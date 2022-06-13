@@ -3,10 +3,9 @@
 <package schemaVersion="1.4" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="PACK.xsd">
   <vendor>Arm</vendor>
   <name>Arm-2D</name>
-  <description>This library is a research project used to explore and demonstrate the 2D image processing capability of Cortex-M processors in resource constraint environment. It is not a committed product from Arm, and the quality of the library is not validated with sophisticated tests but limited functional tests.
-The library name, i.e. Arm-2D, is a temporary term and it is subject to change in the future. The term "the Library" used in documents refers to the Arm-2D library unless state otherwise.</description>
-  <url>https://raw.githubusercontent.com/ARM-software/EndpointAI/main-arm-2d-developing/Kernels/Research/Arm-2D/cmsis-pack/</url>
-  <supportContact>https://github.com/ARM-software/EndpointAI/issues</supportContact>
+  <description>An 2D graphic library optimized for Cortex-M processors.</description>
+  <url>https://raw.githubusercontent.com/ARM-software/Arm-2D/developing/cmsis-pack/</url>
+  <supportContact>https://github.com/ARM-software/Arm-2D/issues</supportContact>
   <license>LICENSE</license>
   <!-- optional license file -->
   <!-- 
@@ -17,20 +16,21 @@ The library name, i.e. Arm-2D, is a temporary term and it is subject to change i
   <repository type="git">https://github.com/ARM-software/EndpointAI.git</repository>
   
   <releases>
-    <release date="2022-06-10" version="1.0.0-preview-beta1" url="https://raw.githubusercontent.com/ARM-software/EndpointAI/main-arm-2d-developing/Kernels/Research/Arm-2D/cmsis-pack/Arm.Arm-2D.1.0.0-preview-beta1.pack">
+    <release date="2022-06-13" version="1.0.0-preview-beta2" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/developing/cmsis-pack/Arm.Arm-2D.1.0.0-preview-beta2.pack">
       - Add CMSIS-Pack
-      - Arm-2D v1.0.0 preview
-      - Add support for transform (rotation and scaling)
+      - Arm-2D v1.0.0-preview
+      - Add support for Transform (rotation and scaling)
       - Add a patch for alpha-255-opaque issue
       - Add a new header files __arm_2d_direct.h for professional developers.
-      - Improve performance of transform-with-source-masks
-      - Fix defects found in transform
+      - Improve the performance of transform-with-source-masks
+      - Fix defects found in Transform 
       - update examples to use common assets and controls
       - Introduce entries for copy-only, copy-with-x-mirror/y-mirror/xy-mirror
       - Introduce entries for fill-only, fill-with-x-mirror/y-mirror/xy-mirror
       - Fix cccn888 alpha-channel over-written issue
       - Add Doxygen
-      - Improve transform performance
+      - Improve Transform performance
+      - Moved to new repository
     </release>
     
   </releases>
