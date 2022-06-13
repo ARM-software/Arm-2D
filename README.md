@@ -45,7 +45,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** that are 
   - Supports Colour-keying by default
   - Supports an optional **Opacity** ratio
   - Supports the Anti-Alias feature. 
-    - You can enable it by defining macro  **\_\_ARM_2D_HAS_ANTI_ALIAS_TRANSFORM to "**1**" on **compile-time**.
+    - You can enable it by defining macro  `__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__` to `1` at **compile-time**.
   - Support source masks
 - **An Unified and User-Friendly Programmers' Model**
   - APIs can be used in **Synchronous** manner (  **Classic and Blocking** ) and/or **Asynchronous** manner ( **Event-Driven** )
