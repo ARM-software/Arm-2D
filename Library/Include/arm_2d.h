@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        31. May 2022
- * $Revision:    V.1.0.1
+ * $Date:        13. June 2022
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -135,12 +135,9 @@ bool arm_2d_op_wait_async(arm_2d_op_core_t *ptOP);
 
 /*! 
    \brief get the status of a specified OP, 
-   \param ptOP the address of the target OP (NULL means using the default OP)
-   \return arm_2d_op_status_t the operation status
- */
-/*
-    usually, it is used after calling arm_2d_op_wait_async(). 
+   \details usually, it is used after calling arm_2d_op_wait_async(). 
     E.g.
+    \code
     //! wait for previous operation complete
     do {
         arm_2d_op_wait_async();
@@ -152,6 +149,9 @@ bool arm_2d_op_wait_async(arm_2d_op_core_t *ptOP);
             break;
         }
     } while(true);
+    \endcode
+    \param ptOP the address of the target OP (NULL means using the default OP)
+    \return arm_2d_op_status_t the operation status
  */
 extern
 arm_2d_op_status_t arm_2d_get_op_status(arm_2d_op_core_t *ptOP);

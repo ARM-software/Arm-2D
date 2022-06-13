@@ -1629,12 +1629,9 @@ void arm_2d_set_user_param(arm_2d_op_core_t *ptOP, uintptr_t pUserParam)
 
 /*! 
    \brief get the status of a specified OP, 
-   \param ptOP the address of the target OP (NULL means using the default OP)
-   \return arm_2d_op_status_t the operation status
- */
-/*
-    usually, it is used after calling arm_2d_op_wait_async(). 
+   \details usually, it is used after calling arm_2d_op_wait_async(). 
     E.g.
+    \code
     //! wait for previous operation complete
     do {
         arm_2d_op_wait_async();
@@ -1646,6 +1643,9 @@ void arm_2d_set_user_param(arm_2d_op_core_t *ptOP, uintptr_t pUserParam)
             break;
         }
     } while(true);
+    \endcode
+    \param ptOP the address of the target OP (NULL means using the default OP)
+    \return arm_2d_op_status_t the operation status
  */
 arm_2d_op_status_t arm_2d_get_op_status(arm_2d_op_core_t *ptOP)
 {
