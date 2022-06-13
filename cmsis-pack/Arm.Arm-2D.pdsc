@@ -13,7 +13,7 @@
   </license>
   -->
   
-  <repository type="git">https://github.com/ARM-software/EndpointAI.git</repository>
+  <repository type="git">https://github.com/ARM-software/Arm-2D.git</repository>
   
   <releases>
     <release date="2022-06-13" version="1.0.0-preview-beta2" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/developing/cmsis-pack/Arm.Arm-2D.1.0.0-preview-beta2.pack">
