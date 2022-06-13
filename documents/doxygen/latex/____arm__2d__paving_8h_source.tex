@@ -1,0 +1,824 @@
+\hypertarget{____arm__2d__paving_8h_source}{}\doxysection{\+\_\+\+\_\+arm\+\_\+2d\+\_\+paving.\+h}
+\label{____arm__2d__paving_8h_source}\index{\_\_arm\_2d\_paving.h@{\_\_arm\_2d\_paving.h}}
+\mbox{\hyperlink{____arm__2d__paving_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00001}00001 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00002}00002 \textcolor{comment}{ * Copyright (C) 2010-\/2021 Arm Limited or its affiliates. All rights reserved.}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00003}00003 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00004}00004 \textcolor{comment}{ * SPDX-\/License-\/Identifier: Apache-\/2.0}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00005}00005 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00006}00006 \textcolor{comment}{ * Licensed under the Apache License, Version 2.0 (the License); you may}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00007}00007 \textcolor{comment}{ * not use this file except in compliance with the License.}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00008}00008 \textcolor{comment}{ * You may obtain a copy of the License at}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00009}00009 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00010}00010 \textcolor{comment}{ * www.apache.org/licenses/LICENSE-\/2.0}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00011}00011 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00012}00012 \textcolor{comment}{ * Unless required by applicable law or agreed to in writing, software}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00013}00013 \textcolor{comment}{ * distributed under the License is distributed on an AS IS BASIS, WITHOUT}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00014}00014 \textcolor{comment}{ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00015}00015 \textcolor{comment}{ * See the License for the specific language governing permissions and}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00016}00016 \textcolor{comment}{ * limitations under the License.}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00017}00017 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00018}00018 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00019}00019 \textcolor{comment}{/* -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00020}00020 \textcolor{comment}{ * Project:      Arm-\/2D Library}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00021}00021 \textcolor{comment}{ * Title:        arm-\/2d\_paving.h}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00022}00022 \textcolor{comment}{ * Description:  Provides definitions and code templates for generic paving}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00023}00023 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00024}00024 \textcolor{comment}{ * \$Date:        20. Jan 2021}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00025}00025 \textcolor{comment}{ * \$Revision:    V 0.5.0}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00026}00026 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00027}00027 \textcolor{comment}{ * Target Processor:  Cortex-\/M cores}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00028}00028 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00029}00029 \textcolor{comment}{ * -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ */}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00032}00032 \textcolor{preprocessor}{\#ifndef \_\_ARM\_2D\_PAVING\_H\_\_}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00033}00033 \textcolor{preprocessor}{\#define \_\_ARM\_2D\_PAVING\_H\_\_       }}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00035}00035 \textcolor{comment}{/*============================ INCLUDES ======================================*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00037}00037 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{arm__2d_8h}{arm\_2d.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00039}00039 \textcolor{preprocessor}{\#ifdef   \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00040}00040 \textcolor{keyword}{extern} \textcolor{stringliteral}{"{}C"{}} \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00041}00041 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00043}00043 \textcolor{preprocessor}{\#if defined(\_\_clang\_\_)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00044}00044 \textcolor{preprocessor}{\#   pragma clang diagnostic push}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00045}00045 \textcolor{preprocessor}{\#   pragma clang diagnostic ignored "{}-\/Wunknown-\/warning-\/option"{}}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00046}00046 \textcolor{preprocessor}{\#   pragma clang diagnostic ignored "{}-\/Wreserved-\/identifier"{}}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00047}00047 \textcolor{preprocessor}{\#   pragma clang diagnostic ignored "{}-\/Wgnu-\/zero-\/variadic-\/macro-\/arguments"{}}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00048}00048 \textcolor{preprocessor}{\#elif \_\_IS\_COMPILER\_GCC\_\_}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00049}00049 \textcolor{preprocessor}{\#   pragma GCC diagnostic push}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00050}00050 \textcolor{preprocessor}{\#   pragma GCC diagnostic ignored "{}-\/Wdiscarded-\/qualifiers"{}}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00051}00051 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00052}00052 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00053}00053 \textcolor{comment}{/*============================ MACROS ========================================*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00054}00054 \textcolor{comment}{/*============================ MACROFIED FUNCTIONS ===========================*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00056}\mbox{\hyperlink{____arm__2d__paving_8h_aa2bfe985bd4a6304c13c8f272c27feda}{00056}} \textcolor{preprocessor}{\#define SETUP\_DIRECT\_COPY\_8(srcWidth)          (void)srcWidth;}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00057}\mbox{\hyperlink{____arm__2d__paving_8h_aa4966a08050140e3d7458294caf3659d}{00057}} \textcolor{preprocessor}{\#define SETUP\_DIRECT\_COPY\_16(srcWidth)         (void)srcWidth;}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00058}\mbox{\hyperlink{____arm__2d__paving_8h_ad5b3ec5099d74000130066acf650dc6c}{00058}} \textcolor{preprocessor}{\#define SETUP\_DIRECT\_COPY\_32(srcWidth)         (void)srcWidth;}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00059}00059 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00060}00060 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00061}00061 \textcolor{comment}{/* scalar copy w/o mirroring */}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00062}\mbox{\hyperlink{____arm__2d__paving_8h_addfb5d002955f2aaaa4f625a382a6094}{00062}} \textcolor{preprocessor}{\#define LOAD\_SRC\_DIRECT\_8(pSource, offset)     *pSource++;}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00063}\mbox{\hyperlink{____arm__2d__paving_8h_a2d54828dcdaeecfd790417b941a52212}{00063}} \textcolor{preprocessor}{\#define LOAD\_SRC\_DIRECT\_16(pSource, offset)    *pSource++;}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00064}\mbox{\hyperlink{____arm__2d__paving_8h_a6be833173f8216880262603ad58342a7}{00064}} \textcolor{preprocessor}{\#define LOAD\_SRC\_DIRECT\_32(pSource, offset)    *pSource++;}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00066}\mbox{\hyperlink{____arm__2d__paving_8h_a847e58844c5cf18614a1ced92c5efc0d}{00066}} \textcolor{preprocessor}{\#define LOAD\_SRC\_X\_MIRROR\_8(pSource, offset)   pSource[offset]; offset -\/= 1;}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00067}\mbox{\hyperlink{____arm__2d__paving_8h_ab93b1d05838af7ce1536e08c64ac92e0}{00067}} \textcolor{preprocessor}{\#define LOAD\_SRC\_X\_MIRROR\_16(pSource, offset)  pSource[offset]; offset -\/= 1;}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00068}\mbox{\hyperlink{____arm__2d__paving_8h_a9d5d767528d31c10704c5ed631cdb95f}{00068}} \textcolor{preprocessor}{\#define LOAD\_SRC\_X\_MIRROR\_32(pSource, offset)  pSource[offset]; offset -\/= 1;}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00069}00069 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00070}\mbox{\hyperlink{____arm__2d__paving_8h_aba18a21253bc71e6688ed32210ef294a}{00070}} \textcolor{preprocessor}{\#define SETUP\_MIRROR\_COPY\_8(srcWidth)          uint32\_t offset = srcWidth -\/ 1;}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00071}\mbox{\hyperlink{____arm__2d__paving_8h_a1143d22209a37ec736ee112ba68bf347}{00071}} \textcolor{preprocessor}{\#define SETUP\_MIRROR\_COPY\_16(srcWidth)         uint32\_t offset = srcWidth -\/ 1;}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00072}\mbox{\hyperlink{____arm__2d__paving_8h_a06a499b24562cadbf731a09c50d5ad8d}{00072}} \textcolor{preprocessor}{\#define SETUP\_MIRROR\_COPY\_32(srcWidth)         uint32\_t offset = srcWidth -\/ 1;}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00073}00073 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00074}00074 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00075}\mbox{\hyperlink{____arm__2d__paving_8h_a6040506e1e4b603740beed7719594979}{00075}} \textcolor{preprocessor}{\#define INCR\_Y\_DIR         1}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00076}\mbox{\hyperlink{____arm__2d__paving_8h_a272c88eb2723a5f77e3e440248554300}{00076}} \textcolor{preprocessor}{\#define DECR\_Y\_DIR         -\/1}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00077}\mbox{\hyperlink{____arm__2d__paving_8h_a4f13024d3542bbe924c301dae7898441}{00077}} \textcolor{preprocessor}{\#define BOTTOM\_TO\_TOP      INCR\_Y\_DIR}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00078}\mbox{\hyperlink{____arm__2d__paving_8h_a2a055f51d3c29d90ac861e83afcb215d}{00078}} \textcolor{preprocessor}{\#define TOP\_TO\_BOTTOM      DECR\_Y\_DIR}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00079}00079 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00080}00080 \textcolor{preprocessor}{\#ifndef PAVING\_OP}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00081}\mbox{\hyperlink{____arm__2d__paving_8h_ad20ed02ef4893076bae132eca206571b}{00081}} \textcolor{preprocessor}{    \#define PAVING\_OP(\_\_DES\_ADDR, \_\_SRC)                                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00082}00082 \textcolor{preprocessor}{            do \{                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00083}00083 \textcolor{preprocessor}{                *(\_\_DES\_ADDR) = (\_\_SRC);                                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00084}00084 \textcolor{preprocessor}{            \}while(0)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00085}00085 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00086}00086 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00087}\mbox{\hyperlink{____arm__2d__paving_8h_a851ace0d1be1a61ee6f2e62175081eb8}{00087}} \textcolor{preprocessor}{\#define PAVING\_DIRECT\_START\_OFFS(strd, heig)    0}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00088}\mbox{\hyperlink{____arm__2d__paving_8h_a5329deb41501f1cefb9f654051b6dd62}{00088}} \textcolor{preprocessor}{\#define PAVING\_DIRECT\_READ\_DIR                  BOTTOM\_TO\_TOP}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00089}\mbox{\hyperlink{____arm__2d__paving_8h_a991e99bf175385a7aeb67c3be22013fa}{00089}} \textcolor{preprocessor}{\#define PAVING\_DIRECT\_SETUP\_COPY(sz)            ARM\_CONNECT2(SETUP\_DIRECT\_COPY\_,sz)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00090}\mbox{\hyperlink{____arm__2d__paving_8h_a60e2a689ca0a32c82317602ee5c899ed}{00090}} \textcolor{preprocessor}{\#define PAVING\_DIRECT\_LOAD\_PATTERN(sz)          ARM\_CONNECT2(LOAD\_SRC\_DIRECT\_,sz)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00091}00091 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00092}\mbox{\hyperlink{____arm__2d__paving_8h_a9afafa10111564c36abe62afc6934e77}{00092}} \textcolor{preprocessor}{\#define PAVING\_X\_MIRROR\_START\_OFFS(strd, heig)  PAVING\_DIRECT\_START\_OFFS(strd, heig)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00093}\mbox{\hyperlink{____arm__2d__paving_8h_abeda6ce9b5893f297b93c7ec6400c554}{00093}} \textcolor{preprocessor}{\#define PAVING\_X\_MIRROR\_READ\_DIR                PAVING\_DIRECT\_READ\_DIR}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00094}\mbox{\hyperlink{____arm__2d__paving_8h_a5da4892082be65888b98e2fb7db553e3}{00094}} \textcolor{preprocessor}{\#define PAVING\_X\_MIRROR\_SETUP\_COPY(sz)          ARM\_CONNECT2(SETUP\_MIRROR\_COPY\_,sz)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00095}\mbox{\hyperlink{____arm__2d__paving_8h_a58f7f32acfbab8e1fd038df713925372}{00095}} \textcolor{preprocessor}{\#define PAVING\_X\_MIRROR\_LOAD\_PATTERN(sz)        ARM\_CONNECT2(LOAD\_SRC\_X\_MIRROR\_,sz)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00096}00096 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00097}\mbox{\hyperlink{____arm__2d__paving_8h_ae5207869a0bdfae8999bdef13214c9c1}{00097}} \textcolor{preprocessor}{\#define PAVING\_Y\_MIRROR\_START\_OFFS(strd, heig)  (strd * (heig -\/ 1))}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00098}\mbox{\hyperlink{____arm__2d__paving_8h_a8060083e994db64e90615f635ba77977}{00098}} \textcolor{preprocessor}{\#define PAVING\_Y\_MIRROR\_READ\_DIR                TOP\_TO\_BOTTOM}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00099}\mbox{\hyperlink{____arm__2d__paving_8h_a8d09879c8ccd55068e5f695f49237e82}{00099}} \textcolor{preprocessor}{\#define PAVING\_Y\_MIRROR\_SETUP\_COPY(sz)          PAVING\_DIRECT\_SETUP\_COPY(sz)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00100}\mbox{\hyperlink{____arm__2d__paving_8h_a6749a3da724a5c996443307579660aea}{00100}} \textcolor{preprocessor}{\#define PAVING\_Y\_MIRROR\_LOAD\_PATTERN(sz)        PAVING\_DIRECT\_LOAD\_PATTERN(sz)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00101}00101 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00102}\mbox{\hyperlink{____arm__2d__paving_8h_a57a6da164c773ddea78d7fd5bfff4e34}{00102}} \textcolor{preprocessor}{\#define PAVING\_XY\_MIRROR\_START\_OFFS(strd, heig) PAVING\_Y\_MIRROR\_START\_OFFS(strd, heig)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00103}\mbox{\hyperlink{____arm__2d__paving_8h_a1eaed5b468bfd1e8caeca8249c8228a9}{00103}} \textcolor{preprocessor}{\#define PAVING\_XY\_MIRROR\_READ\_DIR               PAVING\_Y\_MIRROR\_READ\_DIR}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00104}\mbox{\hyperlink{____arm__2d__paving_8h_ac56c194b9206bd46f1a826d0d0a1c2d8}{00104}} \textcolor{preprocessor}{\#define PAVING\_XY\_MIRROR\_SETUP\_COPY(sz)         PAVING\_X\_MIRROR\_SETUP\_COPY(sz)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00105}\mbox{\hyperlink{____arm__2d__paving_8h_a70d0f2bc990213b0866903582c27702b}{00105}} \textcolor{preprocessor}{\#define PAVING\_XY\_MIRROR\_LOAD\_PATTERN(sz)       PAVING\_X\_MIRROR\_LOAD\_PATTERN(sz)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00106}00106 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00107}00107 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00108}00108 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00109}00109 \textcolor{preprocessor}{\#define \_\_ARM\_2D\_MEM\_FILL\_GENERIC(  pSourceBase,                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00110}00110 \textcolor{preprocessor}{                                    iSourceStride,                              \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00111}00111 \textcolor{preprocessor}{                                    ptSourceSize,                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00112}00112 \textcolor{preprocessor}{                                    pTargetBase,                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00113}00113 \textcolor{preprocessor}{                                    iTargetStride,                              \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00114}00114 \textcolor{preprocessor}{                                    ptTargetSize,                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00115}00115 \textcolor{preprocessor}{                                    pPavFct,                                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00116}00116 \textcolor{preprocessor}{                                    ...)                                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00117}00117 \textcolor{preprocessor}{\{                                                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00118}00118 \textcolor{preprocessor}{    uint16\_t        targetIWidth = ptTargetSize-\/>iWidth;                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00119}00119 \textcolor{preprocessor}{    uint16\_t        sourceIWidth = ptSourceSize-\/>iWidth;                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00120}00120 \textcolor{preprocessor}{    uint16\_t        targetIHeight = ptTargetSize-\/>iHeight;                      \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00121}00121 \textcolor{preprocessor}{    uint16\_t        sourceIHeight = ptSourceSize-\/>iHeight;                      \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00122}00122 \textcolor{preprocessor}{    uint32\_t        tilePairRows = (targetIHeight / (2 * sourceIHeight));       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00123}00123 \textcolor{preprocessor}{    uint32\_t        tilePairCols = (targetIWidth / (2 * sourceIWidth));         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00124}00124 \textcolor{preprocessor}{    int32\_t         residueW = 0;                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00125}00125 \textcolor{preprocessor}{    int32\_t         residueH = 0;                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00126}00126 \textcolor{preprocessor}{    uint32\_t        targetOffsetRows = 0;                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00127}00127 \textcolor{preprocessor}{    uint32\_t        targetOffsetCols = 0;                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00128}00128 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00129}00129 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00130}00130 \textcolor{preprocessor}{    }\textcolor{comment}{/* can we handle vertical pairs of image ? */}\textcolor{preprocessor}{                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00131}00131 \textcolor{preprocessor}{    if (tilePairRows >= 1) \{                                                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00132}00132 \textcolor{preprocessor}{        }\textcolor{comment}{/* target row coordinate after paving */}\textcolor{preprocessor}{                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00133}00133 \textcolor{preprocessor}{        targetOffsetRows = tilePairRows * (2 * sourceIHeight);                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00134}00134 \textcolor{preprocessor}{        residueW = targetIWidth;                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00135}00135 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00136}00136 \textcolor{preprocessor}{        }\textcolor{comment}{/* can we handle horizontal pairs of image ? */}\textcolor{preprocessor}{                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00137}00137 \textcolor{preprocessor}{        if (tilePairCols >= 1) \{                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00138}00138 \textcolor{preprocessor}{            }\textcolor{comment}{/* target column coordinate after paving */}\textcolor{preprocessor}{                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00139}00139 \textcolor{preprocessor}{            targetOffsetCols = tilePairCols * (2 * sourceIWidth);               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00140}00140 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00141}00141 \textcolor{preprocessor}{            }\textcolor{comment}{/* run 2 x 2 image paving */}\textcolor{preprocessor}{                                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00142}00142 \textcolor{preprocessor}{            }\textcolor{comment}{/*                                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00143}00143 \textcolor{comment}{             *       +=======+=======+=======+=======+=======+=======++.....    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00144}00144 \textcolor{comment}{             *       ||xxxxxx|xxxxxxx||      |       ||      |       ||         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00145}00145 \textcolor{comment}{             *       +-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/+-\/.....    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00146}00146 \textcolor{comment}{             *       ||xxxxxx|xxxxxxx||      |       ||      |       ||         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00147}00147 \textcolor{comment}{             *       +=======+=======+=======+=======+=======+=======++.....    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00148}00148 \textcolor{comment}{             *       ||      |       ||      |       ||      |       ||         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00149}00149 \textcolor{comment}{             *       +-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/+-\/.....    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00150}00150 \textcolor{comment}{             *       ||      |       ||      |       ||      |       ||         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00151}00151 \textcolor{comment}{             *       +=======+=======+=======+=======+=======+=======++.....    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00152}00152 \textcolor{comment}{             */}\textcolor{preprocessor}{                                                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00153}00153 \textcolor{preprocessor}{            pPavFct-\/>pav\_2x2(pSourceBase, iSourceStride, ptSourceSize,          \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00154}00154 \textcolor{preprocessor}{                                          pTargetBase, iTargetStride,           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00155}00155 \textcolor{preprocessor}{                                          tilePairRows, tilePairCols            \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00156}00156 \textcolor{preprocessor}{                                          ,\#\#\_\_VA\_ARGS\_\_);                      \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00157}00157 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00158}00158 \textcolor{preprocessor}{            residueW = targetIWidth -\/ targetOffsetCols;                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00159}00159 \textcolor{preprocessor}{        \}                                                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00160}00160 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00161}00161 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00162}00162 \textcolor{preprocessor}{        if (residueW > ptSourceSize-\/>iWidth) \{                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00163}00163 \textcolor{preprocessor}{            }\textcolor{comment}{/* run 1 x 2 image paving */}\textcolor{preprocessor}{                                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00164}00164 \textcolor{preprocessor}{            }\textcolor{comment}{/*                                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00165}00165 \textcolor{comment}{             *       ...+=======+=.....                                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00166}00166 \textcolor{comment}{             *       ...||xxxxxx||                                              \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00167}00167 \textcolor{comment}{             *       ...+-\/-\/-\/-\/-\/-\/-\/+-\/.....                                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00168}00168 \textcolor{comment}{             *       ...||xxxxxx||                                              \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00169}00169 \textcolor{comment}{             *       ...+=======+=.....                                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00170}00170 \textcolor{comment}{             */}\textcolor{preprocessor}{                                                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00171}00171 \textcolor{preprocessor}{            pPavFct-\/>pav\_1x2(   pSourceBase,                                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00172}00172 \textcolor{preprocessor}{                                iSourceStride,                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00173}00173 \textcolor{preprocessor}{                                ptSourceSize,                                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00174}00174 \textcolor{preprocessor}{                                pTargetBase + targetOffsetCols,                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00175}00175 \textcolor{preprocessor}{                                iTargetStride,                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00176}00176 \textcolor{preprocessor}{                                ptSourceSize-\/>iWidth,                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00177}00177 \textcolor{preprocessor}{                                tilePairRows, \#\#\_\_VA\_ARGS\_\_);                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00178}00178 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00179}00179 \textcolor{preprocessor}{            targetOffsetCols += ptSourceSize-\/>iWidth;                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00180}00180 \textcolor{preprocessor}{            residueW = targetIWidth -\/ targetOffsetCols;                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00181}00181 \textcolor{preprocessor}{        \}                                                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00182}00182 \textcolor{preprocessor}{        if (residueW > 0) \{                                                     \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00183}00183 \textcolor{preprocessor}{            }\textcolor{comment}{/* run residual 1 x 2 image paving */}\textcolor{preprocessor}{                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00184}00184 \textcolor{preprocessor}{            }\textcolor{comment}{/*                                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00185}00185 \textcolor{comment}{             *       ...+=====                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00186}00186 \textcolor{comment}{             *       ...||xxxx                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00187}00187 \textcolor{comment}{             *       ...+-\/-\/-\/-\/-\/                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00188}00188 \textcolor{comment}{             *       ...||xxxx                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00189}00189 \textcolor{comment}{             *       ...+=====                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00190}00190 \textcolor{comment}{             */}\textcolor{preprocessor}{                                                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00191}00191 \textcolor{preprocessor}{            pPavFct-\/>pav\_1x2(   pSourceBase, iSourceStride, ptSourceSize,       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00192}00192 \textcolor{preprocessor}{                                pTargetBase + targetOffsetCols,                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00193}00193 \textcolor{preprocessor}{                                iTargetStride, residueW, tilePairRows           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00194}00194 \textcolor{preprocessor}{                                , \#\#\_\_VA\_ARGS\_\_);                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00195}00195 \textcolor{preprocessor}{        \}                                                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00196}00196 \textcolor{preprocessor}{    \}                                                                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00197}00197 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00198}00198 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00199}00199 \textcolor{preprocessor}{    }\textcolor{comment}{/* less than 2 complete vertical images */}\textcolor{preprocessor}{                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00200}00200 \textcolor{preprocessor}{    targetOffsetCols = 0;                                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00201}00201 \textcolor{preprocessor}{    residueH = targetIHeight -\/ targetOffsetRows;                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00202}00202 \textcolor{preprocessor}{    if (residueH >= ptSourceSize-\/>iHeight) \{                                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00203}00203 \textcolor{preprocessor}{        residueW = targetIWidth;                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00204}00204 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00205}00205 \textcolor{preprocessor}{        }\textcolor{comment}{/* can we handle horizontal pair of image ? */}\textcolor{preprocessor}{                          \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00206}00206 \textcolor{preprocessor}{        if (tilePairCols >= 1) \{                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00207}00207 \textcolor{preprocessor}{            }\textcolor{comment}{/* run 2 x 1 image paving */}\textcolor{preprocessor}{                                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00208}00208 \textcolor{preprocessor}{            }\textcolor{comment}{/*                                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00209}00209 \textcolor{comment}{             *       +=======+=======+=======+=======+=======+=======++.....    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00210}00210 \textcolor{comment}{             *       ||xxxxxx|xxxxxxx||      |       ||      |       ||         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00211}00211 \textcolor{comment}{             *       +-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/+-\/.....    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00212}00212 \textcolor{comment}{             *       ..................................................         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00213}00213 \textcolor{comment}{             */}\textcolor{preprocessor}{                                                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00214}00214 \textcolor{preprocessor}{            pPavFct-\/>pav\_2x1(   pSourceBase,                                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00215}00215 \textcolor{preprocessor}{                                iSourceStride,                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00216}00216 \textcolor{preprocessor}{                                ptSourceSize,                                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00217}00217 \textcolor{preprocessor}{                                pTargetBase +                                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00218}00218 \textcolor{preprocessor}{                                    targetOffsetRows * iTargetStride,           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00219}00219 \textcolor{preprocessor}{                                iTargetStride,                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00220}00220 \textcolor{preprocessor}{                                tilePairCols,                                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00221}00221 \textcolor{preprocessor}{                                ptSourceSize-\/>iHeight                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00222}00222 \textcolor{preprocessor}{                                , \#\#\_\_VA\_ARGS\_\_);                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00223}00223 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00224}00224 \textcolor{preprocessor}{            targetOffsetCols = tilePairCols * (2 * sourceIWidth);               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00225}00225 \textcolor{preprocessor}{            residueW = targetIWidth -\/ targetOffsetCols;                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00226}00226 \textcolor{preprocessor}{        \}                                                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00227}00227 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00228}00228 \textcolor{preprocessor}{        if (residueW > ptSourceSize-\/>iWidth) \{                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00229}00229 \textcolor{preprocessor}{            }\textcolor{comment}{/* run single image paving */}\textcolor{preprocessor}{                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00230}00230 \textcolor{preprocessor}{            }\textcolor{comment}{/*                                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00231}00231 \textcolor{comment}{             *       +=======+...                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00232}00232 \textcolor{comment}{             *       ||xxxxx||...                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00233}00233 \textcolor{comment}{             *       +-\/-\/-\/-\/-\/-\/-\/+...                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00234}00234 \textcolor{comment}{             *       ............                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00235}00235 \textcolor{comment}{             */}\textcolor{preprocessor}{                                                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00236}00236 \textcolor{preprocessor}{            pPavFct-\/>pav\_1x1(pSourceBase,                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00237}00237 \textcolor{preprocessor}{                            iSourceStride,                                      \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00238}00238 \textcolor{preprocessor}{                            pTargetBase + targetOffsetRows * iTargetStride +    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00239}00239 \textcolor{preprocessor}{                                targetOffsetCols,                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00240}00240 \textcolor{preprocessor}{                            iTargetStride,                                      \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00241}00241 \textcolor{preprocessor}{                            ptSourceSize,                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00242}00242 \textcolor{preprocessor}{                            ptSourceSize                                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00243}00243 \textcolor{preprocessor}{                            , \#\#\_\_VA\_ARGS\_\_);                                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00244}00244 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00245}00245 \textcolor{preprocessor}{            targetOffsetCols += ptSourceSize-\/>iWidth;                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00246}00246 \textcolor{preprocessor}{            residueW = targetIWidth -\/ targetOffsetCols;                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00247}00247 \textcolor{preprocessor}{        \}                                                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00248}00248 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00249}00249 \textcolor{preprocessor}{        if (residueW > 0) \{                                                     \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00250}00250 \textcolor{preprocessor}{            }\textcolor{comment}{/* run residual single image paving (complete height, */}\textcolor{preprocessor}{            \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00251}00251 \textcolor{preprocessor}{            }\textcolor{comment}{/* but truncated width) */}\textcolor{preprocessor}{                                          \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00252}00252 \textcolor{preprocessor}{            }\textcolor{comment}{/*                      */}\textcolor{preprocessor}{                                          \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00253}00253 \textcolor{preprocessor}{            }\textcolor{comment}{/*       +=====...      */}\textcolor{preprocessor}{                                          \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00254}00254 \textcolor{preprocessor}{            }\textcolor{comment}{/*       ||xxxx...      */}\textcolor{preprocessor}{                                          \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00255}00255 \textcolor{preprocessor}{            }\textcolor{comment}{/*       +-\/-\/-\/-\/-\/...      */}\textcolor{preprocessor}{                                          \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00256}00256 \textcolor{preprocessor}{            }\textcolor{comment}{/*       .........      */}\textcolor{preprocessor}{                                          \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00257}00257 \textcolor{preprocessor}{            }\textcolor{comment}{/*                      */}\textcolor{preprocessor}{                                          \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00258}00258 \textcolor{preprocessor}{            arm\_2d\_size\_t tail;                                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00259}00259 \textcolor{preprocessor}{            tail.iWidth = residueW;                                             \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00260}00260 \textcolor{preprocessor}{            tail.iHeight = ptSourceSize-\/>iHeight;                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00261}00261 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00262}00262 \textcolor{preprocessor}{            pPavFct-\/>pav\_1x1(   pSourceBase,                                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00263}00263 \textcolor{preprocessor}{                                iSourceStride,                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00264}00264 \textcolor{preprocessor}{                                pTargetBase + targetOffsetRows * iTargetStride +\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00265}00265 \textcolor{preprocessor}{                                    targetOffsetCols,                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00266}00266 \textcolor{preprocessor}{                                iTargetStride,                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00267}00267 \textcolor{preprocessor}{                                ptSourceSize,                                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00268}00268 \textcolor{preprocessor}{                                \&tail                                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00269}00269 \textcolor{preprocessor}{                                , \#\#\_\_VA\_ARGS\_\_);                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00270}00270 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00271}00271 \textcolor{preprocessor}{        \}                                                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00272}00272 \textcolor{preprocessor}{        targetOffsetRows += ptSourceSize-\/>iHeight;                              \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00273}00273 \textcolor{preprocessor}{    \}                                                                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00274}00274 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00275}00275 \textcolor{preprocessor}{    }\textcolor{comment}{/* less than 1 complete vertical images */}\textcolor{preprocessor}{                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00276}00276 \textcolor{preprocessor}{    targetOffsetCols = 0;                                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00277}00277 \textcolor{preprocessor}{    residueH = ptTargetSize-\/>iHeight -\/ targetOffsetRows;                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00278}00278 \textcolor{preprocessor}{    if (residueH) \{                                                             \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00279}00279 \textcolor{preprocessor}{        arm\_2d\_size\_t tail;                                                     \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00280}00280 \textcolor{preprocessor}{        tail.iWidth = ptSourceSize-\/>iWidth;                                     \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00281}00281 \textcolor{preprocessor}{        tail.iHeight = residueH;                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00282}00282 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00283}00283 \textcolor{preprocessor}{        if (tilePairCols >= 1) \{                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00284}00284 \textcolor{preprocessor}{            }\textcolor{comment}{/* run vertical truncated 2 x 1 image paving */}\textcolor{preprocessor}{                     \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00285}00285 \textcolor{preprocessor}{            }\textcolor{comment}{/*                                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00286}00286 \textcolor{comment}{             *       +=======+=======+=======+=======+=======+=======++.....    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00287}00287 \textcolor{comment}{             *       ||xxxxxx|xxxxxxx||      |       ||      |       ||         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00288}00288 \textcolor{comment}{             *       ..................................................         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00289}00289 \textcolor{comment}{             */}\textcolor{preprocessor}{                                                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00290}00290 \textcolor{preprocessor}{            pPavFct-\/>pav\_2x1(   pSourceBase,                                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00291}00291 \textcolor{preprocessor}{                                iSourceStride,                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00292}00292 \textcolor{preprocessor}{                                ptSourceSize,                                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00293}00293 \textcolor{preprocessor}{                                pTargetBase + targetOffsetRows * iTargetStride, \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00294}00294 \textcolor{preprocessor}{                                iTargetStride,                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00295}00295 \textcolor{preprocessor}{                                tilePairCols,                                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00296}00296 \textcolor{preprocessor}{                                residueH                                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00297}00297 \textcolor{preprocessor}{                                , \#\#\_\_VA\_ARGS\_\_);                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00298}00298 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00299}00299 \textcolor{preprocessor}{            targetOffsetCols = tilePairCols * (2 * sourceIWidth);               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00300}00300 \textcolor{preprocessor}{        \}                                                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00301}00301 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00302}00302 \textcolor{preprocessor}{        residueW = targetIWidth -\/ targetOffsetCols;                             \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00303}00303 \textcolor{preprocessor}{        if (residueW > ptSourceSize-\/>iWidth) \{                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00304}00304 \textcolor{preprocessor}{            }\textcolor{comment}{/* run vertical truncated single image copy */}\textcolor{preprocessor}{                      \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00305}00305 \textcolor{preprocessor}{            }\textcolor{comment}{/*                                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00306}00306 \textcolor{comment}{             *       +=======+...                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00307}00307 \textcolor{comment}{             *       ||xxxxx||...                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00308}00308 \textcolor{comment}{             *       ............                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00309}00309 \textcolor{comment}{             */}\textcolor{preprocessor}{                                                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00310}00310 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00311}00311 \textcolor{preprocessor}{            pPavFct-\/>pav\_1x1(   pSourceBase,                                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00312}00312 \textcolor{preprocessor}{                                iSourceStride,                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00313}00313 \textcolor{preprocessor}{                                pTargetBase + targetOffsetRows * iTargetStride +\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00314}00314 \textcolor{preprocessor}{                                    targetOffsetCols,                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00315}00315 \textcolor{preprocessor}{                                iTargetStride,                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00316}00316 \textcolor{preprocessor}{                                ptSourceSize,                                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00317}00317 \textcolor{preprocessor}{                                \&tail                                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00318}00318 \textcolor{preprocessor}{                                , \#\#\_\_VA\_ARGS\_\_);                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00319}00319 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00320}00320 \textcolor{preprocessor}{            targetOffsetCols += ptSourceSize-\/>iWidth;                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00321}00321 \textcolor{preprocessor}{            residueW = targetIWidth -\/ targetOffsetCols;                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00322}00322 \textcolor{preprocessor}{        \}                                                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00323}00323 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00324}00324 \textcolor{preprocessor}{        if (residueW > 0) \{                                                     \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00325}00325 \textcolor{preprocessor}{            }\textcolor{comment}{/* run horizontal \& vertical truncated single image copy */}\textcolor{preprocessor}{         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00326}00326 \textcolor{preprocessor}{            }\textcolor{comment}{/*                                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00327}00327 \textcolor{comment}{             *       +======..                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00328}00328 \textcolor{comment}{             *       ||xxxxx...                                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00329}00329 \textcolor{comment}{             *       ..........                                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00330}00330 \textcolor{comment}{             */}\textcolor{preprocessor}{                                                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00331}00331 \textcolor{preprocessor}{            tail.iWidth = residueW;                                             \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00332}00332 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00333}00333 \textcolor{preprocessor}{            pPavFct-\/>pav\_1x1(   pSourceBase,                                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00334}00334 \textcolor{preprocessor}{                                iSourceStride,                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00335}00335 \textcolor{preprocessor}{                                pTargetBase + targetOffsetRows * iTargetStride +\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00336}00336 \textcolor{preprocessor}{                                    targetOffsetCols,                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00337}00337 \textcolor{preprocessor}{                                iTargetStride,                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00338}00338 \textcolor{preprocessor}{                                ptSourceSize,                                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00339}00339 \textcolor{preprocessor}{                                \&tail                                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00340}00340 \textcolor{preprocessor}{                                , \#\#\_\_VA\_ARGS\_\_);                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00341}00341 \textcolor{preprocessor}{        \}                                                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00342}00342 \textcolor{preprocessor}{    \}                                                                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00343}00343 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00344}00344 \textcolor{preprocessor}{\}}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00345}00345 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00346}00346 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00347}00347 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00348}00348 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00349}00349 \textcolor{preprocessor}{\#define \_\_ARM\_2D\_PAVING\_2x2(sz, SRC\_OFFSET, DIR, SETUP\_MIRROR, LOAD, ...)       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00350}00350 \textcolor{preprocessor}{\{                                                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00351}00351 \textcolor{preprocessor}{    uint32\_t            srcWidth = ptSourceSize-\/>iWidth;                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00352}00352 \textcolor{preprocessor}{    uint32\_t            srcHeight = ptSourceSize-\/>iHeight;                      \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00353}00353 \textcolor{preprocessor}{    ARM\_PIX\_SCLTYP(sz) *\_\_RESTRICT pSourceBaseCur;                              \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00354}00354 \textcolor{preprocessor}{    ARM\_PIX\_SCLTYP(sz) *\_\_RESTRICT pTargetBaseCur = pTargetBase;                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00355}00355 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00356}00356 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00357}00357 \textcolor{preprocessor}{    }\textcolor{comment}{/* row iteration */}\textcolor{preprocessor}{                                                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00358}00358 \textcolor{preprocessor}{    }\textcolor{comment}{/* handle pair of source image row and fill in the column direction */}\textcolor{preprocessor}{      \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00359}00359 \textcolor{preprocessor}{    do \{                                                                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00360}00360 \textcolor{preprocessor}{        uint32\_t        rowCnt = 0;                                             \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00361}00361 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00362}00362 \textcolor{preprocessor}{        pSourceBaseCur = (ARM\_PIX\_SCLTYP(sz) *)pSourceBase;                     \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00363}00363 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00364}00364 \textcolor{preprocessor}{        }\textcolor{comment}{/* single source row loop */}\textcolor{preprocessor}{                                            \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00365}00365 \textcolor{preprocessor}{        do \{                                                                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00366}00366 \textcolor{preprocessor}{            ARM\_PIX\_SCLTYP(sz) *\_\_RESTRICT pDst = pTargetBaseCur;               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00367}00367 \textcolor{preprocessor}{            uint32\_t            tilePairColsCnt = tilePairCols;                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00368}00368 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00369}00369 \textcolor{preprocessor}{            }\textcolor{comment}{/* column loop */}\textcolor{preprocessor}{                                                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00370}00370 \textcolor{preprocessor}{            }\textcolor{comment}{/* duplicate current source row into 2 x 2 destination across */}\textcolor{preprocessor}{    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00371}00371 \textcolor{preprocessor}{            }\textcolor{comment}{/*destination columns */}\textcolor{preprocessor}{                                            \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00372}00372 \textcolor{preprocessor}{            }\textcolor{comment}{/*                                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00373}00373 \textcolor{comment}{             *  +-\/-\/-\/-\/-\/-\/-\/+                                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00374}00374 \textcolor{comment}{             *  |xxxxxxx|                                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00375}00375 \textcolor{comment}{             *  |  src  |                                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00376}00376 \textcolor{comment}{             *  +-\/-\/-\/-\/-\/-\/-\/+                                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00377}00377 \textcolor{comment}{             *                                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00378}00378 \textcolor{comment}{             *            <-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/>                                     \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00379}00379 \textcolor{comment}{             *                                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00380}00380 \textcolor{comment}{             *           ||       |       ||       |       ||                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00381}00381 \textcolor{comment}{             *       *   +========+=======+========+=======+                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00382}00382 \textcolor{comment}{             *       |   ||xxxxxxx|xxxxxxx||xxxxxxx|xxxxxxx||...                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00383}00383 \textcolor{comment}{             *       |   ||       |       ||       |       ||...                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00384}00384 \textcolor{comment}{             *       |   +-\/-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/+-\/...                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00385}00385 \textcolor{comment}{             *       |   ||xxxxxxx|xxxxxxx||xxxxxxx|xxxxxxx||...                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00386}00386 \textcolor{comment}{             *       |   ||       |       ||       |       ||...                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00387}00387 \textcolor{comment}{             *       *   +========+=======+========+=======+                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00388}00388 \textcolor{comment}{             *           ||       |       ||       |       ||                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00389}00389 \textcolor{comment}{             */}\textcolor{preprocessor}{                                                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00390}00390 \textcolor{preprocessor}{            do \{                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00391}00391 \textcolor{preprocessor}{                int32\_t              dstColCnt = srcWidth;                      \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00392}00392 \textcolor{preprocessor}{                ARM\_PIX\_SCLTYP(sz)  *\_\_RESTRICT pSource = pSourceBaseCur + SRC\_OFFSET;     \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00393}00393 \textcolor{preprocessor}{                ARM\_PIX\_SCLTYP(sz)  *\_\_RESTRICT pDst00 = pDst;                             \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00394}00394 \textcolor{preprocessor}{                ARM\_PIX\_SCLTYP(sz)  *\_\_RESTRICT pDst01 = pDst00 + srcWidth;                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00395}00395 \textcolor{preprocessor}{                ARM\_PIX\_SCLTYP(sz)  *\_\_RESTRICT pDst10 = pDst + srcHeight * iTargetStride; \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00396}00396 \textcolor{preprocessor}{                ARM\_PIX\_SCLTYP(sz)  *\_\_RESTRICT pDst11 = pDst10 + srcWidth;                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00397}00397 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00398}00398 \textcolor{preprocessor}{                SETUP\_MIRROR(srcWidth);                                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00399}00399 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00400}00400 \textcolor{preprocessor}{                }\textcolor{comment}{/* duplicate current source line into 2x2 destinations tiles*/}\textcolor{preprocessor}{  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00401}00401 \textcolor{preprocessor}{                do \{                                                            \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00402}00402 \textcolor{preprocessor}{                    ARM\_PIX\_SCLTYP(sz)  in;                                     \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00403}00403 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00404}00404 \textcolor{preprocessor}{                    in = LOAD(pSource, offset);                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00405}00405 \textcolor{preprocessor}{                    if (true,\#\#\_\_VA\_ARGS\_\_) \{                                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00406}00406 \textcolor{preprocessor}{                        PAVING\_OP(pDst00++, in);                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00407}00407 \textcolor{preprocessor}{                        PAVING\_OP(pDst01++, in);                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00408}00408 \textcolor{preprocessor}{                        PAVING\_OP(pDst10++, in);                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00409}00409 \textcolor{preprocessor}{                        PAVING\_OP(pDst11++, in);                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00410}00410 \textcolor{preprocessor}{                    \} else \{                                                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00411}00411 \textcolor{preprocessor}{                        pDst00++;pDst01++;pDst10++;pDst11++;                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00412}00412 \textcolor{preprocessor}{                    \}                                                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00413}00413 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00414}00414 \textcolor{preprocessor}{                \} while (-\/-\/dstColCnt);                                          \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00415}00415 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00416}00416 \textcolor{preprocessor}{                pDst += 2 * srcWidth;                                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00417}00417 \textcolor{preprocessor}{                tilePairColsCnt-\/-\/;                                              \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00418}00418 \textcolor{preprocessor}{            \}                                                                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00419}00419 \textcolor{preprocessor}{            while (tilePairColsCnt != 0);                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00420}00420 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00421}00421 \textcolor{preprocessor}{            rowCnt ++;                                                          \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00422}00422 \textcolor{preprocessor}{            pTargetBaseCur += iTargetStride;                                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00423}00423 \textcolor{preprocessor}{            pSourceBaseCur += (iSourceStride * DIR);                            \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00424}00424 \textcolor{preprocessor}{        \}                                                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00425}00425 \textcolor{preprocessor}{        while (rowCnt < ptSourceSize-\/>iHeight);                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00426}00426 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00427}00427 \textcolor{preprocessor}{        pTargetBaseCur += srcHeight * iTargetStride;                            \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00428}00428 \textcolor{preprocessor}{        tilePairRows-\/-\/;                                                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00429}00429 \textcolor{preprocessor}{    \}                                                                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00430}00430 \textcolor{preprocessor}{    while (tilePairRows != 0);                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00431}00431 \textcolor{preprocessor}{\}}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00432}00432 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00433}00433 \textcolor{preprocessor}{\#define \_\_ARM\_2D\_PAVING\_1x2(sz, SRC\_OFFSET, DIR, SETUP\_MIRROR, LOAD, ...)       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00434}00434 \textcolor{preprocessor}{\{                                                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00435}00435 \textcolor{preprocessor}{    uint32\_t            srcWidth = ptSourceSize-\/>iWidth;                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00436}00436 \textcolor{preprocessor}{    uint32\_t            srcHeight = ptSourceSize-\/>iHeight;                      \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00437}00437 \textcolor{preprocessor}{    ARM\_PIX\_SCLTYP(sz)  *\_\_RESTRICT pSourceBaseCur;                             \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00438}00438 \textcolor{preprocessor}{    ARM\_PIX\_SCLTYP(sz)  *\_\_RESTRICT pTargetBaseCur = pTargetBase;               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00439}00439 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00440}00440 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00441}00441 \textcolor{preprocessor}{    }\textcolor{comment}{/* row iteration */}\textcolor{preprocessor}{                                                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00442}00442 \textcolor{preprocessor}{    }\textcolor{comment}{/* handle pair of source image row and fill in the column direction */}\textcolor{preprocessor}{      \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00443}00443 \textcolor{preprocessor}{    do \{                                                                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00444}00444 \textcolor{preprocessor}{        uint32\_t        rowCnt = 0;                                             \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00445}00445 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00446}00446 \textcolor{preprocessor}{        pSourceBaseCur = (ARM\_PIX\_SCLTYP(sz) *)pSourceBase;                     \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00447}00447 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00448}00448 \textcolor{preprocessor}{        }\textcolor{comment}{/* single source row loop */}\textcolor{preprocessor}{                                            \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00449}00449 \textcolor{preprocessor}{        do \{                                                                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00450}00450 \textcolor{preprocessor}{            int32\_t              dstColCnt = destWidth;                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00451}00451 \textcolor{preprocessor}{            ARM\_PIX\_SCLTYP(sz)  *\_\_RESTRICT pSource = pSourceBaseCur + SRC\_OFFSET;         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00452}00452 \textcolor{preprocessor}{            ARM\_PIX\_SCLTYP(sz)  *\_\_RESTRICT pDst = pTargetBaseCur;                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00453}00453 \textcolor{preprocessor}{            ARM\_PIX\_SCLTYP(sz)  *\_\_RESTRICT pDst00 = pDst;                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00454}00454 \textcolor{preprocessor}{            ARM\_PIX\_SCLTYP(sz)  *\_\_RESTRICT pDst10 = pDst + srcHeight * iTargetStride;     \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00455}00455 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00456}00456 \textcolor{preprocessor}{            }\textcolor{comment}{/* column loop */}\textcolor{preprocessor}{                                                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00457}00457 \textcolor{preprocessor}{            }\textcolor{comment}{/* duplicate current source row into 1 x 2 destination across */}\textcolor{preprocessor}{    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00458}00458 \textcolor{preprocessor}{            }\textcolor{comment}{/* destination columns */}\textcolor{preprocessor}{                                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00459}00459 \textcolor{preprocessor}{            }\textcolor{comment}{/*                                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00460}00460 \textcolor{comment}{             *  +-\/-\/-\/-\/-\/-\/-\/+                                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00461}00461 \textcolor{comment}{             *  |xxxxxxx|                                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00462}00462 \textcolor{comment}{             *  |  src  |                                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00463}00463 \textcolor{comment}{             *  +-\/-\/-\/-\/-\/-\/-\/+                                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00464}00464 \textcolor{comment}{             *                                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00465}00465 \textcolor{comment}{             *           ..||       ||                                          \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00466}00466 \textcolor{comment}{             *       *   ==+========+=...                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00467}00467 \textcolor{comment}{             *       |   ..||xxxxxxx||...                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00468}00468 \textcolor{comment}{             *       |   ..||       ||...                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00469}00469 \textcolor{comment}{             *       |   ..+-\/-\/-\/-\/-\/-\/-\/-\/+-\/...                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00470}00470 \textcolor{comment}{             *       |   ..||xxxxxxx||...                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00471}00471 \textcolor{comment}{             *       |   ..||       ||...                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00472}00472 \textcolor{comment}{             *       *   ==+========+=...                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00473}00473 \textcolor{comment}{             *           ..||       ||...                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00474}00474 \textcolor{comment}{             */}\textcolor{preprocessor}{                                                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00475}00475 \textcolor{preprocessor}{            SETUP\_MIRROR(srcWidth);                                             \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00476}00476 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00477}00477 \textcolor{preprocessor}{            }\textcolor{comment}{/* duplicate current source line into 2x2 destinations */}\textcolor{preprocessor}{           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00478}00478 \textcolor{preprocessor}{            do \{                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00479}00479 \textcolor{preprocessor}{                ARM\_PIX\_SCLTYP(sz)  in;                                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00480}00480 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00481}00481 \textcolor{preprocessor}{                in = LOAD(pSource, offset);                                     \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00482}00482 \textcolor{preprocessor}{                if (true,\#\#\_\_VA\_ARGS\_\_) \{                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00483}00483 \textcolor{preprocessor}{                     PAVING\_OP(pDst00++, in);                                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00484}00484 \textcolor{preprocessor}{                     PAVING\_OP(pDst10++, in);                                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00485}00485 \textcolor{preprocessor}{                \} else \{                                                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00486}00486 \textcolor{preprocessor}{                    pDst00 ++;                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00487}00487 \textcolor{preprocessor}{                    pDst10 ++;                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00488}00488 \textcolor{preprocessor}{                \}                                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00489}00489 \textcolor{preprocessor}{            \}                                                                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00490}00490 \textcolor{preprocessor}{            while (-\/-\/dstColCnt);                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00491}00491 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00492}00492 \textcolor{preprocessor}{            rowCnt ++;                                                          \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00493}00493 \textcolor{preprocessor}{            pTargetBaseCur += iTargetStride;                                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00494}00494 \textcolor{preprocessor}{            pSourceBaseCur += (iSourceStride * DIR);                            \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00495}00495 \textcolor{preprocessor}{        \}                                                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00496}00496 \textcolor{preprocessor}{        while (rowCnt < ptSourceSize-\/>iHeight);                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00497}00497 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00498}00498 \textcolor{preprocessor}{        pTargetBaseCur += srcHeight * iTargetStride;                            \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00499}00499 \textcolor{preprocessor}{        tilePairRows-\/-\/;                                                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00500}00500 \textcolor{preprocessor}{    \}                                                                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00501}00501 \textcolor{preprocessor}{    while (tilePairRows != 0);                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00502}00502 \textcolor{preprocessor}{\}}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00503}00503 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00504}00504 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00505}00505 \textcolor{preprocessor}{\#define \_\_ARM\_2D\_PAVING\_2x1(sz, SRC\_OFFSET, DIR, SETUP\_MIRROR, LOAD, ...)       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00506}00506 \textcolor{preprocessor}{\{                                                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00507}00507 \textcolor{preprocessor}{    uint32\_t             srcWidth = ptSourceSize-\/>iWidth;                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00508}00508 \textcolor{preprocessor}{    ARM\_PIX\_SCLTYP(sz)  *\_\_RESTRICT pSourceBaseCur;                             \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00509}00509 \textcolor{preprocessor}{    ARM\_PIX\_SCLTYP(sz)  *\_\_RESTRICT pTargetBaseCur = pTargetBase;               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00510}00510 \textcolor{preprocessor}{    uint32\_t             rowCnt = 0;                                            \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00511}00511 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00512}00512 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00513}00513 \textcolor{preprocessor}{    }\textcolor{comment}{/* row iteration */}\textcolor{preprocessor}{                                                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00514}00514 \textcolor{preprocessor}{    }\textcolor{comment}{/* handle pair of source image row and fill in the column direction */}\textcolor{preprocessor}{      \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00515}00515 \textcolor{preprocessor}{    }\textcolor{comment}{/*                                                                          \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00516}00516 \textcolor{comment}{     *  +-\/-\/-\/-\/-\/-\/-\/+                                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00517}00517 \textcolor{comment}{     *  | src   |                                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00518}00518 \textcolor{comment}{     *  +-\/-\/-\/-\/-\/-\/-\/+                                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00519}00519 \textcolor{comment}{     *                                                                          \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00520}\mbox{\hyperlink{____arm__2d__paving_8h_a0f7c03ed50077f924a5c12c1e030595f}{00520}} \textcolor{comment}{     *                             tilePairCols                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00521}00521 \textcolor{comment}{     *                  <-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/-\/........>                      \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00522}00522 \textcolor{comment}{     *                                                                          \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00523}\mbox{\hyperlink{____arm__2d__paving_8h_ae09f925d684e7cc0693b69bd088db530}{00523}} \textcolor{comment}{     *                  +=======+=======++=======+=======++......               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00524}00524 \textcolor{comment}{     *                  ||      |       ||       |       ||                     \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00525}00525 \textcolor{comment}{     *                  +=======+=======++=======+=======++                     \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00526}\mbox{\hyperlink{____arm__2d__paving_8h_aa888dadd4683eb8c6a00aae23508e4d1}{00526}} \textcolor{comment}{     *                  ........                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00527}00527 \textcolor{comment}{     */}\textcolor{preprocessor}{                                                                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00528}00528 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00529}\mbox{\hyperlink{____arm__2d__paving_8h_a1bf0f0c05e8e54b6ee73ade50c9df2e3}{00529}} \textcolor{preprocessor}{    pSourceBaseCur = (ARM\_PIX\_SCLTYP(sz) *)pSourceBase;                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00530}00530 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00531}00531 \textcolor{preprocessor}{    }\textcolor{comment}{/* copy 2 x 2 source image block */}\textcolor{preprocessor}{                                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00532}00532 \textcolor{preprocessor}{    do \{                                                                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00533}\mbox{\hyperlink{structarm__2d__c8bit__paving__fct__t}{00533}} \textcolor{preprocessor}{        ARM\_PIX\_SCLTYP(sz)  *\_\_RESTRICT pDst = pTargetBaseCur;                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00534}\mbox{\hyperlink{structarm__2d__c8bit__paving__fct__t_a7cf4cc9286bb830ab3ca252db1d67978}{00534}} \textcolor{preprocessor}{        ARM\_PIX\_SCLTYP(sz)   tilePairColsCnt = tilePairCols;                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00535}\mbox{\hyperlink{structarm__2d__c8bit__paving__fct__t_a1b3c1293a0b256eb2a1d7656372ff25c}{00535}} \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00536}\mbox{\hyperlink{structarm__2d__c8bit__paving__fct__t_a1084f2c3587f00ba8ddf14ee4e1deeb9}{00536}} \textcolor{preprocessor}{        do \{                                                                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00537}\mbox{\hyperlink{structarm__2d__c8bit__paving__fct__t_a10f0bdebd1d0bd0df818f956d02b65d6}{00537}} \textcolor{preprocessor}{            int                 srcColCnt = srcWidth;                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00538}00538 \textcolor{preprocessor}{            ARM\_PIX\_SCLTYP(sz) *\_\_RESTRICT pSource = pSourceBaseCur+SRC\_OFFSET; \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00539}00539 \textcolor{preprocessor}{            ARM\_PIX\_SCLTYP(sz) *\_\_RESTRICT pDst00 = pDst;                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00540}00540 \textcolor{preprocessor}{            ARM\_PIX\_SCLTYP(sz) *\_\_RESTRICT pDst01 = pDst00 + srcColCnt;         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00541}\mbox{\hyperlink{____arm__2d__paving_8h_a424a48c75fb19bbe5a3d8d62339ceb46}{00541}} \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00542}00542 \textcolor{preprocessor}{            SETUP\_MIRROR(srcWidth);                                             \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00543}00543 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00544}\mbox{\hyperlink{____arm__2d__paving_8h_a23ee1e003a05a04844cd20be03f55d0b}{00544}} \textcolor{preprocessor}{            }\textcolor{comment}{/* duplicate current source line into 4 destinations */}\textcolor{preprocessor}{             \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00545}00545 \textcolor{preprocessor}{            do \{                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00546}00546 \textcolor{preprocessor}{                ARM\_PIX\_SCLTYP(sz)  in;                                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00547}\mbox{\hyperlink{____arm__2d__paving_8h_a96527a124674600cd2c6317e1ed476ad}{00547}} \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00548}00548 \textcolor{preprocessor}{                in = LOAD(pSource, offset);                                     \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00549}00549 \textcolor{preprocessor}{                if (true,\#\#\_\_VA\_ARGS\_\_) \{                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00550}\mbox{\hyperlink{____arm__2d__paving_8h_a1e8847150bb67e398d195b6086e09d95}{00550}} \textcolor{preprocessor}{                    PAVING\_OP(pDst00++, in);                                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00551}00551 \textcolor{preprocessor}{                    PAVING\_OP(pDst01++, in);                                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00552}00552 \textcolor{preprocessor}{                \} else \{                                                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00553}00553 \textcolor{preprocessor}{                    pDst00 ++;                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00554}\mbox{\hyperlink{structarm__2d__rgb16__paving__fct__t}{00554}} \textcolor{preprocessor}{                    pDst01 ++;                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00555}\mbox{\hyperlink{structarm__2d__rgb16__paving__fct__t_ad6a42be3e05a82d13f06a503a8d015f6}{00555}} \textcolor{preprocessor}{                \}                                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00556}\mbox{\hyperlink{structarm__2d__rgb16__paving__fct__t_ab3c49be17bb0e059dd3d58b4eeef8176}{00556}} \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00557}\mbox{\hyperlink{structarm__2d__rgb16__paving__fct__t_ae0e9688e1eaa2eaf6c2a8d54eea33f85}{00557}} \textcolor{preprocessor}{                srcColCnt -\/= 1;                                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00558}\mbox{\hyperlink{structarm__2d__rgb16__paving__fct__t_af468b22134791acc7fef7ed1ca51955e}{00558}} \textcolor{preprocessor}{            \}                                                                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00559}00559 \textcolor{preprocessor}{            while ((int32\_t) srcColCnt > 0);                                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00560}00560 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00561}\mbox{\hyperlink{____arm__2d__paving_8h_abe1a7936fe788f34a3fbebb5146d73be}{00561}} \textcolor{preprocessor}{            pDst += 2 * srcWidth;                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00562}00562 \textcolor{preprocessor}{            tilePairColsCnt-\/-\/;                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00563}00563 \textcolor{preprocessor}{        \}                                                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00564}\mbox{\hyperlink{____arm__2d__paving_8h_a2fc2b44173abbf24de4d4b178b27ce8d}{00564}} \textcolor{preprocessor}{        while (tilePairColsCnt != 0);                                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00565}00565 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00566}00566 \textcolor{preprocessor}{        rowCnt++;                                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00567}\mbox{\hyperlink{____arm__2d__paving_8h_adb84bd4bfa5c8c2e0340510cf53d2b7a}{00567}} \textcolor{preprocessor}{        pTargetBaseCur += iTargetStride;                                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00568}00568 \textcolor{preprocessor}{        pSourceBaseCur += (iSourceStride * DIR);                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00569}00569 \textcolor{preprocessor}{    \}                                                                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00570}\mbox{\hyperlink{____arm__2d__paving_8h_a2fa5503e39d2f7eaae85a4d8e9931b7f}{00570}} \textcolor{preprocessor}{    while (rowCnt < destHeight);                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00571}00571 \textcolor{preprocessor}{\}}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00572}00572 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00573}00573 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00574}\mbox{\hyperlink{structarm__2d__rgb32__paving__fct__t}{00574}} \textcolor{preprocessor}{\#define \_\_ARM\_2D\_PAVING\_1x1(sz, SRC\_OFFSET, DIR, SETUP\_MIRROR, LOAD, ...)       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00575}\mbox{\hyperlink{structarm__2d__rgb32__paving__fct__t_aead9930e9ef92f920fbccb8bea4500d6}{00575}} \textcolor{preprocessor}{\{                                                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00576}\mbox{\hyperlink{structarm__2d__rgb32__paving__fct__t_a1d36c6cde6a68bce8d8de840ba1d4a85}{00576}} \textcolor{preprocessor}{    pSource += SRC\_OFFSET;                                                      \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00577}\mbox{\hyperlink{structarm__2d__rgb32__paving__fct__t_ad8a1f20d3a0a92bcf63f49932429d20b}{00577}} \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00578}\mbox{\hyperlink{structarm__2d__rgb32__paving__fct__t_aa0ea091df0b884854eef2a7b94c56968}{00578}} \textcolor{preprocessor}{    for (int\_fast16\_t y = 0; y < ptDstCopySize-\/>iHeight; y++) \{                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00579}00579 \textcolor{preprocessor}{        ARM\_PIX\_SCLTYP(sz)  *\_\_RESTRICT pDst = pTarget;                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00580}00580 \textcolor{preprocessor}{        ARM\_PIX\_SCLTYP(sz)  *\_\_RESTRICT pSrc = (ARM\_PIX\_SCLTYP(sz)  *)pSource;  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00581}00581 \textcolor{preprocessor}{        uint32\_t             srcWidth = ptSrcCopySize-\/>iWidth;                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00582}00582 \textcolor{preprocessor}{        uint32\_t             dstWidth = ptDstCopySize-\/>iWidth;                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00583}\mbox{\hyperlink{____arm__2d__paving_8h_aa654722c884a7935459d34cdd0aa1d58}{00583}} \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00584}00584 \textcolor{preprocessor}{        SETUP\_MIRROR(srcWidth);                                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00585}00585 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00586}00586 \textcolor{preprocessor}{        do \{                                                                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00587}00587 \textcolor{preprocessor}{            ARM\_PIX\_SCLTYP(sz)  in;                                             \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00588}00588 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00589}00589 \textcolor{preprocessor}{            in = LOAD(pSrc, offset);                                            \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00590}00590 \textcolor{preprocessor}{            if (true,\#\#\_\_VA\_ARGS\_\_) \{                                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00591}00591 \textcolor{preprocessor}{                PAVING\_OP(pDst++,in);                                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00592}\mbox{\hyperlink{____arm__2d__paving_8h_af723043f5d2bda991ce2a7a8acceb013}{00592}} \textcolor{preprocessor}{            \} else \{                                                            \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00593}00593 \textcolor{preprocessor}{                pDst++;                                                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00594}00594 \textcolor{preprocessor}{            \}                                                                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00595}00595 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00596}00596 \textcolor{preprocessor}{            dstWidth -\/= 1;                                                      \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00597}00597 \textcolor{preprocessor}{        \}                                                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00598}00598 \textcolor{preprocessor}{        while ((int32\_t) dstWidth > 0);                                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00599}00599 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00600}00600 \textcolor{preprocessor}{        pSource += (iSourceStride * DIR);                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00601}\mbox{\hyperlink{____arm__2d__paving_8h_a5a10cafb7c5328f481c3a63ebbab9e72}{00601}} \textcolor{preprocessor}{        pTarget += iTargetStride;                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00602}00602 \textcolor{preprocessor}{    \}                                                                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00603}00603 \textcolor{preprocessor}{\}}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00604}00604 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00605}00605 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00606}00606 \textcolor{comment}{/*============================ TYPES =========================================*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00607}00607 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00608}00608 \textcolor{keyword}{typedef} void    (\mbox{\hyperlink{____arm__2d__paving_8h_a0f7c03ed50077f924a5c12c1e030595f}{arm\_2d\_c8bit\_paving\_2x2}}) (\textcolor{keyword}{const} uint8\_t *, int16\_t, \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00609}00609                                             uint8\_t *, int16\_t, uint16\_t, uint16\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00610}\mbox{\hyperlink{____arm__2d__paving_8h_a56062b43443887f85b722c7742e00296}{00610}} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00611}00611 \textcolor{keyword}{typedef} void    (\mbox{\hyperlink{____arm__2d__paving_8h_ae09f925d684e7cc0693b69bd088db530}{arm\_2d\_c8bit\_paving\_1x2}}) (\textcolor{keyword}{const} uint8\_t *, int16\_t, \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00612}00612                                             uint8\_t *, int16\_t, uint32\_t, uint16\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00613}00613 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00614}00614 \textcolor{keyword}{typedef} void    (\mbox{\hyperlink{____arm__2d__paving_8h_aa888dadd4683eb8c6a00aae23508e4d1}{arm\_2d\_c8bit\_paving\_2x1}}) (\textcolor{keyword}{const} uint8\_t *, int16\_t,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00615}00615                                              \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *, uint8\_t *, int16\_t, uint16\_t, uint16\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00616}00616 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00617}00617 \textcolor{keyword}{typedef} void    (\mbox{\hyperlink{____arm__2d__paving_8h_a1bf0f0c05e8e54b6ee73ade50c9df2e3}{arm\_2d\_c8bit\_paving\_1x1}}) (\textcolor{keyword}{const} uint8\_t *, int16\_t, uint8\_t *, int16\_t,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00618}00618                                            \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *, \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00619}\mbox{\hyperlink{structarm__2d__c8bit__cl__key__paving__fct__t}{00619}} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00620}\mbox{\hyperlink{structarm__2d__c8bit__cl__key__paving__fct__t_a93bff88ed7c09264f4dc59b5a3622e94}{00620}} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00621}\mbox{\hyperlink{structarm__2d__c8bit__cl__key__paving__fct__t_a6576a8d9e5a79b48dd212e2aab0d2cec}{00621}} \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{structarm__2d__c8bit__paving__fct__t}{arm\_2d\_c8bit\_paving\_fct\_t}} \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00622}\mbox{\hyperlink{structarm__2d__c8bit__cl__key__paving__fct__t_ab9b51f327df0fcb1412eb7e07cec6c27}{00622}}     \mbox{\hyperlink{____arm__2d__paving_8h_a0f7c03ed50077f924a5c12c1e030595f}{arm\_2d\_c8bit\_paving\_2x2}}    *\mbox{\hyperlink{structarm__2d__c8bit__paving__fct__t_a7cf4cc9286bb830ab3ca252db1d67978}{pav\_2x2}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00623}\mbox{\hyperlink{structarm__2d__c8bit__cl__key__paving__fct__t_ada93c39ce6193d515a65a3a5eab1085a}{00623}}     \mbox{\hyperlink{____arm__2d__paving_8h_ae09f925d684e7cc0693b69bd088db530}{arm\_2d\_c8bit\_paving\_1x2}}    *\mbox{\hyperlink{structarm__2d__c8bit__paving__fct__t_a1b3c1293a0b256eb2a1d7656372ff25c}{pav\_1x2}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00624}00624     \mbox{\hyperlink{____arm__2d__paving_8h_aa888dadd4683eb8c6a00aae23508e4d1}{arm\_2d\_c8bit\_paving\_2x1}}    *\mbox{\hyperlink{structarm__2d__c8bit__paving__fct__t_a1084f2c3587f00ba8ddf14ee4e1deeb9}{pav\_2x1}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00625}00625     \mbox{\hyperlink{____arm__2d__paving_8h_a1bf0f0c05e8e54b6ee73ade50c9df2e3}{arm\_2d\_c8bit\_paving\_1x1}}    *\mbox{\hyperlink{structarm__2d__c8bit__paving__fct__t_a10f0bdebd1d0bd0df818f956d02b65d6}{pav\_1x1}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00626}00626 \} \mbox{\hyperlink{structarm__2d__c8bit__paving__fct__t}{arm\_2d\_c8bit\_paving\_fct\_t}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00627}\mbox{\hyperlink{____arm__2d__paving_8h_acf0fe5758e6490646d2908da7441dc2a}{00627}} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00628}00628 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00629}00629 \textcolor{keyword}{typedef} void    (\mbox{\hyperlink{____arm__2d__paving_8h_a424a48c75fb19bbe5a3d8d62339ceb46}{arm\_2d\_rgb16\_paving\_2x2}}) (\textcolor{keyword}{const} uint16\_t *, int16\_t, \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00630}00630                                             uint16\_t *, int16\_t, uint16\_t, uint16\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00631}00631 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00632}00632 \textcolor{keyword}{typedef} void    (\mbox{\hyperlink{____arm__2d__paving_8h_a23ee1e003a05a04844cd20be03f55d0b}{arm\_2d\_rgb16\_paving\_1x2}}) (\textcolor{keyword}{const} uint16\_t *, int16\_t, \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00633}00633                                             uint16\_t *, int16\_t, uint32\_t, uint16\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00634}00634 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00635}00635 \textcolor{keyword}{typedef} void    (\mbox{\hyperlink{____arm__2d__paving_8h_a96527a124674600cd2c6317e1ed476ad}{arm\_2d\_rgb16\_paving\_2x1}}) (\textcolor{keyword}{const} uint16\_t *, int16\_t,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00636}\mbox{\hyperlink{____arm__2d__paving_8h_a2a7ccf3ce4f831b59178739d0532f076}{00636}}                                              \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *, uint16\_t *, int16\_t, uint16\_t, uint16\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00637}00637 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00638}00638 \textcolor{keyword}{typedef} void    (\mbox{\hyperlink{____arm__2d__paving_8h_a1e8847150bb67e398d195b6086e09d95}{arm\_2d\_rgb16\_paving\_1x1}}) (\textcolor{keyword}{const} uint16\_t *, int16\_t, uint16\_t *, int16\_t,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00639}00639                                            \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *, \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00640}00640 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00641}00641 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00642}00642 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{structarm__2d__rgb16__paving__fct__t}{arm\_2d\_rgb16\_paving\_fct\_t}} \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00643}00643     \mbox{\hyperlink{____arm__2d__paving_8h_a424a48c75fb19bbe5a3d8d62339ceb46}{arm\_2d\_rgb16\_paving\_2x2}}    *\mbox{\hyperlink{structarm__2d__rgb16__paving__fct__t_ad6a42be3e05a82d13f06a503a8d015f6}{pav\_2x2}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00644}00644     \mbox{\hyperlink{____arm__2d__paving_8h_a23ee1e003a05a04844cd20be03f55d0b}{arm\_2d\_rgb16\_paving\_1x2}}    *\mbox{\hyperlink{structarm__2d__rgb16__paving__fct__t_ab3c49be17bb0e059dd3d58b4eeef8176}{pav\_1x2}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00645}\mbox{\hyperlink{____arm__2d__paving_8h_a17278ebcc30c03a316b8ded470718251}{00645}}     \mbox{\hyperlink{____arm__2d__paving_8h_a96527a124674600cd2c6317e1ed476ad}{arm\_2d\_rgb16\_paving\_2x1}}    *\mbox{\hyperlink{structarm__2d__rgb16__paving__fct__t_ae0e9688e1eaa2eaf6c2a8d54eea33f85}{pav\_2x1}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00646}00646     \mbox{\hyperlink{____arm__2d__paving_8h_a1e8847150bb67e398d195b6086e09d95}{arm\_2d\_rgb16\_paving\_1x1}}    *\mbox{\hyperlink{structarm__2d__rgb16__paving__fct__t_af468b22134791acc7fef7ed1ca51955e}{pav\_1x1}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00647}00647 \} \mbox{\hyperlink{structarm__2d__rgb16__paving__fct__t}{arm\_2d\_rgb16\_paving\_fct\_t}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00648}00648 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00649}00649 \textcolor{keyword}{typedef} void    (\mbox{\hyperlink{____arm__2d__paving_8h_abe1a7936fe788f34a3fbebb5146d73be}{arm\_2d\_rgb32\_paving\_2x2}}) (\textcolor{keyword}{const} uint32\_t *, int16\_t, \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00650}00650                                             uint32\_t *, int16\_t, uint16\_t, uint16\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00651}00651 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00652}00652 \textcolor{keyword}{typedef} void    (\mbox{\hyperlink{____arm__2d__paving_8h_a2fc2b44173abbf24de4d4b178b27ce8d}{arm\_2d\_rgb32\_paving\_1x2}}) (\textcolor{keyword}{const} uint32\_t *, int16\_t, \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00653}00653                                             uint32\_t *, int16\_t, uint32\_t, uint16\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00654}\mbox{\hyperlink{____arm__2d__paving_8h_aa559e477063e175a82bcff1c35f64ee4}{00654}} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00655}00655 \textcolor{keyword}{typedef} void    (\mbox{\hyperlink{____arm__2d__paving_8h_adb84bd4bfa5c8c2e0340510cf53d2b7a}{arm\_2d\_rgb32\_paving\_2x1}}) (\textcolor{keyword}{const} uint32\_t *, int16\_t,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00656}00656                                              \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *, uint32\_t *, int16\_t, uint16\_t, uint16\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00657}00657 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00658}00658 \textcolor{keyword}{typedef} void    (\mbox{\hyperlink{____arm__2d__paving_8h_a2fa5503e39d2f7eaae85a4d8e9931b7f}{arm\_2d\_rgb32\_paving\_1x1}}) (\textcolor{keyword}{const} uint32\_t *, int16\_t, uint32\_t *, int16\_t,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00659}00659                                            \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *, \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00660}00660 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00661}00661 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00662}00662 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{structarm__2d__rgb32__paving__fct__t}{arm\_2d\_rgb32\_paving\_fct\_t}} \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00663}\mbox{\hyperlink{structarm__2d__rgb16__cl__key__paving__fct__t}{00663}}     \mbox{\hyperlink{____arm__2d__paving_8h_abe1a7936fe788f34a3fbebb5146d73be}{arm\_2d\_rgb32\_paving\_2x2}}    *\mbox{\hyperlink{structarm__2d__rgb32__paving__fct__t_aead9930e9ef92f920fbccb8bea4500d6}{pav\_2x2}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00664}\mbox{\hyperlink{structarm__2d__rgb16__cl__key__paving__fct__t_a5d309b53ce153fcbe56400c322925984}{00664}}     \mbox{\hyperlink{____arm__2d__paving_8h_a2fc2b44173abbf24de4d4b178b27ce8d}{arm\_2d\_rgb32\_paving\_1x2}}    *\mbox{\hyperlink{structarm__2d__rgb32__paving__fct__t_a1d36c6cde6a68bce8d8de840ba1d4a85}{pav\_1x2}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00665}\mbox{\hyperlink{structarm__2d__rgb16__cl__key__paving__fct__t_a11e01e8d5d1ed59b9124dc7a17ba7949}{00665}}     \mbox{\hyperlink{____arm__2d__paving_8h_adb84bd4bfa5c8c2e0340510cf53d2b7a}{arm\_2d\_rgb32\_paving\_2x1}}    *\mbox{\hyperlink{structarm__2d__rgb32__paving__fct__t_ad8a1f20d3a0a92bcf63f49932429d20b}{pav\_2x1}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00666}\mbox{\hyperlink{structarm__2d__rgb16__cl__key__paving__fct__t_a81f13f38ec0c2969e0f5a2f113191278}{00666}}     \mbox{\hyperlink{____arm__2d__paving_8h_a2fa5503e39d2f7eaae85a4d8e9931b7f}{arm\_2d\_rgb32\_paving\_1x1}}    *\mbox{\hyperlink{structarm__2d__rgb32__paving__fct__t_aa0ea091df0b884854eef2a7b94c56968}{pav\_1x1}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00667}\mbox{\hyperlink{structarm__2d__rgb16__cl__key__paving__fct__t_a942a62f2a0eb3686a4ee2c0d0018f848}{00667}} \} \mbox{\hyperlink{structarm__2d__rgb32__paving__fct__t}{arm\_2d\_rgb32\_paving\_fct\_t}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00668}00668 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00669}00669 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00670}00670 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00671}00671 \textcolor{keyword}{typedef} void    (\mbox{\hyperlink{____arm__2d__paving_8h_aa654722c884a7935459d34cdd0aa1d58}{arm\_2d\_c8bit\_cl\_key\_paving\_2x2}})(   \textcolor{keyword}{const} uint8\_t * \_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00672}\mbox{\hyperlink{____arm__2d__paving_8h_aaffdb50efb8ae4eb27e8e6bf57233df8}{00672}}                                                     int16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00673}00673                                                     \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00674}00674                                                     uint8\_t * \_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00675}00675                                                     int16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00676}00676                                                     uint16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00677}00677                                                     uint16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00678}00678                                                     uint8\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00679}00679 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00680}00680 \textcolor{keyword}{typedef} void    (\mbox{\hyperlink{____arm__2d__paving_8h_af723043f5d2bda991ce2a7a8acceb013}{arm\_2d\_c8bit\_cl\_key\_paving\_1x2}}) (  \textcolor{keyword}{const} uint8\_t *\_\_RESTRICT , }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00681}\mbox{\hyperlink{____arm__2d__paving_8h_aa17579f9d38df70c898fd4eb5e058f2c}{00681}}                                                     int16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00682}00682                                                     \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *\_\_RESTRICT,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00683}00683                                                     uint8\_t *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00684}00684                                                     int16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00685}00685                                                     uint32\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00686}00686                                                     uint16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00687}00687                                                     uint8\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00688}00688 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00689}00689 \textcolor{keyword}{typedef} void    (\mbox{\hyperlink{____arm__2d__paving_8h_a5a10cafb7c5328f481c3a63ebbab9e72}{arm\_2d\_c8bit\_cl\_key\_paving\_2x1}}) (  \textcolor{keyword}{const} uint8\_t *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00690}\mbox{\hyperlink{____arm__2d__paving_8h_a16eb11d20a2b34dbeeaffb41b8d30c83}{00690}}                                                     int16\_t,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00691}00691                                                     \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00692}00692                                                     uint8\_t *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00693}00693                                                     int16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00694}00694                                                     uint16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00695}00695                                                     uint16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00696}00696                                                     uint8\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00697}00697 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00698}00698 \textcolor{keyword}{typedef} void    (\mbox{\hyperlink{____arm__2d__paving_8h_a56062b43443887f85b722c7742e00296}{arm\_2d\_c8bit\_cl\_key\_paving\_1x1}}) (  \textcolor{keyword}{const} uint8\_t *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00699}\mbox{\hyperlink{____arm__2d__paving_8h_aab88353f0e4afe72fd0659449a7dc086}{00699}}                                                     int16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00700}00700                                                     uint8\_t *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00701}00701                                                     int16\_t,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00702}00702                                                     \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00703}00703                                                     \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00704}00704                                                     uint8\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00705}00705 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00706}00706 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00707}00707 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{structarm__2d__c8bit__cl__key__paving__fct__t}{arm\_2d\_c8bit\_cl\_key\_paving\_fct\_t}} \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00708}\mbox{\hyperlink{structarm__2d__rgb32__cl__key__paving__fct__t}{00708}}     \mbox{\hyperlink{____arm__2d__paving_8h_aa654722c884a7935459d34cdd0aa1d58}{arm\_2d\_c8bit\_cl\_key\_paving\_2x2}}    *\mbox{\hyperlink{structarm__2d__c8bit__cl__key__paving__fct__t_a93bff88ed7c09264f4dc59b5a3622e94}{pav\_2x2}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00709}\mbox{\hyperlink{structarm__2d__rgb32__cl__key__paving__fct__t_a0c1fef82da7d785f8e42101188091562}{00709}}     \mbox{\hyperlink{____arm__2d__paving_8h_af723043f5d2bda991ce2a7a8acceb013}{arm\_2d\_c8bit\_cl\_key\_paving\_1x2}}    *\mbox{\hyperlink{structarm__2d__c8bit__cl__key__paving__fct__t_a6576a8d9e5a79b48dd212e2aab0d2cec}{pav\_1x2}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00710}\mbox{\hyperlink{structarm__2d__rgb32__cl__key__paving__fct__t_abae6c54dfc1e2b9d9096f46c0eff7ad8}{00710}}     \mbox{\hyperlink{____arm__2d__paving_8h_a5a10cafb7c5328f481c3a63ebbab9e72}{arm\_2d\_c8bit\_cl\_key\_paving\_2x1}}    *\mbox{\hyperlink{structarm__2d__c8bit__cl__key__paving__fct__t_ab9b51f327df0fcb1412eb7e07cec6c27}{pav\_2x1}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00711}\mbox{\hyperlink{structarm__2d__rgb32__cl__key__paving__fct__t_a6052cc819829fe4c5bcd11a5845207e3}{00711}}     \mbox{\hyperlink{____arm__2d__paving_8h_a56062b43443887f85b722c7742e00296}{arm\_2d\_c8bit\_cl\_key\_paving\_1x1}}    *\mbox{\hyperlink{structarm__2d__c8bit__cl__key__paving__fct__t_ada93c39ce6193d515a65a3a5eab1085a}{pav\_1x1}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00712}\mbox{\hyperlink{structarm__2d__rgb32__cl__key__paving__fct__t_a68da22453a4eb9ded6b2d4b832a658b1}{00712}} \} \mbox{\hyperlink{structarm__2d__c8bit__cl__key__paving__fct__t}{arm\_2d\_c8bit\_cl\_key\_paving\_fct\_t}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00713}00713 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00714}00714 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00715}00715 \textcolor{keyword}{typedef} void    (\mbox{\hyperlink{____arm__2d__paving_8h_acf0fe5758e6490646d2908da7441dc2a}{arm\_2d\_rgb16\_cl\_key\_paving\_2x2}})(   \textcolor{keyword}{const} uint16\_t * \_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00716}00716                                                     int16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00717}00717                                                     \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00718}00718                                                     uint16\_t * \_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00719}00719                                                     int16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00720}00720                                                     uint16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00721}00721                                                     uint16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00722}00722                                                     uint16\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00723}00723 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00724}00724 \textcolor{keyword}{typedef} void    (\mbox{\hyperlink{____arm__2d__paving_8h_a2a7ccf3ce4f831b59178739d0532f076}{arm\_2d\_rgb16\_cl\_key\_paving\_1x2}}) (  \textcolor{keyword}{const} uint16\_t *\_\_RESTRICT , }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00725}00725                                                     int16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00726}00726                                                     \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *\_\_RESTRICT,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00727}00727                                                     uint16\_t *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00728}00728                                                     int16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00729}00729                                                     uint32\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00730}00730                                                     uint16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00731}00731                                                     uint16\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00732}00732 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00733}00733 \textcolor{keyword}{typedef} void    (\mbox{\hyperlink{____arm__2d__paving_8h_a17278ebcc30c03a316b8ded470718251}{arm\_2d\_rgb16\_cl\_key\_paving\_2x1}}) (  \textcolor{keyword}{const} uint16\_t *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00734}00734                                                     int16\_t,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00735}00735                                                     \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00736}00736                                                     uint16\_t *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00737}00737                                                     int16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00738}00738                                                     uint16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00739}00739                                                     uint16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00740}00740                                                     uint16\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00741}00741 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00742}00742 \textcolor{keyword}{typedef} void    (\mbox{\hyperlink{____arm__2d__paving_8h_aa559e477063e175a82bcff1c35f64ee4}{arm\_2d\_rgb16\_cl\_key\_paving\_1x1}}) (  \textcolor{keyword}{const} uint16\_t *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00743}00743                                                     int16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00744}00744                                                     uint16\_t *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00745}00745                                                     int16\_t,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00746}00746                                                     \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00747}00747                                                     \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00748}00748                                                     uint16\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00749}00749 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00750}00750 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00751}00751 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{structarm__2d__rgb16__cl__key__paving__fct__t}{arm\_2d\_rgb16\_cl\_key\_paving\_fct\_t}} \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00752}00752     \mbox{\hyperlink{____arm__2d__paving_8h_acf0fe5758e6490646d2908da7441dc2a}{arm\_2d\_rgb16\_cl\_key\_paving\_2x2}}    *\mbox{\hyperlink{structarm__2d__rgb16__cl__key__paving__fct__t_a5d309b53ce153fcbe56400c322925984}{pav\_2x2}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00753}00753     \mbox{\hyperlink{____arm__2d__paving_8h_a2a7ccf3ce4f831b59178739d0532f076}{arm\_2d\_rgb16\_cl\_key\_paving\_1x2}}    *\mbox{\hyperlink{structarm__2d__rgb16__cl__key__paving__fct__t_a11e01e8d5d1ed59b9124dc7a17ba7949}{pav\_1x2}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00754}00754     \mbox{\hyperlink{____arm__2d__paving_8h_a17278ebcc30c03a316b8ded470718251}{arm\_2d\_rgb16\_cl\_key\_paving\_2x1}}    *\mbox{\hyperlink{structarm__2d__rgb16__cl__key__paving__fct__t_a81f13f38ec0c2969e0f5a2f113191278}{pav\_2x1}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00755}00755     \mbox{\hyperlink{____arm__2d__paving_8h_aa559e477063e175a82bcff1c35f64ee4}{arm\_2d\_rgb16\_cl\_key\_paving\_1x1}}    *\mbox{\hyperlink{structarm__2d__rgb16__cl__key__paving__fct__t_a942a62f2a0eb3686a4ee2c0d0018f848}{pav\_1x1}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00756}00756 \} \mbox{\hyperlink{structarm__2d__rgb16__cl__key__paving__fct__t}{arm\_2d\_rgb16\_cl\_key\_paving\_fct\_t}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00757}00757 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00758}00758 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00759}00759 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00760}00760 \textcolor{keyword}{typedef} void    (\mbox{\hyperlink{____arm__2d__paving_8h_aaffdb50efb8ae4eb27e8e6bf57233df8}{arm\_2d\_rgb32\_cl\_key\_paving\_2x2}})(   \textcolor{keyword}{const} uint32\_t *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00761}00761                                                     int16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00762}00762                                                     \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *\_\_RESTRICT,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00763}00763                                                     uint32\_t *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00764}00764                                                     int16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00765}00765                                                     uint16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00766}00766                                                     uint16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00767}00767                                                     uint32\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00768}00768 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00769}00769 \textcolor{keyword}{typedef} void    (\mbox{\hyperlink{____arm__2d__paving_8h_aa17579f9d38df70c898fd4eb5e058f2c}{arm\_2d\_rgb32\_cl\_key\_paving\_1x2}}) (  \textcolor{keyword}{const} uint32\_t *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00770}00770                                                     int16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00771}00771                                                     \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *\_\_RESTRICT,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00772}00772                                                     uint32\_t *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00773}00773                                                     int16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00774}00774                                                     uint32\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00775}00775                                                     uint16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00776}00776                                                     uint32\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00777}00777 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00778}00778 \textcolor{keyword}{typedef} void    (\mbox{\hyperlink{____arm__2d__paving_8h_a16eb11d20a2b34dbeeaffb41b8d30c83}{arm\_2d\_rgb32\_cl\_key\_paving\_2x1}}) (  \textcolor{keyword}{const} uint32\_t *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00779}00779                                                     int16\_t,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00780}00780                                                     \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00781}00781                                                     uint32\_t *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00782}00782                                                     int16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00783}00783                                                     uint16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00784}00784                                                     uint16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00785}00785                                                     uint32\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00786}00786 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00787}00787 \textcolor{keyword}{typedef} void    (\mbox{\hyperlink{____arm__2d__paving_8h_aab88353f0e4afe72fd0659449a7dc086}{arm\_2d\_rgb32\_cl\_key\_paving\_1x1}}) (  \textcolor{keyword}{const} uint32\_t *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00788}00788                                                     int16\_t, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00789}00789                                                     uint32\_t *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00790}00790                                                     int16\_t,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00791}00791                                                     \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00792}00792                                                     \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *\_\_RESTRICT, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00793}00793                                                     uint32\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00794}00794 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00795}00795 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00796}00796 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{structarm__2d__rgb32__cl__key__paving__fct__t}{arm\_2d\_rgb32\_cl\_key\_paving\_fct\_t}} \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00797}00797     \mbox{\hyperlink{____arm__2d__paving_8h_aaffdb50efb8ae4eb27e8e6bf57233df8}{arm\_2d\_rgb32\_cl\_key\_paving\_2x2}}    *\mbox{\hyperlink{structarm__2d__rgb32__cl__key__paving__fct__t_a0c1fef82da7d785f8e42101188091562}{pav\_2x2}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00798}00798     \mbox{\hyperlink{____arm__2d__paving_8h_aa17579f9d38df70c898fd4eb5e058f2c}{arm\_2d\_rgb32\_cl\_key\_paving\_1x2}}    *\mbox{\hyperlink{structarm__2d__rgb32__cl__key__paving__fct__t_abae6c54dfc1e2b9d9096f46c0eff7ad8}{pav\_1x2}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00799}00799     \mbox{\hyperlink{____arm__2d__paving_8h_a16eb11d20a2b34dbeeaffb41b8d30c83}{arm\_2d\_rgb32\_cl\_key\_paving\_2x1}}    *\mbox{\hyperlink{structarm__2d__rgb32__cl__key__paving__fct__t_a6052cc819829fe4c5bcd11a5845207e3}{pav\_2x1}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00800}00800     \mbox{\hyperlink{____arm__2d__paving_8h_aab88353f0e4afe72fd0659449a7dc086}{arm\_2d\_rgb32\_cl\_key\_paving\_1x1}}    *\mbox{\hyperlink{structarm__2d__rgb32__cl__key__paving__fct__t_a68da22453a4eb9ded6b2d4b832a658b1}{pav\_1x1}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00801}00801 \} \mbox{\hyperlink{structarm__2d__rgb32__cl__key__paving__fct__t}{arm\_2d\_rgb32\_cl\_key\_paving\_fct\_t}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00802}00802 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00803}00803 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00804}00804 \textcolor{comment}{/*============================ GLOBAL VARIABLES ==============================*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00805}00805 \textcolor{comment}{/*============================ PROTOTYPES ====================================*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00806}00806 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00807}00807 \textcolor{preprocessor}{\#if defined(\_\_clang\_\_)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00808}00808 \textcolor{preprocessor}{\#   pragma clang diagnostic pop}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00809}00809 \textcolor{preprocessor}{\#elif \_\_IS\_COMPILER\_GCC\_\_}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00810}00810 \textcolor{preprocessor}{\#   pragma GCC diagnostic pop}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00811}00811 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00812}00812 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00813}00813 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00814}00814 \textcolor{preprocessor}{\#ifdef   \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00815}00815 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00816}00816 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00817}00817 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__paving_8h_source_l00818}00818 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,1176 @@
+\hypertarget{arm__2d__alpha__blending_8h}{}\doxysection{arm\+\_\+2d\+\_\+alpha\+\_\+blending.\+h File Reference}
+\label{arm__2d__alpha__blending_8h}\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+{\ttfamily \#include \char`\"{}arm\+\_\+2d\+\_\+types.\+h\char`\"{}}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structarm__2d__op__alpha__t}{arm\+\_\+2d\+\_\+op\+\_\+alpha\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structarm__2d__op__alpha__cl__key__t}{arm\+\_\+2d\+\_\+op\+\_\+alpha\+\_\+cl\+\_\+key\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structarm__2d__op__fill__cl__msk__t}{arm\+\_\+2d\+\_\+op\+\_\+fill\+\_\+cl\+\_\+msk\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structarm__2d__op__alpha__fill__cl__msk__opc__t}{arm\+\_\+2d\+\_\+op\+\_\+alpha\+\_\+fill\+\_\+cl\+\_\+msk\+\_\+opc\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structarm__2d__op__fill__cl__opc__t}{arm\+\_\+2d\+\_\+op\+\_\+fill\+\_\+cl\+\_\+opc\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_ad64e4ded2daa05f2f00a1de6e736aece}{arm\+\_\+2d\+\_\+gray8\+\_\+alpha\+\_\+blending}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_aff29b3e4e7a5927253def8137a5dddf4}{arm\+\_\+2d\+\_\+rgb565\+\_\+alpha\+\_\+blending}}(\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a0f35f78bd36346b630f3797ba356a6a9}{arm\+\_\+2d\+\_\+rgb888\+\_\+alpha\+\_\+blending}}(\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a67f88a59aafda342a340e478eda97111}{arm\+\_\+2d\+\_\+cccn888\+\_\+alpha\+\_\+blending}}(\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a8af46133363d7b10a869da2a99f8a6d0}{arm\+\_\+2d\+\_\+gray8\+\_\+fill\+\_\+colour\+\_\+with\+\_\+alpha}}( \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+COLOUR,  \+\_\+\+\_\+\+ALPHA)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_ad985535cda1a86d80f62aa85570298ee}{arm\+\_\+2d\+\_\+rgb565\+\_\+fill\+\_\+colour\+\_\+with\+\_\+alpha}}( \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+COLOUR,  \+\_\+\+\_\+\+ALPHA)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a53a94576fcaec05d290cf2d59d70089c}{arm\+\_\+2d\+\_\+rgb565\+\_\+fill\+\_\+colour\+\_\+with\+\_\+opacity}}( \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+COLOUR,  \+\_\+\+\_\+\+ALPHA)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a0763c935422b0696048b2cfebbf8386f}{arm\+\_\+2d\+\_\+rgb888\+\_\+fill\+\_\+colour\+\_\+with\+\_\+alpha}}( \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+COLOUR,  \+\_\+\+\_\+\+ALPHA)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_ae0ae4d4843ce4e38bcd5bf278d735dfd}{arm\+\_\+2d\+\_\+rgb888\+\_\+fill\+\_\+colour\+\_\+with\+\_\+opacity}}( \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+COLOUR,  \+\_\+\+\_\+\+ALPHA)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a82b0fcf60de7e1fa0c98ad738e5be92e}{arm\+\_\+2d\+\_\+cccn888\+\_\+fill\+\_\+colour\+\_\+with\+\_\+alpha}}( \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+COLOUR,  \+\_\+\+\_\+\+ALPHA)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a462c826a465f49398a2cfee555a9ab86}{arm\+\_\+2d\+\_\+cccn888\+\_\+fill\+\_\+colour\+\_\+with\+\_\+opacity}}( \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+COLOUR,  \+\_\+\+\_\+\+ALPHA)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_ab8e9cb8e4f6b7463ab60b73245b4fe70}{arm\+\_\+2d\+\_\+gray8\+\_\+fill\+\_\+colour\+\_\+with\+\_\+alpha\+\_\+mask}}( \+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  \+\_\+\+\_\+\+COLOUR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_aa553b555586bee7b83383f7c0c3e2b68}{arm\+\_\+2d\+\_\+gray8\+\_\+fill\+\_\+colour\+\_\+with\+\_\+mask}}( \+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  \+\_\+\+\_\+\+COLOUR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a3566451bcbea7534524447bc7f00d296}{arm\+\_\+2d\+\_\+rgb565\+\_\+fill\+\_\+colour\+\_\+with\+\_\+alpha\+\_\+mask}}( \+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  \+\_\+\+\_\+\+COLOUR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a3bee3c108ab93bccbbec99eb5bc24b6e}{arm\+\_\+2d\+\_\+rgb565\+\_\+fill\+\_\+colour\+\_\+with\+\_\+mask}}( \+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  \+\_\+\+\_\+\+COLOUR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_ab25d092f414674b7a6759b49086ae955}{arm\+\_\+2d\+\_\+rgb888\+\_\+fill\+\_\+colour\+\_\+with\+\_\+alpha\+\_\+mask}}( \+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  \+\_\+\+\_\+\+COLOUR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a47cd979e043f9ff0acf4799f2fa7362e}{arm\+\_\+2d\+\_\+rgb888\+\_\+fill\+\_\+colour\+\_\+with\+\_\+mask}}( \+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  \+\_\+\+\_\+\+COLOUR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_af3c50a920b7ebccc808e26da956ed709}{arm\+\_\+2d\+\_\+cccn888\+\_\+fill\+\_\+colour\+\_\+with\+\_\+alpha\+\_\+mask}}( \+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  \+\_\+\+\_\+\+COLOUR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a5dacdcd7290160c962542952fc37f782}{arm\+\_\+2d\+\_\+cccn888\+\_\+fill\+\_\+colour\+\_\+with\+\_\+mask}}( \+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  \+\_\+\+\_\+\+COLOUR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a4ec3e2f2faea8354f0bafa1b96c9d56a}{arm\+\_\+2d\+\_\+gray8\+\_\+fill\+\_\+colour\+\_\+with\+\_\+alpha\+\_\+mask\+\_\+and\+\_\+opacity}}( \+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  \+\_\+\+\_\+\+COLOUR,  \+\_\+\+\_\+\+OPACITY)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_ad7fb810798de3fba42f88491cf4dfa6e}{arm\+\_\+2d\+\_\+gray8\+\_\+fill\+\_\+colour\+\_\+with\+\_\+mask\+\_\+and\+\_\+opacity}}( \+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  \+\_\+\+\_\+\+COLOUR,  \+\_\+\+\_\+\+OPACITY)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a1bc9e2e52ec5ae9b889bcc1d2b78aada}{arm\+\_\+2d\+\_\+rgb565\+\_\+fill\+\_\+colour\+\_\+with\+\_\+alpha\+\_\+mask\+\_\+and\+\_\+opacity}}( \+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  \+\_\+\+\_\+\+COLOUR,  \+\_\+\+\_\+\+OPACITY)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_ab66ae063b7da25adc82488b006fa5bf1}{arm\+\_\+2d\+\_\+rgb565\+\_\+fill\+\_\+colour\+\_\+with\+\_\+mask\+\_\+and\+\_\+opacity}}( \+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  \+\_\+\+\_\+\+COLOUR,  \+\_\+\+\_\+\+OPACITY)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a4c26b48c56cec90959ecd0251f734229}{arm\+\_\+2d\+\_\+rgb888\+\_\+fill\+\_\+colour\+\_\+with\+\_\+alpha\+\_\+mask\+\_\+and\+\_\+opacity}}( \+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  \+\_\+\+\_\+\+COLOUR,  \+\_\+\+\_\+\+OPACITY)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_abba400f1c11bcfa0afc8535d49f7614d}{arm\+\_\+2d\+\_\+rgb888\+\_\+fill\+\_\+colour\+\_\+with\+\_\+mask\+\_\+and\+\_\+opacity}}( \+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  \+\_\+\+\_\+\+COLOUR,  \+\_\+\+\_\+\+OPACITY)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a9bbcc112bb518c20431e62cb558a169f}{arm\+\_\+2d\+\_\+cccn888\+\_\+fill\+\_\+colour\+\_\+with\+\_\+alpha\+\_\+mask\+\_\+and\+\_\+opacity}}( \+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  \+\_\+\+\_\+\+COLOUR,  \+\_\+\+\_\+\+OPACITY)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a35008868e9897405a0632680283dd8b5}{arm\+\_\+2d\+\_\+cccn888\+\_\+fill\+\_\+colour\+\_\+with\+\_\+mask\+\_\+and\+\_\+opacity}}( \+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  \+\_\+\+\_\+\+COLOUR,  \+\_\+\+\_\+\+OPACITY)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_aaf7aa25738c4d83b14c961cc938361ca}{arm\+\_\+2d\+\_\+gray8\+\_\+alpha\+\_\+blending\+\_\+with\+\_\+colour\+\_\+keying}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA,  \+\_\+\+\_\+\+COLOUR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a0b84ba8653056613923742d330d7ecbb}{arm\+\_\+2d\+\_\+gray8\+\_\+alpha\+\_\+blending\+\_\+with\+\_\+colour\+\_\+masking}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA,  \+\_\+\+\_\+\+COLOUR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a7b626a62502d24784df0fed128e3f0c1}{arm\+\_\+2d\+\_\+rgb565\+\_\+alpha\+\_\+blending\+\_\+with\+\_\+colour\+\_\+keying}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA,  \+\_\+\+\_\+\+COLOUR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a3055658b578e8a7ddc89b1ca482f3c4c}{arm\+\_\+2d\+\_\+rgb565\+\_\+alpha\+\_\+blending\+\_\+with\+\_\+colour\+\_\+masking}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA,  \+\_\+\+\_\+\+COLOUR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a8b671b603210454f5eee2a65ada92b05}{arm\+\_\+2d\+\_\+rgb888\+\_\+alpha\+\_\+blending\+\_\+with\+\_\+colour\+\_\+masking}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA,  \+\_\+\+\_\+\+COLOUR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a9339a032aa2f5cbc25fb2f84f121b123}{arm\+\_\+2d\+\_\+rgb888\+\_\+alpha\+\_\+blending\+\_\+with\+\_\+colour\+\_\+keying}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA,  \+\_\+\+\_\+\+COLOUR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a03bfeab92fd5d2e09be3f94ee34399c4}{arm\+\_\+2d\+\_\+cccn888\+\_\+alpha\+\_\+blending\+\_\+with\+\_\+colour\+\_\+masking}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA,  \+\_\+\+\_\+\+COLOUR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a29134f516d2c67cd083549c26fa514e5}{arm\+\_\+2d\+\_\+cccn888\+\_\+alpha\+\_\+blending\+\_\+with\+\_\+colour\+\_\+keying}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+ALPHA,  \+\_\+\+\_\+\+COLOUR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_ab2c790df3a1f448b3f93d79a6d255140}{arm\+\_\+2d\+\_\+gray8\+\_\+tile\+\_\+copy\+\_\+with\+\_\+masks}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+SRC\+\_\+\+MSK\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+MSK\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION,  \+\_\+\+\_\+\+MODE)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_ac5731e6d198c1abfbec6d225ac1f7a5b}{arm\+\_\+2d\+\_\+gray8\+\_\+tile\+\_\+copy\+\_\+with\+\_\+alpha\+\_\+masks}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+SRC\+\_\+\+MSK\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+MSK\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION,  \+\_\+\+\_\+\+MODE)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_add68c1a154d59607608c1e1840a45dcb}{arm\+\_\+2d\+\_\+rgb565\+\_\+tile\+\_\+copy\+\_\+with\+\_\+masks}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+SRC\+\_\+\+MSK\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+MSK\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION,  \+\_\+\+\_\+\+MODE)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a198bf7a96ad5f2222b560ec552a366e6}{arm\+\_\+2d\+\_\+rgb565\+\_\+tile\+\_\+copy\+\_\+with\+\_\+alpha\+\_\+masks}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+SRC\+\_\+\+MSK\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+MSK\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION,  \+\_\+\+\_\+\+MODE)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a6019e69ca01406f7350f72867f21fd0a}{arm\+\_\+2d\+\_\+cccn888\+\_\+tile\+\_\+copy\+\_\+with\+\_\+masks}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+SRC\+\_\+\+MSK\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+MSK\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION,  \+\_\+\+\_\+\+MODE)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_acc3f8bc63f33b031ec604d43fe9dfc85}{arm\+\_\+2d\+\_\+cccn888\+\_\+tile\+\_\+copy\+\_\+with\+\_\+alpha\+\_\+masks}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+SRC\+\_\+\+MSK\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+MSK\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION,  \+\_\+\+\_\+\+MODE)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_ad3d4bc4234e284e0ef602fededb51825}{arm\+\_\+2d\+\_\+rgb888\+\_\+tile\+\_\+copy\+\_\+with\+\_\+masks}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+SRC\+\_\+\+MSK\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+MSK\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION,  \+\_\+\+\_\+\+MODE)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a02ada32264df2b07f010c642906cbbbf}{arm\+\_\+2d\+\_\+rgb888\+\_\+tile\+\_\+copy\+\_\+with\+\_\+alpha\+\_\+mask}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+SRC\+\_\+\+MSK\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+MSK\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION,  \+\_\+\+\_\+\+MODE)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a9ea6b9d2d8b88962d85bd5f48447b8a6}{arm\+\_\+2d\+\_\+gray8\+\_\+tile\+\_\+copy\+\_\+with\+\_\+src\+\_\+mask}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+SRC\+\_\+\+MSK\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION,  \+\_\+\+\_\+\+MODE)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_aff98713582045da1a8b5eac04f745263}{arm\+\_\+2d\+\_\+rgb565\+\_\+tile\+\_\+copy\+\_\+with\+\_\+src\+\_\+mask}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+SRC\+\_\+\+MSK\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION,  \+\_\+\+\_\+\+MODE)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_afa5c0d47af052846c159f9e127bfb26c}{arm\+\_\+2d\+\_\+cccn888\+\_\+tile\+\_\+copy\+\_\+with\+\_\+src\+\_\+mask}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+SRC\+\_\+\+MSK\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION,  \+\_\+\+\_\+\+MODE)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_ae8e537ec191008c74f16bdb5f2d86724}{arm\+\_\+2d\+\_\+rgb888\+\_\+tile\+\_\+copy\+\_\+with\+\_\+src\+\_\+mask}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+SRC\+\_\+\+MSK\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION,  \+\_\+\+\_\+\+MODE)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_aa31d310d6dedd0ce5c48613aa17e22aa}{arm\+\_\+2d\+\_\+gray8\+\_\+tile\+\_\+copy\+\_\+with\+\_\+des\+\_\+mask}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+MSK\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION,  \+\_\+\+\_\+\+MODE)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a08d30ffe5c87ec1fd2ac2ab24f30068a}{arm\+\_\+2d\+\_\+rgb565\+\_\+tile\+\_\+copy\+\_\+with\+\_\+des\+\_\+mask}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+MSK\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION,  \+\_\+\+\_\+\+MODE)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_aad8e1bfd25dde1cf872f4730a4a2e357}{arm\+\_\+2d\+\_\+cccn888\+\_\+tile\+\_\+copy\+\_\+with\+\_\+des\+\_\+mask}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+MSK\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION,  \+\_\+\+\_\+\+MODE)
+\item 
+\#define \mbox{\hyperlink{arm__2d__alpha__blending_8h_a59cfde3fe63472ec8b49a08ebe39c6c8}{arm\+\_\+2d\+\_\+rgb888\+\_\+tile\+\_\+copy\+\_\+with\+\_\+des\+\_\+mask}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+MSK\+\_\+\+ADDR,  \+\_\+\+\_\+\+REGION,  \+\_\+\+\_\+\+MODE)
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef \mbox{\hyperlink{structarm__2d__op__src__msk__t}{arm\+\_\+2d\+\_\+op\+\_\+src\+\_\+msk\+\_\+t}} \mbox{\hyperlink{arm__2d__alpha__blending_8h_a8d81a82d787906c56381e84f8944969f}{arm\+\_\+2d\+\_\+op\+\_\+cp\+\_\+msk\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} $\ast$ \mbox{\hyperlink{arm__2d__alpha__blending_8h_a3993bb94d25fad259236f86ef3034fe4}{pt\+Source}}
+\item 
+const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} $\ast$ \mbox{\hyperlink{arm__2d__alpha__blending_8h_a46ba63bb042a2ef13c3295664d0a8a00}{pt\+Target}}
+\item 
+const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} $\ast$ \mbox{\hyperlink{arm__2d__alpha__blending_8h_a25b1be65ad65273d0a8df4d7822bb37c}{pt\+Region}}
+\item 
+const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} uint\+\_\+fast8\+\_\+t \mbox{\hyperlink{arm__2d__alpha__blending_8h_a3b6c1f4bc2dffba78739ca1206b108dd}{ch\+Ratio}}
+\item 
+const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} uint8\+\_\+t \mbox{\hyperlink{arm__2d__alpha__blending_8h_a3dfdff9257dda1432d9fbefa251473c3}{ch\+Colour}}
+\item 
+const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} \mbox{\hyperlink{unionarm__2d__color__rgb565__t}{arm\+\_\+2d\+\_\+color\+\_\+rgb565\+\_\+t}} \mbox{\hyperlink{arm__2d__alpha__blending_8h_a913e40ba00cedf57a515027786cac9d1}{t\+Colour}}
+\item 
+const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} $\ast$ \mbox{\hyperlink{arm__2d__alpha__blending_8h_a0d9d33c2c11dfa67110e0711cb367906}{pt\+Alpha}}
+\item 
+const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} uint8\+\_\+t uint8\+\_\+t \mbox{\hyperlink{arm__2d__alpha__blending_8h_ab025c7acb6920ba4cf780b0bc2a715d2}{ch\+Opacity}}
+\item 
+const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} $\ast$ \mbox{\hyperlink{arm__2d__alpha__blending_8h_a94acddd53ee4543d4c0ddf34abd52f05}{pt\+Src\+Mask}}
+\item 
+const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} $\ast$ \mbox{\hyperlink{arm__2d__alpha__blending_8h_aeeb5bc6cd024fba5ac2bff8fe0ab939a}{pt\+Des\+Mask}}
+\item 
+const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} uint32\+\_\+t \mbox{\hyperlink{arm__2d__alpha__blending_8h_a2e5a85ec501d28af73a7b6d43828b7f0}{w\+Mode}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a67f88a59aafda342a340e478eda97111}\label{arm__2d__alpha__blending_8h_a67f88a59aafda342a340e478eda97111}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_cccn888\_alpha\_blending@{arm\_2d\_cccn888\_alpha\_blending}}
+\index{arm\_2d\_cccn888\_alpha\_blending@{arm\_2d\_cccn888\_alpha\_blending}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_cccn888\_alpha\_blending}{arm\_2d\_cccn888\_alpha\_blending}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+cccn888\+\_\+alpha\+\_\+blending(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{               \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_alpha\_blending(  NULL,                              \(\backslash\)}
+\DoxyCodeLine{                                            (\_\_SRC\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                            (\_\_DES\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                            (\_\_REGION\_ADDR),                    \(\backslash\)}
+\DoxyCodeLine{                                            (\_\_ALPHA))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a29134f516d2c67cd083549c26fa514e5}\label{arm__2d__alpha__blending_8h_a29134f516d2c67cd083549c26fa514e5}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_cccn888\_alpha\_blending\_with\_colour\_keying@{arm\_2d\_cccn888\_alpha\_blending\_with\_colour\_keying}}
+\index{arm\_2d\_cccn888\_alpha\_blending\_with\_colour\_keying@{arm\_2d\_cccn888\_alpha\_blending\_with\_colour\_keying}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_cccn888\_alpha\_blending\_with\_colour\_keying}{arm\_2d\_cccn888\_alpha\_blending\_with\_colour\_keying}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+cccn888\+\_\+alpha\+\_\+blending\+\_\+with\+\_\+colour\+\_\+keying(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA,  }\item[{}]{\+\_\+\+\_\+\+COLOUR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{              \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_alpha\_blending\_with\_colour\_keying(                  \(\backslash\)}
+\DoxyCodeLine{                                                    NULL,                       \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_SRC\_ADDR),                  \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_DES\_ADDR),                  \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_REGION\_ADDR),               \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_ALPHA),                     \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_COLOUR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a03bfeab92fd5d2e09be3f94ee34399c4}\label{arm__2d__alpha__blending_8h_a03bfeab92fd5d2e09be3f94ee34399c4}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_cccn888\_alpha\_blending\_with\_colour\_masking@{arm\_2d\_cccn888\_alpha\_blending\_with\_colour\_masking}}
+\index{arm\_2d\_cccn888\_alpha\_blending\_with\_colour\_masking@{arm\_2d\_cccn888\_alpha\_blending\_with\_colour\_masking}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_cccn888\_alpha\_blending\_with\_colour\_masking}{arm\_2d\_cccn888\_alpha\_blending\_with\_colour\_masking}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+cccn888\+\_\+alpha\+\_\+blending\+\_\+with\+\_\+colour\+\_\+masking(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA,  }\item[{}]{\+\_\+\+\_\+\+COLOUR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{              \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_alpha\_blending\_with\_colour\_keying(                  \(\backslash\)}
+\DoxyCodeLine{                                                    NULL,                       \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_SRC\_ADDR),                  \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_DES\_ADDR),                  \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_REGION\_ADDR),               \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_ALPHA),                     \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_COLOUR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a82b0fcf60de7e1fa0c98ad738e5be92e}\label{arm__2d__alpha__blending_8h_a82b0fcf60de7e1fa0c98ad738e5be92e}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_cccn888\_fill\_colour\_with\_alpha@{arm\_2d\_cccn888\_fill\_colour\_with\_alpha}}
+\index{arm\_2d\_cccn888\_fill\_colour\_with\_alpha@{arm\_2d\_cccn888\_fill\_colour\_with\_alpha}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_cccn888\_fill\_colour\_with\_alpha}{arm\_2d\_cccn888\_fill\_colour\_with\_alpha}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+cccn888\+\_\+fill\+\_\+colour\+\_\+with\+\_\+alpha(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+COLOUR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{               \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_fill\_colour\_with\_opacity(  NULL,                    \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_DES\_ADDR),                  \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_REGION\_ADDR),               \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_COLOUR),                    \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_ALPHA))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_af3c50a920b7ebccc808e26da956ed709}\label{arm__2d__alpha__blending_8h_af3c50a920b7ebccc808e26da956ed709}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_cccn888\_fill\_colour\_with\_alpha\_mask@{arm\_2d\_cccn888\_fill\_colour\_with\_alpha\_mask}}
+\index{arm\_2d\_cccn888\_fill\_colour\_with\_alpha\_mask@{arm\_2d\_cccn888\_fill\_colour\_with\_alpha\_mask}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_cccn888\_fill\_colour\_with\_alpha\_mask}{arm\_2d\_cccn888\_fill\_colour\_with\_alpha\_mask}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+cccn888\+\_\+fill\+\_\+colour\+\_\+with\+\_\+alpha\+\_\+mask(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+COLOUR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{              \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_fill\_colour\_with\_mask(                              \(\backslash\)}
+\DoxyCodeLine{                                      NULL,                                     \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_TARGET\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_REGION\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_ALPHA\_ADDR),                            \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_COLOUR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a9bbcc112bb518c20431e62cb558a169f}\label{arm__2d__alpha__blending_8h_a9bbcc112bb518c20431e62cb558a169f}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_cccn888\_fill\_colour\_with\_alpha\_mask\_and\_opacity@{arm\_2d\_cccn888\_fill\_colour\_with\_alpha\_mask\_and\_opacity}}
+\index{arm\_2d\_cccn888\_fill\_colour\_with\_alpha\_mask\_and\_opacity@{arm\_2d\_cccn888\_fill\_colour\_with\_alpha\_mask\_and\_opacity}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_cccn888\_fill\_colour\_with\_alpha\_mask\_and\_opacity}{arm\_2d\_cccn888\_fill\_colour\_with\_alpha\_mask\_and\_opacity}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+cccn888\+\_\+fill\+\_\+colour\+\_\+with\+\_\+alpha\+\_\+mask\+\_\+and\+\_\+opacity(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+COLOUR,  }\item[{}]{\+\_\+\+\_\+\+OPACITY }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_fill\_colour\_with\_mask\_and\_opacity(                  \(\backslash\)}
+\DoxyCodeLine{                                      NULL,                                     \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_TARGET\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_REGION\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_ALPHA\_ADDR),                            \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_COLOUR),                                \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_OPACITY))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a5dacdcd7290160c962542952fc37f782}\label{arm__2d__alpha__blending_8h_a5dacdcd7290160c962542952fc37f782}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_cccn888\_fill\_colour\_with\_mask@{arm\_2d\_cccn888\_fill\_colour\_with\_mask}}
+\index{arm\_2d\_cccn888\_fill\_colour\_with\_mask@{arm\_2d\_cccn888\_fill\_colour\_with\_mask}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_cccn888\_fill\_colour\_with\_mask}{arm\_2d\_cccn888\_fill\_colour\_with\_mask}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+cccn888\+\_\+fill\+\_\+colour\+\_\+with\+\_\+mask(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+COLOUR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{              \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_fill\_colour\_with\_mask(                              \(\backslash\)}
+\DoxyCodeLine{                                      NULL,                                     \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_TARGET\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_REGION\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_ALPHA\_ADDR),                            \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_COLOUR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a35008868e9897405a0632680283dd8b5}\label{arm__2d__alpha__blending_8h_a35008868e9897405a0632680283dd8b5}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_cccn888\_fill\_colour\_with\_mask\_and\_opacity@{arm\_2d\_cccn888\_fill\_colour\_with\_mask\_and\_opacity}}
+\index{arm\_2d\_cccn888\_fill\_colour\_with\_mask\_and\_opacity@{arm\_2d\_cccn888\_fill\_colour\_with\_mask\_and\_opacity}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_cccn888\_fill\_colour\_with\_mask\_and\_opacity}{arm\_2d\_cccn888\_fill\_colour\_with\_mask\_and\_opacity}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+cccn888\+\_\+fill\+\_\+colour\+\_\+with\+\_\+mask\+\_\+and\+\_\+opacity(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+COLOUR,  }\item[{}]{\+\_\+\+\_\+\+OPACITY }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_fill\_colour\_with\_mask\_and\_opacity(                  \(\backslash\)}
+\DoxyCodeLine{                                      NULL,                                     \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_TARGET\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_REGION\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_ALPHA\_ADDR),                            \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_COLOUR),                                \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_OPACITY))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a462c826a465f49398a2cfee555a9ab86}\label{arm__2d__alpha__blending_8h_a462c826a465f49398a2cfee555a9ab86}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_cccn888\_fill\_colour\_with\_opacity@{arm\_2d\_cccn888\_fill\_colour\_with\_opacity}}
+\index{arm\_2d\_cccn888\_fill\_colour\_with\_opacity@{arm\_2d\_cccn888\_fill\_colour\_with\_opacity}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_cccn888\_fill\_colour\_with\_opacity}{arm\_2d\_cccn888\_fill\_colour\_with\_opacity}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+cccn888\+\_\+fill\+\_\+colour\+\_\+with\+\_\+opacity(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+COLOUR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{               \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_fill\_colour\_with\_opacity(  NULL,                    \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_DES\_ADDR),                  \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_REGION\_ADDR),               \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_COLOUR),                    \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_ALPHA))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_acc3f8bc63f33b031ec604d43fe9dfc85}\label{arm__2d__alpha__blending_8h_acc3f8bc63f33b031ec604d43fe9dfc85}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_cccn888\_tile\_copy\_with\_alpha\_masks@{arm\_2d\_cccn888\_tile\_copy\_with\_alpha\_masks}}
+\index{arm\_2d\_cccn888\_tile\_copy\_with\_alpha\_masks@{arm\_2d\_cccn888\_tile\_copy\_with\_alpha\_masks}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_cccn888\_tile\_copy\_with\_alpha\_masks}{arm\_2d\_cccn888\_tile\_copy\_with\_alpha\_masks}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+cccn888\+\_\+tile\+\_\+copy\+\_\+with\+\_\+alpha\+\_\+masks(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+MSK\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+MSK\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{           \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_tile\_copy\_with\_masks(                               \(\backslash\)}
+\DoxyCodeLine{                                        NULL,                                   \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_MSK\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_MSK\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_REGION),                             \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_MODE))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_aad8e1bfd25dde1cf872f4730a4a2e357}\label{arm__2d__alpha__blending_8h_aad8e1bfd25dde1cf872f4730a4a2e357}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_cccn888\_tile\_copy\_with\_des\_mask@{arm\_2d\_cccn888\_tile\_copy\_with\_des\_mask}}
+\index{arm\_2d\_cccn888\_tile\_copy\_with\_des\_mask@{arm\_2d\_cccn888\_tile\_copy\_with\_des\_mask}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_cccn888\_tile\_copy\_with\_des\_mask}{arm\_2d\_cccn888\_tile\_copy\_with\_des\_mask}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+cccn888\+\_\+tile\+\_\+copy\+\_\+with\+\_\+des\+\_\+mask(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+MSK\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{           \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_tile\_copy\_with\_des\_mask(                            \(\backslash\)}
+\DoxyCodeLine{                                        NULL,                                   \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_MSK\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_REGION),                             \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_MODE))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a6019e69ca01406f7350f72867f21fd0a}\label{arm__2d__alpha__blending_8h_a6019e69ca01406f7350f72867f21fd0a}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_cccn888\_tile\_copy\_with\_masks@{arm\_2d\_cccn888\_tile\_copy\_with\_masks}}
+\index{arm\_2d\_cccn888\_tile\_copy\_with\_masks@{arm\_2d\_cccn888\_tile\_copy\_with\_masks}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_cccn888\_tile\_copy\_with\_masks}{arm\_2d\_cccn888\_tile\_copy\_with\_masks}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+cccn888\+\_\+tile\+\_\+copy\+\_\+with\+\_\+masks(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+MSK\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+MSK\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{           \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_tile\_copy\_with\_masks(                               \(\backslash\)}
+\DoxyCodeLine{                                        NULL,                                   \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_MSK\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_MSK\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_REGION),                             \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_MODE))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_afa5c0d47af052846c159f9e127bfb26c}\label{arm__2d__alpha__blending_8h_afa5c0d47af052846c159f9e127bfb26c}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_cccn888\_tile\_copy\_with\_src\_mask@{arm\_2d\_cccn888\_tile\_copy\_with\_src\_mask}}
+\index{arm\_2d\_cccn888\_tile\_copy\_with\_src\_mask@{arm\_2d\_cccn888\_tile\_copy\_with\_src\_mask}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_cccn888\_tile\_copy\_with\_src\_mask}{arm\_2d\_cccn888\_tile\_copy\_with\_src\_mask}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+cccn888\+\_\+tile\+\_\+copy\+\_\+with\+\_\+src\+\_\+mask(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+MSK\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{           \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_tile\_copy\_with\_src\_mask(                            \(\backslash\)}
+\DoxyCodeLine{                                        NULL,                                   \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_MSK\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_REGION),                             \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_MODE))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_ad64e4ded2daa05f2f00a1de6e736aece}\label{arm__2d__alpha__blending_8h_ad64e4ded2daa05f2f00a1de6e736aece}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_gray8\_alpha\_blending@{arm\_2d\_gray8\_alpha\_blending}}
+\index{arm\_2d\_gray8\_alpha\_blending@{arm\_2d\_gray8\_alpha\_blending}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_gray8\_alpha\_blending}{arm\_2d\_gray8\_alpha\_blending}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+gray8\+\_\+alpha\+\_\+blending(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{               \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_gray8\_alpha\_blending(  NULL,                                \(\backslash\)}
+\DoxyCodeLine{                                            (\_\_SRC\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                            (\_\_DES\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                            (\_\_REGION\_ADDR),                    \(\backslash\)}
+\DoxyCodeLine{                                            (\_\_ALPHA))}
+
+\end{DoxyCode}
+\texorpdfstring{$<$}{<} source tile address
+
+\texorpdfstring{$<$}{<} target tile address
+
+\texorpdfstring{$<$}{<} region address source tile address target tile address region address source tile address target tile address region address source tile address target tile address region address target tile address region address colour target tile address region address colour target tile address region address colour target tile address region address colour target tile address region address colour target tile address region address colour target tile address region address colour target tile address target region address alpha tile address target tile address target region address alpha tile address target tile address target region address alpha tile address target tile address target region address alpha tile address target tile address target region address alpha tile address target tile address target region address alpha tile address target tile address target region address alpha tile address target tile address target region address alpha tile address target tile address target region address alpha tile address colour target tile address target region address alpha tile address colour target tile address target region address alpha tile address colour target tile address target region address alpha tile address colour target tile address target region address alpha tile address colour target tile address target region address alpha tile address colour target tile address target region address alpha tile address colour target tile address target region address alpha tile address colour source tile address target tile address region address colour source tile address target tile address region address colour source tile address target tile address region address colour source tile address target tile address region address colour source tile address target tile address region address colour source tile address target tile address region address colour source tile address target tile address region address colour source tile address target tile address region address colour source tile address source mask address target tile address target mask address region address source tile address source mask address target tile address target mask address region address source tile address source mask address target tile address target mask address region address source tile address source mask address target tile address target mask address region address source tile address source mask address target tile address target mask address region address source tile address source mask address target tile address target mask address region address source tile address source mask address target tile address target mask address region address source tile address source mask address target tile address target mask address region address source tile address source mask address target tile address region address source tile address source mask address target tile address region address source tile address source mask address target tile address region address source tile address source mask address target tile address region address source tile address target tile address target mask address region address source tile address target tile address target mask address region address source tile address target tile address target mask address region address source tile address target tile address target mask address region address 
+
+Definition at line \mbox{\hyperlink{arm__2d__alpha__blending_8h_source_l00736}{736}} of file \mbox{\hyperlink{arm__2d__alpha__blending_8h_source}{arm\+\_\+2d\+\_\+alpha\+\_\+blending.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_aaf7aa25738c4d83b14c961cc938361ca}\label{arm__2d__alpha__blending_8h_aaf7aa25738c4d83b14c961cc938361ca}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_gray8\_alpha\_blending\_with\_colour\_keying@{arm\_2d\_gray8\_alpha\_blending\_with\_colour\_keying}}
+\index{arm\_2d\_gray8\_alpha\_blending\_with\_colour\_keying@{arm\_2d\_gray8\_alpha\_blending\_with\_colour\_keying}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_gray8\_alpha\_blending\_with\_colour\_keying}{arm\_2d\_gray8\_alpha\_blending\_with\_colour\_keying}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+gray8\+\_\+alpha\+\_\+blending\+\_\+with\+\_\+colour\+\_\+keying(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA,  }\item[{}]{\+\_\+\+\_\+\+COLOUR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{              \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_gray8\_alpha\_blending\_with\_colour\_keying(                    \(\backslash\)}
+\DoxyCodeLine{                                                    NULL,                       \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_SRC\_ADDR),                  \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_DES\_ADDR),                  \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_REGION\_ADDR),               \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_ALPHA),                     \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_COLOUR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a0b84ba8653056613923742d330d7ecbb}\label{arm__2d__alpha__blending_8h_a0b84ba8653056613923742d330d7ecbb}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_gray8\_alpha\_blending\_with\_colour\_masking@{arm\_2d\_gray8\_alpha\_blending\_with\_colour\_masking}}
+\index{arm\_2d\_gray8\_alpha\_blending\_with\_colour\_masking@{arm\_2d\_gray8\_alpha\_blending\_with\_colour\_masking}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_gray8\_alpha\_blending\_with\_colour\_masking}{arm\_2d\_gray8\_alpha\_blending\_with\_colour\_masking}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+gray8\+\_\+alpha\+\_\+blending\+\_\+with\+\_\+colour\+\_\+masking(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA,  }\item[{}]{\+\_\+\+\_\+\+COLOUR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{              \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_gray8\_alpha\_blending\_with\_colour\_keying(                    \(\backslash\)}
+\DoxyCodeLine{                                                    NULL,                       \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_SRC\_ADDR),                  \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_DES\_ADDR),                  \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_REGION\_ADDR),               \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_ALPHA),                     \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_COLOUR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a8af46133363d7b10a869da2a99f8a6d0}\label{arm__2d__alpha__blending_8h_a8af46133363d7b10a869da2a99f8a6d0}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_gray8\_fill\_colour\_with\_alpha@{arm\_2d\_gray8\_fill\_colour\_with\_alpha}}
+\index{arm\_2d\_gray8\_fill\_colour\_with\_alpha@{arm\_2d\_gray8\_fill\_colour\_with\_alpha}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_gray8\_fill\_colour\_with\_alpha}{arm\_2d\_gray8\_fill\_colour\_with\_alpha}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+gray8\+\_\+fill\+\_\+colour\+\_\+with\+\_\+alpha(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+COLOUR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{               \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_gray8\_fill\_colour\_with\_opacity(  NULL,                      \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_DES\_ADDR),                  \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_REGION\_ADDR),               \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_COLOUR),                    \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_ALPHA))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_ab8e9cb8e4f6b7463ab60b73245b4fe70}\label{arm__2d__alpha__blending_8h_ab8e9cb8e4f6b7463ab60b73245b4fe70}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_gray8\_fill\_colour\_with\_alpha\_mask@{arm\_2d\_gray8\_fill\_colour\_with\_alpha\_mask}}
+\index{arm\_2d\_gray8\_fill\_colour\_with\_alpha\_mask@{arm\_2d\_gray8\_fill\_colour\_with\_alpha\_mask}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_gray8\_fill\_colour\_with\_alpha\_mask}{arm\_2d\_gray8\_fill\_colour\_with\_alpha\_mask}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+gray8\+\_\+fill\+\_\+colour\+\_\+with\+\_\+alpha\+\_\+mask(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+COLOUR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{              \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_gray8\_fill\_colour\_with\_mask(                                \(\backslash\)}
+\DoxyCodeLine{                                      NULL,                                     \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_TARGET\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_REGION\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_ALPHA\_ADDR),                            \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_COLOUR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a4ec3e2f2faea8354f0bafa1b96c9d56a}\label{arm__2d__alpha__blending_8h_a4ec3e2f2faea8354f0bafa1b96c9d56a}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_gray8\_fill\_colour\_with\_alpha\_mask\_and\_opacity@{arm\_2d\_gray8\_fill\_colour\_with\_alpha\_mask\_and\_opacity}}
+\index{arm\_2d\_gray8\_fill\_colour\_with\_alpha\_mask\_and\_opacity@{arm\_2d\_gray8\_fill\_colour\_with\_alpha\_mask\_and\_opacity}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_gray8\_fill\_colour\_with\_alpha\_mask\_and\_opacity}{arm\_2d\_gray8\_fill\_colour\_with\_alpha\_mask\_and\_opacity}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+gray8\+\_\+fill\+\_\+colour\+\_\+with\+\_\+alpha\+\_\+mask\+\_\+and\+\_\+opacity(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+COLOUR,  }\item[{}]{\+\_\+\+\_\+\+OPACITY }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{            arm\_2dp\_gray8\_fill\_colour\_with\_mask\_and\_opacity(                    \(\backslash\)}
+\DoxyCodeLine{                                      NULL,                                     \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_TARGET\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_REGION\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_ALPHA\_ADDR),                            \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_COLOUR),                                \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_OPACITY))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_aa553b555586bee7b83383f7c0c3e2b68}\label{arm__2d__alpha__blending_8h_aa553b555586bee7b83383f7c0c3e2b68}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_gray8\_fill\_colour\_with\_mask@{arm\_2d\_gray8\_fill\_colour\_with\_mask}}
+\index{arm\_2d\_gray8\_fill\_colour\_with\_mask@{arm\_2d\_gray8\_fill\_colour\_with\_mask}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_gray8\_fill\_colour\_with\_mask}{arm\_2d\_gray8\_fill\_colour\_with\_mask}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+gray8\+\_\+fill\+\_\+colour\+\_\+with\+\_\+mask(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+COLOUR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{              \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_gray8\_fill\_colour\_with\_mask(                                \(\backslash\)}
+\DoxyCodeLine{                                      NULL,                                     \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_TARGET\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_REGION\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_ALPHA\_ADDR),                            \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_COLOUR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_ad7fb810798de3fba42f88491cf4dfa6e}\label{arm__2d__alpha__blending_8h_ad7fb810798de3fba42f88491cf4dfa6e}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_gray8\_fill\_colour\_with\_mask\_and\_opacity@{arm\_2d\_gray8\_fill\_colour\_with\_mask\_and\_opacity}}
+\index{arm\_2d\_gray8\_fill\_colour\_with\_mask\_and\_opacity@{arm\_2d\_gray8\_fill\_colour\_with\_mask\_and\_opacity}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_gray8\_fill\_colour\_with\_mask\_and\_opacity}{arm\_2d\_gray8\_fill\_colour\_with\_mask\_and\_opacity}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+gray8\+\_\+fill\+\_\+colour\+\_\+with\+\_\+mask\+\_\+and\+\_\+opacity(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+COLOUR,  }\item[{}]{\+\_\+\+\_\+\+OPACITY }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{            arm\_2dp\_gray8\_fill\_colour\_with\_mask\_and\_opacity(                    \(\backslash\)}
+\DoxyCodeLine{                                      NULL,                                     \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_TARGET\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_REGION\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_ALPHA\_ADDR),                            \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_COLOUR),                                \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_OPACITY))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_ac5731e6d198c1abfbec6d225ac1f7a5b}\label{arm__2d__alpha__blending_8h_ac5731e6d198c1abfbec6d225ac1f7a5b}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_gray8\_tile\_copy\_with\_alpha\_masks@{arm\_2d\_gray8\_tile\_copy\_with\_alpha\_masks}}
+\index{arm\_2d\_gray8\_tile\_copy\_with\_alpha\_masks@{arm\_2d\_gray8\_tile\_copy\_with\_alpha\_masks}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_gray8\_tile\_copy\_with\_alpha\_masks}{arm\_2d\_gray8\_tile\_copy\_with\_alpha\_masks}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+gray8\+\_\+tile\+\_\+copy\+\_\+with\+\_\+alpha\+\_\+masks(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+MSK\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+MSK\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{           \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_gray8\_tile\_copy\_with\_masks(                                 \(\backslash\)}
+\DoxyCodeLine{                                        NULL,                                   \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_MSK\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_MSK\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_REGION),                             \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_MODE))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_aa31d310d6dedd0ce5c48613aa17e22aa}\label{arm__2d__alpha__blending_8h_aa31d310d6dedd0ce5c48613aa17e22aa}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_gray8\_tile\_copy\_with\_des\_mask@{arm\_2d\_gray8\_tile\_copy\_with\_des\_mask}}
+\index{arm\_2d\_gray8\_tile\_copy\_with\_des\_mask@{arm\_2d\_gray8\_tile\_copy\_with\_des\_mask}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_gray8\_tile\_copy\_with\_des\_mask}{arm\_2d\_gray8\_tile\_copy\_with\_des\_mask}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+gray8\+\_\+tile\+\_\+copy\+\_\+with\+\_\+des\+\_\+mask(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+MSK\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{           \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_gray8\_tile\_copy\_with\_des\_mask(                              \(\backslash\)}
+\DoxyCodeLine{                                        NULL,                                   \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_MSK\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_REGION),                             \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_MODE))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_ab2c790df3a1f448b3f93d79a6d255140}\label{arm__2d__alpha__blending_8h_ab2c790df3a1f448b3f93d79a6d255140}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_gray8\_tile\_copy\_with\_masks@{arm\_2d\_gray8\_tile\_copy\_with\_masks}}
+\index{arm\_2d\_gray8\_tile\_copy\_with\_masks@{arm\_2d\_gray8\_tile\_copy\_with\_masks}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_gray8\_tile\_copy\_with\_masks}{arm\_2d\_gray8\_tile\_copy\_with\_masks}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+gray8\+\_\+tile\+\_\+copy\+\_\+with\+\_\+masks(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+MSK\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+MSK\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{           \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_gray8\_tile\_copy\_with\_masks(                                 \(\backslash\)}
+\DoxyCodeLine{                                        NULL,                                   \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_MSK\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_MSK\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_REGION),                             \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_MODE))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a9ea6b9d2d8b88962d85bd5f48447b8a6}\label{arm__2d__alpha__blending_8h_a9ea6b9d2d8b88962d85bd5f48447b8a6}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_gray8\_tile\_copy\_with\_src\_mask@{arm\_2d\_gray8\_tile\_copy\_with\_src\_mask}}
+\index{arm\_2d\_gray8\_tile\_copy\_with\_src\_mask@{arm\_2d\_gray8\_tile\_copy\_with\_src\_mask}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_gray8\_tile\_copy\_with\_src\_mask}{arm\_2d\_gray8\_tile\_copy\_with\_src\_mask}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+gray8\+\_\+tile\+\_\+copy\+\_\+with\+\_\+src\+\_\+mask(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+MSK\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{           \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_gray8\_tile\_copy\_with\_src\_mask(                              \(\backslash\)}
+\DoxyCodeLine{                                        NULL,                                   \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_MSK\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_REGION),                             \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_MODE))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_aff29b3e4e7a5927253def8137a5dddf4}\label{arm__2d__alpha__blending_8h_aff29b3e4e7a5927253def8137a5dddf4}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb565\_alpha\_blending@{arm\_2d\_rgb565\_alpha\_blending}}
+\index{arm\_2d\_rgb565\_alpha\_blending@{arm\_2d\_rgb565\_alpha\_blending}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb565\_alpha\_blending}{arm\_2d\_rgb565\_alpha\_blending}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb565\+\_\+alpha\+\_\+blending(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{               \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb565\_alpha\_blending(  NULL,                               \(\backslash\)}
+\DoxyCodeLine{                                            (\_\_SRC\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                            (\_\_DES\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                            (\_\_REGION\_ADDR),                    \(\backslash\)}
+\DoxyCodeLine{                                            (\_\_ALPHA))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a7b626a62502d24784df0fed128e3f0c1}\label{arm__2d__alpha__blending_8h_a7b626a62502d24784df0fed128e3f0c1}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb565\_alpha\_blending\_with\_colour\_keying@{arm\_2d\_rgb565\_alpha\_blending\_with\_colour\_keying}}
+\index{arm\_2d\_rgb565\_alpha\_blending\_with\_colour\_keying@{arm\_2d\_rgb565\_alpha\_blending\_with\_colour\_keying}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb565\_alpha\_blending\_with\_colour\_keying}{arm\_2d\_rgb565\_alpha\_blending\_with\_colour\_keying}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb565\+\_\+alpha\+\_\+blending\+\_\+with\+\_\+colour\+\_\+keying(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA,  }\item[{}]{\+\_\+\+\_\+\+COLOUR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{              \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb565\_alpha\_blending\_with\_colour\_keying(                   \(\backslash\)}
+\DoxyCodeLine{                                                    NULL,                       \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_SRC\_ADDR),                  \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_DES\_ADDR),                  \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_REGION\_ADDR),               \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_ALPHA),                     \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_COLOUR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a3055658b578e8a7ddc89b1ca482f3c4c}\label{arm__2d__alpha__blending_8h_a3055658b578e8a7ddc89b1ca482f3c4c}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb565\_alpha\_blending\_with\_colour\_masking@{arm\_2d\_rgb565\_alpha\_blending\_with\_colour\_masking}}
+\index{arm\_2d\_rgb565\_alpha\_blending\_with\_colour\_masking@{arm\_2d\_rgb565\_alpha\_blending\_with\_colour\_masking}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb565\_alpha\_blending\_with\_colour\_masking}{arm\_2d\_rgb565\_alpha\_blending\_with\_colour\_masking}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb565\+\_\+alpha\+\_\+blending\+\_\+with\+\_\+colour\+\_\+masking(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA,  }\item[{}]{\+\_\+\+\_\+\+COLOUR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{              \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb565\_alpha\_blending\_with\_colour\_keying(                   \(\backslash\)}
+\DoxyCodeLine{                                                    NULL,                       \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_SRC\_ADDR),                  \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_DES\_ADDR),                  \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_REGION\_ADDR),               \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_ALPHA),                     \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_COLOUR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_ad985535cda1a86d80f62aa85570298ee}\label{arm__2d__alpha__blending_8h_ad985535cda1a86d80f62aa85570298ee}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb565\_fill\_colour\_with\_alpha@{arm\_2d\_rgb565\_fill\_colour\_with\_alpha}}
+\index{arm\_2d\_rgb565\_fill\_colour\_with\_alpha@{arm\_2d\_rgb565\_fill\_colour\_with\_alpha}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb565\_fill\_colour\_with\_alpha}{arm\_2d\_rgb565\_fill\_colour\_with\_alpha}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb565\+\_\+fill\+\_\+colour\+\_\+with\+\_\+alpha(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+COLOUR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{               \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb565\_fill\_colour\_with\_opacity(  NULL,                     \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_DES\_ADDR),                  \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_REGION\_ADDR),               \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_COLOUR),                    \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_ALPHA))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a3566451bcbea7534524447bc7f00d296}\label{arm__2d__alpha__blending_8h_a3566451bcbea7534524447bc7f00d296}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb565\_fill\_colour\_with\_alpha\_mask@{arm\_2d\_rgb565\_fill\_colour\_with\_alpha\_mask}}
+\index{arm\_2d\_rgb565\_fill\_colour\_with\_alpha\_mask@{arm\_2d\_rgb565\_fill\_colour\_with\_alpha\_mask}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb565\_fill\_colour\_with\_alpha\_mask}{arm\_2d\_rgb565\_fill\_colour\_with\_alpha\_mask}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb565\+\_\+fill\+\_\+colour\+\_\+with\+\_\+alpha\+\_\+mask(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+COLOUR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{              \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb565\_fill\_colour\_with\_mask(                               \(\backslash\)}
+\DoxyCodeLine{                                      NULL,                                     \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_TARGET\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_REGION\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_ALPHA\_ADDR),                            \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_COLOUR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a1bc9e2e52ec5ae9b889bcc1d2b78aada}\label{arm__2d__alpha__blending_8h_a1bc9e2e52ec5ae9b889bcc1d2b78aada}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb565\_fill\_colour\_with\_alpha\_mask\_and\_opacity@{arm\_2d\_rgb565\_fill\_colour\_with\_alpha\_mask\_and\_opacity}}
+\index{arm\_2d\_rgb565\_fill\_colour\_with\_alpha\_mask\_and\_opacity@{arm\_2d\_rgb565\_fill\_colour\_with\_alpha\_mask\_and\_opacity}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb565\_fill\_colour\_with\_alpha\_mask\_and\_opacity}{arm\_2d\_rgb565\_fill\_colour\_with\_alpha\_mask\_and\_opacity}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb565\+\_\+fill\+\_\+colour\+\_\+with\+\_\+alpha\+\_\+mask\+\_\+and\+\_\+opacity(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+COLOUR,  }\item[{}]{\+\_\+\+\_\+\+OPACITY }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{            arm\_2dp\_rgb565\_fill\_colour\_with\_mask\_and\_opacity(                   \(\backslash\)}
+\DoxyCodeLine{                                      NULL,                                     \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_TARGET\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_REGION\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_ALPHA\_ADDR),                            \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_COLOUR),                                \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_OPACITY))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a3bee3c108ab93bccbbec99eb5bc24b6e}\label{arm__2d__alpha__blending_8h_a3bee3c108ab93bccbbec99eb5bc24b6e}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb565\_fill\_colour\_with\_mask@{arm\_2d\_rgb565\_fill\_colour\_with\_mask}}
+\index{arm\_2d\_rgb565\_fill\_colour\_with\_mask@{arm\_2d\_rgb565\_fill\_colour\_with\_mask}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb565\_fill\_colour\_with\_mask}{arm\_2d\_rgb565\_fill\_colour\_with\_mask}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb565\+\_\+fill\+\_\+colour\+\_\+with\+\_\+mask(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+COLOUR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{              \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb565\_fill\_colour\_with\_mask(                               \(\backslash\)}
+\DoxyCodeLine{                                      NULL,                                     \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_TARGET\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_REGION\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_ALPHA\_ADDR),                            \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_COLOUR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_ab66ae063b7da25adc82488b006fa5bf1}\label{arm__2d__alpha__blending_8h_ab66ae063b7da25adc82488b006fa5bf1}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb565\_fill\_colour\_with\_mask\_and\_opacity@{arm\_2d\_rgb565\_fill\_colour\_with\_mask\_and\_opacity}}
+\index{arm\_2d\_rgb565\_fill\_colour\_with\_mask\_and\_opacity@{arm\_2d\_rgb565\_fill\_colour\_with\_mask\_and\_opacity}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb565\_fill\_colour\_with\_mask\_and\_opacity}{arm\_2d\_rgb565\_fill\_colour\_with\_mask\_and\_opacity}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb565\+\_\+fill\+\_\+colour\+\_\+with\+\_\+mask\+\_\+and\+\_\+opacity(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+COLOUR,  }\item[{}]{\+\_\+\+\_\+\+OPACITY }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{            arm\_2dp\_rgb565\_fill\_colour\_with\_mask\_and\_opacity(                   \(\backslash\)}
+\DoxyCodeLine{                                      NULL,                                     \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_TARGET\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_REGION\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_ALPHA\_ADDR),                            \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_COLOUR),                                \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_OPACITY))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a53a94576fcaec05d290cf2d59d70089c}\label{arm__2d__alpha__blending_8h_a53a94576fcaec05d290cf2d59d70089c}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb565\_fill\_colour\_with\_opacity@{arm\_2d\_rgb565\_fill\_colour\_with\_opacity}}
+\index{arm\_2d\_rgb565\_fill\_colour\_with\_opacity@{arm\_2d\_rgb565\_fill\_colour\_with\_opacity}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb565\_fill\_colour\_with\_opacity}{arm\_2d\_rgb565\_fill\_colour\_with\_opacity}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb565\+\_\+fill\+\_\+colour\+\_\+with\+\_\+opacity(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+COLOUR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{               \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb565\_fill\_colour\_with\_opacity(  NULL,                     \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_DES\_ADDR),                  \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_REGION\_ADDR),               \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_COLOUR),                    \(\backslash\)}
+\DoxyCodeLine{                                                 (\_\_ALPHA))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a198bf7a96ad5f2222b560ec552a366e6}\label{arm__2d__alpha__blending_8h_a198bf7a96ad5f2222b560ec552a366e6}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb565\_tile\_copy\_with\_alpha\_masks@{arm\_2d\_rgb565\_tile\_copy\_with\_alpha\_masks}}
+\index{arm\_2d\_rgb565\_tile\_copy\_with\_alpha\_masks@{arm\_2d\_rgb565\_tile\_copy\_with\_alpha\_masks}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb565\_tile\_copy\_with\_alpha\_masks}{arm\_2d\_rgb565\_tile\_copy\_with\_alpha\_masks}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb565\+\_\+tile\+\_\+copy\+\_\+with\+\_\+alpha\+\_\+masks(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+MSK\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+MSK\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{           \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb565\_tile\_copy\_with\_masks(                                \(\backslash\)}
+\DoxyCodeLine{                                        NULL,                                   \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_MSK\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_MSK\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_REGION),                             \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_MODE))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a08d30ffe5c87ec1fd2ac2ab24f30068a}\label{arm__2d__alpha__blending_8h_a08d30ffe5c87ec1fd2ac2ab24f30068a}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb565\_tile\_copy\_with\_des\_mask@{arm\_2d\_rgb565\_tile\_copy\_with\_des\_mask}}
+\index{arm\_2d\_rgb565\_tile\_copy\_with\_des\_mask@{arm\_2d\_rgb565\_tile\_copy\_with\_des\_mask}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb565\_tile\_copy\_with\_des\_mask}{arm\_2d\_rgb565\_tile\_copy\_with\_des\_mask}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb565\+\_\+tile\+\_\+copy\+\_\+with\+\_\+des\+\_\+mask(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+MSK\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{           \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb565\_tile\_copy\_with\_des\_mask(                             \(\backslash\)}
+\DoxyCodeLine{                                        NULL,                                   \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_MSK\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_REGION),                             \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_MODE))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_add68c1a154d59607608c1e1840a45dcb}\label{arm__2d__alpha__blending_8h_add68c1a154d59607608c1e1840a45dcb}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb565\_tile\_copy\_with\_masks@{arm\_2d\_rgb565\_tile\_copy\_with\_masks}}
+\index{arm\_2d\_rgb565\_tile\_copy\_with\_masks@{arm\_2d\_rgb565\_tile\_copy\_with\_masks}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb565\_tile\_copy\_with\_masks}{arm\_2d\_rgb565\_tile\_copy\_with\_masks}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb565\+\_\+tile\+\_\+copy\+\_\+with\+\_\+masks(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+MSK\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+MSK\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{           \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb565\_tile\_copy\_with\_masks(                                \(\backslash\)}
+\DoxyCodeLine{                                        NULL,                                   \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_MSK\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_MSK\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_REGION),                             \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_MODE))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_aff98713582045da1a8b5eac04f745263}\label{arm__2d__alpha__blending_8h_aff98713582045da1a8b5eac04f745263}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb565\_tile\_copy\_with\_src\_mask@{arm\_2d\_rgb565\_tile\_copy\_with\_src\_mask}}
+\index{arm\_2d\_rgb565\_tile\_copy\_with\_src\_mask@{arm\_2d\_rgb565\_tile\_copy\_with\_src\_mask}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb565\_tile\_copy\_with\_src\_mask}{arm\_2d\_rgb565\_tile\_copy\_with\_src\_mask}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb565\+\_\+tile\+\_\+copy\+\_\+with\+\_\+src\+\_\+mask(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+MSK\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{           \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb565\_tile\_copy\_with\_src\_mask(                             \(\backslash\)}
+\DoxyCodeLine{                                        NULL,                                   \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_MSK\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_REGION),                             \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_MODE))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a0f35f78bd36346b630f3797ba356a6a9}\label{arm__2d__alpha__blending_8h_a0f35f78bd36346b630f3797ba356a6a9}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb888\_alpha\_blending@{arm\_2d\_rgb888\_alpha\_blending}}
+\index{arm\_2d\_rgb888\_alpha\_blending@{arm\_2d\_rgb888\_alpha\_blending}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb888\_alpha\_blending}{arm\_2d\_rgb888\_alpha\_blending}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb888\+\_\+alpha\+\_\+blending(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{               \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_alpha\_blending(  NULL,                              \(\backslash\)}
+\DoxyCodeLine{                                            (\_\_SRC\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                            (\_\_DES\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                            (\_\_REGION\_ADDR),                    \(\backslash\)}
+\DoxyCodeLine{                                            (\_\_ALPHA))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a9339a032aa2f5cbc25fb2f84f121b123}\label{arm__2d__alpha__blending_8h_a9339a032aa2f5cbc25fb2f84f121b123}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb888\_alpha\_blending\_with\_colour\_keying@{arm\_2d\_rgb888\_alpha\_blending\_with\_colour\_keying}}
+\index{arm\_2d\_rgb888\_alpha\_blending\_with\_colour\_keying@{arm\_2d\_rgb888\_alpha\_blending\_with\_colour\_keying}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb888\_alpha\_blending\_with\_colour\_keying}{arm\_2d\_rgb888\_alpha\_blending\_with\_colour\_keying}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb888\+\_\+alpha\+\_\+blending\+\_\+with\+\_\+colour\+\_\+keying(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA,  }\item[{}]{\+\_\+\+\_\+\+COLOUR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{              \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_alpha\_blending\_with\_colour\_keying(                  \(\backslash\)}
+\DoxyCodeLine{                                    NULL,                       \(\backslash\)}
+\DoxyCodeLine{                                 (\_\_SRC\_ADDR),                  \(\backslash\)}
+\DoxyCodeLine{                                 (\_\_DES\_ADDR),                  \(\backslash\)}
+\DoxyCodeLine{                                 (\_\_REGION\_ADDR),               \(\backslash\)}
+\DoxyCodeLine{                                 (\_\_ALPHA),                     \(\backslash\)}
+\DoxyCodeLine{                                 (\mbox{\hyperlink{unionarm__2d__color__cccn888__t}{arm\_2d\_color\_cccn888\_t}})\{(\_\_COLOUR).tValue\})}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a8b671b603210454f5eee2a65ada92b05}\label{arm__2d__alpha__blending_8h_a8b671b603210454f5eee2a65ada92b05}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb888\_alpha\_blending\_with\_colour\_masking@{arm\_2d\_rgb888\_alpha\_blending\_with\_colour\_masking}}
+\index{arm\_2d\_rgb888\_alpha\_blending\_with\_colour\_masking@{arm\_2d\_rgb888\_alpha\_blending\_with\_colour\_masking}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb888\_alpha\_blending\_with\_colour\_masking}{arm\_2d\_rgb888\_alpha\_blending\_with\_colour\_masking}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb888\+\_\+alpha\+\_\+blending\+\_\+with\+\_\+colour\+\_\+masking(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA,  }\item[{}]{\+\_\+\+\_\+\+COLOUR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{              \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_alpha\_blending\_with\_colour\_keying(                  \(\backslash\)}
+\DoxyCodeLine{                                    NULL,                                       \(\backslash\)}
+\DoxyCodeLine{                                 (\_\_SRC\_ADDR),                                  \(\backslash\)}
+\DoxyCodeLine{                                 (\_\_DES\_ADDR),                                  \(\backslash\)}
+\DoxyCodeLine{                                 (\_\_REGION\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                 (\_\_ALPHA),                                     \(\backslash\)}
+\DoxyCodeLine{                                 (\mbox{\hyperlink{unionarm__2d__color__cccn888__t}{arm\_2d\_color\_cccn888\_t}})\{(\_\_COLOUR).tValue\})}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a0763c935422b0696048b2cfebbf8386f}\label{arm__2d__alpha__blending_8h_a0763c935422b0696048b2cfebbf8386f}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb888\_fill\_colour\_with\_alpha@{arm\_2d\_rgb888\_fill\_colour\_with\_alpha}}
+\index{arm\_2d\_rgb888\_fill\_colour\_with\_alpha@{arm\_2d\_rgb888\_fill\_colour\_with\_alpha}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb888\_fill\_colour\_with\_alpha}{arm\_2d\_rgb888\_fill\_colour\_with\_alpha}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb888\+\_\+fill\+\_\+colour\+\_\+with\+\_\+alpha(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+COLOUR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{               \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_fill\_colour\_with\_opacity(  NULL,                    \(\backslash\)}
+\DoxyCodeLine{                                 (\_\_DES\_ADDR),                                  \(\backslash\)}
+\DoxyCodeLine{                                 (\_\_REGION\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                 (\mbox{\hyperlink{unionarm__2d__color__cccn888__t}{arm\_2d\_color\_cccn888\_t}})\{(\_\_COLOUR).tValue\},   \(\backslash\)}
+\DoxyCodeLine{                                 (\_\_ALPHA))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_ab25d092f414674b7a6759b49086ae955}\label{arm__2d__alpha__blending_8h_ab25d092f414674b7a6759b49086ae955}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb888\_fill\_colour\_with\_alpha\_mask@{arm\_2d\_rgb888\_fill\_colour\_with\_alpha\_mask}}
+\index{arm\_2d\_rgb888\_fill\_colour\_with\_alpha\_mask@{arm\_2d\_rgb888\_fill\_colour\_with\_alpha\_mask}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb888\_fill\_colour\_with\_alpha\_mask}{arm\_2d\_rgb888\_fill\_colour\_with\_alpha\_mask}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb888\+\_\+fill\+\_\+colour\+\_\+with\+\_\+alpha\+\_\+mask(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+COLOUR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{              \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_fill\_colour\_with\_mask(                              \(\backslash\)}
+\DoxyCodeLine{                                      NULL,                                     \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_TARGET\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_REGION\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_ALPHA\_ADDR),                            \(\backslash\)}
+\DoxyCodeLine{                                     (\mbox{\hyperlink{unionarm__2d__color__cccn888__t}{arm\_2d\_color\_cccn888\_t}})\{(\_\_COLOUR).tValue\})}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a4c26b48c56cec90959ecd0251f734229}\label{arm__2d__alpha__blending_8h_a4c26b48c56cec90959ecd0251f734229}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb888\_fill\_colour\_with\_alpha\_mask\_and\_opacity@{arm\_2d\_rgb888\_fill\_colour\_with\_alpha\_mask\_and\_opacity}}
+\index{arm\_2d\_rgb888\_fill\_colour\_with\_alpha\_mask\_and\_opacity@{arm\_2d\_rgb888\_fill\_colour\_with\_alpha\_mask\_and\_opacity}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb888\_fill\_colour\_with\_alpha\_mask\_and\_opacity}{arm\_2d\_rgb888\_fill\_colour\_with\_alpha\_mask\_and\_opacity}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb888\+\_\+fill\+\_\+colour\+\_\+with\+\_\+alpha\+\_\+mask\+\_\+and\+\_\+opacity(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+COLOUR,  }\item[{}]{\+\_\+\+\_\+\+OPACITY }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_fill\_colour\_with\_mask\_and\_opacity(                  \(\backslash\)}
+\DoxyCodeLine{                                  NULL,                                         \(\backslash\)}
+\DoxyCodeLine{                                 (\_\_TARGET\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                 (\_\_REGION\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                 (\_\_ALPHA\_ADDR),                                \(\backslash\)}
+\DoxyCodeLine{                                 (\mbox{\hyperlink{unionarm__2d__color__cccn888__t}{arm\_2d\_color\_cccn888\_t}})\{(\_\_COLOUR).tValue\},   \(\backslash\)}
+\DoxyCodeLine{                                 (\_\_OPACITY))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a47cd979e043f9ff0acf4799f2fa7362e}\label{arm__2d__alpha__blending_8h_a47cd979e043f9ff0acf4799f2fa7362e}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb888\_fill\_colour\_with\_mask@{arm\_2d\_rgb888\_fill\_colour\_with\_mask}}
+\index{arm\_2d\_rgb888\_fill\_colour\_with\_mask@{arm\_2d\_rgb888\_fill\_colour\_with\_mask}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb888\_fill\_colour\_with\_mask}{arm\_2d\_rgb888\_fill\_colour\_with\_mask}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb888\+\_\+fill\+\_\+colour\+\_\+with\+\_\+mask(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+COLOUR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{              \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_fill\_colour\_with\_mask(                              \(\backslash\)}
+\DoxyCodeLine{                                      NULL,                                     \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_TARGET\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_REGION\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                     (\_\_ALPHA\_ADDR),                            \(\backslash\)}
+\DoxyCodeLine{                                     (\mbox{\hyperlink{unionarm__2d__color__cccn888__t}{arm\_2d\_color\_cccn888\_t}})\{(\_\_COLOUR).tValue\})}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_abba400f1c11bcfa0afc8535d49f7614d}\label{arm__2d__alpha__blending_8h_abba400f1c11bcfa0afc8535d49f7614d}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb888\_fill\_colour\_with\_mask\_and\_opacity@{arm\_2d\_rgb888\_fill\_colour\_with\_mask\_and\_opacity}}
+\index{arm\_2d\_rgb888\_fill\_colour\_with\_mask\_and\_opacity@{arm\_2d\_rgb888\_fill\_colour\_with\_mask\_and\_opacity}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb888\_fill\_colour\_with\_mask\_and\_opacity}{arm\_2d\_rgb888\_fill\_colour\_with\_mask\_and\_opacity}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb888\+\_\+fill\+\_\+colour\+\_\+with\+\_\+mask\+\_\+and\+\_\+opacity(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+TARGET\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+COLOUR,  }\item[{}]{\+\_\+\+\_\+\+OPACITY }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_fill\_colour\_with\_mask\_and\_opacity(                  \(\backslash\)}
+\DoxyCodeLine{                                  NULL,                                         \(\backslash\)}
+\DoxyCodeLine{                                 (\_\_TARGET\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                 (\_\_REGION\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                 (\_\_ALPHA\_ADDR),                                \(\backslash\)}
+\DoxyCodeLine{                                 (\mbox{\hyperlink{unionarm__2d__color__cccn888__t}{arm\_2d\_color\_cccn888\_t}})\{(\_\_COLOUR).tValue\},   \(\backslash\)}
+\DoxyCodeLine{                                 (\_\_OPACITY))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_ae0ae4d4843ce4e38bcd5bf278d735dfd}\label{arm__2d__alpha__blending_8h_ae0ae4d4843ce4e38bcd5bf278d735dfd}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb888\_fill\_colour\_with\_opacity@{arm\_2d\_rgb888\_fill\_colour\_with\_opacity}}
+\index{arm\_2d\_rgb888\_fill\_colour\_with\_opacity@{arm\_2d\_rgb888\_fill\_colour\_with\_opacity}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb888\_fill\_colour\_with\_opacity}{arm\_2d\_rgb888\_fill\_colour\_with\_opacity}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb888\+\_\+fill\+\_\+colour\+\_\+with\+\_\+opacity(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+COLOUR,  }\item[{}]{\+\_\+\+\_\+\+ALPHA }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{               \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_fill\_colour\_with\_opacity(  NULL,                    \(\backslash\)}
+\DoxyCodeLine{                                 (\_\_DES\_ADDR),                                  \(\backslash\)}
+\DoxyCodeLine{                                 (\_\_REGION\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                 (\mbox{\hyperlink{unionarm__2d__color__cccn888__t}{arm\_2d\_color\_cccn888\_t}})\{(\_\_COLOUR).tValue\},   \(\backslash\)}
+\DoxyCodeLine{                                 (\_\_ALPHA))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a02ada32264df2b07f010c642906cbbbf}\label{arm__2d__alpha__blending_8h_a02ada32264df2b07f010c642906cbbbf}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb888\_tile\_copy\_with\_alpha\_mask@{arm\_2d\_rgb888\_tile\_copy\_with\_alpha\_mask}}
+\index{arm\_2d\_rgb888\_tile\_copy\_with\_alpha\_mask@{arm\_2d\_rgb888\_tile\_copy\_with\_alpha\_mask}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb888\_tile\_copy\_with\_alpha\_mask}{arm\_2d\_rgb888\_tile\_copy\_with\_alpha\_mask}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb888\+\_\+tile\+\_\+copy\+\_\+with\+\_\+alpha\+\_\+mask(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+MSK\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+MSK\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{           \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_tile\_copy\_with\_masks(                               \(\backslash\)}
+\DoxyCodeLine{                                        NULL,                                   \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_MSK\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_MSK\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_REGION),                             \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_MODE))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a59cfde3fe63472ec8b49a08ebe39c6c8}\label{arm__2d__alpha__blending_8h_a59cfde3fe63472ec8b49a08ebe39c6c8}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb888\_tile\_copy\_with\_des\_mask@{arm\_2d\_rgb888\_tile\_copy\_with\_des\_mask}}
+\index{arm\_2d\_rgb888\_tile\_copy\_with\_des\_mask@{arm\_2d\_rgb888\_tile\_copy\_with\_des\_mask}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb888\_tile\_copy\_with\_des\_mask}{arm\_2d\_rgb888\_tile\_copy\_with\_des\_mask}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb888\+\_\+tile\+\_\+copy\+\_\+with\+\_\+des\+\_\+mask(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+MSK\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{           \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_tile\_copy\_with\_des\_mask(                            \(\backslash\)}
+\DoxyCodeLine{                                        NULL,                                   \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_MSK\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_REGION),                             \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_MODE))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_ad3d4bc4234e284e0ef602fededb51825}\label{arm__2d__alpha__blending_8h_ad3d4bc4234e284e0ef602fededb51825}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb888\_tile\_copy\_with\_masks@{arm\_2d\_rgb888\_tile\_copy\_with\_masks}}
+\index{arm\_2d\_rgb888\_tile\_copy\_with\_masks@{arm\_2d\_rgb888\_tile\_copy\_with\_masks}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb888\_tile\_copy\_with\_masks}{arm\_2d\_rgb888\_tile\_copy\_with\_masks}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb888\+\_\+tile\+\_\+copy\+\_\+with\+\_\+masks(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+MSK\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+MSK\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{           \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_tile\_copy\_with\_masks(                               \(\backslash\)}
+\DoxyCodeLine{                                        NULL,                                   \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_MSK\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_MSK\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_REGION),                             \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_MODE))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_ae8e537ec191008c74f16bdb5f2d86724}\label{arm__2d__alpha__blending_8h_ae8e537ec191008c74f16bdb5f2d86724}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_rgb888\_tile\_copy\_with\_src\_mask@{arm\_2d\_rgb888\_tile\_copy\_with\_src\_mask}}
+\index{arm\_2d\_rgb888\_tile\_copy\_with\_src\_mask@{arm\_2d\_rgb888\_tile\_copy\_with\_src\_mask}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb888\_tile\_copy\_with\_src\_mask}{arm\_2d\_rgb888\_tile\_copy\_with\_src\_mask}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb888\+\_\+tile\+\_\+copy\+\_\+with\+\_\+src\+\_\+mask(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+MSK\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+REGION,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{           \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_cccn888\_tile\_copy\_with\_src\_mask(                            \(\backslash\)}
+\DoxyCodeLine{                                        NULL,                                   \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_SRC\_MSK\_ADDR),                       \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_DES\_ADDR),                           \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_REGION),                             \(\backslash\)}
+\DoxyCodeLine{                                        (\_\_MODE))}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a8d81a82d787906c56381e84f8944969f}\label{arm__2d__alpha__blending_8h_a8d81a82d787906c56381e84f8944969f}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!arm\_2d\_op\_cp\_msk\_t@{arm\_2d\_op\_cp\_msk\_t}}
+\index{arm\_2d\_op\_cp\_msk\_t@{arm\_2d\_op\_cp\_msk\_t}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_op\_cp\_msk\_t}{arm\_2d\_op\_cp\_msk\_t}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{structarm__2d__op__src__msk__t}{arm\+\_\+2d\+\_\+op\+\_\+src\+\_\+msk\+\_\+t}} \mbox{\hyperlink{arm__2d__alpha__blending_8h_a8d81a82d787906c56381e84f8944969f}{arm\+\_\+2d\+\_\+op\+\_\+cp\+\_\+msk\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__alpha__blending_8h_source_l00846}{846}} of file \mbox{\hyperlink{arm__2d__alpha__blending_8h_source}{arm\+\_\+2d\+\_\+alpha\+\_\+blending.\+h}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a3dfdff9257dda1432d9fbefa251473c3}\label{arm__2d__alpha__blending_8h_a3dfdff9257dda1432d9fbefa251473c3}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!chColour@{chColour}}
+\index{chColour@{chColour}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{chColour}{chColour}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} uint\+\_\+fast8\+\_\+t ch\+Colour}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__alpha__blending_8h_source_l00890}{890}} of file \mbox{\hyperlink{arm__2d__alpha__blending_8h_source}{arm\+\_\+2d\+\_\+alpha\+\_\+blending.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_ab025c7acb6920ba4cf780b0bc2a715d2}\label{arm__2d__alpha__blending_8h_ab025c7acb6920ba4cf780b0bc2a715d2}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!chOpacity@{chOpacity}}
+\index{chOpacity@{chOpacity}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{chOpacity}{chOpacity}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__location__t}{arm\+\_\+2d\+\_\+location\+\_\+t}} float float uint\+\_\+fast8\+\_\+t ch\+Opacity}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__alpha__blending_8h_source_l00955}{955}} of file \mbox{\hyperlink{arm__2d__alpha__blending_8h_source}{arm\+\_\+2d\+\_\+alpha\+\_\+blending.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a3b6c1f4bc2dffba78739ca1206b108dd}\label{arm__2d__alpha__blending_8h_a3b6c1f4bc2dffba78739ca1206b108dd}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!chRatio@{chRatio}}
+\index{chRatio@{chRatio}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{chRatio}{chRatio}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__location__t}{arm\+\_\+2d\+\_\+location\+\_\+t}} float float uint32\+\_\+t uint\+\_\+fast8\+\_\+t ch\+Ratio}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__alpha__blending_8h_source_l00861}{861}} of file \mbox{\hyperlink{arm__2d__alpha__blending_8h_source}{arm\+\_\+2d\+\_\+alpha\+\_\+blending.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a0d9d33c2c11dfa67110e0711cb367906}\label{arm__2d__alpha__blending_8h_a0d9d33c2c11dfa67110e0711cb367906}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!ptAlpha@{ptAlpha}}
+\index{ptAlpha@{ptAlpha}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{ptAlpha}{ptAlpha}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} $\ast$ pt\+Alpha}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__alpha__blending_8h_source_l00921}{921}} of file \mbox{\hyperlink{arm__2d__alpha__blending_8h_source}{arm\+\_\+2d\+\_\+alpha\+\_\+blending.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_aeeb5bc6cd024fba5ac2bff8fe0ab939a}\label{arm__2d__alpha__blending_8h_aeeb5bc6cd024fba5ac2bff8fe0ab939a}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!ptDesMask@{ptDesMask}}
+\index{ptDesMask@{ptDesMask}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{ptDesMask}{ptDesMask}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} $\ast$ pt\+Des\+Mask}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__alpha__blending_8h_source_l01023}{1023}} of file \mbox{\hyperlink{arm__2d__alpha__blending_8h_source}{arm\+\_\+2d\+\_\+alpha\+\_\+blending.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a25b1be65ad65273d0a8df4d7822bb37c}\label{arm__2d__alpha__blending_8h_a25b1be65ad65273d0a8df4d7822bb37c}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!ptRegion@{ptRegion}}
+\index{ptRegion@{ptRegion}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{ptRegion}{ptRegion}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} $\ast$ pt\+Region}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__alpha__blending_8h_source_l00860}{860}} of file \mbox{\hyperlink{arm__2d__alpha__blending_8h_source}{arm\+\_\+2d\+\_\+alpha\+\_\+blending.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a3993bb94d25fad259236f86ef3034fe4}\label{arm__2d__alpha__blending_8h_a3993bb94d25fad259236f86ef3034fe4}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!ptSource@{ptSource}}
+\index{ptSource@{ptSource}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{ptSource}{ptSource}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} $\ast$ pt\+Source}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__alpha__blending_8h_source_l00858}{858}} of file \mbox{\hyperlink{arm__2d__alpha__blending_8h_source}{arm\+\_\+2d\+\_\+alpha\+\_\+blending.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a94acddd53ee4543d4c0ddf34abd52f05}\label{arm__2d__alpha__blending_8h_a94acddd53ee4543d4c0ddf34abd52f05}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!ptSrcMask@{ptSrcMask}}
+\index{ptSrcMask@{ptSrcMask}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{ptSrcMask}{ptSrcMask}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} $\ast$ pt\+Src\+Mask}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__alpha__blending_8h_source_l01021}{1021}} of file \mbox{\hyperlink{arm__2d__alpha__blending_8h_source}{arm\+\_\+2d\+\_\+alpha\+\_\+blending.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a46ba63bb042a2ef13c3295664d0a8a00}\label{arm__2d__alpha__blending_8h_a46ba63bb042a2ef13c3295664d0a8a00}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!ptTarget@{ptTarget}}
+\index{ptTarget@{ptTarget}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{ptTarget}{ptTarget}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} $\ast$ pt\+Target}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__alpha__blending_8h_source_l00859}{859}} of file \mbox{\hyperlink{arm__2d__alpha__blending_8h_source}{arm\+\_\+2d\+\_\+alpha\+\_\+blending.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a913e40ba00cedf57a515027786cac9d1}\label{arm__2d__alpha__blending_8h_a913e40ba00cedf57a515027786cac9d1}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!tColour@{tColour}}
+\index{tColour@{tColour}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{tColour}{tColour}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} uint\+\_\+fast8\+\_\+t \mbox{\hyperlink{unionarm__2d__color__cccn888__t}{arm\+\_\+2d\+\_\+color\+\_\+cccn888\+\_\+t}} t\+Colour}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__alpha__blending_8h_source_l00899}{899}} of file \mbox{\hyperlink{arm__2d__alpha__blending_8h_source}{arm\+\_\+2d\+\_\+alpha\+\_\+blending.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__alpha__blending_8h_a2e5a85ec501d28af73a7b6d43828b7f0}\label{arm__2d__alpha__blending_8h_a2e5a85ec501d28af73a7b6d43828b7f0}} 
+\index{arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}!wMode@{wMode}}
+\index{wMode@{wMode}!arm\_2d\_alpha\_blending.h@{arm\_2d\_alpha\_blending.h}}
+\doxysubsubsection{\texorpdfstring{wMode}{wMode}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} uint32\+\_\+t uint32\+\_\+t w\+Mode}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__alpha__blending_8h_source_l01025}{1025}} of file \mbox{\hyperlink{arm__2d__alpha__blending_8h_source}{arm\+\_\+2d\+\_\+alpha\+\_\+blending.\+h}}.
+

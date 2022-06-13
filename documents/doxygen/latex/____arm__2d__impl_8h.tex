@@ -1,0 +1,184 @@
+\hypertarget{____arm__2d__impl_8h}{}\doxysection{\+\_\+\+\_\+arm\+\_\+2d\+\_\+impl.\+h File Reference}
+\label{____arm__2d__impl_8h}\index{\_\_arm\_2d\_impl.h@{\_\_arm\_2d\_impl.h}}
+{\ttfamily \#include \char`\"{}arm\+\_\+2d.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}\+\_\+\+\_\+arm\+\_\+2d\+\_\+direct.\+h\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{____arm__2d__impl_8h_a50383951d2a9d4f1a855b2cec5e03274}{this}}~($\ast$pt\+This)
+\item 
+\#define \mbox{\hyperlink{____arm__2d__impl_8h_a9f9d937dc5a6d79e26e25ebf55bbf679}{OP\+\_\+\+CORE}}~this.\+use\+\_\+as\+\_\+\+\_\+arm\+\_\+2d\+\_\+op\+\_\+core\+\_\+t
+\item 
+\#define \mbox{\hyperlink{____arm__2d__impl_8h_a451aeef94e8d5bf76519f63cbca43493}{ARM\+\_\+2\+D\+\_\+\+IMPL}}(\+\_\+\+\_\+\+TYPE, ...)
+\item 
+\#define \mbox{\hyperlink{____arm__2d__impl_8h_a4b283d1d8cd28fdc1a93a1d7dd2e4f57}{ARM\+\_\+2\+D\+\_\+\+TRY\+\_\+\+ACCELERATION}}(\+\_\+\+\_\+\+ID,  \+\_\+\+\_\+\+FUNC\+\_\+\+PROTOTYPE, ...)
+\item 
+\#define \mbox{\hyperlink{____arm__2d__impl_8h_ac0a8a9b5defd52c6b5251c9579e7f520}{ARM\+\_\+2\+D\+\_\+\+RUN\+\_\+\+DEFAULT}}(\+\_\+\+\_\+\+ID,  \+\_\+\+\_\+\+FUNC\+\_\+\+PROTOTYPE, ...)
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{Indent}\textbf{ Operation Index\+: used for logging and debugging purpose}\par
+\begin{DoxyCompactItemize}
+\item 
+enum 
+\end{DoxyCompactItemize}
+\end{Indent}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct \+\_\+\+\_\+arm\+\_\+2d\+\_\+op\+\_\+control \mbox{\hyperlink{____arm__2d__impl_8h_ac44741102f43d22321f1a8fae52be6ce}{ARM\+\_\+2\+D\+\_\+\+CTRL}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{____arm__2d__impl_8h_a451aeef94e8d5bf76519f63cbca43493}\label{____arm__2d__impl_8h_a451aeef94e8d5bf76519f63cbca43493}} 
+\index{\_\_arm\_2d\_impl.h@{\_\_arm\_2d\_impl.h}!ARM\_2D\_IMPL@{ARM\_2D\_IMPL}}
+\index{ARM\_2D\_IMPL@{ARM\_2D\_IMPL}!\_\_arm\_2d\_impl.h@{\_\_arm\_2d\_impl.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_2D\_IMPL}{ARM\_2D\_IMPL}}
+{\footnotesize\ttfamily \#define ARM\+\_\+2\+D\+\_\+\+IMPL(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+TYPE,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{            \_\_TYPE *ptThis = (\_\_TYPE *)(NULL,\#\#\_\_VA\_ARGS\_\_);                    \(\backslash\)}
+\DoxyCodeLine{            if (NULL == ptThis) \{                                               \(\backslash\)}
+\DoxyCodeLine{                ptThis = (\_\_TYPE *)\&\mbox{\hyperlink{____arm__2d__impl_8h_ac44741102f43d22321f1a8fae52be6ce}{ARM\_2D\_CTRL}}.DefaultOP;                      \(\backslash\)}
+\DoxyCodeLine{            \}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{____arm__2d__impl_8h_source_l00065}{65}} of file \mbox{\hyperlink{____arm__2d__impl_8h_source}{\+\_\+\+\_\+arm\+\_\+2d\+\_\+impl.\+h}}.
+
+\mbox{\Hypertarget{____arm__2d__impl_8h_ac0a8a9b5defd52c6b5251c9579e7f520}\label{____arm__2d__impl_8h_ac0a8a9b5defd52c6b5251c9579e7f520}} 
+\index{\_\_arm\_2d\_impl.h@{\_\_arm\_2d\_impl.h}!ARM\_2D\_RUN\_DEFAULT@{ARM\_2D\_RUN\_DEFAULT}}
+\index{ARM\_2D\_RUN\_DEFAULT@{ARM\_2D\_RUN\_DEFAULT}!\_\_arm\_2d\_impl.h@{\_\_arm\_2d\_impl.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_2D\_RUN\_DEFAULT}{ARM\_2D\_RUN\_DEFAULT}}
+{\footnotesize\ttfamily \#define ARM\+\_\+2\+D\+\_\+\+RUN\+\_\+\+DEFAULT(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+ID,  }\item[{}]{\+\_\+\+\_\+\+FUNC\+\_\+\+PROTOTYPE,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{        \textcolor{keywordflow}{if} (    (NULL != \mbox{\hyperlink{____arm__2d__impl_8h_a9f9d937dc5a6d79e26e25ebf55bbf679}{OP\_CORE}}.ptOp-\/>Info.LowLevelIO.IO[\_\_ID]-\/>SW)            \(\backslash\)}
+\DoxyCodeLine{            \&\&  (NULL != \mbox{\hyperlink{____arm__2d__impl_8h_a9f9d937dc5a6d79e26e25ebf55bbf679}{OP\_CORE}}.ptOp-\/>Info.LowLevelIO.IO[\_\_ID])) \{             \(\backslash\)}
+\DoxyCodeLine{            tResult =                                                           \(\backslash\)}
+\DoxyCodeLine{            (*(\_\_FUNC\_PROTOTYPE *)\mbox{\hyperlink{____arm__2d__impl_8h_a9f9d937dc5a6d79e26e25ebf55bbf679}{OP\_CORE}}.ptOp-\/>Info.LowLevelIO.IO[\_\_ID]-\/>SW)(  \(\backslash\)}
+\DoxyCodeLine{                                        ptTask,                                 \(\backslash\)}
+\DoxyCodeLine{\textcolor{preprocessor}{                                        \#\#\_\_VA\_ARGS\_\_);                         \(\backslash\)}}
+\DoxyCodeLine{\textcolor{preprocessor}{        \} else \{                                                                \(\backslash\)}}
+\DoxyCodeLine{\textcolor{preprocessor}{            tResult = (arm\_fsm\_rt\_t)ARM\_2D\_ERR\_NOT\_SUPPORT;                     \(\backslash\)}}
+\DoxyCodeLine{\textcolor{preprocessor}{        \}}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{____arm__2d__impl_8h_source_l00082}{82}} of file \mbox{\hyperlink{____arm__2d__impl_8h_source}{\+\_\+\+\_\+arm\+\_\+2d\+\_\+impl.\+h}}.
+
+\mbox{\Hypertarget{____arm__2d__impl_8h_a4b283d1d8cd28fdc1a93a1d7dd2e4f57}\label{____arm__2d__impl_8h_a4b283d1d8cd28fdc1a93a1d7dd2e4f57}} 
+\index{\_\_arm\_2d\_impl.h@{\_\_arm\_2d\_impl.h}!ARM\_2D\_TRY\_ACCELERATION@{ARM\_2D\_TRY\_ACCELERATION}}
+\index{ARM\_2D\_TRY\_ACCELERATION@{ARM\_2D\_TRY\_ACCELERATION}!\_\_arm\_2d\_impl.h@{\_\_arm\_2d\_impl.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_2D\_TRY\_ACCELERATION}{ARM\_2D\_TRY\_ACCELERATION}}
+{\footnotesize\ttfamily \#define ARM\+\_\+2\+D\+\_\+\+TRY\+\_\+\+ACCELERATION(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+ID,  }\item[{}]{\+\_\+\+\_\+\+FUNC\+\_\+\+PROTOTYPE,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{        \textcolor{keywordflow}{if} (    (NULL != \mbox{\hyperlink{____arm__2d__impl_8h_a9f9d937dc5a6d79e26e25ebf55bbf679}{OP\_CORE}}.ptOp-\/>Info.LowLevelIO.IO[\_\_ID]-\/>HW)            \(\backslash\)}
+\DoxyCodeLine{            \&\&  (NULL != \mbox{\hyperlink{____arm__2d__impl_8h_a9f9d937dc5a6d79e26e25ebf55bbf679}{OP\_CORE}}.ptOp-\/>Info.LowLevelIO.IO[\_\_ID])) \{             \(\backslash\)}
+\DoxyCodeLine{            tResult =                                                           \(\backslash\)}
+\DoxyCodeLine{            (*(\_\_FUNC\_PROTOTYPE *)\mbox{\hyperlink{____arm__2d__impl_8h_a9f9d937dc5a6d79e26e25ebf55bbf679}{OP\_CORE}}.ptOp-\/>Info.LowLevelIO.IO[\_\_ID]-\/>HW)(  \(\backslash\)}
+\DoxyCodeLine{                                        ptTask,                                 \(\backslash\)}
+\DoxyCodeLine{\textcolor{preprocessor}{                                        \#\#\_\_VA\_ARGS\_\_);                         \(\backslash\)}}
+\DoxyCodeLine{\textcolor{preprocessor}{        \}}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{____arm__2d__impl_8h_source_l00073}{73}} of file \mbox{\hyperlink{____arm__2d__impl_8h_source}{\+\_\+\+\_\+arm\+\_\+2d\+\_\+impl.\+h}}.
+
+\mbox{\Hypertarget{____arm__2d__impl_8h_a9f9d937dc5a6d79e26e25ebf55bbf679}\label{____arm__2d__impl_8h_a9f9d937dc5a6d79e26e25ebf55bbf679}} 
+\index{\_\_arm\_2d\_impl.h@{\_\_arm\_2d\_impl.h}!OP\_CORE@{OP\_CORE}}
+\index{OP\_CORE@{OP\_CORE}!\_\_arm\_2d\_impl.h@{\_\_arm\_2d\_impl.h}}
+\doxysubsubsection{\texorpdfstring{OP\_CORE}{OP\_CORE}}
+{\footnotesize\ttfamily \#define OP\+\_\+\+CORE~this.\+use\+\_\+as\+\_\+\+\_\+arm\+\_\+2d\+\_\+op\+\_\+core\+\_\+t}
+
+
+
+Definition at line \mbox{\hyperlink{____arm__2d__impl_8h_source_l00063}{63}} of file \mbox{\hyperlink{____arm__2d__impl_8h_source}{\+\_\+\+\_\+arm\+\_\+2d\+\_\+impl.\+h}}.
+
+\mbox{\Hypertarget{____arm__2d__impl_8h_a50383951d2a9d4f1a855b2cec5e03274}\label{____arm__2d__impl_8h_a50383951d2a9d4f1a855b2cec5e03274}} 
+\index{\_\_arm\_2d\_impl.h@{\_\_arm\_2d\_impl.h}!this@{this}}
+\index{this@{this}!\_\_arm\_2d\_impl.h@{\_\_arm\_2d\_impl.h}}
+\doxysubsubsection{\texorpdfstring{this}{this}}
+{\footnotesize\ttfamily \#define this~($\ast$pt\+This)}
+
+
+
+Definition at line \mbox{\hyperlink{____arm__2d__impl_8h_source_l00060}{60}} of file \mbox{\hyperlink{____arm__2d__impl_8h_source}{\+\_\+\+\_\+arm\+\_\+2d\+\_\+impl.\+h}}.
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{____arm__2d__impl_8h_a06fc87d81c62e9abb8790b6e5713c55b}\label{____arm__2d__impl_8h_a06fc87d81c62e9abb8790b6e5713c55b}} 
+\doxysubsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily anonymous enum}
+
+
+
+Definition at line \mbox{\hyperlink{____arm__2d__impl_8h_source_l00224}{224}} of file \mbox{\hyperlink{____arm__2d__impl_8h_source}{\+\_\+\+\_\+arm\+\_\+2d\+\_\+impl.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00224      \{}
+\DoxyCodeLine{00225     \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ arm-\/2d operation idx begin -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00226     \_\_ARM\_2D\_OP\_IDX\_BARRIER,}
+\DoxyCodeLine{00227     \_\_ARM\_2D\_OP\_IDX\_SYNC = \_\_ARM\_2D\_OP\_IDX\_BARRIER,}
+\DoxyCodeLine{00228     }
+\DoxyCodeLine{00229     \_\_ARM\_2D\_OP\_IDX\_COPY,}
+\DoxyCodeLine{00230     \_\_ARM\_2D\_OP\_IDX\_COPY\_ONLY,}
+\DoxyCodeLine{00231     \_\_ARM\_2D\_OP\_IDX\_COPY\_WITH\_X\_MIRROR,}
+\DoxyCodeLine{00232     \_\_ARM\_2D\_OP\_IDX\_COPY\_WITH\_Y\_MIRROR,}
+\DoxyCodeLine{00233     \_\_ARM\_2D\_OP\_IDX\_COPY\_WITH\_XY\_MIRROR,}
+\DoxyCodeLine{00234     }
+\DoxyCodeLine{00235     \_\_ARM\_2D\_OP\_IDX\_FILL\_ONLY,}
+\DoxyCodeLine{00236     \_\_ARM\_2D\_OP\_IDX\_FILL\_WITH\_X\_MIRROR,}
+\DoxyCodeLine{00237     \_\_ARM\_2D\_OP\_IDX\_FILL\_WITH\_Y\_MIRROR,}
+\DoxyCodeLine{00238     \_\_ARM\_2D\_OP\_IDX\_FILL\_WITH\_XY\_MIRROR,}
+\DoxyCodeLine{00239     }
+\DoxyCodeLine{00240     \_\_ARM\_2D\_OP\_IDX\_COPY\_WITH\_COLOUR\_KEYING,}
+\DoxyCodeLine{00241     \_\_ARM\_2D\_OP\_IDX\_COPY\_WITH\_MASKS,}
+\DoxyCodeLine{00242     \_\_ARM\_2D\_OP\_IDX\_COPY\_WITH\_SOURCE\_MASK,}
+\DoxyCodeLine{00243     \_\_ARM\_2D\_OP\_IDX\_COPY\_WITH\_TARGET\_MASK,}
+\DoxyCodeLine{00244     \_\_ARM\_2D\_OP\_IDX\_FILL\_COLOUR,}
+\DoxyCodeLine{00245     \_\_ARM\_2D\_OP\_IDX\_FILL\_COLOUR\_WITH\_COLOUR\_KEYING,}
+\DoxyCodeLine{00246     \_\_ARM\_2D\_OP\_IDX\_FILL\_COLOUR\_WITH\_MASK,}
+\DoxyCodeLine{00247     \_\_ARM\_2D\_OP\_IDX\_FILL\_COLOUR\_WITH\_MASK\_AND\_OPACITY,}
+\DoxyCodeLine{00248     }
+\DoxyCodeLine{00249     \_\_ARM\_2D\_OP\_IDX\_ALPHA\_BLENDING,}
+\DoxyCodeLine{00250     \_\_ARM\_2D\_OP\_IDX\_ALPHA\_BLENDING\_WITH\_COLOUR\_KEYING,}
+\DoxyCodeLine{00251     \_\_ARM\_2D\_OP\_IDX\_ALPHA\_FILL\_COLOUR,}
+\DoxyCodeLine{00252     \_\_ARM\_2D\_OP\_IDX\_ALPHA\_FILL\_COLOUR\_WITH\_COLOUR\_KEYING,}
+\DoxyCodeLine{00253     }
+\DoxyCodeLine{00254     \_\_ARM\_2D\_OP\_IDX\_DRAW\_POINT,}
+\DoxyCodeLine{00255     \_\_ARM\_2D\_OP\_IDX\_DRAW\_PATTERN,}
+\DoxyCodeLine{00256     }
+\DoxyCodeLine{00257     \_\_ARM\_2D\_OP\_IDX\_COLOUR\_FORMAT\_CONVERSION,}
+\DoxyCodeLine{00258     }
+\DoxyCodeLine{00259     \_\_ARM\_2D\_OP\_IDX\_TRANSFORM,}
+\DoxyCodeLine{00260     \textcolor{comment}{//\_\_ARM\_2D\_OP\_IDX\_TRANSFORM\_WITH\_MASKS,                                     //!< todo in v1.xx}}
+\DoxyCodeLine{00261     \_\_ARM\_2D\_OP\_IDX\_TRANSFORM\_WITH\_SOURCE\_MASK,                                 }
+\DoxyCodeLine{00262     \textcolor{comment}{//\_\_ARM\_2D\_OP\_IDX\_TRANSFORM\_WITH\_TARGET\_MASK,                               //!< todo in v1.xx}}
+\DoxyCodeLine{00263     }
+\DoxyCodeLine{00264     \_\_ARM\_2D\_OP\_IDX\_TRANSFORM\_WITH\_OPACITY,}
+\DoxyCodeLine{00265     \textcolor{comment}{//\_\_ARM\_2D\_OP\_IDX\_TRANSFORM\_WITH\_MASKS\_AND\_OPACITY,                         //!< todo in v1.xx}}
+\DoxyCodeLine{00266     \_\_ARM\_2D\_OP\_IDX\_TRANSFORM\_WITH\_SOURCE\_MASK\_AND\_OPACITY,}
+\DoxyCodeLine{00267     \textcolor{comment}{//\_\_ARM\_2D\_OP\_IDX\_TRANSFORM\_WITH\_TARGET\_MASK\_AND\_OPACITY,                   //!< todo in v1.xx}}
+\DoxyCodeLine{00268     \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ cmsisi-\/2d operation idx end -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00269 \};}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{____arm__2d__impl_8h_ac44741102f43d22321f1a8fae52be6ce}\label{____arm__2d__impl_8h_ac44741102f43d22321f1a8fae52be6ce}} 
+\index{\_\_arm\_2d\_impl.h@{\_\_arm\_2d\_impl.h}!ARM\_2D\_CTRL@{ARM\_2D\_CTRL}}
+\index{ARM\_2D\_CTRL@{ARM\_2D\_CTRL}!\_\_arm\_2d\_impl.h@{\_\_arm\_2d\_impl.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_2D\_CTRL}{ARM\_2D\_CTRL}}
+{\footnotesize\ttfamily struct \+\_\+\+\_\+arm\+\_\+2d\+\_\+op\+\_\+control ARM\+\_\+2\+D\+\_\+\+CTRL\hspace{0.3cm}{\ttfamily [extern]}}
+

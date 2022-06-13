@@ -1,0 +1,505 @@
+\hypertarget{arm__2d__utils_8h}{}\doxysection{arm\+\_\+2d\+\_\+utils.\+h File Reference}
+\label{arm__2d__utils_8h}\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+{\ttfamily \#include \char`\"{}cmsis\+\_\+compiler.\+h\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_a22f94c7e7b097ac219c0e1d1b8129807}{inherit\+\_\+ex}}(\+\_\+\+\_\+type,  \+\_\+\+\_\+name)~\+\_\+\+\_\+inherit\+\_\+ex(\+\_\+\+\_\+type, \+\_\+\+\_\+name)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_a206ba077ba0d890fd0be935fc5d15dda}{ARM\+\_\+2\+D\+\_\+\+UNUSED}}(\+\_\+\+\_\+\+VAR)~(void)(\+\_\+\+\_\+\+VAR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_a399c089faf3ca129f0a98cc7d952cf21}{ARM\+\_\+\+TEST\+\_\+\+BITS}}(\+\_\+\+\_\+\+VALUE,  \+\_\+\+\_\+\+BITS)~((\+\_\+\+\_\+\+BITS) == ((\+\_\+\+\_\+\+VALUE) \& (\+\_\+\+\_\+\+BITS)))
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_a7b6c484887a402bba1af11b457264553}{dimof}}(\+\_\+\+\_\+array)~(sizeof(\+\_\+\+\_\+array)/sizeof(\+\_\+\+\_\+array\mbox{[}0\mbox{]}))
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_a8a4dba3eaaa8e7d90abb2eff93092042}{offsetof}}(\+\_\+\+\_\+type,  \+\_\+\+\_\+member)~            ((uintptr\+\_\+t)\&(((\+\_\+\+\_\+type $\ast$)NULL)-\/$>$\+\_\+\+\_\+member))
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_ae1b849eccd10a282fdee383c4414892c}{ARM\+\_\+\+TO\+\_\+\+STRING}}(\+\_\+\+\_\+\+STR)~\+\_\+\+\_\+\+ARM\+\_\+\+TO\+\_\+\+STRING(\+\_\+\+\_\+\+STR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_ad6a67ffa29074439ce99988dac033e42}{ARM\+\_\+\+CONNECT2}}(\+\_\+\+\_\+A,  \+\_\+\+\_\+B)~\+\_\+\+\_\+\+ARM\+\_\+\+CONNECT2(\+\_\+\+\_\+A, \+\_\+\+\_\+B)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_ad6a57437e52b360a46a1a53d7e656484}{ARM\+\_\+\+CONNECT2\+\_\+\+ALT}}(\+\_\+\+\_\+A,  \+\_\+\+\_\+B)~\+\_\+\+\_\+\+ARM\+\_\+\+CONNECT2\+\_\+\+ALT(\+\_\+\+\_\+A, \+\_\+\+\_\+B)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_aa612e8299f2fa71ff5829e61c4735fd1}{ARM\+\_\+\+CONNECT3}}(\+\_\+\+\_\+A,  \+\_\+\+\_\+B,  \+\_\+\+\_\+C)~\+\_\+\+\_\+\+ARM\+\_\+\+CONNECT3(\+\_\+\+\_\+A, \+\_\+\+\_\+B, \+\_\+\+\_\+C)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_a7661831bf32f2a2bcdd13ac64832b276}{ARM\+\_\+\+CONNECT4}}(\+\_\+\+\_\+A,  \+\_\+\+\_\+B,  \+\_\+\+\_\+C,  \+\_\+\+\_\+D)~\+\_\+\+\_\+\+ARM\+\_\+\+CONNECT4(\+\_\+\+\_\+A, \+\_\+\+\_\+B, \+\_\+\+\_\+C, \+\_\+\+\_\+D)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_a2e16874c12d57bb276a9860b6645f10e}{ARM\+\_\+\+CONNECT5}}(\+\_\+\+\_\+A,  \+\_\+\+\_\+B,  \+\_\+\+\_\+C,  \+\_\+\+\_\+D,  \+\_\+\+\_\+E)~                \+\_\+\+\_\+\+ARM\+\_\+\+CONNECT5(\+\_\+\+\_\+A, \+\_\+\+\_\+B, \+\_\+\+\_\+C, \+\_\+\+\_\+D, \+\_\+\+\_\+E)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_aba600f3cd658dc6e035e4b7b1f3c27dd}{ARM\+\_\+\+CONNECT6}}(\+\_\+\+\_\+A,  \+\_\+\+\_\+B,  \+\_\+\+\_\+C,  \+\_\+\+\_\+D,  \+\_\+\+\_\+E,  \+\_\+\+\_\+F)~                \+\_\+\+\_\+\+ARM\+\_\+\+CONNECT6(\+\_\+\+\_\+A, \+\_\+\+\_\+B, \+\_\+\+\_\+C, \+\_\+\+\_\+D, \+\_\+\+\_\+E, \+\_\+\+\_\+F)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_a33a3313d0da8addcb2ea50f274274f0f}{ARM\+\_\+\+CONNECT7}}(\+\_\+\+\_\+A,  \+\_\+\+\_\+B,  \+\_\+\+\_\+C,  \+\_\+\+\_\+D,  \+\_\+\+\_\+E,  \+\_\+\+\_\+F,  \+\_\+\+\_\+G)~                \+\_\+\+\_\+\+ARM\+\_\+\+CONNECT7(\+\_\+\+\_\+A, \+\_\+\+\_\+B, \+\_\+\+\_\+C, \+\_\+\+\_\+D, \+\_\+\+\_\+E, \+\_\+\+\_\+F, \+\_\+\+\_\+G)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_a4af086e7ef57f699fe7ce566f99337a7}{ARM\+\_\+\+CONNECT8}}(\+\_\+\+\_\+A,  \+\_\+\+\_\+B,  \+\_\+\+\_\+C,  \+\_\+\+\_\+D,  \+\_\+\+\_\+E,  \+\_\+\+\_\+F,  \+\_\+\+\_\+G,  \+\_\+\+\_\+H)~                \+\_\+\+\_\+\+ARM\+\_\+\+CONNECT8(\+\_\+\+\_\+A, \+\_\+\+\_\+B, \+\_\+\+\_\+C, \+\_\+\+\_\+D, \+\_\+\+\_\+E, \+\_\+\+\_\+F, \+\_\+\+\_\+G, \+\_\+\+\_\+H)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_a856347c6941270c7c773e875144b09a5}{ARM\+\_\+\+CONNECT9}}(\+\_\+\+\_\+A,  \+\_\+\+\_\+B,  \+\_\+\+\_\+C,  \+\_\+\+\_\+D,  \+\_\+\+\_\+E,  \+\_\+\+\_\+F,  \+\_\+\+\_\+G,  \+\_\+\+\_\+H,  \+\_\+\+\_\+I)~                \+\_\+\+\_\+\+ARM\+\_\+\+CONNECT9(\+\_\+\+\_\+A, \+\_\+\+\_\+B, \+\_\+\+\_\+C, \+\_\+\+\_\+D, \+\_\+\+\_\+E, \+\_\+\+\_\+F, \+\_\+\+\_\+G, \+\_\+\+\_\+H, \+\_\+\+\_\+I)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_a4fdc0d7383b95357fd4ee0cb64807441}{arm\+\_\+connect}}(...)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_a229485407bd62c3191f14d0d26adbdf8}{ARM\+\_\+\+CONNECT}}(...)~\mbox{\hyperlink{arm__2d__utils_8h_a4fdc0d7383b95357fd4ee0cb64807441}{arm\+\_\+connect}}(\+\_\+\+\_\+\+VA\+\_\+\+ARGS\+\_\+\+\_\+)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_ac2418a94eedb5287b6ac4060df299891}{arm\+\_\+using}}(...)~            \mbox{\hyperlink{arm__2d__utils_8h_ad6a67ffa29074439ce99988dac033e42}{ARM\+\_\+\+CONNECT2}}(\+\_\+\+\_\+\+ARM\+\_\+\+USING, \+\_\+\+\_\+\+ARM\+\_\+\+VA\+\_\+\+NUM\+\_\+\+ARGS(\+\_\+\+\_\+\+VA\+\_\+\+ARGS\+\_\+\+\_\+))(\+\_\+\+\_\+\+VA\+\_\+\+ARGS\+\_\+\+\_\+)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_ab5199659d3ca1a57fe0d0b9929f3d0c7}{arm\+\_\+with}}(...)~            \mbox{\hyperlink{arm__2d__utils_8h_ad6a67ffa29074439ce99988dac033e42}{ARM\+\_\+\+CONNECT2}}(\+\_\+\+\_\+\+ARM\+\_\+\+WITH, \+\_\+\+\_\+\+ARM\+\_\+\+VA\+\_\+\+NUM\+\_\+\+ARGS(\+\_\+\+\_\+\+VA\+\_\+\+ARGS\+\_\+\+\_\+))(\+\_\+\+\_\+\+VA\+\_\+\+ARGS\+\_\+\+\_\+)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_af14ad7a196ed239d17d5d041843a8985}{ARM\+\_\+\+FOREACH2}}(\+\_\+\+\_\+type,  \+\_\+\+\_\+array)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_a548bd49836da620ec2641fd2b8382dc1}{ARM\+\_\+\+FOREACH3}}(\+\_\+\+\_\+type,  \+\_\+\+\_\+array,  \+\_\+\+\_\+item)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_a6e3a3a45bb2eb94a1533de571e498752}{ARM\+\_\+\+FOREACH4}}(\+\_\+\+\_\+type,  \+\_\+\+\_\+array,  \+\_\+\+\_\+count,  \+\_\+\+\_\+item)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_aa55b6a116769d8584d283980a4cc7df7}{arm\+\_\+foreach}}(...)~            \mbox{\hyperlink{arm__2d__utils_8h_ad6a67ffa29074439ce99988dac033e42}{ARM\+\_\+\+CONNECT2}}(ARM\+\_\+\+FOREACH, \+\_\+\+\_\+\+ARM\+\_\+\+VA\+\_\+\+NUM\+\_\+\+ARGS(\+\_\+\+\_\+\+VA\+\_\+\+ARGS\+\_\+\+\_\+))(\+\_\+\+\_\+\+VA\+\_\+\+ARGS\+\_\+\+\_\+)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_a467717c9835f6c6a75f3d6d8c3aee8c8}{ARM\+\_\+\+NOINIT}}
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_a3458644a2202c826043fd8c1b317e138}{ARM\+\_\+\+ALIGN}}(\+\_\+\+\_\+N)~\+\_\+\+\_\+\+ARM\+\_\+\+ALIGN(\+\_\+\+\_\+N)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_ac4cb8417578b68dafd15932572d0aa23}{ARM\+\_\+2\+D\+\_\+\+SAFE\+\_\+\+NAME}}(...)~\mbox{\hyperlink{arm__2d__utils_8h_a229485407bd62c3191f14d0d26adbdf8}{ARM\+\_\+\+CONNECT}}(\+\_\+\+\_\+,\+\_\+\+\_\+\+LINE\+\_\+\+\_\+,\#\#\+\_\+\+\_\+\+VA\+\_\+\+ARGS\+\_\+\+\_\+)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_a70a93027501cdb8935d5cd3220cb4e4f}{arm\+\_\+2d\+\_\+safe\+\_\+name}}(...)~\mbox{\hyperlink{arm__2d__utils_8h_ac4cb8417578b68dafd15932572d0aa23}{ARM\+\_\+2\+D\+\_\+\+SAFE\+\_\+\+NAME}}(\+\_\+\+\_\+\+VA\+\_\+\+ARGS\+\_\+\+\_\+)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_aee644f33c5b07d65d292017b21fb3f39}{arm\+\_\+irq\+\_\+safe}}
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_ae2b9b1672ea8c86b1bf00cd50a2b5fc8}{ARM\+\_\+2\+D\+\_\+\+WRAP\+\_\+\+FUNC}}(\+\_\+\+\_\+\+FUNC)~\+\_\+\+\_\+\+ARM\+\_\+2\+D\+\_\+\+WRAP\+\_\+\+FUNC(\+\_\+\+\_\+\+FUNC)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_a2cf5bb29f6ee76dd781d2007b6ff6c5d}{ARM\+\_\+2\+D\+\_\+\+ORIG\+\_\+\+FUNC}}(\+\_\+\+\_\+\+FUNC)~\+\_\+\+\_\+\+ARM\+\_\+2\+D\+\_\+\+ORIG\+\_\+\+FUNC(\+\_\+\+\_\+\+FUNC)
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_ae740539ae448da882095e3473c72cb15}{ARM\+\_\+\+LIST\+\_\+\+STACK\+\_\+\+PUSH}}(\+\_\+\+\_\+\+P\+\_\+\+TOP,  \+\_\+\+\_\+\+P\+\_\+\+NODE)~            \+\_\+\+\_\+\+ARM\+\_\+\+LIST\+\_\+\+STACK\+\_\+\+PUSH((\+\_\+\+\_\+\+P\+\_\+\+TOP), (\+\_\+\+\_\+\+P\+\_\+\+NODE))
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_aa10ffc3aa0daa211e99adf58927f05a8}{ARM\+\_\+\+LIST\+\_\+\+INSERT\+\_\+\+AFTER}}(\+\_\+\+\_\+\+P\+\_\+\+TARGET,  \+\_\+\+\_\+\+P\+\_\+\+NODE)~            \+\_\+\+\_\+\+ARM\+\_\+\+LIST\+\_\+\+STACK\+\_\+\+PUSH((\+\_\+\+\_\+\+P\+\_\+\+TARGET), (\+\_\+\+\_\+\+P\+\_\+\+NODE))
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_a8a8f0f3874f2f2d7dbddf9c2d2f7bee3}{ARM\+\_\+\+LIST\+\_\+\+STACK\+\_\+\+POP}}(\+\_\+\+\_\+\+P\+\_\+\+TOP,  \+\_\+\+\_\+\+P\+\_\+\+NODE)~            \+\_\+\+\_\+\+ARM\+\_\+\+LIST\+\_\+\+STACK\+\_\+\+POP((\+\_\+\+\_\+\+P\+\_\+\+TOP), (\+\_\+\+\_\+\+P\+\_\+\+NODE))
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_a403c3eb9380abcea72edf8a141773b33}{ARM\+\_\+\+LIST\+\_\+\+REMOVE\+\_\+\+AFTER}}(\+\_\+\+\_\+\+P\+\_\+\+TARGET,  \+\_\+\+\_\+\+P\+\_\+\+NODE)~            \mbox{\hyperlink{arm__2d__utils_8h_a8a8f0f3874f2f2d7dbddf9c2d2f7bee3}{ARM\+\_\+\+LIST\+\_\+\+STACK\+\_\+\+POP}}((\+\_\+\+\_\+\+P\+\_\+\+TARGET), (\+\_\+\+\_\+\+P\+\_\+\+NODE))
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_a55542925879b5c786d437ab3efde1c36}{ARM\+\_\+\+LIST\+\_\+\+QUEUE\+\_\+\+ENQUEUE}}(\+\_\+\+\_\+\+HEAD,  \+\_\+\+\_\+\+TAIL,  \+\_\+\+\_\+\+ITEM)~            \+\_\+\+\_\+\+ARM\+\_\+\+LIST\+\_\+\+QUEUE\+\_\+\+ENQUEUE((\+\_\+\+\_\+\+HEAD), (\+\_\+\+\_\+\+TAIL), (\+\_\+\+\_\+\+ITEM))
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_a414fd4c148fd220c3c9d561893c3335e}{ARM\+\_\+\+LIST\+\_\+\+QUEUE\+\_\+\+DEQUEUE}}(\+\_\+\+\_\+\+HEAD,  \+\_\+\+\_\+\+TAIL,  \+\_\+\+\_\+\+ITEM)~            \+\_\+\+\_\+\+ARM\+\_\+\+LIST\+\_\+\+QUEUE\+\_\+\+DEQUEUE((\+\_\+\+\_\+\+HEAD), (\+\_\+\+\_\+\+TAIL), (\+\_\+\+\_\+\+ITEM))
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_ae655d62f3c3810b420c874a7af11b09f}{ARM\+\_\+\+LIST\+\_\+\+QUEUE\+\_\+\+PEEK}}(\+\_\+\+\_\+\+HEAD,  \+\_\+\+\_\+\+TAIL,  \+\_\+\+\_\+\+ITEM)~            \+\_\+\+\_\+\+ARM\+\_\+\+LIST\+\_\+\+QUEUE\+\_\+\+PEEK((\+\_\+\+\_\+\+HEAD), (\+\_\+\+\_\+\+TAIL), (\+\_\+\+\_\+\+ITEM))                 \textbackslash{}
+\item 
+\#define \mbox{\hyperlink{arm__2d__utils_8h_ae3cfa68806c0c6c9fa7bb2a36453eef5}{ref\+\_\+low\+\_\+lv\+\_\+io}}(\+\_\+\+\_\+\+NAME)~\+\_\+\+\_\+ref\+\_\+low\+\_\+lv\+\_\+io(\+\_\+\+\_\+\+NAME)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{arm__2d__utils_8h_a2cf5bb29f6ee76dd781d2007b6ff6c5d}\label{arm__2d__utils_8h_a2cf5bb29f6ee76dd781d2007b6ff6c5d}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_2D\_ORIG\_FUNC@{ARM\_2D\_ORIG\_FUNC}}
+\index{ARM\_2D\_ORIG\_FUNC@{ARM\_2D\_ORIG\_FUNC}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_2D\_ORIG\_FUNC}{ARM\_2D\_ORIG\_FUNC}}
+{\footnotesize\ttfamily \#define ARM\+\_\+2\+D\+\_\+\+ORIG\+\_\+\+FUNC(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+FUNC }\end{DoxyParamCaption})~\+\_\+\+\_\+\+ARM\+\_\+2\+D\+\_\+\+ORIG\+\_\+\+FUNC(\+\_\+\+\_\+\+FUNC)}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00351}{351}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_ac4cb8417578b68dafd15932572d0aa23}\label{arm__2d__utils_8h_ac4cb8417578b68dafd15932572d0aa23}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_2D\_SAFE\_NAME@{ARM\_2D\_SAFE\_NAME}}
+\index{ARM\_2D\_SAFE\_NAME@{ARM\_2D\_SAFE\_NAME}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_2D\_SAFE\_NAME}{ARM\_2D\_SAFE\_NAME}}
+{\footnotesize\ttfamily \#define ARM\+\_\+2\+D\+\_\+\+SAFE\+\_\+\+NAME(\begin{DoxyParamCaption}\item[{}]{... }\end{DoxyParamCaption})~\mbox{\hyperlink{arm__2d__utils_8h_a229485407bd62c3191f14d0d26adbdf8}{ARM\+\_\+\+CONNECT}}(\+\_\+\+\_\+,\+\_\+\+\_\+\+LINE\+\_\+\+\_\+,\#\#\+\_\+\+\_\+\+VA\+\_\+\+ARGS\+\_\+\+\_\+)}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00326}{326}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_a70a93027501cdb8935d5cd3220cb4e4f}\label{arm__2d__utils_8h_a70a93027501cdb8935d5cd3220cb4e4f}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!arm\_2d\_safe\_name@{arm\_2d\_safe\_name}}
+\index{arm\_2d\_safe\_name@{arm\_2d\_safe\_name}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_safe\_name}{arm\_2d\_safe\_name}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+safe\+\_\+name(\begin{DoxyParamCaption}\item[{}]{... }\end{DoxyParamCaption})~\mbox{\hyperlink{arm__2d__utils_8h_ac4cb8417578b68dafd15932572d0aa23}{ARM\+\_\+2\+D\+\_\+\+SAFE\+\_\+\+NAME}}(\+\_\+\+\_\+\+VA\+\_\+\+ARGS\+\_\+\+\_\+)}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00327}{327}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_a206ba077ba0d890fd0be935fc5d15dda}\label{arm__2d__utils_8h_a206ba077ba0d890fd0be935fc5d15dda}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_2D\_UNUSED@{ARM\_2D\_UNUSED}}
+\index{ARM\_2D\_UNUSED@{ARM\_2D\_UNUSED}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_2D\_UNUSED}{ARM\_2D\_UNUSED}}
+{\footnotesize\ttfamily \#define ARM\+\_\+2\+D\+\_\+\+UNUSED(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+VAR }\end{DoxyParamCaption})~(void)(\+\_\+\+\_\+\+VAR)}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00157}{157}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_ae2b9b1672ea8c86b1bf00cd50a2b5fc8}\label{arm__2d__utils_8h_ae2b9b1672ea8c86b1bf00cd50a2b5fc8}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_2D\_WRAP\_FUNC@{ARM\_2D\_WRAP\_FUNC}}
+\index{ARM\_2D\_WRAP\_FUNC@{ARM\_2D\_WRAP\_FUNC}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_2D\_WRAP\_FUNC}{ARM\_2D\_WRAP\_FUNC}}
+{\footnotesize\ttfamily \#define ARM\+\_\+2\+D\+\_\+\+WRAP\+\_\+\+FUNC(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+FUNC }\end{DoxyParamCaption})~\+\_\+\+\_\+\+ARM\+\_\+2\+D\+\_\+\+WRAP\+\_\+\+FUNC(\+\_\+\+\_\+\+FUNC)}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00350}{350}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_a3458644a2202c826043fd8c1b317e138}\label{arm__2d__utils_8h_a3458644a2202c826043fd8c1b317e138}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_ALIGN@{ARM\_ALIGN}}
+\index{ARM\_ALIGN@{ARM\_ALIGN}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_ALIGN}{ARM\_ALIGN}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+ALIGN(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+N }\end{DoxyParamCaption})~\+\_\+\+\_\+\+ARM\+\_\+\+ALIGN(\+\_\+\+\_\+N)}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00314}{314}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_a4fdc0d7383b95357fd4ee0cb64807441}\label{arm__2d__utils_8h_a4fdc0d7383b95357fd4ee0cb64807441}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!arm\_connect@{arm\_connect}}
+\index{arm\_connect@{arm\_connect}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{arm\_connect}{arm\_connect}}
+{\footnotesize\ttfamily \#define arm\+\_\+connect(\begin{DoxyParamCaption}\item[{}]{... }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{            \mbox{\hyperlink{arm__2d__utils_8h_ad6a57437e52b360a46a1a53d7e656484}{ARM\_CONNECT2\_ALT}}(\mbox{\hyperlink{arm__2d__utils_8h_a229485407bd62c3191f14d0d26adbdf8}{ARM\_CONNECT}}, \_\_ARM\_VA\_NUM\_ARGS(\_\_VA\_ARGS\_\_))       \(\backslash\)}
+\DoxyCodeLine{                (\_\_VA\_ARGS\_\_)}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00218}{218}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_a229485407bd62c3191f14d0d26adbdf8}\label{arm__2d__utils_8h_a229485407bd62c3191f14d0d26adbdf8}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_CONNECT@{ARM\_CONNECT}}
+\index{ARM\_CONNECT@{ARM\_CONNECT}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_CONNECT}{ARM\_CONNECT}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+CONNECT(\begin{DoxyParamCaption}\item[{}]{... }\end{DoxyParamCaption})~\mbox{\hyperlink{arm__2d__utils_8h_a4fdc0d7383b95357fd4ee0cb64807441}{arm\+\_\+connect}}(\+\_\+\+\_\+\+VA\+\_\+\+ARGS\+\_\+\+\_\+)}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00222}{222}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_ad6a67ffa29074439ce99988dac033e42}\label{arm__2d__utils_8h_ad6a67ffa29074439ce99988dac033e42}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_CONNECT2@{ARM\_CONNECT2}}
+\index{ARM\_CONNECT2@{ARM\_CONNECT2}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_CONNECT2}{ARM\_CONNECT2}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+CONNECT2(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+A,  }\item[{}]{\+\_\+\+\_\+B }\end{DoxyParamCaption})~\+\_\+\+\_\+\+ARM\+\_\+\+CONNECT2(\+\_\+\+\_\+A, \+\_\+\+\_\+B)}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00203}{203}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_ad6a57437e52b360a46a1a53d7e656484}\label{arm__2d__utils_8h_ad6a57437e52b360a46a1a53d7e656484}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_CONNECT2\_ALT@{ARM\_CONNECT2\_ALT}}
+\index{ARM\_CONNECT2\_ALT@{ARM\_CONNECT2\_ALT}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_CONNECT2\_ALT}{ARM\_CONNECT2\_ALT}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+CONNECT2\+\_\+\+ALT(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+A,  }\item[{}]{\+\_\+\+\_\+B }\end{DoxyParamCaption})~\+\_\+\+\_\+\+ARM\+\_\+\+CONNECT2\+\_\+\+ALT(\+\_\+\+\_\+A, \+\_\+\+\_\+B)}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00204}{204}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_aa612e8299f2fa71ff5829e61c4735fd1}\label{arm__2d__utils_8h_aa612e8299f2fa71ff5829e61c4735fd1}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_CONNECT3@{ARM\_CONNECT3}}
+\index{ARM\_CONNECT3@{ARM\_CONNECT3}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_CONNECT3}{ARM\_CONNECT3}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+CONNECT3(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+A,  }\item[{}]{\+\_\+\+\_\+B,  }\item[{}]{\+\_\+\+\_\+C }\end{DoxyParamCaption})~\+\_\+\+\_\+\+ARM\+\_\+\+CONNECT3(\+\_\+\+\_\+A, \+\_\+\+\_\+B, \+\_\+\+\_\+C)}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00205}{205}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_a7661831bf32f2a2bcdd13ac64832b276}\label{arm__2d__utils_8h_a7661831bf32f2a2bcdd13ac64832b276}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_CONNECT4@{ARM\_CONNECT4}}
+\index{ARM\_CONNECT4@{ARM\_CONNECT4}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_CONNECT4}{ARM\_CONNECT4}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+CONNECT4(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+A,  }\item[{}]{\+\_\+\+\_\+B,  }\item[{}]{\+\_\+\+\_\+C,  }\item[{}]{\+\_\+\+\_\+D }\end{DoxyParamCaption})~\+\_\+\+\_\+\+ARM\+\_\+\+CONNECT4(\+\_\+\+\_\+A, \+\_\+\+\_\+B, \+\_\+\+\_\+C, \+\_\+\+\_\+D)}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00206}{206}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_a2e16874c12d57bb276a9860b6645f10e}\label{arm__2d__utils_8h_a2e16874c12d57bb276a9860b6645f10e}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_CONNECT5@{ARM\_CONNECT5}}
+\index{ARM\_CONNECT5@{ARM\_CONNECT5}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_CONNECT5}{ARM\_CONNECT5}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+CONNECT5(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+A,  }\item[{}]{\+\_\+\+\_\+B,  }\item[{}]{\+\_\+\+\_\+C,  }\item[{}]{\+\_\+\+\_\+D,  }\item[{}]{\+\_\+\+\_\+E }\end{DoxyParamCaption})~                \+\_\+\+\_\+\+ARM\+\_\+\+CONNECT5(\+\_\+\+\_\+A, \+\_\+\+\_\+B, \+\_\+\+\_\+C, \+\_\+\+\_\+D, \+\_\+\+\_\+E)}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00207}{207}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_aba600f3cd658dc6e035e4b7b1f3c27dd}\label{arm__2d__utils_8h_aba600f3cd658dc6e035e4b7b1f3c27dd}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_CONNECT6@{ARM\_CONNECT6}}
+\index{ARM\_CONNECT6@{ARM\_CONNECT6}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_CONNECT6}{ARM\_CONNECT6}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+CONNECT6(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+A,  }\item[{}]{\+\_\+\+\_\+B,  }\item[{}]{\+\_\+\+\_\+C,  }\item[{}]{\+\_\+\+\_\+D,  }\item[{}]{\+\_\+\+\_\+E,  }\item[{}]{\+\_\+\+\_\+F }\end{DoxyParamCaption})~                \+\_\+\+\_\+\+ARM\+\_\+\+CONNECT6(\+\_\+\+\_\+A, \+\_\+\+\_\+B, \+\_\+\+\_\+C, \+\_\+\+\_\+D, \+\_\+\+\_\+E, \+\_\+\+\_\+F)}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00209}{209}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_a33a3313d0da8addcb2ea50f274274f0f}\label{arm__2d__utils_8h_a33a3313d0da8addcb2ea50f274274f0f}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_CONNECT7@{ARM\_CONNECT7}}
+\index{ARM\_CONNECT7@{ARM\_CONNECT7}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_CONNECT7}{ARM\_CONNECT7}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+CONNECT7(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+A,  }\item[{}]{\+\_\+\+\_\+B,  }\item[{}]{\+\_\+\+\_\+C,  }\item[{}]{\+\_\+\+\_\+D,  }\item[{}]{\+\_\+\+\_\+E,  }\item[{}]{\+\_\+\+\_\+F,  }\item[{}]{\+\_\+\+\_\+G }\end{DoxyParamCaption})~                \+\_\+\+\_\+\+ARM\+\_\+\+CONNECT7(\+\_\+\+\_\+A, \+\_\+\+\_\+B, \+\_\+\+\_\+C, \+\_\+\+\_\+D, \+\_\+\+\_\+E, \+\_\+\+\_\+F, \+\_\+\+\_\+G)}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00211}{211}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_a4af086e7ef57f699fe7ce566f99337a7}\label{arm__2d__utils_8h_a4af086e7ef57f699fe7ce566f99337a7}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_CONNECT8@{ARM\_CONNECT8}}
+\index{ARM\_CONNECT8@{ARM\_CONNECT8}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_CONNECT8}{ARM\_CONNECT8}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+CONNECT8(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+A,  }\item[{}]{\+\_\+\+\_\+B,  }\item[{}]{\+\_\+\+\_\+C,  }\item[{}]{\+\_\+\+\_\+D,  }\item[{}]{\+\_\+\+\_\+E,  }\item[{}]{\+\_\+\+\_\+F,  }\item[{}]{\+\_\+\+\_\+G,  }\item[{}]{\+\_\+\+\_\+H }\end{DoxyParamCaption})~                \+\_\+\+\_\+\+ARM\+\_\+\+CONNECT8(\+\_\+\+\_\+A, \+\_\+\+\_\+B, \+\_\+\+\_\+C, \+\_\+\+\_\+D, \+\_\+\+\_\+E, \+\_\+\+\_\+F, \+\_\+\+\_\+G, \+\_\+\+\_\+H)}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00213}{213}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_a856347c6941270c7c773e875144b09a5}\label{arm__2d__utils_8h_a856347c6941270c7c773e875144b09a5}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_CONNECT9@{ARM\_CONNECT9}}
+\index{ARM\_CONNECT9@{ARM\_CONNECT9}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_CONNECT9}{ARM\_CONNECT9}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+CONNECT9(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+A,  }\item[{}]{\+\_\+\+\_\+B,  }\item[{}]{\+\_\+\+\_\+C,  }\item[{}]{\+\_\+\+\_\+D,  }\item[{}]{\+\_\+\+\_\+E,  }\item[{}]{\+\_\+\+\_\+F,  }\item[{}]{\+\_\+\+\_\+G,  }\item[{}]{\+\_\+\+\_\+H,  }\item[{}]{\+\_\+\+\_\+I }\end{DoxyParamCaption})~                \+\_\+\+\_\+\+ARM\+\_\+\+CONNECT9(\+\_\+\+\_\+A, \+\_\+\+\_\+B, \+\_\+\+\_\+C, \+\_\+\+\_\+D, \+\_\+\+\_\+E, \+\_\+\+\_\+F, \+\_\+\+\_\+G, \+\_\+\+\_\+H, \+\_\+\+\_\+I)}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00215}{215}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_aa55b6a116769d8584d283980a4cc7df7}\label{arm__2d__utils_8h_aa55b6a116769d8584d283980a4cc7df7}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!arm\_foreach@{arm\_foreach}}
+\index{arm\_foreach@{arm\_foreach}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{arm\_foreach}{arm\_foreach}}
+{\footnotesize\ttfamily \#define arm\+\_\+foreach(\begin{DoxyParamCaption}\item[{}]{... }\end{DoxyParamCaption})~            \mbox{\hyperlink{arm__2d__utils_8h_ad6a67ffa29074439ce99988dac033e42}{ARM\+\_\+\+CONNECT2}}(ARM\+\_\+\+FOREACH, \+\_\+\+\_\+\+ARM\+\_\+\+VA\+\_\+\+NUM\+\_\+\+ARGS(\+\_\+\+\_\+\+VA\+\_\+\+ARGS\+\_\+\+\_\+))(\+\_\+\+\_\+\+VA\+\_\+\+ARGS\+\_\+\+\_\+)}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00282}{282}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_af14ad7a196ed239d17d5d041843a8985}\label{arm__2d__utils_8h_af14ad7a196ed239d17d5d041843a8985}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_FOREACH2@{ARM\_FOREACH2}}
+\index{ARM\_FOREACH2@{ARM\_FOREACH2}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_FOREACH2}{ARM\_FOREACH2}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+FOREACH2(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+type,  }\item[{}]{\+\_\+\+\_\+array }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{            \mbox{\hyperlink{arm__2d__utils_8h_ac2418a94eedb5287b6ac4060df299891}{arm\_using}}(\_\_type *\_ = \_\_array)                                      \(\backslash\)}
+\DoxyCodeLine{            for (   uint\_fast32\_t \mbox{\hyperlink{arm__2d__utils_8h_ad6a67ffa29074439ce99988dac033e42}{ARM\_CONNECT2}}(count,\_\_LINE\_\_) = \mbox{\hyperlink{arm__2d__utils_8h_a7b6c484887a402bba1af11b457264553}{dimof}}(\_\_array);\(\backslash\)}
+\DoxyCodeLine{                    ARM\_CONNECT2(count,\_\_LINE\_\_) > 0;                           \(\backslash\)}
+\DoxyCodeLine{                    \_++, \mbox{\hyperlink{arm__2d__utils_8h_ad6a67ffa29074439ce99988dac033e42}{ARM\_CONNECT2}}(count,\_\_LINE\_\_)-\/-\/                         \(\backslash\)}
+\DoxyCodeLine{                )}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00261}{261}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_a548bd49836da620ec2641fd2b8382dc1}\label{arm__2d__utils_8h_a548bd49836da620ec2641fd2b8382dc1}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_FOREACH3@{ARM\_FOREACH3}}
+\index{ARM\_FOREACH3@{ARM\_FOREACH3}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_FOREACH3}{ARM\_FOREACH3}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+FOREACH3(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+type,  }\item[{}]{\+\_\+\+\_\+array,  }\item[{}]{\+\_\+\+\_\+item }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{            \mbox{\hyperlink{arm__2d__utils_8h_ac2418a94eedb5287b6ac4060df299891}{arm\_using}}(\_\_type *\_ = \_\_array, *\_\_item = \_, \_ = \_, )                \(\backslash\)}
+\DoxyCodeLine{            for (   uint\_fast32\_t \mbox{\hyperlink{arm__2d__utils_8h_ad6a67ffa29074439ce99988dac033e42}{ARM\_CONNECT2}}(count,\_\_LINE\_\_) = \mbox{\hyperlink{arm__2d__utils_8h_a7b6c484887a402bba1af11b457264553}{dimof}}(\_\_array);\(\backslash\)}
+\DoxyCodeLine{                    ARM\_CONNECT2(count,\_\_LINE\_\_) > 0;                           \(\backslash\)}
+\DoxyCodeLine{                    \_++, \_\_item = \_, \mbox{\hyperlink{arm__2d__utils_8h_ad6a67ffa29074439ce99988dac033e42}{ARM\_CONNECT2}}(count,\_\_LINE\_\_)-\/-\/             \(\backslash\)}
+\DoxyCodeLine{                )}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00268}{268}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_a6e3a3a45bb2eb94a1533de571e498752}\label{arm__2d__utils_8h_a6e3a3a45bb2eb94a1533de571e498752}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_FOREACH4@{ARM\_FOREACH4}}
+\index{ARM\_FOREACH4@{ARM\_FOREACH4}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_FOREACH4}{ARM\_FOREACH4}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+FOREACH4(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+type,  }\item[{}]{\+\_\+\+\_\+array,  }\item[{}]{\+\_\+\+\_\+count,  }\item[{}]{\+\_\+\+\_\+item }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{            \mbox{\hyperlink{arm__2d__utils_8h_ac2418a94eedb5287b6ac4060df299891}{arm\_using}}(\_\_type *\_ = \_\_array, *\_\_item = \_, \_ = \_, )                \(\backslash\)}
+\DoxyCodeLine{            for (   uint\_fast32\_t \mbox{\hyperlink{arm__2d__utils_8h_ad6a67ffa29074439ce99988dac033e42}{ARM\_CONNECT2}}(count,\_\_LINE\_\_) = (\_\_count);     \(\backslash\)}
+\DoxyCodeLine{                    ARM\_CONNECT2(count,\_\_LINE\_\_) > 0;                           \(\backslash\)}
+\DoxyCodeLine{                    \_++, \_\_item = \_, \mbox{\hyperlink{arm__2d__utils_8h_ad6a67ffa29074439ce99988dac033e42}{ARM\_CONNECT2}}(count,\_\_LINE\_\_)-\/-\/             \(\backslash\)}
+\DoxyCodeLine{                )}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00275}{275}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_aee644f33c5b07d65d292017b21fb3f39}\label{arm__2d__utils_8h_aee644f33c5b07d65d292017b21fb3f39}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!arm\_irq\_safe@{arm\_irq\_safe}}
+\index{arm\_irq\_safe@{arm\_irq\_safe}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{arm\_irq\_safe}{arm\_irq\_safe}}
+{\footnotesize\ttfamily \#define arm\+\_\+irq\+\_\+safe}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{            \mbox{\hyperlink{arm__2d__utils_8h_ac2418a94eedb5287b6ac4060df299891}{arm\_using}}(  uint32\_t \mbox{\hyperlink{arm__2d__utils_8h_ac4cb8417578b68dafd15932572d0aa23}{ARM\_2D\_SAFE\_NAME}}(temp) =                       \(\backslash\)}
+\DoxyCodeLine{                        (\{uint32\_t temp=\_\_get\_PRIMASK();\_\_disable\_irq();temp;\}),\(\backslash\)}
+\DoxyCodeLine{                        \_\_set\_PRIMASK(\mbox{\hyperlink{arm__2d__utils_8h_ac4cb8417578b68dafd15932572d0aa23}{ARM\_2D\_SAFE\_NAME}}(temp)))}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00331}{331}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_aa10ffc3aa0daa211e99adf58927f05a8}\label{arm__2d__utils_8h_aa10ffc3aa0daa211e99adf58927f05a8}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_LIST\_INSERT\_AFTER@{ARM\_LIST\_INSERT\_AFTER}}
+\index{ARM\_LIST\_INSERT\_AFTER@{ARM\_LIST\_INSERT\_AFTER}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_LIST\_INSERT\_AFTER}{ARM\_LIST\_INSERT\_AFTER}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+LIST\+\_\+\+INSERT\+\_\+\+AFTER(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+P\+\_\+\+TARGET,  }\item[{}]{\+\_\+\+\_\+\+P\+\_\+\+NODE }\end{DoxyParamCaption})~            \+\_\+\+\_\+\+ARM\+\_\+\+LIST\+\_\+\+STACK\+\_\+\+PUSH((\+\_\+\+\_\+\+P\+\_\+\+TARGET), (\+\_\+\+\_\+\+P\+\_\+\+NODE))}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00370}{370}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_a414fd4c148fd220c3c9d561893c3335e}\label{arm__2d__utils_8h_a414fd4c148fd220c3c9d561893c3335e}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_LIST\_QUEUE\_DEQUEUE@{ARM\_LIST\_QUEUE\_DEQUEUE}}
+\index{ARM\_LIST\_QUEUE\_DEQUEUE@{ARM\_LIST\_QUEUE\_DEQUEUE}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_LIST\_QUEUE\_DEQUEUE}{ARM\_LIST\_QUEUE\_DEQUEUE}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+LIST\+\_\+\+QUEUE\+\_\+\+DEQUEUE(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+HEAD,  }\item[{}]{\+\_\+\+\_\+\+TAIL,  }\item[{}]{\+\_\+\+\_\+\+ITEM }\end{DoxyParamCaption})~            \+\_\+\+\_\+\+ARM\+\_\+\+LIST\+\_\+\+QUEUE\+\_\+\+DEQUEUE((\+\_\+\+\_\+\+HEAD), (\+\_\+\+\_\+\+TAIL), (\+\_\+\+\_\+\+ITEM))}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00420}{420}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_a55542925879b5c786d437ab3efde1c36}\label{arm__2d__utils_8h_a55542925879b5c786d437ab3efde1c36}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_LIST\_QUEUE\_ENQUEUE@{ARM\_LIST\_QUEUE\_ENQUEUE}}
+\index{ARM\_LIST\_QUEUE\_ENQUEUE@{ARM\_LIST\_QUEUE\_ENQUEUE}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_LIST\_QUEUE\_ENQUEUE}{ARM\_LIST\_QUEUE\_ENQUEUE}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+LIST\+\_\+\+QUEUE\+\_\+\+ENQUEUE(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+HEAD,  }\item[{}]{\+\_\+\+\_\+\+TAIL,  }\item[{}]{\+\_\+\+\_\+\+ITEM }\end{DoxyParamCaption})~            \+\_\+\+\_\+\+ARM\+\_\+\+LIST\+\_\+\+QUEUE\+\_\+\+ENQUEUE((\+\_\+\+\_\+\+HEAD), (\+\_\+\+\_\+\+TAIL), (\+\_\+\+\_\+\+ITEM))}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00405}{405}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_ae655d62f3c3810b420c874a7af11b09f}\label{arm__2d__utils_8h_ae655d62f3c3810b420c874a7af11b09f}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_LIST\_QUEUE\_PEEK@{ARM\_LIST\_QUEUE\_PEEK}}
+\index{ARM\_LIST\_QUEUE\_PEEK@{ARM\_LIST\_QUEUE\_PEEK}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_LIST\_QUEUE\_PEEK}{ARM\_LIST\_QUEUE\_PEEK}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+LIST\+\_\+\+QUEUE\+\_\+\+PEEK(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+HEAD,  }\item[{}]{\+\_\+\+\_\+\+TAIL,  }\item[{}]{\+\_\+\+\_\+\+ITEM }\end{DoxyParamCaption})~            \+\_\+\+\_\+\+ARM\+\_\+\+LIST\+\_\+\+QUEUE\+\_\+\+PEEK((\+\_\+\+\_\+\+HEAD), (\+\_\+\+\_\+\+TAIL), (\+\_\+\+\_\+\+ITEM))                 \textbackslash{}}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00427}{427}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_a403c3eb9380abcea72edf8a141773b33}\label{arm__2d__utils_8h_a403c3eb9380abcea72edf8a141773b33}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_LIST\_REMOVE\_AFTER@{ARM\_LIST\_REMOVE\_AFTER}}
+\index{ARM\_LIST\_REMOVE\_AFTER@{ARM\_LIST\_REMOVE\_AFTER}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_LIST\_REMOVE\_AFTER}{ARM\_LIST\_REMOVE\_AFTER}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+LIST\+\_\+\+REMOVE\+\_\+\+AFTER(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+P\+\_\+\+TARGET,  }\item[{}]{\+\_\+\+\_\+\+P\+\_\+\+NODE }\end{DoxyParamCaption})~            \mbox{\hyperlink{arm__2d__utils_8h_a8a8f0f3874f2f2d7dbddf9c2d2f7bee3}{ARM\+\_\+\+LIST\+\_\+\+STACK\+\_\+\+POP}}((\+\_\+\+\_\+\+P\+\_\+\+TARGET), (\+\_\+\+\_\+\+P\+\_\+\+NODE))}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00385}{385}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_a8a8f0f3874f2f2d7dbddf9c2d2f7bee3}\label{arm__2d__utils_8h_a8a8f0f3874f2f2d7dbddf9c2d2f7bee3}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_LIST\_STACK\_POP@{ARM\_LIST\_STACK\_POP}}
+\index{ARM\_LIST\_STACK\_POP@{ARM\_LIST\_STACK\_POP}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_LIST\_STACK\_POP}{ARM\_LIST\_STACK\_POP}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+LIST\+\_\+\+STACK\+\_\+\+POP(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+P\+\_\+\+TOP,  }\item[{}]{\+\_\+\+\_\+\+P\+\_\+\+NODE }\end{DoxyParamCaption})~            \+\_\+\+\_\+\+ARM\+\_\+\+LIST\+\_\+\+STACK\+\_\+\+POP((\+\_\+\+\_\+\+P\+\_\+\+TOP), (\+\_\+\+\_\+\+P\+\_\+\+NODE))}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00383}{383}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_ae740539ae448da882095e3473c72cb15}\label{arm__2d__utils_8h_ae740539ae448da882095e3473c72cb15}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_LIST\_STACK\_PUSH@{ARM\_LIST\_STACK\_PUSH}}
+\index{ARM\_LIST\_STACK\_PUSH@{ARM\_LIST\_STACK\_PUSH}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_LIST\_STACK\_PUSH}{ARM\_LIST\_STACK\_PUSH}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+LIST\+\_\+\+STACK\+\_\+\+PUSH(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+P\+\_\+\+TOP,  }\item[{}]{\+\_\+\+\_\+\+P\+\_\+\+NODE }\end{DoxyParamCaption})~            \+\_\+\+\_\+\+ARM\+\_\+\+LIST\+\_\+\+STACK\+\_\+\+PUSH((\+\_\+\+\_\+\+P\+\_\+\+TOP), (\+\_\+\+\_\+\+P\+\_\+\+NODE))}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00368}{368}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_a467717c9835f6c6a75f3d6d8c3aee8c8}\label{arm__2d__utils_8h_a467717c9835f6c6a75f3d6d8c3aee8c8}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_NOINIT@{ARM\_NOINIT}}
+\index{ARM\_NOINIT@{ARM\_NOINIT}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_NOINIT}{ARM\_NOINIT}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+NOINIT}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00307}{307}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_a399c089faf3ca129f0a98cc7d952cf21}\label{arm__2d__utils_8h_a399c089faf3ca129f0a98cc7d952cf21}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_TEST\_BITS@{ARM\_TEST\_BITS}}
+\index{ARM\_TEST\_BITS@{ARM\_TEST\_BITS}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_TEST\_BITS}{ARM\_TEST\_BITS}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+TEST\+\_\+\+BITS(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+VALUE,  }\item[{}]{\+\_\+\+\_\+\+BITS }\end{DoxyParamCaption})~((\+\_\+\+\_\+\+BITS) == ((\+\_\+\+\_\+\+VALUE) \& (\+\_\+\+\_\+\+BITS)))}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00161}{161}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_ae1b849eccd10a282fdee383c4414892c}\label{arm__2d__utils_8h_ae1b849eccd10a282fdee383c4414892c}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ARM\_TO\_STRING@{ARM\_TO\_STRING}}
+\index{ARM\_TO\_STRING@{ARM\_TO\_STRING}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_TO\_STRING}{ARM\_TO\_STRING}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+TO\+\_\+\+STRING(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+STR }\end{DoxyParamCaption})~\+\_\+\+\_\+\+ARM\+\_\+\+TO\+\_\+\+STRING(\+\_\+\+\_\+\+STR)}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00174}{174}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_ac2418a94eedb5287b6ac4060df299891}\label{arm__2d__utils_8h_ac2418a94eedb5287b6ac4060df299891}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!arm\_using@{arm\_using}}
+\index{arm\_using@{arm\_using}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{arm\_using}{arm\_using}}
+{\footnotesize\ttfamily \#define arm\+\_\+using(\begin{DoxyParamCaption}\item[{}]{... }\end{DoxyParamCaption})~            \mbox{\hyperlink{arm__2d__utils_8h_ad6a67ffa29074439ce99988dac033e42}{ARM\+\_\+\+CONNECT2}}(\+\_\+\+\_\+\+ARM\+\_\+\+USING, \+\_\+\+\_\+\+ARM\+\_\+\+VA\+\_\+\+NUM\+\_\+\+ARGS(\+\_\+\+\_\+\+VA\+\_\+\+ARGS\+\_\+\+\_\+))(\+\_\+\+\_\+\+VA\+\_\+\+ARGS\+\_\+\+\_\+)}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00249}{249}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_ab5199659d3ca1a57fe0d0b9929f3d0c7}\label{arm__2d__utils_8h_ab5199659d3ca1a57fe0d0b9929f3d0c7}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!arm\_with@{arm\_with}}
+\index{arm\_with@{arm\_with}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{arm\_with}{arm\_with}}
+{\footnotesize\ttfamily \#define arm\+\_\+with(\begin{DoxyParamCaption}\item[{}]{... }\end{DoxyParamCaption})~            \mbox{\hyperlink{arm__2d__utils_8h_ad6a67ffa29074439ce99988dac033e42}{ARM\+\_\+\+CONNECT2}}(\+\_\+\+\_\+\+ARM\+\_\+\+WITH, \+\_\+\+\_\+\+ARM\+\_\+\+VA\+\_\+\+NUM\+\_\+\+ARGS(\+\_\+\+\_\+\+VA\+\_\+\+ARGS\+\_\+\+\_\+))(\+\_\+\+\_\+\+VA\+\_\+\+ARGS\+\_\+\+\_\+)}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00258}{258}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_a7b6c484887a402bba1af11b457264553}\label{arm__2d__utils_8h_a7b6c484887a402bba1af11b457264553}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!dimof@{dimof}}
+\index{dimof@{dimof}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{dimof}{dimof}}
+{\footnotesize\ttfamily \#define dimof(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+array }\end{DoxyParamCaption})~(sizeof(\+\_\+\+\_\+array)/sizeof(\+\_\+\+\_\+array\mbox{[}0\mbox{]}))}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00165}{165}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_a22f94c7e7b097ac219c0e1d1b8129807}\label{arm__2d__utils_8h_a22f94c7e7b097ac219c0e1d1b8129807}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!inherit\_ex@{inherit\_ex}}
+\index{inherit\_ex@{inherit\_ex}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{inherit\_ex}{inherit\_ex}}
+{\footnotesize\ttfamily \#define inherit\+\_\+ex(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+type,  }\item[{}]{\+\_\+\+\_\+name }\end{DoxyParamCaption})~\+\_\+\+\_\+inherit\+\_\+ex(\+\_\+\+\_\+type, \+\_\+\+\_\+name)}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00149}{149}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_a8a4dba3eaaa8e7d90abb2eff93092042}\label{arm__2d__utils_8h_a8a4dba3eaaa8e7d90abb2eff93092042}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!offsetof@{offsetof}}
+\index{offsetof@{offsetof}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{offsetof}{offsetof}}
+{\footnotesize\ttfamily \#define offsetof(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+type,  }\item[{}]{\+\_\+\+\_\+member }\end{DoxyParamCaption})~            ((uintptr\+\_\+t)\&(((\+\_\+\+\_\+type $\ast$)NULL)-\/$>$\+\_\+\+\_\+member))}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00169}{169}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__utils_8h_ae3cfa68806c0c6c9fa7bb2a36453eef5}\label{arm__2d__utils_8h_ae3cfa68806c0c6c9fa7bb2a36453eef5}} 
+\index{arm\_2d\_utils.h@{arm\_2d\_utils.h}!ref\_low\_lv\_io@{ref\_low\_lv\_io}}
+\index{ref\_low\_lv\_io@{ref\_low\_lv\_io}!arm\_2d\_utils.h@{arm\_2d\_utils.h}}
+\doxysubsubsection{\texorpdfstring{ref\_low\_lv\_io}{ref\_low\_lv\_io}}
+{\footnotesize\ttfamily \#define ref\+\_\+low\+\_\+lv\+\_\+io(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+NAME }\end{DoxyParamCaption})~\+\_\+\+\_\+ref\+\_\+low\+\_\+lv\+\_\+io(\+\_\+\+\_\+\+NAME)}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__utils_8h_source_l00444}{444}} of file \mbox{\hyperlink{arm__2d__utils_8h_source}{arm\+\_\+2d\+\_\+utils.\+h}}.
+

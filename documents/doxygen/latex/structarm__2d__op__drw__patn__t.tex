@@ -1,0 +1,144 @@
+\hypertarget{structarm__2d__op__drw__patn__t}{}\doxysection{arm\+\_\+2d\+\_\+op\+\_\+drw\+\_\+patn\+\_\+t Struct Reference}
+\label{structarm__2d__op__drw__patn__t}\index{arm\_2d\_op\_drw\_patn\_t@{arm\_2d\_op\_drw\_patn\_t}}
+
+
+{\ttfamily \#include $<$arm\+\_\+2d\+\_\+draw.\+h$>$}
+
+\doxysubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>const \mbox{\hyperlink{structarm__2d__tile__t}{arm\_2d\_tile\_t}} $\ast$ \mbox{\hyperlink{structarm__2d__op__drw__patn__t_a4d986b7b2e643c3277fdecd2c99d7956}{ptTile}}\\
+\>\>{\em target tile }\\
+\>const \mbox{\hyperlink{structarm__2d__region__t}{arm\_2d\_region\_t}} $\ast$ \mbox{\hyperlink{structarm__2d__op__drw__patn__t_a619b22863e35d4b68b685a293160fb77}{ptRegion}}\\
+\>\>{\em target region }\\
+\} \mbox{\hyperlink{structarm__2d__op__drw__patn__t_a01629fde09039484fb4191bb806bf281}{Target}}\\
+
+\end{tabbing}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>const \mbox{\hyperlink{structarm__2d__tile__t}{arm\_2d\_tile\_t}} $\ast$ \mbox{\hyperlink{structarm__2d__op__drw__patn__t_a4d986b7b2e643c3277fdecd2c99d7956}{ptTile}}\\
+\>\>{\em source tile }\\
+\} \mbox{\hyperlink{structarm__2d__op__drw__patn__t_a72e486df5d629afca0ce58d553c7cc74}{Source}}\\
+
+\end{tabbing}\item 
+uint32\+\_\+t \mbox{\hyperlink{structarm__2d__op__drw__patn__t_a18975ab3ce177381cc0c77216342636f}{w\+Mode}}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>uint8\_t \mbox{\hyperlink{structarm__2d__op__drw__patn__t_a6b45ea193486329328bb4e3f85f4db10}{chColour}}\\
+\>uint16\_t \mbox{\hyperlink{structarm__2d__op__drw__patn__t_ae1c307c362a307faa81d3084a4351748}{hwColour}}\\
+\>uint32\_t \mbox{\hyperlink{structarm__2d__op__drw__patn__t_a15aea702f7cc30e0a6146b09ae9dfdbd}{wColour}}\\
+\} \mbox{\hyperlink{structarm__2d__op__drw__patn__t_a75ed28945b585370aaf6cb12f2b2946d}{Foreground}}\\
+
+\end{tabbing}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>uint8\_t \mbox{\hyperlink{structarm__2d__op__drw__patn__t_a6b45ea193486329328bb4e3f85f4db10}{chColour}}\\
+\>uint16\_t \mbox{\hyperlink{structarm__2d__op__drw__patn__t_ae1c307c362a307faa81d3084a4351748}{hwColour}}\\
+\>uint32\_t \mbox{\hyperlink{structarm__2d__op__drw__patn__t_a15aea702f7cc30e0a6146b09ae9dfdbd}{wColour}}\\
+\} \mbox{\hyperlink{structarm__2d__op__drw__patn__t_afec234661a87fca7442acb76fb3b44e2}{Background}}\\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyNote}{Note}
+\mbox{\hyperlink{structarm__2d__op__drw__patn__t}{arm\+\_\+2d\+\_\+op\+\_\+drw\+\_\+patn\+\_\+t}} inherits from \mbox{\hyperlink{structarm__2d__op__src__t}{arm\+\_\+2d\+\_\+op\+\_\+src\+\_\+t}} explicitly 
+\end{DoxyNote}
+
+
+Definition at line \mbox{\hyperlink{arm__2d__draw_8h_source_l00175}{175}} of file \mbox{\hyperlink{arm__2d__draw_8h_source}{arm\+\_\+2d\+\_\+draw.\+h}}.
+
+
+
+\doxysubsection{Field Documentation}
+\mbox{\Hypertarget{structarm__2d__op__drw__patn__t_afec234661a87fca7442acb76fb3b44e2}\label{structarm__2d__op__drw__patn__t_afec234661a87fca7442acb76fb3b44e2}} 
+\index{arm\_2d\_op\_drw\_patn\_t@{arm\_2d\_op\_drw\_patn\_t}!Background@{Background}}
+\index{Background@{Background}!arm\_2d\_op\_drw\_patn\_t@{arm\_2d\_op\_drw\_patn\_t}}
+\doxysubsubsection{\texorpdfstring{}{}}
+{\footnotesize\ttfamily union  \{ ... \}  arm\+\_\+2d\+\_\+op\+\_\+drw\+\_\+patn\+\_\+t\+::\+Background}
+
+\mbox{\Hypertarget{structarm__2d__op__drw__patn__t_a6b45ea193486329328bb4e3f85f4db10}\label{structarm__2d__op__drw__patn__t_a6b45ea193486329328bb4e3f85f4db10}} 
+\index{arm\_2d\_op\_drw\_patn\_t@{arm\_2d\_op\_drw\_patn\_t}!chColour@{chColour}}
+\index{chColour@{chColour}!arm\_2d\_op\_drw\_patn\_t@{arm\_2d\_op\_drw\_patn\_t}}
+\doxysubsubsection{\texorpdfstring{chColour}{chColour}}
+{\footnotesize\ttfamily uint8\+\_\+t arm\+\_\+2d\+\_\+op\+\_\+drw\+\_\+patn\+\_\+t\+::ch\+Colour}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__draw_8h_source_l00187}{187}} of file \mbox{\hyperlink{arm__2d__draw_8h_source}{arm\+\_\+2d\+\_\+draw.\+h}}.
+
+\mbox{\Hypertarget{structarm__2d__op__drw__patn__t_a75ed28945b585370aaf6cb12f2b2946d}\label{structarm__2d__op__drw__patn__t_a75ed28945b585370aaf6cb12f2b2946d}} 
+\index{arm\_2d\_op\_drw\_patn\_t@{arm\_2d\_op\_drw\_patn\_t}!Foreground@{Foreground}}
+\index{Foreground@{Foreground}!arm\_2d\_op\_drw\_patn\_t@{arm\_2d\_op\_drw\_patn\_t}}
+\doxysubsubsection{\texorpdfstring{}{}}
+{\footnotesize\ttfamily union  \{ ... \}  arm\+\_\+2d\+\_\+op\+\_\+drw\+\_\+patn\+\_\+t\+::\+Foreground}
+
+\mbox{\Hypertarget{structarm__2d__op__drw__patn__t_ae1c307c362a307faa81d3084a4351748}\label{structarm__2d__op__drw__patn__t_ae1c307c362a307faa81d3084a4351748}} 
+\index{arm\_2d\_op\_drw\_patn\_t@{arm\_2d\_op\_drw\_patn\_t}!hwColour@{hwColour}}
+\index{hwColour@{hwColour}!arm\_2d\_op\_drw\_patn\_t@{arm\_2d\_op\_drw\_patn\_t}}
+\doxysubsubsection{\texorpdfstring{hwColour}{hwColour}}
+{\footnotesize\ttfamily uint16\+\_\+t arm\+\_\+2d\+\_\+op\+\_\+drw\+\_\+patn\+\_\+t\+::hw\+Colour}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__draw_8h_source_l00188}{188}} of file \mbox{\hyperlink{arm__2d__draw_8h_source}{arm\+\_\+2d\+\_\+draw.\+h}}.
+
+\mbox{\Hypertarget{structarm__2d__op__drw__patn__t_a619b22863e35d4b68b685a293160fb77}\label{structarm__2d__op__drw__patn__t_a619b22863e35d4b68b685a293160fb77}} 
+\index{arm\_2d\_op\_drw\_patn\_t@{arm\_2d\_op\_drw\_patn\_t}!ptRegion@{ptRegion}}
+\index{ptRegion@{ptRegion}!arm\_2d\_op\_drw\_patn\_t@{arm\_2d\_op\_drw\_patn\_t}}
+\doxysubsubsection{\texorpdfstring{ptRegion}{ptRegion}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}}$\ast$ arm\+\_\+2d\+\_\+op\+\_\+drw\+\_\+patn\+\_\+t\+::pt\+Region}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__draw_8h_source_l00180}{180}} of file \mbox{\hyperlink{arm__2d__draw_8h_source}{arm\+\_\+2d\+\_\+draw.\+h}}.
+
+\mbox{\Hypertarget{structarm__2d__op__drw__patn__t_a4d986b7b2e643c3277fdecd2c99d7956}\label{structarm__2d__op__drw__patn__t_a4d986b7b2e643c3277fdecd2c99d7956}} 
+\index{arm\_2d\_op\_drw\_patn\_t@{arm\_2d\_op\_drw\_patn\_t}!ptTile@{ptTile}}
+\index{ptTile@{ptTile}!arm\_2d\_op\_drw\_patn\_t@{arm\_2d\_op\_drw\_patn\_t}}
+\doxysubsubsection{\texorpdfstring{ptTile}{ptTile}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}}$\ast$ arm\+\_\+2d\+\_\+op\+\_\+drw\+\_\+patn\+\_\+t\+::pt\+Tile}
+
+source tile 
+
+Definition at line \mbox{\hyperlink{arm__2d__draw_8h_source_l00179}{179}} of file \mbox{\hyperlink{arm__2d__draw_8h_source}{arm\+\_\+2d\+\_\+draw.\+h}}.
+
+\mbox{\Hypertarget{structarm__2d__op__drw__patn__t_a72e486df5d629afca0ce58d553c7cc74}\label{structarm__2d__op__drw__patn__t_a72e486df5d629afca0ce58d553c7cc74}} 
+\index{arm\_2d\_op\_drw\_patn\_t@{arm\_2d\_op\_drw\_patn\_t}!Source@{Source}}
+\index{Source@{Source}!arm\_2d\_op\_drw\_patn\_t@{arm\_2d\_op\_drw\_patn\_t}}
+\doxysubsubsection{\texorpdfstring{}{}}
+{\footnotesize\ttfamily struct  \{ ... \}  arm\+\_\+2d\+\_\+op\+\_\+drw\+\_\+patn\+\_\+t\+::\+Source}
+
+\mbox{\Hypertarget{structarm__2d__op__drw__patn__t_a01629fde09039484fb4191bb806bf281}\label{structarm__2d__op__drw__patn__t_a01629fde09039484fb4191bb806bf281}} 
+\index{arm\_2d\_op\_drw\_patn\_t@{arm\_2d\_op\_drw\_patn\_t}!Target@{Target}}
+\index{Target@{Target}!arm\_2d\_op\_drw\_patn\_t@{arm\_2d\_op\_drw\_patn\_t}}
+\doxysubsubsection{\texorpdfstring{}{}}
+{\footnotesize\ttfamily struct  \{ ... \}  arm\+\_\+2d\+\_\+op\+\_\+drw\+\_\+patn\+\_\+t\+::\+Target}
+
+\mbox{\Hypertarget{structarm__2d__op__drw__patn__t_a15aea702f7cc30e0a6146b09ae9dfdbd}\label{structarm__2d__op__drw__patn__t_a15aea702f7cc30e0a6146b09ae9dfdbd}} 
+\index{arm\_2d\_op\_drw\_patn\_t@{arm\_2d\_op\_drw\_patn\_t}!wColour@{wColour}}
+\index{wColour@{wColour}!arm\_2d\_op\_drw\_patn\_t@{arm\_2d\_op\_drw\_patn\_t}}
+\doxysubsubsection{\texorpdfstring{wColour}{wColour}}
+{\footnotesize\ttfamily uint32\+\_\+t arm\+\_\+2d\+\_\+op\+\_\+drw\+\_\+patn\+\_\+t\+::w\+Colour}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__draw_8h_source_l00189}{189}} of file \mbox{\hyperlink{arm__2d__draw_8h_source}{arm\+\_\+2d\+\_\+draw.\+h}}.
+
+\mbox{\Hypertarget{structarm__2d__op__drw__patn__t_a18975ab3ce177381cc0c77216342636f}\label{structarm__2d__op__drw__patn__t_a18975ab3ce177381cc0c77216342636f}} 
+\index{arm\_2d\_op\_drw\_patn\_t@{arm\_2d\_op\_drw\_patn\_t}!wMode@{wMode}}
+\index{wMode@{wMode}!arm\_2d\_op\_drw\_patn\_t@{arm\_2d\_op\_drw\_patn\_t}}
+\doxysubsubsection{\texorpdfstring{wMode}{wMode}}
+{\footnotesize\ttfamily uint32\+\_\+t arm\+\_\+2d\+\_\+op\+\_\+drw\+\_\+patn\+\_\+t\+::w\+Mode}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__draw_8h_source_l00185}{185}} of file \mbox{\hyperlink{arm__2d__draw_8h_source}{arm\+\_\+2d\+\_\+draw.\+h}}.
+

@@ -1,0 +1,201 @@
+\hypertarget{arm__2d__features_8h_source}{}\doxysection{arm\+\_\+2d\+\_\+features.\+h}
+\label{arm__2d__features_8h_source}\index{arm\_2d\_features.h@{arm\_2d\_features.h}}
+\mbox{\hyperlink{arm__2d__features_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00001}00001 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00002}00002 \textcolor{comment}{ * Copyright (C) 2022 Arm Limited or its affiliates. All rights reserved.}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00003}00003 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00004}00004 \textcolor{comment}{ * SPDX-\/License-\/Identifier: Apache-\/2.0}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00005}00005 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00006}00006 \textcolor{comment}{ * Licensed under the Apache License, Version 2.0 (the License); you may}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00007}00007 \textcolor{comment}{ * not use this file except in compliance with the License.}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00008}00008 \textcolor{comment}{ * You may obtain a copy of the License at}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00009}00009 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00010}00010 \textcolor{comment}{ * www.apache.org/licenses/LICENSE-\/2.0}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00011}00011 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00012}00012 \textcolor{comment}{ * Unless required by applicable law or agreed to in writing, software}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00013}00013 \textcolor{comment}{ * distributed under the License is distributed on an AS IS BASIS, WITHOUT}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00014}00014 \textcolor{comment}{ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00015}00015 \textcolor{comment}{ * See the License for the specific language governing permissions and}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00016}00016 \textcolor{comment}{ * limitations under the License.}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00017}00017 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00018}00018 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00019}00019 \textcolor{comment}{/* -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00020}00020 \textcolor{comment}{ * Project:      Arm-\/2D Library}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00021}00021 \textcolor{comment}{ * Title:        \#include "{}arm\_2d\_features.h"{}}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00022}00022 \textcolor{comment}{ * Description:  Public header file to indicate features avaialble for this}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00023}00023 \textcolor{comment}{ *               arm-\/2d library variant.}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00024}00024 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00025}00025 \textcolor{comment}{ * \$Date:        19. April 2022}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00026}00026 \textcolor{comment}{ * \$Revision:    V.1.0.2}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00027}00027 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00028}00028 \textcolor{comment}{ * Target Processor:  Cortex-\/M cores}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00029}00029 \textcolor{comment}{ * -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ */}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00031}00031 \textcolor{preprocessor}{\#ifndef \_\_ARM\_2D\_FEATURES\_H\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00032}00032 \textcolor{preprocessor}{\#define \_\_ARM\_2D\_FEATURES\_H\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00034}00034 \textcolor{comment}{/*============================ INCLUDES ======================================*/}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00037}00037 \textcolor{preprocessor}{\#ifdef   \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00038}00038 \textcolor{keyword}{extern} \textcolor{stringliteral}{"{}C"{}} \{}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00039}00039 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00041}00041 \textcolor{comment}{/*============================ MACROS ========================================*/}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00043}00043 \textcolor{preprocessor}{\#undef \_\_ARM\_2D\_HAS\_HELIUM\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00044}00044 \textcolor{preprocessor}{\#undef \_\_ARM\_2D\_HAS\_HELIUM\_INTEGER\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00045}00045 \textcolor{preprocessor}{\#undef \_\_ARM\_2D\_HAS\_HELIUM\_FLOAT\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00047}00047 \textcolor{preprocessor}{\#if defined(\_\_ARM\_FEATURE\_MVE) \&\& \_\_ARM\_FEATURE\_MVE}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00048}00048 \textcolor{preprocessor}{\#   define \_\_ARM\_2D\_HAS\_HELIUM\_\_                        1}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00049}00049 \textcolor{preprocessor}{\#   define \_\_ARM\_2D\_HAS\_HELIUM\_INTEGER\_\_                1}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00050}00050 \textcolor{preprocessor}{\#   if (\_\_ARM\_FEATURE\_MVE \& 2)}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00051}00051 \textcolor{preprocessor}{\#       define \_\_ARM\_2D\_HAS\_HELIUM\_FLOAT\_\_              1}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00052}00052 \textcolor{preprocessor}{\#   else}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00053}00053 \textcolor{preprocessor}{\#       define \_\_ARM\_2D\_HAS\_HELIUM\_FLOAT\_\_              0}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00054}00054 \textcolor{preprocessor}{\#   endif}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00055}00055 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00056}00056 \textcolor{preprocessor}{\#   define \_\_ARM\_2D\_HAS\_HELIUM\_\_                        0}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00057}00057 \textcolor{preprocessor}{\#   define \_\_ARM\_2D\_HAS\_HELIUM\_INTEGER\_\_                0}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00058}00058 \textcolor{preprocessor}{\#   define \_\_ARM\_2D\_HAS\_HELIUM\_FLOAT\_\_                  0}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00059}00059 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00060}00060 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00061}00061 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00062}00062 \textcolor{preprocessor}{\#ifndef \_\_ARM\_2D\_HAS\_CDE\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00063}00063 \textcolor{preprocessor}{\#   define \_\_ARM\_2D\_HAS\_CDE\_\_                           0}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00064}00064 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00066}00066 \textcolor{preprocessor}{\#ifndef \_\_ARM\_2D\_HAS\_HW\_ACC\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00067}00067 \textcolor{preprocessor}{\#   define \_\_ARM\_2D\_HAS\_HW\_ACC\_\_                        0}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00068}00068 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00069}00069 \textcolor{preprocessor}{\#if defined(\_\_ARM\_2D\_HAS\_HW\_ACC\_\_) \&\& \_\_ARM\_2D\_HAS\_HW\_ACC\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00070}00070 \textcolor{preprocessor}{\#   if defined(\_\_ARM\_2D\_HAS\_ASYNC\_\_) \&\& !\_\_ARM\_2D\_HAS\_ASYNC\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00071}00071 \textcolor{preprocessor}{\#       warning As long as \_\_ARM\_2D\_HAS\_HW\_ACC\_\_ is set to 1,\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00072}00072 \textcolor{preprocessor}{ \_\_ARM\_2D\_HAS\_ASYNC\_\_ is forced to 1. Since you set \_\_ARM\_2D\_HAS\_ASYNC\_\_ to\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00073}00073 \textcolor{preprocessor}{ 0, please remove your macro definition for \_\_ARM\_2D\_HAS\_ASYNC\_\_ to avoid this\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00074}00074 \textcolor{preprocessor}{ warning.}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00075}00075 \textcolor{preprocessor}{\#   endif}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00076}00076 \textcolor{preprocessor}{\#   undef \_\_ARM\_2D\_HAS\_ASYNC\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00077}00077 \textcolor{preprocessor}{\#   define \_\_ARM\_2D\_HAS\_ASYNC\_\_                         1}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00078}00078 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00079}00079 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00080}00080 \textcolor{preprocessor}{\#ifndef \_\_ARM\_2D\_HAS\_ASYNC\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00081}00081 \textcolor{preprocessor}{\#   define \_\_ARM\_2D\_HAS\_ASYNC\_\_                         1}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00082}00082 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00083}00083 \textcolor{preprocessor}{\#if defined(\_\_ARM\_2D\_HAS\_ASYNC\_\_) \&\&  \_\_ARM\_2D\_HAS\_ASYNC\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00084}00084 \textcolor{preprocessor}{\#   if  !defined(\_\_ARM\_2D\_CFG\_DEFAULT\_SUB\_TASK\_POOL\_SIZE\_\_) ||                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00085}00085 \textcolor{preprocessor}{        \_\_ARM\_2D\_CFG\_DEFAULT\_SUB\_TASK\_POOL\_SIZE\_\_ < 4}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00086}00086 \textcolor{preprocessor}{\#       define \_\_ARM\_2D\_CFG\_DEFAULT\_SUB\_TASK\_POOL\_SIZE\_\_      4}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00087}00087 \textcolor{preprocessor}{\#   endif}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00088}00088 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00089}00089 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00090}00090 \textcolor{preprocessor}{\#undef \_\_ARM\_2D\_HAS\_FPU\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00091}00091 \textcolor{preprocessor}{\#if defined(\_\_ARM\_FP)}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00092}00092 \textcolor{preprocessor}{\#define \_\_ARM\_2D\_HAS\_FPU\_\_                              1}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00093}00093 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00094}00094 \textcolor{preprocessor}{\#define \_\_ARM\_2D\_HAS\_FPU\_\_                              0}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00095}00095 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00096}00096 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00097}00097 \textcolor{preprocessor}{\#undef \_\_ARM\_2D\_HAS\_DSP\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00098}00098 \textcolor{preprocessor}{\#if defined(\_\_ARM\_FEATURE\_DSP) \&\& \_\_ARM\_FEATURE\_DSP}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00099}00099 \textcolor{preprocessor}{\#define \_\_ARM\_2D\_HAS\_DSP\_\_                              1}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00100}00100 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00101}00101 \textcolor{preprocessor}{\#define \_\_ARM\_2D\_HAS\_DSP\_\_                              0}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00102}00102 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00103}00103 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00104}00104 \textcolor{preprocessor}{\#ifndef \_\_ARM\_2D\_HAS\_ANTI\_ALIAS\_TRANSFORM\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00105}00105 \textcolor{preprocessor}{\#   ifdef \_\_ARM\_2D\_HAS\_INTERPOLATION\_ROTATION\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00106}00106 \textcolor{preprocessor}{\#   warning \_\_ARM\_2D\_HAS\_INTERPOLATION\_ROTATION\_\_ is deprecated, please use \_\_ARM\_2D\_HAS\_ANTI\_ALIAS\_TRANSFORM\_\_ instead.}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00110}00110 \textcolor{preprocessor}{\#       define \_\_ARM\_2D\_HAS\_ANTI\_ALIAS\_TRANSFORM\_\_                              \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00111}00111 \textcolor{preprocessor}{                \_\_ARM\_2D\_HAS\_INTERPOLATION\_ROTATION\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00112}00112 \textcolor{preprocessor}{\#   else}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00113}00113 \textcolor{preprocessor}{\#       define \_\_ARM\_2D\_HAS\_ANTI\_ALIAS\_TRANSFORM\_\_        0}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00114}00114 \textcolor{preprocessor}{\#   endif}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00115}00115 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00116}00116 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00117}00117 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00121}00121 \textcolor{preprocessor}{\#if !\_\_ARM\_2D\_HAS\_FPU\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00122}00122 \textcolor{preprocessor}{\#   undef \_\_ARM\_2D\_CFG\_FORCED\_FIXED\_POINT\_TRANSFORM\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00123}00123 \textcolor{preprocessor}{\#   define \_\_ARM\_2D\_CFG\_FORCED\_FIXED\_POINT\_TRANSFORM\_\_   1}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00124}00124 \textcolor{preprocessor}{\#elif   !\_\_ARM\_2D\_HAS\_HELIUM\_\_                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00125}00125 \textcolor{preprocessor}{    \&\&  !defined(\_\_ARM\_2D\_CFG\_FORCED\_FIXED\_POINT\_TRANSFORM\_\_)}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00131}00131 \textcolor{preprocessor}{\#   define \_\_ARM\_2D\_CFG\_FORCED\_FIXED\_POINT\_TRANSFORM\_\_   1}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00132}00132 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00133}00133 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00134}00134 \textcolor{preprocessor}{\#if \_\_ARM\_2D\_HAS\_HELIUM\_INTEGER\_\_ \&\& !\_\_ARM\_2D\_HAS\_HELIUM\_FLOAT\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00135}00135 \textcolor{preprocessor}{\#   undef \_\_ARM\_2D\_CFG\_FORCED\_FIXED\_POINT\_TRANSFORM\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00136}00136 \textcolor{preprocessor}{\#   define \_\_ARM\_2D\_CFG\_FORCED\_FIXED\_POINT\_TRANSFORM\_\_   1}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00137}00137 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00138}00138 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00139}00139 \textcolor{preprocessor}{\#ifndef \_\_ARM\_2D\_CFG\_FORCED\_FIXED\_POINT\_TRANSFORM\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00140}00140 \textcolor{preprocessor}{\#   define \_\_ARM\_2D\_CFG\_FORCED\_FIXED\_POINT\_TRANSFORM\_\_   1}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00141}00141 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00142}00142 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00147}00147 \textcolor{preprocessor}{\#ifndef \_\_ARM\_2D\_CFG\_SUPPORT\_COLOUR\_CHANNEL\_ACCESS\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00148}00148 \textcolor{preprocessor}{\#   define \_\_ARM\_2D\_CFG\_SUPPORT\_COLOUR\_CHANNEL\_ACCESS\_\_  1}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00149}00149 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00150}00150 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00151}00151 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00152}00152 \textcolor{comment}{ * Unsafe configurations                                                      *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00153}00153 \textcolor{comment}{ *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00154}00154 \textcolor{comment}{ * Following macro switches are used to improve performance with aggressive   *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00155}00155 \textcolor{comment}{ * methods which might cause errors or distortions in some cases.             *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00156}00156 \textcolor{comment}{ * Those macros are undefined by defaults. Please use with cautions.          *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00157}00157 \textcolor{comment}{ *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00158}00158 \textcolor{comment}{ *                                                                            *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00159}00159 \textcolor{comment}{ * 1. \_\_ARM\_2D\_CFG\_UNSAFE\_IGNORE\_CALIB\_IN\_TRANSFORM\_\_                         *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00160}00160 \textcolor{comment}{ *    This option is used to remove calibration in angle computations to gain *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00161}00161 \textcolor{comment}{ *    a better performance, small error might be noticible for angles like    *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00162}00162 \textcolor{comment}{ *    90, 180, 270 etc.                                                       *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00163}00163 \textcolor{comment}{ *                                                                            *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00164}00164 \textcolor{comment}{ * 2. \_\_ARM\_2D\_CFG\_UNSAFE\_NO\_SATURATION\_IN\_FIXED\_POINT\_\_                      *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00165}00165 \textcolor{comment}{ *    This option is used to speed up M-\/cores without DSP support             *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00166}00166 \textcolor{comment}{ *    It skips saturation in the QADD/QDADD/QDSUB involved in the rotation.   *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00167}00167 \textcolor{comment}{ *    The chances of overflow remain low as elements involved are using       *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00168}00168 \textcolor{comment}{ *    non-\/accumulating Q15.16 format and integer parts are in the range of    *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00169}00169 \textcolor{comment}{ *    the screen size providing enough margin.                                *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00170}00170 \textcolor{comment}{ *                                                                            *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00171}00171 \textcolor{comment}{ * 3. \_\_ARM\_2D\_CFG\_UNSAFE\_IGNORE\_ALPHA\_255\_COMPENSATION\_\_                     *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00172}00172 \textcolor{comment}{ *    When define this macro, alpha value 0xFF will not be treated as opaque  *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00173}00173 \textcolor{comment}{ *    in mask related operations you can barely see the background. Defining  *}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00174}00174 \textcolor{comment}{ *    this macro can get a big performance uplift.                            * }}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00175}00175 \textcolor{comment}{ *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00176}00176 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00177}00177 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00182}00182 \textcolor{preprocessor}{\#ifndef \_\_ARM\_2D\_CFG\_UNSAFE\_IGNORE\_CALIB\_IN\_TRANSFORM\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00183}00183 \textcolor{preprocessor}{\#   ifdef  \_\_ARM\_2D\_CFG\_UNSAFE\_IGNORE\_CALIB\_IN\_ROTATION\_FOR\_PERFORMANCE\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00184}00184 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00185}00185 \textcolor{preprocessor}{\#       warning \_\_ARM\_2D\_CFG\_UNSAFE\_IGNORE\_CALIB\_IN\_ROTATION\_FOR\_PERFORMANCE\_\_\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00186}00186 \textcolor{preprocessor}{ is deprecated, please use \_\_ARM\_2D\_CFG\_UNSAFE\_IGNORE\_CALIB\_IN\_TRANSFORM\_\_\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00187}00187 \textcolor{preprocessor}{ instead.}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00188}00188 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00189}00189 \textcolor{preprocessor}{\#       define \_\_ARM\_2D\_CFG\_UNSAFE\_IGNORE\_CALIB\_IN\_TRANSFORM\_\_                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00190}00190 \textcolor{preprocessor}{                \_\_ARM\_2D\_CFG\_UNSAFE\_IGNORE\_CALIB\_IN\_ROTATION\_FOR\_PERFORMANCE\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00191}00191 \textcolor{preprocessor}{\#   endif}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00192}00192 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00193}00193 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00198}00198 \textcolor{preprocessor}{\#ifndef \_\_ARM\_2D\_CFG\_UNSAFE\_NO\_SATURATION\_IN\_FIXED\_POINT\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00199}00199 \textcolor{preprocessor}{\#   ifdef  \_\_ARM\_2D\_CFG\_UNSAFE\_NO\_SATURATION\_IN\_FIXED\_POINT\_FOR\_PERFROMANCE\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00200}00200 \textcolor{preprocessor}{\#       warning \_\_ARM\_2D\_CFG\_UNSAFE\_NO\_SATURATION\_IN\_FIXED\_POINT\_FOR\_PERFROMANCE\_\_\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00201}00201 \textcolor{preprocessor}{ is deprecated, please use \_\_ARM\_2D\_CFG\_UNSAFE\_NO\_SATURATION\_IN\_FIXED\_POINT\_\_\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00202}00202 \textcolor{preprocessor}{ instead.}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00203}00203 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00204}00204 \textcolor{preprocessor}{\#       define  \_\_ARM\_2D\_CFG\_UNSAFE\_NO\_SATURATION\_IN\_FIXED\_POINT\_\_              \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00205}00205 \textcolor{preprocessor}{            \_\_ARM\_2D\_CFG\_UNSAFE\_NO\_SATURATION\_IN\_FIXED\_POINT\_FOR\_PERFROMANCE\_\_}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00206}00206 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00207}00207 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00208}00208 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00209}00209 \textcolor{comment}{/*============================ MACROFIED FUNCTIONS ===========================*/}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00210}00210 \textcolor{comment}{/*============================ TYPES =========================================*/}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00211}00211 \textcolor{comment}{/*============================ GLOBAL VARIABLES ==============================*/}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00212}00212 \textcolor{comment}{/*============================ PROTOTYPES ====================================*/}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00213}00213 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00214}00214 \textcolor{preprocessor}{\#ifdef   \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00215}00215 \}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00216}00216 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00217}00217 }
+\DoxyCodeLine{\Hypertarget{arm__2d__features_8h_source_l00218}00218 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

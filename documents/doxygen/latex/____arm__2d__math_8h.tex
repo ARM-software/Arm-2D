@@ -1,0 +1,126 @@
+\hypertarget{____arm__2d__math_8h}{}\doxysection{\+\_\+\+\_\+arm\+\_\+2d\+\_\+math.\+h File Reference}
+\label{____arm__2d__math_8h}\index{\_\_arm\_2d\_math.h@{\_\_arm\_2d\_math.h}}
+{\ttfamily \#include \char`\"{}arm\+\_\+math.\+h\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{____arm__2d__math_8h_afa99ec4acc4ecb2dc3c2d05da15d0e3f}{MAX}}(a,  b)~((a) $>$ (b) ? (a) \+: (b))
+\item 
+\#define \mbox{\hyperlink{____arm__2d__math_8h_a3acffbd305ee72dcd4593c0d8af64a4f}{MIN}}(a,  b)~((a) $<$ (b) ? (a) \+: (b))
+\item 
+\#define \mbox{\hyperlink{____arm__2d__math_8h_a94026a8222e1438f86fdb8c36b381903}{\+\_\+\+BV}}(\+\_\+\+\_\+\+BIT)~(1 $<$$<$ (\+\_\+\+\_\+\+BIT))
+\item 
+\#define \mbox{\hyperlink{____arm__2d__math_8h_a996f7be338ccb40d1a2a5abc1ad61759}{ABS}}(x)~((x) $>$ 0 ? (x) \+: -\/(x))
+\item 
+\#define \mbox{\hyperlink{____arm__2d__math_8h_a8229f0714afc303702b719820a158087}{MULTFX}}(x,  y)~(q31\+\_\+t)((q63\+\_\+t)((q63\+\_\+t) (x) $\ast$ (q63\+\_\+t)(y)) $>$$>$ 32)
+\item 
+\#define \mbox{\hyperlink{____arm__2d__math_8h_a4ef0ba639a9c54743e098669d658998c}{MUL\+\_\+\+Q16}}(x,  y)~(q31\+\_\+t)((q63\+\_\+t)((q63\+\_\+t) (x) $\ast$ (q63\+\_\+t)(y)) $>$$>$ 16)
+\item 
+\#define \mbox{\hyperlink{____arm__2d__math_8h_a5d272632a22e0803ab5b423328db9d46}{ARM\+\_\+\+PIX\+\_\+\+SCLTYP}}(sz)~\mbox{\hyperlink{arm__2d__utils_8h_ad6a67ffa29074439ce99988dac033e42}{ARM\+\_\+\+CONNECT2}}(\mbox{\hyperlink{arm__2d__utils_8h_ad6a67ffa29074439ce99988dac033e42}{ARM\+\_\+\+CONNECT2}}(uint, sz), \+\_\+t)
+\item 
+\#define \mbox{\hyperlink{____arm__2d__math_8h_a86539c599e84cce7c62d447f2d411750}{ARM\+\_\+2\+D\+\_\+\+ANGLE}}(\+\_\+\+\_\+\+ANGLE)~((float)((float)(\+\_\+\+\_\+\+ANGLE) $\ast$ 3.\+1416926f / 180.\+0f))
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef float \mbox{\hyperlink{____arm__2d__math_8h_a49736383ceddf92e73a0620e13185b2f}{float16\+\_\+t}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{____arm__2d__math_8h_a94026a8222e1438f86fdb8c36b381903}\label{____arm__2d__math_8h_a94026a8222e1438f86fdb8c36b381903}} 
+\index{\_\_arm\_2d\_math.h@{\_\_arm\_2d\_math.h}!\_BV@{\_BV}}
+\index{\_BV@{\_BV}!\_\_arm\_2d\_math.h@{\_\_arm\_2d\_math.h}}
+\doxysubsubsection{\texorpdfstring{\_BV}{\_BV}}
+{\footnotesize\ttfamily \#define \+\_\+\+BV(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+BIT }\end{DoxyParamCaption})~(1 $<$$<$ (\+\_\+\+\_\+\+BIT))}
+
+
+
+Definition at line \mbox{\hyperlink{____arm__2d__math_8h_source_l00099}{99}} of file \mbox{\hyperlink{____arm__2d__math_8h_source}{\+\_\+\+\_\+arm\+\_\+2d\+\_\+math.\+h}}.
+
+\mbox{\Hypertarget{____arm__2d__math_8h_a996f7be338ccb40d1a2a5abc1ad61759}\label{____arm__2d__math_8h_a996f7be338ccb40d1a2a5abc1ad61759}} 
+\index{\_\_arm\_2d\_math.h@{\_\_arm\_2d\_math.h}!ABS@{ABS}}
+\index{ABS@{ABS}!\_\_arm\_2d\_math.h@{\_\_arm\_2d\_math.h}}
+\doxysubsubsection{\texorpdfstring{ABS}{ABS}}
+{\footnotesize\ttfamily \#define ABS(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})~((x) $>$ 0 ? (x) \+: -\/(x))}
+
+
+
+Definition at line \mbox{\hyperlink{____arm__2d__math_8h_source_l00103}{103}} of file \mbox{\hyperlink{____arm__2d__math_8h_source}{\+\_\+\+\_\+arm\+\_\+2d\+\_\+math.\+h}}.
+
+\mbox{\Hypertarget{____arm__2d__math_8h_a86539c599e84cce7c62d447f2d411750}\label{____arm__2d__math_8h_a86539c599e84cce7c62d447f2d411750}} 
+\index{\_\_arm\_2d\_math.h@{\_\_arm\_2d\_math.h}!ARM\_2D\_ANGLE@{ARM\_2D\_ANGLE}}
+\index{ARM\_2D\_ANGLE@{ARM\_2D\_ANGLE}!\_\_arm\_2d\_math.h@{\_\_arm\_2d\_math.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_2D\_ANGLE}{ARM\_2D\_ANGLE}}
+{\footnotesize\ttfamily \#define ARM\+\_\+2\+D\+\_\+\+ANGLE(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+ANGLE }\end{DoxyParamCaption})~((float)((float)(\+\_\+\+\_\+\+ANGLE) $\ast$ 3.\+1416926f / 180.\+0f))}
+
+
+
+Definition at line \mbox{\hyperlink{____arm__2d__math_8h_source_l00117}{117}} of file \mbox{\hyperlink{____arm__2d__math_8h_source}{\+\_\+\+\_\+arm\+\_\+2d\+\_\+math.\+h}}.
+
+\mbox{\Hypertarget{____arm__2d__math_8h_a5d272632a22e0803ab5b423328db9d46}\label{____arm__2d__math_8h_a5d272632a22e0803ab5b423328db9d46}} 
+\index{\_\_arm\_2d\_math.h@{\_\_arm\_2d\_math.h}!ARM\_PIX\_SCLTYP@{ARM\_PIX\_SCLTYP}}
+\index{ARM\_PIX\_SCLTYP@{ARM\_PIX\_SCLTYP}!\_\_arm\_2d\_math.h@{\_\_arm\_2d\_math.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_PIX\_SCLTYP}{ARM\_PIX\_SCLTYP}}
+{\footnotesize\ttfamily \#define ARM\+\_\+\+PIX\+\_\+\+SCLTYP(\begin{DoxyParamCaption}\item[{}]{sz }\end{DoxyParamCaption})~\mbox{\hyperlink{arm__2d__utils_8h_ad6a67ffa29074439ce99988dac033e42}{ARM\+\_\+\+CONNECT2}}(\mbox{\hyperlink{arm__2d__utils_8h_ad6a67ffa29074439ce99988dac033e42}{ARM\+\_\+\+CONNECT2}}(uint, sz), \+\_\+t)}
+
+
+
+Definition at line \mbox{\hyperlink{____arm__2d__math_8h_source_l00115}{115}} of file \mbox{\hyperlink{____arm__2d__math_8h_source}{\+\_\+\+\_\+arm\+\_\+2d\+\_\+math.\+h}}.
+
+\mbox{\Hypertarget{____arm__2d__math_8h_afa99ec4acc4ecb2dc3c2d05da15d0e3f}\label{____arm__2d__math_8h_afa99ec4acc4ecb2dc3c2d05da15d0e3f}} 
+\index{\_\_arm\_2d\_math.h@{\_\_arm\_2d\_math.h}!MAX@{MAX}}
+\index{MAX@{MAX}!\_\_arm\_2d\_math.h@{\_\_arm\_2d\_math.h}}
+\doxysubsubsection{\texorpdfstring{MAX}{MAX}}
+{\footnotesize\ttfamily \#define MAX(\begin{DoxyParamCaption}\item[{}]{a,  }\item[{}]{b }\end{DoxyParamCaption})~((a) $>$ (b) ? (a) \+: (b))}
+
+
+
+Definition at line \mbox{\hyperlink{____arm__2d__math_8h_source_l00091}{91}} of file \mbox{\hyperlink{____arm__2d__math_8h_source}{\+\_\+\+\_\+arm\+\_\+2d\+\_\+math.\+h}}.
+
+\mbox{\Hypertarget{____arm__2d__math_8h_a3acffbd305ee72dcd4593c0d8af64a4f}\label{____arm__2d__math_8h_a3acffbd305ee72dcd4593c0d8af64a4f}} 
+\index{\_\_arm\_2d\_math.h@{\_\_arm\_2d\_math.h}!MIN@{MIN}}
+\index{MIN@{MIN}!\_\_arm\_2d\_math.h@{\_\_arm\_2d\_math.h}}
+\doxysubsubsection{\texorpdfstring{MIN}{MIN}}
+{\footnotesize\ttfamily \#define MIN(\begin{DoxyParamCaption}\item[{}]{a,  }\item[{}]{b }\end{DoxyParamCaption})~((a) $<$ (b) ? (a) \+: (b))}
+
+
+
+Definition at line \mbox{\hyperlink{____arm__2d__math_8h_source_l00095}{95}} of file \mbox{\hyperlink{____arm__2d__math_8h_source}{\+\_\+\+\_\+arm\+\_\+2d\+\_\+math.\+h}}.
+
+\mbox{\Hypertarget{____arm__2d__math_8h_a4ef0ba639a9c54743e098669d658998c}\label{____arm__2d__math_8h_a4ef0ba639a9c54743e098669d658998c}} 
+\index{\_\_arm\_2d\_math.h@{\_\_arm\_2d\_math.h}!MUL\_Q16@{MUL\_Q16}}
+\index{MUL\_Q16@{MUL\_Q16}!\_\_arm\_2d\_math.h@{\_\_arm\_2d\_math.h}}
+\doxysubsubsection{\texorpdfstring{MUL\_Q16}{MUL\_Q16}}
+{\footnotesize\ttfamily \#define MUL\+\_\+\+Q16(\begin{DoxyParamCaption}\item[{}]{x,  }\item[{}]{y }\end{DoxyParamCaption})~(q31\+\_\+t)((q63\+\_\+t)((q63\+\_\+t) (x) $\ast$ (q63\+\_\+t)(y)) $>$$>$ 16)}
+
+
+
+Definition at line \mbox{\hyperlink{____arm__2d__math_8h_source_l00112}{112}} of file \mbox{\hyperlink{____arm__2d__math_8h_source}{\+\_\+\+\_\+arm\+\_\+2d\+\_\+math.\+h}}.
+
+\mbox{\Hypertarget{____arm__2d__math_8h_a8229f0714afc303702b719820a158087}\label{____arm__2d__math_8h_a8229f0714afc303702b719820a158087}} 
+\index{\_\_arm\_2d\_math.h@{\_\_arm\_2d\_math.h}!MULTFX@{MULTFX}}
+\index{MULTFX@{MULTFX}!\_\_arm\_2d\_math.h@{\_\_arm\_2d\_math.h}}
+\doxysubsubsection{\texorpdfstring{MULTFX}{MULTFX}}
+{\footnotesize\ttfamily \#define MULTFX(\begin{DoxyParamCaption}\item[{}]{x,  }\item[{}]{y }\end{DoxyParamCaption})~(q31\+\_\+t)((q63\+\_\+t)((q63\+\_\+t) (x) $\ast$ (q63\+\_\+t)(y)) $>$$>$ 32)}
+
+
+
+Definition at line \mbox{\hyperlink{____arm__2d__math_8h_source_l00108}{108}} of file \mbox{\hyperlink{____arm__2d__math_8h_source}{\+\_\+\+\_\+arm\+\_\+2d\+\_\+math.\+h}}.
+
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{____arm__2d__math_8h_a49736383ceddf92e73a0620e13185b2f}\label{____arm__2d__math_8h_a49736383ceddf92e73a0620e13185b2f}} 
+\index{\_\_arm\_2d\_math.h@{\_\_arm\_2d\_math.h}!float16\_t@{float16\_t}}
+\index{float16\_t@{float16\_t}!\_\_arm\_2d\_math.h@{\_\_arm\_2d\_math.h}}
+\doxysubsubsection{\texorpdfstring{float16\_t}{float16\_t}}
+{\footnotesize\ttfamily typedef float \mbox{\hyperlink{____arm__2d__math_8h_a49736383ceddf92e73a0620e13185b2f}{float16\+\_\+t}}}
+
+\begin{DoxyNote}{Note}
+this header file is not standalone, and please always use it after ! \#include \char`\"{}arm\+\_\+2d\+\_\+features.\+h\char`\"{} ! \#include \char`\"{}arm\+\_\+2d\+\_\+utils.\+h\char`\"{} ! in your c source file if you insist to use it explicity. 
+\end{DoxyNote}
+
+
+Definition at line \mbox{\hyperlink{____arm__2d__math_8h_source_l00065}{65}} of file \mbox{\hyperlink{____arm__2d__math_8h_source}{\+\_\+\+\_\+arm\+\_\+2d\+\_\+math.\+h}}.
+

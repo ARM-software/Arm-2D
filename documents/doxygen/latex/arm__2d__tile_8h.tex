@@ -1,0 +1,939 @@
+\hypertarget{arm__2d__tile_8h}{}\doxysection{arm\+\_\+2d\+\_\+tile.\+h File Reference}
+\label{arm__2d__tile_8h}\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+{\ttfamily \#include \char`\"{}arm\+\_\+2d\+\_\+types.\+h\char`\"{}}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structarm__2d__op__cp__cl__key__t}{arm\+\_\+2d\+\_\+op\+\_\+cp\+\_\+cl\+\_\+key\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_afb2e3507690d5f733555a47c50d534e5}{arm\+\_\+2d\+\_\+c8bit\+\_\+tile\+\_\+copy}}(\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+MODE)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_adb6dca012253b6a71c7a1eb10da4cefe}{arm\+\_\+2d\+\_\+rgb16\+\_\+tile\+\_\+copy}}(\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+MODE)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_abef4e01fa3750c73b24b780f2bcf97a0}{arm\+\_\+2d\+\_\+rgb32\+\_\+tile\+\_\+copy}}(\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+MODE)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_a03e06a299149712aff1fb7570c19a220}{arm\+\_\+2d\+\_\+c8bit\+\_\+tile\+\_\+copy\+\_\+only}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_aef8e5e6e7b6407bc1b91b279832a6f10}{arm\+\_\+2d\+\_\+rgb16\+\_\+tile\+\_\+copy\+\_\+only}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_a4b4c559c434eb9f583cf8f890d2179bf}{arm\+\_\+2d\+\_\+rgb32\+\_\+tile\+\_\+copy\+\_\+only}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_a6f53f86a5d899058ff5c119d40701f50}{arm\+\_\+2d\+\_\+c8bit\+\_\+tile\+\_\+copy\+\_\+with\+\_\+x\+\_\+mirror}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_afb81e82adac41a03abbcdcc86163dfba}{arm\+\_\+2d\+\_\+rgb16\+\_\+tile\+\_\+copy\+\_\+with\+\_\+x\+\_\+mirror}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_ac88edab83758c6b696841cc5add6b1a3}{arm\+\_\+2d\+\_\+rgb32\+\_\+tile\+\_\+copy\+\_\+with\+\_\+x\+\_\+mirror}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_ad3d1351c055cebd4e0670ea1f3140fbc}{arm\+\_\+2d\+\_\+c8bit\+\_\+tile\+\_\+copy\+\_\+with\+\_\+y\+\_\+mirror}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_afb88b7c608ad0a30c44875bfa32921bb}{arm\+\_\+2d\+\_\+rgb16\+\_\+tile\+\_\+copy\+\_\+with\+\_\+y\+\_\+mirror}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_af61b0f18787ec43614e0e3556705966a}{arm\+\_\+2d\+\_\+rgb32\+\_\+tile\+\_\+copy\+\_\+with\+\_\+y\+\_\+mirror}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_aaffcefd9e23fd8171785df9996aadcc3}{arm\+\_\+2d\+\_\+c8bit\+\_\+tile\+\_\+copy\+\_\+with\+\_\+xy\+\_\+mirror}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_ae86ac169ce9918cbf9c892d6d0f5629c}{arm\+\_\+2d\+\_\+rgb16\+\_\+tile\+\_\+copy\+\_\+with\+\_\+xy\+\_\+mirror}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_a8e6039c41db18234afec0d6631cba8f1}{arm\+\_\+2d\+\_\+rgb32\+\_\+tile\+\_\+copy\+\_\+with\+\_\+xy\+\_\+mirror}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_a73b448986fa5f8bd30543f64c10cb79b}{arm\+\_\+2d\+\_\+c8bit\+\_\+tile\+\_\+fill\+\_\+only}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_aa53328a3802032f3fb25b14e09029605}{arm\+\_\+2d\+\_\+rgb16\+\_\+tile\+\_\+fill\+\_\+only}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_adb4bc1bb552149efd6bfdc2af4a071d1}{arm\+\_\+2d\+\_\+rgb32\+\_\+tile\+\_\+fill\+\_\+only}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_a7d6e557f471767813391e48b6b3a24f8}{arm\+\_\+2d\+\_\+c8bit\+\_\+tile\+\_\+fill\+\_\+with\+\_\+x\+\_\+mirror}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_a531ec42e13cde74d1144d7015d20df19}{arm\+\_\+2d\+\_\+rgb16\+\_\+tile\+\_\+fill\+\_\+with\+\_\+x\+\_\+mirror}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_a072aec879530f4460920b710f1a67591}{arm\+\_\+2d\+\_\+rgb32\+\_\+tile\+\_\+fill\+\_\+with\+\_\+x\+\_\+mirror}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_a39c0e206b120504b504931b3138f612f}{arm\+\_\+2d\+\_\+c8bit\+\_\+tile\+\_\+fill\+\_\+with\+\_\+y\+\_\+mirror}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_aac05fef386cc92597b1370a0edce4ebf}{arm\+\_\+2d\+\_\+rgb16\+\_\+tile\+\_\+fill\+\_\+with\+\_\+y\+\_\+mirror}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_a760e83f398cf1275ce6127ad7b8c6638}{arm\+\_\+2d\+\_\+rgb32\+\_\+tile\+\_\+fill\+\_\+with\+\_\+y\+\_\+mirror}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_a61ca05d8dac5c1dfcc4b8c962e227e78}{arm\+\_\+2d\+\_\+c8bit\+\_\+tile\+\_\+fill\+\_\+with\+\_\+xy\+\_\+mirror}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_a7daeb30fe53f2a71a4767f520bdd1c1c}{arm\+\_\+2d\+\_\+rgb16\+\_\+tile\+\_\+fill\+\_\+with\+\_\+xy\+\_\+mirror}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_aab65ed7e4300dc7d2167ea75517acb84}{arm\+\_\+2d\+\_\+rgb32\+\_\+tile\+\_\+fill\+\_\+with\+\_\+xy\+\_\+mirror}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_aa614814c6c51afbf507200c5aa4c44ea}{arm\+\_\+2d\+\_\+c8bit\+\_\+tile\+\_\+copy\+\_\+with\+\_\+colour\+\_\+masking}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+MSK\+\_\+\+COLOUR,  \+\_\+\+\_\+\+MODE)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_aa22f6930146e3f00e9d57131e1dc75cc}{arm\+\_\+2d\+\_\+c8bit\+\_\+tile\+\_\+copy\+\_\+with\+\_\+colour\+\_\+keying}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+MSK\+\_\+\+COLOUR,  \+\_\+\+\_\+\+MODE)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_a938c5ee88de12d34ec89b085492e7e01}{arm\+\_\+2d\+\_\+rgb16\+\_\+tile\+\_\+copy\+\_\+with\+\_\+colour\+\_\+masking}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+MSK\+\_\+\+COLOUR,  \+\_\+\+\_\+\+MODE)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_a13a6d864039c3d125aac5ae0eb466533}{arm\+\_\+2d\+\_\+rgb16\+\_\+tile\+\_\+copy\+\_\+with\+\_\+colour\+\_\+keying}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+MSK\+\_\+\+COLOUR,  \+\_\+\+\_\+\+MODE)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_a8b0b184727f906e2d090a835aafd71dd}{arm\+\_\+2d\+\_\+rgb32\+\_\+tile\+\_\+copy\+\_\+with\+\_\+colour\+\_\+masking}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+MSK\+\_\+\+COLOUR,  \+\_\+\+\_\+\+MODE)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_aebbc92311796e5c9cf86bc5c5df267a6}{arm\+\_\+2d\+\_\+rgb32\+\_\+tile\+\_\+copy\+\_\+with\+\_\+colour\+\_\+keying}}( \+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+ADDR,  \+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR,  \+\_\+\+\_\+\+MSK\+\_\+\+COLOUR,  \+\_\+\+\_\+\+MODE)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_a9fd50f143930535c58f61d3cca9e2921}{arm\+\_\+2d\+\_\+get\+\_\+address\+\_\+and\+\_\+region\+\_\+from\+\_\+tile}}(\+\_\+\+\_\+\+TILE\+\_\+\+PTR,  \+\_\+\+\_\+\+VALID\+\_\+\+REGION\+\_\+\+NAME,  \+\_\+\+\_\+\+LOCATION\+\_\+\+OFFSET\+\_\+\+PTR,  \+\_\+\+\_\+\+TYPE,  \+\_\+\+\_\+\+BUF\+\_\+\+PTR\+\_\+\+NAME)
+\item 
+\#define \mbox{\hyperlink{arm__2d__tile_8h_a35cde51709d5ffc8bfef0ba6dd04bf8b}{arm\+\_\+2d\+\_\+get\+\_\+address\+\_\+and\+\_\+region\+\_\+from\+\_\+tile\+\_\+with\+\_\+mirroring}}( \+\_\+\+\_\+\+TILE\+\_\+\+PTR,  \+\_\+\+\_\+\+VALID\+\_\+\+REGION\+\_\+\+NAME,  \+\_\+\+\_\+\+LOCATION\+\_\+\+OFFSET\+\_\+\+PTR,  \+\_\+\+\_\+\+TYPE,  \+\_\+\+\_\+\+BUF\+\_\+\+PTR\+\_\+\+NAME,  \+\_\+\+\_\+\+MODE)
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef \mbox{\hyperlink{structarm__2d__op__src__t}{arm\+\_\+2d\+\_\+op\+\_\+src\+\_\+t}} \mbox{\hyperlink{arm__2d__tile_8h_a7a8963fd261ac942f11c9d9cd03f7b34}{arm\+\_\+2d\+\_\+op\+\_\+cp\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ \newline
+\mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034accc2f66ec619a68fb6d627da4aabc6d9}{ARM\+\_\+2\+D\+\_\+\+CP\+\_\+\+MODE\+\_\+\+COPY}} = 0
+, \mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034a206050d8cffe7ddc3f61b7b3b1bddf8d}{ARM\+\_\+2\+D\+\_\+\+CP\+\_\+\+MODE\+\_\+\+FILL}} = \+\_\+\+BV(0)
+, \mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034ac561823141d2a0cb61b1d79970d88a60}{ARM\+\_\+2\+D\+\_\+\+CP\+\_\+\+MODE\+\_\+\+Y\+\_\+\+MIRROR}} = \+\_\+\+BV(2)
+, \mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034a69116a74f0ddd40fad4d810dd8191cf1}{ARM\+\_\+2\+D\+\_\+\+CP\+\_\+\+MODE\+\_\+\+X\+\_\+\+MIRROR}} = \+\_\+\+BV(3)
+, \newline
+\mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034a0dc08b6b75385217fb5666998a7e7715}{ARM\+\_\+2\+D\+\_\+\+CP\+\_\+\+MODE\+\_\+\+XY\+\_\+\+MIRROR}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} $\ast$ \mbox{\hyperlink{arm__2d__tile_8h_abc4b0ef4720dd4663889d9034870b136}{pt\+Region\+In1}}
+\item 
+const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} $\ast$ \mbox{\hyperlink{arm__2d__tile_8h_a581fc09f05188ffd494171b16c3037e2}{pt\+Region\+Out}}
+\item 
+const \mbox{\hyperlink{structarm__2d__location__t}{arm\+\_\+2d\+\_\+location\+\_\+t}} $\ast$ \mbox{\hyperlink{arm__2d__tile_8h_a3b6b3df8fa64632f584b6ebb21852f3a}{pt\+Point}}
+\item 
+\mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} $\ast$ \mbox{\hyperlink{arm__2d__tile_8h_a6ea677d57063d6f9b0105e56681f218b}{pt\+Valid\+Region}}
+\item 
+\mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} \mbox{\hyperlink{structarm__2d__location__t}{arm\+\_\+2d\+\_\+location\+\_\+t}} $\ast$ \mbox{\hyperlink{arm__2d__tile_8h_afa50c6d3667ae01b765264e7deb89132}{pt\+Offset}}
+\item 
+const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} $\ast$ \mbox{\hyperlink{arm__2d__tile_8h_ae91422afd71e61eee96acf55e1468b47}{pt\+Region}}
+\item 
+const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} $\ast$ \mbox{\hyperlink{arm__2d__tile_8h_acdf7e028a284ccc39eccda497271cee7}{pt\+Output}}
+\item 
+const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} bool \mbox{\hyperlink{arm__2d__tile_8h_a7dc372aa5fc05c99cc23552860121efc}{b\+Clip\+Region}}
+\item 
+const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} $\ast$ \mbox{\hyperlink{arm__2d__tile_8h_ab1246db8cd9dc4327fdcec202b9e48ff}{pt\+Reference}}
+\item 
+\mbox{\hyperlink{structarm__2d__location__t}{arm\+\_\+2d\+\_\+location\+\_\+t}} $\ast$ \mbox{\hyperlink{arm__2d__tile_8h_a4f4e98490343680b27fcf6351a6ba00a}{pt\+Location}}
+\item 
+const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} $\ast$ \mbox{\hyperlink{arm__2d__tile_8h_a92de48b0ca59e6dce548975c96661f98}{pt\+Buffer}}
+\item 
+const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} $\ast$ \mbox{\hyperlink{arm__2d__tile_8h_a839113872b353ce27e460e1bc21c2e1b}{pt\+Source}}
+\item 
+const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} $\ast$ \mbox{\hyperlink{arm__2d__tile_8h_a81568a0a131f60b06a5a97ee9415fef7}{pt\+Target}}
+\item 
+const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} uint32\+\_\+t \mbox{\hyperlink{arm__2d__tile_8h_a2e5a85ec501d28af73a7b6d43828b7f0}{w\+Mode}}
+\item 
+const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} uint8\+\_\+t \mbox{\hyperlink{arm__2d__tile_8h_aec98dc3b0a602189b3c556de571e3962}{ch\+Mask\+Colour}}
+\item 
+const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} uint16\+\_\+t \mbox{\hyperlink{arm__2d__tile_8h_a8819ce4bd172f0ddde9ca10cc8cadbf0}{hw\+Mask\+Colour}}
+\item 
+const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} uint32\+\_\+t \mbox{\hyperlink{arm__2d__tile_8h_a099a3dd4d2fc6a07ecbd21ef7d8e2b9d}{w\+Mask\+Colour}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{arm__2d__tile_8h_afb2e3507690d5f733555a47c50d534e5}\label{arm__2d__tile_8h_afb2e3507690d5f733555a47c50d534e5}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_c8bit\_tile\_copy@{arm\_2d\_c8bit\_tile\_copy}}
+\index{arm\_2d\_c8bit\_tile\_copy@{arm\_2d\_c8bit\_tile\_copy}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_c8bit\_tile\_copy}{arm\_2d\_c8bit\_tile\_copy}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+c8bit\+\_\+tile\+\_\+copy(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{                \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_c8bit\_tile\_copy(NULL,                                       \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR),                        \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_MODE))}
+
+\end{DoxyCode}
+\texorpdfstring{$<$}{<} source tile address
+
+\texorpdfstring{$<$}{<} target tile address
+
+\texorpdfstring{$<$}{<} target region address source tile address target tile address target region address source tile address target tile address target region address source tile address target tile address source tile address target tile address source tile address target tile address source tile address target tile address source tile address target tile address source tile address target tile address source tile address target tile address source tile address target tile address source tile address target tile address source tile address target tile address source tile address target tile address source tile address target tile address source tile address target tile address source tile address target tile address source tile address target tile address source tile address target tile address source tile address target tile address source tile address target tile address source tile address target tile address source tile address target tile address source tile address target tile address source tile address target tile address source tile address target tile address source tile address target tile address source tile address target tile address target region address mask(key) colour source tile address target tile address target region address mask(key) colour source tile address target tile address target region address mask(key) colour source tile address target tile address target region address mask(key) colour source tile address target tile address target region address mask(key) colour source tile address target tile address target region address mask(key) colour 
+
+Definition at line \mbox{\hyperlink{arm__2d__tile_8h_source_l00386}{386}} of file \mbox{\hyperlink{arm__2d__tile_8h_source}{arm\+\_\+2d\+\_\+tile.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__tile_8h_a03e06a299149712aff1fb7570c19a220}\label{arm__2d__tile_8h_a03e06a299149712aff1fb7570c19a220}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_c8bit\_tile\_copy\_only@{arm\_2d\_c8bit\_tile\_copy\_only}}
+\index{arm\_2d\_c8bit\_tile\_copy\_only@{arm\_2d\_c8bit\_tile\_copy\_only}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_c8bit\_tile\_copy\_only}{arm\_2d\_c8bit\_tile\_copy\_only}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+c8bit\+\_\+tile\+\_\+copy\+\_\+only(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_c8bit\_tile\_copy\_only(NULL,                                  \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_aa22f6930146e3f00e9d57131e1dc75cc}\label{arm__2d__tile_8h_aa22f6930146e3f00e9d57131e1dc75cc}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_c8bit\_tile\_copy\_with\_colour\_keying@{arm\_2d\_c8bit\_tile\_copy\_with\_colour\_keying}}
+\index{arm\_2d\_c8bit\_tile\_copy\_with\_colour\_keying@{arm\_2d\_c8bit\_tile\_copy\_with\_colour\_keying}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_c8bit\_tile\_copy\_with\_colour\_keying}{arm\_2d\_c8bit\_tile\_copy\_with\_colour\_keying}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+c8bit\+\_\+tile\+\_\+copy\+\_\+with\+\_\+colour\+\_\+keying(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+MSK\+\_\+\+COLOUR,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{                \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_c8bit\_tile\_copy\_with\_colour\_keying(                         \(\backslash\)}
+\DoxyCodeLine{                                    NULL,                                       \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR),                        \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_MSK\_COLOUR),                             \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_MODE))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_aa614814c6c51afbf507200c5aa4c44ea}\label{arm__2d__tile_8h_aa614814c6c51afbf507200c5aa4c44ea}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_c8bit\_tile\_copy\_with\_colour\_masking@{arm\_2d\_c8bit\_tile\_copy\_with\_colour\_masking}}
+\index{arm\_2d\_c8bit\_tile\_copy\_with\_colour\_masking@{arm\_2d\_c8bit\_tile\_copy\_with\_colour\_masking}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_c8bit\_tile\_copy\_with\_colour\_masking}{arm\_2d\_c8bit\_tile\_copy\_with\_colour\_masking}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+c8bit\+\_\+tile\+\_\+copy\+\_\+with\+\_\+colour\+\_\+masking(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+MSK\+\_\+\+COLOUR,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{                \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_c8bit\_tile\_copy\_with\_colour\_keying(                         \(\backslash\)}
+\DoxyCodeLine{                                    NULL,                                       \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR),                        \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_MSK\_COLOUR),                             \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_MODE))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_a6f53f86a5d899058ff5c119d40701f50}\label{arm__2d__tile_8h_a6f53f86a5d899058ff5c119d40701f50}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_c8bit\_tile\_copy\_with\_x\_mirror@{arm\_2d\_c8bit\_tile\_copy\_with\_x\_mirror}}
+\index{arm\_2d\_c8bit\_tile\_copy\_with\_x\_mirror@{arm\_2d\_c8bit\_tile\_copy\_with\_x\_mirror}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_c8bit\_tile\_copy\_with\_x\_mirror}{arm\_2d\_c8bit\_tile\_copy\_with\_x\_mirror}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+c8bit\+\_\+tile\+\_\+copy\+\_\+with\+\_\+x\+\_\+mirror(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_c8bit\_tile\_copy\_with\_x\_mirror(                              \(\backslash\)}
+\DoxyCodeLine{                                     NULL,                                      \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_aaffcefd9e23fd8171785df9996aadcc3}\label{arm__2d__tile_8h_aaffcefd9e23fd8171785df9996aadcc3}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_c8bit\_tile\_copy\_with\_xy\_mirror@{arm\_2d\_c8bit\_tile\_copy\_with\_xy\_mirror}}
+\index{arm\_2d\_c8bit\_tile\_copy\_with\_xy\_mirror@{arm\_2d\_c8bit\_tile\_copy\_with\_xy\_mirror}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_c8bit\_tile\_copy\_with\_xy\_mirror}{arm\_2d\_c8bit\_tile\_copy\_with\_xy\_mirror}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+c8bit\+\_\+tile\+\_\+copy\+\_\+with\+\_\+xy\+\_\+mirror(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_c8bit\_tile\_copy\_with\_xy\_mirror(                             \(\backslash\)}
+\DoxyCodeLine{                                     NULL,                                      \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_ad3d1351c055cebd4e0670ea1f3140fbc}\label{arm__2d__tile_8h_ad3d1351c055cebd4e0670ea1f3140fbc}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_c8bit\_tile\_copy\_with\_y\_mirror@{arm\_2d\_c8bit\_tile\_copy\_with\_y\_mirror}}
+\index{arm\_2d\_c8bit\_tile\_copy\_with\_y\_mirror@{arm\_2d\_c8bit\_tile\_copy\_with\_y\_mirror}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_c8bit\_tile\_copy\_with\_y\_mirror}{arm\_2d\_c8bit\_tile\_copy\_with\_y\_mirror}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+c8bit\+\_\+tile\+\_\+copy\+\_\+with\+\_\+y\+\_\+mirror(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_c8bit\_tile\_copy\_with\_y\_mirror(                              \(\backslash\)}
+\DoxyCodeLine{                                     NULL,                                      \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_a73b448986fa5f8bd30543f64c10cb79b}\label{arm__2d__tile_8h_a73b448986fa5f8bd30543f64c10cb79b}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_c8bit\_tile\_fill\_only@{arm\_2d\_c8bit\_tile\_fill\_only}}
+\index{arm\_2d\_c8bit\_tile\_fill\_only@{arm\_2d\_c8bit\_tile\_fill\_only}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_c8bit\_tile\_fill\_only}{arm\_2d\_c8bit\_tile\_fill\_only}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+c8bit\+\_\+tile\+\_\+fill\+\_\+only(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_c8bit\_tile\_fill\_only(NULL,                                  \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_a7d6e557f471767813391e48b6b3a24f8}\label{arm__2d__tile_8h_a7d6e557f471767813391e48b6b3a24f8}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_c8bit\_tile\_fill\_with\_x\_mirror@{arm\_2d\_c8bit\_tile\_fill\_with\_x\_mirror}}
+\index{arm\_2d\_c8bit\_tile\_fill\_with\_x\_mirror@{arm\_2d\_c8bit\_tile\_fill\_with\_x\_mirror}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_c8bit\_tile\_fill\_with\_x\_mirror}{arm\_2d\_c8bit\_tile\_fill\_with\_x\_mirror}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+c8bit\+\_\+tile\+\_\+fill\+\_\+with\+\_\+x\+\_\+mirror(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_c8bit\_tile\_fill\_with\_x\_mirror(                              \(\backslash\)}
+\DoxyCodeLine{                                     NULL,                                      \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_a61ca05d8dac5c1dfcc4b8c962e227e78}\label{arm__2d__tile_8h_a61ca05d8dac5c1dfcc4b8c962e227e78}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_c8bit\_tile\_fill\_with\_xy\_mirror@{arm\_2d\_c8bit\_tile\_fill\_with\_xy\_mirror}}
+\index{arm\_2d\_c8bit\_tile\_fill\_with\_xy\_mirror@{arm\_2d\_c8bit\_tile\_fill\_with\_xy\_mirror}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_c8bit\_tile\_fill\_with\_xy\_mirror}{arm\_2d\_c8bit\_tile\_fill\_with\_xy\_mirror}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+c8bit\+\_\+tile\+\_\+fill\+\_\+with\+\_\+xy\+\_\+mirror(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_c8bit\_tile\_fill\_with\_xy\_mirror(                             \(\backslash\)}
+\DoxyCodeLine{                                     NULL,                                      \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_a39c0e206b120504b504931b3138f612f}\label{arm__2d__tile_8h_a39c0e206b120504b504931b3138f612f}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_c8bit\_tile\_fill\_with\_y\_mirror@{arm\_2d\_c8bit\_tile\_fill\_with\_y\_mirror}}
+\index{arm\_2d\_c8bit\_tile\_fill\_with\_y\_mirror@{arm\_2d\_c8bit\_tile\_fill\_with\_y\_mirror}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_c8bit\_tile\_fill\_with\_y\_mirror}{arm\_2d\_c8bit\_tile\_fill\_with\_y\_mirror}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+c8bit\+\_\+tile\+\_\+fill\+\_\+with\+\_\+y\+\_\+mirror(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_c8bit\_tile\_fill\_with\_y\_mirror(                              \(\backslash\)}
+\DoxyCodeLine{                                     NULL,                                      \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_a9fd50f143930535c58f61d3cca9e2921}\label{arm__2d__tile_8h_a9fd50f143930535c58f61d3cca9e2921}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_get\_address\_and\_region\_from\_tile@{arm\_2d\_get\_address\_and\_region\_from\_tile}}
+\index{arm\_2d\_get\_address\_and\_region\_from\_tile@{arm\_2d\_get\_address\_and\_region\_from\_tile}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_get\_address\_and\_region\_from\_tile}{arm\_2d\_get\_address\_and\_region\_from\_tile}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+get\+\_\+address\+\_\+and\+\_\+region\+\_\+from\+\_\+tile(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+TILE\+\_\+\+PTR,  }\item[{}]{\+\_\+\+\_\+\+VALID\+\_\+\+REGION\+\_\+\+NAME,  }\item[{}]{\+\_\+\+\_\+\+LOCATION\+\_\+\+OFFSET\+\_\+\+PTR,  }\item[{}]{\+\_\+\+\_\+\+TYPE,  }\item[{}]{\+\_\+\+\_\+\+BUF\+\_\+\+PTR\+\_\+\+NAME }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{        \_\_arm\_2d\_get\_address\_and\_region\_from\_tile(  \_\_TILE\_PTR,                 \(\backslash\)}
+\DoxyCodeLine{                                                    \_\_VALID\_REGION\_NAME,        \(\backslash\)}
+\DoxyCodeLine{                                                    \_\_LOCATION\_OFFSET\_PTR,      \(\backslash\)}
+\DoxyCodeLine{                                                    \_\_TYPE,                     \(\backslash\)}
+\DoxyCodeLine{                                                    \_\_BUF\_PTR\_NAME)}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{arm__2d__tile_8h_source_l00444}{444}} of file \mbox{\hyperlink{arm__2d__tile_8h_source}{arm\+\_\+2d\+\_\+tile.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__tile_8h_a35cde51709d5ffc8bfef0ba6dd04bf8b}\label{arm__2d__tile_8h_a35cde51709d5ffc8bfef0ba6dd04bf8b}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_get\_address\_and\_region\_from\_tile\_with\_mirroring@{arm\_2d\_get\_address\_and\_region\_from\_tile\_with\_mirroring}}
+\index{arm\_2d\_get\_address\_and\_region\_from\_tile\_with\_mirroring@{arm\_2d\_get\_address\_and\_region\_from\_tile\_with\_mirroring}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_get\_address\_and\_region\_from\_tile\_with\_mirroring}{arm\_2d\_get\_address\_and\_region\_from\_tile\_with\_mirroring}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+get\+\_\+address\+\_\+and\+\_\+region\+\_\+from\+\_\+tile\+\_\+with\+\_\+mirroring(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+TILE\+\_\+\+PTR,  }\item[{}]{\+\_\+\+\_\+\+VALID\+\_\+\+REGION\+\_\+\+NAME,  }\item[{}]{\+\_\+\+\_\+\+LOCATION\+\_\+\+OFFSET\+\_\+\+PTR,  }\item[{}]{\+\_\+\+\_\+\+TYPE,  }\item[{}]{\+\_\+\+\_\+\+BUF\+\_\+\+PTR\+\_\+\+NAME,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{        \_\_arm\_2d\_get\_address\_and\_region\_from\_tile\_with\_mirroring(               \(\backslash\)}
+\DoxyCodeLine{                                                    \_\_TILE\_PTR,                 \(\backslash\)}
+\DoxyCodeLine{                                                    \_\_VALID\_REGION\_NAME,        \(\backslash\)}
+\DoxyCodeLine{                                                    \_\_LOCATION\_OFFSET\_PTR,      \(\backslash\)}
+\DoxyCodeLine{                                                    \_\_TYPE,                     \(\backslash\)}
+\DoxyCodeLine{                                                    \_\_BUF\_PTR\_NAME,             \(\backslash\)}
+\DoxyCodeLine{                                                    (\_\_MODE))}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{arm__2d__tile_8h_source_l00485}{485}} of file \mbox{\hyperlink{arm__2d__tile_8h_source}{arm\+\_\+2d\+\_\+tile.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__tile_8h_adb6dca012253b6a71c7a1eb10da4cefe}\label{arm__2d__tile_8h_adb6dca012253b6a71c7a1eb10da4cefe}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_rgb16\_tile\_copy@{arm\_2d\_rgb16\_tile\_copy}}
+\index{arm\_2d\_rgb16\_tile\_copy@{arm\_2d\_rgb16\_tile\_copy}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb16\_tile\_copy}{arm\_2d\_rgb16\_tile\_copy}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb16\+\_\+tile\+\_\+copy(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{                \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb16\_tile\_copy(NULL,                                       \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR),                        \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_MODE))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_aef8e5e6e7b6407bc1b91b279832a6f10}\label{arm__2d__tile_8h_aef8e5e6e7b6407bc1b91b279832a6f10}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_rgb16\_tile\_copy\_only@{arm\_2d\_rgb16\_tile\_copy\_only}}
+\index{arm\_2d\_rgb16\_tile\_copy\_only@{arm\_2d\_rgb16\_tile\_copy\_only}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb16\_tile\_copy\_only}{arm\_2d\_rgb16\_tile\_copy\_only}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb16\+\_\+tile\+\_\+copy\+\_\+only(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb16\_tile\_copy\_only(NULL,                                  \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_a13a6d864039c3d125aac5ae0eb466533}\label{arm__2d__tile_8h_a13a6d864039c3d125aac5ae0eb466533}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_rgb16\_tile\_copy\_with\_colour\_keying@{arm\_2d\_rgb16\_tile\_copy\_with\_colour\_keying}}
+\index{arm\_2d\_rgb16\_tile\_copy\_with\_colour\_keying@{arm\_2d\_rgb16\_tile\_copy\_with\_colour\_keying}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb16\_tile\_copy\_with\_colour\_keying}{arm\_2d\_rgb16\_tile\_copy\_with\_colour\_keying}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb16\+\_\+tile\+\_\+copy\+\_\+with\+\_\+colour\+\_\+keying(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+MSK\+\_\+\+COLOUR,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{                \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb16\_tile\_copy\_with\_colour\_keying(                         \(\backslash\)}
+\DoxyCodeLine{                                    NULL,                                       \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR),                        \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_MSK\_COLOUR),                             \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_MODE))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_a938c5ee88de12d34ec89b085492e7e01}\label{arm__2d__tile_8h_a938c5ee88de12d34ec89b085492e7e01}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_rgb16\_tile\_copy\_with\_colour\_masking@{arm\_2d\_rgb16\_tile\_copy\_with\_colour\_masking}}
+\index{arm\_2d\_rgb16\_tile\_copy\_with\_colour\_masking@{arm\_2d\_rgb16\_tile\_copy\_with\_colour\_masking}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb16\_tile\_copy\_with\_colour\_masking}{arm\_2d\_rgb16\_tile\_copy\_with\_colour\_masking}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb16\+\_\+tile\+\_\+copy\+\_\+with\+\_\+colour\+\_\+masking(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+MSK\+\_\+\+COLOUR,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{                \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb16\_tile\_copy\_with\_colour\_keying(                         \(\backslash\)}
+\DoxyCodeLine{                                    NULL,                                       \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR),                        \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_MSK\_COLOUR),                             \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_MODE))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_afb81e82adac41a03abbcdcc86163dfba}\label{arm__2d__tile_8h_afb81e82adac41a03abbcdcc86163dfba}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_rgb16\_tile\_copy\_with\_x\_mirror@{arm\_2d\_rgb16\_tile\_copy\_with\_x\_mirror}}
+\index{arm\_2d\_rgb16\_tile\_copy\_with\_x\_mirror@{arm\_2d\_rgb16\_tile\_copy\_with\_x\_mirror}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb16\_tile\_copy\_with\_x\_mirror}{arm\_2d\_rgb16\_tile\_copy\_with\_x\_mirror}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb16\+\_\+tile\+\_\+copy\+\_\+with\+\_\+x\+\_\+mirror(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb16\_tile\_copy\_with\_x\_mirror(                              \(\backslash\)}
+\DoxyCodeLine{                                     NULL,                                      \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_ae86ac169ce9918cbf9c892d6d0f5629c}\label{arm__2d__tile_8h_ae86ac169ce9918cbf9c892d6d0f5629c}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_rgb16\_tile\_copy\_with\_xy\_mirror@{arm\_2d\_rgb16\_tile\_copy\_with\_xy\_mirror}}
+\index{arm\_2d\_rgb16\_tile\_copy\_with\_xy\_mirror@{arm\_2d\_rgb16\_tile\_copy\_with\_xy\_mirror}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb16\_tile\_copy\_with\_xy\_mirror}{arm\_2d\_rgb16\_tile\_copy\_with\_xy\_mirror}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb16\+\_\+tile\+\_\+copy\+\_\+with\+\_\+xy\+\_\+mirror(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb16\_tile\_copy\_with\_xy\_mirror(                             \(\backslash\)}
+\DoxyCodeLine{                                     NULL,                                      \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_afb88b7c608ad0a30c44875bfa32921bb}\label{arm__2d__tile_8h_afb88b7c608ad0a30c44875bfa32921bb}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_rgb16\_tile\_copy\_with\_y\_mirror@{arm\_2d\_rgb16\_tile\_copy\_with\_y\_mirror}}
+\index{arm\_2d\_rgb16\_tile\_copy\_with\_y\_mirror@{arm\_2d\_rgb16\_tile\_copy\_with\_y\_mirror}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb16\_tile\_copy\_with\_y\_mirror}{arm\_2d\_rgb16\_tile\_copy\_with\_y\_mirror}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb16\+\_\+tile\+\_\+copy\+\_\+with\+\_\+y\+\_\+mirror(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb16\_tile\_copy\_with\_y\_mirror(                              \(\backslash\)}
+\DoxyCodeLine{                                     NULL,                                      \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_aa53328a3802032f3fb25b14e09029605}\label{arm__2d__tile_8h_aa53328a3802032f3fb25b14e09029605}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_rgb16\_tile\_fill\_only@{arm\_2d\_rgb16\_tile\_fill\_only}}
+\index{arm\_2d\_rgb16\_tile\_fill\_only@{arm\_2d\_rgb16\_tile\_fill\_only}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb16\_tile\_fill\_only}{arm\_2d\_rgb16\_tile\_fill\_only}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb16\+\_\+tile\+\_\+fill\+\_\+only(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb16\_tile\_fill\_only(NULL,                                  \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_a531ec42e13cde74d1144d7015d20df19}\label{arm__2d__tile_8h_a531ec42e13cde74d1144d7015d20df19}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_rgb16\_tile\_fill\_with\_x\_mirror@{arm\_2d\_rgb16\_tile\_fill\_with\_x\_mirror}}
+\index{arm\_2d\_rgb16\_tile\_fill\_with\_x\_mirror@{arm\_2d\_rgb16\_tile\_fill\_with\_x\_mirror}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb16\_tile\_fill\_with\_x\_mirror}{arm\_2d\_rgb16\_tile\_fill\_with\_x\_mirror}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb16\+\_\+tile\+\_\+fill\+\_\+with\+\_\+x\+\_\+mirror(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb16\_tile\_fill\_with\_x\_mirror(                              \(\backslash\)}
+\DoxyCodeLine{                                     NULL,                                      \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_a7daeb30fe53f2a71a4767f520bdd1c1c}\label{arm__2d__tile_8h_a7daeb30fe53f2a71a4767f520bdd1c1c}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_rgb16\_tile\_fill\_with\_xy\_mirror@{arm\_2d\_rgb16\_tile\_fill\_with\_xy\_mirror}}
+\index{arm\_2d\_rgb16\_tile\_fill\_with\_xy\_mirror@{arm\_2d\_rgb16\_tile\_fill\_with\_xy\_mirror}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb16\_tile\_fill\_with\_xy\_mirror}{arm\_2d\_rgb16\_tile\_fill\_with\_xy\_mirror}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb16\+\_\+tile\+\_\+fill\+\_\+with\+\_\+xy\+\_\+mirror(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb16\_tile\_fill\_with\_xy\_mirror(                             \(\backslash\)}
+\DoxyCodeLine{                                     NULL,                                      \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_aac05fef386cc92597b1370a0edce4ebf}\label{arm__2d__tile_8h_aac05fef386cc92597b1370a0edce4ebf}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_rgb16\_tile\_fill\_with\_y\_mirror@{arm\_2d\_rgb16\_tile\_fill\_with\_y\_mirror}}
+\index{arm\_2d\_rgb16\_tile\_fill\_with\_y\_mirror@{arm\_2d\_rgb16\_tile\_fill\_with\_y\_mirror}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb16\_tile\_fill\_with\_y\_mirror}{arm\_2d\_rgb16\_tile\_fill\_with\_y\_mirror}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb16\+\_\+tile\+\_\+fill\+\_\+with\+\_\+y\+\_\+mirror(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb16\_tile\_fill\_with\_y\_mirror(                              \(\backslash\)}
+\DoxyCodeLine{                                     NULL,                                      \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_abef4e01fa3750c73b24b780f2bcf97a0}\label{arm__2d__tile_8h_abef4e01fa3750c73b24b780f2bcf97a0}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_rgb32\_tile\_copy@{arm\_2d\_rgb32\_tile\_copy}}
+\index{arm\_2d\_rgb32\_tile\_copy@{arm\_2d\_rgb32\_tile\_copy}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb32\_tile\_copy}{arm\_2d\_rgb32\_tile\_copy}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb32\+\_\+tile\+\_\+copy(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{                \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb32\_tile\_copy(NULL,                                       \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR),                        \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_MODE))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_a4b4c559c434eb9f583cf8f890d2179bf}\label{arm__2d__tile_8h_a4b4c559c434eb9f583cf8f890d2179bf}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_rgb32\_tile\_copy\_only@{arm\_2d\_rgb32\_tile\_copy\_only}}
+\index{arm\_2d\_rgb32\_tile\_copy\_only@{arm\_2d\_rgb32\_tile\_copy\_only}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb32\_tile\_copy\_only}{arm\_2d\_rgb32\_tile\_copy\_only}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb32\+\_\+tile\+\_\+copy\+\_\+only(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb32\_tile\_copy\_only(NULL,                                  \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_aebbc92311796e5c9cf86bc5c5df267a6}\label{arm__2d__tile_8h_aebbc92311796e5c9cf86bc5c5df267a6}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_rgb32\_tile\_copy\_with\_colour\_keying@{arm\_2d\_rgb32\_tile\_copy\_with\_colour\_keying}}
+\index{arm\_2d\_rgb32\_tile\_copy\_with\_colour\_keying@{arm\_2d\_rgb32\_tile\_copy\_with\_colour\_keying}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb32\_tile\_copy\_with\_colour\_keying}{arm\_2d\_rgb32\_tile\_copy\_with\_colour\_keying}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb32\+\_\+tile\+\_\+copy\+\_\+with\+\_\+colour\+\_\+keying(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+MSK\+\_\+\+COLOUR,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{                \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb32\_tile\_copy\_with\_colour\_keying(                         \(\backslash\)}
+\DoxyCodeLine{                                    NULL,                                       \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR),                        \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_MSK\_COLOUR),                             \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_MODE))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_a8b0b184727f906e2d090a835aafd71dd}\label{arm__2d__tile_8h_a8b0b184727f906e2d090a835aafd71dd}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_rgb32\_tile\_copy\_with\_colour\_masking@{arm\_2d\_rgb32\_tile\_copy\_with\_colour\_masking}}
+\index{arm\_2d\_rgb32\_tile\_copy\_with\_colour\_masking@{arm\_2d\_rgb32\_tile\_copy\_with\_colour\_masking}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb32\_tile\_copy\_with\_colour\_masking}{arm\_2d\_rgb32\_tile\_copy\_with\_colour\_masking}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb32\+\_\+tile\+\_\+copy\+\_\+with\+\_\+colour\+\_\+masking(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+MSK\+\_\+\+COLOUR,  }\item[{}]{\+\_\+\+\_\+\+MODE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{                \(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb32\_tile\_copy\_with\_colour\_keying(                         \(\backslash\)}
+\DoxyCodeLine{                                    NULL,                                       \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR),                        \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_MSK\_COLOUR),                             \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_MODE))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_ac88edab83758c6b696841cc5add6b1a3}\label{arm__2d__tile_8h_ac88edab83758c6b696841cc5add6b1a3}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_rgb32\_tile\_copy\_with\_x\_mirror@{arm\_2d\_rgb32\_tile\_copy\_with\_x\_mirror}}
+\index{arm\_2d\_rgb32\_tile\_copy\_with\_x\_mirror@{arm\_2d\_rgb32\_tile\_copy\_with\_x\_mirror}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb32\_tile\_copy\_with\_x\_mirror}{arm\_2d\_rgb32\_tile\_copy\_with\_x\_mirror}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb32\+\_\+tile\+\_\+copy\+\_\+with\+\_\+x\+\_\+mirror(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb32\_tile\_copy\_with\_x\_mirror(                              \(\backslash\)}
+\DoxyCodeLine{                                     NULL,                                      \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_a8e6039c41db18234afec0d6631cba8f1}\label{arm__2d__tile_8h_a8e6039c41db18234afec0d6631cba8f1}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_rgb32\_tile\_copy\_with\_xy\_mirror@{arm\_2d\_rgb32\_tile\_copy\_with\_xy\_mirror}}
+\index{arm\_2d\_rgb32\_tile\_copy\_with\_xy\_mirror@{arm\_2d\_rgb32\_tile\_copy\_with\_xy\_mirror}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb32\_tile\_copy\_with\_xy\_mirror}{arm\_2d\_rgb32\_tile\_copy\_with\_xy\_mirror}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb32\+\_\+tile\+\_\+copy\+\_\+with\+\_\+xy\+\_\+mirror(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb32\_tile\_copy\_with\_xy\_mirror(                             \(\backslash\)}
+\DoxyCodeLine{                                     NULL,                                      \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_af61b0f18787ec43614e0e3556705966a}\label{arm__2d__tile_8h_af61b0f18787ec43614e0e3556705966a}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_rgb32\_tile\_copy\_with\_y\_mirror@{arm\_2d\_rgb32\_tile\_copy\_with\_y\_mirror}}
+\index{arm\_2d\_rgb32\_tile\_copy\_with\_y\_mirror@{arm\_2d\_rgb32\_tile\_copy\_with\_y\_mirror}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb32\_tile\_copy\_with\_y\_mirror}{arm\_2d\_rgb32\_tile\_copy\_with\_y\_mirror}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb32\+\_\+tile\+\_\+copy\+\_\+with\+\_\+y\+\_\+mirror(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb32\_tile\_copy\_with\_y\_mirror(                              \(\backslash\)}
+\DoxyCodeLine{                                     NULL,                                      \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_adb4bc1bb552149efd6bfdc2af4a071d1}\label{arm__2d__tile_8h_adb4bc1bb552149efd6bfdc2af4a071d1}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_rgb32\_tile\_fill\_only@{arm\_2d\_rgb32\_tile\_fill\_only}}
+\index{arm\_2d\_rgb32\_tile\_fill\_only@{arm\_2d\_rgb32\_tile\_fill\_only}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb32\_tile\_fill\_only}{arm\_2d\_rgb32\_tile\_fill\_only}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb32\+\_\+tile\+\_\+fill\+\_\+only(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb32\_tile\_fill\_only(NULL,                                  \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_a072aec879530f4460920b710f1a67591}\label{arm__2d__tile_8h_a072aec879530f4460920b710f1a67591}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_rgb32\_tile\_fill\_with\_x\_mirror@{arm\_2d\_rgb32\_tile\_fill\_with\_x\_mirror}}
+\index{arm\_2d\_rgb32\_tile\_fill\_with\_x\_mirror@{arm\_2d\_rgb32\_tile\_fill\_with\_x\_mirror}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb32\_tile\_fill\_with\_x\_mirror}{arm\_2d\_rgb32\_tile\_fill\_with\_x\_mirror}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb32\+\_\+tile\+\_\+fill\+\_\+with\+\_\+x\+\_\+mirror(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb32\_tile\_fill\_with\_x\_mirror(                              \(\backslash\)}
+\DoxyCodeLine{                                     NULL,                                      \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_aab65ed7e4300dc7d2167ea75517acb84}\label{arm__2d__tile_8h_aab65ed7e4300dc7d2167ea75517acb84}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_rgb32\_tile\_fill\_with\_xy\_mirror@{arm\_2d\_rgb32\_tile\_fill\_with\_xy\_mirror}}
+\index{arm\_2d\_rgb32\_tile\_fill\_with\_xy\_mirror@{arm\_2d\_rgb32\_tile\_fill\_with\_xy\_mirror}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb32\_tile\_fill\_with\_xy\_mirror}{arm\_2d\_rgb32\_tile\_fill\_with\_xy\_mirror}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb32\+\_\+tile\+\_\+fill\+\_\+with\+\_\+xy\+\_\+mirror(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb32\_tile\_fill\_with\_xy\_mirror(                             \(\backslash\)}
+\DoxyCodeLine{                                     NULL,                                      \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d__tile_8h_a760e83f398cf1275ce6127ad7b8c6638}\label{arm__2d__tile_8h_a760e83f398cf1275ce6127ad7b8c6638}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_rgb32\_tile\_fill\_with\_y\_mirror@{arm\_2d\_rgb32\_tile\_fill\_with\_y\_mirror}}
+\index{arm\_2d\_rgb32\_tile\_fill\_with\_y\_mirror@{arm\_2d\_rgb32\_tile\_fill\_with\_y\_mirror}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_rgb32\_tile\_fill\_with\_y\_mirror}{arm\_2d\_rgb32\_tile\_fill\_with\_y\_mirror}}
+{\footnotesize\ttfamily \#define arm\+\_\+2d\+\_\+rgb32\+\_\+tile\+\_\+fill\+\_\+with\+\_\+y\+\_\+mirror(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+SRC\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+ADDR,  }\item[{}]{\+\_\+\+\_\+\+DES\+\_\+\+REGION\+\_\+\+ADDR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{            arm\_2dp\_rgb32\_tile\_fill\_with\_y\_mirror(                              \(\backslash\)}
+\DoxyCodeLine{                                     NULL,                                      \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_SRC\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_ADDR),                               \(\backslash\)}
+\DoxyCodeLine{                                    (\_\_DES\_REGION\_ADDR))}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{arm__2d__tile_8h_a7a8963fd261ac942f11c9d9cd03f7b34}\label{arm__2d__tile_8h_a7a8963fd261ac942f11c9d9cd03f7b34}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!arm\_2d\_op\_cp\_t@{arm\_2d\_op\_cp\_t}}
+\index{arm\_2d\_op\_cp\_t@{arm\_2d\_op\_cp\_t}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_op\_cp\_t}{arm\_2d\_op\_cp\_t}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{structarm__2d__op__src__t}{arm\+\_\+2d\+\_\+op\+\_\+src\+\_\+t}} \mbox{\hyperlink{arm__2d__tile_8h_a7a8963fd261ac942f11c9d9cd03f7b34}{arm\+\_\+2d\+\_\+op\+\_\+cp\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__tile_8h_source_l00502}{502}} of file \mbox{\hyperlink{arm__2d__tile_8h_source}{arm\+\_\+2d\+\_\+tile.\+h}}.
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034}\label{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034}} 
+\doxysubsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily anonymous enum}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ARM\_2D\_CP\_MODE\_COPY@{ARM\_2D\_CP\_MODE\_COPY}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!ARM\_2D\_CP\_MODE\_COPY@{ARM\_2D\_CP\_MODE\_COPY}}}\mbox{\Hypertarget{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034accc2f66ec619a68fb6d627da4aabc6d9}\label{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034accc2f66ec619a68fb6d627da4aabc6d9}} 
+ARM\+\_\+2\+D\+\_\+\+CP\+\_\+\+MODE\+\_\+\+COPY&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ARM\_2D\_CP\_MODE\_FILL@{ARM\_2D\_CP\_MODE\_FILL}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!ARM\_2D\_CP\_MODE\_FILL@{ARM\_2D\_CP\_MODE\_FILL}}}\mbox{\Hypertarget{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034a206050d8cffe7ddc3f61b7b3b1bddf8d}\label{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034a206050d8cffe7ddc3f61b7b3b1bddf8d}} 
+ARM\+\_\+2\+D\+\_\+\+CP\+\_\+\+MODE\+\_\+\+FILL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ARM\_2D\_CP\_MODE\_Y\_MIRROR@{ARM\_2D\_CP\_MODE\_Y\_MIRROR}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!ARM\_2D\_CP\_MODE\_Y\_MIRROR@{ARM\_2D\_CP\_MODE\_Y\_MIRROR}}}\mbox{\Hypertarget{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034ac561823141d2a0cb61b1d79970d88a60}\label{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034ac561823141d2a0cb61b1d79970d88a60}} 
+ARM\+\_\+2\+D\+\_\+\+CP\+\_\+\+MODE\+\_\+\+Y\+\_\+\+MIRROR&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ARM\_2D\_CP\_MODE\_X\_MIRROR@{ARM\_2D\_CP\_MODE\_X\_MIRROR}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!ARM\_2D\_CP\_MODE\_X\_MIRROR@{ARM\_2D\_CP\_MODE\_X\_MIRROR}}}\mbox{\Hypertarget{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034a69116a74f0ddd40fad4d810dd8191cf1}\label{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034a69116a74f0ddd40fad4d810dd8191cf1}} 
+ARM\+\_\+2\+D\+\_\+\+CP\+\_\+\+MODE\+\_\+\+X\+\_\+\+MIRROR&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ARM\_2D\_CP\_MODE\_XY\_MIRROR@{ARM\_2D\_CP\_MODE\_XY\_MIRROR}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!ARM\_2D\_CP\_MODE\_XY\_MIRROR@{ARM\_2D\_CP\_MODE\_XY\_MIRROR}}}\mbox{\Hypertarget{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034a0dc08b6b75385217fb5666998a7e7715}\label{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034a0dc08b6b75385217fb5666998a7e7715}} 
+ARM\+\_\+2\+D\+\_\+\+CP\+\_\+\+MODE\+\_\+\+XY\+\_\+\+MIRROR&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{arm__2d__tile_8h_source_l00650}{650}} of file \mbox{\hyperlink{arm__2d__tile_8h_source}{arm\+\_\+2d\+\_\+tile.\+h}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{arm__2d__tile_8h_a7dc372aa5fc05c99cc23552860121efc}\label{arm__2d__tile_8h_a7dc372aa5fc05c99cc23552860121efc}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!bClipRegion@{bClipRegion}}
+\index{bClipRegion@{bClipRegion}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{bClipRegion}{bClipRegion}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} bool b\+Clip\+Region}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__tile_8h_source_l00618}{618}} of file \mbox{\hyperlink{arm__2d__tile_8h_source}{arm\+\_\+2d\+\_\+tile.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__tile_8h_aec98dc3b0a602189b3c556de571e3962}\label{arm__2d__tile_8h_aec98dc3b0a602189b3c556de571e3962}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!chMaskColour@{chMaskColour}}
+\index{chMaskColour@{chMaskColour}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{chMaskColour}{chMaskColour}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} uint8\+\_\+t ch\+Mask\+Colour}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__tile_8h_source_l00912}{912}} of file \mbox{\hyperlink{arm__2d__tile_8h_source}{arm\+\_\+2d\+\_\+tile.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__tile_8h_a8819ce4bd172f0ddde9ca10cc8cadbf0}\label{arm__2d__tile_8h_a8819ce4bd172f0ddde9ca10cc8cadbf0}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!hwMaskColour@{hwMaskColour}}
+\index{hwMaskColour@{hwMaskColour}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{hwMaskColour}{hwMaskColour}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} uint16\+\_\+t hw\+Mask\+Colour}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__tile_8h_source_l00931}{931}} of file \mbox{\hyperlink{arm__2d__tile_8h_source}{arm\+\_\+2d\+\_\+tile.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__tile_8h_a92de48b0ca59e6dce548975c96661f98}\label{arm__2d__tile_8h_a92de48b0ca59e6dce548975c96661f98}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!ptBuffer@{ptBuffer}}
+\index{ptBuffer@{ptBuffer}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{ptBuffer}{ptBuffer}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}}$\ast$ pt\+Buffer}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__tile_8h_source_l00645}{645}} of file \mbox{\hyperlink{arm__2d__tile_8h_source}{arm\+\_\+2d\+\_\+tile.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__tile_8h_a4f4e98490343680b27fcf6351a6ba00a}\label{arm__2d__tile_8h_a4f4e98490343680b27fcf6351a6ba00a}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!ptLocation@{ptLocation}}
+\index{ptLocation@{ptLocation}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{ptLocation}{ptLocation}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structarm__2d__location__t}{arm\+\_\+2d\+\_\+location\+\_\+t}}$\ast$ pt\+Location}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__tile_8h_source_l00639}{639}} of file \mbox{\hyperlink{arm__2d__tile_8h_source}{arm\+\_\+2d\+\_\+tile.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__tile_8h_afa50c6d3667ae01b765264e7deb89132}\label{arm__2d__tile_8h_afa50c6d3667ae01b765264e7deb89132}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!ptOffset@{ptOffset}}
+\index{ptOffset@{ptOffset}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{ptOffset}{ptOffset}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} \mbox{\hyperlink{structarm__2d__location__t}{arm\+\_\+2d\+\_\+location\+\_\+t}}$\ast$ pt\+Offset}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__tile_8h_source_l00592}{592}} of file \mbox{\hyperlink{arm__2d__tile_8h_source}{arm\+\_\+2d\+\_\+tile.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__tile_8h_acdf7e028a284ccc39eccda497271cee7}\label{arm__2d__tile_8h_acdf7e028a284ccc39eccda497271cee7}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!ptOutput@{ptOutput}}
+\index{ptOutput@{ptOutput}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{ptOutput}{ptOutput}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}}$\ast$ pt\+Output}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__tile_8h_source_l00617}{617}} of file \mbox{\hyperlink{arm__2d__tile_8h_source}{arm\+\_\+2d\+\_\+tile.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__tile_8h_a3b6b3df8fa64632f584b6ebb21852f3a}\label{arm__2d__tile_8h_a3b6b3df8fa64632f584b6ebb21852f3a}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!ptPoint@{ptPoint}}
+\index{ptPoint@{ptPoint}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{ptPoint}{ptPoint}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__location__t}{arm\+\_\+2d\+\_\+location\+\_\+t}}$\ast$ pt\+Point}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__tile_8h_source_l00565}{565}} of file \mbox{\hyperlink{arm__2d__tile_8h_source}{arm\+\_\+2d\+\_\+tile.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__tile_8h_ab1246db8cd9dc4327fdcec202b9e48ff}\label{arm__2d__tile_8h_ab1246db8cd9dc4327fdcec202b9e48ff}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!ptReference@{ptReference}}
+\index{ptReference@{ptReference}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{ptReference}{ptReference}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} $\ast$ pt\+Reference}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__tile_8h_source_l00623}{623}} of file \mbox{\hyperlink{arm__2d__tile_8h_source}{arm\+\_\+2d\+\_\+tile.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__tile_8h_ae91422afd71e61eee96acf55e1468b47}\label{arm__2d__tile_8h_ae91422afd71e61eee96acf55e1468b47}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!ptRegion@{ptRegion}}
+\index{ptRegion@{ptRegion}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{ptRegion}{ptRegion}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}}$\ast$ pt\+Region}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__tile_8h_source_l00616}{616}} of file \mbox{\hyperlink{arm__2d__tile_8h_source}{arm\+\_\+2d\+\_\+tile.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__tile_8h_abc4b0ef4720dd4663889d9034870b136}\label{arm__2d__tile_8h_abc4b0ef4720dd4663889d9034870b136}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!ptRegionIn1@{ptRegionIn1}}
+\index{ptRegionIn1@{ptRegionIn1}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{ptRegionIn1}{ptRegionIn1}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}}$\ast$ pt\+Region\+In1}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__tile_8h_source_l00560}{560}} of file \mbox{\hyperlink{arm__2d__tile_8h_source}{arm\+\_\+2d\+\_\+tile.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__tile_8h_a581fc09f05188ffd494171b16c3037e2}\label{arm__2d__tile_8h_a581fc09f05188ffd494171b16c3037e2}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!ptRegionOut@{ptRegionOut}}
+\index{ptRegionOut@{ptRegionOut}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{ptRegionOut}{ptRegionOut}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}}$\ast$ pt\+Region\+Out}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__tile_8h_source_l00561}{561}} of file \mbox{\hyperlink{arm__2d__tile_8h_source}{arm\+\_\+2d\+\_\+tile.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__tile_8h_a839113872b353ce27e460e1bc21c2e1b}\label{arm__2d__tile_8h_a839113872b353ce27e460e1bc21c2e1b}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!ptSource@{ptSource}}
+\index{ptSource@{ptSource}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{ptSource}{ptSource}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}}$\ast$ pt\+Source}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__tile_8h_source_l00662}{662}} of file \mbox{\hyperlink{arm__2d__tile_8h_source}{arm\+\_\+2d\+\_\+tile.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__tile_8h_a81568a0a131f60b06a5a97ee9415fef7}\label{arm__2d__tile_8h_a81568a0a131f60b06a5a97ee9415fef7}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!ptTarget@{ptTarget}}
+\index{ptTarget@{ptTarget}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{ptTarget}{ptTarget}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}}$\ast$ pt\+Target}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__tile_8h_source_l00663}{663}} of file \mbox{\hyperlink{arm__2d__tile_8h_source}{arm\+\_\+2d\+\_\+tile.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__tile_8h_a6ea677d57063d6f9b0105e56681f218b}\label{arm__2d__tile_8h_a6ea677d57063d6f9b0105e56681f218b}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!ptValidRegion@{ptValidRegion}}
+\index{ptValidRegion@{ptValidRegion}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{ptValidRegion}{ptValidRegion}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}}$\ast$ pt\+Valid\+Region}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__tile_8h_source_l00591}{591}} of file \mbox{\hyperlink{arm__2d__tile_8h_source}{arm\+\_\+2d\+\_\+tile.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__tile_8h_a099a3dd4d2fc6a07ecbd21ef7d8e2b9d}\label{arm__2d__tile_8h_a099a3dd4d2fc6a07ecbd21ef7d8e2b9d}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!wMaskColour@{wMaskColour}}
+\index{wMaskColour@{wMaskColour}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{wMaskColour}{wMaskColour}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} uint32\+\_\+t w\+Mask\+Colour}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__tile_8h_source_l00951}{951}} of file \mbox{\hyperlink{arm__2d__tile_8h_source}{arm\+\_\+2d\+\_\+tile.\+h}}.
+
+\mbox{\Hypertarget{arm__2d__tile_8h_a2e5a85ec501d28af73a7b6d43828b7f0}\label{arm__2d__tile_8h_a2e5a85ec501d28af73a7b6d43828b7f0}} 
+\index{arm\_2d\_tile.h@{arm\_2d\_tile.h}!wMode@{wMode}}
+\index{wMode@{wMode}!arm\_2d\_tile.h@{arm\_2d\_tile.h}}
+\doxysubsubsection{\texorpdfstring{wMode}{wMode}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} const \mbox{\hyperlink{structarm__2d__region__t}{arm\+\_\+2d\+\_\+region\+\_\+t}} uint32\+\_\+t uint32\+\_\+t w\+Mode}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d__tile_8h_source_l00665}{665}} of file \mbox{\hyperlink{arm__2d__tile_8h_source}{arm\+\_\+2d\+\_\+tile.\+h}}.
+

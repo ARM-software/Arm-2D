@@ -1,0 +1,1337 @@
+\hypertarget{____arm__2d__copy_8inc_source}{}\doxysection{\+\_\+\+\_\+arm\+\_\+2d\+\_\+copy.\+inc}
+\label{____arm__2d__copy_8inc_source}\index{\_\_arm\_2d\_copy.inc@{\_\_arm\_2d\_copy.inc}}
+\mbox{\hyperlink{____arm__2d__copy_8inc}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00001}00001 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00002}00002 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00003}00003 \textcolor{comment}{ * Copyright (C) 2010-\/2021 Arm Limited or its affiliates. All rights reserved.}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00004}00004 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00005}00005 \textcolor{comment}{ * SPDX-\/License-\/Identifier: Apache-\/2.0}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00006}00006 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00007}00007 \textcolor{comment}{ * Licensed under the Apache License, Version 2.0 (the License); you may}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00008}00008 \textcolor{comment}{ * not use this file except in compliance with the License.}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00009}00009 \textcolor{comment}{ * You may obtain a copy of the License at}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00010}00010 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00011}00011 \textcolor{comment}{ * www.apache.org/licenses/LICENSE-\/2.0}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00012}00012 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00013}00013 \textcolor{comment}{ * Unless required by applicable law or agreed to in writing, software}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00014}00014 \textcolor{comment}{ * distributed under the License is distributed on an AS IS BASIS, WITHOUT}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00015}00015 \textcolor{comment}{ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00016}00016 \textcolor{comment}{ * See the License for the specific language governing permissions and}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00017}00017 \textcolor{comment}{ * limitations under the License.}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00018}00018 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00020}00020 \textcolor{comment}{/* -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00021}00021 \textcolor{comment}{ * Project:      Arm-\/2D Library}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00022}00022 \textcolor{comment}{ * Title:        \_\_arm\_2d\_copy.inc}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00023}00023 \textcolor{comment}{ * Description:  c code template for copy like operations}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00024}00024 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00025}00025 \textcolor{comment}{ * \$Date:        14. April 2020}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00026}00026 \textcolor{comment}{ * \$Revision:    V.1.0.0}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00027}00027 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00028}00028 \textcolor{comment}{ * -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ */}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00029}00029  }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00030}00030 \textcolor{preprocessor}{\#ifndef \_\_API\_COLOUR}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00031}00031 \textcolor{preprocessor}{\#   error You have to define \_\_API\_COLOUR before using this c template}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00032}00032 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00033}00033 \textcolor{preprocessor}{\#ifndef \_\_API\_INT\_TYPE}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00034}00034 \textcolor{preprocessor}{\#   error You have to define the \_\_API\_INT\_TYPE before using this c template}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00035}00035 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00036}00036 \textcolor{preprocessor}{\#ifndef \_\_API\_INT\_TYPE\_BIT\_NUM}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00037}00037 \textcolor{preprocessor}{\#   error You have to define the \_\_API\_INT\_TYPE\_BIT\_NUM before using this c template}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00038}00038 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00040}00040 \textcolor{preprocessor}{\#undef \_\_\_\_ARM\_2D\_FUNC}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00041}00041 \textcolor{preprocessor}{\#undef \_\_\_ARM\_2D\_FUNC}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00042}00042 \textcolor{preprocessor}{\#undef \_\_ARM\_2D\_FUNC}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00043}00043 \textcolor{preprocessor}{\#define \_\_\_\_ARM\_2D\_FUNC(\_\_NAME, \_\_COLOUR)  \_\_arm\_2d\_impl\_\#\#\_\_COLOUR\#\#\_\#\#\_\_NAME}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00044}00044 \textcolor{preprocessor}{\#define \_\_\_ARM\_2D\_FUNC(\_\_NAME, \_\_COLOUR)   \_\_\_\_ARM\_2D\_FUNC(\_\_NAME, \_\_COLOUR) }}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00045}00045 \textcolor{preprocessor}{\#define \_\_ARM\_2D\_FUNC(\_\_NAME)   \_\_\_ARM\_2D\_FUNC(\_\_NAME, \_\_API\_COLOUR)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00048}00048 \textcolor{preprocessor}{\#undef \_\_\_\_ARM\_2D\_TYPE}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00049}00049 \textcolor{preprocessor}{\#undef \_\_\_ARM\_2D\_TYPE}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00050}00050 \textcolor{preprocessor}{\#undef \_\_ARM\_2D\_TYPE}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00051}00051 \textcolor{preprocessor}{\#define \_\_\_\_ARM\_2D\_TYPE(\_\_NAME, \_\_COLOUR)  arm\_2d\_\#\#\_\_COLOUR\#\#\_\#\#\_\_NAME}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00052}00052 \textcolor{preprocessor}{\#define \_\_\_ARM\_2D\_TYPE(\_\_NAME, \_\_COLOUR)   \_\_\_\_ARM\_2D\_TYPE(\_\_NAME, \_\_COLOUR) }}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00053}00053 \textcolor{preprocessor}{\#define \_\_ARM\_2D\_TYPE(\_\_NAME)   \_\_\_ARM\_2D\_TYPE(\_\_NAME, \_\_API\_COLOUR)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00056}00056 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00057}00057 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00058}00058 \textcolor{comment}{ * Accelerable Low Level APIs                                                 *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00059}00059 \textcolor{comment}{ *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00060}00060 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00061}00061 \textcolor{preprocessor}{\#if 0}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00062}00062 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00063}00063 \textcolor{comment}{ * Fill with mirroring                                                        *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00064}00064 \textcolor{comment}{ *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00066}00066 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(fill\_x\_mirror)(  \_\_API\_INT\_TYPE * \_\_RESTRICT phwSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00067}00067                                     int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00068}00068                                     \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00069}00069                                     \_\_API\_INT\_TYPE * \_\_RESTRICT phwTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00070}00070                                     int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00071}00071                                     \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptTargetSize);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00072}00072 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00073}00073 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(fill\_y\_mirror)( \_\_API\_INT\_TYPE * \_\_RESTRICT phwSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00074}00074                                     int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00075}00075                                     \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00076}00076                                     \_\_API\_INT\_TYPE * \_\_RESTRICT phwTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00077}00077                                     int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00078}00078                                     \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptTargetSize);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00079}00079 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00080}00080 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(fill\_xy\_mirror)( \_\_API\_INT\_TYPE * \_\_RESTRICT phwSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00081}00081                                     int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00082}00082                                     \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00083}00083                                     \_\_API\_INT\_TYPE * \_\_RESTRICT phwTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00084}00084                                     int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00085}00085                                     \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptTargetSize);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00086}00086 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00087}00087 \textcolor{keyword}{static}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00088}00088 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(fill\_generic)(   }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00089}00089                         \textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00090}00090                         int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00091}00091                         \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00092}00092                         \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00093}00093                         int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00094}00094                         \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptTargetSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00095}00095                         \textcolor{keyword}{const} \_\_ARM\_2D\_TYPE(paving\_fct\_t) * \_\_RESTRICT pPavFct)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00096}00096 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00097}00097     \_\_ARM\_2D\_MEM\_FILL\_GENERIC(  pSourceBase, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00098}00098                                 iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00099}00099                                 ptSourceSize, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00100}00100                                 pTargetBase, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00101}00101                                 iTargetStride, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00102}00102                                 ptTargetSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00103}00103                                 pPavFct);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00104}00104 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00105}00105 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00106}00106 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00107}00107 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00108}00108 \textcolor{comment}{ * Copy with mirroring                                                        *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00109}00109 \textcolor{comment}{ *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00110}00110 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(copy\_x\_mirror)( \_\_API\_INT\_TYPE *\_\_RESTRICT phwSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00111}00111                                     int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00112}00112                                     \_\_API\_INT\_TYPE *\_\_RESTRICT phwTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00113}00113                                     int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00114}00114                                     \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *\_\_RESTRICT ptCopySize);   }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00115}00115                                         }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00116}00116 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(copy\_y\_mirror)( \_\_API\_INT\_TYPE *\_\_RESTRICT phwSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00117}00117                                     int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00118}00118                                     \_\_API\_INT\_TYPE *\_\_RESTRICT phwTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00119}00119                                     int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00120}00120                                     \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *\_\_RESTRICT ptCopySize);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00121}00121 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00122}00122 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(copy\_xy\_mirror)( \_\_API\_INT\_TYPE *\_\_RESTRICT phwSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00123}00123                                     int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00124}00124                                     \_\_API\_INT\_TYPE *\_\_RESTRICT phwTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00125}00125                                     int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00126}00126                                     \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *\_\_RESTRICT ptCopySize);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00127}00127                                     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00128}00128 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00129}00129 \textcolor{comment}{ * Paving                                                                     *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00130}00130 \textcolor{comment}{ *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00131}00131 \_\_WEAK }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00132}00132 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(2x2\_paving)(\textcolor{keyword}{const} \_\_API\_INT\_TYPE *\_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00133}00133                                 int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00134}00134                                 \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00135}00135                                 \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00136}00136                                 int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00137}00137                                 uint16\_t tilePairRows,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00138}00138                                 uint16\_t tilePairCols)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00139}00139 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00140}00140     \_\_ARM\_2D\_PAVING\_2x2(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00141}00141                         \mbox{\hyperlink{____arm__2d__paving_8h_a851ace0d1be1a61ee6f2e62175081eb8}{PAVING\_DIRECT\_START\_OFFS}}(\_, \_),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00142}00142                         \mbox{\hyperlink{____arm__2d__paving_8h_a5329deb41501f1cefb9f654051b6dd62}{PAVING\_DIRECT\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00143}00143                         \mbox{\hyperlink{____arm__2d__paving_8h_a991e99bf175385a7aeb67c3be22013fa}{PAVING\_DIRECT\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00144}00144                         \mbox{\hyperlink{____arm__2d__paving_8h_a60e2a689ca0a32c82317602ee5c899ed}{PAVING\_DIRECT\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00145}00145 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00146}00146 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00147}00147 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00148}00148 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(2x2\_paving\_x\_mirror)(\textcolor{keyword}{const} \_\_API\_INT\_TYPE *\_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00149}00149                                         int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00150}00150                                         \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00151}00151                                         \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00152}00152                                         int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00153}00153                                         uint16\_t tilePairRows,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00154}00154                                         uint16\_t tilePairCols)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00155}00155 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00156}00156     \_\_ARM\_2D\_PAVING\_2x2(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00157}00157                         \mbox{\hyperlink{____arm__2d__paving_8h_a9afafa10111564c36abe62afc6934e77}{PAVING\_X\_MIRROR\_START\_OFFS}}(\_, \_),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00158}00158                         \mbox{\hyperlink{____arm__2d__paving_8h_abeda6ce9b5893f297b93c7ec6400c554}{PAVING\_X\_MIRROR\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00159}00159                         \mbox{\hyperlink{____arm__2d__paving_8h_a5da4892082be65888b98e2fb7db553e3}{PAVING\_X\_MIRROR\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00160}00160                         \mbox{\hyperlink{____arm__2d__paving_8h_a58f7f32acfbab8e1fd038df713925372}{PAVING\_X\_MIRROR\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00161}00161 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00162}00162 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00163}00163 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00164}00164 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(2x2\_paving\_y\_mirror)(\textcolor{keyword}{const} \_\_API\_INT\_TYPE *\_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00165}00165                                         int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00166}00166                                         \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00167}00167                                         \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00168}00168                                         int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00169}00169                                         uint16\_t tilePairRows,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00170}00170                                         uint16\_t tilePairCols)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00171}00171 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00172}00172     \_\_ARM\_2D\_PAVING\_2x2(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00173}00173                         \mbox{\hyperlink{____arm__2d__paving_8h_ae5207869a0bdfae8999bdef13214c9c1}{PAVING\_Y\_MIRROR\_START\_OFFS}}(iSourceStride, ptSourceSize-\/>iHeight),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00174}00174                         \mbox{\hyperlink{____arm__2d__paving_8h_a8060083e994db64e90615f635ba77977}{PAVING\_Y\_MIRROR\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00175}00175                         \mbox{\hyperlink{____arm__2d__paving_8h_a8d09879c8ccd55068e5f695f49237e82}{PAVING\_Y\_MIRROR\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00176}00176                         \mbox{\hyperlink{____arm__2d__paving_8h_a6749a3da724a5c996443307579660aea}{PAVING\_Y\_MIRROR\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00177}00177 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00178}00178 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00179}00179 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(2x2\_paving\_xy\_mirror)(\textcolor{keyword}{const} \_\_API\_INT\_TYPE *\_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00180}00180                                             int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00181}00181                                             \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00182}00182                                             \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00183}00183                                             int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00184}00184                                             uint16\_t tilePairRows,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00185}00185                                             uint16\_t tilePairCols)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00186}00186 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00187}00187     \_\_ARM\_2D\_PAVING\_2x2(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00188}00188                         \mbox{\hyperlink{____arm__2d__paving_8h_a57a6da164c773ddea78d7fd5bfff4e34}{PAVING\_XY\_MIRROR\_START\_OFFS}}(iSourceStride, ptSourceSize-\/>iHeight),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00189}00189                         \mbox{\hyperlink{____arm__2d__paving_8h_a1eaed5b468bfd1e8caeca8249c8228a9}{PAVING\_XY\_MIRROR\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00190}00190                         \mbox{\hyperlink{____arm__2d__paving_8h_ac56c194b9206bd46f1a826d0d0a1c2d8}{PAVING\_XY\_MIRROR\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00191}00191                         \mbox{\hyperlink{____arm__2d__paving_8h_a70d0f2bc990213b0866903582c27702b}{PAVING\_XY\_MIRROR\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00192}00192 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00193}00193 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00194}00194 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00195}00195 \_\_WEAK }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00196}00196 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(1x2\_paving)( \textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00197}00197                                 int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00198}00198                                 \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00199}00199                                 \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00200}00200                                 int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00201}00201                                 uint32\_t destWidth,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00202}00202                                 uint16\_t tilePairRows)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00203}00203 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00204}00204     \_\_ARM\_2D\_PAVING\_1x2(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00205}00205                         \mbox{\hyperlink{____arm__2d__paving_8h_a851ace0d1be1a61ee6f2e62175081eb8}{PAVING\_DIRECT\_START\_OFFS}}(\_, \_),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00206}00206                         \mbox{\hyperlink{____arm__2d__paving_8h_a5329deb41501f1cefb9f654051b6dd62}{PAVING\_DIRECT\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00207}00207                         \mbox{\hyperlink{____arm__2d__paving_8h_a991e99bf175385a7aeb67c3be22013fa}{PAVING\_DIRECT\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00208}00208                         \mbox{\hyperlink{____arm__2d__paving_8h_a60e2a689ca0a32c82317602ee5c899ed}{PAVING\_DIRECT\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00209}00209 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00210}00210 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00211}00211 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(1x2\_paving\_x\_mirror)(\textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00212}00212                                         int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00213}00213                                         \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00214}00214                                         \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00215}00215                                         int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00216}00216                                         uint32\_t destWidth,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00217}00217                                         uint16\_t tilePairRows)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00218}00218 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00219}00219     \_\_ARM\_2D\_PAVING\_1x2(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00220}00220                         \mbox{\hyperlink{____arm__2d__paving_8h_a9afafa10111564c36abe62afc6934e77}{PAVING\_X\_MIRROR\_START\_OFFS}}(\_, \_),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00221}00221                         \mbox{\hyperlink{____arm__2d__paving_8h_abeda6ce9b5893f297b93c7ec6400c554}{PAVING\_X\_MIRROR\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00222}00222                         \mbox{\hyperlink{____arm__2d__paving_8h_a5da4892082be65888b98e2fb7db553e3}{PAVING\_X\_MIRROR\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00223}00223                         \mbox{\hyperlink{____arm__2d__paving_8h_a58f7f32acfbab8e1fd038df713925372}{PAVING\_X\_MIRROR\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00224}00224 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00225}00225 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00226}00226 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(1x2\_paving\_y\_mirror)(\textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00227}00227                                        int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00228}00228                                        \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00229}00229                                        \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00230}00230                                        int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00231}00231                                        uint32\_t destWidth,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00232}00232                                        uint16\_t tilePairRows)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00233}00233 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00234}00234     \_\_ARM\_2D\_PAVING\_1x2(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00235}00235                         \mbox{\hyperlink{____arm__2d__paving_8h_ae5207869a0bdfae8999bdef13214c9c1}{PAVING\_Y\_MIRROR\_START\_OFFS}}(iSourceStride, ptSourceSize-\/>iHeight),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00236}00236                         \mbox{\hyperlink{____arm__2d__paving_8h_a8060083e994db64e90615f635ba77977}{PAVING\_Y\_MIRROR\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00237}00237                         \mbox{\hyperlink{____arm__2d__paving_8h_a8d09879c8ccd55068e5f695f49237e82}{PAVING\_Y\_MIRROR\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00238}00238                         \mbox{\hyperlink{____arm__2d__paving_8h_a6749a3da724a5c996443307579660aea}{PAVING\_Y\_MIRROR\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00239}00239 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00240}00240 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00241}00241 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00242}00242 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(1x2\_paving\_xy\_mirror)(\textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00243}00243                                        int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00244}00244                                        \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00245}00245                                        \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00246}00246                                        int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00247}00247                                        uint32\_t destWidth,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00248}00248                                        uint16\_t tilePairRows)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00249}00249 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00250}00250     \_\_ARM\_2D\_PAVING\_1x2(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00251}00251                         \mbox{\hyperlink{____arm__2d__paving_8h_a57a6da164c773ddea78d7fd5bfff4e34}{PAVING\_XY\_MIRROR\_START\_OFFS}}(iSourceStride, ptSourceSize-\/>iHeight),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00252}00252                         \mbox{\hyperlink{____arm__2d__paving_8h_a1eaed5b468bfd1e8caeca8249c8228a9}{PAVING\_XY\_MIRROR\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00253}00253                         \mbox{\hyperlink{____arm__2d__paving_8h_ac56c194b9206bd46f1a826d0d0a1c2d8}{PAVING\_XY\_MIRROR\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00254}00254                         \mbox{\hyperlink{____arm__2d__paving_8h_a70d0f2bc990213b0866903582c27702b}{PAVING\_XY\_MIRROR\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00255}00255 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00256}00256 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00257}00257 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00258}00258 \_\_WEAK }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00259}00259 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(2x1\_paving)( \textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00260}00260                                 int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00261}00261                                 \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00262}00262                                 \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00263}00263                                 int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00264}00264                                 uint16\_t tilePairCols,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00265}00265                                 uint16\_t destHeight)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00266}00266 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00267}00267     \_\_ARM\_2D\_PAVING\_2x1(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00268}00268                         \mbox{\hyperlink{____arm__2d__paving_8h_a851ace0d1be1a61ee6f2e62175081eb8}{PAVING\_DIRECT\_START\_OFFS}}(\_, \_),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00269}00269                         \mbox{\hyperlink{____arm__2d__paving_8h_a5329deb41501f1cefb9f654051b6dd62}{PAVING\_DIRECT\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00270}00270                         \mbox{\hyperlink{____arm__2d__paving_8h_a991e99bf175385a7aeb67c3be22013fa}{PAVING\_DIRECT\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00271}00271                         \mbox{\hyperlink{____arm__2d__paving_8h_a60e2a689ca0a32c82317602ee5c899ed}{PAVING\_DIRECT\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00272}00272 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00273}00273 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00274}00274 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(2x1\_paving\_x\_mirror)(\textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00275}00275                                         int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00276}00276                                         \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00277}00277                                         \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00278}00278                                         int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00279}00279                                         uint16\_t tilePairCols,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00280}00280                                         uint16\_t destHeight)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00281}00281 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00282}00282     \_\_ARM\_2D\_PAVING\_2x1(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00283}00283                         \mbox{\hyperlink{____arm__2d__paving_8h_a9afafa10111564c36abe62afc6934e77}{PAVING\_X\_MIRROR\_START\_OFFS}}(\_, \_),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00284}00284                         \mbox{\hyperlink{____arm__2d__paving_8h_abeda6ce9b5893f297b93c7ec6400c554}{PAVING\_X\_MIRROR\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00285}00285                         \mbox{\hyperlink{____arm__2d__paving_8h_a5da4892082be65888b98e2fb7db553e3}{PAVING\_X\_MIRROR\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00286}00286                         \mbox{\hyperlink{____arm__2d__paving_8h_a58f7f32acfbab8e1fd038df713925372}{PAVING\_X\_MIRROR\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00287}00287 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00288}00288 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00289}00289 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(2x1\_paving\_y\_mirror)(\textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00290}00290                                         int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00291}00291                                         \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00292}00292                                         \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00293}00293                                         int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00294}00294                                         uint16\_t tilePairCols,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00295}00295                                         uint16\_t destHeight)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00296}00296 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00297}00297     \_\_ARM\_2D\_PAVING\_2x1(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00298}00298                         \mbox{\hyperlink{____arm__2d__paving_8h_ae5207869a0bdfae8999bdef13214c9c1}{PAVING\_Y\_MIRROR\_START\_OFFS}}(iSourceStride, ptSourceSize-\/>iHeight),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00299}00299                         \mbox{\hyperlink{____arm__2d__paving_8h_a8060083e994db64e90615f635ba77977}{PAVING\_Y\_MIRROR\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00300}00300                         \mbox{\hyperlink{____arm__2d__paving_8h_a8d09879c8ccd55068e5f695f49237e82}{PAVING\_Y\_MIRROR\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00301}00301                         \mbox{\hyperlink{____arm__2d__paving_8h_a6749a3da724a5c996443307579660aea}{PAVING\_Y\_MIRROR\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00302}00302 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00303}00303 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00304}00304 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00305}00305 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(2x1\_paving\_xy\_mirror)(\textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00306}00306                                         int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00307}00307                                         \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00308}00308                                         \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00309}00309                                         int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00310}00310                                         uint16\_t tilePairCols,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00311}00311                                         uint16\_t destHeight)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00312}00312 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00313}00313     \_\_ARM\_2D\_PAVING\_2x1(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00314}00314                         \mbox{\hyperlink{____arm__2d__paving_8h_a57a6da164c773ddea78d7fd5bfff4e34}{PAVING\_XY\_MIRROR\_START\_OFFS}}(iSourceStride, ptSourceSize-\/>iHeight),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00315}00315                         \mbox{\hyperlink{____arm__2d__paving_8h_a1eaed5b468bfd1e8caeca8249c8228a9}{PAVING\_XY\_MIRROR\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00316}00316                         \mbox{\hyperlink{____arm__2d__paving_8h_ac56c194b9206bd46f1a826d0d0a1c2d8}{PAVING\_XY\_MIRROR\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00317}00317                         \mbox{\hyperlink{____arm__2d__paving_8h_a70d0f2bc990213b0866903582c27702b}{PAVING\_XY\_MIRROR\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00318}00318 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00319}00319 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00320}00320 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00321}00321 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00322}00322 \_\_WEAK }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00323}00323 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(1x1\_paving)(\textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00324}00324                                int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00325}00325                                \_\_API\_INT\_TYPE * \_\_RESTRICT pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00326}00326                                int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00327}00327                                \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSrcCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00328}00328                                \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptDstCopySize)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00329}00329 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00330}00330     \_\_ARM\_2D\_PAVING\_1x1(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00331}00331                         \mbox{\hyperlink{____arm__2d__paving_8h_a851ace0d1be1a61ee6f2e62175081eb8}{PAVING\_DIRECT\_START\_OFFS}}(\_, \_),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00332}00332                         \mbox{\hyperlink{____arm__2d__paving_8h_a5329deb41501f1cefb9f654051b6dd62}{PAVING\_DIRECT\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00333}00333                         \mbox{\hyperlink{____arm__2d__paving_8h_a991e99bf175385a7aeb67c3be22013fa}{PAVING\_DIRECT\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00334}00334                         \mbox{\hyperlink{____arm__2d__paving_8h_a60e2a689ca0a32c82317602ee5c899ed}{PAVING\_DIRECT\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00335}00335 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00336}00336 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00337}00337 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(1x1\_paving\_x\_mirror)(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00338}00338                                         \textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00339}00339                                         int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00340}00340                                         \_\_API\_INT\_TYPE * \_\_RESTRICT pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00341}00341                                         int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00342}00342                                         \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSrcCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00343}00343                                         \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptDstCopySize)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00344}00344 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00345}00345     \_\_ARM\_2D\_PAVING\_1x1(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00346}00346                         \mbox{\hyperlink{____arm__2d__paving_8h_a9afafa10111564c36abe62afc6934e77}{PAVING\_X\_MIRROR\_START\_OFFS}}(\_, \_),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00347}00347                         \mbox{\hyperlink{____arm__2d__paving_8h_abeda6ce9b5893f297b93c7ec6400c554}{PAVING\_X\_MIRROR\_READ\_DIR}}, \mbox{\hyperlink{____arm__2d__paving_8h_a5da4892082be65888b98e2fb7db553e3}{PAVING\_X\_MIRROR\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00348}00348                         \mbox{\hyperlink{____arm__2d__paving_8h_a58f7f32acfbab8e1fd038df713925372}{PAVING\_X\_MIRROR\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00349}00349 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00350}00350 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00351}00351 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00352}00352 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(1x1\_paving\_y\_mirror)(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00353}00353                                         \textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00354}00354                                         int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00355}00355                                         \_\_API\_INT\_TYPE * \_\_RESTRICT pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00356}00356                                         int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00357}00357                                         \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSrcCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00358}00358                                         \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptDstCopySize)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00359}00359 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00360}00360     \_\_ARM\_2D\_PAVING\_1x1(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00361}00361                         \mbox{\hyperlink{____arm__2d__paving_8h_ae5207869a0bdfae8999bdef13214c9c1}{PAVING\_Y\_MIRROR\_START\_OFFS}}(iSourceStride, ptSrcCopySize-\/>iHeight),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00362}00362                         \mbox{\hyperlink{____arm__2d__paving_8h_a8060083e994db64e90615f635ba77977}{PAVING\_Y\_MIRROR\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00363}00363                         \mbox{\hyperlink{____arm__2d__paving_8h_a8d09879c8ccd55068e5f695f49237e82}{PAVING\_Y\_MIRROR\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00364}00364                         \mbox{\hyperlink{____arm__2d__paving_8h_a6749a3da724a5c996443307579660aea}{PAVING\_Y\_MIRROR\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00365}00365 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00366}00366 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00367}00367 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00368}00368 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(1x1\_paving\_xy\_mirror)(\textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00369}00369                                            int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00370}00370                                            \_\_API\_INT\_TYPE * \_\_RESTRICT pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00371}00371                                            int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00372}00372                                            \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSrcCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00373}00373                                            \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptDstCopySize)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00374}00374 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00375}00375     \_\_ARM\_2D\_PAVING\_1x1(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00376}00376                         \mbox{\hyperlink{____arm__2d__paving_8h_a57a6da164c773ddea78d7fd5bfff4e34}{PAVING\_XY\_MIRROR\_START\_OFFS}}(iSourceStride, ptSrcCopySize-\/>iHeight),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00377}00377                         \mbox{\hyperlink{____arm__2d__paving_8h_a1eaed5b468bfd1e8caeca8249c8228a9}{PAVING\_XY\_MIRROR\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00378}00378                         \mbox{\hyperlink{____arm__2d__paving_8h_ac56c194b9206bd46f1a826d0d0a1c2d8}{PAVING\_XY\_MIRROR\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00379}00379                         \mbox{\hyperlink{____arm__2d__paving_8h_a70d0f2bc990213b0866903582c27702b}{PAVING\_XY\_MIRROR\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00380}00380 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00381}00381 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00382}00382 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00383}00383 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00384}00384 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00385}00385 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00386}00386 \textcolor{comment}{ * Copy                                                                       *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00387}00387 \textcolor{comment}{ *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00388}00388 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00389}00389 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00390}00390 \_\_WEAK}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00391}00391 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(copy)(   \_\_API\_INT\_TYPE *\_\_RESTRICT pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00392}00392                             int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00393}00393                             \_\_API\_INT\_TYPE *\_\_RESTRICT pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00394}00394                             int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00395}00395                             \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *\_\_RESTRICT ptCopySize)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00396}00396 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00397}00397     \textcolor{keywordflow}{for} (int\_fast16\_t y = 0; y < ptCopySize-\/>iHeight; y++) \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00398}00398         memcpy(pTarget, pSource, ptCopySize-\/>iWidth * \textcolor{keyword}{sizeof}(*pSource));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00399}00399         pSource += iSourceStride;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00400}00400         pTarget += iTargetStride;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00401}00401     \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00402}00402 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00403}00403 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00404}00404 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00405}00405 \_\_WEAK}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00406}00406 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(copy\_mirror)( \_\_API\_INT\_TYPE * \_\_RESTRICT pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00407}00407                                  int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00408}00408                                  \_\_API\_INT\_TYPE * \_\_RESTRICT pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00409}00409                                  int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00410}00410                                  \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00411}00411                                  uint32\_t \mbox{\hyperlink{arm__2d__alpha__blending_8h_a2e5a85ec501d28af73a7b6d43828b7f0}{wMode}})}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00412}00412 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00413}00413     \textcolor{keywordflow}{switch} (\mbox{\hyperlink{arm__2d__alpha__blending_8h_a2e5a85ec501d28af73a7b6d43828b7f0}{wMode}} \& (\mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034ac561823141d2a0cb61b1d79970d88a60}{ARM\_2D\_CP\_MODE\_Y\_MIRROR}} | \mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034a69116a74f0ddd40fad4d810dd8191cf1}{ARM\_2D\_CP\_MODE\_X\_MIRROR}})) \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00414}00414       \textcolor{keywordflow}{case} \mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034a69116a74f0ddd40fad4d810dd8191cf1}{ARM\_2D\_CP\_MODE\_X\_MIRROR}}:}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00415}00415           \_\_ARM\_2D\_FUNC(copy\_x\_mirror)( pSource, iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00416}00416                                         pTarget, iTargetStride, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00417}00417                                         ptCopySize);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00418}00418           \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00419}00419       \textcolor{keywordflow}{case} \mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034ac561823141d2a0cb61b1d79970d88a60}{ARM\_2D\_CP\_MODE\_Y\_MIRROR}}:}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00420}00420           \_\_ARM\_2D\_FUNC(copy\_y\_mirror)( pSource, iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00421}00421                                         pTarget, iTargetStride, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00422}00422                                         ptCopySize);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00423}00423           \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00424}00424       \textcolor{keywordflow}{case} \mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034ac561823141d2a0cb61b1d79970d88a60}{ARM\_2D\_CP\_MODE\_Y\_MIRROR}} | \mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034a69116a74f0ddd40fad4d810dd8191cf1}{ARM\_2D\_CP\_MODE\_X\_MIRROR}}:}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00425}00425           \_\_ARM\_2D\_FUNC(copy\_xy\_mirror)(pSource, iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00426}00426                                         pTarget, iTargetStride, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00427}00427                                         ptCopySize);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00428}00428           \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00429}00429       \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00430}00430           assert(\textcolor{keyword}{false});        }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00431}00431           \textcolor{comment}{//break;}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00432}00432     \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00433}00433 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00434}00434 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00435}00435 \_\_WEAK }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00436}00436 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(copy\_y\_mirror)(  \_\_API\_INT\_TYPE * \_\_RESTRICT pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00437}00437                                     int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00438}00438                                     \_\_API\_INT\_TYPE * \_\_RESTRICT pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00439}00439                                     int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00440}00440                                     \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptCopySize)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00441}00441 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00442}00442     \_\_ARM\_2D\_FUNC(1x1\_paving\_y\_mirror)( pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00443}00443                                         iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00444}00444                                         pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00445}00445                                         iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00446}00446                                         ptCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00447}00447                                         ptCopySize);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00448}00448 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00449}00449 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00450}00450 \_\_WEAK }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00451}00451 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(copy\_x\_mirror)(\_\_API\_INT\_TYPE * \_\_RESTRICT pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00452}00452                                   int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00453}00453                                   \_\_API\_INT\_TYPE * \_\_RESTRICT pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00454}00454                                   int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00455}00455                                   \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptCopySize)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00456}00456 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00457}00457     \_\_ARM\_2D\_FUNC(1x1\_paving\_x\_mirror)( pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00458}00458                                         iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00459}00459                                         pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00460}00460                                         iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00461}00461                                         ptCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00462}00462                                         ptCopySize);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00463}00463 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00464}00464 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00465}00465 \_\_WEAK }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00466}00466 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(copy\_xy\_mirror)( \_\_API\_INT\_TYPE * \_\_RESTRICT pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00467}00467                                     int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00468}00468                                     \_\_API\_INT\_TYPE * \_\_RESTRICT pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00469}00469                                     int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00470}00470                                     \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptCopySize)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00471}00471 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00472}00472     \_\_ARM\_2D\_FUNC(1x1\_paving\_xy\_mirror)(pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00473}00473                                         iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00474}00474                                         pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00475}00475                                         iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00476}00476                                         ptCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00477}00477                                         ptCopySize);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00478}00478 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00479}00479 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00480}00480 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00481}00481 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00482}00482 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00483}00483 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00484}00484 \textcolor{comment}{ * Fill                                                                       *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00485}00485 \textcolor{comment}{ *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00486}00486 \_\_WEAK }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00487}00487 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(fill)(\_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00488}00488                          int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00489}00489                          \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00490}00490                          \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00491}00491                          int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00492}00492                          \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptTargetSize)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00493}00493 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00494}00494     \textcolor{keyword}{static} \textcolor{keyword}{const} \_\_ARM\_2D\_TYPE(paving\_fct\_t) pav\_func = \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00495}00495         .pav\_2x2 = \&\_\_ARM\_2D\_FUNC(2x2\_paving),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00496}00496         .pav\_1x2 = \&\_\_ARM\_2D\_FUNC(1x2\_paving),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00497}00497         .pav\_2x1 = \&\_\_ARM\_2D\_FUNC(2x1\_paving),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00498}00498         .pav\_1x1 = \&\_\_ARM\_2D\_FUNC(1x1\_paving)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00499}00499     \};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00500}00500 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00501}00501     \_\_ARM\_2D\_FUNC(fill\_generic)(pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00502}00502                                 iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00503}00503                                 ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00504}00504                                 pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00505}00505                                 iTargetStride, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00506}00506                                 ptTargetSize, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00507}00507                                 \&pav\_func);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00508}00508 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00509}00509 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00510}00510 \_\_WEAK}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00511}00511 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(fill\_mirror)( \_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00512}00512                                  int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00513}00513                                  \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00514}00514                                  \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00515}00515                                  int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00516}00516                                  \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptTargetSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00517}00517                                  uint32\_t \mbox{\hyperlink{arm__2d__alpha__blending_8h_a2e5a85ec501d28af73a7b6d43828b7f0}{wMode}})}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00518}00518 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00519}00519     \textcolor{keywordflow}{switch} (\mbox{\hyperlink{arm__2d__alpha__blending_8h_a2e5a85ec501d28af73a7b6d43828b7f0}{wMode}} \& (\mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034ac561823141d2a0cb61b1d79970d88a60}{ARM\_2D\_CP\_MODE\_Y\_MIRROR}} | \mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034a69116a74f0ddd40fad4d810dd8191cf1}{ARM\_2D\_CP\_MODE\_X\_MIRROR}})) \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00520}00520         \textcolor{keywordflow}{case} \mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034a69116a74f0ddd40fad4d810dd8191cf1}{ARM\_2D\_CP\_MODE\_X\_MIRROR}}:}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00521}00521             \_\_ARM\_2D\_FUNC(fill\_x\_mirror)(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00522}00522                     pSourceBase, iSourceStride, ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00523}00523                     pTargetBase, iTargetStride, ptTargetSize);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00524}00524             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00525}00525         \textcolor{keywordflow}{case} \mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034ac561823141d2a0cb61b1d79970d88a60}{ARM\_2D\_CP\_MODE\_Y\_MIRROR}}:}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00526}00526             \_\_ARM\_2D\_FUNC(fill\_y\_mirror)(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00527}00527                     pSourceBase, iSourceStride, ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00528}00528                     pTargetBase, iTargetStride, ptTargetSize);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00529}00529             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00530}00530         \textcolor{keywordflow}{case} \mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034ac561823141d2a0cb61b1d79970d88a60}{ARM\_2D\_CP\_MODE\_Y\_MIRROR}} | \mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034a69116a74f0ddd40fad4d810dd8191cf1}{ARM\_2D\_CP\_MODE\_X\_MIRROR}} :}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00531}00531             \_\_ARM\_2D\_FUNC(fill\_xy\_mirror)(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00532}00532                     pSourceBase, iSourceStride, ptSourceSize, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00533}00533                     pTargetBase, iTargetStride, ptTargetSize);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00534}00534             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00535}00535         \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00536}00536             assert(\textcolor{keyword}{false});  }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00537}00537             \textcolor{comment}{//break;}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00538}00538     \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00539}00539 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00540}00540 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00541}00541 \_\_WEAK }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00542}00542 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(fill\_x\_mirror)(\_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00543}00543                                       int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00544}00544                                       \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00545}00545                                       \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00546}00546                                       int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00547}00547                                       \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptTargetSize)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00548}00548 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00549}00549     \textcolor{keyword}{static} \_\_ARM\_2D\_TYPE(paving\_fct\_t) pav\_func = \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00550}00550         .pav\_2x2 = \&\_\_ARM\_2D\_FUNC(2x2\_paving\_x\_mirror),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00551}00551         .pav\_1x2 = \&\_\_ARM\_2D\_FUNC(1x2\_paving\_x\_mirror),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00552}00552         .pav\_2x1 = \&\_\_ARM\_2D\_FUNC(2x1\_paving\_x\_mirror),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00553}00553         .pav\_1x1 = \&\_\_ARM\_2D\_FUNC(1x1\_paving\_x\_mirror)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00554}00554     \};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00555}00555 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00556}00556     \_\_ARM\_2D\_FUNC(fill\_generic)(pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00557}00557                                 iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00558}00558                                 ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00559}00559                                 pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00560}00560                                 iTargetStride, ptTargetSize, \&pav\_func);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00561}00561 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00562}00562 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00563}00563 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(fill\_y\_mirror)(\_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00564}00564                                       int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00565}00565                                       \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00566}00566                                       \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00567}00567                                       int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00568}00568                                       \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptTargetSize)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00569}00569 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00570}00570     \textcolor{keyword}{static} \_\_ARM\_2D\_TYPE(paving\_fct\_t) pav\_func = \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00571}00571         .pav\_2x2 = \&\_\_ARM\_2D\_FUNC(2x2\_paving\_y\_mirror),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00572}00572         .pav\_1x2 = \&\_\_ARM\_2D\_FUNC(1x2\_paving\_y\_mirror),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00573}00573         .pav\_2x1 = \&\_\_ARM\_2D\_FUNC(2x1\_paving\_y\_mirror),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00574}00574         .pav\_1x1 = \&\_\_ARM\_2D\_FUNC(1x1\_paving\_y\_mirror)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00575}00575     \};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00576}00576 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00577}00577     \_\_ARM\_2D\_FUNC(fill\_generic)(pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00578}00578                                 iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00579}00579                                 ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00580}00580                                 pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00581}00581                                 iTargetStride, ptTargetSize, \&pav\_func);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00582}00582 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00583}00583 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00584}00584 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00585}00585 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(fill\_xy\_mirror)(\_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00586}00586                                        int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00587}00587                                        \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00588}00588                                        \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00589}00589                                        int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00590}00590                                        \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptTargetSize)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00591}00591 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00592}00592     \textcolor{keyword}{static} \_\_ARM\_2D\_TYPE(paving\_fct\_t) pav\_func = \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00593}00593         .pav\_2x2 = \&\_\_ARM\_2D\_FUNC(2x2\_paving\_xy\_mirror),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00594}00594         .pav\_1x2 = \&\_\_ARM\_2D\_FUNC(1x2\_paving\_xy\_mirror),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00595}00595         .pav\_2x1 = \&\_\_ARM\_2D\_FUNC(2x1\_paving\_xy\_mirror),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00596}00596         .pav\_1x1 = \&\_\_ARM\_2D\_FUNC(1x1\_paving\_xy\_mirror)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00597}00597     \};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00598}00598 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00599}00599     \_\_ARM\_2D\_FUNC(fill\_generic)(pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00600}00600                                 iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00601}00601                                 ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00602}00602                                 pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00603}00603                                 iTargetStride, ptTargetSize, \&pav\_func);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00604}00604 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00605}00605 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00606}00606 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00607}00607 \textcolor{comment}{ * Copy with colour maksing and mirroring                                     *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00608}00608 \textcolor{comment}{ *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00609}00609 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(copy\_colour\_keying\_x\_mirror)( }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00610}00610                                     \_\_API\_INT\_TYPE *\_\_RESTRICT phwSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00611}00611                                     int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00612}00612                                     \_\_API\_INT\_TYPE *\_\_RESTRICT phwTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00613}00613                                     int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00614}00614                                     \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *\_\_RESTRICT ptCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00615}00615                                     \_\_API\_INT\_TYPE Colour);   }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00616}00616                                         }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00617}00617 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(copy\_colour\_keying\_y\_mirror)( }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00618}00618                                     \_\_API\_INT\_TYPE *\_\_RESTRICT phwSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00619}00619                                     int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00620}00620                                     \_\_API\_INT\_TYPE *\_\_RESTRICT phwTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00621}00621                                     int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00622}00622                                     \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *\_\_RESTRICT ptCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00623}00623                                     \_\_API\_INT\_TYPE Colour);   }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00624}00624 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00625}00625 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(copy\_colour\_keying\_xy\_mirror)( }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00626}00626                                     \_\_API\_INT\_TYPE *\_\_RESTRICT phwSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00627}00627                                     int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00628}00628                                     \_\_API\_INT\_TYPE *\_\_RESTRICT phwTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00629}00629                                     int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00630}00630                                     \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *\_\_RESTRICT ptCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00631}00631                                     \_\_API\_INT\_TYPE Colour);   }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00632}00632                                         }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00633}00633 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00634}00634 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00635}00635 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00636}00636 \textcolor{comment}{ * Fill with colour maksing and mirroring                                     *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00637}00637 \textcolor{comment}{ *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00638}00638  }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00639}00639  \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(fill\_colour\_keying\_x\_mirror)(  }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00640}00640                                     \_\_API\_INT\_TYPE * \_\_RESTRICT phwSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00641}00641                                     int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00642}00642                                     \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00643}00643                                     \_\_API\_INT\_TYPE * \_\_RESTRICT phwTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00644}00644                                     int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00645}00645                                     \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptTargetSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00646}00646                                     \_\_API\_INT\_TYPE Colour);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00647}00647 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00648}00648 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(fill\_colour\_keying\_y\_mirror)( }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00649}00649                                     \_\_API\_INT\_TYPE * \_\_RESTRICT phwSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00650}00650                                     int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00651}00651                                     \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00652}00652                                     \_\_API\_INT\_TYPE * \_\_RESTRICT phwTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00653}00653                                     int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00654}00654                                     \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptTargetSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00655}00655                                     \_\_API\_INT\_TYPE Colour);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00656}00656 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00657}00657 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(fill\_colour\_keying\_xy\_mirror)( }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00658}00658                                     \_\_API\_INT\_TYPE * \_\_RESTRICT phwSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00659}00659                                     int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00660}00660                                     \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00661}00661                                     \_\_API\_INT\_TYPE * \_\_RESTRICT phwTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00662}00662                                     int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00663}00663                                     \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptTargetSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00664}00664                                     \_\_API\_INT\_TYPE Colour);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00665}00665 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00666}00666 \textcolor{keyword}{static}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00667}00667 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(fill\_colour\_keying\_generic)(   }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00668}00668                 \textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00669}00669                 int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00670}00670                 \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00671}00671                 \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00672}00672                 int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00673}00673                 \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptTargetSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00674}00674                 \textcolor{keyword}{const} \_\_ARM\_2D\_TYPE(cl\_key\_paving\_fct\_t) * \_\_RESTRICT pPavFct,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00675}00675                 uint\_fast16\_t \mbox{\hyperlink{arm__2d__draw_8h_ad889ecad4b4b237b36815d51803d1c4d}{hwColour}})}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00676}00676 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00677}00677     \_\_ARM\_2D\_MEM\_FILL\_GENERIC(  pSourceBase, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00678}00678                                 iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00679}00679                                 ptSourceSize, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00680}00680                                 pTargetBase, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00681}00681                                 iTargetStride, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00682}00682                                 ptTargetSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00683}00683                                 pPavFct,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00684}00684                                 \mbox{\hyperlink{arm__2d__draw_8h_ad889ecad4b4b237b36815d51803d1c4d}{hwColour}});}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00685}00685 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00686}00686 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00687}00687 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00688}00688 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00689}00689 \textcolor{comment}{ * Paving with colour masking                                                 *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00690}00690 \textcolor{comment}{ *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00691}00691 \_\_WEAK }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00692}00692 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(cl\_key\_2x2\_paving)(\textcolor{keyword}{const} \_\_API\_INT\_TYPE *\_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00693}00693                                 int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00694}00694                                 \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00695}00695                                 \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00696}00696                                 int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00697}00697                                 uint16\_t tilePairRows,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00698}00698                                 uint16\_t tilePairCols,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00699}00699                                 \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00700}00700 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00701}00701     \_\_ARM\_2D\_PAVING\_2x2(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00702}00702                         \mbox{\hyperlink{____arm__2d__paving_8h_a851ace0d1be1a61ee6f2e62175081eb8}{PAVING\_DIRECT\_START\_OFFS}}(\_, \_),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00703}00703                         \mbox{\hyperlink{____arm__2d__paving_8h_a5329deb41501f1cefb9f654051b6dd62}{PAVING\_DIRECT\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00704}00704                         \mbox{\hyperlink{____arm__2d__paving_8h_a991e99bf175385a7aeb67c3be22013fa}{PAVING\_DIRECT\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00705}00705                         \mbox{\hyperlink{____arm__2d__paving_8h_a60e2a689ca0a32c82317602ee5c899ed}{PAVING\_DIRECT\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00706}00706                         (in != Colour));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00707}00707 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00708}00708 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00709}00709 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00710}00710 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(cl\_key\_2x2\_paving\_x\_mirror)(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00711}00711                                 \textcolor{keyword}{const} \_\_API\_INT\_TYPE *\_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00712}00712                                 int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00713}00713                                 \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00714}00714                                 \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00715}00715                                 int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00716}00716                                 uint16\_t tilePairRows,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00717}00717                                 uint16\_t tilePairCols,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00718}00718                                 \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00719}00719 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00720}00720     \_\_ARM\_2D\_PAVING\_2x2(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00721}00721                         \mbox{\hyperlink{____arm__2d__paving_8h_a9afafa10111564c36abe62afc6934e77}{PAVING\_X\_MIRROR\_START\_OFFS}}(\_, \_),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00722}00722                         \mbox{\hyperlink{____arm__2d__paving_8h_abeda6ce9b5893f297b93c7ec6400c554}{PAVING\_X\_MIRROR\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00723}00723                         \mbox{\hyperlink{____arm__2d__paving_8h_a5da4892082be65888b98e2fb7db553e3}{PAVING\_X\_MIRROR\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00724}00724                         \mbox{\hyperlink{____arm__2d__paving_8h_a58f7f32acfbab8e1fd038df713925372}{PAVING\_X\_MIRROR\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00725}00725                         (in != Colour));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00726}00726 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00727}00727 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00728}00728 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00729}00729 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(cl\_key\_2x2\_paving\_y\_mirror)(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00730}00730                                 \textcolor{keyword}{const} \_\_API\_INT\_TYPE *\_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00731}00731                                 int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00732}00732                                 \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00733}00733                                 \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00734}00734                                 int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00735}00735                                 uint16\_t tilePairRows,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00736}00736                                 uint16\_t tilePairCols,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00737}00737                                 \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00738}00738 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00739}00739     \_\_ARM\_2D\_PAVING\_2x2(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00740}00740                         \mbox{\hyperlink{____arm__2d__paving_8h_ae5207869a0bdfae8999bdef13214c9c1}{PAVING\_Y\_MIRROR\_START\_OFFS}}(iSourceStride, ptSourceSize-\/>iHeight),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00741}00741                         \mbox{\hyperlink{____arm__2d__paving_8h_a8060083e994db64e90615f635ba77977}{PAVING\_Y\_MIRROR\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00742}00742                         \mbox{\hyperlink{____arm__2d__paving_8h_a8d09879c8ccd55068e5f695f49237e82}{PAVING\_Y\_MIRROR\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00743}00743                         \mbox{\hyperlink{____arm__2d__paving_8h_a6749a3da724a5c996443307579660aea}{PAVING\_Y\_MIRROR\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00744}00744                         (in != Colour));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00745}00745 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00746}00746 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00747}00747 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(cl\_key\_2x2\_paving\_xy\_mirror)(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00748}00748                                 \textcolor{keyword}{const} \_\_API\_INT\_TYPE *\_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00749}00749                                 int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00750}00750                                 \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00751}00751                                 \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00752}00752                                 int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00753}00753                                 uint16\_t tilePairRows,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00754}00754                                 uint16\_t tilePairCols,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00755}00755                                 \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00756}00756 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00757}00757     \_\_ARM\_2D\_PAVING\_2x2(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00758}00758                         \mbox{\hyperlink{____arm__2d__paving_8h_a57a6da164c773ddea78d7fd5bfff4e34}{PAVING\_XY\_MIRROR\_START\_OFFS}}(iSourceStride, ptSourceSize-\/>iHeight),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00759}00759                         \mbox{\hyperlink{____arm__2d__paving_8h_a1eaed5b468bfd1e8caeca8249c8228a9}{PAVING\_XY\_MIRROR\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00760}00760                         \mbox{\hyperlink{____arm__2d__paving_8h_ac56c194b9206bd46f1a826d0d0a1c2d8}{PAVING\_XY\_MIRROR\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00761}00761                         \mbox{\hyperlink{____arm__2d__paving_8h_a70d0f2bc990213b0866903582c27702b}{PAVING\_XY\_MIRROR\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00762}00762                         (in != Colour));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00763}00763 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00764}00764 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00765}00765 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00766}00766 \_\_WEAK }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00767}00767 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(cl\_key\_1x2\_paving)( }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00768}00768                                 \textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00769}00769                                 int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00770}00770                                 \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00771}00771                                 \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00772}00772                                 int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00773}00773                                 uint32\_t destWidth,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00774}00774                                 uint16\_t tilePairRows,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00775}00775                                 \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00776}00776 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00777}00777     \_\_ARM\_2D\_PAVING\_1x2(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00778}00778                         \mbox{\hyperlink{____arm__2d__paving_8h_a851ace0d1be1a61ee6f2e62175081eb8}{PAVING\_DIRECT\_START\_OFFS}}(\_, \_),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00779}00779                         \mbox{\hyperlink{____arm__2d__paving_8h_a5329deb41501f1cefb9f654051b6dd62}{PAVING\_DIRECT\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00780}00780                         \mbox{\hyperlink{____arm__2d__paving_8h_a991e99bf175385a7aeb67c3be22013fa}{PAVING\_DIRECT\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00781}00781                         \mbox{\hyperlink{____arm__2d__paving_8h_a60e2a689ca0a32c82317602ee5c899ed}{PAVING\_DIRECT\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00782}00782                         (in != Colour));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00783}00783 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00784}00784 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00785}00785 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(cl\_key\_1x2\_paving\_x\_mirror)(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00786}00786                                 \textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00787}00787                                 int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00788}00788                                 \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00789}00789                                 \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00790}00790                                 int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00791}00791                                 uint32\_t destWidth,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00792}00792                                 uint16\_t tilePairRows,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00793}00793                                 \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00794}00794 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00795}00795     \_\_ARM\_2D\_PAVING\_1x2(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00796}00796                         \mbox{\hyperlink{____arm__2d__paving_8h_a9afafa10111564c36abe62afc6934e77}{PAVING\_X\_MIRROR\_START\_OFFS}}(\_, \_),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00797}00797                         \mbox{\hyperlink{____arm__2d__paving_8h_abeda6ce9b5893f297b93c7ec6400c554}{PAVING\_X\_MIRROR\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00798}00798                         \mbox{\hyperlink{____arm__2d__paving_8h_a5da4892082be65888b98e2fb7db553e3}{PAVING\_X\_MIRROR\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00799}00799                         \mbox{\hyperlink{____arm__2d__paving_8h_a58f7f32acfbab8e1fd038df713925372}{PAVING\_X\_MIRROR\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00800}00800                         (in != Colour));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00801}00801 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00802}00802 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00803}00803 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(cl\_key\_1x2\_paving\_y\_mirror)(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00804}00804                                 \textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00805}00805                                int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00806}00806                                \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00807}00807                                \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00808}00808                                int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00809}00809                                uint32\_t destWidth,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00810}00810                                uint16\_t tilePairRows,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00811}00811                                 \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00812}00812 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00813}00813     \_\_ARM\_2D\_PAVING\_1x2(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00814}00814                         \mbox{\hyperlink{____arm__2d__paving_8h_ae5207869a0bdfae8999bdef13214c9c1}{PAVING\_Y\_MIRROR\_START\_OFFS}}(iSourceStride, ptSourceSize-\/>iHeight),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00815}00815                         \mbox{\hyperlink{____arm__2d__paving_8h_a8060083e994db64e90615f635ba77977}{PAVING\_Y\_MIRROR\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00816}00816                         \mbox{\hyperlink{____arm__2d__paving_8h_a8d09879c8ccd55068e5f695f49237e82}{PAVING\_Y\_MIRROR\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00817}00817                         \mbox{\hyperlink{____arm__2d__paving_8h_a6749a3da724a5c996443307579660aea}{PAVING\_Y\_MIRROR\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00818}00818                         (in != Colour));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00819}00819 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00820}00820 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00821}00821 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00822}00822 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(cl\_key\_1x2\_paving\_xy\_mirror)(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00823}00823                                 \textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00824}00824                                 int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00825}00825                                 \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00826}00826                                 \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00827}00827                                 int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00828}00828                                 uint32\_t destWidth,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00829}00829                                 uint16\_t tilePairRows,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00830}00830                                 \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00831}00831 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00832}00832     \_\_ARM\_2D\_PAVING\_1x2(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00833}00833                         \mbox{\hyperlink{____arm__2d__paving_8h_a57a6da164c773ddea78d7fd5bfff4e34}{PAVING\_XY\_MIRROR\_START\_OFFS}}(iSourceStride, ptSourceSize-\/>iHeight),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00834}00834                         \mbox{\hyperlink{____arm__2d__paving_8h_a1eaed5b468bfd1e8caeca8249c8228a9}{PAVING\_XY\_MIRROR\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00835}00835                         \mbox{\hyperlink{____arm__2d__paving_8h_ac56c194b9206bd46f1a826d0d0a1c2d8}{PAVING\_XY\_MIRROR\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00836}00836                         \mbox{\hyperlink{____arm__2d__paving_8h_a70d0f2bc990213b0866903582c27702b}{PAVING\_XY\_MIRROR\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00837}00837                         (in != Colour));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00838}00838 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00839}00839 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00840}00840 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00841}00841 \_\_WEAK }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00842}00842 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(cl\_key\_2x1\_paving)( }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00843}00843                                 \textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00844}00844                                 int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00845}00845                                 \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00846}00846                                 \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00847}00847                                 int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00848}00848                                 uint16\_t tilePairCols,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00849}00849                                 uint16\_t destHeight,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00850}00850                                 \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00851}00851 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00852}00852     \_\_ARM\_2D\_PAVING\_2x1(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00853}00853                         \mbox{\hyperlink{____arm__2d__paving_8h_a851ace0d1be1a61ee6f2e62175081eb8}{PAVING\_DIRECT\_START\_OFFS}}(\_, \_),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00854}00854                         \mbox{\hyperlink{____arm__2d__paving_8h_a5329deb41501f1cefb9f654051b6dd62}{PAVING\_DIRECT\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00855}00855                         \mbox{\hyperlink{____arm__2d__paving_8h_a991e99bf175385a7aeb67c3be22013fa}{PAVING\_DIRECT\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00856}00856                         \mbox{\hyperlink{____arm__2d__paving_8h_a60e2a689ca0a32c82317602ee5c899ed}{PAVING\_DIRECT\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00857}00857                         (in != Colour));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00858}00858 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00859}00859 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00860}00860 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(cl\_key\_2x1\_paving\_x\_mirror)(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00861}00861                                 \textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00862}00862                                 int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00863}00863                                 \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00864}00864                                 \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00865}00865                                 int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00866}00866                                 uint16\_t tilePairCols,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00867}00867                                 uint16\_t destHeight,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00868}00868                                 \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00869}00869 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00870}00870     \_\_ARM\_2D\_PAVING\_2x1(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00871}00871                         \mbox{\hyperlink{____arm__2d__paving_8h_a9afafa10111564c36abe62afc6934e77}{PAVING\_X\_MIRROR\_START\_OFFS}}(\_, \_),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00872}00872                         \mbox{\hyperlink{____arm__2d__paving_8h_abeda6ce9b5893f297b93c7ec6400c554}{PAVING\_X\_MIRROR\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00873}00873                         \mbox{\hyperlink{____arm__2d__paving_8h_a5da4892082be65888b98e2fb7db553e3}{PAVING\_X\_MIRROR\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00874}00874                         \mbox{\hyperlink{____arm__2d__paving_8h_a58f7f32acfbab8e1fd038df713925372}{PAVING\_X\_MIRROR\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00875}00875                         (in != Colour));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00876}00876 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00877}00877 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00878}00878 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(cl\_key\_2x1\_paving\_y\_mirror)(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00879}00879                                 \textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00880}00880                                 int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00881}00881                                 \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00882}00882                                 \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00883}00883                                 int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00884}00884                                 uint16\_t tilePairCols,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00885}00885                                 uint16\_t destHeight,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00886}00886                                 \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00887}00887 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00888}00888     \_\_ARM\_2D\_PAVING\_2x1(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00889}00889                         \mbox{\hyperlink{____arm__2d__paving_8h_ae5207869a0bdfae8999bdef13214c9c1}{PAVING\_Y\_MIRROR\_START\_OFFS}}(iSourceStride, ptSourceSize-\/>iHeight),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00890}00890                         \mbox{\hyperlink{____arm__2d__paving_8h_a8060083e994db64e90615f635ba77977}{PAVING\_Y\_MIRROR\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00891}00891                         \mbox{\hyperlink{____arm__2d__paving_8h_a8d09879c8ccd55068e5f695f49237e82}{PAVING\_Y\_MIRROR\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00892}00892                         \mbox{\hyperlink{____arm__2d__paving_8h_a6749a3da724a5c996443307579660aea}{PAVING\_Y\_MIRROR\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00893}00893                         (in != Colour));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00894}00894 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00895}00895 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00896}00896 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00897}00897 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(cl\_key\_2x1\_paving\_xy\_mirror)(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00898}00898                                 \textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00899}00899                                 int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00900}00900                                 \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00901}00901                                 \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00902}00902                                 int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00903}00903                                 uint16\_t tilePairCols,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00904}00904                                 uint16\_t destHeight,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00905}00905                                 \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00906}00906 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00907}00907     \_\_ARM\_2D\_PAVING\_2x1(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00908}00908                         \mbox{\hyperlink{____arm__2d__paving_8h_a57a6da164c773ddea78d7fd5bfff4e34}{PAVING\_XY\_MIRROR\_START\_OFFS}}(iSourceStride, ptSourceSize-\/>iHeight),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00909}00909                         \mbox{\hyperlink{____arm__2d__paving_8h_a1eaed5b468bfd1e8caeca8249c8228a9}{PAVING\_XY\_MIRROR\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00910}00910                         \mbox{\hyperlink{____arm__2d__paving_8h_ac56c194b9206bd46f1a826d0d0a1c2d8}{PAVING\_XY\_MIRROR\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00911}00911                         \mbox{\hyperlink{____arm__2d__paving_8h_a70d0f2bc990213b0866903582c27702b}{PAVING\_XY\_MIRROR\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00912}00912                         (in != Colour));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00913}00913 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00914}00914 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00915}00915 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00916}00916 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00917}00917 \_\_WEAK }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00918}00918 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(cl\_key\_1x1\_paving)(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00919}00919                                 \textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00920}00920                                 int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00921}00921                                 \_\_API\_INT\_TYPE * \_\_RESTRICT pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00922}00922                                 int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00923}00923                                 \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSrcCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00924}00924                                 \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptDstCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00925}00925                                 \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00926}00926 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00927}00927     \_\_ARM\_2D\_PAVING\_1x1(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00928}00928                         \mbox{\hyperlink{____arm__2d__paving_8h_a851ace0d1be1a61ee6f2e62175081eb8}{PAVING\_DIRECT\_START\_OFFS}}(\_, \_),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00929}00929                         \mbox{\hyperlink{____arm__2d__paving_8h_a5329deb41501f1cefb9f654051b6dd62}{PAVING\_DIRECT\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00930}00930                         \mbox{\hyperlink{____arm__2d__paving_8h_a991e99bf175385a7aeb67c3be22013fa}{PAVING\_DIRECT\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00931}00931                         \mbox{\hyperlink{____arm__2d__paving_8h_a60e2a689ca0a32c82317602ee5c899ed}{PAVING\_DIRECT\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00932}00932                         (in != Colour));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00933}00933 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00934}00934 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00935}00935 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(cl\_key\_1x1\_paving\_x\_mirror)(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00936}00936                                 \textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00937}00937                                 int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00938}00938                                 \_\_API\_INT\_TYPE * \_\_RESTRICT pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00939}00939                                 int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00940}00940                                 \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSrcCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00941}00941                                 \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptDstCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00942}00942                                 \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00943}00943 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00944}00944     \_\_ARM\_2D\_PAVING\_1x1(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00945}00945                         \mbox{\hyperlink{____arm__2d__paving_8h_a9afafa10111564c36abe62afc6934e77}{PAVING\_X\_MIRROR\_START\_OFFS}}(\_, \_),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00946}00946                         \mbox{\hyperlink{____arm__2d__paving_8h_abeda6ce9b5893f297b93c7ec6400c554}{PAVING\_X\_MIRROR\_READ\_DIR}}, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00947}00947                         \mbox{\hyperlink{____arm__2d__paving_8h_a5da4892082be65888b98e2fb7db553e3}{PAVING\_X\_MIRROR\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00948}00948                         \mbox{\hyperlink{____arm__2d__paving_8h_a58f7f32acfbab8e1fd038df713925372}{PAVING\_X\_MIRROR\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00949}00949                         (in != Colour));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00950}00950 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00951}00951 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00952}00952 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00953}00953 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(cl\_key\_1x1\_paving\_y\_mirror)(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00954}00954                                 \textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00955}00955                                 int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00956}00956                                 \_\_API\_INT\_TYPE * \_\_RESTRICT pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00957}00957                                 int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00958}00958                                 \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSrcCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00959}00959                                 \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptDstCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00960}00960                                 \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00961}00961 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00962}00962     \_\_ARM\_2D\_PAVING\_1x1(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00963}00963                         \mbox{\hyperlink{____arm__2d__paving_8h_ae5207869a0bdfae8999bdef13214c9c1}{PAVING\_Y\_MIRROR\_START\_OFFS}}(iSourceStride, ptSrcCopySize-\/>iHeight),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00964}00964                         \mbox{\hyperlink{____arm__2d__paving_8h_a8060083e994db64e90615f635ba77977}{PAVING\_Y\_MIRROR\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00965}00965                         \mbox{\hyperlink{____arm__2d__paving_8h_a8d09879c8ccd55068e5f695f49237e82}{PAVING\_Y\_MIRROR\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00966}00966                         \mbox{\hyperlink{____arm__2d__paving_8h_a6749a3da724a5c996443307579660aea}{PAVING\_Y\_MIRROR\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00967}00967                         (in != Colour));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00968}00968 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00969}00969 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00970}00970 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00971}00971 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(cl\_key\_1x1\_paving\_xy\_mirror)(\textcolor{keyword}{const} \_\_API\_INT\_TYPE * \_\_RESTRICT pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00972}00972                                int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00973}00973                                \_\_API\_INT\_TYPE * \_\_RESTRICT pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00974}00974                                int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00975}00975                                \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSrcCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00976}00976                                \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptDstCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00977}00977                                 \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00978}00978 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00979}00979     \_\_ARM\_2D\_PAVING\_1x1(\_\_API\_INT\_TYPE\_BIT\_NUM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00980}00980                         \mbox{\hyperlink{____arm__2d__paving_8h_a57a6da164c773ddea78d7fd5bfff4e34}{PAVING\_XY\_MIRROR\_START\_OFFS}}(iSourceStride, ptSrcCopySize-\/>iHeight),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00981}00981                         \mbox{\hyperlink{____arm__2d__paving_8h_a1eaed5b468bfd1e8caeca8249c8228a9}{PAVING\_XY\_MIRROR\_READ\_DIR}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00982}00982                         \mbox{\hyperlink{____arm__2d__paving_8h_ac56c194b9206bd46f1a826d0d0a1c2d8}{PAVING\_XY\_MIRROR\_SETUP\_COPY}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00983}00983                         \mbox{\hyperlink{____arm__2d__paving_8h_a70d0f2bc990213b0866903582c27702b}{PAVING\_XY\_MIRROR\_LOAD\_PATTERN}}(\_\_API\_INT\_TYPE\_BIT\_NUM),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00984}00984                         (in != Colour));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00985}00985 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00986}00986 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00987}00987 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00988}00988 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00989}00989 \textcolor{comment}{ * Copy with colour masking                                                   *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00990}00990 \textcolor{comment}{ *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00991}00991 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00992}00992 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00993}00993 \_\_WEAK}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00994}00994 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(cl\_key\_copy)(   }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00995}00995                             \_\_API\_INT\_TYPE *\_\_RESTRICT pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00996}00996                             int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00997}00997                             \_\_API\_INT\_TYPE *\_\_RESTRICT pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00998}00998                             int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l00999}00999                             \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *\_\_RESTRICT ptCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01000}01000                             \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01001}01001 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01002}01002     \textcolor{keywordflow}{for} (int\_fast16\_t y = 0; y < ptCopySize-\/>iHeight; y++) \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01003}01003         \textcolor{keywordflow}{for} (int\_fast16\_t x = 0; x < ptCopySize-\/>iWidth; x++)\{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01004}01004             \textcolor{keywordflow}{if} (pSource[x] == Colour) \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01005}01005                 \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01006}01006             \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01007}01007             pTarget[x] = pSource[x];}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01008}01008         \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01009}01009         pSource += iSourceStride;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01010}01010         pTarget += iTargetStride;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01011}01011     \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01012}01012 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01013}01013 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01014}01014 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01015}01015 \_\_WEAK}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01016}01016 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(cl\_key\_copy\_mirror)( }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01017}01017                                         \_\_API\_INT\_TYPE * \_\_RESTRICT pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01018}01018                                         int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01019}01019                                         \_\_API\_INT\_TYPE * \_\_RESTRICT pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01020}01020                                         int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01021}01021                                         \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01022}01022                                         uint32\_t \mbox{\hyperlink{arm__2d__alpha__blending_8h_a2e5a85ec501d28af73a7b6d43828b7f0}{wMode}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01023}01023                                         \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01024}01024 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01025}01025     \textcolor{keywordflow}{switch} (\mbox{\hyperlink{arm__2d__alpha__blending_8h_a2e5a85ec501d28af73a7b6d43828b7f0}{wMode}} \& (\mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034ac561823141d2a0cb61b1d79970d88a60}{ARM\_2D\_CP\_MODE\_Y\_MIRROR}} | \mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034a69116a74f0ddd40fad4d810dd8191cf1}{ARM\_2D\_CP\_MODE\_X\_MIRROR}})) \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01026}01026       \textcolor{keywordflow}{case} \mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034a69116a74f0ddd40fad4d810dd8191cf1}{ARM\_2D\_CP\_MODE\_X\_MIRROR}}:}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01027}01027           \_\_ARM\_2D\_FUNC(copy\_colour\_keying\_x\_mirror)( }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01028}01028                                         pSource, iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01029}01029                                         pTarget, iTargetStride, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01030}01030                                         ptCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01031}01031                                         Colour);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01032}01032           \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01033}01033       \textcolor{keywordflow}{case} \mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034ac561823141d2a0cb61b1d79970d88a60}{ARM\_2D\_CP\_MODE\_Y\_MIRROR}}:}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01034}01034           \_\_ARM\_2D\_FUNC(copy\_colour\_keying\_y\_mirror)( pSource, iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01035}01035                                         pTarget, iTargetStride, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01036}01036                                         ptCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01037}01037                                         Colour);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01038}01038           \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01039}01039       \textcolor{keywordflow}{case} \mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034ac561823141d2a0cb61b1d79970d88a60}{ARM\_2D\_CP\_MODE\_Y\_MIRROR}} | \mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034a69116a74f0ddd40fad4d810dd8191cf1}{ARM\_2D\_CP\_MODE\_X\_MIRROR}}:}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01040}01040           \_\_ARM\_2D\_FUNC(copy\_colour\_keying\_xy\_mirror)(pSource, iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01041}01041                                         pTarget, iTargetStride, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01042}01042                                         ptCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01043}01043                                         Colour);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01044}01044           \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01045}01045       \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01046}01046           assert(\textcolor{keyword}{false});        }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01047}01047           \textcolor{comment}{//break;}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01048}01048     \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01049}01049 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01050}01050 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01051}01051 \_\_WEAK }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01052}01052 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(copy\_colour\_keying\_y\_mirror)(   }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01053}01053                                         \_\_API\_INT\_TYPE * \_\_RESTRICT pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01054}01054                                         int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01055}01055                                         \_\_API\_INT\_TYPE * \_\_RESTRICT pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01056}01056                                         int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01057}01057                                         \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01058}01058                                         \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01059}01059 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01060}01060     \_\_ARM\_2D\_FUNC(cl\_key\_1x1\_paving\_y\_mirror)(  pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01061}01061                                                 iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01062}01062                                                 pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01063}01063                                                 iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01064}01064                                                 ptCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01065}01065                                                 ptCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01066}01066                                                 Colour);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01067}01067 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01068}01068 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01069}01069 \_\_WEAK }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01070}01070 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(copy\_colour\_keying\_x\_mirror)(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01071}01071                                         \_\_API\_INT\_TYPE * \_\_RESTRICT pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01072}01072                                         int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01073}01073                                         \_\_API\_INT\_TYPE * \_\_RESTRICT pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01074}01074                                         int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01075}01075                                         \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01076}01076                                         \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01077}01077 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01078}01078     \_\_ARM\_2D\_FUNC(cl\_key\_1x1\_paving\_x\_mirror)(  pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01079}01079                                                 iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01080}01080                                                 pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01081}01081                                                 iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01082}01082                                                 ptCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01083}01083                                                 ptCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01084}01084                                                 Colour);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01085}01085 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01086}01086 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01087}01087 \_\_WEAK }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01088}01088 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(copy\_colour\_keying\_xy\_mirror)( }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01089}01089                                         \_\_API\_INT\_TYPE * \_\_RESTRICT pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01090}01090                                         int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01091}01091                                         \_\_API\_INT\_TYPE * \_\_RESTRICT pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01092}01092                                         int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01093}01093                                         \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01094}01094                                         \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01095}01095 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01096}01096     \_\_ARM\_2D\_FUNC(cl\_key\_1x1\_paving\_xy\_mirror)( pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01097}01097                                                 iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01098}01098                                                 pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01099}01099                                                 iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01100}01100                                                 ptCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01101}01101                                                 ptCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01102}01102                                                 Colour);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01103}01103 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01104}01104 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01105}01105 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01106}01106 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01107}01107 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01108}01108 \textcolor{comment}{ * Fill with Colour Masking                                                   *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01109}01109 \textcolor{comment}{ *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01110}01110 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01111}01111 \_\_WEAK }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01112}01112 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(cl\_key\_fill)(\_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01113}01113                          int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01114}01114                          \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01115}01115                          \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01116}01116                          int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01117}01117                          \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptTargetSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01118}01118                          \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01119}01119 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01120}01120 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01121}01121     \textcolor{keyword}{static} \textcolor{keyword}{const} \_\_ARM\_2D\_TYPE(cl\_key\_paving\_fct\_t) pav\_func = \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01122}01122         .pav\_2x2 = \&\_\_ARM\_2D\_FUNC(cl\_key\_2x2\_paving),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01123}01123         .pav\_1x2 = \&\_\_ARM\_2D\_FUNC(cl\_key\_1x2\_paving),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01124}01124         .pav\_2x1 = \&\_\_ARM\_2D\_FUNC(cl\_key\_2x1\_paving),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01125}01125         .pav\_1x1 = \&\_\_ARM\_2D\_FUNC(cl\_key\_1x1\_paving),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01126}01126     \};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01127}01127 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01128}01128     \_\_ARM\_2D\_FUNC(fill\_colour\_keying\_generic)( pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01129}01129                                                 iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01130}01130                                                 ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01131}01131                                                 pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01132}01132                                                 iTargetStride, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01133}01133                                                 ptTargetSize, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01134}01134                                                 \&pav\_func,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01135}01135                                                 Colour);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01136}01136 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01137}01137 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01138}01138 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01139}01139 \_\_WEAK}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01140}01140 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(cl\_key\_fill\_mirror)( }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01141}01141                                  \_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01142}01142                                  int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01143}01143                                  \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01144}01144                                  \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01145}01145                                  int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01146}01146                                  \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptTargetSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01147}01147                                  uint32\_t \mbox{\hyperlink{arm__2d__alpha__blending_8h_a2e5a85ec501d28af73a7b6d43828b7f0}{wMode}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01148}01148                                  \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01149}01149 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01150}01150     \textcolor{keywordflow}{switch} (\mbox{\hyperlink{arm__2d__alpha__blending_8h_a2e5a85ec501d28af73a7b6d43828b7f0}{wMode}} \& (\mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034ac561823141d2a0cb61b1d79970d88a60}{ARM\_2D\_CP\_MODE\_Y\_MIRROR}} | \mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034a69116a74f0ddd40fad4d810dd8191cf1}{ARM\_2D\_CP\_MODE\_X\_MIRROR}})) \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01151}01151         \textcolor{keywordflow}{case} \mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034a69116a74f0ddd40fad4d810dd8191cf1}{ARM\_2D\_CP\_MODE\_X\_MIRROR}}:}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01152}01152             \_\_ARM\_2D\_FUNC(fill\_colour\_keying\_x\_mirror)(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01153}01153                     pSourceBase, iSourceStride, ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01154}01154                     pTargetBase, iTargetStride, ptTargetSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01155}01155                     Colour);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01156}01156             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01157}01157         \textcolor{keywordflow}{case} \mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034ac561823141d2a0cb61b1d79970d88a60}{ARM\_2D\_CP\_MODE\_Y\_MIRROR}}:}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01158}01158             \_\_ARM\_2D\_FUNC(fill\_colour\_keying\_y\_mirror)(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01159}01159                     pSourceBase, iSourceStride, ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01160}01160                     pTargetBase, iTargetStride, ptTargetSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01161}01161                     Colour);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01162}01162             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01163}01163         \textcolor{keywordflow}{case} \mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034ac561823141d2a0cb61b1d79970d88a60}{ARM\_2D\_CP\_MODE\_Y\_MIRROR}} | \mbox{\hyperlink{arm__2d__tile_8h_aac34dfe6c6b73b43a4656c9dce041034a69116a74f0ddd40fad4d810dd8191cf1}{ARM\_2D\_CP\_MODE\_X\_MIRROR}} :}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01164}01164             \_\_ARM\_2D\_FUNC(fill\_colour\_keying\_xy\_mirror)(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01165}01165                     pSourceBase, iSourceStride, ptSourceSize, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01166}01166                     pTargetBase, iTargetStride, ptTargetSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01167}01167                     Colour);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01168}01168             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01169}01169         \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01170}01170             assert(\textcolor{keyword}{false});  }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01171}01171             \textcolor{comment}{//break;}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01172}01172     \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01173}01173 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01174}01174 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01175}01175 \_\_WEAK }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01176}01176 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(fill\_colour\_keying\_x\_mirror)(\_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01177}01177                                       int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01178}01178                                       \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01179}01179                                       \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01180}01180                                       int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01181}01181                                       \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptTargetSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01182}01182                                     \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01183}01183 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01184}01184     \textcolor{keyword}{static} \_\_ARM\_2D\_TYPE(cl\_key\_paving\_fct\_t) pav\_func = \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01185}01185         .pav\_2x2 = \&\_\_ARM\_2D\_FUNC(cl\_key\_2x2\_paving\_x\_mirror),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01186}01186         .pav\_1x2 = \&\_\_ARM\_2D\_FUNC(cl\_key\_1x2\_paving\_x\_mirror),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01187}01187         .pav\_2x1 = \&\_\_ARM\_2D\_FUNC(cl\_key\_2x1\_paving\_x\_mirror),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01188}01188         .pav\_1x1 = \&\_\_ARM\_2D\_FUNC(cl\_key\_1x1\_paving\_x\_mirror)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01189}01189     \};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01190}01190 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01191}01191     \_\_ARM\_2D\_FUNC(fill\_colour\_keying\_generic)( pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01192}01192                                                 iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01193}01193                                                 ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01194}01194                                                 pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01195}01195                                                 iTargetStride, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01196}01196                                                 ptTargetSize, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01197}01197                                                 \&pav\_func,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01198}01198                                                 Colour);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01199}01199 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01200}01200 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01201}01201 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(fill\_colour\_keying\_y\_mirror)(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01202}01202                                         \_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01203}01203                                         int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01204}01204                                         \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01205}01205                                         \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01206}01206                                         int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01207}01207                                         \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptTargetSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01208}01208                                         \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01209}01209 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01210}01210     \textcolor{keyword}{static} \_\_ARM\_2D\_TYPE(cl\_key\_paving\_fct\_t) pav\_func = \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01211}01211         .pav\_2x2 = \&\_\_ARM\_2D\_FUNC(cl\_key\_2x2\_paving\_y\_mirror),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01212}01212         .pav\_1x2 = \&\_\_ARM\_2D\_FUNC(cl\_key\_1x2\_paving\_y\_mirror),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01213}01213         .pav\_2x1 = \&\_\_ARM\_2D\_FUNC(cl\_key\_2x1\_paving\_y\_mirror),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01214}01214         .pav\_1x1 = \&\_\_ARM\_2D\_FUNC(cl\_key\_1x1\_paving\_y\_mirror)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01215}01215     \};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01216}01216 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01217}01217     \_\_ARM\_2D\_FUNC(fill\_colour\_keying\_generic)( pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01218}01218                                                 iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01219}01219                                                 ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01220}01220                                                 pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01221}01221                                                 iTargetStride, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01222}01222                                                 ptTargetSize, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01223}01223                                                 \&pav\_func,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01224}01224                                                 Colour);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01225}01225 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01226}01226 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01227}01227 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01228}01228 \_\_WEAK \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(fill\_colour\_keying\_xy\_mirror)(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01229}01229                                         \_\_API\_INT\_TYPE * \_\_RESTRICT pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01230}01230                                         int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01231}01231                                         \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01232}01232                                         \_\_API\_INT\_TYPE * \_\_RESTRICT pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01233}01233                                         int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01234}01234                                         \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} * \_\_RESTRICT ptTargetSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01235}01235                                         \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01236}01236 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01237}01237     \textcolor{keyword}{static} \_\_ARM\_2D\_TYPE(cl\_key\_paving\_fct\_t) pav\_func = \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01238}01238         .pav\_2x2 = \&\_\_ARM\_2D\_FUNC(cl\_key\_2x2\_paving\_xy\_mirror),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01239}01239         .pav\_1x2 = \&\_\_ARM\_2D\_FUNC(cl\_key\_1x2\_paving\_xy\_mirror),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01240}01240         .pav\_2x1 = \&\_\_ARM\_2D\_FUNC(cl\_key\_2x1\_paving\_xy\_mirror),}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01241}01241         .pav\_1x1 = \&\_\_ARM\_2D\_FUNC(cl\_key\_1x1\_paving\_xy\_mirror)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01242}01242     \};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01243}01243 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01244}01244     \_\_ARM\_2D\_FUNC(fill\_colour\_keying\_generic)( pSourceBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01245}01245                                                 iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01246}01246                                                 ptSourceSize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01247}01247                                                 pTargetBase,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01248}01248                                                 iTargetStride, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01249}01249                                                 ptTargetSize, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01250}01250                                                 \&pav\_func,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01251}01251                                                 Colour);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01252}01252 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01253}01253 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01254}01254 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01255}01255 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01256}01256 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01257}01257 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01258}01258 \textcolor{comment}{ * Copy and Fill                                                              *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01259}01259 \textcolor{comment}{ *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01260}01260 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01261}01261 \textcolor{preprocessor}{\#define \_\_API\_MCAF\_COLOUR                   \_\_API\_COLOUR}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01262}01262 \textcolor{preprocessor}{\#define \_\_API\_MCAF\_INT\_TYPE                 \_\_API\_INT\_TYPE}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01263}01263 \textcolor{preprocessor}{\#define \_\_API\_MCAF\_INT\_TYPE\_BIT\_NUM         \_\_API\_INT\_TYPE\_BIT\_NUM}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01264}01264 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01265}01265 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01266}01266 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{____arm__2d__meta__copy__and__fill_8inc}{\_\_arm\_2d\_meta\_copy\_and\_fill.inc}}"{}}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01267}01267 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01268}01268 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01269}01269 \_\_WEAK}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01270}01270 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(copy)(   \_\_API\_INT\_TYPE *\_\_RESTRICT pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01271}01271                             int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01272}01272                             \_\_API\_INT\_TYPE *\_\_RESTRICT pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01273}01273                             int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01274}01274                             \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *\_\_RESTRICT ptCopySize)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01275}01275 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01276}01276     \textcolor{keywordflow}{for} (int\_fast16\_t y = 0; y < ptCopySize-\/>iHeight; y++) \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01277}01277         memcpy(pTarget, pSource, ptCopySize-\/>iWidth * \textcolor{keyword}{sizeof}(*pSource));}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01278}01278         pSource += iSourceStride;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01279}01279         pTarget += iTargetStride;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01280}01280     \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01281}01281 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01282}01282 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01283}01283 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01284}01284 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01285}01285 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01286}01286 \textcolor{comment}{ * Copy and Fill with Colour Masking                                          *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01287}01287 \textcolor{comment}{ *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01288}01288 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01289}01289 \textcolor{preprocessor}{\#define \_\_API\_MCAF\_COLOUR                   \_\_API\_COLOUR}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01290}01290 \textcolor{preprocessor}{\#define \_\_API\_MCAF\_INT\_TYPE                 \_\_API\_INT\_TYPE}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01291}01291 \textcolor{preprocessor}{\#define \_\_API\_MCAF\_INT\_TYPE\_BIT\_NUM         \_\_API\_INT\_TYPE\_BIT\_NUM}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01292}01292 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01293}01293 \textcolor{preprocessor}{\#define \_\_API\_MCAF\_OP\_NAME                  cl\_key}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01294}01294 \textcolor{preprocessor}{\#define \_\_API\_MCAF\_EXTRA\_PARAM              ,\_\_API\_MCAF\_INT\_TYPE Colour}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01295}01295 \textcolor{preprocessor}{\#define \_\_API\_MCAF\_EXTRA\_EXPRESSION         Colour}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01296}01296 \textcolor{preprocessor}{\#define \_\_API\_MCAF\_EXTRA\_PAVE\_EXPRESSION    (in != Colour)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01297}01297 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01298}01298 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{____arm__2d__meta__copy__and__fill_8inc}{\_\_arm\_2d\_meta\_copy\_and\_fill.inc}}"{}}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01299}01299 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01300}01300 \_\_WEAK}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01301}01301 \textcolor{keywordtype}{void} \_\_ARM\_2D\_FUNC(cl\_key\_copy)(   }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01302}01302                             \_\_API\_INT\_TYPE *\_\_RESTRICT pSource,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01303}01303                             int16\_t iSourceStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01304}01304                             \_\_API\_INT\_TYPE *\_\_RESTRICT pTarget,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01305}01305                             int16\_t iTargetStride,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01306}01306                             \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}} *\_\_RESTRICT ptCopySize,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01307}01307                             \_\_API\_INT\_TYPE Colour)}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01308}01308 \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01309}01309     \textcolor{keywordflow}{for} (int\_fast16\_t y = 0; y < ptCopySize-\/>iHeight; y++) \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01310}01310         \textcolor{keywordflow}{for} (int\_fast16\_t x = 0; x < ptCopySize-\/>iWidth; x++)\{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01311}01311             \textcolor{keywordflow}{if} (pSource[x] == Colour) \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01312}01312                 \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01313}01313             \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01314}01314             pTarget[x] = pSource[x];}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01315}01315         \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01316}01316         pSource += iSourceStride;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01317}01317         pTarget += iTargetStride;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01318}01318     \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01319}01319 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01320}01320 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01321}01321 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01322}01322 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01323}01323 \textcolor{preprocessor}{\#undef \_\_\_\_ARM\_2D\_FUNC}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01324}01324 \textcolor{preprocessor}{\#undef \_\_\_ARM\_2D\_FUNC}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01325}01325 \textcolor{preprocessor}{\#undef \_\_ARM\_2D\_FUNC}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01326}01326 \textcolor{preprocessor}{\#undef \_\_API\_COLOUR}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01327}01327 \textcolor{preprocessor}{\#undef \_\_API\_INT\_TYPE}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01328}01328 \textcolor{preprocessor}{\#undef \_\_API\_INT\_TYPE\_BIT\_NUM}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01329}01329 \textcolor{preprocessor}{\#undef \_\_\_\_ARM\_2D\_TYPE}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01330}01330 \textcolor{preprocessor}{\#undef \_\_\_ARM\_2D\_TYPE}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__copy_8inc_source_l01331}01331 \textcolor{preprocessor}{\#undef \_\_ARM\_2D\_TYPE}}
+
+\end{DoxyCode}

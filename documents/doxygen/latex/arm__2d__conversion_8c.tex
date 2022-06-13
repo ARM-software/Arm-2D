@@ -1,0 +1,78 @@
+\hypertarget{arm__2d__conversion_8c}{}\doxysection{arm\+\_\+2d\+\_\+conversion.\+c File Reference}
+\label{arm__2d__conversion_8c}\index{arm\_2d\_conversion.c@{arm\_2d\_conversion.c}}
+{\ttfamily \#include \char`\"{}arm\+\_\+2d.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}\+\_\+\+\_\+arm\+\_\+2d\+\_\+impl.\+h\char`\"{}}\newline
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \+\_\+\+\_\+arm\+\_\+2d\+\_\+op\+\_\+info\+\_\+t \mbox{\hyperlink{arm__2d__conversion_8c_a62087d26931aac811fbfe7dfb5937f8a}{ARM\+\_\+2\+D\+\_\+\+OP\+\_\+\+CONVERT\+\_\+\+TO\+\_\+\+RGB565}}
+\item 
+const \+\_\+\+\_\+arm\+\_\+2d\+\_\+op\+\_\+info\+\_\+t \mbox{\hyperlink{arm__2d__conversion_8c_a4c16312160e01e7e0a2a6654db820e88}{ARM\+\_\+2\+D\+\_\+\+OP\+\_\+\+CONVERT\+\_\+\+TO\+\_\+\+RGB888}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{arm__2d__conversion_8c_a62087d26931aac811fbfe7dfb5937f8a}\label{arm__2d__conversion_8c_a62087d26931aac811fbfe7dfb5937f8a}} 
+\index{arm\_2d\_conversion.c@{arm\_2d\_conversion.c}!ARM\_2D\_OP\_CONVERT\_TO\_RGB565@{ARM\_2D\_OP\_CONVERT\_TO\_RGB565}}
+\index{ARM\_2D\_OP\_CONVERT\_TO\_RGB565@{ARM\_2D\_OP\_CONVERT\_TO\_RGB565}!arm\_2d\_conversion.c@{arm\_2d\_conversion.c}}
+\doxysubsubsection{\texorpdfstring{ARM\_2D\_OP\_CONVERT\_TO\_RGB565}{ARM\_2D\_OP\_CONVERT\_TO\_RGB565}}
+{\footnotesize\ttfamily const \+\_\+\+\_\+arm\+\_\+2d\+\_\+op\+\_\+info\+\_\+t ARM\+\_\+2\+D\+\_\+\+OP\+\_\+\+CONVERT\+\_\+\+TO\+\_\+\+RGB565}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \{}
+\DoxyCodeLine{    .Info = \{}
+\DoxyCodeLine{        .Colour = \{}
+\DoxyCodeLine{            .chScheme   = \mbox{\hyperlink{arm__2d__types_8h_afb730582952b7ceec73d7dc9bf7bef39a722291a1596b47199a716a1e001a8d38}{ARM\_2D\_COLOUR\_RGB565}},}
+\DoxyCodeLine{        \},}
+\DoxyCodeLine{        .Param = \{}
+\DoxyCodeLine{            .bHasSource             = \textcolor{keyword}{true},}
+\DoxyCodeLine{            .bHasTarget             = \textcolor{keyword}{true},}
+\DoxyCodeLine{            .bAllowEnforcedColour   = \textcolor{keyword}{true},}
+\DoxyCodeLine{        \},}
+\DoxyCodeLine{        .chOpIndex      = \_\_ARM\_2D\_OP\_IDX\_COLOUR\_FORMAT\_CONVERSION,}
+\DoxyCodeLine{        }
+\DoxyCodeLine{        .LowLevelIO = \{}
+\DoxyCodeLine{            .ptCopyLike = \mbox{\hyperlink{arm__2d__utils_8h_ae3cfa68806c0c6c9fa7bb2a36453eef5}{ref\_low\_lv\_io}}(\_\_ARM\_2D\_IO\_COLOUR\_CONVERT\_TO\_RGB565),}
+\DoxyCodeLine{            .ptFillLike = NULL,}
+\DoxyCodeLine{        \},}
+\DoxyCodeLine{    \},}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{arm__2d__conversion_8c_source_l00278}{278}} of file \mbox{\hyperlink{arm__2d__conversion_8c_source}{arm\+\_\+2d\+\_\+conversion.\+c}}.
+
+\mbox{\Hypertarget{arm__2d__conversion_8c_a4c16312160e01e7e0a2a6654db820e88}\label{arm__2d__conversion_8c_a4c16312160e01e7e0a2a6654db820e88}} 
+\index{arm\_2d\_conversion.c@{arm\_2d\_conversion.c}!ARM\_2D\_OP\_CONVERT\_TO\_RGB888@{ARM\_2D\_OP\_CONVERT\_TO\_RGB888}}
+\index{ARM\_2D\_OP\_CONVERT\_TO\_RGB888@{ARM\_2D\_OP\_CONVERT\_TO\_RGB888}!arm\_2d\_conversion.c@{arm\_2d\_conversion.c}}
+\doxysubsubsection{\texorpdfstring{ARM\_2D\_OP\_CONVERT\_TO\_RGB888}{ARM\_2D\_OP\_CONVERT\_TO\_RGB888}}
+{\footnotesize\ttfamily const \+\_\+\+\_\+arm\+\_\+2d\+\_\+op\+\_\+info\+\_\+t ARM\+\_\+2\+D\+\_\+\+OP\+\_\+\+CONVERT\+\_\+\+TO\+\_\+\+RGB888}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \{}
+\DoxyCodeLine{    .Info = \{}
+\DoxyCodeLine{        .Colour = \{}
+\DoxyCodeLine{            .chScheme   = \mbox{\hyperlink{arm__2d__types_8h_afb730582952b7ceec73d7dc9bf7bef39a6507e9aa44de854d820857e988096852}{ARM\_2D\_COLOUR\_CCCN888}},}
+\DoxyCodeLine{        \},}
+\DoxyCodeLine{        .Param = \{}
+\DoxyCodeLine{            .bHasSource             = \textcolor{keyword}{true},}
+\DoxyCodeLine{            .bHasTarget             = \textcolor{keyword}{true},}
+\DoxyCodeLine{            .bAllowEnforcedColour   = \textcolor{keyword}{true},}
+\DoxyCodeLine{        \},}
+\DoxyCodeLine{        .chOpIndex      = \_\_ARM\_2D\_OP\_IDX\_COLOUR\_FORMAT\_CONVERSION,}
+\DoxyCodeLine{        }
+\DoxyCodeLine{        .LowLevelIO = \{}
+\DoxyCodeLine{            .ptCopyLike = \mbox{\hyperlink{arm__2d__utils_8h_ae3cfa68806c0c6c9fa7bb2a36453eef5}{ref\_low\_lv\_io}}(\_\_ARM\_2D\_IO\_COLOUR\_CONVERT\_TO\_RGB888),}
+\DoxyCodeLine{            .ptFillLike = NULL,}
+\DoxyCodeLine{        \},}
+\DoxyCodeLine{    \},}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{arm__2d__conversion_8c_source_l00298}{298}} of file \mbox{\hyperlink{arm__2d__conversion_8c_source}{arm\+\_\+2d\+\_\+conversion.\+c}}.
+

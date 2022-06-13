@@ -1,0 +1,256 @@
+\hypertarget{arm__2d_8h}{}\doxysection{arm\+\_\+2d.\+h File Reference}
+\label{arm__2d_8h}\index{arm\_2d.h@{arm\_2d.h}}
+{\ttfamily \#include \char`\"{}arm\+\_\+2d\+\_\+types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}arm\+\_\+2d\+\_\+op.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}arm\+\_\+2d\+\_\+tile.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}arm\+\_\+2d\+\_\+draw.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}arm\+\_\+2d\+\_\+conversion.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}arm\+\_\+2d\+\_\+alpha\+\_\+blending.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}arm\+\_\+2d\+\_\+transform.\+h\char`\"{}}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structarm__2d__runtime__feature__t}{arm\+\_\+2d\+\_\+runtime\+\_\+feature\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structarm__2d__version__t}{arm\+\_\+2d\+\_\+version\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{Indent}\textbf{ arm-\/2d version}\par
+{\em suppress some warnings for user applications when using arm-\/2d. }\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{arm__2d_8h_aa1a520634c974866fb98044c63143532}{ARM\+\_\+2\+D\+\_\+\+VERSION\+\_\+\+MAJOR}}~1
+\item 
+\#define \mbox{\hyperlink{arm__2d_8h_a17fea46439a9f655a68d9b186838163e}{ARM\+\_\+2\+D\+\_\+\+VERSION\+\_\+\+MINOR}}~0
+\item 
+\#define \mbox{\hyperlink{arm__2d_8h_a84adc455ac15b1574d66130d661dbd7e}{ARM\+\_\+2\+D\+\_\+\+VERSION\+\_\+\+PATCH}}~0
+\item 
+\#define \mbox{\hyperlink{arm__2d_8h_a717a4db05af2c6d8e4ee171f6ba53d52}{ARM\+\_\+2\+D\+\_\+\+VERSION\+\_\+\+STR}}~\char`\"{}preview\char`\"{}
+\item 
+\#define \mbox{\hyperlink{arm__2d_8h_a11b2dbdafc85d9d678e52447cc25f9ac}{ARM\+\_\+2\+D\+\_\+\+VERISON}}
+\end{DoxyCompactItemize}
+\end{Indent}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{arm__2d_8h_ae417897e7d7186b294c0ff3468102276}{arm\+\_\+2d\+\_\+init}} (void)
+\begin{DoxyCompactList}\small\item\em initialise arm-\/2d \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} $\ast$ \mbox{\hyperlink{arm__2d_8h_a42407a7eebceade2349b1309bdf78b48}{arm\+\_\+2d\+\_\+set\+\_\+default\+\_\+frame\+\_\+buffer}} (const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} $\ast$pt\+Frame\+Buffer)
+\begin{DoxyCompactList}\small\item\em set the default frame buffer \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} $\ast$ \mbox{\hyperlink{arm__2d_8h_aa0f5857c97450feeb79b3983dd1a950b}{arm\+\_\+2d\+\_\+get\+\_\+default\+\_\+frame\+\_\+buffer}} (void)
+\begin{DoxyCompactList}\small\item\em get the default frame buffer \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{arm__2d_8h_af435aa9cb213d9c2d39fb34ef02641ed}{arm\+\_\+2d\+\_\+set\+\_\+user\+\_\+param}} (\mbox{\hyperlink{structarm__2d__op__core__t}{arm\+\_\+2d\+\_\+op\+\_\+core\+\_\+t}} $\ast$pt\+OP, uintptr\+\_\+t p\+User\+Param)
+\begin{DoxyCompactList}\small\item\em attach a user param (which could be a pointer) to specified OP \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{arm__2d_8h_a129e2a7110847b0fd22eeb6351205989}{arm\+\_\+2d\+\_\+op\+\_\+wait\+\_\+async}} (\mbox{\hyperlink{structarm__2d__op__core__t}{arm\+\_\+2d\+\_\+op\+\_\+core\+\_\+t}} $\ast$pt\+OP)
+\begin{DoxyCompactList}\small\item\em wait asynchronouse operation complete \end{DoxyCompactList}\item 
+\mbox{\hyperlink{unionarm__2d__op__status__t}{arm\+\_\+2d\+\_\+op\+\_\+status\+\_\+t}} \mbox{\hyperlink{arm__2d_8h_a78ba01fb790d0a43878499dcb2639e0d}{arm\+\_\+2d\+\_\+get\+\_\+op\+\_\+status}} (\mbox{\hyperlink{structarm__2d__op__core__t}{arm\+\_\+2d\+\_\+op\+\_\+core\+\_\+t}} $\ast$pt\+OP)
+\begin{DoxyCompactList}\small\item\em get the status of a specified OP, \end{DoxyCompactList}\item 
+\mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\+\_\+fsm\+\_\+rt\+\_\+t}} \mbox{\hyperlink{arm__2d_8h_a14a09993e474bef1266e2572146b8341}{arm\+\_\+2d\+\_\+task}} (\mbox{\hyperlink{structarm__2d__task__t}{arm\+\_\+2d\+\_\+task\+\_\+t}} $\ast$pt\+Task)
+\begin{DoxyCompactList}\small\item\em arm-\/2d pixel pipeline task entery \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structarm__2d__runtime__feature__t}{arm\+\_\+2d\+\_\+runtime\+\_\+feature\+\_\+t}} \mbox{\hyperlink{arm__2d_8h_ae30937777f3c67e2418c9c26c76fb501}{ARM\+\_\+2\+D\+\_\+\+RUNTIME\+\_\+\+FEATURE}}
+\item 
+const \mbox{\hyperlink{structarm__2d__version__t}{arm\+\_\+2d\+\_\+version\+\_\+t}} \mbox{\hyperlink{arm__2d_8h_a3cef1eb288e3529dab7e441cc769e1e2}{ARM\+\_\+2\+D\+\_\+\+VERSION}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{arm__2d_8h_a11b2dbdafc85d9d678e52447cc25f9ac}\label{arm__2d_8h_a11b2dbdafc85d9d678e52447cc25f9ac}} 
+\index{arm\_2d.h@{arm\_2d.h}!ARM\_2D\_VERISON@{ARM\_2D\_VERISON}}
+\index{ARM\_2D\_VERISON@{ARM\_2D\_VERISON}!arm\_2d.h@{arm\_2d.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_2D\_VERISON}{ARM\_2D\_VERISON}}
+{\footnotesize\ttfamily \#define ARM\+\_\+2\+D\+\_\+\+VERISON}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{                                    (   \mbox{\hyperlink{arm__2d_8h_aa1a520634c974866fb98044c63143532}{ARM\_2D\_VERSION\_MAJOR}} * 10000ul          \(\backslash\)}
+\DoxyCodeLine{                                    +   \mbox{\hyperlink{arm__2d_8h_a17fea46439a9f655a68d9b186838163e}{ARM\_2D\_VERSION\_MINOR}} * 100ul            \(\backslash\)}
+\DoxyCodeLine{                                        ARM\_2D\_VERSION\_PATCH)}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{arm__2d_8h_source_l00066}{66}} of file \mbox{\hyperlink{arm__2d_8h_source}{arm\+\_\+2d.\+h}}.
+
+\mbox{\Hypertarget{arm__2d_8h_aa1a520634c974866fb98044c63143532}\label{arm__2d_8h_aa1a520634c974866fb98044c63143532}} 
+\index{arm\_2d.h@{arm\_2d.h}!ARM\_2D\_VERSION\_MAJOR@{ARM\_2D\_VERSION\_MAJOR}}
+\index{ARM\_2D\_VERSION\_MAJOR@{ARM\_2D\_VERSION\_MAJOR}!arm\_2d.h@{arm\_2d.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_2D\_VERSION\_MAJOR}{ARM\_2D\_VERSION\_MAJOR}}
+{\footnotesize\ttfamily \#define ARM\+\_\+2\+D\+\_\+\+VERSION\+\_\+\+MAJOR~1}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d_8h_source_l00061}{61}} of file \mbox{\hyperlink{arm__2d_8h_source}{arm\+\_\+2d.\+h}}.
+
+\mbox{\Hypertarget{arm__2d_8h_a17fea46439a9f655a68d9b186838163e}\label{arm__2d_8h_a17fea46439a9f655a68d9b186838163e}} 
+\index{arm\_2d.h@{arm\_2d.h}!ARM\_2D\_VERSION\_MINOR@{ARM\_2D\_VERSION\_MINOR}}
+\index{ARM\_2D\_VERSION\_MINOR@{ARM\_2D\_VERSION\_MINOR}!arm\_2d.h@{arm\_2d.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_2D\_VERSION\_MINOR}{ARM\_2D\_VERSION\_MINOR}}
+{\footnotesize\ttfamily \#define ARM\+\_\+2\+D\+\_\+\+VERSION\+\_\+\+MINOR~0}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d_8h_source_l00062}{62}} of file \mbox{\hyperlink{arm__2d_8h_source}{arm\+\_\+2d.\+h}}.
+
+\mbox{\Hypertarget{arm__2d_8h_a84adc455ac15b1574d66130d661dbd7e}\label{arm__2d_8h_a84adc455ac15b1574d66130d661dbd7e}} 
+\index{arm\_2d.h@{arm\_2d.h}!ARM\_2D\_VERSION\_PATCH@{ARM\_2D\_VERSION\_PATCH}}
+\index{ARM\_2D\_VERSION\_PATCH@{ARM\_2D\_VERSION\_PATCH}!arm\_2d.h@{arm\_2d.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_2D\_VERSION\_PATCH}{ARM\_2D\_VERSION\_PATCH}}
+{\footnotesize\ttfamily \#define ARM\+\_\+2\+D\+\_\+\+VERSION\+\_\+\+PATCH~0}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d_8h_source_l00063}{63}} of file \mbox{\hyperlink{arm__2d_8h_source}{arm\+\_\+2d.\+h}}.
+
+\mbox{\Hypertarget{arm__2d_8h_a717a4db05af2c6d8e4ee171f6ba53d52}\label{arm__2d_8h_a717a4db05af2c6d8e4ee171f6ba53d52}} 
+\index{arm\_2d.h@{arm\_2d.h}!ARM\_2D\_VERSION\_STR@{ARM\_2D\_VERSION\_STR}}
+\index{ARM\_2D\_VERSION\_STR@{ARM\_2D\_VERSION\_STR}!arm\_2d.h@{arm\_2d.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_2D\_VERSION\_STR}{ARM\_2D\_VERSION\_STR}}
+{\footnotesize\ttfamily \#define ARM\+\_\+2\+D\+\_\+\+VERSION\+\_\+\+STR~\char`\"{}preview\char`\"{}}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d_8h_source_l00064}{64}} of file \mbox{\hyperlink{arm__2d_8h_source}{arm\+\_\+2d.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{arm__2d_8h_aa0f5857c97450feeb79b3983dd1a950b}\label{arm__2d_8h_aa0f5857c97450feeb79b3983dd1a950b}} 
+\index{arm\_2d.h@{arm\_2d.h}!arm\_2d\_get\_default\_frame\_buffer@{arm\_2d\_get\_default\_frame\_buffer}}
+\index{arm\_2d\_get\_default\_frame\_buffer@{arm\_2d\_get\_default\_frame\_buffer}!arm\_2d.h@{arm\_2d.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_get\_default\_frame\_buffer()}{arm\_2d\_get\_default\_frame\_buffer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} $\ast$ arm\+\_\+2d\+\_\+get\+\_\+default\+\_\+frame\+\_\+buffer (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+arm\+\_\+2d\+\_\+tile\+\_\+t$\ast$ the address of the default frame buffer 
+\end{DoxyReturn}
+\mbox{\Hypertarget{arm__2d_8h_a78ba01fb790d0a43878499dcb2639e0d}\label{arm__2d_8h_a78ba01fb790d0a43878499dcb2639e0d}} 
+\index{arm\_2d.h@{arm\_2d.h}!arm\_2d\_get\_op\_status@{arm\_2d\_get\_op\_status}}
+\index{arm\_2d\_get\_op\_status@{arm\_2d\_get\_op\_status}!arm\_2d.h@{arm\_2d.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_get\_op\_status()}{arm\_2d\_get\_op\_status()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{unionarm__2d__op__status__t}{arm\+\_\+2d\+\_\+op\+\_\+status\+\_\+t}} arm\+\_\+2d\+\_\+get\+\_\+op\+\_\+status (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structarm__2d__op__core__t}{arm\+\_\+2d\+\_\+op\+\_\+core\+\_\+t}} $\ast$}]{pt\+OP }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em pt\+OP} & the address of the target OP (NULL means using the default OP) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{unionarm__2d__op__status__t}{arm\+\_\+2d\+\_\+op\+\_\+status\+\_\+t}} the operation status 
+\end{DoxyReturn}
+\mbox{\Hypertarget{arm__2d_8h_ae417897e7d7186b294c0ff3468102276}\label{arm__2d_8h_ae417897e7d7186b294c0ff3468102276}} 
+\index{arm\_2d.h@{arm\_2d.h}!arm\_2d\_init@{arm\_2d\_init}}
+\index{arm\_2d\_init@{arm\_2d\_init}!arm\_2d.h@{arm\_2d.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_init()}{arm\_2d\_init()}}
+{\footnotesize\ttfamily void arm\+\_\+2d\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{arm__2d_8c_source_l00132}{132}} of file \mbox{\hyperlink{arm__2d_8c_source}{arm\+\_\+2d.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00133 \{}
+\DoxyCodeLine{00134     \_\_arm\_2d\_init();      }
+\DoxyCodeLine{00135     }
+\DoxyCodeLine{00136     \textcolor{keywordflow}{do} \{}
+\DoxyCodeLine{00137         \textcolor{keyword}{static} \_\_arm\_2d\_sub\_task\_t }
+\DoxyCodeLine{00138             s\_tDefaultTaskPool[\_\_ARM\_2D\_CFG\_DEFAULT\_SUB\_TASK\_POOL\_SIZE\_\_];}
+\DoxyCodeLine{00139 }
+\DoxyCodeLine{00140         \mbox{\hyperlink{arm__2d__utils_8h_a206ba077ba0d890fd0be935fc5d15dda}{ARM\_2D\_UNUSED}}(s\_tDefaultTaskPool);}
+\DoxyCodeLine{00141 }
+\DoxyCodeLine{00142         \_\_arm\_2d\_async\_init(s\_tDefaultTaskPool, \mbox{\hyperlink{arm__2d__utils_8h_a7b6c484887a402bba1af11b457264553}{dimof}}(s\_tDefaultTaskPool));}
+\DoxyCodeLine{00143     \} \textcolor{keywordflow}{while}(0);}
+\DoxyCodeLine{00144 }
+\DoxyCodeLine{00145     \_\_arm\_2d\_helium\_init();                                             }
+\DoxyCodeLine{00146     \_\_arm\_2d\_cde\_init();                                                }
+\DoxyCodeLine{00147     \_\_arm\_2d\_acc\_init();                                                }
+\DoxyCodeLine{00148 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{arm__2d_8h_a129e2a7110847b0fd22eeb6351205989}\label{arm__2d_8h_a129e2a7110847b0fd22eeb6351205989}} 
+\index{arm\_2d.h@{arm\_2d.h}!arm\_2d\_op\_wait\_async@{arm\_2d\_op\_wait\_async}}
+\index{arm\_2d\_op\_wait\_async@{arm\_2d\_op\_wait\_async}!arm\_2d.h@{arm\_2d.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_op\_wait\_async()}{arm\_2d\_op\_wait\_async()}}
+{\footnotesize\ttfamily bool arm\+\_\+2d\+\_\+op\+\_\+wait\+\_\+async (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structarm__2d__op__core__t}{arm\+\_\+2d\+\_\+op\+\_\+core\+\_\+t}} $\ast$}]{pt\+OP }\end{DoxyParamCaption})}
+
+
+\begin{DoxyRetVals}{Return values}
+{\em true} & sync up with operation \\
+\hline
+{\em false} & operation is busy \\
+\hline
+\end{DoxyRetVals}
+\mbox{\Hypertarget{arm__2d_8h_a42407a7eebceade2349b1309bdf78b48}\label{arm__2d_8h_a42407a7eebceade2349b1309bdf78b48}} 
+\index{arm\_2d.h@{arm\_2d.h}!arm\_2d\_set\_default\_frame\_buffer@{arm\_2d\_set\_default\_frame\_buffer}}
+\index{arm\_2d\_set\_default\_frame\_buffer@{arm\_2d\_set\_default\_frame\_buffer}!arm\_2d.h@{arm\_2d.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_set\_default\_frame\_buffer()}{arm\_2d\_set\_default\_frame\_buffer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} $\ast$ arm\+\_\+2d\+\_\+set\+\_\+default\+\_\+frame\+\_\+buffer (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structarm__2d__tile__t}{arm\+\_\+2d\+\_\+tile\+\_\+t}} $\ast$}]{pt\+Frame\+Buffer }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em pt\+Framebuffer} & the new frame buffer, \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+if NULL is given, no default frame buffer will be used 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+arm\+\_\+2d\+\_\+tile\+\_\+t$\ast$ the address of the old frame buffer 
+\end{DoxyReturn}
+\mbox{\Hypertarget{arm__2d_8h_af435aa9cb213d9c2d39fb34ef02641ed}\label{arm__2d_8h_af435aa9cb213d9c2d39fb34ef02641ed}} 
+\index{arm\_2d.h@{arm\_2d.h}!arm\_2d\_set\_user\_param@{arm\_2d\_set\_user\_param}}
+\index{arm\_2d\_set\_user\_param@{arm\_2d\_set\_user\_param}!arm\_2d.h@{arm\_2d.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_set\_user\_param()}{arm\_2d\_set\_user\_param()}}
+{\footnotesize\ttfamily void arm\+\_\+2d\+\_\+set\+\_\+user\+\_\+param (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structarm__2d__op__core__t}{arm\+\_\+2d\+\_\+op\+\_\+core\+\_\+t}} $\ast$}]{pt\+OP,  }\item[{uintptr\+\_\+t}]{p\+User\+Param }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em pt\+OP} & the address of the target OP (NULL means using the default OP) \\
+\hline
+{\em p\+User\+Param} & a user parameter (it can be used as a pointer) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{arm__2d_8h_a14a09993e474bef1266e2572146b8341}\label{arm__2d_8h_a14a09993e474bef1266e2572146b8341}} 
+\index{arm\_2d.h@{arm\_2d.h}!arm\_2d\_task@{arm\_2d\_task}}
+\index{arm\_2d\_task@{arm\_2d\_task}!arm\_2d.h@{arm\_2d.h}}
+\doxysubsubsection{\texorpdfstring{arm\_2d\_task()}{arm\_2d\_task()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\+\_\+fsm\+\_\+rt\+\_\+t}} arm\+\_\+2d\+\_\+task (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structarm__2d__task__t}{arm\+\_\+2d\+\_\+task\+\_\+t}} $\ast$}]{pt\+Task }\end{DoxyParamCaption})}
+
+\begin{DoxyNote}{Note}
+This function is {\itshape TRHEAD-\/\+SAFE} 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em pt\+Task} & the address of an arm-\/2d task control block \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em arm\+\_\+fsm\+\_\+rt\+\_\+cpl} & The sub-\/task FIFO is empty, the caller can wait for a semaphore set by arm\+\_\+2d\+\_\+notif\+\_\+sub\+\_\+task\+\_\+fifo\+\_\+task\+\_\+arrive() \\
+\hline
+{\em arm\+\_\+fsm\+\_\+rt\+\_\+on\+\_\+going} & The arm\+\_\+2d\+\_\+task yields \\
+\hline
+{\em arm\+\_\+fsm\+\_\+rt\+\_\+async} & You shouldn\textquotesingle{}t see this value \\
+\hline
+{\em arm\+\_\+fsm\+\_\+rt\+\_\+wait\+\_\+for\+\_\+obj} & hardware accelerator wants to sync-\/up with applications. \\
+\hline
+{\em ($<$0)} & Serious error is detected. \\
+\hline
+\end{DoxyRetVals}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{arm__2d_8h_ae30937777f3c67e2418c9c26c76fb501}\label{arm__2d_8h_ae30937777f3c67e2418c9c26c76fb501}} 
+\index{arm\_2d.h@{arm\_2d.h}!ARM\_2D\_RUNTIME\_FEATURE@{ARM\_2D\_RUNTIME\_FEATURE}}
+\index{ARM\_2D\_RUNTIME\_FEATURE@{ARM\_2D\_RUNTIME\_FEATURE}!arm\_2d.h@{arm\_2d.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_2D\_RUNTIME\_FEATURE}{ARM\_2D\_RUNTIME\_FEATURE}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structarm__2d__runtime__feature__t}{arm\+\_\+2d\+\_\+runtime\+\_\+feature\+\_\+t}} ARM\+\_\+2\+D\+\_\+\+RUNTIME\+\_\+\+FEATURE\hspace{0.3cm}{\ttfamily [extern]}}
+
+\mbox{\Hypertarget{arm__2d_8h_a3cef1eb288e3529dab7e441cc769e1e2}\label{arm__2d_8h_a3cef1eb288e3529dab7e441cc769e1e2}} 
+\index{arm\_2d.h@{arm\_2d.h}!ARM\_2D\_VERSION@{ARM\_2D\_VERSION}}
+\index{ARM\_2D\_VERSION@{ARM\_2D\_VERSION}!arm\_2d.h@{arm\_2d.h}}
+\doxysubsubsection{\texorpdfstring{ARM\_2D\_VERSION}{ARM\_2D\_VERSION}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structarm__2d__version__t}{arm\+\_\+2d\+\_\+version\+\_\+t}} ARM\+\_\+2\+D\+\_\+\+VERSION\hspace{0.3cm}{\ttfamily [extern]}}
+

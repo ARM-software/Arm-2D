@@ -1,0 +1,808 @@
+\hypertarget{____arm__2d__impl_8h_source}{}\doxysection{\+\_\+\+\_\+arm\+\_\+2d\+\_\+impl.\+h}
+\label{____arm__2d__impl_8h_source}\index{\_\_arm\_2d\_impl.h@{\_\_arm\_2d\_impl.h}}
+\mbox{\hyperlink{____arm__2d__impl_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00001}00001 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00002}00002 \textcolor{comment}{ * Copyright (C) 2010-\/2022 Arm Limited or its affiliates. All rights reserved.}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00003}00003 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00004}00004 \textcolor{comment}{ * SPDX-\/License-\/Identifier: Apache-\/2.0}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00005}00005 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00006}00006 \textcolor{comment}{ * Licensed under the Apache License, Version 2.0 (the License); you may}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00007}00007 \textcolor{comment}{ * not use this file except in compliance with the License.}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00008}00008 \textcolor{comment}{ * You may obtain a copy of the License at}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00009}00009 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00010}00010 \textcolor{comment}{ * www.apache.org/licenses/LICENSE-\/2.0}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00011}00011 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00012}00012 \textcolor{comment}{ * Unless required by applicable law or agreed to in writing, software}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00013}00013 \textcolor{comment}{ * distributed under the License is distributed on an AS IS BASIS, WITHOUT}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00014}00014 \textcolor{comment}{ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00015}00015 \textcolor{comment}{ * See the License for the specific language governing permissions and}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00016}00016 \textcolor{comment}{ * limitations under the License.}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00017}00017 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00018}00018 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00019}00019 \textcolor{comment}{/* -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00020}00020 \textcolor{comment}{ * Project:      Arm-\/2D Library}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00021}00021 \textcolor{comment}{ * Title:        \_\_arm\_2d\_impl.h}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00022}00022 \textcolor{comment}{ * Description:  header files for internal users or professional developers}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00023}00023 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00024}00024 \textcolor{comment}{ * \$Date:        24. May 2022}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00025}00025 \textcolor{comment}{ * \$Revision:    V.1.2.1}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00026}00026 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00027}00027 \textcolor{comment}{ * Target Processor:  Cortex-\/M cores}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00028}00028 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00029}00029 \textcolor{comment}{ * -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ */}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00031}00031 \textcolor{preprocessor}{\#ifndef \_\_ARM\_2D\_ACCELERATION\_H\_\_}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00032}00032 \textcolor{preprocessor}{\#   define \_\_ARM\_2D\_ACCELERATION\_H\_\_      1}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00034}00034 \textcolor{comment}{/*============================ INCLUDES ======================================*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00036}00036 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{arm__2d_8h}{arm\_2d.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00038}00038 \textcolor{preprocessor}{\#ifdef   \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00039}00039 \textcolor{keyword}{extern} \textcolor{stringliteral}{"{}C"{}} \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00040}00040 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00042}00042 \textcolor{preprocessor}{\#if defined(\_\_clang\_\_)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00043}00043 \textcolor{preprocessor}{\#   pragma clang diagnostic push}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00044}00044 \textcolor{preprocessor}{\#   pragma clang diagnostic ignored "{}-\/Wunknown-\/warning-\/option"{}}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00045}00045 \textcolor{preprocessor}{\#   pragma clang diagnostic ignored "{}-\/Wreserved-\/identifier"{}}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00046}00046 \textcolor{preprocessor}{\#   pragma clang diagnostic ignored "{}-\/Wgnu-\/zero-\/variadic-\/macro-\/arguments"{}}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00047}00047 \textcolor{preprocessor}{\#   pragma clang diagnostic ignored "{}-\/Wmissing-\/declarations"{}}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00048}00048 \textcolor{preprocessor}{\#   pragma clang diagnostic ignored "{}-\/Wpadded"{}}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00049}00049 \textcolor{preprocessor}{\#elif \_\_IS\_COMPILER\_ARM\_COMPILER\_5\_\_}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00050}00050 \textcolor{preprocessor}{\#   pragma diag\_suppress 174,177,188,68,513,144,64}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00051}00051 \textcolor{preprocessor}{\#elif \_\_IS\_COMPILER\_IAR\_\_}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00052}00052 \textcolor{preprocessor}{\#   pragma diag\_suppress=Pe301}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00053}00053 \textcolor{preprocessor}{\#elif \_\_IS\_COMPILER\_GCC\_\_}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00054}00054 \textcolor{preprocessor}{\#   pragma GCC diagnostic push}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00055}00055 \textcolor{preprocessor}{\#   pragma GCC diagnostic ignored "{}-\/Wunused-\/value"{}}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00056}00056 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00057}00057 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00058}00058 \textcolor{comment}{/*============================ MACROS ========================================*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00059}00059 \textcolor{preprocessor}{\#undef this}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00060}\mbox{\hyperlink{____arm__2d__impl_8h_a50383951d2a9d4f1a855b2cec5e03274}{00060}} \textcolor{preprocessor}{\#define this            (*ptThis)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00061}00061 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00062}00062 \textcolor{preprocessor}{\#undef OP\_CORE}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00063}\mbox{\hyperlink{____arm__2d__impl_8h_a9f9d937dc5a6d79e26e25ebf55bbf679}{00063}} \textcolor{preprocessor}{\#define OP\_CORE         this.use\_as\_\_arm\_2d\_op\_core\_t}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00064}00064 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00065}\mbox{\hyperlink{____arm__2d__impl_8h_a451aeef94e8d5bf76519f63cbca43493}{00065}} \textcolor{preprocessor}{\#define ARM\_2D\_IMPL(\_\_TYPE, ...)                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00066}00066 \textcolor{preprocessor}{            \_\_TYPE *ptThis = (\_\_TYPE *)(NULL,\#\#\_\_VA\_ARGS\_\_);                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00067}00067 \textcolor{preprocessor}{            if (NULL == ptThis) \{                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00068}00068 \textcolor{preprocessor}{                ptThis = (\_\_TYPE *)\&ARM\_2D\_CTRL.DefaultOP;                      \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00069}00069 \textcolor{preprocessor}{            \}}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00070}00070 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00071}00071 \textcolor{comment}{/*============================ MACROFIED FUNCTIONS ===========================*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00072}00072 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00073}\mbox{\hyperlink{____arm__2d__impl_8h_a4b283d1d8cd28fdc1a93a1d7dd2e4f57}{00073}} \textcolor{preprocessor}{\#define ARM\_2D\_TRY\_ACCELERATION(\_\_ID, \_\_FUNC\_PROTOTYPE, ...)                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00074}00074 \textcolor{preprocessor}{        if (    (NULL != OP\_CORE.ptOp-\/>Info.LowLevelIO.IO[\_\_ID]-\/>HW)            \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00075}00075 \textcolor{preprocessor}{            \&\&  (NULL != OP\_CORE.ptOp-\/>Info.LowLevelIO.IO[\_\_ID])) \{             \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00076}00076 \textcolor{preprocessor}{            tResult =                                                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00077}00077 \textcolor{preprocessor}{            (*(\_\_FUNC\_PROTOTYPE *)OP\_CORE.ptOp-\/>Info.LowLevelIO.IO[\_\_ID]-\/>HW)(  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00078}00078 \textcolor{preprocessor}{                                        ptTask,                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00079}00079 \textcolor{preprocessor}{                                        \#\#\_\_VA\_ARGS\_\_);                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00080}00080 \textcolor{preprocessor}{        \}}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00081}00081 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00082}\mbox{\hyperlink{____arm__2d__impl_8h_ac0a8a9b5defd52c6b5251c9579e7f520}{00082}} \textcolor{preprocessor}{\#define ARM\_2D\_RUN\_DEFAULT(\_\_ID, \_\_FUNC\_PROTOTYPE, ...)                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00083}00083 \textcolor{preprocessor}{        if (    (NULL != OP\_CORE.ptOp-\/>Info.LowLevelIO.IO[\_\_ID]-\/>SW)            \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00084}00084 \textcolor{preprocessor}{            \&\&  (NULL != OP\_CORE.ptOp-\/>Info.LowLevelIO.IO[\_\_ID])) \{             \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00085}00085 \textcolor{preprocessor}{            tResult =                                                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00086}00086 \textcolor{preprocessor}{            (*(\_\_FUNC\_PROTOTYPE *)OP\_CORE.ptOp-\/>Info.LowLevelIO.IO[\_\_ID]-\/>SW)(  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00087}00087 \textcolor{preprocessor}{                                        ptTask,                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00088}00088 \textcolor{preprocessor}{                                        \#\#\_\_VA\_ARGS\_\_);                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00089}00089 \textcolor{preprocessor}{        \} else \{                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00090}00090 \textcolor{preprocessor}{            tResult = (arm\_fsm\_rt\_t)ARM\_2D\_ERR\_NOT\_SUPPORT;                     \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00091}00091 \textcolor{preprocessor}{        \}}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00092}00092     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00093}00093 \textcolor{preprocessor}{\#define \_\_ARM\_2D\_PIXEL\_BLENDING\_GRAY8(\_\_SRC\_ADDR, \_\_DES\_ADDR, \_\_TRANS)          \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00094}00094 \textcolor{preprocessor}{            do \{                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00095}00095 \textcolor{preprocessor}{                uint16\_t hwOPA = 256 -\/ (\_\_TRANS);                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00096}00096 \textcolor{preprocessor}{                const uint8\_t *pchSrc = (uint8\_t *)(\_\_SRC\_ADDR);                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00097}00097 \textcolor{preprocessor}{                uint8\_t *pchDes = (uint8\_t *)(\_\_DES\_ADDR);                      \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00098}00098 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00099}00099 \textcolor{preprocessor}{                *pchDes = ((uint16\_t)( ((uint16\_t)(*pchSrc++) * hwOPA)          \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00100}00100 \textcolor{preprocessor}{                                     + ((uint16\_t)(*pchDes) * (\_\_TRANS))        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00101}00101 \textcolor{preprocessor}{                                     ) >> 8);                                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00102}00102 \textcolor{preprocessor}{            \} while(0)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00103}00103 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00104}00104 \textcolor{preprocessor}{\#define \_\_ARM\_2D\_PIXEL\_BLENDING\_RGB565(\_\_SRC\_ADDR, \_\_DES\_ADDR, \_\_TRANS)         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00105}00105 \textcolor{preprocessor}{            do \{                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00106}00106 \textcolor{preprocessor}{                uint16\_t hwOPA = 256 -\/ (\_\_TRANS);                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00107}00107 \textcolor{preprocessor}{                \_\_arm\_2d\_color\_fast\_rgb\_t tSrcPix, tTargetPix;                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00108}00108 \textcolor{preprocessor}{                uint16\_t *phwTargetPixel = (\_\_DES\_ADDR);                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00109}00109 \textcolor{preprocessor}{                \_\_arm\_2d\_rgb565\_unpack(*(\_\_SRC\_ADDR), \&tSrcPix);                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00110}00110 \textcolor{preprocessor}{                \_\_arm\_2d\_rgb565\_unpack(*phwTargetPixel, \&tTargetPix);           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00111}00111 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00112}00112 \textcolor{preprocessor}{                for (int i = 0; i < 3; i++) \{                                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00113}00113 \textcolor{preprocessor}{                    uint16\_t        hwTemp =                                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00114}00114 \textcolor{preprocessor}{                        (uint16\_t) (tSrcPix.RGBA[i] * hwOPA) +                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00115}00115 \textcolor{preprocessor}{                        (tTargetPix.RGBA[i] * (\_\_TRANS));                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00116}00116 \textcolor{preprocessor}{                    tTargetPix.RGBA[i] = (uint16\_t) (hwTemp >> 8);              \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00117}00117 \textcolor{preprocessor}{                \}                                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00118}00118 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00119}00119 \textcolor{preprocessor}{                }\textcolor{comment}{/* pack merged stream */}\textcolor{preprocessor}{                                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00120}00120 \textcolor{preprocessor}{                *phwTargetPixel = \_\_arm\_2d\_rgb565\_pack(\&tTargetPix);            \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00121}00121 \textcolor{preprocessor}{            \} while(0)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00122}00122             }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00123}00123 \textcolor{preprocessor}{\#define \_\_ARM\_2D\_PIXEL\_BLENDING\_CCCN888(\_\_SRC\_ADDR, \_\_DES\_ADDR, \_\_TRANS)        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00124}00124 \textcolor{preprocessor}{            do \{                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00125}00125 \textcolor{preprocessor}{                uint16\_t hwOPA = 256 -\/ (\_\_TRANS);                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00126}00126 \textcolor{preprocessor}{                }\textcolor{comment}{/* do not change alpha */}\textcolor{preprocessor}{                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00127}00127 \textcolor{preprocessor}{                uint\_fast8\_t ARM\_2D\_SAFE\_NAME(n) = sizeof(uint32\_t) -\/ 1;        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00128}00128 \textcolor{preprocessor}{                const uint8\_t *pchSrc = (uint8\_t *)(\_\_SRC\_ADDR);                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00129}00129 \textcolor{preprocessor}{                uint8\_t *pchDes = (uint8\_t *)(\_\_DES\_ADDR);                      \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00130}00130 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00131}00131 \textcolor{preprocessor}{                do \{                                                            \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00132}00132 \textcolor{preprocessor}{                    *pchDes = ( ((uint\_fast16\_t)(*pchSrc++) * hwOPA)            \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00133}00133 \textcolor{preprocessor}{                              + ((uint\_fast16\_t)(*pchDes) * (\_\_TRANS))          \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00134}00134 \textcolor{preprocessor}{                              ) >> 8;                                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00135}00135 \textcolor{preprocessor}{                     pchDes++;                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00136}00136 \textcolor{preprocessor}{                \} while(-\/-\/ARM\_2D\_SAFE\_NAME(n));                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00137}00137 \textcolor{preprocessor}{            \} while(0)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00138}00138             }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00139}00139             }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00140}00140             }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00141}00141 \textcolor{preprocessor}{\#define \_\_ARM\_2D\_PIXEL\_BLENDING\_OPA\_GRAY8(\_\_SRC\_ADDR, \_\_DES\_ADDR, \_\_OPA)        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00142}00142 \textcolor{preprocessor}{            do \{                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00143}00143 \textcolor{preprocessor}{                uint16\_t hwTrans = 256 -\/ (\_\_OPA);                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00144}00144 \textcolor{preprocessor}{                const uint8\_t *pchSrc = (uint8\_t *)(\_\_SRC\_ADDR);                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00145}00145 \textcolor{preprocessor}{                uint8\_t *pchDes = (uint8\_t *)(\_\_DES\_ADDR);                      \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00146}00146 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00147}00147 \textcolor{preprocessor}{                *pchDes = ((uint16\_t)( ((uint16\_t)(*pchSrc++) * (\_\_OPA))        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00148}00148 \textcolor{preprocessor}{                                     + ((uint16\_t)(*pchDes) * hwTrans)          \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00149}00149 \textcolor{preprocessor}{                                     ) >> 8);                                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00150}00150 \textcolor{preprocessor}{            \} while(0)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00151}00151 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00152}00152 \textcolor{preprocessor}{\#define \_\_ARM\_2D\_PIXEL\_BLENDING\_OPA\_RGB565(\_\_SRC\_ADDR, \_\_DES\_ADDR, \_\_OPA)       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00153}00153 \textcolor{preprocessor}{            do \{                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00154}00154 \textcolor{preprocessor}{                uint16\_t hwTrans = 256 -\/ (\_\_OPA);                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00155}00155 \textcolor{preprocessor}{                \_\_arm\_2d\_color\_fast\_rgb\_t tSrcPix, tTargetPix;                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00156}00156 \textcolor{preprocessor}{                uint16\_t *phwTargetPixel = (\_\_DES\_ADDR);                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00157}00157 \textcolor{preprocessor}{                \_\_arm\_2d\_rgb565\_unpack(*(\_\_SRC\_ADDR), \&tSrcPix);                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00158}00158 \textcolor{preprocessor}{                \_\_arm\_2d\_rgb565\_unpack(*phwTargetPixel, \&tTargetPix);           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00159}00159 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00160}00160 \textcolor{preprocessor}{                for (int i = 0; i < 3; i++) \{                                   \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00161}00161 \textcolor{preprocessor}{                    uint16\_t        hwTemp =                                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00162}00162 \textcolor{preprocessor}{                        (uint16\_t) (tSrcPix.RGBA[i] * (\_\_OPA)) +                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00163}00163 \textcolor{preprocessor}{                        (tTargetPix.RGBA[i] * hwTrans);                         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00164}00164 \textcolor{preprocessor}{                    tTargetPix.RGBA[i] = (uint16\_t) (hwTemp >> 8);              \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00165}00165 \textcolor{preprocessor}{                \}                                                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00166}00166 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00167}00167 \textcolor{preprocessor}{                }\textcolor{comment}{/* pack merged stream */}\textcolor{preprocessor}{                                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00168}00168 \textcolor{preprocessor}{                *phwTargetPixel = \_\_arm\_2d\_rgb565\_pack(\&tTargetPix);            \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00169}00169 \textcolor{preprocessor}{            \} while(0)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00170}00170             }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00171}00171 \textcolor{preprocessor}{\#define \_\_ARM\_2D\_PIXEL\_BLENDING\_OPA\_CCCN888(\_\_SRC\_ADDR, \_\_DES\_ADDR, \_\_OPA)      \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00172}00172 \textcolor{preprocessor}{            do \{                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00173}00173 \textcolor{preprocessor}{                uint16\_t hwTrans = 256 -\/ (\_\_OPA);                               \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00174}00174 \textcolor{preprocessor}{                }\textcolor{comment}{/* do not change alpha */}\textcolor{preprocessor}{                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00175}00175 \textcolor{preprocessor}{                uint\_fast8\_t ARM\_2D\_SAFE\_NAME(n) = sizeof(uint32\_t) -\/ 1;        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00176}00176 \textcolor{preprocessor}{                const uint8\_t *pchSrc = (uint8\_t *)(\_\_SRC\_ADDR);                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00177}00177 \textcolor{preprocessor}{                uint8\_t *pchDes = (uint8\_t *)(\_\_DES\_ADDR);                      \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00178}00178 \textcolor{preprocessor}{                                                                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00179}00179 \textcolor{preprocessor}{                do \{                                                            \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00180}00180 \textcolor{preprocessor}{                    *pchDes = ( ((uint\_fast16\_t)(*pchSrc++) * (\_\_OPA))          \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00181}00181 \textcolor{preprocessor}{                              + ((uint\_fast16\_t)(*pchDes) * hwTrans)            \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00182}00182 \textcolor{preprocessor}{                              ) >> 8;                                           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00183}00183 \textcolor{preprocessor}{                     pchDes++;                                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00184}00184 \textcolor{preprocessor}{                \} while(-\/-\/ARM\_2D\_SAFE\_NAME(n));                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00185}00185 \textcolor{preprocessor}{            \} while(0)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00186}00186 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00187}00187 \textcolor{preprocessor}{\#define \_\_ARM\_2D\_PIXEL\_AVERAGE\_RGB565(\_\_PIXEL\_IN, \_\_ALPHA)                      \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00188}00188 \textcolor{preprocessor}{    do \{                                                                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00189}00189 \textcolor{preprocessor}{        \_\_arm\_2d\_color\_fast\_rgb\_t tTempColour;                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00190}00190 \textcolor{preprocessor}{        \_\_arm\_2d\_rgb565\_unpack((\_\_PIXEL\_IN), \&tTempColour);                     \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00191}00191 \textcolor{preprocessor}{        tPixel.R += tTempColour.R * (\_\_ALPHA);                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00192}00192 \textcolor{preprocessor}{        tPixel.G += tTempColour.G * (\_\_ALPHA);                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00193}00193 \textcolor{preprocessor}{        tPixel.B += tTempColour.B * (\_\_ALPHA);                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00194}00194 \textcolor{preprocessor}{    \} while(0)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00195}00195 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00196}00196 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00197}00197 \textcolor{preprocessor}{\#define \_\_ARM\_2D\_PIXEL\_AVERAGE\_CCCN888(\_\_PIXEL\_IN, \_\_ALPHA)                     \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00198}00198 \textcolor{preprocessor}{    do \{                                                                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00199}00199 \textcolor{preprocessor}{        arm\_2d\_color\_rgb888\_t tTempColour = \{.tValue = (\_\_PIXEL\_IN)\};           \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00200}00200 \textcolor{preprocessor}{        tPixel.R += tTempColour.u8R * (\_\_ALPHA);                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00201}00201 \textcolor{preprocessor}{        tPixel.G += tTempColour.u8G * (\_\_ALPHA);                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00202}00202 \textcolor{preprocessor}{        tPixel.B += tTempColour.u8B * (\_\_ALPHA);                                \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00203}00203 \textcolor{preprocessor}{    \} while(0)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00204}00204     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00205}00205 \textcolor{preprocessor}{\#define \_\_ARM\_2D\_PIXEL\_AVERAGE\_GRAY8(\_\_PIXEL\_IN, \_\_ALPHA)                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00206}00206 \textcolor{preprocessor}{    do \{                                                                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00207}00207 \textcolor{preprocessor}{        tPixel += (uint16\_t)(\_\_PIXEL\_IN) * (uint16\_t)(\_\_ALPHA);                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00208}00208 \textcolor{preprocessor}{    \} while(0)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00209}00209 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00210}00210 \textcolor{comment}{/*============================ TYPES =========================================*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00211}00211 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00212}00212 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\_\_arm\_2d\_point\_adj\_alpha\_t\{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00213}00213     \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00214}00214         \mbox{\hyperlink{structarm__2d__location__t}{arm\_2d\_location\_t}} tOffset;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00215}00215         uint\_fast8\_t chAlpha;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00216}00216     \}tMatrix[4];}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00217}00217 \} \_\_arm\_2d\_point\_adj\_alpha\_t;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00218}00218 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00219}00219 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00220}00220 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00221}00221 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00224}00224 \textcolor{keyword}{enum} \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00225}00225     \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ arm-\/2d operation idx begin -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00226}00226     \_\_ARM\_2D\_OP\_IDX\_BARRIER,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00227}00227     \_\_ARM\_2D\_OP\_IDX\_SYNC = \_\_ARM\_2D\_OP\_IDX\_BARRIER,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00228}00228     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00229}00229     \_\_ARM\_2D\_OP\_IDX\_COPY,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00230}00230     \_\_ARM\_2D\_OP\_IDX\_COPY\_ONLY,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00231}00231     \_\_ARM\_2D\_OP\_IDX\_COPY\_WITH\_X\_MIRROR,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00232}00232     \_\_ARM\_2D\_OP\_IDX\_COPY\_WITH\_Y\_MIRROR,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00233}00233     \_\_ARM\_2D\_OP\_IDX\_COPY\_WITH\_XY\_MIRROR,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00234}00234     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00235}00235     \_\_ARM\_2D\_OP\_IDX\_FILL\_ONLY,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00236}00236     \_\_ARM\_2D\_OP\_IDX\_FILL\_WITH\_X\_MIRROR,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00237}00237     \_\_ARM\_2D\_OP\_IDX\_FILL\_WITH\_Y\_MIRROR,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00238}00238     \_\_ARM\_2D\_OP\_IDX\_FILL\_WITH\_XY\_MIRROR,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00239}00239     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00240}00240     \_\_ARM\_2D\_OP\_IDX\_COPY\_WITH\_COLOUR\_KEYING,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00241}00241     \_\_ARM\_2D\_OP\_IDX\_COPY\_WITH\_MASKS,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00242}00242     \_\_ARM\_2D\_OP\_IDX\_COPY\_WITH\_SOURCE\_MASK,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00243}00243     \_\_ARM\_2D\_OP\_IDX\_COPY\_WITH\_TARGET\_MASK,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00244}00244     \_\_ARM\_2D\_OP\_IDX\_FILL\_COLOUR,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00245}00245     \_\_ARM\_2D\_OP\_IDX\_FILL\_COLOUR\_WITH\_COLOUR\_KEYING,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00246}00246     \_\_ARM\_2D\_OP\_IDX\_FILL\_COLOUR\_WITH\_MASK,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00247}00247     \_\_ARM\_2D\_OP\_IDX\_FILL\_COLOUR\_WITH\_MASK\_AND\_OPACITY,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00248}00248     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00249}00249     \_\_ARM\_2D\_OP\_IDX\_ALPHA\_BLENDING,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00250}00250     \_\_ARM\_2D\_OP\_IDX\_ALPHA\_BLENDING\_WITH\_COLOUR\_KEYING,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00251}00251     \_\_ARM\_2D\_OP\_IDX\_ALPHA\_FILL\_COLOUR,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00252}00252     \_\_ARM\_2D\_OP\_IDX\_ALPHA\_FILL\_COLOUR\_WITH\_COLOUR\_KEYING,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00253}00253     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00254}00254     \_\_ARM\_2D\_OP\_IDX\_DRAW\_POINT,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00255}00255     \_\_ARM\_2D\_OP\_IDX\_DRAW\_PATTERN,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00256}00256     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00257}00257     \_\_ARM\_2D\_OP\_IDX\_COLOUR\_FORMAT\_CONVERSION,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00258}00258     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00259}00259     \_\_ARM\_2D\_OP\_IDX\_TRANSFORM,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00260}00260     \textcolor{comment}{//\_\_ARM\_2D\_OP\_IDX\_TRANSFORM\_WITH\_MASKS,                                     //!< todo in v1.xx}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00261}00261     \_\_ARM\_2D\_OP\_IDX\_TRANSFORM\_WITH\_SOURCE\_MASK,                                 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00262}00262     \textcolor{comment}{//\_\_ARM\_2D\_OP\_IDX\_TRANSFORM\_WITH\_TARGET\_MASK,                               //!< todo in v1.xx}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00263}00263     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00264}00264     \_\_ARM\_2D\_OP\_IDX\_TRANSFORM\_WITH\_OPACITY,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00265}00265     \textcolor{comment}{//\_\_ARM\_2D\_OP\_IDX\_TRANSFORM\_WITH\_MASKS\_AND\_OPACITY,                         //!< todo in v1.xx}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00266}00266     \_\_ARM\_2D\_OP\_IDX\_TRANSFORM\_WITH\_SOURCE\_MASK\_AND\_OPACITY,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00267}00267     \textcolor{comment}{//\_\_ARM\_2D\_OP\_IDX\_TRANSFORM\_WITH\_TARGET\_MASK\_AND\_OPACITY,                   //!< todo in v1.xx}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00268}00268     \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ cmsisi-\/2d operation idx end -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00269}00269 \};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00271}00271 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00272}00272 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00273}00273 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\_\_arm\_2d\_sub\_task\_t \_\_arm\_2d\_sub\_task\_t;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00274}00274 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00275}00275 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00276}00276 \textcolor{keyword}{typedef} \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_io\_func\_t(\_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00277}00277 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00278}00278 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\_\_arm\_2d\_low\_level\_io\_t \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00279}00279     \_\_arm\_2d\_io\_func\_t *SW;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00280}00280     \_\_arm\_2d\_io\_func\_t *HW;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00281}00281 \} \_\_arm\_2d\_low\_level\_io\_t;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00282}00282 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00283}00283 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00284}00284 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\_\_arm\_2d\_tile\_param\_t \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00285}00285     \textcolor{keywordtype}{void} *              pBuffer;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00286}00286     int32\_t             nOffset;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00287}00287     int16\_t             iStride;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00288}00288     \mbox{\hyperlink{unionarm__2d__color__info__t}{arm\_2d\_color\_info\_t}} \mbox{\hyperlink{arm__2d__alpha__blending_8h_a913e40ba00cedf57a515027786cac9d1}{tColour}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00289}00289     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00290}00290     uint8\_t             bInvalid            : 1;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00291}00291     uint8\_t             bDerivedResource    : 1;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00292}00292     uint8\_t                                 : 6;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00293}00293     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00294}00294     \mbox{\hyperlink{structarm__2d__region__t}{arm\_2d\_region\_t}}     tValidRegion;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00295}00295 \} \_\_arm\_2d\_tile\_param\_t;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00296}00296 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00297}00297 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\_\_arm\_2d\_param\_copy\_t \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00298}00298     \_\_arm\_2d\_tile\_param\_t tSource;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00299}00299     \_\_arm\_2d\_tile\_param\_t tTarget;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00300}00300     \mbox{\hyperlink{structarm__2d__size__t}{arm\_2d\_size\_t}}       tCopySize;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00301}00301 \} \_\_arm\_2d\_param\_copy\_t;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00302}00302 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00303}00303 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\_\_arm\_2d\_param\_copy\_msk\_t \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00304}00304     implement(\_\_arm\_2d\_param\_copy\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00305}00305     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00306}00306     \_\_arm\_2d\_tile\_param\_t tSrcMask;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00307}00307     \_\_arm\_2d\_tile\_param\_t tDesMask;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00308}00308 \} \_\_arm\_2d\_param\_copy\_msk\_t;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00309}00309 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00310}00310 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\_\_arm\_2d\_param\_copy\_orig\_t \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00311}00311     implement(\_\_arm\_2d\_param\_copy\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00312}00312     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00313}00313     \_\_arm\_2d\_tile\_param\_t tOrigin;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00314}00314     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00315}00315 \} \_\_arm\_2d\_param\_copy\_orig\_t;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00316}00316 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00317}00317 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\_\_arm\_2d\_param\_copy\_orig\_msk\_t \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00318}00318     implement(\_\_arm\_2d\_param\_copy\_orig\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00319}00319     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00320}00320     \_\_arm\_2d\_tile\_param\_t tOrigMask;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00321}00321     \_\_arm\_2d\_tile\_param\_t tDesMask;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00322}00322     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00323}00323 \} \_\_arm\_2d\_param\_copy\_orig\_msk\_t;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00324}00324 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00325}00325 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\_\_arm\_2d\_param\_fill\_t \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00326}00326     \_\_arm\_2d\_tile\_param\_t tSource;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00327}00327     \_\_arm\_2d\_tile\_param\_t tTarget;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00328}00328 \} \_\_arm\_2d\_param\_fill\_t;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00329}00329 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00330}00330 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\_\_arm\_2d\_param\_fill\_msk\_t \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00331}00331     implement(\_\_arm\_2d\_param\_fill\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00332}00332     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00333}00333     \_\_arm\_2d\_tile\_param\_t tSrcMask;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00334}00334     \_\_arm\_2d\_tile\_param\_t tDesMask;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00335}00335 \} \_\_arm\_2d\_param\_fill\_msk\_t;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00336}00336 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00337}00337 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\_\_arm\_2d\_param\_fill\_orig\_t \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00338}00338     implement(\_\_arm\_2d\_param\_fill\_t);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00339}00339     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00340}00340     \_\_arm\_2d\_tile\_param\_t tOrigin;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00341}00341     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00342}00342 \} \_\_arm\_2d\_param\_fill\_orig\_t;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00343}00343 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00344}00344 \textcolor{keyword}{struct }\_\_arm\_2d\_sub\_task\_t\{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00345}00345 ARM\_PRIVATE(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00346}00346     \_\_arm\_2d\_sub\_task\_t         *ptNext;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00347}00347     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00348}00348     \mbox{\hyperlink{structarm__2d__op__core__t}{arm\_2d\_op\_core\_t}}            *ptOP;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00349}00349     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00350}00350     uint8\_t         chLowLeveIOIndex;                                           }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00351}00351     uint8\_t         bIsCPL              : 1;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00352}00352     uint8\_t                             : 7;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00353}00353     uint16\_t                            : 16;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00354}00354     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00355}00355     \textcolor{keyword}{union }\{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00356}00356         \_\_arm\_2d\_tile\_param\_t           tTileProcess;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00357}00357         }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00358}00358         \_\_arm\_2d\_param\_copy\_t           tCopy;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00359}00359         \_\_arm\_2d\_param\_copy\_msk\_t       tCopyMask;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00360}00360         \_\_arm\_2d\_param\_copy\_orig\_t      tCopyOrig;                              }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00361}00361         \_\_arm\_2d\_param\_copy\_orig\_msk\_t  tCopyOrigMask;                          }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00362}00362         }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00363}00363         \_\_arm\_2d\_param\_fill\_t           tFill;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00364}00364         \_\_arm\_2d\_param\_fill\_msk\_t       tFillMask;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00365}00365         \_\_arm\_2d\_param\_fill\_orig\_t      tFillOrig;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00366}00366     \}Param;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00367}00367 )\};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00368}00368 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00369}00369 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00370}00370 \textcolor{keyword}{struct }\_\_arm\_2d\_op\_control \{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00371}00371 ARM\_PRIVATE(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00372}00372     \_\_arm\_2d\_sub\_task\_t   *ptFreeList;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00373}00373     \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00374}00374         \_\_arm\_2d\_sub\_task\_t   *ptHead;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00375}00375         \_\_arm\_2d\_sub\_task\_t   *ptTail;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00376}00376     \} TaskFIFO;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00377}00377     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00378}00378     \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00379}00379         \mbox{\hyperlink{structarm__2d__op__core__t}{arm\_2d\_op\_core\_t}}   *ptHead;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00380}00380         \mbox{\hyperlink{structarm__2d__op__core__t}{arm\_2d\_op\_core\_t}}   *ptTail;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00381}00381     \} OPFIFO;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00382}00382     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00383}00383     uint16\_t                hwFreeCount;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00384}00384     uint16\_t                hwTaskCount;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00385}00385     uint16\_t                hwBookCount;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00386}00386     uint16\_t                            : 16;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00387}00387     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00388}00388     \mbox{\hyperlink{structarm__2d__tile__t}{arm\_2d\_tile\_t}}           *ptDefaultFrameBuffer;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00389}00389     }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00390}00390     \textcolor{keyword}{union }\{}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00391}00391         \mbox{\hyperlink{structarm__2d__op__t}{arm\_2d\_op\_t}}                         tBasic;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00392}00392         \mbox{\hyperlink{structarm__2d__op__fill__cl__t}{arm\_2d\_op\_fill\_cl\_t}}                 tFillColour;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00393}00393         \mbox{\hyperlink{structarm__2d__op__fill__cl__msk__t}{arm\_2d\_op\_fill\_cl\_msk\_t}}             tFillColourMask;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00394}00394         \mbox{\hyperlink{structarm__2d__op__fill__cl__opc__t}{arm\_2d\_op\_fill\_cl\_opc\_t}}             tFillColourOpacity;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00395}00395         \mbox{\hyperlink{structarm__2d__op__src__t}{arm\_2d\_op\_src\_t}}                     tWithSource;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00396}00396         }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00397}00397         \mbox{\hyperlink{structarm__2d__op__alpha__t}{arm\_2d\_op\_alpha\_t}}                   tAlpha;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00398}00398         \mbox{\hyperlink{structarm__2d__op__alpha__cl__key__t}{arm\_2d\_op\_alpha\_cl\_key\_t}}            tAlphaColourKeying;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00399}00399         \mbox{\hyperlink{structarm__2d__op__alpha__fill__cl__msk__opc__t}{arm\_2d\_op\_alpha\_fill\_cl\_msk\_opc\_t}}   tAlphaFillColourMaskOpacity;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00400}00400         \mbox{\hyperlink{structarm__2d__op__src__msk__t}{arm\_2d\_op\_cp\_msk\_t}}                  tCopyMasks;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00401}00401         }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00402}00402         \mbox{\hyperlink{structarm__2d__op__drw__patn__t}{arm\_2d\_op\_drw\_patn\_t}}                tDrawPattern;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00403}00403         \mbox{\hyperlink{structarm__2d__op__trans__t}{arm\_2d\_op\_trans\_t}}                   tTransform;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00404}00404         \mbox{\hyperlink{structarm__2d__op__trans__opa__t}{arm\_2d\_op\_trans\_opa\_t}}               tRotateOpacity;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00405}00405         }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00406}00406         \mbox{\hyperlink{structarm__2d__op__msk__t}{arm\_2d\_op\_msk\_t}}                     tBasicMask;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00407}00407         \mbox{\hyperlink{structarm__2d__op__src__msk__t}{arm\_2d\_op\_src\_msk\_t}}                 tSourceMask;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00408}00408         \mbox{\hyperlink{structarm__2d__op__src__orig__msk__t}{arm\_2d\_op\_src\_orig\_msk\_t}}            tSourceOrigMask;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00409}00409     \} DefaultOP;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00410}00410 )\};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00411}00411 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00412}00412 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00413}00413 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00414}00414 \textcolor{comment}{/*============================ GLOBAL VARIABLES ==============================*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00415}00415 \textcolor{keyword}{extern} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00416}00416 \textcolor{keyword}{const} \textcolor{keyword}{struct }\_\_arm\_2d\_io\_table \_\_ARM\_2D\_IO\_TABLE;}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00417}00417 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00418}00418 \textcolor{keyword}{extern} \textcolor{keyword}{struct }\_\_arm\_2d\_op\_control \mbox{\hyperlink{____arm__2d__impl_8h_ac44741102f43d22321f1a8fae52be6ce}{ARM\_2D\_CTRL}};}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00419}00419 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00420}00420 \textcolor{comment}{/*============================ PROTOTYPES ====================================*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00421}00421 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00422}00422 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00423}00423 \textcolor{comment}{ * Pipeline                                                                   *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00424}00424 \textcolor{comment}{ *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00425}00425 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00426}00426 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_op\_invoke(\mbox{\hyperlink{structarm__2d__op__core__t}{arm\_2d\_op\_core\_t}} *ptOP);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00427}00427 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00428}00428 \textcolor{keyword}{extern} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00433}00433 \textcolor{keywordtype}{bool} \_\_arm\_2d\_op\_acquire(\mbox{\hyperlink{structarm__2d__op__core__t}{arm\_2d\_op\_core\_t}} *ptOP);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00434}00434 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00438}00438 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00439}00439 \textcolor{keywordtype}{void} \_\_arm\_2d\_notify\_sub\_task\_cpl(\_\_arm\_2d\_sub\_task\_t *ptTask, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00440}00440                                     \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} tResult,}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00441}00441                                     \textcolor{keywordtype}{bool} bFromHW);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00442}00442 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00443}00443 \textcolor{keyword}{extern} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00444}00444 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_op\_frontend\_op\_decoder(\mbox{\hyperlink{structarm__2d__op__core__t}{arm\_2d\_op\_core\_t}} *ptThis);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00445}00445 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00446}00446 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00447}00447 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00448}00448 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_op\_depose(\mbox{\hyperlink{structarm__2d__op__core__t}{arm\_2d\_op\_core\_t}} *ptThis, }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00449}00449                                 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} tResult);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00450}00450 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00451}00451 \textcolor{comment}{ * Utilities                                                                  *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00452}00452 \textcolor{comment}{ *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00453}00453 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00454}00454 \_\_arm\_2d\_point\_adj\_alpha\_t }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00455}00455 \_\_arm\_2d\_point\_get\_adjacent\_alpha\_fp(\mbox{\hyperlink{structarm__2d__point__float__t}{arm\_2d\_point\_float\_t}} *\mbox{\hyperlink{arm__2d__tile_8h_a3b6b3df8fa64632f584b6ebb21852f3a}{ptPoint}});}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00456}00456 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00457}00457 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00458}00458 \_\_arm\_2d\_point\_adj\_alpha\_t }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00459}00459 \_\_arm\_2d\_point\_get\_adjacent\_alpha\_q16(\mbox{\hyperlink{structarm__2d__point__fx__t}{arm\_2d\_point\_fx\_t}} *\mbox{\hyperlink{arm__2d__tile_8h_a3b6b3df8fa64632f584b6ebb21852f3a}{ptPoint}});}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00460}00460 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00461}00461 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00462}00462 \mbox{\hyperlink{arm__2d__types_8h_a27a24a896295488772e6d847c790fd1c}{arm\_2d\_err\_t}}  \_\_arm\_mask\_validate(  \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__tile__t}{arm\_2d\_tile\_t}} *\mbox{\hyperlink{arm__2d__alpha__blending_8h_a3993bb94d25fad259236f86ef3034fe4}{ptSource}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00463}00463                                     \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__tile__t}{arm\_2d\_tile\_t}} *\mbox{\hyperlink{arm__2d__alpha__blending_8h_a94acddd53ee4543d4c0ddf34abd52f05}{ptSrcMask}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00464}00464                                     \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__tile__t}{arm\_2d\_tile\_t}} *\mbox{\hyperlink{arm__2d__alpha__blending_8h_a46ba63bb042a2ef13c3295664d0a8a00}{ptTarget}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00465}00465                                     \textcolor{keyword}{const} \mbox{\hyperlink{structarm__2d__tile__t}{arm\_2d\_tile\_t}} *\mbox{\hyperlink{arm__2d__alpha__blending_8h_aeeb5bc6cd024fba5ac2bff8fe0ab939a}{ptDesMask}},}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00466}00466                                     uint32\_t \mbox{\hyperlink{arm__2d__alpha__blending_8h_a2e5a85ec501d28af73a7b6d43828b7f0}{wMode}});}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00467}00467 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00468}00468 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00469}00469 \textcolor{comment}{ * Default Software Implementations                                           *}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00470}00470 \textcolor{comment}{ *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00471}00471         }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00472}00472 \textcolor{keyword}{extern} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00473}00473 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_sw\_draw\_point(\_\_arm\_2d\_sub\_task\_t *ptTask);      }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00474}00474 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00475}00475 \textcolor{keyword}{extern} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00476}00476 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_c8bit\_sw\_draw\_pattern( \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00477}00477 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00478}00478 \textcolor{keyword}{extern} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00479}00479 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb16\_sw\_draw\_pattern( \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00480}00480 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00481}00481 \textcolor{keyword}{extern} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00482}00482 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb32\_sw\_draw\_pattern( \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00483}00483 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00484}00484 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00485}00485 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_c8bit\_sw\_tile\_fill( \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00486}00486 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00487}00487 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00488}00488 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb16\_sw\_tile\_fill( \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00489}00489 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00490}00490 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00491}00491 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb32\_sw\_tile\_fill( \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00492}00492 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00493}00493 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00494}00494 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_c8bit\_sw\_tile\_copy(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00495}00495 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00496}00496 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00497}00497 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb16\_sw\_tile\_copy(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00498}00498 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00499}00499 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00500}00500 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb32\_sw\_tile\_copy(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00501}00501 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00502}00502 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00503}00503 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_c8bit\_sw\_tile\_copy\_only(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00504}00504 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00505}00505 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00506}00506 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb16\_sw\_tile\_copy\_only(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00507}00507 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00508}00508 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00509}00509 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb32\_sw\_tile\_copy\_only(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00510}00510 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00511}00511 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00512}00512 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_c8bit\_sw\_tile\_copy\_x\_mirror(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00513}00513 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00514}00514 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00515}00515 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb16\_sw\_tile\_copy\_x\_mirror(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00516}00516 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00517}00517 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00518}00518 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb32\_sw\_tile\_copy\_x\_mirror(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00519}00519 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00520}00520 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00521}00521 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_c8bit\_sw\_tile\_copy\_y\_mirror(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00522}00522 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00523}00523 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00524}00524 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb16\_sw\_tile\_copy\_y\_mirror(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00525}00525 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00526}00526 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00527}00527 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb32\_sw\_tile\_copy\_y\_mirror(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00528}00528 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00529}00529 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00530}00530 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_c8bit\_sw\_tile\_copy\_xy\_mirror(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00531}00531 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00532}00532 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00533}00533 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb16\_sw\_tile\_copy\_xy\_mirror(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00534}00534 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00535}00535 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00536}00536 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb32\_sw\_tile\_copy\_xy\_mirror(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00537}00537 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00538}00538 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00539}00539 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_c8bit\_sw\_tile\_fill\_only(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00540}00540 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00541}00541 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00542}00542 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb16\_sw\_tile\_fill\_only(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00543}00543 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00544}00544 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00545}00545 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb32\_sw\_tile\_fill\_only(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00546}00546 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00547}00547 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00548}00548 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_c8bit\_sw\_tile\_fill\_x\_mirror(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00549}00549 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00550}00550 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00551}00551 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb16\_sw\_tile\_fill\_x\_mirror(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00552}00552 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00553}00553 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00554}00554 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb32\_sw\_tile\_fill\_x\_mirror(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00555}00555 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00556}00556 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00557}00557 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_c8bit\_sw\_tile\_fill\_y\_mirror(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00558}00558 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00559}00559 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00560}00560 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb16\_sw\_tile\_fill\_y\_mirror(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00561}00561 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00562}00562 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00563}00563 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb32\_sw\_tile\_fill\_y\_mirror(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00564}00564 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00565}00565 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00566}00566 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_c8bit\_sw\_tile\_fill\_xy\_mirror(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00567}00567 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00568}00568 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00569}00569 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb16\_sw\_tile\_fill\_xy\_mirror(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00570}00570 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00571}00571 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00572}00572 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb32\_sw\_tile\_fill\_xy\_mirror(  \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00573}00573 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00574}00574 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00575}00575 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_gray8\_sw\_tile\_copy\_with\_masks(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00576}00576                                                 \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00577}00577 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00578}00578 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00579}00579 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_gray8\_sw\_tile\_fill\_with\_masks(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00580}00580                                                 \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00581}00581 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00582}00582 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00583}00583 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb565\_sw\_tile\_copy\_with\_masks(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00584}00584                                                 \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00585}00585 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00586}00586 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00587}00587 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb565\_sw\_tile\_fill\_with\_masks(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00588}00588                                                 \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00589}00589 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00590}00590 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00591}00591 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_cccn888\_sw\_tile\_copy\_with\_masks(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00592}00592                                                 \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00593}00593 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00594}00594 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00595}00595 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_cccn888\_sw\_tile\_fill\_with\_masks(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00596}00596                                                 \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00597}00597 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00598}00598 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00599}00599 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_gray8\_sw\_tile\_copy\_with\_src\_mask(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00600}00600                                                 \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00601}00601 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00602}00602 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00603}00603 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_gray8\_sw\_tile\_fill\_with\_src\_mask(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00604}00604                                                 \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00605}00605 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00606}00606 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00607}00607 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb565\_sw\_tile\_copy\_with\_src\_mask(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00608}00608                                                 \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00609}00609 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00610}00610 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00611}00611 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb565\_sw\_tile\_fill\_with\_src\_mask(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00612}00612                                                 \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00613}00613 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00614}00614 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00615}00615 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_cccn888\_sw\_tile\_copy\_with\_src\_mask(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00616}00616                                                 \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00617}00617 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00618}00618 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00619}00619 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_cccn888\_sw\_tile\_fill\_with\_src\_mask(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00620}00620                                                 \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00621}00621 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00622}00622 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00623}00623 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00624}00624 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_gray8\_sw\_tile\_copy\_with\_des\_mask(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00625}00625                                                 \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00626}00626 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00627}00627 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00628}00628 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_gray8\_sw\_tile\_fill\_with\_des\_mask(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00629}00629                                                 \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00630}00630 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00631}00631 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00632}00632 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb565\_sw\_tile\_copy\_with\_des\_mask(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00633}00633                                                 \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00634}00634 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00635}00635 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00636}00636 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb565\_sw\_tile\_fill\_with\_des\_mask(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00637}00637                                                 \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00638}00638 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00639}00639 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00640}00640 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_cccn888\_sw\_tile\_copy\_with\_des\_mask(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00641}00641                                                 \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00642}00642 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00643}00643 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00644}00644 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_cccn888\_sw\_tile\_fill\_with\_des\_mask(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00645}00645                                                 \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00646}00646                                                 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00647}00647 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00648}00648 \textcolor{keyword}{extern} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00649}00649 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_c8bit\_sw\_tile\_copy\_with\_colour\_keying(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00650}00650                                                 \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00651}00651 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00652}00652 \textcolor{keyword}{extern} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00653}00653 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb16\_sw\_tile\_copy\_with\_colour\_keying(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00654}00654                                         \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00655}00655                            }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00656}00656 \textcolor{keyword}{extern} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00657}00657 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb32\_sw\_tile\_copy\_with\_colour\_keying(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00658}00658                                         \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00659}00659                            }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00660}00660 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00661}00661 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_c8bit\_sw\_tile\_fill\_with\_colour\_keying( }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00662}00662                                         \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00663}00663 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00664}00664 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00665}00665 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb16\_sw\_tile\_fill\_with\_colour\_keying( }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00666}00666                                         \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00667}00667 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00668}00668 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00669}00669 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb32\_sw\_tile\_fill\_with\_colour\_keying( }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00670}00670                                         \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00671}00671        }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00672}00672 \textcolor{keyword}{extern} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00673}00673 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_c8bit\_sw\_colour\_filling(\_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00674}00674        }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00675}00675 \textcolor{keyword}{extern} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00676}00676 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb16\_sw\_colour\_filling(\_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00677}00677 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00678}00678 \textcolor{keyword}{extern} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00679}00679 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb32\_sw\_colour\_filling(\_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00680}00680 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00681}00681 \textcolor{keyword}{extern} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00682}00682 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_gray8\_sw\_colour\_filling\_with\_mask(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00683}00683                                         \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00684}00684 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00685}00685 \textcolor{keyword}{extern} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00686}00686 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb565\_sw\_colour\_filling\_with\_mask(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00687}00687                                         \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00688}00688 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00689}00689 \textcolor{keyword}{extern} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00690}00690 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_cccn888\_sw\_colour\_filling\_with\_mask(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00691}00691                                         \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00692}00692 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00693}00693 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00694}00694 \textcolor{keyword}{extern} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00695}00695 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_gray8\_sw\_colour\_filling\_with\_mask\_and\_opacity(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00696}00696                                         \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00697}00697 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00698}00698 \textcolor{keyword}{extern} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00699}00699 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb565\_sw\_colour\_filling\_with\_mask\_and\_opacity(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00700}00700                                         \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00701}00701 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00702}00702 \textcolor{keyword}{extern} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00703}00703 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_cccn888\_sw\_colour\_filling\_with\_mask\_and\_opacity(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00704}00704                                         \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00705}00705 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00706}00706 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00707}00707 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_gray8\_sw\_alpha\_blending(\_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00708}00708 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00709}00709 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00710}00710 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb565\_sw\_alpha\_blending(\_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00711}00711 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00712}00712 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00713}00713 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_cccn888\_sw\_alpha\_blending(\_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00714}00714  }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00715}00715 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00716}00716 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00717}00717 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_gray8\_sw\_alpha\_blending\_with\_colour\_keying(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00718}00718                                         \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00719}00719                                         }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00720}00720 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00721}00721 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb565\_sw\_alpha\_blending\_with\_colour\_keying(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00722}00722                                         \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00723}00723                                         }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00724}00724 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00725}00725 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_cccn888\_sw\_alpha\_blending\_with\_colour\_keying(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00726}00726                                         \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00727}00727 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00728}00728 \textcolor{keyword}{extern} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00729}00729 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_gray8\_sw\_colour\_filling\_with\_opacity(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00730}00730                                         \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00731}00731 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00732}00732 \textcolor{keyword}{extern} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00733}00733 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb565\_sw\_colour\_filling\_with\_opacity(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00734}00734                                         \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00735}00735 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00736}00736 \textcolor{keyword}{extern} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00737}00737 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_cccn888\_sw\_colour\_filling\_with\_opacity(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00738}00738                                         \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00739}00739 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00740}00740 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00741}00741 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_sw\_convert\_colour\_to\_rgb565(  }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00742}00742                                     \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00743}00743 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00744}00744 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00745}00745 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_sw\_convert\_colour\_to\_rgb888(  }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00746}00746                                     \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00747}00747 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00748}00748 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00749}00749 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_gray8\_sw\_transform(\_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00750}00750 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00751}00751 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00752}00752 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_rgb565\_sw\_transform(\_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00753}00753 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00754}00754 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00755}00755 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} \_\_arm\_2d\_cccn888\_sw\_transform(\_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00756}00756 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00757}00757 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00758}00758 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00759}00759 \_\_arm\_2d\_gray8\_sw\_transform\_with\_alpha(\_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00760}00760 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00761}00761 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00762}00762 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00763}00763 \_\_arm\_2d\_rgb565\_sw\_transform\_with\_alpha(\_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00764}00764 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00765}00765 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00766}00766 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00767}00767 \_\_arm\_2d\_cccn888\_sw\_transform\_with\_alpha(\_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00768}00768 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00769}00769 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00770}00770 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00771}00771 \_\_arm\_2d\_gray8\_sw\_transform\_with\_src\_mask(\_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00772}00772 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00773}00773 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00774}00774 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00775}00775 \_\_arm\_2d\_rgb565\_sw\_transform\_with\_src\_mask(\_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00776}00776 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00777}00777 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00778}00778 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00779}00779 \_\_arm\_2d\_cccn888\_sw\_transform\_with\_src\_mask(\_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00780}00780 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00781}00781 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00782}00782 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00783}00783 \_\_arm\_2d\_gray8\_sw\_transform\_with\_src\_mask\_and\_opacity(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00784}00784                                                 \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00785}00785 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00786}00786 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00787}00787 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00788}00788 \_\_arm\_2d\_rgb565\_sw\_transform\_with\_src\_mask\_and\_opacity(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00789}00789                                                 \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00790}00790 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00791}00791 \textcolor{keyword}{extern}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00792}00792 \mbox{\hyperlink{arm__2d__types_8h_a373f79d09c0d15653ca46ea08e0377fc}{arm\_fsm\_rt\_t}} }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00793}00793 \_\_arm\_2d\_cccn888\_sw\_transform\_with\_src\_mask\_and\_opacity(}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00794}00794                                                 \_\_arm\_2d\_sub\_task\_t *ptTask);}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00795}00795 \textcolor{comment}{/*========================== POST INCLUDES ===================================*/}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00796}00796 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{____arm__2d__direct_8h}{\_\_arm\_2d\_direct.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00797}00797 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00798}00798 \textcolor{preprocessor}{\#if defined(\_\_clang\_\_)}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00799}00799 \textcolor{preprocessor}{\#   pragma clang diagnostic pop}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00800}00800 \textcolor{preprocessor}{\#elif \_\_IS\_COMPILER\_ARM\_COMPILER\_5\_\_}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00801}00801 \textcolor{preprocessor}{\#   pragma diag\_warning 174,177,188,68,513,144,64}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00802}00802 \textcolor{preprocessor}{\#elif \_\_IS\_COMPILER\_IAR\_\_}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00803}00803 \textcolor{preprocessor}{\#   pragma diag\_warning=pe111}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00804}00804 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00805}00805 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00806}00806 \textcolor{preprocessor}{\#ifdef   \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00807}00807 \}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00808}00808 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00809}00809 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00810}00810 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00811}00811 }
+\DoxyCodeLine{\Hypertarget{____arm__2d__impl_8h_source_l00812}00812 }
+
+\end{DoxyCode}
