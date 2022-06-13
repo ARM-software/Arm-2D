@@ -1,26 +1,19 @@
 # README
 
-**NOTE:** 
-
-1. This library is a research project used to explore and demonstrate the possibilities of delivering modernized graphic user interfaces using low-cost and resource constraint micro-controllers. It's not a committed product yet from Arm, and the quality of the service is not validated with a sophisticated test suit but some functional tests. 
-2.  The library name, i.e. **Arm-2D**, is a temporary term and might be subject to change in the future. The term "the Library" used in this documents refers to the **Arm-2D** library unless state otherwise. 
 
 
+## Branch Summary
 
-## The Purpose of Branches In This Repository
-
-| Branch Name                               | Description                                                  | Note                                                         |
-| ----------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ***master/main***                         | The main branch of the repository. It contains the Arm-2D library, examples, templates and a helper library. |                                                              |
-| ***main-arm-2d-developing***              | The development branch of the ***master/main*** branch.      | It will be merged into ***main*** branch.                    |
-| ***main-arm-2d-more-examples***           | It has the same content as the ***master/main*** branch with additional examples. <br />The purpose of this branch is **adding more examples** while **keeping the main branch simple and small**. |                                                              |
-| ***main-arm-2d-more-example-developing*** | It is the development branch of the ***main-arm-2d-more-examples-developing*** branch. | The ***main*** branch is merged into this one which is merged into the ***main-arm-2d-more-examples*** branch later. |
+| Branch           | Description                                                  | Note                                      |
+| ---------------- | ------------------------------------------------------------ | ----------------------------------------- |
+| ***main***       | The main branch of the repository. It contains the Arm-2D library, examples, templates and a helper library. |                                           |
+| ***developing*** | The development branch of the ***master/main*** branch.      | It will be merged into ***main*** branch. |
 
 
 
-## Features of the Arm-2D Library
+## Features
 
-#### In this release ( ver1.0.0-preview-beta1)
+#### In this release ( ver1.0.0-preview-beta2)
 
 The Arm-2D library provides **Low-Level 2D Image Processing Services** that are mainly used in **Deep Embedded Display system**. The supported features include but not limited to:
 
@@ -138,12 +131,12 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 
 #### 1.5.1 Summary
 
-| Projects                           | Description                                                  | Folder                                      | Note                        |
-| ---------------------------------- | ------------------------------------------------------------ | ------------------------------------------- | --------------------------- |
-| benchmark                          | It is an **ALL-IN-ONE** example that demonstrates almost all features provided by Arm-2D. By setting different PFB sizes, you can evaluate the 2D image processing capability for the target system. | examples/benchmark                          | Can be used as a benchmark. |
-| watch_panel                        | It is a dedicated example of a smart-watch-like panel. A pointer and two gears rotate at different angular velocities on a translucent watch panel with a dynamic background. | examples/watch_panel                        | Can be used as a benchmark  |
-| \[template\]\[bare-metal\]\[pfb\]  | It is a project template for the bare-metal environment.     | examples/\[template\]\[bare-metal\]\[pfb\]  | Project Template            |
-| \[template\]\[cmsis-rtos2\]\[pfb\] | It is a project template for the RTOS environment, which use CMSIS-RTO2 as an example to show how Arm-2D can work with an RTOS. | examples/\[template\]\[cmsis-rtos2\]\[pfb\] | Project Template            |
+| Projects                           | Description                                                  | Folder                                      | Note                      |
+| ---------------------------------- | ------------------------------------------------------------ | ------------------------------------------- | ------------------------- |
+| benchmark                          | It is an **ALL-IN-ONE** example that demonstrates almost all features provided by Arm-2D. By setting different PFB sizes, you can evaluate the 2D image processing capability for the target system. | examples/benchmark                          | Can be used as benchmark. |
+| watch_panel                        | It is a dedicated example of a smart-watch-like panel. A pointer and two gears rotate at different angular velocities on a translucent watch panel with a dynamic background. | examples/watch_panel                        | Can be used as benchmark  |
+| \[template\]\[bare-metal\]\[pfb\]  | It is a project template for the bare-metal environment.     | examples/\[template\]\[bare-metal\]\[pfb\]  | Project Template          |
+| \[template\]\[cmsis-rtos2\]\[pfb\] | It is a project template for the RTOS environment, which use CMSIS-RTO2 as an example to show how Arm-2D can work with an RTOS. | examples/\[template\]\[cmsis-rtos2\]\[pfb\] | Project Template          |
 
 
 
@@ -154,8 +147,8 @@ There is no public 2D image processing benchmark available for microcontrollers.
 - **Choose the widely used algorithms in embedded GUI as the body of the benchmark**
   - Alpha-blending
   - Colour-Keying
-  - Image Copy
-  - Texture Paving
+  - Blit
+  - Tiling
   - Rotation
   - Mirroring
   - Masking
@@ -193,14 +186,15 @@ There is no public 2D image processing benchmark available for microcontrollers.
 
 | Folder and File                  | Type    | Description                                                  |
 | :------------------------------- | ------- | ------------------------------------------------------------ |
-| Library                          | Folder  | This folder contains the source files and header files of the library. |
-| Documents                        | Folder  | This folder contains all the documents.                      |
-| Examples                         | Folder  | This folder contains all the example projects.               |
+| **Library**                      | Folder  | This folder contains the source files and header files of the library. |
+| **Helper**                       | Folder  | This folder contains the source files and header files of helper functions / services. |
+| documents                        | Folder  | This folder contains all the documents.                      |
+| examples                         | Folder  | This folder contains all the example code / projects.        |
 | README                           | .md     | The README.md you are currently reading.                     |
 | how_to_deploy_the_arm_2d_library | .md     | A step by step guidance helping you to deploy the Arm-2D library to your projects. |
 | LICENSE                          | License | The Apache 2.0 License                                       |
 | tools                            | Folder  | This folder contains some useful utilities for using the library. For example, img2c.py is a python script that convert a specified picture into the tile data structure. |
-| cmsis-pack                       | Folder  | This folder contains the pdsc file and pre-compiled CMSIS-Packs. |
+| cmsis-pack                       | Folder  | This folder contains the pdsc file and a pre-compiled CMSIS-Pack. |
 
 
 
@@ -423,19 +417,18 @@ def_low_lv_io(__ARM_2D_IO_ROTATE_RGB888,
 
 ## 6 Feedback
 
-As mentioned at the beginning, the purpose of this project is to explore and demonstrate the possibilities of delivering smart-phone modern graphic user interface using low-cost and resource constraint micro-controllers. We expect that this arm-2d library could inspire more similar initiatives and engineering practices. Hence, your feedback and thoughts are precious to us. On the other hand, although this is a research project, with your help and support, it can be promoted as a formal product similar to other open-source projects delivered by Arm. 
+As mentioned at the beginning, the purpose of this project is to explore and demonstrate the possibilities of delivering smart-phone modern graphic user interface using low-cost and resource constraint micro-controllers. We expect that this arm-2d library could inspire more similar initiatives and engineering practices. Hence, your feedback and thoughts are precious to us. 
 
-If you want to spend some time to try the library and leave some thoughts, please feel free to raise issues and kindly provide us with some critical information such as:
+If you want to spend some time and try the library, please feel free to leave your thoughts. It would be nice to have following information:
 
-- The target application and industry segment which you want to introduce a GUI using Cortex-M processors
-- The constraint of your platform, such as the size of the RAM, ROM, system frequency, the average power consumption etc.
+- The target application and/or industry segment which you want to introduce a GUI using Cortex-M processors
+- The resources of your platform, such as the size of the RAM, ROM, system frequency, the average power consumption etc.
 - The LCD resolution and target frame-rate (FPS)
-- Algorithms that you like and don't like
-- Algorithms that are missing in the library and why you recommend them.
-- What kind of device do you use? 
+- Algorithms that you find most useful but missing
+- About the device
   - Does it contain HW accelerators for 2D image processing? 
-  - What kind of features/functionalities does the accelerator provide?
-  - Does the HW accelerator contain features that arm-2d currently doesn't support?
+  - What is the feature set of this 2D accelerator?
+  - Does it contain features that are currently missing in this library?
 - Any other thoughts or suggestions.
 
 
@@ -444,4 +437,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-20-May-2022
+June 2022
