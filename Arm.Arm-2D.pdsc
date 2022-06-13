@@ -3,7 +3,7 @@
 <package schemaVersion="1.4" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="PACK.xsd">
   <vendor>Arm</vendor>
   <name>Arm-2D</name>
-  <description>An 2D graphic library optimized for Cortex-M processors.</description>
+  <description>A 2D graphic library optimized for Cortex-M processors.</description>
   <url>https://raw.githubusercontent.com/ARM-software/Arm-2D/developing/cmsis-pack/</url>
   <supportContact>https://github.com/ARM-software/Arm-2D/issues</supportContact>
   <license>LICENSE</license>
