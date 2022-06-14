@@ -21,8 +21,8 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        17. May 2022
- * $Revision:    V.1.1.0
+ * $Date:        14. June 2022
+ * $Revision:    V.1.1.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -2602,7 +2602,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_ONLY_C8BIT = {
         
         .LowLevelIO = {
             .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_ONLY_C8BIT),
-            .ptCopyLike = NULL,
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_ONLY_C8BIT),
         },
     },
 };
@@ -2620,7 +2620,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_ONLY_RGB16 = {
         
         .LowLevelIO = {
             .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_ONLY_RGB16),
-            .ptCopyLike = NULL,
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_ONLY_RGB16),
         },
     },
 };
@@ -2638,7 +2638,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_ONLY_RGB32 = {
         
         .LowLevelIO = {
             .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_ONLY_RGB32),
-            .ptCopyLike = NULL,
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_ONLY_RGB32),
         },
     },
 };
@@ -2656,7 +2656,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_X_MIRROR_C8BIT = {
         
         .LowLevelIO = {
             .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_X_MIRROR_C8BIT),
-            .ptCopyLike = NULL,
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_X_MIRROR_C8BIT),
         },
     },
 };
@@ -2674,7 +2674,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_X_MIRROR_RGB16 = {
         
         .LowLevelIO = {
             .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_X_MIRROR_RGB16),
-            .ptCopyLike = NULL,
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_X_MIRROR_RGB16),
         },
     },
 };
@@ -2692,7 +2692,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_X_MIRROR_RGB32 = {
         
         .LowLevelIO = {
             .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_X_MIRROR_RGB32),
-            .ptCopyLike = NULL,
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_X_MIRROR_RGB32),
         },
     },
 };
@@ -2711,7 +2711,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_Y_MIRROR_C8BIT = {
         
         .LowLevelIO = {
             .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_Y_MIRROR_C8BIT),
-            .ptCopyLike = NULL,
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_Y_MIRROR_C8BIT),
         },
     },
 };
@@ -2729,7 +2729,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_Y_MIRROR_RGB16 = {
         
         .LowLevelIO = {
             .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_Y_MIRROR_RGB16),
-            .ptCopyLike = NULL,
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_Y_MIRROR_RGB16),
         },
     },
 };
@@ -2747,7 +2747,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_Y_MIRROR_RGB32 = {
         
         .LowLevelIO = {
             .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_Y_MIRROR_RGB32),
-            .ptCopyLike = NULL,
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_Y_MIRROR_RGB32),
         },
     },
 };
@@ -2765,7 +2765,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_XY_MIRROR_C8BIT = {
         
         .LowLevelIO = {
             .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_XY_MIRROR_C8BIT),
-            .ptCopyLike = NULL,
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_XY_MIRROR_C8BIT),
         },
     },
 };
@@ -2783,7 +2783,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_XY_MIRROR_RGB16 = {
         
         .LowLevelIO = {
             .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_XY_MIRROR_RGB16),
-            .ptCopyLike = NULL,
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_XY_MIRROR_RGB16),
         },
     },
 };
@@ -2801,7 +2801,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_XY_MIRROR_RGB32 = {
         
         .LowLevelIO = {
             .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_XY_MIRROR_RGB32),
-            .ptCopyLike = NULL,
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_XY_MIRROR_RGB32),
         },
     },
 };
