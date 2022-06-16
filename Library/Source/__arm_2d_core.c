@@ -21,8 +21,8 @@
  * Title:        __arm-2d_core.c
  * Description:  Basic Tile operations
  *
- * $Date:        31. May 2022
- * $Revision:    V.1.0.3
+ * $Date:        16. June 2022
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -518,7 +518,7 @@ static void __arm_2d_source_side_tile_mirror_preprocess(
 
 ARM_NONNULL(1,2)
 static
-arm_fsm_rt_t __arm_2d_big_pixel_tile_pave(  arm_2d_op_cp_t *ptThis,
+arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
                                             const arm_2d_tile_t *ptSource,
                                             const arm_2d_tile_t *ptSourceMask,
                                             const arm_2d_tile_t *ptTarget,
@@ -628,7 +628,6 @@ arm_fsm_rt_t __arm_2d_big_pixel_tile_pave(  arm_2d_op_cp_t *ptThis,
                         = tTargetTileParam.tValidRegion.tSize.iWidth 
                         - tTempRegion.tSize.iWidth;
                 
-                #if 0 //! no use for now
                     tTempRegion.tLocation.iY 
                         = tTargetTileParam.tValidRegion.tLocation.iY 
                         - tTempRegion.tLocation.iY;
@@ -636,12 +635,13 @@ arm_fsm_rt_t __arm_2d_big_pixel_tile_pave(  arm_2d_op_cp_t *ptThis,
                     tTempRegion.tSize.iHeight
                         = tTargetTileParam.tValidRegion.tSize.iHeight 
                         - tTempRegion.tSize.iHeight;
-                #endif
                 
                     arm_2d_region_t tNewTargetMaskRegion = ptTargetMask->tRegion;
                 
                     tNewTargetMaskRegion.tLocation.iX += tTempRegion.tLocation.iX;
+                    tNewTargetMaskRegion.tLocation.iY += tTempRegion.tLocation.iY;
                     tNewTargetMaskRegion.tSize.iWidth += tTempRegion.tSize.iWidth;
+                    tNewTargetMaskRegion.tSize.iHeight += tTempRegion.tSize.iHeight;
                     
                 
                     ptTargetMask = arm_2d_tile_generate_child( 
@@ -705,7 +705,6 @@ arm_fsm_rt_t __arm_2d_big_pixel_tile_pave(  arm_2d_op_cp_t *ptThis,
                         = tTargetTileParam.tValidRegion.tSize.iWidth 
                         - tTempRegion.tSize.iWidth;
                 
-                #if 0 //! no use for now
                     tTempRegion.tLocation.iY 
                         = tTargetTileParam.tValidRegion.tLocation.iY 
                         - tTempRegion.tLocation.iY;
@@ -713,13 +712,13 @@ arm_fsm_rt_t __arm_2d_big_pixel_tile_pave(  arm_2d_op_cp_t *ptThis,
                     tTempRegion.tSize.iHeight
                         = tTargetTileParam.tValidRegion.tSize.iHeight 
                         - tTempRegion.tSize.iHeight;
-                #endif
                 
                     arm_2d_region_t tNewTargetMaskRegion = ptTargetMask->tRegion;
                 
                     tNewTargetMaskRegion.tLocation.iX += tTempRegion.tLocation.iX;
+                    tNewTargetMaskRegion.tLocation.iY += tTempRegion.tLocation.iY;
                     tNewTargetMaskRegion.tSize.iWidth += tTempRegion.tSize.iWidth;
-                    
+                    tNewTargetMaskRegion.tSize.iHeight += tTempRegion.tSize.iHeight;
                 
                     ptTargetMask = arm_2d_tile_generate_child( 
                                             ptTargetMask,
@@ -971,7 +970,7 @@ arm_fsm_rt_t __tile_clipped_pave(
             case ARM_2D_COLOUR_SZ_8BIT:
             case ARM_2D_COLOUR_SZ_16BIT:
             case ARM_2D_COLOUR_SZ_32BIT:
-                tResult = __arm_2d_big_pixel_tile_pave( ptThis, 
+                tResult = __arm_2d_region_calculator( ptThis, 
                                                     &tTempSourceTile, 
                                                     &tTargetTile, 
                                                     wMode);
@@ -982,7 +981,7 @@ arm_fsm_rt_t __tile_clipped_pave(
         }
     #else
         if (OP_CORE.ptOp->Info.Colour.u3ColourSZ >= ARM_2D_COLOUR_SZ_8BIT) {
-            tResult = __arm_2d_big_pixel_tile_pave( ptThis, 
+            tResult = __arm_2d_region_calculator( ptThis, 
                                     &tTempSourceTile, 
                                     NULL,   //!< source mask
                                     &tTargetTile, 
@@ -1015,7 +1014,7 @@ static arm_fsm_rt_t __tile_non_negtive_location_pave(
             case ARM_2D_COLOUR_SZ_8BIT:
             case ARM_2D_COLOUR_SZ_16BIT:
             case ARM_2D_COLOUR_SZ_32BIT:
-                tResult = __arm_2d_big_pixel_tile_pave(ptThis, ptSource, &tTile, wMode);
+                tResult = __arm_2d_region_calculator(ptThis, ptSource, &tTile, wMode);
                 break;
             default:
                 tResult = (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
@@ -1023,7 +1022,7 @@ static arm_fsm_rt_t __tile_non_negtive_location_pave(
         }
     #else
         if (OP_CORE.ptOp->Info.Colour.u3ColourSZ >= ARM_2D_COLOUR_SZ_8BIT) {
-            tResult = __arm_2d_big_pixel_tile_pave( ptThis, 
+            tResult = __arm_2d_region_calculator( ptThis, 
                                                     ptSource, 
                                                     NULL,       //!< source mask
                                                     &tTile, 
@@ -1135,7 +1134,7 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process( arm_2d_op_core_t *ptOP)
             case ARM_2D_COLOUR_SZ_8BIT:
             case ARM_2D_COLOUR_SZ_16BIT:
             case ARM_2D_COLOUR_SZ_32BIT:
-                tResult = __arm_2d_big_pixel_tile_pave(ptThis, ptSource, &tTile, wMode);
+                tResult = __arm_2d_region_calculator(ptThis, ptSource, &tTile, wMode);
                 break;
             default:
                 tResult = (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
@@ -1629,9 +1628,12 @@ void arm_2d_set_user_param(arm_2d_op_core_t *ptOP, uintptr_t pUserParam)
 
 /*! 
    \brief get the status of a specified OP, 
-   \details usually, it is used after calling arm_2d_op_wait_async(). 
+   \param ptOP the address of the target OP (NULL means using the default OP)
+   \return arm_2d_op_status_t the operation status
+ */
+/*
+    usually, it is used after calling arm_2d_op_wait_async(). 
     E.g.
-    \code
     //! wait for previous operation complete
     do {
         arm_2d_op_wait_async();
@@ -1643,9 +1645,6 @@ void arm_2d_set_user_param(arm_2d_op_core_t *ptOP, uintptr_t pUserParam)
             break;
         }
     } while(true);
-    \endcode
-    \param ptOP the address of the target OP (NULL means using the default OP)
-    \return arm_2d_op_status_t the operation status
  */
 arm_2d_op_status_t arm_2d_get_op_status(arm_2d_op_core_t *ptOP)
 {
