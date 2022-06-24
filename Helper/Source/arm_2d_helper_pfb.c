@@ -141,18 +141,17 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
     memset(ptThis, 0, sizeof(this));
     this.tCFG = *ptCFG;
     
-    if (    (NULL == this.tCFG.Dependency.evtOnDrawing.fnHandler)
-       ||   (NULL == this.tCFG.Dependency.evtOnLowLevelRendering.fnHandler)) {
+    if (NULL == this.tCFG.Dependency.evtOnLowLevelRendering.fnHandler) {
         return ARM_2D_ERR_MISSING_PARAM;
     }
     
-    //! perform validation
+    // perform validation
     do {
         int_fast16_t n = this.tCFG.FrameBuffer.hwPFBNum;
         arm_2d_pfb_t *ptItem = this.tCFG.FrameBuffer.ptPFBs;
         uint32_t wBufferSize = this.tCFG.FrameBuffer.wBufferSize;
         
-        //! handle alignments
+        // handle alignments
         wBufferSize += __alignof__(arm_2d_pfb_t) - 1;
         wBufferSize &= ~(__alignof__(arm_2d_pfb_t) - 1);
         
@@ -164,7 +163,7 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
             return ARM_2D_ERR_INVALID_PARAM;
         }
         
-        //! add PFBs to pool
+        // add PFBs to pool
         do {
             ptItem->tTile = (arm_2d_tile_t) {
                 .tRegion = {
@@ -175,7 +174,7 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
             };
             ARM_LIST_STACK_PUSH(this.Adapter.ptFreeList, ptItem);
             
-            //! update pointer
+            // update pointer
             ptItem = (arm_2d_pfb_t *)(  (uintptr_t)ptItem 
                                      +  wBufferSize
                                      +  sizeof(arm_2d_pfb_t));
@@ -197,7 +196,7 @@ void __arm_2d_helper_swap_rgb16(uint16_t *phwBuffer, uint32_t wSize)
         return ;
     }
     
-    //! aligned (4)
+    // aligned (4)
     assert((((uintptr_t) phwBuffer) & 0x03) == 0);
     
     uint32_t wWords = wSize >> 1;
@@ -232,7 +231,7 @@ void __arm_2d_helper_flush_pfb(arm_2d_helper_pfb_t *ptThis)
     }
 
     if (NULL != ptPFB) {
-        //! call handler
+        // call handler
         (*this.tCFG.Dependency.evtOnLowLevelRendering.fnHandler)(
                         this.tCFG.Dependency.evtOnLowLevelRendering.pTarget,
                         ptPFB,
@@ -267,7 +266,7 @@ void __arm_2d_helper_low_level_rendering(arm_2d_helper_pfb_t *ptThis)
     assert(NULL != this.tCFG.Dependency.evtOnLowLevelRendering.fnHandler);
     assert(NULL != this.Adapter.ptCurrent);
     
-    //! update location info
+    // update location info
     this.Adapter.ptCurrent->tTile.tRegion.tLocation = (arm_2d_location_t) {
         .iX = this.Adapter.tDrawRegion.tLocation.iX
             + this.Adapter.tTargetRegion.tLocation.iX,
@@ -291,7 +290,7 @@ void __arm_2d_helper_low_level_rendering(arm_2d_helper_pfb_t *ptThis)
 static bool __arm_2d_helper_pfb_get_next_dirty_region(arm_2d_helper_pfb_t *ptThis)
 {
     if (NULL == this.Adapter.ptDirtyRegion) {
-        //! no dirty region list
+        // no dirty region list
         this.Adapter.bFirstIteration = true;
         
         return false;
@@ -300,7 +299,7 @@ static bool __arm_2d_helper_pfb_get_next_dirty_region(arm_2d_helper_pfb_t *ptThi
     this.Adapter.ptDirtyRegion = this.Adapter.ptDirtyRegion->ptNext;
     
     if (NULL == this.Adapter.ptDirtyRegion) {
-        //! reach last item in a chain
+        // reach last item in a chain
         this.Adapter.bFirstIteration = true;
         
         return false;
@@ -312,13 +311,14 @@ static bool __arm_2d_helper_pfb_get_next_dirty_region(arm_2d_helper_pfb_t *ptThi
 }
 
 /*! \brief begin a iteration of drawing and request a frame buffer from 
- *!        low level display driver.
- *! \param ptTargetRegion the address of the target region in the LCD
- *!        passing NULL means we want to draw the whole LCD.
- *! \retval NULL the display driver is not ready
- *! \retval (intptr_t)-1 the display driver want to ignore this drawing 
- *!         (maybe because the target area is out of the LCD)
- *! \retval non-null a tile which contains the (partial) frame buffer
+ *         low level display driver.
+ *  \param[in] ptThis the PFB helper control block
+ *  \param[in] ptTargetRegion the address of the target region in the LCD
+ *         passing NULL means we want to draw the whole LCD.
+ *  \retval NULL the display driver is not ready
+ *  \retval (intptr_t)-1 the display driver want to ignore this drawing 
+ *          (maybe because the target area is out of the LCD)
+ *  \retval non-null a tile which contains the (partial) frame buffer
  */
 static 
 arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
@@ -330,13 +330,11 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
     }
     
     if (NULL == this.Adapter.ptCurrent) {
-        //! no resource left
+        // no resource left
         return NULL;
     }
     arm_2d_tile_t *ptPartialFrameBuffer = &(this.Adapter.ptCurrent->tTile);
-    
-    
-    
+
     if (this.Adapter.bFirstIteration) {
         this.Adapter.ptDirtyRegion = ptDirtyRegions;
         //this.Adapter.bFirstIteration = false;
@@ -350,16 +348,16 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
             this.Adapter.bIsRegionChanged = false;
 
             if (NULL != this.Adapter.ptDirtyRegion) { 
-                //! calculate the valid region
+                // calculate the valid region
                 if (!arm_2d_region_intersect(   &this.tCFG.tDisplayArea, 
                                                 &(this.Adapter.ptDirtyRegion->tRegion), 
                                                 &this.Adapter.tTargetRegion)) {
                                                 
                     if (__arm_2d_helper_pfb_get_next_dirty_region(ptThis)) {
-                        //! try next region
+                        // try next region
                         continue;
                     }
-                    //! out of lcd 
+                    // out of lcd 
                     return (arm_2d_tile_t *)-1;
                 }
             } else {
@@ -367,11 +365,11 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
             }
 
         #if __ARM_ARCH == 6 || __TARGET_ARCH_THUMB == 3
-            //! reset adapter frame size
+            // reset adapter frame size
             this.Adapter.tFrameSize = this.tCFG.FrameBuffer.tFrameSize;
         #else
             if (this.tCFG.FrameBuffer.bDisableDynamicFPBSize) {
-                //! reset adapter frame size
+                // reset adapter frame size
                 this.Adapter.tFrameSize = this.tCFG.FrameBuffer.tFrameSize;
 
             } else {                                                            //!< update PFB size
@@ -386,7 +384,7 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                 if (    (wTargetPixelCount <= wPFBPixelCount)
                    ||   (   this.Adapter.tTargetRegion.tSize.iWidth 
                         <   this.tCFG.FrameBuffer.tFrameSize.iWidth)) {
-                    //! redefine the shape of PFB
+                    // redefine the shape of PFB
                     
                     this.Adapter.tFrameSize.iWidth 
                         = this.Adapter.tTargetRegion.tSize.iWidth;
@@ -396,7 +394,7 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                         /   (uint32_t)this.Adapter.tTargetRegion.tSize.iWidth);
                 
                 } else {
-                    //! reset adapter frame size
+                    // reset adapter frame size
                     this.Adapter.tFrameSize = this.tCFG.FrameBuffer.tFrameSize;
                 }
             } 
@@ -433,11 +431,11 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
 
 
     if (!this.tCFG.FrameBuffer.bDoNOTUpdateDefaultFrameBuffer) {
-        //! update default frame buffer
+        // update default frame buffer
         arm_2d_set_default_frame_buffer(&this.Adapter.tPFBTile);
     }
     
-    //! uncomment this when necessary for debug purpose
+    // uncomment this when necessary for debug purpose
     //arm_2d_rgb16_fill_colour(&this.Adapter.tPFBTile, NULL, 0);
 
     return (arm_2d_tile_t *)&(this.Adapter.tPFBTile);
@@ -446,10 +444,10 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
 
 
 /*! \brief end a drawing iteration and decide wether a new iteration is required
- *!        or not based on the return value
- *! \param none
- *! \retval true a new iteration is required
- *! \retval false no more iteration is required
+ *         or not based on the return value
+ *  \param[in] ptThis the PFB control block
+ *  \retval true a new iteration is required
+ *  \retval false no more iteration is required
  */
 static 
 bool __arm_2d_helper_pfb_drawing_iteration_end(arm_2d_helper_pfb_t *ptThis)
@@ -459,7 +457,7 @@ bool __arm_2d_helper_pfb_drawing_iteration_end(arm_2d_helper_pfb_t *ptThis)
     arm_2d_tile_t *ptPartialFrameBuffer = &(this.Adapter.ptCurrent->tTile);
     
     if (!this.tCFG.FrameBuffer.bDoNOTUpdateDefaultFrameBuffer) {
-        //! update default frame buffer
+        // update default frame buffer
         arm_2d_set_default_frame_buffer(NULL);
     }
 
@@ -473,7 +471,7 @@ bool __arm_2d_helper_pfb_drawing_iteration_end(arm_2d_helper_pfb_t *ptThis)
         
         if (    this.Adapter.tDrawRegion.tLocation.iY 
             >=  this.Adapter.tTargetRegion.tSize.iHeight) {
-            //! finished
+            // finished
             this.Adapter.tDrawRegion.tLocation.iY = 0;
 
             return __arm_2d_helper_pfb_get_next_dirty_region(ptThis);
@@ -559,44 +557,44 @@ ARM_PT_BEGIN(this.Adapter.chPT)
     do {
         this.Statistics.nRenderingCycle += arm_2d_helper_perf_counter_stop(); 
 
-        /*! begin of the drawing iteration, 
-         *! try to request the tile of frame buffer
+        /* begin of the drawing iteration, 
+         * try to request the tile of frame buffer
          */
         
         do {
         
             /*! \note In deep embedded applications, a LCD usually is connected 
-             *!       via a serial interface to save pins, hence the bandwidth 
-             *!       is limited and the FPS is low due to the bandwidth.
-             *!       To overcome this issue, some partial-flushing schemes are 
-             *!       used, such as:
-             *!       - Dirty Region based partial-flushing
-             *!       - Flush the known and fixed small area that is updated 
-             *!         frequently based on the application scenarios. 
-             *!       
-             *!       It is worth emphasizing that as we are using partial 
-             *!       flushing scheme, which means for a given frame, we only 
-             *!       update those changed area(s) but not the complete frame,
-             *!       using the term frame per sec (FPS) might confuse people,
-             *!       hence, we decide to introduce a NEW term called update per
-             *!       sec (UPS) to avoid this confusion. It reflects what people
-             *!       feel when looking at the LCD but not necessarily means
-             *!       the rate that a complete frame is flushed into LCD.  
-             *!       
-             *!       In Arm-2D:
-             *!       - FPS is a sub-set of UPS. 
-             *!       - UPS forcus on how people feel and FPS is sticks to the 
-             *!         concept of (full) frame per sec.              
+             *       via a serial interface to save pins, hence the bandwidth 
+             *       is limited and the FPS is low due to the bandwidth.
+             *       To overcome this issue, some partial-flushing schemes are 
+             *       used, such as:
+             *       - Dirty Region based partial-flushing
+             *       - Flush the known and fixed small area that is updated 
+             *         frequently based on the application scenarios. 
+             *       
+             *       It is worth emphasizing that as we are using partial 
+             *       flushing scheme, which means for a given frame, we only 
+             *       update those changed area(s) but not the complete frame,
+             *       using the term frame per sec (FPS) might confuse people,
+             *       hence, we decide to introduce a NEW term called update per
+             *       sec (UPS) to avoid this confusion. It reflects what people
+             *       feel when looking at the LCD but not necessarily means
+             *       the rate that a complete frame is flushed into LCD.  
+             *       
+             *       In Arm-2D:
+             *       - FPS is a sub-set of UPS. 
+             *       - UPS forcus on how people feel and FPS is sticks to the 
+             *         concept of (full) frame per sec.              
              */
         
-            //! request to draw the whole LCD
+            // request to draw the whole LCD
             this.Adapter.ptFrameBuffer = 
                 __arm_2d_helper_pfb_drawing_iteration_begin( 
                                                         ptThis, 
                                                         ptDirtyRegions);
             if (NULL == this.Adapter.ptFrameBuffer) {
                 if (NULL != this.tCFG.Dependency.evtOnLowLevelSyncUp.fnHandler){
-                     //!wait until lcd is ready
+                     // wait until lcd is ready
                     (*this.tCFG.Dependency.evtOnLowLevelSyncUp.fnHandler)(
                         this.tCFG.Dependency.evtOnLowLevelSyncUp.pTarget
                     );
@@ -611,12 +609,12 @@ ARM_PT_BEGIN(this.Adapter.chPT)
     ARM_PT_ENTRY(this.Adapter.chPT)
         
         arm_2d_helper_perf_counter_start(); 
-        //! draw all the gui elements on target frame buffer
+        // draw all the gui elements on target frame buffer
         tResult = this.tCFG.Dependency.evtOnDrawing.fnHandler(
                                         this.tCFG.Dependency.evtOnDrawing.pTarget,
                                         this.Adapter.ptFrameBuffer,
                                         this.Adapter.bIsNewFrame);
-        //! just in case some one forgot to do this...
+        // just in case some one forgot to do this...
         arm_2d_op_wait_async(NULL);
         
         this.Adapter.bIsNewFrame = false;
@@ -625,7 +623,7 @@ ARM_PT_BEGIN(this.Adapter.chPT)
         if (arm_fsm_rt_on_going == tResult) {
     ARM_PT_GOTO_PREV_ENTRY()
         } else if (tResult < 0) {
-            //! error was reported
+            // error was reported
     ARM_PT_RETURN(this.Adapter.chPT, tResult)
         } else if (arm_fsm_rt_wait_for_obj == tResult) {
     ARM_PT_REPORT_STATUS(this.Adapter.chPT, tResult)
@@ -640,5 +638,6 @@ ARM_PT_BEGIN(this.Adapter.chPT)
 ARM_PT_END(this.Adapter.chPT)
     
     return arm_fsm_rt_cpl;
-}       
+}
+
 

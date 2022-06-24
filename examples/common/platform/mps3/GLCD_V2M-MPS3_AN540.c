@@ -40,6 +40,7 @@
 #include "MPS3_CM55.h"
 #include "GLCD_Config.h"
 #include "Board_GLCD.h"
+#include "../controls/__common.h"
 
 #if defined (RTE_CMSIS_RTOS) && !defined (RTE_CMSIS_RTOS2)
   #include "cmsis_os.h"               /* ARM::CMSIS:RTOS:Keil RTX */

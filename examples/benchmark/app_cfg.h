@@ -30,19 +30,7 @@
 #endif
 
 /*============================ MACROS ========================================*/
-#ifndef ITERATION_CNT
-#   define ITERATION_CNT       1000
-#endif
-
-#if defined(__USE_FVP__)
-#   undef ITERATION_CNT
-#   define ITERATION_CNT        1
-#endif
-
-
 /*============================ MACROFIED FUNCTIONS ===========================*/
-
-#define ASSERT(...)         assert(__VA_ARGS__)
 
 /*! \note FPB Size
  *!         8 * 8     128B
@@ -55,19 +43,10 @@
  *!       480 * 4    3840B
  *!       480 * 8    7680B
  */
-#define PFB_BLOCK_WIDTH         GLCD_WIDTH
-#define PFB_BLOCK_HEIGHT        GLCD_HEIGHT
+#define PFB_BLOCK_WIDTH                     GLCD_WIDTH
+#define PFB_BLOCK_HEIGHT                    GLCD_HEIGHT
 
 #define BUSY_WHEEL_SPIN_SPEED   100
-
-#ifndef APP_SCREEN_WIDTH 
-#   define APP_SCREEN_WIDTH         GLCD_WIDTH
-#endif
-
-#ifndef APP_SCREEN_HEIGHT 
-#   define APP_SCREEN_HEIGHT        GLCD_HEIGHT
-#endif
-
 
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/

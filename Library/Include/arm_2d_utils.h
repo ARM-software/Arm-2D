@@ -185,6 +185,14 @@ extern "C" {
 #   warning Please enable GNC extensions, it is required by the Arm-2D.
 #endif
 
+#ifndef ARM_2D_INVOKE
+#   define ARM_2D_INVOKE(__FUNC_PTR, ...)                                       \
+            do {                                                                \
+                if (NULL != (__FUNC_PTR)) {                                     \
+                    (*(__FUNC_PTR))(__VA_ARGS__);                               \
+                }                                                               \
+            } while(0)
+#endif
 
 #define __ARM_CONNECT2(__A, __B)                        __A##__B
 #define __ARM_CONNECT2_ALT(__A, __B)                    __A##__B

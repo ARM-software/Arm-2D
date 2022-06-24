@@ -20,7 +20,7 @@
 #include <stdio.h>
 #include "platform.h"
 #include "example_gui.h"
-#include "../common/controls/controls.h"
+#include "arm_extra_controls.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -73,7 +73,7 @@ void platform_1ms_event_handler(void)
 
 void example_gui_init(void)
 {
-    controls_init();
+    arm_extra_controls_init();
     
 }
 
@@ -93,9 +93,11 @@ void example_gui_on_refresh_evt_handler(const arm_2d_tile_t *ptFrameBuffer)
 
 void example_gui_refresh(const arm_2d_tile_t *ptFrameBuffer, bool bIsNewFrame)
 {
-    arm_2d_rgb16_fill_colour(ptFrameBuffer, NULL, GLCD_COLOR_BLACK);
+    arm_2d_rgb16_fill_colour(ptFrameBuffer, NULL, GLCD_COLOR_NAVY);
     
     busy_wheel2_show(ptFrameBuffer, bIsNewFrame);
+
+    //spinning_wheel_show(ptFrameBuffer, bIsNewFrame);
 
     example_gui_on_refresh_evt_handler(ptFrameBuffer);
     

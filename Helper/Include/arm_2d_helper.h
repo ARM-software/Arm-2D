@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
+ * Copyright (C) 2022 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -16,12 +16,24 @@
  * limitations under the License.
  */
 
+/* ----------------------------------------------------------------------
+ * Project:      Arm-2D Library
+ * Title:        #include "arm_2d_helper.h"
+ * Description:  Public header file for the all helper services
+ *
+ * $Date:        17. June 2022
+ * $Revision:    V.1.0.1
+ *
+ * Target Processor:  Cortex-M cores
+ * -------------------------------------------------------------------- */
+
 #ifndef __ARM_2D_HELPER_H__
 #define __ARM_2D_HELPER_H__
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
 #include "./arm_2d_helper_pfb.h"
+#include "./arm_2d_helper_scene.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -32,6 +44,11 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #endif
 
+
+/*!
+ * \addtogroup gHelper 7 Helper Services
+ * @{
+ */
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
@@ -67,8 +84,8 @@ extern "C" {
     for (arm_2d_region_t __centre_region = {                                    \
             .tSize = (__size),                                                  \
             .tLocation = {                                                      \
-                .iX = ((__region).tRegion.tSize.iWidth - (__size).iWidth)  >> 1,\
-                .iY = ((__region).tRegion.tSize.iHeight - (__size).iHeight)>> 1,\
+                .iX = ((__region).tSize.iWidth - (__size).iWidth)  >> 1,\
+                .iY = ((__region).tSize.iHeight - (__size).iHeight)>> 1,\
             },                                                                  \
         },                                                                      \
         *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
@@ -82,8 +99,8 @@ extern "C" {
                 .iHeight = (__height),                                          \
             },                                                                  \
             .tLocation = {                                                      \
-                .iX = ((__region).tRegion.tSize.iWidth - (__width))  >> 1,      \
-                .iY = ((__region).tRegion.tSize.iHeight - (__height))>> 1,      \
+                .iX = ((__region).tSize.iWidth - (__width))  >> 1,      \
+                .iY = ((__region).tSize.iHeight - (__height))>> 1,      \
             },                                                                  \
         },                                                                      \
         *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
@@ -99,6 +116,8 @@ extern "C" {
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ PROTOTYPES ====================================*/
+
+/*! @} */
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

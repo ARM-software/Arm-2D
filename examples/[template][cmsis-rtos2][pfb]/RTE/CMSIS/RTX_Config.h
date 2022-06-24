@@ -124,7 +124,7 @@
 //   <i> Defines stack size for threads with zero stack size specified.
 //   <i> Default: 3072
 #ifndef OS_STACK_SIZE
-#define OS_STACK_SIZE               1024
+#define OS_STACK_SIZE               2048
 #endif
  
 //   <o>Idle Thread Stack size [bytes] <72-1073741824:8>

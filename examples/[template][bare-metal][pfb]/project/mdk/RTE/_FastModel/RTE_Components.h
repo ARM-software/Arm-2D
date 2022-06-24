@@ -16,7 +16,11 @@
  */
 #define CMSIS_device_header "CMSDK_CM4_FP.h"
 
-/* Arm::Acceleration:Arm-2D Helper:PFB:1.0.0-preview */
+/* Arm::Acceleration:Arm-2D Extras:Controls:1.0.0 */
+#define __RTE_ACCELERATION_ARM_2D_EXTRA_CONTROLS__
+/* Arm::Acceleration:Arm-2D Extras:LCD ASCII Printf:1.0.0 */
+#define __RTE_ACCELERATION_ARM_2D_EXTRA_LCD_PRINTF__
+/* Arm::Acceleration:Arm-2D Helper:PFB:1.1.0 */
 #define __RTE_ACCELERATION_ARM_2D_HELPER_PFB__
 /* Arm::Acceleration:Arm-2D:Alpha-Blending:1.0.0-preview */
 #define __RTE_ACCELERATION_ARM_2D_ALPHA_BLENDING__

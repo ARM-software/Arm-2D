@@ -145,9 +145,9 @@ void example_gui_on_refresh_evt_handler(const arm_2d_tile_t *ptFrameBuffer)
     
 #if !defined(__USE_FVP__)
     //! print performance info
-    lcd_text_location( GLCD_HEIGHT / 8 - 2, 0);
+    arm_lcd_text_location( GLCD_HEIGHT / 8 - 2, 0);
     
-    lcd_printf( "Screeen: " STR(APP_SCREEN_WIDTH) "*"
+    arm_lcd_printf( "Screeen: " STR(APP_SCREEN_WIDTH) "*"
                 STR(APP_SCREEN_HEIGHT) 
                 " PFB: " STR(PFB_BLOCK_WIDTH) "*"
                 STR(PFB_BLOCK_HEIGHT)
@@ -155,7 +155,7 @@ void example_gui_on_refresh_evt_handler(const arm_2d_tile_t *ptFrameBuffer)
                 (int32_t)SystemCoreClock / 1000000);
                 
     //lcd_text_location( 0, 0);
-    lcd_puts(s_chPerformanceInfo);
+    arm_lcd_puts(s_chPerformanceInfo);
 #endif
 }
 
@@ -194,7 +194,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_background_handler)
     ARM_2D_UNUSED(pTarget);
     ARM_2D_UNUSED(bIsNewFrame);
 
-    arm_2d_rgb16_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
+    arm_2d_rgb16_fill_colour(ptTile, NULL, GLCD_COLOR_NAVY);
     arm_2d_op_wait_async(NULL);
     return arm_fsm_rt_cpl;
 }

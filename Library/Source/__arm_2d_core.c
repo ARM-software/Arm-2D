@@ -628,21 +628,26 @@ arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
                         = tTargetTileParam.tValidRegion.tSize.iWidth 
                         - tTempRegion.tSize.iWidth;
                 
-                    tTempRegion.tLocation.iY 
-                        = tTargetTileParam.tValidRegion.tLocation.iY 
-                        - tTempRegion.tLocation.iY;
-                
-                    tTempRegion.tSize.iHeight
-                        = tTargetTileParam.tValidRegion.tSize.iHeight 
-                        - tTempRegion.tSize.iHeight;
-                
+                    
                     arm_2d_region_t tNewTargetMaskRegion = ptTargetMask->tRegion;
                 
                     tNewTargetMaskRegion.tLocation.iX += tTempRegion.tLocation.iX;
-                    tNewTargetMaskRegion.tLocation.iY += tTempRegion.tLocation.iY;
                     tNewTargetMaskRegion.tSize.iWidth += tTempRegion.tSize.iWidth;
-                    tNewTargetMaskRegion.tSize.iHeight += tTempRegion.tSize.iHeight;
                     
+                    // when the target mask is not 1-horizontal line mask
+                    if (ptTargetMask->tRegion.tSize.iHeight != 1 ) {
+                        tTempRegion.tLocation.iY 
+                            = tTargetTileParam.tValidRegion.tLocation.iY 
+                            - tTempRegion.tLocation.iY;
+                    
+                        tTempRegion.tSize.iHeight
+                            = tTargetTileParam.tValidRegion.tSize.iHeight 
+                            - tTempRegion.tSize.iHeight;
+                    
+                        
+                        tNewTargetMaskRegion.tLocation.iY += tTempRegion.tLocation.iY;
+                        tNewTargetMaskRegion.tSize.iHeight += tTempRegion.tSize.iHeight;
+                    }
                 
                     ptTargetMask = arm_2d_tile_generate_child( 
                                             ptTargetMask,
@@ -705,20 +710,26 @@ arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
                         = tTargetTileParam.tValidRegion.tSize.iWidth 
                         - tTempRegion.tSize.iWidth;
                 
-                    tTempRegion.tLocation.iY 
-                        = tTargetTileParam.tValidRegion.tLocation.iY 
-                        - tTempRegion.tLocation.iY;
-                
-                    tTempRegion.tSize.iHeight
-                        = tTargetTileParam.tValidRegion.tSize.iHeight 
-                        - tTempRegion.tSize.iHeight;
-                
+                    
                     arm_2d_region_t tNewTargetMaskRegion = ptTargetMask->tRegion;
                 
                     tNewTargetMaskRegion.tLocation.iX += tTempRegion.tLocation.iX;
-                    tNewTargetMaskRegion.tLocation.iY += tTempRegion.tLocation.iY;
                     tNewTargetMaskRegion.tSize.iWidth += tTempRegion.tSize.iWidth;
-                    tNewTargetMaskRegion.tSize.iHeight += tTempRegion.tSize.iHeight;
+                    
+                    // when the target mask is not 1-horizontal line mask
+                    if (ptTargetMask->tRegion.tSize.iHeight != 1 ) {
+                        tTempRegion.tLocation.iY 
+                            = tTargetTileParam.tValidRegion.tLocation.iY 
+                            - tTempRegion.tLocation.iY;
+                    
+                        tTempRegion.tSize.iHeight
+                            = tTargetTileParam.tValidRegion.tSize.iHeight 
+                            - tTempRegion.tSize.iHeight;
+                    
+                        
+                        tNewTargetMaskRegion.tLocation.iY += tTempRegion.tLocation.iY;
+                        tNewTargetMaskRegion.tSize.iHeight += tTempRegion.tSize.iHeight;
+                    }
                 
                     ptTargetMask = arm_2d_tile_generate_child( 
                                             ptTargetMask,
@@ -1589,8 +1600,8 @@ void __arm_2d_init(void)
 
 /*!
  * \brief set the default frame buffer
- * \param ptFramebuffer the new frame buffer, 
- * \note  if NULL is given, no default frame buffer will be used
+ * \param ptFrameBuffer the new frame buffer, 
+ * \note  Passing NULL means using no default framebuffer
  * \return arm_2d_tile_t* the address of the old frame buffer
  */
 arm_2d_tile_t *arm_2d_set_default_frame_buffer(const arm_2d_tile_t *ptFrameBuffer)

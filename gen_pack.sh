@@ -128,10 +128,13 @@ echo Generating Pack Version: for $PACK_VENDOR.$PACK_NAME
 echo " "
 IFS=$SAVEIFS
 
+
 #if $PACK_BUILD directory does not exist, create it.
 if [ ! -d $PACK_BUILD ]; then
   mkdir -p $PACK_BUILD
 fi
+
+
 
 # Copy files into build base directory: $PACK_BUILD
 # pdsc file is mandatory in base directory:
@@ -146,6 +149,9 @@ do
   cp -r "$d" ${PACK_BUILD}
 done
 
+mkdir -p $PACK_BUILD/examples
+cp -r "examples/common" ${PACK_BUILD}/examples
+
 # files for base directory
 echo Adding files to pack:
 echo $PACK_BASE_FILES
@@ -158,6 +164,18 @@ done
 echo Remove cde files
 rm -rf $PACK_BUILD/Library/Include/__arm_2d_cde.h
 rm -rf $PACK_BUILD/Library/Source/arm_2d_cde.c
+
+echo Remove unrequired files
+rm -rf $PACK_BUILD/examples/[template][bare-metal][pfb]
+rm -rf $PACK_BUILD/examples/[template][cmsis-rtos2][pfb]
+rm -rf $PACK_BUILD/examples/benchmark
+rm -rf $PACK_BUILD/examples/watch_panel
+rm -rf $PACK_BUILD/examples/README.md
+rm -rf $PACK_BUILD/examples/common/platform
+rm -rf $PACK_BUILD/examples/common/*.pack
+rm -rf $PACK_BUILD/examples/common/asset/*.png
+rm -rf $PACK_BUILD/examples/common/asset/*.PNG
+rm -rf $PACK_BUILD/examples/common/asset/*.jpg
 
 # Run Schema Check (for Linux only):
 # sudo apt-get install libxml2-utils

@@ -20,9 +20,6 @@
 #define __PLATFORM_H__
 
 /*============================ INCLUDES ======================================*/
-
-
-
 #include "perf_counter.h"
 #include "cmsis_compiler.h"
 
@@ -32,7 +29,6 @@
 #include <string.h>
 
 #include "arm_2d.h"
-#include "lcd_printf.h"
 
 //#include "Device.h"                     // Keil::Board Support:V2M-MPS2:Common
 #include "RTE_Components.h"             // Component selection
@@ -46,6 +42,8 @@
 #   include "cmsis_os2.h"                  // ::CMSIS:RTOS2
 #endif
 
+#include "../controls/arm_extra_controls.h"
+#include "../controls/arm_extra_lcd_printf.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push

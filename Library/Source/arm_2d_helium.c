@@ -101,6 +101,8 @@ void __arm_2d_helium_init(void)
 #include "__arm_2d_copy_helium.inc"
 
 
+#define __ARM_2D_COMPILATION_UNIT
+#include "__arm_2d_transform_helium.c"
 
 /*----------------------------------------------------------------------------*
  * Specialized Copy Routines                                                  *

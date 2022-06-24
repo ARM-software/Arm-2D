@@ -10,9 +10,8 @@
 #ifndef PRE_INCLUDE_GLOBAL_H
 #define PRE_INCLUDE_GLOBAL_H
 
-/* GorgonMeducer.Performance Counter::Utilities:perf_counter:RTX5 Patch:1.9.2 */
-//! \brief Enable RTOS Patch for perf_counter
-#define __PERF_CNT_USE_RTOS__
+/* Arm::Acceleration:Arm-2D:Core:1.0.0-preview */
+#define __ARM_2D_SKIP_CFG_HEADER__
 
 
 #endif /* PRE_INCLUDE_GLOBAL_H */

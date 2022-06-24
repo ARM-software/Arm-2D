@@ -44,7 +44,7 @@
 ;   <o1> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ; </h>
  *----------------------------------------------------------------------------*/
-#define __STACK_SIZE    0x00000600
+#define __STACK_SIZE    0x00000800
 
 #define __RAM1_RW_SIZE 	(__RAM1_SIZE - __STACK_SIZE - __HEAP_SIZE)
 //#define __RAM1_RW_SIZE 	(__RAM1_SIZE - __STACK_SIZE)

@@ -115,6 +115,21 @@ extern "C" {
  * Draw a point with specified colour                                         *
  *----------------------------------------------------------------------------*/
 
+/*!
+ *  \brief draw a point with a given 8bit colour
+ *  \param[in] ptOP the control block, NULL means using the default control block
+ *  \param[in] ptTarget the target root tile
+ *  \param[in] tLocation the target location
+ *  \param[in] chColour an 8bit colour
+ *  \return arm_fsm_rt_t the operation result
+ *
+ *  \note As those draw point APIs involve the region calculation
+ *        which is only useful when partial framebuffer is used, it is slow.
+ *        For gettting better performance, if the target tile is root and the 
+ *        target location is inside the target region, please use the
+ *        functions with "_fast" posfix.
+ *        
+ */
 ARM_NONNULL(2)
 arm_fsm_rt_t arm_2dp_c8bit_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -146,6 +161,21 @@ arm_fsm_rt_t arm_2dp_c8bit_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
 
+/*!
+ *  \brief draw a point with a given 16bit colour
+ *  \param[in] ptOP the control block, NULL means using the default control block
+ *  \param[in] ptTarget the target root tile
+ *  \param[in] tLocation the target location
+ *  \param[in] hwColour an 16bit colour
+ *  \return arm_fsm_rt_t the operation result
+ *
+ *  \note As those draw point APIs involve the region calculation
+ *        which is only useful when partial framebuffer is used, it is slow.
+ *        For gettting better performance, if the target tile is root and the 
+ *        target location is inside the target region, please use the
+ *        functions with "_fast" posfix.
+ *        
+ */
 ARM_NONNULL(2)
 arm_fsm_rt_t arm_2dp_rgb16_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -177,7 +207,21 @@ arm_fsm_rt_t arm_2dp_rgb16_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
 
-
+/*!
+ *  \brief draw a point with a given 32bit colour
+ *  \param[in] ptOP the control block, NULL means using the default control block
+ *  \param[in] ptTarget the target root tile
+ *  \param[in] tLocation the target location
+ *  \param[in] wColour an 32bit colour
+ *  \return arm_fsm_rt_t the operation result
+ *
+ *  \note As those draw point APIs involve the region calculation
+ *        which is only useful when partial framebuffer is used, it is slow.
+ *        For gettting better performance, if the target tile is root and the 
+ *        target location is inside the target region, please use the
+ *        functions with "_fast" posfix.
+ *        
+ */
 ARM_NONNULL(2)
 arm_fsm_rt_t arm_2dp_rgb32_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -235,6 +279,14 @@ arm_fsm_rt_t __arm_2d_sw_draw_point(__arm_2d_sub_task_t *ptTask)
  * Fill tile with a specified colour                                          *
  *----------------------------------------------------------------------------*/
 
+/*!
+ *  \brief fill the target region with a given 8bit colour
+ *  \param[in] ptOP the control block, NULL means using the default control block
+ *  \param[in] ptTarget the target tile
+ *  \param[in] ptRegion the target region
+ *  \param[in] chColour a 8bit colour
+ *  \return arm_fsm_rt_t the operation result
+ */
 ARM_NONNULL(2)
 arm_fsm_rt_t arm_2dp_c8bit_fill_colour( arm_2d_op_fill_cl_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -260,6 +312,14 @@ arm_fsm_rt_t arm_2dp_c8bit_fill_colour( arm_2d_op_fill_cl_t *ptOP,
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
 
+/*!
+ *  \brief fill the target region with a given 16bit colour
+ *  \param[in] ptOP the control block, NULL means using the default control block
+ *  \param[in] ptTarget the target tile
+ *  \param[in] ptRegion the target region
+ *  \param[in] hwColour a 16bit colour
+ *  \return arm_fsm_rt_t the operation result
+ */
 ARM_NONNULL(2)
 arm_fsm_rt_t arm_2dp_rgb16_fill_colour( arm_2d_op_fill_cl_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -285,6 +345,14 @@ arm_fsm_rt_t arm_2dp_rgb16_fill_colour( arm_2d_op_fill_cl_t *ptOP,
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
 
+/*!
+ *  \brief fill the target region with a given 32bit colour
+ *  \param[in] ptOP the control block, NULL means using the default control block
+ *  \param[in] ptTarget the target tile
+ *  \param[in] ptRegion the target region
+ *  \param[in] wColour a 32bit colour
+ *  \return arm_fsm_rt_t the operations result
+ */
 ARM_NONNULL(2)
 arm_fsm_rt_t arm_2dp_rgb32_fill_colour( arm_2d_op_fill_cl_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -357,6 +425,17 @@ arm_fsm_rt_t __arm_2d_rgb32_sw_colour_filling(__arm_2d_sub_task_t *ptTask)
  * Draw a bit patterns                                                        *
  *----------------------------------------------------------------------------*/
 
+/*!
+ *  \brief copy a bit-pattern with given 8bit colours
+ *  \param[in] ptOP the control block, NULL means using the default control block
+ *  \param[in] ptPattern the source bit pattern
+ *  \param[in] ptTarget the target tile
+ *  \param[in] ptRegion the target region
+ *  \param[in] wMode the copy mode
+ *  \param[in] chForeColour the foreground colour
+ *  \param[in] chBackColour the background colour
+ *  \return arm_fsm_rt_t the operation result
+ */
 ARM_NONNULL(2,3)
 arm_fsm_rt_t arm_2dp_c8bit_draw_pattern( arm_2d_op_drw_patn_t   *ptOP,
                                          const arm_2d_tile_t    *ptPattern,
@@ -399,6 +478,17 @@ arm_fsm_rt_t arm_2dp_c8bit_draw_pattern( arm_2d_op_drw_patn_t   *ptOP,
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
 
+/*!
+ *  \brief copy a bit-pattern with given 16bit colours
+ *  \param[in] ptOP the control block, NULL means using the default control block
+ *  \param[in] ptPattern the source bit pattern
+ *  \param[in] ptTarget the target tile
+ *  \param[in] ptRegion the target region
+ *  \param[in] wMode the copy mode
+ *  \param[in] hwForeColour the foreground colour
+ *  \param[in] hwBackColour the background colour
+ *  \return arm_fsm_rt_t the operation result
+ */
 ARM_NONNULL(2,3)
 arm_fsm_rt_t arm_2dp_rgb16_draw_pattern( arm_2d_op_drw_patn_t   *ptOP,
                                          const arm_2d_tile_t    *ptPattern,
@@ -440,7 +530,17 @@ arm_fsm_rt_t arm_2dp_rgb16_draw_pattern( arm_2d_op_drw_patn_t   *ptOP,
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
 
-
+/*!
+ *  \brief copy a bit-pattern with given 32bit colours
+ *  \param[in] ptOP the control block, NULL means using the default control block
+ *  \param[in] ptPattern the source bit pattern
+ *  \param[in] ptTarget the target tile
+ *  \param[in] ptRegion the target region
+ *  \param[in] wMode the copy mode
+ *  \param[in] wForeColour the foreground colour
+ *  \param[in] wBackColour the background colour
+ *  \return arm_fsm_rt_t the operation result
+ */
 ARM_NONNULL(2,3)
 arm_fsm_rt_t arm_2dp_rgb32_draw_pattern(arm_2d_op_drw_patn_t    *ptOP,
                                         const arm_2d_tile_t     *ptPattern,

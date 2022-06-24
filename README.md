@@ -13,7 +13,7 @@
 
 ## Features
 
-#### In this release ( ver1.0.0-preview-beta2)
+#### In this release ( ver1.0.0-preview-beta7)
 
 The Arm-2D library provides **Low-Level 2D Image Processing Services** that are mainly used in **Deep Embedded Display system**. The supported features include but not limited to:
 
@@ -417,9 +417,9 @@ def_low_lv_io(__ARM_2D_IO_ROTATE_RGB888,
 
 ## 6 Feedback
 
-As mentioned at the beginning, the purpose of this project is to explore and demonstrate the possibilities of delivering smart-phone modern graphic user interface using low-cost and resource constraint micro-controllers. We expect that this arm-2d library could inspire more similar initiatives and engineering practices. Hence, your feedback and thoughts are precious to us. 
+As mentioned at the beginning, the purpose of this project is to explore and demonstrate the possibilities of delivering smart-phone-like modern GUI using low-cost and resource constraint micro-controllers. We expect that arm-2d could inspire more similar initiatives and engineering practices. Hence, your feedback and thoughts are precious to us. 
 
-If you want to spend some time and try the library, please feel free to leave your thoughts. It would be nice to have following information:
+If you can to spend some time and try the library, please feel free to leave your thoughts. It would be nice to contains following information:
 
 - The target application and/or industry segment which you want to introduce a GUI using Cortex-M processors
 - The resources of your platform, such as the size of the RAM, ROM, system frequency, the average power consumption etc.

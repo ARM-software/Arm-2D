@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2022 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the APIs for colour space
  *               conversions
  *
- * $Date:        16. Nov 2021
- * $Revision:    V.1.0.0
+ * $Date:        17. June 2022
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -51,17 +51,22 @@ extern "C" {
 #   pragma diag_suppress=Go029 
 #endif
 
+/*!
+ * \addtogroup gConversion 6 Conversion Operations
+ * @{
+ */
+
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
-#define arm_2d_convert_colour_to_rgb888(__SRC_ADDR, /*!< source tile address */ \
-                                        __DES_ADDR /*!< target tile address */) \
+#define arm_2d_convert_colour_to_rgb888(__SRC_ADDR, /* source tile address */   \
+                                        __DES_ADDR  /* target tile address */)  \
             arm_2dp_convert_colour_to_rgb888(   NULL,                           \
                                                 (__SRC_ADDR),                   \
                                                 (__DES_ADDR))
 
-#define arm_2d_convert_colour_to_rgb565(__SRC_ADDR, /*!< source tile address */ \
-                                        __DES_ADDR /*!< target tile address */) \
+#define arm_2d_convert_colour_to_rgb565(__SRC_ADDR, /* source tile address */   \
+                                        __DES_ADDR  /* target tile address */)  \
             arm_2dp_convert_colour_to_rgb565(   NULL,                           \
                                                 (__SRC_ADDR),                   \
                                                 (__DES_ADDR))
@@ -70,10 +75,8 @@ extern "C" {
 
 typedef arm_2d_op_src_t arm_2d_op_cl_convt_t;
 
-
-
 /*! \brief 3x16-bit packed RGB color
- *!        autovectorizer friendly format
+ *         autovectorizer friendly format
  */
 typedef union {
     uint16_t            RGBA[4];
@@ -92,6 +95,12 @@ typedef union {
  * RGB565 channels extraction/packing                                         *
  *----------------------------------------------------------------------------*/
 
+/*!
+ * \brief unpack a rgb565 colour into a given __arm_2d_color_fast_rgb_t object
+ * \param[in] hwColour the target rgb565 colour
+ * \param[out] ptRGB a __arm_2d_color_fast_rgb_t object
+ */
+ARM_NONNULL(2)
 __STATIC_INLINE void __arm_2d_rgb565_unpack(uint16_t hwColor,
                                             __arm_2d_color_fast_rgb_t * ptRGB)
 {
@@ -106,6 +115,12 @@ __STATIC_INLINE void __arm_2d_rgb565_unpack(uint16_t hwColor,
     ptRGB->A = 0xFF;
 }
 
+/*!
+ * \brief generate a rgb565 colour from a __arm_2d_color_fast_rgb_t object 
+ * \param[in] ptRGB the target __arm_2d_color_fast_rgb_t object
+ * \return uint16_t a rgb565 colour
+ */
+ARM_NONNULL(1)
 __STATIC_INLINE uint16_t __arm_2d_rgb565_pack(__arm_2d_color_fast_rgb_t * ptRGB)
 {
     assert(NULL != ptRGB);
@@ -118,6 +133,13 @@ __STATIC_INLINE uint16_t __arm_2d_rgb565_pack(__arm_2d_color_fast_rgb_t * ptRGB)
     return tOutput.tValue;
 }
 
+/*!
+ * \brief generate a cccn888 colour from a __arm_2d_color_fast_rgb_t object 
+ * \param[in] ptRGB the target __arm_2d_color_fast_rgb_t object
+ * \return uint32_t a cccn888 colour
+ * \note the alpha channel will be kept in the output value
+ */
+ARM_NONNULL(1)
 __STATIC_INLINE uint32_t __arm_2d_cccn888_pack(__arm_2d_color_fast_rgb_t * ptRGB)
 {
     assert(NULL != ptRGB);
@@ -136,17 +158,32 @@ __STATIC_INLINE uint32_t __arm_2d_cccn888_pack(__arm_2d_color_fast_rgb_t * ptRGB
  * Colour Conversion                                                          *
  *----------------------------------------------------------------------------*/
 
+/*!
+ * \brief convert the colour format of a given tile to rgb888
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[out] ptTarget the output tile (holding a buffer)
+ * \return arm_fsm_rt_t the operation result
+ */
 extern
 ARM_NONNULL(2,3)
 arm_fsm_rt_t arm_2dp_convert_colour_to_rgb888(  arm_2d_op_cl_convt_t *ptOP,
                                                 const arm_2d_tile_t *ptSource,
                                                 const arm_2d_tile_t *ptTarget);
-
+/*!
+ * \brief convert the colour format of a given tile to rgb565
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[out] ptTarget the output tile (holding a buffer)
+ * \return arm_fsm_rt_t the operation result
+ */
 extern
 ARM_NONNULL(2,3)
 arm_fsm_rt_t arm_2dp_convert_colour_to_rgb565(  arm_2d_op_cl_convt_t *ptOP,
                                                 const arm_2d_tile_t *ptSource,
                                                 const arm_2d_tile_t *ptTarget);
+
+/*! @} */
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

@@ -35,6 +35,8 @@
 
 #include <stddef.h>
 
+#include "../controls/__common.h"
+
 #if   defined IOTKit_ARMv8MBL ||    \
       defined IOTKit_ARMv8MML ||    \
       defined IOTKit_CM23     ||    \

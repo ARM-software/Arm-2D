@@ -243,9 +243,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-Ofast -flto -fdata-sections -ffunction-sections -fms-extensions -mcpu=cortex-m7 -mfloat-abi=hard -mfpu=fpv5-sp-d16 -std=gnu11</MiscControls>
-              <Define>NDEBUG,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1</Define>
+              <Define>NDEBUG,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1,__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\common\platform;..\..\Library\Include;..\common\platform\stm32f746g-discovery;.;..\..\Helper\Include;..\common\platform\lib</IncludePath>
+              <IncludePath>..\common\platform;..\common\platform\lib;..\common\platform\stm32f746g-discovery;..\common\controls;..\..\Library\Include;.;..\..\Helper\Include;..\..\Library\Include\template;..\common\benchmark</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -282,16 +282,6 @@
           <GroupName>Application</GroupName>
           <Files>
             <File>
-              <FileName>example_gui.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\example_gui.c</FilePath>
-            </File>
-            <File>
-              <FileName>example_gui.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\example_gui.h</FilePath>
-            </File>
-            <File>
               <FileName>app_cfg.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\app_cfg.h</FilePath>
@@ -300,6 +290,21 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>benchmark_watch_panel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\benchmark\benchmark_watch_panel.c</FilePath>
+            </File>
+            <File>
+              <FileName>benchmark_watch_panel.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\benchmark\benchmark_watch_panel.h</FilePath>
+            </File>
+            <File>
+              <FileName>benchmark_watch_panel_app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\benchmark\benchmark_watch_panel_app.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -310,16 +315,6 @@
               <FileName>app_platform.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\platform\app_platform.c</FilePath>
-            </File>
-            <File>
-              <FileName>GLCD_Fonts.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\GLCD_Fonts.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_printf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\lcd_printf.c</FilePath>
             </File>
             <File>
               <FileName>platform.h</FileName>
@@ -486,6 +481,11 @@
               <FileType>5</FileType>
               <FilePath>..\..\Helper\Include\arm_2d_helper.h</FilePath>
             </File>
+            <File>
+              <FileName>arm_2d_helper_scene.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_scene.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -507,11 +507,6 @@
               <FilePath>..\common\controls\controls.c</FilePath>
             </File>
             <File>
-              <FileName>controls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\controls\controls.h</FilePath>
-            </File>
-            <File>
               <FileName>shape_round_corner_box.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\shape_round_corner_box.c</FilePath>
@@ -530,6 +525,16 @@
               <FileName>spinning_wheel.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\controls\spinning_wheel.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\lcd_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>GLCD_Fonts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\GLCD_Fonts.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -585,6 +590,36 @@
               <FileName>whilte_dot.c.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\whilte_dot.c.c</FilePath>
+            </File>
+            <File>
+              <FileName>small_icon_sun.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\small_icon_sun.c</FilePath>
+            </File>
+            <File>
+              <FileName>arrow.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\arrow.c</FilePath>
+            </File>
+            <File>
+              <FileName>circle_mask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\circle_mask.c</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\cmsis_logo.c</FilePath>
+            </File>
+            <File>
+              <FileName>helium.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\helium.c</FilePath>
+            </File>
+            <File>
+              <FileName>software.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\software.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -943,7 +978,7 @@
               <MiscControls>-Ofast -flto -fdata-sections -ffunction-sections -fms-extensions -mfloat-abi=soft -std=gnu11</MiscControls>
               <Define>RTE_Compiler_IO_STDOUT_User,CMSDK_CM0plus,ITERATION_CNT=10</Define>
               <Undefine></Undefine>
-              <IncludePath>..\common\platform;..\..\Library\Include;.;..\..\Helper\Include;..\common\platform\lib;..\common\platform\mps2</IncludePath>
+              <IncludePath>..\common\platform;..\..\Library\Include;.;..\..\Helper\Include;..\common\platform\lib;..\common\platform\mps2;..\..\Library\Include\template;..\common\benchmark;..\common\controls</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -980,16 +1015,6 @@
           <GroupName>Application</GroupName>
           <Files>
             <File>
-              <FileName>example_gui.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\example_gui.c</FilePath>
-            </File>
-            <File>
-              <FileName>example_gui.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\example_gui.h</FilePath>
-            </File>
-            <File>
               <FileName>app_cfg.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\app_cfg.h</FilePath>
@@ -998,6 +1023,21 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>benchmark_watch_panel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\benchmark\benchmark_watch_panel.c</FilePath>
+            </File>
+            <File>
+              <FileName>benchmark_watch_panel.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\benchmark\benchmark_watch_panel.h</FilePath>
+            </File>
+            <File>
+              <FileName>benchmark_watch_panel_app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\benchmark\benchmark_watch_panel_app.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1008,16 +1048,6 @@
               <FileName>app_platform.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\platform\app_platform.c</FilePath>
-            </File>
-            <File>
-              <FileName>GLCD_Fonts.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\GLCD_Fonts.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_printf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\lcd_printf.c</FilePath>
             </File>
             <File>
               <FileName>platform.h</FileName>
@@ -1184,6 +1214,11 @@
               <FileType>5</FileType>
               <FilePath>..\..\Helper\Include\arm_2d_helper.h</FilePath>
             </File>
+            <File>
+              <FileName>arm_2d_helper_scene.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_scene.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1205,11 +1240,6 @@
               <FilePath>..\common\controls\controls.c</FilePath>
             </File>
             <File>
-              <FileName>controls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\controls\controls.h</FilePath>
-            </File>
-            <File>
               <FileName>shape_round_corner_box.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\shape_round_corner_box.c</FilePath>
@@ -1228,6 +1258,16 @@
               <FileName>spinning_wheel.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\controls\spinning_wheel.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\lcd_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>GLCD_Fonts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\GLCD_Fonts.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1283,6 +1323,36 @@
               <FileName>whilte_dot.c.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\whilte_dot.c.c</FilePath>
+            </File>
+            <File>
+              <FileName>small_icon_sun.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\small_icon_sun.c</FilePath>
+            </File>
+            <File>
+              <FileName>arrow.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\arrow.c</FilePath>
+            </File>
+            <File>
+              <FileName>circle_mask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\circle_mask.c</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\cmsis_logo.c</FilePath>
+            </File>
+            <File>
+              <FileName>helium.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\helium.c</FilePath>
+            </File>
+            <File>
+              <FileName>software.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\software.c</FilePath>
             </File>
           </Files>
         </Group>

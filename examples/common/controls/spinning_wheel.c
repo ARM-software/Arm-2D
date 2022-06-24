@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2022 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -17,13 +17,11 @@
  */
 
 /*============================ INCLUDES ======================================*/
-#include "app_cfg.h"
-
-
 #include "arm_2d.h"
 #include "arm_2d_helper.h"
-#include "platform.h"
 #include <math.h>
+
+#include "__common.h"
 
 #include "./spinning_wheel.h"
 #include "./shape_round_corner_box.h"
@@ -85,12 +83,12 @@ void spinning_wheel_init(void)
 
 void spinning_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
 {
-    ASSERT(NULL != ptTarget);
+    assert(NULL != ptTarget);
     ARM_2D_UNUSED(ptTarget);
     ARM_2D_UNUSED(bIsNewFrame);
     static float s_fAngle = 0.0f;
 
-    arm_2d_align_centre(*ptTarget, 100, 100) {
+    arm_2d_align_centre(ptTarget->tRegion, 100, 100) {
         
         draw_round_corner_box(  ptTarget, 
                                 &__centre_region,
@@ -127,7 +125,7 @@ void spinning_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
         arm_2d_op_wait_async(NULL);
     } while(0);
 
-    arm_2d_align_centre(*ptTarget, s_tileSpinWheelMask.tRegion.tSize) {
+    arm_2d_align_centre(ptTarget->tRegion, s_tileSpinWheelMask.tRegion.tSize) {
         arm_2d_rgb565_fill_colour_with_mask(
                                 ptTarget, 
                                 &__centre_region, 

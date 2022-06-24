@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        13. June 2022
- * $Revision:    V.1.0.2
+ * $Date:        17. June 2022
+ * $Revision:    V.1.0.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -44,7 +44,7 @@
 extern "C" {
 #endif
 
-/*! \brief suppress some warnings for user applications when using arm-2d.
+/* suppress some warnings for user applications when using arm-2d.
  */
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -53,6 +53,11 @@ extern "C" {
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)
 #   pragma diag_suppress 1296,174
 #endif
+
+/*!
+ * \addtogroup gKernel 1 Kernel
+ * @{
+ */
 
 /*============================ MACROS ========================================*/
 
@@ -72,7 +77,10 @@ extern "C" {
 /*============================ TYPES =========================================*/
 
 typedef struct {
+    /*! if the target region is out of the target tile, return arm_fsm_rt_cpl */
     uint8_t     TREAT_OUT_OF_RANGE_AS_COMPLETE          : 1;
+    
+    /*! indicate that there is a dedicated thread to run arm_2d_task() in RTOS env */
     uint8_t     HAS_DEDICATED_THREAD_FOR_2D_TASK        : 1;
     uint8_t                                             : 6;
 } arm_2d_runtime_feature_t;
@@ -102,8 +110,8 @@ void arm_2d_init(void);
 
 /*!
  * \brief set the default frame buffer
- * \param ptFramebuffer the new frame buffer, 
- * \note  if NULL is given, no default frame buffer will be used
+ * \param ptFrameBuffer the new frame buffer, 
+ * \note  Passing NULL means using no default framebuffer
  * \return arm_2d_tile_t* the address of the old frame buffer
  */
 extern 
@@ -169,6 +177,8 @@ arm_2d_op_status_t arm_2d_get_op_status(arm_2d_op_core_t *ptOP);
  */
 extern
 arm_fsm_rt_t arm_2d_task(arm_2d_task_t *ptTask);
+
+/*! @} */
 
 /*! \note delibrately comment out */
 //#if defined(__clang__)

@@ -19,6 +19,10 @@
 /* ARM::CMSIS:RTOS2:Keil RTX5:Library:5.5.4 */
 #define RTE_CMSIS_RTOS2                 /* CMSIS-RTOS2 */
         #define RTE_CMSIS_RTOS2_RTX5            /* CMSIS-RTOS2 Keil RTX5 */
+/* Arm::Acceleration:Arm-2D Extras:Controls:1.0.0 */
+#define __RTE_ACCELERATION_ARM_2D_EXTRA_CONTROLS__
+/* Arm::Acceleration:Arm-2D Extras:LCD ASCII Printf:1.0.0 */
+#define __RTE_ACCELERATION_ARM_2D_EXTRA_LCD_PRINTF__
 /* Arm::Acceleration:Arm-2D Helper:PFB:1.0.0-preview */
 #define __RTE_ACCELERATION_ARM_2D_HELPER_PFB__
 /* Arm::Acceleration:Arm-2D:Alpha-Blending:1.0.0-preview */

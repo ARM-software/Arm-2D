@@ -21,8 +21,8 @@
  * Title:        arm-2d.c
  * Description:  Tables for pixel pipeline OPs
  *
- * $Date:        14. April 2022
- * $Revision:    V.1.0.0
+ * $Date:        31. May 2022
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -79,9 +79,11 @@ extern "C" {
 /*============================ PROTOTYPES ====================================*/
 
 #if defined(__ARM_2D_HAS_ASYNC__) && __ARM_2D_HAS_ASYNC__
-/*! \brief initialise the arm-2d pipeline
- *! \param none
- *! \return none
+/*! 
+ * \brief initialise the arm-2d pipeline
+ * \param ptSubTasks an array of __arm_2d_sub_task_t objects
+ * \param hwCount the number of items in the array
+ * \return arm_2d_err_t error code
  */
 extern
 arm_2d_err_t __arm_2d_async_init(   __arm_2d_sub_task_t *ptSubTasks, 
@@ -89,18 +91,16 @@ arm_2d_err_t __arm_2d_async_init(   __arm_2d_sub_task_t *ptSubTasks,
 #endif
 
 #if defined(__ARM_2D_HAS_HELIUM__) && __ARM_2D_HAS_HELIUM__
-/*! \brief initialise the helium service
- *! \param none
- *! \return none
+/*! 
+ * \brief initialise the helium acceleration
  */
 extern
 void __arm_2d_helium_init(void);
 #endif
 
 #if defined(__ARM_2D_HAS_CDE__) && __ARM_2D_HAS_CDE__
-/*! \brief initialise the cde service
- *! \param none
- *! \return none
+/*! 
+ * \brief initialise the cde service
  */
 extern
 void __arm_2d_cde_init(void);
@@ -109,18 +109,16 @@ void __arm_2d_cde_init(void);
 
 
 #if defined(__ARM_2D_HAS_HW_ACC__) && __ARM_2D_HAS_HW_ACC__
-/*! \brief initialise the hardware accelerator adapter
- *! \param none
- *! \return none
+/*! 
+ * \brief initialise the hardware accelerator adapter
  */
 extern
 void __arm_2d_acc_init(void);
 #endif
 
 
-/*! \brief initialise the whole arm-2d core service
- *! \param none
- *! \return none
+/*! 
+ *  \brief initialise the arm-2d core service
  */
 extern
 void __arm_2d_init(void);
@@ -128,10 +126,8 @@ void __arm_2d_init(void);
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
-
-/*! \brief initialise arm-2d
- *! \param none
- *! \return none
+/*! 
+ * \brief initialise arm-2d
  */
 void arm_2d_init(void)
 {
@@ -140,7 +136,9 @@ void arm_2d_init(void)
     do {
         static __arm_2d_sub_task_t 
             s_tDefaultTaskPool[__ARM_2D_CFG_DEFAULT_SUB_TASK_POOL_SIZE__];
-        
+
+        ARM_2D_UNUSED(s_tDefaultTaskPool);
+
         __arm_2d_async_init(s_tDefaultTaskPool, dimof(s_tDefaultTaskPool));
     } while(0);
 

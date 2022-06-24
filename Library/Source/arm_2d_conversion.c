@@ -21,8 +21,8 @@
  * Title:        arm-2d_draw.c
  * Description:  APIs for colour format conversion
  *
- * $Date:        21. April 2022
- * $Revision:    V.1.0.0
+ * $Date:        16. June 2022
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -91,6 +91,13 @@ void __arm_2d_impl_rgb565_to_cccn888(uint16_t *__RESTRICT phwSourceBase,
  * Convert Colour format                                                      *
  *----------------------------------------------------------------------------*/
 
+/*!
+ * \brief convert the colour format of a given tile to rgb888
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[out] ptTarget the output tile (holding a buffer)
+ * \return arm_fsm_rt_t the operation result
+ */
 ARM_NONNULL(2,3)
 arm_fsm_rt_t arm_2dp_convert_colour_to_rgb888(  arm_2d_op_cl_convt_t *ptOP,
                                                 const arm_2d_tile_t *ptSource,
@@ -116,7 +123,13 @@ arm_fsm_rt_t arm_2dp_convert_colour_to_rgb888(  arm_2d_op_cl_convt_t *ptOP,
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
 
-
+/*!
+ * \brief convert the colour format of a given tile to rgb565
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[out] ptTarget the output tile (holding a buffer)
+ * \return arm_fsm_rt_t the operation result
+ */
 ARM_NONNULL(2,3)
 arm_fsm_rt_t arm_2dp_convert_colour_to_rgb565(  arm_2d_op_cl_convt_t *ptOP,
                                                 const arm_2d_tile_t *ptSource,

@@ -10,7 +10,7 @@
       <TargetName>DO_NOT_USE_V2M-MPS3-CM33</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
+      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -340,7 +340,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>NDEBUG,GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0,EXTERANL_DELAY_MS_DECLARE="extern void delay_ms(uint32_t);"</Define>
               <Undefine></Undefine>
-              <IncludePath>.\platform;.\platform\mps3\v2m_mps3;..\..\Library\Include;.\platform\mps3;.;..\..\Helper\Include</IncludePath>
+              <IncludePath>..\common\platform;..\common\platform\mps3\v2m_mps3;..\common\platform\mps3;..\common\controls;..\common\platform\lib;..\..\Library\Include;.;..\..\Helper\Include;..\..\Library\Include\template;..\common\benchmark</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -396,14 +396,19 @@
               <FilePath>.\app_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>example_gui.c</FileName>
+              <FileName>benchmark_generic.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\example_gui.c</FilePath>
+              <FilePath>..\common\benchmark\benchmark_generic.c</FilePath>
             </File>
             <File>
-              <FileName>example_gui.h</FileName>
+              <FileName>benchmark_generic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\example_gui.h</FilePath>
+              <FilePath>..\common\benchmark\benchmark_generic.h</FilePath>
+            </File>
+            <File>
+              <FileName>benchmark_generic_app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\benchmark\benchmark_generic_app.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -429,21 +434,6 @@
               <FileName>app_platform.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\platform\app_platform.c</FilePath>
-            </File>
-            <File>
-              <FileName>GLCD_Fonts.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\GLCD_Fonts.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_printf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\lcd_printf.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_printf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\platform\lcd_printf.h</FilePath>
             </File>
             <File>
               <FileName>platform.h</FileName>
@@ -506,11 +496,6 @@
               <FilePath>..\common\controls\controls.c</FilePath>
             </File>
             <File>
-              <FileName>controls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\controls\controls.h</FilePath>
-            </File>
-            <File>
               <FileName>shape_round_corner_box.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\shape_round_corner_box.c</FilePath>
@@ -529,6 +514,31 @@
               <FileName>spinning_wheel.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\controls\spinning_wheel.h</FilePath>
+            </File>
+            <File>
+              <FileName>GLCD_Fonts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\GLCD_Fonts.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\lcd_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_controls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_lcd_printf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_lcd_printf.h</FilePath>
+            </File>
+            <File>
+              <FileName>__common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\__common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -691,14 +701,14 @@
               <FilePath>..\..\Library\Include\template\arm_2d_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_transform_helium.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Library\Source\arm_2d_transform_helium.c</FilePath>
-            </File>
-            <File>
               <FileName>__arm_2d_transform_helium.inc</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_transform_helium.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_transform_helium.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_transform_helium.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -927,6 +937,16 @@
               <FileName>arm_2d_helper.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Helper\Include\arm_2d_helper.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_scene.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Helper\Include\arm_2d_helper_scene.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_scene.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_scene.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1419,7 +1439,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>NDEBUG,GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1,</Define>
               <Undefine></Undefine>
-              <IncludePath>..\common\platform;..\..\Library\Include;.;..\..\Helper\Include;..\common\platform\lib</IncludePath>
+              <IncludePath>..\common\platform;..\..\Library\Include;.;..\..\Helper\Include;..\common\platform\lib;..\..\Library\Include\template;..\common\controls;..\common\platform\mps2;..\common\benchmark</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1475,14 +1495,19 @@
               <FilePath>.\app_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>example_gui.c</FileName>
+              <FileName>benchmark_generic.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\example_gui.c</FilePath>
+              <FilePath>..\common\benchmark\benchmark_generic.c</FilePath>
             </File>
             <File>
-              <FileName>example_gui.h</FileName>
+              <FileName>benchmark_generic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\example_gui.h</FilePath>
+              <FilePath>..\common\benchmark\benchmark_generic.h</FilePath>
+            </File>
+            <File>
+              <FileName>benchmark_generic_app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\benchmark\benchmark_generic_app.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1508,21 +1533,6 @@
               <FileName>app_platform.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\platform\app_platform.c</FilePath>
-            </File>
-            <File>
-              <FileName>GLCD_Fonts.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\GLCD_Fonts.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_printf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\lcd_printf.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_printf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\platform\lcd_printf.h</FilePath>
             </File>
             <File>
               <FileName>platform.h</FileName>
@@ -1585,11 +1595,6 @@
               <FilePath>..\common\controls\controls.c</FilePath>
             </File>
             <File>
-              <FileName>controls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\controls\controls.h</FilePath>
-            </File>
-            <File>
               <FileName>shape_round_corner_box.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\shape_round_corner_box.c</FilePath>
@@ -1608,6 +1613,31 @@
               <FileName>spinning_wheel.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\controls\spinning_wheel.h</FilePath>
+            </File>
+            <File>
+              <FileName>GLCD_Fonts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\GLCD_Fonts.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\lcd_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_controls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_lcd_printf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_lcd_printf.h</FilePath>
+            </File>
+            <File>
+              <FileName>__common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\__common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1770,14 +1800,14 @@
               <FilePath>..\..\Library\Include\template\arm_2d_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_transform_helium.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Library\Source\arm_2d_transform_helium.c</FilePath>
-            </File>
-            <File>
               <FileName>__arm_2d_transform_helium.inc</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_transform_helium.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_transform_helium.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_transform_helium.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2007,6 +2037,16 @@
               <FileType>5</FileType>
               <FilePath>..\..\Helper\Include\arm_2d_helper.h</FilePath>
             </File>
+            <File>
+              <FileName>arm_2d_helper_scene.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Helper\Include\arm_2d_helper_scene.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_scene.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_scene.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2018,7 +2058,7 @@
               <RVCTZI>0</RVCTZI>
               <RVCTOtherData>0</RVCTOtherData>
               <ModuleSelection>0</ModuleSelection>
-              <IncludeInBuild>1</IncludeInBuild>
+              <IncludeInBuild>0</IncludeInBuild>
               <AlwaysBuild>2</AlwaysBuild>
               <GenerateAssemblyFile>2</GenerateAssemblyFile>
               <AssembleAssemblyFile>2</AssembleAssemblyFile>
@@ -2565,9 +2605,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>__USE_FVP__,NDEBUG,GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1</Define>
+              <Define>__USE_FVP__,NDEBUG,GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1,__RTE_ACCELERATION_ARM_2D_EXTRA_LCD_PRINTF__,__RTE_ACCELERATION_ARM_2D_EXTRA_CONTROLS__</Define>
               <Undefine></Undefine>
-              <IncludePath>..\common\platform;.;..\..\Library\Include;..\..\Helper\Include;..\common\platform\lib</IncludePath>
+              <IncludePath>..\common\platform;.;..\..\Library\Include;..\..\Helper\Include;..\common\platform\lib;..\..\Library\Include\template;..\common\platform\mps2;..\common\controls;..\common\benchmark</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2622,14 +2662,19 @@
               <FilePath>.\app_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>example_gui.c</FileName>
+              <FileName>benchmark_generic.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\example_gui.c</FilePath>
+              <FilePath>..\common\benchmark\benchmark_generic.c</FilePath>
             </File>
             <File>
-              <FileName>example_gui.h</FileName>
+              <FileName>benchmark_generic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\example_gui.h</FilePath>
+              <FilePath>..\common\benchmark\benchmark_generic.h</FilePath>
+            </File>
+            <File>
+              <FileName>benchmark_generic_app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\benchmark\benchmark_generic_app.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2655,21 +2700,6 @@
               <FileName>app_platform.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\platform\app_platform.c</FilePath>
-            </File>
-            <File>
-              <FileName>GLCD_Fonts.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\GLCD_Fonts.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_printf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\lcd_printf.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_printf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\platform\lcd_printf.h</FilePath>
             </File>
             <File>
               <FileName>platform.h</FileName>
@@ -2732,11 +2762,6 @@
               <FilePath>..\common\controls\controls.c</FilePath>
             </File>
             <File>
-              <FileName>controls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\controls\controls.h</FilePath>
-            </File>
-            <File>
               <FileName>shape_round_corner_box.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\shape_round_corner_box.c</FilePath>
@@ -2755,6 +2780,31 @@
               <FileName>spinning_wheel.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\controls\spinning_wheel.h</FilePath>
+            </File>
+            <File>
+              <FileName>GLCD_Fonts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\GLCD_Fonts.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\lcd_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_controls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_lcd_printf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_lcd_printf.h</FilePath>
+            </File>
+            <File>
+              <FileName>__common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\__common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2917,14 +2967,14 @@
               <FilePath>..\..\Library\Include\template\arm_2d_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_transform_helium.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Library\Source\arm_2d_transform_helium.c</FilePath>
-            </File>
-            <File>
               <FileName>__arm_2d_transform_helium.inc</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_transform_helium.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_transform_helium.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_transform_helium.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3154,6 +3204,16 @@
               <FileType>5</FileType>
               <FilePath>..\..\Helper\Include\arm_2d_helper.h</FilePath>
             </File>
+            <File>
+              <FileName>arm_2d_helper_scene.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Helper\Include\arm_2d_helper_scene.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_scene.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_scene.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3165,7 +3225,7 @@
               <RVCTZI>0</RVCTZI>
               <RVCTOtherData>0</RVCTOtherData>
               <ModuleSelection>0</ModuleSelection>
-              <IncludeInBuild>1</IncludeInBuild>
+              <IncludeInBuild>0</IncludeInBuild>
               <AlwaysBuild>2</AlwaysBuild>
               <GenerateAssemblyFile>2</GenerateAssemblyFile>
               <AssembleAssemblyFile>2</AssembleAssemblyFile>
@@ -3714,7 +3774,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>NDEBUG,GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1,__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__</Define>
               <Undefine></Undefine>
-              <IncludePath>..\common\platform;..\common\platform\v2m_mps2;..\..\Library\Include;.;..\..\Helper\Include;..\common\platform\lib;..\common\platform\mps2</IncludePath>
+              <IncludePath>..\common\platform;..\common\platform\v2m_mps2;..\..\Library\Include;.;..\..\Helper\Include;..\common\platform\lib;..\common\platform\mps2;..\..\Library\Include\template;..\common\controls;..\common\benchmark</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3770,14 +3830,19 @@
               <FilePath>.\app_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>example_gui.c</FileName>
+              <FileName>benchmark_generic.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\example_gui.c</FilePath>
+              <FilePath>..\common\benchmark\benchmark_generic.c</FilePath>
             </File>
             <File>
-              <FileName>example_gui.h</FileName>
+              <FileName>benchmark_generic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\example_gui.h</FilePath>
+              <FilePath>..\common\benchmark\benchmark_generic.h</FilePath>
+            </File>
+            <File>
+              <FileName>benchmark_generic_app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\benchmark\benchmark_generic_app.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3803,21 +3868,6 @@
               <FileName>app_platform.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\platform\app_platform.c</FilePath>
-            </File>
-            <File>
-              <FileName>GLCD_Fonts.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\GLCD_Fonts.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_printf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\lcd_printf.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_printf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\platform\lcd_printf.h</FilePath>
             </File>
             <File>
               <FileName>platform.h</FileName>
@@ -3880,11 +3930,6 @@
               <FilePath>..\common\controls\controls.c</FilePath>
             </File>
             <File>
-              <FileName>controls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\controls\controls.h</FilePath>
-            </File>
-            <File>
               <FileName>shape_round_corner_box.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\shape_round_corner_box.c</FilePath>
@@ -3903,6 +3948,31 @@
               <FileName>spinning_wheel.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\controls\spinning_wheel.h</FilePath>
+            </File>
+            <File>
+              <FileName>GLCD_Fonts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\GLCD_Fonts.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\lcd_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_controls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_lcd_printf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_lcd_printf.h</FilePath>
+            </File>
+            <File>
+              <FileName>__common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\__common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4065,14 +4135,14 @@
               <FilePath>..\..\Library\Include\template\arm_2d_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_transform_helium.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Library\Source\arm_2d_transform_helium.c</FilePath>
-            </File>
-            <File>
               <FileName>__arm_2d_transform_helium.inc</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_transform_helium.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_transform_helium.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_transform_helium.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4301,6 +4371,16 @@
               <FileName>arm_2d_helper.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Helper\Include\arm_2d_helper.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_scene.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Helper\Include\arm_2d_helper_scene.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_scene.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_scene.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4793,7 +4873,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>NDEBUG,LCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\common\platform;..\common\platform\mps3;..\common\platform\mps3\v2m_mps3;..\..\Library\Include;..\..\Helper\Include;.;..\common\platform\lib</IncludePath>
+              <IncludePath>..\common\platform;..\common\platform\mps3;..\common\platform\mps3\v2m_mps3;..\..\Library\Include;..\..\Helper\Include;.;..\common\platform\lib;..\..\Library\Include\template;..\common\controls;..\common\benchmark</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4849,14 +4929,19 @@
               <FilePath>.\app_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>example_gui.c</FileName>
+              <FileName>benchmark_generic.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\example_gui.c</FilePath>
+              <FilePath>..\common\benchmark\benchmark_generic.c</FilePath>
             </File>
             <File>
-              <FileName>example_gui.h</FileName>
+              <FileName>benchmark_generic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\example_gui.h</FilePath>
+              <FilePath>..\common\benchmark\benchmark_generic.h</FilePath>
+            </File>
+            <File>
+              <FileName>benchmark_generic_app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\benchmark\benchmark_generic_app.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4882,21 +4967,6 @@
               <FileName>app_platform.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\platform\app_platform.c</FilePath>
-            </File>
-            <File>
-              <FileName>GLCD_Fonts.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\GLCD_Fonts.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_printf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\lcd_printf.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_printf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\platform\lcd_printf.h</FilePath>
             </File>
             <File>
               <FileName>platform.h</FileName>
@@ -4959,11 +5029,6 @@
               <FilePath>..\common\controls\controls.c</FilePath>
             </File>
             <File>
-              <FileName>controls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\controls\controls.h</FilePath>
-            </File>
-            <File>
               <FileName>shape_round_corner_box.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\shape_round_corner_box.c</FilePath>
@@ -4982,6 +5047,31 @@
               <FileName>spinning_wheel.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\controls\spinning_wheel.h</FilePath>
+            </File>
+            <File>
+              <FileName>GLCD_Fonts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\GLCD_Fonts.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\lcd_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_controls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_lcd_printf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_lcd_printf.h</FilePath>
+            </File>
+            <File>
+              <FileName>__common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\__common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5144,14 +5234,14 @@
               <FilePath>..\..\Library\Include\template\arm_2d_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_transform_helium.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Library\Source\arm_2d_transform_helium.c</FilePath>
-            </File>
-            <File>
               <FileName>__arm_2d_transform_helium.inc</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_transform_helium.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_transform_helium.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_transform_helium.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5380,6 +5470,16 @@
               <FileName>arm_2d_helper.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Helper\Include\arm_2d_helper.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_scene.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Helper\Include\arm_2d_helper_scene.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_scene.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_scene.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5941,7 +6041,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>NDEBUG,GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\common\platform;..\common\platform\lib;..\..\Library\Include;..\..\Helper\Include;.</IncludePath>
+              <IncludePath>..\common\platform;..\common\platform\lib;..\..\Library\Include;..\..\Helper\Include;.;..\..\Library\Include\template;..\common\controls;..\common\platform\mps2;..\common\benchmark</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5997,14 +6097,19 @@
               <FilePath>.\app_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>example_gui.c</FileName>
+              <FileName>benchmark_generic.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\example_gui.c</FilePath>
+              <FilePath>..\common\benchmark\benchmark_generic.c</FilePath>
             </File>
             <File>
-              <FileName>example_gui.h</FileName>
+              <FileName>benchmark_generic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\example_gui.h</FilePath>
+              <FilePath>..\common\benchmark\benchmark_generic.h</FilePath>
+            </File>
+            <File>
+              <FileName>benchmark_generic_app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\benchmark\benchmark_generic_app.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6030,21 +6135,6 @@
               <FileName>app_platform.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\platform\app_platform.c</FilePath>
-            </File>
-            <File>
-              <FileName>GLCD_Fonts.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\GLCD_Fonts.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_printf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\lcd_printf.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_printf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\platform\lcd_printf.h</FilePath>
             </File>
             <File>
               <FileName>platform.h</FileName>
@@ -6107,11 +6197,6 @@
               <FilePath>..\common\controls\controls.c</FilePath>
             </File>
             <File>
-              <FileName>controls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\controls\controls.h</FilePath>
-            </File>
-            <File>
               <FileName>shape_round_corner_box.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\shape_round_corner_box.c</FilePath>
@@ -6130,6 +6215,31 @@
               <FileName>spinning_wheel.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\controls\spinning_wheel.h</FilePath>
+            </File>
+            <File>
+              <FileName>GLCD_Fonts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\GLCD_Fonts.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\lcd_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_controls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_lcd_printf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_lcd_printf.h</FilePath>
+            </File>
+            <File>
+              <FileName>__common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\__common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6292,14 +6402,14 @@
               <FilePath>..\..\Library\Include\template\arm_2d_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_transform_helium.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Library\Source\arm_2d_transform_helium.c</FilePath>
-            </File>
-            <File>
               <FileName>__arm_2d_transform_helium.inc</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_transform_helium.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_transform_helium.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_transform_helium.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6529,6 +6639,16 @@
               <FileType>5</FileType>
               <FilePath>..\..\Helper\Include\arm_2d_helper.h</FilePath>
             </File>
+            <File>
+              <FileName>arm_2d_helper_scene.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Helper\Include\arm_2d_helper_scene.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_scene.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_scene.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6540,7 +6660,7 @@
               <RVCTZI>0</RVCTZI>
               <RVCTOtherData>0</RVCTOtherData>
               <ModuleSelection>0</ModuleSelection>
-              <IncludeInBuild>1</IncludeInBuild>
+              <IncludeInBuild>0</IncludeInBuild>
               <AlwaysBuild>2</AlwaysBuild>
               <GenerateAssemblyFile>2</GenerateAssemblyFile>
               <AssembleAssemblyFile>2</AssembleAssemblyFile>
@@ -7089,7 +7209,7 @@
               <MiscControls>-Omax -Wno-nonportable-include-path</MiscControls>
               <Define>NDEBUG,GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\common\platform;..\common\platform\lib;..\..\Library\Include;..\..\Helper\Include;.</IncludePath>
+              <IncludePath>..\common\platform;..\common\platform\lib;..\..\Library\Include;..\..\Helper\Include;.;..\..\Library\Include\template;..\common\controls;..\common\platform\mps2;..\common\benchmark</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7145,14 +7265,19 @@
               <FilePath>.\app_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>example_gui.c</FileName>
+              <FileName>benchmark_generic.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\example_gui.c</FilePath>
+              <FilePath>..\common\benchmark\benchmark_generic.c</FilePath>
             </File>
             <File>
-              <FileName>example_gui.h</FileName>
+              <FileName>benchmark_generic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\example_gui.h</FilePath>
+              <FilePath>..\common\benchmark\benchmark_generic.h</FilePath>
+            </File>
+            <File>
+              <FileName>benchmark_generic_app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\benchmark\benchmark_generic_app.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7178,21 +7303,6 @@
               <FileName>app_platform.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\platform\app_platform.c</FilePath>
-            </File>
-            <File>
-              <FileName>GLCD_Fonts.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\GLCD_Fonts.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_printf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\lcd_printf.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_printf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\platform\lcd_printf.h</FilePath>
             </File>
             <File>
               <FileName>platform.h</FileName>
@@ -7255,11 +7365,6 @@
               <FilePath>..\common\controls\controls.c</FilePath>
             </File>
             <File>
-              <FileName>controls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\controls\controls.h</FilePath>
-            </File>
-            <File>
               <FileName>shape_round_corner_box.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\shape_round_corner_box.c</FilePath>
@@ -7278,6 +7383,31 @@
               <FileName>spinning_wheel.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\controls\spinning_wheel.h</FilePath>
+            </File>
+            <File>
+              <FileName>GLCD_Fonts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\GLCD_Fonts.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\lcd_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_controls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_lcd_printf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_lcd_printf.h</FilePath>
+            </File>
+            <File>
+              <FileName>__common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\__common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7440,14 +7570,14 @@
               <FilePath>..\..\Library\Include\template\arm_2d_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_transform_helium.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Library\Source\arm_2d_transform_helium.c</FilePath>
-            </File>
-            <File>
               <FileName>__arm_2d_transform_helium.inc</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_transform_helium.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_transform_helium.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_transform_helium.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7677,6 +7807,16 @@
               <FileType>5</FileType>
               <FilePath>..\..\Helper\Include\arm_2d_helper.h</FilePath>
             </File>
+            <File>
+              <FileName>arm_2d_helper_scene.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Helper\Include\arm_2d_helper_scene.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_scene.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_scene.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -7688,7 +7828,7 @@
               <RVCTZI>0</RVCTZI>
               <RVCTOtherData>0</RVCTOtherData>
               <ModuleSelection>0</ModuleSelection>
-              <IncludeInBuild>1</IncludeInBuild>
+              <IncludeInBuild>0</IncludeInBuild>
               <AlwaysBuild>2</AlwaysBuild>
               <GenerateAssemblyFile>2</GenerateAssemblyFile>
               <AssembleAssemblyFile>2</AssembleAssemblyFile>
@@ -7907,7 +8047,7 @@
       <TargetName>STM32F746G-Discovery</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6170000::V6.17::.\Arm Compiler 6.17</pCCUsed>
+      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -8237,7 +8377,7 @@
               <MiscControls>-Wno-nonportable-include-path -Omax</MiscControls>
               <Define>NDEBUG,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Library\Include;.;..\..\Helper\Include;..\common\platform;..\common\platform\stm32f746g-discovery;..\common\platform\lib</IncludePath>
+              <IncludePath>..\..\Library\Include;.;..\..\Helper\Include;..\common\platform;..\common\platform\stm32f746g-discovery;..\common\platform\lib;..\..\Library\Include\template;..\common\controls;..\common\benchmark;..\common\benchmark</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -8293,14 +8433,19 @@
               <FilePath>.\app_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>example_gui.c</FileName>
+              <FileName>benchmark_generic.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\example_gui.c</FilePath>
+              <FilePath>..\common\benchmark\benchmark_generic.c</FilePath>
             </File>
             <File>
-              <FileName>example_gui.h</FileName>
+              <FileName>benchmark_generic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\example_gui.h</FilePath>
+              <FilePath>..\common\benchmark\benchmark_generic.h</FilePath>
+            </File>
+            <File>
+              <FileName>benchmark_generic_app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\benchmark\benchmark_generic_app.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8326,21 +8471,6 @@
               <FileName>app_platform.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\platform\app_platform.c</FilePath>
-            </File>
-            <File>
-              <FileName>GLCD_Fonts.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\GLCD_Fonts.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_printf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\lcd_printf.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_printf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\platform\lcd_printf.h</FilePath>
             </File>
             <File>
               <FileName>platform.h</FileName>
@@ -8403,11 +8533,6 @@
               <FilePath>..\common\controls\controls.c</FilePath>
             </File>
             <File>
-              <FileName>controls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\controls\controls.h</FilePath>
-            </File>
-            <File>
               <FileName>shape_round_corner_box.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\shape_round_corner_box.c</FilePath>
@@ -8426,6 +8551,31 @@
               <FileName>spinning_wheel.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\controls\spinning_wheel.h</FilePath>
+            </File>
+            <File>
+              <FileName>GLCD_Fonts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\GLCD_Fonts.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\lcd_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_controls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_lcd_printf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_lcd_printf.h</FilePath>
+            </File>
+            <File>
+              <FileName>__common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\__common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -8588,14 +8738,14 @@
               <FilePath>..\..\Library\Include\template\arm_2d_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_transform_helium.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Library\Source\arm_2d_transform_helium.c</FilePath>
-            </File>
-            <File>
               <FileName>__arm_2d_transform_helium.inc</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_transform_helium.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_transform_helium.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_transform_helium.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8824,6 +8974,16 @@
               <FileName>arm_2d_helper.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Helper\Include\arm_2d_helper.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_scene.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Helper\Include\arm_2d_helper_scene.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_scene.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_scene.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9055,7 +9215,7 @@
       <TargetName>AN547-Cortex-M55_r0</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6170000::V6.17::.\ARMCompiler6.17</pCCUsed>
+      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -9178,7 +9338,7 @@
             <UseExternalTool>1</UseExternalTool>
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
-            <Capability>1</Capability>
+            <Capability>0</Capability>
             <DriverSelection>4102</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
@@ -9385,7 +9545,7 @@
               <MiscControls>-Wno-padded -Omax</MiscControls>
               <Define>__USE_FVP__,NDEBUG,LCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__USE_AN547__,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\common\platform;..\common\platform\mps3;..\common\platform\mps3\v2m_mps3;..\..\Library\Include;..\..\Helper\Include;.;..\common\platform\lib</IncludePath>
+              <IncludePath>..\common\platform;..\common\platform\mps3;..\common\platform\mps3\v2m_mps3;..\..\Library\Include;..\..\Helper\Include;.;..\common\platform\lib;..\..\Library\Include\template;..\common\controls;..\common\benchmark</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -9441,14 +9601,19 @@
               <FilePath>.\app_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>example_gui.c</FileName>
+              <FileName>benchmark_generic.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\example_gui.c</FilePath>
+              <FilePath>..\common\benchmark\benchmark_generic.c</FilePath>
             </File>
             <File>
-              <FileName>example_gui.h</FileName>
+              <FileName>benchmark_generic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\example_gui.h</FilePath>
+              <FilePath>..\common\benchmark\benchmark_generic.h</FilePath>
+            </File>
+            <File>
+              <FileName>benchmark_generic_app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\benchmark\benchmark_generic_app.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9474,21 +9639,6 @@
               <FileName>app_platform.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\platform\app_platform.c</FilePath>
-            </File>
-            <File>
-              <FileName>GLCD_Fonts.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\GLCD_Fonts.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_printf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\lcd_printf.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_printf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\platform\lcd_printf.h</FilePath>
             </File>
             <File>
               <FileName>platform.h</FileName>
@@ -9551,11 +9701,6 @@
               <FilePath>..\common\controls\controls.c</FilePath>
             </File>
             <File>
-              <FileName>controls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\controls\controls.h</FilePath>
-            </File>
-            <File>
               <FileName>shape_round_corner_box.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\shape_round_corner_box.c</FilePath>
@@ -9574,6 +9719,31 @@
               <FileName>spinning_wheel.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\controls\spinning_wheel.h</FilePath>
+            </File>
+            <File>
+              <FileName>GLCD_Fonts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\GLCD_Fonts.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\lcd_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_controls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_lcd_printf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_lcd_printf.h</FilePath>
+            </File>
+            <File>
+              <FileName>__common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\__common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -9736,14 +9906,14 @@
               <FilePath>..\..\Library\Include\template\arm_2d_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_transform_helium.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Library\Source\arm_2d_transform_helium.c</FilePath>
-            </File>
-            <File>
               <FileName>__arm_2d_transform_helium.inc</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_transform_helium.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_transform_helium.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_transform_helium.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9973,6 +10143,16 @@
               <FileType>5</FileType>
               <FilePath>..\..\Helper\Include\arm_2d_helper.h</FilePath>
             </File>
+            <File>
+              <FileName>arm_2d_helper_scene.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Helper\Include\arm_2d_helper_scene.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_scene.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_scene.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -10134,7 +10314,7 @@
       <TargetName>STM32F746G-Discovery-AC5</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060960::V5.06 update 7 (build 960)::ARMCC</pCCUsed>
+      <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -10464,7 +10644,7 @@
               <MiscControls></MiscControls>
               <Define>NDEBUG,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1,__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__</Define>
               <Undefine></Undefine>
-              <IncludePath>..\common\platform;..\common\platform\lib;..\common\platform\stm32f746g-discovery;..\..\Library\Include;.;..\..\Helper\Include</IncludePath>
+              <IncludePath>..\common\platform;..\common\platform\lib;..\common\platform\stm32f746g-discovery;..\..\Library\Include;.;..\..\Helper\Include;..\..\Library\Include\template;..\common\controls;..\common\benchmark</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -10520,14 +10700,19 @@
               <FilePath>.\app_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>example_gui.c</FileName>
+              <FileName>benchmark_generic.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\example_gui.c</FilePath>
+              <FilePath>..\common\benchmark\benchmark_generic.c</FilePath>
             </File>
             <File>
-              <FileName>example_gui.h</FileName>
+              <FileName>benchmark_generic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\example_gui.h</FilePath>
+              <FilePath>..\common\benchmark\benchmark_generic.h</FilePath>
+            </File>
+            <File>
+              <FileName>benchmark_generic_app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\benchmark\benchmark_generic_app.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -10553,21 +10738,6 @@
               <FileName>app_platform.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\platform\app_platform.c</FilePath>
-            </File>
-            <File>
-              <FileName>GLCD_Fonts.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\GLCD_Fonts.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_printf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\lcd_printf.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_printf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\platform\lcd_printf.h</FilePath>
             </File>
             <File>
               <FileName>platform.h</FileName>
@@ -10630,11 +10800,6 @@
               <FilePath>..\common\controls\controls.c</FilePath>
             </File>
             <File>
-              <FileName>controls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\controls\controls.h</FilePath>
-            </File>
-            <File>
               <FileName>shape_round_corner_box.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\shape_round_corner_box.c</FilePath>
@@ -10653,6 +10818,31 @@
               <FileName>spinning_wheel.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\controls\spinning_wheel.h</FilePath>
+            </File>
+            <File>
+              <FileName>GLCD_Fonts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\GLCD_Fonts.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\lcd_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_controls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_lcd_printf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_lcd_printf.h</FilePath>
+            </File>
+            <File>
+              <FileName>__common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\__common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -10815,14 +11005,14 @@
               <FilePath>..\..\Library\Include\template\arm_2d_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_transform_helium.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Library\Source\arm_2d_transform_helium.c</FilePath>
-            </File>
-            <File>
               <FileName>__arm_2d_transform_helium.inc</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_transform_helium.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_transform_helium.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_transform_helium.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -11051,6 +11241,16 @@
               <FileName>arm_2d_helper.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Helper\Include\arm_2d_helper.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_scene.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Helper\Include\arm_2d_helper_scene.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_scene.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_scene.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -11612,7 +11812,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>NDEBUG,LCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\common\platform;..\common\platform\mps3;..\common\platform\mps3\v2m_mps3;..\..\Library\Include;..\..\Helper\Include;.;..\common\platform\lib</IncludePath>
+              <IncludePath>..\common\platform;..\common\platform\mps3;..\common\platform\mps3\v2m_mps3;..\..\Library\Include;..\..\Helper\Include;.;..\common\platform\lib;..\..\Library\Include\template;..\common\controls;..\common\benchmark</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -11668,14 +11868,19 @@
               <FilePath>.\app_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>example_gui.c</FileName>
+              <FileName>benchmark_generic.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\example_gui.c</FilePath>
+              <FilePath>..\common\benchmark\benchmark_generic.c</FilePath>
             </File>
             <File>
-              <FileName>example_gui.h</FileName>
+              <FileName>benchmark_generic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\example_gui.h</FilePath>
+              <FilePath>..\common\benchmark\benchmark_generic.h</FilePath>
+            </File>
+            <File>
+              <FileName>benchmark_generic_app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\benchmark\benchmark_generic_app.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -11701,21 +11906,6 @@
               <FileName>app_platform.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\platform\app_platform.c</FilePath>
-            </File>
-            <File>
-              <FileName>GLCD_Fonts.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\GLCD_Fonts.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_printf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\platform\lcd_printf.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_printf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\platform\lcd_printf.h</FilePath>
             </File>
             <File>
               <FileName>platform.h</FileName>
@@ -11778,11 +11968,6 @@
               <FilePath>..\common\controls\controls.c</FilePath>
             </File>
             <File>
-              <FileName>controls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\controls\controls.h</FilePath>
-            </File>
-            <File>
               <FileName>shape_round_corner_box.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\shape_round_corner_box.c</FilePath>
@@ -11801,6 +11986,31 @@
               <FileName>spinning_wheel.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\controls\spinning_wheel.h</FilePath>
+            </File>
+            <File>
+              <FileName>GLCD_Fonts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\GLCD_Fonts.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\lcd_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_controls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_lcd_printf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_lcd_printf.h</FilePath>
+            </File>
+            <File>
+              <FileName>__common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\__common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -11963,14 +12173,14 @@
               <FilePath>..\..\Library\Include\template\arm_2d_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_transform_helium.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Library\Source\arm_2d_transform_helium.c</FilePath>
-            </File>
-            <File>
               <FileName>__arm_2d_transform_helium.inc</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_transform_helium.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_transform_helium.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_transform_helium.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -12199,6 +12409,16 @@
               <FileName>arm_2d_helper.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Helper\Include\arm_2d_helper.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_scene.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Helper\Include\arm_2d_helper_scene.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_scene.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_scene.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -12600,15 +12820,6 @@
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
-        </targetInfos>
-      </component>
-      <component Cbundle="V2M-MPS2" Cclass="Board Support" Cgroup="Common" Cvendor="Keil" Cversion="2.0.0" condition="CMSDK CMSIS">
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.7.1"/>
-        <targetInfos>
-          <targetInfo name="FastModel"/>
-          <targetInfo name="V2M-MPS2-CM0+"/>
-          <targetInfo name="V2M-MPS2-CM4"/>
-          <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
       <component Capiversion="1.0.0" Cclass="Device" Cgroup="STM32Cube Framework" Csub="Classic" Cvendor="Keil" Cversion="1.2.8" condition="STM32F7 Framework Classic">

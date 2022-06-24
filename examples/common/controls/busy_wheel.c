@@ -17,12 +17,12 @@
  */
 
 /*============================ INCLUDES ======================================*/
-#include "app_cfg.h"
 #include "./busy_wheel.h"
-#include "platform.h"
+#include "./__common.h"
 #include "arm_2d.h"
 #include <math.h>
 #include <time.h>
+#include <assert.h>
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -69,9 +69,12 @@ ARM_NOINIT static uint32_t s_wUnit;
 
 void busy_wheel_init(void)
 {
+    int16_t iXOffset = c_tileWhiteDot.tRegion.tSize.iWidth >> 2;
+    int16_t iYOffset = c_tileWhiteDot.tRegion.tSize.iHeight>> 2;
+    
     for (uint_fast8_t n = 0; n < 8; n++) {
-        s_tDotsLocation[n].iY = (int16_t)(sinf(__PI * (float)n / 4.0f) * __RADIUS);
-        s_tDotsLocation[n].iX = (int16_t)(cosf(__PI * (float)n / 4.0f) * __RADIUS);
+        s_tDotsLocation[n].iY = (int16_t)(sinf(__PI * (float)n / 4.0f) * __RADIUS) + iXOffset;
+        s_tDotsLocation[n].iX = (int16_t)(cosf(__PI * (float)n / 4.0f) * __RADIUS) + iYOffset;
         s_tAlphaTable[n] = (uint8_t)((float)n * 255.0f / 8.0f);
     }
     s_lLastTime = clock();
@@ -81,7 +84,7 @@ void busy_wheel_init(void)
 
 void busy_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
 {
-    ASSERT(NULL != ptTarget);
+    assert(NULL != ptTarget);
     static uint8_t s_chOffset = 0;
     arm_2d_location_t tBasePoint = {
         .iX = ptTarget->tRegion.tSize.iWidth / 2 - 10,
@@ -122,7 +125,7 @@ void busy_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
 
 void busy_wheel2_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
 {
-    ASSERT(NULL != ptTarget);
+    assert(NULL != ptTarget);
     static uint8_t s_chOffset = 0;
     arm_2d_location_t tBasePoint = {
         .iX = ptTarget->tRegion.tSize.iWidth / 2 - 10,
