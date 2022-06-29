@@ -16,7 +16,7 @@
   <repository type="git">https://github.com/ARM-software/Arm-2D.git</repository>
   
   <releases>
-    <release date="2022-06-23" version="1.0.0-preview-beta7" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/developing/cmsis-pack/Arm.Arm-2D.1.0.0-preview-beta7.pack">
+    <release date="2022-06-28" version="1.0.0-preview-beta8" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/developing/cmsis-pack/Arm.Arm-2D.1.0.0-preview-beta8.pack">
       - Add CMSIS-Pack
       - Arm-2D v1.0.0-preview
       - Add support for Transform (rotation and scaling)
@@ -252,11 +252,11 @@
           </RTE_Components_h>
         </component>
         
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cversion="1.0.1" condition="Arm-2D-Helper" maxInstances="4">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cversion="1.0.1" condition="Arm-2D-Helper" maxInstances="8">
           <description>The Display Adapter</description>
           <files>
-            <file category="sourceC"     name="Helper/Source/template/arm_2d_disp_adapter.c" attr="config" version="1.0.1" />
-            <file category="header"      name="Helper/Include/template/arm_2d_disp_adapter.h" attr="config" version="1.0.1" />
+            <file category="sourceC"     name="Helper/Source/template/arm_2d_disp_adapter.c" attr="config" version="1.0.2" />
+            <file category="header"      name="Helper/Include/template/arm_2d_disp_adapter.h" attr="config" version="1.0.2" />
           </files>
           <RTE_Components_h>
 #define __RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER%Instance%__

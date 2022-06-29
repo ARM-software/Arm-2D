@@ -303,7 +303,7 @@ void disp_adapter%Instance%_init(void)
 
         END_IMPL_ARM_2D_REGION_LIST()
         
-        static const arm_2d_scene_t c_tBenchmarkScene[] = {
+        static arm_2d_scene_t s_tScenes[] = {
             [0] = {
                 .fnBackground   = &__pfb_draw_background_handler,
                 .fnScene        = &__pfb_draw_handler,
@@ -315,7 +315,7 @@ void disp_adapter%Instance%_init(void)
         };
         arm_2d_user_scene_player_append_scenes( 
                                         &DISP%Instance%_ADAPTER,
-                                        (arm_2d_scene_t *)c_tBenchmarkScene);
+                                        (arm_2d_scene_t *)s_tScenes);
     } while(0);
 }
 

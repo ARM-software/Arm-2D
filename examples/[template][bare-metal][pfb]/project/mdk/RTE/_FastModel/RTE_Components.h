@@ -20,6 +20,9 @@
 #define __RTE_ACCELERATION_ARM_2D_EXTRA_CONTROLS__
 /* Arm::Acceleration:Arm-2D Extras:LCD ASCII Printf:1.0.0 */
 #define __RTE_ACCELERATION_ARM_2D_EXTRA_LCD_PRINTF__
+/* Arm::Acceleration:Arm-2D Helper:Display Adapter:1.0.1 */
+#define __RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER0__
+
 /* Arm::Acceleration:Arm-2D Helper:PFB:1.1.0 */
 #define __RTE_ACCELERATION_ARM_2D_HELPER_PFB__
 /* Arm::Acceleration:Arm-2D:Alpha-Blending:1.0.0-preview */

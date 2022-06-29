@@ -63,7 +63,7 @@
 #   define __DISP%Instance%_CFG_PFB_BLOCK_HEIGHT__          240
 #endif
 
-// <o>Number of interations <0-2000>
+// <o>Number of iterations <0-2000>
 // <i> run number of iterations before calculate the FPS.
 #ifndef __DISP%Instance%_CFG_ITERATION_CNT
 #   define __DISP%Instance%_CFG_ITERATION_CNT               30

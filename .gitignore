@@ -43,3 +43,6 @@ si4/pixelpipe.si4project/pixelpipe.sip_xsd
 *.wsdt
 *.dnx
 documents/doxygen
+build
+*.gabriel
+*.scvd
