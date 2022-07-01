@@ -10,7 +10,7 @@
   <license>LICENSE</license>
   <repository type="git">https://github.com/ARM-software/Arm-2D.git</repository>
   <releases>
-    <release date="2022-06-28" version="1.0.0-preview-beta8" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/developing/cmsis-pack/Arm.Arm-2D.1.0.0-preview-beta8.pack">
+    <release date="2022-07-01" version="1.0.0-preview-beta9" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/developing/cmsis-pack/Arm.Arm-2D.1.0.0-preview-beta9.pack">
       - Add CMSIS-Pack
       - Arm-2D v1.0.0-preview
       - Add support for Transform (rotation and scaling)
@@ -215,6 +215,7 @@
           <description>Alpha-blending related APIs for Arm-2D</description>
           <files>
             <file category="sourceC"     name="Library/Source/arm_2d_alpha_blending.c" />
+            <file category="doc"         name="documentation/group__gAlpha.html"/>
           </files>
           <RTE_Components_h>
 
@@ -226,6 +227,7 @@
           <description>Transform (rotation and zooming)</description>
           <files>
             <file category="sourceC"     name="Library/Source/arm_2d_transform.c"           condition="CMSIS-DSP"/>
+            <file category="doc"         name="documentation/group__gTransform.html"/>
           </files>
           <RTE_Components_h>
 
@@ -240,6 +242,7 @@
             <file category="include"     name="Helper/Include/" />
             <file category="sourceC"     name="Helper/Source/arm_2d_helper_pfb.c" />
             <file category="sourceC"     name="Helper/Source/arm_2d_helper_scene.c" />
+            <file category="doc"         name="documentation/group__gHelper.html"/>
           </files>
           <RTE_Components_h>
 #define __RTE_ACCELERATION_ARM_2D_HELPER_PFB__
