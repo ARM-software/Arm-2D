@@ -30,7 +30,7 @@ if [ `uname -s` = "Linux" ]
 else
   UTILITIES_OS=Win32
   ZIP="/c/Program\ Files/7-Zip/7z.exe"
-  CMSIS_PACK_PATH="/c/Keil_v5/ARM/Packs/ARM/CMSIS/5.9.0"
+  CMSIS_PACK_PATH="/C/Users/gabriel/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0"
   PATH_TO_ADD="/C/Program Files (x86)/7-Zip/:$CMSIS_PACK_PATH/CMSIS/Utilities/Win32/:/C/xmllint/"
 fi
 [[ ":$PATH:" != *":$PATH_TO_ADD}:"* ]] && PATH="${PATH}:${PATH_TO_ADD}"
@@ -44,6 +44,7 @@ if [ ! -d $UTILITIES_DIR ]; then
   mkdir $UTILITIES_OS
   # PackChk
   #curl -L $UTILITIES_URL/CMSIS/Utilities/$UTILITIES_OS/PackChk.exe?raw=true -o $UTILITIES_OS/PackChk.exe
+  echo Examplexxxxxxx
   cp -f $CMSIS_PACK_PATH/CMSIS/Utilities/$UTILITIES_OS/packchk.exe $UTILITIES_OS/PackChk.exe
   curl -L https://github.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/blob/main/schema/PACK.xsd?raw=true -o ./PACK.xsd
   popd
