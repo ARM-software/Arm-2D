@@ -1,12 +1,14 @@
-# Introduction for Arm-2D
+# Introduction for Arm-2D {#intro}
 
 As part of the Arm-2D help document, this article mainly explains and introduces some basic concepts and necessary knowledge of using Arm-2D. It doesn't matter whether you have read the **README** document (in the root directory) or not. The content of this article is suitable for users who are new to the Arm-2D concept. 
 
-**NOTE:** 
 
-1. This library is a research project used to explore and demonstrate the possibilities of delivering smart-phone modern graphic user interface using low-cost and resource constraint micro-controllers. It is not a committed product from Arm, and the quality of the service is not validated with sophisticated tests but some functional tests. 
 
-2. The library name, i.e. **Arm-2D**, is a temporary term and might be subject to change in the future. The term "the Library" used in this document refers to the **Arm-2D** library unless otherwise. 
+**NOTE:**
+
+1. This library is a research project used to explore and demonstrate the possibilities of delivering smart-phone modern graphic user interface using low-cost and resource constraint micro-controllers. It is not a committed product from Arm, and the quality of the service is not validated with sophisticated tests but some functional tests.
+
+2. The library name, i.e. **Arm-2D**, is a temporary term and might be subject to change in the future. The term "the Library" used in this document refers to the **Arm-2D** library unless otherwise.
 
    
 
@@ -14,16 +16,16 @@ As part of the Arm-2D help document, this article mainly explains and introduces
 
 At the beginning of your adventure, we try to answer some questions you are likely to ask, such as:
 
-- what is Arm-2D? 
-- what problems does it solve? 
-- Who are the users it faces? 
-- What are the parts of Arm-2D? 
-- What assumptions does it make about the environment in which it is used? and 
+- what is Arm-2D?
+- what problems does it solve?
+- Who are the users it faces?
+- What are the parts of Arm-2D?
+- What assumptions does it make about the environment in which it is used? and
 - What are the restrictions?
 
-We hope this could help you with a wonderful journey. 
+We hope this could help you with a wonderful journey.
 
-### 1.1 What is Arm-2D 
+### 1.1 What is Arm-2D
 
 If you want to use a graphical interface in the Linux environment, you don’t have to face hardware such as GPU directly. In fact, the Linux ecosystem will provide you with mature software support, which includes drivers for GPU, GUI stacks and a large number of handy interface reference designs.
 
@@ -31,9 +33,7 @@ Unfortunately, if you are an embedded developer who mainly uses Cortex-M, due to
 
 **Figure 1-1 Ecosystem Comparison between Rich Embedded and Constraint Embedded System in GUI**
 
-<img src="../documents/pictures/TopReadme_1_2a.png" alt="image-20210318235815106" style="zoom: 67%;" /> 
-
-
+![Ecosystem Comparison between Rich and Constraint Embedded System in GUI](./pictures/TopReadme_1_2a.png)
 
 **Arm-2D is not about reinventing a GUI or competing with the existing GUI stacks.** In fact, the problem Arm-2D wants to solve is how to **provide a unified low-level hardware acceleration interface for all GUI stacks** so that these high-level software service providers are no longer tired of writing drivers for a large number of emerging non-standard embedded hardware platforms. Once Arm-2D becomes a tacit understanding between GUI providers and chip manufacturers, everyone can perform their duties to maximise cooperation within the entire embedded ecosystem.
 
@@ -41,11 +41,9 @@ Unfortunately, if you are an embedded developer who mainly uses Cortex-M, due to
 
 **Figure 1-2 The Hierarchy of a Typical Embedded GUI System.**
 
-<img src="../documents/pictures/TopReadme_1_2b.png" alt="image-20210319001021087" style="zoom: 67%;" /> 
+![The Hierarchy of a Typical Embedded GUI System](./pictures/TopReadme_1_2b.png)
 
 To put it simple, **Arm-2D focuses on low level 2D image processing and provides a unified software interface for the vastly different 2D accelerators.**
-
-
 
 ### 1.2 Target Audiences
 
@@ -92,7 +90,7 @@ As a starting point, Arm-2D provides a default software implementation for all a
 
 #### 1.3.2 Helium Acceleration
 
-If you are using an Armv8.1-M processor, such as Cortex-M55, as long as you enable Helium support with compilation options, **Arm-2D library will automatically use Helium technology for acceleration**. 
+If you are using an Armv8.1-M processor, such as Cortex-M55, as long as you enable Helium support with compilation options, **Arm-2D library will automatically use Helium technology for acceleration**.
 
 #### 1.3.4 Third-party Implementation
 
@@ -132,15 +130,14 @@ Arm-2D has provided standard ways to add support for 2D image processing algorit
   - In principle, the library will **NOT** provide APIs for content creation, such as drawing shape, text display and etc, but simple draw point APIs. 
   - In principle, the library will **NOT** provide data structures or related algorithms which are essential for creating a GUI, for example, element tree, GUI message handling and the tree traversal algorithms.
 
-**NOTE: For the temporary limitations in current version, please check section 5.2 in [README](../README.md) for details.** 
-
+**NOTE: For the temporary limitations in current version, please check section 5.2 in [README](./../README.md) for details.**
 
 
 ### 1.5 Operation Categories
 
 **Table 1-1 Summary of Operation Categories.** 
 
-<img src="../documents/pictures/Introduction1_5_1.png" />
+![Summary of Operation Categories.](./pictures/Introduction1_5_1.png)
 
 ### 1.6 Folder Structures
 
@@ -174,7 +171,7 @@ typedef struct arm_2d_region_t {
 
 **Figure 2-1 Region with Location and Size ** 
 
-<img src="../documents/pictures/Introduction2_1a.png" alt="image-20210329175941500" style="zoom: 67%;" /> 
+![Region with Location and Size](./pictures/Introduction2_1a.png)
 
 #### 2.1.1 Location
 
@@ -191,7 +188,7 @@ Different from the general Cartesian coordinate system, in graphics, the Y-axis 
 
 **Figure 2-2 When Location has a negative coordinates.** 
 
-<img src="../documents/pictures/Introduction2_1b.png" style="zoom: 80%;" /> 
+![When Location has a negative coordinates](./pictures/Introduction2_1b.png)
 
 As shown in **Figure 2-2**, when the ***x*** and ***y*** coordinates of a Region are both negative, it actually has a considerable area outside (upper left corner) of its parent Region. When we try to find the intersection of the current Region and its parent Region, we will find that only part of the region is valid.
 
@@ -222,7 +219,7 @@ The coordinates of the elements inside a container are described as **coordinate
 
 **Figure 2-3 A Typical Example of Absolute Locations and Relative Locations**
 
-<img src="../documents/pictures/Introduction2_2a.png" style="zoom: 67%;" />   
+![A Typical Example of Absolute Locations and Relative Locations](./pictures/Introduction2_2a.png)
 
 #### 2.2.2 Absolute Region and Relative Region
 
@@ -230,7 +227,7 @@ If a Region has absolute Location, it is an **Absolute Region**; similarly, if a
 
 **Figure 2-4 A Typical Example of Absolute Regions and Relative Regions**
 
-<img src="../documents/pictures/Introduction2_2b.png" alt="image-20210329185726285" style="zoom: 67%;" /> 
+![A Typical Example of Absolute Regions and Relative Regions](./pictures/Introduction2_2b.png)
 
 When we use these relative and absolute information to perform visual area calculations, it is easy to exclude those areas that are actually invisible to the user from various graphic operations, thereby improving the overall 2D processing performance (as shown in **Figure 2-4** ).
 
@@ -409,7 +406,7 @@ Figure 2-3 shows a series of Child Tiles, and their derivation relationship in t
 
 **Figure 2-3 A Chain of Child Tiles and Their Root Tile**
 
-<img src="../documents/pictures/Introduction2_3a.png" style="zoom:67%;" /> 
+![A Chain of Child Tiles and Their Root Tile](./pictures/Introduction2_3a.png)
 
 The introduction of Child Tiles can greatly simplify the storing and representing of GUI resources. Smart designers can even put many image elements in the same picture and retrieve them by creating Child Tiles with different sizes from different locations. In practice, A multi-level Child Tile suffers almost no performance loss in 2D operations.
 
@@ -421,7 +418,7 @@ The so-called Partial Frame Buffer is a special use of the Tile Child scheme. It
 
 **Figure 2-4 How Partial Frame Buffer Works**
 
-<img src="../documents/pictures/Introduction2_3b.png" style="zoom:67%;" /> 
+![How Partial Frame Buffer Works](./pictures/Introduction2_3b.png)
 
 More details are shown in a dedicated example project located in "***examples/benchmark***" directory.
 
@@ -629,4 +626,3 @@ To be added in future versions.
 ### 3.7 Filters
 
 To be added in future versions.
-

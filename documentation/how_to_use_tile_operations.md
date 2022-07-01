@@ -1,4 +1,4 @@
-# How to Use Tile Operations
+# How to Use Tile Operations {#use_tile}
 
 
 
@@ -156,7 +156,7 @@ The so-called Partial Frame Buffer is a special use of the Tile Child scheme. It
 
 **Figure 2-4 How Partial Frame Buffer Works**
 
-<img src="../documents/pictures/Introduction2_3b.png" style="zoom:67%;" /> 
+![Partial Frame Buffer](./pictures/Introduction2_3b.png)
 
 More details are shown in a dedicated example project located in "***examples/partial_frame_buffer***" directory.
 
@@ -314,8 +314,8 @@ In addition to the standard Copy and Fill, operations can be combined with X and
 | **Parameter**    | uint32_t ***wMode***                   | The mode of the copy, please refer to the copy mode description for more details. |
 | **Return Value** | < 0 or ***arm_fsm_rt_err*** (-1)       | Error code                                                   |
 | **Return Value** | ***arm_fsm_rt_cpl*** (0)               | Operation **completed**                                      |
-| **Return Value** | ***arm_fsm_rt_on_going*** (1)          | Operation is **on-going**, and you have to keep calling this function until other value is returned. <br />This usually means that the function is working/implemented in ***synchronous mode***. For more, please refer to [Introduction.md](./Introduction.md). |
-| **Return Value** | ***arm_fsm_rt_asyn***(3)               | Operation request has been received; no error found so far. If you have registered your own ***2D-Operation-Complete-Handler*** (***arm_2d_evt_t***), you don't have to poll this function anymore; the operation result will be passed to you via the event handler; otherwise, you can poll this function until another value is returned.  This usually means that the function is working/implemented in **asynchronous mode**.  For more, please refer to [Introduction.md](./Introduction.md). |
+| **Return Value** | ***arm_fsm_rt_on_going*** (1)          | Operation is **on-going**, and you have to keep calling this function until other value is returned. <br />This usually means that the function is working/implemented in ***synchronous mode***. For more, please refer to [introduction.md](./introduction.md). |
+| **Return Value** | ***arm_fsm_rt_asyn***(3)               | Operation request has been received; no error found so far. If you have registered your own ***2D-Operation-Complete-Handler*** (***arm_2d_evt_t***), you don't have to poll this function anymore; the operation result will be passed to you via the event handler; otherwise, you can poll this function until another value is returned.  This usually means that the function is working/implemented in **asynchronous mode**.  For more, please refer to [introduction.md](./introduction.md). |
 
 The behaviour of function **arm_2d_rgb16_tile_copy** is illustrated in **Figure 4.4**. This function copies a source tile to a specified region inside the target tile or fills the specified region with a given source tile. Several combinations of modes are supported, e.g. copy with X mirroring and/or Y mirroring.
 
@@ -334,8 +334,8 @@ The behaviour of function **arm_2d_rgb16_tile_copy** is illustrated in **Figure 
 | **Parameter**    | uint32_t ***wMode***                   | The mode of the copy, please refer to the copy mode description for more details. |
 | **Return Value** | < 0 or ***arm_fsm_rt_err*** (-1)       | Error code                                                   |
 | **Return Value** | ***arm_fsm_rt_cpl*** (0)               | Operation **completed**                                      |
-| **Return Value** | ***arm_fsm_rt_on_going*** (1)          | Operation is **on-going**, and you have to keep calling this function until another value is returned.  This usually means that the function is working/implemented in **synchronous mode**. For more, please refer to [Introduction.md](./Introduction.md). |
-| **Return Value** | ***arm_fsm_rt_asyn***(3)               | Operation request has been received; no error found so far. If you have registered your own ***2D-Operation-Complete-Handler*** (***arm_2d_evt_t***), you don't have to poll this function anymore; the operation result will be passed to you via the event handler; otherwise, you can poll this function until another value is returned.  This usually means that the function is working/implemented in **asynchronous mode**.  For more, please refer to [Introduction.md](./Introduction.md). |
+| **Return Value** | ***arm_fsm_rt_on_going*** (1)          | Operation is **on-going**, and you have to keep calling this function until another value is returned.  This usually means that the function is working/implemented in **synchronous mode**. For more, please refer to [introduction.md](./introduction.md). |
+| **Return Value** | ***arm_fsm_rt_asyn***(3)               | Operation request has been received; no error found so far. If you have registered your own ***2D-Operation-Complete-Handler*** (***arm_2d_evt_t***), you don't have to poll this function anymore; the operation result will be passed to you via the event handler; otherwise, you can poll this function until another value is returned.  This usually means that the function is working/implemented in **asynchronous mode**.  For more, please refer to [introduction.md](./introduction.md). |
 
 The behaviour of function **arm_2d_rgb32_tile_copy** is illustrated in **Figure 4.4**. This function copies a source tile to a specified region inside the target tile or fills the specified region with a given source tile. Several combinations of modes are supported, e.g. copy with X mirroring and/or Y mirroring.
 
@@ -365,8 +365,8 @@ Colour-keying is a commonly used scheme to implement non-rectangular UI elements
 | **Parameter**    | uint32_t ***wMode***                            | The mode of the copy, please refer to the copy mode description for more details. |
 | **Return Value** | < 0 or **arm_fsm_rt_err** (-1)                  | Error code                                                   |
 | **Return Value** | **arm_fsm_rt_cpl** (0)                          | Operation **completed**                                      |
-| **Return Value** | **arm_fsm_rt_on_going** (1)                     | Operation is **on-going**, and you have to keep calling this function until another value is returned.  This usually means that the function is working/implemented in **synchronous mode**. For more, please refer to [Introduction.md](./Introduction.md). |
-| **Return Value** | **arm_fsm_rt_asyn**(3)                          | Operation request has been received; no error found so far. If you have registered your own ***2D-Operation-Complete-Handler*** (***arm_2d_evt_t***), you don't have to poll this function anymore; the operation result will be passed to you via the event handler; otherwise, you can poll this function until another value is returned.  This usually means that the function is working/implemented in **asynchronous mode**.  For more, please refer to [Introduction.md](./Introduction.md). |
+| **Return Value** | **arm_fsm_rt_on_going** (1)                     | Operation is **on-going**, and you have to keep calling this function until another value is returned.  This usually means that the function is working/implemented in **synchronous mode**. For more, please refer to [introduction.md](./introduction.md). |
+| **Return Value** | **arm_fsm_rt_asyn**(3)                          | Operation request has been received; no error found so far. If you have registered your own ***2D-Operation-Complete-Handler*** (***arm_2d_evt_t***), you don't have to poll this function anymore; the operation result will be passed to you via the event handler; otherwise, you can poll this function until another value is returned.  This usually means that the function is working/implemented in **asynchronous mode**.  For more, please refer to [introduction.md](./introduction.md). |
 
 The behaviour of function **arm_2d_c8bit_tile_copy_with_colour_keying** is illustrated in **Figure 4.6**. This function copies a given source tile to a specified region inside a target tile, during this process, user can specify a colour as the masking colour. If the colour of the pixel read from the source tile is the masking colour, the copy operation for that pixel will be ignored, as the result, i.e. the pixel in the background will be used. This function is dedicated to all colour formats with 8-bit pixel.  
 
@@ -386,8 +386,8 @@ The behaviour of function **arm_2d_c8bit_tile_copy_with_colour_keying** is illus
 | **Parameter**    | uint32_t ***wMode***                            | The mode of the copy, please refer to the copy mode description for more details. |
 | **Return Value** | < 0 or **arm_fsm_rt_err** (-1)                  | Error code                                                   |
 | **Return Value** | **arm_fsm_rt_cpl** (0)                          | Operation **completed**                                      |
-| **Return Value** | **arm_fsm_rt_on_going** (1)                     | Operation is **on-going**, and you have to keep calling this function until another value is returned.  This usually means that the function is working/implemented in **synchronous mode**. For more, please refer to [Introduction.md](./Introduction.md). |
-| **Return Value** | **arm_fsm_rt_asyn**(3)                          | Operation request has been received; no error found so far. If you have registered your own ***2D-Operation-Complete-Handler*** (***arm_2d_evt_t***), you don't have to poll this function anymore; the operation result will be passed to you via the event handler; otherwise, you can poll this function until another value is returned.  This usually means that the function is working/implemented in **asynchronous mode**.  For more, please refer to [Introduction.md](./Introduction.md). |
+| **Return Value** | **arm_fsm_rt_on_going** (1)                     | Operation is **on-going**, and you have to keep calling this function until another value is returned.  This usually means that the function is working/implemented in **synchronous mode**. For more, please refer to [introduction.md](./introduction.md). |
+| **Return Value** | **arm_fsm_rt_asyn**(3)                          | Operation request has been received; no error found so far. If you have registered your own ***2D-Operation-Complete-Handler*** (***arm_2d_evt_t***), you don't have to poll this function anymore; the operation result will be passed to you via the event handler; otherwise, you can poll this function until another value is returned.  This usually means that the function is working/implemented in **asynchronous mode**.  For more, please refer to [introduction.md](./introduction.md). |
 
 The behaviour of function **arm_2d_rbg16_tile_copy_with_colour_keying** is illustrated in **Figure 4.6**. This function copies a given source tile to a specified region inside a target tile, during this process, user can specify a colour as the masking colour. If the colour of the pixel read from the source tile is the masking colour, the copy operation for that pixel will be ignored, as the result, i.e. the pixel in the background will be used. This function is dedicated to all colour formats with 16-bit pixel.  
 
@@ -407,8 +407,8 @@ The behaviour of function **arm_2d_rbg16_tile_copy_with_colour_keying** is illus
 | **Parameter**    | uint32_t ***wMode***                            | The mode of the copy, please refer to the copy mode description for more details. |
 | **Return Value** | < 0 or ***arm_fsm_rt_err*** (-1)                | Error code                                                   |
 | **Return Value** | ***arm_fsm_rt_cpl*** (0)                        | Operation **completed**                                      |
-| **Return Value** | ***arm_fsm_rt_on_going*** (1)                   | Operation is **on-going**, and you have to keep calling this function until another value is returned.  This usually means that the function is working/implemented in **synchronous mode**. For more, please refer to [Introduction.md](./Introduction.md). |
-| **Return Value** | ***arm_fsm_rt_asyn***(3)                        | Operation request has been received; no error found so far. If you have registered your own ***2D-Operation-Complete-Handler*** (***arm_2d_evt_t***), you don't have to poll this function anymore; the operation result will be passed to you via the event handler; otherwise, you can poll this function until another value is returned.  This usually means that the function is working/implemented in **asynchronous mode**.  For more, please refer to [Introduction.md](./Introduction.md). |
+| **Return Value** | ***arm_fsm_rt_on_going*** (1)                   | Operation is **on-going**, and you have to keep calling this function until another value is returned.  This usually means that the function is working/implemented in **synchronous mode**. For more, please refer to [introduction.md](./introduction.md). |
+| **Return Value** | ***arm_fsm_rt_asyn***(3)                        | Operation request has been received; no error found so far. If you have registered your own ***2D-Operation-Complete-Handler*** (***arm_2d_evt_t***), you don't have to poll this function anymore; the operation result will be passed to you via the event handler; otherwise, you can poll this function until another value is returned.  This usually means that the function is working/implemented in **asynchronous mode**.  For more, please refer to [introduction.md](./introduction.md). |
 
 The behaviour of function **arm_2d_rbg32_tile_copy_with_colour_keying** is illustrated in **Figure 4.6**. This function copies a given source tile to a specified region inside a target tile. During this process, the user can specify a colour as the masking colour. If the colour of the pixel read from the source tile is the masking colour, the copy operation for that pixel will be ignored. As a result, i.e. the pixel in the background will be used. This function is dedicated to all colour formats with the 32-bit pixel. 
 
@@ -418,4 +418,4 @@ The behaviour of function **arm_2d_rbg32_tile_copy_with_colour_keying** is illus
 
 ## 5 Reference
 
-1. [Introduction to Arm-2D](./Introduction.md)
+1. [Introduction to Arm-2D](./introduction.md)
