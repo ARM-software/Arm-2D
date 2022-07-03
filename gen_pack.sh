@@ -45,6 +45,7 @@ if [ ! -d $UTILITIES_DIR ]; then
   # PackChk
   #curl -L $UTILITIES_URL/CMSIS/Utilities/$UTILITIES_OS/PackChk.exe?raw=true -o $UTILITIES_OS/PackChk.exe
   echo Examplexxxxxxx
+  ls $CMSIS_PACK_PATH/CMSIS/Utilities/$UTILITIES_OS/
   cp -f $CMSIS_PACK_PATH/CMSIS/Utilities/$UTILITIES_OS/packchk.exe $UTILITIES_OS/PackChk.exe
   curl -L https://github.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/blob/main/schema/PACK.xsd?raw=true -o ./PACK.xsd
   popd
