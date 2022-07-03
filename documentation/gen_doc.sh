@@ -11,7 +11,7 @@ set -o pipefail
 
 DIRNAME=$(dirname $(readlink -f $0))
 DOXYGEN=$(which doxygen 2>/dev/null)
-REQ_DXY_VERSION="1.9.2"
+REQ_DXY_VERSION="1.8.6"
 REGEN=0
 DESCRIBE=$(readlink -f ${DIRNAME}/../Scripts/git/git_describe.sh)
 CHANGELOG=$(readlink -f ${DIRNAME}/../Scripts/git/gen_changelog.sh)
