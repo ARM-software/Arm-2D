@@ -16,17 +16,39 @@
 ############### EDIT BELOW ###############
 # Extend Path environment variable locally
 #
+# Pack build utilities Repository
+UTILITIES_URL=https://github.com/ARM-software/CMSIS_5/blob/5.9.0/
+UTILITIES_TAG=1.0.0
+UTILITIES_DIR=./Utilities
+
 if [ `uname -s` = "Linux" ]
   then
+  UTILITIES_OS=Linux64
   CMSIS_PACK_PATH="/home/$USER/.arm/Packs/ARM/CMSIS/5.9.0/"
   PATH_TO_ADD="$CMSIS_PACK_PATH/CMSIS/Utilities/Linux64/"
+  ZIP=zip
 else
+  UTILITIES_OS=Win32
+  ZIP="/c/Program\ Files/7-Zip/7z.exe"
   CMSIS_PACK_PATH="/C/Users/gabriel/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0"
   PATH_TO_ADD="/C/Program Files (x86)/7-Zip/:$CMSIS_PACK_PATH/CMSIS/Utilities/Win32/:/C/xmllint/"
 fi
 [[ ":$PATH:" != *":$PATH_TO_ADD}:"* ]] && PATH="${PATH}:${PATH_TO_ADD}"
 echo $PATH_TO_ADD appended to PATH
 echo " "
+
+# if not present, fetch utilities
+if [ ! -d $UTILITIES_DIR ]; then
+  mkdir $UTILITIES_DIR
+  pushd $UTILITIES_DIR
+  mkdir $UTILITIES_OS
+  # PackChk
+  #curl -L $UTILITIES_URL/CMSIS/Utilities/$UTILITIES_OS/PackChk.exe?raw=true -o $UTILITIES_OS/PackChk.exe
+  echo Examplexxxxxxx
+  cp -f $CMSIS_PACK_PATH/CMSIS/Utilities/$UTILITIES_OS/packchk.exe $UTILITIES_OS/PackChk.exe
+  curl -L https://github.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/blob/main/schema/PACK.xsd?raw=true -o ./PACK.xsd
+  popd
+fi
 
 # Pack warehouse directory - destination 
 PACK_WAREHOUSE=cmsis-pack/
@@ -45,14 +67,12 @@ PACK_BUILD=build/
 PACK_DIRS="
   Library
   Helper
-  documents
   tools
 "
 
   
 # Specify file names to be added to pack base directory
 PACK_BASE_FILES="
-  how_to_deploy_the_arm_2d_library.md
   LICENSE
   README.md
 "
@@ -72,7 +92,7 @@ if [ $errorlevel -gt 0 ]
 fi
 
 # Pack checking utility check
-PACKCHK=PackChk
+PACKCHK=$UTILITIES_DIR/$UTILITIES_OS/PackChk.exe
 type -a $PACKCHK
 errorlevel=$?
 if [ $errorlevel != 0 ]
@@ -134,6 +154,28 @@ if [ ! -d $PACK_BUILD ]; then
   mkdir -p $PACK_BUILD
 fi
 
+#if $PACK_BUILD folder does not exist create it
+if [ ! -d $PACK_BUILD ]; then
+  mkdir $PACK_BUILD
+fi
+
+# Generate documentation
+pushd ./documentation
+./gen_doc.sh
+errorlevel=$?
+popd
+if [ $errorlevel -ne 0 ]; then
+  echo "build aborted: documentation build failed"
+  exit
+fi
+
+#if $PACK_BUILD/documentation folder does not exist create it
+if [ ! -d $PACK_BUILD/documentation ]; then
+  mkdir $PACK_BUILD/documentation
+fi
+# Move built documentation into $PACK_BUILD
+mv -v ./documentation/html/* $PACK_BUILD/documentation/
+rm -rf ./documentation/html/
 
 
 # Copy files into build base directory: $PACK_BUILD
@@ -181,7 +223,7 @@ rm -rf $PACK_BUILD/examples/common/asset/*.jpg
 # sudo apt-get install libxml2-utils
 
 echo Running schema check for $PACK_VENDOR.$PACK_NAME.pdsc
-$XMLLINT --noout --schema ${CMSIS_PACK_PATH}/CMSIS/Utilities/PACK.xsd $PACK_BUILD/$PACK_VENDOR.$PACK_NAME.pdsc
+$XMLLINT --noout --schema ${UTILITIES_DIR}/PACK.xsd $PACK_BUILD/$PACK_VENDOR.$PACK_NAME.pdsc
 errorlevel=$?
 if [ $errorlevel -ne 0 ]; then
   echo "build aborted: Schema check of $PACK_VENDOR.$PACK_NAME.pdsc against PACK.xsd failed"

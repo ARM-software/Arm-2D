@@ -1,15 +1,14 @@
-# README
+# README {#mainpage}
 
 
 
 ## Branch Summary
 
+
 | Branch           | Description                                                  | Note                                      |
 | ---------------- | ------------------------------------------------------------ | ----------------------------------------- |
 | ***main***       | The main branch of the repository. It contains the Arm-2D library, examples, templates and a helper library. |                                           |
 | ***developing*** | The development branch of the ***master/main*** branch.      | It will be merged into ***main*** branch. |
-
-
 
 ## Features
 
@@ -78,7 +77,7 @@ Technologies used for 2D graphics have been matured as early as the era of 8-bit
 
 **Figure 1-1  2D Technologies used in Super-Mario-Brothers on NES** 
 
-<img src="./documents/pictures/TopReadme_1_a.png" alt="image-20210318235155494" style="zoom: 50%;" /> 
+![2D Technologies used in Super-Mario-Brothers](./documentation/pictures/TopReadme_1_a.png)
 
 ### 1.2 The Problems in current solutions
 
@@ -86,9 +85,7 @@ As shown in **Figure 1-2**, Linux based systems have a complete ecosystem that p
 
 **Figure 1-2 Ecosystem Comparison between Rich Embedded and Constraint Embedded System in GUI**
 
-<img src="./documents/pictures/TopReadme_1_2a.png" alt="image-20210318235815106" style="zoom:80%;" /> 
-
-
+![ Ecosystem Comparison](./documentation/pictures/TopReadme_1_2a.png)
 
 When we look at the traditionally embedded  GUI architecture(as shown in **Figure 1-3** ), there are four layers: 1) the application and designer layer, 2) the GUI software service layer, 3) the rendering layer, and 3) the hardware driver layer. 
 
@@ -96,8 +93,7 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 
 **Figure 1-3 The Hierarchy of a Typical Embedded GUI System.**
 
-<img src="./documents/pictures/TopReadme_1_2b.png" style="zoom:80%;" /> 
-
+![The Hierarchy of a Typical Embedded GUI System](./documentation/pictures/TopReadme_1_2b.png)
 
 
 ### 1.3 The Platform
@@ -166,7 +162,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
 
 **Figure 1-4 A snapshot of benchmark running on Cortex-M4 FVP platform**
 
-![Alpha-blending](./documents/pictures/benchmark)  
+![Alpha-blending](./documentation/pictures/benchmark)  
 
 
 
@@ -178,7 +174,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
 
 **Figure 1-5 Performance Comparison among some Cortex-M processors**
 
-![](./documents/pictures/TopReadme_1_6_2_b.png) 
+![](./documentation/pictures/TopReadme_1_6_2_b.png) 
 
 
 
@@ -207,7 +203,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
 
 **Figure 3-1 Private and Public Files** 
 
-![](./documents/pictures/TopReadme_3_1.png) 
+![](./documentation/pictures/TopReadme_3_1.png) 
 
 - Any symbol, e.g. file name, function name, macro name, type name etc., having a double under-scope as the prefix is considered as **PRIVATE** to the library. You should save your time from touching them. 
 
@@ -243,7 +239,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
   - [Unnamed Structure and Union Fields](https://gcc.gnu.org/onlinedocs/gcc/Unnamed-Fields.html)
   - [Statements and Declarations in Expressions](https://gcc.gnu.org/onlinedocs/gcc/Statement-Exprs.html#Statement-Exprs)
 - Some of the definitions are written with the support of the **Microsoft Extensions** in mind \( ***-fms-extensions*** \), but **the library never depends on it**. This means that if programmers enable the support of the Microsoft Extensions in their project, they can benefit from it. 
-- This library follows "***Using Extensions to replace Modifications***" principle
+- This library follows ***"Using Extensions to replace Modifications"*** principle
   - Keywords ***\_\_WEAK*** and ***\_\_OVERRIDE\_WEAK*** are introduced for default functions and extensions; it is similar to the concept of "virtual functions" and "override functions" in C#. 
     - ***arm_2d_async.c*** is used to override some infrastructure functions in ***arm_2d.c*** to support asynchronous mode in the programmers' mode.  
     - ***arm_2d_helium.c*** is used to override some default software algorithm implementations across the library. 
@@ -375,12 +371,12 @@ def_low_lv_io(__ARM_2D_IO_ROTATE_RGB888,
 | Name                                                         | Description                                                  | Location  |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | --------- |
 | **README.md**                                                | It is the document that you are reading. It provides basic information and guidance for the arm-2d library. | (root)    |
-| [**how_to_deploy_the_arm_2d_library.md**](./how_to_deploy_the_arm_2d_library.md) | A step by step guide that helps you to deploy the library to your existing or new projects. | (root)    |
-| **[introduction.md](./documents/Introduction.md)**           | A relatively detailed introduction for the library, including basic concepts, programmers' mode etc. | documents |
-| **[how_to_use_tile_operations.md](./documents/how_to_use_tile_operations.md)** | A detailed document elaborates the APIs dedicated to basic tile operations in the arm-2d library. | documents |
-| **how_to_use_alpha_blending_operations.md**                  | A detailed document elaborates the APIs dedicated to alpha-blending services provided by the arm-2d library. | documents |
-| **how_to_use_conversion_operations.md**                      | A detailed document elaborates the APIs dedicated to colour space conversion services provided by the arm-2d library. | documents |
-| **how_to_use_drawing_operations.md**                         | A detailed document elaborates the APIs that provide basic point-drawing and colour-filling services in the arm-2d library. | documents |
+| **[how_to_deploy_the_arm_2d_library.md](./documentation/how_to_deploy_the_arm_2d_library.md)** | A step by step guide that helps you to deploy the library to your existing or new projects. | documentation    |
+| **[introduction.md](./documentation/introduction.md)**       | A relatively detailed introduction for the library, including basic concepts, programmers' mode etc. | documentation |
+| **[how_to_use_tile_operations.md](./documentation/how_to_use_tile_operations.md)** | A detailed document elaborates the APIs dedicated to basic tile operations in the arm-2d library. | documentation |
+| **how_to_use_alpha_blending_operations.md**                  | A detailed document elaborates the APIs dedicated to alpha-blending services provided by the arm-2d library. | documentation |
+| **how_to_use_conversion_operations.md**                      | A detailed document elaborates the APIs dedicated to colour space conversion services provided by the arm-2d library. | documentation |
+| **how_to_use_drawing_operations.md**                         | A detailed document elaborates the APIs that provide basic point-drawing and colour-filling services in the arm-2d library. | documentation |
 
 
 
