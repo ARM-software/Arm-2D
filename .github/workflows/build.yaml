@@ -71,14 +71,14 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: documentation
-          path: Documentation/html/
+          path: documentation/html/
           retention-days: 1
           if-no-files-found: error
           
       - name: Archive documentation
         if: ${{ github.event_name == 'release' || github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
         run: |
-          cd Documentation/html
+          cd documentation/html
           tar -cvjf /tmp/doc.tbz2 .
         
       - name: Generate pack
