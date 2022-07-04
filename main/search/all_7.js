@@ -2,7 +2,7 @@ var searchData=
 [
   ['_5f_5farm_5f2d_5fcccn888_5fpack_0',['__arm_2d_cccn888_pack',['../group__gConversion.html#ga50cef518f8e1fe3aa7b6870ac797c66e',1,'arm_2d_conversion.h']]],
   ['_5f_5farm_5f2d_5fcolor_5ffast_5frgb_5ft_1',['__arm_2d_color_fast_rgb_t',['../group__gConversion.html#union____arm__2d__color__fast__rgb__t',1,'']]],
-  ['_5f_5farm_5f2d_5fcolor_5ffast_5frgb_5ft_2e_5f_5funnamed85_5f_5f_2',['__arm_2d_color_fast_rgb_t.__unnamed85__',['../group__gConversion.html#struct____arm__2d__color__fast__rgb__t_8____unnamed85____',1,'']]],
+  ['_5f_5farm_5f2d_5fcolor_5ffast_5frgb_5ft_2e_5f_5funnamed87_5f_5f_2',['__arm_2d_color_fast_rgb_t.__unnamed87__',['../group__gConversion.html#struct____arm__2d__color__fast__rgb__t_8____unnamed87____',1,'']]],
   ['_5f_5farm_5f2d_5fcopy_5fmode_5ft_3',['__arm_2d_copy_mode_t',['../group__Tile.html#ga257faa203a12d4121d37c1ce2c2ae5bf',1,'arm_2d_tile.h']]],
   ['_5f_5farm_5f2d_5fop_5finfo_5ft_4',['__arm_2d_op_info_t',['../union____arm__2d__op__info__t.html',1,'']]],
   ['_5f_5farm_5f2d_5fop_5finfo_5ft_2einfo_5',['__arm_2d_op_info_t.Info',['../struct____arm__2d__op__info__t_8Info.html',1,'']]],
@@ -19,7 +19,8 @@ var searchData=
   ['_5f_5farm_5f2d_5frgb565_5fpack_16',['__arm_2d_rgb565_pack',['../group__gConversion.html#gad741f60e362467e251ef35febec37c28',1,'arm_2d_conversion.h']]],
   ['_5f_5farm_5f2d_5frgb565_5funpack_17',['__arm_2d_rgb565_unpack',['../group__gConversion.html#ga0dac4bd927c28a54130bfe279542065c',1,'arm_2d_conversion.h']]],
   ['_5f_5farm_5f2d_5ftransform_5finfo_5ft_18',['__arm_2d_transform_info_t',['../group__gTransform.html#struct____arm__2d__transform__info__t',1,'']]],
-  ['_5f_5farm_5f2d_5ftransform_5finfo_5ft_2emask_19',['__arm_2d_transform_info_t.Mask',['../group__gTransform.html#union____arm__2d__transform__info__t_8Mask',1,'']]],
-  ['_5f_5farm_5f2d_5ftransform_5finfo_5ft_2etarget_20',['__arm_2d_transform_info_t.Target',['../group__gTransform.html#struct____arm__2d__transform__info__t_8Target',1,'']]],
-  ['_5f_5farm_5fslist_5fnode_5ft_21',['__arm_slist_node_t',['../struct____arm__slist__node__t.html',1,'']]]
+  ['_5f_5farm_5f2d_5ftransform_5finfo_5ft_2e_5f_5funnamed58_5f_5f_19',['__arm_2d_transform_info_t.__unnamed58__',['../group__gTransform.html#struct____arm__2d__transform__info__t_8____unnamed58____',1,'']]],
+  ['_5f_5farm_5f2d_5ftransform_5finfo_5ft_2e_5f_5funnamed58_5f_5f_2etarget_20',['__arm_2d_transform_info_t.__unnamed58__.Target',['../group__gTransform.html#struct____arm__2d__transform__info__t_8____unnamed58_____8Target',1,'']]],
+  ['_5f_5farm_5f2d_5ftransform_5finfo_5ft_2emask_21',['__arm_2d_transform_info_t.Mask',['../group__gTransform.html#union____arm__2d__transform__info__t_8Mask',1,'']]],
+  ['_5f_5farm_5fslist_5fnode_5ft_22',['__arm_slist_node_t',['../struct____arm__slist__node__t.html',1,'']]]
 ];

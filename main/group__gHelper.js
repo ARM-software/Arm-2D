@@ -24,12 +24,11 @@ var group__gHelper =
     ] ],
     [ "arm_2d_helper_pfb_cfg_t", "group__gHelper.html#structarm__2d__helper__pfb__cfg__t", [
       [ "tDisplayArea", "group__gHelper.html#adc4ca6df76cda6514cff8a4cec3918ca", null ],
-      [ "FrameBuffer", "group__gHelper.html#aa24ae9a0fa4971e27e32942bf1399d8a", null ],
+      [ "FrameBuffer", "group__gHelper.html#a9188212c8c49814042dd360c80cc11bb", null ],
       [ "Dependency", "group__gHelper.html#a65ec336911098eaed7b2ac60038dda6e", null ]
     ] ],
     [ "arm_2d_helper_pfb_t", "group__gHelper.html#structarm__2d__helper__pfb__t", [
-      [ "tCFG", "group__gHelper.html#ab25eb0e562e37e952b14bd3c18fa2faf", null ],
-      [ "Statistics", "group__gHelper.html#ab14c07b986357d112ef104a4d5c0d8f6", null ]
+      [ "Statistics", "group__gHelper.html#ac968ff4fc74d07416c7ea080d627b9ff", null ]
     ] ],
     [ "arm_2d_helper_pfb_cfg_t.FrameBuffer", "group__gHelper.html#structarm__2d__helper__pfb__cfg__t_8FrameBuffer", [
       [ "ptPFBs", "group__gHelper.html#ae32199e047789740867bc43fd74278d1", null ],
@@ -40,9 +39,10 @@ var group__gHelper =
       [ "bDisableDynamicFPBSize", "group__gHelper.html#a3491f099ff99db25de694b559954bd68", null ],
       [ "bSwapRGB16", "group__gHelper.html#a545d827276ad405ea34db579f2ef9e2c", null ]
     ] ],
-    [ "arm_2d_helper_pfb_t.Adapter", "group__gHelper.html#structarm__2d__helper__pfb__t_8Adapter", null ],
-    [ "arm_2d_helper_pfb_t.Adapter.__unnamed110__", "group__gHelper.html#structarm__2d__helper__pfb__t_8Adapter_8____unnamed110____", null ],
-    [ "arm_2d_helper_pfb_t.Adapter.FlushFIFO", "group__gHelper.html#structarm__2d__helper__pfb__t_8Adapter_8FlushFIFO", null ],
+    [ "arm_2d_helper_pfb_t.__unnamed112__", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed112____", null ],
+    [ "arm_2d_helper_pfb_t.__unnamed112__.Adapter", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed112_____8Adapter", null ],
+    [ "arm_2d_helper_pfb_t.__unnamed112__.Adapter.__unnamed116__", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed112_____8Adapter_8____unnamed116____", null ],
+    [ "arm_2d_helper_pfb_t.__unnamed112__.Adapter.FlushFIFO", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed112_____8Adapter_8FlushFIFO", null ],
     [ "arm_2d_helper_pfb_t.Statistics", "group__gHelper.html#structarm__2d__helper__pfb__t_8Statistics", [
       [ "nTotalCycle", "group__gHelper.html#aad0c95f31d24233a32300ac6e851506f", null ],
       [ "nRenderingCycle", "group__gHelper.html#a5ae6646bd6957664dcc13172aa268290", null ]
@@ -53,10 +53,10 @@ var group__gHelper =
     [ "update_arm_2d_helper_pfb_on_draw_handler", "group__gHelper.html#ga8769bf582db2a83c923cb8be4887b8fb", null ],
     [ "arm_2d_helper_draw_handler_t", "group__gHelper.html#ga895cc320ceab0ca0bd10b999787b2d6c", null ],
     [ "arm_2d_helper_render_handler_t", "group__gHelper.html#ga03c2991d31bd58c8a1d5303fb9460f39", [
-      [ "ARM_2D_PFB_DEPEND_ON_LOW_LEVEL_RENDERING", "group__gHelper.html#gga1f3b6c692395e5007ff47ce5d9304c1cad07b975cfa54daf24ef1ecff43df374b", null ],
-      [ "ARM_2D_PFB_DEPEND_ON_DRAWING", "group__gHelper.html#gga1f3b6c692395e5007ff47ce5d9304c1cade6d8cce78f88aedc433f3550699e9bd", null ],
-      [ "ARM_2D_PFB_DEPEND_ON_LOW_LEVEL_SYNC_UP", "group__gHelper.html#gga1f3b6c692395e5007ff47ce5d9304c1cad7df2fe2d2065398cf935e34b6afedeb", null ],
-      [ "ARM_2D_PFB_DEPEND_ON_FRAME_SYNC_UP", "group__gHelper.html#gga1f3b6c692395e5007ff47ce5d9304c1cadf9795f2b046202ae537509960d6e873", null ]
+      [ "ARM_2D_PFB_DEPEND_ON_LOW_LEVEL_RENDERING", "group__gHelper.html#gga29d44341ce767c5dfc737d622fc97ba1ad07b975cfa54daf24ef1ecff43df374b", null ],
+      [ "ARM_2D_PFB_DEPEND_ON_DRAWING", "group__gHelper.html#gga29d44341ce767c5dfc737d622fc97ba1ade6d8cce78f88aedc433f3550699e9bd", null ],
+      [ "ARM_2D_PFB_DEPEND_ON_LOW_LEVEL_SYNC_UP", "group__gHelper.html#gga29d44341ce767c5dfc737d622fc97ba1ad7df2fe2d2065398cf935e34b6afedeb", null ],
+      [ "ARM_2D_PFB_DEPEND_ON_FRAME_SYNC_UP", "group__gHelper.html#gga29d44341ce767c5dfc737d622fc97ba1adf9795f2b046202ae537509960d6e873", null ]
     ] ],
     [ "arm_2d_helper_pfb_init", "group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99", null ],
     [ "arm_2d_helper_pfb_task", "group__gHelper.html#gab2cec999a9abbf7ec42bed4352a17b88", null ],

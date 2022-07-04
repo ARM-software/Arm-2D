@@ -158,7 +158,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "deploy.html",
-"group__gHelper.html#structarm__2d__helper__pfb__cfg__t_8FrameBuffer"
+"group__gHelper.html#structarm__2d__helper__pfb__dependency__t"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
