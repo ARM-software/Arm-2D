@@ -12,7 +12,7 @@
 
 ## Features
 
-#### In this release ( ver1.0.0-preview-beta8)
+#### In this release ( ver1.0.0-preview)
 
 The Arm-2D library provides **Low-Level 2D Image Processing Services** that are mainly used in **Deep Embedded Display system**. The supported features include but not limited to:
 
@@ -184,7 +184,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
 | :------------------------------- | ------- | ------------------------------------------------------------ |
 | **Library**                      | Folder  | This folder contains the source files and header files of the library. |
 | **Helper**                       | Folder  | This folder contains the source files and header files of helper functions / services. |
-| documents                        | Folder  | This folder contains all the documents.                      |
+| documentation                    | Folder  | This folder contains all the documents.                      |
 | examples                         | Folder  | This folder contains all the example code / projects.        |
 | README                           | .md     | The README.md you are currently reading.                     |
 | how_to_deploy_the_arm_2d_library | .md     | A step by step guidance helping you to deploy the Arm-2D library to your projects. |
@@ -433,4 +433,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-June 2022
+July 2022
