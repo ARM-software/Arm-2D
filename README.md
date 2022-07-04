@@ -190,7 +190,6 @@ There is no public 2D image processing benchmark available for microcontrollers.
 | how_to_deploy_the_arm_2d_library | .md     | A step by step guidance helping you to deploy the Arm-2D library to your projects. |
 | LICENSE                          | License | The Apache 2.0 License                                       |
 | tools                            | Folder  | This folder contains some useful utilities for using the library. For example, img2c.py is a python script that convert a specified picture into the tile data structure. |
-| cmsis-pack                       | Folder  | This folder contains the pdsc file and a pre-compiled CMSIS-Pack. |
 
 
 
