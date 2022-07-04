@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<package schemaVersion="1.4" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="PACK.xsd">
+<package schemaVersion="1.7.7" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/v1.7.7/schema/PACK.xsd">
   <vendor>Arm</vendor>
   <name>Arm-2D</name>
   <description>A 2D graphic library optimized for Cortex-M processors.</description>
@@ -215,7 +215,7 @@
           <description>Alpha-blending related APIs for Arm-2D</description>
           <files>
             <file category="sourceC"     name="Library/Source/arm_2d_alpha_blending.c" />
-            <file category="doc"         name="documentation/group__gAlpha.html"/>
+            <file category="doc"         name="documentation/html/group__gAlpha.html"/>
           </files>
           <RTE_Components_h>
 
@@ -227,7 +227,7 @@
           <description>Transform (rotation and zooming)</description>
           <files>
             <file category="sourceC"     name="Library/Source/arm_2d_transform.c"           condition="CMSIS-DSP"/>
-            <file category="doc"         name="documentation/group__gTransform.html"/>
+            <file category="doc"         name="documentation/html/group__gTransform.html"/>
           </files>
           <RTE_Components_h>
 
@@ -242,7 +242,7 @@
             <file category="include"     name="Helper/Include/" />
             <file category="sourceC"     name="Helper/Source/arm_2d_helper_pfb.c" />
             <file category="sourceC"     name="Helper/Source/arm_2d_helper_scene.c" />
-            <file category="doc"         name="documentation/group__gHelper.html"/>
+            <file category="doc"         name="documentation/html/group__gHelper.html"/>
           </files>
           <RTE_Components_h>
 #define __RTE_ACCELERATION_ARM_2D_HELPER_PFB__
