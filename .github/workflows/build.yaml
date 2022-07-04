@@ -29,13 +29,6 @@ jobs:
           sudo apt-get install --no-install-recommends -y libclang1-9 libclang-cpp1-9 p7zip libxml2-utils
           sudo pip install LinkChecker
 
-#      - name: Install Doxygen 1.8.6
-#        run: |
-#          wget http://archive.ubuntu.com/ubuntu/pool/main/d/doxygen/doxygen_1.8.6-2_amd64.deb
-#          sudo dpkg -i doxygen_1.8.6-2_amd64.deb
-#          which doxygen
-#          doxygen --version
-
       - name: Install doxygen 1.9.2
         run: |
           wget https://doxygen.nl/files/doxygen-1.9.2.linux.bin.tar.gz
@@ -55,14 +48,14 @@ jobs:
       - name: Generate doxygen
         run: |
           echo "::add-matcher::.github/doxygen.json"
-          /bin/bash gen_doc.sh
+          ./gen_doc.sh
           echo "::remove-matcher owner=doxygen::"
         working-directory: ./documentation
 
       - name: Run linkchecker
         run: |
           echo "::add-matcher::.github/linkchecker.json"
-          /bin/bash ../Scripts/git/check_links.sh ./html/index.html ./
+          ../Scripts/git/check_links.sh ./html/index.html ./
           echo "::remove-matcher owner=linkchecker::"
         working-directory: ./documentation
 
@@ -87,7 +80,7 @@ jobs:
           mkdir -p ~/.arm/Packs/.Web
           wget -O ~/.arm/Packs/.Web/ARM.CMSIS.pdsc https://www.keil.com/pack/ARM.CMSIS.pdsc
           echo "::add-matcher::.github/packchk.json"
-          /bin/bash ./gen_pack.sh
+          ./Scripts/git/gen_pack.sh
           echo "::remove-matcher owner=packchk::"
       
       - name: Archive pack
