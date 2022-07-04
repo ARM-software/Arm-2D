@@ -1330,7 +1330,6 @@ HTML_EXTRA_FILES       = ./Doxygen_Templates/tabs.css \
                          ./Doxygen_Templates/search.css \
                          ./Doxygen_Templates/navtree.css \
                          ./Doxygen_Templates/tab_b.png \
-                         ./Doxygen_Templates/printComponentTabs.js \
                          ./Doxygen_Templates/navtree.js \
 
 # The HTML_COLORSTYLE_HUE tag controls the color of the HTML output. Doxygen
