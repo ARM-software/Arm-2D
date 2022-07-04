@@ -38,7 +38,7 @@ PROJECT_NAME           = "Arm-2D"
 # could be handy for archiving the generated documentation or if some version
 # control system is used.
 
-PROJECT_NUMBER         = "Version 0.9.1-dev35"
+PROJECT_NUMBER         = "Version {projectNumber}"
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer a
