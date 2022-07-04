@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<index schemaVersion="1.0.0" xs:noNamespaceSchemaLocation="PackIndex.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance">
-  <vendor>Arm</vendor>
-  <url>https://raw.githubusercontent.com/ARM-software/Arm-2D/developing/cmsis-pack/</url>
-  <timestamp>2022-06-13T00:19:22</timestamp>
-  <pindex>
-    <pdsc url="https://raw.githubusercontent.com/ARM-software/Arm-2D/developing/cmsis-pack/" vendor="Arm" name="Arm-2D" version="1.0.0-preview-beta2"/>
-  </pindex>
-</index>
