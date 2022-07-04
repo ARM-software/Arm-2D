@@ -16,7 +16,6 @@
 
 <script type="text/javascript" src="$relpath^jquery.js"></script>
 <script type="text/javascript" src="$relpath^dynsections.js"></script>
-<script type="text/javascript" src="$relpath^printComponentTabs.js"></script>
 <script type="text/javascript" src="$relpath^footer.js"></script>
 $treeview
 $search
@@ -43,7 +42,12 @@ $extrastylesheet
   <!--BEGIN PROJECT_NAME-->
    <div id="projectname">$projectname
    <!--END PROJECT_NAME-->
-   <!--BEGIN PROJECT_NUMBER-->&#160;<span id="projectnumber">$projectnumber</span><!--END PROJECT_NUMBER-->
+   <!--BEGIN PROJECT_NUMBER-->&#160;<span id="projectnumber"><script type="text/javascript">
+     <!--
+     writeHeader.call(this);
+     //-->
+    </script>
+   </span><!--END PROJECT_NUMBER-->
    </div>
    <!--BEGIN PROJECT_BRIEF--><div id="projectbrief">$projectbrief</div><!--END PROJECT_BRIEF-->
   </td>
@@ -67,12 +71,3 @@ $extrastylesheet
 </div>
 <!--END TITLEAREA-->
 <!-- end header part -->
-<div id="Compnav" class="tabs1">
-    <ul class="tablist">
-      <script type="text/javascript">
-		<!--
-		writeComponentTabs.call(this);
-		//-->
-      </script>
-	  </ul>
-</div>
