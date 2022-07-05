@@ -114,6 +114,10 @@ typedef enum {
  * Colour definitions                                                         *
  *----------------------------------------------------------------------------*/
 
+typedef union arm_2d_color_gray8_t {
+    uint8_t tValue;
+} arm_2d_color_gray8_t;
+
 typedef union arm_2d_color_rgb565_t {
     uint16_t tValue;
     struct {

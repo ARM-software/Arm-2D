@@ -45,6 +45,31 @@
 
 /*============================ MACROS ========================================*/
 
+#if __GLCD_CFG_COLOUR_DEPTH__ == 8
+#   define arm_2d_fill_colour_with_mask_and_opacity                             \
+                arm_2d_gray8_fill_colour_with_mask_and_opacity
+#   define arm_2dp_fill_colour_with_opacity                                     \
+                arm_2dp_gray8_fill_colour_with_opacity
+#   define __arm_2d_color_t         arm_2d_color_gray8_t
+#   define COLOUR_INT               uint8_t
+#elif __GLCD_CFG_COLOUR_DEPTH__ == 16
+#   define arm_2d_fill_colour_with_mask_and_opacity                             \
+                arm_2d_rgb565_fill_colour_with_mask_and_opacity
+#   define arm_2dp_fill_colour_with_opacity                                     \
+                arm_2dp_rgb565_fill_colour_with_opacity
+#   define __arm_2d_color_t         arm_2d_color_rgb565_t
+#   define COLOUR_INT               uint16_t
+#elif __GLCD_CFG_COLOUR_DEPTH__ == 32
+#   define arm_2d_fill_colour_with_mask_and_opacity                             \
+                arm_2d_cccn888_fill_colour_with_mask_and_opacity 
+#   define arm_2dp_fill_colour_with_opacity                                     \
+                arm_2dp_cccn888_fill_colour_with_opacity
+#   define __arm_2d_color_t         arm_2d_color_cccn888_t
+#   define COLOUR_INT               uint32_t
+#else
+#   error Unsupported colour depth!
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -69,7 +94,7 @@ implement_tile(s_tCorner, 7, 7, uint8_t,
 
 void draw_round_corner_box( const arm_2d_tile_t *ptTarget, 
                             const arm_2d_region_t *ptRegion,
-                            uint16_t hwColour,
+                            COLOUR_INT tColour,
                             uint8_t chAlpha,
                             bool bIsNewFrame)
 {
@@ -87,11 +112,11 @@ void draw_round_corner_box( const arm_2d_tile_t *ptTarget,
                                             &s_tCorner, 
                                             NULL);
                             
-    arm_2d_rgb565_fill_colour_with_mask_and_opacity(   
+    arm_2d_fill_colour_with_mask_and_opacity(   
                                             ptTarget, 
                                             &tRegion, 
                                             &s_tCorner, 
-                                            (arm_2d_color_rgb565_t){hwColour},
+                                            (__arm_2d_color_t){tColour},
                                             chAlpha);
                                                 
     arm_2d_op_wait_async(NULL);
@@ -102,16 +127,16 @@ void draw_round_corner_box( const arm_2d_tile_t *ptTarget,
                                             &s_tCorner, 
                                             NULL);
                             
-    arm_2d_rgb565_fill_colour_with_mask_and_opacity(   
+    arm_2d_fill_colour_with_mask_and_opacity(   
                                             ptTarget, 
                                             &tRegion, 
                                             &s_tCorner, 
-                                            (arm_2d_color_rgb565_t){hwColour},
+                                            (__arm_2d_color_t){tColour},
                                             chAlpha);
 
     arm_2d_op_wait_async(NULL);
 
-    arm_2dp_rgb565_fill_colour_with_opacity(   
+    arm_2dp_fill_colour_with_opacity(   
         NULL,
         ptTarget, 
         &(arm_2d_region_t) {
@@ -124,12 +149,12 @@ void draw_round_corner_box( const arm_2d_tile_t *ptTarget,
                 .iY = ptRegion->tLocation.iY,
             },
         }, 
-        (arm_2d_color_rgb565_t){hwColour},
+        (__arm_2d_color_t){tColour},
         chAlpha);
     
     arm_2d_op_wait_async(NULL);
 
-    arm_2dp_rgb565_fill_colour_with_opacity(   
+    arm_2dp_fill_colour_with_opacity(   
         NULL,
         ptTarget, 
         &(arm_2d_region_t) {
@@ -142,7 +167,7 @@ void draw_round_corner_box( const arm_2d_tile_t *ptTarget,
                 .iY = ptRegion->tLocation.iY + s_tCorner.tRegion.tSize.iHeight,
             },
         }, 
-        (arm_2d_color_rgb565_t){hwColour},
+        (__arm_2d_color_t){tColour},
         chAlpha);
 
     arm_2d_op_wait_async(NULL);
@@ -153,11 +178,11 @@ void draw_round_corner_box( const arm_2d_tile_t *ptTarget,
                                 &s_tCorner, 
                                 NULL);
 
-    arm_2d_rgb565_fill_colour_with_mask_and_opacity(   
+    arm_2d_fill_colour_with_mask_and_opacity(   
                                             ptTarget, 
                                             &tRegion, 
                                             &s_tCorner, 
-                                            (arm_2d_color_rgb565_t){hwColour},
+                                            (__arm_2d_color_t){tColour},
                                             chAlpha);
 
     arm_2d_op_wait_async(NULL);
@@ -168,16 +193,16 @@ void draw_round_corner_box( const arm_2d_tile_t *ptTarget,
                                             &s_tCorner, 
                                             NULL);
                             
-    arm_2d_rgb565_fill_colour_with_mask_and_opacity(  
+    arm_2d_fill_colour_with_mask_and_opacity(  
                                             ptTarget, 
                                             &tRegion, 
                                             &s_tCorner, 
-                                            (arm_2d_color_rgb565_t){hwColour},
+                                            (__arm_2d_color_t){tColour},
                                             chAlpha);
 
     arm_2d_op_wait_async(NULL);
 
-    arm_2dp_rgb565_fill_colour_with_opacity(   
+    arm_2dp_fill_colour_with_opacity(   
         NULL,
         ptTarget, 
         &(arm_2d_region_t) {
@@ -190,7 +215,7 @@ void draw_round_corner_box( const arm_2d_tile_t *ptTarget,
                 .iY = tRegion.tLocation.iY,
             },
         }, 
-        (arm_2d_color_rgb565_t){hwColour},
+        (__arm_2d_color_t){tColour},
         chAlpha);
 
     arm_2d_op_wait_async(NULL);
