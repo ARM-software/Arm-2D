@@ -52,6 +52,35 @@
 #   define __GLCD_CFG_SCEEN_HEIGHT__      320
 #endif
 
+#if __GLCD_CFG_COLOUR_DEPTH__ == 8
+
+#   define __arm_2d_color_t         arm_2d_color_gray8_t
+#   define COLOUR_INT               uint8_t
+
+#   define c_tileCMSISLogo          c_tileCMSISLogoAlpha
+#   define c_tilePictureSun         c_tilePictureSunAlpha
+#   define c_tileHelium             c_tileHeliumCHNB
+#elif __GLCD_CFG_COLOUR_DEPTH__ == 16
+
+#   define __arm_2d_color_t         arm_2d_color_rgb565_t
+#   define COLOUR_INT               uint16_t
+
+#   define c_tileCMSISLogo          c_tileCMSISLogoRGB565
+#   define c_tilePictureSun         c_tilePictureSunRGB565
+#   define c_tileHelium             c_tileHeliumRGB565
+#elif __GLCD_CFG_COLOUR_DEPTH__ == 32
+
+#   define __arm_2d_color_t         arm_2d_color_cccn888_t
+#   define COLOUR_INT               uint32_t
+
+#   define c_tileCMSISLogo          c_tileCMSISLogoCCCA8888
+#   define c_tilePictureSun         c_tilePictureSunCCCA8888
+#   define c_tileHelium             c_tileHeliumCCCN888
+
+#else
+#   error Unsupported colour depth!
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 #define arm_2d_layer(__TILE_ADDR, __OPACITY, __X, __Y, ...)                     \
@@ -102,13 +131,13 @@ extern
 const arm_2d_tile_t c_tileCMSISLogoMask2;
 
 extern
-const arm_2d_tile_t c_tPictureSun;
+const arm_2d_tile_t c_tilePictureSun;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
 declare_tile(c_tLayerB)
-implement_tile(c_tLayerB, 90, 50, arm_2d_color_rgb565_t);
+implement_tile(c_tLayerB, 90, 50, __arm_2d_color_t);
 
 
 ARM_NOINIT static uint8_t s_bmpFadeMask[__GLCD_CFG_SCEEN_WIDTH__ >> 1];
@@ -139,7 +168,7 @@ static arm_2d_layer_t s_ptRefreshLayers[] = {
                     .tRegion.tSize.iHeight = 100
                 ),
     arm_2d_layer(   &c_tLayerB, 112, 50, 150),
-    arm_2d_layer(   &c_tPictureSun, 255, 0, 0, 
+    arm_2d_layer(   &c_tilePictureSun, 255, 0, 0, 
                     .bIsIrregular = true, 
                     .hwKeyColour = GLCD_COLOR_WHITE),
 };
@@ -312,7 +341,7 @@ void show_icon_with_background(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
                                 ptTarget, 
                                 &__centre_region, 
                                 &c_tileSoftwareMask, 
-                                (arm_2d_color_rgb565_t){GLCD_COLOR_DARK_GREY});
+                                (__arm_2d_color_t){GLCD_COLOR_DARK_GREY});
         arm_2d_op_wait_async(NULL);
     }
 }
@@ -328,7 +357,7 @@ void show_icon_without_background(const arm_2d_tile_t *ptTarget, bool bIsNewFram
                                 ptTarget, 
                                 &__centre_region, 
                                 &c_tileSoftwareMask, 
-                                (arm_2d_color_rgb565_t){GLCD_COLOR_DARK_GREY},
+                                (__arm_2d_color_t){GLCD_COLOR_DARK_GREY},
                                 128);
     
         arm_2d_op_wait_async(NULL);
@@ -340,7 +369,7 @@ void show_icon_without_background(const arm_2d_tile_t *ptTarget, bool bIsNewFram
                                     ptTarget, 
                                     &__centre_region, 
                                     &c_tileSoftwareMask, 
-                                    (arm_2d_color_rgb565_t){GLCD_COLOR_WHITE});
+                                    (__arm_2d_color_t){GLCD_COLOR_WHITE});
         arm_2d_op_wait_async(NULL);
     }
 }
@@ -472,7 +501,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
                                 
     
     //!< fill background with CMSISlogo (with colour-keying)
-    arm_2d_rgb16_tile_copy_with_colour_keying( &c_tPictureSun,
+    arm_2d_rgb16_tile_copy_with_colour_keying( &c_tilePictureSun,
                                                 s_ptRefreshLayers[2].ptTile,
                                                 NULL,
                                                 GLCD_COLOR_WHITE,
@@ -493,7 +522,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
                             ptFrameBuffer,
                             &tRegion,
                             ptLayer->chOpacity,
-                            (arm_2d_color_rgb565_t){ ptLayer->hwKeyColour });
+                            (__arm_2d_color_t){ ptLayer->hwKeyColour });
             } else {
                 arm_2d_rgb16_tile_copy_with_colour_keying( 
                                             ptLayer->ptTile,
@@ -519,7 +548,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
     arm_2d_rgb565_fill_colour_with_opacity(   
                                 ptFrameBuffer, 
                                 &s_ptRefreshLayers[1].tRegion,
-                                (arm_2d_color_rgb565_t){GLCD_COLOR_RED},
+                                (__arm_2d_color_t){GLCD_COLOR_RED},
                                 s_ptRefreshLayers[1].chOpacity);
     
     

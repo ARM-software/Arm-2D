@@ -17,6 +17,7 @@
 #   pragma diag_suppress=1296
 #endif
 
+__attribute__((aligned(4), section("arm2d.asset.c_bmpCMSISLogoAlpha")))
 static const uint8_t c_bmpCMSISLogoAlpha[163*65] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -800,7 +801,8 @@ static const uint8_t c_bmpCMSISLogoAlpha[163*65] = {
 0x00, 0x00, 0x00, 
 };
 
-static const uint16_t c_bmpCMSISLogo[163*65] = {
+__attribute__((section("arm2d.asset.c_bmpCMSISLogoRGB565")))
+static const uint16_t c_bmpCMSISLogoRGB565[163*65] = {
 /* -0- */
 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
@@ -1583,10 +1585,8 @@ static const uint16_t c_bmpCMSISLogo[163*65] = {
 0x0000, 0x0000, 0x0000, 
 };
 
-
-
-
-static const uint32_t c_bmpCMSISLogoRGB32[163*65] = {
+__attribute__((section("arm2d.asset.c_bmpCMSISLogoCCCA8888")))
+static const uint32_t c_bmpCMSISLogoCCCA8888[163*65] = {
 /* -0- */
 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
@@ -2372,8 +2372,10 @@ static const uint32_t c_bmpCMSISLogoRGB32[163*65] = {
 
 
 
-extern const arm_2d_tile_t c_tileCMSISLogo;
-const arm_2d_tile_t c_tileCMSISLogo = {
+extern const arm_2d_tile_t c_tileCMSISLogoRGB565;
+
+__attribute__((section("arm2d.tile.c_tileCMSISLogoRGB565")))
+const arm_2d_tile_t c_tileCMSISLogoRGB565 = {
     .tRegion = {
         .tSize = {
             .iWidth = 163,
@@ -2381,13 +2383,15 @@ const arm_2d_tile_t c_tileCMSISLogo = {
         },
     },
     .tInfo.bIsRoot = true,
-    .phwBuffer = (uint16_t*)c_bmpCMSISLogo,
+    .phwBuffer = (uint16_t*)c_bmpCMSISLogoRGB565,
 };
 
 
 
 
 extern const arm_2d_tile_t c_tileCMSISLogoMask;
+
+__attribute__((section("arm2d.tile.c_tileCMSISLogoMask")))
 const arm_2d_tile_t c_tileCMSISLogoMask = {
     .tRegion = {
         .tSize = {
@@ -2406,6 +2410,8 @@ const arm_2d_tile_t c_tileCMSISLogoMask = {
 };
 
 extern const arm_2d_tile_t c_tileCMSISLogoMask2;
+
+__attribute__((section("arm2d.tile.c_tileCMSISLogoMask2")))
 const arm_2d_tile_t c_tileCMSISLogoMask2 = {
     .tRegion = {
         .tSize = {
@@ -2420,7 +2426,7 @@ const arm_2d_tile_t c_tileCMSISLogoMask2 = {
             .chScheme = ARM_2D_CHANNEL_8in32,
         },
     },
-    .nAddress = ((intptr_t)c_bmpCMSISLogoRGB32) + 3,
+    .nAddress = ((intptr_t)c_bmpCMSISLogoCCCA8888) + 3,
 };
 
 

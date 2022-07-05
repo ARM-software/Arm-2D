@@ -55,6 +55,7 @@
 #   define arm_2d_fill_colour_with_mask_and_opacity                             \
                 arm_2d_gray8_fill_colour_with_mask_and_opacity
 #   define __arm_2d_color_t         arm_2d_color_gray8_t
+#   define c_tileWhiteDot           c_tileWhiteDotAlpha
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 #   define arm_2d_alpha_blending_with_colour_keying                             \
@@ -62,6 +63,7 @@
 #   define arm_2d_fill_colour_with_mask_and_opacity                             \
                 arm_2d_rgb565_fill_colour_with_mask_and_opacity
 #   define __arm_2d_color_t         arm_2d_color_rgb565_t
+#   define c_tileWhiteDot           c_tileWhiteDotRGB565
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 #define arm_2d_alpha_blending_with_colour_keying                                \
@@ -69,7 +71,7 @@
 #   define arm_2d_fill_colour_with_mask_and_opacity                             \
                 arm_2d_cccn888_fill_colour_with_mask_and_opacity
 #   define __arm_2d_color_t         arm_2d_color_cccn888_t
-
+#   define c_tileWhiteDot           c_tileWhiteDotCCCA8888
 #else
 #   error Unsupported colour depth!
 #endif
@@ -94,8 +96,8 @@ ARM_NOINIT static uint32_t s_wUnit;
 
 void busy_wheel_init(void)
 {
-    int16_t iXOffset = c_tileWhiteDot.tRegion.tSize.iWidth >> 2;
-    int16_t iYOffset = c_tileWhiteDot.tRegion.tSize.iHeight>> 2;
+    int16_t iXOffset = c_tileWhiteDotAlpha.tRegion.tSize.iWidth >> 2;
+    int16_t iYOffset = c_tileWhiteDotAlpha.tRegion.tSize.iHeight>> 2;
     
     for (uint_fast8_t n = 0; n < 8; n++) {
         s_tDotsLocation[n].iY = (int16_t)(sinf(__PI * (float)n / 4.0f) * __RADIUS) + iXOffset;
@@ -115,7 +117,7 @@ void busy_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
         .iX = ptTarget->tRegion.tSize.iWidth / 2 - 10,
         .iY = ptTarget->tRegion.tSize.iHeight / 2 - 10,
     };
-    arm_2d_region_t tTargetRegion = c_tileWhiteDot.tRegion;
+    arm_2d_region_t tTargetRegion = c_tileWhiteDotAlpha.tRegion;
     
     if (bIsNewFrame) {
         int64_t lClocks = clock();
@@ -155,7 +157,7 @@ void busy_wheel2_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
         .iX = ptTarget->tRegion.tSize.iWidth / 2 - 10,
         .iY = ptTarget->tRegion.tSize.iHeight / 2 - 10,
     };
-    arm_2d_region_t tTargetRegion = c_tileWhiteDot.tRegion;
+    arm_2d_region_t tTargetRegion = c_tileWhiteDotAlpha.tRegion;
     
     if (bIsNewFrame) {
         int64_t lClocks = clock();
