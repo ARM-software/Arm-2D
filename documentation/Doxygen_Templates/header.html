@@ -22,6 +22,8 @@ $search
 $mathjax
 <link href="$relpath^$extra_stylesheet" rel="stylesheet" type="text/css" />
 $extrastylesheet
+<link href="../version.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../version.js"></script>
 </head>
 <body>
 <!--BEGIN DISABLE_INDEX-->
@@ -45,6 +47,7 @@ $extrastylesheet
    <!--BEGIN PROJECT_NUMBER-->&#160;<span id="projectnumber"><script type="text/javascript">
      <!--
      writeHeader.call(this);
+     writeVersionDropdown(this);
      //-->
     </script>
    </span><!--END PROJECT_NUMBER-->

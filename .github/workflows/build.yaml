@@ -111,8 +111,10 @@ jobs:
         run: |
           rm -rf main
           mkdir main
-          cd main
+          pushd main
           tar -xvjf /tmp/doc.tbz2
+          popd
+          ./update_versions.sh
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
@@ -127,8 +129,10 @@ jobs:
           mkdir -p ${RELEASE}
           rm -f latest
           ln -s ${RELEASE} latest
-          cd ${RELEASE}
+          pushd ${RELEASE}
           tar -xvjf /tmp/doc.tbz2
+          popd
+          ./update_versions.sh
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add . ../latest
