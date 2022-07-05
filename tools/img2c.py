@@ -127,8 +127,10 @@ const arm_2d_tile_t c_tile{0}CCCA8888 = {{
 
 tailAlpha="""
 
-__attribute__((section(\"arm2d.tile.c_tile{0}Mask\")))
+
 extern const arm_2d_tile_t c_tile{0}Mask;
+
+__attribute__((section(\"arm2d.tile.c_tile{0}Mask\")))
 const arm_2d_tile_t c_tile{0}Mask = {{
     .tRegion = {{
         .tSize = {{
@@ -149,8 +151,10 @@ const arm_2d_tile_t c_tile{0}Mask = {{
 
 tailAlpha2="""
 
-__attribute__((section(\"arm2d.tile.c_tile{0}Mask2\")))
+
 extern const arm_2d_tile_t c_tile{0}Mask2;
+
+__attribute__((section(\"arm2d.tile.c_tile{0}Mask2\")))
 const arm_2d_tile_t c_tile{0}Mask2 = {{
     .tRegion = {{
         .tSize = {{
@@ -165,7 +169,7 @@ const arm_2d_tile_t c_tile{0}Mask2 = {{
             .chScheme = ARM_2D_CHANNEL_8in32,
         }},
     }},
-    .nAddress = ((intptr_t)c_bmp{0}) + 3,
+    .nAddress = ((intptr_t)c_bmp{0}CCCA8888) + 3,
 }};
 """
 
@@ -251,7 +255,7 @@ def main(argv):
         print(hdr.format(time.asctime( time.localtime(time.time())), argv[0], resized, args.rot), file=o)
 
         if mode == "RGBA":
-            print('__attribute__((section(\"arm2d.asset.c_bmp%sAlpha\")))' % (arr_name), file=o)
+            print('__attribute__((aligned(4), section(\"arm2d.asset.c_bmp%sAlpha\")))' % (arr_name), file=o)
             # alpha channel array available
             print('static const uint8_t c_bmp%sAlpha[%d*%d] = {' % (arr_name, row, col),file=o)
             cnt = 0
