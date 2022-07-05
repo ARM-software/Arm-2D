@@ -251,7 +251,7 @@ def main(argv):
         print(hdr.format(time.asctime( time.localtime(time.time())), argv[0], resized, args.rot), file=o)
 
         if mode == "RGBA":
-            print('__attribute__((section(\"arm2d.asset.c_bmp%sAlpha\"))) = {' % (arr_name), file=o)
+            print('__attribute__((section(\"arm2d.asset.c_bmp%sAlpha\")))' % (arr_name), file=o)
             # alpha channel array available
             print('static const uint8_t c_bmp%sAlpha[%d*%d] = {' % (arr_name, row, col),file=o)
             cnt = 0
@@ -279,7 +279,7 @@ def main(argv):
             RGB = R | G | B
 
             print('',file=o)
-            print('__attribute__((section(\"arm2d.asset.c_bmp%sRGB565\"))) = {' % (arr_name), file=o)
+            print('__attribute__((section(\"arm2d.asset.c_bmp%sRGB565\")))' % (arr_name), file=o)
             print('static const uint16_t c_bmp%sRGB565[%d*%d] = {' % (arr_name, row, col), file=o)
             cnt = 0
             for eachRow in RGB:
@@ -312,10 +312,10 @@ def main(argv):
             print('',file=o)
             
             if mode == "RGBA":
-                print('__attribute__((section(\"arm2d.asset.c_bmp%sCCCA8888\"))) = {' % (arr_name), file=o)
+                print('__attribute__((section(\"arm2d.asset.c_bmp%sCCCA8888\")))' % (arr_name), file=o)
                 print('static const uint32_t c_bmp%sCCCA8888[%d*%d] = {' % (arr_name, row, col), file=o)
             else:
-                print('__attribute__((section(\"arm2d.asset.c_bmp%sCCCN888\"))) = {' % (arr_name), file=o)
+                print('__attribute__((section(\"arm2d.asset.c_bmp%sCCCN888\")))' % (arr_name), file=o)
                 print('static const uint32_t c_bmp%sCCCN888[%d*%d]= {' % (arr_name, row, col), file=o)
                 
             cnt = 0
