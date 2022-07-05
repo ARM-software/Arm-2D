@@ -28,21 +28,18 @@
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*---------------------- Graphic LCD color definitions -----------------------*/
-/* Color coding (16-bit):
-     15..11 = R4..0 (Red)
-     10..5  = G5..0 (Green)
-      4..0  = B4..0 (Blue)
-*/
 
-#if __GLCD_CFG_COLOUR_DEPTH__ == 32
+#if __GLCD_CFG_COLOUR_DEPTH__ == 8
+#   define __RGB(__R, __G, __B)    ((((__R) + (__G) + (__B)) / 3) & 0xFF)
+#elif __GLCD_CFG_COLOUR_DEPTH__ == 16
+#   define __RGB(__R, __G, __B)    ((((uint16_t)(__R) & 0xFF) >> 3 << 11)   |   \
+                                    (((uint16_t)(__G) & 0xFF) >> 2 << 5)    |   \
+                                    (((uint16_t)(__B) & 0xFF) >> 3 << 0)    )
+#else /* __GLCD_CFG_COLOUR_DEPTH__ == 32 */
 #   define __RGB(__R, __G, __B)    ((((uint32_t)(__R) & 0xFF) << 16)   |        \
                                     (((uint32_t)(__G) & 0xFF) << 8)   |         \
                                     (((uint32_t)(__B) & 0xFF) << 0)  |          \
                                     (uint32_t)0xFF << 24)
-#else /* __GLCD_CFG_COLOUR_DEPTH__ == 16 */
-#   define __RGB(__R, __G, __B)    ((((uint16_t)(__R) & 0xFF) >> 3 << 11)   |   \
-                                    (((uint16_t)(__G) & 0xFF) >> 2 << 5)   |    \
-                                    (((uint16_t)(__B) & 0xFF) >> 3 << 0)  ) 
 #endif
 
 /* GLCD RGB color definitions                            */
