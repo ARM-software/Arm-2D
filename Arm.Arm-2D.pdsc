@@ -9,28 +9,11 @@
   <supportContact>https://github.com/ARM-software/Arm-2D/issues</supportContact>
   <license>LICENSE</license>
   <repository type="git">https://github.com/ARM-software/Arm-2D.git</repository>
+  
   <releases>
-    <release date="2022-07-04" version="1.0.0-preview" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/main/cmsis-pack/Arm.Arm-2D.1.0.0-preview.pack">
-      - Add CMSIS-Pack
-      - Arm-2D v1.0.0-preview
-      - Add support for Transform (rotation and scaling)
-      - Add a patch for alpha-255-opaque issue
-      - Add a new header files __arm_2d_direct.h for professional developers.
-      - Improve the performance of transform-with-source-masks
-      - Fix defects found in Transform 
-      - update examples to use common assets and controls
-      - Introduce entries for copy-only, copy-with-x-mirror/y-mirror/xy-mirror
-      - Introduce entries for fill-only, fill-with-x-mirror/y-mirror/xy-mirror
-      - Fix cccn888 alpha-channel over-written issue
-      - Add Doxygen
-      - Improve Transform performance
-      - Moved to new repository
-      - Fixed issues found in target masks support
-      - Add extras
-      - Add benchmarks as cmsis-pack components
-      - Add Display Adatper 
+    <release version="0.0.0">
+      Active development ...
     </release>
-    
   </releases>
 
   <keywords>
