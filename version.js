@@ -1,7 +1,8 @@
 //--- list of versions ---
 const versions = {
     "latest": "1.0.0-preview",
-    "v1.0.0-preview": "1.0.0-preview","main": "1.0.0-preview1-dev2",".git": ""
+    "v1.0.0-preview": "1.0.0-preview",
+    "main": "1.0.0-preview1-dev2"
 }
 //--- list of versions ---
 
@@ -28,8 +29,8 @@ function writeVersionDropdown() {
     document.write('  <div id="myDropdown" class="dropdown-content">'); 
     for(var version in versions) {
         var label = versions[version];
-        if (label != version) {
-            label += "("+version+")"
+        if ("v"+label != version) {
+            label += " ("+version+")"
         }
         document.write('    <a href="'+urlForVersion(docUrl, version)+'">'+label+'</a>');
     }
