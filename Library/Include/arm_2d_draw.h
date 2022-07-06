@@ -367,7 +367,7 @@ extern
 ARM_NONNULL(1)
 arm_fsm_rt_t arm_2d_rgba8888_draw_point(const arm_2d_tile_t *ptTarget,
                                         const arm_2d_location_t tLocation,
-                                        arm_2d_color_rgba8888_t tColour);
+                                        arm_2d_color_bgra8888_t tColour);
 #endif 
 
 

@@ -144,7 +144,7 @@ __STATIC_INLINE uint32_t __arm_2d_cccn888_pack(__arm_2d_color_fast_rgb_t * ptRGB
 {
     assert(NULL != ptRGB);
     
-    arm_2d_color_rgba8888_t tOutput = {
+    arm_2d_color_bgra8888_t tOutput = {
         .u8R = (uint16_t) ptRGB->R,
         .u8G = (uint16_t) ptRGB->G,
         .u8B = (uint16_t) ptRGB->B,

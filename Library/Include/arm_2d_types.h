@@ -121,9 +121,9 @@ typedef union arm_2d_color_gray8_t {
 typedef union arm_2d_color_rgb565_t {
     uint16_t tValue;
     struct {
-        uint16_t u5R : 5;
-        uint16_t u6G : 6;
         uint16_t u5B : 5;
+        uint16_t u6G : 6;
+        uint16_t u5R : 5;
     };
 } arm_2d_color_rgb565_t;
 
@@ -135,23 +135,23 @@ typedef union arm_2d_color_rgb565_t {
  *!
  *!        (source: https://en.wikipedia.org/wiki/RGBA_color_model#ARGB32)
  */
-typedef union arm_2d_color_rgba8888_t {
+typedef union arm_2d_color_bgra8888_t {
     uint32_t tValue;
     struct {
-        uint32_t u8R : 8;
-        uint32_t u8G : 8;
         uint32_t u8B : 8;
+        uint32_t u8G : 8;
+        uint32_t u8R : 8;
         uint32_t u8A : 8;
     };
-} arm_2d_color_rgba8888_t;
+} arm_2d_color_bgra8888_t;
 
 
 typedef union arm_2d_color_rgb888_t {
     uint32_t tValue;
     struct {
-        uint32_t u8R : 8;
-        uint32_t u8G : 8;
         uint32_t u8B : 8;
+        uint32_t u8G : 8;
+        uint32_t u8R : 8;
         uint32_t     : 8;
     };
 } arm_2d_color_rgb888_t;
@@ -283,7 +283,7 @@ enum {
                                   ARM_2D_COLOUR_HAS_ALPHA_msk       ,
 
     ARM_2D_COLOUR_RGB888      =   ARM_2D_COLOUR_CCCN888             ,
-    ARM_2D_COLOUR_RGBA8888    =   ARM_2D_COLOUR_CCCA8888            ,
+    ARM_2D_COLOUR_BGRA8888    =   ARM_2D_COLOUR_CCCA8888            ,
 
 /*! not supported yet
     ARM_2D_COLOUR_NCCC888     =   ARM_2D_COLOUR_RGB32               |

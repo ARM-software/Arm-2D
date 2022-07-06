@@ -230,7 +230,7 @@ void __arm_2d_impl_cccn888_to_rgb565(uint32_t *__RESTRICT pwSourceBase,
         uint16_t *__RESTRICT phwTarget = phwTargetBase;
 
         for (int_fast16_t x = 0; x < ptCopySize->iWidth; x++) {
-            arm_2d_color_rgba8888_t wSrcPixel;
+            arm_2d_color_bgra8888_t wSrcPixel;
             __arm_2d_color_fast_rgb_t      hwTargetPixel;
 
             wSrcPixel.tValue = *pwSource++;
@@ -260,7 +260,7 @@ void __arm_2d_impl_rgb565_to_cccn888(uint16_t *__RESTRICT phwSourceBase,
 
         for (int_fast16_t x = 0; x < ptCopySize->iWidth; x++) {
             __arm_2d_color_fast_rgb_t      hwSrcPixel;
-            arm_2d_color_rgba8888_t wTargetPixel;
+            arm_2d_color_bgra8888_t wTargetPixel;
 
             __arm_2d_rgb565_unpack(*phwSource++, &hwSrcPixel);
             wTargetPixel.u8R = hwSrcPixel.R;
