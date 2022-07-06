@@ -302,9 +302,9 @@ def main(argv):
             typStr='uint16_t'
 
         elif args.format == 'rgb32':
-            R = data[...,0].astype(np.uint32)
+            R = data[...,0].astype(np.uint32) << 16
             G = data[...,1].astype(np.uint32) << 8
-            B = data[...,2].astype(np.uint32) << 16
+            B = data[...,2].astype(np.uint32)
             if mode == "RGBA":
                 A = data[...,3].astype(np.uint32) << 24
             else:
