@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D_DISP_ADAPTER_H__
-#define __ARM_2D_DISP_ADAPTER_H__
+#ifndef __ARM_2D_DISP_ADAPTER%Instance%_H__
+#define __ARM_2D_DISP_ADAPTER%Instance%_H__
 
 #include "arm_2d.h"
 
