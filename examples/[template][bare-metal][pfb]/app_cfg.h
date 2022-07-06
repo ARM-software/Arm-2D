@@ -20,43 +20,9 @@
 #define __TOP_APP_CFG_H__
 
 /*============================ INCLUDES ======================================*/
-#include <assert.h>
-
-#if !defined(__GNUC__) && !defined(__IAR_SYSTEMS_ICC__)
-#   error This demo requires GNU extensions
-#endif
 
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
-
-#define ASSERT(...)         assert(__VA_ARGS__)
-
-/*! \note FPB Size
- *!         8 * 8     128B
- *!        16 * 16    512B
- *!        48 * 8     768B
- *!        20 * 20    800B
- *!        24 * 24   1152B
- *!        32 * 32      2K
- *!       480 * 1     960B  
- *!       480 * 2    1920B
- *!       480 * 4    3840B
- *!       480 * 8    7680B
- */
-#define PFB_BLOCK_WIDTH         48
-#define PFB_BLOCK_HEIGHT        8
-
-#define BUSY_WHEEL_SPIN_SPEED   100
-
-#ifndef APP_SCREEN_WIDTH 
-#   define APP_SCREEN_WIDTH         GLCD_WIDTH
-#endif
-
-#ifndef APP_SCREEN_HEIGHT 
-#   define APP_SCREEN_HEIGHT        GLCD_HEIGHT
-#endif
-
-
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/

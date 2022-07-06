@@ -79,8 +79,8 @@
 
 /************************ Global variables ************************************/
 
-static uint16_t   foreground_color = GLCD_COLOR_BLACK;
-static uint16_t   background_color = GLCD_COLOR_WHITE;
+static uint16_t   foreground_color = 0x0000;
+static uint16_t   background_color = 0xFFFF;
 static GLCD_FONT *active_font      = NULL;
 
 //static uint8_t    Himax;

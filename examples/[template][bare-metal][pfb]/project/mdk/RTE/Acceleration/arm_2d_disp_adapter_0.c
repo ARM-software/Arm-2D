@@ -21,14 +21,14 @@
 
 #include "arm_2d.h"
 
-#ifdef __RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER%Instance%__
+#ifdef __RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER0__
 
 #include <stdio.h>
 #include "arm_2d_helper.h"
 #include "arm_extra_lcd_printf.h"
 #include "arm_extra_controls.h"
 #include "__common.h"
-#include "arm_2d_disp_adapter_%Instance%.h"
+#include "arm_2d_disp_adapter_0.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -61,31 +61,31 @@
 #   define STR(__A)         __STR(__A)
 #endif
 
-#ifndef __DISP%Instance%_CFG_ITERATION_CNT
-#   define __DISP%Instance%_CFG_ITERATION_CNT       30
+#ifndef __DISP0_CFG_ITERATION_CNT
+#   define __DISP0_CFG_ITERATION_CNT       30
 #endif
 
-#ifndef __DISP%Instance%_CFG_PFB_BLOCK_WIDTH__
-#   define __DISP%Instance%_CFG_PFB_BLOCK_WIDTH__   __DISP%Instance%_CFG_SCEEN_WIDTH__
+#ifndef __DISP0_CFG_PFB_BLOCK_WIDTH__
+#   define __DISP0_CFG_PFB_BLOCK_WIDTH__   __DISP0_CFG_SCEEN_WIDTH__
 #endif
 
-#ifndef __DISP%Instance%_CFG_PFB_BLOCK_WIDTH__
-#   define __DISP%Instance%_CFG_PFB_BLOCK_WIDTH__   __DISP%Instance%_CFG_SCEEN_HEIGHT__
+#ifndef __DISP0_CFG_PFB_BLOCK_WIDTH__
+#   define __DISP0_CFG_PFB_BLOCK_WIDTH__   __DISP0_CFG_SCEEN_HEIGHT__
 #endif
 
-#if __DISP%Instance%_CFG_COLOUR_DEPTH__ == 8
+#if __DISP0_CFG_COLOUR_DEPTH__ == 8
 #   define __arm_2d_color_t         arm_2d_color_gray8_t
 #   define COLOUR_INT               uint8_t
 #   define arm_2d_fill_colour       arm_2d_c8it_fill_colour
 #   define arm_2dp_fill_colour_with_opacity                                     \
                 arm_2dp_gray8_fill_colour_with_opacity
-#elif __DISP%Instance%_CFG_COLOUR_DEPTH__ == 16
+#elif __DISP0_CFG_COLOUR_DEPTH__ == 16
 #   define __arm_2d_color_t         arm_2d_color_rgb565_t
 #   define COLOUR_INT               uint16_t
 #   define arm_2d_fill_colour       arm_2d_rgb16_fill_colour
 #   define arm_2dp_fill_colour_with_opacity                                     \
                 arm_2dp_rgb565_fill_colour_with_opacity
-#elif __DISP%Instance%_CFG_COLOUR_DEPTH__ == 32
+#elif __DISP0_CFG_COLOUR_DEPTH__ == 32
 #   define __arm_2d_color_t         arm_2d_color_cccn888_t
 #   define COLOUR_INT               uint32_t
 #   define arm_2d_fill_colour       arm_2d_rgb32_fill_colour
@@ -102,7 +102,7 @@ extern uint32_t SystemCoreClock;
 
 /*============================ PROTOTYPES ====================================*/
 extern 
-int32_t Disp%Instance%_DrawBitmap(int16_t x, 
+int32_t Disp0_DrawBitmap(int16_t x, 
                         int16_t y, 
                         int16_t width, 
                         int16_t height, 
@@ -111,7 +111,7 @@ int32_t Disp%Instance%_DrawBitmap(int16_t x,
 /*============================ LOCAL VARIABLES ===============================*/
 
 ARM_NOINIT 
-arm_2d_scene_player_t DISP%Instance%_ADAPTER;
+arm_2d_scene_player_t DISP0_ADAPTER;
 
 static struct {
     uint32_t wMin;
@@ -125,7 +125,7 @@ static struct {
     .wMax = 0,
     .dwTotal = 0,
     .wAverage = 0,
-    .wIterations = __DISP%Instance%_CFG_ITERATION_CNT,
+    .wIterations = __DISP0_CFG_ITERATION_CNT,
 };
 
 
@@ -140,11 +140,11 @@ static void on_frame_complete(arm_2d_scene_t *ptScene)
 {
     ARM_2D_UNUSED(ptScene);
     
-    int32_t nTotalCyclCount = DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nTotalCycle;
-    int32_t nTotalLCDCycCount = DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nRenderingCycle;
+    int32_t nTotalCyclCount = DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nTotalCycle;
+    int32_t nTotalLCDCycCount = DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nRenderingCycle;
     BENCHMARK.wLCDLatency = nTotalLCDCycCount;
 
-    if (__DISP%Instance%_CFG_ITERATION_CNT) {
+    if (__DISP0_CFG_ITERATION_CNT) {
         if (BENCHMARK.wIterations) {
             BENCHMARK.wMin = MIN((uint32_t)nTotalCyclCount, BENCHMARK.wMin);
             BENCHMARK.wMax = MAX(nTotalCyclCount, (int32_t)BENCHMARK.wMax);
@@ -153,12 +153,12 @@ static void on_frame_complete(arm_2d_scene_t *ptScene)
 
             if (0 == BENCHMARK.wIterations) {
                 BENCHMARK.wAverage =
-                    (uint32_t)(BENCHMARK.dwTotal / (uint64_t)__DISP%Instance%_CFG_ITERATION_CNT);
+                    (uint32_t)(BENCHMARK.dwTotal / (uint64_t)__DISP0_CFG_ITERATION_CNT);
                     
                 BENCHMARK.wMin = UINT32_MAX;
                 BENCHMARK.wMax = 0;
                 BENCHMARK.dwTotal = 0;
-                BENCHMARK.wIterations = __DISP%Instance%_CFG_ITERATION_CNT;
+                BENCHMARK.wIterations = __DISP0_CFG_ITERATION_CNT;
             }
         }
     }
@@ -185,7 +185,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
     
     busy_wheel2_show(ptTile, bIsNewFrame);
     
-    if (__DISP%Instance%_CFG_ITERATION_CNT) {
+    if (__DISP0_CFG_ITERATION_CNT) {
         arm_2dp_fill_colour_with_opacity(
                     NULL, 
                     ptTile, 
@@ -193,9 +193,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
                         {
                             .tLocation = {
                                 .iX = 0,
-                                .iY = __DISP%Instance%_CFG_SCEEN_HEIGHT__ - 9},
+                                .iY = __DISP0_CFG_SCEEN_HEIGHT__ - 9},
                             .tSize = {
-                                .iWidth = __DISP%Instance%_CFG_SCEEN_WIDTH__,
+                                .iWidth = __DISP0_CFG_SCEEN_WIDTH__,
                                 .iHeight = 9,
                             },
                         },
@@ -204,7 +204,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
                     255 - 32);
         arm_2d_op_wait_async(NULL);
         
-        arm_lcd_text_location( (__DISP%Instance%_CFG_SCEEN_HEIGHT__ + 7) / 8 - 1, 0);
+        arm_lcd_text_location( (__DISP0_CFG_SCEEN_HEIGHT__ + 7) / 8 - 1, 0);
         if (BENCHMARK.wAverage) {
             arm_lcd_printf("FPS: %3d:%dms   ",
                             SystemCoreClock / BENCHMARK.wAverage,
@@ -242,42 +242,42 @@ IMPL_PFB_ON_DRAW(__pfb_draw_background_handler)
 }
 
 __WEAK
-IMPL_PFB_ON_LOW_LV_RENDERING(__glcd%Instance%_pfb_render_handler)
+IMPL_PFB_ON_LOW_LV_RENDERING(__glcd0_pfb_render_handler)
 {
     const arm_2d_tile_t *ptTile = &(ptPFB->tTile);
 
     ARM_2D_UNUSED(pTarget);
     ARM_2D_UNUSED(bIsNewFrame);
 
-    Disp%Instance%_DrawBitmap(ptTile->tRegion.tLocation.iX,
+    Disp0_DrawBitmap(ptTile->tRegion.tLocation.iX,
                     ptTile->tRegion.tLocation.iY,
                     ptTile->tRegion.tSize.iWidth,
                     ptTile->tRegion.tSize.iHeight,
                     (const uint8_t *)ptTile->pchBuffer);
 
     arm_2d_helper_pfb_report_rendering_complete(
-                    &DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t,
+                    &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t,
                     (arm_2d_pfb_t *)ptPFB);
 }
 
 
 static void __user_scene_player_init(void)
 {
-    memset(&DISP%Instance%_ADAPTER, 0, sizeof(DISP%Instance%_ADAPTER));
+    memset(&DISP0_ADAPTER, 0, sizeof(DISP0_ADAPTER));
 
     //! initialise FPB helper
     if (ARM_2D_HELPER_PFB_INIT(
-        &DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t,                            //!< FPB Helper object
-        __DISP%Instance%_CFG_SCEEN_WIDTH__,                                     //!< screen width
-        __DISP%Instance%_CFG_SCEEN_HEIGHT__,                                    //!< screen height
+        &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t,                            //!< FPB Helper object
+        __DISP0_CFG_SCEEN_WIDTH__,                                     //!< screen width
+        __DISP0_CFG_SCEEN_HEIGHT__,                                    //!< screen height
         COLOUR_INT,                                                             //!< colour date type
-        __DISP%Instance%_CFG_PFB_BLOCK_WIDTH__,                                 //!< PFB block width
-        __DISP%Instance%_CFG_PFB_BLOCK_HEIGHT__,                                //!< PFB block height
+        __DISP0_CFG_PFB_BLOCK_WIDTH__,                                 //!< PFB block width
+        __DISP0_CFG_PFB_BLOCK_HEIGHT__,                                //!< PFB block height
         1,                                                                      //!< number of PFB in the PFB pool
         {
             .evtOnLowLevelRendering = {
                 //! callback for low level rendering
-                .fnHandler = &__glcd%Instance%_pfb_render_handler,
+                .fnHandler = &__glcd0_pfb_render_handler,
             },
         },
         //.FrameBuffer.bSwapRGB16 = true,
@@ -291,7 +291,7 @@ static void __user_scene_player_init(void)
  * Benchmark Entry                                                            *
  *----------------------------------------------------------------------------*/
 
-void disp_adapter%Instance%_init(void)
+void disp_adapter0_init(void)
 {
     arm_extra_controls_init();
     
@@ -304,8 +304,8 @@ void disp_adapter%Instance%_init(void)
             /* a region for the busy wheel */
             ADD_REGION_TO_LIST(s_tDirtyRegions,
                 .tLocation = {
-                    .iX = ((__DISP%Instance%_CFG_SCEEN_WIDTH__ - 100) >> 1),
-                    .iY = ((__DISP%Instance%_CFG_SCEEN_HEIGHT__ - 100) >> 1),
+                    .iX = ((__DISP0_CFG_SCEEN_WIDTH__ - 100) >> 1),
+                    .iY = ((__DISP0_CFG_SCEEN_HEIGHT__ - 100) >> 1),
                 },
                 .tSize = {
                     .iWidth = 100,
@@ -317,9 +317,9 @@ void disp_adapter%Instance%_init(void)
             ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
                 .tLocation = {
                     .iX = 0,
-                    .iY = __DISP%Instance%_CFG_SCEEN_HEIGHT__ - 9},
+                    .iY = __DISP0_CFG_SCEEN_HEIGHT__ - 9},
                 .tSize = {
-                    .iWidth = __DISP%Instance%_CFG_SCEEN_WIDTH__,
+                    .iWidth = __DISP0_CFG_SCEEN_WIDTH__,
                     .iHeight = 9,
                 },
             ),
@@ -337,14 +337,14 @@ void disp_adapter%Instance%_init(void)
             },
         };
         arm_2d_user_scene_player_append_scenes( 
-                                        &DISP%Instance%_ADAPTER,
+                                        &DISP0_ADAPTER,
                                         (arm_2d_scene_t *)s_tScenes);
     } while(0);
 }
 
-arm_fsm_rt_t disp_adapter%Instance%_task(void)
+arm_fsm_rt_t disp_adapter0_task(void)
 {
-    return arm_2d_user_scene_player_task(&DISP%Instance%_ADAPTER);
+    return arm_2d_user_scene_player_task(&DISP0_ADAPTER);
 }
 
 

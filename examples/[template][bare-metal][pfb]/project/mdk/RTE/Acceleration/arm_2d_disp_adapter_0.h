@@ -21,7 +21,7 @@
 
 #include "arm_2d.h"
 
-#ifdef __RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER%Instance%__
+#ifdef __RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER0__
 
 #include "arm_2d_helper_scene.h"
 
@@ -35,40 +35,40 @@
 //     <16=>    16Bits
 //     <32=>    32Bits
 // <i> The colour depth of your screen
-#ifndef __DISP%Instance%_CFG_COLOUR_DEPTH__
-#   define __DISP%Instance%_CFG_COLOUR_DEPTH__              16
+#ifndef __DISP0_CFG_COLOUR_DEPTH__
+#   define __DISP0_CFG_COLOUR_DEPTH__              16
 #endif
 
 // <o>Width of the screen <8-32767>
 // <i> The width of your screen
 // <i> Default: 320
-#ifndef __DISP%Instance%_CFG_SCEEN_WIDTH__
-#   define __DISP%Instance%_CFG_SCEEN_WIDTH__               320
+#ifndef __DISP0_CFG_SCEEN_WIDTH__
+#   define __DISP0_CFG_SCEEN_WIDTH__               320
 #endif
 
 // <o>Height of the screen <8-32767>
 // <i> The height of your screen
 // <i> Default: 240
-#ifndef __DISP%Instance%_CFG_SCEEN_HEIGHT__
-#   define __DISP%Instance%_CFG_SCEEN_HEIGHT__              240
+#ifndef __DISP0_CFG_SCEEN_HEIGHT__
+#   define __DISP0_CFG_SCEEN_HEIGHT__              240
 #endif
 
 // <o>Width of the PFB block
-// <i> The width of your PFB block size used in disp%Instance%
-#ifndef __DISP%Instance%_CFG_PFB_BLOCK_WIDTH__
-#   define __DISP%Instance%_CFG_PFB_BLOCK_WIDTH__           320
+// <i> The width of your PFB block size used in disp0
+#ifndef __DISP0_CFG_PFB_BLOCK_WIDTH__
+#   define __DISP0_CFG_PFB_BLOCK_WIDTH__           320
 #endif
 
 // <o>Height of the PFB block
-// <i> The height of your PFB block size used in disp%Instance%
-#ifndef __DISP%Instance%_CFG_PFB_BLOCK_HEIGHT__
-#   define __DISP%Instance%_CFG_PFB_BLOCK_HEIGHT__          240
+// <i> The height of your PFB block size used in disp0
+#ifndef __DISP0_CFG_PFB_BLOCK_HEIGHT__
+#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__          240
 #endif
 
 // <o>Number of iterations <0-2000>
 // <i> run number of iterations before calculate the FPS.
-#ifndef __DISP%Instance%_CFG_ITERATION_CNT
-#   define __DISP%Instance%_CFG_ITERATION_CNT               30
+#ifndef __DISP0_CFG_ITERATION_CNT
+#   define __DISP0_CFG_ITERATION_CNT               30
 #endif
 
 // <<< end of configuration section >>>
@@ -79,15 +79,15 @@
 /*============================ GLOBAL VARIABLES ==============================*/
 ARM_NOINIT
 extern
-arm_2d_scene_player_t DISP%Instance%_ADAPTER;
+arm_2d_scene_player_t DISP0_ADAPTER;
 
 /*============================ PROTOTYPES ====================================*/
 
 extern
-void disp_adapter%Instance%_init(void);
+void disp_adapter0_init(void);
 
 extern
-arm_fsm_rt_t disp_adapter%Instance%_task(void);
+arm_fsm_rt_t disp_adapter0_task(void);
 
 #endif
 

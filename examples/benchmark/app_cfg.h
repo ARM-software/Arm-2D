@@ -22,29 +22,9 @@
 /*============================ INCLUDES ======================================*/
 #include <assert.h>
 
-//#if !defined(__STDC_VERSION__) || __STDC_VERSION__ < 201112L
-//#   error This demo requires C11. 
-//#endif
-#if !defined(__GNUC__)
-#   error This demo requires GNU extensions
-#endif
 
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
-
-/*! \note FPB Size
- *!         8 * 8     128B
- *!        16 * 16    512B
- *!        20 * 20    800B
- *!        24 * 24   1152B
- *!        32 * 32      2K
- *!       480 * 1     960B  
- *!       480 * 2    1920B
- *!       480 * 4    3840B
- *!       480 * 8    7680B
- */
-#define PFB_BLOCK_WIDTH                     GLCD_WIDTH
-#define PFB_BLOCK_HEIGHT                    GLCD_HEIGHT
 
 #define BUSY_WHEEL_SPIN_SPEED   100
 

@@ -47,6 +47,25 @@
 #endif
 
 /*============================ MACROS ========================================*/
+#if __GLCD_CFG_COLOUR_DEPTH__ == 8
+#define arm_2d_fill_colour_with_mask                                            \
+            arm_2d_gray8_fill_colour_with_mask
+#   define __arm_2d_color_t         arm_2d_color_gray8_t
+
+#elif __GLCD_CFG_COLOUR_DEPTH__ == 16
+#define arm_2d_fill_colour_with_mask                                            \
+            arm_2d_rgb565_fill_colour_with_mask
+#   define __arm_2d_color_t         arm_2d_color_rgb565_t
+
+#elif __GLCD_CFG_COLOUR_DEPTH__ == 32
+#define arm_2d_fill_colour_with_mask                                            \
+            arm_2d_cccn888_fill_colour_with_mask
+#   define __arm_2d_color_t         arm_2d_color_cccn888_t
+
+#else
+#   error Unsupported colour depth!
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -72,6 +91,8 @@ const static arm_2d_tile_t s_tileSpinWheelMask = {
         },
     },
 };
+
+
 
 /*============================ IMPLEMENTATION ================================*/
 
@@ -112,7 +133,7 @@ void spinning_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
             .iY = 30,
         };
 
-        memset(s_tileSpinWheelMask.pchBuffer, 0, 61 * 61);
+        memset(s_tileSpinWheelMask.pchBuffer, 0, sizeof(s_tileSpinWheelMaskBuffer));
         
         arm_2dp_gray8_tile_rotation(&s_tMaskRotateCB,
                                     &c_tileSpinWheelMask,
@@ -126,11 +147,11 @@ void spinning_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
     } while(0);
 
     arm_2d_align_centre(ptTarget->tRegion, s_tileSpinWheelMask.tRegion.tSize) {
-        arm_2d_rgb565_fill_colour_with_mask(
+        arm_2d_fill_colour_with_mask(
                                 ptTarget, 
                                 &__centre_region, 
                                 &s_tileSpinWheelMask, 
-                                (arm_2d_color_rgb565_t){GLCD_COLOR_WHITE});
+                                (__arm_2d_color_t){GLCD_COLOR_WHITE});
         arm_2d_op_wait_async(NULL);
     }
 

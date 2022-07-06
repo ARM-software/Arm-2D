@@ -22,6 +22,17 @@
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
 /*============================ MACROS ========================================*/
+#if __GLCD_CFG_COLOUR_DEPTH__ == 8
+#   define COLOUR_INT               uint8_t
+#elif __GLCD_CFG_COLOUR_DEPTH__ == 16
+#   define COLOUR_INT               uint16_t
+#elif __GLCD_CFG_COLOUR_DEPTH__ == 32
+#   define COLOUR_INT               uint32_t
+#else
+#   error Unsupported colour depth!
+#endif
+
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -31,7 +42,7 @@
 extern
 void draw_round_corner_box( const arm_2d_tile_t *ptTarget, 
                             const arm_2d_region_t *ptRegion,
-                            uint16_t hwColour,
+                            COLOUR_INT tColour,
                             uint8_t chAlpha,
                             bool bIsNewFrame);
 

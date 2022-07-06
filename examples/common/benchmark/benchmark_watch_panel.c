@@ -111,7 +111,7 @@ const arm_2d_tile_t c_tileBackground;
 
 extern const arm_2d_tile_t c_tileStar;
 extern const arm_2d_tile_t c_tileStarMask;
-extern const arm_2d_tile_t c_tileStar32Mask2;
+extern const arm_2d_tile_t c_tileStarMask2;
 
 extern const arm_2d_tile_t c_tileCircleBackGroundMask;
 
@@ -439,7 +439,7 @@ void example_gui_refresh(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
         static arm_2d_op_trans_msk_opa_t s_tStarOP;
         const arm_2d_tile_t *ptSrcMask = 
         #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-            &c_tileStar32Mask2; //!< 8in32 channel mask
+            &c_tileStarMask2; //!< 8in32 channel mask
         #else
             &c_tileStarMask;    //!< normal 8bit mask
         #endif

@@ -550,7 +550,7 @@
       <file attr="config" category="sourceC" name="Library\Source\arm_2d.c" version="1.0.1">
         <instance index="0">RTE\Acceleration\arm_2d.c</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="Arm" Cversion="1.0.0-preview" condition="CMSIS-DSP"/>
-        <package name="Arm-2D" schemaVersion="1.4" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/developing/cmsis-pack/" vendor="Arm" version="1.0.0-preview-beta8"/>
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/main/cmsis-pack/" vendor="Arm" version="1.0.0-preview1-dev19+g5237936"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery-GCC"/>
         </targetInfos>
@@ -558,7 +558,7 @@
       <file attr="config" category="preIncludeGlobal" name="Library\Include\template\arm_2d_cfg.h" version="1.0.4">
         <instance index="0">RTE\Acceleration\arm_2d_cfg.h</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="Arm" Cversion="1.0.0-preview" condition="CMSIS-DSP"/>
-        <package name="Arm-2D" schemaVersion="1.4" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/developing/cmsis-pack/" vendor="Arm" version="1.0.0-preview-beta8"/>
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/main/cmsis-pack/" vendor="Arm" version="1.0.0-preview1-dev19+g5237936"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery-GCC"/>
         </targetInfos>
@@ -566,7 +566,7 @@
       <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_disp_adapter.c" version="1.0.0">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.c</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="Arm" Cversion="1.0.1" condition="Arm-2D-Helper" maxInstances="8"/>
-        <package name="Arm-2D" schemaVersion="1.4" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/developing/cmsis-pack/" vendor="Arm" version="1.0.0-preview-beta8"/>
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/main/cmsis-pack/" vendor="Arm" version="1.0.0-preview1-dev19+g5237936"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery-GCC"/>
         </targetInfos>
@@ -574,7 +574,7 @@
       <file attr="config" category="header" name="Helper\Include\template\arm_2d_disp_adapter.h" version="1.0.0">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.h</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="Arm" Cversion="1.0.1" condition="Arm-2D-Helper" maxInstances="8"/>
-        <package name="Arm-2D" schemaVersion="1.4" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/developing/cmsis-pack/" vendor="Arm" version="1.0.0-preview-beta8"/>
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/main/cmsis-pack/" vendor="Arm" version="1.0.0-preview1-dev19+g5237936"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery-GCC"/>
         </targetInfos>

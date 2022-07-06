@@ -539,9 +539,9 @@
               <FilePath>..\common\asset\SpinWheel.c</FilePath>
             </File>
             <File>
-              <FileName>whilte_dot.c.c</FileName>
+              <FileName>white_dot.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\common\asset\whilte_dot.c.c</FilePath>
+              <FilePath>..\common\asset\white_dot.c</FilePath>
             </File>
           </Files>
         </Group>

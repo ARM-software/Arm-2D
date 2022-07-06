@@ -56,8 +56,9 @@ hdr="""
 
 tailDataRGB565="""
 
-extern const arm_2d_tile_t c_tile{0};
-const arm_2d_tile_t c_tile{0} = {{
+extern const arm_2d_tile_t c_tile{0}RGB565;
+__attribute__((section(\"arm2d.tile.c_tile{0}RGB565\")))
+const arm_2d_tile_t c_tile{0}RGB565 = {{
     .tRegion = {{
         .tSize = {{
             .iWidth = {1},
@@ -71,15 +72,17 @@ const arm_2d_tile_t c_tile{0} = {{
             .chScheme = ARM_2D_COLOUR_RGB565,
         }},
     }},
-    {3}c_bmp{0},
+    {3}c_bmp{0}RGB565,
 }};
 
 """
 
 tailDataRGB888="""
 
-extern const arm_2d_tile_t c_tile{0};
-const arm_2d_tile_t c_tile{0} = {{
+extern const arm_2d_tile_t c_tile{0}CCCN888;
+
+__attribute__((section(\"arm2d.tile.c_tile{0}CCCN888\")))
+const arm_2d_tile_t c_tile{0}CCCN888 = {{
     .tRegion = {{
         .tSize = {{
             .iWidth = {1},
@@ -93,15 +96,17 @@ const arm_2d_tile_t c_tile{0} = {{
             .chScheme = ARM_2D_COLOUR_RGB888,
         }},
     }},
-    {3}c_bmp{0},
+    {3}c_bmp{0}CCCN888,
 }};
 
 """
 
 tailDataRGBA8888="""
 
-extern const arm_2d_tile_t c_tile{0};
-const arm_2d_tile_t c_tile{0} = {{
+extern const arm_2d_tile_t c_tile{0}CCCA8888;
+
+__attribute__((section(\"arm2d.tile.c_tile{0}CCCA8888\")))
+const arm_2d_tile_t c_tile{0}CCCA8888 = {{
     .tRegion = {{
         .tSize = {{
             .iWidth = {1},
@@ -112,17 +117,20 @@ const arm_2d_tile_t c_tile{0} = {{
         .bIsRoot = true,
         .bHasEnforcedColour = true,
         .tColourInfo = {{
-            .chScheme = ARM_2D_COLOUR_RGBA8888,
+            .chScheme = ARM_2D_COLOUR_BGRA8888,
         }},
     }},
-    {3}c_bmp{0},
+    {3}c_bmp{0}CCCA8888,
 }};
 
 """
 
 tailAlpha="""
 
+
 extern const arm_2d_tile_t c_tile{0}Mask;
+
+__attribute__((section(\"arm2d.tile.c_tile{0}Mask\")))
 const arm_2d_tile_t c_tile{0}Mask = {{
     .tRegion = {{
         .tSize = {{
@@ -143,7 +151,10 @@ const arm_2d_tile_t c_tile{0}Mask = {{
 
 tailAlpha2="""
 
+
 extern const arm_2d_tile_t c_tile{0}Mask2;
+
+__attribute__((section(\"arm2d.tile.c_tile{0}Mask2\")))
 const arm_2d_tile_t c_tile{0}Mask2 = {{
     .tRegion = {{
         .tSize = {{
@@ -158,7 +169,7 @@ const arm_2d_tile_t c_tile{0}Mask2 = {{
             .chScheme = ARM_2D_CHANNEL_8in32,
         }},
     }},
-    .nAddress = ((intptr_t)c_bmp{0}) + 3,
+    .nAddress = ((intptr_t)c_bmp{0}CCCA8888) + 3,
 }};
 """
 
@@ -244,6 +255,7 @@ def main(argv):
         print(hdr.format(time.asctime( time.localtime(time.time())), argv[0], resized, args.rot), file=o)
 
         if mode == "RGBA":
+            print('__attribute__((aligned(4), section(\"arm2d.asset.c_bmp%sAlpha\")))' % (arr_name), file=o)
             # alpha channel array available
             print('static const uint8_t c_bmp%sAlpha[%d*%d] = {' % (arr_name, row, col),file=o)
             cnt = 0
@@ -271,7 +283,8 @@ def main(argv):
             RGB = R | G | B
 
             print('',file=o)
-            print('static const uint16_t c_bmp%s[%d*%d] = {' % (arr_name, row, col), file=o)
+            print('__attribute__((section(\"arm2d.asset.c_bmp%sRGB565\")))' % (arr_name), file=o)
+            print('static const uint16_t c_bmp%sRGB565[%d*%d] = {' % (arr_name, row, col), file=o)
             cnt = 0
             for eachRow in RGB:
                 lineWidth=0
@@ -289,9 +302,9 @@ def main(argv):
             typStr='uint16_t'
 
         elif args.format == 'rgb32':
-            R = data[...,0].astype(np.uint32)
+            R = data[...,0].astype(np.uint32) << 16
             G = data[...,1].astype(np.uint32) << 8
-            B = data[...,2].astype(np.uint32) << 16
+            B = data[...,2].astype(np.uint32)
             if mode == "RGBA":
                 A = data[...,3].astype(np.uint32) << 24
             else:
@@ -301,7 +314,14 @@ def main(argv):
             RGB = R | G | B | A
 
             print('',file=o)
-            print('static const uint32_t c_bmp%s[%d*%d] = {' % (arr_name, row, col), file=o)
+            
+            if mode == "RGBA":
+                print('__attribute__((section(\"arm2d.asset.c_bmp%sCCCA8888\")))' % (arr_name), file=o)
+                print('static const uint32_t c_bmp%sCCCA8888[%d*%d] = {' % (arr_name, row, col), file=o)
+            else:
+                print('__attribute__((section(\"arm2d.asset.c_bmp%sCCCN888\")))' % (arr_name), file=o)
+                print('static const uint32_t c_bmp%sCCCN888[%d*%d]= {' % (arr_name, row, col), file=o)
+                
             cnt = 0
             for eachRow in RGB:
                 lineWidth=0

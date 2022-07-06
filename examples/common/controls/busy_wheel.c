@@ -49,6 +49,33 @@
 #   define BUSY_WHEEL_SPIN_SPEED            60
 #endif
 
+#if __GLCD_CFG_COLOUR_DEPTH__ == 8
+#   define arm_2d_alpha_blending_with_colour_keying                             \
+            arm_2d_gray8_alpha_blending_with_colour_keying
+#   define arm_2d_fill_colour_with_mask_and_opacity                             \
+                arm_2d_gray8_fill_colour_with_mask_and_opacity
+#   define __arm_2d_color_t         arm_2d_color_gray8_t
+#   define c_tileWhiteDot           c_tileWhiteDotAlpha
+
+#elif __GLCD_CFG_COLOUR_DEPTH__ == 16
+#   define arm_2d_alpha_blending_with_colour_keying                             \
+            arm_2d_rgb565_alpha_blending_with_colour_keying
+#   define arm_2d_fill_colour_with_mask_and_opacity                             \
+                arm_2d_rgb565_fill_colour_with_mask_and_opacity
+#   define __arm_2d_color_t         arm_2d_color_rgb565_t
+#   define c_tileWhiteDot           c_tileWhiteDotRGB565
+
+#elif __GLCD_CFG_COLOUR_DEPTH__ == 32
+#define arm_2d_alpha_blending_with_colour_keying                                \
+            arm_2d_cccn888_alpha_blending_with_colour_keying
+#   define arm_2d_fill_colour_with_mask_and_opacity                             \
+                arm_2d_cccn888_fill_colour_with_mask_and_opacity
+#   define __arm_2d_color_t         arm_2d_color_cccn888_t
+#   define c_tileWhiteDot           c_tileWhiteDotCCCA8888
+#else
+#   error Unsupported colour depth!
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -56,7 +83,7 @@ extern uint32_t SystemCoreClock;
 extern
 const arm_2d_tile_t c_tileWhiteDot;
 extern
-const arm_2d_tile_t c_tileWhiteDotAlpha;
+const arm_2d_tile_t c_tileWhiteDotMask;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
@@ -111,12 +138,11 @@ void busy_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
         tTargetRegion.tLocation.iX += s_tDotsLocation[chIndex].iX;
         tTargetRegion.tLocation.iY += s_tDotsLocation[chIndex].iY;
     
-        arm_2d_rgb565_alpha_blending_with_colour_keying(   
-                                                &c_tileWhiteDot,
-                                                ptTarget,
-                                                &tTargetRegion,
-                                                s_tAlphaTable[n],
-                                                (arm_2d_color_rgb565_t){0});
+        arm_2d_alpha_blending_with_colour_keying(   &c_tileWhiteDot,
+                                                    ptTarget,
+                                                    &tTargetRegion,
+                                                    s_tAlphaTable[n],
+                                                    (__arm_2d_color_t){0});
                                                 
         arm_2d_op_wait_async(NULL);
     }
@@ -152,11 +178,11 @@ void busy_wheel2_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
         tTargetRegion.tLocation.iX += s_tDotsLocation[chIndex].iX;
         tTargetRegion.tLocation.iY += s_tDotsLocation[chIndex].iY;
     
-        arm_2d_rgb565_fill_colour_with_mask_and_opacity(   
+        arm_2d_fill_colour_with_mask_and_opacity(   
                                     ptTarget,
                                     &tTargetRegion,
-                                    &c_tileWhiteDotAlpha,
-                                    (arm_2d_color_rgb565_t){GLCD_COLOR_WHITE},
+                                    &c_tileWhiteDotMask,
+                                    (__arm_2d_color_t){GLCD_COLOR_WHITE},
                                     s_tAlphaTable[n]);
                                                 
         arm_2d_op_wait_async(NULL);
