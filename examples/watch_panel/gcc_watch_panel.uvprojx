@@ -587,11 +587,6 @@
               <FilePath>..\common\asset\watch_panel.c</FilePath>
             </File>
             <File>
-              <FileName>whilte_dot.c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\whilte_dot.c.c</FilePath>
-            </File>
-            <File>
               <FileName>small_icon_sun.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\small_icon_sun.c</FilePath>
@@ -620,6 +615,11 @@
               <FileName>software.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\software.c</FilePath>
+            </File>
+            <File>
+              <FileName>whilte_dot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\whilte_dot.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1320,11 +1320,6 @@
               <FilePath>..\common\asset\watch_panel.c</FilePath>
             </File>
             <File>
-              <FileName>whilte_dot.c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\whilte_dot.c.c</FilePath>
-            </File>
-            <File>
               <FileName>small_icon_sun.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\small_icon_sun.c</FilePath>
@@ -1353,6 +1348,11 @@
               <FileName>software.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\software.c</FilePath>
+            </File>
+            <File>
+              <FileName>whilte_dot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\whilte_dot.c</FilePath>
             </File>
           </Files>
         </Group>

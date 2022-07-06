@@ -73,6 +73,28 @@
 #   define __DISP0_CFG_PFB_BLOCK_WIDTH__   __DISP0_CFG_SCEEN_HEIGHT__
 #endif
 
+#if __DISP0_CFG_COLOUR_DEPTH__ == 8
+#   define __arm_2d_color_t         arm_2d_color_gray8_t
+#   define COLOUR_INT               uint8_t
+#   define arm_2d_fill_colour       arm_2d_c8it_fill_colour
+#   define arm_2dp_fill_colour_with_opacity                                     \
+                arm_2dp_gray8_fill_colour_with_opacity
+#elif __DISP0_CFG_COLOUR_DEPTH__ == 16
+#   define __arm_2d_color_t         arm_2d_color_rgb565_t
+#   define COLOUR_INT               uint16_t
+#   define arm_2d_fill_colour       arm_2d_rgb16_fill_colour
+#   define arm_2dp_fill_colour_with_opacity                                     \
+                arm_2dp_rgb565_fill_colour_with_opacity
+#elif __DISP0_CFG_COLOUR_DEPTH__ == 32
+#   define __arm_2d_color_t         arm_2d_color_cccn888_t
+#   define COLOUR_INT               uint32_t
+#   define arm_2d_fill_colour       arm_2d_rgb32_fill_colour
+#   define arm_2dp_fill_colour_with_opacity                                     \
+                arm_2dp_cccn888_fill_colour_with_opacity
+#else
+#   error Unsupported colour depth!
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -80,10 +102,10 @@ extern uint32_t SystemCoreClock;
 
 /*============================ PROTOTYPES ====================================*/
 extern 
-int32_t Disp0_DrawBitmap(uint32_t x, 
-                        uint32_t y, 
-                        uint32_t width, 
-                        uint32_t height, 
+int32_t Disp0_DrawBitmap(int16_t x, 
+                        int16_t y, 
+                        int16_t width, 
+                        int16_t height, 
                         const uint8_t *bitmap);
 
 /*============================ LOCAL VARIABLES ===============================*/
@@ -151,7 +173,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
     ARM_2D_UNUSED(bIsNewFrame);
     
     
-    arm_2d_rgb16_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
+    arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
     
     arm_2d_align_centre(ptTile->tRegion, 100, 100) {
         draw_round_corner_box(  ptTile,
@@ -164,21 +186,22 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
     busy_wheel2_show(ptTile, bIsNewFrame);
     
     if (__DISP0_CFG_ITERATION_CNT) {
-        arm_2dp_rgb565_fill_colour_with_opacity(NULL, 
-                                                ptTile, 
-                                                (arm_2d_region_t []){
-                                                    {
-                                                        .tLocation = {
-                                                            .iX = 0,
-                                                            .iY = __DISP0_CFG_SCEEN_HEIGHT__ - 9},
-                                                        .tSize = {
-                                                            .iWidth = __DISP0_CFG_SCEEN_WIDTH__,
-                                                            .iHeight = 9,
-                                                        },
-                                                    },
-                                                }, 
-                                                (arm_2d_color_rgb565_t){__RGB(64,64,64)}, 
-                                                255 - 32);
+        arm_2dp_fill_colour_with_opacity(
+                    NULL, 
+                    ptTile, 
+                    (arm_2d_region_t []){
+                        {
+                            .tLocation = {
+                                .iX = 0,
+                                .iY = __DISP0_CFG_SCEEN_HEIGHT__ - 9},
+                            .tSize = {
+                                .iWidth = __DISP0_CFG_SCEEN_WIDTH__,
+                                .iHeight = 9,
+                            },
+                        },
+                    }, 
+                    (__arm_2d_color_t){__RGB(64,64,64)}, 
+                    255 - 32);
         arm_2d_op_wait_async(NULL);
         
         arm_lcd_text_location( (__DISP0_CFG_SCEEN_HEIGHT__ + 7) / 8 - 1, 0);
@@ -201,7 +224,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_background_handler)
     ARM_2D_UNUSED(pTarget);
     ARM_2D_UNUSED(bIsNewFrame);
 
-    arm_2d_rgb16_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
+    arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
 
     arm_2d_align_centre(ptTile->tRegion, 100, 100) {
         draw_round_corner_box(  ptTile,
@@ -247,7 +270,7 @@ static void __user_scene_player_init(void)
         &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t,                            //!< FPB Helper object
         __DISP0_CFG_SCEEN_WIDTH__,                                     //!< screen width
         __DISP0_CFG_SCEEN_HEIGHT__,                                    //!< screen height
-        uint16_t,                                                               //!< colour date type
+        COLOUR_INT,                                                             //!< colour date type
         __DISP0_CFG_PFB_BLOCK_WIDTH__,                                 //!< PFB block width
         __DISP0_CFG_PFB_BLOCK_HEIGHT__,                                //!< PFB block height
         1,                                                                      //!< number of PFB in the PFB pool
