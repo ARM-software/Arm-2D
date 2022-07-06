@@ -528,7 +528,7 @@ $(document).ready(function(){initNavTree('intro.html',''); initResizable(); });
 <div class="line"><span class="comment"> *!</span></div>
 <div class="line"><span class="comment"> *!        (source: https://en.wikipedia.org/wiki/RGBA_color_model#ARGB32)</span></div>
 <div class="line"><span class="comment"> */</span></div>
-<div class="line"><span class="keyword">typedef</span> <span class="keyword">union </span><a class="code hl_union" href="unionarm__2d__color__rgba8888__t.html" title="In most cases four equal-sized pieces of adjacent memory are used, ! one for each channel,...">arm_2d_color_rgba8888_t</a> {</div>
+<div class="line"><span class="keyword">typedef</span> <span class="keyword">union </span>arm_2d_color_rgba8888_t {</div>
 <div class="line">    uint32_t tValue;</div>
 <div class="line">    <span class="keyword">struct </span>{</div>
 <div class="line">        uint32_t u8R : 8;</div>
@@ -536,7 +536,7 @@ $(document).ready(function(){initNavTree('intro.html',''); initResizable(); });
 <div class="line">        uint32_t u8B : 8;</div>
 <div class="line">        uint32_t u8A : 8;</div>
 <div class="line">    };</div>
-<div class="line">} <a class="code hl_union" href="unionarm__2d__color__rgba8888__t.html" title="In most cases four equal-sized pieces of adjacent memory are used, ! one for each channel,...">arm_2d_color_rgba8888_t</a>;</div>
+<div class="line">} arm_2d_color_rgba8888_t;</div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">typedef</span> <span class="keyword">union </span><a class="code hl_union" href="unionarm__2d__color__rgb888__t.html">arm_2d_color_rgb888_t</a> {</div>
