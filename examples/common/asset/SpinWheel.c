@@ -1,5 +1,5 @@
 
-/* Generated on Tue Jul  5 22:12:53 2022 from -i */
+/* Generated on Wed Jul  6 01:12:18 2022 from -i */
 /* Re-sized : True */
 /* Rotated : 0.0 deg */
 
@@ -966,7 +966,6 @@ const arm_2d_tile_t c_tileSpinWheelRGB565 = {
     .phwBuffer = (uint16_t*)c_bmpSpinWheelRGB565,
 };
 
-
 extern const arm_2d_tile_t c_tileSpinWheelCCCA8888;
 
 __attribute__((section("arm2d.tile.c_tileSpinWheelCCCA8888")))
@@ -981,7 +980,7 @@ const arm_2d_tile_t c_tileSpinWheelCCCA8888 = {
         .bIsRoot = true,
         .bHasEnforcedColour = true,
         .tColourInfo = {
-            .chScheme = ARM_2D_COLOUR_RGBA8888,
+            .chScheme = ARM_2D_COLOUR_BGRA8888,
         },
     },
     .pwBuffer = (uint32_t*)c_bmpSpinWheelCCCA8888,
