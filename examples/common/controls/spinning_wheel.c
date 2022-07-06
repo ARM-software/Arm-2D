@@ -92,6 +92,8 @@ const static arm_2d_tile_t s_tileSpinWheelMask = {
     },
 };
 
+
+
 /*============================ IMPLEMENTATION ================================*/
 
 
@@ -131,7 +133,7 @@ void spinning_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
             .iY = 30,
         };
 
-        memset(s_tileSpinWheelMask.pchBuffer, 0, 61 * 61);
+        memset(s_tileSpinWheelMask.pchBuffer, 0, sizeof(s_tileSpinWheelMaskBuffer));
         
         arm_2dp_gray8_tile_rotation(&s_tMaskRotateCB,
                                     &c_tileSpinWheelMask,
