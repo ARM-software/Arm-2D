@@ -117,7 +117,7 @@ const arm_2d_tile_t c_tile{0}CCCA8888 = {{
         .bIsRoot = true,
         .bHasEnforcedColour = true,
         .tColourInfo = {{
-            .chScheme = ARM_2D_COLOUR_RGBA8888,
+            .chScheme = ARM_2D_COLOUR_BGRA8888,
         }},
     }},
     {3}c_bmp{0}CCCA8888,

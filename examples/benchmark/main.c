@@ -47,6 +47,13 @@
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
+extern 
+int32_t GLCD_DrawBitmap(uint32_t x,
+                        uint32_t y,
+                        uint32_t width,
+                        uint32_t height,
+                        const uint8_t *bitmap);
+                        
 /*============================ LOCAL VARIABLES ===============================*/
 
 
@@ -62,6 +69,35 @@ __OVERRIDE_WEAK
 int32_t arm_2d_helper_perf_counter_stop(void)
 {
     return stop_cycle_counter();
+}
+
+__OVERRIDE_WEAK 
+void Benchmark_DrawBitmap(  int16_t x, 
+                            int16_t y, 
+                            int16_t width, 
+                            int16_t height, 
+                            const uint8_t *bitmap)
+{
+#if __GLCD_CFG_COLOUR_DEPTH__ == 32
+    extern
+    void __arm_2d_impl_cccn888_to_rgb565(uint32_t *__RESTRICT pwSourceBase,
+                                        int16_t iSourceStride,
+                                        uint16_t *__RESTRICT phwTargetBase,
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t *__RESTRICT ptCopySize);
+
+    arm_2d_size_t size = {
+        .iWidth = width,
+        .iHeight = height,
+    };
+    __arm_2d_impl_cccn888_to_rgb565((uint32_t *)bitmap,
+                                    width,
+                                    (uint16_t *)bitmap,
+                                    width,
+                                    &size);
+#endif
+
+    GLCD_DrawBitmap(x, y, width, height, bitmap);
 }
 
 /*----------------------------------------------------------------------------

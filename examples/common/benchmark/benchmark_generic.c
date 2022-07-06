@@ -60,6 +60,43 @@
 #   define c_tileCMSISLogo          c_tileCMSISLogoAlpha
 #   define c_tilePictureSun         c_tilePictureSunAlpha
 #   define c_tileHelium             c_tileHeliumCHNB
+
+#   define arm_2d_fill_colour_with_mask                                         \
+                arm_2d_gray8_fill_colour_with_mask
+#   define arm_2d_fill_colour_with_mask_and_opacity                             \
+                arm_2d_gray8_fill_colour_with_mask_and_opacity
+#   define arm_2d_fill_colour_with_mask                                         \
+                arm_2d_gray8_fill_colour_with_mask
+#   define arm_2d_alpha_blending_with_colour_keying                             \
+                arm_2d_gray8_alpha_blending_with_colour_keying
+#   define arm_2d_tile_copy_with_masks                                          \
+                arm_2d_gray8_tile_copy_with_masks
+#   define arm_2d_tile_fill_with_x_mirror                                       \
+                arm_2d_c8bit_tile_fill_with_x_mirror
+#   define arm_2d_tile_fill_with_y_mirror                                       \
+                arm_2d_c8bit_tile_fill_with_y_mirror
+#   define arm_2d_tile_fill_with_xy_mirror                                      \
+                arm_2d_c8bit_tile_fill_with_xy_mirror
+#   define arm_2d_tile_fill_only                                                \
+                arm_2d_c8bit_tile_fill_only
+#   define arm_2d_tile_copy_with_x_mirror                                       \
+                arm_2d_c8bit_tile_copy_with_x_mirror
+#   define arm_2d_tile_copy_with_y_mirror                                       \
+                arm_2d_c8bit_tile_copy_with_y_mirror
+#   define arm_2d_tile_copy_with_xy_mirror                                      \
+                arm_2d_c8bit_tile_copy_with_xy_mirror
+#   define arm_2d_tile_copy_only                                                \
+                arm_2d_c8bit_tile_copy_only
+#   define arm_2d_tile_copy                                                     \
+                arm_2d_c8bit_tile_copy
+#   define arm_2d_fill_colour                                                   \
+                arm_2d_c8bit_fill_colour
+#   define arm_2d_tile_copy_with_colour_keying                                  \
+                arm_2d_c8bit_tile_copy_with_colour_keying
+#   define arm_2d_fill_colour_with_opacity                                      \
+                arm_2d_gray8_fill_colour_with_opacity
+#   define arm_2d_alpha_blending                                                \
+                arm_2d_gray8_alpha_blending
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
 #   define __arm_2d_color_t         arm_2d_color_rgb565_t
@@ -68,6 +105,43 @@
 #   define c_tileCMSISLogo          c_tileCMSISLogoRGB565
 #   define c_tilePictureSun         c_tilePictureSunRGB565
 #   define c_tileHelium             c_tileHeliumRGB565
+
+#   define arm_2d_fill_colour_with_mask                                         \
+                arm_2d_rgb565_fill_colour_with_mask
+#   define arm_2d_fill_colour_with_mask_and_opacity                             \
+                arm_2d_rgb565_fill_colour_with_mask_and_opacity
+#   define arm_2d_fill_colour_with_mask                                         \
+                arm_2d_rgb565_fill_colour_with_mask
+#   define arm_2d_alpha_blending_with_colour_keying                             \
+                arm_2d_rgb565_alpha_blending_with_colour_keying
+#   define arm_2d_tile_copy_with_masks                                          \
+                arm_2d_rgb565_tile_copy_with_masks
+#   define arm_2d_tile_fill_with_x_mirror                                       \
+                arm_2d_rgb16_tile_fill_with_x_mirror
+#   define arm_2d_tile_fill_with_y_mirror                                       \
+                arm_2d_rgb16_tile_fill_with_y_mirror
+#   define arm_2d_tile_fill_with_xy_mirror                                      \
+                arm_2d_rgb16_tile_fill_with_xy_mirror
+#   define arm_2d_tile_fill_only                                                \
+                arm_2d_rgb16_tile_fill_only
+#   define arm_2d_tile_copy_with_x_mirror                                       \
+                arm_2d_rgb16_tile_copy_with_x_mirror
+#   define arm_2d_tile_copy_with_y_mirror                                       \
+                arm_2d_rgb16_tile_copy_with_y_mirror
+#   define arm_2d_tile_copy_with_xy_mirror                                      \
+                arm_2d_rgb16_tile_copy_with_xy_mirror
+#   define arm_2d_tile_copy_only                                                \
+                arm_2d_rgb16_tile_copy_only
+#   define arm_2d_tile_copy                                                     \
+                arm_2d_rgb16_tile_copy
+#   define arm_2d_fill_colour                                                   \
+                arm_2d_rgb16_fill_colour
+#   define arm_2d_tile_copy_with_colour_keying                                  \
+                arm_2d_rgb16_tile_copy_with_colour_keying
+#   define arm_2d_fill_colour_with_opacity                                      \
+                arm_2d_rgb565_fill_colour_with_opacity
+#   define arm_2d_alpha_blending                                                \
+                arm_2d_rgb565_alpha_blending
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
 #   define __arm_2d_color_t         arm_2d_color_cccn888_t
@@ -77,6 +151,42 @@
 #   define c_tilePictureSun         c_tilePictureSunCCCA8888
 #   define c_tileHelium             c_tileHeliumCCCN888
 
+#   define arm_2d_fill_colour_with_mask                                         \
+                arm_2d_cccn888_fill_colour_with_mask
+#   define arm_2d_fill_colour_with_mask_and_opacity                             \
+                arm_2d_cccn888_fill_colour_with_mask_and_opacity
+#   define arm_2d_fill_colour_with_mask                                         \
+                arm_2d_cccn888_fill_colour_with_mask
+#   define arm_2d_alpha_blending_with_colour_keying                             \
+                arm_2d_cccn888_alpha_blending_with_colour_keying
+#   define arm_2d_tile_copy_with_masks                                          \
+                arm_2d_cccn888_tile_copy_with_masks
+#   define arm_2d_tile_fill_with_x_mirror                                       \
+                arm_2d_rgb32_tile_fill_with_x_mirror
+#   define arm_2d_tile_fill_with_y_mirror                                       \
+                arm_2d_rgb32_tile_fill_with_y_mirror
+#   define arm_2d_tile_fill_with_xy_mirror                                      \
+                arm_2d_rgb32_tile_fill_with_xy_mirror
+#   define arm_2d_tile_fill_only                                                \
+                arm_2d_rgb32_tile_fill_only
+#   define arm_2d_tile_copy_with_x_mirror                                       \
+                arm_2d_rgb32_tile_copy_with_x_mirror
+#   define arm_2d_tile_copy_with_y_mirror                                       \
+                arm_2d_rgb32_tile_copy_with_y_mirror
+#   define arm_2d_tile_copy_with_xy_mirror                                      \
+                arm_2d_rgb32_tile_copy_with_xy_mirror
+#   define arm_2d_tile_copy_only                                                \
+                arm_2d_rgb32_tile_copy_only
+#   define arm_2d_tile_copy                                                     \
+                arm_2d_rgb32_tile_copy
+#   define arm_2d_fill_colour                                                   \
+                arm_2d_rgb32_fill_colour
+#   define arm_2d_tile_copy_with_colour_keying                                  \
+                arm_2d_rgb32_tile_copy_with_colour_keying
+#   define arm_2d_fill_colour_with_opacity                                      \
+                arm_2d_cccn888_fill_colour_with_opacity
+#   define arm_2d_alpha_blending                                                \
+                arm_2d_cccn888_alpha_blending
 #else
 #   error Unsupported colour depth!
 #endif
@@ -100,7 +210,7 @@ typedef struct arm_2d_layer_t {
     uint8_t                 chOpacity;
     uint8_t                 bIsIrregular    : 1;
     uint8_t                                 : 7;
-    uint16_t                hwKeyColour;
+    COLOUR_INT              tKeyColour;
 } arm_2d_layer_t;
 
 typedef struct floating_range_t {
@@ -170,7 +280,7 @@ static arm_2d_layer_t s_ptRefreshLayers[] = {
     arm_2d_layer(   &c_tLayerB, 112, 50, 150),
     arm_2d_layer(   &c_tilePictureSun, 255, 0, 0, 
                     .bIsIrregular = true, 
-                    .hwKeyColour = GLCD_COLOR_WHITE),
+                    .tKeyColour = GLCD_COLOR_WHITE),
 };
 
 static floating_range_t s_ptFloatingBoxes[] = {
@@ -337,7 +447,7 @@ void show_icon_with_background(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
 
 
     arm_2d_align_centre(ptTarget->tRegion, c_tileSoftwareMask.tRegion.tSize) {
-        arm_2d_rgb565_fill_colour_with_mask(
+        arm_2d_fill_colour_with_mask(
                                 ptTarget, 
                                 &__centre_region, 
                                 &c_tileSoftwareMask, 
@@ -353,7 +463,7 @@ void show_icon_without_background(const arm_2d_tile_t *ptTarget, bool bIsNewFram
 
     arm_2d_align_centre(ptTarget->tRegion, c_tileSoftwareMask.tRegion.tSize) {
         
-        arm_2d_rgb565_fill_colour_with_mask_and_opacity(   
+        arm_2d_fill_colour_with_mask_and_opacity(   
                                 ptTarget, 
                                 &__centre_region, 
                                 &c_tileSoftwareMask, 
@@ -365,11 +475,10 @@ void show_icon_without_background(const arm_2d_tile_t *ptTarget, bool bIsNewFram
         __centre_region.tLocation.iX -= 2;
         __centre_region.tLocation.iY -= 2;
     
-        arm_2d_rgb565_fill_colour_with_mask(
-                                    ptTarget, 
-                                    &__centre_region, 
-                                    &c_tileSoftwareMask, 
-                                    (__arm_2d_color_t){GLCD_COLOR_WHITE});
+        arm_2d_fill_colour_with_mask(   ptTarget, 
+                                        &__centre_region, 
+                                        &c_tileSoftwareMask, 
+                                        (__arm_2d_color_t){GLCD_COLOR_WHITE});
         arm_2d_op_wait_async(NULL);
     }
 }
@@ -404,43 +513,43 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
     #else
         switch (ptLayers[0].wMode) {
             case ARM_2D_CP_MODE_FILL | ARM_2D_CP_MODE_X_MIRROR:
-                arm_2d_rgb16_tile_fill_with_x_mirror(  &c_tileCMSISLogo,
+                arm_2d_tile_fill_with_x_mirror(  &c_tileCMSISLogo,
                                                         ptFrameBuffer,
                                                         &c_tFillRegion);
                 break;
             case ARM_2D_CP_MODE_FILL | ARM_2D_CP_MODE_Y_MIRROR:
-                arm_2d_rgb16_tile_fill_with_y_mirror(   &c_tileCMSISLogo,
+                arm_2d_tile_fill_with_y_mirror(   &c_tileCMSISLogo,
                                                         ptFrameBuffer,
                                                         &c_tFillRegion);
                 break;
             case ARM_2D_CP_MODE_FILL | ARM_2D_CP_MODE_XY_MIRROR:
-                arm_2d_rgb16_tile_fill_with_xy_mirror(  &c_tileCMSISLogo,
+                arm_2d_tile_fill_with_xy_mirror(  &c_tileCMSISLogo,
                                                         ptFrameBuffer,
                                                         &c_tFillRegion);
                 break;
             case ARM_2D_CP_MODE_FILL:
-                arm_2d_rgb16_tile_fill_only(&c_tileCMSISLogo,
+                arm_2d_tile_fill_only(&c_tileCMSISLogo,
                                             ptFrameBuffer,
                                             &c_tFillRegion);
                 break;
                 
             case ARM_2D_CP_MODE_COPY | ARM_2D_CP_MODE_X_MIRROR:
-                arm_2d_rgb16_tile_copy_with_x_mirror(  &c_tileCMSISLogo,
+                arm_2d_tile_copy_with_x_mirror(  &c_tileCMSISLogo,
                                                         ptFrameBuffer,
                                                         &c_tFillRegion);
                 break;
             case ARM_2D_CP_MODE_COPY | ARM_2D_CP_MODE_Y_MIRROR:
-                arm_2d_rgb16_tile_copy_with_y_mirror(   &c_tileCMSISLogo,
+                arm_2d_tile_copy_with_y_mirror(   &c_tileCMSISLogo,
                                                         ptFrameBuffer,
                                                         &c_tFillRegion);
                 break;
             case ARM_2D_CP_MODE_COPY | ARM_2D_CP_MODE_XY_MIRROR:
-                arm_2d_rgb16_tile_copy_with_xy_mirror(  &c_tileCMSISLogo,
+                arm_2d_tile_copy_with_xy_mirror(  &c_tileCMSISLogo,
                                                         ptFrameBuffer,
                                                         &c_tFillRegion);
                 break;
             case ARM_2D_CP_MODE_COPY:
-                arm_2d_rgb16_tile_copy_only(&c_tileCMSISLogo,
+                arm_2d_tile_copy_only(&c_tileCMSISLogo,
                                             ptFrameBuffer,
                                             &c_tFillRegion);
                 break;
@@ -465,7 +574,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
                                     false);
                                     
         //!< set background colour
-        arm_2d_rgb16_fill_colour(   &tTempPanel,
+        arm_2d_fill_colour(   &tTempPanel,
                                     NULL,
                                     GLCD_COLOR_WHITE);
                                     
@@ -478,7 +587,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
          */
         arm_2d_align_centre(tTempPanel.tRegion, c_tileCMSISLogo.tRegion.tSize) {
             //!< copy CMSIS logo (with masks) to the centre of the right panel
-            arm_2d_rgb565_tile_copy_with_masks(
+            arm_2d_tile_copy_with_masks(
                                 &c_tileCMSISLogo,
                                 &c_tileCMSISLogoMask,
                                 &tTempPanel,
@@ -494,18 +603,18 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
         }
     } while(0);
     
-    arm_2d_rgb16_fill_colour(   s_ptRefreshLayers[2].ptTile, 
+    arm_2d_fill_colour(   s_ptRefreshLayers[2].ptTile, 
                                 NULL, 
                                 GLCD_COLOR_GREEN);
                                 
                                 
     
     //!< fill background with CMSISlogo (with colour-keying)
-    arm_2d_rgb16_tile_copy_with_colour_keying( &c_tilePictureSun,
-                                                s_ptRefreshLayers[2].ptTile,
-                                                NULL,
-                                                GLCD_COLOR_WHITE,
-                                                s_ptRefreshLayers[2].wMode);
+    arm_2d_tile_copy_with_colour_keying(&c_tilePictureSun,
+                                        s_ptRefreshLayers[2].ptTile,
+                                        NULL,
+                                        GLCD_COLOR_WHITE,
+                                        s_ptRefreshLayers[2].wMode);
                                                 
     
     arm_foreach(arm_2d_layer_t, ptLayers, hwCount, ptLayer) {
@@ -517,35 +626,35 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
         
         if (ptLayer->bIsIrregular) {
             if (255 != ptLayer->chOpacity) {
-                arm_2d_rgb565_alpha_blending_with_colour_keying(
+                arm_2d_alpha_blending_with_colour_keying(
                             ptLayer->ptTile,
                             ptFrameBuffer,
                             &tRegion,
                             ptLayer->chOpacity,
-                            (__arm_2d_color_t){ ptLayer->hwKeyColour });
+                            (__arm_2d_color_t){ ptLayer->tKeyColour });
             } else {
-                arm_2d_rgb16_tile_copy_with_colour_keying( 
+                arm_2d_tile_copy_with_colour_keying( 
                                             ptLayer->ptTile,
                                             ptFrameBuffer,
                                             &tRegion,
-                                            ptLayer->hwKeyColour,
+                                            ptLayer->tKeyColour,
                                             ptLayer->wMode);
             }
         } else {
             if (255 != ptLayer->chOpacity) {
-                arm_2d_rgb565_alpha_blending(   ptLayer->ptTile,
+                arm_2d_alpha_blending(   ptLayer->ptTile,
                                                 ptFrameBuffer,
                                                 &tRegion,
                                                 ptLayer->chOpacity);
             } else {
-                arm_2d_rgb16_tile_copy_only( ptLayer->ptTile,
+                arm_2d_tile_copy_only( ptLayer->ptTile,
                                         ptFrameBuffer,
                                         &tRegion);
             }
         }
     }
     
-    arm_2d_rgb565_fill_colour_with_opacity(   
+    arm_2d_fill_colour_with_opacity(   
                                 ptFrameBuffer, 
                                 &s_ptRefreshLayers[1].tRegion,
                                 (__arm_2d_color_t){GLCD_COLOR_RED},

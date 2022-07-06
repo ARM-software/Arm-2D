@@ -83,7 +83,7 @@ extern uint32_t SystemCoreClock;
 extern
 const arm_2d_tile_t c_tileWhiteDot;
 extern
-const arm_2d_tile_t c_tileWhiteDotAlpha;
+const arm_2d_tile_t c_tileWhiteDotMask;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
@@ -96,8 +96,8 @@ ARM_NOINIT static uint32_t s_wUnit;
 
 void busy_wheel_init(void)
 {
-    int16_t iXOffset = c_tileWhiteDotAlpha.tRegion.tSize.iWidth >> 2;
-    int16_t iYOffset = c_tileWhiteDotAlpha.tRegion.tSize.iHeight>> 2;
+    int16_t iXOffset = c_tileWhiteDot.tRegion.tSize.iWidth >> 2;
+    int16_t iYOffset = c_tileWhiteDot.tRegion.tSize.iHeight>> 2;
     
     for (uint_fast8_t n = 0; n < 8; n++) {
         s_tDotsLocation[n].iY = (int16_t)(sinf(__PI * (float)n / 4.0f) * __RADIUS) + iXOffset;
@@ -117,7 +117,7 @@ void busy_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
         .iX = ptTarget->tRegion.tSize.iWidth / 2 - 10,
         .iY = ptTarget->tRegion.tSize.iHeight / 2 - 10,
     };
-    arm_2d_region_t tTargetRegion = c_tileWhiteDotAlpha.tRegion;
+    arm_2d_region_t tTargetRegion = c_tileWhiteDot.tRegion;
     
     if (bIsNewFrame) {
         int64_t lClocks = clock();
@@ -157,7 +157,7 @@ void busy_wheel2_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
         .iX = ptTarget->tRegion.tSize.iWidth / 2 - 10,
         .iY = ptTarget->tRegion.tSize.iHeight / 2 - 10,
     };
-    arm_2d_region_t tTargetRegion = c_tileWhiteDotAlpha.tRegion;
+    arm_2d_region_t tTargetRegion = c_tileWhiteDot.tRegion;
     
     if (bIsNewFrame) {
         int64_t lClocks = clock();
@@ -181,7 +181,7 @@ void busy_wheel2_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
         arm_2d_fill_colour_with_mask_and_opacity(   
                                     ptTarget,
                                     &tTargetRegion,
-                                    &c_tileWhiteDotAlpha,
+                                    &c_tileWhiteDotMask,
                                     (__arm_2d_color_t){GLCD_COLOR_WHITE},
                                     s_tAlphaTable[n]);
                                                 
