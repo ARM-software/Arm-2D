@@ -46,6 +46,7 @@ void arm_extra_controls_init(void)
 {
     busy_wheel_init();
     spinning_wheel_init();
+    progress_bar_drill_init();
 }
 
 

@@ -16,23 +16,12 @@
  * limitations under the License.
  */
 
-
-
-#ifndef __CONTROL_H__
-#define __CONTROL_H__
+#ifndef __PROGRESS_BAR_DRILL_H__
+#define __PROGRESS_BAR_DRILL_H__
 
 /*============================ INCLUDES ======================================*/
+#include "./app_cfg.h"
 #include "arm_2d.h"
-#include "./__common.h"
-#include "./busy_wheel.h"
-#include "./shape_round_corner_box.h"
-#include "./spinning_wheel.h"
-#include "./progress_bar_drill.h"
-
-#if defined(__RTE_ACCELERATION_ARM_2D_EXTRA_LCD_PRINTF__)
-#   include "./arm_extra_lcd_printf.h"
-#endif
-
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
@@ -40,6 +29,12 @@
 /*============================ PROTOTYPES ====================================*/
 
 extern
-void arm_extra_controls_init(void);
+void progress_bar_flowing_init(void);
+
+extern
+void progress_bar_flowing_show(const arm_2d_tile_t *ptTarget, int_fast16_t iProgress);
+
+extern 
+void progress_bar_flowing_insert_1ms_handler(void);
 
 #endif
