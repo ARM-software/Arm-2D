@@ -547,11 +547,6 @@
               <FilePath>..\common\asset\star.c</FilePath>
             </File>
             <File>
-              <FileName>star32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\star32.c</FilePath>
-            </File>
-            <File>
               <FileName>background.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\background.c</FilePath>
@@ -1278,11 +1273,6 @@
               <FileName>star.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\star.c</FilePath>
-            </File>
-            <File>
-              <FileName>star32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\star32.c</FilePath>
             </File>
             <File>
               <FileName>background.c</FileName>

@@ -72,23 +72,163 @@
 #   define BENCHMARK_PFB_BLOCK_HEIGHT            __GLCD_CFG_SCEEN_HEIGHT__
 #endif
 
+
+#if __GLCD_CFG_COLOUR_DEPTH__ == 8
+
+#   define __arm_2d_color_t         arm_2d_color_gray8_t
+#   define COLOUR_INT               uint8_t
+
+#   define c_tileGear01             c_tileGear01Mask
+#   define c_tileGear02             c_tileGear02Mask
+#   define c_tilePointerSec         c_tilePointerSecMask
+#   define c_tileBackground         c_tileBackgroundCHNB
+
+#   define arm_2d_fill_colour_with_mask                                         \
+                arm_2d_gray8_fill_colour_with_mask
+#   define arm_2d_fill_colour_with_mask_and_opacity                             \
+                arm_2d_gray8_fill_colour_with_mask_and_opacity
+#   define arm_2d_fill_colour_with_mask                                         \
+                arm_2d_gray8_fill_colour_with_mask
+#   define arm_2d_alpha_blending_with_colour_keying                             \
+                arm_2d_gray8_alpha_blending_with_colour_keying
+#   define arm_2d_tile_copy_with_masks                                          \
+                arm_2d_gray8_tile_copy_with_masks
+#   define arm_2d_tile_fill_with_x_mirror                                       \
+                arm_2d_c8bit_tile_fill_with_x_mirror
+#   define arm_2d_tile_fill_with_y_mirror                                       \
+                arm_2d_c8bit_tile_fill_with_y_mirror
+#   define arm_2d_tile_fill_with_xy_mirror                                      \
+                arm_2d_c8bit_tile_fill_with_xy_mirror
+#   define arm_2d_tile_fill_only                                                \
+                arm_2d_c8bit_tile_fill_only
+#   define arm_2d_tile_copy_with_x_mirror                                       \
+                arm_2d_c8bit_tile_copy_with_x_mirror
+#   define arm_2d_tile_copy_with_y_mirror                                       \
+                arm_2d_c8bit_tile_copy_with_y_mirror
+#   define arm_2d_tile_copy_with_xy_mirror                                      \
+                arm_2d_c8bit_tile_copy_with_xy_mirror
+#   define arm_2d_tile_copy_only                                                \
+                arm_2d_c8bit_tile_copy_only
+#   define arm_2d_tile_copy                                                     \
+                arm_2d_c8bit_tile_copy
+#   define arm_2d_fill_colour                                                   \
+                arm_2d_c8bit_fill_colour
+#   define arm_2d_tile_copy_with_colour_keying                                  \
+                arm_2d_c8bit_tile_copy_with_colour_keying
+#   define arm_2d_fill_colour_with_opacity                                      \
+                arm_2d_gray8_fill_colour_with_opacity
+#   define arm_2d_alpha_blending                                                \
+                arm_2d_gray8_alpha_blending
+#elif __GLCD_CFG_COLOUR_DEPTH__ == 16
+
+#   define __arm_2d_color_t         arm_2d_color_rgb565_t
+#   define COLOUR_INT               uint16_t
+
+#   define c_tileGear01             c_tileGear01RGB565
+#   define c_tileGear02             c_tileGear02RGB565
+#   define c_tilePointerSec         c_tilePointerSecRGB565
+#   define c_tileBackground         c_tileBackgroundRGB565
+
+#   define arm_2d_fill_colour_with_mask                                         \
+                arm_2d_rgb565_fill_colour_with_mask
+#   define arm_2d_fill_colour_with_mask_and_opacity                             \
+                arm_2d_rgb565_fill_colour_with_mask_and_opacity
+#   define arm_2d_fill_colour_with_mask                                         \
+                arm_2d_rgb565_fill_colour_with_mask
+#   define arm_2d_alpha_blending_with_colour_keying                             \
+                arm_2d_rgb565_alpha_blending_with_colour_keying
+#   define arm_2d_tile_copy_with_masks                                          \
+                arm_2d_rgb565_tile_copy_with_masks
+#   define arm_2d_tile_fill_with_x_mirror                                       \
+                arm_2d_rgb16_tile_fill_with_x_mirror
+#   define arm_2d_tile_fill_with_y_mirror                                       \
+                arm_2d_rgb16_tile_fill_with_y_mirror
+#   define arm_2d_tile_fill_with_xy_mirror                                      \
+                arm_2d_rgb16_tile_fill_with_xy_mirror
+#   define arm_2d_tile_fill_only                                                \
+                arm_2d_rgb16_tile_fill_only
+#   define arm_2d_tile_copy_with_x_mirror                                       \
+                arm_2d_rgb16_tile_copy_with_x_mirror
+#   define arm_2d_tile_copy_with_y_mirror                                       \
+                arm_2d_rgb16_tile_copy_with_y_mirror
+#   define arm_2d_tile_copy_with_xy_mirror                                      \
+                arm_2d_rgb16_tile_copy_with_xy_mirror
+#   define arm_2d_tile_copy_only                                                \
+                arm_2d_rgb16_tile_copy_only
+#   define arm_2d_tile_copy                                                     \
+                arm_2d_rgb16_tile_copy
+#   define arm_2d_fill_colour                                                   \
+                arm_2d_rgb16_fill_colour
+#   define arm_2d_tile_copy_with_colour_keying                                  \
+                arm_2d_rgb16_tile_copy_with_colour_keying
+#   define arm_2d_fill_colour_with_opacity                                      \
+                arm_2d_rgb565_fill_colour_with_opacity
+#   define arm_2d_alpha_blending                                                \
+                arm_2d_rgb565_alpha_blending
+#elif __GLCD_CFG_COLOUR_DEPTH__ == 32
+
+#   define __arm_2d_color_t         arm_2d_color_cccn888_t
+#   define COLOUR_INT               uint32_t
+
+#   define c_tileGear01             c_tileGear01CCCA8888
+#   define c_tileGear02             c_tileGear02CCCA8888
+#   define c_tilePointerSec         c_tilePointerSecCCCA8888
+#   define c_tileBackground         c_tileBackgroundCCCA8888
+
+#   define arm_2d_fill_colour_with_mask                                         \
+                arm_2d_cccn888_fill_colour_with_mask
+#   define arm_2d_fill_colour_with_mask_and_opacity                             \
+                arm_2d_cccn888_fill_colour_with_mask_and_opacity
+#   define arm_2d_fill_colour_with_mask                                         \
+                arm_2d_cccn888_fill_colour_with_mask
+#   define arm_2d_alpha_blending_with_colour_keying                             \
+                arm_2d_cccn888_alpha_blending_with_colour_keying
+#   define arm_2d_tile_copy_with_masks                                          \
+                arm_2d_cccn888_tile_copy_with_masks
+#   define arm_2d_tile_fill_with_x_mirror                                       \
+                arm_2d_rgb32_tile_fill_with_x_mirror
+#   define arm_2d_tile_fill_with_y_mirror                                       \
+                arm_2d_rgb32_tile_fill_with_y_mirror
+#   define arm_2d_tile_fill_with_xy_mirror                                      \
+                arm_2d_rgb32_tile_fill_with_xy_mirror
+#   define arm_2d_tile_fill_only                                                \
+                arm_2d_rgb32_tile_fill_only
+#   define arm_2d_tile_copy_with_x_mirror                                       \
+                arm_2d_rgb32_tile_copy_with_x_mirror
+#   define arm_2d_tile_copy_with_y_mirror                                       \
+                arm_2d_rgb32_tile_copy_with_y_mirror
+#   define arm_2d_tile_copy_with_xy_mirror                                      \
+                arm_2d_rgb32_tile_copy_with_xy_mirror
+#   define arm_2d_tile_copy_only                                                \
+                arm_2d_rgb32_tile_copy_only
+#   define arm_2d_tile_copy                                                     \
+                arm_2d_rgb32_tile_copy
+#   define arm_2d_fill_colour                                                   \
+                arm_2d_rgb32_fill_colour
+#   define arm_2d_tile_copy_with_colour_keying                                  \
+                arm_2d_rgb32_tile_copy_with_colour_keying
+#   define arm_2d_fill_colour_with_opacity                                      \
+                arm_2d_cccn888_fill_colour_with_opacity
+#   define arm_2d_alpha_blending                                                \
+                arm_2d_cccn888_alpha_blending
+#else
+#   error Unsupported colour depth!
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 extern uint32_t SystemCoreClock;
-
-extern
-const arm_2d_tile_t c_tPictureHeliun;
 
 extern 
 const arm_2d_tile_t c_tileBackground;
 
 /*============================ PROTOTYPES ====================================*/
 extern 
-int32_t GLCD_DrawBitmap(uint32_t x, 
-                        uint32_t y, 
-                        uint32_t width, 
-                        uint32_t height, 
+void Disp0_DrawBitmap(  int16_t x,
+                        int16_t y,
+                        int16_t width,
+                        int16_t height,
                         const uint8_t *bitmap);
 
 /*============================ LOCAL VARIABLES ===============================*/
@@ -197,11 +337,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_background_handler)
     ARM_2D_UNUSED(pTarget);
     ARM_2D_UNUSED(bIsNewFrame);
 
-    arm_2d_rgb16_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
-    arm_2d_rgb16_tile_copy(&c_tileBackground,
-                        ptTile,
-                        NULL,
-                        ARM_2D_CP_MODE_COPY);
+    arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
+    arm_2d_tile_copy_only(  &c_tileBackground,
+                            ptTile,
+                            NULL);
     
     arm_print_banner("Arm-2D Benchmark");
     
@@ -225,6 +364,30 @@ IMPL_PFB_ON_DRAW(__pfb_draw_background_handler)
 }
 
 
+__WEAK 
+void Disp0_DrawBitmap(  int16_t x, 
+                        int16_t y, 
+                        int16_t width, 
+                        int16_t height, 
+                        const uint8_t *bitmap)
+{
+    ARM_2D_UNUSED(x);
+    ARM_2D_UNUSED(y);
+    ARM_2D_UNUSED(width);
+    ARM_2D_UNUSED(height);
+    ARM_2D_UNUSED(bitmap);
+}
+
+__WEAK 
+void Benchmark_DrawBitmap(  int16_t x, 
+                            int16_t y, 
+                            int16_t width, 
+                            int16_t height, 
+                            const uint8_t *bitmap)
+{
+    Disp0_DrawBitmap(x, y, width, height, bitmap);
+}
+
 __WEAK
 IMPL_PFB_ON_LOW_LV_RENDERING(__pfb_render_handler)
 {
@@ -234,7 +397,7 @@ IMPL_PFB_ON_LOW_LV_RENDERING(__pfb_render_handler)
     ARM_2D_UNUSED(bIsNewFrame);
 
     if (0 == BENCHMARK.wIterations || s_bDrawInfo) {
-        GLCD_DrawBitmap(ptTile->tRegion.tLocation.iX,
+        Benchmark_DrawBitmap(ptTile->tRegion.tLocation.iX,
                         ptTile->tRegion.tLocation.iY,
                         ptTile->tRegion.tSize.iWidth,
                         ptTile->tRegion.tSize.iHeight,
@@ -254,7 +417,7 @@ void arm_2d_user_scene_player_init(void)
         &s_tScenePlayer.use_as__arm_2d_helper_pfb_t,                            //!< FPB Helper object
         __GLCD_CFG_SCEEN_WIDTH__,                                               //!< screen width
         __GLCD_CFG_SCEEN_HEIGHT__,                                              //!< screen height
-        uint16_t,                                                               //!< colour date type
+        COLOUR_INT,                                                             //!< colour date type
         BENCHMARK_PFB_BLOCK_WIDTH,                                              //!< PFB block width
         BENCHMARK_PFB_BLOCK_HEIGHT,                                             //!< PFB block height
         1,                                                                      //!< number of PFB in the PFB pool
