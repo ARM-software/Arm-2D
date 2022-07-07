@@ -476,11 +476,6 @@
               <FilePath>..\common\asset\star.c</FilePath>
             </File>
             <File>
-              <FileName>star32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\star32.c</FilePath>
-            </File>
-            <File>
               <FileName>watch_panel.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\watch_panel.c</FilePath>
@@ -1650,11 +1645,6 @@
               <FileName>star.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\star.c</FilePath>
-            </File>
-            <File>
-              <FileName>star32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\star32.c</FilePath>
             </File>
             <File>
               <FileName>watch_panel.c</FileName>
@@ -2896,11 +2886,6 @@
               <FilePath>..\common\asset\star.c</FilePath>
             </File>
             <File>
-              <FileName>star32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\star32.c</FilePath>
-            </File>
-            <File>
               <FileName>watch_panel.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\watch_panel.c</FilePath>
@@ -4072,11 +4057,6 @@
               <FilePath>..\common\asset\star.c</FilePath>
             </File>
             <File>
-              <FileName>star32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\star32.c</FilePath>
-            </File>
-            <File>
               <FileName>watch_panel.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\watch_panel.c</FilePath>
@@ -5246,11 +5226,6 @@
               <FileName>star.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\star.c</FilePath>
-            </File>
-            <File>
-              <FileName>star32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\star32.c</FilePath>
             </File>
             <File>
               <FileName>watch_panel.c</FileName>
@@ -6493,11 +6468,6 @@
               <FilePath>..\common\asset\star.c</FilePath>
             </File>
             <File>
-              <FileName>star32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\star32.c</FilePath>
-            </File>
-            <File>
               <FileName>watch_panel.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\watch_panel.c</FilePath>
@@ -7667,11 +7637,6 @@
               <FileName>star.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\star.c</FilePath>
-            </File>
-            <File>
-              <FileName>star32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\star32.c</FilePath>
             </File>
             <File>
               <FileName>watch_panel.c</FileName>
@@ -8845,11 +8810,6 @@
               <FilePath>..\common\asset\star.c</FilePath>
             </File>
             <File>
-              <FileName>star32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\star32.c</FilePath>
-            </File>
-            <File>
               <FileName>watch_panel.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\watch_panel.c</FilePath>
@@ -10019,11 +9979,6 @@
               <FileName>star.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\star.c</FilePath>
-            </File>
-            <File>
-              <FileName>star32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\star32.c</FilePath>
             </File>
             <File>
               <FileName>watch_panel.c</FileName>
@@ -11197,11 +11152,6 @@
               <FilePath>..\common\asset\star.c</FilePath>
             </File>
             <File>
-              <FileName>star32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\star32.c</FilePath>
-            </File>
-            <File>
               <FileName>watch_panel.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\watch_panel.c</FilePath>
@@ -12302,11 +12252,6 @@
               <FileName>star.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\star.c</FilePath>
-            </File>
-            <File>
-              <FileName>star32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\star32.c</FilePath>
             </File>
             <File>
               <FileName>watch_panel.c</FileName>
