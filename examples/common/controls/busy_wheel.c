@@ -50,27 +50,15 @@
 #endif
 
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
-#   define arm_2d_alpha_blending_with_colour_keying                             \
-            arm_2d_gray8_alpha_blending_with_colour_keying
-#   define arm_2d_fill_colour_with_mask_and_opacity                             \
-                arm_2d_gray8_fill_colour_with_mask_and_opacity
-#   define __arm_2d_color_t         arm_2d_color_gray8_t
+
 #   define c_tileWhiteDot           c_tileWhiteDotAlpha
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
-#   define arm_2d_alpha_blending_with_colour_keying                             \
-            arm_2d_rgb565_alpha_blending_with_colour_keying
-#   define arm_2d_fill_colour_with_mask_and_opacity                             \
-                arm_2d_rgb565_fill_colour_with_mask_and_opacity
-#   define __arm_2d_color_t         arm_2d_color_rgb565_t
+
 #   define c_tileWhiteDot           c_tileWhiteDotRGB565
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
-#define arm_2d_alpha_blending_with_colour_keying                                \
-            arm_2d_cccn888_alpha_blending_with_colour_keying
-#   define arm_2d_fill_colour_with_mask_and_opacity                             \
-                arm_2d_cccn888_fill_colour_with_mask_and_opacity
-#   define __arm_2d_color_t         arm_2d_color_cccn888_t
+
 #   define c_tileWhiteDot           c_tileWhiteDotCCCA8888
 #else
 #   error Unsupported colour depth!

@@ -49,19 +49,6 @@
 #   define __LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__              256
 #endif
 
-#if __GLCD_CFG_COLOUR_DEPTH__ == 8
-#   define arm_2d_draw_pattern    arm_2d_c8bit_draw_pattern
-
-#elif __GLCD_CFG_COLOUR_DEPTH__ == 16
-#   define arm_2d_draw_pattern    arm_2d_rgb16_draw_pattern 
-
-#elif __GLCD_CFG_COLOUR_DEPTH__ == 32
-#   define arm_2d_draw_pattern    arm_2d_rgb32_draw_pattern 
-
-#else
-#   error Unsupported colour depth!
-#endif
-
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /* Font definitions */
