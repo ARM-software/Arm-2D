@@ -271,12 +271,12 @@
             <file category="sourceC"     name="examples/common/controls/busy_wheel.c" />
             <file category="sourceC"     name="examples/common/controls/shape_round_corner_box.c" />
             <file category="sourceC"     name="examples/common/controls/spinning_wheel.c" />
+            <file category="sourceC"     name="examples/common/controls/progress_bar_drill.c" />
+            <file category="sourceC"     name="examples/common/controls/progress_bar_flowing.c" />
+            <file category="sourceC"     name="examples/common/controls/progress_bar_simple.c" />
             <file category="sourceC"     name="examples/common/asset/white_dot.c" />
             <file category="sourceC"     name="examples/common/asset/SpinWheel.c" />
             <file category="sourceC"     name="examples/common/asset/blue_slashes.c" />
-            <file category="sourceC"     name="examples/common/asset/progress_bar_drill.c" />
-            <file category="sourceC"     name="examples/common/asset/progress_bar_flowing.c" />
-            <file category="sourceC"     name="examples/common/asset/progress_bar_simple.c" />
           </files>
           <RTE_Components_h>
 
