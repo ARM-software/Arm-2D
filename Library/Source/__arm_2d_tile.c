@@ -21,8 +21,8 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        14. June 2022
- * $Revision:    V.1.1.1
+ * $Date:        07. july 2022
+ * $Revision:    V.1.1.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -295,11 +295,15 @@ const arm_2d_tile_t *arm_2d_tile_get_root(  const arm_2d_tile_t *ptTile,
          *!       when calculate the valid range in parent, we have to assume
          *!       that the location is always (0,0)
          *!
-         *! \note the location of a root tile is always (0,0)
          */
         arm_2d_region_t tParentRegion = {
             .tSize = ptTile->tRegion.tSize,
         };
+
+        if (arm_2d_is_root_tile(ptTile)) {
+            /* root tile can has offset */
+            tParentRegion.tLocation = ptTile->tRegion.tLocation;
+        }
 
         /*! make sure the output region is valid */
         if (!arm_2d_region_intersect(   &tParentRegion,

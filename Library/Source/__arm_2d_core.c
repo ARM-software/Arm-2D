@@ -21,8 +21,8 @@
  * Title:        __arm-2d_core.c
  * Description:  Basic Tile operations
  *
- * $Date:        16. June 2022
- * $Revision:    V.1.1.0
+ * $Date:        07. July 2022
+ * $Revision:    V.1.1.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -374,8 +374,8 @@ static const arm_2d_tile_t * __arm_2d_tile_region_caculator(
     assert(NULL != ptTile);
     assert(NULL != ptOut);
     
-    bool bDerivedResource = ptTile->tInfo.bDerivedResource 
-                          & !ptTile->tInfo.bIsRoot;
+    bool bDerivedResource =     ptTile->tInfo.bDerivedResource 
+                          &&    !ptTile->tInfo.bIsRoot;
     
     
     //memset(ptOut, 0, sizeof(__arm_2d_tile_param_t));
@@ -395,13 +395,18 @@ static const arm_2d_tile_t * __arm_2d_tile_region_caculator(
         
         uint_fast8_t chPixelLenInBit = *pchPixelLenInBit;
     
-        arm_2d_location_t tOffset = tValidRegion.tLocation;              
+        arm_2d_location_t tOffset = tValidRegion.tLocation;
+        
+        /* root tile can have offset location */
+        tOffset.iX -= ptTile->tRegion.tLocation.iX;
+        tOffset.iY -= ptTile->tRegion.tLocation.iY;
+        
         if ((wMode) & ARM_2D_CP_MODE_X_MIRROR) {                             
             tOffset.iX = 0;                                                     
         }                                                                       
         if ((wMode) & ARM_2D_CP_MODE_Y_MIRROR) {                             
             tOffset.iY = 0;                                                     
-        }                          
+        }
 
         if (chPixelLenInBit >= 8) {
             nOffset = ptTile->tRegion.tSize.iWidth * tOffset.iY + tOffset.iX;
