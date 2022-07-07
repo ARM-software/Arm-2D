@@ -277,6 +277,7 @@
             <file category="sourceC"     name="examples/common/asset/white_dot.c" />
             <file category="sourceC"     name="examples/common/asset/SpinWheel.c" />
             <file category="sourceC"     name="examples/common/asset/blue_slashes.c" />
+            <file category="sourceC"     name="examples/common/asset/wave.c" />
           </files>
           <RTE_Components_h>
 

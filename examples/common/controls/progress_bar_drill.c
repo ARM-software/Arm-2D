@@ -25,6 +25,7 @@
 #include <assert.h>
 
 #if defined(__clang__)
+#   pragma clang diagnostic push
 #   pragma clang diagnostic ignored "-Wunknown-warning-option"
 #   pragma clang diagnostic ignored "-Wreserved-identifier"
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
@@ -56,7 +57,7 @@
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
-#   define c_tileBlueSlash           c_tileBlueSlashCCCA888
+#   define c_tileBlueSlash           c_tileBlueSlashCCCA8888
 #else
 #   error Unsupported colour depth!
 #endif
@@ -103,7 +104,7 @@ void progress_bar_drill_show(const arm_2d_tile_t *ptTarget, int_fast16_t iProgre
     };
     
     //! draw a white box
-    arm_2d_fill_colour(ptTarget, &tBarRegion, 0xA63D);
+    arm_2d_fill_colour(ptTarget, &tBarRegion, __RGB(0xa5, 0xc6, 0xef));
     
     //! pave inter texture
     tBarRegion.tSize.iHeight-=2;

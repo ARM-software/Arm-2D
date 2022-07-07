@@ -16,12 +16,12 @@
  * limitations under the License.
  */
 
-#ifndef __PROGRESS_BAR_DRILL_H__
-#define __PROGRESS_BAR_DRILL_H__
+#ifndef __PROGRESS_BAR_FLOWING_H__
+#define __PROGRESS_BAR_FLOWING_H__
 
 /*============================ INCLUDES ======================================*/
-#include "./app_cfg.h"
 #include "arm_2d.h"
+
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
@@ -34,7 +34,5 @@ void progress_bar_flowing_init(void);
 extern
 void progress_bar_flowing_show(const arm_2d_tile_t *ptTarget, int_fast16_t iProgress);
 
-extern 
-void progress_bar_flowing_insert_1ms_handler(void);
 
 #endif

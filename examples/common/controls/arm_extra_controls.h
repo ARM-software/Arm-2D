@@ -28,6 +28,7 @@
 #include "./shape_round_corner_box.h"
 #include "./spinning_wheel.h"
 #include "./progress_bar_drill.h"
+#include "./progress_bar_flowing.h"
 
 #if defined(__RTE_ACCELERATION_ARM_2D_EXTRA_LCD_PRINTF__)
 #   include "./arm_extra_lcd_printf.h"

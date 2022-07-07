@@ -37,8 +37,6 @@
                 arm_2d_gray8_fill_colour_with_mask
 #   define arm_2d_fill_colour_with_mask_and_opacity                             \
                 arm_2d_gray8_fill_colour_with_mask_and_opacity
-#   define arm_2d_fill_colour_with_mask                                         \
-                arm_2d_gray8_fill_colour_with_mask
 #   define arm_2d_alpha_blending_with_colour_keying                             \
                 arm_2d_gray8_alpha_blending_with_colour_keying
 #   define arm_2d_tile_copy_with_masks                                          \
@@ -90,8 +88,6 @@
                 arm_2d_rgb565_fill_colour_with_mask
 #   define arm_2d_fill_colour_with_mask_and_opacity                             \
                 arm_2d_rgb565_fill_colour_with_mask_and_opacity
-#   define arm_2d_fill_colour_with_mask                                         \
-                arm_2d_rgb565_fill_colour_with_mask
 #   define arm_2d_alpha_blending_with_colour_keying                             \
                 arm_2d_rgb565_alpha_blending_with_colour_keying
 #   define arm_2d_tile_copy_with_masks                                          \
@@ -143,8 +139,6 @@
                 arm_2d_cccn888_fill_colour_with_mask
 #   define arm_2d_fill_colour_with_mask_and_opacity                             \
                 arm_2d_cccn888_fill_colour_with_mask_and_opacity
-#   define arm_2d_fill_colour_with_mask                                         \
-                arm_2d_cccn888_fill_colour_with_mask
 #   define arm_2d_alpha_blending_with_colour_keying                             \
                 arm_2d_cccn888_alpha_blending_with_colour_keying
 #   define arm_2d_tile_copy_with_masks                                          \
