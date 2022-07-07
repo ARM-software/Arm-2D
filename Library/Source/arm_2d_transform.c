@@ -786,7 +786,7 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_prepare(
     this.tTransform.fAngle = fAngle;
     this.tTransform.fScale = fScale;
     this.tTransform.tCenter = tCentre;
-    this.tTransform.Mask.hwColour = wFillColour;
+    this.tTransform.Mask.wColour = wFillColour;
 
     return __arm_2d_transform_preprocess_source(ptThis, &this.tTransform);
 }
