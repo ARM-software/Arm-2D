@@ -446,19 +446,9 @@
           <GroupName>asset</GroupName>
           <Files>
             <File>
-              <FileName>arrow.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\arrow.c</FilePath>
-            </File>
-            <File>
               <FileName>SpinWheel.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\SpinWheel.c</FilePath>
-            </File>
-            <File>
-              <FileName>clockface.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\clockface.c</FilePath>
             </File>
             <File>
               <FileName>gear_01.c</FileName>
@@ -1632,19 +1622,9 @@
           <GroupName>asset</GroupName>
           <Files>
             <File>
-              <FileName>arrow.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\arrow.c</FilePath>
-            </File>
-            <File>
               <FileName>SpinWheel.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\SpinWheel.c</FilePath>
-            </File>
-            <File>
-              <FileName>clockface.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\clockface.c</FilePath>
             </File>
             <File>
               <FileName>gear_01.c</FileName>
@@ -2886,19 +2866,9 @@
           <GroupName>asset</GroupName>
           <Files>
             <File>
-              <FileName>arrow.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\arrow.c</FilePath>
-            </File>
-            <File>
               <FileName>SpinWheel.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\SpinWheel.c</FilePath>
-            </File>
-            <File>
-              <FileName>clockface.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\clockface.c</FilePath>
             </File>
             <File>
               <FileName>gear_01.c</FileName>
@@ -4072,19 +4042,9 @@
           <GroupName>asset</GroupName>
           <Files>
             <File>
-              <FileName>arrow.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\arrow.c</FilePath>
-            </File>
-            <File>
               <FileName>SpinWheel.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\SpinWheel.c</FilePath>
-            </File>
-            <File>
-              <FileName>clockface.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\clockface.c</FilePath>
             </File>
             <File>
               <FileName>gear_01.c</FileName>
@@ -5258,19 +5218,9 @@
           <GroupName>asset</GroupName>
           <Files>
             <File>
-              <FileName>arrow.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\arrow.c</FilePath>
-            </File>
-            <File>
               <FileName>SpinWheel.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\SpinWheel.c</FilePath>
-            </File>
-            <File>
-              <FileName>clockface.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\clockface.c</FilePath>
             </File>
             <File>
               <FileName>gear_01.c</FileName>
@@ -6513,19 +6463,9 @@
           <GroupName>asset</GroupName>
           <Files>
             <File>
-              <FileName>arrow.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\arrow.c</FilePath>
-            </File>
-            <File>
               <FileName>SpinWheel.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\SpinWheel.c</FilePath>
-            </File>
-            <File>
-              <FileName>clockface.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\clockface.c</FilePath>
             </File>
             <File>
               <FileName>gear_01.c</FileName>
@@ -7699,19 +7639,9 @@
           <GroupName>asset</GroupName>
           <Files>
             <File>
-              <FileName>arrow.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\arrow.c</FilePath>
-            </File>
-            <File>
               <FileName>SpinWheel.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\SpinWheel.c</FilePath>
-            </File>
-            <File>
-              <FileName>clockface.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\clockface.c</FilePath>
             </File>
             <File>
               <FileName>gear_01.c</FileName>
@@ -8885,19 +8815,9 @@
           <GroupName>asset</GroupName>
           <Files>
             <File>
-              <FileName>arrow.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\arrow.c</FilePath>
-            </File>
-            <File>
               <FileName>SpinWheel.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\SpinWheel.c</FilePath>
-            </File>
-            <File>
-              <FileName>clockface.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\clockface.c</FilePath>
             </File>
             <File>
               <FileName>gear_01.c</FileName>
@@ -10071,19 +9991,9 @@
           </GroupOption>
           <Files>
             <File>
-              <FileName>arrow.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\arrow.c</FilePath>
-            </File>
-            <File>
               <FileName>SpinWheel.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\SpinWheel.c</FilePath>
-            </File>
-            <File>
-              <FileName>clockface.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\clockface.c</FilePath>
             </File>
             <File>
               <FileName>gear_01.c</FileName>
@@ -11257,19 +11167,9 @@
           <GroupName>asset</GroupName>
           <Files>
             <File>
-              <FileName>arrow.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\arrow.c</FilePath>
-            </File>
-            <File>
               <FileName>SpinWheel.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\SpinWheel.c</FilePath>
-            </File>
-            <File>
-              <FileName>clockface.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\clockface.c</FilePath>
             </File>
             <File>
               <FileName>gear_01.c</FileName>
@@ -12374,19 +12274,9 @@
           <GroupName>asset</GroupName>
           <Files>
             <File>
-              <FileName>arrow.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\arrow.c</FilePath>
-            </File>
-            <File>
               <FileName>SpinWheel.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\SpinWheel.c</FilePath>
-            </File>
-            <File>
-              <FileName>clockface.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\clockface.c</FilePath>
             </File>
             <File>
               <FileName>gear_01.c</FileName>
