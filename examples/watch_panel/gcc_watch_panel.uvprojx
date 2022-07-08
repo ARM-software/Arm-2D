@@ -536,6 +536,21 @@
               <FileType>1</FileType>
               <FilePath>..\common\controls\GLCD_Fonts.c</FilePath>
             </File>
+            <File>
+              <FileName>progress_bar_flowing.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_flowing.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_drill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_drill.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_simple.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_simple.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -615,6 +630,16 @@
               <FileName>white_dot.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\white_dot.c</FilePath>
+            </File>
+            <File>
+              <FileName>blue_slashes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\blue_slashes.c</FilePath>
+            </File>
+            <File>
+              <FileName>wave.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\wave.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1264,6 +1289,21 @@
               <FileType>1</FileType>
               <FilePath>..\common\controls\GLCD_Fonts.c</FilePath>
             </File>
+            <File>
+              <FileName>progress_bar_flowing.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_flowing.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_drill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_drill.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_simple.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_simple.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1343,6 +1383,16 @@
               <FileName>white_dot.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\white_dot.c</FilePath>
+            </File>
+            <File>
+              <FileName>blue_slashes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\blue_slashes.c</FilePath>
+            </File>
+            <File>
+              <FileName>wave.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\wave.c</FilePath>
             </File>
           </Files>
         </Group>

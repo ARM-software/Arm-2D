@@ -116,6 +116,44 @@ static const uint16_t c_bmpWhiteDotRGB565[14*14] = {
 };
 
 
+__attribute__((aligned(4), section("arm2d.asset.c_bmpSmallDotAlpha")))
+static const uint8_t c_bmpSmallDotAlpha[7*7] = {
+/* -0- */
+0x00, 0x5a, 0xd8, 0xf8, 0xd8, 0x59, 0x00, 
+/* -1- */
+0x57, 0xf8, 0xff, 0xff, 0xff, 0xf8, 0x56, 
+/* -2- */
+0xd8, 0xff, 0xff, 0xff, 0xff, 0xff, 0xd7, 
+/* -3- */
+0xf8, 0xff, 0xff, 0xff, 0xff, 0xff, 0xf7, 
+/* -4- */
+0xd8, 0xff, 0xff, 0xff, 0xff, 0xff, 0xd7, 
+/* -5- */
+0x57, 0xf9, 0xff, 0xff, 0xff, 0xf8, 0x56, 
+/* -6- */
+0x00, 0x5b, 0xd9, 0xf8, 0xd8, 0x5a, 0x00, 
+};
+
+extern const arm_2d_tile_t c_tileSmallDotMask;
+
+__attribute__((section("arm2d.tile.c_tileSmallDotMask")))
+const arm_2d_tile_t c_tileSmallDotMask = {
+    .tRegion = {
+        .tSize = {
+            .iWidth = 7,
+            .iHeight = 7,
+        },
+    },
+    .tInfo = {
+        .bIsRoot = true,
+        .bHasEnforcedColour = true,
+        .tColourInfo = {
+            .chScheme = ARM_2D_COLOUR_8BIT,
+        },
+    },
+    .pchBuffer = (uint8_t *)c_bmpSmallDotAlpha,
+};
+
 extern const arm_2d_tile_t c_tileWhiteDotRGB565;
 __attribute__((section("arm2d.tile.c_tileWhiteDotRGB565")))
 const arm_2d_tile_t c_tileWhiteDotRGB565 = {
