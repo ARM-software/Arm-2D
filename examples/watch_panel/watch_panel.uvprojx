@@ -490,6 +490,16 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\white_dot.c</FilePath>
             </File>
+            <File>
+              <FileName>blue_slashes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\blue_slashes.c</FilePath>
+            </File>
+            <File>
+              <FileName>wave.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -539,6 +549,46 @@
               <FileName>lcd_printf.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\lcd_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>__common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\__common.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_drill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_drill.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_drill.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_drill.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_flowing.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_flowing.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_flowing.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_flowing.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_simple.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_simple.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_simple.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_simple.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_controls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1661,6 +1711,16 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\white_dot.c</FilePath>
             </File>
+            <File>
+              <FileName>blue_slashes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\blue_slashes.c</FilePath>
+            </File>
+            <File>
+              <FileName>wave.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1710,6 +1770,46 @@
               <FileName>lcd_printf.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\lcd_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>__common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\__common.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_drill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_drill.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_drill.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_drill.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_flowing.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_flowing.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_flowing.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_flowing.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_simple.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_simple.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_simple.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_simple.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_controls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2900,6 +3000,16 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\white_dot.c</FilePath>
             </File>
+            <File>
+              <FileName>blue_slashes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\blue_slashes.c</FilePath>
+            </File>
+            <File>
+              <FileName>wave.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2949,6 +3059,46 @@
               <FileName>lcd_printf.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\lcd_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>__common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\__common.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_drill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_drill.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_drill.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_drill.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_flowing.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_flowing.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_flowing.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_flowing.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_simple.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_simple.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_simple.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_simple.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_controls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4071,6 +4221,16 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\white_dot.c</FilePath>
             </File>
+            <File>
+              <FileName>blue_slashes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\blue_slashes.c</FilePath>
+            </File>
+            <File>
+              <FileName>wave.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4120,6 +4280,46 @@
               <FileName>lcd_printf.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\lcd_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>__common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\__common.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_drill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_drill.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_drill.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_drill.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_flowing.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_flowing.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_flowing.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_flowing.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_simple.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_simple.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_simple.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_simple.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_controls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5242,6 +5442,16 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\white_dot.c</FilePath>
             </File>
+            <File>
+              <FileName>blue_slashes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\blue_slashes.c</FilePath>
+            </File>
+            <File>
+              <FileName>wave.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5291,6 +5501,46 @@
               <FileName>lcd_printf.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\lcd_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>__common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\__common.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_drill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_drill.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_drill.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_drill.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_flowing.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_flowing.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_flowing.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_flowing.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_simple.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_simple.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_simple.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_simple.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_controls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6482,6 +6732,16 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\white_dot.c</FilePath>
             </File>
+            <File>
+              <FileName>blue_slashes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\blue_slashes.c</FilePath>
+            </File>
+            <File>
+              <FileName>wave.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6531,6 +6791,46 @@
               <FileName>lcd_printf.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\lcd_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>__common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\__common.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_drill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_drill.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_drill.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_drill.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_flowing.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_flowing.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_flowing.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_flowing.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_simple.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_simple.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_simple.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_simple.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_controls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7653,6 +7953,16 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\white_dot.c</FilePath>
             </File>
+            <File>
+              <FileName>blue_slashes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\blue_slashes.c</FilePath>
+            </File>
+            <File>
+              <FileName>wave.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -7702,6 +8012,46 @@
               <FileName>lcd_printf.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\lcd_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>__common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\__common.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_drill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_drill.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_drill.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_drill.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_flowing.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_flowing.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_flowing.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_flowing.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_simple.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_simple.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_simple.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_simple.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_controls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -8824,6 +9174,16 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\white_dot.c</FilePath>
             </File>
+            <File>
+              <FileName>blue_slashes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\blue_slashes.c</FilePath>
+            </File>
+            <File>
+              <FileName>wave.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -8873,6 +9233,46 @@
               <FileName>lcd_printf.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\lcd_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>__common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\__common.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_drill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_drill.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_drill.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_drill.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_flowing.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_flowing.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_flowing.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_flowing.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_simple.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_simple.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_simple.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_simple.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_controls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -9995,6 +10395,16 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\white_dot.c</FilePath>
             </File>
+            <File>
+              <FileName>blue_slashes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\blue_slashes.c</FilePath>
+            </File>
+            <File>
+              <FileName>wave.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -10044,6 +10454,46 @@
               <FileName>lcd_printf.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\lcd_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>__common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\__common.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_drill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_drill.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_drill.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_drill.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_flowing.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_flowing.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_flowing.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_flowing.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_simple.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_simple.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_simple.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_simple.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_controls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -11166,6 +11616,16 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\white_dot.c</FilePath>
             </File>
+            <File>
+              <FileName>blue_slashes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\blue_slashes.c</FilePath>
+            </File>
+            <File>
+              <FileName>wave.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -11215,6 +11675,46 @@
               <FileName>lcd_printf.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\lcd_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>__common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\__common.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_drill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_drill.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_drill.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_drill.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_flowing.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_flowing.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_flowing.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_flowing.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_simple.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_simple.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_simple.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_simple.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_controls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -12268,6 +12768,16 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\white_dot.c</FilePath>
             </File>
+            <File>
+              <FileName>blue_slashes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\blue_slashes.c</FilePath>
+            </File>
+            <File>
+              <FileName>wave.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -12317,6 +12827,46 @@
               <FileName>lcd_printf.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\lcd_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>__common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\__common.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_drill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_drill.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_drill.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_drill.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_flowing.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_flowing.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_flowing.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_flowing.h</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_simple.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\progress_bar_simple.c</FilePath>
+            </File>
+            <File>
+              <FileName>progress_bar_simple.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\progress_bar_simple.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_extra_controls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
             </File>
           </Files>
         </Group>
