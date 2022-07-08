@@ -83,7 +83,9 @@ void progress_bar_drill_init(void)
     s_wUnit = (SystemCoreClock  / 1000) * PROGRESS_BAR_DRILL_SPEED;
 }
 
-void progress_bar_drill_show(const arm_2d_tile_t *ptTarget, int_fast16_t iProgress)
+void progress_bar_drill_show(   const arm_2d_tile_t *ptTarget, 
+                                int_fast16_t iProgress,
+                                bool bIsNewFrame)
 {
     int_fast16_t iWidth = ptTarget->tRegion.tSize.iWidth * 3 >> 3;         //!< 3/8 Width
  
@@ -133,7 +135,7 @@ void progress_bar_drill_show(const arm_2d_tile_t *ptTarget, int_fast16_t iProgre
                             &tileInnerSlot, 
                             &tInnerRegion);
         //! update offset
-        do {
+        if (bIsNewFrame) {
             int64_t lClocks = clock();
             int32_t nElapsed = (int32_t)((lClocks - s_lLastTime));
             
@@ -144,7 +146,7 @@ void progress_bar_drill_show(const arm_2d_tile_t *ptTarget, int_fast16_t iProgre
                     s_chOffset = 0;
                 }
             }
-        } while(0);
+        }
 
     } while(0);
 

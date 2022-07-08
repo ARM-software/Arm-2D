@@ -31,6 +31,8 @@ extern
 void progress_bar_drill_init(void);
 
 extern
-void progress_bar_drill_show(const arm_2d_tile_t *ptTarget, int_fast16_t iProgress);
+void progress_bar_drill_show(   const arm_2d_tile_t *ptTarget, 
+                                int_fast16_t iProgress,
+                                bool bIsNewFrame);
 
 #endif

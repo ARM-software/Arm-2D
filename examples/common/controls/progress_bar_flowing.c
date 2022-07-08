@@ -72,7 +72,9 @@ void progress_bar_flowing_init(void)
     s_tWavingTime = s_nLastTime + SystemCoreClock  * 3;
 }
 
-void progress_bar_flowing_show(const arm_2d_tile_t *ptTarget, int_fast16_t iProgress)
+void progress_bar_flowing_show( const arm_2d_tile_t *ptTarget, 
+                                int_fast16_t iProgress, 
+                                bool bIsNewFrame)
 {
     int_fast16_t iWidth = ptTarget->tRegion.tSize.iWidth * 3 >> 3;         //!< 3/8 Width
  
@@ -131,7 +133,7 @@ void progress_bar_flowing_show(const arm_2d_tile_t *ptTarget, int_fast16_t iProg
                                         (__arm_2d_color_t) {GLCD_COLOR_WHITE});
         
         //! update offset
-        do {
+        if (bIsNewFrame) {
             int32_t nClocks = clock();
             int32_t nElapsed = (int32_t)((nClocks - s_nLastTime));
 
@@ -151,8 +153,7 @@ void progress_bar_flowing_show(const arm_2d_tile_t *ptTarget, int_fast16_t iProg
                     }
                 }
             }
-        } while(0);
-        
+        }
 
     } while(0);
     
