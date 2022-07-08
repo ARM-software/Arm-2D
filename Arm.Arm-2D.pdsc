@@ -29,7 +29,6 @@
         </languages>
     </requirements>
   
-  
     <conditions> 
         <!--
         <condition id="Arm Compiler">
@@ -119,19 +118,6 @@
             <require condition="Arm-2D-Helper"/>
             <deny Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Benchmark:Generic" />
         </condition>
-        
-        <!--
-        <condition id="Cortex-M Arm GCC">
-            <description>Compile Cortex-M Processors with GNU Tools for Arm Embedded Processors.</description>
-            <require condition="Arm GCC"/>
-            <require condition="Cortex-M Processors"/>
-        </condition>
-        <condition id="Cortex-M Arm Compiler">
-            <description>Compile Cortex-M Processors with GNU Tools for Arm Embedded Processors.</description>
-            <require condition="Arm Compiler"/>
-            <require condition="Cortex-M Processors"/>
-        </condition>
-        -->
         
         <condition id="Cortex-M CMSIS-CORE">
             <description>Compile Cortex-M Processors CMSIS-CORE.</description>
