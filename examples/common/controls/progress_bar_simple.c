@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2022 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -17,14 +17,18 @@
  */
 
 /*============================ INCLUDES ======================================*/
-#include "./app_cfg.h"
-#include "./progress_bar_simple.h"
+#include "./arm_extra_controls.h"
+#include "./__common.h"
 #include "arm_2d.h"
-#include "platform.h"
 #include <math.h>
+#include <time.h>
+#include <assert.h>
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
+#   pragma clang diagnostic ignored "-Wunknown-warning-option"
+#   pragma clang diagnostic ignored "-Wreserved-identifier"
+#   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wsign-conversion"
 #   pragma clang diagnostic ignored "-Wpadded"
 #   pragma clang diagnostic ignored "-Wcast-qual"
@@ -38,33 +42,18 @@
 #endif
 
 /*============================ MACROS ========================================*/
-
-
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 extern uint32_t SystemCoreClock;
 
-/*============================ PROTOTYPES ====================================*/
-__attribute__((nothrow)) 
-extern int64_t clock(void);
+extern const arm_2d_tile_t c_tileSmallDotMask;
 
+/*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
-extern const uint8_t c_bmpSmallWhiteDot[];
-const arm_2d_tile_t c_tileSmallWhiteDot = {
-    .tRegion = {
-        .tSize = {
-            .iWidth = 7,
-            .iHeight = 7
-        },
-    },
-    .tInfo.bIsRoot = true,
-    .phwBuffer = (uint16_t *)c_bmpSmallWhiteDot,
-};
 
-
-const arm_2d_tile_t c_tileSemisphere = {
+const arm_2d_tile_t c_tileSemisphereLeft = {
     .tRegion = {
         .tLocation = {
             .iX = 0,
@@ -75,9 +64,37 @@ const arm_2d_tile_t c_tileSemisphere = {
             .iHeight = 7
         },
     },
-    .tInfo.bIsRoot = false,
-    .tInfo.bDerivedResource = true,
-    .ptParent = (arm_2d_tile_t *)&c_tileSmallWhiteDot,
+    .tInfo = {
+        .bIsRoot = false,
+        .bHasEnforcedColour = true,
+        .bDerivedResource = true,
+        .tColourInfo = {
+            .chScheme = ARM_2D_COLOUR_8BIT,
+        },
+    },
+    .ptParent = (arm_2d_tile_t *)&c_tileSmallDotMask,
+};
+
+const arm_2d_tile_t c_tileSemisphereRight = {
+    .tRegion = {
+        .tLocation = {
+            .iX = 3,
+            .iY = 0,
+        },
+        .tSize = {
+            .iWidth = 4,
+            .iHeight = 7
+        },
+    },
+    .tInfo = {
+        .bIsRoot = false,
+        .bHasEnforcedColour = true,
+        .bDerivedResource = true,
+        .tColourInfo = {
+            .chScheme = ARM_2D_COLOUR_8BIT,
+        },
+    },
+    .ptParent = (arm_2d_tile_t *)&c_tileSmallDotMask,
 };
 /*============================ IMPLEMENTATION ================================*/
 
@@ -91,64 +108,73 @@ void progress_bar_simple_show(const arm_2d_tile_t *ptTarget, int_fast16_t iProgr
 {
     int_fast16_t iWidth = ptTarget->tRegion.tSize.iWidth * 3 >> 3;         //!< 3/8 Width
  
-    ASSERT(NULL != ptTarget);
-    ASSERT(iProgress <= 1000);
+    assert(NULL != ptTarget);
+    if (iProgress > 1000) {
+        iProgress = 1000;
+    }
  
     arm_2d_region_t tBarRegion = {
         .tLocation = {
            .iX = (ptTarget->tRegion.tSize.iWidth - (int16_t)iWidth) / 2,
-           .iY = (ptTarget->tRegion.tSize.iHeight - c_tileSmallWhiteDot.tRegion.tSize.iHeight) / 2,
+           .iY = (ptTarget->tRegion.tSize.iHeight - c_tileSmallDotMask.tRegion.tSize.iHeight) / 2,
         },
         .tSize = {
             .iWidth = (int16_t)iWidth,
-            .iHeight = c_tileSmallWhiteDot.tRegion.tSize.iHeight,
+            .iHeight = c_tileSmallDotMask.tRegion.tSize.iHeight,
         },
     };
     
-    //! draw a white box
-    arm_2d_rgb16_fill_colour(ptTarget, &tBarRegion, GLCD_COLOR_WHITE);
+    // draw a white box
+    arm_2d_draw_box(ptTarget, &tBarRegion, 1, GLCD_COLOR_WHITE, 255 - 64);
     
-    
-    //! draw semispheres
+    // draw semispheres
     do {
         arm_2d_region_t tSemisphere = {
-            .tSize = c_tileSemisphere.tRegion.tSize,
+            .tSize = c_tileSemisphereLeft.tRegion.tSize,
             .tLocation = {
-                .iX = tBarRegion.tLocation.iX - c_tileSemisphere.tRegion.tSize.iWidth,
+                .iX = tBarRegion.tLocation.iX - c_tileSemisphereLeft.tRegion.tSize.iWidth,
                 .iY = tBarRegion.tLocation.iY,
             },
         };
-        arm_2d_rgb16_tile_copy_with_colour_keying( 
-                                &c_tileSemisphere,          //!< source tile
-                                ptTarget,                   //!< display buffer
-                                &tSemisphere,               //!< region to draw
-                                GLCD_COLOR_BLACK,
-                                ARM_2D_CP_MODE_COPY);       //!< copy only
-                                       
-                               
+
+        arm_2d_fill_colour_with_mask_and_opacity(   
+                                        ptTarget,
+                                        &tSemisphere,
+                                        &c_tileSemisphereLeft,
+                                        (__arm_2d_color_t) {GLCD_COLOR_WHITE},
+                                        255 - 64);
+
         tSemisphere.tLocation.iX = tBarRegion.tLocation.iX + tBarRegion.tSize.iWidth;
-        arm_2d_rgb16_tile_copy_with_colour_keying( 
-                                &c_tileSemisphere,          //!< source tile
-                                ptTarget,                   //!< display buffer
-                                &tSemisphere,               //!< region to draw
-                                GLCD_COLOR_BLACK,
-                                ARM_2D_CP_MODE_COPY |       //!< copy with x-mirroring
-                                ARM_2D_CP_MODE_X_MIRROR);   
+
+
+        arm_2d_fill_colour_with_mask_and_opacity(
+                                        ptTarget,
+                                        &tSemisphere,
+                                        &c_tileSemisphereRight,
+                                        (__arm_2d_color_t) {GLCD_COLOR_WHITE},
+                                        255 - 64);
     } while(0);
     
-    //! draw inner bar
+    // draw inner bar
     tBarRegion.tSize.iHeight-=2;
     tBarRegion.tSize.iWidth-=2;
     tBarRegion.tLocation.iX += 1;
     tBarRegion.tLocation.iY += 1;
-    arm_2d_rgb16_fill_colour(ptTarget, &tBarRegion, GLCD_COLOR_BLACK);
+
+    arm_2d_fill_colour_with_opacity(ptTarget, 
+                                    &tBarRegion, 
+                                    (__arm_2d_color_t) {GLCD_COLOR_BLACK},
+                                    64);
     
     
-    //! calculate the width of the inner stripe 
+    // calculate the width of the inner stripe 
     tBarRegion.tSize.iWidth = tBarRegion.tSize.iWidth * (int16_t)iProgress / 1000;
     
-    //! draw the inner stripe
-    arm_2d_rgb16_fill_colour(ptTarget, &tBarRegion, GLCD_COLOR_WHITE);
+    // draw the inner stripe
+    arm_2d_fill_colour_with_opacity(ptTarget, 
+                                &tBarRegion, 
+                                (__arm_2d_color_t) {GLCD_COLOR_WHITE},
+                                255 - 64);
     
 }
 

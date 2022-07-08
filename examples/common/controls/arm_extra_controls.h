@@ -29,6 +29,7 @@
 #include "./spinning_wheel.h"
 #include "./progress_bar_drill.h"
 #include "./progress_bar_flowing.h"
+#include "./progress_bar_simple.h"
 
 #if defined(__RTE_ACCELERATION_ARM_2D_EXTRA_LCD_PRINTF__)
 #   include "./arm_extra_lcd_printf.h"
@@ -42,5 +43,12 @@
 
 extern
 void arm_extra_controls_init(void);
+
+extern
+void arm_2d_draw_box(const arm_2d_tile_t *ptTarget,
+                     const arm_2d_region_t *ptRegion,
+                     int16_t iBorderWidth, 
+                     COLOUR_INT tColour,
+                     uint8_t chOpacity);
 
 #endif

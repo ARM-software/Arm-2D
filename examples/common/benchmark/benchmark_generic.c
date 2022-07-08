@@ -619,9 +619,6 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
         
         arm_2d_op_wait_async(NULL);
     }
-    
-    
-    progress_bar_drill_show(ptFrameBuffer, 0);
 
     example_gui_on_refresh_evt_handler(ptFrameBuffer);
 
