@@ -5,13 +5,13 @@
   <name>Arm-2D</name>
   <description>A 2D graphic library optimized for Cortex-M processors.</description>
   <!-- web download link -->
-  <url>https://raw.githubusercontent.com/ARM-software/Arm-2D/main/cmsis-pack/</url>
+  <url>https://www.keil.com/pack/</url>
   <supportContact>https://github.com/ARM-software/Arm-2D/issues</supportContact>
   <license>LICENSE</license>
   <repository type="git">https://github.com/ARM-software/Arm-2D.git</repository>
   
   <releases>
-    <release version="0.0.0">
+    <release version="1.0.0-preview" tag="v1.0.0-preview">
       Active development ...
     </release>
   </releases>
