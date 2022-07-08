@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <package schemaVersion="1.7.7" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/v1.7.7/schema/PACK.xsd">
-  <vendor>Arm</vendor>
+  <vendor>ARM</vendor>
   <name>Arm-2D</name>
   <description>A 2D graphic library optimized for Cortex-M processors.</description>
   <!-- web download link -->
@@ -28,7 +28,6 @@
             <language name="C" version="99"/>
         </languages>
     </requirements>
-  
   
     <conditions> 
         <!--
@@ -119,19 +118,6 @@
             <require condition="Arm-2D-Helper"/>
             <deny Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Benchmark:Generic" />
         </condition>
-        
-        <!--
-        <condition id="Cortex-M Arm GCC">
-            <description>Compile Cortex-M Processors with GNU Tools for Arm Embedded Processors.</description>
-            <require condition="Arm GCC"/>
-            <require condition="Cortex-M Processors"/>
-        </condition>
-        <condition id="Cortex-M Arm Compiler">
-            <description>Compile Cortex-M Processors with GNU Tools for Arm Embedded Processors.</description>
-            <require condition="Arm Compiler"/>
-            <require condition="Cortex-M Processors"/>
-        </condition>
-        -->
         
         <condition id="Cortex-M CMSIS-CORE">
             <description>Compile Cortex-M Processors CMSIS-CORE.</description>
