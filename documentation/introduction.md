@@ -1,26 +1,26 @@
 # Introduction for Arm-2D {#intro}
 
-This document mainly explains the basic concepts of Arm-2D. It doesn't matter whether you have read the **README** in the root directory or not. The content is suitable for everyone. 
+This document explains the basic concepts of Arm-2D. It doesn't matter whether you have read the **README** in the root directory. The content is suitable for everyone. 
 
 
 
 ## 1 Overview
 
-At the beginning of your adventure, you might have a lot of questions in your mind, such as
+At the beginning of our adventure, you might have a lot of questions, such as
 
 - What is Arm-2D?
 - What problems does it solve?
 - Who are the target audiences?
 - What does Arm-2D consist of?
-- What are about the development environment?
+- What about the development environment?
 
 You will find the answers in the following sections. 
 
 ### 1.1 What is Arm-2D
 
-If you want to design GUI applications in Linux, you don’t have to face hardware directly. The Linux ecosystem provides you with all necessary software components, including GPU drivers, GUI stacks and many handy interface reference designs.
+If you want to design GUI applications in Linux, you don’t have to face hardware directly. The Linux ecosystem provides you with all necessary software components, including GPU drivers, GUI stacks and many handy reference designs.
 
-Unfortunately, if you are an embedded developer mainly using Cortex-M devices, you have to face various display hardware directly. You might also handle non-standard 2D graphics accelerators from different silicon vendors in some devices. Although we have many GUI stacks to choose from, most of them lack direct support for your target device; hence you have to do the porting work yourself. In summary, using GUI in the Cortex-M system is feasible, but we have a lot of low-level work to do.
+Unfortunately, if you are an embedded developer using Cortex-M devices, you must face various display hardware directly. Even worse, you might face various non-standard 2D graphics accelerators from different silicon vendors. Many GUI stacks are available for embedded applications, but most of them are not ready for your target device immediately. As a result, you have to do the porting work first. In summary, using GUI in the Cortex-M system is feasible, but there is a lot of low-level work beforehand.
 
 **Figure 1-1 Ecosystem Comparison between Rich Embedded and Constraint Embedded System in GUI**
 
@@ -53,9 +53,9 @@ In an ideal condition, chip manufacturers only need to implement arm-2d complian
 
 Most embedded software developers use devices with constrained resources. A typical system has less than 64KB FLASH and 4~32K SRAM. As a reference, a standard low-cost serial LCD (320*240 resolution and 65K colour) requires 150KB RAM for the display buffer, which is unaffordable. 
 
-Also, for such microcontrollers, most of the existing GUI stacks are too expensive to use in terms of memory footprint. On the other hand, many GUI applications are so simple that even some home-brew implementations are good enough to fulfil the requirements. In such cases,  most existing GUI stacks are too heavy for the application. 
+Also, for such microcontrollers, most of the existing GUI stacks are too expensive to use in terms of memory footprint. On the other hand, many GUI applications are so simple that even some home-brew implementations are good enough to fulfil the requirements. In such cases,  most existing GUI stacks are too heavy. 
 
-When one has to build a GUI-based application from scratch with such resource-constrained microcontrollers, you either completely ignore the use of GUI or make trade-offs among the following options:
+When one wants to build a GUI-based application from scratch with such resource-constrained microcontrollers, you either completely give up the idea of GUI or make trade-offs among the following options:
 
 - Implement GUI using only simple shapes, such as points, lines, colour blocks, etc.
 - Bearing with low bandwidth in operations: read pixels from LCD's internal display buffer, modify and write them back
