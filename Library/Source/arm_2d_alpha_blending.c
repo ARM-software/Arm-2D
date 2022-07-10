@@ -1716,9 +1716,9 @@ void __arm_2d_impl_rgb565_alpha_blending(   uint16_t *__RESTRICT phwSourceBase,
 
             for (int i = 0; i < 3; i++) {
                 uint16_t        tmp =
-                    (uint16_t) (srcPix.RGBA[i] * hwRatio) +
-                    (targetPix.RGBA[i] * ratioCompl);
-                targetPix.RGBA[i] = (uint16_t) (tmp >> 8);
+                    (uint16_t) (srcPix.BGRA[i] * hwRatio) +
+                    (targetPix.BGRA[i] * ratioCompl);
+                targetPix.BGRA[i] = (uint16_t) (tmp >> 8);
             }
             /* pack merged stream */
             *phwTargetBase++ = __arm_2d_rgb565_pack(&targetPix);

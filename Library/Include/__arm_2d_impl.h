@@ -111,9 +111,9 @@ extern "C" {
                                                                                 \
                 for (int i = 0; i < 3; i++) {                                   \
                     uint16_t        hwTemp =                                    \
-                        (uint16_t) (tSrcPix.RGBA[i] * hwOPA) +                  \
-                        (tTargetPix.RGBA[i] * (__TRANS));                       \
-                    tTargetPix.RGBA[i] = (uint16_t) (hwTemp >> 8);              \
+                        (uint16_t) (tSrcPix.BGRA[i] * hwOPA) +                  \
+                        (tTargetPix.BGRA[i] * (__TRANS));                       \
+                    tTargetPix.BGRA[i] = (uint16_t) (hwTemp >> 8);              \
                 }                                                               \
                                                                                 \
                 /* pack merged stream */                                        \
@@ -159,9 +159,9 @@ extern "C" {
                                                                                 \
                 for (int i = 0; i < 3; i++) {                                   \
                     uint16_t        hwTemp =                                    \
-                        (uint16_t) (tSrcPix.RGBA[i] * (__OPA)) +                \
-                        (tTargetPix.RGBA[i] * hwTrans);                         \
-                    tTargetPix.RGBA[i] = (uint16_t) (hwTemp >> 8);              \
+                        (uint16_t) (tSrcPix.BGRA[i] * (__OPA)) +                \
+                        (tTargetPix.BGRA[i] * hwTrans);                         \
+                    tTargetPix.BGRA[i] = (uint16_t) (hwTemp >> 8);              \
                 }                                                               \
                                                                                 \
                 /* pack merged stream */                                        \

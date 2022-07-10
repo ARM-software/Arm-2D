@@ -79,11 +79,11 @@ typedef arm_2d_op_src_t arm_2d_op_cl_convt_t;
  *         autovectorizer friendly format
  */
 typedef union {
-    uint16_t            RGBA[4];
+    uint16_t            BGRA[4];
     struct {
-        uint16_t        R;
-        uint16_t        G;
         uint16_t        B;
+        uint16_t        G;
+        uint16_t        R;
         uint16_t        A;
     };
 } __arm_2d_color_fast_rgb_t;
@@ -109,9 +109,10 @@ __STATIC_INLINE void __arm_2d_rgb565_unpack(uint16_t hwColor,
     /* uses explicit extraction, leading to a more efficient autovectorized code */
     uint16_t maskRunpk = 0x001f, maskGunpk = 0x003f;
 
-    ptRGB->R = (uint16_t) ((hwColor & maskRunpk) << 3);
-    ptRGB->B = (uint16_t) ((hwColor >> 11) << 3);
+    ptRGB->B = (uint16_t) ((hwColor & maskRunpk) << 3);
+    ptRGB->R = (uint16_t) ((hwColor >> 11) << 3);
     ptRGB->G = (uint16_t) (((hwColor >> 5) & maskGunpk) << 2);
+    
     ptRGB->A = 0xFF;
 }
 
