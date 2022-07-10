@@ -1,27 +1,26 @@
 # Introduction for Arm-2D {#intro}
 
-As part of the Arm-2D help document, this article mainly explains and introduces some basic concepts and knowledge of Arm-2D. Whether you have read the **README** document (in the root directory) doesn't matter. The content of this article is suitable for users new to the Arm-2D concept. 
+This document mainly explains the basic concepts of Arm-2D. It doesn't matter whether you have read the **README** in the root directory or not. The content is suitable for everyone. 
 
 
 
 ## 1 Overview
 
-At the beginning of your adventure, we try to answer some questions you are likely to ask, such as:
+At the beginning of your adventure, you might have a lot of questions in your mind, such as
 
 - What is Arm-2D?
 - What problems does it solve?
-- Who are the users it faces?
-- What are the parts of Arm-2D?
-- What assumptions does it have been made about the environment  and
-- What are the restrictions?
+- Who are the target audiences?
+- What does Arm-2D consist of?
+- What are about the development environment?
 
-We hope this could help you with a beautiful journey.
+You will find the answers in the following sections. 
 
 ### 1.1 What is Arm-2D
 
-If you want to use a graphical interface in the Linux environment, you don’t have to face hardware such as GPU directly. The Linux ecosystem will provide you with complete software support, which includes drivers for GPU, GUI stacks and a large number of handy interface reference designs.
+If you want to design GUI applications in Linux, you don’t have to face hardware directly. The Linux ecosystem provides you with all necessary software components, including GPU drivers, GUI stacks and many handy interface reference designs.
 
-Unfortunately, if you are an embedded developer mainly using Cortex-M devices, you might face various LCDs directly. In some devices, you will also handle some non-standard 2D graphics accelerators provided by different chip manufacturers. Although you have many GUI stacks to choose from, most of them lack direct support for your target device; hence you have to do the porting work yourself. In summary, using GUI in the Cortex-M system is feasible, but we have a lot of low-level stuff to handle.
+Unfortunately, if you are an embedded developer mainly using Cortex-M devices, you have to face various display hardware directly. You might also handle non-standard 2D graphics accelerators from different silicon vendors in some devices. Although we have many GUI stacks to choose from, most of them lack direct support for your target device; hence you have to do the porting work yourself. In summary, using GUI in the Cortex-M system is feasible, but we have a lot of low-level work to do.
 
 **Figure 1-1 Ecosystem Comparison between Rich Embedded and Constraint Embedded System in GUI**
 
