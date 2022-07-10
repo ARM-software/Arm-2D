@@ -1,84 +1,71 @@
 # Introduction for Arm-2D {#intro}
 
-As part of the Arm-2D help document, this article mainly explains and introduces some basic concepts and necessary knowledge of using Arm-2D. It doesn't matter whether you have read the **README** document (in the root directory) or not. The content of this article is suitable for users who are new to the Arm-2D concept. 
+As part of the Arm-2D help document, this article mainly explains and introduces some basic concepts and knowledge of Arm-2D. Whether you have read the **README** document (in the root directory) doesn't matter. The content of this article is suitable for users new to the Arm-2D concept. 
 
 
-
-**NOTE:**
-
-1. This library is a research project used to explore and demonstrate the possibilities of delivering smart-phone modern graphic user interface using low-cost and resource constraint micro-controllers. It is not a committed product from Arm, and the quality of the service is not validated with sophisticated tests but some functional tests.
-
-2. The library name, i.e. **Arm-2D**, is a temporary term and might be subject to change in the future. The term "the Library" used in this document refers to the **Arm-2D** library unless otherwise.
-
-   
 
 ## 1 Overview
 
 At the beginning of your adventure, we try to answer some questions you are likely to ask, such as:
 
-- what is Arm-2D?
-- what problems does it solve?
+- What is Arm-2D?
+- What problems does it solve?
 - Who are the users it faces?
 - What are the parts of Arm-2D?
-- What assumptions does it make about the environment in which it is used? and
+- What assumptions does it have been made about the environment  and
 - What are the restrictions?
 
-We hope this could help you with a wonderful journey.
+We hope this could help you with a beautiful journey.
 
 ### 1.1 What is Arm-2D
 
-If you want to use a graphical interface in the Linux environment, you don’t have to face hardware such as GPU directly. In fact, the Linux ecosystem will provide you with mature software support, which includes drivers for GPU, GUI stacks and a large number of handy interface reference designs.
+If you want to use a graphical interface in the Linux environment, you don’t have to face hardware such as GPU directly. The Linux ecosystem will provide you with complete software support, which includes drivers for GPU, GUI stacks and a large number of handy interface reference designs.
 
-Unfortunately, if you are an embedded developer who mainly uses Cortex-M, due to the lack of a mature software system like that the Linux ecosystem has, you may have to face various non-standard LCD hardware modules directly. If you are lucky, you also need to face the non-standard 2D graphics accelerators provided by different chip manufacturers. Although you have many GUI stacks to choose from, most of them lack direct support for a specific device, and then you have to port the GUI to your own platform, solving problems between low-level hardware acceleration and high-level software. In summary, it is feasible to use GUI in the Cortex-M system, but most of the time, we need to take care of almost every detail.
+Unfortunately, if you are an embedded developer mainly using Cortex-M devices, you might face various LCDs directly. In some devices, you will also handle some non-standard 2D graphics accelerators provided by different chip manufacturers. Although you have many GUI stacks to choose from, most of them lack direct support for your target device; hence you have to do the porting work yourself. In summary, using GUI in the Cortex-M system is feasible, but we have a lot of low-level stuff to handle.
 
 **Figure 1-1 Ecosystem Comparison between Rich Embedded and Constraint Embedded System in GUI**
 
 ![Ecosystem Comparison between Rich and Constraint Embedded System in GUI](./pictures/TopReadme_1_2a.png)
 
-**Arm-2D is not about reinventing a GUI or competing with the existing GUI stacks.** In fact, the problem Arm-2D wants to solve is how to **provide a unified low-level hardware acceleration interface for all GUI stacks** so that these high-level software service providers are no longer tired of writing drivers for a large number of emerging non-standard embedded hardware platforms. Once Arm-2D becomes a tacit understanding between GUI providers and chip manufacturers, everyone can perform their duties to maximise cooperation within the entire embedded ecosystem.
-
-
+**Arm-2D is not about reinventing a GUI or competing with the existing GUI stacks.** The problem Arm-2D wants to solve is how to **provide a unified low-level hardware acceleration interface for all GUI stacks** so that high-level software service providers are freed from writing drivers for endlessly emerging non-standard hardware. Once Arm-2D becomes a bridge between GUI providers and chip manufacturers, everyone can do their best.
 
 **Figure 1-2 The Hierarchy of a Typical Embedded GUI System.**
 
 ![The Hierarchy of a Typical Embedded GUI System](./pictures/TopReadme_1_2b.png)
 
-To put it simple, **Arm-2D focuses on low level 2D image processing and provides a unified software interface for the vastly different 2D accelerators.**
+**Arm-2D focuses on low-level 2D image processing and provides a unified software interface for the various 2D accelerators.**
 
 ### 1.2 Target Audiences
 
-In the Arm-2D story, there are at least 3 types of participants: GUI service providers, silicon vendors, and bare-metal system developers.
+There are three types of participants in arm-2d: GUI service providers, silicon vendors, and embedded software developers.
 
 #### 1.2.1 GUI Service Provider
 
-GUI service providers are the main beneficiaries of Arm-2D. Since Arm-2D provides a standard interface for hardware acceleration commonly required by GUI services, in their software package by default, GUI service providers only need to provide a porting version using Arm-2D as a low-level dependency, and it is sufficient to ensure that all Cortex-M processors are covered.
-
-After saving a lot of unnecessary hardware adaptation work, GUI service providers can concentrate on improving the quality of their software services or provide high-value customisation services for their VIP customers.
+GUI service providers can benefit from Arm-2D, which provides a standard interface for commonly used hardware acceleration.  GUI service providers can use Arm-2D to get low-level acceleration by default.  As a result, they are freed from writing drivers for hardware; and concentrate on improving the software and providing customisation services for their VIP customers.
 
 #### 1.2.2 Silicon Vendor
 
-Semiconductor manufacturers are the main beneficiaries of Arm-2D. As the market and users expect microcontrollers to use processors under the same architecture (to save their time of learning different processors), these semiconductor manufacturers often need to find ways to differentiate their products, hence introducing dedicated 2D graphic acceleration engine to their devices has become a new fashion.
+Semiconductor manufacturers can benefit from Arm-2D. To save the efforts of learning new architectures, programmers want to use microcontrollers under the same architecture, and in most cases, that means using Cortex-M processors. Since devices use the same processor architecture, semiconductor manufacturers are motivated to introduce proprietary peripherals for differentiation. Introducing dedicated accelerators for 2D graphics has become the new trend. 
+While differentiation in hardware brings benefits to end-users, it also inevitably introduces the problem of software fragmentation. Introducing a hardware abstract layer to mitigate the issue is common practice in software engineering. Arm-2D is such an abstract layer for various 2D graphic accelerations. 
 
-While differentiation in hardware brings benefits to end-users, it also inevitably introduces the problem of software fragmentation. It is common in software engineering to introduce a unified API set, a.k.a. a hardware abstraction layer for fragmented hardware. Based on commonly agreed requirements among upper-level software, Arm-2D actually acts as an abstract layer for different 2D graphic acceleration engines. In this relationship, chip manufacturers only need to implement drivers for their own hardware accelerators following the Arm-2D standard, and it is (for most of the case) sufficient to see that most of the GUI stacks are ready for their devices. 
+In an ideal condition, chip manufacturers only need to implement arm-2d compliant drivers for their hardware accelerators, and this is sufficient to get support from the mainstream GUI stacks. 
 
-#### 1.2.3 Bare-metal System Developers
+#### 1.2.3 Embedded Software Developers
 
-Most bare-metal developers often face a constraint embedded platform. A typical such system has less than 64KB FLASH and 4~32K SRAM. As a reference, a common low-cost serial LCD with 320*240 resolution and 16bit colour require 150KB RAM as just one frame of the display buffer. This is not a comparison of resources of the same order of magnitude at all.
+Most embedded software developers use devices with constrained resources. A typical system has less than 64KB FLASH and 4~32K SRAM. As a reference, a standard low-cost serial LCD (320*240 resolution and 65K colour) requires 150KB RAM for the display buffer, which is unaffordable. 
 
-For those deep embedded MCUs, most of the existing GUI stacks are too expensive to use. On the other hand, considering that the application scenarios are often very simple, i.e. GUIs' requirements are also simple, as a result, in many cases, even simple home-brew GUI-like data structures are good enough to meet the application requirements. In summary, most bare-metal developers will not choose the existing GUI stacks as the basis for their GUI-based applications.
+Also, for such microcontrollers, most of the existing GUI stacks are too expensive to use in terms of memory footprint. On the other hand, many GUI applications are so simple that even some home-brew implementations are good enough to fulfil the requirements. In such cases,  most existing GUI stacks are too heavy for the application. 
 
-When one has to build a GUI-based application from scratch with such resource-constrained microcontrollers, people usually either completely ignore the use of GUI or can only make necessary trade-offs among the following options:
+When one has to build a GUI-based application from scratch with such resource-constrained microcontrollers, you either completely ignore the use of GUI or make trade-offs among the following options:
 
 - Implement GUI using only simple shapes, such as points, lines, colour blocks, etc.
-- Bearing with high transmission latency, read the pixel back from LCD's internal display buffer, perform certain calculations and write it back
-- Only copy/send pre-saved pictures in FLASH to LCD without further image processing.
+- Bearing with low bandwidth in operations: read pixels from LCD's internal display buffer, modify and write them back
+- Only copy/send pre-stored pictures in ROM to LCD without any processing.
 - Using a technique called the Partial-Frame-Buffer to practise time-space-exchanging
 
-In conclusion, **in the past, it was possible but not easy to implement a modern-looking graphical user interface in a bare-metal environment**. 
+In conclusion, **in the past, it was hard to implement a modern-looking GUI in a bare-metal environment**. And now, Arm-2D provides a series of easy-to-use APIs to help users implement desired graphic effects using the so-called Partial-Frame-Buffer helper service. It is worth mentioning that the **PFB-backed design paradigm introduced by Arm-2D is transparent to upper-layer software**, which dramatically simplifies the application development in a bare-metal environment, i.e. **users can design applications as if there is a full frame buffer.**
 
-Now, Arm-2D not only provides a series of easy to use function templates that help users to implement desired graphic effects but also supports the Partial-Frame-Buffer. It is worth mentioning that the **specific PFB paradigm introduced by Arm-2D is transparent to upper layer software**. This kind of transparency greatly simplifies the application development in a bare-metal environment, i.e. **users can write applications as if the device really has a complete display buffer.**
-
-**In summary, Arm-2D enable a large number of devices (that were traditionally not suitable for modern-looking GUI) to have a fancy GUI with a small memory footprint.**
+**In summary, Arm-2D enables many devices (traditionally unsuitable for modern-looking GUI) to implement a modern-looking GUI with a small memory footprint.**
 
 
 
