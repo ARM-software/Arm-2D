@@ -8655,7 +8655,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-Wno-nonportable-include-path -Omax</MiscControls>
-              <Define>NDEBUG,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1</Define>
+              <Define>__GLCD_CFG_SCEEN_WIDTH__=480,__GLCD_CFG_SCEEN_HEIGHT__=272,BENCHMARK_PFB_BLOCK_WIDTH=480,BENCHMARK_PFB_BLOCK_HEIGHT=272,NDEBUG,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Library\Include;.;..\..\Helper\Include;..\common\platform;..\common\platform\stm32f746g-discovery;..\common\platform\lib;..\..\Library\Include\template;..\common\controls;..\common\benchmark;..\common\benchmark</IncludePath>
             </VariousControls>
@@ -12056,7 +12056,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>3</RvdsVP>
-            <RvdsMve>2</RvdsMve>
+            <RvdsMve>0</RvdsMve>
             <RvdsCdeCp>0</RvdsCdeCp>
             <nBranchProt>0</nBranchProt>
             <hadIRAM2>1</hadIRAM2>
