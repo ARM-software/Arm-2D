@@ -100,7 +100,7 @@ static void system_init(void)
 
 **Figure 2-5 A Typical Configuration for A MDK project**
 
-<img src="./pictures/HowToDeploy2_5.png" alt="image-20210323180956872" style="zoom:80%;" />
+![image-20210323180956872](./pictures/HowToDeploy2_5.png)
 
 **NOTE:**
 
