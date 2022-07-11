@@ -109,6 +109,8 @@ PACK_DIRS="
 # Specify file names to be added to pack base directory
 PACK_BASE_FILES="
   documentation/index.html
+  documentation/version.css
+  documentation/version.js
   LICENSE
   README.md
 "
