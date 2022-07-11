@@ -41,11 +41,14 @@ function print_pdsc_head {
 }
 
 function print_pdsc {
-  if [ -z "$2" ]; then
-    echo "  <release version=\"$1\">"
-  else
-    echo "  <release version=\"$1\" date=\"$2\">"
+  echo -n "  <release version=\"$1\""
+  if [ -n "$2" ]; then
+    echo -n " date=\"$2\""
   fi
+  if [ -n "$4" ]; then
+    echo -n " tag=\"$4\""
+  fi
+  echo ">"
   echo -e "$3" | \
     sed "s/^/    /" | \
     sed "s/<br>//" | \
@@ -153,7 +156,7 @@ for TAG in $TAGS; do
   TAG="${TAG#refs/tags/}" 
   DESC=$(git tag -l -n99 --format "%(contents)" ${TAG} 2>/dev/null)
   DATE=$(git tag -l -n99 --format "%(taggerdate:short)" ${TAG} 2>/dev/null)
-  print_$FORMAT "${TAG#${PREFIX}}" "${DATE}" "${DESC}"       
+  print_$FORMAT "${TAG#${PREFIX}}" "${DATE}" "${DESC}" "${TAG}"      
 done
 
 print_${FORMAT}_tail
