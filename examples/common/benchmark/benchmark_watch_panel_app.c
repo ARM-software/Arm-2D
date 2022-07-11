@@ -338,9 +338,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_background_handler)
     ARM_2D_UNUSED(bIsNewFrame);
 
     arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
-    arm_2d_tile_copy_only(  &c_tileBackground,
-                            ptTile,
-                            NULL);
+//    arm_2d_tile_copy_only(  &c_tileBackground,
+//                            ptTile,
+//                            NULL);
     
     arm_print_banner("Arm-2D Benchmark");
     

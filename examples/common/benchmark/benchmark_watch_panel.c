@@ -260,17 +260,17 @@ void example_gui_init(void)
 {
     arm_extra_controls_init();
 
-    arm_foreach(arm_2d_layer_t, s_ptRefreshLayers) {
-        arm_2d_region_t tRegion = _->tRegion;
-        if (!tRegion.tSize.iHeight) {
-            tRegion.tSize.iHeight = _->ptTile->tRegion.tSize.iHeight;
-        }
-        if (!tRegion.tSize.iWidth) {
-            tRegion.tSize.iWidth = _->ptTile->tRegion.tSize.iWidth;
-        }
-        
-        _->tRegion = tRegion;
-    }
+//    arm_foreach(arm_2d_layer_t, s_ptRefreshLayers) {
+//        arm_2d_region_t tRegion = _->tRegion;
+//        if (!tRegion.tSize.iHeight) {
+//            tRegion.tSize.iHeight = _->ptTile->tRegion.tSize.iHeight;
+//        }
+//        if (!tRegion.tSize.iWidth) {
+//            tRegion.tSize.iWidth = _->ptTile->tRegion.tSize.iWidth;
+//        }
+//        
+//        _->tRegion = tRegion;
+//    }
 }
 
 static void example_update_boxes(floating_range_t *ptBoxes, uint_fast16_t hwCount)
@@ -311,7 +311,7 @@ static void example_update_boxes(floating_range_t *ptBoxes, uint_fast16_t hwCoun
 
 void example_gui_do_events(void)
 {
-    example_update_boxes(s_ptFloatingBoxes, dimof(s_ptFloatingBoxes));
+    //example_update_boxes(s_ptFloatingBoxes, dimof(s_ptFloatingBoxes));
 }
 
 
@@ -330,28 +330,28 @@ void example_gui_refresh(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
 
     arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
 
-    static arm_2d_tile_t s_tPanelTile;
-    
-    arm_2d_tile_generate_child( ptTile,
-                                (const arm_2d_region_t []) {
-                                    {
-                                        .tSize = {240, 240},
-                                        .tLocation = {
-                                            .iX = ((__GLCD_CFG_SCEEN_WIDTH__ - 240) >> 1),
-                                            .iY = ((__GLCD_CFG_SCEEN_HEIGHT__ - 240) >> 1),
-                                        },
-                                    },
-                                },
-                                &s_tPanelTile,
-                                false);
-    
-    arm_2d_tile_copy_with_des_mask(
-        s_ptRefreshLayers->ptTile,
-        &s_tPanelTile,
-        &c_tileCircleBackgroundMask,
-        &(s_ptRefreshLayers->tRegion),
-        ARM_2D_CP_MODE_COPY
-    );
+//    static arm_2d_tile_t s_tPanelTile;
+//    
+//    arm_2d_tile_generate_child( ptTile,
+//                                (const arm_2d_region_t []) {
+//                                    {
+//                                        .tSize = {240, 240},
+//                                        .tLocation = {
+//                                            .iX = ((__GLCD_CFG_SCEEN_WIDTH__ - 240) >> 1),
+//                                            .iY = ((__GLCD_CFG_SCEEN_HEIGHT__ - 240) >> 1),
+//                                        },
+//                                    },
+//                                },
+//                                &s_tPanelTile,
+//                                false);
+//    
+//    arm_2d_tile_copy_with_des_mask(
+//        s_ptRefreshLayers->ptTile,
+//        &s_tPanelTile,
+//        &c_tileCircleBackgroundMask,
+//        &(s_ptRefreshLayers->tRegion),
+//        ARM_2D_CP_MODE_COPY
+//    );
     
     //! draw the watch panel with transparency effect
     do {
