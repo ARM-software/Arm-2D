@@ -68,7 +68,7 @@ var NAVTREE =
         [ "1.2 Target Audiences", "intro.html#autotoc_md29", [
           [ "1.2.1 GUI Service Provider", "intro.html#autotoc_md30", null ],
           [ "1.2.2 Silicon Vendor", "intro.html#autotoc_md31", null ],
-          [ "1.2.3 Embedded Software Developers", "intro.html#autotoc_md32", null ]
+          [ "1.2.3 Bare-metal System Developers", "intro.html#autotoc_md32", null ]
         ] ],
         [ "1.3 Arm-2D Libraries", "intro.html#autotoc_md33", [
           [ "1.3.1 Standard Software Implementation", "intro.html#autotoc_md34", null ],

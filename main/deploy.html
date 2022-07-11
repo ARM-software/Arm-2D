@@ -22,7 +22,6 @@
   $(document).ready(function() { init_search(); });
 /* @license-end */
 </script>
-<link href="$extra_stylesheet" rel="stylesheet" type="text/css" />
 <link href="extra_stylesheet.css" rel="stylesheet" type="text/css"/>
 <link href="../version.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../version.js"></script>
@@ -192,7 +191,7 @@ $(document).ready(function(){initNavTree('deploy.html',''); initResizable(); });
 <td class="markdownTableBodyNone">Microsoft Extensions   </td><td class="markdownTableBodyNone"><em><b>-fms-extensions</b></em>   </td><td class="markdownTableBodyNone">Arm Compiler 6, GCC, LLVM   </td><td class="markdownTableBodyLeft">Enable enhanced support for <a href="https://gcc.gnu.org/onlinedocs/gcc/Unnamed-Fields.html">Unnamed Structure and Union Fields</a> introduce by Microsoft Extensions. In Arm Compiler 6, when "-fms-extensions" added, you should also add an option " ***-Wno-microsoft-anon-tag*** " to suppress the corresponding warning. <b>IAR supports this by default.</b>   </td></tr>
 </table>
 <p ><b>Figure 2-5 A Typical Configuration for A MDK project</b></p>
-<p ><img src="./pictures/HowToDeploy2_5.png" alt="image-20210323180956872" style="zoom:80%;" class="inline"/></p>
+<p ><img src="HowToDeploy2_5.png" alt="" class="inline" title="image-20210323180956872"/></p>
 <p ><b>NOTE:</b></p>
 <ol type="1">
 <li>This picture shows that the highest level of optimisation (" ***-Omax*** ") is enabled while the link-time-optimisation is disabled (" ***-fno-lto*** "). This is <b>NOT</b> a requirement of the Arm-2D library.</li>
