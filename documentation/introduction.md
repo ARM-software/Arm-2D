@@ -636,43 +636,74 @@ The examples and documents for Asynchronous mode will be added soon.
 
 ### 3.3 Alpha Blending 
 
-| Function Name                                          | Description                                                  | NOTE |
-| ------------------------------------------------------ | ------------------------------------------------------------ | ---- |
-| ***arm_2d_rgb565_alpha_blending***                     | Blend a source tile to a target tile with a given transparency ratio. Both tiles should use ***RGB565*** colour format. |      |
-| ***arm_2d_rgb888_alpha_blending***                     | Blend a source tile to a target tile with a given transparency ratio. Both tiles should use ***RGB888*** colour format. ***RGBA8888*** will be treated as ***RGB888***. |      |
-| ***arm_2d_rbg565_alpha_blending_with_colour_masking*** | Blend a source tile to a target tile with a given transparency ratio and the Colour-Masking scheme. Both tiles should use ***RGB565*** colour format. |      |
-| ***arm_2d_rbg888_alpha_blending_with_colour_masking*** | Blend a source tile to a target tile with a given transparency ratio and the Colour-Masking scheme. Both tiles should use ***RGB888*** colour format. ***RGBA8888*** will be treated as ***RGB888***. |      |
-| ***arm_2d_rgb565_fill_colour_with_alpha***             | Fill a given region in the target tile with a specified colour and transparent ratio. Both the target tile and filled colour will be treated as ***RGB565***. |      |
-| ***arm_2d_rgb888_fill_colour_with_alpha***             | Fill a given region in the target tile with a specified colour and transparent ratio. Both the target tile and filled colour will be treated as ***RGB888***. |      |
+| Function Name                                           | Description                                                  | NOTE |
+| ------------------------------------------------------- | ------------------------------------------------------------ | ---- |
+| ***arm_2dp_gray8_alpha_blending***                      | Blend a source tile to a target tile with a given transparency ratio. Both tiles should use ***GRAY8*** as their colour format. |      |
+| ***arm_2dp_rgb565_alpha_blending***                     | Blend a source tile to a target tile with a given transparency ratio. Both tiles should use ***RGB565*** as their colour format. |      |
+| ***arm_2dp_cccn888_alpha_blending***                    | Blend a source tile to a target tile with a given transparency ratio. Both tiles should use ***CCCN888*** as their colour format. |      |
+| ***arm_2dp_gray8_alpha_blending_with_colour_keying***   | Blend a source tile to a target tile with a given transparency ratio and the Colour-Keying scheme. Both tiles should use ***GRAY8*** as their colour format. |      |
+| ***arm_2dp_rbg565_alpha_blending_with_colour_keying***  | Blend a source tile to a target tile with a given transparency ratio and the Colour-Keying scheme. Both tiles should use ***RGB565*** as their colour format. |      |
+| ***arm_2dp_cccn888_alpha_blending_with_colour_keying*** | Blend a source tile to a target tile with a given transparency ratio and the Colour-Keying scheme. Both tiles should use ***RGB888*** as their colour format. |      |
+| ***arm_2dp_gray8_fill_colour_with_opacity***            | Fill a given region in the target tile with a specified ***GRAY8*** colour and opacity. |      |
+| ***arm_2dp_rgb565_fill_colour_with_opacity***           | Fill a given region in the target tile with a specified ***RGB565*** colour and opacity. |      |
+| ***arm_2dp_cccn888_fill_colour_with_opacity***          | Fill a given region in the target tile with a specified ***CCCN888*** colour and opacity. |      |
+| ***arm_2dp_gray8_fill_colour_with_mask***               | fill a target tile with a given ***GRAY8*** colour and a mask on target side |      |
+| ***arm_2dp_rgb565_fill_colour_with_mask***              | fill a target tile with a given ***RGB565*** colour and a mask on target side |      |
+| ***arm_2dp_cccn888_fill_colour_with_mask***             | fill a target tile with a given ***CCCN888*** colour and a mask on target side |      |
+| ***arm_2dp_gray8_fill_colour_with_mask_and_opacity***   | fill a target tile with a given ***GRAY8*** colour, a mask on target side and an opacity |      |
+| ***arm_2dp_rgb565_fill_colour_with_mask_and_opacity***  | fill a target tile with a given ***RGB565*** colour, a mask on target side and an opacity |      |
+| ***arm_2dp_cccn888_fill_colour_with_mask_and_opacity*** | fill a target tile with a given ***CCCN888*** colour, a mask on target side and an opacity |      |
+| ***arm_2dp_gray8_tile_copy_with_masks***                | copy or fill a source tile to a target tile with masks in a given mode. Both tiles use ***GRAY8*** as their colour format. |      |
+| ***arm_2dp_rgb565_tile_copy_with_masks***               | copy or fill a source tile to a target tile with masks in a given mode. Both tiles use ***RGB565*** as their colour format. |      |
+| ***arm_2dp_CCCN888_tile_copy_with_masks***              | copy or fill a source tile to a target tile with masks in a given mode. Both tiles use ***CCCN888*** as their colour format. |      |
+| ***arm_2dp_gray8_tile_copy_with_des_mask***             | copy or fill a source tile to a target tile with a mask on the target  side in a given mode. Both tiles use ***GRAY8*** as their colour format. |      |
+| ***arm_2dp_rgb565_tile_copy_with_des_mask***            | copy or fill a source tile to a target tile with a mask on the target side in a given mode. Both tiles use ***RGB565*** as their colour format. |      |
+| ***arm_2dp_cccn888_tile_copy_with_des_mask***           | copy or fill a source tile to a target tile with a mask on the target side in a given mode. Both tiles use ***CCCN888*** as their colour format. |      |
+| ***arm_2dp_gray8_tile_copy_with_src_mask***             | copy or fill a source tile to a target tile with a mask on the source side in a given mode. Both tiles use ***GRAY8*** as their colour format. |      |
+| ***arm_2dp_rgb565_tile_copy_with_src_mask***            | copy or fill a source tile to a target tile with a mask on the source side in a given mode. Both tiles use ***RGB565*** as their colour format. |      |
+| ***arm_2dp_cccn888_tile_copy_with_src_mask***           | copy or fill a source tile to a target tile with a mask on the source side in a given mode. Both tiles use ***CCCN888*** as their colour format. |      |
 
 
 
-### 3.4 Mirroring/Rotation
+### 3.4 Transform (Rotation/Scaling)
+
+| Function Name                                                | Description                                                  | NOTE |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ---- |
+| ***arm_2dp_gray8_tile_transform_prepare***                   | prepare for a transform in ***GRAY8***                       |      |
+| ***arm_2dp_rgb565_tile_transform_prepare***                  | prepare for a transform in ***RGB565***                      |      |
+| ***arm_2dp_cccn888_tile_transform_prepare***                 | prepare for a transform in ***CCCN888***                     |      |
+| ***arm_2dp_gray8_tile_transform_with_opacity_prepare***      | prepare for a transform with opacity in ***GRAY8***          |      |
+| ***arm_2dp_rgb565_tile_transform_with_opacity_prepare***     | prepare for a transform with opacity in ***RGB565***         |      |
+| ***arm_2dp_cccn888_tile_transform_with_opacity_prepare***    | prepare for a transform with opacity in ***CCCN888***        |      |
+| ***arm_2dp_gray8_tile_transform_with_src_mask_prepare***     | prepare for a transform with source mask in ***GRAY8***      |      |
+| ***arm_2dp_rgb565_tile_transform_with_src_mask_prepare***    | prepare for a transform with source mask in ***RGB565***     |      |
+| ***arm_2dp_cccn888_tile_transform_with_src_mask_prepare***   | prepare for a transform with source mask in ***CCCN888***    |      |
+| ***arm_2dp_gray8_tile_transform_with_src_mask_and_opacity_prepare*** | prepare for a transform with source mask and opacity in ***GRAY8*** |      |
+| ***arm_2dp_rgb565_tile_transform_with_src_mask_and_opacity_prepare*** | prepare for a transform with source mask and opacity in ***RGB565*** |      |
+| ***arm_2dp_cccn888_tile_transform_with_src_mask_and_opacity_prepare*** | prepare for a transform with source mask and opacity in ***CCCN888*** |      |
+| ***arm_2dp_tile_transform***                                 | start a transform operation                                  |      |
 
 
 
-
-
-### 3.5 Zooming/Stretching
-
-
-
-
-
-### 3.6 Drawing
+### 3.5 Drawing
 
 | Function Name                      | Description                                                  | NOTE                                                         |
 | ---------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-|                                    |                                                              |                                                              |
+| ***arm_2d_c8bit_draw_point_fast*** | Draw a 8bit pixel to a given root tile.                      |                                                              |
 | ***arm_2d_rgb16_draw_point_fast*** | Draw a 16bit pixel to a given root tile.                     |                                                              |
 | ***arm_2d_rgb32_draw_point_fast*** | Draw a 32bit pixel to a given root tile.                     |                                                              |
-| ***arm_2d_rgb16_draw_point***      | Draw a 16bit pixel to a given tile. This function is relatively slower than the "***\_fast***" version but supports the Partial Frame Buffer scheme. |                                                              |
-| ***arm_2d_rgb32_draw_point***      | Draw a 32bit pixel to a given tile. This function is relatively slower than the "***\_fast***" version but supports the Partial Frame Buffer scheme. |                                                              |
-| ***arm_2d_rgb16_fill_colour***     | Fill a given region inside a tile with a specified 16bit colour. | This function can be used to draw vertical and horizontal lines. |
-| ***arm_2d_rgb32_fill_colour***     | Fill a given region inside a tile with a specified 32bit colour. | This function can be used to draw vertical and horizontal lines. |
+| ***arm_2dp_c8bit_draw_point***     | Draw a 8bit pixel to a given tile. This function is relatively slower than the "***\_fast***" version but supports the Partial Frame Buffer scheme. |                                                              |
+| ***arm_2dp_rgb16_draw_point***     | Draw a 16bit pixel to a given tile. This function is relatively slower than the "***\_fast***" version but supports the Partial Frame Buffer scheme. |                                                              |
+| ***arm_2dp_rgb32_draw_point***     | Draw a 32bit pixel to a given tile. This function is relatively slower than the "***\_fast***" version but supports the Partial Frame Buffer scheme. |                                                              |
+| ***arm_2dp_c8bit_fill_colour***    | Fill a given region inside a tile with a specified 8bit colour. | This function can be used to draw vertical and horizontal lines. |
+| ***arm_2dp_rgb16_fill_colour***    | Fill a given region inside a tile with a specified 16bit colour. | This function can be used to draw vertical and horizontal lines. |
+| ***arm_2dp_rgb32_fill_colour***    | Fill a given region inside a tile with a specified 32bit colour. | This function can be used to draw vertical and horizontal lines. |
+| ***arm_2dp_c8bit_draw_pattern***   | copy a bit-pattern (A1) to a target tile in 8bit colour      |                                                              |
+| ***arm_2dp_rgb16_draw_pattern***   | copy a bit-pattern (A1) to a target tile in 16bit colour     |                                                              |
+| ***arm_2dp_rgb32_draw_pattern***   | copy a bit-pattern (A1) to a target tile in 32bit colour     |                                                              |
 
 
 
-### 3.7 Filters
+### 3.6 Filters
 
 To be added in future versions.
