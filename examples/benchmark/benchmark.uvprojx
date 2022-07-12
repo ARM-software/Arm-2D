@@ -12056,7 +12056,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>3</RvdsVP>
-            <RvdsMve>0</RvdsMve>
+            <RvdsMve>2</RvdsMve>
             <RvdsCdeCp>0</RvdsCdeCp>
             <nBranchProt>0</nBranchProt>
             <hadIRAM2>1</hadIRAM2>
