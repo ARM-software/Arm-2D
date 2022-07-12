@@ -128,15 +128,16 @@ Arm-2D has provided standard ways to add support for 2D image processing algorit
 ### 1.6 Folder Structures
 
 **Table 1-2 The Folder Structure of Arm-2d Root** 
-
-| Folder and File                  | Type   | Description                                                  |
-| :------------------------------- | ------ | ------------------------------------------------------------ |
-| Library                          | Folder | This folder contains the source files and header files of the library. |
-| Documents                        | Folder | This folder contains all the documents.                      |
-| Examples                         | Folder | This folder contains all the example projects.               |
-| README                           | .md    | The README.md you are currently reading.                     |
-| how_to_deploy_the_arm_2d_library | .md    | A step by step guidance helping you to deploy the Arm-2D library to your projects. |
-| LICENSE                          |        | The Apache 2.0 License                                       |
+| Folder and File                  | Type    | Description                                                  |
+| :------------------------------- | ------- | ------------------------------------------------------------ |
+| **Library**                      | Folder  | This folder contains the source files and header files of the library. |
+| **Helper**                       | Folder  | This folder contains the source files and header files of helper functions / services. |
+| documentation                    | Folder  | This folder contains all the documents.                      |
+| examples                         | Folder  | This folder contains all the example code / projects.        |
+| README                           | .md     | The README.md you are currently reading.                     |
+| how_to_deploy_the_arm_2d_library | .md     | A step by step guidance helping you to deploy the Arm-2D library to your projects. |
+| LICENSE                          | License | The Apache 2.0 License                                       |
+| tools                            | Folder  | This folder contains some useful utilities for using the library. For example, img2c.py is a python script that convert a specified picture into the tile data structure. |
 
 
 
@@ -233,12 +234,13 @@ The C definition of a the Tile data structure is shown below:
 typedef struct arm_2d_tile_t arm_2d_tile_t;
 struct arm_2d_tile_t {
     implement_ex(struct {
-        uint8_t    bIsRoot              : 1;    //!< is this tile a root tile
-        uint8_t    bHasEnforcedColour   : 1;    //!< does this tile contains enforced colour info
-        uint8_t                         : 6;
+        uint8_t    bIsRoot              : 1;
+        uint8_t    bHasEnforcedColour   : 1;
+        uint8_t    bDerivedResource     : 1;
+        uint8_t                         : 5;
         uint8_t                         : 8;
         uint8_t                         : 8;
-        arm_2d_color_info_t    tColourInfo;     //!< enforced colour
+        arm_2d_color_info_t    tColourInfo;
     }, tInfo);
 
     implement_ex(arm_2d_region_t, tRegion);
@@ -248,9 +250,11 @@ struct arm_2d_tile_t {
          *! otherwise ptParent is available
          */
         arm_2d_tile_t       *ptParent;
+        uint8_t             *pchBuffer;
         uint16_t            *phwBuffer;
         uint32_t            *pwBuffer;
-        uint8_t             *pchBuffer;
+        
+        intptr_t            nAddress;
     };
 };
 ```
@@ -277,11 +281,11 @@ struct arm_2d_tile_t {
 
 #### 2.3.1 Root Tile
 
-A Root tile is a kind of tiles that directly contain the display buffer, and its feature bit ***bIsRoot*** is set, according to the pixel types used in the display buffer to which corresponding pointers should be used. For more details, please refer to **Table 2-1**.
+A Root tile is a kind of tiles that directly contain the display buffer, and its feature bit `bIsRoot` is set, according to the pixel types used in the display buffer to which corresponding pointers should be used. For more details, please refer to **Table 2-1**.
 
 It is worth emphasizing that for a root Tile, its Location coordinate must be ***(0,0)***; otherwise, it is considered illegal.
 
-With the help of [C99 designator](https://gcc.gnu.org/onlinedocs/gcc/Designated-Inits.html), a tile structure can be initialised clearly and easily. The following example shows a root tile ***c_tPictureCMSISLogo*** representing a ***RGBA8888*** bitmap stored in a constant array called ***c_bmpCMSISLogo[]***. Note that because the bitmap and the tile structure are designated as constants, it is highly likely that a compiler will use ROM rather than RAM to store them and keep a small RAM footprint. 
+With the help of [C99 designator](https://gcc.gnu.org/onlinedocs/gcc/Designated-Inits.html), a tile structure can be initialised clearly and easily. The following example shows a root tile `c_tPictureCMSISLogo` representing a ***RGBA8888*** bitmap stored in a constant array called `c_bmpCMSISLogo[]`. Note that because the bitmap and the tile structure are designated as constants, it is highly likely that a compiler will use ROM rather than RAM to store them and keep a small RAM footprint. 
 
 ```c
 /*! picture cmsis_logo */
@@ -326,7 +330,7 @@ In fact, with the help of some macros, we can use Tile to implement the concept 
             __implement_tile(__NAME, __WIDTH, __HEIGHT, __TYPE)
 ```
 
-For example, we can create two visual layers with size **100\*100** and ***200\*50*** respectively and using colour ***arm_2d_color_rgb565_t*** for pixels:
+For example, we can create two visual layers with size **100\*100** and ***200\*50*** respectively and using colour `arm_2d_color_rgb565_t` for pixels:
 
 ```c
 declare_tile(c_tLayerA)
@@ -338,7 +342,7 @@ implement_tile(c_tLayerB, 200, 50, arm_2d_color_rgb565_t);
 
 These layers are stored in RAM, which are used as sources and targets for 2D operations. 
 
-Note that in the aforementioned macro template, we use ***ARM\_NOINIT*** to decorate the display buffer, its definition is shown below:
+Note that in the aforementioned macro template, we use `ARM_NOINIT` to decorate the display buffer, its definition is shown below:
 
 ```c
 #ifndef ARM_NOINIT
@@ -356,13 +360,13 @@ Note that in the aforementioned macro template, we use ***ARM\_NOINIT*** to deco
 #endif
 ```
 
-It is clear that for the Arm Compiler 5 and Arm Compiler 6, ***ARM_NOINIT*** puts the target variable into a ***ZI*** section called ***".bss.noinit"*** which later should be placed in an execution region with ***[UNINIT](https://developer.arm.com/documentation/101754/0616/armlink-Reference/Scatter-File-Syntax/Execution-region-descriptions/Execution-region-attributes)*** feature in a scatter-script, for example:
+It is clear that for the Arm Compiler 5 and Arm Compiler 6, `ARM_NOINIT` puts the target variable into a ***ZI*** section called `.bss.noinit` which later should be placed in an execution region with ***[UNINIT](https://developer.arm.com/documentation/101754/0616/armlink-Reference/Scatter-File-Syntax/Execution-region-descriptions/Execution-region-attributes)*** feature in a scatter-script, for example:
 
 ```
 LR_ROM __ROM_BASE __ROM_SIZE  {                           
     ...
-
-    ARM_LIB_STACK __RAM1_BASE ALIGN 8 EMPTY __STACK_SIZE { ; Reserve empty region for stack
+    ; Reserve empty region for stack
+    ARM_LIB_STACK __RAM1_BASE ALIGN 8 EMPTY __STACK_SIZE { 
     }
 
     RW_RAM1 +0 __RAM1_RW_SIZE {
@@ -373,8 +377,9 @@ LR_ROM __ROM_BASE __ROM_SIZE  {
     RM_RAM_NOINIT +0 UNINIT {
         * (.bss.noinit)
     }
-
-    ARM_LIB_HEAP  __HEAP_BASE ALIGN 8 EMPTY __HEAP_SIZE  { ; Reserve empty region for heap
+    
+    ; Reserve empty region for heap
+    ARM_LIB_HEAP  __HEAP_BASE ALIGN 8 EMPTY __HEAP_SIZE  { 
     }
     ...
 }
@@ -384,11 +389,11 @@ LR_ROM __ROM_BASE __ROM_SIZE  {
 
 #### 2.3.2 Child Tile
 
-Given any tile, we can derive a theoretically unlimited number of sub-tiles based on it, which are called Child Tiles in Arm-2D. It is worth emphasizing that the Tile that can be used to derive child tiles does not need to be a root Tile. The ***bIsRoot*** flag of the Child Tile is 0, which means that the pointer ptParent points to its parent Tile. 
+Given any tile, we can derive a theoretically unlimited number of sub-tiles based on it, which are called Child Tiles in Arm-2D. It is worth emphasizing that the Tile that can be used to derive child tiles does not need to be a root Tile. The `bIsRoot` flag of the Child Tile is 0, which means that the pointer` ptParent` points to its parent Tile. 
 
 The Location information of the child tile is used to indicate its location in the parent tile. Negative numbers are allowed for the coordinates here. The region of a child tile can be larger than the size of the parent tile. This is often used to implement the Partial Frame-buffer. For more, please refer to **[section 2.3.3](#233-partial-frame-buffer)**. 
 
-Figure 2-3 shows a series of Child Tiles, and their derivation relationship in the form of Region View.
+**Figure 2-3** shows a series of Child Tiles, and their derivation relationship in the form of Region View.
 
 **Figure 2-3 A Chain of Child Tiles and Their Root Tile**
 
@@ -406,7 +411,7 @@ The so-called Partial Frame Buffer is a special use of the Tile Child scheme. It
 
 ![How Partial Frame Buffer Works](./pictures/Introduction2_3b.png)
 
-More details are shown in a dedicated example project located in "***examples/benchmark***" directory.
+More details are shown in a dedicated example project located in `examples/benchmark` directory.
 
 
 
@@ -415,8 +420,9 @@ More details are shown in a dedicated example project located in "***examples/be
 Arm-2D has reserved sufficient space for supporting more colour formats. A data structure has been introduced to describe a colour format used in a given tile. The C definition is shown below:
 
 ```c
-//! \name colour size
-//! @{
+/*! 
+ * \brief enumerations for colour attributes
+ */
 enum {
     ARM_2D_COLOUR_SZ_1BIT = 0,            //!< 1 bit:black and white
     ARM_2D_COLOUR_SZ_2BIT = 1,            //!< 4 colours or 4 gray-levels
@@ -431,6 +437,7 @@ enum {
     ARM_2D_COLOUR_SZ_8BIT_msk =   ARM_2D_COLOUR_SZ_8BIT << 1,
     ARM_2D_COLOUR_SZ_16BIT_msk =  ARM_2D_COLOUR_SZ_16BIT<< 1,
     ARM_2D_COLOUR_SZ_32BIT_msk =  ARM_2D_COLOUR_SZ_32BIT<< 1,
+    ARM_2D_COLOUR_SZ_msk      =   (0x07 << 1),
 
     ARM_2D_COLOUR_LITTLE_ENDIAN       = 0,
     ARM_2D_COLOUR_BIG_ENDIAN          = 1,
@@ -443,23 +450,58 @@ enum {
 
     ARM_2D_COLOUR_NO_ALPHA_msk        = ARM_2D_COLOUR_NO_ALPHA      << 0,
     ARM_2D_COLOUR_HAS_ALPHA_msk       = ARM_2D_COLOUR_HAS_ALPHA     << 0,
+    
+    ARM_2D_COLOUR_VARIANT_pos = 5,
+    ARM_2D_COLOUR_VARIANT_msk         = 0x07 << ARM_2D_COLOUR_VARIANT_pos,
 };
-//! @}
 
-//! \name colour scheme
-//! @{
+/*!
+ * \brief enumerations for colour types
+ * 
+ */
 enum {
-    ARM_2D_COLOUR_RGB16       =   ARM_2D_COLOUR_SZ_16BIT_msk    ,
-    ARM_2D_COLOUR_RGB565      =   ARM_2D_COLOUR_RGB16    ,
+    ARM_2D_COLOUR_BIN         =   ARM_2D_COLOUR_SZ_1BIT_msk,
+    ARM_2D_COLOUR_1BIT        =   ARM_2D_COLOUR_SZ_1BIT_msk,
+    
+    ARM_2D_COLOUR_8BIT        =   ARM_2D_COLOUR_SZ_8BIT_msk,
+    ARM_2D_COLOUR_GRAY8       =   ARM_2D_COLOUR_SZ_8BIT_msk,
+    
+    ARM_2D_COLOUR_16BIT       =   ARM_2D_COLOUR_SZ_16BIT_msk,
+    ARM_2D_COLOUR_RGB16       =   ARM_2D_COLOUR_SZ_16BIT_msk,
+    ARM_2D_COLOUR_RGB565      =   ARM_2D_COLOUR_RGB16,
+    
+/*  won't support
+    ARM_2D_COLOUR_RGB565_BE   =   ARM_2D_COLOUR_SZ_16BIT_msk        |
+                                  ARM_2D_COLOUR_BIG_ENDIAN_msk      ,
+ */
+ 
+    ARM_2D_COLOUR_32BIT       =   ARM_2D_COLOUR_SZ_32BIT_msk        ,
+    ARM_2D_COLOUR_RGB32       =   ARM_2D_COLOUR_SZ_32BIT_msk        ,
 
-    ARM_2D_COLOUR_RGB32       =   ARM_2D_COLOUR_SZ_32BIT_msk    ,
-    ARM_2D_COLOUR_RGB888      =   ARM_2D_COLOUR_RGB32    ,
-    ARM_2D_COLOUR_RGBA8888    =   ARM_2D_COLOUR_SZ_32BIT_msk    |
-                                    ARM_2D_COLOUR_HAS_ALPHA       ,
+    ARM_2D_COLOUR_CCCN888     =   ARM_2D_COLOUR_RGB32               ,
+    ARM_2D_COLOUR_CCCA8888    =   ARM_2D_COLOUR_SZ_32BIT_msk        |
+                                  ARM_2D_COLOUR_HAS_ALPHA_msk       ,
+
+    ARM_2D_COLOUR_RGB888      =   ARM_2D_COLOUR_CCCN888             ,
+    ARM_2D_COLOUR_BGRA8888    =   ARM_2D_COLOUR_CCCA8888            ,
+
+/* not supported yet
+    ARM_2D_COLOUR_NCCC888     =   ARM_2D_COLOUR_RGB32               |
+                                  ARM_2D_COLOUR_BIG_ENDIAN_msk      ,
+    ARM_2D_COLOUR_ACCC8888    =   ARM_2D_COLOUR_SZ_32BIT_msk        |
+                                  ARM_2D_COLOUR_HAS_ALPHA_msk       |
+                                  ARM_2D_COLOUR_BIG_ENDIAN_msk      ,
+*/
+    ARM_2D_CHANNEL_8in32      =   ARM_2D_COLOUR_SZ_32BIT_msk        |
+                                  ARM_2D_COLOUR_HAS_ALPHA_msk       |
+                                  ARM_2D_COLOUR_VARIANT_msk   ,
 };
-//! @}
 
 
+/*!
+ * \brief a type used as colour descriptor
+ * 
+ */
 typedef union {
     struct {
         uint8_t bHasAlpha  : 1;     //!< whether the target colour has alpha channel
@@ -489,43 +531,34 @@ In addition to the colour format descriptor, the current version of the Arm-2D l
 typedef union arm_2d_color_rgb565_t {
     uint16_t tValue;
     struct {
-        uint16_t u5R : 5;
-        uint16_t u6G : 6;
         uint16_t u5B : 5;
+        uint16_t u6G : 6;
+        uint16_t u5R : 5;
     };
 } arm_2d_color_rgb565_t;
 
-/*! \brief In most cases four equal-sized pieces of adjacent memory are used,
- *!        one for each channel, and a 0 in a channel indicates black color or
- *!        transparent alpha, while all-1 bits indicates white or fully opaque
- *!        alpha. By far the most common format is to store 8 bits (one byte)
- *!        for each channel, which is 32 bits for each pixel.
- *!
- *!        (source: https://en.wikipedia.org/wiki/RGBA_color_model#ARGB32)
- */
-typedef union arm_2d_color_rgba8888_t {
+typedef union arm_2d_color_bgra8888_t {
     uint32_t tValue;
     struct {
-        uint32_t u8R : 8;
-        uint32_t u8G : 8;
         uint32_t u8B : 8;
+        uint32_t u8G : 8;
+        uint32_t u8R : 8;
         uint32_t u8A : 8;
     };
-} arm_2d_color_rgba8888_t;
-
+} arm_2d_color_bgra8888_t;
 
 typedef union arm_2d_color_rgb888_t {
     uint32_t tValue;
     struct {
-        uint32_t u8R : 8;
-        uint32_t u8G : 8;
         uint32_t u8B : 8;
+        uint32_t u8G : 8;
+        uint32_t u8R : 8;
         uint32_t     : 8;
     };
 } arm_2d_color_rgb888_t;
 ```
 
-NOTE: The RGBA8888 is not fully supported in current version of Arm-2D but referenced in some part of the library. 
+As shown above, **arm-2d describes colour format in little-end manner**, for example, **BGRA8888** means the blue-channel is the 1st byte and the Alpha channel is the 3rd byte. The colour format CCCA8888 means the Alpha channel is the 3rd byte and there are three colour channels whose name and order we don't care. The colour format CCCN888 means the 8 MSB are unused (reserved for alpha) and the lower 3 bytes are used to store colour channels. 
 
 
 
@@ -554,10 +587,41 @@ The examples and documents for Asynchronous mode will be added soon.
 | ***arm_2d_is_point_inside_region***              | A function used to check whether a point is inside a given region or not. |      |
 | ***arm_2d_tile_get_root***                       | For a given tile, return its root tile and the valid region inside that root tile. |      |
 | ***arm_2d_tile_generate_child***                 | Generate a Child Tile for a given Tile with a target region inside the given tile. |      |
-| ***arm_2d_rgb16_tile_copy***                     | Copy or Fill a given tile into a target tile. Both tiles should use 16bits for each pixel. |      |
-| ***arm_2d_rgb32_tile_copy***                     | Copy or Fill a given tile into a target tile. Both tiles should use 32bits for each pixel. |      |
-| ***arm_2d_rgb16_tile_copy_with_colour_masking*** | Copy a given tile into a target tile with the Colour-Masking scheme. Both tiles should use 16bits for each pixel. |      |
-| ***arm_2d_rgb32_tile_copy_with_colour_masking*** | Copy a given tile into a target tile with the Colour-Masking scheme. Both tiles should use 32bits for each pixel. No alpha channel is used in this function. |      |
+| ***arm_2d_tile_width_compare***                  | compare the widths of two tiles                              |      |
+| ***arm_2d_tile_height_compare***                 | compare the heights of two tiles                             |      |
+| ***arm_2d_tile_shape_compare***                  | compare the shape (both widths and heights) of two tiles     |      |
+| ***arm_2d_get_absolute_location***               | calcualte the absolute location in the root tile for a given tile |      |
+| ***arm_2d_tile_region_diff***                    | calculate the region differences between two tiles           |      |
+| ***arm_2dp_c8bit_tile_copy***                    | Copy or Fill a given tile into a target tile. Both tiles should use 8bits for each pixel. |      |
+| ***arm_2dp_rgb16_tile_copy***                    | Copy or Fill a given tile into a target tile. Both tiles should use 16bits for each pixel. |      |
+| ***arm_2dp_rgb32_tile_copy***                    | Copy or Fill a given tile into a target tile. Both tiles should use 32bits for each pixel. |      |
+| ***arm_2dp_c8bit_tile_copy_only***               | copy a source tile to a given target tile. Both tiles should be 8bit per pixel. |      |
+| ***arm_2dp_rgb16_tile_copy_only***               | copy a source tile to a given target tile. Both tiles should be 16bit per pixel. |      |
+| ***arm_2dp_rgb32_tile_copy_only***               | copy a source tile to a given target tile. Both tiles should be 32bit per pixel. |      |
+| ***arm_2dp_c8bit_tile_copy_with_x_mirror***      | copy a source tile to a given target tile with x-mirroring. Both tiles should be 8bit per pixel. |      |
+| ***arm_2dp_rgb16_tile_copy_with_x_mirror***      | copy a source tile to a given target tile with x-mirroring. Both tiles should be 16bit per pixel. |      |
+| ***arm_2dp_rgb32_tile_copy_with_x_mirror***      | copy a source tile to a given target tile with x-mirroring. Both tiles should be 32bit per pixel. |      |
+| ***arm_2dp_c8bit_tile_copy_with_y_mirror***      | copy a source tile to a given target tile with y-mirroring. Both tiles should be 8bit per pixel. |      |
+| ***arm_2dp_rgb16_tile_copy_with_y_mirror***      | copy a source tile to a given target tile with y-mirroring. Both tiles should be 16bit per pixel. |      |
+| ***arm_2dp_rgb32_tile_copy_with_y_mirror***      | copy a source tile to a given target tile with y-mirroring. Both tiles should be 32bit per pixel. |      |
+| ***arm_2dp_c8bit_tile_copy_with_xy_mirror***     | copy a source tile to a given target tile with xy-mirroring. Both tiles should be 8bit per pixel. |      |
+| ***arm_2dp_rgb16_tile_copy_with_xy_mirror***     | copy a source tile to a given target tile with xy-mirroring. Both tiles should be 16bit per pixel. |      |
+| ***arm_2dp_rgb32_tile_copy_with_xy_mirror***     | copy a source tile to a given target tile with xy-mirroring. Both tiles should be 32bit per pixel. |      |
+| ***arm_2dp_c8bit_tile_fill_only***               | fill the target tile with a given source tile. Both tiles should be 8bit per pixel. |      |
+| ***arm_2dp_rgb16_tile_fill_only***               | fill the target tile with a given source tile. Both tiles should be 16bit per pixel. |      |
+| ***arm_2dp_rgb32_tile_fill_only***               | fill the target tile with a given source tile. Both tiles should be 32bit per pixel. |      |
+| ***arm_2dp_c8bit_tile_fill_with_x_mirror***      | fill the target tile with a given source tile in x-mirroring. Both tiles should be 8bit per pixel. |      |
+| ***arm_2dp_rgb16_tile_fill_with_x_mirror***      | fill the target tile with a given source tile in x-mirroring. Both tiles should be 16bit per pixel. |      |
+| ***arm_2dp_rgb32_tile_fill_with_x_mirror***      | fill the target tile with a given source tile in x-mirroring. Both tiles should be 32bit per pixel. |      |
+| ***arm_2dp_c8bit_tile_fill_with_y_mirror***      | fill the target tile with a given source tile in y-mirroring. Both tiles should be 8bit per pixel. |      |
+| ***arm_2dp_rgb16_tile_fill_with_y_mirror***      | fill the target tile with a given source tile in y-mirroring. Both tiles should be 16bit per pixel. |      |
+| ***arm_2dp_rgb32_tile_fill_with_y_mirror***      | fill the target tile with a given source tile in y-mirroring. Both tiles should be 32bit per pixel. |      |
+| ***arm_2dp_c8bit_tile_fill_with_xy_mirror***     | fill the target tile with a given source tile in xy-mirroring. Both tiles should be 8bit per pixel. |      |
+| ***arm_2dp_rgb16_tile_fill_with_xy_mirror***     | fill the target tile with a given source tile in  xy-mirroring. Both tiles should be 16bit per pixel. |      |
+| ***arm_2dp_rgb32_tile_fill_with_xy_mirror***     | fill the target tile with a given source tile in xy-mirroring. Both tiles should be 32bit per pixel. |      |
+| ***arm_2dp_c8bit_tile_copy_with_colour_keying*** | Copy a given tile into a target tile with the Colour-Keying scheme. Both tiles should use 8bits for each pixel. |      |
+| ***arm_2dp_rgb16_tile_copy_with_colour_keying*** | Copy a given tile into a target tile with the Colour-Keying scheme. Both tiles should use 16bits for each pixel. |      |
+| ***arm_2dp_rgb32_tile_copy_with_colour_keying*** | Copy a given tile into a target tile with the Colour-Keying scheme. Both tiles should use 32bits for each pixel. No alpha channel is used in this function. |      |
 
 
 
@@ -585,13 +649,13 @@ The examples and documents for Asynchronous mode will be added soon.
 
 ### 3.4 Mirroring/Rotation
 
-To be added in future versions.
+
 
 
 
 ### 3.5 Zooming/Stretching
 
-To be added in future versions.
+
 
 
 
