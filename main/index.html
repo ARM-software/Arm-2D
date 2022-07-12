@@ -122,10 +122,10 @@ Branch Summary</h1>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Features</h1>
 <h3><a class="anchor" id="autotoc_md2"></a>
-In this release ( ver1.0.0-preview2)</h3>
+In this release ( ver1.0.0-preview3)</h3>
 <p >The Arm-2D library provides <b>Low-Level 2D Image Processing Services</b> that are mainly used in <b>Deep Embedded Display system</b>. The supported features include but not limited to:</p>
 <ul>
-<li><b>Support Accelerating LVGL</b> (<b>v8.2.0</b> or newer)</li>
+<li><b>Support Accelerating LVGL</b> (<b>v8.3.0</b> or newer)</li>
 <li><b>CMSIS-Pack is available.</b></li>
 <li><b>Alpha-Blending</b> / <b>Alpha-Masking</b><ul>
 <li>With or without Colour-Keying</li>
@@ -315,11 +315,11 @@ Planned in the Future</h2>
 <ul>
 <li>Any symbol, e.g. file name, function name, macro name, type name etc., having a double under-scope as the prefix is considered as <b>PRIVATE</b> to the library. You should save your time from touching them.</li>
 <li>The library is designed with the philosophy that Users are free to use anything in public header files and should not touch anything marked implicitly or explicitly as private.</li>
-<li>Despite which processor you use, during the compilation, all C source files are safe to be added to the compilation (and we highly recommend you to do this for simplicity reason). For example, when you use Cortex-M4, which doesn't support Helium extension (introduced by Armv8.1-M architecture and first implemented by the Cortex-M55 processor), it is OK to include "***arm_2d_helium.c***" in the compilation process, as the C source files are constructed with environment detection in pre-processing phase.</li>
-<li>In your application, including "***arm_2d.h***" is sufficient to get all the services and APIs ready for you.</li>
+<li>Despite which processor you use, during the compilation, all C source files are safe to be added to the compilation (and we highly recommend you to do this for simplicity reason). For example, when you use Cortex-M4, which doesn't support Helium extension (introduced by Armv8.1-M architecture and first implemented by the Cortex-M55 processor), it is OK to include <code>arm_2d_helium.c</code> in the compilation process, as the C source files are constructed with environment detection in pre-processing phase.</li>
+<li>In your application, including <code><a class="el" href="arm__2d_8h_source.html">arm_2d.h</a></code> is sufficient to get all the services and APIs ready for you.</li>
 <li><p class="startli">Make sure that the library is initialised by calling <code><a class="el" href="group__gKernel.html#gae417897e7d7186b294c0ff3468102276" title="initialise arm-2d">arm_2d_init()</a></code> before using any of the services.</p>
 <p class="startli"><b>NOTE</b>:</p><ol type="1">
-<li>Feature configuration macros are checked by "***arm_2d_feature.h***". For the current stage of the library, please <b>DO NOT</b> override those feature configuration macros.</li>
+<li>Feature configuration macros are checked by <code>arm_2d_feature.h</code>. For the current stage of the library, please <b>DO NOT</b> override those feature configuration macros.</li>
 </ol>
 </li>
 </ul>
@@ -347,17 +347,17 @@ Planned in the Future</h2>
 <li><a href="https://gcc.gnu.org/onlinedocs/gcc/Statement-Exprs.html#Statement-Exprs">Statements and Declarations in Expressions</a></li>
 </ul>
 </li>
-<li>Some of the definitions are written with the support of the <b>Microsoft Extensions</b> in mind ( <em><b>-fms-extensions</b></em> ), but <b>the library never depends on it</b>. This means that if programmers enable the support of the Microsoft Extensions in their project, they can benefit from it.</li>
+<li>Some of the definitions are written with the support of the <b>Microsoft Extensions</b> in mind ( <code>-fms-extensions</code> ), but <b>the library never depends on it</b>. This means that if programmers enable the support of the Microsoft Extensions in their project, they can benefit from it.</li>
 <li>This library follows <em><b>"Using Extensions to replace Modifications"</b></em> principle<ul>
-<li>Keywords <em><b>__WEAK</b></em> and <em><b>__OVERRIDE_WEAK</b></em> are introduced for default functions and extensions; it is similar to the concept of "virtual functions" and "override functions" in C#.<ul>
-<li><em><b>arm_2d_async.c</b></em> is used to override some infrastructure functions in <em><b>arm_2d.c</b></em> to support asynchronous mode in the programmers' mode. <br  />
+<li>Keywords <code>__WEAK</code> and <code>__OVERRIDE_WEAK</code> are introduced for default functions and extensions; it is similar to the concept of "virtual functions" and "override functions" in C#.<ul>
+<li><code>arm_2d_async.c</code> is used to override some infrastructure functions in <code>arm_2d.c</code> to support asynchronous mode in the programmers' mode. <br  />
 </li>
 <li><em><b>arm_2d_helium.c</b></em> is used to override some default software algorithm implementations across the library.</li>
 </ul>
 </li>
 <li>Supports for hardware accelerators (both from Arm and 3rd-parties) should be added in the same manner in the future.<ul>
-<li><p class="startli">Override the target low level IO defined with <em><b>def_low_lv_io()</b></em> macro that originally defined in <em><b>arm_2d_op_table.c</b></em> to add your own version of algorithms and hardware accelerations. For example, if you want to add alpha-blending support for RGB565 using your 2D hardware accelerator, you should do the following steps:</p><ol type="1">
-<li><p class="startli">In one of your own C source code, override the definition of <em><b>__ARM_2D_IO_ALPHA_BLENDING_RGB565</b></em></p>
+<li><p class="startli">Override the target low level IO defined with <code>def_low_lv_io()</code> macro that originally defined in <code>arm_2d_op_table.c</code> to add your own version of algorithms and hardware accelerations. For example, if you want to add alpha-blending support for RGB565 using your 2D hardware accelerator, you should do the following steps:</p><ol type="1">
+<li><p class="startli">In one of your own C source code, override the definition of <code>__ARM_2D_IO_ALPHA_BLENDING_RGB565</code></p>
 <div class="fragment"><div class="line"><span class="comment">//! PLEASE add following three lines in your hardware adapter source code</span></div>
 <div class="line"><span class="preprocessor">#define __ARM_2D_IMPL__</span></div>
 <div class="line"><span class="preprocessor">#include &quot;arm_2d.h&quot;</span></div>
@@ -370,16 +370,16 @@ Planned in the Future</h2>
 <div class="line">                __arm_2d_rgb565_sw_alpha_blending,</div>
 <div class="line">                __arm_2d_rgb565_my_hw_alpha_blending);</div>
 </div><!-- fragment --></li>
-<li>Copy the function body of <em><b>__arm_2d_rgb565_sw_alpha_blending()</b></em> to your source code as a template of the <em><b>hardware adaptor</b></em> and rename it as <em><b>__arm_2d_rgb565_my_hw_alpha_blending()</b></em></li>
+<li>Copy the function body of <code>__arm_2d_rgb565_sw_alpha_blending()</code> to your source code as a template of the <em><b>hardware adaptor</b></em> and rename it as <code>__arm_2d_rgb565_my_hw_alpha_blending()</code></li>
 <li>Modify <em><b>__arm_2d_rgb565_my_hw_alpha_blending()</b></em> to use your own hardware accelerator.</li>
 <li>Based on the arguments passed to the function and the capability of your 2D accelerator, you can:<ul>
-<li>return "***ARM_2D_ERR_NOT_SUPPORT***" if the hardware isn't capable to do what is requested.</li>
-<li>return "***arm_fsm_rt_cpl***" if the task is done immediately and no need to wait.</li>
-<li>return "***arm_fsm_rt_async***" if the task is done asynchronously and later report to arm-2d by calling function <em><b>__arm_2d_notify_sub_task_cpl()</b></em>.</li>
+<li>return <code>ARM_2D_ERR_NOT_SUPPORT</code> if the hardware isn't capable to do what is requested.</li>
+<li>return <code>arm_fsm_rt_cpl</code> if the task is done immediately and no need to wait.</li>
+<li>return <code>arm_fsm_rt_async</code> if the task is done asynchronously and later report to arm-2d by calling function <code>__arm_2d_notify_sub_task_cpl()</code>.</li>
 </ul>
 </li>
 </ol>
-<p class="startli"><em><b>NOTE</b></em>: The Arm-2D pipeline will keep issuing tasks to your <em><b>hardware adaptor</b></em>, please quickly check whether the hardware is capable of doing the work or not, and then add the task (an <em><b>__arm_2d_sub_task_t</b></em> object) to a list in <em><b>First-In-First-Out</b></em> manner if your hardware adaptor decides to keep it. After that, your hardware accelerator can fetch tasks one by one. <br  />
+<p class="startli"><em><b>NOTE</b></em>: The Arm-2D pipeline will keep issuing tasks to your <em><b>hardware adaptor</b></em>, please quickly check whether the hardware is capable of doing the work or not, and then add the task (an <code>__arm_2d_sub_task_t</code> object) to a list in <em><b>First-In-First-Out</b></em> manner if your hardware adaptor decides to keep it. After that, your hardware accelerator can fetch tasks one by one. <br  />
 </p>
 </li>
 </ul>
