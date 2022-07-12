@@ -2413,7 +2413,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask)(uint16_t * __RESTR
             "   vshr.u16                q5, q5, #8                 \n"
 
             /*  blend R vector with input R color*/
-            "   vmla.s16                q4, q1, %[R]               \n"
+            "   vmla.s16                q4, q1, %[B]               \n"
 
             /* load packing Mask for G channel */
             "   vldrh.u16               q7, [%[scratch], #(2*16)]  \n"
@@ -2423,7 +2423,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask)(uint16_t * __RESTR
             "   vand                    q5, q5, q7                 \n"
 
             /*  blend B vector with input B color*/
-            "   vmla.s16                q6, q1, %[B]               \n"
+            "   vmla.s16                q6, q1, %[R]               \n"
 
             /* load packing Mask for B channel */
             "   vldrh.u16               q7, [%[scratch], #(3*16)]  \n"
@@ -2567,7 +2567,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_opacity)(uint16_t *
             "   vshr.u16                q5, q5, #8                 \n"
 
             /*  blend R vector with input R color*/
-            "   vmla.s16                q4, q1, %[R]               \n"
+            "   vmla.s16                q4, q1, %[B]               \n"
 
             /* load packing Mask for G channel */
             "   vldrh.u16               q7, [%[scratch], #(2*16)]  \n"
@@ -2577,7 +2577,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_opacity)(uint16_t *
             "   vand                    q5, q5, q7                 \n"
 
             /*  blend B vector with input B color*/
-            "   vmla.s16                q6, q1, %[B]               \n"
+            "   vmla.s16                q6, q1, %[R]               \n"
 
             /* load packing Mask for B channel */
             "   vldrh.u16               q7, [%[scratch], #(3*16)]  \n"
@@ -2718,7 +2718,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_mask)(uint16_t *
             "   vshr.u16                q5, q5, #8                 \n"
 
             /*  blend R vector with input R color*/
-            "   vmla.s16                q4, q1, %[R]               \n"
+            "   vmla.s16                q4, q1, %[B]               \n"
 
             /* load packing Mask for G channel */
             "   vldrh.u16               q7, [%[scratch], #(2*16)]  \n"
@@ -2728,7 +2728,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_mask)(uint16_t *
             "   vand                    q5, q5, q7                 \n"
 
             /*  blend B vector with input B color*/
-            "   vmla.s16                q6, q1, %[B]               \n"
+            "   vmla.s16                q6, q1, %[R]               \n"
 
             /* load packing Mask for B channel */
             "   vldrh.u16               q7, [%[scratch], #(3*16)]  \n"
@@ -2874,7 +2874,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_mask_opacity)(ui
             "   vshr.u16                q5, q5, #8                 \n"
 
             /*  blend R vector with input R color*/
-            "   vmla.s16                q4, q1, %[R]               \n"
+            "   vmla.s16                q4, q1, %[B]               \n"
 
             /* load packing Mask for G channel */
             "   vldrh.u16               q7, [%[scratch], #(2*16)]  \n"
@@ -2884,7 +2884,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_mask_opacity)(ui
             "   vand                    q5, q5, q7                 \n"
 
             /*  blend B vector with input B color*/
-            "   vmla.s16                q6, q1, %[B]               \n"
+            "   vmla.s16                q6, q1, %[R]               \n"
 
             /* load packing Mask for B channel */
             "   vldrh.u16               q7, [%[scratch], #(3*16)]  \n"
