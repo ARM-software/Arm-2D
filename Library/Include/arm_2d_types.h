@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2022 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        cmsis_nn_typs.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        01. December 2020
- * $Revision:    V.1.0.0
+ * $Date:        12. July 2022
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -70,21 +70,23 @@ extern "C" {
  * Infrastructure                                                             *
  *----------------------------------------------------------------------------*/
 
-//! \name finite-state-machine status return (Compatible with arm_status), int8_t
-//! @{
+/*!
+ * \brief finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)
+ * 
+ */
 typedef enum {
     arm_fsm_rt_err          = -1,    //!< fsm error
     arm_fsm_rt_cpl          = 0,     //!< fsm complete
     arm_fsm_rt_on_going     = 1,     //!< fsm on-going
     arm_fsm_rt_wait_for_obj = 2,     //!< fsm wait for IPC object
-    arm_fsm_rt_async        = 3,     //!< fsm work asynchronosely, please check it later.
+    arm_fsm_rt_async        = 3,     //!< fsm work asynchronously, please check it later.
     arm_fsm_rt_wait_for_res = 4,     //!< wait for resource
 } arm_fsm_rt_t;
-//! @}
 
-//! \name error code for arm-2d, int8_t
-//! \note arm_2d_err_t is compatible with arm_fsm_rt_t
-//! @{
+/*!
+ * \brief the error code for arm-2d (minimal integer: int8_t)
+ * 
+ */
 typedef enum {
     ARM_2D_ERR_UNSUPPORTED_COLOUR       = -11,  //!< the specified colour is not supported
     ARM_2D_ERR_BUSY                     = -10,  //!< service is busy
@@ -99,25 +101,33 @@ typedef enum {
     ARM_2D_ERR_UNKNOWN                  = -1,   //!< generic or unknown errors
     ARM_2D_ERR_NONE                     = 0,    //!< no error
 } arm_2d_err_t;
-//! @}
 
-//! \name compare result
-//! @{
+/*!
+ * \brief comparison result
+ * 
+ */
 typedef enum {
     ARM_2D_CMP_SMALLER = -1,    //!< the target is smaller than the reference
     ARM_2D_CMP_EQUALS  = 0,     //!< the target is equal to the reference
     ARM_2D_CMP_LARGER  = 1,     //!< the target is larger than the reference
 } arm_2d_cmp_t;
-//! @}
 
 /*----------------------------------------------------------------------------*
  * Colour definitions                                                         *
  *----------------------------------------------------------------------------*/
 
+/*!
+ * \brief the colour type for gray8 (8bit gray scale)
+ * 
+ */
 typedef union arm_2d_color_gray8_t {
     uint8_t tValue;
 } arm_2d_color_gray8_t;
 
+/*!
+ * \brief the colour type for rgb565
+ * 
+ */
 typedef union arm_2d_color_rgb565_t {
     uint16_t tValue;
     struct {
@@ -127,13 +137,16 @@ typedef union arm_2d_color_rgb565_t {
     };
 } arm_2d_color_rgb565_t;
 
-/*! \brief In most cases four equal-sized pieces of adjacent memory are used,
- *!        one for each channel, and a 0 in a channel indicates black color or
- *!        transparent alpha, while all-1 bits indicates white or fully opaque
- *!        alpha. By far the most common format is to store 8 bits (one byte)
- *!        for each channel, which is 32 bits for each pixel.
- *!
- *!        (source: https://en.wikipedia.org/wiki/RGBA_color_model#ARGB32)
+/*! 
+ * \brief the colour type for brga8888
+ *
+ * \details In most cases four equal-sized pieces of adjacent memory are used,
+ *          one for each channel, and a 0 in a channel indicates black color or
+ *          transparent alpha, while all-1 bits indicates white or fully opaque
+ *          alpha. By far the most common format is to store 8 bits (one byte)
+ *          for each channel, which is 32 bits for each pixel.
+ *
+ *          (source: https://en.wikipedia.org/wiki/RGBA_color_model#ARGB32)
  */
 typedef union arm_2d_color_bgra8888_t {
     uint32_t tValue;
@@ -145,7 +158,17 @@ typedef union arm_2d_color_bgra8888_t {
     };
 } arm_2d_color_bgra8888_t;
 
-
+/*!
+ * \brief the colour type for rgb888 (compliant with ccca888 and bgra8888)
+ * 
+ * \details In most cases four equal-sized pieces of adjacent memory are used,
+ *          one for each channel, and a 0 in a channel indicates black color or
+ *          transparent alpha, while all-1 bits indicates white or fully opaque
+ *          alpha. By far the most common format is to store 8 bits (one byte)
+ *          for each channel, which is 32 bits for each pixel.
+ *
+ *          (source: https://en.wikipedia.org/wiki/RGBA_color_model#ARGB32)
+ */
 typedef union arm_2d_color_rgb888_t {
     uint32_t tValue;
     struct {
@@ -156,7 +179,17 @@ typedef union arm_2d_color_rgb888_t {
     };
 } arm_2d_color_rgb888_t;
 
-
+/*!
+ * \brief the colour type for any 32bit colour formats which has an alpha channel on its 3rd byte.
+ * 
+ * \details In most cases four equal-sized pieces of adjacent memory are used,
+ *          one for each channel, and a 0 in a channel indicates black color or
+ *          transparent alpha, while all-1 bits indicates white or fully opaque
+ *          alpha. By far the most common format is to store 8 bits (one byte)
+ *          for each channel, which is 32 bits for each pixel.
+ *
+ *          (source: https://en.wikipedia.org/wiki/RGBA_color_model#ARGB32)
+ */
 typedef union arm_2d_color_ccca8888_t {
     uint32_t tValue;
     struct {
@@ -165,6 +198,17 @@ typedef union arm_2d_color_ccca8888_t {
     };
 } arm_2d_color_ccca8888_t;
 
+/*!
+ * \brief the colour type for any 32bit colour formats which has an alpha channel on its first byte.
+ *
+ * \details In most cases four equal-sized pieces of adjacent memory are used,
+ *          one for each channel, and a 0 in a channel indicates black color or
+ *          transparent alpha, while all-1 bits indicates white or fully opaque
+ *          alpha. By far the most common format is to store 8 bits (one byte)
+ *          for each channel, which is 32 bits for each pixel.
+ *
+ *          (source: https://en.wikipedia.org/wiki/RGBA_color_model#ARGB32)
+ */
 typedef union arm_2d_color_accc8888_t {
     uint32_t tValue;
     struct {
@@ -173,6 +217,17 @@ typedef union arm_2d_color_accc8888_t {
     };
 } arm_2d_color_accc8888_t;
 
+/*!
+ * \brief the colour type for any 32bit colour formats which has an unused-alpha channel on its 3rd byte.
+ *
+ * \details In most cases four equal-sized pieces of adjacent memory are used,
+ *          one for each channel, and a 0 in a channel indicates black color or
+ *          transparent alpha, while all-1 bits indicates white or fully opaque
+ *          alpha. By far the most common format is to store 8 bits (one byte)
+ *          for each channel, which is 32 bits for each pixel.
+ *
+ *          (source: https://en.wikipedia.org/wiki/RGBA_color_model#ARGB32)
+ */
 typedef union arm_2d_color_cccn888_t {
     uint32_t tValue;
     struct {
@@ -181,6 +236,17 @@ typedef union arm_2d_color_cccn888_t {
     };
 } arm_2d_color_cccn888_t;
 
+/*!
+ * \brief the colour type for any 32bit colour formats which has an unused-alpha channel on its first byte.
+ *
+ * \details In most cases four equal-sized pieces of adjacent memory are used,
+ *          one for each channel, and a 0 in a channel indicates black color or
+ *          transparent alpha, while all-1 bits indicates white or fully opaque
+ *          alpha. By far the most common format is to store 8 bits (one byte)
+ *          for each channel, which is 32 bits for each pixel.
+ *
+ *          (source: https://en.wikipedia.org/wiki/RGBA_color_model#ARGB32)
+ */
 typedef union arm_2d_color_nccc888_t {
     uint32_t tValue;
     struct {
@@ -189,8 +255,9 @@ typedef union arm_2d_color_nccc888_t {
     };
 } arm_2d_color_nccc888_t;
 
-//! \name colour size
-//! @{
+/*! 
+ * \brief enumerations for colour attributes
+ */
 enum {
     ARM_2D_COLOUR_SZ_1BIT = 0,            //!< 1 bit:black and white
     ARM_2D_COLOUR_SZ_2BIT = 1,            //!< 4 colours or 4 gray-levels
@@ -222,10 +289,11 @@ enum {
     ARM_2D_COLOUR_VARIANT_pos = 5,
     ARM_2D_COLOUR_VARIANT_msk         = 0x07 << ARM_2D_COLOUR_VARIANT_pos,
 };
-//! @}
 
-//! \name macors for colour attributes
-//! @{
+/*!
+ * \brief macros for colour attributes
+ * 
+ */
 #define ARM_2D_M_COLOUR_SZ_1BIT             0       //!< 1 bit:black and white
 #define ARM_2D_M_COLOUR_SZ_2BIT             1       //!< 4 colours or 4 gray-levels
 #define ARM_2D_M_COLOUR_SZ_4BIT             2       //!< 16 colours or 16 gray-levels
@@ -255,10 +323,11 @@ enum {
     
 #define ARM_2D_M_COLOUR_VARIANT_pos         5
 #define ARM_2D_M_COLOUR_VARIANT_msk         (0x07 << ARM_2D_M_COLOUR_VARIANT_pos)
-//! @}
 
-//! \name colour scheme
-//! @{
+/*!
+ * \brief enumerations for colour types
+ * 
+ */
 enum {
     ARM_2D_COLOUR_BIN         =   ARM_2D_COLOUR_SZ_1BIT_msk,
     ARM_2D_COLOUR_1BIT        =   ARM_2D_COLOUR_SZ_1BIT_msk,
@@ -270,7 +339,7 @@ enum {
     ARM_2D_COLOUR_RGB16       =   ARM_2D_COLOUR_SZ_16BIT_msk,
     ARM_2D_COLOUR_RGB565      =   ARM_2D_COLOUR_RGB16,
     
-/*! will not support
+/*  won't support
     ARM_2D_COLOUR_RGB565_BE   =   ARM_2D_COLOUR_SZ_16BIT_msk        |
                                   ARM_2D_COLOUR_BIG_ENDIAN_msk      ,
  */
@@ -285,7 +354,7 @@ enum {
     ARM_2D_COLOUR_RGB888      =   ARM_2D_COLOUR_CCCN888             ,
     ARM_2D_COLOUR_BGRA8888    =   ARM_2D_COLOUR_CCCA8888            ,
 
-/*! not supported yet
+/* not supported yet
     ARM_2D_COLOUR_NCCC888     =   ARM_2D_COLOUR_RGB32               |
                                   ARM_2D_COLOUR_BIG_ENDIAN_msk      ,
     ARM_2D_COLOUR_ACCC8888    =   ARM_2D_COLOUR_SZ_32BIT_msk        |
@@ -296,10 +365,11 @@ enum {
                                   ARM_2D_COLOUR_HAS_ALPHA_msk       |
                                   ARM_2D_COLOUR_VARIANT_msk   ,
 };
-//! @}
 
-//! \name macros for colour formats used in code tempalte
-//! @{
+/*!
+ * \brief macros for colour formats
+ * 
+ */
 #define ARM_2D_M_COLOUR_BIN         ARM_2D_M_COLOUR_SZ_1BIT_msk
 #define ARM_2D_M_COLOUR_1BIT        ARM_2D_M_COLOUR_SZ_1BIT_msk
     
@@ -310,7 +380,7 @@ enum {
 #define ARM_2D_M_COLOUR_RGB16       ARM_2D_M_COLOUR_SZ_16BIT_msk
 #define ARM_2D_M_COLOUR_RGB565      ARM_2D_M_COLOUR_RGB16
     
-/* will not support
+/* won't support
 #define ARM_2D_M_COLOUR_RGB565_BE   (   ARM_2D_M_COLOUR_SZ_16BIT_msk            \
                                     |   ARM_2D_M_COLOUR_BIG_ENDIAN_msk          )
  */
@@ -335,8 +405,11 @@ enum {
 #define ARM_2D_M_CHANNEL_8in32      (   ARM_2D_M_COLOUR_SZ_32BIT_msk            \
                                     |   ARM_2D_M_COLOUR_HAS_ALPHA_msk)          \
                                     |   ARM_2D_M_COLOUR_VARIANT_msk             )
-//! @}
 
+/*!
+ * \brief a type used as colour descriptor
+ * 
+ */
 typedef union {
     struct {
         uint8_t bHasAlpha  : 1;     //!< whether the target colour has alpha channel
@@ -448,6 +521,9 @@ typedef struct arm_2d_evt_t {
 //! an imcomplete defintion which is only used for defining pointers
 typedef struct __arm_2d_low_level_io_t __arm_2d_low_level_io_t;
 
+/*!
+ * \brief A descriptive header for 2D operations
+ */
 typedef union __arm_2d_op_info_t {
     struct {
         arm_2d_color_info_t Colour;     //!< the colour used in thie operation
@@ -464,20 +540,20 @@ typedef union __arm_2d_op_info_t {
             uint8_t chValue;
         }Param;
 
-        uint8_t chInClassOffset;        //!< some operation uses this as the offset of the key member in the class
-        uint8_t chOpIndex;              //!< __ARM_2D_OP_IDX_XXXXXX
+        uint8_t chInClassOffset;                                                //!< some operation uses this as the offset of the key member in the class
+        uint8_t chOpIndex;                                                      //!< __ARM_2D_OP_IDX_XXXXXX
 
         union {
             struct {
-                uint8_t CopyLike;
-                uint8_t FillLike;
+                uint8_t CopyLike;                                               //!< A copy-like interface contains the target tile, the source tile and the copy size
+                uint8_t FillLike;                                               //!< A copy-like interface contains the target tile and the source tile
             };
             struct {
-                uint8_t CopyOrigLike;
-                uint8_t FillOrigLike;
+                uint8_t CopyOrigLike;                                           //!< A copy-like interface contains the target tile, the dummy tile, the reference to the original source tile and the copy size 
+                uint8_t FillOrigLike;                                           //!< A copy-like interface contains the target tile, the dummy tile and the reference to the original source tile 
             };
             struct {
-                uint8_t TileProcessLike;
+                uint8_t TileProcessLike;d                                       //!< A simple interface contains only the target tile
             };
         }LowLevelInterfaceIndex;
 
@@ -485,24 +561,25 @@ typedef union __arm_2d_op_info_t {
             const __arm_2d_low_level_io_t *IO[2];
 
             struct {
-                const __arm_2d_low_level_io_t *ptCopyLike;
-                const __arm_2d_low_level_io_t *ptFillLike;
+                const __arm_2d_low_level_io_t *ptCopyLike;                      //!< the function pointer for a copy-like implementation   
+                const __arm_2d_low_level_io_t *ptFillLike;                      //!< the function pointer for a fill-like implementation
             };
             struct {
-                const __arm_2d_low_level_io_t *ptCopyOrigLike;
-                const __arm_2d_low_level_io_t *ptFillOrigLike;
+                const __arm_2d_low_level_io_t *ptCopyOrigLike;                  //!< the function pointer for a copy-orig-like implementation
+                const __arm_2d_low_level_io_t *ptFillOrigLike;                  //!< the function pointer for a fill-orig-like implementation
             };
             struct {
-                const __arm_2d_low_level_io_t *ptTileProcessLike;
+                const __arm_2d_low_level_io_t *ptTileProcessLike;               //!< the function pointer for the tile-process-like implementation
             };
         }LowLevelIO;
 
     }Info;
-    uint32_t    wID;                    //!< ID for a specific operation
+    uint32_t    wID;                                                            //!< Operation ID
 } __arm_2d_op_info_t;
 
-//! \name how would you want to accelerate the 2d-operation
-//! @{
+/*!
+ * \brief how would you want to accelerate the 2d-operation
+ */
 enum {
     //! Use hardware acceleration if possible, even if there is a long queue to wait
     ARM_2D_PREF_ACC_USE_HW_IF_POSSIBLE    = 0,
@@ -516,8 +593,6 @@ enum {
     //!< don't care, let the arm-2d library decide
     ARM_2D_PREF_ACC_DONT_CARE             = 3,
 };
-//! @}
-
 
 #define __ARM_2D_OP_STATUS_BUSY_msk         (1 << 4)
 #define __ARM_2D_OP_STATUS_IO_ERROR_msk     (1 << 5)
