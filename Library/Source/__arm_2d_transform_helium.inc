@@ -111,6 +111,8 @@ void __ARM_2D_FUNC(transform)( __arm_2d_param_copy_orig_t *ptParam,
             float16x8_t     vX = vcvtq_f16_s16((int16x8_t) vidupq_n_u16(0, 1));
             __API_INT_TYPE       *pTargetBaseCur = pTargetBase;
 
+
+
             while (nbVecElts > 0) {
                 arm_2d_point_f16x8_t tPointV;
 
@@ -337,6 +339,7 @@ void __ARM_2D_FUNC(transform_with_opacity)(__arm_2d_param_copy_orig_t *ptParam,
 
 #else /* __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__ */
 
+
 __OVERRIDE_WEAK
 void __ARM_2D_FUNC(transform)(   __arm_2d_param_copy_orig_t *ptParam,
                                     __arm_2d_transform_info_t *ptInfo)
@@ -393,6 +396,7 @@ void __ARM_2D_FUNC(transform)(   __arm_2d_param_copy_orig_t *ptParam,
 
 #endif
     for (int32_t y = 0; y < iHeight; y++) {
+
 
         /* 1st column estimates */
         int32_t         colFirstY =

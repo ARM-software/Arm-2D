@@ -130,9 +130,9 @@ void __arm_2d_pack_rgb888_to_mem(uint8_t * pMem, uint16x8_t R, uint16x8_t G, uin
 {
     uint16x8_t      sg = vidupq_n_u16(0, 4);
 
-    vstrbq_scatter_offset_u16(pMem, sg, R);
-    vstrbq_scatter_offset_u16(pMem + 1, sg, G);
-    vstrbq_scatter_offset_u16(pMem + 2, sg, B);
+    vstrbq_scatter_offset_u16(pMem,     sg, vminq(R, vdupq_n_u16(255)));
+    vstrbq_scatter_offset_u16(pMem + 1, sg, vminq(G, vdupq_n_u16(255)));
+    vstrbq_scatter_offset_u16(pMem + 2, sg, vminq(B, vdupq_n_u16(255)));
     //vstrbq_scatter_offset_u16(pMem + 3, sg, vdupq_n_u16(0));
 }
 
@@ -459,6 +459,7 @@ void __arm_2d_pack_rgb888_to_mem(uint8_t * pMem, uint16x8_t R, uint16x8_t G, uin
     }
 
 
+
 #define __ARM2D_AVG_NEIGHBR_CCCN888_PIX(/* inputs */                                                       \
                                         ptPoint, vXi, vYi, pOrigin, ptOrigValidRegion, iOrigStride,        \
                                         MaskColour, vTargetLo, vTargetHi, predTailLow, predTailHigh,       \
@@ -470,7 +471,7 @@ void __arm_2d_pack_rgb888_to_mem(uint8_t * pMem, uint16x8_t R, uint16x8_t G, uin
     __typeof__ (vAvgPixelR)     vAreaTR, vAreaTL, vAreaBR, vAreaBL;                                        \
                                                                                                            \
     __ARM2D_GET_NEIGHBR_PIX_AREAS(vXi, vYi, ptPoint, vAreaTR, vAreaTL, vAreaBR, vAreaBL);                  \
-                                                                                                           \
+\
     /*                                                                                                     \
      * accumulate / average over the 4 neigbouring pixels                                                  \
      */                                                                                                    \
@@ -791,12 +792,12 @@ bool __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
                                            vAreaTR, vAreaTL, vAreaBR, vAreaBL)          \
     int16x8_t       vOne = vdupq_n_s16(SET_Q6INT(1));                                   \
                                                                                         \
-    vXi = vsubq_m_n_s16(vXi, vXi, 1, vcmpltq_n_s16(ptPoint->X, 0));                     \
-    vYi = vsubq_m_n_s16(vYi, vYi, 1, vcmpltq_n_s16(ptPoint->Y, 0));                     \
+    /*vXi = vsubq_m_n_s16(vXi, vXi, 1, vcmpltq_n_s16(ptPoint->X, 0));       */          \
+    /*vYi = vsubq_m_n_s16(vYi, vYi, 1, vcmpltq_n_s16(ptPoint->Y, 0));       */          \
                                                                                         \
     int16x8_t       vWX = ptPoint->X - SET_Q6INT(vXi);                                  \
     int16x8_t       vWY = ptPoint->Y - SET_Q6INT(vYi);                                  \
-                                                                                        \
+\
     /* combination of Bottom / Top & Left / Right areas contributions */                \
     vAreaTR = vmulq_u16(vWX, vWY);                                                      \
     vAreaTL = vmulq_u16((vOne - vWX), vWY);                                             \
@@ -1244,7 +1245,6 @@ void __arm_2d_impl_rgb565_get_pixel_colour_with_alpha_offs_compensated(ARM_2D_PO
 
 
 
-
 static
 void __arm_2d_impl_cccn888_get_pixel_colour(ARM_2D_POINT_VEC * ptPoint,
                                             arm_2d_region_t * ptOrigValidRegion,
@@ -1266,6 +1266,7 @@ void __arm_2d_impl_cccn888_get_pixel_colour(ARM_2D_POINT_VEC * ptPoint,
     /* averaged pixed / target pixel */
     mve_pred16_t    predGlbLo = 0, predGlbHi = 0;
 
+
 #if defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__) &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
     {
         /* accumulated pixel vectors */
@@ -1280,20 +1281,25 @@ void __arm_2d_impl_cccn888_get_pixel_colour(ARM_2D_POINT_VEC * ptPoint,
         {
             ARM_ALIGN(8)    uint32_t scratch32[32];
             /* pack */
+
             __arm_2d_pack_rgb888_to_mem((uint8_t *) scratch32, __ARM_2D_CONVERT_TO_PIX_TYP(vAvgPixelR),
                                         __ARM_2D_CONVERT_TO_PIX_TYP(vAvgPixelG), __ARM_2D_CONVERT_TO_PIX_TYP(vAvgPixelB));
 
             uint32x4_t      TempPixel = vld1q(scratch32);
 
+
             /* select between target pixel, averaged pixed */
             TempPixel = vpselq_u32(TempPixel, vTargetLo, predGlbLo);
+
 
             vst1q_p(pTarget, TempPixel, predTailLow);
 
             TempPixel = vld1q(scratch32 + 4);
 
+
             /* select between target pixel, averaged pixed */
             TempPixel = vpselq_u32(TempPixel, vTargetHi, predGlbHi);
+
 
             vst1q_p(pTarget + 4, TempPixel, predTailHigh);
         }
