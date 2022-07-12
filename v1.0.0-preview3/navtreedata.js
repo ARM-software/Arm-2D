@@ -107,49 +107,48 @@ var NAVTREE =
         [ "3.1 Tile Operations", "intro.html#autotoc_md59", null ],
         [ "3.2 Colour Space Conversion", "intro.html#autotoc_md60", null ],
         [ "3.3 Alpha Blending", "intro.html#autotoc_md61", null ],
-        [ "3.4 Mirroring/Rotation", "intro.html#autotoc_md62", null ],
-        [ "3.5 Zooming/Stretching", "intro.html#autotoc_md63", null ],
-        [ "3.6 Drawing", "intro.html#autotoc_md64", null ],
-        [ "3.7 Filters", "intro.html#autotoc_md65", null ]
+        [ "3.4 Transform (Rotation/Scaling)", "intro.html#autotoc_md62", null ],
+        [ "3.5 Drawing", "intro.html#autotoc_md63", null ],
+        [ "3.6 Filters", "intro.html#autotoc_md64", null ]
       ] ]
     ] ],
     [ "How to Use Tile Operations", "use_tile.html", [
-      [ "1 Overview", "use_tile.html#autotoc_md66", null ],
-      [ "2 Key Scenarios, Patterns and Use Cases", "use_tile.html#autotoc_md67", [
-        [ "2.1 Normal Usage", "use_tile.html#autotoc_md68", [
-          [ "2.1.1 Window/Panel Clipping", "use_tile.html#autotoc_md69", null ],
-          [ "2.1.2 Texture Paving", "use_tile.html#autotoc_md70", null ]
+      [ "1 Overview", "use_tile.html#autotoc_md65", null ],
+      [ "2 Key Scenarios, Patterns and Use Cases", "use_tile.html#autotoc_md66", [
+        [ "2.1 Normal Usage", "use_tile.html#autotoc_md67", [
+          [ "2.1.1 Window/Panel Clipping", "use_tile.html#autotoc_md68", null ],
+          [ "2.1.2 Texture Paving", "use_tile.html#autotoc_md69", null ]
         ] ],
-        [ "2.2 Advanced Usage", "use_tile.html#autotoc_md71", [
-          [ "2.2.1 Partial Frame Buffer (PFB)", "use_tile.html#autotoc_md72", null ]
+        [ "2.2 Advanced Usage", "use_tile.html#autotoc_md70", [
+          [ "2.2.1 Partial Frame Buffer (PFB)", "use_tile.html#autotoc_md71", null ]
         ] ]
       ] ],
-      [ "3 Design Considerations", "use_tile.html#autotoc_md73", null ],
-      [ "4 API Table", "use_tile.html#autotoc_md74", [
-        [ "4.1 Basic", "use_tile.html#autotoc_md75", [
-          [ "4.1.1 <strong>arm_2d_tile_generate_child</strong>", "use_tile.html#autotoc_md76", null ],
-          [ "4.1.2 <strong>arm_2d_tile_get_root</strong>", "use_tile.html#autotoc_md77", null ],
-          [ "4.1.3 <strong>arm_2d_is_root_tile</strong>", "use_tile.html#autotoc_md78", null ],
-          [ "4.1.4 <strong>arm_2d_region_intersect</strong>", "use_tile.html#autotoc_md79", null ],
-          [ "4.1.5 <strong>arm_2d_get_address_and_region_from_tile</strong>", "use_tile.html#autotoc_md80", null ]
+      [ "3 Design Considerations", "use_tile.html#autotoc_md72", null ],
+      [ "4 API Table", "use_tile.html#autotoc_md73", [
+        [ "4.1 Basic", "use_tile.html#autotoc_md74", [
+          [ "4.1.1 <strong>arm_2d_tile_generate_child</strong>", "use_tile.html#autotoc_md75", null ],
+          [ "4.1.2 <strong>arm_2d_tile_get_root</strong>", "use_tile.html#autotoc_md76", null ],
+          [ "4.1.3 <strong>arm_2d_is_root_tile</strong>", "use_tile.html#autotoc_md77", null ],
+          [ "4.1.4 <strong>arm_2d_region_intersect</strong>", "use_tile.html#autotoc_md78", null ],
+          [ "4.1.5 <strong>arm_2d_get_address_and_region_from_tile</strong>", "use_tile.html#autotoc_md79", null ]
         ] ],
-        [ "4.2 Copy, Fill and X/Y Mirroring", "use_tile.html#autotoc_md81", [
-          [ "4.2.1 <strong>arm_2d_rgb16_tile_copy</strong>", "use_tile.html#autotoc_md82", null ],
-          [ "4.2.2 <strong>arm_2d_rgb32_tile_copy</strong>", "use_tile.html#autotoc_md83", null ]
+        [ "4.2 Copy, Fill and X/Y Mirroring", "use_tile.html#autotoc_md80", [
+          [ "4.2.1 <strong>arm_2d_rgb16_tile_copy</strong>", "use_tile.html#autotoc_md81", null ],
+          [ "4.2.2 <strong>arm_2d_rgb32_tile_copy</strong>", "use_tile.html#autotoc_md82", null ]
         ] ],
-        [ "4.3 Colour Keying", "use_tile.html#autotoc_md84", [
-          [ "4.3.1 arm_2d_c8bit_tile_copy_with_colour_keying", "use_tile.html#autotoc_md85", null ],
-          [ "4.3.2 arm_2d_rbg16_tile_copy_with_colour_keying", "use_tile.html#autotoc_md86", null ],
-          [ "4.3.3 arm_2d_rbg32_tile_copy_with_colour_keying", "use_tile.html#autotoc_md87", null ]
+        [ "4.3 Colour Keying", "use_tile.html#autotoc_md83", [
+          [ "4.3.1 arm_2d_c8bit_tile_copy_with_colour_keying", "use_tile.html#autotoc_md84", null ],
+          [ "4.3.2 arm_2d_rbg16_tile_copy_with_colour_keying", "use_tile.html#autotoc_md85", null ],
+          [ "4.3.3 arm_2d_rbg32_tile_copy_with_colour_keying", "use_tile.html#autotoc_md86", null ]
         ] ]
       ] ],
-      [ "5 Reference", "use_tile.html#autotoc_md88", null ]
+      [ "5 Reference", "use_tile.html#autotoc_md87", null ]
     ] ],
     [ "Header Files Summary", "headers.html", [
-      [ "1 Overview", "headers.html#autotoc_md89", null ],
-      [ "2 Public Header Files", "headers.html#autotoc_md90", null ],
-      [ "3 Private Header Files", "headers.html#autotoc_md91", null ],
-      [ "4 Templates", "headers.html#autotoc_md92", null ]
+      [ "1 Overview", "headers.html#autotoc_md88", null ],
+      [ "2 Public Header Files", "headers.html#autotoc_md89", null ],
+      [ "3 Private Header Files", "headers.html#autotoc_md90", null ],
+      [ "4 Templates", "headers.html#autotoc_md91", null ]
     ] ],
     [ "Reference", "modules.html", "modules" ]
   ] ]
