@@ -22,8 +22,8 @@
  * Title:        __arm_2d_transform_helium.inc
  * Description:  c code template for transform
  *
- * $Date:        31. May 2022
- * $Revision:    V.1.0.3
+ * $Date:        12. July 2022
+ * $Revision:    V.1.0.4
  *
  * -------------------------------------------------------------------- */
 
@@ -40,7 +40,7 @@
 #undef ____ARM_2D_FUNC
 #undef ___ARM_2D_FUNC
 #undef __ARM_2D_FUNC
-#define ____ARM_2D_FUNC(__NAME, __COLOUR)  __arm_2d_impl_##__COLOUR##_##__NAME
+#define ____ARM_2D_FUNC(__NAME, __COLOUR)  __MVE_WRAPPER(__arm_2d_impl_##__COLOUR##_##__NAME)
 #define ___ARM_2D_FUNC(__NAME, __COLOUR)   ____ARM_2D_FUNC(__NAME, __COLOUR)
 #define __ARM_2D_FUNC(__NAME)   ___ARM_2D_FUNC(__NAME, __API_COLOUR_NAME)
 
@@ -165,7 +165,7 @@ void __ARM_2D_FUNC(transform)( __arm_2d_param_copy_orig_t *ptParam,
                     tPointV.Y = vaddq_m_n_f16(tPointV.Y, tPointV.Y, __CALIB, vcmpgtq(tPointV.Y, 0));
                     tPointV.Y = vsubq_m_n_f16(tPointV.Y, tPointV.Y, __CALIB, vcmpleq(tPointV.Y, 0));
 #endif
-                __arm_2d_impl_rgb565_get_pixel_colour_offs_compensated(&tPointV,
+                __MVE_WRAPPER(__arm_2d_impl_rgb565_get_pixel_colour_offs_compensated)(&tPointV,
                                                                        &ptParam->tOrigin.
                                                                        tValidRegion,
                                                                        pOrigin,
@@ -315,7 +315,7 @@ void __ARM_2D_FUNC(transform_with_opacity)(__arm_2d_param_copy_orig_t *ptParam,
                 tPointV.Y = vaddq_m_n_f16(tPointV.Y, tPointV.Y, __CALIB, vcmpgtq(tPointV.Y, 0));
                 tPointV.Y = vsubq_m_n_f16(tPointV.Y, tPointV.Y, __CALIB, vcmpleq(tPointV.Y, 0));
 #endif
-                __arm_2d_impl_rgb565_get_pixel_colour_with_alpha_offs_compensated(&tPointV,
+                __MVE_WRAPPER(__arm_2d_impl_rgb565_get_pixel_colour_with_alpha_offs_compensated)(&tPointV,
                                                                         &ptParam->tOrigin.
                                                                         tValidRegion,
                                                                         pOrigin,
@@ -464,7 +464,7 @@ void __ARM_2D_FUNC(transform)(   __arm_2d_param_copy_orig_t *ptParam,
                 tPointV.Y = vqdmulhq_n_s16(vX, slopeY);
                 tPointV.Y = vaddq_n_s16(vqrshlq_n_s16(tPointV.Y, nrmSlopeY), colFirstY);
 
-                __arm_2d_impl_rgb565_get_pixel_colour_offs_compensated(&tPointV,
+                __MVE_WRAPPER(__arm_2d_impl_rgb565_get_pixel_colour_offs_compensated)(&tPointV,
                                                                        &ptParam->tOrigin.
                                                                        tValidRegion,
                                                                        pOrigin,
@@ -622,7 +622,7 @@ void __ARM_2D_FUNC(transform_with_opacity)(   __arm_2d_param_copy_orig_t *ptPara
                 tPointV.Y = vqdmulhq_n_s16(vX, slopeY);
                 tPointV.Y = vaddq_n_s16(vqrshlq_n_s16(tPointV.Y, nrmSlopeY), colFirstY);
 
-                __arm_2d_impl_rgb565_get_pixel_colour_with_alpha_offs_compensated
+                __MVE_WRAPPER(__arm_2d_impl_rgb565_get_pixel_colour_with_alpha_offs_compensated)
                     (&tPointV, &ptParam->tOrigin.tValidRegion, pOrigin, iOrigStride,
                      pTargetBaseCur, MaskColour, hwRatio, nbVecElts);
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        __arm_2d_meta_copy_with_masks_helium.inc
  * Description:  c code template for copy and fill like operations
  *
- * $Date:        06. Oct 2021
- * $Revision:    V.1.0.0
+ * $Date:        12. July 2022
+ * $Revision:    v1.0.1
  *
  * -------------------------------------------------------------------- */
 
@@ -99,11 +99,11 @@
 
 #ifndef __API_MCWM_OP_NAME
 #   define ____MCWM_FUNC(__NAME, __COLOUR)                                      \
-        __arm_2d_impl_##__COLOUR##_##__NAME
+        __MVE_WRAPPER(__arm_2d_impl_##__COLOUR##_##__NAME)
 #   define ___MCWM_FUNC(__NAME, __COLOUR)   ____MCWM_FUNC(__NAME, __COLOUR)
 #else
 #   define _____MCWM_FUNC(__OP_NAME, __NAME, __COLOUR)                          \
-        __arm_2d_impl_##__COLOUR##_##__OP_NAME##_##__NAME
+        __MVE_WRAPPER(__arm_2d_impl_##__COLOUR##_##__OP_NAME##_##__NAME)
 #   define ____MCWM_FUNC(__OP_NAME, __NAME, __COLOUR)                           \
         _____MCWM_FUNC(__OP_NAME, __NAME, __COLOUR)
 #   define ___MCWM_FUNC(__NAME, __COLOUR)                                       \

@@ -21,8 +21,8 @@
  * Title:        arm-2d_transform_helium.c
  * Description:  Acceleration extensions using Helium.
  *
- * $Date:        9. Jun 2022
- * $Revision:    V.0.1.4
+ * $Date:        12. July 2022
+ * $Revision:    V.0.1.5
  *
  * Target Processor:  Cortex-M cores with Helium
  *
@@ -944,7 +944,7 @@ bool __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
 
 
 static
-void __arm_2d_impl_gray8_get_pixel_colour(ARM_2D_POINT_VEC * ptPoint,
+void __MVE_WRAPPER( __arm_2d_impl_gray8_get_pixel_colour)(ARM_2D_POINT_VEC * ptPoint,
                                           arm_2d_region_t * ptOrigValidRegion,
                                           uint8_t * pOrigin,
                                           int16_t iOrigStride,
@@ -995,7 +995,7 @@ void __arm_2d_impl_gray8_get_pixel_colour(ARM_2D_POINT_VEC * ptPoint,
 
 
 static
-void __arm_2d_impl_gray8_get_pixel_colour_with_alpha(ARM_2D_POINT_VEC * ptPoint,
+void __MVE_WRAPPER( __arm_2d_impl_gray8_get_pixel_colour_with_alpha)(ARM_2D_POINT_VEC * ptPoint,
                                                      arm_2d_region_t * ptOrigValidRegion,
                                                      uint8_t * pOrigin,
                                                      int16_t iOrigStride,
@@ -1043,8 +1043,8 @@ void __arm_2d_impl_gray8_get_pixel_colour_with_alpha(ARM_2D_POINT_VEC * ptPoint,
 }
 
 
-static
-void __arm_2d_impl_rgb565_get_pixel_colour(ARM_2D_POINT_VEC * ptPoint,
+static 
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_get_pixel_colour)(ARM_2D_POINT_VEC * ptPoint,
                                            arm_2d_region_t * ptOrigValidRegion,
                                            uint16_t * pOrigin,
                                            int16_t iOrigStride,
@@ -1092,7 +1092,7 @@ void __arm_2d_impl_rgb565_get_pixel_colour(ARM_2D_POINT_VEC * ptPoint,
 
 
 static
-void __arm_2d_impl_rgb565_get_pixel_colour_offs_compensated(ARM_2D_POINT_VEC * ptPoint,
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_get_pixel_colour_offs_compensated)(ARM_2D_POINT_VEC * ptPoint,
                                            arm_2d_region_t * ptOrigValidRegion,
                                            uint16_t * pOrigin,
                                            int16_t iOrigStride,
@@ -1139,7 +1139,7 @@ void __arm_2d_impl_rgb565_get_pixel_colour_offs_compensated(ARM_2D_POINT_VEC * p
 
 
 static
-void __arm_2d_impl_rgb565_get_pixel_colour_with_alpha(ARM_2D_POINT_VEC * ptPoint,
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_get_pixel_colour_with_alpha)(ARM_2D_POINT_VEC * ptPoint,
                                                       arm_2d_region_t * ptOrigValidRegion,
                                                       uint16_t * pOrigin,
                                                       int16_t iOrigStride,
@@ -1192,7 +1192,7 @@ void __arm_2d_impl_rgb565_get_pixel_colour_with_alpha(ARM_2D_POINT_VEC * ptPoint
 
 
 static
-void __arm_2d_impl_rgb565_get_pixel_colour_with_alpha_offs_compensated(ARM_2D_POINT_VEC * ptPoint,
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_get_pixel_colour_with_alpha_offs_compensated)(ARM_2D_POINT_VEC * ptPoint,
                                                       arm_2d_region_t * ptOrigValidRegion,
                                                       uint16_t * pOrigin,
                                                       int16_t iOrigStride,
@@ -1246,7 +1246,7 @@ void __arm_2d_impl_rgb565_get_pixel_colour_with_alpha_offs_compensated(ARM_2D_PO
 
 
 static
-void __arm_2d_impl_cccn888_get_pixel_colour(ARM_2D_POINT_VEC * ptPoint,
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_get_pixel_colour)(ARM_2D_POINT_VEC * ptPoint,
                                             arm_2d_region_t * ptOrigValidRegion,
                                             uint32_t * pOrigin,
                                             int16_t iOrigStride,
@@ -1319,7 +1319,7 @@ void __arm_2d_impl_cccn888_get_pixel_colour(ARM_2D_POINT_VEC * ptPoint,
 
 
 static
-void __arm_2d_impl_cccn888_get_pixel_colour_with_alpha(ARM_2D_POINT_VEC * ptPoint,
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_get_pixel_colour_with_alpha)(ARM_2D_POINT_VEC * ptPoint,
                                                        arm_2d_region_t * ptOrigValidRegion,
                                                        uint32_t * pOrigin,
                                                        int16_t iOrigStride,

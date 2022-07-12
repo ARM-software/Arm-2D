@@ -1,6 +1,6 @@
 
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -22,8 +22,8 @@
  * Title:        __arm_2d_draw_pattern_helium.inc
  * Description:  Helium code template for drawing pattern
  *
- * $Date:        29. sep 2021
- * $Revision:    V.0.0.3
+ * $Date:        12. July 2022
+ * $Revision:    V.1.0.0
  *
  * -------------------------------------------------------------------- */
 
@@ -38,7 +38,8 @@
 #undef ____ARM_2D_FUNC
 #undef ___ARM_2D_FUNC
 #undef __ARM_2D_FUNC
-#define ____ARM_2D_FUNC(__NAME, __COLOUR)  __arm_2d_impl_##__COLOUR##_##__NAME
+#define ____ARM_2D_FUNC(__NAME, __COLOUR)                                       \
+            __MVE_WRAPPER(__arm_2d_impl_##__COLOUR##_##__NAME)
 #define ___ARM_2D_FUNC(__NAME, __COLOUR)   ____ARM_2D_FUNC(__NAME, __COLOUR)
 #define __ARM_2D_FUNC(__NAME)   ___ARM_2D_FUNC(__NAME, __API_COLOUR)
 

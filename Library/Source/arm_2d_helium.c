@@ -21,8 +21,8 @@
  * Title:        arm-2d_helium.c
  * Description:  Acceleration extensions using Helium.
  *
- * $Date:        31. May 2022
- * $Revision:    V.0.13.4
+ * $Date:        12. July 2022
+ * $Revision:    V.0.13.5
  *
  * Target Processor:  Cortex-M cores with Helium
  *
@@ -60,6 +60,7 @@
 #endif
 
 
+/*============================ INCLUDES ======================================*/
 
 #include "__arm_2d_paving_helium.h"
 #include "__arm_2d_math_helium.h"
@@ -67,6 +68,24 @@
 #ifdef   __cplusplus
 extern "C" {
 #endif
+
+/*============================ MACROS ========================================*/
+/*============================ MACROFIED FUNCTIONS ===========================*/
+
+#if defined(__MVE_DEBUG__) && __MVE_DEBUG__
+#   define ____MVE_WRAPPER(__FUNC)       __FUNC##_mve
+#else
+#   define ____MVE_WRAPPER(__FUNC)       __FUNC
+#endif
+
+#define __MVE_WRAPPER(__FUNC)       ____MVE_WRAPPER(__FUNC)
+
+
+/*============================ TYPES =========================================*/
+/*============================ GLOBAL VARIABLES ==============================*/
+/*============================ PROTOTYPES ====================================*/
+/*============================ LOCAL VARIABLES ===============================*/
+/*============================ IMPLEMENTATION ================================*/
 
 /*! 
  * \brief initialise the helium acceleration
@@ -242,7 +261,7 @@ void __arm_copy_32_mve_narrow(   uint32_t *pwSource,
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_rgb16_copy(   uint16_t *phwSource,
+void __MVE_WRAPPER( __arm_2d_impl_rgb16_copy)(   uint16_t *phwSource,
                                 int16_t iSourceStride,
                                 uint16_t *phwTarget,
                                 int16_t iTargetStride,
@@ -337,7 +356,7 @@ void __arm_2d_impl_rgb16_copy(   uint16_t *phwSource,
 }
 
 __OVERRIDE_WEAK
- void __arm_2d_impl_rgb32_copy( uint32_t *pwSource,
+ void __MVE_WRAPPER( __arm_2d_impl_rgb32_copy)( uint32_t *pwSource,
                                 int16_t iSourceStride,
                                 uint32_t *pwTarget,
                                 int16_t iTargetStride,
@@ -431,7 +450,7 @@ __OVERRIDE_WEAK
  *----------------------------------------------------------------------------*/
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_gray8_alpha_blending(uint8_t * __RESTRICT pSourceBase,
+void __MVE_WRAPPER( __arm_2d_impl_gray8_alpha_blending)(uint8_t * __RESTRICT pSourceBase,
                                         int16_t iSourceStride,
                                         uint8_t * __RESTRICT pTargetBase,
                                         int16_t iTargetStride,
@@ -513,7 +532,7 @@ void __arm_2d_impl_gray8_alpha_blending(uint8_t * __RESTRICT pSourceBase,
 }
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_gray8_alpha_blending_colour_keying(uint8_t * __RESTRICT pSourceBase,
+void __MVE_WRAPPER( __arm_2d_impl_gray8_alpha_blending_colour_keying)(uint8_t * __RESTRICT pSourceBase,
                                                       int16_t iSourceStride,
                                                       uint8_t * __RESTRICT pTargetBase,
                                                       int16_t iTargetStride,
@@ -603,7 +622,7 @@ void __arm_2d_impl_gray8_alpha_blending_colour_keying(uint8_t * __RESTRICT pSour
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_gray8_colour_filling_with_opacity(uint8_t * __restrict pTargetBase,
+void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_opacity)(uint8_t * __restrict pTargetBase,
                                                      int16_t iTargetStride,
                                                      arm_2d_size_t *
                                                      __restrict ptCopySize,
@@ -689,7 +708,7 @@ void __arm_2d_impl_gray8_colour_filling_with_opacity(uint8_t * __restrict pTarge
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_rgb565_alpha_blending(   uint16_t *phwSourceBase,
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_alpha_blending)(   uint16_t *phwSourceBase,
                                             int16_t iSourceStride,
                                             uint16_t *phwTargetBase,
                                             int16_t iTargetStride,
@@ -870,7 +889,7 @@ void __arm_2d_impl_rgb565_alpha_blending(   uint16_t *phwSourceBase,
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_rgb565_colour_filling_with_opacity(
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_opacity)(
                                         uint16_t *__RESTRICT pTargetBase,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptCopySize,
@@ -1040,7 +1059,7 @@ void __arm_2d_impl_rgb565_colour_filling_with_opacity(
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_rgb565_alpha_blending_colour_keying(
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_alpha_blending_colour_keying)(
                                                 uint16_t * __RESTRICT phwSource,
                                                 int16_t         iSourceStride,
                                                 uint16_t * __RESTRICT phwTarget,
@@ -1255,7 +1274,7 @@ void __arm_2d_impl_rgb565_alpha_blending_colour_keying(
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_cccn888_alpha_blending(   uint32_t *pwSourceBase,
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_alpha_blending)(   uint32_t *pwSourceBase,
                                             int16_t iSourceStride,
                                             uint32_t *pwTargetBase,
                                             int16_t iTargetStride,
@@ -1342,7 +1361,7 @@ void __arm_2d_impl_cccn888_alpha_blending(   uint32_t *pwSourceBase,
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_cccn888_colour_filling_with_opacity(
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_opacity)(
                                         uint32_t *__RESTRICT pTargetBase,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptCopySize,
@@ -1421,7 +1440,7 @@ void __arm_2d_impl_cccn888_colour_filling_with_opacity(
 }
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_cccn888_alpha_blending_colour_keying(uint32_t * __RESTRICT pSourceBase,
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_alpha_blending_colour_keying)(uint32_t * __RESTRICT pSourceBase,
                                                        int16_t iSourceStride,
                                                        uint32_t * __RESTRICT pTargetBase,
                                                        int16_t iTargetStride,
@@ -1530,7 +1549,7 @@ void __arm_2d_impl_cccn888_alpha_blending_colour_keying(uint32_t * __RESTRICT pS
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_rgb565_alpha_blending_direct(const uint16_t *phwSource,
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_alpha_blending_direct)(const uint16_t *phwSource,
                                                 const uint16_t *phwBackground,
                                                 uint16_t *phwDestination,
                                                 uint32_t wPixelCount,
@@ -1674,7 +1693,7 @@ void __arm_2d_impl_rgb565_alpha_blending_direct(const uint16_t *phwSource,
 }
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_cccn888_alpha_blending_direct(const uint32_t *pwSource,
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_alpha_blending_direct)(const uint32_t *pwSource,
                                                 const uint32_t *pwBackground,
                                                 uint32_t *pwDestination,
                                                 uint32_t wPixelCount,
@@ -2041,7 +2060,7 @@ static  uint32_t __draw_pattern_src_bitmask_rgb32[16] = {
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_gray8_colour_filling_mask(uint8_t * __RESTRICT pTarget,
+void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask)(uint8_t * __RESTRICT pTarget,
                                                        int16_t iTargetStride,
                                                        uint8_t * __RESTRICT pchAlpha,
                                                        int16_t iAlphaStride,
@@ -2101,7 +2120,7 @@ void __arm_2d_impl_gray8_colour_filling_mask(uint8_t * __RESTRICT pTarget,
 }
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_gray8_colour_filling_mask_opacity(uint8_t * __RESTRICT pTarget,
+void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask_opacity)(uint8_t * __RESTRICT pTarget,
                                                                int16_t iTargetStride,
                                                                uint8_t * __RESTRICT pchAlpha,
                                                                int16_t iAlphaStride,
@@ -2169,7 +2188,7 @@ void __arm_2d_impl_gray8_colour_filling_mask_opacity(uint8_t * __RESTRICT pTarge
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_gray8_colour_filling_channel_mask(uint8_t * __RESTRICT pTarget,
+void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_mask)(uint8_t * __RESTRICT pTarget,
                                                          int16_t iTargetStride,
                                                          uint32_t * __RESTRICT pwAlpha,
                                                          int16_t iAlphaStride,
@@ -2235,7 +2254,7 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask(uint8_t * __RESTRICT pTarge
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_gray8_colour_filling_channel_mask_opacity(uint8_t * __RESTRICT pTarget,
+void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_mask_opacity)(uint8_t * __RESTRICT pTarget,
                                                                  int16_t iTargetStride,
                                                                  uint32_t * __RESTRICT pwAlpha,
                                                                  int16_t iAlphaStride,
@@ -2307,7 +2326,7 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_opacity(uint8_t * __RESTRIC
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_rgb565_colour_filling_mask(uint16_t * __RESTRICT pTarget,
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask)(uint16_t * __RESTRICT pTarget,
                                                     int16_t iTargetStride,
                                                     uint8_t * __RESTRICT pchAlpha,
                                                     int16_t iAlphaStride,
@@ -2454,7 +2473,7 @@ void __arm_2d_impl_rgb565_colour_filling_mask(uint16_t * __RESTRICT pTarget,
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_rgb565_colour_filling_mask_opacity(uint16_t * __RESTRICT pTarget,
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_opacity)(uint16_t * __RESTRICT pTarget,
                                                     int16_t iTargetStride,
                                                     uint8_t * __RESTRICT pchAlpha,
                                                     int16_t iAlphaStride,
@@ -2611,7 +2630,7 @@ void __arm_2d_impl_rgb565_colour_filling_mask_opacity(uint16_t * __RESTRICT pTar
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_rgb565_colour_filling_channel_mask(uint16_t * __RESTRICT pTarget,
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_mask)(uint16_t * __RESTRICT pTarget,
                                                       int16_t iTargetStride,
                                                       uint32_t * __RESTRICT pwAlpha,
                                                       int16_t iAlphaStride,
@@ -2759,7 +2778,7 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask(uint16_t * __RESTRICT pTar
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_rgb565_colour_filling_channel_mask_opacity(uint16_t * __RESTRICT pTarget,
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_mask_opacity)(uint16_t * __RESTRICT pTarget,
                                                               int16_t iTargetStride,
                                                               uint32_t * __RESTRICT pwAlpha,
                                                               int16_t iAlphaStride,
@@ -2918,7 +2937,7 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_opacity(uint16_t * __RESTR
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_cccn888_colour_filling_mask(uint32_t * __RESTRICT pTarget,
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask)(uint32_t * __RESTRICT pTarget,
                                                      int16_t iTargetStride,
                                                      uint8_t * __RESTRICT pchAlpha,
                                                      int16_t iAlphaStride,
@@ -3028,7 +3047,7 @@ void __arm_2d_impl_cccn888_colour_filling_mask(uint32_t * __RESTRICT pTarget,
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_cccn888_colour_filling_mask_opacity(uint32_t * __RESTRICT pTarget,
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_opacity)(uint32_t * __RESTRICT pTarget,
                                                              int16_t iTargetStride,
                                                              uint8_t * __RESTRICT pchAlpha,
                                                              int16_t iAlphaStride,
@@ -3140,7 +3159,7 @@ void __arm_2d_impl_cccn888_colour_filling_mask_opacity(uint32_t * __RESTRICT pTa
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_cccn888_colour_filling_channel_mask(uint32_t * __RESTRICT pTarget,
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel_mask)(uint32_t * __RESTRICT pTarget,
                                                        int16_t iTargetStride,
                                                        uint32_t * __RESTRICT pwAlpha,
                                                        int16_t iAlphaStride,
@@ -3250,7 +3269,7 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask(uint32_t * __RESTRICT pTa
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_cccn888_colour_filling_channel_mask_opacity(uint32_t * __RESTRICT pTarget,
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel_mask_opacity)(uint32_t * __RESTRICT pTarget,
                                                                int16_t iTargetStride,
                                                                uint32_t * __RESTRICT pwAlpha,
                                                                int16_t iAlphaStride,
@@ -3369,7 +3388,7 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask_opacity(uint32_t * __REST
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_cccn888_to_rgb565(uint32_t *__RESTRICT pwSourceBase,
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_to_rgb565)(uint32_t *__RESTRICT pwSourceBase,
                                     int16_t iSourceStride,
                                     uint16_t *__RESTRICT phwTargetBase,
                                     int16_t iTargetStride,
@@ -3459,7 +3478,7 @@ void __arm_2d_impl_cccn888_to_rgb565(uint32_t *__RESTRICT pwSourceBase,
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_rgb565_to_cccn888(uint16_t *__RESTRICT phwSourceBase,
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_to_cccn888)(uint16_t *__RESTRICT phwSourceBase,
                                     int16_t iSourceStride,
                                     uint32_t *__RESTRICT pwTargetBase,
                                     int16_t iTargetStride,
@@ -3602,7 +3621,7 @@ void __arm_2d_impl_rgb565_to_cccn888(uint16_t *__RESTRICT phwSourceBase,
 #if defined(__IS_COMPILER_GCC__) && __IS_COMPILER_GCC__
 
 __OVERRIDE_WEAK
-void ARM_2D_WRAP_FUNC(  __arm_2d_impl_rgb565_masks_fill)(
+void ARM_2D_WRAP_FUNC(  __MVE_WRAPPER( __arm_2d_impl_rgb565_masks_fill))(
                          uint16_t * __RESTRICT ptSourceBase,
                          int16_t iSourceStride,
                          arm_2d_size_t * __RESTRICT ptSourceSize,
@@ -3819,7 +3838,7 @@ void ARM_2D_WRAP_FUNC(  __arm_2d_impl_rgb565_masks_fill)(
 
 
 __OVERRIDE_WEAK
-void ARM_2D_WRAP_FUNC(  __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill)(
+void ARM_2D_WRAP_FUNC(  __MVE_WRAPPER( __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill))(
                         uint16_t * __RESTRICT ptSourceBase,
                         int16_t iSourceStride,
                         arm_2d_size_t * __RESTRICT ptSourceSize,

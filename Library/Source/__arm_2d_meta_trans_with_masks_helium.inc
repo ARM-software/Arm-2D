@@ -25,8 +25,8 @@
  *                  - transform_with_src_chn_mask
  *                  - transform_with_src_mask
  *
- * $Date:        9. Jun 2022
- * $Revision:    V.1.0.3
+ * $Date:        12. July 2022
+ * $Revision:    V.1.0.4
  *
  * -------------------------------------------------------------------- */
 
@@ -97,11 +97,11 @@
 
 #ifndef __API_MTWM_OP_NAME
 #   define ____MTWM_FUNC(__NAME, __COLOUR)                                      \
-        __arm_2d_impl_##__COLOUR##_##__NAME
+        __MVE_WRAPPER(__arm_2d_impl_##__COLOUR##_##__NAME)
 #   define ___MTWM_FUNC(__NAME, __COLOUR)   ____MTWM_FUNC(__NAME, __COLOUR)
 #else
 #   define _____MTWM_FUNC(__OP_NAME, __NAME, __COLOUR)                          \
-        __arm_2d_impl_##__COLOUR##_##__OP_NAME##_##__NAME
+        __MVE_WRAPPER(__arm_2d_impl_##__COLOUR##_##__OP_NAME##_##__NAME)
 #   define ____MTWM_FUNC(__OP_NAME, __NAME, __COLOUR)                           \
         _____MTWM_FUNC(__OP_NAME, __NAME, __COLOUR)
 #   define ___MTWM_FUNC(__NAME, __COLOUR)                                       \
@@ -686,7 +686,7 @@ void __MTWM_FUNC(transform_with_mask)(
 #if __API_MTWM_COLOUR == ARM_2D_M_COLOUR_GRAY8
 
 static
-void            ARM_CONNECT2(__arm_2d_impl_gray8_, get_pixel_colour_mask) (
+void __MVE_WRAPPER(ARM_CONNECT2(__arm_2d_impl_gray8_, get_pixel_colour_mask)) (
                                                  ARM_2D_POINT_VEC * ptPoint,
                                                  arm_2d_region_t * ptOrigValidRegion,
                                                  uint8_t * pOrigin, int16_t iOrigStride,
@@ -752,7 +752,7 @@ void            ARM_CONNECT2(__arm_2d_impl_gray8_, get_pixel_colour_mask) (
 #elif __API_MTWM_COLOUR == ARM_2D_M_COLOUR_RGB565
 
 static
-void ARM_CONNECT2(__arm_2d_impl_rgb565_, get_pixel_colour_mask)(ARM_2D_POINT_VEC * ptPoint,
+void __MVE_WRAPPER(ARM_CONNECT2(__arm_2d_impl_rgb565_, get_pixel_colour_mask))(ARM_2D_POINT_VEC * ptPoint,
                                                             arm_2d_region_t * ptOrigValidRegion,
                                                             uint16_t * pOrigin,
                                                             int16_t iOrigStride,
@@ -836,7 +836,7 @@ void ARM_CONNECT2(__arm_2d_impl_rgb565_, get_pixel_colour_mask)(ARM_2D_POINT_VEC
 
 
 static
-void ARM_CONNECT2(__arm_2d_impl_cccn888_, get_pixel_colour_mask)(ARM_2D_POINT_VEC *ptPoint,
+void __MVE_WRAPPER(ARM_CONNECT2(__arm_2d_impl_cccn888_, get_pixel_colour_mask))(ARM_2D_POINT_VEC *ptPoint,
                                         arm_2d_region_t *ptOrigValidRegion,
                                         uint32_t *pOrigin,
                                         int16_t iOrigStride,
