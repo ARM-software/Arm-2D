@@ -9,6 +9,11 @@ var group__gKernel =
       [ "Minor", "group__gKernel.html#ae2058b1efa649f0c544c7317e3e01886", null ],
       [ "Patch", "group__gKernel.html#a334b7db0f3d20eaba3dcd21b25b54060", null ]
     ] ],
+    [ "ARM_2D_VERSION_MAJOR", "group__gKernel.html#gaa1a520634c974866fb98044c63143532", null ],
+    [ "ARM_2D_VERSION_MINOR", "group__gKernel.html#ga17fea46439a9f655a68d9b186838163e", null ],
+    [ "ARM_2D_VERSION_PATCH", "group__gKernel.html#ga84adc455ac15b1574d66130d661dbd7e", null ],
+    [ "ARM_2D_VERSION_STR", "group__gKernel.html#ga717a4db05af2c6d8e4ee171f6ba53d52", null ],
+    [ "ARM_2D_VERISON", "group__gKernel.html#ga11b2dbdafc85d9d678e52447cc25f9ac", null ],
     [ "arm_2d_init", "group__gKernel.html#gae417897e7d7186b294c0ff3468102276", null ],
     [ "arm_2d_set_default_frame_buffer", "group__gKernel.html#ga42407a7eebceade2349b1309bdf78b48", null ],
     [ "arm_2d_get_default_frame_buffer", "group__gKernel.html#gaa0f5857c97450feeb79b3983dd1a950b", null ],
