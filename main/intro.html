@@ -237,19 +237,19 @@ $(document).ready(function(){initNavTree('intro.html',''); initResizable(); });
 <h2><a class="anchor" id="autotoc_md44"></a>
 2.1 Region</h2>
 <p >Region is a rectangular area described by the Location (the coordinates of the upper left corner) and the Size information.</p>
-<div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structarm__2d__region__t.html">arm_2d_region_t</a> {</div>
-<div class="line">    implement_ex(<a class="code hl_struct" href="structarm__2d__location__t.html">arm_2d_location_t</a>, tLocation);</div>
-<div class="line">    implement_ex(<a class="code hl_struct" href="structarm__2d__size__t.html">arm_2d_size_t</a>, tSize);</div>
-<div class="line">} <a class="code hl_struct" href="structarm__2d__region__t.html">arm_2d_region_t</a>;</div>
+<div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structarm__2d__region__t.html" title="a type for an rectangular area">arm_2d_region_t</a> {</div>
+<div class="line">    <a class="code hl_function" href="structarm__2d__region__t.html#a09d46c454557ffa5e11df6d8797a7eb5" title="the location (top-left corner)">implement_ex</a>(<a class="code hl_struct" href="structarm__2d__location__t.html" title="a type for coordinates (integer)">arm_2d_location_t</a>, tLocation);</div>
+<div class="line">    <a class="code hl_function" href="structarm__2d__region__t.html#a09d46c454557ffa5e11df6d8797a7eb5" title="the location (top-left corner)">implement_ex</a>(<a class="code hl_struct" href="structarm__2d__size__t.html" title="a type for the size of an rectangular area">arm_2d_size_t</a>, tSize);</div>
+<div class="line">} <a class="code hl_struct" href="structarm__2d__region__t.html" title="a type for an rectangular area">arm_2d_region_t</a>;</div>
 </div><!-- fragment --><p >**Figure 2-1 Region with Location and Size **</p>
 <p ><img src="Introduction2_1a.png" alt="" class="inline" title="Region with Location and Size"/></p>
 <h3><a class="anchor" id="autotoc_md45"></a>
 2.1.1 Location</h3>
 <p >The coordinate of the Region is defined by the vertices at the upper left corner of the bit rectangle. Its data structure is as follows:</p>
-<div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structarm__2d__location__t.html">arm_2d_location_t</a> {</div>
-<div class="line">    int16_t iX;</div>
-<div class="line">    int16_t iY;</div>
-<div class="line">} <a class="code hl_struct" href="structarm__2d__location__t.html">arm_2d_location_t</a>;</div>
+<div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structarm__2d__location__t.html" title="a type for coordinates (integer)">arm_2d_location_t</a> {</div>
+<div class="line">    int16_t <a class="code hl_variable" href="structarm__2d__location__t.html#afcfe4e9ad6eb4f402d0001a14d888e5f" title="x in Cartesian coordinate system">iX</a>;</div>
+<div class="line">    int16_t <a class="code hl_variable" href="structarm__2d__location__t.html#ab6746d623416d076c3339cc9b44289b6" title="y in Cartesian coordinate system">iY</a>;</div>
+<div class="line">} <a class="code hl_struct" href="structarm__2d__location__t.html" title="a type for coordinates (integer)">arm_2d_location_t</a>;</div>
 </div><!-- fragment --><p >Different from the general Cartesian coordinate system, in graphics, the Y-axis is usually mirrored in the opposite direction, which means that the lower the Y coordinate is, the larger the Y coordinate is. In the Boxing model that will be introduced later, we will understand that the <b>coordinates of a Region can be negative</b>, representing the position of the current Region relative to the starting point of its parent Region.</p>
 <p ><b>Figure 2-2 When Location has a negative coordinates.</b></p>
 <p ><img src="Introduction2_1b.png" alt="" class="inline" title="When Location has a negative coordinates"/></p>
@@ -257,10 +257,10 @@ $(document).ready(function(){initNavTree('intro.html',''); initResizable(); });
 <h3><a class="anchor" id="autotoc_md46"></a>
 2.1.2 Size</h3>
 <p >The size information of the Region is described by the Height and Width together. The data structure is defined as follows:</p>
-<div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structarm__2d__size__t.html">arm_2d_size_t</a> {</div>
-<div class="line">    int16_t iWidth;</div>
-<div class="line">    int16_t iHeight;</div>
-<div class="line">} <a class="code hl_struct" href="structarm__2d__size__t.html">arm_2d_size_t</a>;</div>
+<div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structarm__2d__size__t.html" title="a type for the size of an rectangular area">arm_2d_size_t</a> {</div>
+<div class="line">    int16_t <a class="code hl_variable" href="structarm__2d__size__t.html#a1aeaa9f863c682c26e8070d575667842" title="width of an rectangular area">iWidth</a>;</div>
+<div class="line">    int16_t <a class="code hl_variable" href="structarm__2d__size__t.html#a44f7520235d22c8906b2c192442a0c31" title="height of an rectangular area">iHeight</a>;</div>
+<div class="line">} <a class="code hl_struct" href="structarm__2d__size__t.html" title="a type for the size of an rectangular area">arm_2d_size_t</a>;</div>
 </div><!-- fragment --><p >Although a signed type <em><b>int16_t</b></em> is used to describe the width and height, negative numbers are meaningless and should be avoided.</p>
 <h2><a class="anchor" id="autotoc_md47"></a>
 2.2 Boxing Model</h2>
@@ -287,8 +287,8 @@ $(document).ready(function(){initNavTree('intro.html',''); initResizable(); });
 <li>Pointers</li>
 </ul>
 <p >The C definition of a the Tile data structure is shown below:</p>
-<div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structarm__2d__tile__t.html">arm_2d_tile_t</a> <a class="code hl_struct" href="structarm__2d__tile__t.html">arm_2d_tile_t</a>;</div>
-<div class="line"><span class="keyword">struct </span><a class="code hl_struct" href="structarm__2d__tile__t.html">arm_2d_tile_t</a> {</div>
+<div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structarm__2d__tile__t.html" title="a type for tile">arm_2d_tile_t</a> <a class="code hl_struct" href="structarm__2d__tile__t.html" title="a type for tile">arm_2d_tile_t</a>;</div>
+<div class="line"><span class="keyword">struct </span><a class="code hl_struct" href="structarm__2d__tile__t.html" title="a type for tile">arm_2d_tile_t</a> {</div>
 <div class="line">    implement_ex(<span class="keyword">struct</span> {</div>
 <div class="line">        uint8_t    bIsRoot              : 1;    <span class="comment">//!&lt; is this tile a root tile</span></div>
 <div class="line">        uint8_t    bHasEnforcedColour   : 1;    <span class="comment">//!&lt; does this tile contains enforced colour info</span></div>
@@ -298,13 +298,13 @@ $(document).ready(function(){initNavTree('intro.html',''); initResizable(); });
 <div class="line">        <a class="code hl_union" href="unionarm__2d__color__info__t.html" title="a type used as colour descriptor">arm_2d_color_info_t</a>    tColourInfo;     <span class="comment">//!&lt; enforced colour</span></div>
 <div class="line">    }, tInfo);</div>
 <div class="line"> </div>
-<div class="line">    implement_ex(<a class="code hl_struct" href="structarm__2d__region__t.html">arm_2d_region_t</a>, tRegion);</div>
+<div class="line">    implement_ex(<a class="code hl_struct" href="structarm__2d__region__t.html" title="a type for an rectangular area">arm_2d_region_t</a>, tRegion);</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">union </span>{<span class="comment"></span></div>
 <div class="line"><span class="comment">        /*! when bIsRoot is true, phwBuffer is available,</span></div>
 <div class="line"><span class="comment">         *! otherwise ptParent is available</span></div>
 <div class="line"><span class="comment">         */</span></div>
-<div class="line">        <a class="code hl_struct" href="structarm__2d__tile__t.html">arm_2d_tile_t</a>       *ptParent;</div>
+<div class="line">        <a class="code hl_struct" href="structarm__2d__tile__t.html" title="a type for tile">arm_2d_tile_t</a>       *ptParent;</div>
 <div class="line">        uint16_t            *phwBuffer;</div>
 <div class="line">        uint32_t            *pwBuffer;</div>
 <div class="line">        uint8_t             *pchBuffer;</div>
@@ -323,9 +323,9 @@ $(document).ready(function(){initNavTree('intro.html',''); initResizable(); });
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><em><b>tColourInfo</b></em>   </td><td class="markdownTableBodyNone">Feature Info   </td><td class="markdownTableBodyNone"><em><b><a class="el" href="unionarm__2d__color__info__t.html" title="a type used as colour descriptor">arm_2d_color_info_t</a></b></em>   </td><td class="markdownTableBodyNone">When <em><b>bHasEnforcedColour</b></em> is set, tColourInfo should contain a valid descriptor about the colour used in the target Tile.   </td><td class="markdownTableBodyNone">See <b><a href="#24-colour">section 2.4</a></b> for details.    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><em><b>tRegion</b></em>   </td><td class="markdownTableBodyNone">Region   </td><td class="markdownTableBodyNone"><em><b><a class="el" href="structarm__2d__region__t.html">arm_2d_region_t</a></b></em>   </td><td class="markdownTableBodyNone">Depends on the type of a given tile, <em><b>tRegion</b></em> has a different meaning.   </td><td class="markdownTableBodyNone">See <b><a href="#231-root-tile">section 2.3.1</a></b> and <b><a href="#232-child-tile">2.3.2</a></b> for details.    </td></tr>
+<td class="markdownTableBodyNone"><em><b>tRegion</b></em>   </td><td class="markdownTableBodyNone">Region   </td><td class="markdownTableBodyNone"><em><b><a class="el" href="structarm__2d__region__t.html" title="a type for an rectangular area">arm_2d_region_t</a></b></em>   </td><td class="markdownTableBodyNone">Depends on the type of a given tile, <em><b>tRegion</b></em> has a different meaning.   </td><td class="markdownTableBodyNone">See <b><a href="#231-root-tile">section 2.3.1</a></b> and <b><a href="#232-child-tile">2.3.2</a></b> for details.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><em><b>ptParent</b></em>   </td><td class="markdownTableBodyNone">Pointers   </td><td class="markdownTableBodyNone"><em><b><a class="el" href="structarm__2d__tile__t.html">arm_2d_tile_t</a> *</b></em>   </td><td class="markdownTableBodyNone">When <em><b>bIsRoot</b></em> is "***0***", this pointer is used to point the parent tile.   </td><td class="markdownTableBodyNone">See <b><a href="#231-root-tile">section 2.3.1</a></b> for details.    </td></tr>
+<td class="markdownTableBodyNone"><em><b>ptParent</b></em>   </td><td class="markdownTableBodyNone">Pointers   </td><td class="markdownTableBodyNone"><em><b><a class="el" href="structarm__2d__tile__t.html" title="a type for tile">arm_2d_tile_t</a> *</b></em>   </td><td class="markdownTableBodyNone">When <em><b>bIsRoot</b></em> is "***0***", this pointer is used to point the parent tile.   </td><td class="markdownTableBodyNone">See <b><a href="#231-root-tile">section 2.3.1</a></b> for details.    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><em><b>phwBuffer</b></em>   </td><td class="markdownTableBodyNone">Pointers   </td><td class="markdownTableBodyNone"><em><b>uint16_t *</b></em>   </td><td class="markdownTableBodyNone">When <em><b>bIsRoot</b></em> is "***1***", this pointer is used to point to a display buffer that contains 16-bit pixels.   </td><td class="markdownTableBodyNone">See <b><a href="#231-root-tile">section 2.3.1</a></b> for details.    </td></tr>
 <tr class="markdownTableRowEven">
@@ -341,7 +341,7 @@ $(document).ready(function(){initNavTree('intro.html',''); initResizable(); });
 <p >With the help of <a href="https://gcc.gnu.org/onlinedocs/gcc/Designated-Inits.html">C99 designator</a>, a tile structure can be initialised clearly and easily. The following example shows a root tile <em><b>c_tPictureCMSISLogo</b></em> representing a <em><b>RGBA8888</b></em> bitmap stored in a constant array called <em><b>c_bmpCMSISLogo[]</b></em>. Note that because the bitmap and the tile structure are designated as constants, it is highly likely that a compiler will use ROM rather than RAM to store them and keep a small RAM footprint.</p>
 <div class="fragment"><div class="line"><span class="comment">/*! picture cmsis_logo */</span></div>
 <div class="line"><span class="keyword">extern</span> <span class="keyword">const</span> uint8_t c_bmpCMSISLogo[163 * 65 * <span class="keyword">sizeof</span>(uint32_t)];</div>
-<div class="line"><span class="keyword">const</span> <span class="keyword">static</span> <a class="code hl_struct" href="structarm__2d__tile__t.html">arm_2d_tile_t</a> c_tPictureCMSISLogo = {</div>
+<div class="line"><span class="keyword">const</span> <span class="keyword">static</span> <a class="code hl_struct" href="structarm__2d__tile__t.html" title="a type for tile">arm_2d_tile_t</a> c_tPictureCMSISLogo = {</div>
 <div class="line">    .tRegion = {</div>
 <div class="line">        .tSize = {</div>
 <div class="line">            .iWidth = 163,</div>

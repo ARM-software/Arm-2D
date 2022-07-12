@@ -409,7 +409,7 @@ Patch</td>
 <p >usually, it is used after calling <a class="el" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronouse operation complete">arm_2d_op_wait_async()</a>. E.g. </p><div class="fragment"><div class="line"><span class="comment">//! wait for previous operation complete</span></div>
 <div class="line"><span class="keywordflow">do</span> {</div>
 <div class="line">    <a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronouse operation complete">arm_2d_op_wait_async</a>();</div>
-<div class="line">    <a class="code hl_union" href="unionarm__2d__op__status__t.html">arm_2d_op_status_t</a> tStatus = <a class="code hl_function" href="group__gKernel.html#ga78ba01fb790d0a43878499dcb2639e0d" title="get the status of a specified OP,">arm_2d_get_op_status</a>();</div>
+<div class="line">    <a class="code hl_union" href="unionarm__2d__op__status__t.html" title="a type for 2D operation status">arm_2d_op_status_t</a> tStatus = <a class="code hl_function" href="group__gKernel.html#ga78ba01fb790d0a43878499dcb2639e0d" title="get the status of a specified OP,">arm_2d_get_op_status</a>();</div>
 <div class="line">    <span class="keywordflow">if</span> (tStatus.bIOError) {<span class="comment"></span></div>
 <div class="line"><span class="comment">        //! error detected</span></div>
 <div class="line"><span class="comment"></span>        ...</div>
@@ -423,7 +423,7 @@ Patch</td>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="unionarm__2d__op__status__t.html">arm_2d_op_status_t</a> the operation status </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="unionarm__2d__op__status__t.html" title="a type for 2D operation status">arm_2d_op_status_t</a> the operation status </dd></dl>
 
 </div>
 </div>
