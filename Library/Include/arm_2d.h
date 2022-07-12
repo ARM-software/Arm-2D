@@ -61,8 +61,7 @@ extern "C" {
 
 /*============================ MACROS ========================================*/
 
-//! \name arm-2d version
-//! @{
+/*  arm-2d version */
 #define ARM_2D_VERSION_MAJOR        1
 #define ARM_2D_VERSION_MINOR        0
 #define ARM_2D_VERSION_PATCH        0
@@ -71,11 +70,14 @@ extern "C" {
 #define ARM_2D_VERISON              (   ARM_2D_VERSION_MAJOR * 10000ul          \
                                     +   ARM_2D_VERSION_MINOR * 100ul            \
                                         ARM_2D_VERSION_PATCH)
-//! @}
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 
+/*!
+ * \brief a type for arm-2d runtime configuration 
+ * 
+ */
 typedef struct {
     /*! if the target region is out of the target tile, return arm_fsm_rt_cpl */
     uint8_t     TREAT_OUT_OF_RANGE_AS_COMPLETE          : 1;
@@ -85,18 +87,30 @@ typedef struct {
     uint8_t                                             : 6;
 } arm_2d_runtime_feature_t;
 
+/*!
+ * \brief a type for arm-2d version
+ * 
+ */
 typedef struct {
-    uint8_t     Major;
-    uint8_t     Minor;
-    uint8_t     Patch;
+    uint8_t     Major;              //!< major version
+    uint8_t     Minor;              //!< minor version
+    uint8_t     Patch;              //!< patch number
     uint8_t                 : 8;
 } arm_2d_version_t;
 
 /*============================ GLOBAL VARIABLES ==============================*/
 
+/*!
+ * \brief arm-2d runtime feature configuration
+ * 
+ */
 extern
 arm_2d_runtime_feature_t ARM_2D_RUNTIME_FEATURE;
 
+/*!
+ * \brief arm-2d version
+ * 
+ */
 extern 
 const arm_2d_version_t ARM_2D_VERSION;
 
@@ -127,7 +141,9 @@ arm_2d_tile_t *arm_2d_get_default_frame_buffer(void);
 
 /*! 
  * \brief attach a user param (which could be a pointer) to specified OP
+ *
  * \param ptOP the address of the target OP (NULL means using the default OP)
+ * 
  * \param pUserParam a user parameter (it can be used as a pointer)
  */
 extern
