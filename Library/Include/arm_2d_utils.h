@@ -86,7 +86,6 @@ extern "C" {
 #if ((__ARMCC_VERSION >= 5000000) && (__ARMCC_VERSION < 6000000))
 #   define __IS_COMPILER_ARM_COMPILER_5__       1
 #endif
-//! @}
 
 //! \note for arm compiler 6
 #ifdef __IS_COMPILER_ARM_COMPILER_6__
@@ -111,7 +110,6 @@ extern "C" {
                             ||  defined(__IS_COMPILER_LLVM__))
 #       define __IS_COMPILER_GCC__              1
 #   endif
-//! @}
 #endif
 //! @}
 
