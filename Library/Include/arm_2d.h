@@ -62,11 +62,15 @@ extern "C" {
 /*============================ MACROS ========================================*/
 
 /*  arm-2d version */
-#define ARM_2D_VERSION_MAJOR        1
-#define ARM_2D_VERSION_MINOR        0
-#define ARM_2D_VERSION_PATCH        0
-#define ARM_2D_VERSION_STR          "preview"   
+#define ARM_2D_VERSION_MAJOR        1                                           //!< Major version
+#define ARM_2D_VERSION_MINOR        0                                           //!< Minor version
+#define ARM_2D_VERSION_PATCH        0                                           //!< Patch number
+#define ARM_2D_VERSION_STR          "preview"                                   //!< tag
 
+/*!
+ * \brief arm-2d version number in decimal
+ * 
+ */
 #define ARM_2D_VERISON              (   ARM_2D_VERSION_MAJOR * 10000ul          \
                                     +   ARM_2D_VERSION_MINOR * 100ul            \
                                         ARM_2D_VERSION_PATCH)
@@ -150,7 +154,8 @@ extern
 void arm_2d_set_user_param(arm_2d_op_core_t *ptOP, uintptr_t pUserParam);
 
 /*! 
- * \brief wait asynchronouse operation complete
+ * \brief wait asynchronous operation complete
+ * \param[in] ptOP the address of the target OP (NULL means using the default OP)
  * \retval true sync up with operation
  * \retval false operation is busy
  */
