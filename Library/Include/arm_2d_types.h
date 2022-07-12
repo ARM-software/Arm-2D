@@ -290,10 +290,7 @@ enum {
     ARM_2D_COLOUR_VARIANT_msk         = 0x07 << ARM_2D_COLOUR_VARIANT_pos,
 };
 
-/*!
- * \brief macros for colour attributes
- * 
- */
+/* macros for colour attributes */
 #define ARM_2D_M_COLOUR_SZ_1BIT             0       //!< 1 bit:black and white
 #define ARM_2D_M_COLOUR_SZ_2BIT             1       //!< 4 colours or 4 gray-levels
 #define ARM_2D_M_COLOUR_SZ_4BIT             2       //!< 16 colours or 16 gray-levels
@@ -366,10 +363,7 @@ enum {
                                   ARM_2D_COLOUR_VARIANT_msk   ,
 };
 
-/*!
- * \brief macros for colour formats
- * 
- */
+/* macros for colour formats */
 #define ARM_2D_M_COLOUR_BIN         ARM_2D_M_COLOUR_SZ_1BIT_msk
 #define ARM_2D_M_COLOUR_1BIT        ARM_2D_M_COLOUR_SZ_1BIT_msk
     
@@ -420,37 +414,59 @@ typedef union {
     uint8_t chScheme;
 } arm_2d_color_info_t;
 
-
-
 /*----------------------------------------------------------------------------*
  * Tile and Regions                                                           *
  *----------------------------------------------------------------------------*/
 
+/*!
+ * \brief a type for coordinates (integer)
+ * 
+ */
 typedef struct arm_2d_location_t {
-    int16_t iX;
-    int16_t iY;
+    int16_t iX;                         //!< x in Cartesian coordinate system
+    int16_t iY;                         //!< y in Cartesian coordinate system
 } arm_2d_location_t;
 
+/*!
+ * \brief a type for coordinates in floating point
+ * 
+ */
 typedef struct arm_2d_point_float_t {
-    float fX;
-    float fY;
+    float fX;                           //!< x in Cartesian coordinate system
+    float fY;                           //!< y in Cartesian coordinate system
 } arm_2d_point_float_t;
 
+/*!
+ * \brief a type for coordinates in fixed point
+ * 
+ */
 typedef struct arm_2d_point_fx_t {
-    int32_t X;
-    int32_t Y;
+    int32_t X;                          //!< x in Cartesian coordinate system
+    int32_t Y;                          //!< y in Cartesian coordinate system
 } arm_2d_point_fx_t;
 
+/*!
+ * \brief a type for the size of an rectangular area
+ * 
+ */
 typedef struct arm_2d_size_t {
-    int16_t iWidth;
-    int16_t iHeight;
+    int16_t iWidth;                     //!< width of an rectangular area
+    int16_t iHeight;                    //!< height of an rectangular area
 } arm_2d_size_t;
 
+/*!
+ * \brief a type for an rectangular area
+ * 
+ */
 typedef struct arm_2d_region_t {
-    implement_ex(arm_2d_location_t, tLocation);
-    implement_ex(arm_2d_size_t, tSize);
+    implement_ex(arm_2d_location_t, tLocation); //!< the location (top-left corner)
+    implement_ex(arm_2d_size_t, tSize);         //!< the size 
 } arm_2d_region_t;
 
+/*!
+ * \brief a type for tile
+ * 
+ */
 typedef struct arm_2d_tile_t arm_2d_tile_t;
 struct arm_2d_tile_t {
     implement_ex(struct {
@@ -463,29 +479,35 @@ struct arm_2d_tile_t {
         arm_2d_color_info_t    tColourInfo;                                     //!< enforced colour
     }, tInfo);
 
-    implement_ex(arm_2d_region_t, tRegion);
+    implement_ex(arm_2d_region_t, tRegion);                                     //!< the region of the tile
 
     union {
         /*! when bIsRoot is true, phwBuffer is available,
          *! otherwise ptParent is available
          */
-        arm_2d_tile_t       *ptParent;
-        uint16_t            *phwBuffer;
-        uint32_t            *pwBuffer;
-        uint8_t             *pchBuffer;
-        intptr_t            nAddress;
+        arm_2d_tile_t       *ptParent;                                          //!< a pointer points to the parent tile
+        uint8_t             *pchBuffer;                                         //!< a pointer points to a buffer in a 8bit colour type
+        uint16_t            *phwBuffer;                                         //!< a pointer points to a buffer in a 16bit colour type
+        uint32_t            *pwBuffer;                                          //!< a pointer points to a buffer in a 32bit colour type
+        
+        intptr_t            nAddress;                                           //!< a pointer in integer
     };
 };
 
 /*----------------------------------------------------------------------------*
  * Task                                                                       *
  *----------------------------------------------------------------------------*/
+
+/*!
+ * \brief arm-2d application level task control block
+ * 
+ */
 typedef struct arm_2d_task_t {
 ARM_PRIVATE(
-    arm_fsm_rt_t tResult;
-    uint8_t      chState;
+    arm_fsm_rt_t tResult;                                                       //!< the temporary result of the task
+    uint8_t      chState;                                                       //!< the state of the FSM
 
-    void         *ptTask;
+    void         *ptTask;                                                       //!< a pointer for an internal object
 )
 } arm_2d_task_t;
 
@@ -493,19 +515,42 @@ ARM_PRIVATE(
  * Operation and Events Handling                                              *
  *----------------------------------------------------------------------------*/
 
+
 typedef struct arm_2d_op_core_t arm_2d_op_core_t;
 
+/*!
+ * \brief a prototype of event handlers for 2D operations
+ * 
+ * \param[in] ptThisOP the target 2D operation descriptor 
+ * \param[in] tResult  the operation result
+ * \param[in] pTarget  A user attached object
+ * \return bool a boolean value to indicate whether the event has been handled
+ */
 typedef bool arm_2d_op_evt_handler_t(  arm_2d_op_core_t *ptThisOP,
                                     arm_fsm_rt_t tResult,
                                     void *pTarget);
 
+/*!
+ * \brief a type for 2D operation event handling
+ * 
+ */
 typedef struct arm_2d_op_evt_t {
     arm_2d_op_evt_handler_t    *fnHandler;                                      //!< event handler
     void                       *pTarget;                                        //!< user attached target
 } arm_2d_op_evt_t;
 
+/*!
+ * \brief a prototype for generic event handlers
+ * 
+ * \param pTarget A user attached object
+ * \return bool a boolean value to indicate whether the event has been handled  
+ */
 typedef bool arm_2d_evt_handler_t(void *pTarget);
 
+/*!
+ * \brief a type for generic event handling
+ * 
+ */
 typedef struct arm_2d_evt_t {
     arm_2d_evt_handler_t    *fnHandler;                                         //!< event handler
     void                    *pTarget;                                           //!< user attached target
@@ -518,7 +563,7 @@ typedef struct arm_2d_evt_t {
 #define ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK        _BV(3)
 #define ARM_2D_OP_INFO_PARAM_HAS_ORIGIN             _BV(4)
 
-//! an imcomplete defintion which is only used for defining pointers
+//! \brief an incomplete defintion which is only used for defining pointers
 typedef struct __arm_2d_low_level_io_t __arm_2d_low_level_io_t;
 
 /*!
@@ -598,23 +643,30 @@ enum {
 #define __ARM_2D_OP_STATUS_IO_ERROR_msk     (1 << 5)
 #define __ARM_2D_OP_STATUS_CPL_msk          (1 << 6)
 
-
+/*!
+ * \brief a type for 2D operation status
+ * 
+ */
 typedef union arm_2d_op_status_t {
     struct {
-        uint16_t            u4SubTaskCount  : 4;    //!< sub task count
-        uint16_t            bIsBusy         : 1;    //!< busy flag
-        uint16_t            bIOError        : 1;    //!< HW IO Error
-        uint16_t            bOpCpl          : 1;    //!< the whole operation complete
-        uint16_t                            : 9;    //!< reserved
+        uint16_t            u4SubTaskCount  : 4;        //!< sub task count
+        uint16_t            bIsBusy         : 1;        //!< busy flag
+        uint16_t            bIOError        : 1;        //!< HW IO Error
+        uint16_t            bOpCpl          : 1;        //!< the whole operation complete
+        uint16_t                            : 9;        //!< reserved
     };
-    uint16_t tValue;
+    uint16_t tValue;                                    //!< the host integer
 } arm_2d_op_status_t;
 
+/*!
+ * \brief the abstract class of 2D operations
+ * 
+ */
 struct arm_2d_op_core_t {
 ARM_PRIVATE(
-    arm_2d_op_core_t            *ptNext;              //!< pointer for a single list
+    arm_2d_op_core_t            *ptNext;                //!< a pointer for a single list
 
-    const __arm_2d_op_info_t    *ptOp;
+    const __arm_2d_op_info_t    *ptOp;                  //!< the pointer for the corresponding 2D operation description
 
     struct {
         uint8_t                 u2ACCMethods    : 2;    //!< acceleration Methods
@@ -622,115 +674,129 @@ ARM_PRIVATE(
     }Preference;
 
     int8_t                      tResult;                //!< operation result
-    volatile arm_2d_op_status_t Status;
+    volatile arm_2d_op_status_t Status;                 //!< operation status
 
-    arm_2d_op_evt_t             evt2DOpCpl;             //!< operation complete event
+    arm_2d_op_evt_t             evt2DOpCpl;             //!< operation-complete event
     
 )
-    uintptr_t                   pUserParam;
+    uintptr_t                   pUserParam;             //!< user attached object
 };
 
+/*! 
+ * \brief the base class for operations with only a target tile
+ * \note arm_2d_op_msk_t inherits from arm_2d_op_core_t
+ */
 typedef struct arm_2d_op_t {
     inherit(arm_2d_op_core_t);
     struct {
-        const arm_2d_tile_t     *ptTile;        //!< target tile
-        const arm_2d_region_t   *ptRegion;      //!< target region
+        const arm_2d_tile_t     *ptTile;                //!< target tile
+        const arm_2d_region_t   *ptRegion;              //!< target region
     } Target;
 } arm_2d_op_t;
 
-/*! \brief arm_2d_op_msk_t is inherit from arm_2d_op_t
+/*! 
+ * \brief the base class for operations with a target tile and a target mask 
+ * \note arm_2d_op_msk_t inherits from arm_2d_op_t
  */
 typedef struct arm_2d_op_msk_t {
     inherit(arm_2d_op_core_t);
     struct {
-        const arm_2d_tile_t     *ptTile;        //!< target tile
-        const arm_2d_region_t   *ptRegion;      //!< target region
+        const arm_2d_tile_t     *ptTile;                //!< target tile
+        const arm_2d_region_t   *ptRegion;              //!< target region
     } Target;
     
-    
+    /* derived part */
     struct {
-        const arm_2d_tile_t     *ptTile;        //!< target tile
+        const arm_2d_tile_t     *ptTile;                //!< target tile
     } Mask;
 } arm_2d_op_msk_t;
 
-/*! \brief arm_2d_op_src_t is inherit from arm_2d_op_t
+/*! 
+ * \brief the base class for operations with a target tile and a source tile 
+ * \note arm_2d_op_src_t inherits from arm_2d_op_t
  */
 typedef struct arm_2d_op_src_t {
     inherit(arm_2d_op_core_t);
     struct {
-        const arm_2d_tile_t     *ptTile;        //!< target tile
-        const arm_2d_region_t   *ptRegion;      //!< target region
+        const arm_2d_tile_t     *ptTile;                //!< target tile
+        const arm_2d_region_t   *ptRegion;              //!< target region
     } Target;
-    
-    
+
+    /* derived part */
     struct {
-        const arm_2d_tile_t     *ptTile;        //!< source tile
+        const arm_2d_tile_t     *ptTile;                //!< source tile
     }Source;
     uint32_t wMode;
 } arm_2d_op_src_t;
 
-/*! \brief arm_2d_op_src_msk_t is inherit from arm_2d_op_src_t
+/*! 
+ * \brief the base class for operations with a target tile, a source tile and masks
+ * \note arm_2d_op_src_msk_t inherits from arm_2d_op_src_t
  */
 typedef struct arm_2d_op_src_msk_t {
     inherit(arm_2d_op_core_t);
     struct {
-        const arm_2d_tile_t     *ptTile;        //!< target tile
-        const arm_2d_region_t   *ptRegion;      //!< target region
+        const arm_2d_tile_t     *ptTile;                //!< target tile
+        const arm_2d_region_t   *ptRegion;              //!< target region
     } Target;
     struct {
-        const arm_2d_tile_t     *ptTile;        //!< source tile
+        const arm_2d_tile_t     *ptTile;                //!< source tile
     }Source;
     uint32_t wMode;
     
-    
+    /* derived part */
     struct {
-        const arm_2d_tile_t     *ptSourceSide;  //!< source side mask
-        const arm_2d_tile_t     *ptTargetSide;  //!< target side mask
+        const arm_2d_tile_t     *ptSourceSide;          //!< source side mask
+        const arm_2d_tile_t     *ptTargetSide;          //!< target side mask
     } Mask;
 } arm_2d_op_src_msk_t;
 
-
-/*! \brief arm_2d_op_src_orig_t is inherit from arm_2d_op_src_t
+/*! 
+ * \brief the base class for operations with a target tile, a dummy tile and a reference to the original source tile
+ * \note arm_2d_op_src_orig_t inherits from arm_2d_op_src_t
  */
 typedef struct arm_2d_op_src_orig_t {
     inherit(arm_2d_op_core_t);
     struct {
-        const arm_2d_tile_t     *ptTile;        //!< target tile
-        const arm_2d_region_t   *ptRegion;      //!< target region
+        const arm_2d_tile_t     *ptTile;                //!< target tile
+        const arm_2d_region_t   *ptRegion;              //!< target region
     } Target;
     struct {
-        const arm_2d_tile_t     *ptTile;        //!< source tile
+        const arm_2d_tile_t     *ptTile;                //!< the dummy source tile
     }Source;
     uint32_t wMode;
 
+    /* derived part */
     struct {
-        const arm_2d_tile_t     *ptTile;        //!< the origin tile
-        arm_2d_tile_t           tDummySource;   //!< the buffer for the source
+        const arm_2d_tile_t     *ptTile;                //!< the origin tile
+        arm_2d_tile_t           tDummySource;           //!< the buffer for the source
     }Origin;
 
 } arm_2d_op_src_orig_t;
 
-
-/*! \brief arm_2d_op_src_orig_msk_t is inherit from arm_2d_op_src_orig_t
+/*! 
+ * \brief the base class for operations with a target tile, a dummy tile, a reference to the original source tile and masks
+ * \note arm_2d_op_src_orig_msk_t inherits from arm_2d_op_src_orig_t
  */
 typedef struct arm_2d_op_src_orig_msk_t {
     inherit(arm_2d_op_core_t);
     struct {
-        const arm_2d_tile_t     *ptTile;        //!< target tile
-        const arm_2d_region_t   *ptRegion;      //!< target region
+        const arm_2d_tile_t     *ptTile;                //!< target tile
+        const arm_2d_region_t   *ptRegion;              //!< target region
     } Target;
     struct {
-        const arm_2d_tile_t     *ptTile;        //!< source tile
+        const arm_2d_tile_t     *ptTile;                //!< the dummy source tile
     }Source;
     uint32_t wMode;
     struct {
-        const arm_2d_tile_t     *ptTile;        //!< the origin tile
-        arm_2d_tile_t           tDummySource;   //!< the buffer for the source
+        const arm_2d_tile_t     *ptTile;                //!< the origin tile
+        arm_2d_tile_t           tDummySource;           //!< the buffer for the source
     }Origin;
     
+    /* derived part */
     struct {
-        const arm_2d_tile_t     *ptOriginSide;  //!< origin side mask
-        const arm_2d_tile_t     *ptTargetSide;  //!< target side mask
+        const arm_2d_tile_t     *ptOriginSide;          //!< origin side mask
+        const arm_2d_tile_t     *ptTargetSide;          //!< target side mask
     } Mask;
 } arm_2d_op_src_orig_msk_t;
 
@@ -741,6 +807,10 @@ typedef struct arm_2d_op_src_orig_msk_t {
 
 #if     (__ARM_2D_HAS_HELIUM_FLOAT__ || __ARM_2D_HAS_FPU__)                     \
     && !__ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__
+/*!
+ * \brief a type for parameters of linear interpolation (in floating point)
+ * 
+ */
 typedef struct arm_2d_rot_linear_regr_t {
     float   slopeY;
     float   interceptY;
@@ -749,7 +819,10 @@ typedef struct arm_2d_rot_linear_regr_t {
 } arm_2d_rot_linear_regr_t;
 
 #else
-/* fixed point */
+/*!
+ * \brief a type for parameters of linear interpolation (in fixed point)
+ * 
+ */
 typedef struct arm_2d_rot_linear_regr_t {
     int32_t   slopeY;
     int32_t   interceptY;
