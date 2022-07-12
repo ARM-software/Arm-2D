@@ -598,7 +598,7 @@ typedef union __arm_2d_op_info_t {
                 uint8_t FillOrigLike;                                           //!< A copy-like interface contains the target tile, the dummy tile and the reference to the original source tile 
             };
             struct {
-                uint8_t TileProcessLike;d                                       //!< A simple interface contains only the target tile
+                uint8_t TileProcessLike;                                        //!< A simple interface contains only the target tile
             };
         }LowLevelInterfaceIndex;
 
