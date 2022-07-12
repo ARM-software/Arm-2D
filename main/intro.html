@@ -295,7 +295,7 @@ $(document).ready(function(){initNavTree('intro.html',''); initResizable(); });
 <div class="line">        uint8_t                         : 6;</div>
 <div class="line">        uint8_t                         : 8;</div>
 <div class="line">        uint8_t                         : 8;</div>
-<div class="line">        <a class="code hl_union" href="unionarm__2d__color__info__t.html">arm_2d_color_info_t</a>    tColourInfo;     <span class="comment">//!&lt; enforced colour</span></div>
+<div class="line">        <a class="code hl_union" href="unionarm__2d__color__info__t.html" title="a type used as colour descriptor">arm_2d_color_info_t</a>    tColourInfo;     <span class="comment">//!&lt; enforced colour</span></div>
 <div class="line">    }, tInfo);</div>
 <div class="line"> </div>
 <div class="line">    implement_ex(<a class="code hl_struct" href="structarm__2d__region__t.html">arm_2d_region_t</a>, tRegion);</div>
@@ -321,7 +321,7 @@ $(document).ready(function(){initNavTree('intro.html',''); initResizable(); });
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><em><b>bDerivedResource</b></em>   </td><td class="markdownTableBodyNone">Feature Info   </td><td class="markdownTableBodyNone">bit-field   </td><td class="markdownTableBodyNone">This bit indicates whether a child tile is used as a resource.   </td><td class="markdownTableBodyNone">When creating a resource from a existing tile, you must set this bit to "1". <b>It is only valid when bIsRoot is "0"</b>.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><em><b>tColourInfo</b></em>   </td><td class="markdownTableBodyNone">Feature Info   </td><td class="markdownTableBodyNone"><em><b><a class="el" href="unionarm__2d__color__info__t.html">arm_2d_color_info_t</a></b></em>   </td><td class="markdownTableBodyNone">When <em><b>bHasEnforcedColour</b></em> is set, tColourInfo should contain a valid descriptor about the colour used in the target Tile.   </td><td class="markdownTableBodyNone">See <b><a href="#24-colour">section 2.4</a></b> for details.    </td></tr>
+<td class="markdownTableBodyNone"><em><b>tColourInfo</b></em>   </td><td class="markdownTableBodyNone">Feature Info   </td><td class="markdownTableBodyNone"><em><b><a class="el" href="unionarm__2d__color__info__t.html" title="a type used as colour descriptor">arm_2d_color_info_t</a></b></em>   </td><td class="markdownTableBodyNone">When <em><b>bHasEnforcedColour</b></em> is set, tColourInfo should contain a valid descriptor about the colour used in the target Tile.   </td><td class="markdownTableBodyNone">See <b><a href="#24-colour">section 2.4</a></b> for details.    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><em><b>tRegion</b></em>   </td><td class="markdownTableBodyNone">Region   </td><td class="markdownTableBodyNone"><em><b><a class="el" href="structarm__2d__region__t.html">arm_2d_region_t</a></b></em>   </td><td class="markdownTableBodyNone">Depends on the type of a given tile, <em><b>tRegion</b></em> has a different meaning.   </td><td class="markdownTableBodyNone">See <b><a href="#231-root-tile">section 2.3.1</a></b> and <b><a href="#232-child-tile">2.3.2</a></b> for details.    </td></tr>
 <tr class="markdownTableRowEven">
@@ -375,12 +375,12 @@ $(document).ready(function(){initNavTree('intro.html',''); initResizable(); });
 <div class="line">            </div>
 <div class="line"><span class="preprocessor">#define implement_tile(__NAME, __WIDTH, __HEIGHT, __TYPE)           \</span></div>
 <div class="line"><span class="preprocessor">            __implement_tile(__NAME, __WIDTH, __HEIGHT, __TYPE)</span></div>
-</div><!-- fragment --><p >For example, we can create two visual layers with size <b>100*100</b> and <em><b>200*50</b></em> respectively and using colour <em><b><a class="el" href="unionarm__2d__color__rgb565__t.html">arm_2d_color_rgb565_t</a></b></em> for pixels:</p>
+</div><!-- fragment --><p >For example, we can create two visual layers with size <b>100*100</b> and <em><b>200*50</b></em> respectively and using colour <em><b><a class="el" href="unionarm__2d__color__rgb565__t.html" title="the colour type for rgb565">arm_2d_color_rgb565_t</a></b></em> for pixels:</p>
 <div class="fragment"><div class="line">declare_tile(c_tLayerA)</div>
-<div class="line">implement_tile(c_tLayerA, 100, 100, <a class="code hl_union" href="unionarm__2d__color__rgb565__t.html">arm_2d_color_rgb565_t</a>);</div>
+<div class="line">implement_tile(c_tLayerA, 100, 100, <a class="code hl_union" href="unionarm__2d__color__rgb565__t.html" title="the colour type for rgb565">arm_2d_color_rgb565_t</a>);</div>
 <div class="line"> </div>
 <div class="line">declare_tile(c_tLayerB)</div>
-<div class="line">implement_tile(c_tLayerB, 200, 50, <a class="code hl_union" href="unionarm__2d__color__rgb565__t.html">arm_2d_color_rgb565_t</a>);</div>
+<div class="line">implement_tile(c_tLayerB, 200, 50, <a class="code hl_union" href="unionarm__2d__color__rgb565__t.html" title="the colour type for rgb565">arm_2d_color_rgb565_t</a>);</div>
 </div><!-- fragment --><p >These layers are stored in RAM, which are used as sources and targets for 2D operations.</p>
 <p >Note that in the aforementioned macro template, we use <em><b>ARM_NOINIT</b></em> to decorate the display buffer, its definition is shown below:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#ifndef ARM_NOINIT</span></div>
@@ -486,7 +486,7 @@ $(document).ready(function(){initNavTree('intro.html',''); initResizable(); });
 <div class="line">        uint8_t u3Variant  : 3;</div>
 <div class="line">    };</div>
 <div class="line">    uint8_t chScheme;</div>
-<div class="line">} <a class="code hl_union" href="unionarm__2d__color__info__t.html">arm_2d_color_info_t</a>;</div>
+<div class="line">} <a class="code hl_union" href="unionarm__2d__color__info__t.html" title="a type used as colour descriptor">arm_2d_color_info_t</a>;</div>
 </div><!-- fragment --><p ><b>Table 2-2 The Member of arm_2d_colour_info_t</b></p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -503,14 +503,14 @@ $(document).ready(function(){initNavTree('intro.html',''); initResizable(); });
 <td class="markdownTableBodyNone"><em><b>chScheme</b></em>   </td><td class="markdownTableBodyNone">uint8_t   </td><td class="markdownTableBodyNone">An 8bit representation of the bit fields aforementioned. It is very efficient in comparison. Enumerations starting with " ***ARM\_2D\_COLOUR\_*** " represent the colour formats currently supported in the Arm-2D library. For example, <em><b>ARM_2D_COLOUR_RGB565</b></em>.   </td><td class="markdownTableBodyNone"></td></tr>
 </table>
 <p >In addition to the colour format descriptor, the current version of the Arm-2D library also defines data structures for the supported colour formats:</p>
-<div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">union </span><a class="code hl_union" href="unionarm__2d__color__rgb565__t.html">arm_2d_color_rgb565_t</a> {</div>
+<div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">union </span><a class="code hl_union" href="unionarm__2d__color__rgb565__t.html" title="the colour type for rgb565">arm_2d_color_rgb565_t</a> {</div>
 <div class="line">    uint16_t tValue;</div>
 <div class="line">    <span class="keyword">struct </span>{</div>
 <div class="line">        uint16_t u5R : 5;</div>
 <div class="line">        uint16_t u6G : 6;</div>
 <div class="line">        uint16_t u5B : 5;</div>
 <div class="line">    };</div>
-<div class="line">} <a class="code hl_union" href="unionarm__2d__color__rgb565__t.html">arm_2d_color_rgb565_t</a>;</div>
+<div class="line">} <a class="code hl_union" href="unionarm__2d__color__rgb565__t.html" title="the colour type for rgb565">arm_2d_color_rgb565_t</a>;</div>
 <div class="line"><span class="comment"></span> </div>
 <div class="line"><span class="comment">/*! \brief In most cases four equal-sized pieces of adjacent memory are used,</span></div>
 <div class="line"><span class="comment"> *!        one for each channel, and a 0 in a channel indicates black color or</span></div>
@@ -531,7 +531,7 @@ $(document).ready(function(){initNavTree('intro.html',''); initResizable(); });
 <div class="line">} arm_2d_color_rgba8888_t;</div>
 <div class="line"> </div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">typedef</span> <span class="keyword">union </span><a class="code hl_union" href="unionarm__2d__color__rgb888__t.html">arm_2d_color_rgb888_t</a> {</div>
+<div class="line"><span class="keyword">typedef</span> <span class="keyword">union </span><a class="code hl_union" href="unionarm__2d__color__rgb888__t.html" title="the colour type for rgb888 (compliant with ccca888 and bgra8888)">arm_2d_color_rgb888_t</a> {</div>
 <div class="line">    uint32_t tValue;</div>
 <div class="line">    <span class="keyword">struct </span>{</div>
 <div class="line">        uint32_t u8R : 8;</div>
@@ -539,7 +539,7 @@ $(document).ready(function(){initNavTree('intro.html',''); initResizable(); });
 <div class="line">        uint32_t u8B : 8;</div>
 <div class="line">        uint32_t     : 8;</div>
 <div class="line">    };</div>
-<div class="line">} <a class="code hl_union" href="unionarm__2d__color__rgb888__t.html">arm_2d_color_rgb888_t</a>;</div>
+<div class="line">} <a class="code hl_union" href="unionarm__2d__color__rgb888__t.html" title="the colour type for rgb888 (compliant with ccca888 and bgra8888)">arm_2d_color_rgb888_t</a>;</div>
 </div><!-- fragment --><p >NOTE: The RGBA8888 is not fully supported in current version of Arm-2D but referenced in some part of the library.</p>
 <h2><a class="anchor" id="autotoc_md55"></a>
 2.4 API Usage Modes</h2>

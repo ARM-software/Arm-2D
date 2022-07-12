@@ -828,7 +828,7 @@ $(document).ready(function(){initNavTree('arm__2d__alpha__blending_8h_source.htm
 <div class="line"><a id="l00718" name="l00718"></a><span class="lineno">  718</span>                                                <a class="code hl_struct" href="group__gAlpha.html#structarm__2d__op__fill__cl__opc__t" title="control block for colour-filling-with-opacity operations">arm_2d_op_fill_cl_opc_t</a> *ptOP,</div>
 <div class="line"><a id="l00719" name="l00719"></a><span class="lineno">  719</span>                                                const <a class="code hl_struct" href="structarm__2d__tile__t.html">arm_2d_tile_t</a> *ptTarget,</div>
 <div class="line"><a id="l00720" name="l00720"></a><span class="lineno">  720</span>                                                const <a class="code hl_struct" href="structarm__2d__region__t.html">arm_2d_region_t</a> *ptRegion,</div>
-<div class="line"><a id="l00721" name="l00721"></a><span class="lineno">  721</span>                                                <a class="code hl_union" href="unionarm__2d__color__rgb565__t.html">arm_2d_color_rgb565_t</a> tColour,</div>
+<div class="line"><a id="l00721" name="l00721"></a><span class="lineno">  721</span>                                                <a class="code hl_union" href="unionarm__2d__color__rgb565__t.html" title="the colour type for rgb565">arm_2d_color_rgb565_t</a> tColour,</div>
 <div class="line"><a id="l00722" name="l00722"></a><span class="lineno">  722</span>                                                uint_fast8_t chRatio);</div>
 <div class="line"><a id="l00723" name="l00723"></a><span class="lineno">  723</span><span class="comment"></span> </div>
 <div class="line"><a id="l00724" name="l00724"></a><span class="lineno">  724</span><span class="comment">/*!</span></div>
@@ -846,7 +846,7 @@ $(document).ready(function(){initNavTree('arm__2d__alpha__blending_8h_source.htm
 <div class="line"><a id="l00736" name="l00736"></a><span class="lineno">  736</span>                                                <a class="code hl_struct" href="group__gAlpha.html#structarm__2d__op__fill__cl__opc__t" title="control block for colour-filling-with-opacity operations">arm_2d_op_fill_cl_opc_t</a> *ptOP,</div>
 <div class="line"><a id="l00737" name="l00737"></a><span class="lineno">  737</span>                                                const <a class="code hl_struct" href="structarm__2d__tile__t.html">arm_2d_tile_t</a> *ptTarget,</div>
 <div class="line"><a id="l00738" name="l00738"></a><span class="lineno">  738</span>                                                const <a class="code hl_struct" href="structarm__2d__region__t.html">arm_2d_region_t</a> *ptRegion,</div>
-<div class="line"><a id="l00739" name="l00739"></a><span class="lineno">  739</span>                                                <a class="code hl_union" href="unionarm__2d__color__cccn888__t.html">arm_2d_color_cccn888_t</a> tColour,</div>
+<div class="line"><a id="l00739" name="l00739"></a><span class="lineno">  739</span>                                                <a class="code hl_union" href="unionarm__2d__color__cccn888__t.html" title="the colour type for any 32bit colour formats which has an unused-alpha channel on its 3rd byte.">arm_2d_color_cccn888_t</a> tColour,</div>
 <div class="line"><a id="l00740" name="l00740"></a><span class="lineno">  740</span>                                                uint_fast8_t chRatio);</div>
 <div class="line"><a id="l00741" name="l00741"></a><span class="lineno">  741</span> </div>
 <div class="line"><a id="l00742" name="l00742"></a><span class="lineno">  742</span><span class="comment">/*----------------------------------------------------------------------------*</span></div>
@@ -887,7 +887,7 @@ $(document).ready(function(){initNavTree('arm__2d__alpha__blending_8h_source.htm
 <div class="line"><a id="l00777" name="l00777"></a><span class="lineno">  777</span>                                        const <a class="code hl_struct" href="structarm__2d__tile__t.html">arm_2d_tile_t</a> *ptTarget,</div>
 <div class="line"><a id="l00778" name="l00778"></a><span class="lineno">  778</span>                                        const <a class="code hl_struct" href="structarm__2d__region__t.html">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00779" name="l00779"></a><span class="lineno">  779</span>                                        const <a class="code hl_struct" href="structarm__2d__tile__t.html">arm_2d_tile_t</a> *ptAlpha,</div>
-<div class="line"><a id="l00780" name="l00780"></a><span class="lineno">  780</span>                                        <a class="code hl_union" href="unionarm__2d__color__rgb565__t.html">arm_2d_color_rgb565_t</a> tColour);</div>
+<div class="line"><a id="l00780" name="l00780"></a><span class="lineno">  780</span>                                        <a class="code hl_union" href="unionarm__2d__color__rgb565__t.html" title="the colour type for rgb565">arm_2d_color_rgb565_t</a> tColour);</div>
 <div class="line"><a id="l00781" name="l00781"></a><span class="lineno">  781</span><span class="comment"></span> </div>
 <div class="line"><a id="l00782" name="l00782"></a><span class="lineno">  782</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00783" name="l00783"></a><span class="lineno">  783</span><span class="comment"> * \brief fill a target tile with a given cccn888 colour and a mask on target side</span></div>
@@ -905,7 +905,7 @@ $(document).ready(function(){initNavTree('arm__2d__alpha__blending_8h_source.htm
 <div class="line"><a id="l00795" name="l00795"></a><span class="lineno">  795</span>                                        const <a class="code hl_struct" href="structarm__2d__tile__t.html">arm_2d_tile_t</a> *ptTarget,</div>
 <div class="line"><a id="l00796" name="l00796"></a><span class="lineno">  796</span>                                        const <a class="code hl_struct" href="structarm__2d__region__t.html">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00797" name="l00797"></a><span class="lineno">  797</span>                                        const <a class="code hl_struct" href="structarm__2d__tile__t.html">arm_2d_tile_t</a> *ptAlpha,</div>
-<div class="line"><a id="l00798" name="l00798"></a><span class="lineno">  798</span>                                        <a class="code hl_union" href="unionarm__2d__color__cccn888__t.html">arm_2d_color_cccn888_t</a> tColour);</div>
+<div class="line"><a id="l00798" name="l00798"></a><span class="lineno">  798</span>                                        <a class="code hl_union" href="unionarm__2d__color__cccn888__t.html" title="the colour type for any 32bit colour formats which has an unused-alpha channel on its 3rd byte.">arm_2d_color_cccn888_t</a> tColour);</div>
 <div class="line"><a id="l00799" name="l00799"></a><span class="lineno">  799</span> </div>
 <div class="line"><a id="l00800" name="l00800"></a><span class="lineno">  800</span><span class="comment">/*----------------------------------------------------------------------------*</span></div>
 <div class="line"><a id="l00801" name="l00801"></a><span class="lineno">  801</span><span class="comment"> * Fill tile with a specified colour, an alpha mask and a specified opacity   *</span></div>
@@ -948,7 +948,7 @@ $(document).ready(function(){initNavTree('arm__2d__alpha__blending_8h_source.htm
 <div class="line"><a id="l00838" name="l00838"></a><span class="lineno">  838</span>                                        const <a class="code hl_struct" href="structarm__2d__tile__t.html">arm_2d_tile_t</a> *ptTarget,</div>
 <div class="line"><a id="l00839" name="l00839"></a><span class="lineno">  839</span>                                        const <a class="code hl_struct" href="structarm__2d__region__t.html">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00840" name="l00840"></a><span class="lineno">  840</span>                                        const <a class="code hl_struct" href="structarm__2d__tile__t.html">arm_2d_tile_t</a> *ptAlpha,</div>
-<div class="line"><a id="l00841" name="l00841"></a><span class="lineno">  841</span>                                        <a class="code hl_union" href="unionarm__2d__color__rgb565__t.html">arm_2d_color_rgb565_t</a> tColour,</div>
+<div class="line"><a id="l00841" name="l00841"></a><span class="lineno">  841</span>                                        <a class="code hl_union" href="unionarm__2d__color__rgb565__t.html" title="the colour type for rgb565">arm_2d_color_rgb565_t</a> tColour,</div>
 <div class="line"><a id="l00842" name="l00842"></a><span class="lineno">  842</span>                                        uint8_t chOpacity);</div>
 <div class="line"><a id="l00843" name="l00843"></a><span class="lineno">  843</span><span class="comment"></span> </div>
 <div class="line"><a id="l00844" name="l00844"></a><span class="lineno">  844</span><span class="comment">/*!</span></div>
@@ -968,7 +968,7 @@ $(document).ready(function(){initNavTree('arm__2d__alpha__blending_8h_source.htm
 <div class="line"><a id="l00858" name="l00858"></a><span class="lineno">  858</span>                                        const <a class="code hl_struct" href="structarm__2d__tile__t.html">arm_2d_tile_t</a> *ptTarget,</div>
 <div class="line"><a id="l00859" name="l00859"></a><span class="lineno">  859</span>                                        const <a class="code hl_struct" href="structarm__2d__region__t.html">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00860" name="l00860"></a><span class="lineno">  860</span>                                        const <a class="code hl_struct" href="structarm__2d__tile__t.html">arm_2d_tile_t</a> *ptAlpha,</div>
-<div class="line"><a id="l00861" name="l00861"></a><span class="lineno">  861</span>                                        <a class="code hl_union" href="unionarm__2d__color__cccn888__t.html">arm_2d_color_cccn888_t</a> tColour,</div>
+<div class="line"><a id="l00861" name="l00861"></a><span class="lineno">  861</span>                                        <a class="code hl_union" href="unionarm__2d__color__cccn888__t.html" title="the colour type for any 32bit colour formats which has an unused-alpha channel on its 3rd byte.">arm_2d_color_cccn888_t</a> tColour,</div>
 <div class="line"><a id="l00862" name="l00862"></a><span class="lineno">  862</span>                                        uint8_t chOpacity);</div>
 <div class="line"><a id="l00863" name="l00863"></a><span class="lineno">  863</span> </div>
 <div class="line"><a id="l00864" name="l00864"></a><span class="lineno">  864</span><span class="comment">/*----------------------------------------------------------------------------*</span></div>
@@ -1014,7 +1014,7 @@ $(document).ready(function(){initNavTree('arm__2d__alpha__blending_8h_source.htm
 <div class="line"><a id="l00904" name="l00904"></a><span class="lineno">  904</span>                                                const <a class="code hl_struct" href="structarm__2d__tile__t.html">arm_2d_tile_t</a> *ptTarget, </div>
 <div class="line"><a id="l00905" name="l00905"></a><span class="lineno">  905</span>                                                const <a class="code hl_struct" href="structarm__2d__region__t.html">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00906" name="l00906"></a><span class="lineno">  906</span>                                                uint_fast8_t chRatio,</div>
-<div class="line"><a id="l00907" name="l00907"></a><span class="lineno">  907</span>                                                <a class="code hl_union" href="unionarm__2d__color__rgb565__t.html">arm_2d_color_rgb565_t</a> tColour);</div>
+<div class="line"><a id="l00907" name="l00907"></a><span class="lineno">  907</span>                                                <a class="code hl_union" href="unionarm__2d__color__rgb565__t.html" title="the colour type for rgb565">arm_2d_color_rgb565_t</a> tColour);</div>
 <div class="line"><a id="l00908" name="l00908"></a><span class="lineno">  908</span><span class="comment"></span> </div>
 <div class="line"><a id="l00909" name="l00909"></a><span class="lineno">  909</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00910" name="l00910"></a><span class="lineno">  910</span><span class="comment"> * \brief blend a source tile to a target tile with a opacity and colour keying</span></div>
@@ -1034,7 +1034,7 @@ $(document).ready(function(){initNavTree('arm__2d__alpha__blending_8h_source.htm
 <div class="line"><a id="l00924" name="l00924"></a><span class="lineno">  924</span>                                                const <a class="code hl_struct" href="structarm__2d__tile__t.html">arm_2d_tile_t</a> *ptTarget,</div>
 <div class="line"><a id="l00925" name="l00925"></a><span class="lineno">  925</span>                                                const <a class="code hl_struct" href="structarm__2d__region__t.html">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00926" name="l00926"></a><span class="lineno">  926</span>                                                uint_fast8_t chRatio,</div>
-<div class="line"><a id="l00927" name="l00927"></a><span class="lineno">  927</span>                                                <a class="code hl_union" href="unionarm__2d__color__cccn888__t.html">arm_2d_color_cccn888_t</a> tColour);</div>
+<div class="line"><a id="l00927" name="l00927"></a><span class="lineno">  927</span>                                                <a class="code hl_union" href="unionarm__2d__color__cccn888__t.html" title="the colour type for any 32bit colour formats which has an unused-alpha channel on its 3rd byte.">arm_2d_color_cccn888_t</a> tColour);</div>
 <div class="line"><a id="l00928" name="l00928"></a><span class="lineno">  928</span> </div>
 <div class="line"><a id="l00929" name="l00929"></a><span class="lineno">  929</span><span class="comment">/*----------------------------------------------------------------------------*</span></div>
 <div class="line"><a id="l00930" name="l00930"></a><span class="lineno">  930</span><span class="comment"> * Copy tile to destination with both a source mask and a target mask         *</span></div>
