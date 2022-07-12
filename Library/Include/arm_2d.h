@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        17. June 2022
- * $Revision:    V.1.0.4
+ * $Date:        12. July 2022
+ * $Revision:    V.1.0.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -61,21 +61,27 @@ extern "C" {
 
 /*============================ MACROS ========================================*/
 
-//! \name arm-2d version
-//! @{
-#define ARM_2D_VERSION_MAJOR        1
-#define ARM_2D_VERSION_MINOR        0
-#define ARM_2D_VERSION_PATCH        0
-#define ARM_2D_VERSION_STR          "preview"   
+/*  arm-2d version */
+#define ARM_2D_VERSION_MAJOR        1                                           //!< Major version
+#define ARM_2D_VERSION_MINOR        0                                           //!< Minor version
+#define ARM_2D_VERSION_PATCH        0                                           //!< Patch number
+#define ARM_2D_VERSION_STR          "preview"                                   //!< tag
 
+/*!
+ * \brief arm-2d version number in decimal
+ * 
+ */
 #define ARM_2D_VERISON              (   ARM_2D_VERSION_MAJOR * 10000ul          \
                                     +   ARM_2D_VERSION_MINOR * 100ul            \
                                         ARM_2D_VERSION_PATCH)
-//! @}
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 
+/*!
+ * \brief a type for arm-2d runtime configuration 
+ * 
+ */
 typedef struct {
     /*! if the target region is out of the target tile, return arm_fsm_rt_cpl */
     uint8_t     TREAT_OUT_OF_RANGE_AS_COMPLETE          : 1;
@@ -85,18 +91,30 @@ typedef struct {
     uint8_t                                             : 6;
 } arm_2d_runtime_feature_t;
 
+/*!
+ * \brief a type for arm-2d version
+ * 
+ */
 typedef struct {
-    uint8_t     Major;
-    uint8_t     Minor;
-    uint8_t     Patch;
+    uint8_t     Major;              //!< major version
+    uint8_t     Minor;              //!< minor version
+    uint8_t     Patch;              //!< patch number
     uint8_t                 : 8;
 } arm_2d_version_t;
 
 /*============================ GLOBAL VARIABLES ==============================*/
 
+/*!
+ * \brief arm-2d runtime feature configuration
+ * 
+ */
 extern
 arm_2d_runtime_feature_t ARM_2D_RUNTIME_FEATURE;
 
+/*!
+ * \brief arm-2d version
+ * 
+ */
 extern 
 const arm_2d_version_t ARM_2D_VERSION;
 
@@ -127,14 +145,17 @@ arm_2d_tile_t *arm_2d_get_default_frame_buffer(void);
 
 /*! 
  * \brief attach a user param (which could be a pointer) to specified OP
+ *
  * \param ptOP the address of the target OP (NULL means using the default OP)
+ * 
  * \param pUserParam a user parameter (it can be used as a pointer)
  */
 extern
 void arm_2d_set_user_param(arm_2d_op_core_t *ptOP, uintptr_t pUserParam);
 
 /*! 
- * \brief wait asynchronouse operation complete
+ * \brief wait asynchronous operation complete
+ * \param[in] ptOP the address of the target OP (NULL means using the default OP)
  * \retval true sync up with operation
  * \retval false operation is busy
  */

@@ -56,8 +56,8 @@ LR_CODE S_CODE_START {
 }
 LR_DATA S_DATA_START {
     ER_DATA +0 {
-        * (:gdef:c_bmpBackground)
-        * (:gdef:c_bmpCircleBackGroundAlpha)
+        * (:gdef:c_bmpBackgroundRGB565)
+        * (:gdef:c_bmpCircleMaskAlpha)
         .ANY (+ZI +RW)
     }
 

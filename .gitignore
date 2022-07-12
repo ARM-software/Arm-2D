@@ -47,3 +47,4 @@ documentation/html
 build
 *.gabriel
 *.scvd
+.DS_Store

@@ -21,8 +21,8 @@
  * Title:        arm_2d_utils.h
  * Description:  Public header file for Arm-2D Library
  *
- * $Date:        12. April 2022
- * $Revision:    V.1.0.1
+ * $Date:        12. July 2022
+ * $Revision:    V.1.0.2
  *
  * -------------------------------------------------------------------- */
 
@@ -68,59 +68,73 @@ extern "C" {
  * Environment Detection                                                      *
  *----------------------------------------------------------------------------*/
 
-//! \name The macros to identify the compiler
-//! @{
+/* The macros to identify compilers */
 
-//! \note for IAR
-#ifdef __IS_COMPILER_IAR__
-#   undef __IS_COMPILER_IAR__
-#endif
+/*! 
+ * \brief to detect IAR 
+ */
+#undef __IS_COMPILER_IAR__
 #if defined(__IAR_SYSTEMS_ICC__)
 #   define __IS_COMPILER_IAR__                  1
 #endif
 
-//! \note for arm compiler 5
-#ifdef __IS_COMPILER_ARM_COMPILER_5__
-#   undef __IS_COMPILER_ARM_COMPILER_5__
-#endif
+/*!
+ * \brief to detect arm compiler 5
+ * 
+ */
+#undef __IS_COMPILER_ARM_COMPILER_5__
 #if ((__ARMCC_VERSION >= 5000000) && (__ARMCC_VERSION < 6000000))
 #   define __IS_COMPILER_ARM_COMPILER_5__       1
 #endif
-//! @}
 
-//! \note for arm compiler 6
-#ifdef __IS_COMPILER_ARM_COMPILER_6__
-#   undef __IS_COMPILER_ARM_COMPILER_6__
-#endif
+
+/*!
+ * \brief to detect arm compiler 6
+ * 
+ */
+#undef __IS_COMPILER_ARM_COMPILER_6__
 #if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
 #   define __IS_COMPILER_ARM_COMPILER_6__       1
 #endif
 
-#ifdef __IS_COMPILER_LLVM__
-#   undef  __IS_COMPILER_LLVM__
+/*!
+ * \brief to detect arm compilers
+ * 
+ */
+#undef __IS_COMPILER_ARM_COMPILER__
+#if defined(__IS_COMPILER_ARM_COMPILER_5__) && __IS_COMPILER_ARM_COMPILER_5__   \
+||  defined(__IS_COMPILER_ARM_COMPILER_6__) && __IS_COMPILER_ARM_COMPILER_6__
+#   define __IS_COMPILER_ARM_COMPILER__         1
 #endif
+
+/*!
+ * \brief to detect clang (llvm)
+ * 
+ */
+#undef  __IS_COMPILER_LLVM__
 #if defined(__clang__) && !__IS_COMPILER_ARM_COMPILER_6__
 #   define __IS_COMPILER_LLVM__                 1
 #else
-//! \note for gcc
-#   ifdef __IS_COMPILER_GCC__
-#       undef __IS_COMPILER_GCC__
-#   endif
-#   if defined(__GNUC__) && !(  defined(__IS_COMPILER_ARM_COMPILER_5__)         \
-                            ||  defined(__IS_COMPILER_ARM_COMPILER_6__)         \
-                            ||  defined(__IS_COMPILER_LLVM__))
+
+/*!
+ * \brief to detect gcc
+ * 
+ */
+#   undef __IS_COMPILER_GCC__
+#   if defined(__GNUC__) && !(  defined(__IS_COMPILER_ARM_COMPILER__)           \
+                            ||  defined(__IS_COMPILER_LLVM__)                   \
+                            ||  defined(__IS_COMPILER_IAR__))
 #       define __IS_COMPILER_GCC__              1
 #   endif
-//! @}
+
 #endif
-//! @}
+
 
 
 /*----------------------------------------------------------------------------*
  * OOC and Private Protection                                                 *
  *----------------------------------------------------------------------------*/
-/*! \brief minimal support for OOPC
- */
+/*  minimal support for OOPC */
 #undef __implement_ex
 #undef __implement
 #undef implement
@@ -175,17 +189,32 @@ extern "C" {
 
 #define __ARM_VA_NUM_ARGS_IMPL( _0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,      \
                                 _13,_14,_15,_16,__N,...)      __N
+
+/*!
+ * \brief A macro to count the number of parameters
+ * 
+ * \note if GNU extension is not supported or enabled, the following express will
+ *       be false:  (__ARM_VA_NUM_ARGS() != 0)
+ *       This might cause problems when in this library.
+ */
 #define __ARM_VA_NUM_ARGS(...)                                                  \
             __ARM_VA_NUM_ARGS_IMPL( 0,##__VA_ARGS__,16,15,14,13,12,11,10,9,     \
                                       8,7,6,5,4,3,2,1,0)
 
-/*! \brief detect whether GNU extension is enabled in compilation or not
+/*! 
+ * \brief detect whether GNU extension is enabled in compilation or not
  */
 #if __ARM_VA_NUM_ARGS() != 0
-#   warning Please enable GNC extensions, it is required by the Arm-2D.
+#   warning Please enable GNU extensions, it is required by the Arm-2D.
 #endif
 
 #ifndef ARM_2D_INVOKE
+/*!
+ * \brief A macro to safely invode a function pointer
+ * 
+ * \param[in] __FUNC_PTR the target function pointer
+ * \param[in] ... an optional parameter list
+ */
 #   define ARM_2D_INVOKE(__FUNC_PTR, ...)                                       \
             do {                                                                \
                 if (NULL != (__FUNC_PTR)) {                                     \
@@ -331,11 +360,30 @@ extern "C" {
 #   define __OVERRIDE_WEAK
 #endif
 
+/*!
+ * \brief A macro to generate a safe name, usually used in macro template as the 
+ *        name of local variables
+ * 
+ */
 #define ARM_2D_SAFE_NAME(...)    ARM_CONNECT(__,__LINE__,##__VA_ARGS__)
 #define arm_2d_safe_name(...)    ARM_2D_SAFE_NAME(__VA_ARGS__)
 
 #undef arm_irq_safe
 
+/*!
+ * \brief a decoration to make the immediate following code irq-safe
+ * 
+ * \code
+     arm_irq_safe {
+         // code inside the brackets are IRQ safe
+         ...
+     }
+
+     // the printf is IRQ safe
+     arm_irq_safe printf("IRQ safe printf\n");
+
+   \endcode
+ */
 #define arm_irq_safe                                                            \
             arm_using(  uint32_t ARM_2D_SAFE_NAME(temp) =                       \
                         ({uint32_t temp=__get_PRIMASK();__disable_irq();temp;}),\
@@ -362,9 +410,7 @@ extern "C" {
  * List Operations                                                            *
  *----------------------------------------------------------------------------*/
 
-/*! \note ALL the parameters passed to following macros must be pointer
- *!       variables.
- */
+/*  ALL the parameters passed to following macros must be pointer variables. */
 
 #define __ARM_LIST_STACK_PUSH(__P_TOP, __P_NODE)                                \
         do {                                                                    \
@@ -453,9 +499,15 @@ const __arm_2d_low_level_io_t LOW_LEVEL_IO##__NAME = {                          
 
 /*============================ TYPES =========================================*/
 
+/*!
+ * \brief a type for generic list
+ * 
+ * \note to avoid using container_of() operand, please put __arm_slist_node_t
+ *       at the beginning of a class/structure
+ */
 typedef struct __arm_slist_node_t __arm_slist_node_t;
 struct __arm_slist_node_t {
-    __arm_slist_node_t     *ptNext;
+    __arm_slist_node_t     *ptNext;             //!< the next node
 };
 
 

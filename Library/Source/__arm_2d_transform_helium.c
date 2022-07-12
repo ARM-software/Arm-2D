@@ -130,9 +130,9 @@ void __arm_2d_pack_rgb888_to_mem(uint8_t * pMem, uint16x8_t R, uint16x8_t G, uin
 {
     uint16x8_t      sg = vidupq_n_u16(0, 4);
 
-    vstrbq_scatter_offset_u16(pMem, sg, R);
-    vstrbq_scatter_offset_u16(pMem + 1, sg, G);
-    vstrbq_scatter_offset_u16(pMem + 2, sg, B);
+    vstrbq_scatter_offset_u16(pMem,     sg, vminq(R, vdupq_n_u16(255)));
+    vstrbq_scatter_offset_u16(pMem + 1, sg, vminq(G, vdupq_n_u16(255)));
+    vstrbq_scatter_offset_u16(pMem + 2, sg, vminq(B, vdupq_n_u16(255)));
     //vstrbq_scatter_offset_u16(pMem + 3, sg, vdupq_n_u16(0));
 }
 
@@ -791,8 +791,8 @@ bool __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
                                            vAreaTR, vAreaTL, vAreaBR, vAreaBL)          \
     int16x8_t       vOne = vdupq_n_s16(SET_Q6INT(1));                                   \
                                                                                         \
-    vXi = vsubq_m_n_s16(vXi, vXi, 1, vcmpltq_n_s16(ptPoint->X, 0));                     \
-    vYi = vsubq_m_n_s16(vYi, vYi, 1, vcmpltq_n_s16(ptPoint->Y, 0));                     \
+    /*vXi = vsubq_m_n_s16(vXi, vXi, 1, vcmpltq_n_s16(ptPoint->X, 0));  */               \
+    /*vYi = vsubq_m_n_s16(vYi, vYi, 1, vcmpltq_n_s16(ptPoint->Y, 0));  */               \
                                                                                         \
     int16x8_t       vWX = ptPoint->X - SET_Q6INT(vXi);                                  \
     int16x8_t       vWY = ptPoint->Y - SET_Q6INT(vYi);                                  \

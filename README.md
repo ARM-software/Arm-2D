@@ -12,11 +12,11 @@
 
 ## Features
 
-#### In this release ( ver1.0.0-preview)
+#### In this release ( ver1.0.0-preview3)
 
 The Arm-2D library provides **Low-Level 2D Image Processing Services** that are mainly used in **Deep Embedded Display system**. The supported features include but not limited to:
 
-- **Support Accelerating LVGL** (**v8.2.0** or newer)
+- **Support Accelerating LVGL** (**v8.3.0** or newer)
 - **CMSIS-Pack is available.**
 - **Alpha-Blending** / **Alpha-Masking**
   - With or without Colour-Keying
@@ -208,15 +208,15 @@ There is no public 2D image processing benchmark available for microcontrollers.
 
 - The library is designed with the philosophy that Users are free to use anything in public header files and should not touch anything marked implicitly or explicitly as private. 
 
-- Despite which processor you use, during the compilation, all C source files are safe to be added to the compilation (and we highly recommend you to do this for simplicity reason). For example, when you use Cortex-M4, which doesn't support Helium extension (introduced by Armv8.1-M architecture and first implemented by the Cortex-M55 processor), it is OK to include "***arm_2d_helium.c***" in the compilation process, as the C source files are constructed with environment detection in pre-processing phase. 
+- Despite which processor you use, during the compilation, all C source files are safe to be added to the compilation (and we highly recommend you to do this for simplicity reason). For example, when you use Cortex-M4, which doesn't support Helium extension (introduced by Armv8.1-M architecture and first implemented by the Cortex-M55 processor), it is OK to include `arm_2d_helium.c` in the compilation process, as the C source files are constructed with environment detection in pre-processing phase. 
 
-- In your application, including "***arm_2d.h***" is sufficient to get all the services and APIs ready for you. 
+- In your application, including `arm_2d.h` is sufficient to get all the services and APIs ready for you. 
 
 - Make sure that the library is initialised by calling `arm_2d_init()` before using any of the services. 
 
   **NOTE**: 
 
-  1. Feature configuration macros are checked by "***arm_2d_feature.h***". For the current stage of the library, please **DO NOT** override those feature configuration macros.
+  1. Feature configuration macros are checked by `arm_2d_feature.h`. For the current stage of the library, please **DO NOT** override those feature configuration macros.
   
   
 
@@ -237,16 +237,16 @@ There is no public 2D image processing benchmark available for microcontrollers.
   - [ ***\_\_alignof\_\_()*** ](https://gcc.gnu.org/onlinedocs/gcc/Alignment.html#Alignment) 
   - [Unnamed Structure and Union Fields](https://gcc.gnu.org/onlinedocs/gcc/Unnamed-Fields.html)
   - [Statements and Declarations in Expressions](https://gcc.gnu.org/onlinedocs/gcc/Statement-Exprs.html#Statement-Exprs)
-- Some of the definitions are written with the support of the **Microsoft Extensions** in mind \( ***-fms-extensions*** \), but **the library never depends on it**. This means that if programmers enable the support of the Microsoft Extensions in their project, they can benefit from it. 
+- Some of the definitions are written with the support of the **Microsoft Extensions** in mind \( `-fms-extensions` \), but **the library never depends on it**. This means that if programmers enable the support of the Microsoft Extensions in their project, they can benefit from it. 
 - This library follows ***"Using Extensions to replace Modifications"*** principle
-  - Keywords ***\_\_WEAK*** and ***\_\_OVERRIDE\_WEAK*** are introduced for default functions and extensions; it is similar to the concept of "virtual functions" and "override functions" in C#. 
-    - ***arm_2d_async.c*** is used to override some infrastructure functions in ***arm_2d.c*** to support asynchronous mode in the programmers' mode.  
+  - Keywords `__WEAK` and `__OVERRIDE_WEAK` are introduced for default functions and extensions; it is similar to the concept of "virtual functions" and "override functions" in C#. 
+    - `arm_2d_async.c` is used to override some infrastructure functions in `arm_2d.c` to support asynchronous mode in the programmers' mode.  
     - ***arm_2d_helium.c*** is used to override some default software algorithm implementations across the library. 
   - Supports for hardware accelerators (both from Arm and 3rd-parties) should be added in the same manner in the future. 
     
-    - Override the target low level IO defined with ***def_low_lv_io()*** macro that originally defined in ***arm_2d_op_table.c*** to add your own version of algorithms and hardware accelerations. For example, if you want to add alpha-blending support for RGB565 using your 2D hardware accelerator, you should do the following steps:
+    - Override the target low level IO defined with `def_low_lv_io()` macro that originally defined in `arm_2d_op_table.c` to add your own version of algorithms and hardware accelerations. For example, if you want to add alpha-blending support for RGB565 using your 2D hardware accelerator, you should do the following steps:
     
-      1. In one of your own C source code, override the definition of ***\_\_ARM_2D_IO_ALPHA_BLENDING_RGB565***
+      1. In one of your own C source code, override the definition of `__ARM_2D_IO_ALPHA_BLENDING_RGB565`
     
          ```c
          //! PLEASE add following three lines in your hardware adapter source code
@@ -262,17 +262,17 @@ There is no public 2D image processing benchmark available for microcontrollers.
                          __arm_2d_rgb565_my_hw_alpha_blending);
          ```
     
-      2. Copy the function body of ***\_\_arm\_2d\_rgb565\_sw\_alpha\_blending()*** to your source code as a template of the ***hardware adaptor*** and rename it as ***\_\_arm_2d_rgb565_my_hw_alpha_blending()***
+      2. Copy the function body of `__arm_2d_rgb565_sw_alpha_blending()` to your source code as a template of the ***hardware adaptor*** and rename it as `__arm_2d_rgb565_my_hw_alpha_blending()`
     
       3. Modify ***\_\_arm_2d_rgb565_my_hw_alpha_blending()*** to use your own hardware accelerator. 
     
       4. Based on the arguments passed to the function and the capability of your 2D accelerator, you can:
     
-         - return "***ARM_2D_ERR_NOT_SUPPORT***" if the hardware isn't capable to do what is requested.
-         - return "***arm_fsm_rt_cpl***" if the task is done immediately and no need to wait.
-         - return "***arm_fsm_rt_async***" if the task is done asynchronously and later report to arm-2d by calling function ***__arm_2d_notify_sub_task_cpl()***. 
+         - return `ARM_2D_ERR_NOT_SUPPORT` if the hardware isn't capable to do what is requested.
+         - return `arm_fsm_rt_cpl` if the task is done immediately and no need to wait.
+         - return `arm_fsm_rt_async` if the task is done asynchronously and later report to arm-2d by calling function `__arm_2d_notify_sub_task_cpl()`. 
     
-      ***NOTE***: The Arm-2D pipeline will keep issuing tasks to your ***hardware adaptor***, please quickly check whether the hardware is capable of doing the work or not, and then add the task (an ***__arm_2d_sub_task_t*** object) to a list in ***First-In-First-Out*** manner if your hardware adaptor decides to keep it. After that, your hardware accelerator can fetch tasks one by one.  
+      ***NOTE***: The Arm-2D pipeline will keep issuing tasks to your ***hardware adaptor***, please quickly check whether the hardware is capable of doing the work or not, and then add the task (an `__arm_2d_sub_task_t` object) to a list in ***First-In-First-Out*** manner if your hardware adaptor decides to keep it. After that, your hardware accelerator can fetch tasks one by one.  
 
 ``````c
 typedef struct __arm_2d_sub_task_t __arm_2d_sub_task_t;
