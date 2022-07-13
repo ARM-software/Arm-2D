@@ -73,28 +73,6 @@
 #   define __DISP0_CFG_PFB_BLOCK_WIDTH__   __DISP0_CFG_SCEEN_HEIGHT__
 #endif
 
-#if __DISP0_CFG_COLOUR_DEPTH__ == 8
-#   define __arm_2d_color_t         arm_2d_color_gray8_t
-#   define COLOUR_INT               uint8_t
-#   define arm_2d_fill_colour       arm_2d_c8it_fill_colour
-#   define arm_2dp_fill_colour_with_opacity                                     \
-                arm_2dp_gray8_fill_colour_with_opacity
-#elif __DISP0_CFG_COLOUR_DEPTH__ == 16
-#   define __arm_2d_color_t         arm_2d_color_rgb565_t
-#   define COLOUR_INT               uint16_t
-#   define arm_2d_fill_colour       arm_2d_rgb16_fill_colour
-#   define arm_2dp_fill_colour_with_opacity                                     \
-                arm_2dp_rgb565_fill_colour_with_opacity
-#elif __DISP0_CFG_COLOUR_DEPTH__ == 32
-#   define __arm_2d_color_t         arm_2d_color_cccn888_t
-#   define COLOUR_INT               uint32_t
-#   define arm_2d_fill_colour       arm_2d_rgb32_fill_colour
-#   define arm_2dp_fill_colour_with_opacity                                     \
-                arm_2dp_cccn888_fill_colour_with_opacity
-#else
-#   error Unsupported colour depth!
-#endif
-
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/

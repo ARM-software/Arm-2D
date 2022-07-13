@@ -121,7 +121,7 @@ extern "C" {
 #   define BENCHMARK_PFB_BLOCK_HEIGHT           240
 #endif
 
-// <o>Number of interations <1-2000>
+// <o>Number of iterations <1-2000>
 // <i> run number of iterations used in arm-2d benchmark before calculate the result.
 #ifndef ITERATION_CNT
 #   define ITERATION_CNT                        1000

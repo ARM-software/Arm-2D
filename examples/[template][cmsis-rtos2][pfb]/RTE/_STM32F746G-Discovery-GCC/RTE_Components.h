@@ -16,22 +16,22 @@
  */
 #define CMSIS_device_header "stm32f7xx.h"
 
+/* ARM::Acceleration:Arm-2D Extras:Controls:1.1.0 */
+#define __RTE_ACCELERATION_ARM_2D_EXTRA_CONTROLS__
+/* ARM::Acceleration:Arm-2D Extras:LCD ASCII Printf:1.0.0 */
+#define __RTE_ACCELERATION_ARM_2D_EXTRA_LCD_PRINTF__
+/* ARM::Acceleration:Arm-2D Helper:PFB:1.1.0 */
+#define __RTE_ACCELERATION_ARM_2D_HELPER_PFB__
+/* ARM::Acceleration:Arm-2D:Alpha-Blending:1.0.0-preview */
+#define __RTE_ACCELERATION_ARM_2D_ALPHA_BLENDING__
+/* ARM::Acceleration:Arm-2D:Core:1.0.0-preview */
+#define __RTE_ACCELERATION_ARM_2D__
+/* ARM::Acceleration:Arm-2D:Transform:1.0.0-preview */
+#define __RTE_ACCELERATION_ARM_2D_TRANSFORM__
 /* ARM::CMSIS:RTOS2:Keil RTX5:Source:5.5.4 */
 #define RTE_CMSIS_RTOS2                 /* CMSIS-RTOS2 */
         #define RTE_CMSIS_RTOS2_RTX5            /* CMSIS-RTOS2 Keil RTX5 */
         #define RTE_CMSIS_RTOS2_RTX5_SOURCE     /* CMSIS-RTOS2 Keil RTX5 Source */
-/* Arm::Acceleration:Arm-2D Extras:Controls:1.0.0 */
-#define __RTE_ACCELERATION_ARM_2D_EXTRA_CONTROLS__
-/* Arm::Acceleration:Arm-2D Extras:LCD ASCII Printf:1.0.0 */
-#define __RTE_ACCELERATION_ARM_2D_EXTRA_LCD_PRINTF__
-/* Arm::Acceleration:Arm-2D Helper:PFB:1.0.0-preview */
-#define __RTE_ACCELERATION_ARM_2D_HELPER_PFB__
-/* Arm::Acceleration:Arm-2D:Alpha-Blending:1.0.0-preview */
-#define __RTE_ACCELERATION_ARM_2D_ALPHA_BLENDING__
-/* Arm::Acceleration:Arm-2D:Core:1.0.0-preview */
-#define __RTE_ACCELERATION_ARM_2D__
-/* Arm::Acceleration:Arm-2D:Transform:1.0.0-preview */
-#define __RTE_ACCELERATION_ARM_2D_TRANSFORM__
 /* Keil::CMSIS Driver:USART:1.16.0 */
 #define RTE_Drivers_USART1              /* Driver USART1 */
         #define RTE_Drivers_USART2              /* Driver USART2 */

@@ -9174,6 +9174,118 @@
       </api>
     </apis>
     <components>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-EXTRA">
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.0.0-preview3"/>
+        <targetInfos>
+          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-CORE">
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.0.0-preview3"/>
+        <targetInfos>
+          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-Helper" maxInstances="8">
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.0.0-preview3"/>
+        <targetInfos>
+          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-CORE">
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.0.0-preview3"/>
+        <targetInfos>
+          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Alpha-Blending" Cvendor="ARM" Cversion="1.0.0-preview" condition="Arm-2D-CORE">
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.0.0-preview3"/>
+        <targetInfos>
+          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.0.0-preview" condition="CMSIS-DSP">
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.0.0-preview3"/>
+        <targetInfos>
+          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Transform" Cvendor="ARM" Cversion="1.0.0-preview" condition="Arm-2D-CORE">
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.0.0-preview3"/>
+        <targetInfos>
+          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
       <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.6.0" condition="ARMv6_7_8-M Device">
         <package name="CMSIS" schemaVersion="1.7.7" url="http://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
         <targetInfos>
@@ -9190,8 +9302,8 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Source" Cvendor="ARM" Cversion="1.10.0" condition="CMSIS DSP" isTargetSpecific="1">
-        <package name="CMSIS" schemaVersion="1.7.7" url="http://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
+      <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Source" Cvendor="ARM" Cversion="1.10.1" condition="CMSIS DSP" isTargetSpecific="1">
+        <package name="CMSIS-DSP" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.10.1"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0">
             <c>
@@ -9283,118 +9395,6 @@
         <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="ARM" version="1.3.0"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cvendor="Arm" Cversion="1.0.0" condition="Arm-2D-CORE">
-        <package name="Arm-2D" schemaVersion="1.4" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/developing/cmsis-pack/" vendor="Arm" version="1.0.0-preview-beta8"/>
-        <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
-          <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
-          <targetInfo name="FastModel"/>
-          <targetInfo name="STM32F746G-Discovery"/>
-          <targetInfo name="STM32F746G-Discovery-AC5"/>
-          <targetInfo name="V2M-MPS2-CM0+"/>
-          <targetInfo name="V2M-MPS2-CM33"/>
-          <targetInfo name="V2M-MPS2-CM4"/>
-          <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
-          <targetInfo name="V2M-MPS3-CM85"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="Arm" Cversion="1.0.0" condition="Arm-2D-CORE">
-        <package name="Arm-2D" schemaVersion="1.4" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/developing/cmsis-pack/" vendor="Arm" version="1.0.0-preview-beta8"/>
-        <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
-          <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
-          <targetInfo name="FastModel"/>
-          <targetInfo name="STM32F746G-Discovery"/>
-          <targetInfo name="STM32F746G-Discovery-AC5"/>
-          <targetInfo name="V2M-MPS2-CM0+"/>
-          <targetInfo name="V2M-MPS2-CM33"/>
-          <targetInfo name="V2M-MPS2-CM4"/>
-          <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
-          <targetInfo name="V2M-MPS3-CM85"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="Arm" Cversion="1.0.1" condition="Arm-2D-Helper" maxInstances="8">
-        <package name="Arm-2D" schemaVersion="1.7.7" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/main/cmsis-pack/" vendor="Arm" version="1.0.0-preview1-dev19+g5237936"/>
-        <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
-          <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
-          <targetInfo name="FastModel"/>
-          <targetInfo name="STM32F746G-Discovery"/>
-          <targetInfo name="STM32F746G-Discovery-AC5"/>
-          <targetInfo name="V2M-MPS2-CM0+"/>
-          <targetInfo name="V2M-MPS2-CM33"/>
-          <targetInfo name="V2M-MPS2-CM4"/>
-          <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
-          <targetInfo name="V2M-MPS3-CM85"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="Arm" Cversion="1.1.0" condition="Arm-2D-CORE">
-        <package name="Arm-2D" schemaVersion="1.4" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/developing/cmsis-pack/" vendor="Arm" version="1.0.0-preview-beta8"/>
-        <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
-          <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
-          <targetInfo name="FastModel"/>
-          <targetInfo name="STM32F746G-Discovery"/>
-          <targetInfo name="STM32F746G-Discovery-AC5"/>
-          <targetInfo name="V2M-MPS2-CM0+"/>
-          <targetInfo name="V2M-MPS2-CM33"/>
-          <targetInfo name="V2M-MPS2-CM4"/>
-          <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
-          <targetInfo name="V2M-MPS3-CM85"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Alpha-Blending" Cvendor="Arm" Cversion="1.0.0-preview" condition="Arm-2D-CORE">
-        <package name="Arm-2D" schemaVersion="1.4" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/developing/cmsis-pack/" vendor="Arm" version="1.0.0-preview-beta8"/>
-        <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
-          <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
-          <targetInfo name="FastModel"/>
-          <targetInfo name="STM32F746G-Discovery"/>
-          <targetInfo name="STM32F746G-Discovery-AC5"/>
-          <targetInfo name="V2M-MPS2-CM0+"/>
-          <targetInfo name="V2M-MPS2-CM33"/>
-          <targetInfo name="V2M-MPS2-CM4"/>
-          <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
-          <targetInfo name="V2M-MPS3-CM85"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="Arm" Cversion="1.0.0-preview" condition="CMSIS-DSP">
-        <package name="Arm-2D" schemaVersion="1.4" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/developing/cmsis-pack/" vendor="Arm" version="1.0.0-preview-beta8"/>
-        <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
-          <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
-          <targetInfo name="FastModel"/>
-          <targetInfo name="STM32F746G-Discovery"/>
-          <targetInfo name="STM32F746G-Discovery-AC5"/>
-          <targetInfo name="V2M-MPS2-CM0+"/>
-          <targetInfo name="V2M-MPS2-CM33"/>
-          <targetInfo name="V2M-MPS2-CM4"/>
-          <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
-          <targetInfo name="V2M-MPS3-CM85"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Transform" Cvendor="Arm" Cversion="1.0.0-preview" condition="Arm-2D-CORE">
-        <package name="Arm-2D" schemaVersion="1.4" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/developing/cmsis-pack/" vendor="Arm" version="1.0.0-preview-beta8"/>
-        <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
-          <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
-          <targetInfo name="FastModel"/>
-          <targetInfo name="STM32F746G-Discovery"/>
-          <targetInfo name="STM32F746G-Discovery-AC5"/>
-          <targetInfo name="V2M-MPS2-CM0+"/>
-          <targetInfo name="V2M-MPS2-CM33"/>
-          <targetInfo name="V2M-MPS2-CM4"/>
-          <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
-          <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
       <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="I/O" Csub="STDOUT" Cvariant="User" Cvendor="Keil" Cversion="1.2.0" condition="ARMCC Cortex-M">
@@ -9579,8 +9579,8 @@
     <files>
       <file attr="config" category="sourceC" name="Library\Source\arm_2d.c" version="1.0.1">
         <instance index="0">RTE\Acceleration\arm_2d.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="Arm" Cversion="1.0.0-preview" condition="CMSIS-DSP"/>
-        <package name="Arm-2D" schemaVersion="1.7.7" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/main/cmsis-pack/" vendor="Arm" version="1.0.0-preview1-dev19+g5237936"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.0.0-preview" condition="CMSIS-DSP"/>
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.0.0-preview3"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
@@ -9597,8 +9597,8 @@
       </file>
       <file attr="config" category="preIncludeGlobal" name="Library\Include\template\arm_2d_cfg.h" version="1.0.7">
         <instance index="0">RTE\Acceleration\arm_2d_cfg.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="Arm" Cversion="1.0.0-preview" condition="CMSIS-DSP"/>
-        <package name="Arm-2D" schemaVersion="1.7.7" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/main/cmsis-pack/" vendor="Arm" version="1.0.0-preview1-dev19+g5237936"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.0.0-preview" condition="CMSIS-DSP"/>
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.0.0-preview3"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
@@ -9613,10 +9613,10 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_disp_adapter.c" version="1.0.3">
+      <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_disp_adapter.c" version="1.0.4">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="Arm" Cversion="1.0.1" condition="Arm-2D-Helper" maxInstances="8"/>
-        <package name="Arm-2D" schemaVersion="1.7.7" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/main/cmsis-pack/" vendor="Arm" version="1.0.0-preview1-dev19+g5237936"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-Helper" maxInstances="8"/>
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.0.0-preview3"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
@@ -9631,10 +9631,10 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="Helper\Include\template\arm_2d_disp_adapter.h" version="1.0.3">
+      <file attr="config" category="header" name="Helper\Include\template\arm_2d_disp_adapter.h" version="1.0.4">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="Arm" Cversion="1.0.1" condition="Arm-2D-Helper" maxInstances="8"/>
-        <package name="Arm-2D" schemaVersion="1.7.7" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/main/cmsis-pack/" vendor="Arm" version="1.0.0-preview1-dev19+g5237936"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-Helper" maxInstances="8"/>
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.0.0-preview3"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>

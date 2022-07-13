@@ -10,7 +10,7 @@
 #ifndef PRE_INCLUDE_GLOBAL_H
 #define PRE_INCLUDE_GLOBAL_H
 
-/* Arm::Acceleration:Arm-2D:Core:1.0.0-preview */
+/* ARM::Acceleration:Arm-2D:Core:1.0.0-preview */
 #define __ARM_2D_SKIP_CFG_HEADER__
 /* Keil::Device:STM32Cube HAL:Common:1.2.8 */
 #define USE_HAL_DRIVER
