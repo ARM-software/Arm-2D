@@ -130,8 +130,8 @@ $(document).ready(function(){initNavTree('arm__2d__helper__scene_8h_source.html'
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * Title:        #include &quot;arm_2d_helper_scene.h&quot;</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * Description:  Public header file for the scene service</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        22. June 2022</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.0.0</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        18. July 2022</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.0.1</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> * Target Processor:  Cortex-M cores</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment"> * -------------------------------------------------------------------- */</span></div>
@@ -216,7 +216,7 @@ $(document).ready(function(){initNavTree('arm__2d__helper__scene_8h_source.html'
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span><span class="comment"> * \param[in] ptThis the target scene player</span></div>
 <div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="comment"> * \param[in] ptSceneList the first node of a scene list</span></div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="comment"> * </span></div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="comment"> * \note When you register new scene array to a scene player, existing scenes </span></div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="comment"> * \note When you register a new scene list to a scene player, existing scenes </span></div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span><span class="comment"> *       (if any) will be deposed one by one by the scene player first. This is</span></div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="comment"> *       different from appending scene(s), as this operation is replacing the </span></div>
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span><span class="comment"> *       old (existing) scene with new ones.</span></div>
@@ -255,7 +255,7 @@ $(document).ready(function(){initNavTree('arm__2d__helper__scene_8h_source.html'
 <div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span><span class="comment"> * \param[in] ptThis the target scene player</span></div>
 <div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span><span class="comment"> * </span></div>
 <div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span><span class="comment"> * \note the event sequence of a scene:</span></div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="comment"> *       1. when fnBackground is not NULL</span></div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="comment"> *       1. when fnBackground is valid</span></div>
 <div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="comment"> *           - invoke fnOnBGStart when it is valid</span></div>
 <div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span><span class="comment"> *           - invoke fnBackground</span></div>
 <div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span><span class="comment"> *           - invoke fnOnBGComplete when it is valid</span></div>
@@ -269,7 +269,7 @@ $(document).ready(function(){initNavTree('arm__2d__helper__scene_8h_source.html'
 <div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span><span class="comment"> */</span></div>
 <div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>extern</div>
 <div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga9cb08eac383fd4a3066fa0d113914a8d">  163</a></span>arm_fsm_rt_t <a class="code hl_function" href="group__gHelper.html#ga9cb08eac383fd4a3066fa0d113914a8d" title="the scene player task function">arm_2d_user_scene_player_task</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__scene__player__t" title="a class to manage scenes">arm_2d_scene_player_t</a> *ptThis);</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga9cb08eac383fd4a3066fa0d113914a8d">  163</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gHelper.html#ga9cb08eac383fd4a3066fa0d113914a8d" title="the scene player task function">arm_2d_user_scene_player_task</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__scene__player__t" title="a class to manage scenes">arm_2d_scene_player_t</a> *ptThis);</div>
 <div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span><span class="comment"></span> </div>
 <div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span><span class="comment">/*! @} */</span></div>
 <div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> </div>

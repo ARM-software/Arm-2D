@@ -221,7 +221,7 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>impl_pfb_on_low_lv_rendering</b>(__NAME)&#160;&#160;&#160;            IMPL_PFB_ON_LOW_LV_RENDERING(__NAME)</td></tr>
 <tr class="separator:gac44b19321f46fd234d067343f789c3b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabd2fb6ea496de4693d7157023254e471"><td class="memItemLeft" align="right" valign="top"><a id="gabd2fb6ea496de4693d7157023254e471" name="gabd2fb6ea496de4693d7157023254e471"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>__declare_tile</b>(__NAME)&#160;&#160;&#160;            extern const <a class="el" href="structarm__2d__tile__t.html">arm_2d_tile_t</a> __NAME;</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>__declare_tile</b>(__NAME)&#160;&#160;&#160;            extern const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> __NAME;</td></tr>
 <tr class="separator:gabd2fb6ea496de4693d7157023254e471"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8ff1a2d6d72b77d9af31174201f62949"><td class="memItemLeft" align="right" valign="top"><a id="ga8ff1a2d6d72b77d9af31174201f62949" name="ga8ff1a2d6d72b77d9af31174201f62949"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>declare_tile</b>(__NAME)&#160;&#160;&#160;__declare_tile(__NAME)</td></tr>
@@ -245,7 +245,7 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga895cc320ceab0ca0bd10b999787b2d6c"><td class="memItemLeft" align="right" valign="top">typedef arm_fsm_rt_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga895cc320ceab0ca0bd10b999787b2d6c">arm_2d_helper_draw_handler_t</a>(void *pTarget, const <a class="el" href="structarm__2d__tile__t.html">arm_2d_tile_t</a> *ptTile, bool bIsNewFrame)</td></tr>
+<tr class="memitem:ga895cc320ceab0ca0bd10b999787b2d6c"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga895cc320ceab0ca0bd10b999787b2d6c">arm_2d_helper_draw_handler_t</a>(void *pTarget, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTile, bool bIsNewFrame)</td></tr>
 <tr class="memdesc:ga895cc320ceab0ca0bd10b999787b2d6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">the On-Drawing event handler for application layer  <a href="group__gHelper.html#ga895cc320ceab0ca0bd10b999787b2d6c">More...</a><br /></td></tr>
 <tr class="separator:ga895cc320ceab0ca0bd10b999787b2d6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga03c2991d31bd58c8a1d5303fb9460f39"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga03c2991d31bd58c8a1d5303fb9460f39">arm_2d_helper_render_handler_t</a>(void *pTarget, const <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptPFB, bool bIsNewFrame)</td></tr>
@@ -278,16 +278,16 @@ Functions</h2></td></tr>
 <tr class="memitem:gae96c8170c1e4b282af42717639ebc0cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gae96c8170c1e4b282af42717639ebc0cc">arm_2d_user_scene_player_next_scene</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis)</td></tr>
 <tr class="memdesc:gae96c8170c1e4b282af42717639ebc0cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">request switching to the next scene safely  <a href="group__gHelper.html#gae96c8170c1e4b282af42717639ebc0cc">More...</a><br /></td></tr>
 <tr class="separator:gae96c8170c1e4b282af42717639ebc0cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9cb08eac383fd4a3066fa0d113914a8d"><td class="memItemLeft" align="right" valign="top">arm_fsm_rt_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga9cb08eac383fd4a3066fa0d113914a8d">arm_2d_user_scene_player_task</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis)</td></tr>
+<tr class="memitem:ga9cb08eac383fd4a3066fa0d113914a8d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga9cb08eac383fd4a3066fa0d113914a8d">arm_2d_user_scene_player_task</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis)</td></tr>
 <tr class="memdesc:ga9cb08eac383fd4a3066fa0d113914a8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">the scene player task function  <a href="group__gHelper.html#ga9cb08eac383fd4a3066fa0d113914a8d">More...</a><br /></td></tr>
 <tr class="separator:ga9cb08eac383fd4a3066fa0d113914a8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga14181b777abd2c6af671699f9bfd8f99"><td class="memItemLeft" align="right" valign="top">arm_2d_err_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99">arm_2d_helper_pfb_init</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis, <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__cfg__t">arm_2d_helper_pfb_cfg_t</a> *ptCFG)</td></tr>
+<tr class="memitem:ga14181b777abd2c6af671699f9bfd8f99"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c">arm_2d_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99">arm_2d_helper_pfb_init</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis, <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__cfg__t">arm_2d_helper_pfb_cfg_t</a> *ptCFG)</td></tr>
 <tr class="memdesc:ga14181b777abd2c6af671699f9bfd8f99"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize pfb helper service  <a href="group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99">More...</a><br /></td></tr>
 <tr class="separator:ga14181b777abd2c6af671699f9bfd8f99"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab2cec999a9abbf7ec42bed4352a17b88"><td class="memItemLeft" align="right" valign="top">arm_fsm_rt_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gab2cec999a9abbf7ec42bed4352a17b88">arm_2d_helper_pfb_task</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis, <a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptDirtyRegions)</td></tr>
+<tr class="memitem:gab2cec999a9abbf7ec42bed4352a17b88"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gab2cec999a9abbf7ec42bed4352a17b88">arm_2d_helper_pfb_task</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis, <a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptDirtyRegions)</td></tr>
 <tr class="memdesc:gab2cec999a9abbf7ec42bed4352a17b88"><td class="mdescLeft">&#160;</td><td class="mdescRight">the task function for pfb helper  <a href="group__gHelper.html#gab2cec999a9abbf7ec42bed4352a17b88">More...</a><br /></td></tr>
 <tr class="separator:gab2cec999a9abbf7ec42bed4352a17b88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7f397129da5a5d78a7dd6325ab3405ef"><td class="memItemLeft" align="right" valign="top">arm_2d_err_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga7f397129da5a5d78a7dd6325ab3405ef">arm_2d_helper_pfb_update_dependency</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis, uint_fast8_t chMask, const <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__dependency__t">arm_2d_helper_pfb_dependency_t</a> *ptDependency)</td></tr>
+<tr class="memitem:ga7f397129da5a5d78a7dd6325ab3405ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c">arm_2d_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga7f397129da5a5d78a7dd6325ab3405ef">arm_2d_helper_pfb_update_dependency</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis, uint_fast8_t chMask, const <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__dependency__t">arm_2d_helper_pfb_dependency_t</a> *ptDependency)</td></tr>
 <tr class="memdesc:ga7f397129da5a5d78a7dd6325ab3405ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">update PFB dependency (event handlers)  <a href="group__gHelper.html#ga7f397129da5a5d78a7dd6325ab3405ef">More...</a><br /></td></tr>
 <tr class="separator:ga7f397129da5a5d78a7dd6325ab3405ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2fb25b4b8c12a021f686b0383960b012"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga2fb25b4b8c12a021f686b0383960b012">arm_2d_helper_pfb_report_rendering_complete</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis, <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptPFB)</td></tr>
@@ -575,7 +575,7 @@ ptNext</td>
 <td class="fielddoc">
 next pfb block </td></tr>
 <tr><td class="fieldtype">
-<a id="a5c06645aaf74ac1f648bc144d614c7aa" name="a5c06645aaf74ac1f648bc144d614c7aa"></a><a class="el" href="structarm__2d__tile__t.html">arm_2d_tile_t</a></td>
+<a id="a5c06645aaf74ac1f648bc144d614c7aa" name="a5c06645aaf74ac1f648bc144d614c7aa"></a><a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a></td>
 <td class="fieldname">
 tTile</td>
 <td class="fielddoc">
@@ -611,7 +611,7 @@ ptNext</td>
 <td class="fielddoc">
 the next node </td></tr>
 <tr><td class="fieldtype">
-<a id="aa17e31540f22ea3e9af8a23332b655e1" name="aa17e31540f22ea3e9af8a23332b655e1"></a><a class="el" href="structarm__2d__region__t.html">arm_2d_region_t</a></td>
+<a id="aa17e31540f22ea3e9af8a23332b655e1" name="aa17e31540f22ea3e9af8a23332b655e1"></a><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a></td>
 <td class="fieldname">
 tRegion</td>
 <td class="fielddoc">
@@ -707,7 +707,7 @@ evtOnDrawing</td>
 <td class="fielddoc">
 event handler for drawing GUI </td></tr>
 <tr><td class="fieldtype">
-<a id="a0ed423f1f6490f8cc89abd55f886f4cd" name="a0ed423f1f6490f8cc89abd55f886f4cd"></a><a class="el" href="structarm__2d__evt__t.html">arm_2d_evt_t</a></td>
+<a id="a0ed423f1f6490f8cc89abd55f886f4cd" name="a0ed423f1f6490f8cc89abd55f886f4cd"></a><a class="el" href="group__gKernel.html#structarm__2d__evt__t">arm_2d_evt_t</a></td>
 <td class="fieldname">
 evtOnLowLevelSyncUp</td>
 <td class="fielddoc">
@@ -731,7 +731,7 @@ low level rendering handler wants to sync-up (return arm_fsm_rt_wait_for_obj) </
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="adc4ca6df76cda6514cff8a4cec3918ca" name="adc4ca6df76cda6514cff8a4cec3918ca"></a><a class="el" href="structarm__2d__region__t.html">arm_2d_region_t</a></td>
+<a id="adc4ca6df76cda6514cff8a4cec3918ca" name="adc4ca6df76cda6514cff8a4cec3918ca"></a><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a></td>
 <td class="fieldname">
 tDisplayArea</td>
 <td class="fielddoc">
@@ -889,7 +889,7 @@ ptPFBs</td>
 <td class="fielddoc">
 current PFB block </td></tr>
 <tr><td class="fieldtype">
-<a id="a3b6ffb221416cc974d254f474a88bb0d" name="a3b6ffb221416cc974d254f474a88bb0d"></a><a class="el" href="structarm__2d__size__t.html">arm_2d_size_t</a></td>
+<a id="a3b6ffb221416cc974d254f474a88bb0d" name="a3b6ffb221416cc974d254f474a88bb0d"></a><a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a></td>
 <td class="fieldname">
 tFrameSize</td>
 <td class="fielddoc">
@@ -972,13 +972,13 @@ Adapter</td>
 <div class="textblock"></div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="a4d18f106b8bc55fa33c670e0c839481a" name="a4d18f106b8bc55fa33c670e0c839481a"></a><a class="el" href="structarm__2d__region__t.html">arm_2d_region_t</a></td>
+<a id="a4d18f106b8bc55fa33c670e0c839481a" name="a4d18f106b8bc55fa33c670e0c839481a"></a><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a></td>
 <td class="fieldname">
 tDrawRegion</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="aad733c1d1cdd5d94b743c8d9c80628b4" name="aad733c1d1cdd5d94b743c8d9c80628b4"></a><a class="el" href="structarm__2d__region__t.html">arm_2d_region_t</a></td>
+<a id="aad733c1d1cdd5d94b743c8d9c80628b4" name="aad733c1d1cdd5d94b743c8d9c80628b4"></a><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a></td>
 <td class="fieldname">
 tTargetRegion</td>
 <td class="fielddoc">
@@ -990,13 +990,13 @@ ptDirtyRegion</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a04381b54fb8db304643c2ed1d2e1a75c" name="a04381b54fb8db304643c2ed1d2e1a75c"></a><a class="el" href="structarm__2d__tile__t.html">arm_2d_tile_t</a></td>
+<a id="a04381b54fb8db304643c2ed1d2e1a75c" name="a04381b54fb8db304643c2ed1d2e1a75c"></a><a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a></td>
 <td class="fieldname">
 tPFBTile</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a3b6ffb221416cc974d254f474a88bb0d" name="a3b6ffb221416cc974d254f474a88bb0d"></a><a class="el" href="structarm__2d__size__t.html">arm_2d_size_t</a></td>
+<a id="a3b6ffb221416cc974d254f474a88bb0d" name="a3b6ffb221416cc974d254f474a88bb0d"></a><a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a></td>
 <td class="fieldname">
 tFrameSize</td>
 <td class="fielddoc">
@@ -1044,7 +1044,7 @@ FlushFIFO</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a894ca2705cd4f064970dfbfaa97649a7" name="a894ca2705cd4f064970dfbfaa97649a7"></a><a class="el" href="structarm__2d__tile__t.html">arm_2d_tile_t</a> *</td>
+<a id="a894ca2705cd4f064970dfbfaa97649a7" name="a894ca2705cd4f064970dfbfaa97649a7"></a><a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *</td>
 <td class="fieldname">
 ptFrameBuffer</td>
 <td class="fielddoc">
@@ -1451,8 +1451,8 @@ cycles used in LCD flushing </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">            arm_fsm_rt_t __NAME(<span class="keywordtype">void</span> *pTarget,                                  \</div>
-<div class="line">                                <span class="keyword">const</span> <a class="code hl_struct" href="structarm__2d__tile__t.html" title="a type for tile">arm_2d_tile_t</a> *ptTile,                    \</div>
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> __NAME(<span class="keywordtype">void</span> *pTarget,                                  \</div>
+<div class="line">                                <span class="keyword">const</span> <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTile,                    \</div>
 <div class="line">                                <span class="keywordtype">bool</span> bIsNewFrame)</div>
 </div><!-- fragment -->
 </div>
@@ -1694,7 +1694,7 @@ cycles used in LCD flushing </td></tr>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">            ARM_NOINIT <span class="keyword">static</span> __TYPE                                            \</div>
 <div class="line">                __NAME##Buffer[(__WIDTH) * (__HEIGHT)];                         \</div>
-<div class="line">            const <a class="code hl_struct" href="structarm__2d__tile__t.html" title="a type for tile">arm_2d_tile_t</a> __NAME = {                                      \</div>
+<div class="line">            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> __NAME = {                                      \</div>
 <div class="line">                .tRegion = {                                                    \</div>
 <div class="line">                    .tSize = {(__WIDTH), (__HEIGHT)},                           \</div>
 <div class="line">                },                                                              \</div>
@@ -1750,7 +1750,7 @@ cycles used in LCD flushing </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<a class="code hl_struct" href="structarm__2d__region__t.html" title="a type for an rectangular area">arm_2d_region_t</a> __centre_region = {                                    \</div>
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __centre_region = {                                    \</div>
 <div class="line">            .tSize = (__size),                                                  \</div>
 <div class="line">            .tLocation = {                                                      \</div>
 <div class="line">                .iX = ((__region).tSize.iWidth - (__size).iWidth)  &gt;&gt; 1,\</div>
@@ -1794,7 +1794,7 @@ cycles used in LCD flushing </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<a class="code hl_struct" href="structarm__2d__region__t.html" title="a type for an rectangular area">arm_2d_region_t</a> __centre_region = {                                    \</div>
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __centre_region = {                                    \</div>
 <div class="line">            .tSize = {                                                          \</div>
 <div class="line">                .iWidth = (__width),                                            \</div>
 <div class="line">                .iHeight = (__height),                                          \</div>
@@ -1827,7 +1827,7 @@ cycles used in LCD flushing </td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">            ARM_CONNECT2(   __arm_2d_align_centre,                              \</div>
-<div class="line">                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)</div>
+<div class="line">                            <a class="code hl_define" href="group__gKernel.html#gaca9883ddfc8f4f3382d9d0e4a93a5890" title="A macro to count the number of parameters.">__ARM_VA_NUM_ARGS</a>(__VA_ARGS__))(__VA_ARGS__)</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1839,7 +1839,7 @@ cycles used in LCD flushing </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef arm_fsm_rt_t arm_2d_helper_draw_handler_t(void *pTarget, const <a class="el" href="structarm__2d__tile__t.html">arm_2d_tile_t</a> *ptTile, bool bIsNewFrame)</td>
+          <td class="memname">typedef <a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a> arm_2d_helper_draw_handler_t(void *pTarget, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTile, bool bIsNewFrame)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1944,7 +1944,7 @@ cycles used in LCD flushing </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>When you register new scene array to a scene player, existing scenes (if any) will be deposed one by one by the scene player first. This is different from appending scene(s), as this operation is replacing the old (existing) scene with new ones. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>When you register a new scene list to a scene player, existing scenes (if any) will be deposed one by one by the scene player first. This is different from appending scene(s), as this operation is replacing the old (existing) scene with new ones. </dd></dl>
 
 </div>
 </div>
@@ -2019,7 +2019,7 @@ cycles used in LCD flushing </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">arm_fsm_rt_t arm_2d_user_scene_player_task </td>
+          <td class="memname"><a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a> arm_2d_user_scene_player_task </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *&#160;</td>
           <td class="paramname"><em>ptThis</em></td><td>)</td>
@@ -2036,7 +2036,7 @@ cycles used in LCD flushing </td></tr>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>the event sequence of a scene:<ol type="1">
-<li>when fnBackground is not NULL<ul>
+<li>when fnBackground is valid<ul>
 <li>invoke fnOnBGStart when it is valid</li>
 <li>invoke fnBackground</li>
 <li>invoke fnOnBGComplete when it is valid</li>
@@ -2062,7 +2062,7 @@ cycles used in LCD flushing </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">arm_2d_err_t arm_2d_helper_pfb_init </td>
+          <td class="memname"><a class="el" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c">arm_2d_err_t</a> arm_2d_helper_pfb_init </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *&#160;</td>
           <td class="paramname"><em>ptThis</em>, </td>
@@ -2100,7 +2100,7 @@ cycles used in LCD flushing </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">arm_fsm_rt_t arm_2d_helper_pfb_task </td>
+          <td class="memname"><a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a> arm_2d_helper_pfb_task </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *&#160;</td>
           <td class="paramname"><em>ptThis</em>, </td>
@@ -2146,7 +2146,7 @@ cycles used in LCD flushing </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">arm_2d_err_t arm_2d_helper_pfb_update_dependency </td>
+          <td class="memname"><a class="el" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c">arm_2d_err_t</a> arm_2d_helper_pfb_update_dependency </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *&#160;</td>
           <td class="paramname"><em>ptThis</em>, </td>
