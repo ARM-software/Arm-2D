@@ -24,6 +24,11 @@
 #include <assert.h>
 #include "arm_2d_helper.h"
 
+#if defined(__PERF_COUNTER__)
+#   include "perf_counter.h"
+#else
+#   include <time.h>
+#endif
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -498,6 +503,27 @@ __WEAK int32_t arm_2d_helper_perf_counter_stop(void)
     return 0;
 }
 
+__WEAK int64_t arm_2d_helper_get_system_timestamp(void)
+{
+#if defined(__PERF_COUNTER__)
+    return get_system_ticks();
+#else
+    return (int64_t)clock();
+#endif
+}
+
+__WEAK 
+uint32_t arm_2d_helper_get_reference_clock_frequency(void)
+{
+    extern uint32_t SystemCoreClock;
+    return SystemCoreClock;
+}
+
+
+int64_t arm_2d_helper_convert_ticks_to_ms(int64_t lTick)
+{
+    return (lTick * 1000) / (int64_t)arm_2d_helper_get_reference_clock_frequency();
+}
 
 
 ARM_NONNULL(1,2)

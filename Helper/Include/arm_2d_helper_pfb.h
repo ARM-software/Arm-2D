@@ -526,6 +526,23 @@ void arm_2d_helper_pfb_report_rendering_complete(   arm_2d_helper_pfb_t *ptThis,
  */
 extern
 void arm_2d_helper_swap_rgb16(uint16_t *phwBuffer, uint32_t wCount);
+
+/*! 
+ * \brief convert ticks of a reference timer to millisecond 
+ *
+ * \param[in] lTick the tick count
+ * \return int64_t the millisecond
+ */
+extern
+int64_t arm_2d_helper_convert_ticks_to_ms(int64_t lTick);
+
+/*!
+ * \brief get the reference clock frequency
+ * \return uint32_t the frequency
+ */
+extern
+uint32_t arm_2d_helper_get_reference_clock_frequency(void);
+
 /*! @} */
 
 #if defined(__clang__)
