@@ -38,6 +38,7 @@
 #   pragma clang diagnostic ignored "-Wunused-variable"
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #   pragma clang diagnostic ignored "-Wdouble-promotion"
+#   pragma clang diagnostic ignored "-Wbad-function-cast"
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic push
@@ -109,6 +110,7 @@ static struct {
     uint32_t wMax;
     uint64_t dwTotal;
     uint32_t wAverage;
+    float fFPS30Freq;
     uint32_t wIterations;
     uint32_t wLCDLatency;
 } BENCHMARK = {
@@ -150,6 +152,10 @@ static void on_frame_complete(arm_2d_scene_t *ptScene)
         if (0 == BENCHMARK.wIterations) {
             BENCHMARK.wAverage =
                 (uint32_t)(BENCHMARK.dwTotal / (uint64_t)ITERATION_CNT);
+            BENCHMARK.fFPS30Freq = (float)
+                ((      (double)(BENCHMARK.wAverage * 30) 
+                    /   (double)arm_2d_helper_get_reference_clock_frequency()) 
+                 * ((float)SystemCoreClock / 1000000.0f));
         }
     }
 }
@@ -175,11 +181,14 @@ void example_gui_on_refresh_evt_handler(const arm_2d_tile_t *ptFrameBuffer)
         arm_lcd_puts( "Benchmark Report:\r\n");
         
         arm_lcd_printf("Average: %d ", BENCHMARK.wAverage);
-        arm_lcd_printf("FPS30Freq: %4.2f MHz\r\n", ((float)BENCHMARK.wAverage * 30.0f) / 1000000.0f);
-        arm_lcd_printf("FPS: %3d:%dms   ",
-                            SystemCoreClock / BENCHMARK.wAverage,
-                            BENCHMARK.wAverage / (SystemCoreClock / 1000ul));
-        arm_lcd_printf("LCD Latency: %2dms", BENCHMARK.wLCDLatency / (SystemCoreClock / 1000ul) );
+        arm_lcd_printf( "FPS30Freq: %4.2f MHz\r\n",  BENCHMARK.fFPS30Freq);
+        arm_lcd_printf(
+            "FPS: %3d:%dms   ",
+            arm_2d_helper_get_reference_clock_frequency() / BENCHMARK.wAverage,
+            (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wAverage));
+        arm_lcd_printf( 
+            "LCD Latency: %2dms", 
+            (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wLCDLatency) );
 #endif
 
     }

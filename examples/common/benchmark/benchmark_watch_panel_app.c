@@ -38,6 +38,7 @@
 #   pragma clang diagnostic ignored "-Wunused-variable"
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #   pragma clang diagnostic ignored "-Wdouble-promotion"
+#   pragma clang diagnostic ignored "-Wbad-function-cast"
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic push
@@ -75,142 +76,25 @@
 
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
-#   define __arm_2d_color_t         arm_2d_color_gray8_t
-#   define COLOUR_INT               uint8_t
-
 #   define c_tileGear01             c_tileGear01Mask
 #   define c_tileGear02             c_tileGear02Mask
 #   define c_tilePointerSec         c_tilePointerSecMask
 #   define c_tileBackground         c_tileBackgroundCHNB
 
-#   define arm_2d_fill_colour_with_mask                                         \
-                arm_2d_gray8_fill_colour_with_mask
-#   define arm_2d_fill_colour_with_mask_and_opacity                             \
-                arm_2d_gray8_fill_colour_with_mask_and_opacity
-#   define arm_2d_fill_colour_with_mask                                         \
-                arm_2d_gray8_fill_colour_with_mask
-#   define arm_2d_alpha_blending_with_colour_keying                             \
-                arm_2d_gray8_alpha_blending_with_colour_keying
-#   define arm_2d_tile_copy_with_masks                                          \
-                arm_2d_gray8_tile_copy_with_masks
-#   define arm_2d_tile_fill_with_x_mirror                                       \
-                arm_2d_c8bit_tile_fill_with_x_mirror
-#   define arm_2d_tile_fill_with_y_mirror                                       \
-                arm_2d_c8bit_tile_fill_with_y_mirror
-#   define arm_2d_tile_fill_with_xy_mirror                                      \
-                arm_2d_c8bit_tile_fill_with_xy_mirror
-#   define arm_2d_tile_fill_only                                                \
-                arm_2d_c8bit_tile_fill_only
-#   define arm_2d_tile_copy_with_x_mirror                                       \
-                arm_2d_c8bit_tile_copy_with_x_mirror
-#   define arm_2d_tile_copy_with_y_mirror                                       \
-                arm_2d_c8bit_tile_copy_with_y_mirror
-#   define arm_2d_tile_copy_with_xy_mirror                                      \
-                arm_2d_c8bit_tile_copy_with_xy_mirror
-#   define arm_2d_tile_copy_only                                                \
-                arm_2d_c8bit_tile_copy_only
-#   define arm_2d_tile_copy                                                     \
-                arm_2d_c8bit_tile_copy
-#   define arm_2d_fill_colour                                                   \
-                arm_2d_c8bit_fill_colour
-#   define arm_2d_tile_copy_with_colour_keying                                  \
-                arm_2d_c8bit_tile_copy_with_colour_keying
-#   define arm_2d_fill_colour_with_opacity                                      \
-                arm_2d_gray8_fill_colour_with_opacity
-#   define arm_2d_alpha_blending                                                \
-                arm_2d_gray8_alpha_blending
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
-
-#   define __arm_2d_color_t         arm_2d_color_rgb565_t
-#   define COLOUR_INT               uint16_t
 
 #   define c_tileGear01             c_tileGear01RGB565
 #   define c_tileGear02             c_tileGear02RGB565
 #   define c_tilePointerSec         c_tilePointerSecRGB565
 #   define c_tileBackground         c_tileBackgroundRGB565
 
-#   define arm_2d_fill_colour_with_mask                                         \
-                arm_2d_rgb565_fill_colour_with_mask
-#   define arm_2d_fill_colour_with_mask_and_opacity                             \
-                arm_2d_rgb565_fill_colour_with_mask_and_opacity
-#   define arm_2d_fill_colour_with_mask                                         \
-                arm_2d_rgb565_fill_colour_with_mask
-#   define arm_2d_alpha_blending_with_colour_keying                             \
-                arm_2d_rgb565_alpha_blending_with_colour_keying
-#   define arm_2d_tile_copy_with_masks                                          \
-                arm_2d_rgb565_tile_copy_with_masks
-#   define arm_2d_tile_fill_with_x_mirror                                       \
-                arm_2d_rgb16_tile_fill_with_x_mirror
-#   define arm_2d_tile_fill_with_y_mirror                                       \
-                arm_2d_rgb16_tile_fill_with_y_mirror
-#   define arm_2d_tile_fill_with_xy_mirror                                      \
-                arm_2d_rgb16_tile_fill_with_xy_mirror
-#   define arm_2d_tile_fill_only                                                \
-                arm_2d_rgb16_tile_fill_only
-#   define arm_2d_tile_copy_with_x_mirror                                       \
-                arm_2d_rgb16_tile_copy_with_x_mirror
-#   define arm_2d_tile_copy_with_y_mirror                                       \
-                arm_2d_rgb16_tile_copy_with_y_mirror
-#   define arm_2d_tile_copy_with_xy_mirror                                      \
-                arm_2d_rgb16_tile_copy_with_xy_mirror
-#   define arm_2d_tile_copy_only                                                \
-                arm_2d_rgb16_tile_copy_only
-#   define arm_2d_tile_copy                                                     \
-                arm_2d_rgb16_tile_copy
-#   define arm_2d_fill_colour                                                   \
-                arm_2d_rgb16_fill_colour
-#   define arm_2d_tile_copy_with_colour_keying                                  \
-                arm_2d_rgb16_tile_copy_with_colour_keying
-#   define arm_2d_fill_colour_with_opacity                                      \
-                arm_2d_rgb565_fill_colour_with_opacity
-#   define arm_2d_alpha_blending                                                \
-                arm_2d_rgb565_alpha_blending
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
-
-#   define __arm_2d_color_t         arm_2d_color_cccn888_t
-#   define COLOUR_INT               uint32_t
 
 #   define c_tileGear01             c_tileGear01CCCA8888
 #   define c_tileGear02             c_tileGear02CCCA8888
 #   define c_tilePointerSec         c_tilePointerSecCCCA8888
 #   define c_tileBackground         c_tileBackgroundCCCA8888
 
-#   define arm_2d_fill_colour_with_mask                                         \
-                arm_2d_cccn888_fill_colour_with_mask
-#   define arm_2d_fill_colour_with_mask_and_opacity                             \
-                arm_2d_cccn888_fill_colour_with_mask_and_opacity
-#   define arm_2d_fill_colour_with_mask                                         \
-                arm_2d_cccn888_fill_colour_with_mask
-#   define arm_2d_alpha_blending_with_colour_keying                             \
-                arm_2d_cccn888_alpha_blending_with_colour_keying
-#   define arm_2d_tile_copy_with_masks                                          \
-                arm_2d_cccn888_tile_copy_with_masks
-#   define arm_2d_tile_fill_with_x_mirror                                       \
-                arm_2d_rgb32_tile_fill_with_x_mirror
-#   define arm_2d_tile_fill_with_y_mirror                                       \
-                arm_2d_rgb32_tile_fill_with_y_mirror
-#   define arm_2d_tile_fill_with_xy_mirror                                      \
-                arm_2d_rgb32_tile_fill_with_xy_mirror
-#   define arm_2d_tile_fill_only                                                \
-                arm_2d_rgb32_tile_fill_only
-#   define arm_2d_tile_copy_with_x_mirror                                       \
-                arm_2d_rgb32_tile_copy_with_x_mirror
-#   define arm_2d_tile_copy_with_y_mirror                                       \
-                arm_2d_rgb32_tile_copy_with_y_mirror
-#   define arm_2d_tile_copy_with_xy_mirror                                      \
-                arm_2d_rgb32_tile_copy_with_xy_mirror
-#   define arm_2d_tile_copy_only                                                \
-                arm_2d_rgb32_tile_copy_only
-#   define arm_2d_tile_copy                                                     \
-                arm_2d_rgb32_tile_copy
-#   define arm_2d_fill_colour                                                   \
-                arm_2d_rgb32_fill_colour
-#   define arm_2d_tile_copy_with_colour_keying                                  \
-                arm_2d_rgb32_tile_copy_with_colour_keying
-#   define arm_2d_fill_colour_with_opacity                                      \
-                arm_2d_cccn888_fill_colour_with_opacity
-#   define arm_2d_alpha_blending                                                \
-                arm_2d_cccn888_alpha_blending
 #else
 #   error Unsupported colour depth!
 #endif
@@ -240,6 +124,7 @@ static struct {
     uint32_t wMax;
     uint64_t dwTotal;
     uint32_t wAverage;
+    float fFPS30Freq;
     uint32_t wIterations;
     uint32_t wLCDLatency;
 } BENCHMARK = {
@@ -281,6 +166,10 @@ static void on_frame_complete(arm_2d_scene_t *ptScene)
         if (0 == BENCHMARK.wIterations) {
             BENCHMARK.wAverage =
                 (uint32_t)(BENCHMARK.dwTotal / (uint64_t)ITERATION_CNT);
+            BENCHMARK.fFPS30Freq = (float)
+                ((      (double)(BENCHMARK.wAverage * 30) 
+                    /   (double)arm_2d_helper_get_reference_clock_frequency()) 
+                 * ((float)SystemCoreClock / 1000000.0f));
         }
     }
 }
@@ -306,12 +195,14 @@ void example_gui_on_refresh_evt_handler(const arm_2d_tile_t *ptFrameBuffer)
         arm_lcd_puts( "Benchmark Report:\r\n");
         
         arm_lcd_printf("Average: %d ", BENCHMARK.wAverage);
-        arm_lcd_printf("FPS30Freq: %4.2f MHz\r\n", ((float)BENCHMARK.wAverage * 30.0f) / 1000000.0f);
-        arm_lcd_printf("FPS: %3d:%dms   ",
-                            SystemCoreClock / BENCHMARK.wAverage,
-                            BENCHMARK.wAverage / (SystemCoreClock / 1000ul));
-        arm_lcd_printf("LCD Latency: %2dms", BENCHMARK.wLCDLatency / (SystemCoreClock / 1000ul) );
-        //arm_lcd_printf(" %08x", (int32_t)get_system_ticks() );
+        arm_lcd_printf( "FPS30Freq: %4.2f MHz\r\n",  BENCHMARK.fFPS30Freq);
+        arm_lcd_printf(
+            "FPS: %3d:%dms   ",
+            arm_2d_helper_get_reference_clock_frequency() / BENCHMARK.wAverage,
+            (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wAverage));
+        arm_lcd_printf( 
+            "LCD Latency: %2dms", 
+            (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wLCDLatency) );
 #endif
 
     }

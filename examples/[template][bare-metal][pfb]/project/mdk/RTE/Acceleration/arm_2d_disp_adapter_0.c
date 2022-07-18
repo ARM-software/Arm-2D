@@ -96,6 +96,7 @@ static struct {
     uint32_t wMax;
     uint64_t dwTotal;
     uint32_t wAverage;
+    float fFPS30Freq;
     uint32_t wIterations;
     uint32_t wLCDLatency;
 } BENCHMARK = {
@@ -132,7 +133,11 @@ static void on_frame_complete(arm_2d_scene_t *ptScene)
             if (0 == BENCHMARK.wIterations) {
                 BENCHMARK.wAverage =
                     (uint32_t)(BENCHMARK.dwTotal / (uint64_t)__DISP0_CFG_ITERATION_CNT);
-                    
+//                BENCHMARK.fFPS30Freq = (float)
+//                ((      (double)(BENCHMARK.wAverage * 30) 
+//                    /   (double)arm_2d_helper_get_reference_clock_frequency()) 
+//                 * ((float)SystemCoreClock / 1000000.0f));
+                 
                 BENCHMARK.wMin = UINT32_MAX;
                 BENCHMARK.wMax = 0;
                 BENCHMARK.dwTotal = 0;
@@ -171,7 +176,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
                         {
                             .tLocation = {
                                 .iX = 0,
-                                .iY = __DISP0_CFG_SCEEN_HEIGHT__ - 9},
+                                .iY = __DISP0_CFG_SCEEN_HEIGHT__ - 17},
                             .tSize = {
                                 .iWidth = __DISP0_CFG_SCEEN_WIDTH__,
                                 .iHeight = 9,
@@ -182,13 +187,16 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
                     255 - 32);
         arm_2d_op_wait_async(NULL);
         
-        arm_lcd_text_location( (__DISP0_CFG_SCEEN_HEIGHT__ + 7) / 8 - 1, 0);
+        arm_lcd_text_location( (__DISP0_CFG_SCEEN_HEIGHT__ + 7) / 8 - 2, 0);
         if (BENCHMARK.wAverage) {
-            arm_lcd_printf("FPS: %3d:%dms   ",
-                            SystemCoreClock / BENCHMARK.wAverage,
-                            BENCHMARK.wAverage / (SystemCoreClock / 1000ul));
+            arm_lcd_printf(
+                "FPS: %3d:%dms   ",
+                arm_2d_helper_get_reference_clock_frequency() / BENCHMARK.wAverage,
+                (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wAverage));
         }
-        arm_lcd_printf("LCD Latency: %2dms", BENCHMARK.wLCDLatency / (SystemCoreClock / 1000ul) );
+        arm_lcd_printf( 
+            "LCD Latency: %2dms", 
+            (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wLCDLatency) );
     } 
     
     arm_2d_op_wait_async(NULL);
@@ -295,7 +303,7 @@ void disp_adapter0_init(void)
             ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
                 .tLocation = {
                     .iX = 0,
-                    .iY = __DISP0_CFG_SCEEN_HEIGHT__ - 9},
+                    .iY = __DISP0_CFG_SCEEN_HEIGHT__ - 17},
                 .tSize = {
                     .iWidth = __DISP0_CFG_SCEEN_WIDTH__,
                     .iHeight = 9,
