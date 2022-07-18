@@ -516,6 +516,16 @@ ARM_NONNULL(1,2)
 void arm_2d_helper_pfb_report_rendering_complete(   arm_2d_helper_pfb_t *ptThis,
                                                     arm_2d_pfb_t *ptPFB);
 
+/*!
+ * \brief swap the high and low bytes for each rgb16 pixel
+ *
+ * \params[in] phwBuffer the pixel buffer
+ * \note the phwBuffer MUST aligned to half-word addresses
+ *
+ * \params[in] wSize the number of pixels
+ */
+extern
+void arm_2d_helper_swap_rgb16(uint16_t *phwBuffer, uint32_t wCount);
 /*! @} */
 
 #if defined(__clang__)

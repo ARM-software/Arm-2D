@@ -189,33 +189,40 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
 }
 
 
-static 
-void __arm_2d_helper_swap_rgb16(uint16_t *phwBuffer, uint32_t wSize)
+__WEAK 
+void arm_2d_helper_swap_rgb16(uint16_t *phwBuffer, uint32_t wCount)
 {
-    if (0 == wSize) {
+    if (0 == wCount) {
         return ;
     }
-    
-    // aligned (4)
-    assert((((uintptr_t) phwBuffer) & 0x03) == 0);
-    
-    uint32_t wWords = wSize >> 1;
+
+    // aligned (2)
+    assert((((uintptr_t) phwBuffer) & 0x01) == 0);
+
+    // it is not aligned to 4
+    if ((((uintptr_t) phwBuffer) & 0x03) == 0x02) {
+        // handle the leading pixel
+        uint32_t wTemp = *phwBuffer;
+        *phwBuffer++ = (uint16_t)__REV16(wTemp);
+        wCount--;
+    }
+
+
+    uint32_t wWords = wCount >> 1;
     uint32_t *pwBuffer = (uint32_t *)phwBuffer;
-    wSize &= 0x01;
-    
+    wCount &= 0x01;
+
     if (wWords > 0) {
         do {
             uint32_t wTemp = *pwBuffer;
             *pwBuffer++ = __REV16(wTemp);
         } while(--wWords);
     }
-    
-    if (wSize) {
+
+    if (wCount) {
         uint32_t wTemp = *pwBuffer;
         (*(uint16_t *)pwBuffer) = (uint16_t)__REV16(wTemp);
     }
-    
-    
 }
 
 static 
@@ -275,7 +282,7 @@ void __arm_2d_helper_low_level_rendering(arm_2d_helper_pfb_t *ptThis)
     };
 
     if (this.tCFG.FrameBuffer.bSwapRGB16) {
-        __arm_2d_helper_swap_rgb16( this.Adapter.ptCurrent->tTile.phwBuffer, 
+        arm_2d_helper_swap_rgb16( this.Adapter.ptCurrent->tTile.phwBuffer, 
                                     get_tile_buffer_pixel_count(
                                         this.Adapter.ptCurrent->tTile));
     }
@@ -340,8 +347,7 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
         //this.Adapter.bFirstIteration = false;
         this.Adapter.bIsRegionChanged = true;
     }
-    
-    
+
     do {
         if (this.Adapter.bIsRegionChanged) {
         
