@@ -2305,7 +2305,9 @@ INCLUDE_FILE_PATTERNS  =
 
 PREDEFINED             = ARM_NONNULL(...)= \
                          __attribute__(...)= \
-                         ARM_PRIVATE(...):=struct{__VA_ARGS__};
+                         ARM_PRIVATE(...):=struct{__VA_ARGS__}; \
+                         implement_ex(__struct,__name):=__struct __name \
+                         inherit(x):=x use_as__##x;
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then this
 # tag can be used to specify a list of macro names that should be expanded. The

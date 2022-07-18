@@ -575,7 +575,7 @@ typedef struct __arm_2d_low_level_io_t __arm_2d_low_level_io_t;
  */
 typedef union __arm_2d_op_info_t {
     struct {
-        arm_2d_color_info_t Colour;     //!< the colour used in thie operation
+        arm_2d_color_info_t Colour;                                             //!< the colour used in thie operation
         union {
             struct {
                 uint8_t bHasSource              : 1;                            //!< whether this operation contains source tile
@@ -586,8 +586,8 @@ typedef union __arm_2d_op_info_t {
                 uint8_t                         : 2;
                 uint8_t bAllowEnforcedColour    : 1;                            //!< whether this operation allow enforced colours in tiles
             };
-            uint8_t chValue;
-        }Param;
+            uint8_t chValue;                                                    //!< feature value
+        }Param;                                                                 //!< operation feature set
 
         uint8_t chInClassOffset;                                                //!< some operation uses this as the offset of the key member in the class
         uint8_t chOpIndex;                                                      //!< __ARM_2D_OP_IDX_XXXXXX
@@ -604,10 +604,10 @@ typedef union __arm_2d_op_info_t {
             struct {
                 uint8_t TileProcessLike;                                        //!< A simple interface contains only the target tile
             };
-        }LowLevelInterfaceIndex;
+        }LowLevelInterfaceIndex;                                                //!< Low level interface index
 
         union {
-            const __arm_2d_low_level_io_t *IO[2];
+            const __arm_2d_low_level_io_t *IO[2];                               //!< array of IOs
 
             struct {
                 const __arm_2d_low_level_io_t *ptCopyLike;                      //!< the function pointer for a copy-like implementation   
@@ -620,9 +620,9 @@ typedef union __arm_2d_op_info_t {
             struct {
                 const __arm_2d_low_level_io_t *ptTileProcessLike;               //!< the function pointer for the tile-process-like implementation
             };
-        }LowLevelIO;
+        }LowLevelIO;                                                            //!< low level IO definition
 
-    }Info;
+    }Info;                                                                      //!< operation description
     uint32_t    wID;                                                            //!< Operation ID
 } __arm_2d_op_info_t;
 
