@@ -1,5 +1,10 @@
 var searchData=
 [
-  ['arm_5f2d_5fruntime_5ffeature_0',['ARM_2D_RUNTIME_FEATURE',['../group__gKernel.html#gae30937777f3c67e2418c9c26c76fb501',1,'arm_2d.h']]],
-  ['arm_5f2d_5fversion_1',['ARM_2D_VERSION',['../group__gKernel.html#ga3cef1eb288e3529dab7e441cc769e1e2',1,'arm_2d.h']]]
+  ['arm_5f2d_5fhelper_5fpfb_5ft_0',['arm_2d_helper_pfb_t',['../group__gHelper.html#ad4ca22fba198472e3ebc789888c507d7',1,'arm_2d_scene_player_t']]],
+  ['arm_5f2d_5flocation_5ft_1',['arm_2d_location_t',['../group__gKernel.html#a4dce0fe26bfa55224c601db62b643c79',1,'arm_2d_region_t']]],
+  ['arm_5f2d_5fop_5fcore_5ft_2',['arm_2d_op_core_t',['../group__gAlpha.html#aea403a4255e444d2b886f48e9a07bbb8',1,'arm_2d_op_alpha_t::arm_2d_op_core_t()'],['../group__gAlpha.html#a434790e4bf185ebc635e88a3bb8233d6',1,'arm_2d_op_fill_cl_opc_t::arm_2d_op_core_t()'],['../group__gAlpha.html#adc698457f5219f29f5edf499943f3986',1,'arm_2d_op_alpha_fill_cl_msk_opc_t::arm_2d_op_core_t()'],['../group__gAlpha.html#a6dce4413320f2aa7ead0a8deeba8fa1c',1,'arm_2d_op_fill_cl_msk_t::arm_2d_op_core_t()'],['../group__gAlpha.html#aa25ee06c23b4722003bbbf0abaf6b995',1,'arm_2d_op_alpha_cl_key_t::arm_2d_op_core_t()'],['../group__Drawing.html#a2abd5995ab6396a44e136d16cd330a21',1,'arm_2d_op_drw_patn_t::arm_2d_op_core_t()'],['../group__Drawing.html#ab1bf2464482f46020867f04694749165',1,'arm_2d_op_fill_cl_t::arm_2d_op_core_t()'],['../group__Tile.html#a758e76fe3debd9e8bbc4006bb9e9a890',1,'arm_2d_op_cp_cl_key_t::arm_2d_op_core_t()'],['../group__gTransform.html#aa9c51b12afb322bc7527c892320b46d9',1,'arm_2d_op_trans_msk_opa_t::arm_2d_op_core_t()'],['../group__gTransform.html#aa16cbe60069711ac86added9548e36c9',1,'arm_2d_op_trans_msk_t::arm_2d_op_core_t()'],['../group__gTransform.html#abe28664647ee93207c7635c7dbe30b07',1,'arm_2d_op_trans_opa_t::arm_2d_op_core_t()'],['../group__gTransform.html#ab48735701a2bbe03784dd6a04cda9aff',1,'arm_2d_op_trans_t::arm_2d_op_core_t()']]],
+  ['arm_5f2d_5fregion_5ft_3',['arm_2d_region_t',['../group__gKernel.html#a233b05087f132d3ec5f826c99046e094',1,'arm_2d_tile_t']]],
+  ['arm_5f2d_5fruntime_5ffeature_4',['ARM_2D_RUNTIME_FEATURE',['../group__gKernel.html#gae30937777f3c67e2418c9c26c76fb501',1,'arm_2d.h']]],
+  ['arm_5f2d_5fsize_5ft_5',['arm_2d_size_t',['../group__gKernel.html#aa7e90470c7d7d0e0b99e282f46496892',1,'arm_2d_region_t']]],
+  ['arm_5f2d_5fversion_6',['ARM_2D_VERSION',['../group__gKernel.html#ga3cef1eb288e3529dab7e441cc769e1e2',1,'arm_2d.h']]]
 ];

@@ -1,7 +1,7 @@
 var group__Tile =
 [
     [ "arm_2d_op_cp_cl_key_t", "group__Tile.html#structarm__2d__op__cp__cl__key__t", [
-      [ "inherit", "group__Tile.html#a1ff5fb1c8d95c974de47667984a5c7ea", null ],
+      [ "arm_2d_op_core_t", "group__Tile.html#a758e76fe3debd9e8bbc4006bb9e9a890", null ],
       [ "wMode", "group__Tile.html#a8241efa365f71d741f7fd98bbfabf1ae", null ]
     ] ],
     [ "arm_2d_op_cp_cl_key_t.Target", "group__Tile.html#structarm__2d__op__cp__cl__key__t_8Target", [
@@ -11,7 +11,7 @@ var group__Tile =
     [ "arm_2d_op_cp_cl_key_t.Source", "group__Tile.html#structarm__2d__op__cp__cl__key__t_8Source", [
       [ "ptTile", "group__Tile.html#a64a5acb6f6d68bcc4b933310d44c480b", null ]
     ] ],
-    [ "arm_2d_op_cp_cl_key_t.__unnamed82__", "group__Tile.html#unionarm__2d__op__cp__cl__key__t_8____unnamed82____", [
+    [ "arm_2d_op_cp_cl_key_t.__unnamed84__", "group__Tile.html#unionarm__2d__op__cp__cl__key__t_8____unnamed84____", [
       [ "chColour", "group__Tile.html#a4853c21ae19c1b2bc936685425c225b5", null ],
       [ "hwColour", "group__Tile.html#a3a90debdbc76b907ebc5d82ee18e56aa", null ],
       [ "wColour", "group__Tile.html#a9f162c8dd605b531b0443f4f8d74453d", null ]
