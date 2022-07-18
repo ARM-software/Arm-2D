@@ -82,6 +82,5 @@ var group__gHelper =
     [ "arm_2d_helper_pfb_init", "group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99", null ],
     [ "arm_2d_helper_pfb_task", "group__gHelper.html#gab2cec999a9abbf7ec42bed4352a17b88", null ],
     [ "arm_2d_helper_pfb_update_dependency", "group__gHelper.html#ga7f397129da5a5d78a7dd6325ab3405ef", null ],
-    [ "arm_2d_helper_pfb_report_rendering_complete", "group__gHelper.html#ga2fb25b4b8c12a021f686b0383960b012", null ],
-    [ "arm_2d_helper_swap_rgb16", "group__gHelper.html#gaf07a91ddd548e926e5737db7800c16a9", null ]
+    [ "arm_2d_helper_pfb_report_rendering_complete", "group__gHelper.html#ga2fb25b4b8c12a021f686b0383960b012", null ]
 ];
