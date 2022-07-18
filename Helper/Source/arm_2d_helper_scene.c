@@ -171,7 +171,7 @@ arm_fsm_rt_t arm_2d_user_scene_player_task(arm_2d_scene_player_t *ptThis)
     
     switch (this.Runtime.chState) {
         case START:
-            if (NULL != ptScene) {
+            if (NULL == ptScene) {
                 //! no scene available
                 return arm_fsm_rt_cpl;
             }
