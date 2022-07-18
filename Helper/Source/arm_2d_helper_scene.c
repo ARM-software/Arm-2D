@@ -171,6 +171,10 @@ arm_fsm_rt_t arm_2d_user_scene_player_task(arm_2d_scene_player_t *ptThis)
     
     switch (this.Runtime.chState) {
         case START:
+            if (NULL != ptScene) {
+                //! no scene available
+                return arm_fsm_rt_cpl;
+            }
             this.Runtime.chState++;
             // fall-through
             
@@ -239,13 +243,13 @@ arm_fsm_rt_t arm_2d_user_scene_player_task(arm_2d_scene_player_t *ptThis)
 
             if (this.Runtime.bNextSceneReq) {
                 __arm_2d_user_scene_player_next_scene(ptThis);
-                
                 ARM_2D_USER_SCENE_PLAYER_TASK_RESET();
-                return arm_fsm_rt_cpl;
+            } else {
+                this.Runtime.chState = DRAW_SCENE_START;
             }
 
-            this.Runtime.chState = DRAW_SCENE_START;
-            break;
+            /* return arm_fsm_rt_cpl to indicate a end of a frame */
+            return arm_fsm_rt_cpl;
 
         default:
             ARM_2D_USER_SCENE_PLAYER_TASK_RESET();
