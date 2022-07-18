@@ -21,8 +21,8 @@
  * Title:        cmsis_nn_typs.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        12. July 2022
- * $Revision:    V.1.0.1
+ * $Date:        18. July 2022
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -60,6 +60,10 @@ extern "C" {
 #   pragma GCC diagnostic ignored "-Wpadded"
 #endif
 
+/*!
+ * \addtogroup gKernel 1 Kernel
+ * @{
+ */
 
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
@@ -835,6 +839,7 @@ typedef struct arm_2d_rot_linear_regr_t {
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
+/*! @} */
 
 #if defined(__clang__)
 #pragma clang diagnostic pop

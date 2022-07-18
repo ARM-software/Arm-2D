@@ -22,8 +22,8 @@
  * Description:  Public header file to indicate features avaialble for this
  *               arm-2d library variant.
  *
- * $Date:        19. April 2022
- * $Revision:    V.1.0.2
+ * $Date:        18. July 2022
+ * $Revision:    V.1.0.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -37,6 +37,11 @@
 #ifdef   __cplusplus
 extern "C" {
 #endif
+
+/*!
+ * \addtogroup gKernel 1 Kernel
+ * @{
+ */
 
 #ifndef __ARM_2D_SKIP_CFG_HEADER__
 #   ifndef __ARM_2D_USER_CFG_HEADER__
@@ -218,6 +223,8 @@ extern "C" {
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
+
+/*! @} */
 
 #ifdef   __cplusplus
 }

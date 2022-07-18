@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        22. June 2022
- * $Revision:    V.1.0.0
+ * $Date:        18. July 2022
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -107,7 +107,7 @@ typedef struct arm_2d_scene_player_t {
  * \param[in] ptThis the target scene player
  * \param[in] ptSceneList the first node of a scene list
  * 
- * \note When you register new scene array to a scene player, existing scenes 
+ * \note When you register a new scene list to a scene player, existing scenes 
  *       (if any) will be deposed one by one by the scene player first. This is
  *       different from appending scene(s), as this operation is replacing the 
  *       old (existing) scene with new ones.
@@ -146,7 +146,7 @@ void arm_2d_user_scene_player_next_scene(arm_2d_scene_player_t *ptThis);
  * \param[in] ptThis the target scene player
  * 
  * \note the event sequence of a scene:
- *       1. when fnBackground is not NULL
+ *       1. when fnBackground is valid
  *           - invoke fnOnBGStart when it is valid
  *           - invoke fnBackground
  *           - invoke fnOnBGComplete when it is valid
