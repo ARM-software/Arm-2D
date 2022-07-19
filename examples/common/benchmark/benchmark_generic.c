@@ -53,9 +53,9 @@
 #endif
 
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
-#   define c_tileCMSISLogo          c_tileCMSISLogoAlpha
-#   define c_tilePictureSun         c_tilePictureSunAlpha
-#   define c_tileHelium             c_tileHeliumCHNB
+#   define c_tileCMSISLogo          c_tileCMSISLogoGRAY8
+#   define c_tilePictureSun         c_tilePictureSunGRAY8
+#   define c_tileHelium             c_tileHeliumGRAY8
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 #   define c_tileCMSISLogo          c_tileCMSISLogoRGB565
