@@ -219,7 +219,6 @@ def main(argv):
     parser.add_argument('--dim', nargs=2,type = int, help="Resize the image with the given width and height")
     parser.add_argument('--rot', nargs='?',type = float, default=0.0, help="Rotate the image with the given angle in degrees")
 
-    print(parser)
     args = parser.parse_args()
 
     if args.i == None or args.i == "" :
@@ -305,7 +304,6 @@ def main(argv):
             B = (data[...,2]).astype(np.uint16)
             # merge
             RGB = np.rint((R + G + B)/3).astype(np.uint8)
-            print(RGB)
 
             print('',file=o)
             print('__attribute__((section(\"arm2d.asset.c_bmp%sGRAY8\")))' % (arr_name), file=o)
