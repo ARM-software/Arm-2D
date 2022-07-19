@@ -21,8 +21,8 @@
 #include "./__common.h"
 #include "arm_2d.h"
 #include <math.h>
-#include <time.h>
 #include <assert.h>
+#include "arm_2d_helper.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -92,9 +92,9 @@ void busy_wheel_init(void)
         s_tDotsLocation[n].iX = (int16_t)(cosf(__PI * (float)n / 4.0f) * __RADIUS) + iYOffset;
         s_tAlphaTable[n] = (uint8_t)((float)n * 255.0f / 8.0f);
     }
-    s_lLastTime = clock();
+    s_lLastTime = arm_2d_helper_get_system_timestamp();
     s_lLastTime2 = s_lLastTime;
-    s_wUnit = (SystemCoreClock  / 1000) * BUSY_WHEEL_SPIN_SPEED;
+    s_wUnit = (uint32_t)arm_2d_helper_convert_ms_to_ticks(BUSY_WHEEL_SPIN_SPEED);
 }
 
 void busy_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
@@ -108,7 +108,7 @@ void busy_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
     arm_2d_region_t tTargetRegion = c_tileWhiteDot.tRegion;
     
     if (bIsNewFrame) {
-        int64_t lClocks = clock();
+        int64_t lClocks = arm_2d_helper_get_system_timestamp();
         int32_t nElapsed = (int32_t)((lClocks - s_lLastTime));
         if (nElapsed >= (int32_t)s_wUnit) {
             s_lLastTime = lClocks;
@@ -148,7 +148,7 @@ void busy_wheel2_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
     arm_2d_region_t tTargetRegion = c_tileWhiteDot.tRegion;
     
     if (bIsNewFrame) {
-        int64_t lClocks = clock();
+        int64_t lClocks = arm_2d_helper_get_system_timestamp();
         int32_t nElapsed = (int32_t)((lClocks - s_lLastTime2));
         if (nElapsed >= (int32_t)s_wUnit) {
             s_lLastTime2 = lClocks;
