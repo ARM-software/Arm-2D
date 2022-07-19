@@ -4,7 +4,7 @@
  *      *** Do not modify ! ***
  *
  * Project: 'template' 
- * Target:  'FastModel' 
+ * Target:  'DO_NOT_USE_V2M-MPS3-CM33' 
  */
 
 #ifndef PRE_INCLUDE_GLOBAL_H

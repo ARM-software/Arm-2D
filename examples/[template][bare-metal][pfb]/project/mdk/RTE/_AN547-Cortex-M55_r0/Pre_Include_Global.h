@@ -4,7 +4,7 @@
  *      *** Do not modify ! ***
  *
  * Project: 'template' 
- * Target:  'FastModel' 
+ * Target:  'AN547-Cortex-M55_r0' 
  */
 
 #ifndef PRE_INCLUDE_GLOBAL_H
