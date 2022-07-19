@@ -3775,16 +3775,15 @@ target side mask </td></tr>
 <div class="line">        if (NULL == (__TAIL)) {                                                 \</div>
 <div class="line">            (*((<a class="code hl_struct" href="group__gKernel.html#struct____arm__slist__node__t" title="a type for generic list">__arm_slist_node_t</a> **)&amp;(__TAIL))) =                             \</div>
 <div class="line">                (<a class="code hl_struct" href="group__gKernel.html#struct____arm__slist__node__t" title="a type for generic list">__arm_slist_node_t</a> *)(__ITEM);                                 \</div>
-<div class="line">            ((<a class="code hl_struct" href="group__gKernel.html#struct____arm__slist__node__t" title="a type for generic list">__arm_slist_node_t</a> *)(__ITEM))-&gt;ptNext = NULL;                    \</div>
 <div class="line">            (*((<a class="code hl_struct" href="group__gKernel.html#struct____arm__slist__node__t" title="a type for generic list">__arm_slist_node_t</a> **)&amp;(__HEAD))) =                             \</div>
 <div class="line">                (<a class="code hl_struct" href="group__gKernel.html#struct____arm__slist__node__t" title="a type for generic list">__arm_slist_node_t</a> *)(__ITEM);                                 \</div>
 <div class="line">        } <span class="keywordflow">else</span> {                                                                \</div>
 <div class="line">            ((<a class="code hl_struct" href="group__gKernel.html#struct____arm__slist__node__t" title="a type for generic list">__arm_slist_node_t</a> *)(__TAIL))-&gt;ptNext =                          \</div>
 <div class="line">                (<a class="code hl_struct" href="group__gKernel.html#struct____arm__slist__node__t" title="a type for generic list">__arm_slist_node_t</a> *)(__ITEM);                                 \</div>
-<div class="line">            ((<a class="code hl_struct" href="group__gKernel.html#struct____arm__slist__node__t" title="a type for generic list">__arm_slist_node_t</a> *)(__ITEM))-&gt;ptNext = NULL;                    \</div>
 <div class="line">            (*(<a class="code hl_struct" href="group__gKernel.html#struct____arm__slist__node__t" title="a type for generic list">__arm_slist_node_t</a> **)&amp;(__TAIL)) =                               \</div>
 <div class="line">                (<a class="code hl_struct" href="group__gKernel.html#struct____arm__slist__node__t" title="a type for generic list">__arm_slist_node_t</a> *)(__ITEM);                                 \</div>
 <div class="line">        }                                                                       \</div>
+<div class="line">        ((<a class="code hl_struct" href="group__gKernel.html#struct____arm__slist__node__t" title="a type for generic list">__arm_slist_node_t</a> *)(__ITEM))-&gt;ptNext = NULL;                        \</div>
 <div class="line">    } <span class="keywordflow">while</span>(0)</div>
 </div><!-- fragment -->
 </div>

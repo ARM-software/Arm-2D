@@ -75,8 +75,8 @@ var group__gHelper =
       [ "ARM_2D_PFB_DEPEND_ON_LOW_LEVEL_SYNC_UP", "group__gHelper.html#ggaeac2de18c0ed342a690b3e2ba3c52426ad7df2fe2d2065398cf935e34b6afedeb", null ],
       [ "ARM_2D_PFB_DEPEND_ON_FRAME_SYNC_UP", "group__gHelper.html#ggaeac2de18c0ed342a690b3e2ba3c52426adf9795f2b046202ae537509960d6e873", null ]
     ] ],
-    [ "arm_2d_user_scene_player_set_scenes", "group__gHelper.html#ga3ba8d21a9cc6a540ecbce3568a88c865", null ],
-    [ "arm_2d_user_scene_player_append_scenes", "group__gHelper.html#gaf12d34da9e57560d83577db78264024c", null ],
+    [ "arm_2d_user_scene_player_flush_fifo", "group__gHelper.html#gaa6ae71b7535aa6ae95f895d40624e85c", null ],
+    [ "arm_2d_user_scene_player_append_scenes", "group__gHelper.html#ga80fc59dea5783ccae8aec57f65e9595d", null ],
     [ "arm_2d_user_scene_player_next_scene", "group__gHelper.html#gae96c8170c1e4b282af42717639ebc0cc", null ],
     [ "arm_2d_user_scene_player_task", "group__gHelper.html#ga9cb08eac383fd4a3066fa0d113914a8d", null ],
     [ "arm_2d_helper_pfb_init", "group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99", null ],

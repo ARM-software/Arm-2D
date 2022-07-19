@@ -269,12 +269,12 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga3ba8d21a9cc6a540ecbce3568a88c865"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga3ba8d21a9cc6a540ecbce3568a88c865">arm_2d_user_scene_player_set_scenes</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis, <a class="el" href="group__gHelper.html#structarm__2d__scene__t">arm_2d_scene_t</a> *ptSceneList)</td></tr>
-<tr class="memdesc:ga3ba8d21a9cc6a540ecbce3568a88c865"><td class="mdescLeft">&#160;</td><td class="mdescRight">register a list of scenes to a scene player  <a href="group__gHelper.html#ga3ba8d21a9cc6a540ecbce3568a88c865">More...</a><br /></td></tr>
-<tr class="separator:ga3ba8d21a9cc6a540ecbce3568a88c865"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf12d34da9e57560d83577db78264024c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaf12d34da9e57560d83577db78264024c">arm_2d_user_scene_player_append_scenes</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis, <a class="el" href="group__gHelper.html#structarm__2d__scene__t">arm_2d_scene_t</a> *ptSceneList)</td></tr>
-<tr class="memdesc:gaf12d34da9e57560d83577db78264024c"><td class="mdescLeft">&#160;</td><td class="mdescRight">append a list of scenes to a scene player  <a href="group__gHelper.html#gaf12d34da9e57560d83577db78264024c">More...</a><br /></td></tr>
-<tr class="separator:gaf12d34da9e57560d83577db78264024c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa6ae71b7535aa6ae95f895d40624e85c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaa6ae71b7535aa6ae95f895d40624e85c">arm_2d_user_scene_player_flush_fifo</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis)</td></tr>
+<tr class="memdesc:gaa6ae71b7535aa6ae95f895d40624e85c"><td class="mdescLeft">&#160;</td><td class="mdescRight">flush the scene FIFO  <a href="group__gHelper.html#gaa6ae71b7535aa6ae95f895d40624e85c">More...</a><br /></td></tr>
+<tr class="separator:gaa6ae71b7535aa6ae95f895d40624e85c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga80fc59dea5783ccae8aec57f65e9595d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga80fc59dea5783ccae8aec57f65e9595d">arm_2d_user_scene_player_append_scenes</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis, <a class="el" href="group__gHelper.html#structarm__2d__scene__t">arm_2d_scene_t</a> *ptScenes, int_fast16_t hwCount)</td></tr>
+<tr class="memdesc:ga80fc59dea5783ccae8aec57f65e9595d"><td class="mdescLeft">&#160;</td><td class="mdescRight">append a set of scenes to a scene player  <a href="group__gHelper.html#ga80fc59dea5783ccae8aec57f65e9595d">More...</a><br /></td></tr>
+<tr class="separator:ga80fc59dea5783ccae8aec57f65e9595d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae96c8170c1e4b282af42717639ebc0cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gae96c8170c1e4b282af42717639ebc0cc">arm_2d_user_scene_player_next_scene</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis)</td></tr>
 <tr class="memdesc:gae96c8170c1e4b282af42717639ebc0cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">request switching to the next scene safely  <a href="group__gHelper.html#gae96c8170c1e4b282af42717639ebc0cc">More...</a><br /></td></tr>
 <tr class="separator:gae96c8170c1e4b282af42717639ebc0cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1888,46 +1888,34 @@ cycles used in LCD flushing </td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga3ba8d21a9cc6a540ecbce3568a88c865" name="ga3ba8d21a9cc6a540ecbce3568a88c865"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga3ba8d21a9cc6a540ecbce3568a88c865">&#9670;&nbsp;</a></span>arm_2d_user_scene_player_set_scenes()</h2>
+<a id="gaa6ae71b7535aa6ae95f895d40624e85c" name="gaa6ae71b7535aa6ae95f895d40624e85c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa6ae71b7535aa6ae95f895d40624e85c">&#9670;&nbsp;</a></span>arm_2d_user_scene_player_flush_fifo()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void arm_2d_user_scene_player_set_scenes </td>
+          <td class="memname">void arm_2d_user_scene_player_flush_fifo </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *&#160;</td>
-          <td class="paramname"><em>ptThis</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__scene__t">arm_2d_scene_t</a> *&#160;</td>
-          <td class="paramname"><em>ptSceneList</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>register a list of scenes to a scene player </p>
+<p>flush the scene FIFO </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target scene player </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptSceneList</td><td>the first node of a scene list</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>When you register a new scene list to a scene player, existing scenes (if any) will be deposed one by one by the scene player first. This is different from appending scene(s), as this operation is replacing the old (existing) scene with new ones. </dd></dl>
 
 </div>
 </div>
-<a id="gaf12d34da9e57560d83577db78264024c" name="gaf12d34da9e57560d83577db78264024c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf12d34da9e57560d83577db78264024c">&#9670;&nbsp;</a></span>arm_2d_user_scene_player_append_scenes()</h2>
+<a id="ga80fc59dea5783ccae8aec57f65e9595d" name="ga80fc59dea5783ccae8aec57f65e9595d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga80fc59dea5783ccae8aec57f65e9595d">&#9670;&nbsp;</a></span>arm_2d_user_scene_player_append_scenes()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1942,7 +1930,13 @@ cycles used in LCD flushing </td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__scene__t">arm_2d_scene_t</a> *&#160;</td>
-          <td class="paramname"><em>ptSceneList</em>&#160;</td>
+          <td class="paramname"><em>ptScenes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int_fast16_t&#160;</td>
+          <td class="paramname"><em>hwCount</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1952,11 +1946,12 @@ cycles used in LCD flushing </td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>append a list of scenes to a scene player </p>
+<p>append a set of scenes to a scene player </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target scene player </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptSceneList</td><td>the first node of a scene list </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptScenes</td><td>a scene array </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hwCount</td><td>the number of scenes in the array </td></tr>
   </table>
   </dd>
 </dl>
