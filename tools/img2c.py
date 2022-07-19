@@ -54,6 +54,29 @@ hdr="""
 
 """
 
+tailDataGRAY8="""
+
+extern const arm_2d_tile_t c_tile{0}GRAY8;
+__attribute__((section(\"arm2d.tile.c_tile{0}GRAY8\")))
+const arm_2d_tile_t c_tile{0}GRAY8 = {{
+    .tRegion = {{
+        .tSize = {{
+            .iWidth = {1},
+            .iHeight = {2},
+        }},
+    }},
+    .tInfo = {{
+        .bIsRoot = true,
+        .bHasEnforcedColour = true,
+        .tColourInfo = {{
+            .chScheme = ARM_2D_COLOUR_GRAY8,
+        }},
+    }},
+    {3}c_bmp{0}GRAY8,
+}};
+
+"""
+
 tailDataRGB565="""
 
 extern const arm_2d_tile_t c_tile{0}RGB565;
@@ -188,14 +211,15 @@ def main(argv):
 
     parser = argparse.ArgumentParser(description='image to C array converter')
 
-    parser.add_argument('-i', nargs='?', required=True, type = str,  default="", help="Input file (png, bmp, etc..)")
-    parser.add_argument('-o', nargs='?', type = str,  default="", help="output C file containing RGB56/RGB888 and alpha values arrays")
+    parser.add_argument('-i', nargs='?', type = str,  required=True, help="Input file (png, bmp, etc..)")
+    parser.add_argument('-o', nargs='?', type = str,  required=True, help="output C file containing RGB56/RGB888/Gray8 and alpha values arrays")
 
-    parser.add_argument('--name', nargs='?',type = str, default="", help="A specified array name")
-    parser.add_argument('--format', nargs='?',type = str, default="rgb565", help="RGB Format (rgb565, rgb32)")
+    parser.add_argument('--name', nargs='?',type = str, required=True, help="A specified array name")
+    parser.add_argument('--format', nargs='?',type = str, default="rgb565", help="RGB Format (rgb565, rgb32, gray8)")
     parser.add_argument('--dim', nargs=2,type = int, help="Resize the image with the given width and height")
     parser.add_argument('--rot', nargs='?',type = float, default=0.0, help="Rotate the image with the given angle in degrees")
 
+    print(parser)
     args = parser.parse_args()
 
     if args.i == None or args.i == "" :
@@ -213,7 +237,7 @@ def main(argv):
     if arr_name == None or arr_name == "":
         arr_name = basename
 
-    if args.format != 'rgb565' and args.format != 'rgb32':
+    if args.format != 'rgb565' and args.format != 'rgb32' and args.format != 'gray8':
         parser.print_help()
         exit(1)
 
@@ -274,8 +298,36 @@ def main(argv):
             print('};', file=o)
 
 
+        # Gray8 channel array
+        if args.format == 'gray8':
+            R = (data[...,0]).astype(np.uint16)
+            G = (data[...,1]).astype(np.uint16)
+            B = (data[...,2]).astype(np.uint16)
+            # merge
+            RGB = np.rint((R + G + B)/3).astype(np.uint8)
+            print(RGB)
+
+            print('',file=o)
+            print('__attribute__((section(\"arm2d.asset.c_bmp%sGRAY8\")))' % (arr_name), file=o)
+            print('static const uint8_t c_bmp%sGRAY8[%d*%d] = {' % (arr_name, row, col), file=o)
+            cnt = 0
+            for eachRow in RGB:
+                lineWidth=0
+                print("/* -%d- */" % (cnt), file=o)
+                for eachPix in eachRow:
+                    if lineWidth % 32 == 31:
+                        print("0x%02x," %(eachPix) ,file=o)
+                    else:
+                        print("0x%02x" %(eachPix), end =", ", file=o)
+                    lineWidth+=1
+                print('',file=o)
+                cnt+=1
+            print('};', file=o)
+            buffStr='pchBuffer'
+            typStr='uint8_t'
+
         # RGB565 channel array
-        if args.format == 'rgb565':
+        elif args.format == 'rgb565':
             R = (data[...,0]>>3).astype(np.uint16) << 11
             G = (data[...,1]>>2).astype(np.uint16) << 5
             B = (data[...,2]>>3).astype(np.uint16)
@@ -300,6 +352,8 @@ def main(argv):
             print('};', file=o)
             buffStr='phwBuffer'
             typStr='uint16_t'
+
+
 
         elif args.format == 'rgb32':
             R = data[...,0].astype(np.uint32) << 16
@@ -345,12 +399,17 @@ def main(argv):
 
         # insert tail
         
-        if args.format == 'rgb565':
-            print(tailDataRGB565.format(arr_name, str(row), str(col), "."+buffStr+" = ("+typStr+"*)"), file=o)
+        if args.format == 'gray8':
+            print(tailDataGRAY8.format(arr_name, str(row), str(col), "."+buffStr+" = ("+typStr+"*)"), file=o)
             if mode == "RGBA":
                 print(tailAlpha.format(arr_name, str(row), str(col)), file=o)
         
-        if args.format == 'rgb32':
+        elif args.format == 'rgb565':
+            print(tailDataRGB565.format(arr_name, str(row), str(col), "."+buffStr+" = ("+typStr+"*)"), file=o)
+            if mode == "RGBA":
+                print(tailAlpha.format(arr_name, str(row), str(col)), file=o)
+
+        elif args.format == 'rgb32':
             if mode == "RGBA":
                 print(tailDataRGBA8888.format(arr_name, str(row), str(col), "."+buffStr+" = ("+typStr+"*)"), file=o)
                 print(tailAlpha.format(arr_name, str(row), str(col)), file=o)
