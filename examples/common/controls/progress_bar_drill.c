@@ -21,8 +21,9 @@
 #include "./__common.h"
 #include "arm_2d.h"
 #include <math.h>
-#include <time.h>
 #include <assert.h>
+
+#include "arm_2d_helper.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -65,7 +66,6 @@
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
-extern uint32_t SystemCoreClock;
 
 extern const arm_2d_tile_t c_tileBlueSlash;
 /*============================ PROTOTYPES ====================================*/
@@ -79,8 +79,8 @@ ARM_NOINIT static uint32_t s_wUnit;
 
 void progress_bar_drill_init(void)
 {
-    s_lLastTime = clock();
-    s_wUnit = (SystemCoreClock  / 1000) * PROGRESS_BAR_DRILL_SPEED;
+    s_lLastTime = arm_2d_helper_get_system_timestamp();
+    s_wUnit = (uint32_t)arm_2d_helper_convert_ms_to_ticks(PROGRESS_BAR_DRILL_SPEED);
 }
 
 void progress_bar_drill_show(   const arm_2d_tile_t *ptTarget, 
@@ -136,7 +136,7 @@ void progress_bar_drill_show(   const arm_2d_tile_t *ptTarget,
                             &tInnerRegion);
         //! update offset
         if (bIsNewFrame) {
-            int64_t lClocks = clock();
+            int64_t lClocks = arm_2d_helper_get_system_timestamp();
             int32_t nElapsed = (int32_t)((lClocks - s_lLastTime));
             
             if (nElapsed >= (int32_t)s_wUnit) {
