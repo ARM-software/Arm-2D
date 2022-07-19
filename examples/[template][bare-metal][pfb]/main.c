@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2022 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,6 +21,7 @@
 #include "platform.h"
 #include "arm_2d_helper.h"
 #include "arm_2d_disp_adapter_0.h"
+#include "scene_player_demo.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -125,6 +126,8 @@ int main (void)
     printf("\r\nArm-2D Bare-metal Template\r\n");
  
     disp_adapter0_init();
+    scene_player_demo_init();
+    arm_2d_user_scene_player_next_scene(&DISP0_ADAPTER);
     
     while (1) {
         disp_adapter0_task();

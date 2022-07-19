@@ -527,7 +527,8 @@ int64_t arm_2d_helper_convert_ticks_to_ms(int64_t lTick)
 
 int64_t arm_2d_helper_convert_ms_to_ticks(uint32_t wMS)
 {
-    int64_t lResult = arm_2d_helper_get_reference_clock_frequency() * wMS / 1000;
+    int64_t lResult = arm_2d_helper_get_reference_clock_frequency() 
+                    * (int64_t)wMS / 1000ul;
     return lResult ? lResult : 1;
 }
 

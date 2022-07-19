@@ -42,6 +42,7 @@ extern "C" {
 #if defined(__clang__)
 #   pragma clang diagnostic push
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
+#   pragma clang diagnostic ignored "-Wunused-function"
 #endif
 
 
@@ -99,8 +100,8 @@ extern "C" {
                 .iHeight = (__height),                                          \
             },                                                                  \
             .tLocation = {                                                      \
-                .iX = ((__region).tSize.iWidth - (__width))  >> 1,      \
-                .iY = ((__region).tSize.iHeight - (__height))>> 1,      \
+                .iX = ((__region).tSize.iWidth - (__width))  >> 1,              \
+                .iY = ((__region).tSize.iHeight - (__height))>> 1,              \
             },                                                                  \
         },                                                                      \
         *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
@@ -116,6 +117,32 @@ extern "C" {
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ PROTOTYPES ====================================*/
+
+/*!
+ * \brief set an alarm with given period and check the status
+ *
+ * \param[in] wMS a time period in millisecond
+ *
+ * \return bool whether it is timeout
+ */
+__STATIC_INLINE bool arm_2d_helper_is_time_out(uint32_t wMS)
+{
+    int64_t lTimestamp = arm_2d_helper_get_system_timestamp();
+    static int64_t s_lTimestamp = 0;
+    if (0 == s_lTimestamp) {
+        s_lTimestamp = arm_2d_helper_convert_ms_to_ticks(wMS);
+        s_lTimestamp += lTimestamp;
+        
+        return false;
+    }
+
+    if (lTimestamp >= s_lTimestamp) {
+        s_lTimestamp = arm_2d_helper_convert_ms_to_ticks(wMS) + lTimestamp;
+        return true;
+    }
+
+    return false;
+}
 
 /*! @} */
 

@@ -395,6 +395,11 @@
               <FileType>5</FileType>
               <FilePath>..\..\app_cfg.h</FilePath>
             </File>
+            <File>
+              <FileName>scene_player_demo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\scene_player_demo.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -632,6 +637,21 @@
               <FileName>GLCD_Config.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\platform\stm32f746g-discovery\GLCD_Config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>asset</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\cmsis_logo.c</FilePath>
+            </File>
+            <File>
+              <FileName>software.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\software.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1182,6 +1202,11 @@
               <FileType>5</FileType>
               <FilePath>..\..\app_cfg.h</FilePath>
             </File>
+            <File>
+              <FileName>scene_player_demo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\scene_player_demo.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1419,6 +1444,21 @@
               <FileName>GLCD_Config.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\platform\stm32f746g-discovery\GLCD_Config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>asset</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\cmsis_logo.c</FilePath>
+            </File>
+            <File>
+              <FileName>software.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\software.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2037,6 +2077,11 @@
               <FileType>5</FileType>
               <FilePath>..\..\app_cfg.h</FilePath>
             </File>
+            <File>
+              <FileName>scene_player_demo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\scene_player_demo.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2274,6 +2319,21 @@
               <FileName>GLCD_Config.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\platform\stm32f746g-discovery\GLCD_Config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>asset</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\cmsis_logo.c</FilePath>
+            </File>
+            <File>
+              <FileName>software.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\software.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2893,6 +2953,11 @@
               <FileType>5</FileType>
               <FilePath>..\..\app_cfg.h</FilePath>
             </File>
+            <File>
+              <FileName>scene_player_demo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\scene_player_demo.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3130,6 +3195,21 @@
               <FileName>GLCD_Config.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\platform\stm32f746g-discovery\GLCD_Config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>asset</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\cmsis_logo.c</FilePath>
+            </File>
+            <File>
+              <FileName>software.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\software.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3680,6 +3760,11 @@
               <FileType>5</FileType>
               <FilePath>..\..\app_cfg.h</FilePath>
             </File>
+            <File>
+              <FileName>scene_player_demo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\scene_player_demo.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3917,6 +4002,21 @@
               <FileName>GLCD_Config.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\platform\stm32f746g-discovery\GLCD_Config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>asset</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\cmsis_logo.c</FilePath>
+            </File>
+            <File>
+              <FileName>software.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\software.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4536,6 +4636,11 @@
               <FileType>5</FileType>
               <FilePath>..\..\app_cfg.h</FilePath>
             </File>
+            <File>
+              <FileName>scene_player_demo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\scene_player_demo.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4773,6 +4878,21 @@
               <FileName>GLCD_Config.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\platform\stm32f746g-discovery\GLCD_Config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>asset</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\cmsis_logo.c</FilePath>
+            </File>
+            <File>
+              <FileName>software.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\software.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5392,6 +5512,11 @@
               <FileType>5</FileType>
               <FilePath>..\..\app_cfg.h</FilePath>
             </File>
+            <File>
+              <FileName>scene_player_demo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\scene_player_demo.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5629,6 +5754,21 @@
               <FileName>GLCD_Config.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\platform\stm32f746g-discovery\GLCD_Config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>asset</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\cmsis_logo.c</FilePath>
+            </File>
+            <File>
+              <FileName>software.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\software.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6248,6 +6388,11 @@
               <FileType>5</FileType>
               <FilePath>..\..\app_cfg.h</FilePath>
             </File>
+            <File>
+              <FileName>scene_player_demo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\scene_player_demo.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6485,6 +6630,21 @@
               <FileName>GLCD_Config.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\platform\stm32f746g-discovery\GLCD_Config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>asset</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\cmsis_logo.c</FilePath>
+            </File>
+            <File>
+              <FileName>software.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\software.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7035,6 +7195,11 @@
               <FileType>5</FileType>
               <FilePath>..\..\app_cfg.h</FilePath>
             </File>
+            <File>
+              <FileName>scene_player_demo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\scene_player_demo.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -7272,6 +7437,21 @@
               <FileName>GLCD_Config.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\platform\stm32f746g-discovery\GLCD_Config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>asset</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\cmsis_logo.c</FilePath>
+            </File>
+            <File>
+              <FileName>software.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\software.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7891,6 +8071,11 @@
               <FileType>5</FileType>
               <FilePath>..\..\app_cfg.h</FilePath>
             </File>
+            <File>
+              <FileName>scene_player_demo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\scene_player_demo.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -8128,6 +8313,21 @@
               <FileName>GLCD_Config.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\platform\stm32f746g-discovery\GLCD_Config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>asset</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\cmsis_logo.c</FilePath>
+            </File>
+            <File>
+              <FileName>software.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\software.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8597,7 +8797,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>0</Optim>
+            <Optim>1</Optim>
             <oTime>1</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -8616,11 +8816,11 @@
             <v6LangP>3</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
-            <v6Lto>1</v6Lto>
+            <v6Lto>0</v6Lto>
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-Omax</MiscControls>
+              <MiscControls></MiscControls>
               <Define>LCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\lib;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3</IncludePath>
@@ -8677,6 +8877,11 @@
               <FileName>app_cfg.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\app_cfg.h</FilePath>
+            </File>
+            <File>
+              <FileName>scene_player_demo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\scene_player_demo.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8915,6 +9120,21 @@
               <FileName>GLCD_Config.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\platform\stm32f746g-discovery\GLCD_Config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>asset</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\cmsis_logo.c</FilePath>
+            </File>
+            <File>
+              <FileName>software.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\software.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9174,8 +9394,8 @@
       </api>
     </apis>
     <components>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-EXTRA">
-        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.0.0-preview3"/>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cvendor="ARM" Cversion="1.2.0" condition="Arm-2D-EXTRA">
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
@@ -9191,7 +9411,7 @@
         </targetInfos>
       </component>
       <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-CORE">
-        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.0.0-preview3"/>
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
@@ -9206,8 +9426,8 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-Helper" maxInstances="8">
-        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.0.0-preview3"/>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="1.0.6" condition="Arm-2D-Helper" maxInstances="8">
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
@@ -9222,8 +9442,8 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-CORE">
-        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.0.0-preview3"/>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="1.2.1" condition="Arm-2D-CORE">
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
@@ -9239,7 +9459,7 @@
         </targetInfos>
       </component>
       <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Alpha-Blending" Cvendor="ARM" Cversion="1.0.0-preview" condition="Arm-2D-CORE">
-        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.0.0-preview3"/>
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
@@ -9255,7 +9475,7 @@
         </targetInfos>
       </component>
       <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.0.0-preview" condition="CMSIS-DSP">
-        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.0.0-preview3"/>
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
@@ -9271,7 +9491,7 @@
         </targetInfos>
       </component>
       <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Transform" Cvendor="ARM" Cversion="1.0.0-preview" condition="Arm-2D-CORE">
-        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.0.0-preview3"/>
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
@@ -9580,7 +9800,7 @@
       <file attr="config" category="sourceC" name="Library\Source\arm_2d.c" version="1.0.1">
         <instance index="0">RTE\Acceleration\arm_2d.c</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.0.0-preview" condition="CMSIS-DSP"/>
-        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.0.0-preview3"/>
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
@@ -9598,7 +9818,7 @@
       <file attr="config" category="preIncludeGlobal" name="Library\Include\template\arm_2d_cfg.h" version="1.0.7">
         <instance index="0">RTE\Acceleration\arm_2d_cfg.h</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.0.0-preview" condition="CMSIS-DSP"/>
-        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.0.0-preview3"/>
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
@@ -9613,10 +9833,10 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_disp_adapter.c" version="1.0.4">
+      <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_disp_adapter.c" version="1.0.6">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-Helper" maxInstances="8"/>
-        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.0.0-preview3"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="1.0.6" condition="Arm-2D-Helper" maxInstances="8"/>
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
@@ -9631,10 +9851,10 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="Helper\Include\template\arm_2d_disp_adapter.h" version="1.0.4">
+      <file attr="config" category="header" name="Helper\Include\template\arm_2d_disp_adapter.h" version="1.0.6">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-Helper" maxInstances="8"/>
-        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.0.0-preview3"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="1.0.6" condition="Arm-2D-Helper" maxInstances="8"/>
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
