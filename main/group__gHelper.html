@@ -308,6 +308,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf92c1f5d41f75d4a8514ab79c34f1185"><td class="memItemLeft" align="right" valign="top">int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185">arm_2d_helper_get_system_timestamp</a> (void)</td></tr>
 <tr class="memdesc:gaf92c1f5d41f75d4a8514ab79c34f1185"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the current system stamp from the reference clock  <a href="group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185">More...</a><br /></td></tr>
 <tr class="separator:gaf92c1f5d41f75d4a8514ab79c34f1185"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2107c2ae68e1cb25029cc9b1c04725af"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga2107c2ae68e1cb25029cc9b1c04725af">arm_2d_helper_is_time_out</a> (uint32_t wMS)</td></tr>
+<tr class="memdesc:ga2107c2ae68e1cb25029cc9b1c04725af"><td class="mdescLeft">&#160;</td><td class="mdescRight">set an alarm with given period and check the status  <a href="group__gHelper.html#ga2107c2ae68e1cb25029cc9b1c04725af">More...</a><br /></td></tr>
+<tr class="separator:ga2107c2ae68e1cb25029cc9b1c04725af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
@@ -1778,8 +1781,8 @@ cycles used in LCD flushing </td></tr>
 <div class="line">                .iHeight = (__height),                                          \</div>
 <div class="line">            },                                                                  \</div>
 <div class="line">            .tLocation = {                                                      \</div>
-<div class="line">                .iX = ((__region).tSize.iWidth - (__width))  &gt;&gt; 1,      \</div>
-<div class="line">                .iY = ((__region).tSize.iHeight - (__height))&gt;&gt; 1,      \</div>
+<div class="line">                .iX = ((__region).tSize.iWidth - (__width))  &gt;&gt; 1,              \</div>
+<div class="line">                .iY = ((__region).tSize.iHeight - (__height))&gt;&gt; 1,              \</div>
 <div class="line">            },                                                                  \</div>
 <div class="line">        },                                                                      \</div>
 <div class="line">        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
@@ -2325,6 +2328,33 @@ cycles used in LCD flushing </td></tr>
 <p>get the current system stamp from the reference clock </p>
 <dl class="section return"><dt>Returns</dt><dd>int64_t the timestamp in ticks (no overflow issue) </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>you have to call <a class="el" href="group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf" title="convert ticks of a reference timer to millisecond">arm_2d_helper_convert_ticks_to_ms()</a> to convert the the timestamp into milliseconds when required. </dd></dl>
+
+</div>
+</div>
+<a id="ga2107c2ae68e1cb25029cc9b1c04725af" name="ga2107c2ae68e1cb25029cc9b1c04725af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2107c2ae68e1cb25029cc9b1c04725af">&#9670;&nbsp;</a></span>arm_2d_helper_is_time_out()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE bool arm_2d_helper_is_time_out </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>wMS</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>set an alarm with given period and check the status </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">wMS</td><td>a time period in millisecond</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool whether it is timeout </dd></dl>
 
 </div>
 </div>
