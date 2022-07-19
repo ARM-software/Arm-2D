@@ -8,7 +8,7 @@
 #
 # *************************************************************************************************
 #
-# * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
+# * Copyright (C) 2010-2022 ARM Limited or its affiliates. All rights reserved.
 # *
 # * SPDX-License-Identifier: Apache-2.0
 # *
@@ -212,7 +212,7 @@ def main(argv):
     parser = argparse.ArgumentParser(description='image to C array converter')
 
     parser.add_argument('-i', nargs='?', type = str,  required=True, help="Input file (png, bmp, etc..)")
-    parser.add_argument('-o', nargs='?', type = str,  required=True, help="output C file containing RGB56/RGB888/Gray8 and alpha values arrays")
+    parser.add_argument('-o', nargs='?', type = str,  required=False, help="output C file containing RGB56/RGB888/Gray8 and alpha values arrays")
 
     parser.add_argument('--name', nargs='?',type = str, required=True, help="A specified array name")
     parser.add_argument('--format', nargs='?',type = str, default="rgb565", help="RGB Format (rgb565, rgb32, gray8)")
@@ -309,7 +309,7 @@ def main(argv):
 
             print('',file=o)
             print('__attribute__((section(\"arm2d.asset.c_bmp%sGRAY8\")))' % (arr_name), file=o)
-            print('static const uint8_t c_bmp%sGRAY8[%d*%d] = {' % (arr_name, row, col), file=o)
+            print('const uint8_t c_bmp%sGRAY8[%d*%d] = {' % (arr_name, row, col), file=o)
             cnt = 0
             for eachRow in RGB:
                 lineWidth=0
@@ -336,7 +336,7 @@ def main(argv):
 
             print('',file=o)
             print('__attribute__((section(\"arm2d.asset.c_bmp%sRGB565\")))' % (arr_name), file=o)
-            print('static const uint16_t c_bmp%sRGB565[%d*%d] = {' % (arr_name, row, col), file=o)
+            print('const uint16_t c_bmp%sRGB565[%d*%d] = {' % (arr_name, row, col), file=o)
             cnt = 0
             for eachRow in RGB:
                 lineWidth=0
@@ -371,10 +371,10 @@ def main(argv):
             
             if mode == "RGBA":
                 print('__attribute__((section(\"arm2d.asset.c_bmp%sCCCA8888\")))' % (arr_name), file=o)
-                print('static const uint32_t c_bmp%sCCCA8888[%d*%d] = {' % (arr_name, row, col), file=o)
+                print('const uint32_t c_bmp%sCCCA8888[%d*%d] = {' % (arr_name, row, col), file=o)
             else:
                 print('__attribute__((section(\"arm2d.asset.c_bmp%sCCCN888\")))' % (arr_name), file=o)
-                print('static const uint32_t c_bmp%sCCCN888[%d*%d]= {' % (arr_name, row, col), file=o)
+                print('const uint32_t c_bmp%sCCCN888[%d*%d]= {' % (arr_name, row, col), file=o)
                 
             cnt = 0
             for eachRow in RGB:
