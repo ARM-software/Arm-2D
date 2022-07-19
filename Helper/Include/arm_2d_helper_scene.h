@@ -102,31 +102,26 @@ typedef struct arm_2d_scene_player_t {
 /*============================ PROTOTYPES ====================================*/
 
 /*!
- * \brief register a list of scenes to a scene player
+ * \brief flush the scene FIFO
  * 
  * \param[in] ptThis the target scene player
- * \param[in] ptSceneList the first node of a scene list
- * 
- * \note When you register a new scene list to a scene player, existing scenes 
- *       (if any) will be deposed one by one by the scene player first. This is
- *       different from appending scene(s), as this operation is replacing the 
- *       old (existing) scene with new ones.
  */
 extern
 ARM_NONNULL(1)
-void arm_2d_user_scene_player_set_scenes(   arm_2d_scene_player_t *ptThis,
-                                            arm_2d_scene_t *ptSceneList);
+void arm_2d_user_scene_player_flush_fifo(arm_2d_scene_player_t *ptThis);
 
 /*!
- * \brief append a list of scenes to a scene player
+ * \brief append a set of scenes to a scene player
  *
  * \param[in] ptThis the target scene player
- * \param[in] ptSceneList the first node of a scene list
+ * \param[in] ptScenes a scene array
+ * \param[in] hwCount the number of scenes in the array
  */
 extern
 ARM_NONNULL(1)
 void arm_2d_user_scene_player_append_scenes(arm_2d_scene_player_t *ptThis, 
-                                            arm_2d_scene_t *ptSceneList);
+                                            arm_2d_scene_t *ptScenes,
+                                            int_fast16_t hwCount);
 
 /*!
  * \brief request switching to the next scene safely

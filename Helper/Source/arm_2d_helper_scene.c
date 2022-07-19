@@ -84,42 +84,32 @@ static void __scene_player_depose_all_scene(arm_2d_scene_player_t *ptThis)
 }
 
 ARM_NONNULL(1)
-void arm_2d_user_scene_player_set_scenes(   arm_2d_scene_player_t *ptThis,
-                                            arm_2d_scene_t *ptSceneList)
+void arm_2d_user_scene_player_flush_fifo(arm_2d_scene_player_t *ptThis)
 {
     assert(NULL != ptThis);
 
     __scene_player_depose_all_scene(ptThis);
 
-    this.SceneFIFO.ptHead = ptSceneList;
-    this.SceneFIFO.ptTail = ptSceneList;
-    
-    if (NULL == ptSceneList) {
-        return ;
-    }
+    this.SceneFIFO.ptHead = NULL;
+    this.SceneFIFO.ptTail = NULL;
 
-    while(NULL != ptSceneList->ptNext) {
-        ptSceneList = ptSceneList->ptNext;
-    }
-
-    this.SceneFIFO.ptTail = ptSceneList;
 }
 
 ARM_NONNULL(1)
 void arm_2d_user_scene_player_append_scenes(arm_2d_scene_player_t *ptThis, 
-                                            arm_2d_scene_t *ptSceneList)
+                                            arm_2d_scene_t *ptScenes,
+                                            int_fast16_t hwCount)
 {
     assert(NULL != ptThis);
-
-    while (NULL != ptSceneList) {
-        arm_2d_scene_t *ptNext = ptSceneList->ptNext;
-        
+    assert(NULL != ptScenes);
+    assert(hwCount > 0);
+    
+    do {
+        arm_2d_scene_t *ptScene = ptScenes++;
         ARM_LIST_QUEUE_ENQUEUE(this.SceneFIFO.ptHead,
                                this.SceneFIFO.ptTail,
-                               ptSceneList);
-
-        ptSceneList = ptNext;
-    }
+                               ptScene);
+    } while(--hwCount);
 }
 
 ARM_NONNULL(1)

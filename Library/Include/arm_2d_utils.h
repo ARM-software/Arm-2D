@@ -448,18 +448,17 @@ extern "C" {
         if (NULL == (__TAIL)) {                                                 \
             (*((__arm_slist_node_t **)&(__TAIL))) =                             \
                 (__arm_slist_node_t *)(__ITEM);                                 \
-            ((__arm_slist_node_t *)(__ITEM))->ptNext = NULL;                    \
             (*((__arm_slist_node_t **)&(__HEAD))) =                             \
                 (__arm_slist_node_t *)(__ITEM);                                 \
         } else {                                                                \
             ((__arm_slist_node_t *)(__TAIL))->ptNext =                          \
                 (__arm_slist_node_t *)(__ITEM);                                 \
-            ((__arm_slist_node_t *)(__ITEM))->ptNext = NULL;                    \
             (*(__arm_slist_node_t **)&(__TAIL)) =                               \
                 (__arm_slist_node_t *)(__ITEM);                                 \
         }                                                                       \
+        ((__arm_slist_node_t *)(__ITEM))->ptNext = NULL;                        \
     } while(0)
-#define ARM_LIST_QUEUE_ENQUEUE(__HEAD, __TAIL, __ITEM)  \
+#define ARM_LIST_QUEUE_ENQUEUE(__HEAD, __TAIL, __ITEM)                          \
             __ARM_LIST_QUEUE_ENQUEUE((__HEAD), (__TAIL), (__ITEM))
 
 #define __ARM_LIST_QUEUE_DEQUEUE(__HEAD, __TAIL, __ITEM)                        \

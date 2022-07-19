@@ -212,7 +212,7 @@
         </component>
         
         
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="1.2.0" condition="Arm-2D-CORE">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="1.2.1" condition="Arm-2D-CORE">
           <description>A helper service for LCD adaptor(s) with generic partial framebuffer support</description>
           <files>
             <file category="include"     name="Helper/Include/" />
@@ -225,11 +225,11 @@
           </RTE_Components_h>
         </component>
         
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cversion="1.0.2" condition="Arm-2D-Helper" maxInstances="8">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cversion="1.0.6" condition="Arm-2D-Helper" maxInstances="8">
           <description>The Display Adapter</description>
           <files>
-            <file category="sourceC"     name="Helper/Source/template/arm_2d_disp_adapter.c" attr="config" version="1.0.5" />
-            <file category="header"      name="Helper/Include/template/arm_2d_disp_adapter.h" attr="config" version="1.0.5" />
+            <file category="sourceC"     name="Helper/Source/template/arm_2d_disp_adapter.c" attr="config" version="1.0.6" />
+            <file category="header"      name="Helper/Include/template/arm_2d_disp_adapter.h" attr="config" version="1.0.6" />
           </files>
           <RTE_Components_h>
 #define __RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER%Instance%__
@@ -249,7 +249,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.1.0" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.2.0" condition="Arm-2D-EXTRA">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <file category="include"     name="examples/common/controls/" />
@@ -271,7 +271,7 @@
           </RTE_Components_h>
         </component>
         
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Benchmark:Generic" Cversion="1.1.1" condition="Arm-2D-Benchmark-Generic">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Benchmark:Generic" Cversion="1.1.2" condition="Arm-2D-Benchmark-Generic">
           <description>An all-in-one generic benchmark for arm-2d.</description>
           <files>
             <file category="include"     name="examples/common/benchmark/" />
@@ -288,7 +288,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Benchmark:WatchPanel" Cversion="1.1.1" condition="Arm-2D-Benchmark-WatchPanel">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Benchmark:WatchPanel" Cversion="1.1.2" condition="Arm-2D-Benchmark-WatchPanel">
           <description>An watch-panel benchmark for arm-2d.</description>
           <files>
             <file category="include"     name="examples/common/benchmark/" />

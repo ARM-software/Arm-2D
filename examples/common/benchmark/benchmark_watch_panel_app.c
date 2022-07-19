@@ -375,7 +375,8 @@ void arm_2d_run_benchmark(void)
         };
         arm_2d_user_scene_player_append_scenes( 
                                         &s_tScenePlayer,
-                                        (arm_2d_scene_t *)s_tBenchmarkScene);
+                                        (arm_2d_scene_t *)s_tBenchmarkScene,
+                                        dimof(s_tBenchmarkScene));
     } while(0);
     
     while(true) {
