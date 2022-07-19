@@ -21,8 +21,8 @@
 #include "./__common.h"
 #include "arm_2d.h"
 #include <math.h>
-#include <time.h>
 #include <assert.h>
+#include "arm_2d_helper.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -51,14 +51,13 @@
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
-extern uint32_t SystemCoreClock;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 extern const arm_2d_tile_t c_tileWaveMask;
 
-ARM_NOINIT static int32_t s_nLastTime;
-ARM_NOINIT static int32_t s_tWavingTime;
+ARM_NOINIT static int64_t s_lLastTime;
+ARM_NOINIT static int64_t s_lWavingTime;
 ARM_NOINIT static uint32_t s_wUnit;
 static volatile bool s_bWaving = false;
 
@@ -67,9 +66,9 @@ static volatile bool s_bWaving = false;
 
 void progress_bar_flowing_init(void)
 {
-    s_nLastTime = clock();
-    s_wUnit = (SystemCoreClock  / 1000) * PROGRESS_BAR_WAVE_SPEED;
-    s_tWavingTime = s_nLastTime + SystemCoreClock  * 3;
+    s_lLastTime = arm_2d_helper_get_system_timestamp();
+    s_wUnit = (uint32_t)arm_2d_helper_convert_ms_to_ticks(PROGRESS_BAR_WAVE_SPEED);
+    s_lWavingTime = s_lLastTime + arm_2d_helper_convert_ms_to_ticks(3000);
 }
 
 void progress_bar_flowing_show( const arm_2d_tile_t *ptTarget, 
@@ -134,16 +133,16 @@ void progress_bar_flowing_show( const arm_2d_tile_t *ptTarget,
         
         //! update offset
         if (bIsNewFrame) {
-            int32_t nClocks = clock();
-            int32_t nElapsed = (int32_t)((nClocks - s_nLastTime));
+            int64_t lClocks = arm_2d_helper_get_system_timestamp();
+            int32_t nElapsed = (int32_t)((lClocks - s_lLastTime));
 
-            if (nClocks >= s_tWavingTime) {
-                s_tWavingTime = nClocks + SystemCoreClock  * 3;
+            if (lClocks >= s_lWavingTime) {
+                s_lWavingTime = lClocks + arm_2d_helper_convert_ms_to_ticks(3000);
                 s_bWaving = true;
             }
 
             if (nElapsed >= (int32_t)s_wUnit) {
-                s_nLastTime = nClocks;
+                s_lLastTime = lClocks;
                 
                 if (s_bWaving) {
                     s_iOffset+=2;
