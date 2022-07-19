@@ -645,26 +645,45 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l00536" name="l00536"></a><span class="lineno">  536</span>extern</div>
 <div class="line"><a id="l00537" name="l00537"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf">  537</a></span>int64_t <a class="code hl_function" href="group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf" title="convert ticks of a reference timer to millisecond">arm_2d_helper_convert_ticks_to_ms</a>(int64_t lTick);</div>
 <div class="line"><a id="l00538" name="l00538"></a><span class="lineno">  538</span><span class="comment"></span> </div>
-<div class="line"><a id="l00539" name="l00539"></a><span class="lineno">  539</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00540" name="l00540"></a><span class="lineno">  540</span><span class="comment"> * \brief get the reference clock frequency</span></div>
-<div class="line"><a id="l00541" name="l00541"></a><span class="lineno">  541</span><span class="comment"> * \return uint32_t the frequency</span></div>
-<div class="line"><a id="l00542" name="l00542"></a><span class="lineno">  542</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00543" name="l00543"></a><span class="lineno">  543</span>extern</div>
-<div class="line"><a id="l00544" name="l00544"></a><span class="lineno"><a class="line" href="group__gHelper.html#gace60efc807106e1526fcc9f673f19b12">  544</a></span>uint32_t <a class="code hl_function" href="group__gHelper.html#gace60efc807106e1526fcc9f673f19b12" title="get the reference clock frequency">arm_2d_helper_get_reference_clock_frequency</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00545" name="l00545"></a><span class="lineno">  545</span><span class="comment"></span> </div>
-<div class="line"><a id="l00546" name="l00546"></a><span class="lineno">  546</span><span class="comment">/*! @} */</span></div>
-<div class="line"><a id="l00547" name="l00547"></a><span class="lineno">  547</span> </div>
-<div class="line"><a id="l00548" name="l00548"></a><span class="lineno">  548</span><span class="preprocessor">#if defined(__clang__)</span></div>
-<div class="line"><a id="l00549" name="l00549"></a><span class="lineno">  549</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
-<div class="line"><a id="l00550" name="l00550"></a><span class="lineno">  550</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00551" name="l00551"></a><span class="lineno">  551</span> </div>
-<div class="line"><a id="l00552" name="l00552"></a><span class="lineno">  552</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
-<div class="line"><a id="l00553" name="l00553"></a><span class="lineno">  553</span>}</div>
-<div class="line"><a id="l00554" name="l00554"></a><span class="lineno">  554</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00555" name="l00555"></a><span class="lineno">  555</span> </div>
-<div class="line"><a id="l00556" name="l00556"></a><span class="lineno">  556</span> </div>
-<div class="line"><a id="l00557" name="l00557"></a><span class="lineno">  557</span> </div>
-<div class="line"><a id="l00558" name="l00558"></a><span class="lineno">  558</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00539" name="l00539"></a><span class="lineno">  539</span><span class="comment">/*! </span></div>
+<div class="line"><a id="l00540" name="l00540"></a><span class="lineno">  540</span><span class="comment"> * \brief convert millisecond into ticks of the reference timer </span></div>
+<div class="line"><a id="l00541" name="l00541"></a><span class="lineno">  541</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00542" name="l00542"></a><span class="lineno">  542</span><span class="comment"> * \param[in] wMS the target time in millisecond</span></div>
+<div class="line"><a id="l00543" name="l00543"></a><span class="lineno">  543</span><span class="comment"> * \return int64_t the ticks</span></div>
+<div class="line"><a id="l00544" name="l00544"></a><span class="lineno">  544</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00545" name="l00545"></a><span class="lineno">  545</span>extern</div>
+<div class="line"><a id="l00546" name="l00546"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga22a1338673baaec12c475e371d7593be">  546</a></span>int64_t <a class="code hl_function" href="group__gHelper.html#ga22a1338673baaec12c475e371d7593be" title="convert millisecond into ticks of the reference timer">arm_2d_helper_convert_ms_to_ticks</a>(uint32_t wMS);</div>
+<div class="line"><a id="l00547" name="l00547"></a><span class="lineno">  547</span><span class="comment"></span> </div>
+<div class="line"><a id="l00548" name="l00548"></a><span class="lineno">  548</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00549" name="l00549"></a><span class="lineno">  549</span><span class="comment"> * \brief get the reference clock frequency</span></div>
+<div class="line"><a id="l00550" name="l00550"></a><span class="lineno">  550</span><span class="comment"> * \return uint32_t the frequency</span></div>
+<div class="line"><a id="l00551" name="l00551"></a><span class="lineno">  551</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00552" name="l00552"></a><span class="lineno">  552</span>extern</div>
+<div class="line"><a id="l00553" name="l00553"></a><span class="lineno"><a class="line" href="group__gHelper.html#gace60efc807106e1526fcc9f673f19b12">  553</a></span>uint32_t <a class="code hl_function" href="group__gHelper.html#gace60efc807106e1526fcc9f673f19b12" title="get the reference clock frequency">arm_2d_helper_get_reference_clock_frequency</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00554" name="l00554"></a><span class="lineno">  554</span><span class="comment"></span> </div>
+<div class="line"><a id="l00555" name="l00555"></a><span class="lineno">  555</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00556" name="l00556"></a><span class="lineno">  556</span><span class="comment"> * \brief get the current system stamp from the reference clock</span></div>
+<div class="line"><a id="l00557" name="l00557"></a><span class="lineno">  557</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00558" name="l00558"></a><span class="lineno">  558</span><span class="comment"> * \return int64_t the timestamp in ticks (no overflow issue)</span></div>
+<div class="line"><a id="l00559" name="l00559"></a><span class="lineno">  559</span><span class="comment"> * \note you have to call arm_2d_helper_convert_ticks_to_ms() to convert the </span></div>
+<div class="line"><a id="l00560" name="l00560"></a><span class="lineno">  560</span><span class="comment"> *       the timestamp into milliseconds when required.</span></div>
+<div class="line"><a id="l00561" name="l00561"></a><span class="lineno">  561</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00562" name="l00562"></a><span class="lineno">  562</span>extern</div>
+<div class="line"><a id="l00563" name="l00563"></a><span class="lineno"><a class="line" href="group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185">  563</a></span>int64_t <a class="code hl_function" href="group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185" title="get the current system stamp from the reference clock">arm_2d_helper_get_system_timestamp</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00564" name="l00564"></a><span class="lineno">  564</span><span class="comment"></span> </div>
+<div class="line"><a id="l00565" name="l00565"></a><span class="lineno">  565</span><span class="comment">/*! @} */</span></div>
+<div class="line"><a id="l00566" name="l00566"></a><span class="lineno">  566</span> </div>
+<div class="line"><a id="l00567" name="l00567"></a><span class="lineno">  567</span><span class="preprocessor">#if defined(__clang__)</span></div>
+<div class="line"><a id="l00568" name="l00568"></a><span class="lineno">  568</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
+<div class="line"><a id="l00569" name="l00569"></a><span class="lineno">  569</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00570" name="l00570"></a><span class="lineno">  570</span> </div>
+<div class="line"><a id="l00571" name="l00571"></a><span class="lineno">  571</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
+<div class="line"><a id="l00572" name="l00572"></a><span class="lineno">  572</span>}</div>
+<div class="line"><a id="l00573" name="l00573"></a><span class="lineno">  573</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00574" name="l00574"></a><span class="lineno">  574</span> </div>
+<div class="line"><a id="l00575" name="l00575"></a><span class="lineno">  575</span> </div>
+<div class="line"><a id="l00576" name="l00576"></a><span class="lineno">  576</span> </div>
+<div class="line"><a id="l00577" name="l00577"></a><span class="lineno">  577</span><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

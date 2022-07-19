@@ -299,9 +299,15 @@ Functions</h2></td></tr>
 <tr class="memitem:ga10a29fc878fb8adb0c542589d1b602cf"><td class="memItemLeft" align="right" valign="top">int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf">arm_2d_helper_convert_ticks_to_ms</a> (int64_t lTick)</td></tr>
 <tr class="memdesc:ga10a29fc878fb8adb0c542589d1b602cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">convert ticks of a reference timer to millisecond  <a href="group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf">More...</a><br /></td></tr>
 <tr class="separator:ga10a29fc878fb8adb0c542589d1b602cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga22a1338673baaec12c475e371d7593be"><td class="memItemLeft" align="right" valign="top">int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga22a1338673baaec12c475e371d7593be">arm_2d_helper_convert_ms_to_ticks</a> (uint32_t wMS)</td></tr>
+<tr class="memdesc:ga22a1338673baaec12c475e371d7593be"><td class="mdescLeft">&#160;</td><td class="mdescRight">convert millisecond into ticks of the reference timer  <a href="group__gHelper.html#ga22a1338673baaec12c475e371d7593be">More...</a><br /></td></tr>
+<tr class="separator:ga22a1338673baaec12c475e371d7593be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gace60efc807106e1526fcc9f673f19b12"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gace60efc807106e1526fcc9f673f19b12">arm_2d_helper_get_reference_clock_frequency</a> (void)</td></tr>
 <tr class="memdesc:gace60efc807106e1526fcc9f673f19b12"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the reference clock frequency  <a href="group__gHelper.html#gace60efc807106e1526fcc9f673f19b12">More...</a><br /></td></tr>
 <tr class="separator:gace60efc807106e1526fcc9f673f19b12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf92c1f5d41f75d4a8514ab79c34f1185"><td class="memItemLeft" align="right" valign="top">int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185">arm_2d_helper_get_system_timestamp</a> (void)</td></tr>
+<tr class="memdesc:gaf92c1f5d41f75d4a8514ab79c34f1185"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the current system stamp from the reference clock  <a href="group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185">More...</a><br /></td></tr>
+<tr class="separator:gaf92c1f5d41f75d4a8514ab79c34f1185"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
@@ -2257,6 +2263,33 @@ cycles used in LCD flushing </td></tr>
 
 </div>
 </div>
+<a id="ga22a1338673baaec12c475e371d7593be" name="ga22a1338673baaec12c475e371d7593be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga22a1338673baaec12c475e371d7593be">&#9670;&nbsp;</a></span>arm_2d_helper_convert_ms_to_ticks()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int64_t arm_2d_helper_convert_ms_to_ticks </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>wMS</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>convert millisecond into ticks of the reference timer </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">wMS</td><td>the target time in millisecond </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int64_t the ticks </dd></dl>
+
+</div>
+</div>
 <a id="gace60efc807106e1526fcc9f673f19b12" name="gace60efc807106e1526fcc9f673f19b12"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gace60efc807106e1526fcc9f673f19b12">&#9670;&nbsp;</a></span>arm_2d_helper_get_reference_clock_frequency()</h2>
 
@@ -2275,6 +2308,28 @@ cycles used in LCD flushing </td></tr>
 
 <p>get the reference clock frequency </p>
 <dl class="section return"><dt>Returns</dt><dd>uint32_t the frequency </dd></dl>
+
+</div>
+</div>
+<a id="gaf92c1f5d41f75d4a8514ab79c34f1185" name="gaf92c1f5d41f75d4a8514ab79c34f1185"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf92c1f5d41f75d4a8514ab79c34f1185">&#9670;&nbsp;</a></span>arm_2d_helper_get_system_timestamp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int64_t arm_2d_helper_get_system_timestamp </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get the current system stamp from the reference clock </p>
+<dl class="section return"><dt>Returns</dt><dd>int64_t the timestamp in ticks (no overflow issue) </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>you have to call <a class="el" href="group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf" title="convert ticks of a reference timer to millisecond">arm_2d_helper_convert_ticks_to_ms()</a> to convert the the timestamp into milliseconds when required. </dd></dl>
 
 </div>
 </div>
