@@ -87,7 +87,7 @@ extern "C" {
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
-/*! 
+/*!
  * \brief initialise the helium acceleration
  */
 void __arm_2d_helium_init(void)
@@ -122,6 +122,63 @@ void __arm_2d_helium_init(void)
 
 #define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_transform_helium.c"
+
+/*----------------------------------------------------------------------------*
+ * Helper
+ *----------------------------------------------------------------------------*/
+
+__OVERRIDE_WEAK
+void __MVE_WRAPPER(arm_2d_helper_swap_rgb16)(uint16_t *phwBuffer, uint32_t wCount)
+{
+    if (0 == wCount) {
+        return ;
+    }
+
+    // aligned (2)
+    assert((((uintptr_t) phwBuffer) & 0x01) == 0);
+
+    // src not aligned to 32-bit
+    // (helium supports unaligned vector load & store but with extra cycle penalty)
+    if ((((uintptr_t) phwBuffer) & 0x03) == 0x02) {
+        // handle the leading pixel
+        uint32_t wTemp = *phwBuffer;
+        *phwBuffer++ = (uint16_t)__REV16(wTemp);
+        wCount--;
+    }
+
+#ifdef USE_MVE_INTRINSICS
+        do {
+            mve_pred16_t    tailPred = vctp16q(wCount);
+            uint16x8_t      rgb16vec = vld1q_z(phwBuffer, tailPred);
+
+            rgb16vec = (uint16x8_t)vrev16q_m_u8(rgb16vec, rgb16vec, tailPred);
+
+            vst1q_p(phwBuffer , rgb16vec , tailPred);
+
+            phwBuffer += 8;
+            wCount -= 8;
+        }
+        while ((int32_t)wCount > 0);
+
+#else
+    __asm volatile(
+            ".p2align 2                                             \n"
+            "   wlstp.16                lr, %[wCount], 1f           \n"
+            "2:                                                     \n"
+
+            "   vldrh.u16               q0, [%[phwBuffer]]          \n"
+            "   vrev16.8                q0, q0                      \n"
+            "   vstrh.u16               q0, [%[phwBuffer]], #16     \n"
+            "   letp                    lr, 2b                      \n"
+            "1:                                                     \n"
+
+            : [phwBuffer] "+r"(phwBuffer)
+            : [wCount] "r" (wCount)
+            :"q0", "lr", "memory");
+#endif
+}
+
+
 
 /*----------------------------------------------------------------------------*
  * Specialized Copy Routines                                                  *
@@ -884,6 +941,8 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_alpha_blending)(   uint16_t *phwSourceB
     } while (--row);
 #endif /* USE_MVE_INTRINSICS */
 }
+
+
 
 
 
