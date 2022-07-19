@@ -536,12 +536,31 @@ void arm_2d_helper_swap_rgb16(uint16_t *phwBuffer, uint32_t wCount);
 extern
 int64_t arm_2d_helper_convert_ticks_to_ms(int64_t lTick);
 
+/*! 
+ * \brief convert millisecond into ticks of the reference timer 
+ *
+ * \param[in] wMS the target time in millisecond
+ * \return int64_t the ticks
+ */
+extern
+int64_t arm_2d_helper_convert_ms_to_ticks(uint32_t wMS);
+
 /*!
  * \brief get the reference clock frequency
  * \return uint32_t the frequency
  */
 extern
 uint32_t arm_2d_helper_get_reference_clock_frequency(void);
+
+/*!
+ * \brief get the current system stamp from the reference clock
+ * 
+ * \return int64_t the timestamp in ticks (no overflow issue)
+ * \note you have to call arm_2d_helper_convert_ticks_to_ms() to convert the 
+ *       the timestamp into milliseconds when required.
+ */
+extern
+int64_t arm_2d_helper_get_system_timestamp(void);
 
 /*! @} */
 
