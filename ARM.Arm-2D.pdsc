@@ -11,7 +11,7 @@
   <repository type="git">https://github.com/ARM-software/Arm-2D.git</repository>
   
   <releases>
-    <release version="1.0.0-preview" tag="v1.0.0-preview">
+    <release version="9.9.9" tag="v9.9.9">
       Active development ...
     </release>
   </releases>
