@@ -59,7 +59,10 @@ extern "C" {
  * \brief scene switching mode
  */
 typedef enum {
+
+    /* valid switching visual effects begin */
     ARM_2D_SCENE_SWITCH_MODE_NONE           = 0,                                //!< no switching visual effect
+    ARM_2D_SCENE_SWITCH_MODE_USER           = 1,                                //!< user defined switching visual effect
     ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE     = 2,                                //!< fade in fade out (white)
     ARM_2D_SCENE_SWITCH_MODE_FADE_BLACK     = 3,                                //!< fade in fade out (black)
     ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT     = 4,                                //!< slide left
@@ -70,6 +73,11 @@ typedef enum {
     ARM_2D_SCENE_SWITCH_MODE_ERASE_RIGHT,                                       //!< erase to the left
     ARM_2D_SCENE_SWITCH_MODE_ERASE_UP,                                          //!< erase to the top
     ARM_2D_SCENE_SWITCH_MODE_ERASE_DOWN,                                        //!< erase to the bottom
+    
+    /* valid switching visual effects end */
+    __ARM_2D_SCENE_SWITCH_MODE_VALID,                                           //!< For internal user only
+    
+
     
     ARM_2D_SCENE_SWITCH_MODE_IGNORE_OLD_BG          = _BV(8),                   //!< ignore the background of the old scene
     ARM_2D_SCENE_SWITCH_MODE_IGNORE_OLD_SCEBE       = _BV(9),                   //!< ignore the old scene
@@ -96,7 +104,7 @@ typedef union __arm_2d_helper_scene_switch_t {
         uint8_t u2DefaultBG             : 2;                                    //!< the default background
         uint8_t                         : 2;
     } Feature;
-    uint16_t hwSetting;                                                         //!< the setting value 
+    uint16_t hwSetting;                                                         //!< the setting value
 }__arm_2d_helper_scene_switch_t;
 
 /*!
@@ -136,11 +144,24 @@ typedef struct arm_2d_scene_player_t {
         
         struct {
             uint8_t bNextSceneReq   : 1;                                        //!< a flag to request switching-to-the next-scene
-            uint8_t                 : 7;
-            uint8_t u4State         : 4;                                        //!< the state of the FSM used by runtime.
-            uint8_t u4SWTState      : 4;                                        //!< the state of the FSM used by scene switching
-            __arm_2d_helper_scene_switch_t tSwitch;                             //!< the switching configuration
+            uint8_t bSwitchCPL      : 1;                                        //!< indication of scene switching completion
+            uint8_t                 : 6;
+            uint8_t chState;                                                    //!< the state of the FSM used by runtime.
         } Runtime;                                                              //!< scene player runtime
+        
+        struct {
+            union {
+                uint8_t chState;
+                struct {
+                    uint8_t chState;
+                    uint8_t chOpacity;
+                    bool bIsFadeBlack;
+                }Fade;
+            };
+            __arm_2d_helper_scene_switch_t tConfig;                             //!< the switching configuration
+            uint16_t hwPeriod;                                                  //!< the switching should finish in specified millisecond
+            int64_t lTimeStamp;
+        }Switch;
     )
 } arm_2d_scene_player_t;
 
@@ -203,6 +224,17 @@ void arm_2d_scene_player_set_switching_mode(arm_2d_scene_player_t *ptThis,
 extern
 ARM_NONNULL(1)
 uint16_t arm_2d_scene_player_get_switching_mode(arm_2d_scene_player_t *ptThis);
+
+/*!
+ * \brief configure the scene switching period
+ *
+ * \param[in] ptThis the target scene player
+ * \param[in] hwMS period in millisecond
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_scene_player_set_switching_period(  arm_2d_scene_player_t *ptThis,
+                                                uint_fast16_t hwMS);
 
 /*!
  * \brief the scene player task function

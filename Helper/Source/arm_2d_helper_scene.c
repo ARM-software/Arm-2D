@@ -34,6 +34,7 @@
 #include <stdint.h>
 #include <assert.h>
 #include "arm_2d_helper.h"
+#include "../../examples/common/controls/__common.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -65,6 +66,10 @@
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
+
+/*-----------------------------------------------------------------------------*
+ * Scene Management                                                            *
+ *-----------------------------------------------------------------------------*/
 
 static void __scene_player_depose_all_scene(arm_2d_scene_player_t *ptThis)
 {
@@ -99,9 +104,9 @@ void arm_2d_scene_player_flush_fifo(arm_2d_scene_player_t *ptThis)
 }
 
 ARM_NONNULL(1)
-void arm_2d_scene_player_append_scenes(arm_2d_scene_player_t *ptThis, 
-                                            arm_2d_scene_t *ptScenes,
-                                            int_fast16_t hwCount)
+void arm_2d_scene_player_append_scenes( arm_2d_scene_player_t *ptThis, 
+                                        arm_2d_scene_t *ptScenes,
+                                        int_fast16_t hwCount)
 {
     assert(NULL != ptThis);
     assert(NULL != ptScenes);
@@ -116,6 +121,11 @@ void arm_2d_scene_player_append_scenes(arm_2d_scene_player_t *ptThis,
         }
     } while(--hwCount);
 }
+
+
+/*-----------------------------------------------------------------------------*
+ * Scene Switching                                                             *
+ *-----------------------------------------------------------------------------*/
 
 ARM_NONNULL(1)
 void arm_2d_scene_player_switch_to_next_scene(arm_2d_scene_player_t *ptThis)
@@ -156,17 +166,196 @@ void arm_2d_scene_player_set_switching_mode(arm_2d_scene_player_t *ptThis,
                 >>  __ARM_2D_SCENE_SWTICH_MODE_DEFAULT_BG_pos) 
             <   3);
             
-    this.Runtime.tSwitch.hwSetting = hwSettings;
+    this.Switch.tConfig.hwSetting = hwSettings;
 }
 
 ARM_NONNULL(1)
 uint16_t arm_2d_scene_player_get_switching_mode(arm_2d_scene_player_t *ptThis)
 {
-    return this.Runtime.tSwitch.hwSetting;
+    assert(NULL != ptThis);
+    return this.Switch.tConfig.hwSetting;
 }
 
+ARM_NONNULL(1)
+void arm_2d_scene_player_set_switching_period(  arm_2d_scene_player_t *ptThis,
+                                                uint_fast16_t hwMS)
+{
+    assert(NULL != ptThis);
+    this.Switch.hwPeriod = MAX(hwMS, 100);
+}
+
+__WEAK
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_user)
+{
+    arm_2d_scene_player_t *ptThis = (arm_2d_scene_player_t *)pTarget;
+    ARM_2D_UNUSED(bIsNewFrame);
+
+
+    /* doing nothing at all */
+    this.Runtime.bSwitchCPL = true;
+    
+    return arm_fsm_rt_cpl;
+}
+
+__WEAK
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_user_default_background)
+{
+    arm_2d_scene_player_t *ptThis = (arm_2d_scene_player_t *)pTarget;
+    
+    ARM_2D_UNUSED(bIsNewFrame);
+    ARM_2D_UNUSED(ptTile);
+    
+    arm_2d_op_wait_async(NULL);
+    return arm_fsm_rt_cpl;
+}
+
+static 
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_default_background)
+{
+    arm_2d_scene_player_t *ptThis = (arm_2d_scene_player_t *)pTarget;
+    
+    switch(this.Switch.tConfig.Feature.u2DefaultBG) {
+    case 0: /* ARM_2D_SCENE_SWITCH_MODE_DEFAULT_BG_WHITE */
+        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
+        break;
+    case 1: /* ARM_2D_SCENE_SWITCH_MODE_DEFAULT_BG_BLACK */
+        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
+        break;
+    case 2: /* ARM_2D_SCENE_SWITCH_MODE_DEFAULT_BG_USER */
+    case 3:
+        __pfb_draw_scene_mode_user_default_background(pTarget, ptTile, bIsNewFrame);
+        break;
+    }
+
+    arm_2d_op_wait_async(NULL);
+    return arm_fsm_rt_cpl;
+}
+
+
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
+{
+    enum {
+        START = 0,
+        FADE_IN,
+        FADE_OUT,
+    };
+
+    arm_2d_scene_player_t *ptThis = (arm_2d_scene_player_t *)pTarget;
+    arm_2d_scene_t *ptScene = NULL;
+
+    bool bIgnoreBG = true;
+    bool bIgnoreScene = true;
+    
+    __arm_2d_color_t tColour    = this.Switch.Fade.bIsFadeBlack 
+                                ?   (__arm_2d_color_t){GLCD_COLOR_BLACK}
+                                :   (__arm_2d_color_t){GLCD_COLOR_WHITE};
+
+    /* internal statemachine */
+    if (bIsNewFrame) {
+        int32_t nElapsed;
+        int32_t lTimeStamp = arm_2d_helper_get_system_timestamp();
+        uint_fast16_t hwOpacity;
+        switch (this.Switch.chState) {
+            case START:
+                this.Switch.Fade.chOpacity = 0;
+                this.Switch.lTimeStamp = lTimeStamp;
+                this.Switch.chState++;
+                //break;
+            case FADE_IN:
+                nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
+                hwOpacity = (256ul * (int64_t)nElapsed / arm_2d_helper_convert_ms_to_ticks(this.Switch.hwPeriod >> 1));
+                
+                this.Switch.Fade.chOpacity = MIN(255, hwOpacity);
+                if (this.Switch.Fade.chOpacity >= 255) {
+                    this.Switch.lTimeStamp = lTimeStamp;
+                    this.Switch.chState = FADE_OUT;
+                }
+                break;
+            case FADE_OUT:
+                nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
+                hwOpacity = (256ul * (int64_t)nElapsed / arm_2d_helper_convert_ms_to_ticks(this.Switch.hwPeriod >> 1));
+                
+                this.Switch.Fade.chOpacity = 255 - MIN(255, hwOpacity);
+                if (this.Switch.Fade.chOpacity == 0) {
+                    this.Runtime.bSwitchCPL = true;
+                }
+                break;
+        }
+    }
+
+    assert(NULL != this.SceneFIFO.ptHead);
+
+    if (FADE_IN == this.Switch.chState) {
+        /* draw the old scene background */
+        ptScene = this.SceneFIFO.ptHead;
+
+        bIgnoreBG = this.Switch.tConfig.Feature.bIgnoreOldSceneBG;
+        bIgnoreScene = this.Switch.tConfig.Feature.bIgnoreOldScene;
+        
+    } else if (NULL != this.SceneFIFO.ptHead) {
+        /* draw the new scene background */
+        ptScene = this.SceneFIFO.ptHead->ptNext;
+
+        bIgnoreBG = this.Switch.tConfig.Feature.bIgnoreNewSceneBG;
+        bIgnoreScene = this.Switch.tConfig.Feature.bIgnoreNewScene;
+    }
+
+    if (NULL == ptScene || (bIgnoreBG && bIgnoreScene)) {
+        __pfb_draw_scene_mode_default_background(pTarget, ptTile, bIsNewFrame);
+    } else {
+        if (!bIgnoreBG) {
+            ARM_2D_INVOKE( ptScene->fnOnBGStart, ptScene);
+            ARM_2D_INVOKE( ptScene->fnBackground, pTarget, ptTile, bIsNewFrame);
+            ARM_2D_INVOKE( ptScene->fnOnBGComplete, ptScene);
+        }
+        if (!bIgnoreScene) {
+            ARM_2D_INVOKE( ptScene->fnOnFrameStart, ptScene);
+            ARM_2D_INVOKE( ptScene->fnScene, pTarget, ptTile, bIsNewFrame);
+            ARM_2D_INVOKE( ptScene->fnOnFrameCPL, ptScene);
+        }
+    }
+
+    arm_2d_fill_colour_with_opacity(ptTile,
+                                    NULL,
+                                    tColour,
+                                    this.Switch.Fade.chOpacity);
+
+    arm_2d_op_wait_async(NULL);
+
+    return arm_fsm_rt_cpl;
+}
+
+
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
+{
+    arm_2d_scene_player_t *ptThis = (arm_2d_scene_player_t *)pTarget;
+    ARM_2D_UNUSED(bIsNewFrame);
+
+    /* todo */
+    this.Runtime.bSwitchCPL = true;
+    arm_2d_op_wait_async(NULL);
+
+    return arm_fsm_rt_cpl;
+}
+
+
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
+{
+    arm_2d_scene_player_t *ptThis = (arm_2d_scene_player_t *)pTarget;
+    ARM_2D_UNUSED(bIsNewFrame);
+
+    /* todo */
+    this.Runtime.bSwitchCPL = true;
+    arm_2d_op_wait_async(NULL);
+
+    return arm_fsm_rt_cpl;
+}
+
+/*-----------------------------------------------------------------------------*
+ * Misc                                                                        *
+ *-----------------------------------------------------------------------------*/
 #define ARM_2D_USER_SCENE_PLAYER_TASK_RESET()                                   \
-            do {this.Runtime.u4State = START;} while(0)
+            do {this.Runtime.chState = START;} while(0)
 
 ARM_NONNULL(1)
 arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
@@ -184,20 +373,24 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
         DRAW_SCENE_START,
         DRAW_SCENE,
         POST_SCENE_CHECK,
+        
+        SWITCH_SCENE_PREPARE,
+        SWITCH_SCENE,
+        SWITCH_SCENE_POST,
     };
     
-    switch (this.Runtime.u4State) {
+    switch (this.Runtime.chState) {
         case START:
             if (NULL == ptScene) {
                 //! no scene available
                 return arm_fsm_rt_cpl;
             }
-            this.Runtime.u4State++;
+            this.Runtime.chState++;
             // fall-through
             
         case DRAW_BACKGROUND_PREPARE:
             if (NULL == ptScene->fnBackground) {
-                this.Runtime.u4State = DRAW_SCENE_PREPARE;
+                this.Runtime.chState = DRAW_SCENE_PREPARE;
                 break;
             } else {
                 ARM_2D_INVOKE(ptScene->fnOnBGStart, ptScene);
@@ -205,7 +398,7 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
                 ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(   
                     &this.use_as__arm_2d_helper_pfb_t,
                     ptScene->fnBackground);
-                this.Runtime.u4State = DRAW_BACKGROUND;
+                this.Runtime.chState = DRAW_BACKGROUND;
             }
             // fall-through
             
@@ -222,7 +415,7 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             
             ARM_2D_INVOKE(ptScene->fnOnBGComplete, ptScene);
             
-            this.Runtime.u4State = DRAW_SCENE_PREPARE;
+            this.Runtime.chState = DRAW_SCENE_PREPARE;
             // fall-through
             
         case DRAW_SCENE_PREPARE:
@@ -234,12 +427,12 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(   
                 &this.use_as__arm_2d_helper_pfb_t,
                 ptScene->fnScene);
-            this.Runtime.u4State = DRAW_SCENE_START;
+            this.Runtime.chState = DRAW_SCENE_START;
             // fall-through
             
         case DRAW_SCENE_START:
             ARM_2D_INVOKE(ptScene->fnOnFrameStart, ptScene);
-            this.Runtime.u4State = DRAW_SCENE;
+            this.Runtime.chState = DRAW_SCENE;
             // fall-through
             
         case DRAW_SCENE:
@@ -252,23 +445,113 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             } else if (arm_fsm_rt_cpl != tResult) {
                 return tResult;
             }
-            this.Runtime.u4State = POST_SCENE_CHECK;
+            this.Runtime.chState = POST_SCENE_CHECK;
             // fall-through
             
         case POST_SCENE_CHECK:
             ARM_2D_INVOKE(ptScene->fnOnFrameCPL, ptScene);
 
             if (this.Runtime.bNextSceneReq) {
-                __arm_2d_scene_player_next_scene(ptThis);
-                ARM_2D_USER_SCENE_PLAYER_TASK_RESET();
+            
+                if (    (    ARM_2D_SCENE_SWITCH_MODE_NONE 
+                        ==   this.Switch.tConfig.Feature.chMode)
+                   ||   (   this.Switch.tConfig.Feature.chMode
+                        >=  __ARM_2D_SCENE_SWITCH_MODE_VALID)) {
+                   /* no or unsupported visual effect for switching*/
+                    this.Runtime.chState = SWITCH_SCENE_POST;
+                } else {
+                    this.Runtime.chState = SWITCH_SCENE_PREPARE;
+                    /* also return arm_fsm_rt_cpl to indicate the completion of a frame */
+                }
             } else {
-                this.Runtime.u4State = DRAW_SCENE_START;
+                this.Runtime.chState = DRAW_SCENE_START;
             }
 
             /* return arm_fsm_rt_cpl to indicate a end of a frame */
             return arm_fsm_rt_cpl;
 
         default:
+            ARM_2D_USER_SCENE_PLAYER_TASK_RESET();
+            break;
+        
+        case SWITCH_SCENE_PREPARE: {
+                arm_2d_helper_draw_handler_t *fnSwitchDrawer = NULL;
+
+                assert(     this.Switch.tConfig.Feature.chMode 
+                        !=  ARM_2D_SCENE_SWITCH_MODE_NONE);
+                
+                switch (this.Switch.tConfig.Feature.chMode) {
+                    default:
+                    case ARM_2D_SCENE_SWITCH_MODE_NONE:
+                    case ARM_2D_SCENE_SWITCH_MODE_USER:
+                        /* use user defined switching drawer */
+                        fnSwitchDrawer = __pfb_draw_scene_mode_user;
+                        break;
+
+                    case ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE:
+                        this.Switch.Fade.bIsFadeBlack = false;
+                        /* fade in fade out */
+                        fnSwitchDrawer = __pfb_draw_scene_mode_fade;
+                        break;
+                    case ARM_2D_SCENE_SWITCH_MODE_FADE_BLACK:
+                        this.Switch.Fade.bIsFadeBlack = true;
+                        /* fade in fade out */
+                        fnSwitchDrawer = __pfb_draw_scene_mode_fade;
+                        break;
+
+                    case ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT:
+                    case ARM_2D_SCENE_SWITCH_MODE_SLIDE_RIGHT:
+                    case ARM_2D_SCENE_SWITCH_MODE_SLIDE_UP:
+                    case ARM_2D_SCENE_SWITCH_MODE_SLIDE_DOWN:
+                        /* slide effect */
+                        fnSwitchDrawer = __pfb_draw_scene_mode_slide;
+                        break;
+
+                    case ARM_2D_SCENE_SWITCH_MODE_ERASE_LEFT:
+                    case ARM_2D_SCENE_SWITCH_MODE_ERASE_RIGHT:
+                    case ARM_2D_SCENE_SWITCH_MODE_ERASE_UP:
+                    case ARM_2D_SCENE_SWITCH_MODE_ERASE_DOWN:
+                        /* erase effect */
+                        fnSwitchDrawer = __pfb_draw_scene_mode_erase;
+                        break;
+                }
+                
+                /* update drawer */
+                ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(
+                    &this.use_as__arm_2d_helper_pfb_t,
+                    fnSwitchDrawer,
+                    ptThis);
+                
+                /* reset flag */
+                this.Runtime.bSwitchCPL = false;
+                
+                /* validate parameters */
+                this.Switch.hwPeriod = MAX(100, this.Switch.hwPeriod);
+                
+                /* reset switch FSM */
+                this.Switch.chState = START;
+                this.Runtime.chState = SWITCH_SCENE;
+            }
+            //break;
+        case SWITCH_SCENE:
+            tResult = arm_2d_helper_pfb_task(&this.use_as__arm_2d_helper_pfb_t, 
+                                             NULL);
+            if (tResult < 0) {
+                ARM_2D_USER_SCENE_PLAYER_TASK_RESET();
+                return tResult;
+            } else if (arm_fsm_rt_cpl != tResult) {
+                return tResult;
+            }
+
+            if (this.Runtime.bSwitchCPL) {
+                this.Runtime.chState = SWITCH_SCENE_POST;
+            }
+
+            /* return arm_fsm_rt_cpl to indicate a end of a frame */
+            return arm_fsm_rt_cpl;
+        
+        case SWITCH_SCENE_POST:
+            __arm_2d_scene_player_next_scene(ptThis);
             ARM_2D_USER_SCENE_PLAYER_TASK_RESET();
             break;
     }
