@@ -91,7 +91,7 @@ static void __on_scene0_frame_complete(arm_2d_scene_t *ptScene)
     
     /* switch to next scene after 3s */
     if (arm_2d_helper_is_time_out(3000)) {
-        arm_2d_user_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
+        arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
     }
 }
 
@@ -180,7 +180,7 @@ static void __app_scene0_init(void)
         .fnOnFrameCPL   = &__on_scene0_frame_complete,
         .fnDepose       = &__on_scene_depose,
     };
-    arm_2d_user_scene_player_append_scenes( &DISP0_ADAPTER, ptScene, 1);
+    arm_2d_scene_player_append_scenes( &DISP0_ADAPTER, ptScene, 1);
 }
  
 /*----------------------------------------------------------------------------*
@@ -193,7 +193,7 @@ static void __on_scene1_frame_complete(arm_2d_scene_t *ptScene)
     
 //    /* switch to next scene after 3s */
 //    if (arm_2d_helper_is_time_out(3000)) {
-//        arm_2d_user_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
+//        arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
 //    }
 }
 
@@ -278,7 +278,7 @@ static void __app_scene1_init(void)
         .fnOnFrameCPL   = &__on_scene1_frame_complete,
         .fnDepose       = &__on_scene_depose,
     };
-    arm_2d_user_scene_player_append_scenes( &DISP0_ADAPTER, ptScene, 1);
+    arm_2d_scene_player_append_scenes( &DISP0_ADAPTER, ptScene, 1);
 }
 
 

@@ -84,7 +84,7 @@ static void __scene_player_depose_all_scene(arm_2d_scene_player_t *ptThis)
 }
 
 ARM_NONNULL(1)
-void arm_2d_user_scene_player_flush_fifo(arm_2d_scene_player_t *ptThis)
+void arm_2d_scene_player_flush_fifo(arm_2d_scene_player_t *ptThis)
 {
     assert(NULL != ptThis);
 
@@ -96,7 +96,7 @@ void arm_2d_user_scene_player_flush_fifo(arm_2d_scene_player_t *ptThis)
 }
 
 ARM_NONNULL(1)
-void arm_2d_user_scene_player_append_scenes(arm_2d_scene_player_t *ptThis, 
+void arm_2d_scene_player_append_scenes(arm_2d_scene_player_t *ptThis, 
                                             arm_2d_scene_t *ptScenes,
                                             int_fast16_t hwCount)
 {
@@ -113,14 +113,14 @@ void arm_2d_user_scene_player_append_scenes(arm_2d_scene_player_t *ptThis,
 }
 
 ARM_NONNULL(1)
-void arm_2d_user_scene_player_switch_to_next_scene(arm_2d_scene_player_t *ptThis)
+void arm_2d_scene_player_switch_to_next_scene(arm_2d_scene_player_t *ptThis)
 {
     assert(NULL != ptThis);
 
     this.Runtime.bNextSceneReq = true;
 }
 
-static void __arm_2d_user_scene_player_next_scene(arm_2d_scene_player_t *ptThis)
+static void __arm_2d_scene_player_next_scene(arm_2d_scene_player_t *ptThis)
 {
     arm_2d_scene_t *ptScene = NULL;
     this.Runtime.bNextSceneReq = false;
@@ -142,7 +142,7 @@ static void __arm_2d_user_scene_player_next_scene(arm_2d_scene_player_t *ptThis)
             do {this.Runtime.u4State = START;} while(0)
 
 ARM_NONNULL(1)
-arm_fsm_rt_t arm_2d_user_scene_player_task(arm_2d_scene_player_t *ptThis)
+arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
 {
     assert(NULL != ptThis);
 
@@ -232,7 +232,7 @@ arm_fsm_rt_t arm_2d_user_scene_player_task(arm_2d_scene_player_t *ptThis)
             ARM_2D_INVOKE(ptScene->fnOnFrameCPL, ptScene);
 
             if (this.Runtime.bNextSceneReq) {
-                __arm_2d_user_scene_player_next_scene(ptThis);
+                __arm_2d_scene_player_next_scene(ptThis);
                 ARM_2D_USER_SCENE_PLAYER_TASK_RESET();
             } else {
                 this.Runtime.u4State = DRAW_SCENE_START;

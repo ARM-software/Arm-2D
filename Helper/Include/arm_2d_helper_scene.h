@@ -145,7 +145,7 @@ typedef struct arm_2d_scene_player_t {
  */
 extern
 ARM_NONNULL(1)
-void arm_2d_user_scene_player_flush_fifo(arm_2d_scene_player_t *ptThis);
+void arm_2d_scene_player_flush_fifo(arm_2d_scene_player_t *ptThis);
 
 /*!
  * \brief append a set of scenes to a scene player
@@ -156,7 +156,7 @@ void arm_2d_user_scene_player_flush_fifo(arm_2d_scene_player_t *ptThis);
  */
 extern
 ARM_NONNULL(1)
-void arm_2d_user_scene_player_append_scenes(arm_2d_scene_player_t *ptThis, 
+void arm_2d_scene_player_append_scenes(arm_2d_scene_player_t *ptThis, 
                                             arm_2d_scene_t *ptScenes,
                                             int_fast16_t hwCount);
 
@@ -170,7 +170,7 @@ void arm_2d_user_scene_player_append_scenes(arm_2d_scene_player_t *ptThis,
  */
 extern
 ARM_NONNULL(1)
-void arm_2d_user_scene_player_switch_to_next_scene(arm_2d_scene_player_t *ptThis);
+void arm_2d_scene_player_switch_to_next_scene(arm_2d_scene_player_t *ptThis);
 
 /*!
  * \brief the scene player task function
@@ -192,7 +192,7 @@ void arm_2d_user_scene_player_switch_to_next_scene(arm_2d_scene_player_t *ptThis
  */
 extern
 ARM_NONNULL(1)
-arm_fsm_rt_t arm_2d_user_scene_player_task(arm_2d_scene_player_t *ptThis);
+arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis);
 
 /*! @} */
 

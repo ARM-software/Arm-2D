@@ -299,7 +299,7 @@ IMPL_PFB_ON_LOW_LV_RENDERING(__pfb_render_handler)
 }
 
 
-void arm_2d_user_scene_player_init(void)
+void arm_2d_scene_player_init(void)
 {
     memset(&s_tScenePlayer, 0, sizeof(s_tScenePlayer));
 
@@ -334,7 +334,7 @@ void arm_2d_run_benchmark(void)
 {
     example_gui_init();
 
-    arm_2d_user_scene_player_init();
+    arm_2d_scene_player_init();
     
     do {
         /*! define dirty regions */
@@ -373,14 +373,14 @@ void arm_2d_run_benchmark(void)
                 .fnDepose       = NULL,
             },
         };
-        arm_2d_user_scene_player_append_scenes( 
+        arm_2d_scene_player_append_scenes( 
                                         &s_tScenePlayer,
                                         (arm_2d_scene_t *)s_tBenchmarkScene,
                                         dimof(s_tBenchmarkScene));
     } while(0);
     
     while(true) {
-        arm_2d_user_scene_player_task(&s_tScenePlayer);
+        arm_2d_scene_player_task(&s_tScenePlayer);
     }
 }
 

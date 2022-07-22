@@ -322,7 +322,7 @@ void disp_adapter%Instance%_init(void)
                 .fnDepose       = NULL,
             },
         };
-        arm_2d_user_scene_player_append_scenes( 
+        arm_2d_scene_player_append_scenes( 
                                         &DISP%Instance%_ADAPTER,
                                         (arm_2d_scene_t *)s_tScenes,
                                         dimof(s_tScenes));
@@ -331,7 +331,7 @@ void disp_adapter%Instance%_init(void)
 
 arm_fsm_rt_t disp_adapter%Instance%_task(void)
 {
-    return arm_2d_user_scene_player_task(&DISP%Instance%_ADAPTER);
+    return arm_2d_scene_player_task(&DISP%Instance%_ADAPTER);
 }
 
 
