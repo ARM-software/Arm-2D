@@ -145,12 +145,6 @@ static void on_frame_complete(arm_2d_scene_t *ptScene)
             }
         }
     }
-    
-    /* switch to next scene after 3s */
-    if (arm_2d_helper_is_time_out(3000)) {
-        arm_2d_user_scene_player_next_scene(&DISP0_ADAPTER);
-    }
-    
 }
 
 
@@ -328,7 +322,7 @@ void disp_adapter0_init(void)
                 .fnDepose       = NULL,
             },
         };
-        arm_2d_user_scene_player_append_scenes( 
+        arm_2d_scene_player_append_scenes( 
                                         &DISP0_ADAPTER,
                                         (arm_2d_scene_t *)s_tScenes,
                                         dimof(s_tScenes));
@@ -337,7 +331,7 @@ void disp_adapter0_init(void)
 
 arm_fsm_rt_t disp_adapter0_task(void)
 {
-    return arm_2d_user_scene_player_task(&DISP0_ADAPTER);
+    return arm_2d_scene_player_task(&DISP0_ADAPTER);
 }
 
 
