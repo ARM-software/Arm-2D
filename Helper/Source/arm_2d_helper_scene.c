@@ -71,9 +71,11 @@ static void __scene_player_depose_all_scene(arm_2d_scene_player_t *ptThis)
     arm_2d_scene_t *ptScene = NULL;
 
     do {
-        ARM_LIST_QUEUE_DEQUEUE(this.SceneFIFO.ptHead,
-                               this.SceneFIFO.ptTail,
-                               ptScene);
+        arm_irq_safe {
+            ARM_LIST_QUEUE_DEQUEUE(this.SceneFIFO.ptHead,
+                                   this.SceneFIFO.ptTail,
+                                   ptScene);
+        }
         if (NULL == ptScene) {
             break;
         }
@@ -90,9 +92,10 @@ void arm_2d_scene_player_flush_fifo(arm_2d_scene_player_t *ptThis)
 
     __scene_player_depose_all_scene(ptThis);
 
-    this.SceneFIFO.ptHead = NULL;
-    this.SceneFIFO.ptTail = NULL;
-
+    arm_irq_safe {
+        this.SceneFIFO.ptHead = NULL;
+        this.SceneFIFO.ptTail = NULL;
+    }
 }
 
 ARM_NONNULL(1)
@@ -106,9 +109,11 @@ void arm_2d_scene_player_append_scenes(arm_2d_scene_player_t *ptThis,
     
     do {
         arm_2d_scene_t *ptScene = ptScenes++;
-        ARM_LIST_QUEUE_ENQUEUE(this.SceneFIFO.ptHead,
-                               this.SceneFIFO.ptTail,
-                               ptScene);
+        arm_irq_safe {
+            ARM_LIST_QUEUE_ENQUEUE(this.SceneFIFO.ptHead,
+                                   this.SceneFIFO.ptTail,
+                                   ptScene);
+        }
     } while(--hwCount);
 }
 
@@ -126,9 +131,11 @@ static void __arm_2d_scene_player_next_scene(arm_2d_scene_player_t *ptThis)
     this.Runtime.bNextSceneReq = false;
     
     do {
-        ARM_LIST_QUEUE_DEQUEUE(this.SceneFIFO.ptHead,
-                               this.SceneFIFO.ptTail,
-                               ptScene);
+        arm_irq_safe {
+            ARM_LIST_QUEUE_DEQUEUE(this.SceneFIFO.ptHead,
+                                   this.SceneFIFO.ptTail,
+                                   ptScene);
+        }
         if (NULL == ptScene) {
             break;
         }
