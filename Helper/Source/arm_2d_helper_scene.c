@@ -145,6 +145,26 @@ static void __arm_2d_scene_player_next_scene(arm_2d_scene_player_t *ptThis)
     } while(false);
 }
 
+ARM_NONNULL(1)
+void arm_2d_scene_player_set_switching_mode(arm_2d_scene_player_t *ptThis,
+                                            uint_fast16_t hwSettings)
+{
+    assert(NULL != ptThis);
+    
+    /* valid input */
+    assert(     (   (hwSettings & __ARM_2D_SCENE_SWTICH_MODE_DEFAULT_BG_msk) 
+                >>  __ARM_2D_SCENE_SWTICH_MODE_DEFAULT_BG_pos) 
+            <   3);
+            
+    this.Runtime.tSwitch.hwSetting = hwSettings;
+}
+
+ARM_NONNULL(1)
+uint16_t arm_2d_scene_player_get_switching_mode(arm_2d_scene_player_t *ptThis)
+{
+    return this.Runtime.tSwitch.hwSetting;
+}
+
 #define ARM_2D_USER_SCENE_PLAYER_TASK_RESET()                                   \
             do {this.Runtime.u4State = START;} while(0)
 

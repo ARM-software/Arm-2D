@@ -58,7 +58,7 @@ extern "C" {
 /*!
  * \brief scene switching mode
  */
-enum {
+typedef enum {
     ARM_2D_SCENE_SWITCH_MODE_NONE           = 0,                                //!< no switching visual effect
     ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE     = 2,                                //!< fade in fade out (white)
     ARM_2D_SCENE_SWITCH_MODE_FADE_BLACK     = 3,                                //!< fade in fade out (black)
@@ -75,7 +75,16 @@ enum {
     ARM_2D_SCENE_SWITCH_MODE_IGNORE_OLD_SCEBE       = _BV(9),                   //!< ignore the old scene
     ARM_2D_SCENE_SWITCH_MODE_IGNORE_NEW_BG          = _BV(10),                  //!< ignore the background of the new scene
     ARM_2D_SCENE_SWITCH_MODE_IGNORE_NEW_SCEBE       = _BV(11),                  //!< ignore the new scene
-};
+    
+    ARM_2D_SCENE_SWITCH_MODE_DEFAULT_BG_WHITE       = 0 << 12,                  //!< use white as default background
+    ARM_2D_SCENE_SWITCH_MODE_DEFAULT_BG_BLACK       = 1 << 12,                  //!< use black as default background
+    ARM_2D_SCENE_SWITCH_MODE_DEFAULT_BG_USER        = 2 << 12,                  //!< use user defined default background
+
+    __ARM_2D_SCENE_SWTICH_MODE_IGNORE_msk           = 0x0F << 8,                //!< For internal user only
+    __ARM_2D_SCENE_SWTICH_MODE_IGNORE_pos           = 8,                        //!< For internal user only
+    __ARM_2D_SCENE_SWTICH_MODE_DEFAULT_BG_msk       = 3 << 12,                  //!< For internal user only
+    __ARM_2D_SCENE_SWTICH_MODE_DEFAULT_BG_pos       = 12,                       //!< For internal user only
+} arm_2d_scene_player_switch_mode_t;
 
 typedef union __arm_2d_helper_scene_switch_t {
     struct {
@@ -84,7 +93,8 @@ typedef union __arm_2d_helper_scene_switch_t {
         uint8_t bIgnoreOldScene         : 1;                                    //!< when set, ignore the old scene
         uint8_t bIgnoreNewSceneBG       : 1;                                    //!< when set, ignore the background of the new scene
         uint8_t bIgnoreNewScene         : 1;                                    //!< when set, ignore the new scene
-        uint8_t                         : 4;
+        uint8_t u2DefaultBG             : 2;                                    //!< the default background
+        uint8_t                         : 2;
     } Feature;
     uint16_t hwSetting;                                                         //!< the setting value 
 }__arm_2d_helper_scene_switch_t;
@@ -171,6 +181,28 @@ void arm_2d_scene_player_append_scenes(arm_2d_scene_player_t *ptThis,
 extern
 ARM_NONNULL(1)
 void arm_2d_scene_player_switch_to_next_scene(arm_2d_scene_player_t *ptThis);
+
+/*!
+ * \brief configure the scene switching mode
+ *
+ * \param[in] ptThis the target scene player
+ * \param[in] hwSettings a combination of valid settings defined in
+ *            arm_2d_scene_player_switch_mode_t
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_scene_player_set_switching_mode(arm_2d_scene_player_t *ptThis,
+                                            uint_fast16_t hwSettings);
+                                            
+/*!
+ * \brief read the current scene switching mode
+ *
+ * \param[in] ptThis the target scene player
+ * \return uint16_t the current setting value for the scene switching mode
+ */
+extern
+ARM_NONNULL(1)
+uint16_t arm_2d_scene_player_get_switching_mode(arm_2d_scene_player_t *ptThis);
 
 /*!
  * \brief the scene player task function
