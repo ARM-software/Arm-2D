@@ -91,7 +91,7 @@ static void __on_scene0_frame_complete(arm_2d_scene_t *ptScene)
     
     /* switch to next scene after 3s */
     if (arm_2d_helper_is_time_out(3000)) {
-        arm_2d_user_scene_player_next_scene(&DISP0_ADAPTER);
+        arm_2d_user_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
     }
 }
 
@@ -193,7 +193,7 @@ static void __on_scene1_frame_complete(arm_2d_scene_t *ptScene)
     
 //    /* switch to next scene after 3s */
 //    if (arm_2d_helper_is_time_out(3000)) {
-//        arm_2d_user_scene_player_next_scene(&DISP0_ADAPTER);
+//        arm_2d_user_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
 //    }
 }
 

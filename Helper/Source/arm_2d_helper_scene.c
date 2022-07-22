@@ -113,7 +113,7 @@ void arm_2d_user_scene_player_append_scenes(arm_2d_scene_player_t *ptThis,
 }
 
 ARM_NONNULL(1)
-void arm_2d_user_scene_player_next_scene(arm_2d_scene_player_t *ptThis)
+void arm_2d_user_scene_player_switch_to_next_scene(arm_2d_scene_player_t *ptThis)
 {
     assert(NULL != ptThis);
 
@@ -139,7 +139,7 @@ static void __arm_2d_user_scene_player_next_scene(arm_2d_scene_player_t *ptThis)
 }
 
 #define ARM_2D_USER_SCENE_PLAYER_TASK_RESET()                                   \
-            do {this.Runtime.chState = START;} while(0)
+            do {this.Runtime.u4State = START;} while(0)
 
 ARM_NONNULL(1)
 arm_fsm_rt_t arm_2d_user_scene_player_task(arm_2d_scene_player_t *ptThis)
@@ -159,18 +159,18 @@ arm_fsm_rt_t arm_2d_user_scene_player_task(arm_2d_scene_player_t *ptThis)
         POST_SCENE_CHECK,
     };
     
-    switch (this.Runtime.chState) {
+    switch (this.Runtime.u4State) {
         case START:
             if (NULL == ptScene) {
                 //! no scene available
                 return arm_fsm_rt_cpl;
             }
-            this.Runtime.chState++;
+            this.Runtime.u4State++;
             // fall-through
             
         case DRAW_BACKGROUND_PREPARE:
             if (NULL == ptScene->fnBackground) {
-                this.Runtime.chState = DRAW_SCENE_PREPARE;
+                this.Runtime.u4State = DRAW_SCENE_PREPARE;
                 break;
             } else {
                 ARM_2D_INVOKE(ptScene->fnOnBGStart, ptScene);
@@ -178,7 +178,7 @@ arm_fsm_rt_t arm_2d_user_scene_player_task(arm_2d_scene_player_t *ptThis)
                 ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(   
                     &this.use_as__arm_2d_helper_pfb_t,
                     ptScene->fnBackground);
-                this.Runtime.chState = DRAW_BACKGROUND;
+                this.Runtime.u4State = DRAW_BACKGROUND;
             }
             // fall-through
             
@@ -195,7 +195,7 @@ arm_fsm_rt_t arm_2d_user_scene_player_task(arm_2d_scene_player_t *ptThis)
             
             ARM_2D_INVOKE(ptScene->fnOnBGComplete, ptScene);
             
-            this.Runtime.chState = DRAW_SCENE_PREPARE;
+            this.Runtime.u4State = DRAW_SCENE_PREPARE;
             // fall-through
             
         case DRAW_SCENE_PREPARE:
@@ -207,12 +207,12 @@ arm_fsm_rt_t arm_2d_user_scene_player_task(arm_2d_scene_player_t *ptThis)
             ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(   
                 &this.use_as__arm_2d_helper_pfb_t,
                 ptScene->fnScene);
-            this.Runtime.chState = DRAW_SCENE_START;
+            this.Runtime.u4State = DRAW_SCENE_START;
             // fall-through
             
         case DRAW_SCENE_START:
             ARM_2D_INVOKE(ptScene->fnOnFrameStart, ptScene);
-            this.Runtime.chState = DRAW_SCENE;
+            this.Runtime.u4State = DRAW_SCENE;
             // fall-through
             
         case DRAW_SCENE:
@@ -225,7 +225,7 @@ arm_fsm_rt_t arm_2d_user_scene_player_task(arm_2d_scene_player_t *ptThis)
             } else if (arm_fsm_rt_cpl != tResult) {
                 return tResult;
             }
-            this.Runtime.chState = POST_SCENE_CHECK;
+            this.Runtime.u4State = POST_SCENE_CHECK;
             // fall-through
             
         case POST_SCENE_CHECK:
@@ -235,7 +235,7 @@ arm_fsm_rt_t arm_2d_user_scene_player_task(arm_2d_scene_player_t *ptThis)
                 __arm_2d_user_scene_player_next_scene(ptThis);
                 ARM_2D_USER_SCENE_PLAYER_TASK_RESET();
             } else {
-                this.Runtime.chState = DRAW_SCENE_START;
+                this.Runtime.u4State = DRAW_SCENE_START;
             }
 
             /* return arm_fsm_rt_cpl to indicate a end of a frame */

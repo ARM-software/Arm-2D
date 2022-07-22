@@ -127,7 +127,7 @@ int main (void)
  
     disp_adapter0_init();
     scene_player_demo_init();
-    arm_2d_user_scene_player_next_scene(&DISP0_ADAPTER);
+    arm_2d_user_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
     
     while (1) {
         disp_adapter0_task();

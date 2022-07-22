@@ -56,6 +56,40 @@ extern "C" {
 /*============================ TYPES =========================================*/
 
 /*!
+ * \brief scene switching mode
+ */
+enum {
+    ARM_2D_SCENE_SWITCH_MODE_NONE           = 0,                                //!< no switching visual effect
+    ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE     = 2,                                //!< fade in fade out (white)
+    ARM_2D_SCENE_SWITCH_MODE_FADE_BLACK     = 3,                                //!< fade in fade out (black)
+    ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT     = 4,                                //!< slide left
+    ARM_2D_SCENE_SWITCH_MODE_SLIDE_RIGHT,                                       //!< slide right
+    ARM_2D_SCENE_SWITCH_MODE_SLIDE_UP,                                          //!< slide up
+    ARM_2D_SCENE_SWITCH_MODE_SLIDE_DOWN,                                        //!< slide down
+    ARM_2D_SCENE_SWITCH_MODE_ERASE_LEFT     = 8,                                //!< erase to the right
+    ARM_2D_SCENE_SWITCH_MODE_ERASE_RIGHT,                                       //!< erase to the left
+    ARM_2D_SCENE_SWITCH_MODE_ERASE_UP,                                          //!< erase to the top
+    ARM_2D_SCENE_SWITCH_MODE_ERASE_DOWN,                                        //!< erase to the bottom
+    
+    ARM_2D_SCENE_SWITCH_MODE_IGNORE_OLD_BG          = _BV(8),                   //!< ignore the background of the old scene
+    ARM_2D_SCENE_SWITCH_MODE_IGNORE_OLD_SCEBE       = _BV(9),                   //!< ignore the old scene
+    ARM_2D_SCENE_SWITCH_MODE_IGNORE_NEW_BG          = _BV(10),                  //!< ignore the background of the new scene
+    ARM_2D_SCENE_SWITCH_MODE_IGNORE_NEW_SCEBE       = _BV(11),                  //!< ignore the new scene
+};
+
+typedef union __arm_2d_helper_scene_switch_t {
+    struct {
+        uint8_t chMode;                                                         //!< the switch visual effect
+        uint8_t bIgnoreOldSceneBG       : 1;                                    //!< when set, ignore the background of the old scene
+        uint8_t bIgnoreOldScene         : 1;                                    //!< when set, ignore the old scene
+        uint8_t bIgnoreNewSceneBG       : 1;                                    //!< when set, ignore the background of the new scene
+        uint8_t bIgnoreNewScene         : 1;                                    //!< when set, ignore the new scene
+        uint8_t                         : 4;
+    } Feature;
+    uint16_t hwSetting;                                                         //!< the setting value 
+}__arm_2d_helper_scene_switch_t;
+
+/*!
  * \brief a class for describing scenes which are the combination of a
  *        background and a foreground with a dirty-region-list support
  * 
@@ -70,10 +104,11 @@ struct arm_2d_scene_t {
     void (*fnOnBGComplete)(arm_2d_scene_t *ptThis);                             //!< on-complete-drawing-background event handler
     void (*fnOnFrameStart)(arm_2d_scene_t *ptThis);                             //!< on-frame-start event handler
     void (*fnOnFrameCPL)(arm_2d_scene_t *ptThis);                               //!< on-frame-complete event handler
-    void (*fnDepose)(arm_2d_scene_t *ptThis);                                   //!< on-scene-depose event handler 
+
     /*!
      * \note We use fnDepose to free the resources
      */
+    void (*fnDepose)(arm_2d_scene_t *ptThis);                                   //!< on-scene-depose event handler 
 };
 
 /*!
@@ -92,7 +127,9 @@ typedef struct arm_2d_scene_player_t {
         struct {
             uint8_t bNextSceneReq   : 1;                                        //!< a flag to request switching-to-the next-scene
             uint8_t                 : 7;
-            uint8_t chState;                                                    //!< the state of the FSM used by runtime.
+            uint8_t u4State         : 4;                                        //!< the state of the FSM used by runtime.
+            uint8_t u4SWTState      : 4;                                        //!< the state of the FSM used by scene switching
+            __arm_2d_helper_scene_switch_t tSwitch;                             //!< the switching configuration
         } Runtime;                                                              //!< scene player runtime
     )
 } arm_2d_scene_player_t;
@@ -133,7 +170,7 @@ void arm_2d_user_scene_player_append_scenes(arm_2d_scene_player_t *ptThis,
  */
 extern
 ARM_NONNULL(1)
-void arm_2d_user_scene_player_next_scene(arm_2d_scene_player_t *ptThis);
+void arm_2d_user_scene_player_switch_to_next_scene(arm_2d_scene_player_t *ptThis);
 
 /*!
  * \brief the scene player task function
