@@ -32,7 +32,7 @@ var searchData=
   ['arm_5f2d_5ftile_5fwidth_5fcompare_29',['arm_2d_tile_width_compare',['../group__Tile.html#ga1e4eba78b58b49a3f3eaaba0ebb62f58',1,'arm_2d_tile.h']]],
   ['arm_5f2d_5fuser_5fscene_5fplayer_5fappend_5fscenes_30',['arm_2d_user_scene_player_append_scenes',['../group__gHelper.html#ga80fc59dea5783ccae8aec57f65e9595d',1,'arm_2d_helper_scene.h']]],
   ['arm_5f2d_5fuser_5fscene_5fplayer_5fflush_5ffifo_31',['arm_2d_user_scene_player_flush_fifo',['../group__gHelper.html#gaa6ae71b7535aa6ae95f895d40624e85c',1,'arm_2d_helper_scene.h']]],
-  ['arm_5f2d_5fuser_5fscene_5fplayer_5fnext_5fscene_32',['arm_2d_user_scene_player_next_scene',['../group__gHelper.html#gae96c8170c1e4b282af42717639ebc0cc',1,'arm_2d_helper_scene.h']]],
+  ['arm_5f2d_5fuser_5fscene_5fplayer_5fswitch_5fto_5fnext_5fscene_32',['arm_2d_user_scene_player_switch_to_next_scene',['../group__gHelper.html#ga0c12bb8bbb1870ab9f5c0d1cbbb89bed',1,'arm_2d_helper_scene.h']]],
   ['arm_5f2d_5fuser_5fscene_5fplayer_5ftask_33',['arm_2d_user_scene_player_task',['../group__gHelper.html#ga9cb08eac383fd4a3066fa0d113914a8d',1,'arm_2d_helper_scene.h']]],
   ['arm_5f2dp_5fc8bit_5fdraw_5fpattern_34',['arm_2dp_c8bit_draw_pattern',['../group__Drawing.html#gaa610046e7b07db2c82b4fa4a88a87578',1,'arm_2d_draw.h']]],
   ['arm_5f2dp_5fc8bit_5fdraw_5fpoint_35',['arm_2dp_c8bit_draw_point',['../group__Drawing.html#ga6a53d9a295e615bf665c7002482a4f20',1,'arm_2d_draw.h']]],
