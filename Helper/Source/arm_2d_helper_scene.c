@@ -342,12 +342,12 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
         } else {
             if (!bIgnoreBG) {
                 ARM_2D_INVOKE( ptScene->fnOnBGStart, ptScene);
-                ARM_2D_INVOKE( ptScene->fnBackground, pTarget, ptTile, bIsNewFrame);
+                ARM_2D_INVOKE( ptScene->fnBackground, ptScene, ptTile, bIsNewFrame);
                 ARM_2D_INVOKE( ptScene->fnOnBGComplete, ptScene);
             }
             if (!bIgnoreScene) {
                 ARM_2D_INVOKE( ptScene->fnOnFrameStart, ptScene);
-                ARM_2D_INVOKE( ptScene->fnScene, pTarget, ptTile, bIsNewFrame);
+                ARM_2D_INVOKE( ptScene->fnScene, ptScene, ptTile, bIsNewFrame);
                 ARM_2D_INVOKE( ptScene->fnOnFrameCPL, ptScene);
             }
         }
@@ -435,7 +435,8 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             
                 ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(   
                     &this.use_as__arm_2d_helper_pfb_t,
-                    ptScene->fnBackground);
+                    ptScene->fnBackground,
+                    ptScene);
                 this.Runtime.chState = DRAW_BACKGROUND;
             }
             // fall-through
@@ -464,7 +465,8 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
 
             ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(   
                 &this.use_as__arm_2d_helper_pfb_t,
-                ptScene->fnScene);
+                ptScene->fnScene,
+                ptScene);
             this.Runtime.chState = DRAW_SCENE_START;
             // fall-through
             
@@ -564,7 +566,9 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
                 this.Runtime.bSwitchCPL = false;
                 
                 /* validate parameters */
-                this.Switch.hwPeriod = MAX(__ARM_2D_CFG_HELPER_SWITCH_MIN_PERIOD__, this.Switch.hwPeriod);
+                this.Switch.hwPeriod 
+                    = MAX(  __ARM_2D_CFG_HELPER_SWITCH_MIN_PERIOD__, 
+                            this.Switch.hwPeriod);
                 
                 /* reset switch FSM */
                 this.Switch.chState = START;
