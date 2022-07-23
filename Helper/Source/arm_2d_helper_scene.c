@@ -60,6 +60,13 @@
 #define this        (*ptThis)
 
 
+#ifndef __ARM_2D_CFG_HELPER_SWITCH_FADE_USE_SIN__
+#   define __ARM_2D_CFG_HELPER_SWITCH_FADE_USE_SIN__        0
+#endif
+#ifndef __ARM_2D_CFG_HELPER_SWITCH_MIN_PERIOD__
+#   define __ARM_2D_CFG_HELPER_SWITCH_MIN_PERIOD__          200
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -181,7 +188,7 @@ void arm_2d_scene_player_set_switching_period(  arm_2d_scene_player_t *ptThis,
                                                 uint_fast16_t hwMS)
 {
     assert(NULL != ptThis);
-    this.Switch.hwPeriod = MAX(hwMS, 100);
+    this.Switch.hwPeriod = MAX(hwMS, __ARM_2D_CFG_HELPER_SWITCH_MIN_PERIOD__);
 }
 
 __WEAK
@@ -237,6 +244,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
     enum {
         START = 0,
         FADE_IN,
+        KEEP,
         FADE_OUT,
     };
 
@@ -250,6 +258,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
                                 ?   (__arm_2d_color_t){GLCD_COLOR_BLACK}
                                 :   (__arm_2d_color_t){GLCD_COLOR_WHITE};
 
+    uint16_t hwKeepPeriod = MIN(this.Switch.hwPeriod / 3, 500);
+    
     /* internal statemachine */
     if (bIsNewFrame) {
         int32_t nElapsed;
@@ -263,17 +273,35 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
                 //break;
             case FADE_IN:
                 nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
-                hwOpacity = (256ul * (int64_t)nElapsed / arm_2d_helper_convert_ms_to_ticks(this.Switch.hwPeriod >> 1));
                 
+            #if __ARM_2D_CFG_HELPER_SWITCH_FADE_USE_SIN__
+                hwOpacity = (900ul * (int64_t)nElapsed / arm_2d_helper_convert_ms_to_ticks((this.Switch.hwPeriod - hwKeepPeriod) >> 1));
+                hwOpacity = (uint_fast16_t)(256.0f * arm_sin_f32(ARM_2D_ANGLE((float)hwOpacity / 10.0f)));
+            #else
+                hwOpacity = (256ul * (int64_t)nElapsed / arm_2d_helper_convert_ms_to_ticks((this.Switch.hwPeriod - hwKeepPeriod) >> 1));
+            #endif
                 this.Switch.Fade.chOpacity = MIN(255, hwOpacity);
                 if (this.Switch.Fade.chOpacity >= 255) {
+                    this.Switch.lTimeStamp = lTimeStamp;
+                    this.Switch.chState = KEEP;
+                }
+                break;
+            case KEEP:
+                nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
+                if (nElapsed >= arm_2d_helper_convert_ms_to_ticks(hwKeepPeriod)) {
                     this.Switch.lTimeStamp = lTimeStamp;
                     this.Switch.chState = FADE_OUT;
                 }
                 break;
             case FADE_OUT:
                 nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
-                hwOpacity = (256ul * (int64_t)nElapsed / arm_2d_helper_convert_ms_to_ticks(this.Switch.hwPeriod >> 1));
+                
+            #if __ARM_2D_CFG_HELPER_SWITCH_FADE_USE_SIN__
+                hwOpacity = (900ul * (int64_t)nElapsed / arm_2d_helper_convert_ms_to_ticks((this.Switch.hwPeriod - hwKeepPeriod) >> 1));
+                hwOpacity = (uint_fast16_t)(256.0f * arm_sin_f32(ARM_2D_ANGLE((float)hwOpacity / 10.0f)));
+            #else
+                hwOpacity = (256ul * (int64_t)nElapsed / arm_2d_helper_convert_ms_to_ticks((this.Switch.hwPeriod - hwKeepPeriod) >> 1));
+            #endif
                 
                 this.Switch.Fade.chOpacity = 255 - MIN(255, hwOpacity);
                 if (this.Switch.Fade.chOpacity == 0) {
@@ -283,43 +311,53 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
         }
     }
 
-    assert(NULL != this.SceneFIFO.ptHead);
 
-    if (FADE_IN == this.Switch.chState) {
-        /* draw the old scene background */
-        ptScene = this.SceneFIFO.ptHead;
 
-        bIgnoreBG = this.Switch.tConfig.Feature.bIgnoreOldSceneBG;
-        bIgnoreScene = this.Switch.tConfig.Feature.bIgnoreOldScene;
-        
-    } else if (NULL != this.SceneFIFO.ptHead) {
-        /* draw the new scene background */
-        ptScene = this.SceneFIFO.ptHead->ptNext;
-
-        bIgnoreBG = this.Switch.tConfig.Feature.bIgnoreNewSceneBG;
-        bIgnoreScene = this.Switch.tConfig.Feature.bIgnoreNewScene;
-    }
-
-    if (NULL == ptScene || (bIgnoreBG && bIgnoreScene)) {
-        __pfb_draw_scene_mode_default_background(pTarget, ptTile, bIsNewFrame);
-    } else {
-        if (!bIgnoreBG) {
-            ARM_2D_INVOKE( ptScene->fnOnBGStart, ptScene);
-            ARM_2D_INVOKE( ptScene->fnBackground, pTarget, ptTile, bIsNewFrame);
-            ARM_2D_INVOKE( ptScene->fnOnBGComplete, ptScene);
+    do {
+        if (KEEP == this.Switch.chState) {
+            arm_2d_fill_colour( ptTile,
+                                NULL,
+                                tColour.tValue);
+            break;
         }
-        if (!bIgnoreScene) {
-            ARM_2D_INVOKE( ptScene->fnOnFrameStart, ptScene);
-            ARM_2D_INVOKE( ptScene->fnScene, pTarget, ptTile, bIsNewFrame);
-            ARM_2D_INVOKE( ptScene->fnOnFrameCPL, ptScene);
+
+        assert(NULL != this.SceneFIFO.ptHead);
+        if (FADE_IN == this.Switch.chState) {
+            /* draw the old scene background */
+            ptScene = this.SceneFIFO.ptHead;
+
+            bIgnoreBG = this.Switch.tConfig.Feature.bIgnoreOldSceneBG;
+            bIgnoreScene = this.Switch.tConfig.Feature.bIgnoreOldScene;
+            
+        } else if (NULL != this.SceneFIFO.ptHead) {
+            /* draw the new scene background */
+            ptScene = this.SceneFIFO.ptHead->ptNext;
+
+            bIgnoreBG = this.Switch.tConfig.Feature.bIgnoreNewSceneBG;
+            bIgnoreScene = this.Switch.tConfig.Feature.bIgnoreNewScene;
         }
-    }
 
-    arm_2d_fill_colour_with_opacity(ptTile,
-                                    NULL,
-                                    tColour,
-                                    this.Switch.Fade.chOpacity);
+        if (NULL == ptScene || (bIgnoreBG && bIgnoreScene)) {
+            __pfb_draw_scene_mode_default_background(pTarget, ptTile, bIsNewFrame);
+        } else {
+            if (!bIgnoreBG) {
+                ARM_2D_INVOKE( ptScene->fnOnBGStart, ptScene);
+                ARM_2D_INVOKE( ptScene->fnBackground, pTarget, ptTile, bIsNewFrame);
+                ARM_2D_INVOKE( ptScene->fnOnBGComplete, ptScene);
+            }
+            if (!bIgnoreScene) {
+                ARM_2D_INVOKE( ptScene->fnOnFrameStart, ptScene);
+                ARM_2D_INVOKE( ptScene->fnScene, pTarget, ptTile, bIsNewFrame);
+                ARM_2D_INVOKE( ptScene->fnOnFrameCPL, ptScene);
+            }
+        }
 
+        arm_2d_fill_colour_with_opacity(ptTile,
+                                        NULL,
+                                        tColour,
+                                        this.Switch.Fade.chOpacity);
+    } while(0);
+    
     arm_2d_op_wait_async(NULL);
 
     return arm_fsm_rt_cpl;
@@ -526,7 +564,7 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
                 this.Runtime.bSwitchCPL = false;
                 
                 /* validate parameters */
-                this.Switch.hwPeriod = MAX(100, this.Switch.hwPeriod);
+                this.Switch.hwPeriod = MAX(__ARM_2D_CFG_HELPER_SWITCH_MIN_PERIOD__, this.Switch.hwPeriod);
                 
                 /* reset switch FSM */
                 this.Switch.chState = START;
