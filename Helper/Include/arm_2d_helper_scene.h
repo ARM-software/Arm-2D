@@ -126,7 +126,11 @@ struct arm_2d_scene_t {
     /*!
      * \note We use fnDepose to free the resources
      */
-    void (*fnDepose)(arm_2d_scene_t *ptThis);                                   //!< on-scene-depose event handler 
+    void (*fnDepose)(arm_2d_scene_t *ptThis);                                   //!< on-scene-depose event handler
+    struct {
+        uint8_t bOnSwitchingIgnoreBG    : 1;                                    //!< ignore background during switching period
+        uint8_t bOnSwitchingIgnoreScene : 1;                                    //!< ignore forground during switching period
+    };
 };
 
 /*!

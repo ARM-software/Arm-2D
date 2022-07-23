@@ -336,6 +336,12 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
             bIgnoreBG = this.Switch.tConfig.Feature.bIgnoreNewSceneBG;
             bIgnoreScene = this.Switch.tConfig.Feature.bIgnoreNewScene;
         }
+        
+        if (NULL != ptScene) {
+            bIgnoreBG = ptScene->bOnSwitchingIgnoreBG && bIgnoreBG;
+            bIgnoreScene = ptScene->bOnSwitchingIgnoreScene && bIgnoreScene;
+        }
+        
 
         if (NULL == ptScene || (bIgnoreBG && bIgnoreScene)) {
             __pfb_draw_scene_mode_default_background(pTarget, ptTile, bIsNewFrame);

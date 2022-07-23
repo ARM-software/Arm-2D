@@ -95,18 +95,18 @@ static void __on_scene0_frame_complete(arm_2d_scene_t *ptScene)
     }
 }
 
-static
-IMPL_PFB_ON_DRAW(__pfb_draw_scene0_background_handler)
-{
-    ARM_2D_UNUSED(pTarget);
-    ARM_2D_UNUSED(bIsNewFrame);
+//static
+//IMPL_PFB_ON_DRAW(__pfb_draw_scene0_background_handler)
+//{
+//    ARM_2D_UNUSED(pTarget);
+//    ARM_2D_UNUSED(bIsNewFrame);
 
-    arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
+//    arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
 
-    arm_2d_op_wait_async(NULL);
+//    arm_2d_op_wait_async(NULL);
 
-    return arm_fsm_rt_cpl;
-}
+//    return arm_fsm_rt_cpl;
+//}
 
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
@@ -171,7 +171,7 @@ static void __app_scene0_init(void)
     assert(NULL != ptScene);
     
     *ptScene = (arm_2d_scene_t){
-        .fnBackground   = &__pfb_draw_scene0_background_handler,
+        .fnBackground   = NULL,
         .fnScene        = &__pfb_draw_scene0_handler,
         .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
         .fnOnBGStart    = NULL,
