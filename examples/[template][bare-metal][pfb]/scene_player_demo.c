@@ -114,7 +114,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
     ARM_2D_UNUSED(pTarget);
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
-    
+    arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
     
     arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
     
@@ -218,6 +218,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene1_handler)
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
     
+    arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
     
     arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
     

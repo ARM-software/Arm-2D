@@ -239,6 +239,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_default_background)
 }
 
 
+#define SCENE_SWITCH_RESET_FSM()    do {this.Switch.chState = START;} while(0)
+
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
 {
     enum {
@@ -275,10 +277,20 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
                 nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
                 
             #if __ARM_2D_CFG_HELPER_SWITCH_FADE_USE_SIN__
-                hwOpacity = (900ul * (int64_t)nElapsed / arm_2d_helper_convert_ms_to_ticks((this.Switch.hwPeriod - hwKeepPeriod) >> 1));
-                hwOpacity = (uint_fast16_t)(256.0f * arm_sin_f32(ARM_2D_ANGLE((float)hwOpacity / 10.0f)));
+                hwOpacity = (900ul * (int64_t)nElapsed 
+                                   / arm_2d_helper_convert_ms_to_ticks(
+                                        (this.Switch.hwPeriod - hwKeepPeriod) 
+                                            >> 1));
+                                            
+                hwOpacity = (uint_fast16_t)
+                            (256.0f 
+                                * arm_sin_f32(ARM_2D_ANGLE(
+                                    (float)hwOpacity / 10.0f)));
             #else
-                hwOpacity = (256ul * (int64_t)nElapsed / arm_2d_helper_convert_ms_to_ticks((this.Switch.hwPeriod - hwKeepPeriod) >> 1));
+                hwOpacity = (256ul * (int64_t)nElapsed 
+                                   / arm_2d_helper_convert_ms_to_ticks(
+                                        (this.Switch.hwPeriod - hwKeepPeriod) 
+                                            >> 1));
             #endif
                 this.Switch.Fade.chOpacity = MIN(255, hwOpacity);
                 if (this.Switch.Fade.chOpacity >= 255) {
@@ -297,21 +309,30 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
                 nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
                 
             #if __ARM_2D_CFG_HELPER_SWITCH_FADE_USE_SIN__
-                hwOpacity = (900ul * (int64_t)nElapsed / arm_2d_helper_convert_ms_to_ticks((this.Switch.hwPeriod - hwKeepPeriod) >> 1));
-                hwOpacity = (uint_fast16_t)(256.0f * arm_sin_f32(ARM_2D_ANGLE((float)hwOpacity / 10.0f)));
+                hwOpacity = (900ul * (int64_t)nElapsed 
+                                   / arm_2d_helper_convert_ms_to_ticks(
+                                        (this.Switch.hwPeriod - hwKeepPeriod) 
+                                            >> 1));
+                                            
+                hwOpacity = (uint_fast16_t)
+                            (256.0f 
+                                * arm_sin_f32(ARM_2D_ANGLE(
+                                    (float)hwOpacity / 10.0f)));
             #else
-                hwOpacity = (256ul * (int64_t)nElapsed / arm_2d_helper_convert_ms_to_ticks((this.Switch.hwPeriod - hwKeepPeriod) >> 1));
+                hwOpacity = (256ul * (int64_t)nElapsed 
+                                   / arm_2d_helper_convert_ms_to_ticks(
+                                        (this.Switch.hwPeriod - hwKeepPeriod) 
+                                            >> 1));
             #endif
                 
                 this.Switch.Fade.chOpacity = 255 - MIN(255, hwOpacity);
                 if (this.Switch.Fade.chOpacity == 0) {
                     this.Runtime.bSwitchCPL = true;
+                    SCENE_SWITCH_RESET_FSM();
                 }
                 break;
         }
     }
-
-
 
     do {
         if (KEEP == this.Switch.chState) {
@@ -328,7 +349,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
 
             bIgnoreBG = this.Switch.tConfig.Feature.bIgnoreOldSceneBG;
             bIgnoreScene = this.Switch.tConfig.Feature.bIgnoreOldScene;
-            
+
         } else if (NULL != this.SceneFIFO.ptHead) {
             /* draw the new scene background */
             ptScene = this.SceneFIFO.ptHead->ptNext;
@@ -336,12 +357,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
             bIgnoreBG = this.Switch.tConfig.Feature.bIgnoreNewSceneBG;
             bIgnoreScene = this.Switch.tConfig.Feature.bIgnoreNewScene;
         }
-        
+
         if (NULL != ptScene) {
-            bIgnoreBG = ptScene->bOnSwitchingIgnoreBG && bIgnoreBG;
-            bIgnoreScene = ptScene->bOnSwitchingIgnoreScene && bIgnoreScene;
+            bIgnoreBG = ptScene->bOnSwitchingIgnoreBG || bIgnoreBG;
+            bIgnoreScene = ptScene->bOnSwitchingIgnoreScene || bIgnoreScene;
         }
-        
 
         if (NULL == ptScene || (bIgnoreBG && bIgnoreScene)) {
             __pfb_draw_scene_mode_default_background(pTarget, ptTile, bIsNewFrame);
@@ -383,13 +403,301 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
 }
 
 
+static 
+void __draw_erase_scene(arm_2d_scene_player_t *ptThis,
+                        arm_2d_scene_t *ptScene,
+                        const arm_2d_tile_t *ptTile,
+                        bool bIsNewFrame,
+                        bool bIgnoreBG,
+                        bool bIgnoreScene)
+{
+    if (NULL != ptScene) {
+        bIgnoreBG = ptScene->bOnSwitchingIgnoreBG && bIgnoreBG;
+        bIgnoreScene = ptScene->bOnSwitchingIgnoreScene && bIgnoreScene;
+    }
+
+    if (!bIgnoreBG) {
+        ARM_2D_INVOKE( ptScene->fnOnBGStart, ptScene);
+        ARM_2D_INVOKE( ptScene->fnBackground, ptScene, ptTile, bIsNewFrame);
+        ARM_2D_INVOKE( ptScene->fnOnBGComplete, ptScene);
+    }
+    if (!bIgnoreScene) {
+        ARM_2D_INVOKE( ptScene->fnOnFrameStart, ptScene);
+        ARM_2D_INVOKE( ptScene->fnScene, ptScene, ptTile, bIsNewFrame);
+        ARM_2D_INVOKE( ptScene->fnOnFrameCPL, ptScene);
+    }
+    arm_2d_op_wait_async(NULL);
+}
+
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
 {
-    arm_2d_scene_player_t *ptThis = (arm_2d_scene_player_t *)pTarget;
-    ARM_2D_UNUSED(bIsNewFrame);
+    enum {
+        START = 0,
+        ERASE,
+    };
 
-    /* todo */
-    this.Runtime.bSwitchCPL = true;
+    arm_2d_scene_player_t *ptThis = (arm_2d_scene_player_t *)pTarget;
+    arm_2d_scene_t *ptScene = NULL;
+    
+    int16_t iTargetDistance = 0;
+    int16_t iOffset = 0;
+    
+    switch(this.Switch.tConfig.Feature.chMode) {
+        case ARM_2D_SCENE_SWITCH_MODE_ERASE_LEFT:
+        case ARM_2D_SCENE_SWITCH_MODE_ERASE_RIGHT:
+            iTargetDistance = ptTile->tRegion.tSize.iWidth;
+            break;
+        case ARM_2D_SCENE_SWITCH_MODE_ERASE_UP:
+        case ARM_2D_SCENE_SWITCH_MODE_ERASE_DOWN:
+            iTargetDistance = ptTile->tRegion.tSize.iHeight;
+            break;
+        default:
+            assert(false);      /* this should not happen */
+    };
+
+    
+    /* internal statemachine */
+    if (bIsNewFrame) {
+        int32_t nElapsed;
+        int32_t lTimeStamp = arm_2d_helper_get_system_timestamp();
+
+        switch (this.Switch.chState) {
+            case START:
+                this.Switch.lTimeStamp = lTimeStamp;
+                this.Switch.chState++;
+                //break;
+            case ERASE:
+                nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
+                
+                iOffset = ((int64_t)iTargetDistance * (int64_t)nElapsed 
+                           / arm_2d_helper_convert_ms_to_ticks( 
+                                (this.Switch.hwPeriod) >> 1));
+                iOffset = MIN(iTargetDistance, iOffset);
+
+                if (iOffset >= iTargetDistance) {
+                    this.Runtime.bSwitchCPL = true;
+                    SCENE_SWITCH_RESET_FSM();
+                }
+                break;
+        }
+    }
+
+    /* handle default background */
+    do {
+        bool bIgnoreBG;
+        bool bIgnoreScene;
+        bool bDrawDefaultBG = false;
+        
+        /* draw the old scene background */
+        ptScene = this.SceneFIFO.ptHead;
+
+        if (NULL != ptScene) {
+            bIgnoreBG = this.Switch.tConfig.Feature.bIgnoreOldSceneBG;
+            bIgnoreScene = this.Switch.tConfig.Feature.bIgnoreOldScene;
+            bIgnoreBG = ptScene->bOnSwitchingIgnoreBG || bIgnoreBG;
+            bIgnoreScene = ptScene->bOnSwitchingIgnoreScene || bIgnoreScene;
+            
+            if (bIgnoreBG && bIgnoreScene) {
+                bDrawDefaultBG = true;
+            }
+        } else {
+            bDrawDefaultBG = true;
+        }
+
+        if (NULL != this.SceneFIFO.ptHead) {
+            /* draw the new scene background */
+            ptScene = this.SceneFIFO.ptHead->ptNext;
+            
+            bIgnoreBG = this.Switch.tConfig.Feature.bIgnoreNewSceneBG;
+            bIgnoreScene = this.Switch.tConfig.Feature.bIgnoreNewScene;
+            bIgnoreBG = ptScene->bOnSwitchingIgnoreBG || bIgnoreBG;
+            bIgnoreScene = ptScene->bOnSwitchingIgnoreScene || bIgnoreScene;
+
+            if (bIgnoreBG && bIgnoreScene) {
+                bDrawDefaultBG = true;
+            }
+        } else {
+            bDrawDefaultBG = true;
+        }
+
+        if (bDrawDefaultBG) {
+            __pfb_draw_scene_mode_default_background(pTarget, ptTile, bIsNewFrame);
+        }
+    } while(0);
+
+    do {
+        if (NULL == this.SceneFIFO.ptHead) {
+            break;
+        }
+        /* generate new tile for old scene */
+
+        arm_2d_region_t tWindow = {
+            .tSize = ptTile->tRegion.tSize,
+        };
+        
+        switch(this.Switch.tConfig.Feature.chMode) {
+            case ARM_2D_SCENE_SWITCH_MODE_ERASE_LEFT:
+                tWindow.tSize.iWidth -= iOffset;
+                arm_2d_tile_generate_child( ptTile, 
+                                            &tWindow, 
+                                            &this.Switch.Erase.tTemp, 
+                                            false);
+
+                tWindow.tSize.iWidth = iTargetDistance;
+                arm_2d_tile_generate_child( &this.Switch.Erase.tTemp, 
+                                            &tWindow, 
+                                            &this.Switch.Erase.tSceneWindow, 
+                                            false);
+                break;
+            case ARM_2D_SCENE_SWITCH_MODE_ERASE_RIGHT:
+                tWindow.tSize.iWidth -= iOffset;
+                tWindow.tLocation.iX += iOffset;
+
+                arm_2d_tile_generate_child( ptTile, 
+                                            &tWindow, 
+                                            &this.Switch.Erase.tTemp, 
+                                            false);
+                                            
+                tWindow.tSize.iWidth = iTargetDistance;
+                tWindow.tLocation.iX = -iOffset;
+                arm_2d_tile_generate_child( &this.Switch.Erase.tTemp, 
+                                            &tWindow, 
+                                            &this.Switch.Erase.tSceneWindow, 
+                                            false);
+                break;
+            case ARM_2D_SCENE_SWITCH_MODE_ERASE_UP:
+                tWindow.tSize.iHeight -= iOffset;
+                arm_2d_tile_generate_child( ptTile, 
+                                            &tWindow, 
+                                            &this.Switch.Erase.tTemp, 
+                                            false);
+
+                tWindow.tSize.iHeight = iTargetDistance;
+                arm_2d_tile_generate_child( &this.Switch.Erase.tTemp, 
+                                            &tWindow, 
+                                            &this.Switch.Erase.tSceneWindow, 
+                                            false);
+                break;
+
+            case ARM_2D_SCENE_SWITCH_MODE_ERASE_DOWN:
+                tWindow.tSize.iHeight -= iOffset;
+                tWindow.tLocation.iY += iOffset;
+
+                arm_2d_tile_generate_child( ptTile, 
+                                            &tWindow, 
+                                            &this.Switch.Erase.tTemp, 
+                                            false);
+                                            
+                tWindow.tSize.iHeight = iTargetDistance;
+                tWindow.tLocation.iY = -iOffset;
+                arm_2d_tile_generate_child( &this.Switch.Erase.tTemp, 
+                                            &tWindow, 
+                                            &this.Switch.Erase.tSceneWindow, 
+                                            false);
+                break;
+
+            default:
+                assert(false);      /* this should not happen */
+        };
+
+        /* draw the old scene background */
+        ptScene = this.SceneFIFO.ptHead;
+
+        __draw_erase_scene( ptThis, 
+                            ptScene, 
+                            &this.Switch.Erase.tSceneWindow, 
+                            bIsNewFrame,
+                            this.Switch.tConfig.Feature.bIgnoreOldSceneBG,
+                            this.Switch.tConfig.Feature.bIgnoreOldScene);
+        
+
+
+        /* generate new tile for new scene */
+        if (NULL == ptScene->ptNext) {
+            break;
+        }
+        
+        tWindow = (arm_2d_region_t){ .tSize = ptTile->tRegion.tSize };
+        
+        switch(this.Switch.tConfig.Feature.chMode) {
+            case ARM_2D_SCENE_SWITCH_MODE_ERASE_LEFT:
+                tWindow.tSize.iWidth = iOffset;
+                tWindow.tLocation.iX = iTargetDistance - iOffset;
+
+                arm_2d_tile_generate_child( ptTile, 
+                                            &tWindow, 
+                                            &this.Switch.Erase.tTemp, 
+                                            false);
+                                            
+                tWindow.tSize.iWidth = iTargetDistance;
+                tWindow.tLocation.iX = -(iTargetDistance - iOffset);
+                arm_2d_tile_generate_child( &this.Switch.Erase.tTemp, 
+                                            &tWindow, 
+                                            &this.Switch.Erase.tSceneWindow, 
+                                            false);
+                break;
+
+            case ARM_2D_SCENE_SWITCH_MODE_ERASE_RIGHT:
+                tWindow.tSize.iWidth = iOffset;
+                arm_2d_tile_generate_child( ptTile, 
+                                            &tWindow, 
+                                            &this.Switch.Erase.tTemp, 
+                                            false);
+
+                tWindow.tSize.iWidth = iTargetDistance;
+                arm_2d_tile_generate_child( &this.Switch.Erase.tTemp, 
+                                            &tWindow, 
+                                            &this.Switch.Erase.tSceneWindow, 
+                                            false);
+                break;
+
+            case ARM_2D_SCENE_SWITCH_MODE_ERASE_UP:
+                tWindow.tSize.iHeight = iOffset;
+                tWindow.tLocation.iY = iTargetDistance - iOffset;
+
+                arm_2d_tile_generate_child( ptTile, 
+                                            &tWindow, 
+                                            &this.Switch.Erase.tTemp, 
+                                            false);
+                                            
+                tWindow.tSize.iHeight = iTargetDistance;
+                tWindow.tLocation.iY = -(iTargetDistance - iOffset);
+                arm_2d_tile_generate_child( &this.Switch.Erase.tTemp, 
+                                            &tWindow, 
+                                            &this.Switch.Erase.tSceneWindow, 
+                                            false);
+                break;
+
+            case ARM_2D_SCENE_SWITCH_MODE_ERASE_DOWN:
+                tWindow.tSize.iHeight = iOffset;
+                arm_2d_tile_generate_child( ptTile, 
+                                            &tWindow, 
+                                            &this.Switch.Erase.tTemp, 
+                                            false);
+
+                tWindow.tSize.iHeight = iTargetDistance;
+                arm_2d_tile_generate_child( &this.Switch.Erase.tTemp, 
+                                            &tWindow, 
+                                            &this.Switch.Erase.tSceneWindow, 
+                                            false);
+                break;
+            default:
+                assert(false);      /* this should not happen */
+        };
+
+        /* draw the old scene background */
+        ptScene = this.SceneFIFO.ptHead->ptNext;
+        
+        
+        __draw_erase_scene( ptThis, 
+                            ptScene, 
+                            &this.Switch.Erase.tSceneWindow, 
+                            bIsNewFrame,
+                            this.Switch.tConfig.Feature.bIgnoreNewSceneBG,
+                            this.Switch.tConfig.Feature.bIgnoreNewScene);
+        
+    } while(0);
+
     arm_2d_op_wait_async(NULL);
 
     return arm_fsm_rt_cpl;
