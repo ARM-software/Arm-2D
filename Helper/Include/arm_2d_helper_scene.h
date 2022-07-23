@@ -167,6 +167,10 @@ typedef struct arm_2d_scene_player_t {
                     arm_2d_tile_t tSceneWindow;
                     arm_2d_tile_t tTemp;
                 }Erase;
+                struct {
+                    uint8_t chState;
+                    arm_2d_tile_t tSceneWindow;
+                }Slide;
             };
             __arm_2d_helper_scene_switch_t tConfig;                             //!< the switching configuration
             uint16_t hwPeriod;                                                  //!< the switching should finish in specified millisecond
