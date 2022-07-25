@@ -215,7 +215,7 @@ def main(argv):
     parser.add_argument('-o', nargs='?', type = str,  required=False, help="output C file containing RGB56/RGB888/Gray8 and alpha values arrays")
 
     parser.add_argument('--name', nargs='?',type = str, required=True, help="A specified array name")
-    parser.add_argument('--format', nargs='?',type = str, default="rgb565", help="RGB Format (rgb565, rgb32, gray8)")
+    parser.add_argument('--format', nargs='?',type = str, default="rgb565", help="RGB Format (rgb565, rgb32, gray8, all)")
     parser.add_argument('--dim', nargs=2,type = int, help="Resize the image with the given width and height")
     parser.add_argument('--rot', nargs='?',type = float, default=0.0, help="Rotate the image with the given angle in degrees")
 
@@ -236,7 +236,10 @@ def main(argv):
     if arr_name == None or arr_name == "":
         arr_name = basename
 
-    if args.format != 'rgb565' and args.format != 'rgb32' and args.format != 'gray8':
+    if args.format != 'rgb565' and \
+        args.format != 'rgb32' and \
+        args.format != 'gray8' and \
+        args.format != 'all':
         parser.print_help()
         exit(1)
 
@@ -298,7 +301,7 @@ def main(argv):
 
 
         # Gray8 channel array
-        if args.format == 'gray8':
+        if args.format == 'gray8' or args.format == 'all':
             R = (data[...,0]).astype(np.uint16)
             G = (data[...,1]).astype(np.uint16)
             B = (data[...,2]).astype(np.uint16)
@@ -325,7 +328,7 @@ def main(argv):
             typStr='uint8_t'
 
         # RGB565 channel array
-        elif args.format == 'rgb565':
+        if args.format == 'rgb565' or args.format == 'all':
             R = (data[...,0]>>3).astype(np.uint16) << 11
             G = (data[...,1]>>2).astype(np.uint16) << 5
             B = (data[...,2]>>3).astype(np.uint16)
@@ -353,7 +356,7 @@ def main(argv):
 
 
 
-        elif args.format == 'rgb32':
+        if args.format == 'rgb32' or args.format == 'all':
             R = data[...,0].astype(np.uint32) << 16
             G = data[...,1].astype(np.uint32) << 8
             B = data[...,2].astype(np.uint32)
@@ -366,14 +369,14 @@ def main(argv):
             RGB = R | G | B | A
 
             print('',file=o)
-            
+
             if mode == "RGBA":
                 print('__attribute__((section(\"arm2d.asset.c_bmp%sCCCA8888\")))' % (arr_name), file=o)
                 print('const uint32_t c_bmp%sCCCA8888[%d*%d] = {' % (arr_name, row, col), file=o)
             else:
                 print('__attribute__((section(\"arm2d.asset.c_bmp%sCCCN888\")))' % (arr_name), file=o)
                 print('const uint32_t c_bmp%sCCCN888[%d*%d]= {' % (arr_name, row, col), file=o)
-                
+
             cnt = 0
             for eachRow in RGB:
                 lineWidth=0
@@ -389,33 +392,28 @@ def main(argv):
             print('};', file=o)
             buffStr='pwBuffer'
             typStr='uint32_t'
-        else:
-            print('unknown format')
-            exit(1)
+
 
 
 
         # insert tail
-        
-        if args.format == 'gray8':
+        if args.format == 'gray8' or args.format == 'all':
             print(tailDataGRAY8.format(arr_name, str(row), str(col), "."+buffStr+" = ("+typStr+"*)"), file=o)
-            if mode == "RGBA":
-                print(tailAlpha.format(arr_name, str(row), str(col)), file=o)
-        
-        elif args.format == 'rgb565':
-            print(tailDataRGB565.format(arr_name, str(row), str(col), "."+buffStr+" = ("+typStr+"*)"), file=o)
-            if mode == "RGBA":
-                print(tailAlpha.format(arr_name, str(row), str(col)), file=o)
 
-        elif args.format == 'rgb32':
+        if args.format == 'rgb565' or args.format == 'all':
+            print(tailDataRGB565.format(arr_name, str(row), str(col), "."+buffStr+" = ("+typStr+"*)"), file=o)
+
+        if args.format == 'rgb32' or args.format == 'all':
             if mode == "RGBA":
                 print(tailDataRGBA8888.format(arr_name, str(row), str(col), "."+buffStr+" = ("+typStr+"*)"), file=o)
-                print(tailAlpha.format(arr_name, str(row), str(col)), file=o)
                 print(tailAlpha2.format(arr_name, str(row), str(col)), file=o)
             else :
                 print(tailDataRGB888.format(arr_name, str(row), str(col), "."+buffStr+" = ("+typStr+"*)"), file=o)
-                
-            
+
+
+        if mode == "RGBA":
+            print(tailAlpha.format(arr_name, str(row), str(col)), file=o)
+
 
         print(tail.format(arr_name, str(row), str(col)), file=o)
 
