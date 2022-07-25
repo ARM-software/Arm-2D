@@ -446,11 +446,6 @@
           <GroupName>asset</GroupName>
           <Files>
             <File>
-              <FileName>SpinWheel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\SpinWheel.c</FilePath>
-            </File>
-            <File>
               <FileName>gear_01.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\gear_01.c</FilePath>
@@ -499,6 +494,11 @@
               <FileName>wave.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
+            <File>
+              <FileName>SpinWheel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\SpinWheel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1237,7 +1237,7 @@
         <TargetCommonOption>
           <Device>CMSDK_CM4_FP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>Keil.V2M-MPS2_CMx_BSP.1.7.1</PackID>
+          <PackID>Keil.V2M-MPS2_CMx_BSP.1.8.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x400000) IRAM(0x20000000,0x400000) CPUTYPE("Cortex-M4") FPU3(SFPU) CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -1667,11 +1667,6 @@
           <GroupName>asset</GroupName>
           <Files>
             <File>
-              <FileName>SpinWheel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\SpinWheel.c</FilePath>
-            </File>
-            <File>
               <FileName>gear_01.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\gear_01.c</FilePath>
@@ -1720,6 +1715,11 @@
               <FileName>wave.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
+            <File>
+              <FileName>SpinWheel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\SpinWheel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2527,7 +2527,7 @@
         <TargetCommonOption>
           <Device>CMSDK_CM4_FP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>Keil.V2M-MPS2_CMx_BSP.1.7.1</PackID>
+          <PackID>Keil.V2M-MPS2_CMx_BSP.1.8.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x400000) IRAM(0x20000000,0x400000) CPUTYPE("Cortex-M4") FPU3(SFPU) CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -2956,11 +2956,6 @@
           <GroupName>asset</GroupName>
           <Files>
             <File>
-              <FileName>SpinWheel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\SpinWheel.c</FilePath>
-            </File>
-            <File>
               <FileName>gear_01.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\gear_01.c</FilePath>
@@ -3009,6 +3004,11 @@
               <FileName>wave.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
+            <File>
+              <FileName>SpinWheel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\SpinWheel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4177,11 +4177,6 @@
           <GroupName>asset</GroupName>
           <Files>
             <File>
-              <FileName>SpinWheel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\SpinWheel.c</FilePath>
-            </File>
-            <File>
               <FileName>gear_01.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\gear_01.c</FilePath>
@@ -4230,6 +4225,11 @@
               <FileName>wave.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
+            <File>
+              <FileName>SpinWheel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\SpinWheel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5398,11 +5398,6 @@
           <GroupName>asset</GroupName>
           <Files>
             <File>
-              <FileName>SpinWheel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\SpinWheel.c</FilePath>
-            </File>
-            <File>
               <FileName>gear_01.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\gear_01.c</FilePath>
@@ -5451,6 +5446,11 @@
               <FileName>wave.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
+            <File>
+              <FileName>SpinWheel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\SpinWheel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6258,7 +6258,7 @@
         <TargetCommonOption>
           <Device>CMSDK_CM0plus</Device>
           <Vendor>ARM</Vendor>
-          <PackID>Keil.V2M-MPS2_CMx_BSP.1.7.1</PackID>
+          <PackID>Keil.V2M-MPS2_CMx_BSP.1.8.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00400000) IROM(0x00000000,0x00400000) CPUTYPE("Cortex-M0+") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -6688,11 +6688,6 @@
           <GroupName>asset</GroupName>
           <Files>
             <File>
-              <FileName>SpinWheel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\SpinWheel.c</FilePath>
-            </File>
-            <File>
               <FileName>gear_01.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\gear_01.c</FilePath>
@@ -6741,6 +6736,11 @@
               <FileName>wave.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
+            <File>
+              <FileName>SpinWheel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\SpinWheel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7479,7 +7479,7 @@
         <TargetCommonOption>
           <Device>CMSDK_CM7_DP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>Keil.V2M-MPS2_CMx_BSP.1.7.1</PackID>
+          <PackID>Keil.V2M-MPS2_CMx_BSP.1.8.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00400000) IROM(0x00000000,0x00400000) CPUTYPE("Cortex-M7") FPU3(DFPU) CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -7909,11 +7909,6 @@
           <GroupName>asset</GroupName>
           <Files>
             <File>
-              <FileName>SpinWheel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\SpinWheel.c</FilePath>
-            </File>
-            <File>
               <FileName>gear_01.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\gear_01.c</FilePath>
@@ -7962,6 +7957,11 @@
               <FileName>wave.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
+            <File>
+              <FileName>SpinWheel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\SpinWheel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9130,11 +9130,6 @@
           <GroupName>asset</GroupName>
           <Files>
             <File>
-              <FileName>SpinWheel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\SpinWheel.c</FilePath>
-            </File>
-            <File>
               <FileName>gear_01.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\gear_01.c</FilePath>
@@ -9183,6 +9178,11 @@
               <FileName>wave.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
+            <File>
+              <FileName>SpinWheel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\SpinWheel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -10402,11 +10402,6 @@
           </GroupOption>
           <Files>
             <File>
-              <FileName>SpinWheel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\SpinWheel.c</FilePath>
-            </File>
-            <File>
               <FileName>gear_01.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\gear_01.c</FilePath>
@@ -10455,6 +10450,11 @@
               <FileName>wave.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
+            <File>
+              <FileName>SpinWheel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\SpinWheel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -11623,11 +11623,6 @@
           <GroupName>asset</GroupName>
           <Files>
             <File>
-              <FileName>SpinWheel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\SpinWheel.c</FilePath>
-            </File>
-            <File>
               <FileName>gear_01.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\gear_01.c</FilePath>
@@ -11676,6 +11671,11 @@
               <FileName>wave.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
+            <File>
+              <FileName>SpinWheel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\SpinWheel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -12775,11 +12775,6 @@
           <GroupName>asset</GroupName>
           <Files>
             <File>
-              <FileName>SpinWheel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\asset\SpinWheel.c</FilePath>
-            </File>
-            <File>
               <FileName>gear_01.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\gear_01.c</FilePath>
@@ -12828,6 +12823,11 @@
               <FileName>wave.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
+            <File>
+              <FileName>SpinWheel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\SpinWheel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -14203,24 +14203,32 @@
       </file>
       <file attr="config" category="header" name="CMSIS\Config\RTE_Device.h" version="1.0.0">
         <instance index="0">RTE\Device\CMSDK_CM0plus\RTE_Device.h</instance>
-        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="CMSDK_CM0plus CMSIS"/>
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.7.1"/>
+        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM0plus CMSIS"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
         <targetInfos>
           <targetInfo name="V2M-MPS2-CM0+"/>
         </targetInfos>
       </file>
-      <file attr="config" category="source" condition="ARMCC" name="Device\CMSDK_CM0plus\Source\ARM\startup_CMSDK_CM0plus.s" version="1.0.0">
-        <instance index="0">RTE\Device\CMSDK_CM0plus\startup_CMSDK_CM0plus.s</instance>
-        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="CMSDK_CM0plus CMSIS"/>
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.7.1"/>
+      <file attr="config" category="linkerScript" condition="ARMCC" name="Device\CMSDK_CM0plus\Source\ARM\ac6_arm.sct" version="1.0.0">
+        <instance index="0">RTE\Device\CMSDK_CM0plus\ac6_arm.sct</instance>
+        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM0plus CMSIS"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
         <targetInfos>
           <targetInfo name="V2M-MPS2-CM0+"/>
         </targetInfos>
       </file>
-      <file attr="config" category="source" name="Device\CMSDK_CM0plus\Source\system_CMSDK_CM0plus.c" version="1.0.0">
+      <file attr="config" category="sourceAsm" condition="ARMCC" name="Device\CMSDK_CM0plus\Source\ARM\startup_CMSDK_CM0plus.S" version="1.0.0">
+        <instance index="0">RTE\Device\CMSDK_CM0plus\startup_CMSDK_CM0plus.S</instance>
+        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM0plus CMSIS"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
+        <targetInfos>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="Device\CMSDK_CM0plus\Source\system_CMSDK_CM0plus.c" version="1.0.0">
         <instance index="0">RTE\Device\CMSDK_CM0plus\system_CMSDK_CM0plus.c</instance>
-        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="CMSDK_CM0plus CMSIS"/>
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.7.1"/>
+        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM0plus CMSIS"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
         <targetInfos>
           <targetInfo name="V2M-MPS2-CM0+"/>
         </targetInfos>
@@ -14251,26 +14259,35 @@
       </file>
       <file attr="config" category="header" name="CMSIS\Config\RTE_Device.h" version="1.0.0">
         <instance index="0">RTE\Device\CMSDK_CM4_FP\RTE_Device.h</instance>
-        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="CMSDK_CM4 CMSIS"/>
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.7.1"/>
+        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM4 CMSIS"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
           <targetInfo name="V2M-MPS2-CM4"/>
         </targetInfos>
       </file>
-      <file attr="config" category="source" condition="ARMCC" name="Device\CMSDK_CM4\Source\ARM\startup_CMSDK_CM4.s" version="1.0.0">
-        <instance index="0">RTE\Device\CMSDK_CM4_FP\startup_CMSDK_CM4.s</instance>
-        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="CMSDK_CM4 CMSIS"/>
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.7.1"/>
+      <file attr="config" category="linkerScript" condition="ARMCC" name="Device\CMSDK_CM4\Source\ARM\ac6_arm.sct" version="1.0.0">
+        <instance index="0">RTE\Device\CMSDK_CM4_FP\ac6_arm.sct</instance>
+        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM4 CMSIS"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
           <targetInfo name="V2M-MPS2-CM4"/>
         </targetInfos>
       </file>
-      <file attr="config" category="source" name="Device\CMSDK_CM4\Source\system_CMSDK_CM4.c" version="1.0.0">
+      <file attr="config" category="sourceAsm" condition="ARMCC" name="Device\CMSDK_CM4\Source\ARM\startup_CMSDK_CM4.S" version="1.0.0">
+        <instance index="0">RTE\Device\CMSDK_CM4_FP\startup_CMSDK_CM4.S</instance>
+        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM4 CMSIS"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
+        <targetInfos>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="Device\CMSDK_CM4\Source\system_CMSDK_CM4.c" version="1.0.0">
         <instance index="0">RTE\Device\CMSDK_CM4_FP\system_CMSDK_CM4.c</instance>
-        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="CMSDK_CM4 CMSIS"/>
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.7.1"/>
+        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM4 CMSIS"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
           <targetInfo name="V2M-MPS2-CM4"/>
@@ -14278,24 +14295,32 @@
       </file>
       <file attr="config" category="header" name="CMSIS\Config\RTE_Device.h" version="1.0.0">
         <instance index="0">RTE\Device\CMSDK_CM7_DP\RTE_Device.h</instance>
-        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.1" condition="CMSDK_CM7 CMSIS"/>
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.7.1"/>
+        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM7 CMSIS"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
         <targetInfos>
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </file>
-      <file attr="config" category="source" condition="ARMCC" name="Device\CMSDK_CM7\Source\ARM\startup_CMSDK_CM7.s" version="1.0.0">
-        <instance index="0">RTE\Device\CMSDK_CM7_DP\startup_CMSDK_CM7.s</instance>
-        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.1" condition="CMSDK_CM7 CMSIS"/>
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.7.1"/>
+      <file attr="config" category="linkerScript" condition="ARMCC" name="Device\CMSDK_CM7\Source\ARM\ac6_arm.sct" version="1.0.0">
+        <instance index="0">RTE\Device\CMSDK_CM7_DP\ac6_arm.sct</instance>
+        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM7 CMSIS"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
         <targetInfos>
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </file>
-      <file attr="config" category="source" name="Device\CMSDK_CM7\Source\system_CMSDK_CM7.c" version="1.0.0">
+      <file attr="config" category="sourceAsm" condition="ARMCC" name="Device\CMSDK_CM7\Source\ARM\startup_CMSDK_CM7.S" version="1.0.0">
+        <instance index="0">RTE\Device\CMSDK_CM7_DP\startup_CMSDK_CM7.S</instance>
+        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM7 CMSIS"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
+        <targetInfos>
+          <targetInfo name="V2M-MPS2-CM7"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="Device\CMSDK_CM7\Source\system_CMSDK_CM7.c" version="1.0.0">
         <instance index="0">RTE\Device\CMSDK_CM7_DP\system_CMSDK_CM7.c</instance>
-        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.1" condition="CMSDK_CM7 CMSIS"/>
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.7.1"/>
+        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM7 CMSIS"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
         <targetInfos>
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
