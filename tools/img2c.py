@@ -209,13 +209,13 @@ tail="""
 
 def main(argv):
 
-    parser = argparse.ArgumentParser(description='image to C array converter')
+    parser = argparse.ArgumentParser(description='image to C array converter (v1.2.0)')
 
     parser.add_argument('-i', nargs='?', type = str,  required=True, help="Input file (png, bmp, etc..)")
     parser.add_argument('-o', nargs='?', type = str,  required=False, help="output C file containing RGB56/RGB888/Gray8 and alpha values arrays")
 
     parser.add_argument('--name', nargs='?',type = str, required=True, help="A specified array name")
-    parser.add_argument('--format', nargs='?',type = str, default="rgb565", help="RGB Format (rgb565, rgb32, gray8, all)")
+    parser.add_argument('--format', nargs='?',type = str, default="all", help="RGB Format (rgb565, rgb32, gray8, all)")
     parser.add_argument('--dim', nargs=2,type = int, help="Resize the image with the given width and height")
     parser.add_argument('--rot', nargs='?',type = float, default=0.0, help="Rotate the image with the given angle in degrees")
 

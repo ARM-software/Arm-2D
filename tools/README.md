@@ -34,7 +34,7 @@ img2c.py [***-h***] [***--format*** \<***FORMAT***\>] [***--name \<NAME\>***] [*
 | -i ***Input File Path***  | Input file (png, bmp, etc..)                                 |          |
 | -o ***Output File Path*** | output C file containing RGB56/RGB888 and alpha values arrays | Optional |
 | --name ***Name***         | A specified array name.                                      | Optional |
-| --format ***Format***     | RGB Format, i.e. RGB565 (***default***), RGB32               | Optional |
+| --format ***Format***     | RGB Format, i.e. rgb565, rgb32, all (***default***)          | Optional |
 | --dim ***Width Height***  | Resize the image with the given width and height             | Optional |
 | --rot ***angle***         | Rotate the image with the given angle in degrees             | Optional |
 
