@@ -8,13 +8,13 @@ This document describes how to deploy the **Arm-2D** library to your existing MD
 
 There are three methods to get Arm-2D:
 
--  Cloning the Arm-2D software repository on Github using the following command line:
+-  Cloning Arm-2D repository on Github using the following command line:
 
   ```shell
   git clone https://github.com/ARM-software/Arm-2D.git
   ```
 
-- Downloading cmsis-packs from the [release page](https://github.com/ARM-software/Arm-2D/releases).
+- Downloading Arm-2D CMSIS-Pack from the [release page](https://github.com/ARM-software/Arm-2D/releases).
 
 - Checking for Updates in pack-installer and installing the latest Arm-2D packs as shown in **Figure 1-1** and **Figure 1-2**
 
@@ -24,17 +24,17 @@ There are three methods to get Arm-2D:
 
    
    
-   **Figure 1-2 Install the Arm-2D in Pack Installer**
+   **Figure 1-2 Install Arm-2D in Pack Installer**
    
    ![](./pictures/HowToDeploy1_2.png) 
 
 
 
-## 2 How to Deploy Arm-2D Library
+## 2 How to Deploy Arm-2D
 
 ### 2.1 Generic Method (Using MDK as an example)
 
-1. Copy the Arm-2D folder to your target project directory.
+1. Copy the `Arm-2D` folder to your target project directory.
 
 2. Open the MDK project, add a group in the project viewer and give it a name, for example, `Arm-2D`.
 
@@ -42,7 +42,7 @@ There are three methods to get Arm-2D:
 
 4. For ease of use, please add **ALL** header files in the `Library/Include` directory that **have no double-underscores-prefix in their name** to the Arm-2d group of the project.
 
-   **Figure 2-1 A typical project view after Arm-2D Is added**
+   **Figure 2-1 A typical project view with Arm-2D Group**
 
    ![](./pictures/HowToDeploy2_1.png) 
 
@@ -136,9 +136,12 @@ static void system_init(void)
 6. Expand Acceleration in the project view and open `arm_2d_cfg.h` as shown in **Figure 2-8**. 
 
     **Figure 2-8 Find arm_2d_cfg.h in the project view**
-    ![](./pictures/HowToDeploy2_8.png) 
-
-    Open the Configuration Wizard, you can see options available for Arm-2D
+    
+    ![](./pictures/HowToDeploy2_8.png)  
+    
+    
+    
+    Open the **Configuration Wizard** and check options available for Arm-2D
     
     **Figure 2-9 Configuration Wizard for Arm-2D**
     
