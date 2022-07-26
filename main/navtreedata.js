@@ -28,7 +28,7 @@ var NAVTREE =
     [ "README", "index.html", [
       [ "Branch Summary", "index.html#autotoc_md0", null ],
       [ "Features", "index.html#autotoc_md1", [
-        [ "Planned in the Future", "index.html#autotoc_md3", null ]
+        [ "New Features Planned in the Future", "index.html#autotoc_md3", null ]
       ] ],
       [ "1 Introduction", "index.html#autotoc_md4", [
         [ "1.1 The Background", "index.html#autotoc_md5", null ],
