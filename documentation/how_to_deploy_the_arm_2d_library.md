@@ -19,6 +19,7 @@ There are three methods to get Arm-2D:
 - Checking for Updates in pack-installer and installing the latest Arm-2D packs as shown in **Figure 1-1** and **Figure 1-2**
 
    **Figure 1-1 Check for Updates in Pack Installer**
+   
    ![](./pictures/HowToDeploy1_1.png) 
 
    
