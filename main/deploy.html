@@ -112,27 +112,27 @@ $(document).ready(function(){initNavTree('deploy.html',''); initResizable(); });
 1 How to Get the Arm-2D</h1>
 <p >There are three methods to get Arm-2D:</p>
 <ul>
-<li><p class="startli">Cloning the Arm-2D software repository on Github using the following command line:</p>
+<li><p class="startli">Cloning Arm-2D repository on Github using the following command line:</p>
 <div class="fragment"><div class="line">git clone https://github.com/ARM-software/Arm-2D.git</div>
 </div><!-- fragment --></li>
-<li>Downloading cmsis-packs from the <a href="https://github.com/ARM-software/Arm-2D/releases">release page</a>.</li>
+<li>Downloading Arm-2D CMSIS-Pack from the <a href="https://github.com/ARM-software/Arm-2D/releases">release page</a>.</li>
 <li><p class="startli">Checking for Updates in pack-installer and installing the latest Arm-2D packs as shown in <b>Figure 1-1</b> and <b>Figure 1-2</b></p>
 <p class="startli"><b>Figure 1-1 Check for Updates in Pack Installer</b></p>
 </li>
 </ul>
 <p ><img src="HowToDeploy1_1.png" alt="" class="inline"/></p>
-<p ><b>Figure 1-2 Install the Arm-2D in Pack Installer</b></p>
+<p ><b>Figure 1-2 Install Arm-2D in Pack Installer</b></p>
 <p ><img src="HowToDeploy1_2.png" alt="" class="inline"/></p>
 <h1><a class="anchor" id="autotoc_md22"></a>
-2 How to Deploy Arm-2D Library</h1>
+2 How to Deploy Arm-2D</h1>
 <h2><a class="anchor" id="autotoc_md23"></a>
 2.1 Generic Method (Using MDK as an example)</h2>
 <ol type="1">
-<li>Copy the Arm-2D folder to your target project directory.</li>
+<li>Copy the <code>Arm-2D</code> folder to your target project directory.</li>
 <li>Open the MDK project, add a group in the project viewer and give it a name, for example, <code>Arm-2D</code>.</li>
 <li>Add <b>ALL</b> the C source code in the <code>Library/Source</code> directory to the Arm-2d group of the project.</li>
 <li><p class="startli">For ease of use, please add <b>ALL</b> header files in the <code>Library/Include</code> directory that <b>have no double-underscores-prefix in their name</b> to the Arm-2d group of the project.</p>
-<p class="startli"><b>Figure 2-1 A typical project view after Arm-2D Is added</b></p>
+<p class="startli"><b>Figure 2-1 A typical project view with Arm-2D Group</b></p>
 </li>
 </ol>
 <p ><img src="HowToDeploy2_1.png" alt="" class="inline"/></p>
@@ -205,11 +205,13 @@ $(document).ready(function(){initNavTree('deploy.html',''); initResizable(); });
 <div class="line">}</div>
 </div><!-- fragment --></li>
 <li><p class="startli">Expand Acceleration in the project view and open <code>arm_2d_cfg.h</code> as shown in <b>Figure 2-8</b>.</p>
-<p class="startli"><b>Figure 2-8 Find arm_2d_cfg.h in the project view</b> <img src="HowToDeploy2_8.png" alt="" class="inline"/></p>
-<p class="startli">Open the Configuration Wizard, you can see options available for Arm-2D</p>
-<p class="startli"><b>Figure 2-9 Configuration Wizard for Arm-2D</b></p>
+<p class="startli"><b>Figure 2-8 Find arm_2d_cfg.h in the project view</b></p>
 </li>
 </ol>
+<p ><img src="HowToDeploy2_8.png" alt="" class="inline"/> <br  />
+</p>
+<p >Open the <b>Configuration Wizard</b> and check options available for Arm-2D</p>
+<p ><b>Figure 2-9 Configuration Wizard for Arm-2D</b></p>
 <p ><img src="HowToDeploy2_9.png" alt="" class="inline"/></p>
 <h1><a class="anchor" id="autotoc_md25"></a>
 3 Helper Services and Extras</h1>
