@@ -1,5 +1,6 @@
 # README {#mainpage}
 
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/ARM-software/Arm-2D?include_prereleases) ![GitHub](https://img.shields.io/github/license/ARM-software/Arm-2D)
 
 
 ## Branch Summary
