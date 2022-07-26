@@ -13,7 +13,7 @@
 
 ## Features
 
-#### In this release ( ver1.0.0-preview3)
+#### In this version ( ver1.0.0-preview4)
 
 The Arm-2D library provides **Low-Level 2D Image Processing Services** that are mainly used in **Deep Embedded Display system**. The supported features include but not limited to:
 
@@ -54,12 +54,12 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** that are 
 
 
 
-### Planned in the Future
-
-Following features are planned and to be introduced in the future versions:
+### New Features Planned in the Future
 
 - **Image Filters, e.g. Generic Anti-aliasing algorithms**
-
+- Stretch and Perspective Transform
+- A2, A4 Support
+- DMAC-350 Support
 
 
 ## 1 Introduction
@@ -76,9 +76,6 @@ On the other hand, seemingly complicated GUIs are often implemented with simple 
 
 Technologies used for 2D graphics have been matured as early as the era of 8-bit Gaming Console. Since 8-bit 6502 can achieve fancy graphics effects, why can't the most advanced Cortex-M processor of the day?
 
-**Figure 1-1  2D Technologies used in Super-Mario-Brothers on NES** 
-
-![2D Technologies used in Super-Mario-Brothers](./documentation/pictures/TopReadme_1_a.png)
 
 ### 1.2 The Problems in current solutions
 
@@ -301,69 +298,8 @@ def_low_lv_io(__ARM_2D_IO_FILL_RGB16, __arm_2d_rgb16_sw_tile_fill);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_FILL_RGB32, __arm_2d_rgb32_sw_tile_fill);
 
-__WEAK
-def_low_lv_io(__ARM_2D_IO_COPY_WITH_COLOUR_MASKING_RGB16, 
-                __arm_2d_rgb16_sw_tile_copy_with_colour_masking);
-__WEAK
-def_low_lv_io(__ARM_2D_IO_COPY_WITH_COLOUR_MASKING_RGB32, 
-                __arm_2d_rgb32_sw_tile_copy_with_colour_masking);
-__WEAK
-def_low_lv_io(__ARM_2D_IO_FILL_WITH_COLOUR_MASKING_RGB16, 
-                __arm_2d_rgb16_sw_tile_fill_with_colour_masking);
-__WEAK
-def_low_lv_io(__ARM_2D_IO_FILL_WITH_COLOUR_MASKING_RGB32, 
-                __arm_2d_rgb32_sw_tile_fill_with_colour_masking);
-                
-__WEAK
-def_low_lv_io(__ARM_2D_IO_FILL_COLOUR_RGB16, __arm_2d_rgb16_sw_colour_filling);
-__WEAK
-def_low_lv_io(__ARM_2D_IO_FILL_COLOUR_RGB32, __arm_2d_rgb32_sw_colour_filling);
-
-__WEAK
-def_low_lv_io(__ARM_2D_IO_ALPHA_BLENDING_RGB565, 
-                __arm_2d_rgb565_sw_alpha_blending);
-__WEAK
-def_low_lv_io(__ARM_2D_IO_ALPHA_BLENDING_RGB888, 
-                __arm_2d_rgb888_sw_alpha_blending);
-
-__WEAK
-def_low_lv_io(__ARM_2D_IO_ALPHA_BLENDING_WITH_COLOUR_MASKING_RGB565, 
-                __arm_2d_rgb565_sw_alpha_blending_with_colour_masking);
-__WEAK
-def_low_lv_io(__ARM_2D_IO_ALPHA_BLENDING_WITH_COLOUR_MASKING_RGB888, 
-                __arm_2d_rgb888_sw_alpha_blending_with_colour_masking);
-                
-__WEAK
-def_low_lv_io(__ARM_2D_IO_ALPHA_FILL_COLOUR_RGB565, 
-                __arm_2d_rgb565_sw_colour_filling_with_alpha);
-__WEAK
-def_low_lv_io(__ARM_2D_IO_ALPHA_FILL_COLOUR_RGB888, 
-                __arm_2d_rgb888_sw_colour_filling_with_alpha);
-                
-__WEAK
-def_low_lv_io(__ARM_2D_IO_DRAW_POINT, __arm_2d_sw_draw_point);
-
-__WEAK
-def_low_lv_io(__ARM_2D_IO_DRAW_PATTERN_RGB16, __arm_2d_rgb16_sw_draw_pattern);
-__WEAK
-def_low_lv_io(__ARM_2D_IO_DRAW_PATTERN_RGB32, __arm_2d_rgb32_sw_draw_pattern);
-
-__WEAK
-def_low_lv_io(__ARM_2D_IO_COLOUR_CONVERT_TO_RGB565, 
-                __arm_2d_sw_convert_colour_to_rgb565);
-__WEAK
-def_low_lv_io(__ARM_2D_IO_COLOUR_CONVERT_TO_RGB888, 
-                __arm_2d_sw_convert_colour_to_rgb888);
-                
-__WEAK
-def_low_lv_io(__ARM_2D_IO_ROTATE_RGB565, 
-                __arm_2d_rgb565_sw_rotate);
-
-__WEAK
-def_low_lv_io(__ARM_2D_IO_ROTATE_RGB888, 
-                __arm_2d_rgb888_sw_rotate);
+...
 ``````
-
 
 
 ## 4 Documentation
@@ -386,7 +322,7 @@ def_low_lv_io(__ARM_2D_IO_ROTATE_RGB888,
 
 - The library focus on Cortex-M processors in principle.
 - The library should be compiled with the following compilers:
-  - Arm Compiler 5
+  - Arm Compiler 5 (Deprecated)
   - Arm Compiler 6
   - GCC
   - LLVM
@@ -396,19 +332,17 @@ def_low_lv_io(__ARM_2D_IO_ROTATE_RGB888,
   - In principle, the library will **NOT** provide data structures or related algorithms essential for creating a GUI, for example, element tree, GUI message handling and the tree traversal algorithms.
 
 
-
 ### 5.2 The Temporary Limitations
 
 - The library currently can only be used in the C environment. C++ support will be added later.
 - The GCC support for Cortex-M55 (helium acceleration) is broken (waiting for tool-chain update). 
 - Generic Anti-aliasing algorithms haven't been introduced, but anti-alias in transform (i.e. rotation and scaling) is supported.
 - The library currently only provides default software algorithms and a **[Helium](https://developer.arm.com/architectures/instruction-sets/simd-isas/helium) based acceleration library**. 
-  - Although planned, no hardware acceleration is implemented or supported for now.
+  - Although planned, no accelerator support is implemented for now.
   - Although planned and implemented, the [ACI (Arm Custom Instruction)](https://developer.arm.com/architectures/instruction-sets/custom-instructions) acceleration solutions are not open-source for now. Please contact local Arm FAE for details. 
 - The provided example projects only run on [MPS2](https://developer.arm.com/tools-and-software/development-boards/fpga-prototyping-boards/mps2), [MPS3](https://developer.arm.com/tools-and-software/development-boards/fpga-prototyping-boards/mps3), [FVP](https://developer.arm.com/tools-and-software/open-source-software/arm-platforms-software/cortex-m-platforms-software) and some 3rd party development platforms, e.g. **STM32F746G-Discovery** and **Raspberry Pi Pico**. 
   - Feel free to try the library on your own devices. The library depends on No specific peripheral. 
 - Example projects are based on MDK (one of the most popular development environments for Cortex-M processors ).
-
 
 
 ## 6 Feedback
@@ -428,9 +362,8 @@ If you can to spend some time and try the library, please feel free to leave you
 - Any other thoughts or suggestions.
 
 
-
 Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-July 2022
+26 July 2022
