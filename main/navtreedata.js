@@ -53,14 +53,13 @@ var NAVTREE =
       [ "6 Feedback", "index.html#autotoc_md20", null ]
     ] ],
     [ "How to Deploy the Arm-2D Library", "deploy.html", [
-      [ "1 How to Get the Latest Arm-2D Library", "deploy.html#autotoc_md21", null ],
-      [ "2 How to Deploy the Library", "deploy.html#autotoc_md22", [
-        [ "2.1 Deploy to an MDK project", "deploy.html#autotoc_md23", null ]
+      [ "1 How to Get the Arm-2D", "deploy.html#autotoc_md21", null ],
+      [ "2 How to Deploy Arm-2D Library", "deploy.html#autotoc_md22", [
+        [ "2.1 Generic Method (Using MDK as an example)", "deploy.html#autotoc_md23", null ],
+        [ "2.2 Deploy Using CMSIS-Pack", "deploy.html#autotoc_md24", null ]
       ] ],
-      [ "3 Other Useful information", "deploy.html#autotoc_md24", [
-        [ "3.1 Examples", "deploy.html#autotoc_md25", null ],
-        [ "3.2 How To Read the Library In Users' View", "deploy.html#autotoc_md26", null ]
-      ] ]
+      [ "3 Helper Services and Extras", "deploy.html#autotoc_md25", null ],
+      [ "4 Example Projects", "deploy.html#autotoc_md26", null ]
     ] ],
     [ "Introduction for Arm-2D", "intro.html", [
       [ "1 Overview", "intro.html#autotoc_md27", [
