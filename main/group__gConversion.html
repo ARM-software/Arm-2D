@@ -145,6 +145,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga50cef518f8e1fe3aa7b6870ac797c66e"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gConversion.html#ga50cef518f8e1fe3aa7b6870ac797c66e">__arm_2d_cccn888_pack</a> (<a class="el" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t">__arm_2d_color_fast_rgb_t</a> *ptRGB)</td></tr>
 <tr class="memdesc:ga50cef518f8e1fe3aa7b6870ac797c66e"><td class="mdescLeft">&#160;</td><td class="mdescRight">generate a cccn888 colour from a <a class="el" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t" title="3x16-bit packed RGB color autovectorizer friendly format">__arm_2d_color_fast_rgb_t</a> object  <a href="group__gConversion.html#ga50cef518f8e1fe3aa7b6870ac797c66e">More...</a><br /></td></tr>
 <tr class="separator:ga50cef518f8e1fe3aa7b6870ac797c66e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga60c2471e899128c2a21f02e1a38017de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gConversion.html#ga60c2471e899128c2a21f02e1a38017de">arm_2dp_convert_colour_to_gray8</a> (<a class="el" href="group__gKernel.html#structarm__2d__op__src__t">arm_2d_op_cl_convt_t</a> *ptOP, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptSource, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget)</td></tr>
+<tr class="memdesc:ga60c2471e899128c2a21f02e1a38017de"><td class="mdescLeft">&#160;</td><td class="mdescRight">convert the colour format of a given tile to gray8  <a href="group__gConversion.html#ga60c2471e899128c2a21f02e1a38017de">More...</a><br /></td></tr>
+<tr class="separator:ga60c2471e899128c2a21f02e1a38017de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1064fd7d4bb500483496499a946432ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gConversion.html#ga1064fd7d4bb500483496499a946432ba">arm_2dp_convert_colour_to_rgb888</a> (<a class="el" href="group__gKernel.html#structarm__2d__op__src__t">arm_2d_op_cl_convt_t</a> *ptOP, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptSource, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget)</td></tr>
 <tr class="memdesc:ga1064fd7d4bb500483496499a946432ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">convert the colour format of a given tile to rgb888  <a href="group__gConversion.html#ga1064fd7d4bb500483496499a946432ba">More...</a><br /></td></tr>
 <tr class="separator:ga1064fd7d4bb500483496499a946432ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -378,6 +381,51 @@ A</td>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>uint32_t a cccn888 colour </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>the alpha channel will be kept in the output value </dd></dl>
+
+</div>
+</div>
+<a id="ga60c2471e899128c2a21f02e1a38017de" name="ga60c2471e899128c2a21f02e1a38017de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga60c2471e899128c2a21f02e1a38017de">&#9670;&nbsp;</a></span>arm_2dp_convert_colour_to_gray8()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a> arm_2dp_convert_colour_to_gray8 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gKernel.html#structarm__2d__op__src__t">arm_2d_op_cl_convt_t</a> *&#160;</td>
+          <td class="paramname"><em>ptOP</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td>
+          <td class="paramname"><em>ptSource</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td>
+          <td class="paramname"><em>ptTarget</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>convert the colour format of a given tile to gray8 </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptOP</td><td>the control block, NULL means using the default control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptSource</td><td>the source tile </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ptTarget</td><td>the output tile (holding a buffer) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>arm_fsm_rt_t the operation result </dd></dl>
 
 </div>
 </div>
