@@ -9252,6 +9252,12 @@ void __arm_2d_impl_rgb565_src_msk_fill_y_mirror(uint16_t *
                                                 arm_2d_size_t *
                                                 __restrict ptTargetSize);
 
+void __arm_2d_impl_gray8_to_cccn888(uint8_t *__RESTRICT pchSourceBase,
+                                    int16_t iSourceStride,
+                                    uint32_t *__RESTRICT pwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize);
+
 void __arm_2d_impl_rgb565_to_cccn888(uint16_t * __restrict phwSourceBase,
                                      int16_t iSourceStride,
                                      uint32_t * __restrict pwTargetBase,
