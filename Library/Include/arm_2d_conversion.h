@@ -160,6 +160,19 @@ __STATIC_INLINE uint32_t __arm_2d_cccn888_pack(__arm_2d_color_fast_rgb_t * ptRGB
  *----------------------------------------------------------------------------*/
 
 /*!
+ * \brief convert the colour format of a given tile to gray8
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[out] ptTarget the output tile (holding a buffer)
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_convert_colour_to_gray8(   arm_2d_op_cl_convt_t *ptOP,
+                                                const arm_2d_tile_t *ptSource,
+                                                const arm_2d_tile_t *ptTarget);
+
+/*!
  * \brief convert the colour format of a given tile to rgb888
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptSource the source tile

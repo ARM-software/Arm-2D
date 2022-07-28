@@ -254,6 +254,9 @@ const __arm_2d_op_info_t ARM_2D_OP_DRAW_PATTERN_RGB32;
  * Colour Conversion                                                          *
  *----------------------------------------------------------------------------*/
 extern
+const __arm_2d_op_info_t ARM_2D_OP_CONVERT_TO_GRAY8;
+
+extern
 const __arm_2d_op_info_t ARM_2D_OP_CONVERT_TO_RGB565;
     
 extern

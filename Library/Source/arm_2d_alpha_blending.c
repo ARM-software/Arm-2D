@@ -782,7 +782,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_opacity(
                                                 arm_2d_op_fill_cl_opc_t *ptOP,
                                                 const arm_2d_tile_t *ptTarget,
                                                 const arm_2d_region_t *ptRegion,
-                                                uint8_t chColour,
+                                                arm_2d_color_gray8_t tColour,
                                                 uint_fast8_t chRatio)
 {
     assert(NULL != ptTarget);
@@ -799,7 +799,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_opacity(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.chColour = chColour;
+    this.chColour = tColour.tValue;
     this.chRatio = chRatio;
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
@@ -943,7 +943,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_mask(
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
-                                        uint8_t chColour)
+                                        arm_2d_color_gray8_t tColour)
 {
     assert(NULL != ptTarget);
     assert(NULL != ptAlpha);
@@ -970,7 +970,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_mask(
     this.Target.ptRegion = ptRegion;
     this.Mask.ptTile = ptAlpha;
     this.wMode = 0;
-    this.chColour = chColour;
+    this.chColour = tColour.tValue;
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 
@@ -1160,7 +1160,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_mask_and_opacity(
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
-                                        uint8_t chColour,
+                                        arm_2d_color_gray8_t tColour,
                                         uint8_t chOpacity)
 {
     assert(NULL != ptTarget);
@@ -1189,7 +1189,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_mask_and_opacity(
     this.Target.ptRegion = ptRegion;
     this.Mask.ptTile = ptAlpha;
     this.wMode = 0;
-    this.chColour = chColour;
+    this.chColour = tColour.tValue;
     this.chRatio = chOpacity;
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
@@ -1453,7 +1453,7 @@ arm_fsm_rt_t arm_2dp_gray8_alpha_blending_with_colour_keying(
                                             const arm_2d_tile_t *ptTarget,
                                             const arm_2d_region_t *ptRegion,
                                             uint_fast8_t chRatio,
-                                            uint8_t chColour)
+                                            arm_2d_color_gray8_t tColour)
 {
     assert(NULL != ptSource);
     assert(NULL != ptTarget);
@@ -1473,7 +1473,7 @@ arm_fsm_rt_t arm_2dp_gray8_alpha_blending_with_colour_keying(
     this.Source.ptTile = ptSource;
     this.wMode = 0;
     this.chRatio = chRatio;
-    this.chColour = chColour;
+    this.chColour = tColour.tValue;
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }

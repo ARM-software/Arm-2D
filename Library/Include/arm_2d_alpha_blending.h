@@ -690,7 +690,7 @@ arm_fsm_rt_t arm_2dp_cccn888_alpha_blending( arm_2d_op_alpha_t *ptOP,
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTarget the target tile
  * \param[in] ptRegion the target region
- * \param[in] chColour a gray8 colour
+ * \param[in] tColour a gray8 colour
  * \param[in] chRatio the opacity
  * \return arm_fsm_rt_t the operation result
  */
@@ -700,7 +700,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_opacity(
                                                 arm_2d_op_fill_cl_opc_t *ptOP,
                                                 const arm_2d_tile_t *ptTarget,
                                                 const arm_2d_region_t *ptRegion,
-                                                uint8_t chColour,
+                                                arm_2d_color_gray8_t tColour,
                                                 uint_fast8_t chRatio);
 
 /*!
@@ -749,7 +749,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_opacity(
  * \param[in] ptTarget the target tile
  * \param[in] ptRegion the target region
  * \param[in] ptAlpha the mask on the target side
- * \param[in] chColour a gray8 colour
+ * \param[in] tColour a gray8 colour
  * \return arm_fsm_rt_t the operation result
  */
 extern
@@ -759,7 +759,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_mask(
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
-                                        uint8_t chColour);
+                                        arm_2d_color_gray8_t tColour);
 
 /*!
  * \brief fill a target tile with a given rgb565 colour and a mask on target side
@@ -807,7 +807,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_mask(
  * \param[in] ptTarget the target tile
  * \param[in] ptRegion the target region
  * \param[in] ptAlpha the mask on the target side
- * \param[in] chColour a gray8 colour
+ * \param[in] tColour a gray8 colour
  * \param[in] chOpacity the opacity
  * \return arm_fsm_rt_t the operation result
  */
@@ -818,7 +818,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_mask_and_opacity(
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
-                                        uint8_t chColour,
+                                        arm_2d_color_gray8_t tColour,
                                         uint8_t chOpacity);
 
 /*!
@@ -873,7 +873,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_mask_and_opacity(
  * \param[in] ptTarget the target tile
  * \param[in] ptRegion the target region
  * \param[in] chRatio the opacity
- * \param[in] chColour the key colour
+ * \param[in] tColour the key colour
  * \return arm_fsm_rt_t the operation result
  */
 extern 
@@ -884,7 +884,7 @@ arm_fsm_rt_t arm_2dp_gray8_alpha_blending_with_colour_keying(
                                             const arm_2d_tile_t *ptTarget,
                                             const arm_2d_region_t *ptRegion,
                                             uint_fast8_t chRatio,
-                                            uint8_t chColour);
+                                            arm_2d_color_gray8_t tColour);
 
 /*!
  * \brief blend a source tile to a target tile with a opacity and colour keying

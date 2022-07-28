@@ -83,6 +83,9 @@ uint32_t arm_2d_helper_get_reference_clock_frequency(void)
     return SystemCoreClock;
 }
 
+
+ARM_NOINIT uint16_t s_hwFrameBuffer[BENCHMARK_PFB_BLOCK_WIDTH * BENCHMARK_PFB_BLOCK_HEIGHT];
+
 __OVERRIDE_WEAK 
 void Benchmark_DrawBitmap(  int16_t x, 
                             int16_t y, 
@@ -90,7 +93,26 @@ void Benchmark_DrawBitmap(  int16_t x,
                             int16_t height, 
                             const uint8_t *bitmap)
 {
-#if __GLCD_CFG_COLOUR_DEPTH__ == 32
+#if __GLCD_CFG_COLOUR_DEPTH__ == 8
+    extern
+    void __arm_2d_impl_gray8_to_rgb565( uint8_t *__RESTRICT pchSourceBase,
+                                        int16_t iSourceStride,
+                                        uint16_t *__RESTRICT phwTargetBase,
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t *__RESTRICT ptCopySize);
+
+
+    arm_2d_size_t size = {
+        .iWidth = width,
+        .iHeight = height,
+    };
+    __arm_2d_impl_gray8_to_rgb565( (uint8_t *)bitmap,
+                                    width,
+                                    (uint16_t *)s_hwFrameBuffer,
+                                    width,
+                                    &size);
+    GLCD_DrawBitmap(x, y, width, height, (const uint8_t *)s_hwFrameBuffer);
+#elif __GLCD_CFG_COLOUR_DEPTH__ == 32
     extern
     void __arm_2d_impl_cccn888_to_rgb565(uint32_t *__RESTRICT pwSourceBase,
                                         int16_t iSourceStride,
@@ -107,9 +129,12 @@ void Benchmark_DrawBitmap(  int16_t x,
                                     (uint16_t *)bitmap,
                                     width,
                                     &size);
+    GLCD_DrawBitmap(x, y, width, height, bitmap);
+#else
+    GLCD_DrawBitmap(x, y, width, height, bitmap);
 #endif
 
-    GLCD_DrawBitmap(x, y, width, height, bitmap);
+    
 }
 
 /*----------------------------------------------------------------------------
