@@ -62,3097 +62,3104 @@ extern "C" {
 
 
 void __arm_2d_impl_c8bit_1x1_paving(const uint8_t * __restrict pSource,
-				    int16_t iSourceStride,
-				    uint8_t * __restrict pTarget,
-				    int16_t iTargetStride,
-				    const arm_2d_size_t *
-				    __restrict ptSrcCopySize,
-				    const arm_2d_size_t *
-				    __restrict ptDstCopySize);
+                    int16_t iSourceStride,
+                    uint8_t * __restrict pTarget,
+                    int16_t iTargetStride,
+                    const arm_2d_size_t *
+                    __restrict ptSrcCopySize,
+                    const arm_2d_size_t *
+                    __restrict ptDstCopySize);
 
 void __arm_2d_impl_c8bit_1x1_paving_x_mirror(const uint8_t * __restrict pSource,
-					     int16_t iSourceStride,
-					     uint8_t * __restrict pTarget,
-					     int16_t iTargetStride,
-					     const arm_2d_size_t *
-					     __restrict ptSrcCopySize,
-					     const arm_2d_size_t *
-					     __restrict ptDstCopySize);
+                         int16_t iSourceStride,
+                         uint8_t * __restrict pTarget,
+                         int16_t iTargetStride,
+                         const arm_2d_size_t *
+                         __restrict ptSrcCopySize,
+                         const arm_2d_size_t *
+                         __restrict ptDstCopySize);
 
 void __arm_2d_impl_c8bit_1x1_paving_xy_mirror(const uint8_t *
-					      __restrict pSource,
-					      int16_t iSourceStride,
-					      uint8_t * __restrict pTarget,
-					      int16_t iTargetStride,
-					      const arm_2d_size_t *
-					      __restrict ptSrcCopySize,
-					      const arm_2d_size_t *
-					      __restrict ptDstCopySize);
+                          __restrict pSource,
+                          int16_t iSourceStride,
+                          uint8_t * __restrict pTarget,
+                          int16_t iTargetStride,
+                          const arm_2d_size_t *
+                          __restrict ptSrcCopySize,
+                          const arm_2d_size_t *
+                          __restrict ptDstCopySize);
 
 void __arm_2d_impl_c8bit_1x1_paving_y_mirror(const uint8_t * __restrict pSource,
-					     int16_t iSourceStride,
-					     uint8_t * __restrict pTarget,
-					     int16_t iTargetStride,
-					     const arm_2d_size_t *
-					     __restrict ptSrcCopySize,
-					     const arm_2d_size_t *
-					     __restrict ptDstCopySize);
+                         int16_t iSourceStride,
+                         uint8_t * __restrict pTarget,
+                         int16_t iTargetStride,
+                         const arm_2d_size_t *
+                         __restrict ptSrcCopySize,
+                         const arm_2d_size_t *
+                         __restrict ptDstCopySize);
 
 void __arm_2d_impl_c8bit_1x2_paving(const uint8_t * __restrict pSourceBase,
-				    int16_t iSourceStride,
-				    const arm_2d_size_t *
-				    __restrict ptSourceSize,
-				    uint8_t * __restrict pTargetBase,
-				    int16_t iTargetStride, uint32_t destWidth,
-				    uint16_t tilePairRows);
+                    int16_t iSourceStride,
+                    const arm_2d_size_t *
+                    __restrict ptSourceSize,
+                    uint8_t * __restrict pTargetBase,
+                    int16_t iTargetStride, uint32_t destWidth,
+                    uint16_t tilePairRows);
 
 void __arm_2d_impl_c8bit_1x2_paving_x_mirror(const uint8_t *
-					     __restrict pSourceBase,
-					     int16_t iSourceStride,
-					     const arm_2d_size_t *
-					     __restrict ptSourceSize,
-					     uint8_t * __restrict pTargetBase,
-					     int16_t iTargetStride,
-					     uint32_t destWidth,
-					     uint16_t tilePairRows);
+                         __restrict pSourceBase,
+                         int16_t iSourceStride,
+                         const arm_2d_size_t *
+                         __restrict ptSourceSize,
+                         uint8_t * __restrict pTargetBase,
+                         int16_t iTargetStride,
+                         uint32_t destWidth,
+                         uint16_t tilePairRows);
 
 void __arm_2d_impl_c8bit_1x2_paving_xy_mirror(const uint8_t *
-					      __restrict pSourceBase,
-					      int16_t iSourceStride,
-					      const arm_2d_size_t *
-					      __restrict ptSourceSize,
-					      uint8_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      uint32_t destWidth,
-					      uint16_t tilePairRows);
+                          __restrict pSourceBase,
+                          int16_t iSourceStride,
+                          const arm_2d_size_t *
+                          __restrict ptSourceSize,
+                          uint8_t * __restrict pTargetBase,
+                          int16_t iTargetStride,
+                          uint32_t destWidth,
+                          uint16_t tilePairRows);
 
 void __arm_2d_impl_c8bit_1x2_paving_y_mirror(const uint8_t *
-					     __restrict pSourceBase,
-					     int16_t iSourceStride,
-					     const arm_2d_size_t *
-					     __restrict ptSourceSize,
-					     uint8_t * __restrict pTargetBase,
-					     int16_t iTargetStride,
-					     uint32_t destWidth,
-					     uint16_t tilePairRows);
+                         __restrict pSourceBase,
+                         int16_t iSourceStride,
+                         const arm_2d_size_t *
+                         __restrict ptSourceSize,
+                         uint8_t * __restrict pTargetBase,
+                         int16_t iTargetStride,
+                         uint32_t destWidth,
+                         uint16_t tilePairRows);
 
 void __arm_2d_impl_c8bit_2x1_paving(const uint8_t * __restrict pSourceBase,
-				    int16_t iSourceStride,
-				    const arm_2d_size_t *
-				    __restrict ptSourceSize,
-				    uint8_t * __restrict pTargetBase,
-				    int16_t iTargetStride,
-				    uint16_t tilePairCols, uint16_t destHeight);
+                    int16_t iSourceStride,
+                    const arm_2d_size_t *
+                    __restrict ptSourceSize,
+                    uint8_t * __restrict pTargetBase,
+                    int16_t iTargetStride,
+                    uint16_t tilePairCols, uint16_t destHeight);
 
 void __arm_2d_impl_c8bit_2x1_paving_x_mirror(const uint8_t *
-					     __restrict pSourceBase,
-					     int16_t iSourceStride,
-					     const arm_2d_size_t *
-					     __restrict ptSourceSize,
-					     uint8_t * __restrict pTargetBase,
-					     int16_t iTargetStride,
-					     uint16_t tilePairCols,
-					     uint16_t destHeight);
+                         __restrict pSourceBase,
+                         int16_t iSourceStride,
+                         const arm_2d_size_t *
+                         __restrict ptSourceSize,
+                         uint8_t * __restrict pTargetBase,
+                         int16_t iTargetStride,
+                         uint16_t tilePairCols,
+                         uint16_t destHeight);
 
 void __arm_2d_impl_c8bit_2x1_paving_xy_mirror(const uint8_t *
-					      __restrict pSourceBase,
-					      int16_t iSourceStride,
-					      const arm_2d_size_t *
-					      __restrict ptSourceSize,
-					      uint8_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      uint16_t tilePairCols,
-					      uint16_t destHeight);
+                          __restrict pSourceBase,
+                          int16_t iSourceStride,
+                          const arm_2d_size_t *
+                          __restrict ptSourceSize,
+                          uint8_t * __restrict pTargetBase,
+                          int16_t iTargetStride,
+                          uint16_t tilePairCols,
+                          uint16_t destHeight);
 
 void __arm_2d_impl_c8bit_2x1_paving_y_mirror(const uint8_t *
-					     __restrict pSourceBase,
-					     int16_t iSourceStride,
-					     const arm_2d_size_t *
-					     __restrict ptSourceSize,
-					     uint8_t * __restrict pTargetBase,
-					     int16_t iTargetStride,
-					     uint16_t tilePairCols,
-					     uint16_t destHeight);
+                         __restrict pSourceBase,
+                         int16_t iSourceStride,
+                         const arm_2d_size_t *
+                         __restrict ptSourceSize,
+                         uint8_t * __restrict pTargetBase,
+                         int16_t iTargetStride,
+                         uint16_t tilePairCols,
+                         uint16_t destHeight);
 
 void __arm_2d_impl_c8bit_2x2_paving(const uint8_t * __restrict pSourceBase,
-				    int16_t iSourceStride,
-				    const arm_2d_size_t *
-				    __restrict ptSourceSize,
-				    uint8_t * __restrict pTargetBase,
-				    int16_t iTargetStride,
-				    uint16_t tilePairRows,
-				    uint16_t tilePairCols);
+                    int16_t iSourceStride,
+                    const arm_2d_size_t *
+                    __restrict ptSourceSize,
+                    uint8_t * __restrict pTargetBase,
+                    int16_t iTargetStride,
+                    uint16_t tilePairRows,
+                    uint16_t tilePairCols);
 
 void __arm_2d_impl_c8bit_2x2_paving_x_mirror(const uint8_t *
-					     __restrict pSourceBase,
-					     int16_t iSourceStride,
-					     const arm_2d_size_t *
-					     __restrict ptSourceSize,
-					     uint8_t * __restrict pTargetBase,
-					     int16_t iTargetStride,
-					     uint16_t tilePairRows,
-					     uint16_t tilePairCols);
+                         __restrict pSourceBase,
+                         int16_t iSourceStride,
+                         const arm_2d_size_t *
+                         __restrict ptSourceSize,
+                         uint8_t * __restrict pTargetBase,
+                         int16_t iTargetStride,
+                         uint16_t tilePairRows,
+                         uint16_t tilePairCols);
 
 void __arm_2d_impl_c8bit_2x2_paving_xy_mirror(const uint8_t *
-					      __restrict pSourceBase,
-					      int16_t iSourceStride,
-					      const arm_2d_size_t *
-					      __restrict ptSourceSize,
-					      uint8_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      uint16_t tilePairRows,
-					      uint16_t tilePairCols);
+                          __restrict pSourceBase,
+                          int16_t iSourceStride,
+                          const arm_2d_size_t *
+                          __restrict ptSourceSize,
+                          uint8_t * __restrict pTargetBase,
+                          int16_t iTargetStride,
+                          uint16_t tilePairRows,
+                          uint16_t tilePairCols);
 
 void __arm_2d_impl_c8bit_2x2_paving_y_mirror(const uint8_t *
-					     __restrict pSourceBase,
-					     int16_t iSourceStride,
-					     const arm_2d_size_t *
-					     __restrict ptSourceSize,
-					     uint8_t * __restrict pTargetBase,
-					     int16_t iTargetStride,
-					     uint16_t tilePairRows,
-					     uint16_t tilePairCols);
+                         __restrict pSourceBase,
+                         int16_t iSourceStride,
+                         const arm_2d_size_t *
+                         __restrict ptSourceSize,
+                         uint8_t * __restrict pTargetBase,
+                         int16_t iTargetStride,
+                         uint16_t tilePairRows,
+                         uint16_t tilePairCols);
 
 void __arm_2d_impl_c8bit_cl_key_1x1_paving(const uint8_t * __restrict pSource,
-					   int16_t iSourceStride,
-					   uint8_t * __restrict pTarget,
-					   int16_t iTargetStride,
-					   const arm_2d_size_t *
-					   __restrict ptSrcCopySize,
-					   const arm_2d_size_t *
-					   __restrict ptDstCopySize,
-					   uint8_t Colour);
+                       int16_t iSourceStride,
+                       uint8_t * __restrict pTarget,
+                       int16_t iTargetStride,
+                       const arm_2d_size_t *
+                       __restrict ptSrcCopySize,
+                       const arm_2d_size_t *
+                       __restrict ptDstCopySize,
+                       uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_1x1_paving_x_mirror(const uint8_t *
-						    __restrict pSource,
-						    int16_t iSourceStride,
-						    uint8_t *
-						    __restrict pTarget,
-						    int16_t iTargetStride,
-						    const arm_2d_size_t *
-						    __restrict ptSrcCopySize,
-						    const arm_2d_size_t *
-						    __restrict ptDstCopySize,
-						    uint8_t Colour);
+                            __restrict pSource,
+                            int16_t iSourceStride,
+                            uint8_t *
+                            __restrict pTarget,
+                            int16_t iTargetStride,
+                            const arm_2d_size_t *
+                            __restrict ptSrcCopySize,
+                            const arm_2d_size_t *
+                            __restrict ptDstCopySize,
+                            uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_1x1_paving_xy_mirror(const uint8_t *
-						     __restrict pSource,
-						     int16_t iSourceStride,
-						     uint8_t *
-						     __restrict pTarget,
-						     int16_t iTargetStride,
-						     const arm_2d_size_t *
-						     __restrict ptSrcCopySize,
-						     const arm_2d_size_t *
-						     __restrict ptDstCopySize,
-						     uint8_t Colour);
+                             __restrict pSource,
+                             int16_t iSourceStride,
+                             uint8_t *
+                             __restrict pTarget,
+                             int16_t iTargetStride,
+                             const arm_2d_size_t *
+                             __restrict ptSrcCopySize,
+                             const arm_2d_size_t *
+                             __restrict ptDstCopySize,
+                             uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_1x1_paving_y_mirror(const uint8_t *
-						    __restrict pSource,
-						    int16_t iSourceStride,
-						    uint8_t *
-						    __restrict pTarget,
-						    int16_t iTargetStride,
-						    const arm_2d_size_t *
-						    __restrict ptSrcCopySize,
-						    const arm_2d_size_t *
-						    __restrict ptDstCopySize,
-						    uint8_t Colour);
+                            __restrict pSource,
+                            int16_t iSourceStride,
+                            uint8_t *
+                            __restrict pTarget,
+                            int16_t iTargetStride,
+                            const arm_2d_size_t *
+                            __restrict ptSrcCopySize,
+                            const arm_2d_size_t *
+                            __restrict ptDstCopySize,
+                            uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_1x2_paving(const uint8_t *
-					   __restrict pSourceBase,
-					   int16_t iSourceStride,
-					   const arm_2d_size_t *
-					   __restrict ptSourceSize,
-					   uint8_t * __restrict pTargetBase,
-					   int16_t iTargetStride,
-					   uint32_t destWidth,
-					   uint16_t tilePairRows,
-					   uint8_t Colour);
+                       __restrict pSourceBase,
+                       int16_t iSourceStride,
+                       const arm_2d_size_t *
+                       __restrict ptSourceSize,
+                       uint8_t * __restrict pTargetBase,
+                       int16_t iTargetStride,
+                       uint32_t destWidth,
+                       uint16_t tilePairRows,
+                       uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_1x2_paving_x_mirror(const uint8_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    const arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint8_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint32_t destWidth,
-						    uint16_t tilePairRows,
-						    uint8_t Colour);
+                            __restrict pSourceBase,
+                            int16_t iSourceStride,
+                            const arm_2d_size_t *
+                            __restrict ptSourceSize,
+                            uint8_t *
+                            __restrict pTargetBase,
+                            int16_t iTargetStride,
+                            uint32_t destWidth,
+                            uint16_t tilePairRows,
+                            uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_1x2_paving_xy_mirror(const uint8_t *
-						     __restrict pSourceBase,
-						     int16_t iSourceStride,
-						     const arm_2d_size_t *
-						     __restrict ptSourceSize,
-						     uint8_t *
-						     __restrict pTargetBase,
-						     int16_t iTargetStride,
-						     uint32_t destWidth,
-						     uint16_t tilePairRows,
-						     uint8_t Colour);
+                             __restrict pSourceBase,
+                             int16_t iSourceStride,
+                             const arm_2d_size_t *
+                             __restrict ptSourceSize,
+                             uint8_t *
+                             __restrict pTargetBase,
+                             int16_t iTargetStride,
+                             uint32_t destWidth,
+                             uint16_t tilePairRows,
+                             uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_1x2_paving_y_mirror(const uint8_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    const arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint8_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint32_t destWidth,
-						    uint16_t tilePairRows,
-						    uint8_t Colour);
+                            __restrict pSourceBase,
+                            int16_t iSourceStride,
+                            const arm_2d_size_t *
+                            __restrict ptSourceSize,
+                            uint8_t *
+                            __restrict pTargetBase,
+                            int16_t iTargetStride,
+                            uint32_t destWidth,
+                            uint16_t tilePairRows,
+                            uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_2x1_paving(const uint8_t *
-					   __restrict pSourceBase,
-					   int16_t iSourceStride,
-					   const arm_2d_size_t *
-					   __restrict ptSourceSize,
-					   uint8_t * __restrict pTargetBase,
-					   int16_t iTargetStride,
-					   uint16_t tilePairCols,
-					   uint16_t destHeight, uint8_t Colour);
+                       __restrict pSourceBase,
+                       int16_t iSourceStride,
+                       const arm_2d_size_t *
+                       __restrict ptSourceSize,
+                       uint8_t * __restrict pTargetBase,
+                       int16_t iTargetStride,
+                       uint16_t tilePairCols,
+                       uint16_t destHeight, uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_2x1_paving_x_mirror(const uint8_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    const arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint8_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint16_t tilePairCols,
-						    uint16_t destHeight,
-						    uint8_t Colour);
+                            __restrict pSourceBase,
+                            int16_t iSourceStride,
+                            const arm_2d_size_t *
+                            __restrict ptSourceSize,
+                            uint8_t *
+                            __restrict pTargetBase,
+                            int16_t iTargetStride,
+                            uint16_t tilePairCols,
+                            uint16_t destHeight,
+                            uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_2x1_paving_xy_mirror(const uint8_t *
-						     __restrict pSourceBase,
-						     int16_t iSourceStride,
-						     const arm_2d_size_t *
-						     __restrict ptSourceSize,
-						     uint8_t *
-						     __restrict pTargetBase,
-						     int16_t iTargetStride,
-						     uint16_t tilePairCols,
-						     uint16_t destHeight,
-						     uint8_t Colour);
+                             __restrict pSourceBase,
+                             int16_t iSourceStride,
+                             const arm_2d_size_t *
+                             __restrict ptSourceSize,
+                             uint8_t *
+                             __restrict pTargetBase,
+                             int16_t iTargetStride,
+                             uint16_t tilePairCols,
+                             uint16_t destHeight,
+                             uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_2x1_paving_y_mirror(const uint8_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    const arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint8_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint16_t tilePairCols,
-						    uint16_t destHeight,
-						    uint8_t Colour);
+                            __restrict pSourceBase,
+                            int16_t iSourceStride,
+                            const arm_2d_size_t *
+                            __restrict ptSourceSize,
+                            uint8_t *
+                            __restrict pTargetBase,
+                            int16_t iTargetStride,
+                            uint16_t tilePairCols,
+                            uint16_t destHeight,
+                            uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_2x2_paving(const uint8_t *
-					   __restrict pSourceBase,
-					   int16_t iSourceStride,
-					   const arm_2d_size_t *
-					   __restrict ptSourceSize,
-					   uint8_t * __restrict pTargetBase,
-					   int16_t iTargetStride,
-					   uint16_t tilePairRows,
-					   uint16_t tilePairCols,
-					   uint8_t Colour);
+                       __restrict pSourceBase,
+                       int16_t iSourceStride,
+                       const arm_2d_size_t *
+                       __restrict ptSourceSize,
+                       uint8_t * __restrict pTargetBase,
+                       int16_t iTargetStride,
+                       uint16_t tilePairRows,
+                       uint16_t tilePairCols,
+                       uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_2x2_paving_x_mirror(const uint8_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    const arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint8_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint16_t tilePairRows,
-						    uint16_t tilePairCols,
-						    uint8_t Colour);
+                            __restrict pSourceBase,
+                            int16_t iSourceStride,
+                            const arm_2d_size_t *
+                            __restrict ptSourceSize,
+                            uint8_t *
+                            __restrict pTargetBase,
+                            int16_t iTargetStride,
+                            uint16_t tilePairRows,
+                            uint16_t tilePairCols,
+                            uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_2x2_paving_xy_mirror(const uint8_t *
-						     __restrict pSourceBase,
-						     int16_t iSourceStride,
-						     const arm_2d_size_t *
-						     __restrict ptSourceSize,
-						     uint8_t *
-						     __restrict pTargetBase,
-						     int16_t iTargetStride,
-						     uint16_t tilePairRows,
-						     uint16_t tilePairCols,
-						     uint8_t Colour);
+                             __restrict pSourceBase,
+                             int16_t iSourceStride,
+                             const arm_2d_size_t *
+                             __restrict ptSourceSize,
+                             uint8_t *
+                             __restrict pTargetBase,
+                             int16_t iTargetStride,
+                             uint16_t tilePairRows,
+                             uint16_t tilePairCols,
+                             uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_2x2_paving_y_mirror(const uint8_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    const arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint8_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint16_t tilePairRows,
-						    uint16_t tilePairCols,
-						    uint8_t Colour);
+                            __restrict pSourceBase,
+                            int16_t iSourceStride,
+                            const arm_2d_size_t *
+                            __restrict ptSourceSize,
+                            uint8_t *
+                            __restrict pTargetBase,
+                            int16_t iTargetStride,
+                            uint16_t tilePairRows,
+                            uint16_t tilePairCols,
+                            uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_copy(uint8_t * __restrict pSource,
-				     int16_t iSourceStride,
-				     uint8_t * __restrict pTarget,
-				     int16_t iTargetStride,
-				     arm_2d_size_t * __restrict ptCopySize,
-				     uint8_t Colour);
+                     int16_t iSourceStride,
+                     uint8_t * __restrict pTarget,
+                     int16_t iTargetStride,
+                     arm_2d_size_t * __restrict ptCopySize,
+                     uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_copy_mirror(uint8_t * __restrict pSource,
-					    int16_t iSourceStride,
-					    uint8_t * __restrict pTarget,
-					    int16_t iTargetStride,
-					    arm_2d_size_t *
-					    __restrict ptCopySize,
-					    uint32_t wMode, uint8_t Colour);
+                        int16_t iSourceStride,
+                        uint8_t * __restrict pTarget,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *
+                        __restrict ptCopySize,
+                        uint32_t wMode, uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_copy_x_mirror(uint8_t * __restrict pSource,
-					      int16_t iSourceStride,
-					      uint8_t * __restrict pTarget,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptCopySize,
-					      uint8_t Colour);
+                          int16_t iSourceStride,
+                          uint8_t * __restrict pTarget,
+                          int16_t iTargetStride,
+                          arm_2d_size_t *
+                          __restrict ptCopySize,
+                          uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_copy_xy_mirror(uint8_t * __restrict pSource,
-					       int16_t iSourceStride,
-					       uint8_t * __restrict pTarget,
-					       int16_t iTargetStride,
-					       arm_2d_size_t *
-					       __restrict ptCopySize,
-					       uint8_t Colour);
+                           int16_t iSourceStride,
+                           uint8_t * __restrict pTarget,
+                           int16_t iTargetStride,
+                           arm_2d_size_t *
+                           __restrict ptCopySize,
+                           uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_copy_y_mirror(uint8_t * __restrict pSource,
-					      int16_t iSourceStride,
-					      uint8_t * __restrict pTarget,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptCopySize,
-					      uint8_t Colour);
+                          int16_t iSourceStride,
+                          uint8_t * __restrict pTarget,
+                          int16_t iTargetStride,
+                          arm_2d_size_t *
+                          __restrict ptCopySize,
+                          uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_fill(uint8_t * __restrict pSourceBase,
-				     int16_t iSourceStride,
-				     arm_2d_size_t * __restrict ptSourceSize,
-				     uint8_t * __restrict pTargetBase,
-				     int16_t iTargetStride,
-				     arm_2d_size_t * __restrict ptTargetSize,
-				     uint8_t Colour);
+                     int16_t iSourceStride,
+                     arm_2d_size_t * __restrict ptSourceSize,
+                     uint8_t * __restrict pTargetBase,
+                     int16_t iTargetStride,
+                     arm_2d_size_t * __restrict ptTargetSize,
+                     uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_fill_mirror(uint8_t * __restrict pSourceBase,
-					    int16_t iSourceStride,
-					    arm_2d_size_t *
-					    __restrict ptSourceSize,
-					    uint8_t * __restrict pTargetBase,
-					    int16_t iTargetStride,
-					    arm_2d_size_t *
-					    __restrict ptTargetSize,
-					    uint32_t wMode, uint8_t Colour);
+                        int16_t iSourceStride,
+                        arm_2d_size_t *
+                        __restrict ptSourceSize,
+                        uint8_t * __restrict pTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *
+                        __restrict ptTargetSize,
+                        uint32_t wMode, uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_fill_x_mirror(uint8_t * __restrict pSourceBase,
-					      int16_t iSourceStride,
-					      arm_2d_size_t *
-					      __restrict ptSourceSize,
-					      uint8_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptTargetSize,
-					      uint8_t Colour);
+                          int16_t iSourceStride,
+                          arm_2d_size_t *
+                          __restrict ptSourceSize,
+                          uint8_t * __restrict pTargetBase,
+                          int16_t iTargetStride,
+                          arm_2d_size_t *
+                          __restrict ptTargetSize,
+                          uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_fill_xy_mirror(uint8_t * __restrict pSourceBase,
-					       int16_t iSourceStride,
-					       arm_2d_size_t *
-					       __restrict ptSourceSize,
-					       uint8_t * __restrict pTargetBase,
-					       int16_t iTargetStride,
-					       arm_2d_size_t *
-					       __restrict ptTargetSize,
-					       uint8_t Colour);
+                           int16_t iSourceStride,
+                           arm_2d_size_t *
+                           __restrict ptSourceSize,
+                           uint8_t * __restrict pTargetBase,
+                           int16_t iTargetStride,
+                           arm_2d_size_t *
+                           __restrict ptTargetSize,
+                           uint8_t Colour);
 
 void __arm_2d_impl_c8bit_cl_key_fill_y_mirror(uint8_t * __restrict pSourceBase,
-					      int16_t iSourceStride,
-					      arm_2d_size_t *
-					      __restrict ptSourceSize,
-					      uint8_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptTargetSize,
-					      uint8_t Colour);
+                          int16_t iSourceStride,
+                          arm_2d_size_t *
+                          __restrict ptSourceSize,
+                          uint8_t * __restrict pTargetBase,
+                          int16_t iTargetStride,
+                          arm_2d_size_t *
+                          __restrict ptTargetSize,
+                          uint8_t Colour);
 
 void __arm_2d_impl_c8bit_colour_filling(uint8_t * __restrict pTarget,
-					int16_t iTargetStride,
-					arm_2d_size_t * __restrict ptCopySize,
-					uint8_t Colour);
+                    int16_t iTargetStride,
+                    arm_2d_size_t * __restrict ptCopySize,
+                    uint8_t Colour);
 
 void __arm_2d_impl_c8bit_copy(uint8_t * __restrict pSource,
-			      int16_t iSourceStride,
-			      uint8_t * __restrict pTarget,
-			      int16_t iTargetStride,
-			      arm_2d_size_t * __restrict ptCopySize);
+                  int16_t iSourceStride,
+                  uint8_t * __restrict pTarget,
+                  int16_t iTargetStride,
+                  arm_2d_size_t * __restrict ptCopySize);
 
 void __arm_2d_impl_c8bit_copy_mirror(uint8_t * __restrict pSource,
-				     int16_t iSourceStride,
-				     uint8_t * __restrict pTarget,
-				     int16_t iTargetStride,
-				     arm_2d_size_t * __restrict ptCopySize,
-				     uint32_t wMode);
+                     int16_t iSourceStride,
+                     uint8_t * __restrict pTarget,
+                     int16_t iTargetStride,
+                     arm_2d_size_t * __restrict ptCopySize,
+                     uint32_t wMode);
 
 void __arm_2d_impl_c8bit_copy_x_mirror(uint8_t * __restrict pSource,
-				       int16_t iSourceStride,
-				       uint8_t * __restrict pTarget,
-				       int16_t iTargetStride,
-				       arm_2d_size_t * __restrict ptCopySize);
+                       int16_t iSourceStride,
+                       uint8_t * __restrict pTarget,
+                       int16_t iTargetStride,
+                       arm_2d_size_t * __restrict ptCopySize);
 
 void __arm_2d_impl_c8bit_copy_xy_mirror(uint8_t * __restrict pSource,
-					int16_t iSourceStride,
-					uint8_t * __restrict pTarget,
-					int16_t iTargetStride,
-					arm_2d_size_t * __restrict ptCopySize);
+                    int16_t iSourceStride,
+                    uint8_t * __restrict pTarget,
+                    int16_t iTargetStride,
+                    arm_2d_size_t * __restrict ptCopySize);
 
 void __arm_2d_impl_c8bit_copy_y_mirror(uint8_t * __restrict pSource,
-				       int16_t iSourceStride,
-				       uint8_t * __restrict pTarget,
-				       int16_t iTargetStride,
-				       arm_2d_size_t * __restrict ptCopySize);
+                       int16_t iSourceStride,
+                       uint8_t * __restrict pTarget,
+                       int16_t iTargetStride,
+                       arm_2d_size_t * __restrict ptCopySize);
 
 void __arm_2d_impl_c8bit_draw_pattern(uint8_t * __restrict pchSourceBase,
-				      int32_t iOffset, int16_t iSourceStride,
-				      uint8_t * __restrict pTargetBase,
-				      int16_t iTargetStride,
-				      arm_2d_size_t * __restrict ptCopySize,
-				      uint8_t chMode, uint8_t ForeColour,
-				      uint8_t BackColour);
+                      int32_t iOffset, int16_t iSourceStride,
+                      uint8_t * __restrict pTargetBase,
+                      int16_t iTargetStride,
+                      arm_2d_size_t * __restrict ptCopySize,
+                      uint8_t chMode, uint8_t ForeColour,
+                      uint8_t BackColour);
 
 void __arm_2d_impl_c8bit_draw_pattern_bg_comp(uint8_t *
-					      __restrict pchSourceBase,
-					      int32_t iOffset,
-					      int16_t iSourceStride,
-					      uint8_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptCopySize,
-					      uint8_t BackColour);
+                          __restrict pchSourceBase,
+                          int32_t iOffset,
+                          int16_t iSourceStride,
+                          uint8_t * __restrict pTargetBase,
+                          int16_t iTargetStride,
+                          arm_2d_size_t *
+                          __restrict ptCopySize,
+                          uint8_t BackColour);
 
 void __arm_2d_impl_c8bit_draw_pattern_bg_fg(uint8_t * __restrict pchSourceBase,
-					    int32_t iOffset,
-					    int16_t iSourceStride,
-					    uint8_t * __restrict pTargetBase,
-					    int16_t iTargetStride,
-					    arm_2d_size_t *
-					    __restrict ptCopySize,
-					    uint8_t ForeColour,
-					    uint8_t BackColour);
+                        int32_t iOffset,
+                        int16_t iSourceStride,
+                        uint8_t * __restrict pTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *
+                        __restrict ptCopySize,
+                        uint8_t ForeColour,
+                        uint8_t BackColour);
 
 void __arm_2d_impl_c8bit_draw_pattern_bg_only(uint8_t *
-					      __restrict pchSourceBase,
-					      int32_t iOffset,
-					      int16_t iSourceStride,
-					      uint8_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptCopySize,
-					      uint8_t BackColour);
+                          __restrict pchSourceBase,
+                          int32_t iOffset,
+                          int16_t iSourceStride,
+                          uint8_t * __restrict pTargetBase,
+                          int16_t iTargetStride,
+                          arm_2d_size_t *
+                          __restrict ptCopySize,
+                          uint8_t BackColour);
 
 void __arm_2d_impl_c8bit_draw_pattern_fg_only(uint8_t *
-					      __restrict pchSourceBase,
-					      int32_t iOffset,
-					      int16_t iSourceStride,
-					      uint8_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptCopySize,
-					      uint8_t ForeColour);
+                          __restrict pchSourceBase,
+                          int32_t iOffset,
+                          int16_t iSourceStride,
+                          uint8_t * __restrict pTargetBase,
+                          int16_t iTargetStride,
+                          arm_2d_size_t *
+                          __restrict ptCopySize,
+                          uint8_t ForeColour);
 
 void __arm_2d_impl_c8bit_draw_pattern_no_bg_comp(uint8_t *
-						 __restrict pchSourceBase,
-						 int32_t iOffset,
-						 int16_t iSourceStride,
-						 uint8_t *
-						 __restrict pTargetBase,
-						 int16_t iTargetStride,
-						 arm_2d_size_t *
-						 __restrict ptCopySize);
+                         __restrict pchSourceBase,
+                         int32_t iOffset,
+                         int16_t iSourceStride,
+                         uint8_t *
+                         __restrict pTargetBase,
+                         int16_t iTargetStride,
+                         arm_2d_size_t *
+                         __restrict ptCopySize);
 
 void __arm_2d_impl_c8bit_fill(uint8_t * __restrict pSourceBase,
-			      int16_t iSourceStride,
-			      arm_2d_size_t * __restrict ptSourceSize,
-			      uint8_t * __restrict pTargetBase,
-			      int16_t iTargetStride,
-			      arm_2d_size_t * __restrict ptTargetSize);
+                  int16_t iSourceStride,
+                  arm_2d_size_t * __restrict ptSourceSize,
+                  uint8_t * __restrict pTargetBase,
+                  int16_t iTargetStride,
+                  arm_2d_size_t * __restrict ptTargetSize);
 
 void __arm_2d_impl_c8bit_fill_mirror(uint8_t * __restrict pSourceBase,
-				     int16_t iSourceStride,
-				     arm_2d_size_t * __restrict ptSourceSize,
-				     uint8_t * __restrict pTargetBase,
-				     int16_t iTargetStride,
-				     arm_2d_size_t * __restrict ptTargetSize,
-				     uint32_t wMode);
+                     int16_t iSourceStride,
+                     arm_2d_size_t * __restrict ptSourceSize,
+                     uint8_t * __restrict pTargetBase,
+                     int16_t iTargetStride,
+                     arm_2d_size_t * __restrict ptTargetSize,
+                     uint32_t wMode);
 
 void __arm_2d_impl_c8bit_fill_x_mirror(uint8_t * __restrict pSourceBase,
-				       int16_t iSourceStride,
-				       arm_2d_size_t * __restrict ptSourceSize,
-				       uint8_t * __restrict pTargetBase,
-				       int16_t iTargetStride,
-				       arm_2d_size_t * __restrict ptTargetSize);
+                       int16_t iSourceStride,
+                       arm_2d_size_t * __restrict ptSourceSize,
+                       uint8_t * __restrict pTargetBase,
+                       int16_t iTargetStride,
+                       arm_2d_size_t * __restrict ptTargetSize);
 
 void __arm_2d_impl_c8bit_fill_xy_mirror(uint8_t * __restrict pSourceBase,
-					int16_t iSourceStride,
-					arm_2d_size_t * __restrict ptSourceSize,
-					uint8_t * __restrict pTargetBase,
-					int16_t iTargetStride,
-					arm_2d_size_t *
-					__restrict ptTargetSize);
+                    int16_t iSourceStride,
+                    arm_2d_size_t * __restrict ptSourceSize,
+                    uint8_t * __restrict pTargetBase,
+                    int16_t iTargetStride,
+                    arm_2d_size_t *
+                    __restrict ptTargetSize);
 
 void __arm_2d_impl_c8bit_fill_y_mirror(uint8_t * __restrict pSourceBase,
-				       int16_t iSourceStride,
-				       arm_2d_size_t * __restrict ptSourceSize,
-				       uint8_t * __restrict pTargetBase,
-				       int16_t iTargetStride,
-				       arm_2d_size_t * __restrict ptTargetSize);
+                       int16_t iSourceStride,
+                       arm_2d_size_t * __restrict ptSourceSize,
+                       uint8_t * __restrict pTargetBase,
+                       int16_t iTargetStride,
+                       arm_2d_size_t * __restrict ptTargetSize);
 
 void __arm_2d_impl_cccn888_1h_des_msk_copy(uint32_t * __restrict pSourceBase,
-					   int16_t iSourceStride,
-					   uint32_t * __restrict pTargetBase,
-					   int16_t iTargetStride,
-					   uint8_t *
-					   __restrict ptTargetMaskBase,
-					   int16_t iTargetMaskStride,
-					   arm_2d_size_t *
-					   __restrict ptTargetMaskSize,
-					   arm_2d_size_t *
-					   __restrict ptCopySize);
+                       int16_t iSourceStride,
+                       uint32_t * __restrict pTargetBase,
+                       int16_t iTargetStride,
+                       uint8_t *
+                       __restrict ptTargetMaskBase,
+                       int16_t iTargetMaskStride,
+                       arm_2d_size_t *
+                       __restrict ptTargetMaskSize,
+                       arm_2d_size_t *
+                       __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_1h_des_msk_copy_mirror(uint32_t *
-						  __restrict pSourceBase,
-						  int16_t iSourceStride,
-						  uint32_t *
-						  __restrict pTargetBase,
-						  int16_t iTargetStride,
-						  uint8_t *
-						  __restrict ptTargetMaskBase,
-						  int16_t iTargetMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetMaskSize,
-						  arm_2d_size_t *
-						  __restrict ptCopySize,
-						  uint32_t wMode);
+                          __restrict pSourceBase,
+                          int16_t iSourceStride,
+                          uint32_t *
+                          __restrict pTargetBase,
+                          int16_t iTargetStride,
+                          uint8_t *
+                          __restrict ptTargetMaskBase,
+                          int16_t iTargetMaskStride,
+                          arm_2d_size_t *
+                          __restrict ptTargetMaskSize,
+                          arm_2d_size_t *
+                          __restrict ptCopySize,
+                          uint32_t wMode);
 
 void __arm_2d_impl_cccn888_1h_des_msk_copy_x_mirror(uint32_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    uint32_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint8_t *
-						    __restrict ptTargetMaskBase,
-						    int16_t iTargetMaskStride,
-						    arm_2d_size_t *
-						    __restrict ptTargetMaskSize,
-						    arm_2d_size_t *
-						    __restrict ptCopySize);
+                            __restrict pSourceBase,
+                            int16_t iSourceStride,
+                            uint32_t *
+                            __restrict pTargetBase,
+                            int16_t iTargetStride,
+                            uint8_t *
+                            __restrict ptTargetMaskBase,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *
+                            __restrict ptTargetMaskSize,
+                            arm_2d_size_t *
+                            __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_1h_des_msk_copy_xy_mirror(uint32_t *
-						     __restrict pSourceBase,
-						     int16_t iSourceStride,
-						     uint32_t *
-						     __restrict pTargetBase,
-						     int16_t iTargetStride,
-						     uint8_t *
-						     __restrict
-						     ptTargetMaskBase,
-						     int16_t iTargetMaskStride,
-						     arm_2d_size_t *
-						     __restrict
-						     ptTargetMaskSize,
-						     arm_2d_size_t *
-						     __restrict ptCopySize);
+                             __restrict pSourceBase,
+                             int16_t iSourceStride,
+                             uint32_t *
+                             __restrict pTargetBase,
+                             int16_t iTargetStride,
+                             uint8_t *
+                             __restrict
+                             ptTargetMaskBase,
+                             int16_t iTargetMaskStride,
+                             arm_2d_size_t *
+                             __restrict
+                             ptTargetMaskSize,
+                             arm_2d_size_t *
+                             __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_1h_des_msk_copy_y_mirror(uint32_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    uint32_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint8_t *
-						    __restrict ptTargetMaskBase,
-						    int16_t iTargetMaskStride,
-						    arm_2d_size_t *
-						    __restrict ptTargetMaskSize,
-						    arm_2d_size_t *
-						    __restrict ptCopySize);
+                            __restrict pSourceBase,
+                            int16_t iSourceStride,
+                            uint32_t *
+                            __restrict pTargetBase,
+                            int16_t iTargetStride,
+                            uint8_t *
+                            __restrict ptTargetMaskBase,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *
+                            __restrict ptTargetMaskSize,
+                            arm_2d_size_t *
+                            __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_1h_des_msk_fill(uint32_t * __restrict ptSourceBase,
-					   int16_t iSourceStride,
-					   arm_2d_size_t *
-					   __restrict ptSourceSize,
-					   uint32_t * __restrict ptTargetBase,
-					   int16_t iTargetStride,
-					   arm_2d_size_t *
-					   __restrict ptTargetSize,
-					   uint8_t *
-					   __restrict ptTargetMaskBase,
-					   int16_t iTargetMaskStride,
-					   arm_2d_size_t *
-					   __restrict ptTargetMaskSize);
+                       int16_t iSourceStride,
+                       arm_2d_size_t *
+                       __restrict ptSourceSize,
+                       uint32_t * __restrict ptTargetBase,
+                       int16_t iTargetStride,
+                       arm_2d_size_t *
+                       __restrict ptTargetSize,
+                       uint8_t *
+                       __restrict ptTargetMaskBase,
+                       int16_t iTargetMaskStride,
+                       arm_2d_size_t *
+                       __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_1h_des_msk_fill_mirror(uint32_t *
-						  __restrict ptSourceBase,
-						  int16_t iSourceStride,
-						  arm_2d_size_t *
-						  __restrict ptSourceSize,
-						  uint32_t *
-						  __restrict ptTargetBase,
-						  int16_t iTargetStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetSize,
-						  uint8_t *
-						  __restrict ptTargetMaskBase,
-						  int16_t iTargetMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetMaskSize,
-						  uint32_t wMode);
+                          __restrict ptSourceBase,
+                          int16_t iSourceStride,
+                          arm_2d_size_t *
+                          __restrict ptSourceSize,
+                          uint32_t *
+                          __restrict ptTargetBase,
+                          int16_t iTargetStride,
+                          arm_2d_size_t *
+                          __restrict ptTargetSize,
+                          uint8_t *
+                          __restrict ptTargetMaskBase,
+                          int16_t iTargetMaskStride,
+                          arm_2d_size_t *
+                          __restrict ptTargetMaskSize,
+                          uint32_t wMode);
 
 void __arm_2d_impl_cccn888_1h_des_msk_fill_x_mirror(uint32_t *
-						    __restrict ptSourceBase,
-						    int16_t iSourceStride,
-						    arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint32_t *
-						    __restrict ptTargetBase,
-						    int16_t iTargetStride,
-						    arm_2d_size_t *
-						    __restrict ptTargetSize,
-						    uint8_t *
-						    __restrict ptTargetMaskBase,
-						    int16_t iTargetMaskStride,
-						    arm_2d_size_t *
-						    __restrict
-						    ptTargetMaskSize);
+                            __restrict ptSourceBase,
+                            int16_t iSourceStride,
+                            arm_2d_size_t *
+                            __restrict ptSourceSize,
+                            uint32_t *
+                            __restrict ptTargetBase,
+                            int16_t iTargetStride,
+                            arm_2d_size_t *
+                            __restrict ptTargetSize,
+                            uint8_t *
+                            __restrict ptTargetMaskBase,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *
+                            __restrict
+                            ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_1h_des_msk_fill_xy_mirror(uint32_t *
-						     __restrict ptSourceBase,
-						     int16_t iSourceStride,
-						     arm_2d_size_t *
-						     __restrict ptSourceSize,
-						     uint32_t *
-						     __restrict ptTargetBase,
-						     int16_t iTargetStride,
-						     arm_2d_size_t *
-						     __restrict ptTargetSize,
-						     uint8_t *
-						     __restrict
-						     ptTargetMaskBase,
-						     int16_t iTargetMaskStride,
-						     arm_2d_size_t *
-						     __restrict
-						     ptTargetMaskSize);
+                             __restrict ptSourceBase,
+                             int16_t iSourceStride,
+                             arm_2d_size_t *
+                             __restrict ptSourceSize,
+                             uint32_t *
+                             __restrict ptTargetBase,
+                             int16_t iTargetStride,
+                             arm_2d_size_t *
+                             __restrict ptTargetSize,
+                             uint8_t *
+                             __restrict
+                             ptTargetMaskBase,
+                             int16_t iTargetMaskStride,
+                             arm_2d_size_t *
+                             __restrict
+                             ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_1h_des_msk_fill_y_mirror(uint32_t *
-						    __restrict ptSourceBase,
-						    int16_t iSourceStride,
-						    arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint32_t *
-						    __restrict ptTargetBase,
-						    int16_t iTargetStride,
-						    arm_2d_size_t *
-						    __restrict ptTargetSize,
-						    uint8_t *
-						    __restrict ptTargetMaskBase,
-						    int16_t iTargetMaskStride,
-						    arm_2d_size_t *
-						    __restrict
-						    ptTargetMaskSize);
+                            __restrict ptSourceBase,
+                            int16_t iSourceStride,
+                            arm_2d_size_t *
+                            __restrict ptSourceSize,
+                            uint32_t *
+                            __restrict ptTargetBase,
+                            int16_t iTargetStride,
+                            arm_2d_size_t *
+                            __restrict ptTargetSize,
+                            uint8_t *
+                            __restrict ptTargetMaskBase,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *
+                            __restrict
+                            ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_alpha_blending(uint32_t * __restrict pSourceBase,
-					  int16_t iSourceStride,
-					  uint32_t * __restrict pTargetBase,
-					  int16_t iTargetStride,
-					  arm_2d_size_t * __restrict ptCopySize,
-					  uint_fast16_t chRatio);
+                      int16_t iSourceStride,
+                      uint32_t * __restrict pTargetBase,
+                      int16_t iTargetStride,
+                      arm_2d_size_t * __restrict ptCopySize,
+                      uint_fast16_t chRatio);
 
 void __arm_2d_impl_cccn888_alpha_blending(uint32_t * pwSourceBase,
-					  int16_t iSourceStride,
-					  uint32_t * pwTargetBase,
-					  int16_t iTargetStride,
-					  arm_2d_size_t * ptCopySize,
-					  uint_fast16_t chRatio);
+                      int16_t iSourceStride,
+                      uint32_t * pwTargetBase,
+                      int16_t iTargetStride,
+                      arm_2d_size_t * ptCopySize,
+                      uint_fast16_t chRatio);
 
 void __arm_2d_impl_cccn888_alpha_blending_colour_keying(uint32_t *
-							__restrict pSourceBase,
-							int16_t iSourceStride,
-							uint32_t *
-							__restrict pTargetBase,
-							int16_t iTargetStride,
-							arm_2d_size_t *
-							__restrict ptCopySize,
-							uint_fast16_t chRatio,
-							uint32_t Colour);
+                            __restrict pSourceBase,
+                            int16_t iSourceStride,
+                            uint32_t *
+                            __restrict pTargetBase,
+                            int16_t iTargetStride,
+                            arm_2d_size_t *
+                            __restrict ptCopySize,
+                            uint_fast16_t chRatio,
+                            uint32_t Colour);
 
 void __arm_2d_impl_cccn888_colour_filling_channel_mask(uint32_t *
-						       __restrict pTarget,
-						       int16_t iTargetStride,
-						       uint32_t *
-						       __restrict pwAlpha,
-						       int16_t iAlphaStride,
-						       arm_2d_size_t *
-						       __restrict ptCopySize,
-						       uint32_t Colour);
+                               __restrict pTarget,
+                               int16_t iTargetStride,
+                               uint32_t *
+                               __restrict pwAlpha,
+                               int16_t iAlphaStride,
+                               arm_2d_size_t *
+                               __restrict ptCopySize,
+                               uint32_t Colour);
 
 void __arm_2d_impl_cccn888_colour_filling_channel_mask_opacity(uint32_t *
-							       __restrict
-							       pTarget,
-							       int16_t
-							       iTargetStride,
-							       uint32_t *
-							       __restrict
-							       pwAlpha,
-							       int16_t
-							       iAlphaStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptCopySize,
-							       uint32_t Colour,
-							       uint_fast16_t hwOpacity);
+                                   __restrict
+                                   pTarget,
+                                   int16_t
+                                   iTargetStride,
+                                   uint32_t *
+                                   __restrict
+                                   pwAlpha,
+                                   int16_t
+                                   iAlphaStride,
+                                   arm_2d_size_t *
+                                   __restrict
+                                   ptCopySize,
+                                   uint32_t Colour,
+                                   uint_fast16_t hwOpacity);
 
 void __arm_2d_impl_cccn888_colour_filling_mask(uint32_t * __restrict pTarget,
-					       int16_t iTargetStride,
-					       uint8_t * __restrict pchAlpha,
-					       int16_t iAlphaStride,
-					       arm_2d_size_t *
-					       __restrict ptCopySize,
-					       uint32_t Colour);
+                           int16_t iTargetStride,
+                           uint8_t * __restrict pchAlpha,
+                           int16_t iAlphaStride,
+                           arm_2d_size_t *
+                           __restrict ptCopySize,
+                           uint32_t Colour);
 
 void __arm_2d_impl_cccn888_colour_filling_mask_opacity(uint32_t *
-						       __restrict pTarget,
-						       int16_t iTargetStride,
-						       uint8_t *
-						       __restrict pchAlpha,
-						       int16_t iAlphaStride,
-						       arm_2d_size_t *
-						       __restrict ptCopySize,
-						       uint32_t Colour,
-						       uint_fast16_t hwOpacity);
+                               __restrict pTarget,
+                               int16_t iTargetStride,
+                               uint8_t *
+                               __restrict pchAlpha,
+                               int16_t iAlphaStride,
+                               arm_2d_size_t *
+                               __restrict ptCopySize,
+                               uint32_t Colour,
+                               uint_fast16_t hwOpacity);
 
 void __arm_2d_impl_cccn888_colour_filling_with_opacity(uint32_t *
-						       __restrict pTargetBase,
-						       int16_t iTargetStride,
-						       arm_2d_size_t *
-						       __restrict ptCopySize,
-						       uint32_t Colour,
-						       uint_fast16_t hwRatio);
+                               __restrict pTargetBase,
+                               int16_t iTargetStride,
+                               arm_2d_size_t *
+                               __restrict ptCopySize,
+                               uint32_t Colour,
+                               uint_fast16_t hwRatio);
 
 void __arm_2d_impl_cccn888_des_chn_msk_copy(uint32_t * __restrict pSourceBase,
-					    int16_t iSourceStride,
-					    uint32_t * __restrict pTargetBase,
-					    int16_t iTargetStride,
-					    uint32_t *
-					    __restrict ptTargetMaskBase,
-					    int16_t iTargetMaskStride,
-					    arm_2d_size_t *
-					    __restrict ptTargetMaskSize,
-					    arm_2d_size_t *
-					    __restrict ptCopySize);
+                        int16_t iSourceStride,
+                        uint32_t * __restrict pTargetBase,
+                        int16_t iTargetStride,
+                        uint32_t *
+                        __restrict ptTargetMaskBase,
+                        int16_t iTargetMaskStride,
+                        arm_2d_size_t *
+                        __restrict ptTargetMaskSize,
+                        arm_2d_size_t *
+                        __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_des_chn_msk_copy_mirror(uint32_t *
-						   __restrict pSourceBase,
-						   int16_t iSourceStride,
-						   uint32_t *
-						   __restrict pTargetBase,
-						   int16_t iTargetStride,
-						   uint32_t *
-						   __restrict ptTargetMaskBase,
-						   int16_t iTargetMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetMaskSize,
-						   arm_2d_size_t *
-						   __restrict ptCopySize,
-						   uint32_t wMode);
+                           __restrict pSourceBase,
+                           int16_t iSourceStride,
+                           uint32_t *
+                           __restrict pTargetBase,
+                           int16_t iTargetStride,
+                           uint32_t *
+                           __restrict ptTargetMaskBase,
+                           int16_t iTargetMaskStride,
+                           arm_2d_size_t *
+                           __restrict ptTargetMaskSize,
+                           arm_2d_size_t *
+                           __restrict ptCopySize,
+                           uint32_t wMode);
 
 void __arm_2d_impl_cccn888_des_chn_msk_copy_x_mirror(uint32_t *
-						     __restrict pSourceBase,
-						     int16_t iSourceStride,
-						     uint32_t *
-						     __restrict pTargetBase,
-						     int16_t iTargetStride,
-						     uint32_t *
-						     __restrict
-						     ptTargetMaskBase,
-						     int16_t iTargetMaskStride,
-						     arm_2d_size_t *
-						     __restrict
-						     ptTargetMaskSize,
-						     arm_2d_size_t *
-						     __restrict ptCopySize);
+                             __restrict pSourceBase,
+                             int16_t iSourceStride,
+                             uint32_t *
+                             __restrict pTargetBase,
+                             int16_t iTargetStride,
+                             uint32_t *
+                             __restrict
+                             ptTargetMaskBase,
+                             int16_t iTargetMaskStride,
+                             arm_2d_size_t *
+                             __restrict
+                             ptTargetMaskSize,
+                             arm_2d_size_t *
+                             __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_des_chn_msk_copy_xy_mirror(uint32_t *
-						      __restrict pSourceBase,
-						      int16_t iSourceStride,
-						      uint32_t *
-						      __restrict pTargetBase,
-						      int16_t iTargetStride,
-						      uint32_t *
-						      __restrict
-						      ptTargetMaskBase,
-						      int16_t iTargetMaskStride,
-						      arm_2d_size_t *
-						      __restrict
-						      ptTargetMaskSize,
-						      arm_2d_size_t *
-						      __restrict ptCopySize);
+                              __restrict pSourceBase,
+                              int16_t iSourceStride,
+                              uint32_t *
+                              __restrict pTargetBase,
+                              int16_t iTargetStride,
+                              uint32_t *
+                              __restrict
+                              ptTargetMaskBase,
+                              int16_t iTargetMaskStride,
+                              arm_2d_size_t *
+                              __restrict
+                              ptTargetMaskSize,
+                              arm_2d_size_t *
+                              __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_des_chn_msk_copy_y_mirror(uint32_t *
-						     __restrict pSourceBase,
-						     int16_t iSourceStride,
-						     uint32_t *
-						     __restrict pTargetBase,
-						     int16_t iTargetStride,
-						     uint32_t *
-						     __restrict
-						     ptTargetMaskBase,
-						     int16_t iTargetMaskStride,
-						     arm_2d_size_t *
-						     __restrict
-						     ptTargetMaskSize,
-						     arm_2d_size_t *
-						     __restrict ptCopySize);
+                             __restrict pSourceBase,
+                             int16_t iSourceStride,
+                             uint32_t *
+                             __restrict pTargetBase,
+                             int16_t iTargetStride,
+                             uint32_t *
+                             __restrict
+                             ptTargetMaskBase,
+                             int16_t iTargetMaskStride,
+                             arm_2d_size_t *
+                             __restrict
+                             ptTargetMaskSize,
+                             arm_2d_size_t *
+                             __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_des_chn_msk_fill(uint32_t * __restrict ptSourceBase,
-					    int16_t iSourceStride,
-					    arm_2d_size_t *
-					    __restrict ptSourceSize,
-					    uint32_t * __restrict ptTargetBase,
-					    int16_t iTargetStride,
-					    arm_2d_size_t *
-					    __restrict ptTargetSize,
-					    uint32_t *
-					    __restrict ptTargetMaskBase,
-					    int16_t iTargetMaskStride,
-					    arm_2d_size_t *
-					    __restrict ptTargetMaskSize);
+                        int16_t iSourceStride,
+                        arm_2d_size_t *
+                        __restrict ptSourceSize,
+                        uint32_t * __restrict ptTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *
+                        __restrict ptTargetSize,
+                        uint32_t *
+                        __restrict ptTargetMaskBase,
+                        int16_t iTargetMaskStride,
+                        arm_2d_size_t *
+                        __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_des_chn_msk_fill_mirror(uint32_t *
-						   __restrict ptSourceBase,
-						   int16_t iSourceStride,
-						   arm_2d_size_t *
-						   __restrict ptSourceSize,
-						   uint32_t *
-						   __restrict ptTargetBase,
-						   int16_t iTargetStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetSize,
-						   uint32_t *
-						   __restrict ptTargetMaskBase,
-						   int16_t iTargetMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetMaskSize,
-						   uint32_t wMode);
+                           __restrict ptSourceBase,
+                           int16_t iSourceStride,
+                           arm_2d_size_t *
+                           __restrict ptSourceSize,
+                           uint32_t *
+                           __restrict ptTargetBase,
+                           int16_t iTargetStride,
+                           arm_2d_size_t *
+                           __restrict ptTargetSize,
+                           uint32_t *
+                           __restrict ptTargetMaskBase,
+                           int16_t iTargetMaskStride,
+                           arm_2d_size_t *
+                           __restrict ptTargetMaskSize,
+                           uint32_t wMode);
 
 void __arm_2d_impl_cccn888_des_chn_msk_fill_x_mirror(uint32_t *
-						     __restrict ptSourceBase,
-						     int16_t iSourceStride,
-						     arm_2d_size_t *
-						     __restrict ptSourceSize,
-						     uint32_t *
-						     __restrict ptTargetBase,
-						     int16_t iTargetStride,
-						     arm_2d_size_t *
-						     __restrict ptTargetSize,
-						     uint32_t *
-						     __restrict
-						     ptTargetMaskBase,
-						     int16_t iTargetMaskStride,
-						     arm_2d_size_t *
-						     __restrict
-						     ptTargetMaskSize);
+                             __restrict ptSourceBase,
+                             int16_t iSourceStride,
+                             arm_2d_size_t *
+                             __restrict ptSourceSize,
+                             uint32_t *
+                             __restrict ptTargetBase,
+                             int16_t iTargetStride,
+                             arm_2d_size_t *
+                             __restrict ptTargetSize,
+                             uint32_t *
+                             __restrict
+                             ptTargetMaskBase,
+                             int16_t iTargetMaskStride,
+                             arm_2d_size_t *
+                             __restrict
+                             ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_des_chn_msk_fill_xy_mirror(uint32_t *
-						      __restrict ptSourceBase,
-						      int16_t iSourceStride,
-						      arm_2d_size_t *
-						      __restrict ptSourceSize,
-						      uint32_t *
-						      __restrict ptTargetBase,
-						      int16_t iTargetStride,
-						      arm_2d_size_t *
-						      __restrict ptTargetSize,
-						      uint32_t *
-						      __restrict
-						      ptTargetMaskBase,
-						      int16_t iTargetMaskStride,
-						      arm_2d_size_t *
-						      __restrict
-						      ptTargetMaskSize);
+                              __restrict ptSourceBase,
+                              int16_t iSourceStride,
+                              arm_2d_size_t *
+                              __restrict ptSourceSize,
+                              uint32_t *
+                              __restrict ptTargetBase,
+                              int16_t iTargetStride,
+                              arm_2d_size_t *
+                              __restrict ptTargetSize,
+                              uint32_t *
+                              __restrict
+                              ptTargetMaskBase,
+                              int16_t iTargetMaskStride,
+                              arm_2d_size_t *
+                              __restrict
+                              ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_des_chn_msk_fill_y_mirror(uint32_t *
-						     __restrict ptSourceBase,
-						     int16_t iSourceStride,
-						     arm_2d_size_t *
-						     __restrict ptSourceSize,
-						     uint32_t *
-						     __restrict ptTargetBase,
-						     int16_t iTargetStride,
-						     arm_2d_size_t *
-						     __restrict ptTargetSize,
-						     uint32_t *
-						     __restrict
-						     ptTargetMaskBase,
-						     int16_t iTargetMaskStride,
-						     arm_2d_size_t *
-						     __restrict
-						     ptTargetMaskSize);
+                             __restrict ptSourceBase,
+                             int16_t iSourceStride,
+                             arm_2d_size_t *
+                             __restrict ptSourceSize,
+                             uint32_t *
+                             __restrict ptTargetBase,
+                             int16_t iTargetStride,
+                             arm_2d_size_t *
+                             __restrict ptTargetSize,
+                             uint32_t *
+                             __restrict
+                             ptTargetMaskBase,
+                             int16_t iTargetMaskStride,
+                             arm_2d_size_t *
+                             __restrict
+                             ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_des_msk_copy(uint32_t * __restrict pSourceBase,
-					int16_t iSourceStride,
-					uint32_t * __restrict pTargetBase,
-					int16_t iTargetStride,
-					uint8_t * __restrict ptTargetMaskBase,
-					int16_t iTargetMaskStride,
-					arm_2d_size_t *
-					__restrict ptTargetMaskSize,
-					arm_2d_size_t * __restrict ptCopySize);
+                    int16_t iSourceStride,
+                    uint32_t * __restrict pTargetBase,
+                    int16_t iTargetStride,
+                    uint8_t * __restrict ptTargetMaskBase,
+                    int16_t iTargetMaskStride,
+                    arm_2d_size_t *
+                    __restrict ptTargetMaskSize,
+                    arm_2d_size_t * __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_des_msk_copy_mirror(uint32_t *
-					       __restrict pSourceBase,
-					       int16_t iSourceStride,
-					       uint32_t *
-					       __restrict pTargetBase,
-					       int16_t iTargetStride,
-					       uint8_t *
-					       __restrict ptTargetMaskBase,
-					       int16_t iTargetMaskStride,
-					       arm_2d_size_t *
-					       __restrict ptTargetMaskSize,
-					       arm_2d_size_t *
-					       __restrict ptCopySize,
-					       uint32_t wMode);
+                           __restrict pSourceBase,
+                           int16_t iSourceStride,
+                           uint32_t *
+                           __restrict pTargetBase,
+                           int16_t iTargetStride,
+                           uint8_t *
+                           __restrict ptTargetMaskBase,
+                           int16_t iTargetMaskStride,
+                           arm_2d_size_t *
+                           __restrict ptTargetMaskSize,
+                           arm_2d_size_t *
+                           __restrict ptCopySize,
+                           uint32_t wMode);
 
 void __arm_2d_impl_cccn888_des_msk_copy_x_mirror(uint32_t *
-						 __restrict pSourceBase,
-						 int16_t iSourceStride,
-						 uint32_t *
-						 __restrict pTargetBase,
-						 int16_t iTargetStride,
-						 uint8_t *
-						 __restrict ptTargetMaskBase,
-						 int16_t iTargetMaskStride,
-						 arm_2d_size_t *
-						 __restrict ptTargetMaskSize,
-						 arm_2d_size_t *
-						 __restrict ptCopySize);
+                         __restrict pSourceBase,
+                         int16_t iSourceStride,
+                         uint32_t *
+                         __restrict pTargetBase,
+                         int16_t iTargetStride,
+                         uint8_t *
+                         __restrict ptTargetMaskBase,
+                         int16_t iTargetMaskStride,
+                         arm_2d_size_t *
+                         __restrict ptTargetMaskSize,
+                         arm_2d_size_t *
+                         __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_des_msk_copy_xy_mirror(uint32_t *
-						  __restrict pSourceBase,
-						  int16_t iSourceStride,
-						  uint32_t *
-						  __restrict pTargetBase,
-						  int16_t iTargetStride,
-						  uint8_t *
-						  __restrict ptTargetMaskBase,
-						  int16_t iTargetMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetMaskSize,
-						  arm_2d_size_t *
-						  __restrict ptCopySize);
+                          __restrict pSourceBase,
+                          int16_t iSourceStride,
+                          uint32_t *
+                          __restrict pTargetBase,
+                          int16_t iTargetStride,
+                          uint8_t *
+                          __restrict ptTargetMaskBase,
+                          int16_t iTargetMaskStride,
+                          arm_2d_size_t *
+                          __restrict ptTargetMaskSize,
+                          arm_2d_size_t *
+                          __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_des_msk_copy_y_mirror(uint32_t *
-						 __restrict pSourceBase,
-						 int16_t iSourceStride,
-						 uint32_t *
-						 __restrict pTargetBase,
-						 int16_t iTargetStride,
-						 uint8_t *
-						 __restrict ptTargetMaskBase,
-						 int16_t iTargetMaskStride,
-						 arm_2d_size_t *
-						 __restrict ptTargetMaskSize,
-						 arm_2d_size_t *
-						 __restrict ptCopySize);
+                         __restrict pSourceBase,
+                         int16_t iSourceStride,
+                         uint32_t *
+                         __restrict pTargetBase,
+                         int16_t iTargetStride,
+                         uint8_t *
+                         __restrict ptTargetMaskBase,
+                         int16_t iTargetMaskStride,
+                         arm_2d_size_t *
+                         __restrict ptTargetMaskSize,
+                         arm_2d_size_t *
+                         __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_des_msk_fill(uint32_t * __restrict ptSourceBase,
-					int16_t iSourceStride,
-					arm_2d_size_t * __restrict ptSourceSize,
-					uint32_t * __restrict ptTargetBase,
-					int16_t iTargetStride,
-					arm_2d_size_t * __restrict ptTargetSize,
-					uint8_t * __restrict ptTargetMaskBase,
-					int16_t iTargetMaskStride,
-					arm_2d_size_t *
-					__restrict ptTargetMaskSize);
+                    int16_t iSourceStride,
+                    arm_2d_size_t * __restrict ptSourceSize,
+                    uint32_t * __restrict ptTargetBase,
+                    int16_t iTargetStride,
+                    arm_2d_size_t * __restrict ptTargetSize,
+                    uint8_t * __restrict ptTargetMaskBase,
+                    int16_t iTargetMaskStride,
+                    arm_2d_size_t *
+                    __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_des_msk_fill_mirror(uint32_t *
-					       __restrict ptSourceBase,
-					       int16_t iSourceStride,
-					       arm_2d_size_t *
-					       __restrict ptSourceSize,
-					       uint32_t *
-					       __restrict ptTargetBase,
-					       int16_t iTargetStride,
-					       arm_2d_size_t *
-					       __restrict ptTargetSize,
-					       uint8_t *
-					       __restrict ptTargetMaskBase,
-					       int16_t iTargetMaskStride,
-					       arm_2d_size_t *
-					       __restrict ptTargetMaskSize,
-					       uint32_t wMode);
+                           __restrict ptSourceBase,
+                           int16_t iSourceStride,
+                           arm_2d_size_t *
+                           __restrict ptSourceSize,
+                           uint32_t *
+                           __restrict ptTargetBase,
+                           int16_t iTargetStride,
+                           arm_2d_size_t *
+                           __restrict ptTargetSize,
+                           uint8_t *
+                           __restrict ptTargetMaskBase,
+                           int16_t iTargetMaskStride,
+                           arm_2d_size_t *
+                           __restrict ptTargetMaskSize,
+                           uint32_t wMode);
 
 void __arm_2d_impl_cccn888_des_msk_fill_x_mirror(uint32_t *
-						 __restrict ptSourceBase,
-						 int16_t iSourceStride,
-						 arm_2d_size_t *
-						 __restrict ptSourceSize,
-						 uint32_t *
-						 __restrict ptTargetBase,
-						 int16_t iTargetStride,
-						 arm_2d_size_t *
-						 __restrict ptTargetSize,
-						 uint8_t *
-						 __restrict ptTargetMaskBase,
-						 int16_t iTargetMaskStride,
-						 arm_2d_size_t *
-						 __restrict ptTargetMaskSize);
+                         __restrict ptSourceBase,
+                         int16_t iSourceStride,
+                         arm_2d_size_t *
+                         __restrict ptSourceSize,
+                         uint32_t *
+                         __restrict ptTargetBase,
+                         int16_t iTargetStride,
+                         arm_2d_size_t *
+                         __restrict ptTargetSize,
+                         uint8_t *
+                         __restrict ptTargetMaskBase,
+                         int16_t iTargetMaskStride,
+                         arm_2d_size_t *
+                         __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_des_msk_fill_xy_mirror(uint32_t *
-						  __restrict ptSourceBase,
-						  int16_t iSourceStride,
-						  arm_2d_size_t *
-						  __restrict ptSourceSize,
-						  uint32_t *
-						  __restrict ptTargetBase,
-						  int16_t iTargetStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetSize,
-						  uint8_t *
-						  __restrict ptTargetMaskBase,
-						  int16_t iTargetMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetMaskSize);
+                          __restrict ptSourceBase,
+                          int16_t iSourceStride,
+                          arm_2d_size_t *
+                          __restrict ptSourceSize,
+                          uint32_t *
+                          __restrict ptTargetBase,
+                          int16_t iTargetStride,
+                          arm_2d_size_t *
+                          __restrict ptTargetSize,
+                          uint8_t *
+                          __restrict ptTargetMaskBase,
+                          int16_t iTargetMaskStride,
+                          arm_2d_size_t *
+                          __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_des_msk_fill_y_mirror(uint32_t *
-						 __restrict ptSourceBase,
-						 int16_t iSourceStride,
-						 arm_2d_size_t *
-						 __restrict ptSourceSize,
-						 uint32_t *
-						 __restrict ptTargetBase,
-						 int16_t iTargetStride,
-						 arm_2d_size_t *
-						 __restrict ptTargetSize,
-						 uint8_t *
-						 __restrict ptTargetMaskBase,
-						 int16_t iTargetMaskStride,
-						 arm_2d_size_t *
-						 __restrict ptTargetMaskSize);
+                         __restrict ptSourceBase,
+                         int16_t iSourceStride,
+                         arm_2d_size_t *
+                         __restrict ptSourceSize,
+                         uint32_t *
+                         __restrict ptTargetBase,
+                         int16_t iTargetStride,
+                         arm_2d_size_t *
+                         __restrict ptTargetSize,
+                         uint8_t *
+                         __restrict ptTargetMaskBase,
+                         int16_t iTargetMaskStride,
+                         arm_2d_size_t *
+                         __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_masks_copy(uint32_t * __restrict pSourceBase,
-				      int16_t iSourceStride,
-				      uint8_t * __restrict ptSourceMaskBase,
-				      int16_t iSourceMaskStride,
-				      arm_2d_size_t *
-				      __restrict ptSourceMaskSize,
-				      uint32_t * __restrict pTargetBase,
-				      int16_t iTargetStride,
-				      uint8_t * __restrict ptTargetMaskBase,
-				      int16_t iTargetMaskStride,
-				      arm_2d_size_t *
-				      __restrict ptTargetMaskSize,
-				      arm_2d_size_t * __restrict ptCopySize);
+                      int16_t iSourceStride,
+                      uint8_t * __restrict ptSourceMaskBase,
+                      int16_t iSourceMaskStride,
+                      arm_2d_size_t *
+                      __restrict ptSourceMaskSize,
+                      uint32_t * __restrict pTargetBase,
+                      int16_t iTargetStride,
+                      uint8_t * __restrict ptTargetMaskBase,
+                      int16_t iTargetMaskStride,
+                      arm_2d_size_t *
+                      __restrict ptTargetMaskSize,
+                      arm_2d_size_t * __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_masks_copy_mirror(uint32_t * __restrict pSourceBase,
-					     int16_t iSourceStride,
-					     uint8_t *
-					     __restrict ptSourceMaskBase,
-					     int16_t iSourceMaskStride,
-					     arm_2d_size_t *
-					     __restrict ptSourceMaskSize,
-					     uint32_t * __restrict pTargetBase,
-					     int16_t iTargetStride,
-					     uint8_t *
-					     __restrict ptTargetMaskBase,
-					     int16_t iTargetMaskStride,
-					     arm_2d_size_t *
-					     __restrict ptTargetMaskSize,
-					     arm_2d_size_t *
-					     __restrict ptCopySize,
-					     uint32_t wMode);
+                         int16_t iSourceStride,
+                         uint8_t *
+                         __restrict ptSourceMaskBase,
+                         int16_t iSourceMaskStride,
+                         arm_2d_size_t *
+                         __restrict ptSourceMaskSize,
+                         uint32_t * __restrict pTargetBase,
+                         int16_t iTargetStride,
+                         uint8_t *
+                         __restrict ptTargetMaskBase,
+                         int16_t iTargetMaskStride,
+                         arm_2d_size_t *
+                         __restrict ptTargetMaskSize,
+                         arm_2d_size_t *
+                         __restrict ptCopySize,
+                         uint32_t wMode);
 
 void __arm_2d_impl_cccn888_masks_copy_x_mirror(uint32_t *
-					       __restrict pSourceBase,
-					       int16_t iSourceStride,
-					       uint8_t *
-					       __restrict ptSourceMaskBase,
-					       int16_t iSourceMaskStride,
-					       arm_2d_size_t *
-					       __restrict ptSourceMaskSize,
-					       uint32_t *
-					       __restrict pTargetBase,
-					       int16_t iTargetStride,
-					       uint8_t *
-					       __restrict ptTargetMaskBase,
-					       int16_t iTargetMaskStride,
-					       arm_2d_size_t *
-					       __restrict ptTargetMaskSize,
-					       arm_2d_size_t *
-					       __restrict ptCopySize);
+                           __restrict pSourceBase,
+                           int16_t iSourceStride,
+                           uint8_t *
+                           __restrict ptSourceMaskBase,
+                           int16_t iSourceMaskStride,
+                           arm_2d_size_t *
+                           __restrict ptSourceMaskSize,
+                           uint32_t *
+                           __restrict pTargetBase,
+                           int16_t iTargetStride,
+                           uint8_t *
+                           __restrict ptTargetMaskBase,
+                           int16_t iTargetMaskStride,
+                           arm_2d_size_t *
+                           __restrict ptTargetMaskSize,
+                           arm_2d_size_t *
+                           __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_masks_copy_xy_mirror(uint32_t *
-						__restrict pSourceBase,
-						int16_t iSourceStride,
-						uint8_t *
-						__restrict ptSourceMaskBase,
-						int16_t iSourceMaskStride,
-						arm_2d_size_t *
-						__restrict ptSourceMaskSize,
-						uint32_t *
-						__restrict pTargetBase,
-						int16_t iTargetStride,
-						uint8_t *
-						__restrict ptTargetMaskBase,
-						int16_t iTargetMaskStride,
-						arm_2d_size_t *
-						__restrict ptTargetMaskSize,
-						arm_2d_size_t *
-						__restrict ptCopySize);
+                        __restrict pSourceBase,
+                        int16_t iSourceStride,
+                        uint8_t *
+                        __restrict ptSourceMaskBase,
+                        int16_t iSourceMaskStride,
+                        arm_2d_size_t *
+                        __restrict ptSourceMaskSize,
+                        uint32_t *
+                        __restrict pTargetBase,
+                        int16_t iTargetStride,
+                        uint8_t *
+                        __restrict ptTargetMaskBase,
+                        int16_t iTargetMaskStride,
+                        arm_2d_size_t *
+                        __restrict ptTargetMaskSize,
+                        arm_2d_size_t *
+                        __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_masks_copy_y_mirror(uint32_t *
-					       __restrict pSourceBase,
-					       int16_t iSourceStride,
-					       uint8_t *
-					       __restrict ptSourceMaskBase,
-					       int16_t iSourceMaskStride,
-					       arm_2d_size_t *
-					       __restrict ptSourceMaskSize,
-					       uint32_t *
-					       __restrict pTargetBase,
-					       int16_t iTargetStride,
-					       uint8_t *
-					       __restrict ptTargetMaskBase,
-					       int16_t iTargetMaskStride,
-					       arm_2d_size_t *
-					       __restrict ptTargetMaskSize,
-					       arm_2d_size_t *
-					       __restrict ptCopySize);
+                           __restrict pSourceBase,
+                           int16_t iSourceStride,
+                           uint8_t *
+                           __restrict ptSourceMaskBase,
+                           int16_t iSourceMaskStride,
+                           arm_2d_size_t *
+                           __restrict ptSourceMaskSize,
+                           uint32_t *
+                           __restrict pTargetBase,
+                           int16_t iTargetStride,
+                           uint8_t *
+                           __restrict ptTargetMaskBase,
+                           int16_t iTargetMaskStride,
+                           arm_2d_size_t *
+                           __restrict ptTargetMaskSize,
+                           arm_2d_size_t *
+                           __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_masks_fill(uint32_t * __restrict ptSourceBase,
-				      int16_t iSourceStride,
-				      arm_2d_size_t * __restrict ptSourceSize,
-				      uint8_t * __restrict ptSourceMaskBase,
-				      int16_t iSourceMaskStride,
-				      arm_2d_size_t *
-				      __restrict ptSourceMaskSize,
-				      uint32_t * __restrict ptTargetBase,
-				      int16_t iTargetStride,
-				      arm_2d_size_t * __restrict ptTargetSize,
-				      uint8_t * __restrict ptTargetMaskBase,
-				      int16_t iTargetMaskStride,
-				      arm_2d_size_t *
-				      __restrict ptTargetMaskSize);
+                      int16_t iSourceStride,
+                      arm_2d_size_t * __restrict ptSourceSize,
+                      uint8_t * __restrict ptSourceMaskBase,
+                      int16_t iSourceMaskStride,
+                      arm_2d_size_t *
+                      __restrict ptSourceMaskSize,
+                      uint32_t * __restrict ptTargetBase,
+                      int16_t iTargetStride,
+                      arm_2d_size_t * __restrict ptTargetSize,
+                      uint8_t * __restrict ptTargetMaskBase,
+                      int16_t iTargetMaskStride,
+                      arm_2d_size_t *
+                      __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_masks_fill_mirror(uint32_t * __restrict ptSourceBase,
-					     int16_t iSourceStride,
-					     arm_2d_size_t *
-					     __restrict ptSourceSize,
-					     uint8_t *
-					     __restrict ptSourceMaskBase,
-					     int16_t iSourceMaskStride,
-					     arm_2d_size_t *
-					     __restrict ptSourceMaskSize,
-					     uint32_t * __restrict ptTargetBase,
-					     int16_t iTargetStride,
-					     arm_2d_size_t *
-					     __restrict ptTargetSize,
-					     uint8_t *
-					     __restrict ptTargetMaskBase,
-					     int16_t iTargetMaskStride,
-					     arm_2d_size_t *
-					     __restrict ptTargetMaskSize,
-					     uint32_t wMode);
+                         int16_t iSourceStride,
+                         arm_2d_size_t *
+                         __restrict ptSourceSize,
+                         uint8_t *
+                         __restrict ptSourceMaskBase,
+                         int16_t iSourceMaskStride,
+                         arm_2d_size_t *
+                         __restrict ptSourceMaskSize,
+                         uint32_t * __restrict ptTargetBase,
+                         int16_t iTargetStride,
+                         arm_2d_size_t *
+                         __restrict ptTargetSize,
+                         uint8_t *
+                         __restrict ptTargetMaskBase,
+                         int16_t iTargetMaskStride,
+                         arm_2d_size_t *
+                         __restrict ptTargetMaskSize,
+                         uint32_t wMode);
 
 void __arm_2d_impl_cccn888_masks_fill_x_mirror(uint32_t *
-					       __restrict ptSourceBase,
-					       int16_t iSourceStride,
-					       arm_2d_size_t *
-					       __restrict ptSourceSize,
-					       uint8_t *
-					       __restrict ptSourceMaskBase,
-					       int16_t iSourceMaskStride,
-					       arm_2d_size_t *
-					       __restrict ptSourceMaskSize,
-					       uint32_t *
-					       __restrict ptTargetBase,
-					       int16_t iTargetStride,
-					       arm_2d_size_t *
-					       __restrict ptTargetSize,
-					       uint8_t *
-					       __restrict ptTargetMaskBase,
-					       int16_t iTargetMaskStride,
-					       arm_2d_size_t *
-					       __restrict ptTargetMaskSize);
+                           __restrict ptSourceBase,
+                           int16_t iSourceStride,
+                           arm_2d_size_t *
+                           __restrict ptSourceSize,
+                           uint8_t *
+                           __restrict ptSourceMaskBase,
+                           int16_t iSourceMaskStride,
+                           arm_2d_size_t *
+                           __restrict ptSourceMaskSize,
+                           uint32_t *
+                           __restrict ptTargetBase,
+                           int16_t iTargetStride,
+                           arm_2d_size_t *
+                           __restrict ptTargetSize,
+                           uint8_t *
+                           __restrict ptTargetMaskBase,
+                           int16_t iTargetMaskStride,
+                           arm_2d_size_t *
+                           __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_masks_fill_xy_mirror(uint32_t *
-						__restrict ptSourceBase,
-						int16_t iSourceStride,
-						arm_2d_size_t *
-						__restrict ptSourceSize,
-						uint8_t *
-						__restrict ptSourceMaskBase,
-						int16_t iSourceMaskStride,
-						arm_2d_size_t *
-						__restrict ptSourceMaskSize,
-						uint32_t *
-						__restrict ptTargetBase,
-						int16_t iTargetStride,
-						arm_2d_size_t *
-						__restrict ptTargetSize,
-						uint8_t *
-						__restrict ptTargetMaskBase,
-						int16_t iTargetMaskStride,
-						arm_2d_size_t *
-						__restrict ptTargetMaskSize);
+                        __restrict ptSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *
+                        __restrict ptSourceSize,
+                        uint8_t *
+                        __restrict ptSourceMaskBase,
+                        int16_t iSourceMaskStride,
+                        arm_2d_size_t *
+                        __restrict ptSourceMaskSize,
+                        uint32_t *
+                        __restrict ptTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *
+                        __restrict ptTargetSize,
+                        uint8_t *
+                        __restrict ptTargetMaskBase,
+                        int16_t iTargetMaskStride,
+                        arm_2d_size_t *
+                        __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_masks_fill_y_mirror(uint32_t *
-					       __restrict ptSourceBase,
-					       int16_t iSourceStride,
-					       arm_2d_size_t *
-					       __restrict ptSourceSize,
-					       uint8_t *
-					       __restrict ptSourceMaskBase,
-					       int16_t iSourceMaskStride,
-					       arm_2d_size_t *
-					       __restrict ptSourceMaskSize,
-					       uint32_t *
-					       __restrict ptTargetBase,
-					       int16_t iTargetStride,
-					       arm_2d_size_t *
-					       __restrict ptTargetSize,
-					       uint8_t *
-					       __restrict ptTargetMaskBase,
-					       int16_t iTargetMaskStride,
-					       arm_2d_size_t *
-					       __restrict ptTargetMaskSize);
+                           __restrict ptSourceBase,
+                           int16_t iSourceStride,
+                           arm_2d_size_t *
+                           __restrict ptSourceSize,
+                           uint8_t *
+                           __restrict ptSourceMaskBase,
+                           int16_t iSourceMaskStride,
+                           arm_2d_size_t *
+                           __restrict ptSourceMaskSize,
+                           uint32_t *
+                           __restrict ptTargetBase,
+                           int16_t iTargetStride,
+                           arm_2d_size_t *
+                           __restrict ptTargetSize,
+                           uint8_t *
+                           __restrict ptTargetMaskBase,
+                           int16_t iTargetMaskStride,
+                           arm_2d_size_t *
+                           __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_copy(uint32_t *
-						       __restrict pSourceBase,
-						       int16_t iSourceStride,
-						       uint32_t *
-						       __restrict
-						       ptSourceMaskBase,
-						       int16_t
-						       iSourceMaskStride,
-						       arm_2d_size_t *
-						       __restrict
-						       ptSourceMaskSize,
-						       uint32_t *
-						       __restrict pTargetBase,
-						       int16_t iTargetStride,
-						       uint8_t *
-						       __restrict
-						       ptTargetMaskBase,
-						       int16_t
-						       iTargetMaskStride,
-						       arm_2d_size_t *
-						       __restrict
-						       ptTargetMaskSize,
-						       arm_2d_size_t *
-						       __restrict ptCopySize);
+                               __restrict pSourceBase,
+                               int16_t iSourceStride,
+                               uint32_t *
+                               __restrict
+                               ptSourceMaskBase,
+                               int16_t
+                               iSourceMaskStride,
+                               arm_2d_size_t *
+                               __restrict
+                               ptSourceMaskSize,
+                               uint32_t *
+                               __restrict pTargetBase,
+                               int16_t iTargetStride,
+                               uint8_t *
+                               __restrict
+                               ptTargetMaskBase,
+                               int16_t
+                               iTargetMaskStride,
+                               arm_2d_size_t *
+                               __restrict
+                               ptTargetMaskSize,
+                               arm_2d_size_t *
+                               __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_copy_mirror(uint32_t *
-							      __restrict
-							      pSourceBase,
-							      int16_t
-							      iSourceStride,
-							      uint32_t *
-							      __restrict
-							      ptSourceMaskBase,
-							      int16_t
-							      iSourceMaskStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptSourceMaskSize,
-							      uint32_t *
-							      __restrict
-							      pTargetBase,
-							      int16_t
-							      iTargetStride,
-							      uint8_t *
-							      __restrict
-							      ptTargetMaskBase,
-							      int16_t
-							      iTargetMaskStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptTargetMaskSize,
-							      arm_2d_size_t *
-							      __restrict
-							      ptCopySize,
-							      uint32_t wMode);
+                                  __restrict
+                                  pSourceBase,
+                                  int16_t
+                                  iSourceStride,
+                                  uint32_t *
+                                  __restrict
+                                  ptSourceMaskBase,
+                                  int16_t
+                                  iSourceMaskStride,
+                                  arm_2d_size_t *
+                                  __restrict
+                                  ptSourceMaskSize,
+                                  uint32_t *
+                                  __restrict
+                                  pTargetBase,
+                                  int16_t
+                                  iTargetStride,
+                                  uint8_t *
+                                  __restrict
+                                  ptTargetMaskBase,
+                                  int16_t
+                                  iTargetMaskStride,
+                                  arm_2d_size_t *
+                                  __restrict
+                                  ptTargetMaskSize,
+                                  arm_2d_size_t *
+                                  __restrict
+                                  ptCopySize,
+                                  uint32_t wMode);
 
 void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_copy_x_mirror(uint32_t *
-								__restrict
-								pSourceBase,
-								int16_t
-								iSourceStride,
-								uint32_t *
-								__restrict
-								ptSourceMaskBase,
-								int16_t
-								iSourceMaskStride,
-								arm_2d_size_t *
-								__restrict
-								ptSourceMaskSize,
-								uint32_t *
-								__restrict
-								pTargetBase,
-								int16_t
-								iTargetStride,
-								uint8_t *
-								__restrict
-								ptTargetMaskBase,
-								int16_t
-								iTargetMaskStride,
-								arm_2d_size_t *
-								__restrict
-								ptTargetMaskSize,
-								arm_2d_size_t *
-								__restrict
-								ptCopySize);
+                                __restrict
+                                pSourceBase,
+                                int16_t
+                                iSourceStride,
+                                uint32_t *
+                                __restrict
+                                ptSourceMaskBase,
+                                int16_t
+                                iSourceMaskStride,
+                                arm_2d_size_t *
+                                __restrict
+                                ptSourceMaskSize,
+                                uint32_t *
+                                __restrict
+                                pTargetBase,
+                                int16_t
+                                iTargetStride,
+                                uint8_t *
+                                __restrict
+                                ptTargetMaskBase,
+                                int16_t
+                                iTargetMaskStride,
+                                arm_2d_size_t *
+                                __restrict
+                                ptTargetMaskSize,
+                                arm_2d_size_t *
+                                __restrict
+                                ptCopySize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_copy_xy_mirror(uint32_t *
-								 __restrict
-								 pSourceBase,
-								 int16_t
-								 iSourceStride,
-								 uint32_t *
-								 __restrict
-								 ptSourceMaskBase,
-								 int16_t
-								 iSourceMaskStride,
-								 arm_2d_size_t *
-								 __restrict
-								 ptSourceMaskSize,
-								 uint32_t *
-								 __restrict
-								 pTargetBase,
-								 int16_t
-								 iTargetStride,
-								 uint8_t *
-								 __restrict
-								 ptTargetMaskBase,
-								 int16_t
-								 iTargetMaskStride,
-								 arm_2d_size_t *
-								 __restrict
-								 ptTargetMaskSize,
-								 arm_2d_size_t *
-								 __restrict
-								 ptCopySize);
+                                 __restrict
+                                 pSourceBase,
+                                 int16_t
+                                 iSourceStride,
+                                 uint32_t *
+                                 __restrict
+                                 ptSourceMaskBase,
+                                 int16_t
+                                 iSourceMaskStride,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptSourceMaskSize,
+                                 uint32_t *
+                                 __restrict
+                                 pTargetBase,
+                                 int16_t
+                                 iTargetStride,
+                                 uint8_t *
+                                 __restrict
+                                 ptTargetMaskBase,
+                                 int16_t
+                                 iTargetMaskStride,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptTargetMaskSize,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptCopySize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_copy_y_mirror(uint32_t *
-								__restrict
-								pSourceBase,
-								int16_t
-								iSourceStride,
-								uint32_t *
-								__restrict
-								ptSourceMaskBase,
-								int16_t
-								iSourceMaskStride,
-								arm_2d_size_t *
-								__restrict
-								ptSourceMaskSize,
-								uint32_t *
-								__restrict
-								pTargetBase,
-								int16_t
-								iTargetStride,
-								uint8_t *
-								__restrict
-								ptTargetMaskBase,
-								int16_t
-								iTargetMaskStride,
-								arm_2d_size_t *
-								__restrict
-								ptTargetMaskSize,
-								arm_2d_size_t *
-								__restrict
-								ptCopySize);
+                                __restrict
+                                pSourceBase,
+                                int16_t
+                                iSourceStride,
+                                uint32_t *
+                                __restrict
+                                ptSourceMaskBase,
+                                int16_t
+                                iSourceMaskStride,
+                                arm_2d_size_t *
+                                __restrict
+                                ptSourceMaskSize,
+                                uint32_t *
+                                __restrict
+                                pTargetBase,
+                                int16_t
+                                iTargetStride,
+                                uint8_t *
+                                __restrict
+                                ptTargetMaskBase,
+                                int16_t
+                                iTargetMaskStride,
+                                arm_2d_size_t *
+                                __restrict
+                                ptTargetMaskSize,
+                                arm_2d_size_t *
+                                __restrict
+                                ptCopySize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_fill(uint32_t *
-						       __restrict ptSourceBase,
-						       int16_t iSourceStride,
-						       arm_2d_size_t *
-						       __restrict ptSourceSize,
-						       uint32_t *
-						       __restrict
-						       ptSourceMaskBase,
-						       int16_t
-						       iSourceMaskStride,
-						       arm_2d_size_t *
-						       __restrict
-						       ptSourceMaskSize,
-						       uint32_t *
-						       __restrict ptTargetBase,
-						       int16_t iTargetStride,
-						       arm_2d_size_t *
-						       __restrict ptTargetSize,
-						       uint8_t *
-						       __restrict
-						       ptTargetMaskBase,
-						       int16_t
-						       iTargetMaskStride,
-						       arm_2d_size_t *
-						       __restrict
-						       ptTargetMaskSize);
+                               __restrict ptSourceBase,
+                               int16_t iSourceStride,
+                               arm_2d_size_t *
+                               __restrict ptSourceSize,
+                               uint32_t *
+                               __restrict
+                               ptSourceMaskBase,
+                               int16_t
+                               iSourceMaskStride,
+                               arm_2d_size_t *
+                               __restrict
+                               ptSourceMaskSize,
+                               uint32_t *
+                               __restrict ptTargetBase,
+                               int16_t iTargetStride,
+                               arm_2d_size_t *
+                               __restrict ptTargetSize,
+                               uint8_t *
+                               __restrict
+                               ptTargetMaskBase,
+                               int16_t
+                               iTargetMaskStride,
+                               arm_2d_size_t *
+                               __restrict
+                               ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_fill_mirror(uint32_t *
-							      __restrict
-							      ptSourceBase,
-							      int16_t
-							      iSourceStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptSourceSize,
-							      uint32_t *
-							      __restrict
-							      ptSourceMaskBase,
-							      int16_t
-							      iSourceMaskStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptSourceMaskSize,
-							      uint32_t *
-							      __restrict
-							      ptTargetBase,
-							      int16_t
-							      iTargetStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptTargetSize,
-							      uint8_t *
-							      __restrict
-							      ptTargetMaskBase,
-							      int16_t
-							      iTargetMaskStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptTargetMaskSize,
-							      uint32_t wMode);
+                                  __restrict
+                                  ptSourceBase,
+                                  int16_t
+                                  iSourceStride,
+                                  arm_2d_size_t *
+                                  __restrict
+                                  ptSourceSize,
+                                  uint32_t *
+                                  __restrict
+                                  ptSourceMaskBase,
+                                  int16_t
+                                  iSourceMaskStride,
+                                  arm_2d_size_t *
+                                  __restrict
+                                  ptSourceMaskSize,
+                                  uint32_t *
+                                  __restrict
+                                  ptTargetBase,
+                                  int16_t
+                                  iTargetStride,
+                                  arm_2d_size_t *
+                                  __restrict
+                                  ptTargetSize,
+                                  uint8_t *
+                                  __restrict
+                                  ptTargetMaskBase,
+                                  int16_t
+                                  iTargetMaskStride,
+                                  arm_2d_size_t *
+                                  __restrict
+                                  ptTargetMaskSize,
+                                  uint32_t wMode);
 
 void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_fill_x_mirror(uint32_t *
-								__restrict
-								ptSourceBase,
-								int16_t
-								iSourceStride,
-								arm_2d_size_t *
-								__restrict
-								ptSourceSize,
-								uint32_t *
-								__restrict
-								ptSourceMaskBase,
-								int16_t
-								iSourceMaskStride,
-								arm_2d_size_t *
-								__restrict
-								ptSourceMaskSize,
-								uint32_t *
-								__restrict
-								ptTargetBase,
-								int16_t
-								iTargetStride,
-								arm_2d_size_t *
-								__restrict
-								ptTargetSize,
-								uint8_t *
-								__restrict
-								ptTargetMaskBase,
-								int16_t
-								iTargetMaskStride,
-								arm_2d_size_t *
-								__restrict
-								ptTargetMaskSize);
+                                __restrict
+                                ptSourceBase,
+                                int16_t
+                                iSourceStride,
+                                arm_2d_size_t *
+                                __restrict
+                                ptSourceSize,
+                                uint32_t *
+                                __restrict
+                                ptSourceMaskBase,
+                                int16_t
+                                iSourceMaskStride,
+                                arm_2d_size_t *
+                                __restrict
+                                ptSourceMaskSize,
+                                uint32_t *
+                                __restrict
+                                ptTargetBase,
+                                int16_t
+                                iTargetStride,
+                                arm_2d_size_t *
+                                __restrict
+                                ptTargetSize,
+                                uint8_t *
+                                __restrict
+                                ptTargetMaskBase,
+                                int16_t
+                                iTargetMaskStride,
+                                arm_2d_size_t *
+                                __restrict
+                                ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_fill_xy_mirror(uint32_t *
-								 __restrict
-								 ptSourceBase,
-								 int16_t
-								 iSourceStride,
-								 arm_2d_size_t *
-								 __restrict
-								 ptSourceSize,
-								 uint32_t *
-								 __restrict
-								 ptSourceMaskBase,
-								 int16_t
-								 iSourceMaskStride,
-								 arm_2d_size_t *
-								 __restrict
-								 ptSourceMaskSize,
-								 uint32_t *
-								 __restrict
-								 ptTargetBase,
-								 int16_t
-								 iTargetStride,
-								 arm_2d_size_t *
-								 __restrict
-								 ptTargetSize,
-								 uint8_t *
-								 __restrict
-								 ptTargetMaskBase,
-								 int16_t
-								 iTargetMaskStride,
-								 arm_2d_size_t *
-								 __restrict
-								 ptTargetMaskSize);
+                                 __restrict
+                                 ptSourceBase,
+                                 int16_t
+                                 iSourceStride,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptSourceSize,
+                                 uint32_t *
+                                 __restrict
+                                 ptSourceMaskBase,
+                                 int16_t
+                                 iSourceMaskStride,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptSourceMaskSize,
+                                 uint32_t *
+                                 __restrict
+                                 ptTargetBase,
+                                 int16_t
+                                 iTargetStride,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptTargetSize,
+                                 uint8_t *
+                                 __restrict
+                                 ptTargetMaskBase,
+                                 int16_t
+                                 iTargetMaskStride,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_fill_y_mirror(uint32_t *
-								__restrict
-								ptSourceBase,
-								int16_t
-								iSourceStride,
-								arm_2d_size_t *
-								__restrict
-								ptSourceSize,
-								uint32_t *
-								__restrict
-								ptSourceMaskBase,
-								int16_t
-								iSourceMaskStride,
-								arm_2d_size_t *
-								__restrict
-								ptSourceMaskSize,
-								uint32_t *
-								__restrict
-								ptTargetBase,
-								int16_t
-								iTargetStride,
-								arm_2d_size_t *
-								__restrict
-								ptTargetSize,
-								uint8_t *
-								__restrict
-								ptTargetMaskBase,
-								int16_t
-								iTargetMaskStride,
-								arm_2d_size_t *
-								__restrict
-								ptTargetMaskSize);
+                                __restrict
+                                ptSourceBase,
+                                int16_t
+                                iSourceStride,
+                                arm_2d_size_t *
+                                __restrict
+                                ptSourceSize,
+                                uint32_t *
+                                __restrict
+                                ptSourceMaskBase,
+                                int16_t
+                                iSourceMaskStride,
+                                arm_2d_size_t *
+                                __restrict
+                                ptSourceMaskSize,
+                                uint32_t *
+                                __restrict
+                                ptTargetBase,
+                                int16_t
+                                iTargetStride,
+                                arm_2d_size_t *
+                                __restrict
+                                ptTargetSize,
+                                uint8_t *
+                                __restrict
+                                ptTargetMaskBase,
+                                int16_t
+                                iTargetMaskStride,
+                                arm_2d_size_t *
+                                __restrict
+                                ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_copy(uint32_t * __restrict pSourceBase,
-					    int16_t iSourceStride,
-					    uint32_t *
-					    __restrict ptSourceMaskBase,
-					    int16_t iSourceMaskStride,
-					    arm_2d_size_t *
-					    __restrict ptSourceMaskSize,
-					    uint32_t * __restrict pTargetBase,
-					    int16_t iTargetStride,
-					    arm_2d_size_t *
-					    __restrict ptCopySize);
+                        int16_t iSourceStride,
+                        uint32_t *
+                        __restrict ptSourceMaskBase,
+                        int16_t iSourceMaskStride,
+                        arm_2d_size_t *
+                        __restrict ptSourceMaskSize,
+                        uint32_t * __restrict pTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *
+                        __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_copy_mirror(uint32_t *
-						   __restrict pSourceBase,
-						   int16_t iSourceStride,
-						   uint32_t *
-						   __restrict ptSourceMaskBase,
-						   int16_t iSourceMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptSourceMaskSize,
-						   uint32_t *
-						   __restrict pTargetBase,
-						   int16_t iTargetStride,
-						   arm_2d_size_t *
-						   __restrict ptCopySize,
-						   uint32_t wMode);
+                           __restrict pSourceBase,
+                           int16_t iSourceStride,
+                           uint32_t *
+                           __restrict ptSourceMaskBase,
+                           int16_t iSourceMaskStride,
+                           arm_2d_size_t *
+                           __restrict ptSourceMaskSize,
+                           uint32_t *
+                           __restrict pTargetBase,
+                           int16_t iTargetStride,
+                           arm_2d_size_t *
+                           __restrict ptCopySize,
+                           uint32_t wMode);
 
 void __arm_2d_impl_cccn888_src_chn_msk_copy_x_mirror(uint32_t *
-						     __restrict pSourceBase,
-						     int16_t iSourceStride,
-						     uint32_t *
-						     __restrict
-						     ptSourceMaskBase,
-						     int16_t iSourceMaskStride,
-						     arm_2d_size_t *
-						     __restrict
-						     ptSourceMaskSize,
-						     uint32_t *
-						     __restrict pTargetBase,
-						     int16_t iTargetStride,
-						     arm_2d_size_t *
-						     __restrict ptCopySize);
+                             __restrict pSourceBase,
+                             int16_t iSourceStride,
+                             uint32_t *
+                             __restrict
+                             ptSourceMaskBase,
+                             int16_t iSourceMaskStride,
+                             arm_2d_size_t *
+                             __restrict
+                             ptSourceMaskSize,
+                             uint32_t *
+                             __restrict pTargetBase,
+                             int16_t iTargetStride,
+                             arm_2d_size_t *
+                             __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_copy_xy_mirror(uint32_t *
-						      __restrict pSourceBase,
-						      int16_t iSourceStride,
-						      uint32_t *
-						      __restrict
-						      ptSourceMaskBase,
-						      int16_t iSourceMaskStride,
-						      arm_2d_size_t *
-						      __restrict
-						      ptSourceMaskSize,
-						      uint32_t *
-						      __restrict pTargetBase,
-						      int16_t iTargetStride,
-						      arm_2d_size_t *
-						      __restrict ptCopySize);
+                              __restrict pSourceBase,
+                              int16_t iSourceStride,
+                              uint32_t *
+                              __restrict
+                              ptSourceMaskBase,
+                              int16_t iSourceMaskStride,
+                              arm_2d_size_t *
+                              __restrict
+                              ptSourceMaskSize,
+                              uint32_t *
+                              __restrict pTargetBase,
+                              int16_t iTargetStride,
+                              arm_2d_size_t *
+                              __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_copy_y_mirror(uint32_t *
-						     __restrict pSourceBase,
-						     int16_t iSourceStride,
-						     uint32_t *
-						     __restrict
-						     ptSourceMaskBase,
-						     int16_t iSourceMaskStride,
-						     arm_2d_size_t *
-						     __restrict
-						     ptSourceMaskSize,
-						     uint32_t *
-						     __restrict pTargetBase,
-						     int16_t iTargetStride,
-						     arm_2d_size_t *
-						     __restrict ptCopySize);
+                             __restrict pSourceBase,
+                             int16_t iSourceStride,
+                             uint32_t *
+                             __restrict
+                             ptSourceMaskBase,
+                             int16_t iSourceMaskStride,
+                             arm_2d_size_t *
+                             __restrict
+                             ptSourceMaskSize,
+                             uint32_t *
+                             __restrict pTargetBase,
+                             int16_t iTargetStride,
+                             arm_2d_size_t *
+                             __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_copy(uint32_t *
-							__restrict pSourceBase,
-							int16_t iSourceStride,
-							uint32_t *
-							__restrict
-							ptSourceMaskBase,
-							int16_t
-							iSourceMaskStride,
-							arm_2d_size_t *
-							__restrict
-							ptSourceMaskSize,
-							uint32_t *
-							__restrict pTargetBase,
-							int16_t iTargetStride,
-							uint32_t *
-							__restrict
-							ptTargetMaskBase,
-							int16_t
-							iTargetMaskStride,
-							arm_2d_size_t *
-							__restrict
-							ptTargetMaskSize,
-							arm_2d_size_t *
-							__restrict ptCopySize);
+                            __restrict pSourceBase,
+                            int16_t iSourceStride,
+                            uint32_t *
+                            __restrict
+                            ptSourceMaskBase,
+                            int16_t
+                            iSourceMaskStride,
+                            arm_2d_size_t *
+                            __restrict
+                            ptSourceMaskSize,
+                            uint32_t *
+                            __restrict pTargetBase,
+                            int16_t iTargetStride,
+                            uint32_t *
+                            __restrict
+                            ptTargetMaskBase,
+                            int16_t
+                            iTargetMaskStride,
+                            arm_2d_size_t *
+                            __restrict
+                            ptTargetMaskSize,
+                            arm_2d_size_t *
+                            __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_copy_mirror(uint32_t *
-							       __restrict
-							       pSourceBase,
-							       int16_t
-							       iSourceStride,
-							       uint32_t *
-							       __restrict
-							       ptSourceMaskBase,
-							       int16_t
-							       iSourceMaskStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptSourceMaskSize,
-							       uint32_t *
-							       __restrict
-							       pTargetBase,
-							       int16_t
-							       iTargetStride,
-							       uint32_t *
-							       __restrict
-							       ptTargetMaskBase,
-							       int16_t
-							       iTargetMaskStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptTargetMaskSize,
-							       arm_2d_size_t *
-							       __restrict
-							       ptCopySize,
-							       uint32_t wMode);
+                                   __restrict
+                                   pSourceBase,
+                                   int16_t
+                                   iSourceStride,
+                                   uint32_t *
+                                   __restrict
+                                   ptSourceMaskBase,
+                                   int16_t
+                                   iSourceMaskStride,
+                                   arm_2d_size_t *
+                                   __restrict
+                                   ptSourceMaskSize,
+                                   uint32_t *
+                                   __restrict
+                                   pTargetBase,
+                                   int16_t
+                                   iTargetStride,
+                                   uint32_t *
+                                   __restrict
+                                   ptTargetMaskBase,
+                                   int16_t
+                                   iTargetMaskStride,
+                                   arm_2d_size_t *
+                                   __restrict
+                                   ptTargetMaskSize,
+                                   arm_2d_size_t *
+                                   __restrict
+                                   ptCopySize,
+                                   uint32_t wMode);
 
 void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_copy_x_mirror(uint32_t *
-								 __restrict
-								 pSourceBase,
-								 int16_t
-								 iSourceStride,
-								 uint32_t *
-								 __restrict
-								 ptSourceMaskBase,
-								 int16_t
-								 iSourceMaskStride,
-								 arm_2d_size_t *
-								 __restrict
-								 ptSourceMaskSize,
-								 uint32_t *
-								 __restrict
-								 pTargetBase,
-								 int16_t
-								 iTargetStride,
-								 uint32_t *
-								 __restrict
-								 ptTargetMaskBase,
-								 int16_t
-								 iTargetMaskStride,
-								 arm_2d_size_t *
-								 __restrict
-								 ptTargetMaskSize,
-								 arm_2d_size_t *
-								 __restrict
-								 ptCopySize);
+                                 __restrict
+                                 pSourceBase,
+                                 int16_t
+                                 iSourceStride,
+                                 uint32_t *
+                                 __restrict
+                                 ptSourceMaskBase,
+                                 int16_t
+                                 iSourceMaskStride,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptSourceMaskSize,
+                                 uint32_t *
+                                 __restrict
+                                 pTargetBase,
+                                 int16_t
+                                 iTargetStride,
+                                 uint32_t *
+                                 __restrict
+                                 ptTargetMaskBase,
+                                 int16_t
+                                 iTargetMaskStride,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptTargetMaskSize,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptCopySize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_copy_xy_mirror(uint32_t *
-								  __restrict
-								  pSourceBase,
-								  int16_t
-								  iSourceStride,
-								  uint32_t *
-								  __restrict
-								  ptSourceMaskBase,
-								  int16_t
-								  iSourceMaskStride,
-								  arm_2d_size_t
-								  *
-								  __restrict
-								  ptSourceMaskSize,
-								  uint32_t *
-								  __restrict
-								  pTargetBase,
-								  int16_t
-								  iTargetStride,
-								  uint32_t *
-								  __restrict
-								  ptTargetMaskBase,
-								  int16_t
-								  iTargetMaskStride,
-								  arm_2d_size_t
-								  *
-								  __restrict
-								  ptTargetMaskSize,
-								  arm_2d_size_t
-								  *
-								  __restrict
-								  ptCopySize);
+                                  __restrict
+                                  pSourceBase,
+                                  int16_t
+                                  iSourceStride,
+                                  uint32_t *
+                                  __restrict
+                                  ptSourceMaskBase,
+                                  int16_t
+                                  iSourceMaskStride,
+                                  arm_2d_size_t
+                                  *
+                                  __restrict
+                                  ptSourceMaskSize,
+                                  uint32_t *
+                                  __restrict
+                                  pTargetBase,
+                                  int16_t
+                                  iTargetStride,
+                                  uint32_t *
+                                  __restrict
+                                  ptTargetMaskBase,
+                                  int16_t
+                                  iTargetMaskStride,
+                                  arm_2d_size_t
+                                  *
+                                  __restrict
+                                  ptTargetMaskSize,
+                                  arm_2d_size_t
+                                  *
+                                  __restrict
+                                  ptCopySize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_copy_y_mirror(uint32_t *
-								 __restrict
-								 pSourceBase,
-								 int16_t
-								 iSourceStride,
-								 uint32_t *
-								 __restrict
-								 ptSourceMaskBase,
-								 int16_t
-								 iSourceMaskStride,
-								 arm_2d_size_t *
-								 __restrict
-								 ptSourceMaskSize,
-								 uint32_t *
-								 __restrict
-								 pTargetBase,
-								 int16_t
-								 iTargetStride,
-								 uint32_t *
-								 __restrict
-								 ptTargetMaskBase,
-								 int16_t
-								 iTargetMaskStride,
-								 arm_2d_size_t *
-								 __restrict
-								 ptTargetMaskSize,
-								 arm_2d_size_t *
-								 __restrict
-								 ptCopySize);
+                                 __restrict
+                                 pSourceBase,
+                                 int16_t
+                                 iSourceStride,
+                                 uint32_t *
+                                 __restrict
+                                 ptSourceMaskBase,
+                                 int16_t
+                                 iSourceMaskStride,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptSourceMaskSize,
+                                 uint32_t *
+                                 __restrict
+                                 pTargetBase,
+                                 int16_t
+                                 iTargetStride,
+                                 uint32_t *
+                                 __restrict
+                                 ptTargetMaskBase,
+                                 int16_t
+                                 iTargetMaskStride,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptTargetMaskSize,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptCopySize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_fill(uint32_t *
-							__restrict ptSourceBase,
-							int16_t iSourceStride,
-							arm_2d_size_t *
-							__restrict ptSourceSize,
-							uint32_t *
-							__restrict
-							ptSourceMaskBase,
-							int16_t
-							iSourceMaskStride,
-							arm_2d_size_t *
-							__restrict
-							ptSourceMaskSize,
-							uint32_t *
-							__restrict ptTargetBase,
-							int16_t iTargetStride,
-							arm_2d_size_t *
-							__restrict ptTargetSize,
-							uint32_t *
-							__restrict
-							ptTargetMaskBase,
-							int16_t
-							iTargetMaskStride,
-							arm_2d_size_t *
-							__restrict
-							ptTargetMaskSize);
+                            __restrict ptSourceBase,
+                            int16_t iSourceStride,
+                            arm_2d_size_t *
+                            __restrict ptSourceSize,
+                            uint32_t *
+                            __restrict
+                            ptSourceMaskBase,
+                            int16_t
+                            iSourceMaskStride,
+                            arm_2d_size_t *
+                            __restrict
+                            ptSourceMaskSize,
+                            uint32_t *
+                            __restrict ptTargetBase,
+                            int16_t iTargetStride,
+                            arm_2d_size_t *
+                            __restrict ptTargetSize,
+                            uint32_t *
+                            __restrict
+                            ptTargetMaskBase,
+                            int16_t
+                            iTargetMaskStride,
+                            arm_2d_size_t *
+                            __restrict
+                            ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_fill_mirror(uint32_t *
-							       __restrict
-							       ptSourceBase,
-							       int16_t
-							       iSourceStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptSourceSize,
-							       uint32_t *
-							       __restrict
-							       ptSourceMaskBase,
-							       int16_t
-							       iSourceMaskStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptSourceMaskSize,
-							       uint32_t *
-							       __restrict
-							       ptTargetBase,
-							       int16_t
-							       iTargetStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptTargetSize,
-							       uint32_t *
-							       __restrict
-							       ptTargetMaskBase,
-							       int16_t
-							       iTargetMaskStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptTargetMaskSize,
-							       uint32_t wMode);
+                                   __restrict
+                                   ptSourceBase,
+                                   int16_t
+                                   iSourceStride,
+                                   arm_2d_size_t *
+                                   __restrict
+                                   ptSourceSize,
+                                   uint32_t *
+                                   __restrict
+                                   ptSourceMaskBase,
+                                   int16_t
+                                   iSourceMaskStride,
+                                   arm_2d_size_t *
+                                   __restrict
+                                   ptSourceMaskSize,
+                                   uint32_t *
+                                   __restrict
+                                   ptTargetBase,
+                                   int16_t
+                                   iTargetStride,
+                                   arm_2d_size_t *
+                                   __restrict
+                                   ptTargetSize,
+                                   uint32_t *
+                                   __restrict
+                                   ptTargetMaskBase,
+                                   int16_t
+                                   iTargetMaskStride,
+                                   arm_2d_size_t *
+                                   __restrict
+                                   ptTargetMaskSize,
+                                   uint32_t wMode);
 
 void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_fill_x_mirror(uint32_t *
-								 __restrict
-								 ptSourceBase,
-								 int16_t
-								 iSourceStride,
-								 arm_2d_size_t *
-								 __restrict
-								 ptSourceSize,
-								 uint32_t *
-								 __restrict
-								 ptSourceMaskBase,
-								 int16_t
-								 iSourceMaskStride,
-								 arm_2d_size_t *
-								 __restrict
-								 ptSourceMaskSize,
-								 uint32_t *
-								 __restrict
-								 ptTargetBase,
-								 int16_t
-								 iTargetStride,
-								 arm_2d_size_t *
-								 __restrict
-								 ptTargetSize,
-								 uint32_t *
-								 __restrict
-								 ptTargetMaskBase,
-								 int16_t
-								 iTargetMaskStride,
-								 arm_2d_size_t *
-								 __restrict
-								 ptTargetMaskSize);
+                                 __restrict
+                                 ptSourceBase,
+                                 int16_t
+                                 iSourceStride,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptSourceSize,
+                                 uint32_t *
+                                 __restrict
+                                 ptSourceMaskBase,
+                                 int16_t
+                                 iSourceMaskStride,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptSourceMaskSize,
+                                 uint32_t *
+                                 __restrict
+                                 ptTargetBase,
+                                 int16_t
+                                 iTargetStride,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptTargetSize,
+                                 uint32_t *
+                                 __restrict
+                                 ptTargetMaskBase,
+                                 int16_t
+                                 iTargetMaskStride,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_fill_xy_mirror(uint32_t *
-								  __restrict
-								  ptSourceBase,
-								  int16_t
-								  iSourceStride,
-								  arm_2d_size_t
-								  *
-								  __restrict
-								  ptSourceSize,
-								  uint32_t *
-								  __restrict
-								  ptSourceMaskBase,
-								  int16_t
-								  iSourceMaskStride,
-								  arm_2d_size_t
-								  *
-								  __restrict
-								  ptSourceMaskSize,
-								  uint32_t *
-								  __restrict
-								  ptTargetBase,
-								  int16_t
-								  iTargetStride,
-								  arm_2d_size_t
-								  *
-								  __restrict
-								  ptTargetSize,
-								  uint32_t *
-								  __restrict
-								  ptTargetMaskBase,
-								  int16_t
-								  iTargetMaskStride,
-								  arm_2d_size_t
-								  *
-								  __restrict
-								  ptTargetMaskSize);
+                                  __restrict
+                                  ptSourceBase,
+                                  int16_t
+                                  iSourceStride,
+                                  arm_2d_size_t
+                                  *
+                                  __restrict
+                                  ptSourceSize,
+                                  uint32_t *
+                                  __restrict
+                                  ptSourceMaskBase,
+                                  int16_t
+                                  iSourceMaskStride,
+                                  arm_2d_size_t
+                                  *
+                                  __restrict
+                                  ptSourceMaskSize,
+                                  uint32_t *
+                                  __restrict
+                                  ptTargetBase,
+                                  int16_t
+                                  iTargetStride,
+                                  arm_2d_size_t
+                                  *
+                                  __restrict
+                                  ptTargetSize,
+                                  uint32_t *
+                                  __restrict
+                                  ptTargetMaskBase,
+                                  int16_t
+                                  iTargetMaskStride,
+                                  arm_2d_size_t
+                                  *
+                                  __restrict
+                                  ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_fill_y_mirror(uint32_t *
-								 __restrict
-								 ptSourceBase,
-								 int16_t
-								 iSourceStride,
-								 arm_2d_size_t *
-								 __restrict
-								 ptSourceSize,
-								 uint32_t *
-								 __restrict
-								 ptSourceMaskBase,
-								 int16_t
-								 iSourceMaskStride,
-								 arm_2d_size_t *
-								 __restrict
-								 ptSourceMaskSize,
-								 uint32_t *
-								 __restrict
-								 ptTargetBase,
-								 int16_t
-								 iTargetStride,
-								 arm_2d_size_t *
-								 __restrict
-								 ptTargetSize,
-								 uint32_t *
-								 __restrict
-								 ptTargetMaskBase,
-								 int16_t
-								 iTargetMaskStride,
-								 arm_2d_size_t *
-								 __restrict
-								 ptTargetMaskSize);
+                                 __restrict
+                                 ptSourceBase,
+                                 int16_t
+                                 iSourceStride,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptSourceSize,
+                                 uint32_t *
+                                 __restrict
+                                 ptSourceMaskBase,
+                                 int16_t
+                                 iSourceMaskStride,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptSourceMaskSize,
+                                 uint32_t *
+                                 __restrict
+                                 ptTargetBase,
+                                 int16_t
+                                 iTargetStride,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptTargetSize,
+                                 uint32_t *
+                                 __restrict
+                                 ptTargetMaskBase,
+                                 int16_t
+                                 iTargetMaskStride,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_des_msk_copy(uint32_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    uint32_t *
-						    __restrict ptSourceMaskBase,
-						    int16_t iSourceMaskStride,
-						    arm_2d_size_t *
-						    __restrict ptSourceMaskSize,
-						    uint32_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint8_t *
-						    __restrict ptTargetMaskBase,
-						    int16_t iTargetMaskStride,
-						    arm_2d_size_t *
-						    __restrict ptTargetMaskSize,
-						    arm_2d_size_t *
-						    __restrict ptCopySize);
+                            __restrict pSourceBase,
+                            int16_t iSourceStride,
+                            uint32_t *
+                            __restrict ptSourceMaskBase,
+                            int16_t iSourceMaskStride,
+                            arm_2d_size_t *
+                            __restrict ptSourceMaskSize,
+                            uint32_t *
+                            __restrict pTargetBase,
+                            int16_t iTargetStride,
+                            uint8_t *
+                            __restrict ptTargetMaskBase,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *
+                            __restrict ptTargetMaskSize,
+                            arm_2d_size_t *
+                            __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_des_msk_copy_mirror(uint32_t *
-							   __restrict
-							   pSourceBase,
-							   int16_t
-							   iSourceStride,
-							   uint32_t *
-							   __restrict
-							   ptSourceMaskBase,
-							   int16_t
-							   iSourceMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceMaskSize,
-							   uint32_t *
-							   __restrict
-							   pTargetBase,
-							   int16_t
-							   iTargetStride,
-							   uint8_t *
-							   __restrict
-							   ptTargetMaskBase,
-							   int16_t
-							   iTargetMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetMaskSize,
-							   arm_2d_size_t *
-							   __restrict
-							   ptCopySize,
-							   uint32_t wMode);
+                               __restrict
+                               pSourceBase,
+                               int16_t
+                               iSourceStride,
+                               uint32_t *
+                               __restrict
+                               ptSourceMaskBase,
+                               int16_t
+                               iSourceMaskStride,
+                               arm_2d_size_t *
+                               __restrict
+                               ptSourceMaskSize,
+                               uint32_t *
+                               __restrict
+                               pTargetBase,
+                               int16_t
+                               iTargetStride,
+                               uint8_t *
+                               __restrict
+                               ptTargetMaskBase,
+                               int16_t
+                               iTargetMaskStride,
+                               arm_2d_size_t *
+                               __restrict
+                               ptTargetMaskSize,
+                               arm_2d_size_t *
+                               __restrict
+                               ptCopySize,
+                               uint32_t wMode);
 
 void __arm_2d_impl_cccn888_src_chn_msk_des_msk_copy_x_mirror(uint32_t *
-							     __restrict
-							     pSourceBase,
-							     int16_t
-							     iSourceStride,
-							     uint32_t *
-							     __restrict
-							     ptSourceMaskBase,
-							     int16_t
-							     iSourceMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceMaskSize,
-							     uint32_t *
-							     __restrict
-							     pTargetBase,
-							     int16_t
-							     iTargetStride,
-							     uint8_t *
-							     __restrict
-							     ptTargetMaskBase,
-							     int16_t
-							     iTargetMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetMaskSize,
-							     arm_2d_size_t *
-							     __restrict
-							     ptCopySize);
+                                 __restrict
+                                 pSourceBase,
+                                 int16_t
+                                 iSourceStride,
+                                 uint32_t *
+                                 __restrict
+                                 ptSourceMaskBase,
+                                 int16_t
+                                 iSourceMaskStride,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptSourceMaskSize,
+                                 uint32_t *
+                                 __restrict
+                                 pTargetBase,
+                                 int16_t
+                                 iTargetStride,
+                                 uint8_t *
+                                 __restrict
+                                 ptTargetMaskBase,
+                                 int16_t
+                                 iTargetMaskStride,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptTargetMaskSize,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptCopySize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_des_msk_copy_xy_mirror(uint32_t *
-							      __restrict
-							      pSourceBase,
-							      int16_t
-							      iSourceStride,
-							      uint32_t *
-							      __restrict
-							      ptSourceMaskBase,
-							      int16_t
-							      iSourceMaskStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptSourceMaskSize,
-							      uint32_t *
-							      __restrict
-							      pTargetBase,
-							      int16_t
-							      iTargetStride,
-							      uint8_t *
-							      __restrict
-							      ptTargetMaskBase,
-							      int16_t
-							      iTargetMaskStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptTargetMaskSize,
-							      arm_2d_size_t *
-							      __restrict
-							      ptCopySize);
+                                  __restrict
+                                  pSourceBase,
+                                  int16_t
+                                  iSourceStride,
+                                  uint32_t *
+                                  __restrict
+                                  ptSourceMaskBase,
+                                  int16_t
+                                  iSourceMaskStride,
+                                  arm_2d_size_t *
+                                  __restrict
+                                  ptSourceMaskSize,
+                                  uint32_t *
+                                  __restrict
+                                  pTargetBase,
+                                  int16_t
+                                  iTargetStride,
+                                  uint8_t *
+                                  __restrict
+                                  ptTargetMaskBase,
+                                  int16_t
+                                  iTargetMaskStride,
+                                  arm_2d_size_t *
+                                  __restrict
+                                  ptTargetMaskSize,
+                                  arm_2d_size_t *
+                                  __restrict
+                                  ptCopySize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_des_msk_copy_y_mirror(uint32_t *
-							     __restrict
-							     pSourceBase,
-							     int16_t
-							     iSourceStride,
-							     uint32_t *
-							     __restrict
-							     ptSourceMaskBase,
-							     int16_t
-							     iSourceMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceMaskSize,
-							     uint32_t *
-							     __restrict
-							     pTargetBase,
-							     int16_t
-							     iTargetStride,
-							     uint8_t *
-							     __restrict
-							     ptTargetMaskBase,
-							     int16_t
-							     iTargetMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetMaskSize,
-							     arm_2d_size_t *
-							     __restrict
-							     ptCopySize);
+                                 __restrict
+                                 pSourceBase,
+                                 int16_t
+                                 iSourceStride,
+                                 uint32_t *
+                                 __restrict
+                                 ptSourceMaskBase,
+                                 int16_t
+                                 iSourceMaskStride,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptSourceMaskSize,
+                                 uint32_t *
+                                 __restrict
+                                 pTargetBase,
+                                 int16_t
+                                 iTargetStride,
+                                 uint8_t *
+                                 __restrict
+                                 ptTargetMaskBase,
+                                 int16_t
+                                 iTargetMaskStride,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptTargetMaskSize,
+                                 arm_2d_size_t *
+                                 __restrict
+                                 ptCopySize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_des_msk_fill(uint32_t *
-						    __restrict ptSourceBase,
-						    int16_t iSourceStride,
-						    arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint32_t *
-						    __restrict ptSourceMaskBase,
-						    int16_t iSourceMaskStride,
-						    arm_2d_size_t *
-						    __restrict ptSourceMaskSize,
-						    uint32_t *
-						    __restrict ptTargetBase,
-						    int16_t iTargetStride,
-						    arm_2d_size_t *
-						    __restrict ptTargetSize,
-						    uint8_t *
-						    __restrict ptTargetMaskBase,
-						    int16_t iTargetMaskStride,
-						    arm_2d_size_t *
-						    __restrict
-						    ptTargetMaskSize);
+                            __restrict ptSourceBase,
+                            int16_t iSourceStride,
+                            arm_2d_size_t *
+                            __restrict ptSourceSize,
+                            uint32_t *
+                            __restrict ptSourceMaskBase,
+                            int16_t iSourceMaskStride,
+                            arm_2d_size_t *
+                            __restrict ptSourceMaskSize,
+                            uint32_t *
+                            __restrict ptTargetBase,
+                            int16_t iTargetStride,
+                            arm_2d_size_t *
+                            __restrict ptTargetSize,
+                            uint8_t *
+                            __restrict ptTargetMaskBase,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *
+                            __restrict
+                            ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_des_msk_fill_mirror(uint32_t *
-							   __restrict
-							   ptSourceBase,
-							   int16_t
-							   iSourceStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceSize,
-							   uint32_t *
-							   __restrict
-							   ptSourceMaskBase,
-							   int16_t
-							   iSourceMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceMaskSize,
-							   uint32_t *
-							   __restrict
-							   ptTargetBase,
-							   int16_t
-							   iTargetStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetSize,
-							   uint8_t *
-							   __restrict
-							   ptTargetMaskBase,
-							   int16_t
-							   iTargetMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetMaskSize,
-							   uint32_t wMode);
+                               __restrict
+                               ptSourceBase,
+                               int16_t
+                               iSourceStride,
+                               arm_2d_size_t *
+                               __restrict
+                               ptSourceSize,
+                               uint32_t *
+                               __restrict
+                               ptSourceMaskBase,
+                               int16_t
+                               iSourceMaskStride,
+                               arm_2d_size_t *
+                               __restrict
+                               ptSourceMaskSize,
+                               uint32_t *
+                               __restrict
+                               ptTargetBase,
+                               int16_t
+                               iTargetStride,
+                               arm_2d_size_t *
+                               __restrict
+                               ptTargetSize,
+                               uint8_t *
+                               __restrict
+                               ptTargetMaskBase,
+                               int16_t
+                               iTargetMaskStride,
+                               arm_2d_size_t *
+                               __restrict
+                               ptTargetMaskSize,
+                               uint32_t wMode);
 
 void __arm_2d_impl_cccn888_src_chn_msk_des_msk_fill_x_mirror(uint32_t *
-							     __restrict
-							     ptSourceBase,
-							     int16_t
-							     iSourceStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceSize,
-							     uint32_t *
-							     __restrict
-							     ptSourceMaskBase,
-							     int16_t
-							     iSourceMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceMaskSize,
-							     uint32_t *
-							     __restrict
-							     ptTargetBase,
-							     int16_t
-							     iTargetStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetSize,
-							     uint8_t *
-							     __restrict
-							     ptTargetMaskBase,
-							     int16_t
-							     iTargetMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetMaskSize);
+                                                             __restrict
+                                                             ptSourceBase,
+                                                             int16_t
+                                                             iSourceStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceSize,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptSourceMaskBase,
+                                                             int16_t
+                                                             iSourceMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceMaskSize,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptTargetBase,
+                                                             int16_t
+                                                             iTargetStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetSize,
+                                                             uint8_t *
+                                                             __restrict
+                                                             ptTargetMaskBase,
+                                                             int16_t
+                                                             iTargetMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_des_msk_fill_xy_mirror(uint32_t *
-							      __restrict
-							      ptSourceBase,
-							      int16_t
-							      iSourceStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptSourceSize,
-							      uint32_t *
-							      __restrict
-							      ptSourceMaskBase,
-							      int16_t
-							      iSourceMaskStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptSourceMaskSize,
-							      uint32_t *
-							      __restrict
-							      ptTargetBase,
-							      int16_t
-							      iTargetStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptTargetSize,
-							      uint8_t *
-							      __restrict
-							      ptTargetMaskBase,
-							      int16_t
-							      iTargetMaskStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptTargetMaskSize);
+                                                              __restrict
+                                                              ptSourceBase,
+                                                              int16_t
+                                                              iSourceStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptSourceSize,
+                                                              uint32_t *
+                                                              __restrict
+                                                              ptSourceMaskBase,
+                                                              int16_t
+                                                              iSourceMaskStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptSourceMaskSize,
+                                                              uint32_t *
+                                                              __restrict
+                                                              ptTargetBase,
+                                                              int16_t
+                                                              iTargetStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptTargetSize,
+                                                              uint8_t *
+                                                              __restrict
+                                                              ptTargetMaskBase,
+                                                              int16_t
+                                                              iTargetMaskStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_des_msk_fill_y_mirror(uint32_t *
-							     __restrict
-							     ptSourceBase,
-							     int16_t
-							     iSourceStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceSize,
-							     uint32_t *
-							     __restrict
-							     ptSourceMaskBase,
-							     int16_t
-							     iSourceMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceMaskSize,
-							     uint32_t *
-							     __restrict
-							     ptTargetBase,
-							     int16_t
-							     iTargetStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetSize,
-							     uint8_t *
-							     __restrict
-							     ptTargetMaskBase,
-							     int16_t
-							     iTargetMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetMaskSize);
+                                                             __restrict
+                                                             ptSourceBase,
+                                                             int16_t
+                                                             iSourceStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceSize,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptSourceMaskBase,
+                                                             int16_t
+                                                             iSourceMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceMaskSize,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptTargetBase,
+                                                             int16_t
+                                                             iTargetStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetSize,
+                                                             uint8_t *
+                                                             __restrict
+                                                             ptTargetMaskBase,
+                                                             int16_t
+                                                             iTargetMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_fill(uint32_t * __restrict ptSourceBase,
-					    int16_t iSourceStride,
-					    arm_2d_size_t *
-					    __restrict ptSourceSize,
-					    uint32_t *
-					    __restrict ptSourceMaskBase,
-					    int16_t iSourceMaskStride,
-					    arm_2d_size_t *
-					    __restrict ptSourceMaskSize,
-					    uint32_t * __restrict ptTargetBase,
-					    int16_t iTargetStride,
-					    arm_2d_size_t *
-					    __restrict ptTargetSize);
+                                            int16_t iSourceStride,
+                                            arm_2d_size_t *
+                                            __restrict ptSourceSize,
+                                            uint32_t *
+                                            __restrict ptSourceMaskBase,
+                                            int16_t iSourceMaskStride,
+                                            arm_2d_size_t *
+                                            __restrict ptSourceMaskSize,
+                                            uint32_t * __restrict ptTargetBase,
+                                            int16_t iTargetStride,
+                                            arm_2d_size_t *
+                                            __restrict ptTargetSize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_fill_mirror(uint32_t *
-						   __restrict ptSourceBase,
-						   int16_t iSourceStride,
-						   arm_2d_size_t *
-						   __restrict ptSourceSize,
-						   uint32_t *
-						   __restrict ptSourceMaskBase,
-						   int16_t iSourceMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptSourceMaskSize,
-						   uint32_t *
-						   __restrict ptTargetBase,
-						   int16_t iTargetStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetSize,
-						   uint32_t wMode);
+                                                   __restrict ptSourceBase,
+                                                   int16_t iSourceStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptSourceSize,
+                                                   uint32_t *
+                                                   __restrict ptSourceMaskBase,
+                                                   int16_t iSourceMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptSourceMaskSize,
+                                                   uint32_t *
+                                                   __restrict ptTargetBase,
+                                                   int16_t iTargetStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetSize,
+                                                   uint32_t wMode);
 
 void __arm_2d_impl_cccn888_src_chn_msk_fill_x_mirror(uint32_t *
-						     __restrict ptSourceBase,
-						     int16_t iSourceStride,
-						     arm_2d_size_t *
-						     __restrict ptSourceSize,
-						     uint32_t *
-						     __restrict
-						     ptSourceMaskBase,
-						     int16_t iSourceMaskStride,
-						     arm_2d_size_t *
-						     __restrict
-						     ptSourceMaskSize,
-						     uint32_t *
-						     __restrict ptTargetBase,
-						     int16_t iTargetStride,
-						     arm_2d_size_t *
-						     __restrict ptTargetSize);
+                                                     __restrict ptSourceBase,
+                                                     int16_t iSourceStride,
+                                                     arm_2d_size_t *
+                                                     __restrict ptSourceSize,
+                                                     uint32_t *
+                                                     __restrict
+                                                     ptSourceMaskBase,
+                                                     int16_t iSourceMaskStride,
+                                                     arm_2d_size_t *
+                                                     __restrict
+                                                     ptSourceMaskSize,
+                                                     uint32_t *
+                                                     __restrict ptTargetBase,
+                                                     int16_t iTargetStride,
+                                                     arm_2d_size_t *
+                                                     __restrict ptTargetSize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_fill_xy_mirror(uint32_t *
-						      __restrict ptSourceBase,
-						      int16_t iSourceStride,
-						      arm_2d_size_t *
-						      __restrict ptSourceSize,
-						      uint32_t *
-						      __restrict
-						      ptSourceMaskBase,
-						      int16_t iSourceMaskStride,
-						      arm_2d_size_t *
-						      __restrict
-						      ptSourceMaskSize,
-						      uint32_t *
-						      __restrict ptTargetBase,
-						      int16_t iTargetStride,
-						      arm_2d_size_t *
-						      __restrict ptTargetSize);
+                                                      __restrict ptSourceBase,
+                                                      int16_t iSourceStride,
+                                                      arm_2d_size_t *
+                                                      __restrict ptSourceSize,
+                                                      uint32_t *
+                                                      __restrict
+                                                      ptSourceMaskBase,
+                                                      int16_t iSourceMaskStride,
+                                                      arm_2d_size_t *
+                                                      __restrict
+                                                      ptSourceMaskSize,
+                                                      uint32_t *
+                                                      __restrict ptTargetBase,
+                                                      int16_t iTargetStride,
+                                                      arm_2d_size_t *
+                                                      __restrict ptTargetSize);
 
 void __arm_2d_impl_cccn888_src_chn_msk_fill_y_mirror(uint32_t *
-						     __restrict ptSourceBase,
-						     int16_t iSourceStride,
-						     arm_2d_size_t *
-						     __restrict ptSourceSize,
-						     uint32_t *
-						     __restrict
-						     ptSourceMaskBase,
-						     int16_t iSourceMaskStride,
-						     arm_2d_size_t *
-						     __restrict
-						     ptSourceMaskSize,
-						     uint32_t *
-						     __restrict ptTargetBase,
-						     int16_t iTargetStride,
-						     arm_2d_size_t *
-						     __restrict ptTargetSize);
+                                                     __restrict ptSourceBase,
+                                                     int16_t iSourceStride,
+                                                     arm_2d_size_t *
+                                                     __restrict ptSourceSize,
+                                                     uint32_t *
+                                                     __restrict
+                                                     ptSourceMaskBase,
+                                                     int16_t iSourceMaskStride,
+                                                     arm_2d_size_t *
+                                                     __restrict
+                                                     ptSourceMaskSize,
+                                                     uint32_t *
+                                                     __restrict ptTargetBase,
+                                                     int16_t iTargetStride,
+                                                     arm_2d_size_t *
+                                                     __restrict ptTargetSize);
 
 void __arm_2d_impl_cccn888_src_msk_1h_des_msk_copy(uint32_t *
-						   __restrict pSourceBase,
-						   int16_t iSourceStride,
-						   uint8_t *
-						   __restrict ptSourceMaskBase,
-						   int16_t iSourceMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptSourceMaskSize,
-						   uint32_t *
-						   __restrict pTargetBase,
-						   int16_t iTargetStride,
-						   uint8_t *
-						   __restrict ptTargetMaskBase,
-						   int16_t iTargetMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetMaskSize,
-						   arm_2d_size_t *
-						   __restrict ptCopySize);
+                                                   __restrict pSourceBase,
+                                                   int16_t iSourceStride,
+                                                   uint8_t *
+                                                   __restrict ptSourceMaskBase,
+                                                   int16_t iSourceMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptSourceMaskSize,
+                                                   uint32_t *
+                                                   __restrict pTargetBase,
+                                                   int16_t iTargetStride,
+                                                   uint8_t *
+                                                   __restrict ptTargetMaskBase,
+                                                   int16_t iTargetMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetMaskSize,
+                                                   arm_2d_size_t *
+                                                   __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_src_msk_1h_des_msk_copy_mirror(uint32_t *
-							  __restrict
-							  pSourceBase,
-							  int16_t iSourceStride,
-							  uint8_t *
-							  __restrict
-							  ptSourceMaskBase,
-							  int16_t
-							  iSourceMaskStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptSourceMaskSize,
-							  uint32_t *
-							  __restrict
-							  pTargetBase,
-							  int16_t iTargetStride,
-							  uint8_t *
-							  __restrict
-							  ptTargetMaskBase,
-							  int16_t
-							  iTargetMaskStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptTargetMaskSize,
-							  arm_2d_size_t *
-							  __restrict ptCopySize,
-							  uint32_t wMode);
+                                                          __restrict
+                                                          pSourceBase,
+                                                          int16_t iSourceStride,
+                                                          uint8_t *
+                                                          __restrict
+                                                          ptSourceMaskBase,
+                                                          int16_t
+                                                          iSourceMaskStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptSourceMaskSize,
+                                                          uint32_t *
+                                                          __restrict
+                                                          pTargetBase,
+                                                          int16_t iTargetStride,
+                                                          uint8_t *
+                                                          __restrict
+                                                          ptTargetMaskBase,
+                                                          int16_t
+                                                          iTargetMaskStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptTargetMaskSize,
+                                                          arm_2d_size_t *
+                                                          __restrict ptCopySize,
+                                                          uint32_t wMode);
 
 void __arm_2d_impl_cccn888_src_msk_1h_des_msk_copy_x_mirror(uint32_t *
-							    __restrict
-							    pSourceBase,
-							    int16_t
-							    iSourceStride,
-							    uint8_t *
-							    __restrict
-							    ptSourceMaskBase,
-							    int16_t
-							    iSourceMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceMaskSize,
-							    uint32_t *
-							    __restrict
-							    pTargetBase,
-							    int16_t
-							    iTargetStride,
-							    uint8_t *
-							    __restrict
-							    ptTargetMaskBase,
-							    int16_t
-							    iTargetMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetMaskSize,
-							    arm_2d_size_t *
-							    __restrict
-							    ptCopySize);
+                                                            __restrict
+                                                            pSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint32_t *
+                                                            __restrict
+                                                            pTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptCopySize);
 
 void __arm_2d_impl_cccn888_src_msk_1h_des_msk_copy_xy_mirror(uint32_t *
-							     __restrict
-							     pSourceBase,
-							     int16_t
-							     iSourceStride,
-							     uint8_t *
-							     __restrict
-							     ptSourceMaskBase,
-							     int16_t
-							     iSourceMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceMaskSize,
-							     uint32_t *
-							     __restrict
-							     pTargetBase,
-							     int16_t
-							     iTargetStride,
-							     uint8_t *
-							     __restrict
-							     ptTargetMaskBase,
-							     int16_t
-							     iTargetMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetMaskSize,
-							     arm_2d_size_t *
-							     __restrict
-							     ptCopySize);
+                                                             __restrict
+                                                             pSourceBase,
+                                                             int16_t
+                                                             iSourceStride,
+                                                             uint8_t *
+                                                             __restrict
+                                                             ptSourceMaskBase,
+                                                             int16_t
+                                                             iSourceMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceMaskSize,
+                                                             uint32_t *
+                                                             __restrict
+                                                             pTargetBase,
+                                                             int16_t
+                                                             iTargetStride,
+                                                             uint8_t *
+                                                             __restrict
+                                                             ptTargetMaskBase,
+                                                             int16_t
+                                                             iTargetMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetMaskSize,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptCopySize);
 
 void __arm_2d_impl_cccn888_src_msk_1h_des_msk_copy_y_mirror(uint32_t *
-							    __restrict
-							    pSourceBase,
-							    int16_t
-							    iSourceStride,
-							    uint8_t *
-							    __restrict
-							    ptSourceMaskBase,
-							    int16_t
-							    iSourceMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceMaskSize,
-							    uint32_t *
-							    __restrict
-							    pTargetBase,
-							    int16_t
-							    iTargetStride,
-							    uint8_t *
-							    __restrict
-							    ptTargetMaskBase,
-							    int16_t
-							    iTargetMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetMaskSize,
-							    arm_2d_size_t *
-							    __restrict
-							    ptCopySize);
+                                                            __restrict
+                                                            pSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint32_t *
+                                                            __restrict
+                                                            pTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptCopySize);
 
 void __arm_2d_impl_cccn888_src_msk_1h_des_msk_fill(uint32_t *
-						   __restrict ptSourceBase,
-						   int16_t iSourceStride,
-						   arm_2d_size_t *
-						   __restrict ptSourceSize,
-						   uint8_t *
-						   __restrict ptSourceMaskBase,
-						   int16_t iSourceMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptSourceMaskSize,
-						   uint32_t *
-						   __restrict ptTargetBase,
-						   int16_t iTargetStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetSize,
-						   uint8_t *
-						   __restrict ptTargetMaskBase,
-						   int16_t iTargetMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetMaskSize);
+                                                   __restrict ptSourceBase,
+                                                   int16_t iSourceStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptSourceSize,
+                                                   uint8_t *
+                                                   __restrict ptSourceMaskBase,
+                                                   int16_t iSourceMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptSourceMaskSize,
+                                                   uint32_t *
+                                                   __restrict ptTargetBase,
+                                                   int16_t iTargetStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetSize,
+                                                   uint8_t *
+                                                   __restrict ptTargetMaskBase,
+                                                   int16_t iTargetMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_src_msk_1h_des_msk_fill_mirror(uint32_t *
-							  __restrict
-							  ptSourceBase,
-							  int16_t iSourceStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptSourceSize,
-							  uint8_t *
-							  __restrict
-							  ptSourceMaskBase,
-							  int16_t
-							  iSourceMaskStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptSourceMaskSize,
-							  uint32_t *
-							  __restrict
-							  ptTargetBase,
-							  int16_t iTargetStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptTargetSize,
-							  uint8_t *
-							  __restrict
-							  ptTargetMaskBase,
-							  int16_t
-							  iTargetMaskStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptTargetMaskSize,
-							  uint32_t wMode);
+                                                          __restrict
+                                                          ptSourceBase,
+                                                          int16_t iSourceStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptSourceSize,
+                                                          uint8_t *
+                                                          __restrict
+                                                          ptSourceMaskBase,
+                                                          int16_t
+                                                          iSourceMaskStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptSourceMaskSize,
+                                                          uint32_t *
+                                                          __restrict
+                                                          ptTargetBase,
+                                                          int16_t iTargetStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptTargetSize,
+                                                          uint8_t *
+                                                          __restrict
+                                                          ptTargetMaskBase,
+                                                          int16_t
+                                                          iTargetMaskStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptTargetMaskSize,
+                                                          uint32_t wMode);
 
 void __arm_2d_impl_cccn888_src_msk_1h_des_msk_fill_x_mirror(uint32_t *
-							    __restrict
-							    ptSourceBase,
-							    int16_t
-							    iSourceStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceSize,
-							    uint8_t *
-							    __restrict
-							    ptSourceMaskBase,
-							    int16_t
-							    iSourceMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceMaskSize,
-							    uint32_t *
-							    __restrict
-							    ptTargetBase,
-							    int16_t
-							    iTargetStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetSize,
-							    uint8_t *
-							    __restrict
-							    ptTargetMaskBase,
-							    int16_t
-							    iTargetMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetMaskSize);
+                                                            __restrict
+                                                            ptSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceSize,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetSize,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_src_msk_1h_des_msk_fill_xy_mirror(uint32_t *
-							     __restrict
-							     ptSourceBase,
-							     int16_t
-							     iSourceStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceSize,
-							     uint8_t *
-							     __restrict
-							     ptSourceMaskBase,
-							     int16_t
-							     iSourceMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceMaskSize,
-							     uint32_t *
-							     __restrict
-							     ptTargetBase,
-							     int16_t
-							     iTargetStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetSize,
-							     uint8_t *
-							     __restrict
-							     ptTargetMaskBase,
-							     int16_t
-							     iTargetMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetMaskSize);
+                                                             __restrict
+                                                             ptSourceBase,
+                                                             int16_t
+                                                             iSourceStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceSize,
+                                                             uint8_t *
+                                                             __restrict
+                                                             ptSourceMaskBase,
+                                                             int16_t
+                                                             iSourceMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceMaskSize,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptTargetBase,
+                                                             int16_t
+                                                             iTargetStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetSize,
+                                                             uint8_t *
+                                                             __restrict
+                                                             ptTargetMaskBase,
+                                                             int16_t
+                                                             iTargetMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_src_msk_1h_des_msk_fill_y_mirror(uint32_t *
-							    __restrict
-							    ptSourceBase,
-							    int16_t
-							    iSourceStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceSize,
-							    uint8_t *
-							    __restrict
-							    ptSourceMaskBase,
-							    int16_t
-							    iSourceMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceMaskSize,
-							    uint32_t *
-							    __restrict
-							    ptTargetBase,
-							    int16_t
-							    iTargetStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetSize,
-							    uint8_t *
-							    __restrict
-							    ptTargetMaskBase,
-							    int16_t
-							    iTargetMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetMaskSize);
+                                                            __restrict
+                                                            ptSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceSize,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetSize,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_src_msk_copy(uint32_t * __restrict pSourceBase,
-					int16_t iSourceStride,
-					uint8_t * __restrict ptSourceMaskBase,
-					int16_t iSourceMaskStride,
-					arm_2d_size_t *
-					__restrict ptSourceMaskSize,
-					uint32_t * __restrict pTargetBase,
-					int16_t iTargetStride,
-					arm_2d_size_t * __restrict ptCopySize);
+                                        int16_t iSourceStride,
+                                        uint8_t * __restrict ptSourceMaskBase,
+                                        int16_t iSourceMaskStride,
+                                        arm_2d_size_t *
+                                        __restrict ptSourceMaskSize,
+                                        uint32_t * __restrict pTargetBase,
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t * __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_src_msk_copy_mirror(uint32_t *
-					       __restrict pSourceBase,
-					       int16_t iSourceStride,
-					       uint8_t *
-					       __restrict ptSourceMaskBase,
-					       int16_t iSourceMaskStride,
-					       arm_2d_size_t *
-					       __restrict ptSourceMaskSize,
-					       uint32_t *
-					       __restrict pTargetBase,
-					       int16_t iTargetStride,
-					       arm_2d_size_t *
-					       __restrict ptCopySize,
-					       uint32_t wMode);
+                                               __restrict pSourceBase,
+                                               int16_t iSourceStride,
+                                               uint8_t *
+                                               __restrict ptSourceMaskBase,
+                                               int16_t iSourceMaskStride,
+                                               arm_2d_size_t *
+                                               __restrict ptSourceMaskSize,
+                                               uint32_t *
+                                               __restrict pTargetBase,
+                                               int16_t iTargetStride,
+                                               arm_2d_size_t *
+                                               __restrict ptCopySize,
+                                               uint32_t wMode);
 
 void __arm_2d_impl_cccn888_src_msk_copy_x_mirror(uint32_t *
-						 __restrict pSourceBase,
-						 int16_t iSourceStride,
-						 uint8_t *
-						 __restrict ptSourceMaskBase,
-						 int16_t iSourceMaskStride,
-						 arm_2d_size_t *
-						 __restrict ptSourceMaskSize,
-						 uint32_t *
-						 __restrict pTargetBase,
-						 int16_t iTargetStride,
-						 arm_2d_size_t *
-						 __restrict ptCopySize);
+                                                 __restrict pSourceBase,
+                                                 int16_t iSourceStride,
+                                                 uint8_t *
+                                                 __restrict ptSourceMaskBase,
+                                                 int16_t iSourceMaskStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptSourceMaskSize,
+                                                 uint32_t *
+                                                 __restrict pTargetBase,
+                                                 int16_t iTargetStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_src_msk_copy_xy_mirror(uint32_t *
-						  __restrict pSourceBase,
-						  int16_t iSourceStride,
-						  uint8_t *
-						  __restrict ptSourceMaskBase,
-						  int16_t iSourceMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptSourceMaskSize,
-						  uint32_t *
-						  __restrict pTargetBase,
-						  int16_t iTargetStride,
-						  arm_2d_size_t *
-						  __restrict ptCopySize);
+                                                  __restrict pSourceBase,
+                                                  int16_t iSourceStride,
+                                                  uint8_t *
+                                                  __restrict ptSourceMaskBase,
+                                                  int16_t iSourceMaskStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptSourceMaskSize,
+                                                  uint32_t *
+                                                  __restrict pTargetBase,
+                                                  int16_t iTargetStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_src_msk_copy_y_mirror(uint32_t *
-						 __restrict pSourceBase,
-						 int16_t iSourceStride,
-						 uint8_t *
-						 __restrict ptSourceMaskBase,
-						 int16_t iSourceMaskStride,
-						 arm_2d_size_t *
-						 __restrict ptSourceMaskSize,
-						 uint32_t *
-						 __restrict pTargetBase,
-						 int16_t iTargetStride,
-						 arm_2d_size_t *
-						 __restrict ptCopySize);
+                                                 __restrict pSourceBase,
+                                                 int16_t iSourceStride,
+                                                 uint8_t *
+                                                 __restrict ptSourceMaskBase,
+                                                 int16_t iSourceMaskStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptSourceMaskSize,
+                                                 uint32_t *
+                                                 __restrict pTargetBase,
+                                                 int16_t iTargetStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_src_msk_des_chn_msk_copy(uint32_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    uint8_t *
-						    __restrict ptSourceMaskBase,
-						    int16_t iSourceMaskStride,
-						    arm_2d_size_t *
-						    __restrict ptSourceMaskSize,
-						    uint32_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint32_t *
-						    __restrict ptTargetMaskBase,
-						    int16_t iTargetMaskStride,
-						    arm_2d_size_t *
-						    __restrict ptTargetMaskSize,
-						    arm_2d_size_t *
-						    __restrict ptCopySize);
+                                                    __restrict pSourceBase,
+                                                    int16_t iSourceStride,
+                                                    uint8_t *
+                                                    __restrict ptSourceMaskBase,
+                                                    int16_t iSourceMaskStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptSourceMaskSize,
+                                                    uint32_t *
+                                                    __restrict pTargetBase,
+                                                    int16_t iTargetStride,
+                                                    uint32_t *
+                                                    __restrict ptTargetMaskBase,
+                                                    int16_t iTargetMaskStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptTargetMaskSize,
+                                                    arm_2d_size_t *
+                                                    __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_src_msk_des_chn_msk_copy_mirror(uint32_t *
-							   __restrict
-							   pSourceBase,
-							   int16_t
-							   iSourceStride,
-							   uint8_t *
-							   __restrict
-							   ptSourceMaskBase,
-							   int16_t
-							   iSourceMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceMaskSize,
-							   uint32_t *
-							   __restrict
-							   pTargetBase,
-							   int16_t
-							   iTargetStride,
-							   uint32_t *
-							   __restrict
-							   ptTargetMaskBase,
-							   int16_t
-							   iTargetMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetMaskSize,
-							   arm_2d_size_t *
-							   __restrict
-							   ptCopySize,
-							   uint32_t wMode);
+                                                           __restrict
+                                                           pSourceBase,
+                                                           int16_t
+                                                           iSourceStride,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptSourceMaskBase,
+                                                           int16_t
+                                                           iSourceMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceMaskSize,
+                                                           uint32_t *
+                                                           __restrict
+                                                           pTargetBase,
+                                                           int16_t
+                                                           iTargetStride,
+                                                           uint32_t *
+                                                           __restrict
+                                                           ptTargetMaskBase,
+                                                           int16_t
+                                                           iTargetMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetMaskSize,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptCopySize,
+                                                           uint32_t wMode);
 
 void __arm_2d_impl_cccn888_src_msk_des_chn_msk_copy_x_mirror(uint32_t *
-							     __restrict
-							     pSourceBase,
-							     int16_t
-							     iSourceStride,
-							     uint8_t *
-							     __restrict
-							     ptSourceMaskBase,
-							     int16_t
-							     iSourceMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceMaskSize,
-							     uint32_t *
-							     __restrict
-							     pTargetBase,
-							     int16_t
-							     iTargetStride,
-							     uint32_t *
-							     __restrict
-							     ptTargetMaskBase,
-							     int16_t
-							     iTargetMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetMaskSize,
-							     arm_2d_size_t *
-							     __restrict
-							     ptCopySize);
+                                                             __restrict
+                                                             pSourceBase,
+                                                             int16_t
+                                                             iSourceStride,
+                                                             uint8_t *
+                                                             __restrict
+                                                             ptSourceMaskBase,
+                                                             int16_t
+                                                             iSourceMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceMaskSize,
+                                                             uint32_t *
+                                                             __restrict
+                                                             pTargetBase,
+                                                             int16_t
+                                                             iTargetStride,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptTargetMaskBase,
+                                                             int16_t
+                                                             iTargetMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetMaskSize,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptCopySize);
 
 void __arm_2d_impl_cccn888_src_msk_des_chn_msk_copy_xy_mirror(uint32_t *
-							      __restrict
-							      pSourceBase,
-							      int16_t
-							      iSourceStride,
-							      uint8_t *
-							      __restrict
-							      ptSourceMaskBase,
-							      int16_t
-							      iSourceMaskStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptSourceMaskSize,
-							      uint32_t *
-							      __restrict
-							      pTargetBase,
-							      int16_t
-							      iTargetStride,
-							      uint32_t *
-							      __restrict
-							      ptTargetMaskBase,
-							      int16_t
-							      iTargetMaskStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptTargetMaskSize,
-							      arm_2d_size_t *
-							      __restrict
-							      ptCopySize);
+                                                              __restrict
+                                                              pSourceBase,
+                                                              int16_t
+                                                              iSourceStride,
+                                                              uint8_t *
+                                                              __restrict
+                                                              ptSourceMaskBase,
+                                                              int16_t
+                                                              iSourceMaskStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptSourceMaskSize,
+                                                              uint32_t *
+                                                              __restrict
+                                                              pTargetBase,
+                                                              int16_t
+                                                              iTargetStride,
+                                                              uint32_t *
+                                                              __restrict
+                                                              ptTargetMaskBase,
+                                                              int16_t
+                                                              iTargetMaskStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptTargetMaskSize,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptCopySize);
 
 void __arm_2d_impl_cccn888_src_msk_des_chn_msk_copy_y_mirror(uint32_t *
-							     __restrict
-							     pSourceBase,
-							     int16_t
-							     iSourceStride,
-							     uint8_t *
-							     __restrict
-							     ptSourceMaskBase,
-							     int16_t
-							     iSourceMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceMaskSize,
-							     uint32_t *
-							     __restrict
-							     pTargetBase,
-							     int16_t
-							     iTargetStride,
-							     uint32_t *
-							     __restrict
-							     ptTargetMaskBase,
-							     int16_t
-							     iTargetMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetMaskSize,
-							     arm_2d_size_t *
-							     __restrict
-							     ptCopySize);
+                                                             __restrict
+                                                             pSourceBase,
+                                                             int16_t
+                                                             iSourceStride,
+                                                             uint8_t *
+                                                             __restrict
+                                                             ptSourceMaskBase,
+                                                             int16_t
+                                                             iSourceMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceMaskSize,
+                                                             uint32_t *
+                                                             __restrict
+                                                             pTargetBase,
+                                                             int16_t
+                                                             iTargetStride,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptTargetMaskBase,
+                                                             int16_t
+                                                             iTargetMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetMaskSize,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptCopySize);
 
 void __arm_2d_impl_cccn888_src_msk_des_chn_msk_fill(uint32_t *
-						    __restrict ptSourceBase,
-						    int16_t iSourceStride,
-						    arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint8_t *
-						    __restrict ptSourceMaskBase,
-						    int16_t iSourceMaskStride,
-						    arm_2d_size_t *
-						    __restrict ptSourceMaskSize,
-						    uint32_t *
-						    __restrict ptTargetBase,
-						    int16_t iTargetStride,
-						    arm_2d_size_t *
-						    __restrict ptTargetSize,
-						    uint32_t *
-						    __restrict ptTargetMaskBase,
-						    int16_t iTargetMaskStride,
-						    arm_2d_size_t *
-						    __restrict
-						    ptTargetMaskSize);
+                                                    __restrict ptSourceBase,
+                                                    int16_t iSourceStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptSourceSize,
+                                                    uint8_t *
+                                                    __restrict ptSourceMaskBase,
+                                                    int16_t iSourceMaskStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptSourceMaskSize,
+                                                    uint32_t *
+                                                    __restrict ptTargetBase,
+                                                    int16_t iTargetStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptTargetSize,
+                                                    uint32_t *
+                                                    __restrict ptTargetMaskBase,
+                                                    int16_t iTargetMaskStride,
+                                                    arm_2d_size_t *
+                                                    __restrict
+                                                    ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_src_msk_des_chn_msk_fill_mirror(uint32_t *
-							   __restrict
-							   ptSourceBase,
-							   int16_t
-							   iSourceStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceSize,
-							   uint8_t *
-							   __restrict
-							   ptSourceMaskBase,
-							   int16_t
-							   iSourceMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceMaskSize,
-							   uint32_t *
-							   __restrict
-							   ptTargetBase,
-							   int16_t
-							   iTargetStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetSize,
-							   uint32_t *
-							   __restrict
-							   ptTargetMaskBase,
-							   int16_t
-							   iTargetMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetMaskSize,
-							   uint32_t wMode);
+                                                           __restrict
+                                                           ptSourceBase,
+                                                           int16_t
+                                                           iSourceStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceSize,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptSourceMaskBase,
+                                                           int16_t
+                                                           iSourceMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceMaskSize,
+                                                           uint32_t *
+                                                           __restrict
+                                                           ptTargetBase,
+                                                           int16_t
+                                                           iTargetStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetSize,
+                                                           uint32_t *
+                                                           __restrict
+                                                           ptTargetMaskBase,
+                                                           int16_t
+                                                           iTargetMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetMaskSize,
+                                                           uint32_t wMode);
 
 void __arm_2d_impl_cccn888_src_msk_des_chn_msk_fill_x_mirror(uint32_t *
-							     __restrict
-							     ptSourceBase,
-							     int16_t
-							     iSourceStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceSize,
-							     uint8_t *
-							     __restrict
-							     ptSourceMaskBase,
-							     int16_t
-							     iSourceMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceMaskSize,
-							     uint32_t *
-							     __restrict
-							     ptTargetBase,
-							     int16_t
-							     iTargetStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetSize,
-							     uint32_t *
-							     __restrict
-							     ptTargetMaskBase,
-							     int16_t
-							     iTargetMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetMaskSize);
+                                                             __restrict
+                                                             ptSourceBase,
+                                                             int16_t
+                                                             iSourceStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceSize,
+                                                             uint8_t *
+                                                             __restrict
+                                                             ptSourceMaskBase,
+                                                             int16_t
+                                                             iSourceMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceMaskSize,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptTargetBase,
+                                                             int16_t
+                                                             iTargetStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetSize,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptTargetMaskBase,
+                                                             int16_t
+                                                             iTargetMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_src_msk_des_chn_msk_fill_xy_mirror(uint32_t *
-							      __restrict
-							      ptSourceBase,
-							      int16_t
-							      iSourceStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptSourceSize,
-							      uint8_t *
-							      __restrict
-							      ptSourceMaskBase,
-							      int16_t
-							      iSourceMaskStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptSourceMaskSize,
-							      uint32_t *
-							      __restrict
-							      ptTargetBase,
-							      int16_t
-							      iTargetStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptTargetSize,
-							      uint32_t *
-							      __restrict
-							      ptTargetMaskBase,
-							      int16_t
-							      iTargetMaskStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptTargetMaskSize);
+                                                              __restrict
+                                                              ptSourceBase,
+                                                              int16_t
+                                                              iSourceStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptSourceSize,
+                                                              uint8_t *
+                                                              __restrict
+                                                              ptSourceMaskBase,
+                                                              int16_t
+                                                              iSourceMaskStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptSourceMaskSize,
+                                                              uint32_t *
+                                                              __restrict
+                                                              ptTargetBase,
+                                                              int16_t
+                                                              iTargetStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptTargetSize,
+                                                              uint32_t *
+                                                              __restrict
+                                                              ptTargetMaskBase,
+                                                              int16_t
+                                                              iTargetMaskStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_src_msk_des_chn_msk_fill_y_mirror(uint32_t *
-							     __restrict
-							     ptSourceBase,
-							     int16_t
-							     iSourceStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceSize,
-							     uint8_t *
-							     __restrict
-							     ptSourceMaskBase,
-							     int16_t
-							     iSourceMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceMaskSize,
-							     uint32_t *
-							     __restrict
-							     ptTargetBase,
-							     int16_t
-							     iTargetStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetSize,
-							     uint32_t *
-							     __restrict
-							     ptTargetMaskBase,
-							     int16_t
-							     iTargetMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetMaskSize);
+                                                             __restrict
+                                                             ptSourceBase,
+                                                             int16_t
+                                                             iSourceStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceSize,
+                                                             uint8_t *
+                                                             __restrict
+                                                             ptSourceMaskBase,
+                                                             int16_t
+                                                             iSourceMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceMaskSize,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptTargetBase,
+                                                             int16_t
+                                                             iTargetStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetSize,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptTargetMaskBase,
+                                                             int16_t
+                                                             iTargetMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetMaskSize);
 
 void __arm_2d_impl_cccn888_src_msk_fill(uint32_t * __restrict ptSourceBase,
-					int16_t iSourceStride,
-					arm_2d_size_t * __restrict ptSourceSize,
-					uint8_t * __restrict ptSourceMaskBase,
-					int16_t iSourceMaskStride,
-					arm_2d_size_t *
-					__restrict ptSourceMaskSize,
-					uint32_t * __restrict ptTargetBase,
-					int16_t iTargetStride,
-					arm_2d_size_t *
-					__restrict ptTargetSize);
+                                        int16_t iSourceStride,
+                                        arm_2d_size_t * __restrict ptSourceSize,
+                                        uint8_t * __restrict ptSourceMaskBase,
+                                        int16_t iSourceMaskStride,
+                                        arm_2d_size_t *
+                                        __restrict ptSourceMaskSize,
+                                        uint32_t * __restrict ptTargetBase,
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t *
+                                        __restrict ptTargetSize);
 
 void __arm_2d_impl_cccn888_src_msk_fill_mirror(uint32_t *
-					       __restrict ptSourceBase,
-					       int16_t iSourceStride,
-					       arm_2d_size_t *
-					       __restrict ptSourceSize,
-					       uint8_t *
-					       __restrict ptSourceMaskBase,
-					       int16_t iSourceMaskStride,
-					       arm_2d_size_t *
-					       __restrict ptSourceMaskSize,
-					       uint32_t *
-					       __restrict ptTargetBase,
-					       int16_t iTargetStride,
-					       arm_2d_size_t *
-					       __restrict ptTargetSize,
-					       uint32_t wMode);
+                                               __restrict ptSourceBase,
+                                               int16_t iSourceStride,
+                                               arm_2d_size_t *
+                                               __restrict ptSourceSize,
+                                               uint8_t *
+                                               __restrict ptSourceMaskBase,
+                                               int16_t iSourceMaskStride,
+                                               arm_2d_size_t *
+                                               __restrict ptSourceMaskSize,
+                                               uint32_t *
+                                               __restrict ptTargetBase,
+                                               int16_t iTargetStride,
+                                               arm_2d_size_t *
+                                               __restrict ptTargetSize,
+                                               uint32_t wMode);
 
 void __arm_2d_impl_cccn888_src_msk_fill_x_mirror(uint32_t *
-						 __restrict ptSourceBase,
-						 int16_t iSourceStride,
-						 arm_2d_size_t *
-						 __restrict ptSourceSize,
-						 uint8_t *
-						 __restrict ptSourceMaskBase,
-						 int16_t iSourceMaskStride,
-						 arm_2d_size_t *
-						 __restrict ptSourceMaskSize,
-						 uint32_t *
-						 __restrict ptTargetBase,
-						 int16_t iTargetStride,
-						 arm_2d_size_t *
-						 __restrict ptTargetSize);
+                                                 __restrict ptSourceBase,
+                                                 int16_t iSourceStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptSourceSize,
+                                                 uint8_t *
+                                                 __restrict ptSourceMaskBase,
+                                                 int16_t iSourceMaskStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptSourceMaskSize,
+                                                 uint32_t *
+                                                 __restrict ptTargetBase,
+                                                 int16_t iTargetStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptTargetSize);
 
-void __arm_2d_impl_cccn888_src_msk_fill_xy_mirror(uint32_t *
-						  __restrict ptSourceBase,
-						  int16_t iSourceStride,
-						  arm_2d_size_t *
-						  __restrict ptSourceSize,
-						  uint8_t *
-						  __restrict ptSourceMaskBase,
-						  int16_t iSourceMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptSourceMaskSize,
-						  uint32_t *
-						  __restrict ptTargetBase,
-						  int16_t iTargetStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetSize);
+void __arm_2d_impl_cccn888_src_msk_fill_xy_mirror(  uint32_t *
+                                                    __restrict ptSourceBase,
+                                                    int16_t iSourceStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptSourceSize,
+                                                    uint8_t *
+                                                    __restrict ptSourceMaskBase,
+                                                    int16_t iSourceMaskStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptSourceMaskSize,
+                                                    uint32_t *
+                                                    __restrict ptTargetBase,
+                                                    int16_t iTargetStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptTargetSize);
 
-void __arm_2d_impl_cccn888_src_msk_fill_y_mirror(uint32_t *
-						 __restrict ptSourceBase,
-						 int16_t iSourceStride,
-						 arm_2d_size_t *
-						 __restrict ptSourceSize,
-						 uint8_t *
-						 __restrict ptSourceMaskBase,
-						 int16_t iSourceMaskStride,
-						 arm_2d_size_t *
-						 __restrict ptSourceMaskSize,
-						 uint32_t *
-						 __restrict ptTargetBase,
-						 int16_t iTargetStride,
-						 arm_2d_size_t *
-						 __restrict ptTargetSize);
+void __arm_2d_impl_cccn888_src_msk_fill_y_mirror(   uint32_t *
+                                                    __restrict ptSourceBase,
+                                                    int16_t iSourceStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptSourceSize,
+                                                    uint8_t *
+                                                    __restrict ptSourceMaskBase,
+                                                    int16_t iSourceMaskStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptSourceMaskSize,
+                                                    uint32_t *
+                                                    __restrict ptTargetBase,
+                                                    int16_t iTargetStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptTargetSize);
+
+void __arm_2d_impl_gray8_to_rgb565( uint8_t *__RESTRICT pchSourceBase,
+                                    int16_t iSourceStride,
+                                    uint16_t *__RESTRICT phwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize);
 
 void __arm_2d_impl_cccn888_to_rgb565(uint32_t * __restrict pwSourceBase,
-				     int16_t iSourceStride,
-				     uint16_t * __restrict phwTargetBase,
-				     int16_t iTargetStride,
-				     arm_2d_size_t * __restrict ptCopySize);
+                                     int16_t iSourceStride,
+                                     uint16_t * __restrict phwTargetBase,
+                                     int16_t iTargetStride,
+                                     arm_2d_size_t * __restrict ptCopySize);
 
 void __arm_2d_impl_cccn888_transform(__arm_2d_param_copy_orig_t * ptParam,
-				     __arm_2d_transform_info_t * ptInfo);
+                                     __arm_2d_transform_info_t * ptInfo);
 
-void __arm_2d_impl_cccn888_transform_with_opacity(__arm_2d_param_copy_orig_t * ptParam,
-					   __arm_2d_transform_info_t * ptInfo,
-					   uint_fast16_t hwRatio);
+void __arm_2d_impl_cccn888_transform_with_opacity(
+                                           __arm_2d_param_copy_orig_t * ptParam,
+                                           __arm_2d_transform_info_t * ptInfo,
+                                           uint_fast16_t hwRatio);
                        
 void __arm_2d_impl_cccn888_transform_with_src_mask(
                                         __arm_2d_param_copy_orig_msk_t * ptParam,
@@ -3173,2417 +3180,2418 @@ void __arm_2d_impl_cccn888_transform_with_src_chn_mask_and_opacity(
                                         uint_fast16_t hwRatio);
 
 void __arm_2d_impl_gray8_1h_des_msk_copy(uint8_t * __restrict pSourceBase,
-					 int16_t iSourceStride,
-					 uint8_t * __restrict pTargetBase,
-					 int16_t iTargetStride,
-					 uint8_t * __restrict ptTargetMaskBase,
-					 int16_t iTargetMaskStride,
-					 arm_2d_size_t *
-					 __restrict ptTargetMaskSize,
-					 arm_2d_size_t * __restrict ptCopySize);
+                                         int16_t iSourceStride,
+                                         uint8_t * __restrict pTargetBase,
+                                         int16_t iTargetStride,
+                                         uint8_t * __restrict ptTargetMaskBase,
+                                         int16_t iTargetMaskStride,
+                                         arm_2d_size_t *
+                                         __restrict ptTargetMaskSize,
+                                         arm_2d_size_t * __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_1h_des_msk_copy_mirror(uint8_t *
-						__restrict pSourceBase,
-						int16_t iSourceStride,
-						uint8_t *
-						__restrict pTargetBase,
-						int16_t iTargetStride,
-						uint8_t *
-						__restrict ptTargetMaskBase,
-						int16_t iTargetMaskStride,
-						arm_2d_size_t *
-						__restrict ptTargetMaskSize,
-						arm_2d_size_t *
-						__restrict ptCopySize,
-						uint32_t wMode);
+                                                __restrict pSourceBase,
+                                                int16_t iSourceStride,
+                                                uint8_t *
+                                                __restrict pTargetBase,
+                                                int16_t iTargetStride,
+                                                uint8_t *
+                                                __restrict ptTargetMaskBase,
+                                                int16_t iTargetMaskStride,
+                                                arm_2d_size_t *
+                                                __restrict ptTargetMaskSize,
+                                                arm_2d_size_t *
+                                                __restrict ptCopySize,
+                                                uint32_t wMode);
 
 void __arm_2d_impl_gray8_1h_des_msk_copy_x_mirror(uint8_t *
-						  __restrict pSourceBase,
-						  int16_t iSourceStride,
-						  uint8_t *
-						  __restrict pTargetBase,
-						  int16_t iTargetStride,
-						  uint8_t *
-						  __restrict ptTargetMaskBase,
-						  int16_t iTargetMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetMaskSize,
-						  arm_2d_size_t *
-						  __restrict ptCopySize);
+                                                  __restrict pSourceBase,
+                                                  int16_t iSourceStride,
+                                                  uint8_t *
+                                                  __restrict pTargetBase,
+                                                  int16_t iTargetStride,
+                                                  uint8_t *
+                                                  __restrict ptTargetMaskBase,
+                                                  int16_t iTargetMaskStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptTargetMaskSize,
+                                                  arm_2d_size_t *
+                                                  __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_1h_des_msk_copy_xy_mirror(uint8_t *
-						   __restrict pSourceBase,
-						   int16_t iSourceStride,
-						   uint8_t *
-						   __restrict pTargetBase,
-						   int16_t iTargetStride,
-						   uint8_t *
-						   __restrict ptTargetMaskBase,
-						   int16_t iTargetMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetMaskSize,
-						   arm_2d_size_t *
-						   __restrict ptCopySize);
+                                                   __restrict pSourceBase,
+                                                   int16_t iSourceStride,
+                                                   uint8_t *
+                                                   __restrict pTargetBase,
+                                                   int16_t iTargetStride,
+                                                   uint8_t *
+                                                   __restrict ptTargetMaskBase,
+                                                   int16_t iTargetMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetMaskSize,
+                                                   arm_2d_size_t *
+                                                   __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_1h_des_msk_copy_y_mirror(uint8_t *
-						  __restrict pSourceBase,
-						  int16_t iSourceStride,
-						  uint8_t *
-						  __restrict pTargetBase,
-						  int16_t iTargetStride,
-						  uint8_t *
-						  __restrict ptTargetMaskBase,
-						  int16_t iTargetMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetMaskSize,
-						  arm_2d_size_t *
-						  __restrict ptCopySize);
+                                                  __restrict pSourceBase,
+                                                  int16_t iSourceStride,
+                                                  uint8_t *
+                                                  __restrict pTargetBase,
+                                                  int16_t iTargetStride,
+                                                  uint8_t *
+                                                  __restrict ptTargetMaskBase,
+                                                  int16_t iTargetMaskStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptTargetMaskSize,
+                                                  arm_2d_size_t *
+                                                  __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_1h_des_msk_fill(uint8_t * __restrict ptSourceBase,
-					 int16_t iSourceStride,
-					 arm_2d_size_t *
-					 __restrict ptSourceSize,
-					 uint8_t * __restrict ptTargetBase,
-					 int16_t iTargetStride,
-					 arm_2d_size_t *
-					 __restrict ptTargetSize,
-					 uint8_t * __restrict ptTargetMaskBase,
-					 int16_t iTargetMaskStride,
-					 arm_2d_size_t *
-					 __restrict ptTargetMaskSize);
+                                         int16_t iSourceStride,
+                                         arm_2d_size_t *
+                                         __restrict ptSourceSize,
+                                         uint8_t * __restrict ptTargetBase,
+                                         int16_t iTargetStride,
+                                         arm_2d_size_t *
+                                         __restrict ptTargetSize,
+                                         uint8_t * __restrict ptTargetMaskBase,
+                                         int16_t iTargetMaskStride,
+                                         arm_2d_size_t *
+                                         __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_1h_des_msk_fill_mirror(uint8_t *
-						__restrict ptSourceBase,
-						int16_t iSourceStride,
-						arm_2d_size_t *
-						__restrict ptSourceSize,
-						uint8_t *
-						__restrict ptTargetBase,
-						int16_t iTargetStride,
-						arm_2d_size_t *
-						__restrict ptTargetSize,
-						uint8_t *
-						__restrict ptTargetMaskBase,
-						int16_t iTargetMaskStride,
-						arm_2d_size_t *
-						__restrict ptTargetMaskSize,
-						uint32_t wMode);
+                                                __restrict ptSourceBase,
+                                                int16_t iSourceStride,
+                                                arm_2d_size_t *
+                                                __restrict ptSourceSize,
+                                                uint8_t *
+                                                __restrict ptTargetBase,
+                                                int16_t iTargetStride,
+                                                arm_2d_size_t *
+                                                __restrict ptTargetSize,
+                                                uint8_t *
+                                                __restrict ptTargetMaskBase,
+                                                int16_t iTargetMaskStride,
+                                                arm_2d_size_t *
+                                                __restrict ptTargetMaskSize,
+                                                uint32_t wMode);
 
 void __arm_2d_impl_gray8_1h_des_msk_fill_x_mirror(uint8_t *
-						  __restrict ptSourceBase,
-						  int16_t iSourceStride,
-						  arm_2d_size_t *
-						  __restrict ptSourceSize,
-						  uint8_t *
-						  __restrict ptTargetBase,
-						  int16_t iTargetStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetSize,
-						  uint8_t *
-						  __restrict ptTargetMaskBase,
-						  int16_t iTargetMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetMaskSize);
+                                                  __restrict ptSourceBase,
+                                                  int16_t iSourceStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptSourceSize,
+                                                  uint8_t *
+                                                  __restrict ptTargetBase,
+                                                  int16_t iTargetStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptTargetSize,
+                                                  uint8_t *
+                                                  __restrict ptTargetMaskBase,
+                                                  int16_t iTargetMaskStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_1h_des_msk_fill_xy_mirror(uint8_t *
-						   __restrict ptSourceBase,
-						   int16_t iSourceStride,
-						   arm_2d_size_t *
-						   __restrict ptSourceSize,
-						   uint8_t *
-						   __restrict ptTargetBase,
-						   int16_t iTargetStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetSize,
-						   uint8_t *
-						   __restrict ptTargetMaskBase,
-						   int16_t iTargetMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetMaskSize);
+                                                   __restrict ptSourceBase,
+                                                   int16_t iSourceStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptSourceSize,
+                                                   uint8_t *
+                                                   __restrict ptTargetBase,
+                                                   int16_t iTargetStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetSize,
+                                                   uint8_t *
+                                                   __restrict ptTargetMaskBase,
+                                                   int16_t iTargetMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_1h_des_msk_fill_y_mirror(uint8_t *
-						  __restrict ptSourceBase,
-						  int16_t iSourceStride,
-						  arm_2d_size_t *
-						  __restrict ptSourceSize,
-						  uint8_t *
-						  __restrict ptTargetBase,
-						  int16_t iTargetStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetSize,
-						  uint8_t *
-						  __restrict ptTargetMaskBase,
-						  int16_t iTargetMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetMaskSize);
+                                                  __restrict ptSourceBase,
+                                                  int16_t iSourceStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptSourceSize,
+                                                  uint8_t *
+                                                  __restrict ptTargetBase,
+                                                  int16_t iTargetStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptTargetSize,
+                                                  uint8_t *
+                                                  __restrict ptTargetMaskBase,
+                                                  int16_t iTargetMaskStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_alpha_blending(uint8_t * __restrict pSourceBase,
-					int16_t iSourceStride,
-					uint8_t * __restrict pTargetBase,
-					int16_t iTargetStride,
-					arm_2d_size_t * __restrict ptCopySize,
-					uint_fast16_t hwRatio);
+                                        int16_t iSourceStride,
+                                        uint8_t * __restrict pTargetBase,
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t * __restrict ptCopySize,
+                                        uint_fast16_t hwRatio);
 
 void __arm_2d_impl_gray8_alpha_blending_colour_keying(uint8_t *
-						      __restrict pSourceBase,
-						      int16_t iSourceStride,
-						      uint8_t *
-						      __restrict pTargetBase,
-						      int16_t iTargetStride,
-						      arm_2d_size_t *
-						      __restrict ptCopySize,
-						      uint_fast16_t hwRatio,
-						      uint8_t Colour);
+                                                      __restrict pSourceBase,
+                                                      int16_t iSourceStride,
+                                                      uint8_t *
+                                                      __restrict pTargetBase,
+                                                      int16_t iTargetStride,
+                                                      arm_2d_size_t *
+                                                      __restrict ptCopySize,
+                                                      uint_fast16_t hwRatio,
+                                                      uint8_t Colour);
 
 void __arm_2d_impl_gray8_colour_filling_channel_mask(uint8_t *
-						     __restrict pTarget,
-						     int16_t iTargetStride,
-						     uint32_t *
-						     __restrict pwAlpha,
-						     int16_t iAlphaStride,
-						     arm_2d_size_t *
-						     __restrict ptCopySize,
-						     uint8_t Colour);
+                                                     __restrict pTarget,
+                                                     int16_t iTargetStride,
+                                                     uint32_t *
+                                                     __restrict pwAlpha,
+                                                     int16_t iAlphaStride,
+                                                     arm_2d_size_t *
+                                                     __restrict ptCopySize,
+                                                     uint8_t Colour);
 
 void __arm_2d_impl_gray8_colour_filling_channel_mask_opacity(uint8_t *
-							     __restrict pTarget,
-							     int16_t
-							     iTargetStride,
-							     uint32_t *
-							     __restrict pwAlpha,
-							     int16_t
-							     iAlphaStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptCopySize,
-							     uint8_t Colour,
-							     uint_fast16_t hwOpacity);
+                                                     __restrict pTarget,
+                                                     int16_t
+                                                     iTargetStride,
+                                                     uint32_t *
+                                                     __restrict pwAlpha,
+                                                     int16_t
+                                                     iAlphaStride,
+                                                     arm_2d_size_t *
+                                                     __restrict
+                                                     ptCopySize,
+                                                     uint8_t Colour,
+                                                     uint_fast16_t hwOpacity);
 
 void __arm_2d_impl_gray8_colour_filling_mask(uint8_t * __restrict pTarget,
-					     int16_t iTargetStride,
-					     uint8_t * __restrict pchAlpha,
-					     int16_t iAlphaStride,
-					     arm_2d_size_t *
-					     __restrict ptCopySize,
-					     uint8_t Colour);
+                                             int16_t iTargetStride,
+                                             uint8_t * __restrict pchAlpha,
+                                             int16_t iAlphaStride,
+                                             arm_2d_size_t *
+                                             __restrict ptCopySize,
+                                             uint8_t Colour);
 
 void __arm_2d_impl_gray8_colour_filling_mask_opacity(uint8_t *
-						     __restrict pTarget,
-						     int16_t iTargetStride,
-						     uint8_t *
-						     __restrict pchAlpha,
-						     int16_t iAlphaStride,
-						     arm_2d_size_t *
-						     __restrict ptCopySize,
-						     uint8_t Colour,
-						     uint_fast16_t hwOpacity);
+                                                     __restrict pTarget,
+                                                     int16_t iTargetStride,
+                                                     uint8_t *
+                                                     __restrict pchAlpha,
+                                                     int16_t iAlphaStride,
+                                                     arm_2d_size_t *
+                                                     __restrict ptCopySize,
+                                                     uint8_t Colour,
+                                                     uint_fast16_t hwOpacity);
 
 void __arm_2d_impl_gray8_colour_filling_with_opacity(uint8_t *
-						     __restrict pTargetBase,
-						     int16_t iTargetStride,
-						     arm_2d_size_t *
-						     __restrict ptCopySize,
-						     uint8_t Colour,
-						     uint_fast16_t hwRatio);
+                                                     __restrict pTargetBase,
+                                                     int16_t iTargetStride,
+                                                     arm_2d_size_t *
+                                                     __restrict ptCopySize,
+                                                     uint8_t Colour,
+                                                     uint_fast16_t hwRatio);
 
 void __arm_2d_impl_gray8_des_chn_msk_copy(uint8_t * __restrict pSourceBase,
-					  int16_t iSourceStride,
-					  uint8_t * __restrict pTargetBase,
-					  int16_t iTargetStride,
-					  uint32_t *
-					  __restrict ptTargetMaskBase,
-					  int16_t iTargetMaskStride,
-					  arm_2d_size_t *
-					  __restrict ptTargetMaskSize,
-					  arm_2d_size_t *
-					  __restrict ptCopySize);
+                                          int16_t iSourceStride,
+                                          uint8_t * __restrict pTargetBase,
+                                          int16_t iTargetStride,
+                                          uint32_t *
+                                          __restrict ptTargetMaskBase,
+                                          int16_t iTargetMaskStride,
+                                          arm_2d_size_t *
+                                          __restrict ptTargetMaskSize,
+                                          arm_2d_size_t *
+                                          __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_des_chn_msk_copy_mirror(uint8_t *
-						 __restrict pSourceBase,
-						 int16_t iSourceStride,
-						 uint8_t *
-						 __restrict pTargetBase,
-						 int16_t iTargetStride,
-						 uint32_t *
-						 __restrict ptTargetMaskBase,
-						 int16_t iTargetMaskStride,
-						 arm_2d_size_t *
-						 __restrict ptTargetMaskSize,
-						 arm_2d_size_t *
-						 __restrict ptCopySize,
-						 uint32_t wMode);
+                                                 __restrict pSourceBase,
+                                                 int16_t iSourceStride,
+                                                 uint8_t *
+                                                 __restrict pTargetBase,
+                                                 int16_t iTargetStride,
+                                                 uint32_t *
+                                                 __restrict ptTargetMaskBase,
+                                                 int16_t iTargetMaskStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptTargetMaskSize,
+                                                 arm_2d_size_t *
+                                                 __restrict ptCopySize,
+                                                 uint32_t wMode);
 
 void __arm_2d_impl_gray8_des_chn_msk_copy_x_mirror(uint8_t *
-						   __restrict pSourceBase,
-						   int16_t iSourceStride,
-						   uint8_t *
-						   __restrict pTargetBase,
-						   int16_t iTargetStride,
-						   uint32_t *
-						   __restrict ptTargetMaskBase,
-						   int16_t iTargetMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetMaskSize,
-						   arm_2d_size_t *
-						   __restrict ptCopySize);
+                                                   __restrict pSourceBase,
+                                                   int16_t iSourceStride,
+                                                   uint8_t *
+                                                   __restrict pTargetBase,
+                                                   int16_t iTargetStride,
+                                                   uint32_t *
+                                                   __restrict ptTargetMaskBase,
+                                                   int16_t iTargetMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetMaskSize,
+                                                   arm_2d_size_t *
+                                                   __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_des_chn_msk_copy_xy_mirror(uint8_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    uint8_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint32_t *
-						    __restrict ptTargetMaskBase,
-						    int16_t iTargetMaskStride,
-						    arm_2d_size_t *
-						    __restrict ptTargetMaskSize,
-						    arm_2d_size_t *
-						    __restrict ptCopySize);
+                                                    __restrict pSourceBase,
+                                                    int16_t iSourceStride,
+                                                    uint8_t *
+                                                    __restrict pTargetBase,
+                                                    int16_t iTargetStride,
+                                                    uint32_t *
+                                                    __restrict ptTargetMaskBase,
+                                                    int16_t iTargetMaskStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptTargetMaskSize,
+                                                    arm_2d_size_t *
+                                                    __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_des_chn_msk_copy_y_mirror(uint8_t *
-						   __restrict pSourceBase,
-						   int16_t iSourceStride,
-						   uint8_t *
-						   __restrict pTargetBase,
-						   int16_t iTargetStride,
-						   uint32_t *
-						   __restrict ptTargetMaskBase,
-						   int16_t iTargetMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetMaskSize,
-						   arm_2d_size_t *
-						   __restrict ptCopySize);
+                                                   __restrict pSourceBase,
+                                                   int16_t iSourceStride,
+                                                   uint8_t *
+                                                   __restrict pTargetBase,
+                                                   int16_t iTargetStride,
+                                                   uint32_t *
+                                                   __restrict ptTargetMaskBase,
+                                                   int16_t iTargetMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetMaskSize,
+                                                   arm_2d_size_t *
+                                                   __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_des_chn_msk_fill(uint8_t * __restrict ptSourceBase,
-					  int16_t iSourceStride,
-					  arm_2d_size_t *
-					  __restrict ptSourceSize,
-					  uint8_t * __restrict ptTargetBase,
-					  int16_t iTargetStride,
-					  arm_2d_size_t *
-					  __restrict ptTargetSize,
-					  uint32_t *
-					  __restrict ptTargetMaskBase,
-					  int16_t iTargetMaskStride,
-					  arm_2d_size_t *
-					  __restrict ptTargetMaskSize);
+                                          int16_t iSourceStride,
+                                          arm_2d_size_t *
+                                          __restrict ptSourceSize,
+                                          uint8_t * __restrict ptTargetBase,
+                                          int16_t iTargetStride,
+                                          arm_2d_size_t *
+                                          __restrict ptTargetSize,
+                                          uint32_t *
+                                          __restrict ptTargetMaskBase,
+                                          int16_t iTargetMaskStride,
+                                          arm_2d_size_t *
+                                          __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_des_chn_msk_fill_mirror(uint8_t *
-						 __restrict ptSourceBase,
-						 int16_t iSourceStride,
-						 arm_2d_size_t *
-						 __restrict ptSourceSize,
-						 uint8_t *
-						 __restrict ptTargetBase,
-						 int16_t iTargetStride,
-						 arm_2d_size_t *
-						 __restrict ptTargetSize,
-						 uint32_t *
-						 __restrict ptTargetMaskBase,
-						 int16_t iTargetMaskStride,
-						 arm_2d_size_t *
-						 __restrict ptTargetMaskSize,
-						 uint32_t wMode);
+                                                 __restrict ptSourceBase,
+                                                 int16_t iSourceStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptSourceSize,
+                                                 uint8_t *
+                                                 __restrict ptTargetBase,
+                                                 int16_t iTargetStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptTargetSize,
+                                                 uint32_t *
+                                                 __restrict ptTargetMaskBase,
+                                                 int16_t iTargetMaskStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptTargetMaskSize,
+                                                 uint32_t wMode);
 
 void __arm_2d_impl_gray8_des_chn_msk_fill_x_mirror(uint8_t *
-						   __restrict ptSourceBase,
-						   int16_t iSourceStride,
-						   arm_2d_size_t *
-						   __restrict ptSourceSize,
-						   uint8_t *
-						   __restrict ptTargetBase,
-						   int16_t iTargetStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetSize,
-						   uint32_t *
-						   __restrict ptTargetMaskBase,
-						   int16_t iTargetMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetMaskSize);
+                                                   __restrict ptSourceBase,
+                                                   int16_t iSourceStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptSourceSize,
+                                                   uint8_t *
+                                                   __restrict ptTargetBase,
+                                                   int16_t iTargetStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetSize,
+                                                   uint32_t *
+                                                   __restrict ptTargetMaskBase,
+                                                   int16_t iTargetMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_des_chn_msk_fill_xy_mirror(uint8_t *
-						    __restrict ptSourceBase,
-						    int16_t iSourceStride,
-						    arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint8_t *
-						    __restrict ptTargetBase,
-						    int16_t iTargetStride,
-						    arm_2d_size_t *
-						    __restrict ptTargetSize,
-						    uint32_t *
-						    __restrict ptTargetMaskBase,
-						    int16_t iTargetMaskStride,
-						    arm_2d_size_t *
-						    __restrict
-						    ptTargetMaskSize);
+                                                    __restrict ptSourceBase,
+                                                    int16_t iSourceStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptSourceSize,
+                                                    uint8_t *
+                                                    __restrict ptTargetBase,
+                                                    int16_t iTargetStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptTargetSize,
+                                                    uint32_t *
+                                                    __restrict ptTargetMaskBase,
+                                                    int16_t iTargetMaskStride,
+                                                    arm_2d_size_t *
+                                                    __restrict
+                                                    ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_des_chn_msk_fill_y_mirror(uint8_t *
-						   __restrict ptSourceBase,
-						   int16_t iSourceStride,
-						   arm_2d_size_t *
-						   __restrict ptSourceSize,
-						   uint8_t *
-						   __restrict ptTargetBase,
-						   int16_t iTargetStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetSize,
-						   uint32_t *
-						   __restrict ptTargetMaskBase,
-						   int16_t iTargetMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetMaskSize);
+                                                   __restrict ptSourceBase,
+                                                   int16_t iSourceStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptSourceSize,
+                                                   uint8_t *
+                                                   __restrict ptTargetBase,
+                                                   int16_t iTargetStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetSize,
+                                                   uint32_t *
+                                                   __restrict ptTargetMaskBase,
+                                                   int16_t iTargetMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_des_msk_copy(uint8_t * __restrict pSourceBase,
-				      int16_t iSourceStride,
-				      uint8_t * __restrict pTargetBase,
-				      int16_t iTargetStride,
-				      uint8_t * __restrict ptTargetMaskBase,
-				      int16_t iTargetMaskStride,
-				      arm_2d_size_t *
-				      __restrict ptTargetMaskSize,
-				      arm_2d_size_t * __restrict ptCopySize);
+                                      int16_t iSourceStride,
+                                      uint8_t * __restrict pTargetBase,
+                                      int16_t iTargetStride,
+                                      uint8_t * __restrict ptTargetMaskBase,
+                                      int16_t iTargetMaskStride,
+                                      arm_2d_size_t *
+                                      __restrict ptTargetMaskSize,
+                                      arm_2d_size_t * __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_des_msk_copy_mirror(uint8_t * __restrict pSourceBase,
-					     int16_t iSourceStride,
-					     uint8_t * __restrict pTargetBase,
-					     int16_t iTargetStride,
-					     uint8_t *
-					     __restrict ptTargetMaskBase,
-					     int16_t iTargetMaskStride,
-					     arm_2d_size_t *
-					     __restrict ptTargetMaskSize,
-					     arm_2d_size_t *
-					     __restrict ptCopySize,
-					     uint32_t wMode);
+                                             int16_t iSourceStride,
+                                             uint8_t * __restrict pTargetBase,
+                                             int16_t iTargetStride,
+                                             uint8_t *
+                                             __restrict ptTargetMaskBase,
+                                             int16_t iTargetMaskStride,
+                                             arm_2d_size_t *
+                                             __restrict ptTargetMaskSize,
+                                             arm_2d_size_t *
+                                             __restrict ptCopySize,
+                                             uint32_t wMode);
 
 void __arm_2d_impl_gray8_des_msk_copy_x_mirror(uint8_t * __restrict pSourceBase,
-					       int16_t iSourceStride,
-					       uint8_t * __restrict pTargetBase,
-					       int16_t iTargetStride,
-					       uint8_t *
-					       __restrict ptTargetMaskBase,
-					       int16_t iTargetMaskStride,
-					       arm_2d_size_t *
-					       __restrict ptTargetMaskSize,
-					       arm_2d_size_t *
-					       __restrict ptCopySize);
+                                               int16_t iSourceStride,
+                                               uint8_t * __restrict pTargetBase,
+                                               int16_t iTargetStride,
+                                               uint8_t *
+                                               __restrict ptTargetMaskBase,
+                                               int16_t iTargetMaskStride,
+                                               arm_2d_size_t *
+                                               __restrict ptTargetMaskSize,
+                                               arm_2d_size_t *
+                                               __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_des_msk_copy_xy_mirror(uint8_t *
-						__restrict pSourceBase,
-						int16_t iSourceStride,
-						uint8_t *
-						__restrict pTargetBase,
-						int16_t iTargetStride,
-						uint8_t *
-						__restrict ptTargetMaskBase,
-						int16_t iTargetMaskStride,
-						arm_2d_size_t *
-						__restrict ptTargetMaskSize,
-						arm_2d_size_t *
-						__restrict ptCopySize);
+                                                __restrict pSourceBase,
+                                                int16_t iSourceStride,
+                                                uint8_t *
+                                                __restrict pTargetBase,
+                                                int16_t iTargetStride,
+                                                uint8_t *
+                                                __restrict ptTargetMaskBase,
+                                                int16_t iTargetMaskStride,
+                                                arm_2d_size_t *
+                                                __restrict ptTargetMaskSize,
+                                                arm_2d_size_t *
+                                                __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_des_msk_copy_y_mirror(uint8_t * __restrict pSourceBase,
-					       int16_t iSourceStride,
-					       uint8_t * __restrict pTargetBase,
-					       int16_t iTargetStride,
-					       uint8_t *
-					       __restrict ptTargetMaskBase,
-					       int16_t iTargetMaskStride,
-					       arm_2d_size_t *
-					       __restrict ptTargetMaskSize,
-					       arm_2d_size_t *
-					       __restrict ptCopySize);
+                                               int16_t iSourceStride,
+                                               uint8_t * __restrict pTargetBase,
+                                               int16_t iTargetStride,
+                                               uint8_t *
+                                               __restrict ptTargetMaskBase,
+                                               int16_t iTargetMaskStride,
+                                               arm_2d_size_t *
+                                               __restrict ptTargetMaskSize,
+                                               arm_2d_size_t *
+                                               __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_des_msk_fill(uint8_t * __restrict ptSourceBase,
-				      int16_t iSourceStride,
-				      arm_2d_size_t * __restrict ptSourceSize,
-				      uint8_t * __restrict ptTargetBase,
-				      int16_t iTargetStride,
-				      arm_2d_size_t * __restrict ptTargetSize,
-				      uint8_t * __restrict ptTargetMaskBase,
-				      int16_t iTargetMaskStride,
-				      arm_2d_size_t *
-				      __restrict ptTargetMaskSize);
+                                      int16_t iSourceStride,
+                                      arm_2d_size_t * __restrict ptSourceSize,
+                                      uint8_t * __restrict ptTargetBase,
+                                      int16_t iTargetStride,
+                                      arm_2d_size_t * __restrict ptTargetSize,
+                                      uint8_t * __restrict ptTargetMaskBase,
+                                      int16_t iTargetMaskStride,
+                                      arm_2d_size_t *
+                                      __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_des_msk_fill_mirror(uint8_t * __restrict ptSourceBase,
-					     int16_t iSourceStride,
-					     arm_2d_size_t *
-					     __restrict ptSourceSize,
-					     uint8_t * __restrict ptTargetBase,
-					     int16_t iTargetStride,
-					     arm_2d_size_t *
-					     __restrict ptTargetSize,
-					     uint8_t *
-					     __restrict ptTargetMaskBase,
-					     int16_t iTargetMaskStride,
-					     arm_2d_size_t *
-					     __restrict ptTargetMaskSize,
-					     uint32_t wMode);
+                                             int16_t iSourceStride,
+                                             arm_2d_size_t *
+                                             __restrict ptSourceSize,
+                                             uint8_t * __restrict ptTargetBase,
+                                             int16_t iTargetStride,
+                                             arm_2d_size_t *
+                                             __restrict ptTargetSize,
+                                             uint8_t *
+                                             __restrict ptTargetMaskBase,
+                                             int16_t iTargetMaskStride,
+                                             arm_2d_size_t *
+                                             __restrict ptTargetMaskSize,
+                                             uint32_t wMode);
 
 void __arm_2d_impl_gray8_des_msk_fill_x_mirror(uint8_t *
-					       __restrict ptSourceBase,
-					       int16_t iSourceStride,
-					       arm_2d_size_t *
-					       __restrict ptSourceSize,
-					       uint8_t *
-					       __restrict ptTargetBase,
-					       int16_t iTargetStride,
-					       arm_2d_size_t *
-					       __restrict ptTargetSize,
-					       uint8_t *
-					       __restrict ptTargetMaskBase,
-					       int16_t iTargetMaskStride,
-					       arm_2d_size_t *
-					       __restrict ptTargetMaskSize);
+                                               __restrict ptSourceBase,
+                                               int16_t iSourceStride,
+                                               arm_2d_size_t *
+                                               __restrict ptSourceSize,
+                                               uint8_t *
+                                               __restrict ptTargetBase,
+                                               int16_t iTargetStride,
+                                               arm_2d_size_t *
+                                               __restrict ptTargetSize,
+                                               uint8_t *
+                                               __restrict ptTargetMaskBase,
+                                               int16_t iTargetMaskStride,
+                                               arm_2d_size_t *
+                                               __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_des_msk_fill_xy_mirror(uint8_t *
-						__restrict ptSourceBase,
-						int16_t iSourceStride,
-						arm_2d_size_t *
-						__restrict ptSourceSize,
-						uint8_t *
-						__restrict ptTargetBase,
-						int16_t iTargetStride,
-						arm_2d_size_t *
-						__restrict ptTargetSize,
-						uint8_t *
-						__restrict ptTargetMaskBase,
-						int16_t iTargetMaskStride,
-						arm_2d_size_t *
-						__restrict ptTargetMaskSize);
+                                                __restrict ptSourceBase,
+                                                int16_t iSourceStride,
+                                                arm_2d_size_t *
+                                                __restrict ptSourceSize,
+                                                uint8_t *
+                                                __restrict ptTargetBase,
+                                                int16_t iTargetStride,
+                                                arm_2d_size_t *
+                                                __restrict ptTargetSize,
+                                                uint8_t *
+                                                __restrict ptTargetMaskBase,
+                                                int16_t iTargetMaskStride,
+                                                arm_2d_size_t *
+                                                __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_des_msk_fill_y_mirror(uint8_t *
-					       __restrict ptSourceBase,
-					       int16_t iSourceStride,
-					       arm_2d_size_t *
-					       __restrict ptSourceSize,
-					       uint8_t *
-					       __restrict ptTargetBase,
-					       int16_t iTargetStride,
-					       arm_2d_size_t *
-					       __restrict ptTargetSize,
-					       uint8_t *
-					       __restrict ptTargetMaskBase,
-					       int16_t iTargetMaskStride,
-					       arm_2d_size_t *
-					       __restrict ptTargetMaskSize);
+                                               __restrict ptSourceBase,
+                                               int16_t iSourceStride,
+                                               arm_2d_size_t *
+                                               __restrict ptSourceSize,
+                                               uint8_t *
+                                               __restrict ptTargetBase,
+                                               int16_t iTargetStride,
+                                               arm_2d_size_t *
+                                               __restrict ptTargetSize,
+                                               uint8_t *
+                                               __restrict ptTargetMaskBase,
+                                               int16_t iTargetMaskStride,
+                                               arm_2d_size_t *
+                                               __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_masks_copy(uint8_t * __restrict pSourceBase,
-				    int16_t iSourceStride,
-				    uint8_t * __restrict ptSourceMaskBase,
-				    int16_t iSourceMaskStride,
-				    arm_2d_size_t * __restrict ptSourceMaskSize,
-				    uint8_t * __restrict pTargetBase,
-				    int16_t iTargetStride,
-				    uint8_t * __restrict ptTargetMaskBase,
-				    int16_t iTargetMaskStride,
-				    arm_2d_size_t * __restrict ptTargetMaskSize,
-				    arm_2d_size_t * __restrict ptCopySize);
+                                    int16_t iSourceStride,
+                                    uint8_t * __restrict ptSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __restrict ptSourceMaskSize,
+                                    uint8_t * __restrict pTargetBase,
+                                    int16_t iTargetStride,
+                                    uint8_t * __restrict ptTargetMaskBase,
+                                    int16_t iTargetMaskStride,
+                                    arm_2d_size_t * __restrict ptTargetMaskSize,
+                                    arm_2d_size_t * __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_masks_copy_mirror(uint8_t * __restrict pSourceBase,
-					   int16_t iSourceStride,
-					   uint8_t *
-					   __restrict ptSourceMaskBase,
-					   int16_t iSourceMaskStride,
-					   arm_2d_size_t *
-					   __restrict ptSourceMaskSize,
-					   uint8_t * __restrict pTargetBase,
-					   int16_t iTargetStride,
-					   uint8_t *
-					   __restrict ptTargetMaskBase,
-					   int16_t iTargetMaskStride,
-					   arm_2d_size_t *
-					   __restrict ptTargetMaskSize,
-					   arm_2d_size_t *
-					   __restrict ptCopySize,
-					   uint32_t wMode);
+                                           int16_t iSourceStride,
+                                           uint8_t *
+                                           __restrict ptSourceMaskBase,
+                                           int16_t iSourceMaskStride,
+                                           arm_2d_size_t *
+                                           __restrict ptSourceMaskSize,
+                                           uint8_t * __restrict pTargetBase,
+                                           int16_t iTargetStride,
+                                           uint8_t *
+                                           __restrict ptTargetMaskBase,
+                                           int16_t iTargetMaskStride,
+                                           arm_2d_size_t *
+                                           __restrict ptTargetMaskSize,
+                                           arm_2d_size_t *
+                                           __restrict ptCopySize,
+                                           uint32_t wMode);
 
 void __arm_2d_impl_gray8_masks_copy_x_mirror(uint8_t * __restrict pSourceBase,
-					     int16_t iSourceStride,
-					     uint8_t *
-					     __restrict ptSourceMaskBase,
-					     int16_t iSourceMaskStride,
-					     arm_2d_size_t *
-					     __restrict ptSourceMaskSize,
-					     uint8_t * __restrict pTargetBase,
-					     int16_t iTargetStride,
-					     uint8_t *
-					     __restrict ptTargetMaskBase,
-					     int16_t iTargetMaskStride,
-					     arm_2d_size_t *
-					     __restrict ptTargetMaskSize,
-					     arm_2d_size_t *
-					     __restrict ptCopySize);
+                                             int16_t iSourceStride,
+                                             uint8_t *
+                                             __restrict ptSourceMaskBase,
+                                             int16_t iSourceMaskStride,
+                                             arm_2d_size_t *
+                                             __restrict ptSourceMaskSize,
+                                             uint8_t * __restrict pTargetBase,
+                                             int16_t iTargetStride,
+                                             uint8_t *
+                                             __restrict ptTargetMaskBase,
+                                             int16_t iTargetMaskStride,
+                                             arm_2d_size_t *
+                                             __restrict ptTargetMaskSize,
+                                             arm_2d_size_t *
+                                             __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_masks_copy_xy_mirror(uint8_t * __restrict pSourceBase,
-					      int16_t iSourceStride,
-					      uint8_t *
-					      __restrict ptSourceMaskBase,
-					      int16_t iSourceMaskStride,
-					      arm_2d_size_t *
-					      __restrict ptSourceMaskSize,
-					      uint8_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      uint8_t *
-					      __restrict ptTargetMaskBase,
-					      int16_t iTargetMaskStride,
-					      arm_2d_size_t *
-					      __restrict ptTargetMaskSize,
-					      arm_2d_size_t *
-					      __restrict ptCopySize);
+                                              int16_t iSourceStride,
+                                              uint8_t *
+                                              __restrict ptSourceMaskBase,
+                                              int16_t iSourceMaskStride,
+                                              arm_2d_size_t *
+                                              __restrict ptSourceMaskSize,
+                                              uint8_t * __restrict pTargetBase,
+                                              int16_t iTargetStride,
+                                              uint8_t *
+                                              __restrict ptTargetMaskBase,
+                                              int16_t iTargetMaskStride,
+                                              arm_2d_size_t *
+                                              __restrict ptTargetMaskSize,
+                                              arm_2d_size_t *
+                                              __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_masks_copy_y_mirror(uint8_t * __restrict pSourceBase,
-					     int16_t iSourceStride,
-					     uint8_t *
-					     __restrict ptSourceMaskBase,
-					     int16_t iSourceMaskStride,
-					     arm_2d_size_t *
-					     __restrict ptSourceMaskSize,
-					     uint8_t * __restrict pTargetBase,
-					     int16_t iTargetStride,
-					     uint8_t *
-					     __restrict ptTargetMaskBase,
-					     int16_t iTargetMaskStride,
-					     arm_2d_size_t *
-					     __restrict ptTargetMaskSize,
-					     arm_2d_size_t *
-					     __restrict ptCopySize);
+                                             int16_t iSourceStride,
+                                             uint8_t *
+                                             __restrict ptSourceMaskBase,
+                                             int16_t iSourceMaskStride,
+                                             arm_2d_size_t *
+                                             __restrict ptSourceMaskSize,
+                                             uint8_t * __restrict pTargetBase,
+                                             int16_t iTargetStride,
+                                             uint8_t *
+                                             __restrict ptTargetMaskBase,
+                                             int16_t iTargetMaskStride,
+                                             arm_2d_size_t *
+                                             __restrict ptTargetMaskSize,
+                                             arm_2d_size_t *
+                                             __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_masks_fill(uint8_t * __restrict ptSourceBase,
-				    int16_t iSourceStride,
-				    arm_2d_size_t * __restrict ptSourceSize,
-				    uint8_t * __restrict ptSourceMaskBase,
-				    int16_t iSourceMaskStride,
-				    arm_2d_size_t * __restrict ptSourceMaskSize,
-				    uint8_t * __restrict ptTargetBase,
-				    int16_t iTargetStride,
-				    arm_2d_size_t * __restrict ptTargetSize,
-				    uint8_t * __restrict ptTargetMaskBase,
-				    int16_t iTargetMaskStride,
-				    arm_2d_size_t *
-				    __restrict ptTargetMaskSize);
+                                    int16_t iSourceStride,
+                                    arm_2d_size_t * __restrict ptSourceSize,
+                                    uint8_t * __restrict ptSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __restrict ptSourceMaskSize,
+                                    uint8_t * __restrict ptTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t * __restrict ptTargetSize,
+                                    uint8_t * __restrict ptTargetMaskBase,
+                                    int16_t iTargetMaskStride,
+                                    arm_2d_size_t *
+                                    __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_masks_fill_mirror(uint8_t * __restrict ptSourceBase,
-					   int16_t iSourceStride,
-					   arm_2d_size_t *
-					   __restrict ptSourceSize,
-					   uint8_t *
-					   __restrict ptSourceMaskBase,
-					   int16_t iSourceMaskStride,
-					   arm_2d_size_t *
-					   __restrict ptSourceMaskSize,
-					   uint8_t * __restrict ptTargetBase,
-					   int16_t iTargetStride,
-					   arm_2d_size_t *
-					   __restrict ptTargetSize,
-					   uint8_t *
-					   __restrict ptTargetMaskBase,
-					   int16_t iTargetMaskStride,
-					   arm_2d_size_t *
-					   __restrict ptTargetMaskSize,
-					   uint32_t wMode);
+                                           int16_t iSourceStride,
+                                           arm_2d_size_t *
+                                           __restrict ptSourceSize,
+                                           uint8_t *
+                                           __restrict ptSourceMaskBase,
+                                           int16_t iSourceMaskStride,
+                                           arm_2d_size_t *
+                                           __restrict ptSourceMaskSize,
+                                           uint8_t * __restrict ptTargetBase,
+                                           int16_t iTargetStride,
+                                           arm_2d_size_t *
+                                           __restrict ptTargetSize,
+                                           uint8_t *
+                                           __restrict ptTargetMaskBase,
+                                           int16_t iTargetMaskStride,
+                                           arm_2d_size_t *
+                                           __restrict ptTargetMaskSize,
+                                           uint32_t wMode);
 
 void __arm_2d_impl_gray8_masks_fill_x_mirror(uint8_t * __restrict ptSourceBase,
-					     int16_t iSourceStride,
-					     arm_2d_size_t *
-					     __restrict ptSourceSize,
-					     uint8_t *
-					     __restrict ptSourceMaskBase,
-					     int16_t iSourceMaskStride,
-					     arm_2d_size_t *
-					     __restrict ptSourceMaskSize,
-					     uint8_t * __restrict ptTargetBase,
-					     int16_t iTargetStride,
-					     arm_2d_size_t *
-					     __restrict ptTargetSize,
-					     uint8_t *
-					     __restrict ptTargetMaskBase,
-					     int16_t iTargetMaskStride,
-					     arm_2d_size_t *
-					     __restrict ptTargetMaskSize);
+                                             int16_t iSourceStride,
+                                             arm_2d_size_t *
+                                             __restrict ptSourceSize,
+                                             uint8_t *
+                                             __restrict ptSourceMaskBase,
+                                             int16_t iSourceMaskStride,
+                                             arm_2d_size_t *
+                                             __restrict ptSourceMaskSize,
+                                             uint8_t * __restrict ptTargetBase,
+                                             int16_t iTargetStride,
+                                             arm_2d_size_t *
+                                             __restrict ptTargetSize,
+                                             uint8_t *
+                                             __restrict ptTargetMaskBase,
+                                             int16_t iTargetMaskStride,
+                                             arm_2d_size_t *
+                                             __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_masks_fill_xy_mirror(uint8_t * __restrict ptSourceBase,
-					      int16_t iSourceStride,
-					      arm_2d_size_t *
-					      __restrict ptSourceSize,
-					      uint8_t *
-					      __restrict ptSourceMaskBase,
-					      int16_t iSourceMaskStride,
-					      arm_2d_size_t *
-					      __restrict ptSourceMaskSize,
-					      uint8_t * __restrict ptTargetBase,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptTargetSize,
-					      uint8_t *
-					      __restrict ptTargetMaskBase,
-					      int16_t iTargetMaskStride,
-					      arm_2d_size_t *
-					      __restrict ptTargetMaskSize);
+                                              int16_t iSourceStride,
+                                              arm_2d_size_t *
+                                              __restrict ptSourceSize,
+                                              uint8_t *
+                                              __restrict ptSourceMaskBase,
+                                              int16_t iSourceMaskStride,
+                                              arm_2d_size_t *
+                                              __restrict ptSourceMaskSize,
+                                              uint8_t * __restrict ptTargetBase,
+                                              int16_t iTargetStride,
+                                              arm_2d_size_t *
+                                              __restrict ptTargetSize,
+                                              uint8_t *
+                                              __restrict ptTargetMaskBase,
+                                              int16_t iTargetMaskStride,
+                                              arm_2d_size_t *
+                                              __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_masks_fill_y_mirror(uint8_t * __restrict ptSourceBase,
-					     int16_t iSourceStride,
-					     arm_2d_size_t *
-					     __restrict ptSourceSize,
-					     uint8_t *
-					     __restrict ptSourceMaskBase,
-					     int16_t iSourceMaskStride,
-					     arm_2d_size_t *
-					     __restrict ptSourceMaskSize,
-					     uint8_t * __restrict ptTargetBase,
-					     int16_t iTargetStride,
-					     arm_2d_size_t *
-					     __restrict ptTargetSize,
-					     uint8_t *
-					     __restrict ptTargetMaskBase,
-					     int16_t iTargetMaskStride,
-					     arm_2d_size_t *
-					     __restrict ptTargetMaskSize);
+                                             int16_t iSourceStride,
+                                             arm_2d_size_t *
+                                             __restrict ptSourceSize,
+                                             uint8_t *
+                                             __restrict ptSourceMaskBase,
+                                             int16_t iSourceMaskStride,
+                                             arm_2d_size_t *
+                                             __restrict ptSourceMaskSize,
+                                             uint8_t * __restrict ptTargetBase,
+                                             int16_t iTargetStride,
+                                             arm_2d_size_t *
+                                             __restrict ptTargetSize,
+                                             uint8_t *
+                                             __restrict ptTargetMaskBase,
+                                             int16_t iTargetMaskStride,
+                                             arm_2d_size_t *
+                                             __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_copy(uint8_t *
-						     __restrict pSourceBase,
-						     int16_t iSourceStride,
-						     uint32_t *
-						     __restrict
-						     ptSourceMaskBase,
-						     int16_t iSourceMaskStride,
-						     arm_2d_size_t *
-						     __restrict
-						     ptSourceMaskSize,
-						     uint8_t *
-						     __restrict pTargetBase,
-						     int16_t iTargetStride,
-						     uint8_t *
-						     __restrict
-						     ptTargetMaskBase,
-						     int16_t iTargetMaskStride,
-						     arm_2d_size_t *
-						     __restrict
-						     ptTargetMaskSize,
-						     arm_2d_size_t *
-						     __restrict ptCopySize);
+                                                     __restrict pSourceBase,
+                                                     int16_t iSourceStride,
+                                                     uint32_t *
+                                                     __restrict
+                                                     ptSourceMaskBase,
+                                                     int16_t iSourceMaskStride,
+                                                     arm_2d_size_t *
+                                                     __restrict
+                                                     ptSourceMaskSize,
+                                                     uint8_t *
+                                                     __restrict pTargetBase,
+                                                     int16_t iTargetStride,
+                                                     uint8_t *
+                                                     __restrict
+                                                     ptTargetMaskBase,
+                                                     int16_t iTargetMaskStride,
+                                                     arm_2d_size_t *
+                                                     __restrict
+                                                     ptTargetMaskSize,
+                                                     arm_2d_size_t *
+                                                     __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_copy_mirror(uint8_t *
-							    __restrict
-							    pSourceBase,
-							    int16_t
-							    iSourceStride,
-							    uint32_t *
-							    __restrict
-							    ptSourceMaskBase,
-							    int16_t
-							    iSourceMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceMaskSize,
-							    uint8_t *
-							    __restrict
-							    pTargetBase,
-							    int16_t
-							    iTargetStride,
-							    uint8_t *
-							    __restrict
-							    ptTargetMaskBase,
-							    int16_t
-							    iTargetMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetMaskSize,
-							    arm_2d_size_t *
-							    __restrict
-							    ptCopySize,
-							    uint32_t wMode);
+                                                            __restrict
+                                                            pSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint8_t *
+                                                            __restrict
+                                                            pTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptCopySize,
+                                                            uint32_t wMode);
 
 void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_copy_x_mirror(uint8_t *
-							      __restrict
-							      pSourceBase,
-							      int16_t
-							      iSourceStride,
-							      uint32_t *
-							      __restrict
-							      ptSourceMaskBase,
-							      int16_t
-							      iSourceMaskStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptSourceMaskSize,
-							      uint8_t *
-							      __restrict
-							      pTargetBase,
-							      int16_t
-							      iTargetStride,
-							      uint8_t *
-							      __restrict
-							      ptTargetMaskBase,
-							      int16_t
-							      iTargetMaskStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptTargetMaskSize,
-							      arm_2d_size_t *
-							      __restrict
-							      ptCopySize);
+                                                              __restrict
+                                                              pSourceBase,
+                                                              int16_t
+                                                              iSourceStride,
+                                                              uint32_t *
+                                                              __restrict
+                                                              ptSourceMaskBase,
+                                                              int16_t
+                                                              iSourceMaskStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptSourceMaskSize,
+                                                              uint8_t *
+                                                              __restrict
+                                                              pTargetBase,
+                                                              int16_t
+                                                              iTargetStride,
+                                                              uint8_t *
+                                                              __restrict
+                                                              ptTargetMaskBase,
+                                                              int16_t
+                                                              iTargetMaskStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptTargetMaskSize,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptCopySize);
 
 void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_copy_xy_mirror(uint8_t *
-							       __restrict
-							       pSourceBase,
-							       int16_t
-							       iSourceStride,
-							       uint32_t *
-							       __restrict
-							       ptSourceMaskBase,
-							       int16_t
-							       iSourceMaskStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptSourceMaskSize,
-							       uint8_t *
-							       __restrict
-							       pTargetBase,
-							       int16_t
-							       iTargetStride,
-							       uint8_t *
-							       __restrict
-							       ptTargetMaskBase,
-							       int16_t
-							       iTargetMaskStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptTargetMaskSize,
-							       arm_2d_size_t *
-							       __restrict
-							       ptCopySize);
+                                                               __restrict
+                                                               pSourceBase,
+                                                               int16_t
+                                                               iSourceStride,
+                                                               uint32_t *
+                                                               __restrict
+                                                               ptSourceMaskBase,
+                                                               int16_t
+                                                               iSourceMaskStride,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptSourceMaskSize,
+                                                               uint8_t *
+                                                               __restrict
+                                                               pTargetBase,
+                                                               int16_t
+                                                               iTargetStride,
+                                                               uint8_t *
+                                                               __restrict
+                                                               ptTargetMaskBase,
+                                                               int16_t
+                                                               iTargetMaskStride,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptTargetMaskSize,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptCopySize);
 
 void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_copy_y_mirror(uint8_t *
-							      __restrict
-							      pSourceBase,
-							      int16_t
-							      iSourceStride,
-							      uint32_t *
-							      __restrict
-							      ptSourceMaskBase,
-							      int16_t
-							      iSourceMaskStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptSourceMaskSize,
-							      uint8_t *
-							      __restrict
-							      pTargetBase,
-							      int16_t
-							      iTargetStride,
-							      uint8_t *
-							      __restrict
-							      ptTargetMaskBase,
-							      int16_t
-							      iTargetMaskStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptTargetMaskSize,
-							      arm_2d_size_t *
-							      __restrict
-							      ptCopySize);
+                                                              __restrict
+                                                              pSourceBase,
+                                                              int16_t
+                                                              iSourceStride,
+                                                              uint32_t *
+                                                              __restrict
+                                                              ptSourceMaskBase,
+                                                              int16_t
+                                                              iSourceMaskStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptSourceMaskSize,
+                                                              uint8_t *
+                                                              __restrict
+                                                              pTargetBase,
+                                                              int16_t
+                                                              iTargetStride,
+                                                              uint8_t *
+                                                              __restrict
+                                                              ptTargetMaskBase,
+                                                              int16_t
+                                                              iTargetMaskStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptTargetMaskSize,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptCopySize);
 
 void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_fill(uint8_t *
-						     __restrict ptSourceBase,
-						     int16_t iSourceStride,
-						     arm_2d_size_t *
-						     __restrict ptSourceSize,
-						     uint32_t *
-						     __restrict
-						     ptSourceMaskBase,
-						     int16_t iSourceMaskStride,
-						     arm_2d_size_t *
-						     __restrict
-						     ptSourceMaskSize,
-						     uint8_t *
-						     __restrict ptTargetBase,
-						     int16_t iTargetStride,
-						     arm_2d_size_t *
-						     __restrict ptTargetSize,
-						     uint8_t *
-						     __restrict
-						     ptTargetMaskBase,
-						     int16_t iTargetMaskStride,
-						     arm_2d_size_t *
-						     __restrict
-						     ptTargetMaskSize);
+                                                     __restrict ptSourceBase,
+                                                     int16_t iSourceStride,
+                                                     arm_2d_size_t *
+                                                     __restrict ptSourceSize,
+                                                     uint32_t *
+                                                     __restrict
+                                                     ptSourceMaskBase,
+                                                     int16_t iSourceMaskStride,
+                                                     arm_2d_size_t *
+                                                     __restrict
+                                                     ptSourceMaskSize,
+                                                     uint8_t *
+                                                     __restrict ptTargetBase,
+                                                     int16_t iTargetStride,
+                                                     arm_2d_size_t *
+                                                     __restrict ptTargetSize,
+                                                     uint8_t *
+                                                     __restrict
+                                                     ptTargetMaskBase,
+                                                     int16_t iTargetMaskStride,
+                                                     arm_2d_size_t *
+                                                     __restrict
+                                                     ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_fill_mirror(uint8_t *
-							    __restrict
-							    ptSourceBase,
-							    int16_t
-							    iSourceStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceSize,
-							    uint32_t *
-							    __restrict
-							    ptSourceMaskBase,
-							    int16_t
-							    iSourceMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceMaskSize,
-							    uint8_t *
-							    __restrict
-							    ptTargetBase,
-							    int16_t
-							    iTargetStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetSize,
-							    uint8_t *
-							    __restrict
-							    ptTargetMaskBase,
-							    int16_t
-							    iTargetMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetMaskSize,
-							    uint32_t wMode);
+                                                            __restrict
+                                                            ptSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceSize,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetSize,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize,
+                                                            uint32_t wMode);
 
 void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_fill_x_mirror(uint8_t *
-							      __restrict
-							      ptSourceBase,
-							      int16_t
-							      iSourceStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptSourceSize,
-							      uint32_t *
-							      __restrict
-							      ptSourceMaskBase,
-							      int16_t
-							      iSourceMaskStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptSourceMaskSize,
-							      uint8_t *
-							      __restrict
-							      ptTargetBase,
-							      int16_t
-							      iTargetStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptTargetSize,
-							      uint8_t *
-							      __restrict
-							      ptTargetMaskBase,
-							      int16_t
-							      iTargetMaskStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptTargetMaskSize);
+                                                              __restrict
+                                                              ptSourceBase,
+                                                              int16_t
+                                                              iSourceStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptSourceSize,
+                                                              uint32_t *
+                                                              __restrict
+                                                              ptSourceMaskBase,
+                                                              int16_t
+                                                              iSourceMaskStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptSourceMaskSize,
+                                                              uint8_t *
+                                                              __restrict
+                                                              ptTargetBase,
+                                                              int16_t
+                                                              iTargetStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptTargetSize,
+                                                              uint8_t *
+                                                              __restrict
+                                                              ptTargetMaskBase,
+                                                              int16_t
+                                                              iTargetMaskStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_fill_xy_mirror(uint8_t *
-							       __restrict
-							       ptSourceBase,
-							       int16_t
-							       iSourceStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptSourceSize,
-							       uint32_t *
-							       __restrict
-							       ptSourceMaskBase,
-							       int16_t
-							       iSourceMaskStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptSourceMaskSize,
-							       uint8_t *
-							       __restrict
-							       ptTargetBase,
-							       int16_t
-							       iTargetStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptTargetSize,
-							       uint8_t *
-							       __restrict
-							       ptTargetMaskBase,
-							       int16_t
-							       iTargetMaskStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptTargetMaskSize);
+                                                               __restrict
+                                                               ptSourceBase,
+                                                               int16_t
+                                                               iSourceStride,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptSourceSize,
+                                                               uint32_t *
+                                                               __restrict
+                                                               ptSourceMaskBase,
+                                                               int16_t
+                                                               iSourceMaskStride,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptSourceMaskSize,
+                                                               uint8_t *
+                                                               __restrict
+                                                               ptTargetBase,
+                                                               int16_t
+                                                               iTargetStride,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptTargetSize,
+                                                               uint8_t *
+                                                               __restrict
+                                                               ptTargetMaskBase,
+                                                               int16_t
+                                                               iTargetMaskStride,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_fill_y_mirror(uint8_t *
-							      __restrict
-							      ptSourceBase,
-							      int16_t
-							      iSourceStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptSourceSize,
-							      uint32_t *
-							      __restrict
-							      ptSourceMaskBase,
-							      int16_t
-							      iSourceMaskStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptSourceMaskSize,
-							      uint8_t *
-							      __restrict
-							      ptTargetBase,
-							      int16_t
-							      iTargetStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptTargetSize,
-							      uint8_t *
-							      __restrict
-							      ptTargetMaskBase,
-							      int16_t
-							      iTargetMaskStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptTargetMaskSize);
+                                                              __restrict
+                                                              ptSourceBase,
+                                                              int16_t
+                                                              iSourceStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptSourceSize,
+                                                              uint32_t *
+                                                              __restrict
+                                                              ptSourceMaskBase,
+                                                              int16_t
+                                                              iSourceMaskStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptSourceMaskSize,
+                                                              uint8_t *
+                                                              __restrict
+                                                              ptTargetBase,
+                                                              int16_t
+                                                              iTargetStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptTargetSize,
+                                                              uint8_t *
+                                                              __restrict
+                                                              ptTargetMaskBase,
+                                                              int16_t
+                                                              iTargetMaskStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_src_chn_msk_copy(uint8_t * __restrict pSourceBase,
-					  int16_t iSourceStride,
-					  uint32_t *
-					  __restrict ptSourceMaskBase,
-					  int16_t iSourceMaskStride,
-					  arm_2d_size_t *
-					  __restrict ptSourceMaskSize,
-					  uint8_t * __restrict pTargetBase,
-					  int16_t iTargetStride,
-					  arm_2d_size_t *
-					  __restrict ptCopySize);
+                                          int16_t iSourceStride,
+                                          uint32_t *
+                                          __restrict ptSourceMaskBase,
+                                          int16_t iSourceMaskStride,
+                                          arm_2d_size_t *
+                                          __restrict ptSourceMaskSize,
+                                          uint8_t * __restrict pTargetBase,
+                                          int16_t iTargetStride,
+                                          arm_2d_size_t *
+                                          __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_src_chn_msk_copy_mirror(uint8_t *
-						 __restrict pSourceBase,
-						 int16_t iSourceStride,
-						 uint32_t *
-						 __restrict ptSourceMaskBase,
-						 int16_t iSourceMaskStride,
-						 arm_2d_size_t *
-						 __restrict ptSourceMaskSize,
-						 uint8_t *
-						 __restrict pTargetBase,
-						 int16_t iTargetStride,
-						 arm_2d_size_t *
-						 __restrict ptCopySize,
-						 uint32_t wMode);
+                                                 __restrict pSourceBase,
+                                                 int16_t iSourceStride,
+                                                 uint32_t *
+                                                 __restrict ptSourceMaskBase,
+                                                 int16_t iSourceMaskStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptSourceMaskSize,
+                                                 uint8_t *
+                                                 __restrict pTargetBase,
+                                                 int16_t iTargetStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptCopySize,
+                                                 uint32_t wMode);
 
 void __arm_2d_impl_gray8_src_chn_msk_copy_x_mirror(uint8_t *
-						   __restrict pSourceBase,
-						   int16_t iSourceStride,
-						   uint32_t *
-						   __restrict ptSourceMaskBase,
-						   int16_t iSourceMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptSourceMaskSize,
-						   uint8_t *
-						   __restrict pTargetBase,
-						   int16_t iTargetStride,
-						   arm_2d_size_t *
-						   __restrict ptCopySize);
+                                                   __restrict pSourceBase,
+                                                   int16_t iSourceStride,
+                                                   uint32_t *
+                                                   __restrict ptSourceMaskBase,
+                                                   int16_t iSourceMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptSourceMaskSize,
+                                                   uint8_t *
+                                                   __restrict pTargetBase,
+                                                   int16_t iTargetStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_src_chn_msk_copy_xy_mirror(uint8_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    uint32_t *
-						    __restrict ptSourceMaskBase,
-						    int16_t iSourceMaskStride,
-						    arm_2d_size_t *
-						    __restrict ptSourceMaskSize,
-						    uint8_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    arm_2d_size_t *
-						    __restrict ptCopySize);
+                                                    __restrict pSourceBase,
+                                                    int16_t iSourceStride,
+                                                    uint32_t *
+                                                    __restrict ptSourceMaskBase,
+                                                    int16_t iSourceMaskStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptSourceMaskSize,
+                                                    uint8_t *
+                                                    __restrict pTargetBase,
+                                                    int16_t iTargetStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_src_chn_msk_copy_y_mirror(uint8_t *
-						   __restrict pSourceBase,
-						   int16_t iSourceStride,
-						   uint32_t *
-						   __restrict ptSourceMaskBase,
-						   int16_t iSourceMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptSourceMaskSize,
-						   uint8_t *
-						   __restrict pTargetBase,
-						   int16_t iTargetStride,
-						   arm_2d_size_t *
-						   __restrict ptCopySize);
+                                                   __restrict pSourceBase,
+                                                   int16_t iSourceStride,
+                                                   uint32_t *
+                                                   __restrict ptSourceMaskBase,
+                                                   int16_t iSourceMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptSourceMaskSize,
+                                                   uint8_t *
+                                                   __restrict pTargetBase,
+                                                   int16_t iTargetStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_copy(uint8_t *
-						      __restrict pSourceBase,
-						      int16_t iSourceStride,
-						      uint32_t *
-						      __restrict
-						      ptSourceMaskBase,
-						      int16_t iSourceMaskStride,
-						      arm_2d_size_t *
-						      __restrict
-						      ptSourceMaskSize,
-						      uint8_t *
-						      __restrict pTargetBase,
-						      int16_t iTargetStride,
-						      uint32_t *
-						      __restrict
-						      ptTargetMaskBase,
-						      int16_t iTargetMaskStride,
-						      arm_2d_size_t *
-						      __restrict
-						      ptTargetMaskSize,
-						      arm_2d_size_t *
-						      __restrict ptCopySize);
+                                                      __restrict pSourceBase,
+                                                      int16_t iSourceStride,
+                                                      uint32_t *
+                                                      __restrict
+                                                      ptSourceMaskBase,
+                                                      int16_t iSourceMaskStride,
+                                                      arm_2d_size_t *
+                                                      __restrict
+                                                      ptSourceMaskSize,
+                                                      uint8_t *
+                                                      __restrict pTargetBase,
+                                                      int16_t iTargetStride,
+                                                      uint32_t *
+                                                      __restrict
+                                                      ptTargetMaskBase,
+                                                      int16_t iTargetMaskStride,
+                                                      arm_2d_size_t *
+                                                      __restrict
+                                                      ptTargetMaskSize,
+                                                      arm_2d_size_t *
+                                                      __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_copy_mirror(uint8_t *
-							     __restrict
-							     pSourceBase,
-							     int16_t
-							     iSourceStride,
-							     uint32_t *
-							     __restrict
-							     ptSourceMaskBase,
-							     int16_t
-							     iSourceMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceMaskSize,
-							     uint8_t *
-							     __restrict
-							     pTargetBase,
-							     int16_t
-							     iTargetStride,
-							     uint32_t *
-							     __restrict
-							     ptTargetMaskBase,
-							     int16_t
-							     iTargetMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetMaskSize,
-							     arm_2d_size_t *
-							     __restrict
-							     ptCopySize,
-							     uint32_t wMode);
+                                                             __restrict
+                                                             pSourceBase,
+                                                             int16_t
+                                                             iSourceStride,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptSourceMaskBase,
+                                                             int16_t
+                                                             iSourceMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceMaskSize,
+                                                             uint8_t *
+                                                             __restrict
+                                                             pTargetBase,
+                                                             int16_t
+                                                             iTargetStride,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptTargetMaskBase,
+                                                             int16_t
+                                                             iTargetMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetMaskSize,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptCopySize,
+                                                             uint32_t wMode);
 
 void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_copy_x_mirror(uint8_t *
-							       __restrict
-							       pSourceBase,
-							       int16_t
-							       iSourceStride,
-							       uint32_t *
-							       __restrict
-							       ptSourceMaskBase,
-							       int16_t
-							       iSourceMaskStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptSourceMaskSize,
-							       uint8_t *
-							       __restrict
-							       pTargetBase,
-							       int16_t
-							       iTargetStride,
-							       uint32_t *
-							       __restrict
-							       ptTargetMaskBase,
-							       int16_t
-							       iTargetMaskStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptTargetMaskSize,
-							       arm_2d_size_t *
-							       __restrict
-							       ptCopySize);
+                                                               __restrict
+                                                               pSourceBase,
+                                                               int16_t
+                                                               iSourceStride,
+                                                               uint32_t *
+                                                               __restrict
+                                                               ptSourceMaskBase,
+                                                               int16_t
+                                                               iSourceMaskStride,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptSourceMaskSize,
+                                                               uint8_t *
+                                                               __restrict
+                                                               pTargetBase,
+                                                               int16_t
+                                                               iTargetStride,
+                                                               uint32_t *
+                                                               __restrict
+                                                               ptTargetMaskBase,
+                                                               int16_t
+                                                               iTargetMaskStride,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptTargetMaskSize,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptCopySize);
 
 void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_copy_xy_mirror(uint8_t *
-								__restrict
-								pSourceBase,
-								int16_t
-								iSourceStride,
-								uint32_t *
-								__restrict
-								ptSourceMaskBase,
-								int16_t
-								iSourceMaskStride,
-								arm_2d_size_t *
-								__restrict
-								ptSourceMaskSize,
-								uint8_t *
-								__restrict
-								pTargetBase,
-								int16_t
-								iTargetStride,
-								uint32_t *
-								__restrict
-								ptTargetMaskBase,
-								int16_t
-								iTargetMaskStride,
-								arm_2d_size_t *
-								__restrict
-								ptTargetMaskSize,
-								arm_2d_size_t *
-								__restrict
-								ptCopySize);
+                                                            __restrict
+                                                            pSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint8_t *
+                                                            __restrict
+                                                            pTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptCopySize);
 
 void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_copy_y_mirror(uint8_t *
-							       __restrict
-							       pSourceBase,
-							       int16_t
-							       iSourceStride,
-							       uint32_t *
-							       __restrict
-							       ptSourceMaskBase,
-							       int16_t
-							       iSourceMaskStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptSourceMaskSize,
-							       uint8_t *
-							       __restrict
-							       pTargetBase,
-							       int16_t
-							       iTargetStride,
-							       uint32_t *
-							       __restrict
-							       ptTargetMaskBase,
-							       int16_t
-							       iTargetMaskStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptTargetMaskSize,
-							       arm_2d_size_t *
-							       __restrict
-							       ptCopySize);
+                                                               __restrict
+                                                               pSourceBase,
+                                                               int16_t
+                                                               iSourceStride,
+                                                               uint32_t *
+                                                               __restrict
+                                                               ptSourceMaskBase,
+                                                               int16_t
+                                                               iSourceMaskStride,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptSourceMaskSize,
+                                                               uint8_t *
+                                                               __restrict
+                                                               pTargetBase,
+                                                               int16_t
+                                                               iTargetStride,
+                                                               uint32_t *
+                                                               __restrict
+                                                               ptTargetMaskBase,
+                                                               int16_t
+                                                               iTargetMaskStride,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptTargetMaskSize,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptCopySize);
 
 void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_fill(uint8_t *
-						      __restrict ptSourceBase,
-						      int16_t iSourceStride,
-						      arm_2d_size_t *
-						      __restrict ptSourceSize,
-						      uint32_t *
-						      __restrict
-						      ptSourceMaskBase,
-						      int16_t iSourceMaskStride,
-						      arm_2d_size_t *
-						      __restrict
-						      ptSourceMaskSize,
-						      uint8_t *
-						      __restrict ptTargetBase,
-						      int16_t iTargetStride,
-						      arm_2d_size_t *
-						      __restrict ptTargetSize,
-						      uint32_t *
-						      __restrict
-						      ptTargetMaskBase,
-						      int16_t iTargetMaskStride,
-						      arm_2d_size_t *
-						      __restrict
-						      ptTargetMaskSize);
+                                                      __restrict ptSourceBase,
+                                                      int16_t iSourceStride,
+                                                      arm_2d_size_t *
+                                                      __restrict ptSourceSize,
+                                                      uint32_t *
+                                                      __restrict
+                                                      ptSourceMaskBase,
+                                                      int16_t iSourceMaskStride,
+                                                      arm_2d_size_t *
+                                                      __restrict
+                                                      ptSourceMaskSize,
+                                                      uint8_t *
+                                                      __restrict ptTargetBase,
+                                                      int16_t iTargetStride,
+                                                      arm_2d_size_t *
+                                                      __restrict ptTargetSize,
+                                                      uint32_t *
+                                                      __restrict
+                                                      ptTargetMaskBase,
+                                                      int16_t iTargetMaskStride,
+                                                      arm_2d_size_t *
+                                                      __restrict
+                                                      ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_fill_mirror(uint8_t *
-							     __restrict
-							     ptSourceBase,
-							     int16_t
-							     iSourceStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceSize,
-							     uint32_t *
-							     __restrict
-							     ptSourceMaskBase,
-							     int16_t
-							     iSourceMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceMaskSize,
-							     uint8_t *
-							     __restrict
-							     ptTargetBase,
-							     int16_t
-							     iTargetStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetSize,
-							     uint32_t *
-							     __restrict
-							     ptTargetMaskBase,
-							     int16_t
-							     iTargetMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetMaskSize,
-							     uint32_t wMode);
+                                                             __restrict
+                                                             ptSourceBase,
+                                                             int16_t
+                                                             iSourceStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceSize,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptSourceMaskBase,
+                                                             int16_t
+                                                             iSourceMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceMaskSize,
+                                                             uint8_t *
+                                                             __restrict
+                                                             ptTargetBase,
+                                                             int16_t
+                                                             iTargetStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetSize,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptTargetMaskBase,
+                                                             int16_t
+                                                             iTargetMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetMaskSize,
+                                                             uint32_t wMode);
 
 void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_fill_x_mirror(uint8_t *
-							       __restrict
-							       ptSourceBase,
-							       int16_t
-							       iSourceStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptSourceSize,
-							       uint32_t *
-							       __restrict
-							       ptSourceMaskBase,
-							       int16_t
-							       iSourceMaskStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptSourceMaskSize,
-							       uint8_t *
-							       __restrict
-							       ptTargetBase,
-							       int16_t
-							       iTargetStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptTargetSize,
-							       uint32_t *
-							       __restrict
-							       ptTargetMaskBase,
-							       int16_t
-							       iTargetMaskStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptTargetMaskSize);
+                                                               __restrict
+                                                               ptSourceBase,
+                                                               int16_t
+                                                               iSourceStride,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptSourceSize,
+                                                               uint32_t *
+                                                               __restrict
+                                                               ptSourceMaskBase,
+                                                               int16_t
+                                                               iSourceMaskStride,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptSourceMaskSize,
+                                                               uint8_t *
+                                                               __restrict
+                                                               ptTargetBase,
+                                                               int16_t
+                                                               iTargetStride,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptTargetSize,
+                                                               uint32_t *
+                                                               __restrict
+                                                               ptTargetMaskBase,
+                                                               int16_t
+                                                               iTargetMaskStride,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_fill_xy_mirror(uint8_t *
-								__restrict
-								ptSourceBase,
-								int16_t
-								iSourceStride,
-								arm_2d_size_t *
-								__restrict
-								ptSourceSize,
-								uint32_t *
-								__restrict
-								ptSourceMaskBase,
-								int16_t
-								iSourceMaskStride,
-								arm_2d_size_t *
-								__restrict
-								ptSourceMaskSize,
-								uint8_t *
-								__restrict
-								ptTargetBase,
-								int16_t
-								iTargetStride,
-								arm_2d_size_t *
-								__restrict
-								ptTargetSize,
-								uint32_t *
-								__restrict
-								ptTargetMaskBase,
-								int16_t
-								iTargetMaskStride,
-								arm_2d_size_t *
-								__restrict
-								ptTargetMaskSize);
+                                                            __restrict
+                                                            ptSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceSize,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetSize,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_fill_y_mirror(uint8_t *
-							       __restrict
-							       ptSourceBase,
-							       int16_t
-							       iSourceStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptSourceSize,
-							       uint32_t *
-							       __restrict
-							       ptSourceMaskBase,
-							       int16_t
-							       iSourceMaskStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptSourceMaskSize,
-							       uint8_t *
-							       __restrict
-							       ptTargetBase,
-							       int16_t
-							       iTargetStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptTargetSize,
-							       uint32_t *
-							       __restrict
-							       ptTargetMaskBase,
-							       int16_t
-							       iTargetMaskStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptTargetMaskSize);
+                                                               __restrict
+                                                               ptSourceBase,
+                                                               int16_t
+                                                               iSourceStride,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptSourceSize,
+                                                               uint32_t *
+                                                               __restrict
+                                                               ptSourceMaskBase,
+                                                               int16_t
+                                                               iSourceMaskStride,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptSourceMaskSize,
+                                                               uint8_t *
+                                                               __restrict
+                                                               ptTargetBase,
+                                                               int16_t
+                                                               iTargetStride,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptTargetSize,
+                                                               uint32_t *
+                                                               __restrict
+                                                               ptTargetMaskBase,
+                                                               int16_t
+                                                               iTargetMaskStride,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_src_chn_msk_des_msk_copy(uint8_t *
-						  __restrict pSourceBase,
-						  int16_t iSourceStride,
-						  uint32_t *
-						  __restrict ptSourceMaskBase,
-						  int16_t iSourceMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptSourceMaskSize,
-						  uint8_t *
-						  __restrict pTargetBase,
-						  int16_t iTargetStride,
-						  uint8_t *
-						  __restrict ptTargetMaskBase,
-						  int16_t iTargetMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetMaskSize,
-						  arm_2d_size_t *
-						  __restrict ptCopySize);
+                                                  __restrict pSourceBase,
+                                                  int16_t iSourceStride,
+                                                  uint32_t *
+                                                  __restrict ptSourceMaskBase,
+                                                  int16_t iSourceMaskStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptSourceMaskSize,
+                                                  uint8_t *
+                                                  __restrict pTargetBase,
+                                                  int16_t iTargetStride,
+                                                  uint8_t *
+                                                  __restrict ptTargetMaskBase,
+                                                  int16_t iTargetMaskStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptTargetMaskSize,
+                                                  arm_2d_size_t *
+                                                  __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_src_chn_msk_des_msk_copy_mirror(uint8_t *
-							 __restrict pSourceBase,
-							 int16_t iSourceStride,
-							 uint32_t *
-							 __restrict
-							 ptSourceMaskBase,
-							 int16_t
-							 iSourceMaskStride,
-							 arm_2d_size_t *
-							 __restrict
-							 ptSourceMaskSize,
-							 uint8_t *
-							 __restrict pTargetBase,
-							 int16_t iTargetStride,
-							 uint8_t *
-							 __restrict
-							 ptTargetMaskBase,
-							 int16_t
-							 iTargetMaskStride,
-							 arm_2d_size_t *
-							 __restrict
-							 ptTargetMaskSize,
-							 arm_2d_size_t *
-							 __restrict ptCopySize,
-							 uint32_t wMode);
+                                                         __restrict pSourceBase,
+                                                         int16_t iSourceStride,
+                                                         uint32_t *
+                                                         __restrict
+                                                         ptSourceMaskBase,
+                                                         int16_t
+                                                         iSourceMaskStride,
+                                                         arm_2d_size_t *
+                                                         __restrict
+                                                         ptSourceMaskSize,
+                                                         uint8_t *
+                                                         __restrict pTargetBase,
+                                                         int16_t iTargetStride,
+                                                         uint8_t *
+                                                         __restrict
+                                                         ptTargetMaskBase,
+                                                         int16_t
+                                                         iTargetMaskStride,
+                                                         arm_2d_size_t *
+                                                         __restrict
+                                                         ptTargetMaskSize,
+                                                         arm_2d_size_t *
+                                                         __restrict ptCopySize,
+                                                         uint32_t wMode);
 
 void __arm_2d_impl_gray8_src_chn_msk_des_msk_copy_x_mirror(uint8_t *
-							   __restrict
-							   pSourceBase,
-							   int16_t
-							   iSourceStride,
-							   uint32_t *
-							   __restrict
-							   ptSourceMaskBase,
-							   int16_t
-							   iSourceMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceMaskSize,
-							   uint8_t *
-							   __restrict
-							   pTargetBase,
-							   int16_t
-							   iTargetStride,
-							   uint8_t *
-							   __restrict
-							   ptTargetMaskBase,
-							   int16_t
-							   iTargetMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetMaskSize,
-							   arm_2d_size_t *
-							   __restrict
-							   ptCopySize);
+                                                           __restrict
+                                                           pSourceBase,
+                                                           int16_t
+                                                           iSourceStride,
+                                                           uint32_t *
+                                                           __restrict
+                                                           ptSourceMaskBase,
+                                                           int16_t
+                                                           iSourceMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceMaskSize,
+                                                           uint8_t *
+                                                           __restrict
+                                                           pTargetBase,
+                                                           int16_t
+                                                           iTargetStride,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptTargetMaskBase,
+                                                           int16_t
+                                                           iTargetMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetMaskSize,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptCopySize);
 
 void __arm_2d_impl_gray8_src_chn_msk_des_msk_copy_xy_mirror(uint8_t *
-							    __restrict
-							    pSourceBase,
-							    int16_t
-							    iSourceStride,
-							    uint32_t *
-							    __restrict
-							    ptSourceMaskBase,
-							    int16_t
-							    iSourceMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceMaskSize,
-							    uint8_t *
-							    __restrict
-							    pTargetBase,
-							    int16_t
-							    iTargetStride,
-							    uint8_t *
-							    __restrict
-							    ptTargetMaskBase,
-							    int16_t
-							    iTargetMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetMaskSize,
-							    arm_2d_size_t *
-							    __restrict
-							    ptCopySize);
+                                                            __restrict
+                                                            pSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint8_t *
+                                                            __restrict
+                                                            pTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptCopySize);
 
 void __arm_2d_impl_gray8_src_chn_msk_des_msk_copy_y_mirror(uint8_t *
-							   __restrict
-							   pSourceBase,
-							   int16_t
-							   iSourceStride,
-							   uint32_t *
-							   __restrict
-							   ptSourceMaskBase,
-							   int16_t
-							   iSourceMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceMaskSize,
-							   uint8_t *
-							   __restrict
-							   pTargetBase,
-							   int16_t
-							   iTargetStride,
-							   uint8_t *
-							   __restrict
-							   ptTargetMaskBase,
-							   int16_t
-							   iTargetMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetMaskSize,
-							   arm_2d_size_t *
-							   __restrict
-							   ptCopySize);
+                                                           __restrict
+                                                           pSourceBase,
+                                                           int16_t
+                                                           iSourceStride,
+                                                           uint32_t *
+                                                           __restrict
+                                                           ptSourceMaskBase,
+                                                           int16_t
+                                                           iSourceMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceMaskSize,
+                                                           uint8_t *
+                                                           __restrict
+                                                           pTargetBase,
+                                                           int16_t
+                                                           iTargetStride,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptTargetMaskBase,
+                                                           int16_t
+                                                           iTargetMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetMaskSize,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptCopySize);
 
 void __arm_2d_impl_gray8_src_chn_msk_des_msk_fill(uint8_t *
-						  __restrict ptSourceBase,
-						  int16_t iSourceStride,
-						  arm_2d_size_t *
-						  __restrict ptSourceSize,
-						  uint32_t *
-						  __restrict ptSourceMaskBase,
-						  int16_t iSourceMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptSourceMaskSize,
-						  uint8_t *
-						  __restrict ptTargetBase,
-						  int16_t iTargetStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetSize,
-						  uint8_t *
-						  __restrict ptTargetMaskBase,
-						  int16_t iTargetMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetMaskSize);
+                                                  __restrict ptSourceBase,
+                                                  int16_t iSourceStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptSourceSize,
+                                                  uint32_t *
+                                                  __restrict ptSourceMaskBase,
+                                                  int16_t iSourceMaskStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptSourceMaskSize,
+                                                  uint8_t *
+                                                  __restrict ptTargetBase,
+                                                  int16_t iTargetStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptTargetSize,
+                                                  uint8_t *
+                                                  __restrict ptTargetMaskBase,
+                                                  int16_t iTargetMaskStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_src_chn_msk_des_msk_fill_mirror(uint8_t *
-							 __restrict
-							 ptSourceBase,
-							 int16_t iSourceStride,
-							 arm_2d_size_t *
-							 __restrict
-							 ptSourceSize,
-							 uint32_t *
-							 __restrict
-							 ptSourceMaskBase,
-							 int16_t
-							 iSourceMaskStride,
-							 arm_2d_size_t *
-							 __restrict
-							 ptSourceMaskSize,
-							 uint8_t *
-							 __restrict
-							 ptTargetBase,
-							 int16_t iTargetStride,
-							 arm_2d_size_t *
-							 __restrict
-							 ptTargetSize,
-							 uint8_t *
-							 __restrict
-							 ptTargetMaskBase,
-							 int16_t
-							 iTargetMaskStride,
-							 arm_2d_size_t *
-							 __restrict
-							 ptTargetMaskSize,
-							 uint32_t wMode);
+                                                         __restrict
+                                                         ptSourceBase,
+                                                         int16_t iSourceStride,
+                                                         arm_2d_size_t *
+                                                         __restrict
+                                                         ptSourceSize,
+                                                         uint32_t *
+                                                         __restrict
+                                                         ptSourceMaskBase,
+                                                         int16_t
+                                                         iSourceMaskStride,
+                                                         arm_2d_size_t *
+                                                         __restrict
+                                                         ptSourceMaskSize,
+                                                         uint8_t *
+                                                         __restrict
+                                                         ptTargetBase,
+                                                         int16_t iTargetStride,
+                                                         arm_2d_size_t *
+                                                         __restrict
+                                                         ptTargetSize,
+                                                         uint8_t *
+                                                         __restrict
+                                                         ptTargetMaskBase,
+                                                         int16_t
+                                                         iTargetMaskStride,
+                                                         arm_2d_size_t *
+                                                         __restrict
+                                                         ptTargetMaskSize,
+                                                         uint32_t wMode);
 
 void __arm_2d_impl_gray8_src_chn_msk_des_msk_fill_x_mirror(uint8_t *
-							   __restrict
-							   ptSourceBase,
-							   int16_t
-							   iSourceStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceSize,
-							   uint32_t *
-							   __restrict
-							   ptSourceMaskBase,
-							   int16_t
-							   iSourceMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceMaskSize,
-							   uint8_t *
-							   __restrict
-							   ptTargetBase,
-							   int16_t
-							   iTargetStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetSize,
-							   uint8_t *
-							   __restrict
-							   ptTargetMaskBase,
-							   int16_t
-							   iTargetMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetMaskSize);
+                                                           __restrict
+                                                           ptSourceBase,
+                                                           int16_t
+                                                           iSourceStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceSize,
+                                                           uint32_t *
+                                                           __restrict
+                                                           ptSourceMaskBase,
+                                                           int16_t
+                                                           iSourceMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceMaskSize,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptTargetBase,
+                                                           int16_t
+                                                           iTargetStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetSize,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptTargetMaskBase,
+                                                           int16_t
+                                                           iTargetMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_src_chn_msk_des_msk_fill_xy_mirror(uint8_t *
-							    __restrict
-							    ptSourceBase,
-							    int16_t
-							    iSourceStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceSize,
-							    uint32_t *
-							    __restrict
-							    ptSourceMaskBase,
-							    int16_t
-							    iSourceMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceMaskSize,
-							    uint8_t *
-							    __restrict
-							    ptTargetBase,
-							    int16_t
-							    iTargetStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetSize,
-							    uint8_t *
-							    __restrict
-							    ptTargetMaskBase,
-							    int16_t
-							    iTargetMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetMaskSize);
+                                                            __restrict
+                                                            ptSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceSize,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetSize,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_src_chn_msk_des_msk_fill_y_mirror(uint8_t *
-							   __restrict
-							   ptSourceBase,
-							   int16_t
-							   iSourceStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceSize,
-							   uint32_t *
-							   __restrict
-							   ptSourceMaskBase,
-							   int16_t
-							   iSourceMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceMaskSize,
-							   uint8_t *
-							   __restrict
-							   ptTargetBase,
-							   int16_t
-							   iTargetStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetSize,
-							   uint8_t *
-							   __restrict
-							   ptTargetMaskBase,
-							   int16_t
-							   iTargetMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetMaskSize);
+                                                           __restrict
+                                                           ptSourceBase,
+                                                           int16_t
+                                                           iSourceStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceSize,
+                                                           uint32_t *
+                                                           __restrict
+                                                           ptSourceMaskBase,
+                                                           int16_t
+                                                           iSourceMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceMaskSize,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptTargetBase,
+                                                           int16_t
+                                                           iTargetStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetSize,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptTargetMaskBase,
+                                                           int16_t
+                                                           iTargetMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_src_chn_msk_fill(uint8_t * __restrict ptSourceBase,
-					  int16_t iSourceStride,
-					  arm_2d_size_t *
-					  __restrict ptSourceSize,
-					  uint32_t *
-					  __restrict ptSourceMaskBase,
-					  int16_t iSourceMaskStride,
-					  arm_2d_size_t *
-					  __restrict ptSourceMaskSize,
-					  uint8_t * __restrict ptTargetBase,
-					  int16_t iTargetStride,
-					  arm_2d_size_t *
-					  __restrict ptTargetSize);
+                                          int16_t iSourceStride,
+                                          arm_2d_size_t *
+                                          __restrict ptSourceSize,
+                                          uint32_t *
+                                          __restrict ptSourceMaskBase,
+                                          int16_t iSourceMaskStride,
+                                          arm_2d_size_t *
+                                          __restrict ptSourceMaskSize,
+                                          uint8_t * __restrict ptTargetBase,
+                                          int16_t iTargetStride,
+                                          arm_2d_size_t *
+                                          __restrict ptTargetSize);
 
 void __arm_2d_impl_gray8_src_chn_msk_fill_mirror(uint8_t *
-						 __restrict ptSourceBase,
-						 int16_t iSourceStride,
-						 arm_2d_size_t *
-						 __restrict ptSourceSize,
-						 uint32_t *
-						 __restrict ptSourceMaskBase,
-						 int16_t iSourceMaskStride,
-						 arm_2d_size_t *
-						 __restrict ptSourceMaskSize,
-						 uint8_t *
-						 __restrict ptTargetBase,
-						 int16_t iTargetStride,
-						 arm_2d_size_t *
-						 __restrict ptTargetSize,
-						 uint32_t wMode);
+                                                 __restrict ptSourceBase,
+                                                 int16_t iSourceStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptSourceSize,
+                                                 uint32_t *
+                                                 __restrict ptSourceMaskBase,
+                                                 int16_t iSourceMaskStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptSourceMaskSize,
+                                                 uint8_t *
+                                                 __restrict ptTargetBase,
+                                                 int16_t iTargetStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptTargetSize,
+                                                 uint32_t wMode);
 
 void __arm_2d_impl_gray8_src_chn_msk_fill_x_mirror(uint8_t *
-						   __restrict ptSourceBase,
-						   int16_t iSourceStride,
-						   arm_2d_size_t *
-						   __restrict ptSourceSize,
-						   uint32_t *
-						   __restrict ptSourceMaskBase,
-						   int16_t iSourceMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptSourceMaskSize,
-						   uint8_t *
-						   __restrict ptTargetBase,
-						   int16_t iTargetStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetSize);
+                                                   __restrict ptSourceBase,
+                                                   int16_t iSourceStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptSourceSize,
+                                                   uint32_t *
+                                                   __restrict ptSourceMaskBase,
+                                                   int16_t iSourceMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptSourceMaskSize,
+                                                   uint8_t *
+                                                   __restrict ptTargetBase,
+                                                   int16_t iTargetStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetSize);
 
 void __arm_2d_impl_gray8_src_chn_msk_fill_xy_mirror(uint8_t *
-						    __restrict ptSourceBase,
-						    int16_t iSourceStride,
-						    arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint32_t *
-						    __restrict ptSourceMaskBase,
-						    int16_t iSourceMaskStride,
-						    arm_2d_size_t *
-						    __restrict ptSourceMaskSize,
-						    uint8_t *
-						    __restrict ptTargetBase,
-						    int16_t iTargetStride,
-						    arm_2d_size_t *
-						    __restrict ptTargetSize);
+                                                    __restrict ptSourceBase,
+                                                    int16_t iSourceStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptSourceSize,
+                                                    uint32_t *
+                                                    __restrict ptSourceMaskBase,
+                                                    int16_t iSourceMaskStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptSourceMaskSize,
+                                                    uint8_t *
+                                                    __restrict ptTargetBase,
+                                                    int16_t iTargetStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptTargetSize);
 
 void __arm_2d_impl_gray8_src_chn_msk_fill_y_mirror(uint8_t *
-						   __restrict ptSourceBase,
-						   int16_t iSourceStride,
-						   arm_2d_size_t *
-						   __restrict ptSourceSize,
-						   uint32_t *
-						   __restrict ptSourceMaskBase,
-						   int16_t iSourceMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptSourceMaskSize,
-						   uint8_t *
-						   __restrict ptTargetBase,
-						   int16_t iTargetStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetSize);
+                                                   __restrict ptSourceBase,
+                                                   int16_t iSourceStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptSourceSize,
+                                                   uint32_t *
+                                                   __restrict ptSourceMaskBase,
+                                                   int16_t iSourceMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptSourceMaskSize,
+                                                   uint8_t *
+                                                   __restrict ptTargetBase,
+                                                   int16_t iTargetStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetSize);
 
 void __arm_2d_impl_gray8_src_msk_1h_des_msk_copy(uint8_t *
-						 __restrict pSourceBase,
-						 int16_t iSourceStride,
-						 uint8_t *
-						 __restrict ptSourceMaskBase,
-						 int16_t iSourceMaskStride,
-						 arm_2d_size_t *
-						 __restrict ptSourceMaskSize,
-						 uint8_t *
-						 __restrict pTargetBase,
-						 int16_t iTargetStride,
-						 uint8_t *
-						 __restrict ptTargetMaskBase,
-						 int16_t iTargetMaskStride,
-						 arm_2d_size_t *
-						 __restrict ptTargetMaskSize,
-						 arm_2d_size_t *
-						 __restrict ptCopySize);
+                                                 __restrict pSourceBase,
+                                                 int16_t iSourceStride,
+                                                 uint8_t *
+                                                 __restrict ptSourceMaskBase,
+                                                 int16_t iSourceMaskStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptSourceMaskSize,
+                                                 uint8_t *
+                                                 __restrict pTargetBase,
+                                                 int16_t iTargetStride,
+                                                 uint8_t *
+                                                 __restrict ptTargetMaskBase,
+                                                 int16_t iTargetMaskStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptTargetMaskSize,
+                                                 arm_2d_size_t *
+                                                 __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_src_msk_1h_des_msk_copy_mirror(uint8_t *
-							__restrict pSourceBase,
-							int16_t iSourceStride,
-							uint8_t *
-							__restrict
-							ptSourceMaskBase,
-							int16_t
-							iSourceMaskStride,
-							arm_2d_size_t *
-							__restrict
-							ptSourceMaskSize,
-							uint8_t *
-							__restrict pTargetBase,
-							int16_t iTargetStride,
-							uint8_t *
-							__restrict
-							ptTargetMaskBase,
-							int16_t
-							iTargetMaskStride,
-							arm_2d_size_t *
-							__restrict
-							ptTargetMaskSize,
-							arm_2d_size_t *
-							__restrict ptCopySize,
-							uint32_t wMode);
+                                                        __restrict pSourceBase,
+                                                        int16_t iSourceStride,
+                                                        uint8_t *
+                                                        __restrict
+                                                        ptSourceMaskBase,
+                                                        int16_t
+                                                        iSourceMaskStride,
+                                                        arm_2d_size_t *
+                                                        __restrict
+                                                        ptSourceMaskSize,
+                                                        uint8_t *
+                                                        __restrict pTargetBase,
+                                                        int16_t iTargetStride,
+                                                        uint8_t *
+                                                        __restrict
+                                                        ptTargetMaskBase,
+                                                        int16_t
+                                                        iTargetMaskStride,
+                                                        arm_2d_size_t *
+                                                        __restrict
+                                                        ptTargetMaskSize,
+                                                        arm_2d_size_t *
+                                                        __restrict ptCopySize,
+                                                        uint32_t wMode);
 
 void __arm_2d_impl_gray8_src_msk_1h_des_msk_copy_x_mirror(uint8_t *
-							  __restrict
-							  pSourceBase,
-							  int16_t iSourceStride,
-							  uint8_t *
-							  __restrict
-							  ptSourceMaskBase,
-							  int16_t
-							  iSourceMaskStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptSourceMaskSize,
-							  uint8_t *
-							  __restrict
-							  pTargetBase,
-							  int16_t iTargetStride,
-							  uint8_t *
-							  __restrict
-							  ptTargetMaskBase,
-							  int16_t
-							  iTargetMaskStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptTargetMaskSize,
-							  arm_2d_size_t *
-							  __restrict
-							  ptCopySize);
+                                                          __restrict
+                                                          pSourceBase,
+                                                          int16_t iSourceStride,
+                                                          uint8_t *
+                                                          __restrict
+                                                          ptSourceMaskBase,
+                                                          int16_t
+                                                          iSourceMaskStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptSourceMaskSize,
+                                                          uint8_t *
+                                                          __restrict
+                                                          pTargetBase,
+                                                          int16_t iTargetStride,
+                                                          uint8_t *
+                                                          __restrict
+                                                          ptTargetMaskBase,
+                                                          int16_t
+                                                          iTargetMaskStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptTargetMaskSize,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptCopySize);
 
 void __arm_2d_impl_gray8_src_msk_1h_des_msk_copy_xy_mirror(uint8_t *
-							   __restrict
-							   pSourceBase,
-							   int16_t
-							   iSourceStride,
-							   uint8_t *
-							   __restrict
-							   ptSourceMaskBase,
-							   int16_t
-							   iSourceMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceMaskSize,
-							   uint8_t *
-							   __restrict
-							   pTargetBase,
-							   int16_t
-							   iTargetStride,
-							   uint8_t *
-							   __restrict
-							   ptTargetMaskBase,
-							   int16_t
-							   iTargetMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetMaskSize,
-							   arm_2d_size_t *
-							   __restrict
-							   ptCopySize);
+                                                           __restrict
+                                                           pSourceBase,
+                                                           int16_t
+                                                           iSourceStride,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptSourceMaskBase,
+                                                           int16_t
+                                                           iSourceMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceMaskSize,
+                                                           uint8_t *
+                                                           __restrict
+                                                           pTargetBase,
+                                                           int16_t
+                                                           iTargetStride,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptTargetMaskBase,
+                                                           int16_t
+                                                           iTargetMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetMaskSize,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptCopySize);
 
 void __arm_2d_impl_gray8_src_msk_1h_des_msk_copy_y_mirror(uint8_t *
-							  __restrict
-							  pSourceBase,
-							  int16_t iSourceStride,
-							  uint8_t *
-							  __restrict
-							  ptSourceMaskBase,
-							  int16_t
-							  iSourceMaskStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptSourceMaskSize,
-							  uint8_t *
-							  __restrict
-							  pTargetBase,
-							  int16_t iTargetStride,
-							  uint8_t *
-							  __restrict
-							  ptTargetMaskBase,
-							  int16_t
-							  iTargetMaskStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptTargetMaskSize,
-							  arm_2d_size_t *
-							  __restrict
-							  ptCopySize);
+                                                          __restrict
+                                                          pSourceBase,
+                                                          int16_t iSourceStride,
+                                                          uint8_t *
+                                                          __restrict
+                                                          ptSourceMaskBase,
+                                                          int16_t
+                                                          iSourceMaskStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptSourceMaskSize,
+                                                          uint8_t *
+                                                          __restrict
+                                                          pTargetBase,
+                                                          int16_t iTargetStride,
+                                                          uint8_t *
+                                                          __restrict
+                                                          ptTargetMaskBase,
+                                                          int16_t
+                                                          iTargetMaskStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptTargetMaskSize,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptCopySize);
 
 void __arm_2d_impl_gray8_src_msk_1h_des_msk_fill(uint8_t *
-						 __restrict ptSourceBase,
-						 int16_t iSourceStride,
-						 arm_2d_size_t *
-						 __restrict ptSourceSize,
-						 uint8_t *
-						 __restrict ptSourceMaskBase,
-						 int16_t iSourceMaskStride,
-						 arm_2d_size_t *
-						 __restrict ptSourceMaskSize,
-						 uint8_t *
-						 __restrict ptTargetBase,
-						 int16_t iTargetStride,
-						 arm_2d_size_t *
-						 __restrict ptTargetSize,
-						 uint8_t *
-						 __restrict ptTargetMaskBase,
-						 int16_t iTargetMaskStride,
-						 arm_2d_size_t *
-						 __restrict ptTargetMaskSize);
+                                                 __restrict ptSourceBase,
+                                                 int16_t iSourceStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptSourceSize,
+                                                 uint8_t *
+                                                 __restrict ptSourceMaskBase,
+                                                 int16_t iSourceMaskStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptSourceMaskSize,
+                                                 uint8_t *
+                                                 __restrict ptTargetBase,
+                                                 int16_t iTargetStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptTargetSize,
+                                                 uint8_t *
+                                                 __restrict ptTargetMaskBase,
+                                                 int16_t iTargetMaskStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_src_msk_1h_des_msk_fill_mirror(uint8_t *
-							__restrict ptSourceBase,
-							int16_t iSourceStride,
-							arm_2d_size_t *
-							__restrict ptSourceSize,
-							uint8_t *
-							__restrict
-							ptSourceMaskBase,
-							int16_t
-							iSourceMaskStride,
-							arm_2d_size_t *
-							__restrict
-							ptSourceMaskSize,
-							uint8_t *
-							__restrict ptTargetBase,
-							int16_t iTargetStride,
-							arm_2d_size_t *
-							__restrict ptTargetSize,
-							uint8_t *
-							__restrict
-							ptTargetMaskBase,
-							int16_t
-							iTargetMaskStride,
-							arm_2d_size_t *
-							__restrict
-							ptTargetMaskSize,
-							uint32_t wMode);
+                                                        __restrict ptSourceBase,
+                                                        int16_t iSourceStride,
+                                                        arm_2d_size_t *
+                                                        __restrict ptSourceSize,
+                                                        uint8_t *
+                                                        __restrict
+                                                        ptSourceMaskBase,
+                                                        int16_t
+                                                        iSourceMaskStride,
+                                                        arm_2d_size_t *
+                                                        __restrict
+                                                        ptSourceMaskSize,
+                                                        uint8_t *
+                                                        __restrict ptTargetBase,
+                                                        int16_t iTargetStride,
+                                                        arm_2d_size_t *
+                                                        __restrict ptTargetSize,
+                                                        uint8_t *
+                                                        __restrict
+                                                        ptTargetMaskBase,
+                                                        int16_t
+                                                        iTargetMaskStride,
+                                                        arm_2d_size_t *
+                                                        __restrict
+                                                        ptTargetMaskSize,
+                                                        uint32_t wMode);
 
 void __arm_2d_impl_gray8_src_msk_1h_des_msk_fill_x_mirror(uint8_t *
-							  __restrict
-							  ptSourceBase,
-							  int16_t iSourceStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptSourceSize,
-							  uint8_t *
-							  __restrict
-							  ptSourceMaskBase,
-							  int16_t
-							  iSourceMaskStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptSourceMaskSize,
-							  uint8_t *
-							  __restrict
-							  ptTargetBase,
-							  int16_t iTargetStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptTargetSize,
-							  uint8_t *
-							  __restrict
-							  ptTargetMaskBase,
-							  int16_t
-							  iTargetMaskStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptTargetMaskSize);
+                                                          __restrict
+                                                          ptSourceBase,
+                                                          int16_t iSourceStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptSourceSize,
+                                                          uint8_t *
+                                                          __restrict
+                                                          ptSourceMaskBase,
+                                                          int16_t
+                                                          iSourceMaskStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptSourceMaskSize,
+                                                          uint8_t *
+                                                          __restrict
+                                                          ptTargetBase,
+                                                          int16_t iTargetStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptTargetSize,
+                                                          uint8_t *
+                                                          __restrict
+                                                          ptTargetMaskBase,
+                                                          int16_t
+                                                          iTargetMaskStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_src_msk_1h_des_msk_fill_xy_mirror(uint8_t *
-							   __restrict
-							   ptSourceBase,
-							   int16_t
-							   iSourceStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceSize,
-							   uint8_t *
-							   __restrict
-							   ptSourceMaskBase,
-							   int16_t
-							   iSourceMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceMaskSize,
-							   uint8_t *
-							   __restrict
-							   ptTargetBase,
-							   int16_t
-							   iTargetStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetSize,
-							   uint8_t *
-							   __restrict
-							   ptTargetMaskBase,
-							   int16_t
-							   iTargetMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetMaskSize);
+                                                           __restrict
+                                                           ptSourceBase,
+                                                           int16_t
+                                                           iSourceStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceSize,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptSourceMaskBase,
+                                                           int16_t
+                                                           iSourceMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceMaskSize,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptTargetBase,
+                                                           int16_t
+                                                           iTargetStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetSize,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptTargetMaskBase,
+                                                           int16_t
+                                                           iTargetMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_src_msk_1h_des_msk_fill_y_mirror(uint8_t *
-							  __restrict
-							  ptSourceBase,
-							  int16_t iSourceStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptSourceSize,
-							  uint8_t *
-							  __restrict
-							  ptSourceMaskBase,
-							  int16_t
-							  iSourceMaskStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptSourceMaskSize,
-							  uint8_t *
-							  __restrict
-							  ptTargetBase,
-							  int16_t iTargetStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptTargetSize,
-							  uint8_t *
-							  __restrict
-							  ptTargetMaskBase,
-							  int16_t
-							  iTargetMaskStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptTargetMaskSize);
+                                                          __restrict
+                                                          ptSourceBase,
+                                                          int16_t iSourceStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptSourceSize,
+                                                          uint8_t *
+                                                          __restrict
+                                                          ptSourceMaskBase,
+                                                          int16_t
+                                                          iSourceMaskStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptSourceMaskSize,
+                                                          uint8_t *
+                                                          __restrict
+                                                          ptTargetBase,
+                                                          int16_t iTargetStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptTargetSize,
+                                                          uint8_t *
+                                                          __restrict
+                                                          ptTargetMaskBase,
+                                                          int16_t
+                                                          iTargetMaskStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_src_msk_copy(uint8_t * __restrict pSourceBase,
-				      int16_t iSourceStride,
-				      uint8_t * __restrict ptSourceMaskBase,
-				      int16_t iSourceMaskStride,
-				      arm_2d_size_t *
-				      __restrict ptSourceMaskSize,
-				      uint8_t * __restrict pTargetBase,
-				      int16_t iTargetStride,
-				      arm_2d_size_t * __restrict ptCopySize);
+                                      int16_t iSourceStride,
+                                      uint8_t * __restrict ptSourceMaskBase,
+                                      int16_t iSourceMaskStride,
+                                      arm_2d_size_t *
+                                      __restrict ptSourceMaskSize,
+                                      uint8_t * __restrict pTargetBase,
+                                      int16_t iTargetStride,
+                                      arm_2d_size_t * __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_src_msk_copy_mirror(uint8_t * __restrict pSourceBase,
-					     int16_t iSourceStride,
-					     uint8_t *
-					     __restrict ptSourceMaskBase,
-					     int16_t iSourceMaskStride,
-					     arm_2d_size_t *
-					     __restrict ptSourceMaskSize,
-					     uint8_t * __restrict pTargetBase,
-					     int16_t iTargetStride,
-					     arm_2d_size_t *
-					     __restrict ptCopySize,
-					     uint32_t wMode);
+                                             int16_t iSourceStride,
+                                             uint8_t *
+                                             __restrict ptSourceMaskBase,
+                                             int16_t iSourceMaskStride,
+                                             arm_2d_size_t *
+                                             __restrict ptSourceMaskSize,
+                                             uint8_t * __restrict pTargetBase,
+                                             int16_t iTargetStride,
+                                             arm_2d_size_t *
+                                             __restrict ptCopySize,
+                                             uint32_t wMode);
 
 void __arm_2d_impl_gray8_src_msk_copy_x_mirror(uint8_t * __restrict pSourceBase,
-					       int16_t iSourceStride,
-					       uint8_t *
-					       __restrict ptSourceMaskBase,
-					       int16_t iSourceMaskStride,
-					       arm_2d_size_t *
-					       __restrict ptSourceMaskSize,
-					       uint8_t * __restrict pTargetBase,
-					       int16_t iTargetStride,
-					       arm_2d_size_t *
-					       __restrict ptCopySize);
+                                               int16_t iSourceStride,
+                                               uint8_t *
+                                               __restrict ptSourceMaskBase,
+                                               int16_t iSourceMaskStride,
+                                               arm_2d_size_t *
+                                               __restrict ptSourceMaskSize,
+                                               uint8_t * __restrict pTargetBase,
+                                               int16_t iTargetStride,
+                                               arm_2d_size_t *
+                                               __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_src_msk_copy_xy_mirror(uint8_t *
-						__restrict pSourceBase,
-						int16_t iSourceStride,
-						uint8_t *
-						__restrict ptSourceMaskBase,
-						int16_t iSourceMaskStride,
-						arm_2d_size_t *
-						__restrict ptSourceMaskSize,
-						uint8_t *
-						__restrict pTargetBase,
-						int16_t iTargetStride,
-						arm_2d_size_t *
-						__restrict ptCopySize);
+                                                __restrict pSourceBase,
+                                                int16_t iSourceStride,
+                                                uint8_t *
+                                                __restrict ptSourceMaskBase,
+                                                int16_t iSourceMaskStride,
+                                                arm_2d_size_t *
+                                                __restrict ptSourceMaskSize,
+                                                uint8_t *
+                                                __restrict pTargetBase,
+                                                int16_t iTargetStride,
+                                                arm_2d_size_t *
+                                                __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_src_msk_copy_y_mirror(uint8_t * __restrict pSourceBase,
-					       int16_t iSourceStride,
-					       uint8_t *
-					       __restrict ptSourceMaskBase,
-					       int16_t iSourceMaskStride,
-					       arm_2d_size_t *
-					       __restrict ptSourceMaskSize,
-					       uint8_t * __restrict pTargetBase,
-					       int16_t iTargetStride,
-					       arm_2d_size_t *
-					       __restrict ptCopySize);
+                                               int16_t iSourceStride,
+                                               uint8_t *
+                                               __restrict ptSourceMaskBase,
+                                               int16_t iSourceMaskStride,
+                                               arm_2d_size_t *
+                                               __restrict ptSourceMaskSize,
+                                               uint8_t * __restrict pTargetBase,
+                                               int16_t iTargetStride,
+                                               arm_2d_size_t *
+                                               __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_src_msk_des_chn_msk_copy(uint8_t *
-						  __restrict pSourceBase,
-						  int16_t iSourceStride,
-						  uint8_t *
-						  __restrict ptSourceMaskBase,
-						  int16_t iSourceMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptSourceMaskSize,
-						  uint8_t *
-						  __restrict pTargetBase,
-						  int16_t iTargetStride,
-						  uint32_t *
-						  __restrict ptTargetMaskBase,
-						  int16_t iTargetMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetMaskSize,
-						  arm_2d_size_t *
-						  __restrict ptCopySize);
+                                                  __restrict pSourceBase,
+                                                  int16_t iSourceStride,
+                                                  uint8_t *
+                                                  __restrict ptSourceMaskBase,
+                                                  int16_t iSourceMaskStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptSourceMaskSize,
+                                                  uint8_t *
+                                                  __restrict pTargetBase,
+                                                  int16_t iTargetStride,
+                                                  uint32_t *
+                                                  __restrict ptTargetMaskBase,
+                                                  int16_t iTargetMaskStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptTargetMaskSize,
+                                                  arm_2d_size_t *
+                                                  __restrict ptCopySize);
 
 void __arm_2d_impl_gray8_src_msk_des_chn_msk_copy_mirror(uint8_t *
-							 __restrict pSourceBase,
-							 int16_t iSourceStride,
-							 uint8_t *
-							 __restrict
-							 ptSourceMaskBase,
-							 int16_t
-							 iSourceMaskStride,
-							 arm_2d_size_t *
-							 __restrict
-							 ptSourceMaskSize,
-							 uint8_t *
-							 __restrict pTargetBase,
-							 int16_t iTargetStride,
-							 uint32_t *
-							 __restrict
-							 ptTargetMaskBase,
-							 int16_t
-							 iTargetMaskStride,
-							 arm_2d_size_t *
-							 __restrict
-							 ptTargetMaskSize,
-							 arm_2d_size_t *
-							 __restrict ptCopySize,
-							 uint32_t wMode);
+                                                         __restrict pSourceBase,
+                                                         int16_t iSourceStride,
+                                                         uint8_t *
+                                                         __restrict
+                                                         ptSourceMaskBase,
+                                                         int16_t
+                                                         iSourceMaskStride,
+                                                         arm_2d_size_t *
+                                                         __restrict
+                                                         ptSourceMaskSize,
+                                                         uint8_t *
+                                                         __restrict pTargetBase,
+                                                         int16_t iTargetStride,
+                                                         uint32_t *
+                                                         __restrict
+                                                         ptTargetMaskBase,
+                                                         int16_t
+                                                         iTargetMaskStride,
+                                                         arm_2d_size_t *
+                                                         __restrict
+                                                         ptTargetMaskSize,
+                                                         arm_2d_size_t *
+                                                         __restrict ptCopySize,
+                                                         uint32_t wMode);
 
 void __arm_2d_impl_gray8_src_msk_des_chn_msk_copy_x_mirror(uint8_t *
-							   __restrict
-							   pSourceBase,
-							   int16_t
-							   iSourceStride,
-							   uint8_t *
-							   __restrict
-							   ptSourceMaskBase,
-							   int16_t
-							   iSourceMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceMaskSize,
-							   uint8_t *
-							   __restrict
-							   pTargetBase,
-							   int16_t
-							   iTargetStride,
-							   uint32_t *
-							   __restrict
-							   ptTargetMaskBase,
-							   int16_t
-							   iTargetMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetMaskSize,
-							   arm_2d_size_t *
-							   __restrict
-							   ptCopySize);
+                                                           __restrict
+                                                           pSourceBase,
+                                                           int16_t
+                                                           iSourceStride,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptSourceMaskBase,
+                                                           int16_t
+                                                           iSourceMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceMaskSize,
+                                                           uint8_t *
+                                                           __restrict
+                                                           pTargetBase,
+                                                           int16_t
+                                                           iTargetStride,
+                                                           uint32_t *
+                                                           __restrict
+                                                           ptTargetMaskBase,
+                                                           int16_t
+                                                           iTargetMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetMaskSize,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptCopySize);
 
 void __arm_2d_impl_gray8_src_msk_des_chn_msk_copy_xy_mirror(uint8_t *
-							    __restrict
-							    pSourceBase,
-							    int16_t
-							    iSourceStride,
-							    uint8_t *
-							    __restrict
-							    ptSourceMaskBase,
-							    int16_t
-							    iSourceMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceMaskSize,
-							    uint8_t *
-							    __restrict
-							    pTargetBase,
-							    int16_t
-							    iTargetStride,
-							    uint32_t *
-							    __restrict
-							    ptTargetMaskBase,
-							    int16_t
-							    iTargetMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetMaskSize,
-							    arm_2d_size_t *
-							    __restrict
-							    ptCopySize);
+                                                            __restrict
+                                                            pSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint8_t *
+                                                            __restrict
+                                                            pTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptCopySize);
 
 void __arm_2d_impl_gray8_src_msk_des_chn_msk_copy_y_mirror(uint8_t *
-							   __restrict
-							   pSourceBase,
-							   int16_t
-							   iSourceStride,
-							   uint8_t *
-							   __restrict
-							   ptSourceMaskBase,
-							   int16_t
-							   iSourceMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceMaskSize,
-							   uint8_t *
-							   __restrict
-							   pTargetBase,
-							   int16_t
-							   iTargetStride,
-							   uint32_t *
-							   __restrict
-							   ptTargetMaskBase,
-							   int16_t
-							   iTargetMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetMaskSize,
-							   arm_2d_size_t *
-							   __restrict
-							   ptCopySize);
+                                                           __restrict
+                                                           pSourceBase,
+                                                           int16_t
+                                                           iSourceStride,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptSourceMaskBase,
+                                                           int16_t
+                                                           iSourceMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceMaskSize,
+                                                           uint8_t *
+                                                           __restrict
+                                                           pTargetBase,
+                                                           int16_t
+                                                           iTargetStride,
+                                                           uint32_t *
+                                                           __restrict
+                                                           ptTargetMaskBase,
+                                                           int16_t
+                                                           iTargetMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetMaskSize,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptCopySize);
 
 void __arm_2d_impl_gray8_src_msk_des_chn_msk_fill(uint8_t *
-						  __restrict ptSourceBase,
-						  int16_t iSourceStride,
-						  arm_2d_size_t *
-						  __restrict ptSourceSize,
-						  uint8_t *
-						  __restrict ptSourceMaskBase,
-						  int16_t iSourceMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptSourceMaskSize,
-						  uint8_t *
-						  __restrict ptTargetBase,
-						  int16_t iTargetStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetSize,
-						  uint32_t *
-						  __restrict ptTargetMaskBase,
-						  int16_t iTargetMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetMaskSize);
+                                                  __restrict ptSourceBase,
+                                                  int16_t iSourceStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptSourceSize,
+                                                  uint8_t *
+                                                  __restrict ptSourceMaskBase,
+                                                  int16_t iSourceMaskStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptSourceMaskSize,
+                                                  uint8_t *
+                                                  __restrict ptTargetBase,
+                                                  int16_t iTargetStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptTargetSize,
+                                                  uint32_t *
+                                                  __restrict ptTargetMaskBase,
+                                                  int16_t iTargetMaskStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_src_msk_des_chn_msk_fill_mirror(uint8_t *
-							 __restrict
-							 ptSourceBase,
-							 int16_t iSourceStride,
-							 arm_2d_size_t *
-							 __restrict
-							 ptSourceSize,
-							 uint8_t *
-							 __restrict
-							 ptSourceMaskBase,
-							 int16_t
-							 iSourceMaskStride,
-							 arm_2d_size_t *
-							 __restrict
-							 ptSourceMaskSize,
-							 uint8_t *
-							 __restrict
-							 ptTargetBase,
-							 int16_t iTargetStride,
-							 arm_2d_size_t *
-							 __restrict
-							 ptTargetSize,
-							 uint32_t *
-							 __restrict
-							 ptTargetMaskBase,
-							 int16_t
-							 iTargetMaskStride,
-							 arm_2d_size_t *
-							 __restrict
-							 ptTargetMaskSize,
-							 uint32_t wMode);
+                                                         __restrict
+                                                         ptSourceBase,
+                                                         int16_t iSourceStride,
+                                                         arm_2d_size_t *
+                                                         __restrict
+                                                         ptSourceSize,
+                                                         uint8_t *
+                                                         __restrict
+                                                         ptSourceMaskBase,
+                                                         int16_t
+                                                         iSourceMaskStride,
+                                                         arm_2d_size_t *
+                                                         __restrict
+                                                         ptSourceMaskSize,
+                                                         uint8_t *
+                                                         __restrict
+                                                         ptTargetBase,
+                                                         int16_t iTargetStride,
+                                                         arm_2d_size_t *
+                                                         __restrict
+                                                         ptTargetSize,
+                                                         uint32_t *
+                                                         __restrict
+                                                         ptTargetMaskBase,
+                                                         int16_t
+                                                         iTargetMaskStride,
+                                                         arm_2d_size_t *
+                                                         __restrict
+                                                         ptTargetMaskSize,
+                                                         uint32_t wMode);
 
 void __arm_2d_impl_gray8_src_msk_des_chn_msk_fill_x_mirror(uint8_t *
-							   __restrict
-							   ptSourceBase,
-							   int16_t
-							   iSourceStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceSize,
-							   uint8_t *
-							   __restrict
-							   ptSourceMaskBase,
-							   int16_t
-							   iSourceMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceMaskSize,
-							   uint8_t *
-							   __restrict
-							   ptTargetBase,
-							   int16_t
-							   iTargetStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetSize,
-							   uint32_t *
-							   __restrict
-							   ptTargetMaskBase,
-							   int16_t
-							   iTargetMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetMaskSize);
+                                                           __restrict
+                                                           ptSourceBase,
+                                                           int16_t
+                                                           iSourceStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceSize,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptSourceMaskBase,
+                                                           int16_t
+                                                           iSourceMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceMaskSize,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptTargetBase,
+                                                           int16_t
+                                                           iTargetStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetSize,
+                                                           uint32_t *
+                                                           __restrict
+                                                           ptTargetMaskBase,
+                                                           int16_t
+                                                           iTargetMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_src_msk_des_chn_msk_fill_xy_mirror(uint8_t *
-							    __restrict
-							    ptSourceBase,
-							    int16_t
-							    iSourceStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceSize,
-							    uint8_t *
-							    __restrict
-							    ptSourceMaskBase,
-							    int16_t
-							    iSourceMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceMaskSize,
-							    uint8_t *
-							    __restrict
-							    ptTargetBase,
-							    int16_t
-							    iTargetStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetSize,
-							    uint32_t *
-							    __restrict
-							    ptTargetMaskBase,
-							    int16_t
-							    iTargetMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetMaskSize);
+                                                            __restrict
+                                                            ptSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceSize,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetSize,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_src_msk_des_chn_msk_fill_y_mirror(uint8_t *
-							   __restrict
-							   ptSourceBase,
-							   int16_t
-							   iSourceStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceSize,
-							   uint8_t *
-							   __restrict
-							   ptSourceMaskBase,
-							   int16_t
-							   iSourceMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceMaskSize,
-							   uint8_t *
-							   __restrict
-							   ptTargetBase,
-							   int16_t
-							   iTargetStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetSize,
-							   uint32_t *
-							   __restrict
-							   ptTargetMaskBase,
-							   int16_t
-							   iTargetMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetMaskSize);
+                                                           __restrict
+                                                           ptSourceBase,
+                                                           int16_t
+                                                           iSourceStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceSize,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptSourceMaskBase,
+                                                           int16_t
+                                                           iSourceMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceMaskSize,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptTargetBase,
+                                                           int16_t
+                                                           iTargetStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetSize,
+                                                           uint32_t *
+                                                           __restrict
+                                                           ptTargetMaskBase,
+                                                           int16_t
+                                                           iTargetMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetMaskSize);
 
 void __arm_2d_impl_gray8_src_msk_fill(uint8_t * __restrict ptSourceBase,
-				      int16_t iSourceStride,
-				      arm_2d_size_t * __restrict ptSourceSize,
-				      uint8_t * __restrict ptSourceMaskBase,
-				      int16_t iSourceMaskStride,
-				      arm_2d_size_t *
-				      __restrict ptSourceMaskSize,
-				      uint8_t * __restrict ptTargetBase,
-				      int16_t iTargetStride,
-				      arm_2d_size_t * __restrict ptTargetSize);
+                                      int16_t iSourceStride,
+                                      arm_2d_size_t * __restrict ptSourceSize,
+                                      uint8_t * __restrict ptSourceMaskBase,
+                                      int16_t iSourceMaskStride,
+                                      arm_2d_size_t *
+                                      __restrict ptSourceMaskSize,
+                                      uint8_t * __restrict ptTargetBase,
+                                      int16_t iTargetStride,
+                                      arm_2d_size_t * __restrict ptTargetSize);
 
 void __arm_2d_impl_gray8_src_msk_fill_mirror(uint8_t * __restrict ptSourceBase,
-					     int16_t iSourceStride,
-					     arm_2d_size_t *
-					     __restrict ptSourceSize,
-					     uint8_t *
-					     __restrict ptSourceMaskBase,
-					     int16_t iSourceMaskStride,
-					     arm_2d_size_t *
-					     __restrict ptSourceMaskSize,
-					     uint8_t * __restrict ptTargetBase,
-					     int16_t iTargetStride,
-					     arm_2d_size_t *
-					     __restrict ptTargetSize,
-					     uint32_t wMode);
+                                             int16_t iSourceStride,
+                                             arm_2d_size_t *
+                                             __restrict ptSourceSize,
+                                             uint8_t *
+                                             __restrict ptSourceMaskBase,
+                                             int16_t iSourceMaskStride,
+                                             arm_2d_size_t *
+                                             __restrict ptSourceMaskSize,
+                                             uint8_t * __restrict ptTargetBase,
+                                             int16_t iTargetStride,
+                                             arm_2d_size_t *
+                                             __restrict ptTargetSize,
+                                             uint32_t wMode);
 
 void __arm_2d_impl_gray8_src_msk_fill_x_mirror(uint8_t *
-					       __restrict ptSourceBase,
-					       int16_t iSourceStride,
-					       arm_2d_size_t *
-					       __restrict ptSourceSize,
-					       uint8_t *
-					       __restrict ptSourceMaskBase,
-					       int16_t iSourceMaskStride,
-					       arm_2d_size_t *
-					       __restrict ptSourceMaskSize,
-					       uint8_t *
-					       __restrict ptTargetBase,
-					       int16_t iTargetStride,
-					       arm_2d_size_t *
-					       __restrict ptTargetSize);
+                                               __restrict ptSourceBase,
+                                               int16_t iSourceStride,
+                                               arm_2d_size_t *
+                                               __restrict ptSourceSize,
+                                               uint8_t *
+                                               __restrict ptSourceMaskBase,
+                                               int16_t iSourceMaskStride,
+                                               arm_2d_size_t *
+                                               __restrict ptSourceMaskSize,
+                                               uint8_t *
+                                               __restrict ptTargetBase,
+                                               int16_t iTargetStride,
+                                               arm_2d_size_t *
+                                               __restrict ptTargetSize);
 
 void __arm_2d_impl_gray8_src_msk_fill_xy_mirror(uint8_t *
-						__restrict ptSourceBase,
-						int16_t iSourceStride,
-						arm_2d_size_t *
-						__restrict ptSourceSize,
-						uint8_t *
-						__restrict ptSourceMaskBase,
-						int16_t iSourceMaskStride,
-						arm_2d_size_t *
-						__restrict ptSourceMaskSize,
-						uint8_t *
-						__restrict ptTargetBase,
-						int16_t iTargetStride,
-						arm_2d_size_t *
-						__restrict ptTargetSize);
+                                                __restrict ptSourceBase,
+                                                int16_t iSourceStride,
+                                                arm_2d_size_t *
+                                                __restrict ptSourceSize,
+                                                uint8_t *
+                                                __restrict ptSourceMaskBase,
+                                                int16_t iSourceMaskStride,
+                                                arm_2d_size_t *
+                                                __restrict ptSourceMaskSize,
+                                                uint8_t *
+                                                __restrict ptTargetBase,
+                                                int16_t iTargetStride,
+                                                arm_2d_size_t *
+                                                __restrict ptTargetSize);
 
 void __arm_2d_impl_gray8_src_msk_fill_y_mirror(uint8_t *
-					       __restrict ptSourceBase,
-					       int16_t iSourceStride,
-					       arm_2d_size_t *
-					       __restrict ptSourceSize,
-					       uint8_t *
-					       __restrict ptSourceMaskBase,
-					       int16_t iSourceMaskStride,
-					       arm_2d_size_t *
-					       __restrict ptSourceMaskSize,
-					       uint8_t *
-					       __restrict ptTargetBase,
-					       int16_t iTargetStride,
-					       arm_2d_size_t *
-					       __restrict ptTargetSize);
+                                               __restrict ptSourceBase,
+                                               int16_t iSourceStride,
+                                               arm_2d_size_t *
+                                               __restrict ptSourceSize,
+                                               uint8_t *
+                                               __restrict ptSourceMaskBase,
+                                               int16_t iSourceMaskStride,
+                                               arm_2d_size_t *
+                                               __restrict ptSourceMaskSize,
+                                               uint8_t *
+                                               __restrict ptTargetBase,
+                                               int16_t iTargetStride,
+                                               arm_2d_size_t *
+                                               __restrict ptTargetSize);
 
-void __arm_2d_impl_gray8_transform(__arm_2d_param_copy_orig_t * ptParam,
-				   __arm_2d_transform_info_t * ptInfo);
+void __arm_2d_impl_gray8_transform( __arm_2d_param_copy_orig_t * ptParam,
+                                    __arm_2d_transform_info_t * ptInfo);
 
-void __arm_2d_impl_gray8_transform_with_opacity(__arm_2d_param_copy_orig_t * ptParam,
-					 __arm_2d_transform_info_t * ptInfo,
-					 uint_fast16_t hwRatio);
+void __arm_2d_impl_gray8_transform_with_opacity(
+                                         __arm_2d_param_copy_orig_t * ptParam,
+                                         __arm_2d_transform_info_t * ptInfo,
+                                         uint_fast16_t hwRatio);
 
 void __arm_2d_impl_gray8_transform_with_src_mask(
                                         __arm_2d_param_copy_orig_msk_t * ptParam,
@@ -5604,3650 +5612,3651 @@ void __arm_2d_impl_gray8_transform_with_src_chn_mask_and_opacity(
                                         uint_fast16_t hwRatio);
 
 void __arm_2d_impl_rgb16_1x1_paving(const uint16_t * __restrict pSource,
-				    int16_t iSourceStride,
-				    uint16_t * __restrict pTarget,
-				    int16_t iTargetStride,
-				    const arm_2d_size_t *
-				    __restrict ptSrcCopySize,
-				    const arm_2d_size_t *
-				    __restrict ptDstCopySize);
+                                    int16_t iSourceStride,
+                                    uint16_t * __restrict pTarget,
+                                    int16_t iTargetStride,
+                                    const arm_2d_size_t *
+                                    __restrict ptSrcCopySize,
+                                    const arm_2d_size_t *
+                                    __restrict ptDstCopySize);
 
 void __arm_2d_impl_rgb16_1x1_paving_x_mirror(const uint16_t *
-					     __restrict pSource,
-					     int16_t iSourceStride,
-					     uint16_t * __restrict pTarget,
-					     int16_t iTargetStride,
-					     const arm_2d_size_t *
-					     __restrict ptSrcCopySize,
-					     const arm_2d_size_t *
-					     __restrict ptDstCopySize);
+                                             __restrict pSource,
+                                             int16_t iSourceStride,
+                                             uint16_t * __restrict pTarget,
+                                             int16_t iTargetStride,
+                                             const arm_2d_size_t *
+                                             __restrict ptSrcCopySize,
+                                             const arm_2d_size_t *
+                                             __restrict ptDstCopySize);
 
 void __arm_2d_impl_rgb16_1x1_paving_xy_mirror(const uint16_t *
-					      __restrict pSource,
-					      int16_t iSourceStride,
-					      uint16_t * __restrict pTarget,
-					      int16_t iTargetStride,
-					      const arm_2d_size_t *
-					      __restrict ptSrcCopySize,
-					      const arm_2d_size_t *
-					      __restrict ptDstCopySize);
+                                              __restrict pSource,
+                                              int16_t iSourceStride,
+                                              uint16_t * __restrict pTarget,
+                                              int16_t iTargetStride,
+                                              const arm_2d_size_t *
+                                              __restrict ptSrcCopySize,
+                                              const arm_2d_size_t *
+                                              __restrict ptDstCopySize);
 
 void __arm_2d_impl_rgb16_1x1_paving_y_mirror(const uint16_t *
-					     __restrict pSource,
-					     int16_t iSourceStride,
-					     uint16_t * __restrict pTarget,
-					     int16_t iTargetStride,
-					     const arm_2d_size_t *
-					     __restrict ptSrcCopySize,
-					     const arm_2d_size_t *
-					     __restrict ptDstCopySize);
+                                             __restrict pSource,
+                                             int16_t iSourceStride,
+                                             uint16_t * __restrict pTarget,
+                                             int16_t iTargetStride,
+                                             const arm_2d_size_t *
+                                             __restrict ptSrcCopySize,
+                                             const arm_2d_size_t *
+                                             __restrict ptDstCopySize);
 
 void __arm_2d_impl_rgb16_1x2_paving(const uint16_t * __restrict pSourceBase,
-				    int16_t iSourceStride,
-				    const arm_2d_size_t *
-				    __restrict ptSourceSize,
-				    uint16_t * __restrict pTargetBase,
-				    int16_t iTargetStride, uint32_t destWidth,
-				    uint16_t tilePairRows);
+                                    int16_t iSourceStride,
+                                    const arm_2d_size_t *
+                                    __restrict ptSourceSize,
+                                    uint16_t * __restrict pTargetBase,
+                                    int16_t iTargetStride, uint32_t destWidth,
+                                    uint16_t tilePairRows);
 
 void __arm_2d_impl_rgb16_1x2_paving_x_mirror(const uint16_t *
-					     __restrict pSourceBase,
-					     int16_t iSourceStride,
-					     const arm_2d_size_t *
-					     __restrict ptSourceSize,
-					     uint16_t * __restrict pTargetBase,
-					     int16_t iTargetStride,
-					     uint32_t destWidth,
-					     uint16_t tilePairRows);
+                                             __restrict pSourceBase,
+                                             int16_t iSourceStride,
+                                             const arm_2d_size_t *
+                                             __restrict ptSourceSize,
+                                             uint16_t * __restrict pTargetBase,
+                                             int16_t iTargetStride,
+                                             uint32_t destWidth,
+                                             uint16_t tilePairRows);
 
 void __arm_2d_impl_rgb16_1x2_paving_xy_mirror(const uint16_t *
-					      __restrict pSourceBase,
-					      int16_t iSourceStride,
-					      const arm_2d_size_t *
-					      __restrict ptSourceSize,
-					      uint16_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      uint32_t destWidth,
-					      uint16_t tilePairRows);
+                                              __restrict pSourceBase,
+                                              int16_t iSourceStride,
+                                              const arm_2d_size_t *
+                                              __restrict ptSourceSize,
+                                              uint16_t * __restrict pTargetBase,
+                                              int16_t iTargetStride,
+                                              uint32_t destWidth,
+                                              uint16_t tilePairRows);
 
 void __arm_2d_impl_rgb16_1x2_paving_y_mirror(const uint16_t *
-					     __restrict pSourceBase,
-					     int16_t iSourceStride,
-					     const arm_2d_size_t *
-					     __restrict ptSourceSize,
-					     uint16_t * __restrict pTargetBase,
-					     int16_t iTargetStride,
-					     uint32_t destWidth,
-					     uint16_t tilePairRows);
+                                             __restrict pSourceBase,
+                                             int16_t iSourceStride,
+                                             const arm_2d_size_t *
+                                             __restrict ptSourceSize,
+                                             uint16_t * __restrict pTargetBase,
+                                             int16_t iTargetStride,
+                                             uint32_t destWidth,
+                                             uint16_t tilePairRows);
 
 void __arm_2d_impl_rgb16_2x1_paving(const uint16_t * __restrict pSourceBase,
-				    int16_t iSourceStride,
-				    const arm_2d_size_t *
-				    __restrict ptSourceSize,
-				    uint16_t * __restrict pTargetBase,
-				    int16_t iTargetStride,
-				    uint16_t tilePairCols, uint16_t destHeight);
+                                    int16_t iSourceStride,
+                                    const arm_2d_size_t *
+                                    __restrict ptSourceSize,
+                                    uint16_t * __restrict pTargetBase,
+                                    int16_t iTargetStride,
+                                    uint16_t tilePairCols, uint16_t destHeight);
 
 void __arm_2d_impl_rgb16_2x1_paving_x_mirror(const uint16_t *
-					     __restrict pSourceBase,
-					     int16_t iSourceStride,
-					     const arm_2d_size_t *
-					     __restrict ptSourceSize,
-					     uint16_t * __restrict pTargetBase,
-					     int16_t iTargetStride,
-					     uint16_t tilePairCols,
-					     uint16_t destHeight);
+                                             __restrict pSourceBase,
+                                             int16_t iSourceStride,
+                                             const arm_2d_size_t *
+                                             __restrict ptSourceSize,
+                                             uint16_t * __restrict pTargetBase,
+                                             int16_t iTargetStride,
+                                             uint16_t tilePairCols,
+                                             uint16_t destHeight);
 
 void __arm_2d_impl_rgb16_2x1_paving_xy_mirror(const uint16_t *
-					      __restrict pSourceBase,
-					      int16_t iSourceStride,
-					      const arm_2d_size_t *
-					      __restrict ptSourceSize,
-					      uint16_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      uint16_t tilePairCols,
-					      uint16_t destHeight);
+                                              __restrict pSourceBase,
+                                              int16_t iSourceStride,
+                                              const arm_2d_size_t *
+                                              __restrict ptSourceSize,
+                                              uint16_t * __restrict pTargetBase,
+                                              int16_t iTargetStride,
+                                              uint16_t tilePairCols,
+                                              uint16_t destHeight);
 
 void __arm_2d_impl_rgb16_2x1_paving_y_mirror(const uint16_t *
-					     __restrict pSourceBase,
-					     int16_t iSourceStride,
-					     const arm_2d_size_t *
-					     __restrict ptSourceSize,
-					     uint16_t * __restrict pTargetBase,
-					     int16_t iTargetStride,
-					     uint16_t tilePairCols,
-					     uint16_t destHeight);
+                                             __restrict pSourceBase,
+                                             int16_t iSourceStride,
+                                             const arm_2d_size_t *
+                                             __restrict ptSourceSize,
+                                             uint16_t * __restrict pTargetBase,
+                                             int16_t iTargetStride,
+                                             uint16_t tilePairCols,
+                                             uint16_t destHeight);
 
 void __arm_2d_impl_rgb16_2x2_paving(const uint16_t * __restrict pSourceBase,
-				    int16_t iSourceStride,
-				    const arm_2d_size_t *
-				    __restrict ptSourceSize,
-				    uint16_t * __restrict pTargetBase,
-				    int16_t iTargetStride,
-				    uint16_t tilePairRows,
-				    uint16_t tilePairCols);
+                                    int16_t iSourceStride,
+                                    const arm_2d_size_t *
+                                    __restrict ptSourceSize,
+                                    uint16_t * __restrict pTargetBase,
+                                    int16_t iTargetStride,
+                                    uint16_t tilePairRows,
+                                    uint16_t tilePairCols);
 
 void __arm_2d_impl_rgb16_2x2_paving_x_mirror(const uint16_t *
-					     __restrict pSourceBase,
-					     int16_t iSourceStride,
-					     const arm_2d_size_t *
-					     __restrict ptSourceSize,
-					     uint16_t * __restrict pTargetBase,
-					     int16_t iTargetStride,
-					     uint16_t tilePairRows,
-					     uint16_t tilePairCols);
+                                             __restrict pSourceBase,
+                                             int16_t iSourceStride,
+                                             const arm_2d_size_t *
+                                             __restrict ptSourceSize,
+                                             uint16_t * __restrict pTargetBase,
+                                             int16_t iTargetStride,
+                                             uint16_t tilePairRows,
+                                             uint16_t tilePairCols);
 
 void __arm_2d_impl_rgb16_2x2_paving_xy_mirror(const uint16_t *
-					      __restrict pSourceBase,
-					      int16_t iSourceStride,
-					      const arm_2d_size_t *
-					      __restrict ptSourceSize,
-					      uint16_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      uint16_t tilePairRows,
-					      uint16_t tilePairCols);
+                                              __restrict pSourceBase,
+                                              int16_t iSourceStride,
+                                              const arm_2d_size_t *
+                                              __restrict ptSourceSize,
+                                              uint16_t * __restrict pTargetBase,
+                                              int16_t iTargetStride,
+                                              uint16_t tilePairRows,
+                                              uint16_t tilePairCols);
 
 void __arm_2d_impl_rgb16_2x2_paving_y_mirror(const uint16_t *
-					     __restrict pSourceBase,
-					     int16_t iSourceStride,
-					     const arm_2d_size_t *
-					     __restrict ptSourceSize,
-					     uint16_t * __restrict pTargetBase,
-					     int16_t iTargetStride,
-					     uint16_t tilePairRows,
-					     uint16_t tilePairCols);
+                                             __restrict pSourceBase,
+                                             int16_t iSourceStride,
+                                             const arm_2d_size_t *
+                                             __restrict ptSourceSize,
+                                             uint16_t * __restrict pTargetBase,
+                                             int16_t iTargetStride,
+                                             uint16_t tilePairRows,
+                                             uint16_t tilePairCols);
 
 void __arm_2d_impl_rgb16_cl_key_1x1_paving(const uint16_t * __restrict pSource,
-					   int16_t iSourceStride,
-					   uint16_t * __restrict pTarget,
-					   int16_t iTargetStride,
-					   const arm_2d_size_t *
-					   __restrict ptSrcCopySize,
-					   const arm_2d_size_t *
-					   __restrict ptDstCopySize,
-					   uint16_t Colour);
+                                           int16_t iSourceStride,
+                                           uint16_t * __restrict pTarget,
+                                           int16_t iTargetStride,
+                                           const arm_2d_size_t *
+                                           __restrict ptSrcCopySize,
+                                           const arm_2d_size_t *
+                                           __restrict ptDstCopySize,
+                                           uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_1x1_paving_x_mirror(const uint16_t *
-						    __restrict pSource,
-						    int16_t iSourceStride,
-						    uint16_t *
-						    __restrict pTarget,
-						    int16_t iTargetStride,
-						    const arm_2d_size_t *
-						    __restrict ptSrcCopySize,
-						    const arm_2d_size_t *
-						    __restrict ptDstCopySize,
-						    uint16_t Colour);
+                                                    __restrict pSource,
+                                                    int16_t iSourceStride,
+                                                    uint16_t *
+                                                    __restrict pTarget,
+                                                    int16_t iTargetStride,
+                                                    const arm_2d_size_t *
+                                                    __restrict ptSrcCopySize,
+                                                    const arm_2d_size_t *
+                                                    __restrict ptDstCopySize,
+                                                    uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_1x1_paving_xy_mirror(const uint16_t *
-						     __restrict pSource,
-						     int16_t iSourceStride,
-						     uint16_t *
-						     __restrict pTarget,
-						     int16_t iTargetStride,
-						     const arm_2d_size_t *
-						     __restrict ptSrcCopySize,
-						     const arm_2d_size_t *
-						     __restrict ptDstCopySize,
-						     uint16_t Colour);
+                                                     __restrict pSource,
+                                                     int16_t iSourceStride,
+                                                     uint16_t *
+                                                     __restrict pTarget,
+                                                     int16_t iTargetStride,
+                                                     const arm_2d_size_t *
+                                                     __restrict ptSrcCopySize,
+                                                     const arm_2d_size_t *
+                                                     __restrict ptDstCopySize,
+                                                     uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_1x1_paving_y_mirror(const uint16_t *
-						    __restrict pSource,
-						    int16_t iSourceStride,
-						    uint16_t *
-						    __restrict pTarget,
-						    int16_t iTargetStride,
-						    const arm_2d_size_t *
-						    __restrict ptSrcCopySize,
-						    const arm_2d_size_t *
-						    __restrict ptDstCopySize,
-						    uint16_t Colour);
+                                                    __restrict pSource,
+                                                    int16_t iSourceStride,
+                                                    uint16_t *
+                                                    __restrict pTarget,
+                                                    int16_t iTargetStride,
+                                                    const arm_2d_size_t *
+                                                    __restrict ptSrcCopySize,
+                                                    const arm_2d_size_t *
+                                                    __restrict ptDstCopySize,
+                                                    uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_1x2_paving(const uint16_t *
-					   __restrict pSourceBase,
-					   int16_t iSourceStride,
-					   const arm_2d_size_t *
-					   __restrict ptSourceSize,
-					   uint16_t * __restrict pTargetBase,
-					   int16_t iTargetStride,
-					   uint32_t destWidth,
-					   uint16_t tilePairRows,
-					   uint16_t Colour);
+                                           __restrict pSourceBase,
+                                           int16_t iSourceStride,
+                                           const arm_2d_size_t *
+                                           __restrict ptSourceSize,
+                                           uint16_t * __restrict pTargetBase,
+                                           int16_t iTargetStride,
+                                           uint32_t destWidth,
+                                           uint16_t tilePairRows,
+                                           uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_1x2_paving_x_mirror(const uint16_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    const arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint16_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint32_t destWidth,
-						    uint16_t tilePairRows,
-						    uint16_t Colour);
+                                                    __restrict pSourceBase,
+                                                    int16_t iSourceStride,
+                                                    const arm_2d_size_t *
+                                                    __restrict ptSourceSize,
+                                                    uint16_t *
+                                                    __restrict pTargetBase,
+                                                    int16_t iTargetStride,
+                                                    uint32_t destWidth,
+                                                    uint16_t tilePairRows,
+                                                    uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_1x2_paving_xy_mirror(const uint16_t *
-						     __restrict pSourceBase,
-						     int16_t iSourceStride,
-						     const arm_2d_size_t *
-						     __restrict ptSourceSize,
-						     uint16_t *
-						     __restrict pTargetBase,
-						     int16_t iTargetStride,
-						     uint32_t destWidth,
-						     uint16_t tilePairRows,
-						     uint16_t Colour);
+                                                     __restrict pSourceBase,
+                                                     int16_t iSourceStride,
+                                                     const arm_2d_size_t *
+                                                     __restrict ptSourceSize,
+                                                     uint16_t *
+                                                     __restrict pTargetBase,
+                                                     int16_t iTargetStride,
+                                                     uint32_t destWidth,
+                                                     uint16_t tilePairRows,
+                                                     uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_1x2_paving_y_mirror(const uint16_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    const arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint16_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint32_t destWidth,
-						    uint16_t tilePairRows,
-						    uint16_t Colour);
+                                                    __restrict pSourceBase,
+                                                    int16_t iSourceStride,
+                                                    const arm_2d_size_t *
+                                                    __restrict ptSourceSize,
+                                                    uint16_t *
+                                                    __restrict pTargetBase,
+                                                    int16_t iTargetStride,
+                                                    uint32_t destWidth,
+                                                    uint16_t tilePairRows,
+                                                    uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_2x1_paving(const uint16_t *
-					   __restrict pSourceBase,
-					   int16_t iSourceStride,
-					   const arm_2d_size_t *
-					   __restrict ptSourceSize,
-					   uint16_t * __restrict pTargetBase,
-					   int16_t iTargetStride,
-					   uint16_t tilePairCols,
-					   uint16_t destHeight,
-					   uint16_t Colour);
+                                           __restrict pSourceBase,
+                                           int16_t iSourceStride,
+                                           const arm_2d_size_t *
+                                           __restrict ptSourceSize,
+                                           uint16_t * __restrict pTargetBase,
+                                           int16_t iTargetStride,
+                                           uint16_t tilePairCols,
+                                           uint16_t destHeight,
+                                           uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_2x1_paving_x_mirror(const uint16_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    const arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint16_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint16_t tilePairCols,
-						    uint16_t destHeight,
-						    uint16_t Colour);
+                                                    __restrict pSourceBase,
+                                                    int16_t iSourceStride,
+                                                    const arm_2d_size_t *
+                                                    __restrict ptSourceSize,
+                                                    uint16_t *
+                                                    __restrict pTargetBase,
+                                                    int16_t iTargetStride,
+                                                    uint16_t tilePairCols,
+                                                    uint16_t destHeight,
+                                                    uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_2x1_paving_xy_mirror(const uint16_t *
-						     __restrict pSourceBase,
-						     int16_t iSourceStride,
-						     const arm_2d_size_t *
-						     __restrict ptSourceSize,
-						     uint16_t *
-						     __restrict pTargetBase,
-						     int16_t iTargetStride,
-						     uint16_t tilePairCols,
-						     uint16_t destHeight,
-						     uint16_t Colour);
+                                                     __restrict pSourceBase,
+                                                     int16_t iSourceStride,
+                                                     const arm_2d_size_t *
+                                                     __restrict ptSourceSize,
+                                                     uint16_t *
+                                                     __restrict pTargetBase,
+                                                     int16_t iTargetStride,
+                                                     uint16_t tilePairCols,
+                                                     uint16_t destHeight,
+                                                     uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_2x1_paving_y_mirror(const uint16_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    const arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint16_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint16_t tilePairCols,
-						    uint16_t destHeight,
-						    uint16_t Colour);
+                                                    __restrict pSourceBase,
+                                                    int16_t iSourceStride,
+                                                    const arm_2d_size_t *
+                                                    __restrict ptSourceSize,
+                                                    uint16_t *
+                                                    __restrict pTargetBase,
+                                                    int16_t iTargetStride,
+                                                    uint16_t tilePairCols,
+                                                    uint16_t destHeight,
+                                                    uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_2x2_paving(const uint16_t *
-					   __restrict pSourceBase,
-					   int16_t iSourceStride,
-					   const arm_2d_size_t *
-					   __restrict ptSourceSize,
-					   uint16_t * __restrict pTargetBase,
-					   int16_t iTargetStride,
-					   uint16_t tilePairRows,
-					   uint16_t tilePairCols,
-					   uint16_t Colour);
+                                           __restrict pSourceBase,
+                                           int16_t iSourceStride,
+                                           const arm_2d_size_t *
+                                           __restrict ptSourceSize,
+                                           uint16_t * __restrict pTargetBase,
+                                           int16_t iTargetStride,
+                                           uint16_t tilePairRows,
+                                           uint16_t tilePairCols,
+                                           uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_2x2_paving_x_mirror(const uint16_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    const arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint16_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint16_t tilePairRows,
-						    uint16_t tilePairCols,
-						    uint16_t Colour);
+                                                    __restrict pSourceBase,
+                                                    int16_t iSourceStride,
+                                                    const arm_2d_size_t *
+                                                    __restrict ptSourceSize,
+                                                    uint16_t *
+                                                    __restrict pTargetBase,
+                                                    int16_t iTargetStride,
+                                                    uint16_t tilePairRows,
+                                                    uint16_t tilePairCols,
+                                                    uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_2x2_paving_xy_mirror(const uint16_t *
-						     __restrict pSourceBase,
-						     int16_t iSourceStride,
-						     const arm_2d_size_t *
-						     __restrict ptSourceSize,
-						     uint16_t *
-						     __restrict pTargetBase,
-						     int16_t iTargetStride,
-						     uint16_t tilePairRows,
-						     uint16_t tilePairCols,
-						     uint16_t Colour);
+                                                     __restrict pSourceBase,
+                                                     int16_t iSourceStride,
+                                                     const arm_2d_size_t *
+                                                     __restrict ptSourceSize,
+                                                     uint16_t *
+                                                     __restrict pTargetBase,
+                                                     int16_t iTargetStride,
+                                                     uint16_t tilePairRows,
+                                                     uint16_t tilePairCols,
+                                                     uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_2x2_paving_y_mirror(const uint16_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    const arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint16_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint16_t tilePairRows,
-						    uint16_t tilePairCols,
-						    uint16_t Colour);
+                                                    __restrict pSourceBase,
+                                                    int16_t iSourceStride,
+                                                    const arm_2d_size_t *
+                                                    __restrict ptSourceSize,
+                                                    uint16_t *
+                                                    __restrict pTargetBase,
+                                                    int16_t iTargetStride,
+                                                    uint16_t tilePairRows,
+                                                    uint16_t tilePairCols,
+                                                    uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_copy(uint16_t * __restrict pSource,
-				     int16_t iSourceStride,
-				     uint16_t * __restrict pTarget,
-				     int16_t iTargetStride,
-				     arm_2d_size_t * __restrict ptCopySize,
-				     uint16_t Colour);
+                                     int16_t iSourceStride,
+                                     uint16_t * __restrict pTarget,
+                                     int16_t iTargetStride,
+                                     arm_2d_size_t * __restrict ptCopySize,
+                                     uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_copy_mirror(uint16_t * __restrict pSource,
-					    int16_t iSourceStride,
-					    uint16_t * __restrict pTarget,
-					    int16_t iTargetStride,
-					    arm_2d_size_t *
-					    __restrict ptCopySize,
-					    uint32_t wMode, uint16_t Colour);
+                                            int16_t iSourceStride,
+                                            uint16_t * __restrict pTarget,
+                                            int16_t iTargetStride,
+                                            arm_2d_size_t *
+                                            __restrict ptCopySize,
+                                            uint32_t wMode, uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_copy_x_mirror(uint16_t * __restrict pSource,
-					      int16_t iSourceStride,
-					      uint16_t * __restrict pTarget,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptCopySize,
-					      uint16_t Colour);
+                                              int16_t iSourceStride,
+                                              uint16_t * __restrict pTarget,
+                                              int16_t iTargetStride,
+                                              arm_2d_size_t *
+                                              __restrict ptCopySize,
+                                              uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_copy_xy_mirror(uint16_t * __restrict pSource,
-					       int16_t iSourceStride,
-					       uint16_t * __restrict pTarget,
-					       int16_t iTargetStride,
-					       arm_2d_size_t *
-					       __restrict ptCopySize,
-					       uint16_t Colour);
+                                               int16_t iSourceStride,
+                                               uint16_t * __restrict pTarget,
+                                               int16_t iTargetStride,
+                                               arm_2d_size_t *
+                                               __restrict ptCopySize,
+                                               uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_copy_y_mirror(uint16_t * __restrict pSource,
-					      int16_t iSourceStride,
-					      uint16_t * __restrict pTarget,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptCopySize,
-					      uint16_t Colour);
+                                              int16_t iSourceStride,
+                                              uint16_t * __restrict pTarget,
+                                              int16_t iTargetStride,
+                                              arm_2d_size_t *
+                                              __restrict ptCopySize,
+                                              uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_fill(uint16_t * __restrict pSourceBase,
-				     int16_t iSourceStride,
-				     arm_2d_size_t * __restrict ptSourceSize,
-				     uint16_t * __restrict pTargetBase,
-				     int16_t iTargetStride,
-				     arm_2d_size_t * __restrict ptTargetSize,
-				     uint16_t Colour);
+                                     int16_t iSourceStride,
+                                     arm_2d_size_t * __restrict ptSourceSize,
+                                     uint16_t * __restrict pTargetBase,
+                                     int16_t iTargetStride,
+                                     arm_2d_size_t * __restrict ptTargetSize,
+                                     uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_fill_mirror(uint16_t * __restrict pSourceBase,
-					    int16_t iSourceStride,
-					    arm_2d_size_t *
-					    __restrict ptSourceSize,
-					    uint16_t * __restrict pTargetBase,
-					    int16_t iTargetStride,
-					    arm_2d_size_t *
-					    __restrict ptTargetSize,
-					    uint32_t wMode, uint16_t Colour);
+                                            int16_t iSourceStride,
+                                            arm_2d_size_t *
+                                            __restrict ptSourceSize,
+                                            uint16_t * __restrict pTargetBase,
+                                            int16_t iTargetStride,
+                                            arm_2d_size_t *
+                                            __restrict ptTargetSize,
+                                            uint32_t wMode, uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_fill_x_mirror(uint16_t * __restrict pSourceBase,
-					      int16_t iSourceStride,
-					      arm_2d_size_t *
-					      __restrict ptSourceSize,
-					      uint16_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptTargetSize,
-					      uint16_t Colour);
+                                              int16_t iSourceStride,
+                                              arm_2d_size_t *
+                                              __restrict ptSourceSize,
+                                              uint16_t * __restrict pTargetBase,
+                                              int16_t iTargetStride,
+                                              arm_2d_size_t *
+                                              __restrict ptTargetSize,
+                                              uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_fill_xy_mirror(uint16_t *
-					       __restrict pSourceBase,
-					       int16_t iSourceStride,
-					       arm_2d_size_t *
-					       __restrict ptSourceSize,
-					       uint16_t *
-					       __restrict pTargetBase,
-					       int16_t iTargetStride,
-					       arm_2d_size_t *
-					       __restrict ptTargetSize,
-					       uint16_t Colour);
+                                               __restrict pSourceBase,
+                                               int16_t iSourceStride,
+                                               arm_2d_size_t *
+                                               __restrict ptSourceSize,
+                                               uint16_t *
+                                               __restrict pTargetBase,
+                                               int16_t iTargetStride,
+                                               arm_2d_size_t *
+                                               __restrict ptTargetSize,
+                                               uint16_t Colour);
 
 void __arm_2d_impl_rgb16_cl_key_fill_y_mirror(uint16_t * __restrict pSourceBase,
-					      int16_t iSourceStride,
-					      arm_2d_size_t *
-					      __restrict ptSourceSize,
-					      uint16_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptTargetSize,
-					      uint16_t Colour);
+                                              int16_t iSourceStride,
+                                              arm_2d_size_t *
+                                              __restrict ptSourceSize,
+                                              uint16_t * __restrict pTargetBase,
+                                              int16_t iTargetStride,
+                                              arm_2d_size_t *
+                                              __restrict ptTargetSize,
+                                              uint16_t Colour);
 
 void __arm_2d_impl_rgb16_colour_filling(uint16_t * __restrict pTarget,
-					int16_t iTargetStride,
-					arm_2d_size_t * __restrict ptCopySize,
-					uint16_t Colour);
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t * __restrict ptCopySize,
+                                        uint16_t Colour);
 
 void __arm_2d_impl_rgb16_copy(uint16_t * __restrict pSource,
-			      int16_t iSourceStride,
-			      uint16_t * __restrict pTarget,
-			      int16_t iTargetStride,
-			      arm_2d_size_t * __restrict ptCopySize);
+                              int16_t iSourceStride,
+                              uint16_t * __restrict pTarget,
+                              int16_t iTargetStride,
+                              arm_2d_size_t * __restrict ptCopySize);
 
 void __arm_2d_impl_rgb16_copy(uint16_t * phwSource, int16_t iSourceStride,
-			      uint16_t * phwTarget, int16_t iTargetStride,
-			      arm_2d_size_t * ptCopySize);
+                              uint16_t * phwTarget, int16_t iTargetStride,
+                              arm_2d_size_t * ptCopySize);
 
 void __arm_2d_impl_rgb16_copy_mirror(uint16_t * __restrict pSource,
-				     int16_t iSourceStride,
-				     uint16_t * __restrict pTarget,
-				     int16_t iTargetStride,
-				     arm_2d_size_t * __restrict ptCopySize,
-				     uint32_t wMode);
+                                     int16_t iSourceStride,
+                                     uint16_t * __restrict pTarget,
+                                     int16_t iTargetStride,
+                                     arm_2d_size_t * __restrict ptCopySize,
+                                     uint32_t wMode);
 
 void __arm_2d_impl_rgb16_copy_x_mirror(uint16_t * __restrict pSource,
-				       int16_t iSourceStride,
-				       uint16_t * __restrict pTarget,
-				       int16_t iTargetStride,
-				       arm_2d_size_t * __restrict ptCopySize);
+                                       int16_t iSourceStride,
+                                       uint16_t * __restrict pTarget,
+                                       int16_t iTargetStride,
+                                       arm_2d_size_t * __restrict ptCopySize);
 
 void __arm_2d_impl_rgb16_copy_xy_mirror(uint16_t * __restrict pSource,
-					int16_t iSourceStride,
-					uint16_t * __restrict pTarget,
-					int16_t iTargetStride,
-					arm_2d_size_t * __restrict ptCopySize);
+                                        int16_t iSourceStride,
+                                        uint16_t * __restrict pTarget,
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t * __restrict ptCopySize);
 
 void __arm_2d_impl_rgb16_copy_y_mirror(uint16_t * __restrict pSource,
-				       int16_t iSourceStride,
-				       uint16_t * __restrict pTarget,
-				       int16_t iTargetStride,
-				       arm_2d_size_t * __restrict ptCopySize);
+                                       int16_t iSourceStride,
+                                       uint16_t * __restrict pTarget,
+                                       int16_t iTargetStride,
+                                       arm_2d_size_t * __restrict ptCopySize);
 
 void __arm_2d_impl_rgb16_draw_pattern(uint8_t * __restrict pchSourceBase,
-				      int32_t iOffset, int16_t iSourceStride,
-				      uint16_t * __restrict pTargetBase,
-				      int16_t iTargetStride,
-				      arm_2d_size_t * __restrict ptCopySize,
-				      uint8_t chMode, uint16_t ForeColour,
-				      uint16_t BackColour);
+                                      int32_t iOffset, int16_t iSourceStride,
+                                      uint16_t * __restrict pTargetBase,
+                                      int16_t iTargetStride,
+                                      arm_2d_size_t * __restrict ptCopySize,
+                                      uint8_t chMode, uint16_t ForeColour,
+                                      uint16_t BackColour);
 
 void __arm_2d_impl_rgb16_draw_pattern_bg_comp(uint8_t *
-					      __restrict pchSourceBase,
-					      int32_t iOffset,
-					      int16_t iSourceStride,
-					      uint16_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptCopySize,
-					      uint16_t BackColour);
+                                              __restrict pchSourceBase,
+                                              int32_t iOffset,
+                                              int16_t iSourceStride,
+                                              uint16_t * __restrict pTargetBase,
+                                              int16_t iTargetStride,
+                                              arm_2d_size_t *
+                                              __restrict ptCopySize,
+                                              uint16_t BackColour);
 
 void __arm_2d_impl_rgb16_draw_pattern_bg_fg(uint8_t * __restrict pchSourceBase,
-					    int32_t iOffset,
-					    int16_t iSourceStride,
-					    uint16_t * __restrict pTargetBase,
-					    int16_t iTargetStride,
-					    arm_2d_size_t *
-					    __restrict ptCopySize,
-					    uint16_t ForeColour,
-					    uint16_t BackColour);
+                                            int32_t iOffset,
+                                            int16_t iSourceStride,
+                                            uint16_t * __restrict pTargetBase,
+                                            int16_t iTargetStride,
+                                            arm_2d_size_t *
+                                            __restrict ptCopySize,
+                                            uint16_t ForeColour,
+                                            uint16_t BackColour);
 
 void __arm_2d_impl_rgb16_draw_pattern_bg_only(uint8_t *
-					      __restrict pchSourceBase,
-					      int32_t iOffset,
-					      int16_t iSourceStride,
-					      uint16_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptCopySize,
-					      uint16_t BackColour);
+                                              __restrict pchSourceBase,
+                                              int32_t iOffset,
+                                              int16_t iSourceStride,
+                                              uint16_t * __restrict pTargetBase,
+                                              int16_t iTargetStride,
+                                              arm_2d_size_t *
+                                              __restrict ptCopySize,
+                                              uint16_t BackColour);
 
 void __arm_2d_impl_rgb16_draw_pattern_fg_only(uint8_t *
-					      __restrict pchSourceBase,
-					      int32_t iOffset,
-					      int16_t iSourceStride,
-					      uint16_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptCopySize,
-					      uint16_t ForeColour);
+                                              __restrict pchSourceBase,
+                                              int32_t iOffset,
+                                              int16_t iSourceStride,
+                                              uint16_t * __restrict pTargetBase,
+                                              int16_t iTargetStride,
+                                              arm_2d_size_t *
+                                              __restrict ptCopySize,
+                                              uint16_t ForeColour);
 
 void __arm_2d_impl_rgb16_draw_pattern_no_bg_comp(uint8_t *
-						 __restrict pchSourceBase,
-						 int32_t iOffset,
-						 int16_t iSourceStride,
-						 uint16_t *
-						 __restrict pTargetBase,
-						 int16_t iTargetStride,
-						 arm_2d_size_t *
-						 __restrict ptCopySize);
+                                                 __restrict pchSourceBase,
+                                                 int32_t iOffset,
+                                                 int16_t iSourceStride,
+                                                 uint16_t *
+                                                 __restrict pTargetBase,
+                                                 int16_t iTargetStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptCopySize);
 
 void __arm_2d_impl_rgb16_fill(uint16_t * __restrict pSourceBase,
-			      int16_t iSourceStride,
-			      arm_2d_size_t * __restrict ptSourceSize,
-			      uint16_t * __restrict pTargetBase,
-			      int16_t iTargetStride,
-			      arm_2d_size_t * __restrict ptTargetSize);
+                              int16_t iSourceStride,
+                              arm_2d_size_t * __restrict ptSourceSize,
+                              uint16_t * __restrict pTargetBase,
+                              int16_t iTargetStride,
+                              arm_2d_size_t * __restrict ptTargetSize);
 
 void __arm_2d_impl_rgb16_fill_mirror(uint16_t * __restrict pSourceBase,
-				     int16_t iSourceStride,
-				     arm_2d_size_t * __restrict ptSourceSize,
-				     uint16_t * __restrict pTargetBase,
-				     int16_t iTargetStride,
-				     arm_2d_size_t * __restrict ptTargetSize,
-				     uint32_t wMode);
+                                     int16_t iSourceStride,
+                                     arm_2d_size_t * __restrict ptSourceSize,
+                                     uint16_t * __restrict pTargetBase,
+                                     int16_t iTargetStride,
+                                     arm_2d_size_t * __restrict ptTargetSize,
+                                     uint32_t wMode);
 
 void __arm_2d_impl_rgb16_fill_x_mirror(uint16_t * __restrict pSourceBase,
-				       int16_t iSourceStride,
-				       arm_2d_size_t * __restrict ptSourceSize,
-				       uint16_t * __restrict pTargetBase,
-				       int16_t iTargetStride,
-				       arm_2d_size_t * __restrict ptTargetSize);
+                                       int16_t iSourceStride,
+                                       arm_2d_size_t * __restrict ptSourceSize,
+                                       uint16_t * __restrict pTargetBase,
+                                       int16_t iTargetStride,
+                                       arm_2d_size_t * __restrict ptTargetSize);
 
 void __arm_2d_impl_rgb16_fill_xy_mirror(uint16_t * __restrict pSourceBase,
-					int16_t iSourceStride,
-					arm_2d_size_t * __restrict ptSourceSize,
-					uint16_t * __restrict pTargetBase,
-					int16_t iTargetStride,
-					arm_2d_size_t *
-					__restrict ptTargetSize);
+                                        int16_t iSourceStride,
+                                        arm_2d_size_t * __restrict ptSourceSize,
+                                        uint16_t * __restrict pTargetBase,
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t *
+                                        __restrict ptTargetSize);
 
 void __arm_2d_impl_rgb16_fill_y_mirror(uint16_t * __restrict pSourceBase,
-				       int16_t iSourceStride,
-				       arm_2d_size_t * __restrict ptSourceSize,
-				       uint16_t * __restrict pTargetBase,
-				       int16_t iTargetStride,
-				       arm_2d_size_t * __restrict ptTargetSize);
+                                       int16_t iSourceStride,
+                                       arm_2d_size_t * __restrict ptSourceSize,
+                                       uint16_t * __restrict pTargetBase,
+                                       int16_t iTargetStride,
+                                       arm_2d_size_t * __restrict ptTargetSize);
 
 void __arm_2d_impl_rgb32_1x1_paving(const uint32_t * __restrict pSource,
-				    int16_t iSourceStride,
-				    uint32_t * __restrict pTarget,
-				    int16_t iTargetStride,
-				    const arm_2d_size_t *
-				    __restrict ptSrcCopySize,
-				    const arm_2d_size_t *
-				    __restrict ptDstCopySize);
+                                    int16_t iSourceStride,
+                                    uint32_t * __restrict pTarget,
+                                    int16_t iTargetStride,
+                                    const arm_2d_size_t *
+                                    __restrict ptSrcCopySize,
+                                    const arm_2d_size_t *
+                                    __restrict ptDstCopySize);
 
 void __arm_2d_impl_rgb32_1x1_paving_x_mirror(const uint32_t *
-					     __restrict pSource,
-					     int16_t iSourceStride,
-					     uint32_t * __restrict pTarget,
-					     int16_t iTargetStride,
-					     const arm_2d_size_t *
-					     __restrict ptSrcCopySize,
-					     const arm_2d_size_t *
-					     __restrict ptDstCopySize);
+                                             __restrict pSource,
+                                             int16_t iSourceStride,
+                                             uint32_t * __restrict pTarget,
+                                             int16_t iTargetStride,
+                                             const arm_2d_size_t *
+                                             __restrict ptSrcCopySize,
+                                             const arm_2d_size_t *
+                                             __restrict ptDstCopySize);
 
 void __arm_2d_impl_rgb32_1x1_paving_xy_mirror(const uint32_t *
-					      __restrict pSource,
-					      int16_t iSourceStride,
-					      uint32_t * __restrict pTarget,
-					      int16_t iTargetStride,
-					      const arm_2d_size_t *
-					      __restrict ptSrcCopySize,
-					      const arm_2d_size_t *
-					      __restrict ptDstCopySize);
+                                              __restrict pSource,
+                                              int16_t iSourceStride,
+                                              uint32_t * __restrict pTarget,
+                                              int16_t iTargetStride,
+                                              const arm_2d_size_t *
+                                              __restrict ptSrcCopySize,
+                                              const arm_2d_size_t *
+                                              __restrict ptDstCopySize);
 
 void __arm_2d_impl_rgb32_1x1_paving_y_mirror(const uint32_t *
-					     __restrict pSource,
-					     int16_t iSourceStride,
-					     uint32_t * __restrict pTarget,
-					     int16_t iTargetStride,
-					     const arm_2d_size_t *
-					     __restrict ptSrcCopySize,
-					     const arm_2d_size_t *
-					     __restrict ptDstCopySize);
+                                             __restrict pSource,
+                                             int16_t iSourceStride,
+                                             uint32_t * __restrict pTarget,
+                                             int16_t iTargetStride,
+                                             const arm_2d_size_t *
+                                             __restrict ptSrcCopySize,
+                                             const arm_2d_size_t *
+                                             __restrict ptDstCopySize);
 
 void __arm_2d_impl_rgb32_1x2_paving(const uint32_t * __restrict pSourceBase,
-				    int16_t iSourceStride,
-				    const arm_2d_size_t *
-				    __restrict ptSourceSize,
-				    uint32_t * __restrict pTargetBase,
-				    int16_t iTargetStride, uint32_t destWidth,
-				    uint16_t tilePairRows);
+                                    int16_t iSourceStride,
+                                    const arm_2d_size_t *
+                                    __restrict ptSourceSize,
+                                    uint32_t * __restrict pTargetBase,
+                                    int16_t iTargetStride, uint32_t destWidth,
+                                    uint16_t tilePairRows);
 
 void __arm_2d_impl_rgb32_1x2_paving_x_mirror(const uint32_t *
-					     __restrict pSourceBase,
-					     int16_t iSourceStride,
-					     const arm_2d_size_t *
-					     __restrict ptSourceSize,
-					     uint32_t * __restrict pTargetBase,
-					     int16_t iTargetStride,
-					     uint32_t destWidth,
-					     uint16_t tilePairRows);
+                                             __restrict pSourceBase,
+                                             int16_t iSourceStride,
+                                             const arm_2d_size_t *
+                                             __restrict ptSourceSize,
+                                             uint32_t * __restrict pTargetBase,
+                                             int16_t iTargetStride,
+                                             uint32_t destWidth,
+                                             uint16_t tilePairRows);
 
 void __arm_2d_impl_rgb32_1x2_paving_xy_mirror(const uint32_t *
-					      __restrict pSourceBase,
-					      int16_t iSourceStride,
-					      const arm_2d_size_t *
-					      __restrict ptSourceSize,
-					      uint32_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      uint32_t destWidth,
-					      uint16_t tilePairRows);
+                                              __restrict pSourceBase,
+                                              int16_t iSourceStride,
+                                              const arm_2d_size_t *
+                                              __restrict ptSourceSize,
+                                              uint32_t * __restrict pTargetBase,
+                                              int16_t iTargetStride,
+                                              uint32_t destWidth,
+                                              uint16_t tilePairRows);
 
 void __arm_2d_impl_rgb32_1x2_paving_y_mirror(const uint32_t *
-					     __restrict pSourceBase,
-					     int16_t iSourceStride,
-					     const arm_2d_size_t *
-					     __restrict ptSourceSize,
-					     uint32_t * __restrict pTargetBase,
-					     int16_t iTargetStride,
-					     uint32_t destWidth,
-					     uint16_t tilePairRows);
+                                             __restrict pSourceBase,
+                                             int16_t iSourceStride,
+                                             const arm_2d_size_t *
+                                             __restrict ptSourceSize,
+                                             uint32_t * __restrict pTargetBase,
+                                             int16_t iTargetStride,
+                                             uint32_t destWidth,
+                                             uint16_t tilePairRows);
 
 void __arm_2d_impl_rgb32_2x1_paving(const uint32_t * __restrict pSourceBase,
-				    int16_t iSourceStride,
-				    const arm_2d_size_t *
-				    __restrict ptSourceSize,
-				    uint32_t * __restrict pTargetBase,
-				    int16_t iTargetStride,
-				    uint16_t tilePairCols, uint16_t destHeight);
+                                    int16_t iSourceStride,
+                                    const arm_2d_size_t *
+                                    __restrict ptSourceSize,
+                                    uint32_t * __restrict pTargetBase,
+                                    int16_t iTargetStride,
+                                    uint16_t tilePairCols, uint16_t destHeight);
 
 void __arm_2d_impl_rgb32_2x1_paving_x_mirror(const uint32_t *
-					     __restrict pSourceBase,
-					     int16_t iSourceStride,
-					     const arm_2d_size_t *
-					     __restrict ptSourceSize,
-					     uint32_t * __restrict pTargetBase,
-					     int16_t iTargetStride,
-					     uint16_t tilePairCols,
-					     uint16_t destHeight);
+                                             __restrict pSourceBase,
+                                             int16_t iSourceStride,
+                                             const arm_2d_size_t *
+                                             __restrict ptSourceSize,
+                                             uint32_t * __restrict pTargetBase,
+                                             int16_t iTargetStride,
+                                             uint16_t tilePairCols,
+                                             uint16_t destHeight);
 
 void __arm_2d_impl_rgb32_2x1_paving_xy_mirror(const uint32_t *
-					      __restrict pSourceBase,
-					      int16_t iSourceStride,
-					      const arm_2d_size_t *
-					      __restrict ptSourceSize,
-					      uint32_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      uint16_t tilePairCols,
-					      uint16_t destHeight);
+                                              __restrict pSourceBase,
+                                              int16_t iSourceStride,
+                                              const arm_2d_size_t *
+                                              __restrict ptSourceSize,
+                                              uint32_t * __restrict pTargetBase,
+                                              int16_t iTargetStride,
+                                              uint16_t tilePairCols,
+                                              uint16_t destHeight);
 
 void __arm_2d_impl_rgb32_2x1_paving_y_mirror(const uint32_t *
-					     __restrict pSourceBase,
-					     int16_t iSourceStride,
-					     const arm_2d_size_t *
-					     __restrict ptSourceSize,
-					     uint32_t * __restrict pTargetBase,
-					     int16_t iTargetStride,
-					     uint16_t tilePairCols,
-					     uint16_t destHeight);
+                                             __restrict pSourceBase,
+                                             int16_t iSourceStride,
+                                             const arm_2d_size_t *
+                                             __restrict ptSourceSize,
+                                             uint32_t * __restrict pTargetBase,
+                                             int16_t iTargetStride,
+                                             uint16_t tilePairCols,
+                                             uint16_t destHeight);
 
 void __arm_2d_impl_rgb32_2x2_paving(const uint32_t * __restrict pSourceBase,
-				    int16_t iSourceStride,
-				    const arm_2d_size_t *
-				    __restrict ptSourceSize,
-				    uint32_t * __restrict pTargetBase,
-				    int16_t iTargetStride,
-				    uint16_t tilePairRows,
-				    uint16_t tilePairCols);
+                                    int16_t iSourceStride,
+                                    const arm_2d_size_t *
+                                    __restrict ptSourceSize,
+                                    uint32_t * __restrict pTargetBase,
+                                    int16_t iTargetStride,
+                                    uint16_t tilePairRows,
+                                    uint16_t tilePairCols);
 
 void __arm_2d_impl_rgb32_2x2_paving_x_mirror(const uint32_t *
-					     __restrict pSourceBase,
-					     int16_t iSourceStride,
-					     const arm_2d_size_t *
-					     __restrict ptSourceSize,
-					     uint32_t * __restrict pTargetBase,
-					     int16_t iTargetStride,
-					     uint16_t tilePairRows,
-					     uint16_t tilePairCols);
+                                             __restrict pSourceBase,
+                                             int16_t iSourceStride,
+                                             const arm_2d_size_t *
+                                             __restrict ptSourceSize,
+                                             uint32_t * __restrict pTargetBase,
+                                             int16_t iTargetStride,
+                                             uint16_t tilePairRows,
+                                             uint16_t tilePairCols);
 
 void __arm_2d_impl_rgb32_2x2_paving_xy_mirror(const uint32_t *
-					      __restrict pSourceBase,
-					      int16_t iSourceStride,
-					      const arm_2d_size_t *
-					      __restrict ptSourceSize,
-					      uint32_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      uint16_t tilePairRows,
-					      uint16_t tilePairCols);
+                                              __restrict pSourceBase,
+                                              int16_t iSourceStride,
+                                              const arm_2d_size_t *
+                                              __restrict ptSourceSize,
+                                              uint32_t * __restrict pTargetBase,
+                                              int16_t iTargetStride,
+                                              uint16_t tilePairRows,
+                                              uint16_t tilePairCols);
 
 void __arm_2d_impl_rgb32_2x2_paving_y_mirror(const uint32_t *
-					     __restrict pSourceBase,
-					     int16_t iSourceStride,
-					     const arm_2d_size_t *
-					     __restrict ptSourceSize,
-					     uint32_t * __restrict pTargetBase,
-					     int16_t iTargetStride,
-					     uint16_t tilePairRows,
-					     uint16_t tilePairCols);
+                                             __restrict pSourceBase,
+                                             int16_t iSourceStride,
+                                             const arm_2d_size_t *
+                                             __restrict ptSourceSize,
+                                             uint32_t * __restrict pTargetBase,
+                                             int16_t iTargetStride,
+                                             uint16_t tilePairRows,
+                                             uint16_t tilePairCols);
 
 void __arm_2d_impl_rgb32_cl_key_1x1_paving(const uint32_t * __restrict pSource,
-					   int16_t iSourceStride,
-					   uint32_t * __restrict pTarget,
-					   int16_t iTargetStride,
-					   const arm_2d_size_t *
-					   __restrict ptSrcCopySize,
-					   const arm_2d_size_t *
-					   __restrict ptDstCopySize,
-					   uint32_t Colour);
+                                           int16_t iSourceStride,
+                                           uint32_t * __restrict pTarget,
+                                           int16_t iTargetStride,
+                                           const arm_2d_size_t *
+                                           __restrict ptSrcCopySize,
+                                           const arm_2d_size_t *
+                                           __restrict ptDstCopySize,
+                                           uint32_t Colour);
 
 void __arm_2d_impl_rgb32_cl_key_1x1_paving_x_mirror(const uint32_t *
-						    __restrict pSource,
-						    int16_t iSourceStride,
-						    uint32_t *
-						    __restrict pTarget,
-						    int16_t iTargetStride,
-						    const arm_2d_size_t *
-						    __restrict ptSrcCopySize,
-						    const arm_2d_size_t *
-						    __restrict ptDstCopySize,
-						    uint32_t Colour);
+                                                    __restrict pSource,
+                                                    int16_t iSourceStride,
+                                                    uint32_t *
+                                                    __restrict pTarget,
+                                                    int16_t iTargetStride,
+                                                    const arm_2d_size_t *
+                                                    __restrict ptSrcCopySize,
+                                                    const arm_2d_size_t *
+                                                    __restrict ptDstCopySize,
+                                                    uint32_t Colour);
 
 void __arm_2d_impl_rgb32_cl_key_1x1_paving_xy_mirror(const uint32_t *
-						     __restrict pSource,
-						     int16_t iSourceStride,
-						     uint32_t *
-						     __restrict pTarget,
-						     int16_t iTargetStride,
-						     const arm_2d_size_t *
-						     __restrict ptSrcCopySize,
-						     const arm_2d_size_t *
-						     __restrict ptDstCopySize,
-						     uint32_t Colour);
+                                                     __restrict pSource,
+                                                     int16_t iSourceStride,
+                                                     uint32_t *
+                                                     __restrict pTarget,
+                                                     int16_t iTargetStride,
+                                                     const arm_2d_size_t *
+                                                     __restrict ptSrcCopySize,
+                                                     const arm_2d_size_t *
+                                                     __restrict ptDstCopySize,
+                                                     uint32_t Colour);
 
 void __arm_2d_impl_rgb32_cl_key_1x1_paving_y_mirror(const uint32_t *
-						    __restrict pSource,
-						    int16_t iSourceStride,
-						    uint32_t *
-						    __restrict pTarget,
-						    int16_t iTargetStride,
-						    const arm_2d_size_t *
-						    __restrict ptSrcCopySize,
-						    const arm_2d_size_t *
-						    __restrict ptDstCopySize,
-						    uint32_t Colour);
+                                                    __restrict pSource,
+                                                    int16_t iSourceStride,
+                                                    uint32_t *
+                                                    __restrict pTarget,
+                                                    int16_t iTargetStride,
+                                                    const arm_2d_size_t *
+                                                    __restrict ptSrcCopySize,
+                                                    const arm_2d_size_t *
+                                                    __restrict ptDstCopySize,
+                                                    uint32_t Colour);
 
 void __arm_2d_impl_rgb32_cl_key_1x2_paving(const uint32_t *
-					   __restrict pSourceBase,
-					   int16_t iSourceStride,
-					   const arm_2d_size_t *
-					   __restrict ptSourceSize,
-					   uint32_t * __restrict pTargetBase,
-					   int16_t iTargetStride,
-					   uint32_t destWidth,
-					   uint16_t tilePairRows,
-					   uint32_t Colour);
+                                           __restrict pSourceBase,
+                                           int16_t iSourceStride,
+                                           const arm_2d_size_t *
+                                           __restrict ptSourceSize,
+                                           uint32_t * __restrict pTargetBase,
+                                           int16_t iTargetStride,
+                                           uint32_t destWidth,
+                                           uint16_t tilePairRows,
+                                           uint32_t Colour);
 
 void __arm_2d_impl_rgb32_cl_key_1x2_paving_x_mirror(const uint32_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    const arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint32_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint32_t destWidth,
-						    uint16_t tilePairRows,
-						    uint32_t Colour);
+                                                    __restrict pSourceBase,
+                                                    int16_t iSourceStride,
+                                                    const arm_2d_size_t *
+                                                    __restrict ptSourceSize,
+                                                    uint32_t *
+                                                    __restrict pTargetBase,
+                                                    int16_t iTargetStride,
+                                                    uint32_t destWidth,
+                                                    uint16_t tilePairRows,
+                                                    uint32_t Colour);
 
 void __arm_2d_impl_rgb32_cl_key_1x2_paving_xy_mirror(const uint32_t *
-						     __restrict pSourceBase,
-						     int16_t iSourceStride,
-						     const arm_2d_size_t *
-						     __restrict ptSourceSize,
-						     uint32_t *
-						     __restrict pTargetBase,
-						     int16_t iTargetStride,
-						     uint32_t destWidth,
-						     uint16_t tilePairRows,
-						     uint32_t Colour);
+                                                     __restrict pSourceBase,
+                                                     int16_t iSourceStride,
+                                                     const arm_2d_size_t *
+                                                     __restrict ptSourceSize,
+                                                     uint32_t *
+                                                     __restrict pTargetBase,
+                                                     int16_t iTargetStride,
+                                                     uint32_t destWidth,
+                                                     uint16_t tilePairRows,
+                                                     uint32_t Colour);
 
 void __arm_2d_impl_rgb32_cl_key_1x2_paving_y_mirror(const uint32_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    const arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint32_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint32_t destWidth,
-						    uint16_t tilePairRows,
-						    uint32_t Colour);
+                                                    __restrict pSourceBase,
+                                                    int16_t iSourceStride,
+                                                    const arm_2d_size_t *
+                                                    __restrict ptSourceSize,
+                                                    uint32_t *
+                                                    __restrict pTargetBase,
+                                                    int16_t iTargetStride,
+                                                    uint32_t destWidth,
+                                                    uint16_t tilePairRows,
+                                                    uint32_t Colour);
 
 void __arm_2d_impl_rgb32_cl_key_2x1_paving(const uint32_t *
-					   __restrict pSourceBase,
-					   int16_t iSourceStride,
-					   const arm_2d_size_t *
-					   __restrict ptSourceSize,
-					   uint32_t * __restrict pTargetBase,
-					   int16_t iTargetStride,
-					   uint16_t tilePairCols,
-					   uint16_t destHeight,
-					   uint32_t Colour);
+                                           __restrict pSourceBase,
+                                           int16_t iSourceStride,
+                                           const arm_2d_size_t *
+                                           __restrict ptSourceSize,
+                                           uint32_t * __restrict pTargetBase,
+                                           int16_t iTargetStride,
+                                           uint16_t tilePairCols,
+                                           uint16_t destHeight,
+                                           uint32_t Colour);
 
 void __arm_2d_impl_rgb32_cl_key_2x1_paving_x_mirror(const uint32_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    const arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint32_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint16_t tilePairCols,
-						    uint16_t destHeight,
-						    uint32_t Colour);
+                                                    __restrict pSourceBase,
+                                                    int16_t iSourceStride,
+                                                    const arm_2d_size_t *
+                                                    __restrict ptSourceSize,
+                                                    uint32_t *
+                                                    __restrict pTargetBase,
+                                                    int16_t iTargetStride,
+                                                    uint16_t tilePairCols,
+                                                    uint16_t destHeight,
+                                                    uint32_t Colour);
 
 void __arm_2d_impl_rgb32_cl_key_2x1_paving_xy_mirror(const uint32_t *
-						     __restrict pSourceBase,
-						     int16_t iSourceStride,
-						     const arm_2d_size_t *
-						     __restrict ptSourceSize,
-						     uint32_t *
-						     __restrict pTargetBase,
-						     int16_t iTargetStride,
-						     uint16_t tilePairCols,
-						     uint16_t destHeight,
-						     uint32_t Colour);
+                                                     __restrict pSourceBase,
+                                                     int16_t iSourceStride,
+                                                     const arm_2d_size_t *
+                                                     __restrict ptSourceSize,
+                                                     uint32_t *
+                                                     __restrict pTargetBase,
+                                                     int16_t iTargetStride,
+                                                     uint16_t tilePairCols,
+                                                     uint16_t destHeight,
+                                                     uint32_t Colour);
 
 void __arm_2d_impl_rgb32_cl_key_2x1_paving_y_mirror(const uint32_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    const arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint32_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint16_t tilePairCols,
-						    uint16_t destHeight,
-						    uint32_t Colour);
+                                                    __restrict pSourceBase,
+                                                    int16_t iSourceStride,
+                                                    const arm_2d_size_t *
+                                                    __restrict ptSourceSize,
+                                                    uint32_t *
+                                                    __restrict pTargetBase,
+                                                    int16_t iTargetStride,
+                                                    uint16_t tilePairCols,
+                                                    uint16_t destHeight,
+                                                    uint32_t Colour);
 
 void __arm_2d_impl_rgb32_cl_key_2x2_paving(const uint32_t *
-					   __restrict pSourceBase,
-					   int16_t iSourceStride,
-					   const arm_2d_size_t *
-					   __restrict ptSourceSize,
-					   uint32_t * __restrict pTargetBase,
-					   int16_t iTargetStride,
-					   uint16_t tilePairRows,
-					   uint16_t tilePairCols,
-					   uint32_t Colour);
+                                           __restrict pSourceBase,
+                                           int16_t iSourceStride,
+                                           const arm_2d_size_t *
+                                           __restrict ptSourceSize,
+                                           uint32_t * __restrict pTargetBase,
+                                           int16_t iTargetStride,
+                                           uint16_t tilePairRows,
+                                           uint16_t tilePairCols,
+                                           uint32_t Colour);
 
 void __arm_2d_impl_rgb32_cl_key_2x2_paving_x_mirror(const uint32_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    const arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint32_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint16_t tilePairRows,
-						    uint16_t tilePairCols,
-						    uint32_t Colour);
+                                                    __restrict pSourceBase,
+                                                    int16_t iSourceStride,
+                                                    const arm_2d_size_t *
+                                                    __restrict ptSourceSize,
+                                                    uint32_t *
+                                                    __restrict pTargetBase,
+                                                    int16_t iTargetStride,
+                                                    uint16_t tilePairRows,
+                                                    uint16_t tilePairCols,
+                                                    uint32_t Colour);
 
 void __arm_2d_impl_rgb32_cl_key_2x2_paving_xy_mirror(const uint32_t *
-						     __restrict pSourceBase,
-						     int16_t iSourceStride,
-						     const arm_2d_size_t *
-						     __restrict ptSourceSize,
-						     uint32_t *
-						     __restrict pTargetBase,
-						     int16_t iTargetStride,
-						     uint16_t tilePairRows,
-						     uint16_t tilePairCols,
-						     uint32_t Colour);
+                                                     __restrict pSourceBase,
+                                                     int16_t iSourceStride,
+                                                     const arm_2d_size_t *
+                                                     __restrict ptSourceSize,
+                                                     uint32_t *
+                                                     __restrict pTargetBase,
+                                                     int16_t iTargetStride,
+                                                     uint16_t tilePairRows,
+                                                     uint16_t tilePairCols,
+                                                     uint32_t Colour);
 
 void __arm_2d_impl_rgb32_cl_key_2x2_paving_y_mirror(const uint32_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    const arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint32_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint16_t tilePairRows,
-						    uint16_t tilePairCols,
-						    uint32_t Colour);
+                                                    __restrict pSourceBase,
+                                                    int16_t iSourceStride,
+                                                    const arm_2d_size_t *
+                                                    __restrict ptSourceSize,
+                                                    uint32_t *
+                                                    __restrict pTargetBase,
+                                                    int16_t iTargetStride,
+                                                    uint16_t tilePairRows,
+                                                    uint16_t tilePairCols,
+                                                    uint32_t Colour);
 
 
 void __arm_2d_impl_rgb32_cl_key_copy(uint32_t * __restrict pSource,
-				     int16_t iSourceStride,
-				     uint32_t * __restrict pTarget,
-				     int16_t iTargetStride,
-				     arm_2d_size_t * __restrict ptCopySize,
-				     uint32_t Colour);
+                                     int16_t iSourceStride,
+                                     uint32_t * __restrict pTarget,
+                                     int16_t iTargetStride,
+                                     arm_2d_size_t * __restrict ptCopySize,
+                                     uint32_t Colour);
 
 void __arm_2d_impl_rgb32_cl_key_copy_mirror(uint32_t * __restrict pSource,
-					    int16_t iSourceStride,
-					    uint32_t * __restrict pTarget,
-					    int16_t iTargetStride,
-					    arm_2d_size_t *
-					    __restrict ptCopySize,
-					    uint32_t wMode, uint32_t Colour);
+                                            int16_t iSourceStride,
+                                            uint32_t * __restrict pTarget,
+                                            int16_t iTargetStride,
+                                            arm_2d_size_t *
+                                            __restrict ptCopySize,
+                                            uint32_t wMode, uint32_t Colour);
 
 void __arm_2d_impl_rgb32_cl_key_copy_x_mirror(uint32_t * __restrict pSource,
-					      int16_t iSourceStride,
-					      uint32_t * __restrict pTarget,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptCopySize,
-					      uint32_t Colour);
+                                              int16_t iSourceStride,
+                                              uint32_t * __restrict pTarget,
+                                              int16_t iTargetStride,
+                                              arm_2d_size_t *
+                                              __restrict ptCopySize,
+                                              uint32_t Colour);
 
 void __arm_2d_impl_rgb32_cl_key_copy_xy_mirror(uint32_t * __restrict pSource,
-					       int16_t iSourceStride,
-					       uint32_t * __restrict pTarget,
-					       int16_t iTargetStride,
-					       arm_2d_size_t *
-					       __restrict ptCopySize,
-					       uint32_t Colour);
+                                               int16_t iSourceStride,
+                                               uint32_t * __restrict pTarget,
+                                               int16_t iTargetStride,
+                                               arm_2d_size_t *
+                                               __restrict ptCopySize,
+                                               uint32_t Colour);
 
 void __arm_2d_impl_rgb32_cl_key_copy_y_mirror(uint32_t * __restrict pSource,
-					      int16_t iSourceStride,
-					      uint32_t * __restrict pTarget,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptCopySize,
-					      uint32_t Colour);
+                                              int16_t iSourceStride,
+                                              uint32_t * __restrict pTarget,
+                                              int16_t iTargetStride,
+                                              arm_2d_size_t *
+                                              __restrict ptCopySize,
+                                              uint32_t Colour);
 
 void __arm_2d_impl_rgb32_cl_key_fill(uint32_t * __restrict pSourceBase,
-				     int16_t iSourceStride,
-				     arm_2d_size_t * __restrict ptSourceSize,
-				     uint32_t * __restrict pTargetBase,
-				     int16_t iTargetStride,
-				     arm_2d_size_t * __restrict ptTargetSize,
-				     uint32_t Colour);
+                                     int16_t iSourceStride,
+                                     arm_2d_size_t * __restrict ptSourceSize,
+                                     uint32_t * __restrict pTargetBase,
+                                     int16_t iTargetStride,
+                                     arm_2d_size_t * __restrict ptTargetSize,
+                                     uint32_t Colour);
 
 void __arm_2d_impl_rgb32_cl_key_fill_mirror(uint32_t * __restrict pSourceBase,
-					    int16_t iSourceStride,
-					    arm_2d_size_t *
-					    __restrict ptSourceSize,
-					    uint32_t * __restrict pTargetBase,
-					    int16_t iTargetStride,
-					    arm_2d_size_t *
-					    __restrict ptTargetSize,
-					    uint32_t wMode, uint32_t Colour);
+                                            int16_t iSourceStride,
+                                            arm_2d_size_t *
+                                            __restrict ptSourceSize,
+                                            uint32_t * __restrict pTargetBase,
+                                            int16_t iTargetStride,
+                                            arm_2d_size_t *
+                                            __restrict ptTargetSize,
+                                            uint32_t wMode, uint32_t Colour);
 
 void __arm_2d_impl_rgb32_cl_key_fill_x_mirror(uint32_t * __restrict pSourceBase,
-					      int16_t iSourceStride,
-					      arm_2d_size_t *
-					      __restrict ptSourceSize,
-					      uint32_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptTargetSize,
-					      uint32_t Colour);
+                                              int16_t iSourceStride,
+                                              arm_2d_size_t *
+                                              __restrict ptSourceSize,
+                                              uint32_t * __restrict pTargetBase,
+                                              int16_t iTargetStride,
+                                              arm_2d_size_t *
+                                              __restrict ptTargetSize,
+                                              uint32_t Colour);
 
 void __arm_2d_impl_rgb32_cl_key_fill_xy_mirror(uint32_t *
-					       __restrict pSourceBase,
-					       int16_t iSourceStride,
-					       arm_2d_size_t *
-					       __restrict ptSourceSize,
-					       uint32_t *
-					       __restrict pTargetBase,
-					       int16_t iTargetStride,
-					       arm_2d_size_t *
-					       __restrict ptTargetSize,
-					       uint32_t Colour);
+                                               __restrict pSourceBase,
+                                               int16_t iSourceStride,
+                                               arm_2d_size_t *
+                                               __restrict ptSourceSize,
+                                               uint32_t *
+                                               __restrict pTargetBase,
+                                               int16_t iTargetStride,
+                                               arm_2d_size_t *
+                                               __restrict ptTargetSize,
+                                               uint32_t Colour);
 
 void __arm_2d_impl_rgb32_cl_key_fill_y_mirror(uint32_t * __restrict pSourceBase,
-					      int16_t iSourceStride,
-					      arm_2d_size_t *
-					      __restrict ptSourceSize,
-					      uint32_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptTargetSize,
-					      uint32_t Colour);
+                                              int16_t iSourceStride,
+                                              arm_2d_size_t *
+                                              __restrict ptSourceSize,
+                                              uint32_t * __restrict pTargetBase,
+                                              int16_t iTargetStride,
+                                              arm_2d_size_t *
+                                              __restrict ptTargetSize,
+                                              uint32_t Colour);
 
 void __arm_2d_impl_rgb32_colour_filling(uint32_t * __restrict pTarget,
-					int16_t iTargetStride,
-					arm_2d_size_t * __restrict ptCopySize,
-					uint32_t Colour);
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t * __restrict ptCopySize,
+                                        uint32_t Colour);
 
 void __arm_2d_impl_rgb32_copy(uint32_t * __restrict pSource,
-			      int16_t iSourceStride,
-			      uint32_t * __restrict pTarget,
-			      int16_t iTargetStride,
-			      arm_2d_size_t * __restrict ptCopySize);
+                              int16_t iSourceStride,
+                              uint32_t * __restrict pTarget,
+                              int16_t iTargetStride,
+                              arm_2d_size_t * __restrict ptCopySize);
 
 void __arm_2d_impl_rgb32_copy(uint32_t * pwSource, int16_t iSourceStride,
-			      uint32_t * pwTarget, int16_t iTargetStride,
-			      arm_2d_size_t * ptCopySize);
+                              uint32_t * pwTarget, int16_t iTargetStride,
+                              arm_2d_size_t * ptCopySize);
 
 void __arm_2d_impl_rgb32_copy_mirror(uint32_t * __restrict pSource,
-				     int16_t iSourceStride,
-				     uint32_t * __restrict pTarget,
-				     int16_t iTargetStride,
-				     arm_2d_size_t * __restrict ptCopySize,
-				     uint32_t wMode);
+                                     int16_t iSourceStride,
+                                     uint32_t * __restrict pTarget,
+                                     int16_t iTargetStride,
+                                     arm_2d_size_t * __restrict ptCopySize,
+                                     uint32_t wMode);
 
 void __arm_2d_impl_rgb32_copy_x_mirror(uint32_t * __restrict pSource,
-				       int16_t iSourceStride,
-				       uint32_t * __restrict pTarget,
-				       int16_t iTargetStride,
-				       arm_2d_size_t * __restrict ptCopySize);
+                                       int16_t iSourceStride,
+                                       uint32_t * __restrict pTarget,
+                                       int16_t iTargetStride,
+                                       arm_2d_size_t * __restrict ptCopySize);
 
 void __arm_2d_impl_rgb32_copy_xy_mirror(uint32_t * __restrict pSource,
-					int16_t iSourceStride,
-					uint32_t * __restrict pTarget,
-					int16_t iTargetStride,
-					arm_2d_size_t * __restrict ptCopySize);
+                                        int16_t iSourceStride,
+                                        uint32_t * __restrict pTarget,
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t * __restrict ptCopySize);
 
 void __arm_2d_impl_rgb32_copy_y_mirror(uint32_t * __restrict pSource,
-				       int16_t iSourceStride,
-				       uint32_t * __restrict pTarget,
-				       int16_t iTargetStride,
-				       arm_2d_size_t * __restrict ptCopySize);
+                                       int16_t iSourceStride,
+                                       uint32_t * __restrict pTarget,
+                                       int16_t iTargetStride,
+                                       arm_2d_size_t * __restrict ptCopySize);
 
 void __arm_2d_impl_rgb32_draw_pattern(uint8_t * __restrict pchSourceBase,
-				      int32_t iOffset, int16_t iSourceStride,
-				      uint32_t * __restrict pTargetBase,
-				      int16_t iTargetStride,
-				      arm_2d_size_t * __restrict ptCopySize,
-				      uint8_t chMode, uint32_t ForeColour,
-				      uint32_t BackColour);
+                                      int32_t iOffset, int16_t iSourceStride,
+                                      uint32_t * __restrict pTargetBase,
+                                      int16_t iTargetStride,
+                                      arm_2d_size_t * __restrict ptCopySize,
+                                      uint8_t chMode, uint32_t ForeColour,
+                                      uint32_t BackColour);
 
 void __arm_2d_impl_rgb32_draw_pattern_bg_comp(uint8_t *
-					      __restrict pchSourceBase,
-					      int32_t iOffset,
-					      int16_t iSourceStride,
-					      uint32_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptCopySize,
-					      uint32_t BackColour);
+                                              __restrict pchSourceBase,
+                                              int32_t iOffset,
+                                              int16_t iSourceStride,
+                                              uint32_t * __restrict pTargetBase,
+                                              int16_t iTargetStride,
+                                              arm_2d_size_t *
+                                              __restrict ptCopySize,
+                                              uint32_t BackColour);
 
 void __arm_2d_impl_rgb32_draw_pattern_bg_comp(uint8_t *
-					      __restrict pchSourceBase,
-					      int32_t iOffset,
-					      int16_t iSourceStride,
-					      uint32_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptCopySize,
-					      uint32_t hwBackColour);
+                                              __restrict pchSourceBase,
+                                              int32_t iOffset,
+                                              int16_t iSourceStride,
+                                              uint32_t * __restrict pTargetBase,
+                                              int16_t iTargetStride,
+                                              arm_2d_size_t *
+                                              __restrict ptCopySize,
+                                              uint32_t hwBackColour);
 
 void __arm_2d_impl_rgb32_draw_pattern_bg_fg(uint8_t * __restrict pchSourceBase,
-					    int32_t iOffset,
-					    int16_t iSourceStride,
-					    uint32_t * __restrict pTargetBase,
-					    int16_t iTargetStride,
-					    arm_2d_size_t *
-					    __restrict ptCopySize,
-					    uint32_t ForeColour,
-					    uint32_t BackColour);
+                                            int32_t iOffset,
+                                            int16_t iSourceStride,
+                                            uint32_t * __restrict pTargetBase,
+                                            int16_t iTargetStride,
+                                            arm_2d_size_t *
+                                            __restrict ptCopySize,
+                                            uint32_t ForeColour,
+                                            uint32_t BackColour);
 
 void __arm_2d_impl_rgb32_draw_pattern_bg_fg(uint8_t * __restrict pchSourceBase,
-					    int32_t iOffset,
-					    int16_t iSourceStride,
-					    uint32_t * __restrict pTargetBase,
-					    int16_t iTargetStride,
-					    arm_2d_size_t *
-					    __restrict ptCopySize,
-					    uint32_t hwForeColour,
-					    uint32_t hwBackColour);
+                                            int32_t iOffset,
+                                            int16_t iSourceStride,
+                                            uint32_t * __restrict pTargetBase,
+                                            int16_t iTargetStride,
+                                            arm_2d_size_t *
+                                            __restrict ptCopySize,
+                                            uint32_t hwForeColour,
+                                            uint32_t hwBackColour);
 
 void __arm_2d_impl_rgb32_draw_pattern_bg_only(uint8_t *
-					      __restrict pchSourceBase,
-					      int32_t iOffset,
-					      int16_t iSourceStride,
-					      uint32_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptCopySize,
-					      uint32_t BackColour);
+                                              __restrict pchSourceBase,
+                                              int32_t iOffset,
+                                              int16_t iSourceStride,
+                                              uint32_t * __restrict pTargetBase,
+                                              int16_t iTargetStride,
+                                              arm_2d_size_t *
+                                              __restrict ptCopySize,
+                                              uint32_t BackColour);
 
 void __arm_2d_impl_rgb32_draw_pattern_bg_only(uint8_t *
-					      __restrict pchSourceBase,
-					      int32_t iOffset,
-					      int16_t iSourceStride,
-					      uint32_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptCopySize,
-					      uint32_t hwBackColour);
+                                              __restrict pchSourceBase,
+                                              int32_t iOffset,
+                                              int16_t iSourceStride,
+                                              uint32_t * __restrict pTargetBase,
+                                              int16_t iTargetStride,
+                                              arm_2d_size_t *
+                                              __restrict ptCopySize,
+                                              uint32_t hwBackColour);
 
 void __arm_2d_impl_rgb32_draw_pattern_fg_only(uint8_t *
-					      __restrict pchSourceBase,
-					      int32_t iOffset,
-					      int16_t iSourceStride,
-					      uint32_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptCopySize,
-					      uint32_t ForeColour);
+                                              __restrict pchSourceBase,
+                                              int32_t iOffset,
+                                              int16_t iSourceStride,
+                                              uint32_t * __restrict pTargetBase,
+                                              int16_t iTargetStride,
+                                              arm_2d_size_t *
+                                              __restrict ptCopySize,
+                                              uint32_t ForeColour);
 
 void __arm_2d_impl_rgb32_draw_pattern_fg_only(uint8_t *
-					      __restrict pchSourceBase,
-					      int32_t iOffset,
-					      int16_t iSourceStride,
-					      uint32_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptCopySize,
-					      uint32_t hwForeColour);
+                                              __restrict pchSourceBase,
+                                              int32_t iOffset,
+                                              int16_t iSourceStride,
+                                              uint32_t * __restrict pTargetBase,
+                                              int16_t iTargetStride,
+                                              arm_2d_size_t *
+                                              __restrict ptCopySize,
+                                              uint32_t hwForeColour);
 
 void __arm_2d_impl_rgb32_draw_pattern_no_bg_comp(uint8_t *
-						 __restrict pchSourceBase,
-						 int32_t iOffset,
-						 int16_t iSourceStride,
-						 uint32_t *
-						 __restrict pTargetBase,
-						 int16_t iTargetStride,
-						 arm_2d_size_t *
-						 __restrict ptCopySize);
+                                                 __restrict pchSourceBase,
+                                                 int32_t iOffset,
+                                                 int16_t iSourceStride,
+                                                 uint32_t *
+                                                 __restrict pTargetBase,
+                                                 int16_t iTargetStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptCopySize);
 
 void __arm_2d_impl_rgb32_fill(uint32_t * __restrict pSourceBase,
-			      int16_t iSourceStride,
-			      arm_2d_size_t * __restrict ptSourceSize,
-			      uint32_t * __restrict pTargetBase,
-			      int16_t iTargetStride,
-			      arm_2d_size_t * __restrict ptTargetSize);
+                              int16_t iSourceStride,
+                              arm_2d_size_t * __restrict ptSourceSize,
+                              uint32_t * __restrict pTargetBase,
+                              int16_t iTargetStride,
+                              arm_2d_size_t * __restrict ptTargetSize);
 
 void __arm_2d_impl_rgb32_fill_mirror(uint32_t * __restrict pSourceBase,
-				     int16_t iSourceStride,
-				     arm_2d_size_t * __restrict ptSourceSize,
-				     uint32_t * __restrict pTargetBase,
-				     int16_t iTargetStride,
-				     arm_2d_size_t * __restrict ptTargetSize,
-				     uint32_t wMode);
+                                     int16_t iSourceStride,
+                                     arm_2d_size_t * __restrict ptSourceSize,
+                                     uint32_t * __restrict pTargetBase,
+                                     int16_t iTargetStride,
+                                     arm_2d_size_t * __restrict ptTargetSize,
+                                     uint32_t wMode);
 
 void __arm_2d_impl_rgb32_fill_x_mirror(uint32_t * __restrict pSourceBase,
-				       int16_t iSourceStride,
-				       arm_2d_size_t * __restrict ptSourceSize,
-				       uint32_t * __restrict pTargetBase,
-				       int16_t iTargetStride,
-				       arm_2d_size_t * __restrict ptTargetSize);
+                                       int16_t iSourceStride,
+                                       arm_2d_size_t * __restrict ptSourceSize,
+                                       uint32_t * __restrict pTargetBase,
+                                       int16_t iTargetStride,
+                                       arm_2d_size_t * __restrict ptTargetSize);
 
 void __arm_2d_impl_rgb32_fill_xy_mirror(uint32_t * __restrict pSourceBase,
-					int16_t iSourceStride,
-					arm_2d_size_t * __restrict ptSourceSize,
-					uint32_t * __restrict pTargetBase,
-					int16_t iTargetStride,
-					arm_2d_size_t *
-					__restrict ptTargetSize);
+                                        int16_t iSourceStride,
+                                        arm_2d_size_t * __restrict ptSourceSize,
+                                        uint32_t * __restrict pTargetBase,
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t *
+                                        __restrict ptTargetSize);
 
 void __arm_2d_impl_rgb32_fill_y_mirror(uint32_t * __restrict pSourceBase,
-				       int16_t iSourceStride,
-				       arm_2d_size_t * __restrict ptSourceSize,
-				       uint32_t * __restrict pTargetBase,
-				       int16_t iTargetStride,
-				       arm_2d_size_t * __restrict ptTargetSize);
+                                       int16_t iSourceStride,
+                                       arm_2d_size_t * __restrict ptSourceSize,
+                                       uint32_t * __restrict pTargetBase,
+                                       int16_t iTargetStride,
+                                       arm_2d_size_t * __restrict ptTargetSize);
 
 void __arm_2d_impl_rgb565_1h_des_msk_copy(uint16_t * __restrict pSourceBase,
-					  int16_t iSourceStride,
-					  uint16_t * __restrict pTargetBase,
-					  int16_t iTargetStride,
-					  uint8_t * __restrict ptTargetMaskBase,
-					  int16_t iTargetMaskStride,
-					  arm_2d_size_t *
-					  __restrict ptTargetMaskSize,
-					  arm_2d_size_t *
-					  __restrict ptCopySize);
+                                          int16_t iSourceStride,
+                                          uint16_t * __restrict pTargetBase,
+                                          int16_t iTargetStride,
+                                          uint8_t * __restrict ptTargetMaskBase,
+                                          int16_t iTargetMaskStride,
+                                          arm_2d_size_t *
+                                          __restrict ptTargetMaskSize,
+                                          arm_2d_size_t *
+                                          __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_1h_des_msk_copy_mirror(uint16_t *
-						 __restrict pSourceBase,
-						 int16_t iSourceStride,
-						 uint16_t *
-						 __restrict pTargetBase,
-						 int16_t iTargetStride,
-						 uint8_t *
-						 __restrict ptTargetMaskBase,
-						 int16_t iTargetMaskStride,
-						 arm_2d_size_t *
-						 __restrict ptTargetMaskSize,
-						 arm_2d_size_t *
-						 __restrict ptCopySize,
-						 uint32_t wMode);
+                                                 __restrict pSourceBase,
+                                                 int16_t iSourceStride,
+                                                 uint16_t *
+                                                 __restrict pTargetBase,
+                                                 int16_t iTargetStride,
+                                                 uint8_t *
+                                                 __restrict ptTargetMaskBase,
+                                                 int16_t iTargetMaskStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptTargetMaskSize,
+                                                 arm_2d_size_t *
+                                                 __restrict ptCopySize,
+                                                 uint32_t wMode);
 
 void __arm_2d_impl_rgb565_1h_des_msk_copy_x_mirror(uint16_t *
-						   __restrict pSourceBase,
-						   int16_t iSourceStride,
-						   uint16_t *
-						   __restrict pTargetBase,
-						   int16_t iTargetStride,
-						   uint8_t *
-						   __restrict ptTargetMaskBase,
-						   int16_t iTargetMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetMaskSize,
-						   arm_2d_size_t *
-						   __restrict ptCopySize);
+                                                   __restrict pSourceBase,
+                                                   int16_t iSourceStride,
+                                                   uint16_t *
+                                                   __restrict pTargetBase,
+                                                   int16_t iTargetStride,
+                                                   uint8_t *
+                                                   __restrict ptTargetMaskBase,
+                                                   int16_t iTargetMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetMaskSize,
+                                                   arm_2d_size_t *
+                                                   __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_1h_des_msk_copy_xy_mirror(uint16_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    uint16_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint8_t *
-						    __restrict ptTargetMaskBase,
-						    int16_t iTargetMaskStride,
-						    arm_2d_size_t *
-						    __restrict ptTargetMaskSize,
-						    arm_2d_size_t *
-						    __restrict ptCopySize);
+                                                    __restrict pSourceBase,
+                                                    int16_t iSourceStride,
+                                                    uint16_t *
+                                                    __restrict pTargetBase,
+                                                    int16_t iTargetStride,
+                                                    uint8_t *
+                                                    __restrict ptTargetMaskBase,
+                                                    int16_t iTargetMaskStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptTargetMaskSize,
+                                                    arm_2d_size_t *
+                                                    __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_1h_des_msk_copy_y_mirror(uint16_t *
-						   __restrict pSourceBase,
-						   int16_t iSourceStride,
-						   uint16_t *
-						   __restrict pTargetBase,
-						   int16_t iTargetStride,
-						   uint8_t *
-						   __restrict ptTargetMaskBase,
-						   int16_t iTargetMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetMaskSize,
-						   arm_2d_size_t *
-						   __restrict ptCopySize);
+                                                   __restrict pSourceBase,
+                                                   int16_t iSourceStride,
+                                                   uint16_t *
+                                                   __restrict pTargetBase,
+                                                   int16_t iTargetStride,
+                                                   uint8_t *
+                                                   __restrict ptTargetMaskBase,
+                                                   int16_t iTargetMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetMaskSize,
+                                                   arm_2d_size_t *
+                                                   __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_1h_des_msk_fill(uint16_t * __restrict ptSourceBase,
-					  int16_t iSourceStride,
-					  arm_2d_size_t *
-					  __restrict ptSourceSize,
-					  uint16_t * __restrict ptTargetBase,
-					  int16_t iTargetStride,
-					  arm_2d_size_t *
-					  __restrict ptTargetSize,
-					  uint8_t * __restrict ptTargetMaskBase,
-					  int16_t iTargetMaskStride,
-					  arm_2d_size_t *
-					  __restrict ptTargetMaskSize);
+                                          int16_t iSourceStride,
+                                          arm_2d_size_t *
+                                          __restrict ptSourceSize,
+                                          uint16_t * __restrict ptTargetBase,
+                                          int16_t iTargetStride,
+                                          arm_2d_size_t *
+                                          __restrict ptTargetSize,
+                                          uint8_t * __restrict ptTargetMaskBase,
+                                          int16_t iTargetMaskStride,
+                                          arm_2d_size_t *
+                                          __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_1h_des_msk_fill_mirror(uint16_t *
-						 __restrict ptSourceBase,
-						 int16_t iSourceStride,
-						 arm_2d_size_t *
-						 __restrict ptSourceSize,
-						 uint16_t *
-						 __restrict ptTargetBase,
-						 int16_t iTargetStride,
-						 arm_2d_size_t *
-						 __restrict ptTargetSize,
-						 uint8_t *
-						 __restrict ptTargetMaskBase,
-						 int16_t iTargetMaskStride,
-						 arm_2d_size_t *
-						 __restrict ptTargetMaskSize,
-						 uint32_t wMode);
+                                                 __restrict ptSourceBase,
+                                                 int16_t iSourceStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptSourceSize,
+                                                 uint16_t *
+                                                 __restrict ptTargetBase,
+                                                 int16_t iTargetStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptTargetSize,
+                                                 uint8_t *
+                                                 __restrict ptTargetMaskBase,
+                                                 int16_t iTargetMaskStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptTargetMaskSize,
+                                                 uint32_t wMode);
 
 void __arm_2d_impl_rgb565_1h_des_msk_fill_x_mirror(uint16_t *
-						   __restrict ptSourceBase,
-						   int16_t iSourceStride,
-						   arm_2d_size_t *
-						   __restrict ptSourceSize,
-						   uint16_t *
-						   __restrict ptTargetBase,
-						   int16_t iTargetStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetSize,
-						   uint8_t *
-						   __restrict ptTargetMaskBase,
-						   int16_t iTargetMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetMaskSize);
+                                                   __restrict ptSourceBase,
+                                                   int16_t iSourceStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptSourceSize,
+                                                   uint16_t *
+                                                   __restrict ptTargetBase,
+                                                   int16_t iTargetStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetSize,
+                                                   uint8_t *
+                                                   __restrict ptTargetMaskBase,
+                                                   int16_t iTargetMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_1h_des_msk_fill_xy_mirror(uint16_t *
-						    __restrict ptSourceBase,
-						    int16_t iSourceStride,
-						    arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint16_t *
-						    __restrict ptTargetBase,
-						    int16_t iTargetStride,
-						    arm_2d_size_t *
-						    __restrict ptTargetSize,
-						    uint8_t *
-						    __restrict ptTargetMaskBase,
-						    int16_t iTargetMaskStride,
-						    arm_2d_size_t *
-						    __restrict
-						    ptTargetMaskSize);
+                                                    __restrict ptSourceBase,
+                                                    int16_t iSourceStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptSourceSize,
+                                                    uint16_t *
+                                                    __restrict ptTargetBase,
+                                                    int16_t iTargetStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptTargetSize,
+                                                    uint8_t *
+                                                    __restrict ptTargetMaskBase,
+                                                    int16_t iTargetMaskStride,
+                                                    arm_2d_size_t *
+                                                    __restrict
+                                                    ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_1h_des_msk_fill_y_mirror(uint16_t *
-						   __restrict ptSourceBase,
-						   int16_t iSourceStride,
-						   arm_2d_size_t *
-						   __restrict ptSourceSize,
-						   uint16_t *
-						   __restrict ptTargetBase,
-						   int16_t iTargetStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetSize,
-						   uint8_t *
-						   __restrict ptTargetMaskBase,
-						   int16_t iTargetMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetMaskSize);
+                                                   __restrict ptSourceBase,
+                                                   int16_t iSourceStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptSourceSize,
+                                                   uint16_t *
+                                                   __restrict ptTargetBase,
+                                                   int16_t iTargetStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetSize,
+                                                   uint8_t *
+                                                   __restrict ptTargetMaskBase,
+                                                   int16_t iTargetMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_alpha_blending(uint16_t * __restrict phwSourceBase,
-					 int16_t iSourceStride,
-					 uint16_t * __restrict phwTargetBase,
-					 int16_t iTargetStride,
-					 arm_2d_size_t * __restrict ptCopySize,
-					 uint_fast16_t hwRatio);
+                                         int16_t iSourceStride,
+                                         uint16_t * __restrict phwTargetBase,
+                                         int16_t iTargetStride,
+                                         arm_2d_size_t * __restrict ptCopySize,
+                                         uint_fast16_t hwRatio);
 
 void __arm_2d_impl_rgb565_alpha_blending(uint16_t * phwSourceBase,
-					 int16_t iSourceStride,
-					 uint16_t * phwTargetBase,
-					 int16_t iTargetStride,
-					 arm_2d_size_t * ptCopySize,
-					 uint_fast16_t hwRatio);
+                                         int16_t iSourceStride,
+                                         uint16_t * phwTargetBase,
+                                         int16_t iTargetStride,
+                                         arm_2d_size_t * ptCopySize,
+                                         uint_fast16_t hwRatio);
 
 void __arm_2d_impl_rgb565_alpha_blending_colour_keying(uint16_t *
-						       __restrict pSourceBase,
-						       int16_t iSourceStride,
-						       uint16_t *
-						       __restrict pTargetBase,
-						       int16_t iTargetStride,
-						       arm_2d_size_t *
-						       __restrict ptCopySize,
-						       uint_fast16_t hwRatio,
-						       uint16_t hwColour);
+                                                       __restrict pSourceBase,
+                                                       int16_t iSourceStride,
+                                                       uint16_t *
+                                                       __restrict pTargetBase,
+                                                       int16_t iTargetStride,
+                                                       arm_2d_size_t *
+                                                       __restrict ptCopySize,
+                                                       uint_fast16_t hwRatio,
+                                                       uint16_t hwColour);
 
 void __arm_2d_impl_rgb565_colour_filling_channel_mask(uint16_t *
-						      __restrict pTarget,
-						      int16_t iTargetStride,
-						      uint32_t *
-						      __restrict pwAlpha,
-						      int16_t iAlphaStride,
-						      arm_2d_size_t *
-						      __restrict ptCopySize,
-						      uint16_t Colour);
+                                                      __restrict pTarget,
+                                                      int16_t iTargetStride,
+                                                      uint32_t *
+                                                      __restrict pwAlpha,
+                                                      int16_t iAlphaStride,
+                                                      arm_2d_size_t *
+                                                      __restrict ptCopySize,
+                                                      uint16_t Colour);
 
 void __arm_2d_impl_rgb565_colour_filling_channel_mask_opacity(uint16_t *
-							      __restrict
-							      pTarget,
-							      int16_t
-							      iTargetStride,
-							      uint32_t *
-							      __restrict
-							      pwAlpha,
-							      int16_t
-							      iAlphaStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptCopySize,
-							      uint16_t Colour,
-							      uint_fast16_t hwOpacity);
+                                                      __restrict
+                                                      pTarget,
+                                                      int16_t
+                                                      iTargetStride,
+                                                      uint32_t *
+                                                      __restrict
+                                                      pwAlpha,
+                                                      int16_t
+                                                      iAlphaStride,
+                                                      arm_2d_size_t *
+                                                      __restrict
+                                                      ptCopySize,
+                                                      uint16_t Colour,
+                                                      uint_fast16_t hwOpacity);
 
 void __arm_2d_impl_rgb565_colour_filling_mask(uint16_t * __restrict pTarget,
-					      int16_t iTargetStride,
-					      uint8_t * __restrict pchAlpha,
-					      int16_t iAlphaStride,
-					      arm_2d_size_t *
-					      __restrict ptCopySize,
-					      uint16_t Colour);
+                                              int16_t iTargetStride,
+                                              uint8_t * __restrict pchAlpha,
+                                              int16_t iAlphaStride,
+                                              arm_2d_size_t *
+                                              __restrict ptCopySize,
+                                              uint16_t Colour);
 
 void __arm_2d_impl_rgb565_colour_filling_mask_opacity(uint16_t *
-						      __restrict pTarget,
-						      int16_t iTargetStride,
-						      uint8_t *
-						      __restrict pchAlpha,
-						      int16_t iAlphaStride,
-						      arm_2d_size_t *
-						      __restrict ptCopySize,
-						      uint16_t Colour,
-						      uint_fast16_t hwOpacity);
+                                                      __restrict pTarget,
+                                                      int16_t iTargetStride,
+                                                      uint8_t *
+                                                      __restrict pchAlpha,
+                                                      int16_t iAlphaStride,
+                                                      arm_2d_size_t *
+                                                      __restrict ptCopySize,
+                                                      uint16_t Colour,
+                                                      uint_fast16_t hwOpacity);
 
 void __arm_2d_impl_rgb565_colour_filling_with_opacity(uint16_t *
-						      __restrict pTargetBase,
-						      int16_t iTargetStride,
-						      arm_2d_size_t *
-						      __restrict ptCopySize,
-						      uint16_t Colour,
-						      uint_fast16_t hwRatio);
+                                                      __restrict pTargetBase,
+                                                      int16_t iTargetStride,
+                                                      arm_2d_size_t *
+                                                      __restrict ptCopySize,
+                                                      uint16_t Colour,
+                                                      uint_fast16_t hwRatio);
 
 void __arm_2d_impl_rgb565_des_chn_msk_copy(uint16_t * __restrict pSourceBase,
-					   int16_t iSourceStride,
-					   uint16_t * __restrict pTargetBase,
-					   int16_t iTargetStride,
-					   uint32_t *
-					   __restrict ptTargetMaskBase,
-					   int16_t iTargetMaskStride,
-					   arm_2d_size_t *
-					   __restrict ptTargetMaskSize,
-					   arm_2d_size_t *
-					   __restrict ptCopySize);
+                                           int16_t iSourceStride,
+                                           uint16_t * __restrict pTargetBase,
+                                           int16_t iTargetStride,
+                                           uint32_t *
+                                           __restrict ptTargetMaskBase,
+                                           int16_t iTargetMaskStride,
+                                           arm_2d_size_t *
+                                           __restrict ptTargetMaskSize,
+                                           arm_2d_size_t *
+                                           __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_des_chn_msk_copy_mirror(uint16_t *
-						  __restrict pSourceBase,
-						  int16_t iSourceStride,
-						  uint16_t *
-						  __restrict pTargetBase,
-						  int16_t iTargetStride,
-						  uint32_t *
-						  __restrict ptTargetMaskBase,
-						  int16_t iTargetMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetMaskSize,
-						  arm_2d_size_t *
-						  __restrict ptCopySize,
-						  uint32_t wMode);
+                                                  __restrict pSourceBase,
+                                                  int16_t iSourceStride,
+                                                  uint16_t *
+                                                  __restrict pTargetBase,
+                                                  int16_t iTargetStride,
+                                                  uint32_t *
+                                                  __restrict ptTargetMaskBase,
+                                                  int16_t iTargetMaskStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptTargetMaskSize,
+                                                  arm_2d_size_t *
+                                                  __restrict ptCopySize,
+                                                  uint32_t wMode);
 
 void __arm_2d_impl_rgb565_des_chn_msk_copy_x_mirror(uint16_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    uint16_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint32_t *
-						    __restrict ptTargetMaskBase,
-						    int16_t iTargetMaskStride,
-						    arm_2d_size_t *
-						    __restrict ptTargetMaskSize,
-						    arm_2d_size_t *
-						    __restrict ptCopySize);
+                                                    __restrict pSourceBase,
+                                                    int16_t iSourceStride,
+                                                    uint16_t *
+                                                    __restrict pTargetBase,
+                                                    int16_t iTargetStride,
+                                                    uint32_t *
+                                                    __restrict ptTargetMaskBase,
+                                                    int16_t iTargetMaskStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptTargetMaskSize,
+                                                    arm_2d_size_t *
+                                                    __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_des_chn_msk_copy_xy_mirror(uint16_t *
-						     __restrict pSourceBase,
-						     int16_t iSourceStride,
-						     uint16_t *
-						     __restrict pTargetBase,
-						     int16_t iTargetStride,
-						     uint32_t *
-						     __restrict
-						     ptTargetMaskBase,
-						     int16_t iTargetMaskStride,
-						     arm_2d_size_t *
-						     __restrict
-						     ptTargetMaskSize,
-						     arm_2d_size_t *
-						     __restrict ptCopySize);
+                                                     __restrict pSourceBase,
+                                                     int16_t iSourceStride,
+                                                     uint16_t *
+                                                     __restrict pTargetBase,
+                                                     int16_t iTargetStride,
+                                                     uint32_t *
+                                                     __restrict
+                                                     ptTargetMaskBase,
+                                                     int16_t iTargetMaskStride,
+                                                     arm_2d_size_t *
+                                                     __restrict
+                                                     ptTargetMaskSize,
+                                                     arm_2d_size_t *
+                                                     __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_des_chn_msk_copy_y_mirror(uint16_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    uint16_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    uint32_t *
-						    __restrict ptTargetMaskBase,
-						    int16_t iTargetMaskStride,
-						    arm_2d_size_t *
-						    __restrict ptTargetMaskSize,
-						    arm_2d_size_t *
-						    __restrict ptCopySize);
+                                                    __restrict pSourceBase,
+                                                    int16_t iSourceStride,
+                                                    uint16_t *
+                                                    __restrict pTargetBase,
+                                                    int16_t iTargetStride,
+                                                    uint32_t *
+                                                    __restrict ptTargetMaskBase,
+                                                    int16_t iTargetMaskStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptTargetMaskSize,
+                                                    arm_2d_size_t *
+                                                    __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_des_chn_msk_fill(uint16_t * __restrict ptSourceBase,
-					   int16_t iSourceStride,
-					   arm_2d_size_t *
-					   __restrict ptSourceSize,
-					   uint16_t * __restrict ptTargetBase,
-					   int16_t iTargetStride,
-					   arm_2d_size_t *
-					   __restrict ptTargetSize,
-					   uint32_t *
-					   __restrict ptTargetMaskBase,
-					   int16_t iTargetMaskStride,
-					   arm_2d_size_t *
-					   __restrict ptTargetMaskSize);
+                                           int16_t iSourceStride,
+                                           arm_2d_size_t *
+                                           __restrict ptSourceSize,
+                                           uint16_t * __restrict ptTargetBase,
+                                           int16_t iTargetStride,
+                                           arm_2d_size_t *
+                                           __restrict ptTargetSize,
+                                           uint32_t *
+                                           __restrict ptTargetMaskBase,
+                                           int16_t iTargetMaskStride,
+                                           arm_2d_size_t *
+                                           __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_des_chn_msk_fill_mirror(uint16_t *
-						  __restrict ptSourceBase,
-						  int16_t iSourceStride,
-						  arm_2d_size_t *
-						  __restrict ptSourceSize,
-						  uint16_t *
-						  __restrict ptTargetBase,
-						  int16_t iTargetStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetSize,
-						  uint32_t *
-						  __restrict ptTargetMaskBase,
-						  int16_t iTargetMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetMaskSize,
-						  uint32_t wMode);
+                                                  __restrict ptSourceBase,
+                                                  int16_t iSourceStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptSourceSize,
+                                                  uint16_t *
+                                                  __restrict ptTargetBase,
+                                                  int16_t iTargetStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptTargetSize,
+                                                  uint32_t *
+                                                  __restrict ptTargetMaskBase,
+                                                  int16_t iTargetMaskStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptTargetMaskSize,
+                                                  uint32_t wMode);
 
 void __arm_2d_impl_rgb565_des_chn_msk_fill_x_mirror(uint16_t *
-						    __restrict ptSourceBase,
-						    int16_t iSourceStride,
-						    arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint16_t *
-						    __restrict ptTargetBase,
-						    int16_t iTargetStride,
-						    arm_2d_size_t *
-						    __restrict ptTargetSize,
-						    uint32_t *
-						    __restrict ptTargetMaskBase,
-						    int16_t iTargetMaskStride,
-						    arm_2d_size_t *
-						    __restrict
-						    ptTargetMaskSize);
+                                                    __restrict ptSourceBase,
+                                                    int16_t iSourceStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptSourceSize,
+                                                    uint16_t *
+                                                    __restrict ptTargetBase,
+                                                    int16_t iTargetStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptTargetSize,
+                                                    uint32_t *
+                                                    __restrict ptTargetMaskBase,
+                                                    int16_t iTargetMaskStride,
+                                                    arm_2d_size_t *
+                                                    __restrict
+                                                    ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_des_chn_msk_fill_xy_mirror(uint16_t *
-						     __restrict ptSourceBase,
-						     int16_t iSourceStride,
-						     arm_2d_size_t *
-						     __restrict ptSourceSize,
-						     uint16_t *
-						     __restrict ptTargetBase,
-						     int16_t iTargetStride,
-						     arm_2d_size_t *
-						     __restrict ptTargetSize,
-						     uint32_t *
-						     __restrict
-						     ptTargetMaskBase,
-						     int16_t iTargetMaskStride,
-						     arm_2d_size_t *
-						     __restrict
-						     ptTargetMaskSize);
+                                                     __restrict ptSourceBase,
+                                                     int16_t iSourceStride,
+                                                     arm_2d_size_t *
+                                                     __restrict ptSourceSize,
+                                                     uint16_t *
+                                                     __restrict ptTargetBase,
+                                                     int16_t iTargetStride,
+                                                     arm_2d_size_t *
+                                                     __restrict ptTargetSize,
+                                                     uint32_t *
+                                                     __restrict
+                                                     ptTargetMaskBase,
+                                                     int16_t iTargetMaskStride,
+                                                     arm_2d_size_t *
+                                                     __restrict
+                                                     ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_des_chn_msk_fill_y_mirror(uint16_t *
-						    __restrict ptSourceBase,
-						    int16_t iSourceStride,
-						    arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint16_t *
-						    __restrict ptTargetBase,
-						    int16_t iTargetStride,
-						    arm_2d_size_t *
-						    __restrict ptTargetSize,
-						    uint32_t *
-						    __restrict ptTargetMaskBase,
-						    int16_t iTargetMaskStride,
-						    arm_2d_size_t *
-						    __restrict
-						    ptTargetMaskSize);
+                                                    __restrict ptSourceBase,
+                                                    int16_t iSourceStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptSourceSize,
+                                                    uint16_t *
+                                                    __restrict ptTargetBase,
+                                                    int16_t iTargetStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptTargetSize,
+                                                    uint32_t *
+                                                    __restrict ptTargetMaskBase,
+                                                    int16_t iTargetMaskStride,
+                                                    arm_2d_size_t *
+                                                    __restrict
+                                                    ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_des_msk_copy(uint16_t * __restrict pSourceBase,
-				       int16_t iSourceStride,
-				       uint16_t * __restrict pTargetBase,
-				       int16_t iTargetStride,
-				       uint8_t * __restrict ptTargetMaskBase,
-				       int16_t iTargetMaskStride,
-				       arm_2d_size_t *
-				       __restrict ptTargetMaskSize,
-				       arm_2d_size_t * __restrict ptCopySize);
+                                       int16_t iSourceStride,
+                                       uint16_t * __restrict pTargetBase,
+                                       int16_t iTargetStride,
+                                       uint8_t * __restrict ptTargetMaskBase,
+                                       int16_t iTargetMaskStride,
+                                       arm_2d_size_t *
+                                       __restrict ptTargetMaskSize,
+                                       arm_2d_size_t * __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_des_msk_copy_mirror(uint16_t * __restrict pSourceBase,
-					      int16_t iSourceStride,
-					      uint16_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      uint8_t *
-					      __restrict ptTargetMaskBase,
-					      int16_t iTargetMaskStride,
-					      arm_2d_size_t *
-					      __restrict ptTargetMaskSize,
-					      arm_2d_size_t *
-					      __restrict ptCopySize,
-					      uint32_t wMode);
+                                              int16_t iSourceStride,
+                                              uint16_t * __restrict pTargetBase,
+                                              int16_t iTargetStride,
+                                              uint8_t *
+                                              __restrict ptTargetMaskBase,
+                                              int16_t iTargetMaskStride,
+                                              arm_2d_size_t *
+                                              __restrict ptTargetMaskSize,
+                                              arm_2d_size_t *
+                                              __restrict ptCopySize,
+                                              uint32_t wMode);
 
 void __arm_2d_impl_rgb565_des_msk_copy_x_mirror(uint16_t *
-						__restrict pSourceBase,
-						int16_t iSourceStride,
-						uint16_t *
-						__restrict pTargetBase,
-						int16_t iTargetStride,
-						uint8_t *
-						__restrict ptTargetMaskBase,
-						int16_t iTargetMaskStride,
-						arm_2d_size_t *
-						__restrict ptTargetMaskSize,
-						arm_2d_size_t *
-						__restrict ptCopySize);
+                                                __restrict pSourceBase,
+                                                int16_t iSourceStride,
+                                                uint16_t *
+                                                __restrict pTargetBase,
+                                                int16_t iTargetStride,
+                                                uint8_t *
+                                                __restrict ptTargetMaskBase,
+                                                int16_t iTargetMaskStride,
+                                                arm_2d_size_t *
+                                                __restrict ptTargetMaskSize,
+                                                arm_2d_size_t *
+                                                __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_des_msk_copy_xy_mirror(uint16_t *
-						 __restrict pSourceBase,
-						 int16_t iSourceStride,
-						 uint16_t *
-						 __restrict pTargetBase,
-						 int16_t iTargetStride,
-						 uint8_t *
-						 __restrict ptTargetMaskBase,
-						 int16_t iTargetMaskStride,
-						 arm_2d_size_t *
-						 __restrict ptTargetMaskSize,
-						 arm_2d_size_t *
-						 __restrict ptCopySize);
+                                                 __restrict pSourceBase,
+                                                 int16_t iSourceStride,
+                                                 uint16_t *
+                                                 __restrict pTargetBase,
+                                                 int16_t iTargetStride,
+                                                 uint8_t *
+                                                 __restrict ptTargetMaskBase,
+                                                 int16_t iTargetMaskStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptTargetMaskSize,
+                                                 arm_2d_size_t *
+                                                 __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_des_msk_copy_y_mirror(uint16_t *
-						__restrict pSourceBase,
-						int16_t iSourceStride,
-						uint16_t *
-						__restrict pTargetBase,
-						int16_t iTargetStride,
-						uint8_t *
-						__restrict ptTargetMaskBase,
-						int16_t iTargetMaskStride,
-						arm_2d_size_t *
-						__restrict ptTargetMaskSize,
-						arm_2d_size_t *
-						__restrict ptCopySize);
+                                                __restrict pSourceBase,
+                                                int16_t iSourceStride,
+                                                uint16_t *
+                                                __restrict pTargetBase,
+                                                int16_t iTargetStride,
+                                                uint8_t *
+                                                __restrict ptTargetMaskBase,
+                                                int16_t iTargetMaskStride,
+                                                arm_2d_size_t *
+                                                __restrict ptTargetMaskSize,
+                                                arm_2d_size_t *
+                                                __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_des_msk_fill(uint16_t * __restrict ptSourceBase,
-				       int16_t iSourceStride,
-				       arm_2d_size_t * __restrict ptSourceSize,
-				       uint16_t * __restrict ptTargetBase,
-				       int16_t iTargetStride,
-				       arm_2d_size_t * __restrict ptTargetSize,
-				       uint8_t * __restrict ptTargetMaskBase,
-				       int16_t iTargetMaskStride,
-				       arm_2d_size_t *
-				       __restrict ptTargetMaskSize);
+                                       int16_t iSourceStride,
+                                       arm_2d_size_t * __restrict ptSourceSize,
+                                       uint16_t * __restrict ptTargetBase,
+                                       int16_t iTargetStride,
+                                       arm_2d_size_t * __restrict ptTargetSize,
+                                       uint8_t * __restrict ptTargetMaskBase,
+                                       int16_t iTargetMaskStride,
+                                       arm_2d_size_t *
+                                       __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_des_msk_fill_mirror(uint16_t *
-					      __restrict ptSourceBase,
-					      int16_t iSourceStride,
-					      arm_2d_size_t *
-					      __restrict ptSourceSize,
-					      uint16_t *
-					      __restrict ptTargetBase,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptTargetSize,
-					      uint8_t *
-					      __restrict ptTargetMaskBase,
-					      int16_t iTargetMaskStride,
-					      arm_2d_size_t *
-					      __restrict ptTargetMaskSize,
-					      uint32_t wMode);
+                                              __restrict ptSourceBase,
+                                              int16_t iSourceStride,
+                                              arm_2d_size_t *
+                                              __restrict ptSourceSize,
+                                              uint16_t *
+                                              __restrict ptTargetBase,
+                                              int16_t iTargetStride,
+                                              arm_2d_size_t *
+                                              __restrict ptTargetSize,
+                                              uint8_t *
+                                              __restrict ptTargetMaskBase,
+                                              int16_t iTargetMaskStride,
+                                              arm_2d_size_t *
+                                              __restrict ptTargetMaskSize,
+                                              uint32_t wMode);
 
 void __arm_2d_impl_rgb565_des_msk_fill_x_mirror(uint16_t *
-						__restrict ptSourceBase,
-						int16_t iSourceStride,
-						arm_2d_size_t *
-						__restrict ptSourceSize,
-						uint16_t *
-						__restrict ptTargetBase,
-						int16_t iTargetStride,
-						arm_2d_size_t *
-						__restrict ptTargetSize,
-						uint8_t *
-						__restrict ptTargetMaskBase,
-						int16_t iTargetMaskStride,
-						arm_2d_size_t *
-						__restrict ptTargetMaskSize);
+                                                __restrict ptSourceBase,
+                                                int16_t iSourceStride,
+                                                arm_2d_size_t *
+                                                __restrict ptSourceSize,
+                                                uint16_t *
+                                                __restrict ptTargetBase,
+                                                int16_t iTargetStride,
+                                                arm_2d_size_t *
+                                                __restrict ptTargetSize,
+                                                uint8_t *
+                                                __restrict ptTargetMaskBase,
+                                                int16_t iTargetMaskStride,
+                                                arm_2d_size_t *
+                                                __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_des_msk_fill_xy_mirror(uint16_t *
-						 __restrict ptSourceBase,
-						 int16_t iSourceStride,
-						 arm_2d_size_t *
-						 __restrict ptSourceSize,
-						 uint16_t *
-						 __restrict ptTargetBase,
-						 int16_t iTargetStride,
-						 arm_2d_size_t *
-						 __restrict ptTargetSize,
-						 uint8_t *
-						 __restrict ptTargetMaskBase,
-						 int16_t iTargetMaskStride,
-						 arm_2d_size_t *
-						 __restrict ptTargetMaskSize);
+                                                 __restrict ptSourceBase,
+                                                 int16_t iSourceStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptSourceSize,
+                                                 uint16_t *
+                                                 __restrict ptTargetBase,
+                                                 int16_t iTargetStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptTargetSize,
+                                                 uint8_t *
+                                                 __restrict ptTargetMaskBase,
+                                                 int16_t iTargetMaskStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_des_msk_fill_y_mirror(uint16_t *
-						__restrict ptSourceBase,
-						int16_t iSourceStride,
-						arm_2d_size_t *
-						__restrict ptSourceSize,
-						uint16_t *
-						__restrict ptTargetBase,
-						int16_t iTargetStride,
-						arm_2d_size_t *
-						__restrict ptTargetSize,
-						uint8_t *
-						__restrict ptTargetMaskBase,
-						int16_t iTargetMaskStride,
-						arm_2d_size_t *
-						__restrict ptTargetMaskSize);
+                                                __restrict ptSourceBase,
+                                                int16_t iSourceStride,
+                                                arm_2d_size_t *
+                                                __restrict ptSourceSize,
+                                                uint16_t *
+                                                __restrict ptTargetBase,
+                                                int16_t iTargetStride,
+                                                arm_2d_size_t *
+                                                __restrict ptTargetSize,
+                                                uint8_t *
+                                                __restrict ptTargetMaskBase,
+                                                int16_t iTargetMaskStride,
+                                                arm_2d_size_t *
+                                                __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_masks_copy(uint16_t * __restrict pSourceBase,
-				     int16_t iSourceStride,
-				     uint8_t * __restrict ptSourceMaskBase,
-				     int16_t iSourceMaskStride,
-				     arm_2d_size_t *
-				     __restrict ptSourceMaskSize,
-				     uint16_t * __restrict pTargetBase,
-				     int16_t iTargetStride,
-				     uint8_t * __restrict ptTargetMaskBase,
-				     int16_t iTargetMaskStride,
-				     arm_2d_size_t *
-				     __restrict ptTargetMaskSize,
-				     arm_2d_size_t * __restrict ptCopySize);
+                                     int16_t iSourceStride,
+                                     uint8_t * __restrict ptSourceMaskBase,
+                                     int16_t iSourceMaskStride,
+                                     arm_2d_size_t *
+                                     __restrict ptSourceMaskSize,
+                                     uint16_t * __restrict pTargetBase,
+                                     int16_t iTargetStride,
+                                     uint8_t * __restrict ptTargetMaskBase,
+                                     int16_t iTargetMaskStride,
+                                     arm_2d_size_t *
+                                     __restrict ptTargetMaskSize,
+                                     arm_2d_size_t * __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_masks_copy_mirror(uint16_t * __restrict pSourceBase,
-					    int16_t iSourceStride,
-					    uint8_t *
-					    __restrict ptSourceMaskBase,
-					    int16_t iSourceMaskStride,
-					    arm_2d_size_t *
-					    __restrict ptSourceMaskSize,
-					    uint16_t * __restrict pTargetBase,
-					    int16_t iTargetStride,
-					    uint8_t *
-					    __restrict ptTargetMaskBase,
-					    int16_t iTargetMaskStride,
-					    arm_2d_size_t *
-					    __restrict ptTargetMaskSize,
-					    arm_2d_size_t *
-					    __restrict ptCopySize,
-					    uint32_t wMode);
+                                            int16_t iSourceStride,
+                                            uint8_t *
+                                            __restrict ptSourceMaskBase,
+                                            int16_t iSourceMaskStride,
+                                            arm_2d_size_t *
+                                            __restrict ptSourceMaskSize,
+                                            uint16_t * __restrict pTargetBase,
+                                            int16_t iTargetStride,
+                                            uint8_t *
+                                            __restrict ptTargetMaskBase,
+                                            int16_t iTargetMaskStride,
+                                            arm_2d_size_t *
+                                            __restrict ptTargetMaskSize,
+                                            arm_2d_size_t *
+                                            __restrict ptCopySize,
+                                            uint32_t wMode);
 
 void __arm_2d_impl_rgb565_masks_copy_x_mirror(uint16_t * __restrict pSourceBase,
-					      int16_t iSourceStride,
-					      uint8_t *
-					      __restrict ptSourceMaskBase,
-					      int16_t iSourceMaskStride,
-					      arm_2d_size_t *
-					      __restrict ptSourceMaskSize,
-					      uint16_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      uint8_t *
-					      __restrict ptTargetMaskBase,
-					      int16_t iTargetMaskStride,
-					      arm_2d_size_t *
-					      __restrict ptTargetMaskSize,
-					      arm_2d_size_t *
-					      __restrict ptCopySize);
+                                              int16_t iSourceStride,
+                                              uint8_t *
+                                              __restrict ptSourceMaskBase,
+                                              int16_t iSourceMaskStride,
+                                              arm_2d_size_t *
+                                              __restrict ptSourceMaskSize,
+                                              uint16_t * __restrict pTargetBase,
+                                              int16_t iTargetStride,
+                                              uint8_t *
+                                              __restrict ptTargetMaskBase,
+                                              int16_t iTargetMaskStride,
+                                              arm_2d_size_t *
+                                              __restrict ptTargetMaskSize,
+                                              arm_2d_size_t *
+                                              __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_masks_copy_xy_mirror(uint16_t *
-					       __restrict pSourceBase,
-					       int16_t iSourceStride,
-					       uint8_t *
-					       __restrict ptSourceMaskBase,
-					       int16_t iSourceMaskStride,
-					       arm_2d_size_t *
-					       __restrict ptSourceMaskSize,
-					       uint16_t *
-					       __restrict pTargetBase,
-					       int16_t iTargetStride,
-					       uint8_t *
-					       __restrict ptTargetMaskBase,
-					       int16_t iTargetMaskStride,
-					       arm_2d_size_t *
-					       __restrict ptTargetMaskSize,
-					       arm_2d_size_t *
-					       __restrict ptCopySize);
+                                               __restrict pSourceBase,
+                                               int16_t iSourceStride,
+                                               uint8_t *
+                                               __restrict ptSourceMaskBase,
+                                               int16_t iSourceMaskStride,
+                                               arm_2d_size_t *
+                                               __restrict ptSourceMaskSize,
+                                               uint16_t *
+                                               __restrict pTargetBase,
+                                               int16_t iTargetStride,
+                                               uint8_t *
+                                               __restrict ptTargetMaskBase,
+                                               int16_t iTargetMaskStride,
+                                               arm_2d_size_t *
+                                               __restrict ptTargetMaskSize,
+                                               arm_2d_size_t *
+                                               __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_masks_copy_y_mirror(uint16_t * __restrict pSourceBase,
-					      int16_t iSourceStride,
-					      uint8_t *
-					      __restrict ptSourceMaskBase,
-					      int16_t iSourceMaskStride,
-					      arm_2d_size_t *
-					      __restrict ptSourceMaskSize,
-					      uint16_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      uint8_t *
-					      __restrict ptTargetMaskBase,
-					      int16_t iTargetMaskStride,
-					      arm_2d_size_t *
-					      __restrict ptTargetMaskSize,
-					      arm_2d_size_t *
-					      __restrict ptCopySize);
+                                              int16_t iSourceStride,
+                                              uint8_t *
+                                              __restrict ptSourceMaskBase,
+                                              int16_t iSourceMaskStride,
+                                              arm_2d_size_t *
+                                              __restrict ptSourceMaskSize,
+                                              uint16_t * __restrict pTargetBase,
+                                              int16_t iTargetStride,
+                                              uint8_t *
+                                              __restrict ptTargetMaskBase,
+                                              int16_t iTargetMaskStride,
+                                              arm_2d_size_t *
+                                              __restrict ptTargetMaskSize,
+                                              arm_2d_size_t *
+                                              __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_masks_fill(uint16_t * __restrict ptSourceBase,
-				     int16_t iSourceStride,
-				     arm_2d_size_t * __restrict ptSourceSize,
-				     uint8_t * __restrict ptSourceMaskBase,
-				     int16_t iSourceMaskStride,
-				     arm_2d_size_t *
-				     __restrict ptSourceMaskSize,
-				     uint16_t * __restrict ptTargetBase,
-				     int16_t iTargetStride,
-				     arm_2d_size_t * __restrict ptTargetSize,
-				     uint8_t * __restrict ptTargetMaskBase,
-				     int16_t iTargetMaskStride,
-				     arm_2d_size_t *
-				     __restrict ptTargetMaskSize);
+                                     int16_t iSourceStride,
+                                     arm_2d_size_t * __restrict ptSourceSize,
+                                     uint8_t * __restrict ptSourceMaskBase,
+                                     int16_t iSourceMaskStride,
+                                     arm_2d_size_t *
+                                     __restrict ptSourceMaskSize,
+                                     uint16_t * __restrict ptTargetBase,
+                                     int16_t iTargetStride,
+                                     arm_2d_size_t * __restrict ptTargetSize,
+                                     uint8_t * __restrict ptTargetMaskBase,
+                                     int16_t iTargetMaskStride,
+                                     arm_2d_size_t *
+                                     __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_masks_fill_mirror(uint16_t * __restrict ptSourceBase,
-					    int16_t iSourceStride,
-					    arm_2d_size_t *
-					    __restrict ptSourceSize,
-					    uint8_t *
-					    __restrict ptSourceMaskBase,
-					    int16_t iSourceMaskStride,
-					    arm_2d_size_t *
-					    __restrict ptSourceMaskSize,
-					    uint16_t * __restrict ptTargetBase,
-					    int16_t iTargetStride,
-					    arm_2d_size_t *
-					    __restrict ptTargetSize,
-					    uint8_t *
-					    __restrict ptTargetMaskBase,
-					    int16_t iTargetMaskStride,
-					    arm_2d_size_t *
-					    __restrict ptTargetMaskSize,
-					    uint32_t wMode);
+                                            int16_t iSourceStride,
+                                            arm_2d_size_t *
+                                            __restrict ptSourceSize,
+                                            uint8_t *
+                                            __restrict ptSourceMaskBase,
+                                            int16_t iSourceMaskStride,
+                                            arm_2d_size_t *
+                                            __restrict ptSourceMaskSize,
+                                            uint16_t * __restrict ptTargetBase,
+                                            int16_t iTargetStride,
+                                            arm_2d_size_t *
+                                            __restrict ptTargetSize,
+                                            uint8_t *
+                                            __restrict ptTargetMaskBase,
+                                            int16_t iTargetMaskStride,
+                                            arm_2d_size_t *
+                                            __restrict ptTargetMaskSize,
+                                            uint32_t wMode);
 
 void __arm_2d_impl_rgb565_masks_fill_x_mirror(uint16_t *
-					      __restrict ptSourceBase,
-					      int16_t iSourceStride,
-					      arm_2d_size_t *
-					      __restrict ptSourceSize,
-					      uint8_t *
-					      __restrict ptSourceMaskBase,
-					      int16_t iSourceMaskStride,
-					      arm_2d_size_t *
-					      __restrict ptSourceMaskSize,
-					      uint16_t *
-					      __restrict ptTargetBase,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptTargetSize,
-					      uint8_t *
-					      __restrict ptTargetMaskBase,
-					      int16_t iTargetMaskStride,
-					      arm_2d_size_t *
-					      __restrict ptTargetMaskSize);
+                                              __restrict ptSourceBase,
+                                              int16_t iSourceStride,
+                                              arm_2d_size_t *
+                                              __restrict ptSourceSize,
+                                              uint8_t *
+                                              __restrict ptSourceMaskBase,
+                                              int16_t iSourceMaskStride,
+                                              arm_2d_size_t *
+                                              __restrict ptSourceMaskSize,
+                                              uint16_t *
+                                              __restrict ptTargetBase,
+                                              int16_t iTargetStride,
+                                              arm_2d_size_t *
+                                              __restrict ptTargetSize,
+                                              uint8_t *
+                                              __restrict ptTargetMaskBase,
+                                              int16_t iTargetMaskStride,
+                                              arm_2d_size_t *
+                                              __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_masks_fill_xy_mirror(uint16_t *
-					       __restrict ptSourceBase,
-					       int16_t iSourceStride,
-					       arm_2d_size_t *
-					       __restrict ptSourceSize,
-					       uint8_t *
-					       __restrict ptSourceMaskBase,
-					       int16_t iSourceMaskStride,
-					       arm_2d_size_t *
-					       __restrict ptSourceMaskSize,
-					       uint16_t *
-					       __restrict ptTargetBase,
-					       int16_t iTargetStride,
-					       arm_2d_size_t *
-					       __restrict ptTargetSize,
-					       uint8_t *
-					       __restrict ptTargetMaskBase,
-					       int16_t iTargetMaskStride,
-					       arm_2d_size_t *
-					       __restrict ptTargetMaskSize);
+                                               __restrict ptSourceBase,
+                                               int16_t iSourceStride,
+                                               arm_2d_size_t *
+                                               __restrict ptSourceSize,
+                                               uint8_t *
+                                               __restrict ptSourceMaskBase,
+                                               int16_t iSourceMaskStride,
+                                               arm_2d_size_t *
+                                               __restrict ptSourceMaskSize,
+                                               uint16_t *
+                                               __restrict ptTargetBase,
+                                               int16_t iTargetStride,
+                                               arm_2d_size_t *
+                                               __restrict ptTargetSize,
+                                               uint8_t *
+                                               __restrict ptTargetMaskBase,
+                                               int16_t iTargetMaskStride,
+                                               arm_2d_size_t *
+                                               __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_masks_fill_y_mirror(uint16_t *
-					      __restrict ptSourceBase,
-					      int16_t iSourceStride,
-					      arm_2d_size_t *
-					      __restrict ptSourceSize,
-					      uint8_t *
-					      __restrict ptSourceMaskBase,
-					      int16_t iSourceMaskStride,
-					      arm_2d_size_t *
-					      __restrict ptSourceMaskSize,
-					      uint16_t *
-					      __restrict ptTargetBase,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptTargetSize,
-					      uint8_t *
-					      __restrict ptTargetMaskBase,
-					      int16_t iTargetMaskStride,
-					      arm_2d_size_t *
-					      __restrict ptTargetMaskSize);
+                                              __restrict ptSourceBase,
+                                              int16_t iSourceStride,
+                                              arm_2d_size_t *
+                                              __restrict ptSourceSize,
+                                              uint8_t *
+                                              __restrict ptSourceMaskBase,
+                                              int16_t iSourceMaskStride,
+                                              arm_2d_size_t *
+                                              __restrict ptSourceMaskSize,
+                                              uint16_t *
+                                              __restrict ptTargetBase,
+                                              int16_t iTargetStride,
+                                              arm_2d_size_t *
+                                              __restrict ptTargetSize,
+                                              uint8_t *
+                                              __restrict ptTargetMaskBase,
+                                              int16_t iTargetMaskStride,
+                                              arm_2d_size_t *
+                                              __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_copy(uint16_t *
-						      __restrict pSourceBase,
-						      int16_t iSourceStride,
-						      uint32_t *
-						      __restrict
-						      ptSourceMaskBase,
-						      int16_t iSourceMaskStride,
-						      arm_2d_size_t *
-						      __restrict
-						      ptSourceMaskSize,
-						      uint16_t *
-						      __restrict pTargetBase,
-						      int16_t iTargetStride,
-						      uint8_t *
-						      __restrict
-						      ptTargetMaskBase,
-						      int16_t iTargetMaskStride,
-						      arm_2d_size_t *
-						      __restrict
-						      ptTargetMaskSize,
-						      arm_2d_size_t *
-						      __restrict ptCopySize);
+                                                      __restrict pSourceBase,
+                                                      int16_t iSourceStride,
+                                                      uint32_t *
+                                                      __restrict
+                                                      ptSourceMaskBase,
+                                                      int16_t iSourceMaskStride,
+                                                      arm_2d_size_t *
+                                                      __restrict
+                                                      ptSourceMaskSize,
+                                                      uint16_t *
+                                                      __restrict pTargetBase,
+                                                      int16_t iTargetStride,
+                                                      uint8_t *
+                                                      __restrict
+                                                      ptTargetMaskBase,
+                                                      int16_t iTargetMaskStride,
+                                                      arm_2d_size_t *
+                                                      __restrict
+                                                      ptTargetMaskSize,
+                                                      arm_2d_size_t *
+                                                      __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_copy_mirror(uint16_t *
-							     __restrict
-							     pSourceBase,
-							     int16_t
-							     iSourceStride,
-							     uint32_t *
-							     __restrict
-							     ptSourceMaskBase,
-							     int16_t
-							     iSourceMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceMaskSize,
-							     uint16_t *
-							     __restrict
-							     pTargetBase,
-							     int16_t
-							     iTargetStride,
-							     uint8_t *
-							     __restrict
-							     ptTargetMaskBase,
-							     int16_t
-							     iTargetMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetMaskSize,
-							     arm_2d_size_t *
-							     __restrict
-							     ptCopySize,
-							     uint32_t wMode);
+                                                             __restrict
+                                                             pSourceBase,
+                                                             int16_t
+                                                             iSourceStride,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptSourceMaskBase,
+                                                             int16_t
+                                                             iSourceMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceMaskSize,
+                                                             uint16_t *
+                                                             __restrict
+                                                             pTargetBase,
+                                                             int16_t
+                                                             iTargetStride,
+                                                             uint8_t *
+                                                             __restrict
+                                                             ptTargetMaskBase,
+                                                             int16_t
+                                                             iTargetMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetMaskSize,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptCopySize,
+                                                             uint32_t wMode);
 
 void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_copy_x_mirror(uint16_t *
-							       __restrict
-							       pSourceBase,
-							       int16_t
-							       iSourceStride,
-							       uint32_t *
-							       __restrict
-							       ptSourceMaskBase,
-							       int16_t
-							       iSourceMaskStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptSourceMaskSize,
-							       uint16_t *
-							       __restrict
-							       pTargetBase,
-							       int16_t
-							       iTargetStride,
-							       uint8_t *
-							       __restrict
-							       ptTargetMaskBase,
-							       int16_t
-							       iTargetMaskStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptTargetMaskSize,
-							       arm_2d_size_t *
-							       __restrict
-							       ptCopySize);
+                                                           __restrict
+                                                           pSourceBase,
+                                                           int16_t
+                                                           iSourceStride,
+                                                           uint32_t *
+                                                           __restrict
+                                                           ptSourceMaskBase,
+                                                           int16_t
+                                                           iSourceMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceMaskSize,
+                                                           uint16_t *
+                                                           __restrict
+                                                           pTargetBase,
+                                                           int16_t
+                                                           iTargetStride,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptTargetMaskBase,
+                                                           int16_t
+                                                           iTargetMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetMaskSize,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptCopySize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_copy_xy_mirror(uint16_t *
-								__restrict
-								pSourceBase,
-								int16_t
-								iSourceStride,
-								uint32_t *
-								__restrict
-								ptSourceMaskBase,
-								int16_t
-								iSourceMaskStride,
-								arm_2d_size_t *
-								__restrict
-								ptSourceMaskSize,
-								uint16_t *
-								__restrict
-								pTargetBase,
-								int16_t
-								iTargetStride,
-								uint8_t *
-								__restrict
-								ptTargetMaskBase,
-								int16_t
-								iTargetMaskStride,
-								arm_2d_size_t *
-								__restrict
-								ptTargetMaskSize,
-								arm_2d_size_t *
-								__restrict
-								ptCopySize);
+                                                            __restrict
+                                                            pSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint16_t *
+                                                            __restrict
+                                                            pTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptCopySize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_copy_y_mirror(uint16_t *
-							       __restrict
-							       pSourceBase,
-							       int16_t
-							       iSourceStride,
-							       uint32_t *
-							       __restrict
-							       ptSourceMaskBase,
-							       int16_t
-							       iSourceMaskStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptSourceMaskSize,
-							       uint16_t *
-							       __restrict
-							       pTargetBase,
-							       int16_t
-							       iTargetStride,
-							       uint8_t *
-							       __restrict
-							       ptTargetMaskBase,
-							       int16_t
-							       iTargetMaskStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptTargetMaskSize,
-							       arm_2d_size_t *
-							       __restrict
-							       ptCopySize);
+                                                           __restrict
+                                                           pSourceBase,
+                                                           int16_t
+                                                           iSourceStride,
+                                                           uint32_t *
+                                                           __restrict
+                                                           ptSourceMaskBase,
+                                                           int16_t
+                                                           iSourceMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceMaskSize,
+                                                           uint16_t *
+                                                           __restrict
+                                                           pTargetBase,
+                                                           int16_t
+                                                           iTargetStride,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptTargetMaskBase,
+                                                           int16_t
+                                                           iTargetMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetMaskSize,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptCopySize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_fill(uint16_t *
-						      __restrict ptSourceBase,
-						      int16_t iSourceStride,
-						      arm_2d_size_t *
-						      __restrict ptSourceSize,
-						      uint32_t *
-						      __restrict
-						      ptSourceMaskBase,
-						      int16_t iSourceMaskStride,
-						      arm_2d_size_t *
-						      __restrict
-						      ptSourceMaskSize,
-						      uint16_t *
-						      __restrict ptTargetBase,
-						      int16_t iTargetStride,
-						      arm_2d_size_t *
-						      __restrict ptTargetSize,
-						      uint8_t *
-						      __restrict
-						      ptTargetMaskBase,
-						      int16_t iTargetMaskStride,
-						      arm_2d_size_t *
-						      __restrict
-						      ptTargetMaskSize);
+                                                      __restrict ptSourceBase,
+                                                      int16_t iSourceStride,
+                                                      arm_2d_size_t *
+                                                      __restrict ptSourceSize,
+                                                      uint32_t *
+                                                      __restrict
+                                                      ptSourceMaskBase,
+                                                      int16_t iSourceMaskStride,
+                                                      arm_2d_size_t *
+                                                      __restrict
+                                                      ptSourceMaskSize,
+                                                      uint16_t *
+                                                      __restrict ptTargetBase,
+                                                      int16_t iTargetStride,
+                                                      arm_2d_size_t *
+                                                      __restrict ptTargetSize,
+                                                      uint8_t *
+                                                      __restrict
+                                                      ptTargetMaskBase,
+                                                      int16_t iTargetMaskStride,
+                                                      arm_2d_size_t *
+                                                      __restrict
+                                                      ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_fill_mirror(uint16_t *
-							     __restrict
-							     ptSourceBase,
-							     int16_t
-							     iSourceStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceSize,
-							     uint32_t *
-							     __restrict
-							     ptSourceMaskBase,
-							     int16_t
-							     iSourceMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceMaskSize,
-							     uint16_t *
-							     __restrict
-							     ptTargetBase,
-							     int16_t
-							     iTargetStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetSize,
-							     uint8_t *
-							     __restrict
-							     ptTargetMaskBase,
-							     int16_t
-							     iTargetMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetMaskSize,
-							     uint32_t wMode);
+                                                             __restrict
+                                                             ptSourceBase,
+                                                             int16_t
+                                                             iSourceStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceSize,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptSourceMaskBase,
+                                                             int16_t
+                                                             iSourceMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceMaskSize,
+                                                             uint16_t *
+                                                             __restrict
+                                                             ptTargetBase,
+                                                             int16_t
+                                                             iTargetStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetSize,
+                                                             uint8_t *
+                                                             __restrict
+                                                             ptTargetMaskBase,
+                                                             int16_t
+                                                             iTargetMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetMaskSize,
+                                                             uint32_t wMode);
 
 void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_fill_x_mirror(uint16_t *
-							       __restrict
-							       ptSourceBase,
-							       int16_t
-							       iSourceStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptSourceSize,
-							       uint32_t *
-							       __restrict
-							       ptSourceMaskBase,
-							       int16_t
-							       iSourceMaskStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptSourceMaskSize,
-							       uint16_t *
-							       __restrict
-							       ptTargetBase,
-							       int16_t
-							       iTargetStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptTargetSize,
-							       uint8_t *
-							       __restrict
-							       ptTargetMaskBase,
-							       int16_t
-							       iTargetMaskStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptTargetMaskSize);
+                                                           __restrict
+                                                           ptSourceBase,
+                                                           int16_t
+                                                           iSourceStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceSize,
+                                                           uint32_t *
+                                                           __restrict
+                                                           ptSourceMaskBase,
+                                                           int16_t
+                                                           iSourceMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceMaskSize,
+                                                           uint16_t *
+                                                           __restrict
+                                                           ptTargetBase,
+                                                           int16_t
+                                                           iTargetStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetSize,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptTargetMaskBase,
+                                                           int16_t
+                                                           iTargetMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_fill_xy_mirror(uint16_t *
-								__restrict
-								ptSourceBase,
-								int16_t
-								iSourceStride,
-								arm_2d_size_t *
-								__restrict
-								ptSourceSize,
-								uint32_t *
-								__restrict
-								ptSourceMaskBase,
-								int16_t
-								iSourceMaskStride,
-								arm_2d_size_t *
-								__restrict
-								ptSourceMaskSize,
-								uint16_t *
-								__restrict
-								ptTargetBase,
-								int16_t
-								iTargetStride,
-								arm_2d_size_t *
-								__restrict
-								ptTargetSize,
-								uint8_t *
-								__restrict
-								ptTargetMaskBase,
-								int16_t
-								iTargetMaskStride,
-								arm_2d_size_t *
-								__restrict
-								ptTargetMaskSize);
+                                                            __restrict
+                                                            ptSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceSize,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint16_t *
+                                                            __restrict
+                                                            ptTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetSize,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_fill_y_mirror(uint16_t *
-							       __restrict
-							       ptSourceBase,
-							       int16_t
-							       iSourceStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptSourceSize,
-							       uint32_t *
-							       __restrict
-							       ptSourceMaskBase,
-							       int16_t
-							       iSourceMaskStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptSourceMaskSize,
-							       uint16_t *
-							       __restrict
-							       ptTargetBase,
-							       int16_t
-							       iTargetStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptTargetSize,
-							       uint8_t *
-							       __restrict
-							       ptTargetMaskBase,
-							       int16_t
-							       iTargetMaskStride,
-							       arm_2d_size_t *
-							       __restrict
-							       ptTargetMaskSize);
+                                                               __restrict
+                                                               ptSourceBase,
+                                                               int16_t
+                                                               iSourceStride,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptSourceSize,
+                                                               uint32_t *
+                                                               __restrict
+                                                               ptSourceMaskBase,
+                                                               int16_t
+                                                               iSourceMaskStride,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptSourceMaskSize,
+                                                               uint16_t *
+                                                               __restrict
+                                                               ptTargetBase,
+                                                               int16_t
+                                                               iTargetStride,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptTargetSize,
+                                                               uint8_t *
+                                                               __restrict
+                                                               ptTargetMaskBase,
+                                                               int16_t
+                                                               iTargetMaskStride,
+                                                               arm_2d_size_t *
+                                                               __restrict
+                                                               ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_copy(uint16_t * __restrict pSourceBase,
-					   int16_t iSourceStride,
-					   uint32_t *
-					   __restrict ptSourceMaskBase,
-					   int16_t iSourceMaskStride,
-					   arm_2d_size_t *
-					   __restrict ptSourceMaskSize,
-					   uint16_t * __restrict pTargetBase,
-					   int16_t iTargetStride,
-					   arm_2d_size_t *
-					   __restrict ptCopySize);
+                                               int16_t iSourceStride,
+                                               uint32_t *
+                                               __restrict ptSourceMaskBase,
+                                               int16_t iSourceMaskStride,
+                                               arm_2d_size_t *
+                                               __restrict ptSourceMaskSize,
+                                               uint16_t * __restrict pTargetBase,
+                                               int16_t iTargetStride,
+                                               arm_2d_size_t *
+                                               __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_copy_mirror(uint16_t *
-						  __restrict pSourceBase,
-						  int16_t iSourceStride,
-						  uint32_t *
-						  __restrict ptSourceMaskBase,
-						  int16_t iSourceMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptSourceMaskSize,
-						  uint16_t *
-						  __restrict pTargetBase,
-						  int16_t iTargetStride,
-						  arm_2d_size_t *
-						  __restrict ptCopySize,
-						  uint32_t wMode);
+                                                  __restrict pSourceBase,
+                                                  int16_t iSourceStride,
+                                                  uint32_t *
+                                                  __restrict ptSourceMaskBase,
+                                                  int16_t iSourceMaskStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptSourceMaskSize,
+                                                  uint16_t *
+                                                  __restrict pTargetBase,
+                                                  int16_t iTargetStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptCopySize,
+                                                  uint32_t wMode);
 
 void __arm_2d_impl_rgb565_src_chn_msk_copy_x_mirror(uint16_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    uint32_t *
-						    __restrict ptSourceMaskBase,
-						    int16_t iSourceMaskStride,
-						    arm_2d_size_t *
-						    __restrict ptSourceMaskSize,
-						    uint16_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    arm_2d_size_t *
-						    __restrict ptCopySize);
+                                                    __restrict pSourceBase,
+                                                    int16_t iSourceStride,
+                                                    uint32_t *
+                                                    __restrict ptSourceMaskBase,
+                                                    int16_t iSourceMaskStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptSourceMaskSize,
+                                                    uint16_t *
+                                                    __restrict pTargetBase,
+                                                    int16_t iTargetStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_copy_xy_mirror(uint16_t *
-						     __restrict pSourceBase,
-						     int16_t iSourceStride,
-						     uint32_t *
-						     __restrict
-						     ptSourceMaskBase,
-						     int16_t iSourceMaskStride,
-						     arm_2d_size_t *
-						     __restrict
-						     ptSourceMaskSize,
-						     uint16_t *
-						     __restrict pTargetBase,
-						     int16_t iTargetStride,
-						     arm_2d_size_t *
-						     __restrict ptCopySize);
+                                                     __restrict pSourceBase,
+                                                     int16_t iSourceStride,
+                                                     uint32_t *
+                                                     __restrict
+                                                     ptSourceMaskBase,
+                                                     int16_t iSourceMaskStride,
+                                                     arm_2d_size_t *
+                                                     __restrict
+                                                     ptSourceMaskSize,
+                                                     uint16_t *
+                                                     __restrict pTargetBase,
+                                                     int16_t iTargetStride,
+                                                     arm_2d_size_t *
+                                                     __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_copy_y_mirror(uint16_t *
-						    __restrict pSourceBase,
-						    int16_t iSourceStride,
-						    uint32_t *
-						    __restrict ptSourceMaskBase,
-						    int16_t iSourceMaskStride,
-						    arm_2d_size_t *
-						    __restrict ptSourceMaskSize,
-						    uint16_t *
-						    __restrict pTargetBase,
-						    int16_t iTargetStride,
-						    arm_2d_size_t *
-						    __restrict ptCopySize);
+                                                    __restrict pSourceBase,
+                                                    int16_t iSourceStride,
+                                                    uint32_t *
+                                                    __restrict ptSourceMaskBase,
+                                                    int16_t iSourceMaskStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptSourceMaskSize,
+                                                    uint16_t *
+                                                    __restrict pTargetBase,
+                                                    int16_t iTargetStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_copy(uint16_t *
-						       __restrict pSourceBase,
-						       int16_t iSourceStride,
-						       uint32_t *
-						       __restrict
-						       ptSourceMaskBase,
-						       int16_t
-						       iSourceMaskStride,
-						       arm_2d_size_t *
-						       __restrict
-						       ptSourceMaskSize,
-						       uint16_t *
-						       __restrict pTargetBase,
-						       int16_t iTargetStride,
-						       uint32_t *
-						       __restrict
-						       ptTargetMaskBase,
-						       int16_t
-						       iTargetMaskStride,
-						       arm_2d_size_t *
-						       __restrict
-						       ptTargetMaskSize,
-						       arm_2d_size_t *
-						       __restrict ptCopySize);
+                                                       __restrict pSourceBase,
+                                                       int16_t iSourceStride,
+                                                       uint32_t *
+                                                       __restrict
+                                                       ptSourceMaskBase,
+                                                       int16_t
+                                                       iSourceMaskStride,
+                                                       arm_2d_size_t *
+                                                       __restrict
+                                                       ptSourceMaskSize,
+                                                       uint16_t *
+                                                       __restrict pTargetBase,
+                                                       int16_t iTargetStride,
+                                                       uint32_t *
+                                                       __restrict
+                                                       ptTargetMaskBase,
+                                                       int16_t
+                                                       iTargetMaskStride,
+                                                       arm_2d_size_t *
+                                                       __restrict
+                                                       ptTargetMaskSize,
+                                                       arm_2d_size_t *
+                                                       __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_copy_mirror(uint16_t *
-							      __restrict
-							      pSourceBase,
-							      int16_t
-							      iSourceStride,
-							      uint32_t *
-							      __restrict
-							      ptSourceMaskBase,
-							      int16_t
-							      iSourceMaskStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptSourceMaskSize,
-							      uint16_t *
-							      __restrict
-							      pTargetBase,
-							      int16_t
-							      iTargetStride,
-							      uint32_t *
-							      __restrict
-							      ptTargetMaskBase,
-							      int16_t
-							      iTargetMaskStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptTargetMaskSize,
-							      arm_2d_size_t *
-							      __restrict
-							      ptCopySize,
-							      uint32_t wMode);
+                                                              __restrict
+                                                              pSourceBase,
+                                                              int16_t
+                                                              iSourceStride,
+                                                              uint32_t *
+                                                              __restrict
+                                                              ptSourceMaskBase,
+                                                              int16_t
+                                                              iSourceMaskStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptSourceMaskSize,
+                                                              uint16_t *
+                                                              __restrict
+                                                              pTargetBase,
+                                                              int16_t
+                                                              iTargetStride,
+                                                              uint32_t *
+                                                              __restrict
+                                                              ptTargetMaskBase,
+                                                              int16_t
+                                                              iTargetMaskStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptTargetMaskSize,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptCopySize,
+                                                              uint32_t wMode);
 
 void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_copy_x_mirror(uint16_t *
-								__restrict
-								pSourceBase,
-								int16_t
-								iSourceStride,
-								uint32_t *
-								__restrict
-								ptSourceMaskBase,
-								int16_t
-								iSourceMaskStride,
-								arm_2d_size_t *
-								__restrict
-								ptSourceMaskSize,
-								uint16_t *
-								__restrict
-								pTargetBase,
-								int16_t
-								iTargetStride,
-								uint32_t *
-								__restrict
-								ptTargetMaskBase,
-								int16_t
-								iTargetMaskStride,
-								arm_2d_size_t *
-								__restrict
-								ptTargetMaskSize,
-								arm_2d_size_t *
-								__restrict
-								ptCopySize);
+                                                            __restrict
+                                                            pSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint16_t *
+                                                            __restrict
+                                                            pTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptCopySize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_copy_xy_mirror(uint16_t *
-								 __restrict
-								 pSourceBase,
-								 int16_t
-								 iSourceStride,
-								 uint32_t *
-								 __restrict
-								 ptSourceMaskBase,
-								 int16_t
-								 iSourceMaskStride,
-								 arm_2d_size_t *
-								 __restrict
-								 ptSourceMaskSize,
-								 uint16_t *
-								 __restrict
-								 pTargetBase,
-								 int16_t
-								 iTargetStride,
-								 uint32_t *
-								 __restrict
-								 ptTargetMaskBase,
-								 int16_t
-								 iTargetMaskStride,
-								 arm_2d_size_t *
-								 __restrict
-								 ptTargetMaskSize,
-								 arm_2d_size_t *
-								 __restrict
-								 ptCopySize);
+                                                             __restrict
+                                                             pSourceBase,
+                                                             int16_t
+                                                             iSourceStride,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptSourceMaskBase,
+                                                             int16_t
+                                                             iSourceMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceMaskSize,
+                                                             uint16_t *
+                                                             __restrict
+                                                             pTargetBase,
+                                                             int16_t
+                                                             iTargetStride,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptTargetMaskBase,
+                                                             int16_t
+                                                             iTargetMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetMaskSize,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptCopySize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_copy_y_mirror(uint16_t *
-								__restrict
-								pSourceBase,
-								int16_t
-								iSourceStride,
-								uint32_t *
-								__restrict
-								ptSourceMaskBase,
-								int16_t
-								iSourceMaskStride,
-								arm_2d_size_t *
-								__restrict
-								ptSourceMaskSize,
-								uint16_t *
-								__restrict
-								pTargetBase,
-								int16_t
-								iTargetStride,
-								uint32_t *
-								__restrict
-								ptTargetMaskBase,
-								int16_t
-								iTargetMaskStride,
-								arm_2d_size_t *
-								__restrict
-								ptTargetMaskSize,
-								arm_2d_size_t *
-								__restrict
-								ptCopySize);
+                                                            __restrict
+                                                            pSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint16_t *
+                                                            __restrict
+                                                            pTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptCopySize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_fill(uint16_t *
-						       __restrict ptSourceBase,
-						       int16_t iSourceStride,
-						       arm_2d_size_t *
-						       __restrict ptSourceSize,
-						       uint32_t *
-						       __restrict
-						       ptSourceMaskBase,
-						       int16_t
-						       iSourceMaskStride,
-						       arm_2d_size_t *
-						       __restrict
-						       ptSourceMaskSize,
-						       uint16_t *
-						       __restrict ptTargetBase,
-						       int16_t iTargetStride,
-						       arm_2d_size_t *
-						       __restrict ptTargetSize,
-						       uint32_t *
-						       __restrict
-						       ptTargetMaskBase,
-						       int16_t
-						       iTargetMaskStride,
-						       arm_2d_size_t *
-						       __restrict
-						       ptTargetMaskSize);
+                                                       __restrict ptSourceBase,
+                                                       int16_t iSourceStride,
+                                                       arm_2d_size_t *
+                                                       __restrict ptSourceSize,
+                                                       uint32_t *
+                                                       __restrict
+                                                       ptSourceMaskBase,
+                                                       int16_t
+                                                       iSourceMaskStride,
+                                                       arm_2d_size_t *
+                                                       __restrict
+                                                       ptSourceMaskSize,
+                                                       uint16_t *
+                                                       __restrict ptTargetBase,
+                                                       int16_t iTargetStride,
+                                                       arm_2d_size_t *
+                                                       __restrict ptTargetSize,
+                                                       uint32_t *
+                                                       __restrict
+                                                       ptTargetMaskBase,
+                                                       int16_t
+                                                       iTargetMaskStride,
+                                                       arm_2d_size_t *
+                                                       __restrict
+                                                       ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_fill_mirror(uint16_t *
-							      __restrict
-							      ptSourceBase,
-							      int16_t
-							      iSourceStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptSourceSize,
-							      uint32_t *
-							      __restrict
-							      ptSourceMaskBase,
-							      int16_t
-							      iSourceMaskStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptSourceMaskSize,
-							      uint16_t *
-							      __restrict
-							      ptTargetBase,
-							      int16_t
-							      iTargetStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptTargetSize,
-							      uint32_t *
-							      __restrict
-							      ptTargetMaskBase,
-							      int16_t
-							      iTargetMaskStride,
-							      arm_2d_size_t *
-							      __restrict
-							      ptTargetMaskSize,
-							      uint32_t wMode);
+                                                              __restrict
+                                                              ptSourceBase,
+                                                              int16_t
+                                                              iSourceStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptSourceSize,
+                                                              uint32_t *
+                                                              __restrict
+                                                              ptSourceMaskBase,
+                                                              int16_t
+                                                              iSourceMaskStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptSourceMaskSize,
+                                                              uint16_t *
+                                                              __restrict
+                                                              ptTargetBase,
+                                                              int16_t
+                                                              iTargetStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptTargetSize,
+                                                              uint32_t *
+                                                              __restrict
+                                                              ptTargetMaskBase,
+                                                              int16_t
+                                                              iTargetMaskStride,
+                                                              arm_2d_size_t *
+                                                              __restrict
+                                                              ptTargetMaskSize,
+                                                              uint32_t wMode);
 
 void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_fill_x_mirror(uint16_t *
-								__restrict
-								ptSourceBase,
-								int16_t
-								iSourceStride,
-								arm_2d_size_t *
-								__restrict
-								ptSourceSize,
-								uint32_t *
-								__restrict
-								ptSourceMaskBase,
-								int16_t
-								iSourceMaskStride,
-								arm_2d_size_t *
-								__restrict
-								ptSourceMaskSize,
-								uint16_t *
-								__restrict
-								ptTargetBase,
-								int16_t
-								iTargetStride,
-								arm_2d_size_t *
-								__restrict
-								ptTargetSize,
-								uint32_t *
-								__restrict
-								ptTargetMaskBase,
-								int16_t
-								iTargetMaskStride,
-								arm_2d_size_t *
-								__restrict
-								ptTargetMaskSize);
+                                                            __restrict
+                                                            ptSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceSize,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint16_t *
+                                                            __restrict
+                                                            ptTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetSize,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_fill_xy_mirror(uint16_t *
-								 __restrict
-								 ptSourceBase,
-								 int16_t
-								 iSourceStride,
-								 arm_2d_size_t *
-								 __restrict
-								 ptSourceSize,
-								 uint32_t *
-								 __restrict
-								 ptSourceMaskBase,
-								 int16_t
-								 iSourceMaskStride,
-								 arm_2d_size_t *
-								 __restrict
-								 ptSourceMaskSize,
-								 uint16_t *
-								 __restrict
-								 ptTargetBase,
-								 int16_t
-								 iTargetStride,
-								 arm_2d_size_t *
-								 __restrict
-								 ptTargetSize,
-								 uint32_t *
-								 __restrict
-								 ptTargetMaskBase,
-								 int16_t
-								 iTargetMaskStride,
-								 arm_2d_size_t *
-								 __restrict
-								 ptTargetMaskSize);
+void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_fill_xy_mirror(
+                                                             uint16_t *
+                                                             __restrict
+                                                             ptSourceBase,
+                                                             int16_t
+                                                             iSourceStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceSize,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptSourceMaskBase,
+                                                             int16_t
+                                                             iSourceMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceMaskSize,
+                                                             uint16_t *
+                                                             __restrict
+                                                             ptTargetBase,
+                                                             int16_t
+                                                             iTargetStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetSize,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptTargetMaskBase,
+                                                             int16_t
+                                                             iTargetMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_fill_y_mirror(uint16_t *
-								__restrict
-								ptSourceBase,
-								int16_t
-								iSourceStride,
-								arm_2d_size_t *
-								__restrict
-								ptSourceSize,
-								uint32_t *
-								__restrict
-								ptSourceMaskBase,
-								int16_t
-								iSourceMaskStride,
-								arm_2d_size_t *
-								__restrict
-								ptSourceMaskSize,
-								uint16_t *
-								__restrict
-								ptTargetBase,
-								int16_t
-								iTargetStride,
-								arm_2d_size_t *
-								__restrict
-								ptTargetSize,
-								uint32_t *
-								__restrict
-								ptTargetMaskBase,
-								int16_t
-								iTargetMaskStride,
-								arm_2d_size_t *
-								__restrict
-								ptTargetMaskSize);
+                                                                __restrict
+                                                                ptSourceBase,
+                                                                int16_t
+                                                                iSourceStride,
+                                                                arm_2d_size_t *
+                                                                __restrict
+                                                                ptSourceSize,
+                                                                uint32_t *
+                                                                __restrict
+                                                                ptSourceMaskBase,
+                                                                int16_t
+                                                                iSourceMaskStride,
+                                                                arm_2d_size_t *
+                                                                __restrict
+                                                                ptSourceMaskSize,
+                                                                uint16_t *
+                                                                __restrict
+                                                                ptTargetBase,
+                                                                int16_t
+                                                                iTargetStride,
+                                                                arm_2d_size_t *
+                                                                __restrict
+                                                                ptTargetSize,
+                                                                uint32_t *
+                                                                __restrict
+                                                                ptTargetMaskBase,
+                                                                int16_t
+                                                                iTargetMaskStride,
+                                                                arm_2d_size_t *
+                                                                __restrict
+                                                                ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_des_msk_copy(uint16_t *
-						   __restrict pSourceBase,
-						   int16_t iSourceStride,
-						   uint32_t *
-						   __restrict ptSourceMaskBase,
-						   int16_t iSourceMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptSourceMaskSize,
-						   uint16_t *
-						   __restrict pTargetBase,
-						   int16_t iTargetStride,
-						   uint8_t *
-						   __restrict ptTargetMaskBase,
-						   int16_t iTargetMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetMaskSize,
-						   arm_2d_size_t *
-						   __restrict ptCopySize);
+                                                   __restrict pSourceBase,
+                                                   int16_t iSourceStride,
+                                                   uint32_t *
+                                                   __restrict ptSourceMaskBase,
+                                                   int16_t iSourceMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptSourceMaskSize,
+                                                   uint16_t *
+                                                   __restrict pTargetBase,
+                                                   int16_t iTargetStride,
+                                                   uint8_t *
+                                                   __restrict ptTargetMaskBase,
+                                                   int16_t iTargetMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetMaskSize,
+                                                   arm_2d_size_t *
+                                                   __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_des_msk_copy_mirror(uint16_t *
-							  __restrict
-							  pSourceBase,
-							  int16_t iSourceStride,
-							  uint32_t *
-							  __restrict
-							  ptSourceMaskBase,
-							  int16_t
-							  iSourceMaskStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptSourceMaskSize,
-							  uint16_t *
-							  __restrict
-							  pTargetBase,
-							  int16_t iTargetStride,
-							  uint8_t *
-							  __restrict
-							  ptTargetMaskBase,
-							  int16_t
-							  iTargetMaskStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptTargetMaskSize,
-							  arm_2d_size_t *
-							  __restrict ptCopySize,
-							  uint32_t wMode);
+                                                          __restrict
+                                                          pSourceBase,
+                                                          int16_t iSourceStride,
+                                                          uint32_t *
+                                                          __restrict
+                                                          ptSourceMaskBase,
+                                                          int16_t
+                                                          iSourceMaskStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptSourceMaskSize,
+                                                          uint16_t *
+                                                          __restrict
+                                                          pTargetBase,
+                                                          int16_t iTargetStride,
+                                                          uint8_t *
+                                                          __restrict
+                                                          ptTargetMaskBase,
+                                                          int16_t
+                                                          iTargetMaskStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptTargetMaskSize,
+                                                          arm_2d_size_t *
+                                                          __restrict ptCopySize,
+                                                          uint32_t wMode);
 
 void __arm_2d_impl_rgb565_src_chn_msk_des_msk_copy_x_mirror(uint16_t *
-							    __restrict
-							    pSourceBase,
-							    int16_t
-							    iSourceStride,
-							    uint32_t *
-							    __restrict
-							    ptSourceMaskBase,
-							    int16_t
-							    iSourceMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceMaskSize,
-							    uint16_t *
-							    __restrict
-							    pTargetBase,
-							    int16_t
-							    iTargetStride,
-							    uint8_t *
-							    __restrict
-							    ptTargetMaskBase,
-							    int16_t
-							    iTargetMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetMaskSize,
-							    arm_2d_size_t *
-							    __restrict
-							    ptCopySize);
+                                                            __restrict
+                                                            pSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint16_t *
+                                                            __restrict
+                                                            pTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptCopySize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_des_msk_copy_xy_mirror(uint16_t *
-							     __restrict
-							     pSourceBase,
-							     int16_t
-							     iSourceStride,
-							     uint32_t *
-							     __restrict
-							     ptSourceMaskBase,
-							     int16_t
-							     iSourceMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceMaskSize,
-							     uint16_t *
-							     __restrict
-							     pTargetBase,
-							     int16_t
-							     iTargetStride,
-							     uint8_t *
-							     __restrict
-							     ptTargetMaskBase,
-							     int16_t
-							     iTargetMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetMaskSize,
-							     arm_2d_size_t *
-							     __restrict
-							     ptCopySize);
+                                                             __restrict
+                                                             pSourceBase,
+                                                             int16_t
+                                                             iSourceStride,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptSourceMaskBase,
+                                                             int16_t
+                                                             iSourceMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceMaskSize,
+                                                             uint16_t *
+                                                             __restrict
+                                                             pTargetBase,
+                                                             int16_t
+                                                             iTargetStride,
+                                                             uint8_t *
+                                                             __restrict
+                                                             ptTargetMaskBase,
+                                                             int16_t
+                                                             iTargetMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetMaskSize,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptCopySize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_des_msk_copy_y_mirror(uint16_t *
-							    __restrict
-							    pSourceBase,
-							    int16_t
-							    iSourceStride,
-							    uint32_t *
-							    __restrict
-							    ptSourceMaskBase,
-							    int16_t
-							    iSourceMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceMaskSize,
-							    uint16_t *
-							    __restrict
-							    pTargetBase,
-							    int16_t
-							    iTargetStride,
-							    uint8_t *
-							    __restrict
-							    ptTargetMaskBase,
-							    int16_t
-							    iTargetMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetMaskSize,
-							    arm_2d_size_t *
-							    __restrict
-							    ptCopySize);
+                                                            __restrict
+                                                            pSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint16_t *
+                                                            __restrict
+                                                            pTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptCopySize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_des_msk_fill(uint16_t *
-						   __restrict ptSourceBase,
-						   int16_t iSourceStride,
-						   arm_2d_size_t *
-						   __restrict ptSourceSize,
-						   uint32_t *
-						   __restrict ptSourceMaskBase,
-						   int16_t iSourceMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptSourceMaskSize,
-						   uint16_t *
-						   __restrict ptTargetBase,
-						   int16_t iTargetStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetSize,
-						   uint8_t *
-						   __restrict ptTargetMaskBase,
-						   int16_t iTargetMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetMaskSize);
+                                                   __restrict ptSourceBase,
+                                                   int16_t iSourceStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptSourceSize,
+                                                   uint32_t *
+                                                   __restrict ptSourceMaskBase,
+                                                   int16_t iSourceMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptSourceMaskSize,
+                                                   uint16_t *
+                                                   __restrict ptTargetBase,
+                                                   int16_t iTargetStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetSize,
+                                                   uint8_t *
+                                                   __restrict ptTargetMaskBase,
+                                                   int16_t iTargetMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_des_msk_fill_mirror(uint16_t *
-							  __restrict
-							  ptSourceBase,
-							  int16_t iSourceStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptSourceSize,
-							  uint32_t *
-							  __restrict
-							  ptSourceMaskBase,
-							  int16_t
-							  iSourceMaskStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptSourceMaskSize,
-							  uint16_t *
-							  __restrict
-							  ptTargetBase,
-							  int16_t iTargetStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptTargetSize,
-							  uint8_t *
-							  __restrict
-							  ptTargetMaskBase,
-							  int16_t
-							  iTargetMaskStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptTargetMaskSize,
-							  uint32_t wMode);
+                                                          __restrict
+                                                          ptSourceBase,
+                                                          int16_t iSourceStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptSourceSize,
+                                                          uint32_t *
+                                                          __restrict
+                                                          ptSourceMaskBase,
+                                                          int16_t
+                                                          iSourceMaskStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptSourceMaskSize,
+                                                          uint16_t *
+                                                          __restrict
+                                                          ptTargetBase,
+                                                          int16_t iTargetStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptTargetSize,
+                                                          uint8_t *
+                                                          __restrict
+                                                          ptTargetMaskBase,
+                                                          int16_t
+                                                          iTargetMaskStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptTargetMaskSize,
+                                                          uint32_t wMode);
 
 void __arm_2d_impl_rgb565_src_chn_msk_des_msk_fill_x_mirror(uint16_t *
-							    __restrict
-							    ptSourceBase,
-							    int16_t
-							    iSourceStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceSize,
-							    uint32_t *
-							    __restrict
-							    ptSourceMaskBase,
-							    int16_t
-							    iSourceMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceMaskSize,
-							    uint16_t *
-							    __restrict
-							    ptTargetBase,
-							    int16_t
-							    iTargetStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetSize,
-							    uint8_t *
-							    __restrict
-							    ptTargetMaskBase,
-							    int16_t
-							    iTargetMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetMaskSize);
+                                                            __restrict
+                                                            ptSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceSize,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint16_t *
+                                                            __restrict
+                                                            ptTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetSize,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_des_msk_fill_xy_mirror(uint16_t *
-							     __restrict
-							     ptSourceBase,
-							     int16_t
-							     iSourceStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceSize,
-							     uint32_t *
-							     __restrict
-							     ptSourceMaskBase,
-							     int16_t
-							     iSourceMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceMaskSize,
-							     uint16_t *
-							     __restrict
-							     ptTargetBase,
-							     int16_t
-							     iTargetStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetSize,
-							     uint8_t *
-							     __restrict
-							     ptTargetMaskBase,
-							     int16_t
-							     iTargetMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetMaskSize);
+                                                             __restrict
+                                                             ptSourceBase,
+                                                             int16_t
+                                                             iSourceStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceSize,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptSourceMaskBase,
+                                                             int16_t
+                                                             iSourceMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceMaskSize,
+                                                             uint16_t *
+                                                             __restrict
+                                                             ptTargetBase,
+                                                             int16_t
+                                                             iTargetStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetSize,
+                                                             uint8_t *
+                                                             __restrict
+                                                             ptTargetMaskBase,
+                                                             int16_t
+                                                             iTargetMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_des_msk_fill_y_mirror(uint16_t *
-							    __restrict
-							    ptSourceBase,
-							    int16_t
-							    iSourceStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceSize,
-							    uint32_t *
-							    __restrict
-							    ptSourceMaskBase,
-							    int16_t
-							    iSourceMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceMaskSize,
-							    uint16_t *
-							    __restrict
-							    ptTargetBase,
-							    int16_t
-							    iTargetStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetSize,
-							    uint8_t *
-							    __restrict
-							    ptTargetMaskBase,
-							    int16_t
-							    iTargetMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetMaskSize);
+                                                            __restrict
+                                                            ptSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceSize,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint16_t *
+                                                            __restrict
+                                                            ptTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetSize,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_fill(uint16_t * __restrict ptSourceBase,
-					   int16_t iSourceStride,
-					   arm_2d_size_t *
-					   __restrict ptSourceSize,
-					   uint32_t *
-					   __restrict ptSourceMaskBase,
-					   int16_t iSourceMaskStride,
-					   arm_2d_size_t *
-					   __restrict ptSourceMaskSize,
-					   uint16_t * __restrict ptTargetBase,
-					   int16_t iTargetStride,
-					   arm_2d_size_t *
-					   __restrict ptTargetSize);
+                                           int16_t iSourceStride,
+                                           arm_2d_size_t *
+                                           __restrict ptSourceSize,
+                                           uint32_t *
+                                           __restrict ptSourceMaskBase,
+                                           int16_t iSourceMaskStride,
+                                           arm_2d_size_t *
+                                           __restrict ptSourceMaskSize,
+                                           uint16_t * __restrict ptTargetBase,
+                                           int16_t iTargetStride,
+                                           arm_2d_size_t *
+                                           __restrict ptTargetSize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_fill_mirror(uint16_t *
-						  __restrict ptSourceBase,
-						  int16_t iSourceStride,
-						  arm_2d_size_t *
-						  __restrict ptSourceSize,
-						  uint32_t *
-						  __restrict ptSourceMaskBase,
-						  int16_t iSourceMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptSourceMaskSize,
-						  uint16_t *
-						  __restrict ptTargetBase,
-						  int16_t iTargetStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetSize,
-						  uint32_t wMode);
+                                                  __restrict ptSourceBase,
+                                                  int16_t iSourceStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptSourceSize,
+                                                  uint32_t *
+                                                  __restrict ptSourceMaskBase,
+                                                  int16_t iSourceMaskStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptSourceMaskSize,
+                                                  uint16_t *
+                                                  __restrict ptTargetBase,
+                                                  int16_t iTargetStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptTargetSize,
+                                                  uint32_t wMode);
 
 void __arm_2d_impl_rgb565_src_chn_msk_fill_x_mirror(uint16_t *
-						    __restrict ptSourceBase,
-						    int16_t iSourceStride,
-						    arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint32_t *
-						    __restrict ptSourceMaskBase,
-						    int16_t iSourceMaskStride,
-						    arm_2d_size_t *
-						    __restrict ptSourceMaskSize,
-						    uint16_t *
-						    __restrict ptTargetBase,
-						    int16_t iTargetStride,
-						    arm_2d_size_t *
-						    __restrict ptTargetSize);
+                                                    __restrict ptSourceBase,
+                                                    int16_t iSourceStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptSourceSize,
+                                                    uint32_t *
+                                                    __restrict ptSourceMaskBase,
+                                                    int16_t iSourceMaskStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptSourceMaskSize,
+                                                    uint16_t *
+                                                    __restrict ptTargetBase,
+                                                    int16_t iTargetStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptTargetSize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_fill_xy_mirror(uint16_t *
-						     __restrict ptSourceBase,
-						     int16_t iSourceStride,
-						     arm_2d_size_t *
-						     __restrict ptSourceSize,
-						     uint32_t *
-						     __restrict
-						     ptSourceMaskBase,
-						     int16_t iSourceMaskStride,
-						     arm_2d_size_t *
-						     __restrict
-						     ptSourceMaskSize,
-						     uint16_t *
-						     __restrict ptTargetBase,
-						     int16_t iTargetStride,
-						     arm_2d_size_t *
-						     __restrict ptTargetSize);
+                                                     __restrict ptSourceBase,
+                                                     int16_t iSourceStride,
+                                                     arm_2d_size_t *
+                                                     __restrict ptSourceSize,
+                                                     uint32_t *
+                                                     __restrict
+                                                     ptSourceMaskBase,
+                                                     int16_t iSourceMaskStride,
+                                                     arm_2d_size_t *
+                                                     __restrict
+                                                     ptSourceMaskSize,
+                                                     uint16_t *
+                                                     __restrict ptTargetBase,
+                                                     int16_t iTargetStride,
+                                                     arm_2d_size_t *
+                                                     __restrict ptTargetSize);
 
 void __arm_2d_impl_rgb565_src_chn_msk_fill_y_mirror(uint16_t *
-						    __restrict ptSourceBase,
-						    int16_t iSourceStride,
-						    arm_2d_size_t *
-						    __restrict ptSourceSize,
-						    uint32_t *
-						    __restrict ptSourceMaskBase,
-						    int16_t iSourceMaskStride,
-						    arm_2d_size_t *
-						    __restrict ptSourceMaskSize,
-						    uint16_t *
-						    __restrict ptTargetBase,
-						    int16_t iTargetStride,
-						    arm_2d_size_t *
-						    __restrict ptTargetSize);
+                                                    __restrict ptSourceBase,
+                                                    int16_t iSourceStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptSourceSize,
+                                                    uint32_t *
+                                                    __restrict ptSourceMaskBase,
+                                                    int16_t iSourceMaskStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptSourceMaskSize,
+                                                    uint16_t *
+                                                    __restrict ptTargetBase,
+                                                    int16_t iTargetStride,
+                                                    arm_2d_size_t *
+                                                    __restrict ptTargetSize);
 
 void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy(uint16_t *
-						  __restrict pSourceBase,
-						  int16_t iSourceStride,
-						  uint8_t *
-						  __restrict ptSourceMaskBase,
-						  int16_t iSourceMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptSourceMaskSize,
-						  uint16_t *
-						  __restrict pTargetBase,
-						  int16_t iTargetStride,
-						  uint8_t *
-						  __restrict ptTargetMaskBase,
-						  int16_t iTargetMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetMaskSize,
-						  arm_2d_size_t *
-						  __restrict ptCopySize);
+                                                  __restrict pSourceBase,
+                                                  int16_t iSourceStride,
+                                                  uint8_t *
+                                                  __restrict ptSourceMaskBase,
+                                                  int16_t iSourceMaskStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptSourceMaskSize,
+                                                  uint16_t *
+                                                  __restrict pTargetBase,
+                                                  int16_t iTargetStride,
+                                                  uint8_t *
+                                                  __restrict ptTargetMaskBase,
+                                                  int16_t iTargetMaskStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptTargetMaskSize,
+                                                  arm_2d_size_t *
+                                                  __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_mirror(uint16_t *
-							 __restrict pSourceBase,
-							 int16_t iSourceStride,
-							 uint8_t *
-							 __restrict
-							 ptSourceMaskBase,
-							 int16_t
-							 iSourceMaskStride,
-							 arm_2d_size_t *
-							 __restrict
-							 ptSourceMaskSize,
-							 uint16_t *
-							 __restrict pTargetBase,
-							 int16_t iTargetStride,
-							 uint8_t *
-							 __restrict
-							 ptTargetMaskBase,
-							 int16_t
-							 iTargetMaskStride,
-							 arm_2d_size_t *
-							 __restrict
-							 ptTargetMaskSize,
-							 arm_2d_size_t *
-							 __restrict ptCopySize,
-							 uint32_t wMode);
+                                                         __restrict pSourceBase,
+                                                         int16_t iSourceStride,
+                                                         uint8_t *
+                                                         __restrict
+                                                         ptSourceMaskBase,
+                                                         int16_t
+                                                         iSourceMaskStride,
+                                                         arm_2d_size_t *
+                                                         __restrict
+                                                         ptSourceMaskSize,
+                                                         uint16_t *
+                                                         __restrict pTargetBase,
+                                                         int16_t iTargetStride,
+                                                         uint8_t *
+                                                         __restrict
+                                                         ptTargetMaskBase,
+                                                         int16_t
+                                                         iTargetMaskStride,
+                                                         arm_2d_size_t *
+                                                         __restrict
+                                                         ptTargetMaskSize,
+                                                         arm_2d_size_t *
+                                                         __restrict ptCopySize,
+                                                         uint32_t wMode);
 
 void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_x_mirror(uint16_t *
-							   __restrict
-							   pSourceBase,
-							   int16_t
-							   iSourceStride,
-							   uint8_t *
-							   __restrict
-							   ptSourceMaskBase,
-							   int16_t
-							   iSourceMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceMaskSize,
-							   uint16_t *
-							   __restrict
-							   pTargetBase,
-							   int16_t
-							   iTargetStride,
-							   uint8_t *
-							   __restrict
-							   ptTargetMaskBase,
-							   int16_t
-							   iTargetMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetMaskSize,
-							   arm_2d_size_t *
-							   __restrict
-							   ptCopySize);
+                                                           __restrict
+                                                           pSourceBase,
+                                                           int16_t
+                                                           iSourceStride,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptSourceMaskBase,
+                                                           int16_t
+                                                           iSourceMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceMaskSize,
+                                                           uint16_t *
+                                                           __restrict
+                                                           pTargetBase,
+                                                           int16_t
+                                                           iTargetStride,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptTargetMaskBase,
+                                                           int16_t
+                                                           iTargetMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetMaskSize,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptCopySize);
 
 void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_xy_mirror(uint16_t *
-							    __restrict
-							    pSourceBase,
-							    int16_t
-							    iSourceStride,
-							    uint8_t *
-							    __restrict
-							    ptSourceMaskBase,
-							    int16_t
-							    iSourceMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceMaskSize,
-							    uint16_t *
-							    __restrict
-							    pTargetBase,
-							    int16_t
-							    iTargetStride,
-							    uint8_t *
-							    __restrict
-							    ptTargetMaskBase,
-							    int16_t
-							    iTargetMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetMaskSize,
-							    arm_2d_size_t *
-							    __restrict
-							    ptCopySize);
+                                                            __restrict
+                                                            pSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint16_t *
+                                                            __restrict
+                                                            pTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptCopySize);
 
 void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_y_mirror(uint16_t *
-							   __restrict
-							   pSourceBase,
-							   int16_t
-							   iSourceStride,
-							   uint8_t *
-							   __restrict
-							   ptSourceMaskBase,
-							   int16_t
-							   iSourceMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceMaskSize,
-							   uint16_t *
-							   __restrict
-							   pTargetBase,
-							   int16_t
-							   iTargetStride,
-							   uint8_t *
-							   __restrict
-							   ptTargetMaskBase,
-							   int16_t
-							   iTargetMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetMaskSize,
-							   arm_2d_size_t *
-							   __restrict
-							   ptCopySize);
+                                                           __restrict
+                                                           pSourceBase,
+                                                           int16_t
+                                                           iSourceStride,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptSourceMaskBase,
+                                                           int16_t
+                                                           iSourceMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceMaskSize,
+                                                           uint16_t *
+                                                           __restrict
+                                                           pTargetBase,
+                                                           int16_t
+                                                           iTargetStride,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptTargetMaskBase,
+                                                           int16_t
+                                                           iTargetMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetMaskSize,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptCopySize);
 
 void __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill(uint16_t *
-						  __restrict ptSourceBase,
-						  int16_t iSourceStride,
-						  arm_2d_size_t *
-						  __restrict ptSourceSize,
-						  uint8_t *
-						  __restrict ptSourceMaskBase,
-						  int16_t iSourceMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptSourceMaskSize,
-						  uint16_t *
-						  __restrict ptTargetBase,
-						  int16_t iTargetStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetSize,
-						  uint8_t *
-						  __restrict ptTargetMaskBase,
-						  int16_t iTargetMaskStride,
-						  arm_2d_size_t *
-						  __restrict ptTargetMaskSize);
+                                                  __restrict ptSourceBase,
+                                                  int16_t iSourceStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptSourceSize,
+                                                  uint8_t *
+                                                  __restrict ptSourceMaskBase,
+                                                  int16_t iSourceMaskStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptSourceMaskSize,
+                                                  uint16_t *
+                                                  __restrict ptTargetBase,
+                                                  int16_t iTargetStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptTargetSize,
+                                                  uint8_t *
+                                                  __restrict ptTargetMaskBase,
+                                                  int16_t iTargetMaskStride,
+                                                  arm_2d_size_t *
+                                                  __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_mirror(uint16_t *
-							 __restrict
-							 ptSourceBase,
-							 int16_t iSourceStride,
-							 arm_2d_size_t *
-							 __restrict
-							 ptSourceSize,
-							 uint8_t *
-							 __restrict
-							 ptSourceMaskBase,
-							 int16_t
-							 iSourceMaskStride,
-							 arm_2d_size_t *
-							 __restrict
-							 ptSourceMaskSize,
-							 uint16_t *
-							 __restrict
-							 ptTargetBase,
-							 int16_t iTargetStride,
-							 arm_2d_size_t *
-							 __restrict
-							 ptTargetSize,
-							 uint8_t *
-							 __restrict
-							 ptTargetMaskBase,
-							 int16_t
-							 iTargetMaskStride,
-							 arm_2d_size_t *
-							 __restrict
-							 ptTargetMaskSize,
-							 uint32_t wMode);
+                                                         __restrict
+                                                         ptSourceBase,
+                                                         int16_t iSourceStride,
+                                                         arm_2d_size_t *
+                                                         __restrict
+                                                         ptSourceSize,
+                                                         uint8_t *
+                                                         __restrict
+                                                         ptSourceMaskBase,
+                                                         int16_t
+                                                         iSourceMaskStride,
+                                                         arm_2d_size_t *
+                                                         __restrict
+                                                         ptSourceMaskSize,
+                                                         uint16_t *
+                                                         __restrict
+                                                         ptTargetBase,
+                                                         int16_t iTargetStride,
+                                                         arm_2d_size_t *
+                                                         __restrict
+                                                         ptTargetSize,
+                                                         uint8_t *
+                                                         __restrict
+                                                         ptTargetMaskBase,
+                                                         int16_t
+                                                         iTargetMaskStride,
+                                                         arm_2d_size_t *
+                                                         __restrict
+                                                         ptTargetMaskSize,
+                                                         uint32_t wMode);
 
 void __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_x_mirror(uint16_t *
-							   __restrict
-							   ptSourceBase,
-							   int16_t
-							   iSourceStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceSize,
-							   uint8_t *
-							   __restrict
-							   ptSourceMaskBase,
-							   int16_t
-							   iSourceMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceMaskSize,
-							   uint16_t *
-							   __restrict
-							   ptTargetBase,
-							   int16_t
-							   iTargetStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetSize,
-							   uint8_t *
-							   __restrict
-							   ptTargetMaskBase,
-							   int16_t
-							   iTargetMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetMaskSize);
+                                                           __restrict
+                                                           ptSourceBase,
+                                                           int16_t
+                                                           iSourceStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceSize,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptSourceMaskBase,
+                                                           int16_t
+                                                           iSourceMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceMaskSize,
+                                                           uint16_t *
+                                                           __restrict
+                                                           ptTargetBase,
+                                                           int16_t
+                                                           iTargetStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetSize,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptTargetMaskBase,
+                                                           int16_t
+                                                           iTargetMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_xy_mirror(uint16_t *
-							    __restrict
-							    ptSourceBase,
-							    int16_t
-							    iSourceStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceSize,
-							    uint8_t *
-							    __restrict
-							    ptSourceMaskBase,
-							    int16_t
-							    iSourceMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceMaskSize,
-							    uint16_t *
-							    __restrict
-							    ptTargetBase,
-							    int16_t
-							    iTargetStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetSize,
-							    uint8_t *
-							    __restrict
-							    ptTargetMaskBase,
-							    int16_t
-							    iTargetMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetMaskSize);
+                                                            __restrict
+                                                            ptSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceSize,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint16_t *
+                                                            __restrict
+                                                            ptTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetSize,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_y_mirror(uint16_t *
-							   __restrict
-							   ptSourceBase,
-							   int16_t
-							   iSourceStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceSize,
-							   uint8_t *
-							   __restrict
-							   ptSourceMaskBase,
-							   int16_t
-							   iSourceMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptSourceMaskSize,
-							   uint16_t *
-							   __restrict
-							   ptTargetBase,
-							   int16_t
-							   iTargetStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetSize,
-							   uint8_t *
-							   __restrict
-							   ptTargetMaskBase,
-							   int16_t
-							   iTargetMaskStride,
-							   arm_2d_size_t *
-							   __restrict
-							   ptTargetMaskSize);
+                                                           __restrict
+                                                           ptSourceBase,
+                                                           int16_t
+                                                           iSourceStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceSize,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptSourceMaskBase,
+                                                           int16_t
+                                                           iSourceMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptSourceMaskSize,
+                                                           uint16_t *
+                                                           __restrict
+                                                           ptTargetBase,
+                                                           int16_t
+                                                           iTargetStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetSize,
+                                                           uint8_t *
+                                                           __restrict
+                                                           ptTargetMaskBase,
+                                                           int16_t
+                                                           iTargetMaskStride,
+                                                           arm_2d_size_t *
+                                                           __restrict
+                                                           ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_src_msk_copy(uint16_t * __restrict pSourceBase,
-				       int16_t iSourceStride,
-				       uint8_t * __restrict ptSourceMaskBase,
-				       int16_t iSourceMaskStride,
-				       arm_2d_size_t *
-				       __restrict ptSourceMaskSize,
-				       uint16_t * __restrict pTargetBase,
-				       int16_t iTargetStride,
-				       arm_2d_size_t * __restrict ptCopySize);
+                                       int16_t iSourceStride,
+                                       uint8_t * __restrict ptSourceMaskBase,
+                                       int16_t iSourceMaskStride,
+                                       arm_2d_size_t *
+                                       __restrict ptSourceMaskSize,
+                                       uint16_t * __restrict pTargetBase,
+                                       int16_t iTargetStride,
+                                       arm_2d_size_t * __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_src_msk_copy_mirror(uint16_t * __restrict pSourceBase,
-					      int16_t iSourceStride,
-					      uint8_t *
-					      __restrict ptSourceMaskBase,
-					      int16_t iSourceMaskStride,
-					      arm_2d_size_t *
-					      __restrict ptSourceMaskSize,
-					      uint16_t * __restrict pTargetBase,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptCopySize,
-					      uint32_t wMode);
+                                              int16_t iSourceStride,
+                                              uint8_t *
+                                              __restrict ptSourceMaskBase,
+                                              int16_t iSourceMaskStride,
+                                              arm_2d_size_t *
+                                              __restrict ptSourceMaskSize,
+                                              uint16_t * __restrict pTargetBase,
+                                              int16_t iTargetStride,
+                                              arm_2d_size_t *
+                                              __restrict ptCopySize,
+                                              uint32_t wMode);
 
 void __arm_2d_impl_rgb565_src_msk_copy_x_mirror(uint16_t *
-						__restrict pSourceBase,
-						int16_t iSourceStride,
-						uint8_t *
-						__restrict ptSourceMaskBase,
-						int16_t iSourceMaskStride,
-						arm_2d_size_t *
-						__restrict ptSourceMaskSize,
-						uint16_t *
-						__restrict pTargetBase,
-						int16_t iTargetStride,
-						arm_2d_size_t *
-						__restrict ptCopySize);
+                                                __restrict pSourceBase,
+                                                int16_t iSourceStride,
+                                                uint8_t *
+                                                __restrict ptSourceMaskBase,
+                                                int16_t iSourceMaskStride,
+                                                arm_2d_size_t *
+                                                __restrict ptSourceMaskSize,
+                                                uint16_t *
+                                                __restrict pTargetBase,
+                                                int16_t iTargetStride,
+                                                arm_2d_size_t *
+                                                __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_src_msk_copy_xy_mirror(uint16_t *
-						 __restrict pSourceBase,
-						 int16_t iSourceStride,
-						 uint8_t *
-						 __restrict ptSourceMaskBase,
-						 int16_t iSourceMaskStride,
-						 arm_2d_size_t *
-						 __restrict ptSourceMaskSize,
-						 uint16_t *
-						 __restrict pTargetBase,
-						 int16_t iTargetStride,
-						 arm_2d_size_t *
-						 __restrict ptCopySize);
+                                                 __restrict pSourceBase,
+                                                 int16_t iSourceStride,
+                                                 uint8_t *
+                                                 __restrict ptSourceMaskBase,
+                                                 int16_t iSourceMaskStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptSourceMaskSize,
+                                                 uint16_t *
+                                                 __restrict pTargetBase,
+                                                 int16_t iTargetStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_src_msk_copy_y_mirror(uint16_t *
-						__restrict pSourceBase,
-						int16_t iSourceStride,
-						uint8_t *
-						__restrict ptSourceMaskBase,
-						int16_t iSourceMaskStride,
-						arm_2d_size_t *
-						__restrict ptSourceMaskSize,
-						uint16_t *
-						__restrict pTargetBase,
-						int16_t iTargetStride,
-						arm_2d_size_t *
-						__restrict ptCopySize);
+                                                __restrict pSourceBase,
+                                                int16_t iSourceStride,
+                                                uint8_t *
+                                                __restrict ptSourceMaskBase,
+                                                int16_t iSourceMaskStride,
+                                                arm_2d_size_t *
+                                                __restrict ptSourceMaskSize,
+                                                uint16_t *
+                                                __restrict pTargetBase,
+                                                int16_t iTargetStride,
+                                                arm_2d_size_t *
+                                                __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_src_msk_des_chn_msk_copy(uint16_t *
-						   __restrict pSourceBase,
-						   int16_t iSourceStride,
-						   uint8_t *
-						   __restrict ptSourceMaskBase,
-						   int16_t iSourceMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptSourceMaskSize,
-						   uint16_t *
-						   __restrict pTargetBase,
-						   int16_t iTargetStride,
-						   uint32_t *
-						   __restrict ptTargetMaskBase,
-						   int16_t iTargetMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetMaskSize,
-						   arm_2d_size_t *
-						   __restrict ptCopySize);
+                                                   __restrict pSourceBase,
+                                                   int16_t iSourceStride,
+                                                   uint8_t *
+                                                   __restrict ptSourceMaskBase,
+                                                   int16_t iSourceMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptSourceMaskSize,
+                                                   uint16_t *
+                                                   __restrict pTargetBase,
+                                                   int16_t iTargetStride,
+                                                   uint32_t *
+                                                   __restrict ptTargetMaskBase,
+                                                   int16_t iTargetMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetMaskSize,
+                                                   arm_2d_size_t *
+                                                   __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_src_msk_des_chn_msk_copy_mirror(uint16_t *
-							  __restrict
-							  pSourceBase,
-							  int16_t iSourceStride,
-							  uint8_t *
-							  __restrict
-							  ptSourceMaskBase,
-							  int16_t
-							  iSourceMaskStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptSourceMaskSize,
-							  uint16_t *
-							  __restrict
-							  pTargetBase,
-							  int16_t iTargetStride,
-							  uint32_t *
-							  __restrict
-							  ptTargetMaskBase,
-							  int16_t
-							  iTargetMaskStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptTargetMaskSize,
-							  arm_2d_size_t *
-							  __restrict ptCopySize,
-							  uint32_t wMode);
+                                                          __restrict
+                                                          pSourceBase,
+                                                          int16_t iSourceStride,
+                                                          uint8_t *
+                                                          __restrict
+                                                          ptSourceMaskBase,
+                                                          int16_t
+                                                          iSourceMaskStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptSourceMaskSize,
+                                                          uint16_t *
+                                                          __restrict
+                                                          pTargetBase,
+                                                          int16_t iTargetStride,
+                                                          uint32_t *
+                                                          __restrict
+                                                          ptTargetMaskBase,
+                                                          int16_t
+                                                          iTargetMaskStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptTargetMaskSize,
+                                                          arm_2d_size_t *
+                                                          __restrict ptCopySize,
+                                                          uint32_t wMode);
 
 void __arm_2d_impl_rgb565_src_msk_des_chn_msk_copy_x_mirror(uint16_t *
-							    __restrict
-							    pSourceBase,
-							    int16_t
-							    iSourceStride,
-							    uint8_t *
-							    __restrict
-							    ptSourceMaskBase,
-							    int16_t
-							    iSourceMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceMaskSize,
-							    uint16_t *
-							    __restrict
-							    pTargetBase,
-							    int16_t
-							    iTargetStride,
-							    uint32_t *
-							    __restrict
-							    ptTargetMaskBase,
-							    int16_t
-							    iTargetMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetMaskSize,
-							    arm_2d_size_t *
-							    __restrict
-							    ptCopySize);
+                                                            __restrict
+                                                            pSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint16_t *
+                                                            __restrict
+                                                            pTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptCopySize);
 
 void __arm_2d_impl_rgb565_src_msk_des_chn_msk_copy_xy_mirror(uint16_t *
-							     __restrict
-							     pSourceBase,
-							     int16_t
-							     iSourceStride,
-							     uint8_t *
-							     __restrict
-							     ptSourceMaskBase,
-							     int16_t
-							     iSourceMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceMaskSize,
-							     uint16_t *
-							     __restrict
-							     pTargetBase,
-							     int16_t
-							     iTargetStride,
-							     uint32_t *
-							     __restrict
-							     ptTargetMaskBase,
-							     int16_t
-							     iTargetMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetMaskSize,
-							     arm_2d_size_t *
-							     __restrict
-							     ptCopySize);
+                                                             __restrict
+                                                             pSourceBase,
+                                                             int16_t
+                                                             iSourceStride,
+                                                             uint8_t *
+                                                             __restrict
+                                                             ptSourceMaskBase,
+                                                             int16_t
+                                                             iSourceMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceMaskSize,
+                                                             uint16_t *
+                                                             __restrict
+                                                             pTargetBase,
+                                                             int16_t
+                                                             iTargetStride,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptTargetMaskBase,
+                                                             int16_t
+                                                             iTargetMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetMaskSize,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptCopySize);
 
 void __arm_2d_impl_rgb565_src_msk_des_chn_msk_copy_y_mirror(uint16_t *
-							    __restrict
-							    pSourceBase,
-							    int16_t
-							    iSourceStride,
-							    uint8_t *
-							    __restrict
-							    ptSourceMaskBase,
-							    int16_t
-							    iSourceMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceMaskSize,
-							    uint16_t *
-							    __restrict
-							    pTargetBase,
-							    int16_t
-							    iTargetStride,
-							    uint32_t *
-							    __restrict
-							    ptTargetMaskBase,
-							    int16_t
-							    iTargetMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetMaskSize,
-							    arm_2d_size_t *
-							    __restrict
-							    ptCopySize);
+                                                            __restrict
+                                                            pSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint16_t *
+                                                            __restrict
+                                                            pTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptCopySize);
 
 void __arm_2d_impl_rgb565_src_msk_des_chn_msk_fill(uint16_t *
-						   __restrict ptSourceBase,
-						   int16_t iSourceStride,
-						   arm_2d_size_t *
-						   __restrict ptSourceSize,
-						   uint8_t *
-						   __restrict ptSourceMaskBase,
-						   int16_t iSourceMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptSourceMaskSize,
-						   uint16_t *
-						   __restrict ptTargetBase,
-						   int16_t iTargetStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetSize,
-						   uint32_t *
-						   __restrict ptTargetMaskBase,
-						   int16_t iTargetMaskStride,
-						   arm_2d_size_t *
-						   __restrict ptTargetMaskSize);
+                                                   __restrict ptSourceBase,
+                                                   int16_t iSourceStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptSourceSize,
+                                                   uint8_t *
+                                                   __restrict ptSourceMaskBase,
+                                                   int16_t iSourceMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptSourceMaskSize,
+                                                   uint16_t *
+                                                   __restrict ptTargetBase,
+                                                   int16_t iTargetStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetSize,
+                                                   uint32_t *
+                                                   __restrict ptTargetMaskBase,
+                                                   int16_t iTargetMaskStride,
+                                                   arm_2d_size_t *
+                                                   __restrict ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_src_msk_des_chn_msk_fill_mirror(uint16_t *
-							  __restrict
-							  ptSourceBase,
-							  int16_t iSourceStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptSourceSize,
-							  uint8_t *
-							  __restrict
-							  ptSourceMaskBase,
-							  int16_t
-							  iSourceMaskStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptSourceMaskSize,
-							  uint16_t *
-							  __restrict
-							  ptTargetBase,
-							  int16_t iTargetStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptTargetSize,
-							  uint32_t *
-							  __restrict
-							  ptTargetMaskBase,
-							  int16_t
-							  iTargetMaskStride,
-							  arm_2d_size_t *
-							  __restrict
-							  ptTargetMaskSize,
-							  uint32_t wMode);
+                                                          __restrict
+                                                          ptSourceBase,
+                                                          int16_t iSourceStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptSourceSize,
+                                                          uint8_t *
+                                                          __restrict
+                                                          ptSourceMaskBase,
+                                                          int16_t
+                                                          iSourceMaskStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptSourceMaskSize,
+                                                          uint16_t *
+                                                          __restrict
+                                                          ptTargetBase,
+                                                          int16_t iTargetStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptTargetSize,
+                                                          uint32_t *
+                                                          __restrict
+                                                          ptTargetMaskBase,
+                                                          int16_t
+                                                          iTargetMaskStride,
+                                                          arm_2d_size_t *
+                                                          __restrict
+                                                          ptTargetMaskSize,
+                                                          uint32_t wMode);
 
 void __arm_2d_impl_rgb565_src_msk_des_chn_msk_fill_x_mirror(uint16_t *
-							    __restrict
-							    ptSourceBase,
-							    int16_t
-							    iSourceStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceSize,
-							    uint8_t *
-							    __restrict
-							    ptSourceMaskBase,
-							    int16_t
-							    iSourceMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceMaskSize,
-							    uint16_t *
-							    __restrict
-							    ptTargetBase,
-							    int16_t
-							    iTargetStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetSize,
-							    uint32_t *
-							    __restrict
-							    ptTargetMaskBase,
-							    int16_t
-							    iTargetMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetMaskSize);
+                                                            __restrict
+                                                            ptSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceSize,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint16_t *
+                                                            __restrict
+                                                            ptTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetSize,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_src_msk_des_chn_msk_fill_xy_mirror(uint16_t *
-							     __restrict
-							     ptSourceBase,
-							     int16_t
-							     iSourceStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceSize,
-							     uint8_t *
-							     __restrict
-							     ptSourceMaskBase,
-							     int16_t
-							     iSourceMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptSourceMaskSize,
-							     uint16_t *
-							     __restrict
-							     ptTargetBase,
-							     int16_t
-							     iTargetStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetSize,
-							     uint32_t *
-							     __restrict
-							     ptTargetMaskBase,
-							     int16_t
-							     iTargetMaskStride,
-							     arm_2d_size_t *
-							     __restrict
-							     ptTargetMaskSize);
+                                                             __restrict
+                                                             ptSourceBase,
+                                                             int16_t
+                                                             iSourceStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceSize,
+                                                             uint8_t *
+                                                             __restrict
+                                                             ptSourceMaskBase,
+                                                             int16_t
+                                                             iSourceMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptSourceMaskSize,
+                                                             uint16_t *
+                                                             __restrict
+                                                             ptTargetBase,
+                                                             int16_t
+                                                             iTargetStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetSize,
+                                                             uint32_t *
+                                                             __restrict
+                                                             ptTargetMaskBase,
+                                                             int16_t
+                                                             iTargetMaskStride,
+                                                             arm_2d_size_t *
+                                                             __restrict
+                                                             ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_src_msk_des_chn_msk_fill_y_mirror(uint16_t *
-							    __restrict
-							    ptSourceBase,
-							    int16_t
-							    iSourceStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceSize,
-							    uint8_t *
-							    __restrict
-							    ptSourceMaskBase,
-							    int16_t
-							    iSourceMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptSourceMaskSize,
-							    uint16_t *
-							    __restrict
-							    ptTargetBase,
-							    int16_t
-							    iTargetStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetSize,
-							    uint32_t *
-							    __restrict
-							    ptTargetMaskBase,
-							    int16_t
-							    iTargetMaskStride,
-							    arm_2d_size_t *
-							    __restrict
-							    ptTargetMaskSize);
+                                                            __restrict
+                                                            ptSourceBase,
+                                                            int16_t
+                                                            iSourceStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceSize,
+                                                            uint8_t *
+                                                            __restrict
+                                                            ptSourceMaskBase,
+                                                            int16_t
+                                                            iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptSourceMaskSize,
+                                                            uint16_t *
+                                                            __restrict
+                                                            ptTargetBase,
+                                                            int16_t
+                                                            iTargetStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetSize,
+                                                            uint32_t *
+                                                            __restrict
+                                                            ptTargetMaskBase,
+                                                            int16_t
+                                                            iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __restrict
+                                                            ptTargetMaskSize);
 
 void __arm_2d_impl_rgb565_src_msk_fill(uint16_t * __restrict ptSourceBase,
-				       int16_t iSourceStride,
-				       arm_2d_size_t * __restrict ptSourceSize,
-				       uint8_t * __restrict ptSourceMaskBase,
-				       int16_t iSourceMaskStride,
-				       arm_2d_size_t *
-				       __restrict ptSourceMaskSize,
-				       uint16_t * __restrict ptTargetBase,
-				       int16_t iTargetStride,
-				       arm_2d_size_t * __restrict ptTargetSize);
+                                       int16_t iSourceStride,
+                                       arm_2d_size_t * __restrict ptSourceSize,
+                                       uint8_t * __restrict ptSourceMaskBase,
+                                       int16_t iSourceMaskStride,
+                                       arm_2d_size_t *
+                                       __restrict ptSourceMaskSize,
+                                       uint16_t * __restrict ptTargetBase,
+                                       int16_t iTargetStride,
+                                       arm_2d_size_t * __restrict ptTargetSize);
 
 void __arm_2d_impl_rgb565_src_msk_fill_mirror(uint16_t *
-					      __restrict ptSourceBase,
-					      int16_t iSourceStride,
-					      arm_2d_size_t *
-					      __restrict ptSourceSize,
-					      uint8_t *
-					      __restrict ptSourceMaskBase,
-					      int16_t iSourceMaskStride,
-					      arm_2d_size_t *
-					      __restrict ptSourceMaskSize,
-					      uint16_t *
-					      __restrict ptTargetBase,
-					      int16_t iTargetStride,
-					      arm_2d_size_t *
-					      __restrict ptTargetSize,
-					      uint32_t wMode);
+                                              __restrict ptSourceBase,
+                                              int16_t iSourceStride,
+                                              arm_2d_size_t *
+                                              __restrict ptSourceSize,
+                                              uint8_t *
+                                              __restrict ptSourceMaskBase,
+                                              int16_t iSourceMaskStride,
+                                              arm_2d_size_t *
+                                              __restrict ptSourceMaskSize,
+                                              uint16_t *
+                                              __restrict ptTargetBase,
+                                              int16_t iTargetStride,
+                                              arm_2d_size_t *
+                                              __restrict ptTargetSize,
+                                              uint32_t wMode);
 
 void __arm_2d_impl_rgb565_src_msk_fill_x_mirror(uint16_t *
-						__restrict ptSourceBase,
-						int16_t iSourceStride,
-						arm_2d_size_t *
-						__restrict ptSourceSize,
-						uint8_t *
-						__restrict ptSourceMaskBase,
-						int16_t iSourceMaskStride,
-						arm_2d_size_t *
-						__restrict ptSourceMaskSize,
-						uint16_t *
-						__restrict ptTargetBase,
-						int16_t iTargetStride,
-						arm_2d_size_t *
-						__restrict ptTargetSize);
+                                                __restrict ptSourceBase,
+                                                int16_t iSourceStride,
+                                                arm_2d_size_t *
+                                                __restrict ptSourceSize,
+                                                uint8_t *
+                                                __restrict ptSourceMaskBase,
+                                                int16_t iSourceMaskStride,
+                                                arm_2d_size_t *
+                                                __restrict ptSourceMaskSize,
+                                                uint16_t *
+                                                __restrict ptTargetBase,
+                                                int16_t iTargetStride,
+                                                arm_2d_size_t *
+                                                __restrict ptTargetSize);
 
 void __arm_2d_impl_rgb565_src_msk_fill_xy_mirror(uint16_t *
-						 __restrict ptSourceBase,
-						 int16_t iSourceStride,
-						 arm_2d_size_t *
-						 __restrict ptSourceSize,
-						 uint8_t *
-						 __restrict ptSourceMaskBase,
-						 int16_t iSourceMaskStride,
-						 arm_2d_size_t *
-						 __restrict ptSourceMaskSize,
-						 uint16_t *
-						 __restrict ptTargetBase,
-						 int16_t iTargetStride,
-						 arm_2d_size_t *
-						 __restrict ptTargetSize);
+                                                 __restrict ptSourceBase,
+                                                 int16_t iSourceStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptSourceSize,
+                                                 uint8_t *
+                                                 __restrict ptSourceMaskBase,
+                                                 int16_t iSourceMaskStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptSourceMaskSize,
+                                                 uint16_t *
+                                                 __restrict ptTargetBase,
+                                                 int16_t iTargetStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptTargetSize);
 
 void __arm_2d_impl_rgb565_src_msk_fill_y_mirror(uint16_t *
-						__restrict ptSourceBase,
-						int16_t iSourceStride,
-						arm_2d_size_t *
-						__restrict ptSourceSize,
-						uint8_t *
-						__restrict ptSourceMaskBase,
-						int16_t iSourceMaskStride,
-						arm_2d_size_t *
-						__restrict ptSourceMaskSize,
-						uint16_t *
-						__restrict ptTargetBase,
-						int16_t iTargetStride,
-						arm_2d_size_t *
-						__restrict ptTargetSize);
+                                                __restrict ptSourceBase,
+                                                int16_t iSourceStride,
+                                                arm_2d_size_t *
+                                                __restrict ptSourceSize,
+                                                uint8_t *
+                                                __restrict ptSourceMaskBase,
+                                                int16_t iSourceMaskStride,
+                                                arm_2d_size_t *
+                                                __restrict ptSourceMaskSize,
+                                                uint16_t *
+                                                __restrict ptTargetBase,
+                                                int16_t iTargetStride,
+                                                arm_2d_size_t *
+                                                __restrict ptTargetSize);
 
 void __arm_2d_impl_rgb565_to_cccn888(uint16_t * __restrict phwSourceBase,
-				     int16_t iSourceStride,
-				     uint32_t * __restrict pwTargetBase,
-				     int16_t iTargetStride,
-				     arm_2d_size_t * __restrict ptCopySize);
+                                     int16_t iSourceStride,
+                                     uint32_t * __restrict pwTargetBase,
+                                     int16_t iTargetStride,
+                                     arm_2d_size_t * __restrict ptCopySize);
 
 void __arm_2d_impl_rgb565_transform(__arm_2d_param_copy_orig_t * ptParam,
                                     __arm_2d_transform_info_t * ptInfo);
