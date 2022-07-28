@@ -76,10 +76,10 @@
 
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
-#   define c_tileGear01             c_tileGear01Mask
-#   define c_tileGear02             c_tileGear02Mask
-#   define c_tilePointerSec         c_tilePointerSecMask
-#   define c_tileBackground         c_tileBackgroundCHNB
+#   define c_tileGear01             c_tileGear01GRAY8
+#   define c_tileGear02             c_tileGear02GRAY8
+#   define c_tilePointerSec         c_tilePointerSecGRAY8
+#   define c_tileBackground         c_tileBackgroundGRAY8
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 

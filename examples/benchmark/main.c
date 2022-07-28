@@ -83,9 +83,6 @@ uint32_t arm_2d_helper_get_reference_clock_frequency(void)
     return SystemCoreClock;
 }
 
-
-ARM_NOINIT uint16_t s_hwFrameBuffer[BENCHMARK_PFB_BLOCK_WIDTH * BENCHMARK_PFB_BLOCK_HEIGHT];
-
 __OVERRIDE_WEAK 
 void Benchmark_DrawBitmap(  int16_t x, 
                             int16_t y, 
@@ -101,7 +98,8 @@ void Benchmark_DrawBitmap(  int16_t x,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptCopySize);
 
-
+    static uint16_t s_hwFrameBuffer[BENCHMARK_PFB_BLOCK_WIDTH * BENCHMARK_PFB_BLOCK_HEIGHT];
+    
     arm_2d_size_t size = {
         .iWidth = width,
         .iHeight = height,
@@ -133,8 +131,6 @@ void Benchmark_DrawBitmap(  int16_t x,
 #else
     GLCD_DrawBitmap(x, y, width, height, bitmap);
 #endif
-
-    
 }
 
 /*----------------------------------------------------------------------------
