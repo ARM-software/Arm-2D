@@ -149,6 +149,7 @@ extern const arm_2d_tile_t c_tileCircleBackgroundMask;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
+#if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
 static arm_2d_layer_t s_ptRefreshLayers[] = {
     arm_2d_layer(&c_tileBackground, 0, 0, 0),
 };
@@ -166,6 +167,7 @@ static floating_range_t s_ptFloatingBoxes[] = {
         .tOffset = {-1, -1},
     },
 };
+#endif
 
 static
 demo_gears_t s_tGears[] = {
@@ -200,6 +202,7 @@ demo_gears_t s_tGears[] = {
         .chOpacity = 255,
     },
 
+#if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
     {
         .ptTile = &c_tileGear01,
         .fAngleSpeed = -0.5f,
@@ -219,6 +222,7 @@ demo_gears_t s_tGears[] = {
         }},
         .chOpacity = 128,
     },
+#endif
 
     {
         .ptTile = &c_tilePointerSec,
@@ -260,6 +264,7 @@ void example_gui_init(void)
 {
     arm_extra_controls_init();
 
+#if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
     arm_foreach(arm_2d_layer_t, s_ptRefreshLayers) {
         arm_2d_region_t tRegion = _->tRegion;
         if (!tRegion.tSize.iHeight) {
@@ -271,8 +276,10 @@ void example_gui_init(void)
         
         _->tRegion = tRegion;
     }
+#endif
 }
 
+#if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
 static void example_update_boxes(floating_range_t *ptBoxes, uint_fast16_t hwCount)
 {
     assert(NULL != ptBoxes);
@@ -307,11 +314,13 @@ static void example_update_boxes(floating_range_t *ptBoxes, uint_fast16_t hwCoun
 
     }while(--hwCount);
 }
-
+#endif
 
 void example_gui_do_events(void)
 {
+#if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
     example_update_boxes(s_ptFloatingBoxes, dimof(s_ptFloatingBoxes));
+#endif
 }
 
 
@@ -330,6 +339,7 @@ void example_gui_refresh(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
 
     arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
 
+#if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
     static arm_2d_tile_t s_tPanelTile;
     
     arm_2d_tile_generate_child( ptTile,
@@ -374,6 +384,8 @@ void example_gui_refresh(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
 
 
     } while(0);
+
+#endif
 
     /*! for each item (ptItem) inside array s_tGears */
     arm_foreach (demo_gears_t, s_tGears, ptItem) {

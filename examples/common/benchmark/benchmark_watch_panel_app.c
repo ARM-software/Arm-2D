@@ -229,10 +229,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_background_handler)
     ARM_2D_UNUSED(bIsNewFrame);
 
     arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
+
+#if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
     arm_2d_tile_copy_only(  &c_tileBackground,
                             ptTile,
                             NULL);
-    
+#endif
+
     arm_print_banner("Arm-2D Benchmark");
     
 #if !defined(__USE_FVP__)

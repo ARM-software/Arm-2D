@@ -126,6 +126,13 @@ extern "C" {
 #ifndef ITERATION_CNT
 #   define ITERATION_CNT                        1000
 #endif
+
+// <q>Use Tiny mode to run benchmark
+// <i> Enable this mode to reduce the benchmark memory footprint (removing background picture etc.)
+// <i> This feature is disabled by default.
+#ifndef __ARM_2D_CFG_BENCHMARK_TINY_MODE__
+#   define __ARM_2D_CFG_BENCHMARK_TINY_MODE__   0
+#endif
 //</h>
 // </h>
 
