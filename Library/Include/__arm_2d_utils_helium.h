@@ -50,6 +50,17 @@ extern "C" {
 
 /*============================ MACROS ========================================*/
 
+
+#if defined(__MVE_DEBUG__) && __MVE_DEBUG__
+#   define ____MVE_WRAPPER(__FUNC)       __FUNC##_mve
+#else
+#   define ____MVE_WRAPPER(__FUNC)       __FUNC
+#endif
+
+#define __MVE_WRAPPER(__FUNC)       ____MVE_WRAPPER(__FUNC)
+
+
+
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
 /* set vecAlpha value to 0 when equal to the compensated value */
 /* (=1 or 2 when involving 2 alpha = 255 multiplications)      */

@@ -21,8 +21,8 @@
  * Title:        arm-2d_helium.c
  * Description:  Acceleration extensions using Helium.
  *
- * $Date:        12. July 2022
- * $Revision:    V.0.13.5
+ * $Date:        03. Aug 2022
+ * $Revision:    V.0.13.6
  *
  * Target Processor:  Cortex-M cores with Helium
  *
@@ -71,16 +71,6 @@ extern "C" {
 
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
-
-#if defined(__MVE_DEBUG__) && __MVE_DEBUG__
-#   define ____MVE_WRAPPER(__FUNC)       __FUNC##_mve
-#else
-#   define ____MVE_WRAPPER(__FUNC)       __FUNC
-#endif
-
-#define __MVE_WRAPPER(__FUNC)       ____MVE_WRAPPER(__FUNC)
-
-
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
@@ -2066,7 +2056,7 @@ static  uint32_t __draw_pattern_src_bitmask_rgb32[16] = {
                                                                                                \
             vecTransp = SCAL_OPACITY(vecTransp, OPACITY, tailPred);                            \
                                                                                                \
-            ALPHA_255_COMP_VEC16(vecTransp, COMPVAL);                                                 \
+            ALPHA_255_COMP_VEC16(vecTransp, COMPVAL);                                          \
                                                                                                \
             uint16x8_t      vecAlpha = vsubq_x_u16(v256, vecTransp, tailPred);                 \
                                                                                                \
@@ -3440,187 +3430,6 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel_mask_opacity)(u
     }
 }
 
-
-/*----------------------------------------------------------------------------*
- * Convert Colour format                                                      *
- *----------------------------------------------------------------------------*/
-
-
-__OVERRIDE_WEAK
-void __MVE_WRAPPER( __arm_2d_impl_cccn888_to_rgb565)(uint32_t *__RESTRICT pwSourceBase,
-                                    int16_t iSourceStride,
-                                    uint16_t *__RESTRICT phwTargetBase,
-                                    int16_t iTargetStride,
-                                    arm_2d_size_t *__RESTRICT ptCopySize)
-{
-    int32_t         blkCnt;
-    uint32x4_t      maskR = vdupq_n_u32(0x001f);
-    uint32x4_t      maskG = vdupq_n_u32(0x07e0);
-    uint32x4_t      maskB = vdupq_n_u32(0xf800);
-
-    for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
-        const uint32_t *pSource = pwSourceBase;
-        uint16_t       *pTarget = phwTargetBase;
-
-        blkCnt = ptCopySize->iWidth;
-#ifdef USE_MVE_INTRINSICS
-        do {
-            mve_pred16_t    tailPred = vctp32q(blkCnt);
-
-            /* load a vector of 4 cccn888 pixels */
-            uint32x4_t      vecIn = vld1q_z(pSource, tailPred);
-            /* extract individual channels and place them according bit position */
-            uint32x4_t      vecR = (vecIn >> 3) & maskR;
-            uint32x4_t      vecG = (vecIn >> 5) & maskG;
-            uint32x4_t      vecB = (vecIn >> 8) & maskB;
-            /* merge */
-            uint32x4_t      vOut = vecR | vecG | vecB;
-
-            /* store a vector of 4 rgb565 pixels */
-            vstrhq_p_u32(pTarget, vOut, tailPred);
-
-            pSource += 4;
-            pTarget += 4;
-            blkCnt -= 4;
-        }
-        while (blkCnt > 0);
-#else
-    const int32_t inv_2pow3 = 1 << (31-3); /*1/2^3 in Q.31 */
-    const int32_t inv_2pow5 = 1 << (31-5); /*1/2^5 in Q.31 */
-    const int32_t inv_2pow8 = 1 << (31-8); /*1/2^8 in Q.31 */
-
-    __asm volatile(
-        "   wlstp.32                lr, %[loopCnt], 1f                  \n"
-        /* precompute for allowing filling stalls in the inner loop  */
-        /* use vqdmulh to replace shifts to allow overlap with 'AND' */
-
-        /* load a vector of 4 cccn888 pixels */
-        "   vldrw.u32               q0, [%[pSource]], #16               \n"
-        /* mimic right shift by 3 */
-        "   vqdmulh.s32             q1, q0, %[inv_2pow3]                \n"
-
-        ".p2align 2                                                     \n"
-        "2:                                                             \n"
-        "   vand                    q1, q1, %[maskR]                    \n"
-        /* mimic right shift by 5 */
-        "   vqdmulh.s32             q2, q0, %[inv_2pow5]                \n"
-        "   vand                    q2, q2, %[maskG]                    \n"
-        /* mimic right shift by 8 */
-        "   vqdmulh.s32             q3, q0, %[inv_2pow8]                \n"
-        /* accumulate R & G */
-        "   vorr                    q2, q1, q2                          \n"
-        /* load next vector of 4 cccn888 pixels */
-        "   vldrw.u32               q0, [%[pSource]], #16               \n"
-        "   vand                    q3, q3, %[maskB]                    \n"
-        /* mimic right shift by 3 */
-        "   vqdmulh.s32             q1, q0, %[inv_2pow3]                \n"
-        /* accumulate B */
-        "   vorr                    q2, q2, q3                          \n"
-        /* store a vector of 4 rgb565 pixels */
-        "   vstrh.32                q2, [%[pTarget]], #8                \n"
-        "   letp                    lr, 2b                              \n"
-        "1:                                                             \n"
-
-        : [pSource] "+r"(pSource), [pTarget] "+r" (pTarget)
-        : [loopCnt] "r"(blkCnt), [inv_2pow3] "r" (inv_2pow3),
-          [inv_2pow5] "r" (inv_2pow5),  [inv_2pow8] "r" (inv_2pow8),
-          [maskR] "t" (maskR),[maskG] "t" (maskG),[maskB] "t" (maskB)
-        : "q0", "q1", "q2", "q3", "memory", "r14" );
-#endif
-
-        pwSourceBase += iSourceStride;
-        phwTargetBase += iTargetStride;
-    }
-}
-
-
-
-
-__OVERRIDE_WEAK
-void __MVE_WRAPPER( __arm_2d_impl_rgb565_to_cccn888)(uint16_t *__RESTRICT phwSourceBase,
-                                    int16_t iSourceStride,
-                                    uint32_t *__RESTRICT pwTargetBase,
-                                    int16_t iTargetStride,
-                                    arm_2d_size_t *__RESTRICT ptCopySize)
-{
-    int32_t         blkCnt;
-    uint32x4_t      maskRB = vdupq_n_u32(0xf8);
-    uint32x4_t      maskG = vdupq_n_u32(0xfc00);
-
-
-    for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
-
-        const uint16_t *__RESTRICT phwSource = phwSourceBase;
-        uint32_t       *__RESTRICT pwTarget = pwTargetBase;
-
-        blkCnt = ptCopySize->iWidth;
-#ifdef USE_MVE_INTRINSICS
-        do {
-            mve_pred16_t    tailPred = vctp32q(blkCnt);
-
-            /* load a vector of 4 rgb565 pixels */
-            uint32x4_t      vecIn = vldrhq_z_u32(phwSource, tailPred);
-            /* extract individual channels and place them according position */
-            uint32x4_t      vecR = (vecIn << 3) & maskRB;
-            uint32x4_t      vecG = (vecIn << 5) & maskG;
-            uint32x4_t      vecB = ((vecIn >> 8) & maskRB) << 16;
-            /* merge and set n channel to 0xff */
-            uint32x4_t      vOut = 0xff000000 | vecR | vecG | vecB;
-
-            /* store a vector of 4 cccn888 pixels */
-            vst1q_p(pwTarget, vOut, tailPred);
-
-            phwSource += 4;
-            pwTarget += 4;
-            blkCnt -= 4;
-        }
-        while (blkCnt > 0);
-
-#else
-    __asm volatile(
-        "   wlstp.32                lr, %[loopCnt], 1f                  \n"
-        /* precompute for allowing filling stalls in the inner loop         */
-        /* use vqdmulh & vmul to replace shifts to allow overlap with 'AND' */
-
-        /* load a vector of 4 rgb565 pixels */
-        "   vldrh.u32               q0, [%[pSource]], #8                \n"
-        /* mimic left shift by 3 */
-        "   vmul.u32                q1, q0, %[two_pow3]                 \n"
-        ".p2align 2                                                     \n"
-        "2:                                                             \n"
-        /* mimic left shift by 5 */
-        "   vmul.u32                q2, q0, %[two_pow5]                 \n"
-        "   vand                    q1, q1, %[maskRB]                   \n"
-        /* mimic right shift by 8 */
-        "   vqdmulh.s32             q3, q0, %[inv_2pow8]                \n"
-        "   vand                    q2, q2, %[maskG]                    \n"
-        /* accumulate G & R, use vmla instead of vorr for best overlap */
-        "   vmla.u32                q2, q1, %[one]                      \n"
-        "   vand                    q3, q3, %[maskRB]                   \n"
-        /* accumulate B + left shift by 16 */
-        "   vmla.u32                q2, q3, %[two_pow16]                \n"
-        /* load next vector of 4 rgb565 pixels */
-        "   vldrh.u32               q0, [%[pSource]], #8                \n"
-        /* merge and set n channel to 0xff */
-        "   vorr.i32                q2, #0xff000000                     \n"
-        /* mimic left shift by 3 */
-        "   vmul.u32                q1, q0, %[two_pow3]                 \n"
-        /* store a vector of 4 cccn888 pixels */
-        "   vstrw.32                q2, [%[pTarget]], #16               \n"
-        "   letp                    lr, 2b                              \n"
-        "1:                                                             \n"
-
-        : [pSource] "+r"(phwSource), [pTarget] "+r" (pwTarget)
-        : [loopCnt] "r"(blkCnt),[two_pow3] "r" (1<<3), [two_pow5] "r" (1<<5),
-          [two_pow16] "r" (1<<16),[inv_2pow8] "r" (1 << (31-8)),
-          [maskRB] "t" (maskRB),[maskG] "t" (maskG), [one] "r" (1)
-        : "q0", "q1", "q2", "q3", "memory", "r14" );
-#endif
-
-        phwSourceBase += iSourceStride;
-        pwTargetBase += iTargetStride;
-    }
-}
 
 /* use macro expansion of fill/copy with masking */
 
