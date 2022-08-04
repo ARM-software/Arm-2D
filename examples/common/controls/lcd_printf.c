@@ -227,7 +227,7 @@ void arm_lcd_puts(const char *str)
             int16_t iY = s_tLCDTextControl.tTextLocation.chY * GLCD_Font_6x8.height;
         
             lcd_draw_char(  s_tLCDTextControl.tRegion.tLocation.iX + iX, 
-                            iY, 
+                            s_tLCDTextControl.tRegion.tLocation.iY + iY, 
                             *str);
                             
             s_tLCDTextControl.tTextLocation.chX++;
