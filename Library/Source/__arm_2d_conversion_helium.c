@@ -21,8 +21,8 @@
  * Title:        __arm-2d_conversion_helium.c
  * Description:  APIs for colour format conversion with Helium acceleration
  *
- * $Date:        03. Aug 2022
- * $Revision:    V.0.1.1
+ * $Date:        08. Aug 2022
+ * $Revision:    V.0.2.0
  *
  * Target Processor:  Cortex-M cores with Helium
  *
@@ -32,6 +32,9 @@
 
 #include "arm_2d.h"
 #include "__arm_2d_impl.h"
+
+#ifdef __ARM_2D_COMPILATION_UNIT
+#undef __ARM_2D_COMPILATION_UNIT
 
 #if defined(__ARM_2D_HAS_HELIUM__) && __ARM_2D_HAS_HELIUM__
 
@@ -695,3 +698,5 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_to_cccn888)(uint8_t *__RESTRICT pchSource
 #endif
 
 #endif // __ARM_2D_HAS_HELIUM__
+
+#endif // __ARM_2D_COMPILATION_UNIT
