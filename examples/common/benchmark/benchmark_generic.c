@@ -99,6 +99,15 @@ typedef struct floating_range_t {
     arm_2d_location_t   tOffset;
 } floating_range_t;
 
+enum {
+#if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
+    BENCHMARK_LAYER_HELIUM,
+#endif
+    BENCHMARK_LAYER_RED_OPA,
+    BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING,
+    BENCHMARK_LAYER_ICON,
+};
+
 /*============================ GLOBAL VARIABLES ==============================*/
 
 /*! picture helium */
@@ -151,7 +160,9 @@ const arm_2d_tile_t c_tileFadeMask = {
 
 
 static arm_2d_layer_t s_ptRefreshLayers[] = {
+#if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
     arm_2d_layer(&c_tileHelium, 255, -50, -100),
+#endif
 
     arm_2d_layer(   NULL, 128, 10, 80, 
                     .tRegion.tSize.iWidth = 100, 
@@ -164,24 +175,26 @@ static arm_2d_layer_t s_ptRefreshLayers[] = {
 };
 
 static floating_range_t s_ptFloatingBoxes[] = {
+#if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
     {
         .tRegion = {{0-200, 0-200}, {__GLCD_CFG_SCEEN_WIDTH__ + 400, 256 + 400}},
-        .ptLayer = &s_ptRefreshLayers[0],
+        .ptLayer = &s_ptRefreshLayers[BENCHMARK_LAYER_HELIUM],
         .tOffset = {-1, -1},
     },
+#endif
     {
         .tRegion = {{0, 0}, {__GLCD_CFG_SCEEN_WIDTH__, __GLCD_CFG_SCEEN_HEIGHT__}},
-        .ptLayer = &s_ptRefreshLayers[1],
+        .ptLayer = &s_ptRefreshLayers[BENCHMARK_LAYER_RED_OPA],
         .tOffset = {5, -2},
     },
     {
         .tRegion = {{0, 0}, {__GLCD_CFG_SCEEN_WIDTH__, __GLCD_CFG_SCEEN_HEIGHT__}},
-        .ptLayer = &s_ptRefreshLayers[2],
+        .ptLayer = &s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING],
         .tOffset = {-2, 4},
     },
     {
         .tRegion = {{-100, -100}, {__GLCD_CFG_SCEEN_WIDTH__+200, __GLCD_CFG_SCEEN_HEIGHT__+200}},
-        .ptLayer = &s_ptRefreshLayers[3],
+        .ptLayer = &s_ptRefreshLayers[BENCHMARK_LAYER_ICON],
         .tOffset = {5, 5},
     },
 };
@@ -203,10 +216,13 @@ void platform_1ms_event_handler(void)
 void example_gui_init(void)
 {
     arm_extra_controls_init();
-    
-    s_ptRefreshLayers[0].wMode = ARM_2D_CP_MODE_FILL;
-    s_ptRefreshLayers[2].wMode = ARM_2D_CP_MODE_FILL;
-    s_ptRefreshLayers[3].wMode = ARM_2D_CP_MODE_COPY;
+
+#if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
+    s_ptRefreshLayers[BENCHMARK_LAYER_HELIUM].wMode = ARM_2D_CP_MODE_FILL;
+#endif
+
+    s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode = ARM_2D_CP_MODE_FILL;
+    s_ptRefreshLayers[BENCHMARK_LAYER_ICON].wMode = ARM_2D_CP_MODE_COPY;
     
     //! generate line-fading template for a half of the screen
     do {
@@ -286,25 +302,34 @@ void example_gui_do_events(void)
         
         switch(s_wCounter++ & 0x03) {
             case 0:
-                s_ptRefreshLayers[0].wMode =    ARM_2D_CP_MODE_FILL;
+                s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode = 
+                    ARM_2D_CP_MODE_FILL;
                 break;
             case 1:
-                s_ptRefreshLayers[0].wMode =    ARM_2D_CP_MODE_FILL       | 
-                                                ARM_2D_CP_MODE_X_MIRROR;
+                s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode = 
+                    ARM_2D_CP_MODE_FILL       | 
+                    ARM_2D_CP_MODE_X_MIRROR;
                 break;
             case 2:
-                s_ptRefreshLayers[0].wMode =    ARM_2D_CP_MODE_FILL       | 
-                                                ARM_2D_CP_MODE_Y_MIRROR;
+                s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode = 
+                    ARM_2D_CP_MODE_FILL       | 
+                    ARM_2D_CP_MODE_Y_MIRROR;
                 break;
             case 3:
-                s_ptRefreshLayers[0].wMode =    ARM_2D_CP_MODE_FILL       | 
-                                                ARM_2D_CP_MODE_X_MIRROR   | 
-                                                ARM_2D_CP_MODE_Y_MIRROR;
+                s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode = 
+                    ARM_2D_CP_MODE_FILL       | 
+                    ARM_2D_CP_MODE_X_MIRROR   | 
+                    ARM_2D_CP_MODE_Y_MIRROR;
                 break;
         }
-        
-        s_ptRefreshLayers[2].wMode = s_ptRefreshLayers[0].wMode;
-        s_ptRefreshLayers[3].wMode = s_ptRefreshLayers[0].wMode & ~ARM_2D_CP_MODE_FILL;
+#if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
+        s_ptRefreshLayers[BENCHMARK_LAYER_HELIUM].wMode 
+            = s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode;
+#endif
+
+        s_ptRefreshLayers[BENCHMARK_LAYER_ICON].wMode 
+            = s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode 
+            & ~ARM_2D_CP_MODE_FILL;
     }
 }
 
@@ -382,6 +407,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
                                     .iHeight = __GLCD_CFG_SCEEN_HEIGHT__ + 100 
                                 }};
 
+#if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
     //! handle the left half of the screen
     do {
     #if 0 /* equivalent */
@@ -389,23 +415,23 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
         arm_2d_rgb16_tile_copy( &c_tileCMSISLogo,
                                 ptFrameBuffer,
                                 &c_tFillRegion,
-                                ptLayers[0].wMode);
+                                ptLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode);
     #else
-        switch (ptLayers[0].wMode) {
+        switch (ptLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode) {
             case ARM_2D_CP_MODE_FILL | ARM_2D_CP_MODE_X_MIRROR:
-                arm_2d_tile_fill_with_x_mirror(  &c_tileCMSISLogo,
-                                                        ptFrameBuffer,
-                                                        &c_tFillRegion);
+                arm_2d_tile_fill_with_x_mirror( &c_tileCMSISLogo,
+                                                ptFrameBuffer,
+                                                &c_tFillRegion);
                 break;
             case ARM_2D_CP_MODE_FILL | ARM_2D_CP_MODE_Y_MIRROR:
-                arm_2d_tile_fill_with_y_mirror(   &c_tileCMSISLogo,
-                                                        ptFrameBuffer,
-                                                        &c_tFillRegion);
+                arm_2d_tile_fill_with_y_mirror( &c_tileCMSISLogo,
+                                                ptFrameBuffer,
+                                                &c_tFillRegion);
                 break;
             case ARM_2D_CP_MODE_FILL | ARM_2D_CP_MODE_XY_MIRROR:
-                arm_2d_tile_fill_with_xy_mirror(  &c_tileCMSISLogo,
-                                                        ptFrameBuffer,
-                                                        &c_tFillRegion);
+                arm_2d_tile_fill_with_xy_mirror(&c_tileCMSISLogo,
+                                                ptFrameBuffer,
+                                                &c_tFillRegion);
                 break;
             case ARM_2D_CP_MODE_FILL:
                 arm_2d_tile_fill_only(&c_tileCMSISLogo,
@@ -414,28 +440,84 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
                 break;
                 
             case ARM_2D_CP_MODE_COPY | ARM_2D_CP_MODE_X_MIRROR:
-                arm_2d_tile_copy_with_x_mirror(  &c_tileCMSISLogo,
-                                                        ptFrameBuffer,
-                                                        &c_tFillRegion);
+                arm_2d_tile_copy_with_x_mirror( &c_tileCMSISLogo,
+                                                ptFrameBuffer,
+                                                &c_tFillRegion);
                 break;
             case ARM_2D_CP_MODE_COPY | ARM_2D_CP_MODE_Y_MIRROR:
-                arm_2d_tile_copy_with_y_mirror(   &c_tileCMSISLogo,
-                                                        ptFrameBuffer,
-                                                        &c_tFillRegion);
+                arm_2d_tile_copy_with_y_mirror( &c_tileCMSISLogo,
+                                                ptFrameBuffer,
+                                                &c_tFillRegion);
                 break;
             case ARM_2D_CP_MODE_COPY | ARM_2D_CP_MODE_XY_MIRROR:
-                arm_2d_tile_copy_with_xy_mirror(  &c_tileCMSISLogo,
-                                                        ptFrameBuffer,
-                                                        &c_tFillRegion);
+                arm_2d_tile_copy_with_xy_mirror(&c_tileCMSISLogo,
+                                                ptFrameBuffer,
+                                                &c_tFillRegion);
                 break;
             case ARM_2D_CP_MODE_COPY:
-                arm_2d_tile_copy_only(&c_tileCMSISLogo,
-                                            ptFrameBuffer,
-                                            &c_tFillRegion);
+                arm_2d_tile_copy_only(  &c_tileCMSISLogo,
+                                        ptFrameBuffer,
+                                        &c_tFillRegion);
                 break;
         }
     #endif
     } while(0);
+#else
+    //! handle the left half of the screen
+    do {
+    #if 1 /* equivalent */
+        //!< fill background with CMSISlogo (with colour keying)
+        arm_2d_tile_copy( &c_tilePictureSun,
+                                ptFrameBuffer,
+                                &c_tFillRegion,
+                                ptLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode);
+    #else
+        switch (ptLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode) {
+            case ARM_2D_CP_MODE_FILL | ARM_2D_CP_MODE_X_MIRROR:
+                arm_2d_tile_fill_with_x_mirror( &c_tilePictureSun,
+                                                ptFrameBuffer,
+                                                &c_tFillRegion);
+                break;
+            case ARM_2D_CP_MODE_FILL | ARM_2D_CP_MODE_Y_MIRROR:
+                arm_2d_tile_fill_with_y_mirror( &c_tilePictureSun,
+                                                ptFrameBuffer,
+                                                &c_tFillRegion);
+                break;
+            case ARM_2D_CP_MODE_FILL | ARM_2D_CP_MODE_XY_MIRROR:
+                arm_2d_tile_fill_with_xy_mirror(&c_tilePictureSun,
+                                                ptFrameBuffer,
+                                                &c_tFillRegion);
+                break;
+            case ARM_2D_CP_MODE_FILL:
+                arm_2d_tile_fill_only(&c_tilePictureSun,
+                                            ptFrameBuffer,
+                                            &c_tFillRegion);
+                break;
+                
+            case ARM_2D_CP_MODE_COPY | ARM_2D_CP_MODE_X_MIRROR:
+                arm_2d_tile_copy_with_x_mirror( &c_tilePictureSun,
+                                                ptFrameBuffer,
+                                                &c_tFillRegion);
+                break;
+            case ARM_2D_CP_MODE_COPY | ARM_2D_CP_MODE_Y_MIRROR:
+                arm_2d_tile_copy_with_y_mirror( &c_tilePictureSun,
+                                                ptFrameBuffer,
+                                                &c_tFillRegion);
+                break;
+            case ARM_2D_CP_MODE_COPY | ARM_2D_CP_MODE_XY_MIRROR:
+                arm_2d_tile_copy_with_xy_mirror(&c_tilePictureSun,
+                                                ptFrameBuffer,
+                                                &c_tFillRegion);
+                break;
+            case ARM_2D_CP_MODE_COPY:
+                arm_2d_tile_copy_only(  &c_tilePictureSun,
+                                        ptFrameBuffer,
+                                        &c_tFillRegion);
+                break;
+        }
+    #endif
+    } while(0);
+#endif
 
     //! handle the right half of the screen
     do {
@@ -452,49 +534,64 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
                                     &tRightHalfScreen, 
                                     &tTempPanel, 
                                     false);
-                                    
+#if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
         //!< set background colour
-        arm_2d_fill_colour(   &tTempPanel,
-                                    NULL,
-                                    GLCD_COLOR_WHITE);
-                                    
-        
+        arm_2d_fill_colour( &tTempPanel,
+                            NULL,
+                            GLCD_COLOR_WHITE);
+#else
+        //!< set background colour
+        arm_2d_fill_colour( &tTempPanel,
+                            NULL,
+                            GLCD_COLOR_DARK_GREY);
+#endif
         /*! \note arm_2d_align_centre generate a region '__centre_region' based
          *!       on the given target tile (frame buffer) and the size of the 
          *!       target area of your following drawing.
          *!       Use '__centre_region' when required as the target region in
          *!       2D operations inside the {...} .
          */
-        arm_2d_align_centre(tTempPanel.tRegion, c_tileCMSISLogo.tRegion.tSize) {
+        arm_2d_align_centre(tTempPanel.tRegion, c_tileCMSISLogoMask.tRegion.tSize) {
+
+#if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
             //!< copy CMSIS logo (with masks) to the centre of the right panel
             arm_2d_tile_copy_with_masks(
-                                &c_tileCMSISLogo,
-                                &c_tileCMSISLogoMask,
-                                &tTempPanel,
-                                &c_tileFadeMask,
-                                &__centre_region,                               //!< generated by arm_2d_align_centre()
-                                
-                                /*! remove ARM_2D_CP_MODE_FILL and only keeps
-                                 *! mirroring mode
-                                 */
-                                ptLayers[0].wMode &~ ARM_2D_CP_MODE_FILL);
-                                
+                &c_tileCMSISLogo,
+                &c_tileCMSISLogoMask,
+                &tTempPanel,
+                &c_tileFadeMask,
+                &__centre_region,                                               //!< generated by arm_2d_align_centre()
+                
+                /*! remove ARM_2D_CP_MODE_FILL and only keeps
+                 *! mirroring mode
+                 */
+                ptLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode 
+                    &~ ARM_2D_CP_MODE_FILL);
+#else
+            arm_2d_fill_colour_with_mask(
+                    &tTempPanel,
+                    &__centre_region,
+                    &c_tileCMSISLogoMask,
+                    (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY}
+                );
+#endif
             arm_2d_op_wait_async(NULL);
         }
     } while(0);
     
-    arm_2d_fill_colour(   s_ptRefreshLayers[2].ptTile, 
-                                NULL, 
-                                GLCD_COLOR_GREEN);
+    arm_2d_fill_colour( s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].ptTile, 
+                        NULL, 
+                        GLCD_COLOR_GREEN);
                                 
                                 
     
     //!< fill background with CMSISlogo (with colour-keying)
-    arm_2d_tile_copy_with_colour_keying(&c_tilePictureSun,
-                                        s_ptRefreshLayers[2].ptTile,
-                                        NULL,
-                                        GLCD_COLOR_WHITE,
-                                        s_ptRefreshLayers[2].wMode);
+    arm_2d_tile_copy_with_colour_keying(
+        &c_tilePictureSun,
+        s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].ptTile,
+        NULL,
+        GLCD_COLOR_WHITE,
+        s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode);
                                                 
     
     arm_foreach(arm_2d_layer_t, ptLayers, hwCount, ptLayer) {
@@ -535,10 +632,10 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
     }
     
     arm_2d_fill_colour_with_opacity(   
-                                ptFrameBuffer, 
-                                &s_ptRefreshLayers[1].tRegion,
-                                (__arm_2d_color_t){GLCD_COLOR_RED},
-                                s_ptRefreshLayers[1].chOpacity);
+                        ptFrameBuffer, 
+                        &s_ptRefreshLayers[BENCHMARK_LAYER_RED_OPA].tRegion,
+                        (__arm_2d_color_t){GLCD_COLOR_RED},
+                        s_ptRefreshLayers[BENCHMARK_LAYER_RED_OPA].chOpacity);
     
     
     if (NULL != arm_2d_tile_generate_child( ptFrameBuffer, 
@@ -552,6 +649,19 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
                                 },
                                 &tTempPanel,
                                 false)) {
+                                
+#if __ARM_2D_CFG_BENCHMARK_TINY_MODE__
+        arm_2d_align_centre(tTempPanel.tRegion, 100, 100) {
+            
+            draw_round_corner_box(  &tTempPanel, 
+                                    &__centre_region,
+                                    GLCD_COLOR_BLACK,
+                                    64,
+                                    bIsNewFrame);    
+            arm_2d_op_wait_async(NULL);
+        }
+#endif
+
         //! show progress wheel
         busy_wheel2_show(&tTempPanel, bIsNewFrame);
         
@@ -573,12 +683,24 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
                                 },
                                 &tTempPanel,
                                 false)) {
+#if __ARM_2D_CFG_BENCHMARK_TINY_MODE__
+        arm_2d_align_centre(tTempPanel.tRegion, 100, 100) {
+            
+            draw_round_corner_box(  &tTempPanel, 
+                                    &__centre_region,
+                                    GLCD_COLOR_BLACK,
+                                    128,
+                                    bIsNewFrame);    
+            arm_2d_op_wait_async(NULL);
+        }
+#endif
         //! show progress wheel
         busy_wheel_show(&tTempPanel, bIsNewFrame);
         
         arm_2d_op_wait_async(NULL);
     }
-    
+
+#if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
     if (NULL != arm_2d_tile_generate_child( ptFrameBuffer, 
                                 (arm_2d_region_t []){
                                     {
@@ -599,7 +721,8 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
         
         arm_2d_op_wait_async(NULL);
     }
-    
+
+
     if (NULL != arm_2d_tile_generate_child( ptFrameBuffer, 
                                 (arm_2d_region_t []){
                                     {
@@ -619,6 +742,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
         
         arm_2d_op_wait_async(NULL);
     }
+#endif
 
     example_gui_on_refresh_evt_handler(ptFrameBuffer);
 
