@@ -21,8 +21,8 @@
  * Title:        arm-2d_draw.c
  * Description:  APIs for colour format conversion
  *
- * $Date:        16. June 2022
- * $Revision:    V.1.0.1
+ * $Date:        08. Aug 2022
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -295,6 +295,7 @@ arm_fsm_rt_t __arm_2d_sw_convert_colour_to_rgb888(__arm_2d_sub_task_t *ptTask)
                                             ptTask->Param.tCopy.tTarget.pBuffer,
                                             ptTask->Param.tCopy.tTarget.iStride,
                                             &(ptTask->Param.tCopy.tCopySize));
+            break;
         case ARM_2D_COLOUR_SZ_16BIT:
             __arm_2d_impl_rgb565_to_cccn888( ptTask->Param.tCopy.tSource.pBuffer,
                                             ptTask->Param.tCopy.tSource.iStride,

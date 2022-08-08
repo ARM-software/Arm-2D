@@ -184,7 +184,7 @@ const arm_2d_tile_t c_tileWhiteDotGRAY8 = {
             .chScheme = ARM_2D_COLOUR_GRAY8,
         },
     },
-    .pwBuffer = (uint32_t*)c_bmpWhiteDotGRAY8,
+    .pchBuffer = (uint8_t*)c_bmpWhiteDotGRAY8,
 };
 
 
@@ -205,7 +205,7 @@ const arm_2d_tile_t c_tileSmallDotMask = {
             .chScheme = ARM_2D_COLOUR_8BIT,
         },
     },
-    .pchBuffer = (uint8_t *)c_bmpSmallDotAlpha,
+    .phwBuffer = (uint16_t *)c_bmpSmallDotAlpha,
 };
 
 extern const arm_2d_tile_t c_tileWhiteDotRGB565;

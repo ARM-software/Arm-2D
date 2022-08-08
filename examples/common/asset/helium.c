@@ -14384,7 +14384,7 @@ const arm_2d_tile_t c_tileHeliumGRAY8 = {
             .chScheme = ARM_2D_COLOUR_GRAY8,
         },
     },
-    .pwBuffer = (uint32_t*)c_bmpHeliumGRAY8,
+    .pchBuffer = (uint8_t*)c_bmpHeliumGRAY8,
 };
 
 
@@ -14406,7 +14406,7 @@ const arm_2d_tile_t c_tileHeliumRGB565 = {
             .chScheme = ARM_2D_COLOUR_RGB565,
         },
     },
-    .pwBuffer = (uint32_t*)c_bmpHeliumRGB565,
+    .phwBuffer = (uint16_t*)c_bmpHeliumRGB565,
 };
 
 

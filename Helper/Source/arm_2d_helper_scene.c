@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        23. July 2022
- * $Revision:    V.1.1.0
+ * $Date:        08. Aug 2022
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -50,6 +50,9 @@
 #   pragma clang diagnostic ignored "-Wmissing-braces"
 #   pragma clang diagnostic ignored "-Wunused-const-variable"
 #   pragma clang diagnostic ignored "-Wimplicit-fallthrough"
+#   pragma clang diagnostic ignored "-Wgnu-statement-expression"
+#   pragma clang diagnostic ignored "-Wimplicit-int-conversion"
+#   pragma clang diagnostic ignored "-Wmissing-prototypes"
 #elif defined(__IS_COMPILER_GCC__)
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wstrict-aliasing"
@@ -196,7 +199,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_user)
 {
     arm_2d_scene_player_t *ptThis = (arm_2d_scene_player_t *)pTarget;
     ARM_2D_UNUSED(bIsNewFrame);
-
+    ARM_2D_UNUSED(ptTile);
 
     /* doing nothing at all */
     this.Runtime.bSwitchCPL = true;
@@ -207,10 +210,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_user)
 __WEAK
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_user_default_background)
 {
-    arm_2d_scene_player_t *ptThis = (arm_2d_scene_player_t *)pTarget;
+    //arm_2d_scene_player_t *ptThis = (arm_2d_scene_player_t *)pTarget;
     
     ARM_2D_UNUSED(bIsNewFrame);
     ARM_2D_UNUSED(ptTile);
+    ARM_2D_UNUSED(pTarget);
     
     arm_2d_op_wait_async(NULL);
     return arm_fsm_rt_cpl;
@@ -265,7 +269,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
     /* internal statemachine */
     if (bIsNewFrame) {
         int32_t nElapsed;
-        int32_t lTimeStamp = arm_2d_helper_get_system_timestamp();
+        int64_t lTimeStamp = arm_2d_helper_get_system_timestamp();
         uint_fast16_t hwOpacity;
         switch (this.Switch.chState) {
             case START:
@@ -287,7 +291,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
                                 * arm_sin_f32(ARM_2D_ANGLE(
                                     (float)hwOpacity / 10.0f)));
             #else
-                hwOpacity = (256ul * (int64_t)nElapsed 
+                hwOpacity = (uint_fast16_t)(256ul * (int64_t)nElapsed 
                                    / arm_2d_helper_convert_ms_to_ticks(
                                         (this.Switch.hwPeriod - hwKeepPeriod) 
                                             >> 1));
@@ -319,7 +323,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
                                 * arm_sin_f32(ARM_2D_ANGLE(
                                     (float)hwOpacity / 10.0f)));
             #else
-                hwOpacity = (256ul * (int64_t)nElapsed 
+                hwOpacity = (uint_fast16_t)(256ul * (int64_t)nElapsed 
                                    / arm_2d_helper_convert_ms_to_ticks(
                                         (this.Switch.hwPeriod - hwKeepPeriod) 
                                             >> 1));
@@ -398,6 +402,8 @@ void __draw_erase_scene(arm_2d_scene_player_t *ptThis,
                         bool bIgnoreBG,
                         bool bIgnoreScene)
 {
+    ARM_2D_UNUSED(ptThis);
+
     if (NULL != ptScene) {
         bIgnoreBG = ptScene->bOnSwitchingIgnoreBG && bIgnoreBG;
         bIgnoreScene = ptScene->bOnSwitchingIgnoreScene && bIgnoreScene;
@@ -440,13 +446,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
             break;
         default:
             assert(false);      /* this should not happen */
-    };
+    }
 
     
     /* internal statemachine */
     if (bIsNewFrame) {
         int32_t nElapsed;
-        int32_t lTimeStamp = arm_2d_helper_get_system_timestamp();
+        int64_t lTimeStamp = arm_2d_helper_get_system_timestamp();
 
         switch (this.Switch.chState) {
             case START:
@@ -585,7 +591,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
 
             default:
                 assert(false);      /* this should not happen */
-        };
+        }
 
         /* draw the old scene background */
         ptScene = this.SceneFIFO.ptHead;
@@ -670,7 +676,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
                 break;
             default:
                 assert(false);      /* this should not happen */
-        };
+        }
 
         /* draw the old scene background */
         ptScene = this.SceneFIFO.ptHead->ptNext;
@@ -716,13 +722,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
             break;
         default:
             assert(false);      /* this should not happen */
-    };
+    }
 
     
     /* internal statemachine */
     if (bIsNewFrame) {
         int32_t nElapsed;
-        int32_t lTimeStamp = arm_2d_helper_get_system_timestamp();
+        int64_t lTimeStamp = arm_2d_helper_get_system_timestamp();
 
         switch (this.Switch.chState) {
             case START:
@@ -831,7 +837,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
 
             default:
                 assert(false);      /* this should not happen */
-        };
+        }
 
         /* draw the old scene background */
         ptScene = this.SceneFIFO.ptHead;
@@ -886,7 +892,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
                 break;
             default:
                 assert(false);      /* this should not happen */
-        };
+        }
 
         /* draw the old scene background */
         ptScene = this.SceneFIFO.ptHead->ptNext;
