@@ -393,17 +393,20 @@ def main(argv):
             buffStr='pwBuffer'
             typStr='uint32_t'
 
-
-
-
         # insert tail
         if args.format == 'gray8' or args.format == 'all':
+            buffStr='pchBuffer'
+            typStr='uint8_t'
             print(tailDataGRAY8.format(arr_name, str(row), str(col), "."+buffStr+" = ("+typStr+"*)"), file=o)
 
         if args.format == 'rgb565' or args.format == 'all':
+            buffStr='phwBuffer'
+            typStr='uint16_t'
             print(tailDataRGB565.format(arr_name, str(row), str(col), "."+buffStr+" = ("+typStr+"*)"), file=o)
 
         if args.format == 'rgb32' or args.format == 'all':
+            buffStr='pwBuffer'
+            typStr='uint32_t'
             if mode == "RGBA":
                 print(tailDataRGBA8888.format(arr_name, str(row), str(col), "."+buffStr+" = ("+typStr+"*)"), file=o)
                 print(tailAlpha2.format(arr_name, str(row), str(col)), file=o)
