@@ -13,7 +13,7 @@
 
 ## Features
 
-#### In this version ( ver1.0.0-preview4)
+#### In this version ( ver1.0.0-preview5)
 
 The Arm-2D library provides **Low-Level 2D Image Processing Services** that are mainly used in **Deep Embedded Display system**. The supported features include but not limited to:
 
@@ -21,17 +21,17 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** that are 
 - **CMSIS-Pack is available.**
 - **Alpha-Blending** / **Alpha-Masking**
   - With or without Colour-Keying
-  - Colour-filling with an Alpha-Mask
+  - Filling-Colour with an Alpha-Mask
     - For drawing icons/texts with anti-alias in a specified colour
     - Supports an optional ***Opacity*** ratio can be applied.
-- **Image Copy / Tiling**
+- **Image Copy (Tiling) **
   - With or without Colour-Keying (a.k.a colour masking)
   - Supports four mirroring modes: No-mirroring, X-mirroring, Y-mirroring and XY-mirroring
   - Supports **alpha masks** on the source side and/or the target side 
 - **Supported Colour formats**
-  - **8-bit Grayscale**, **RGB565** and **RGB888**
+  - **Gray8 (8-bit Grayscale)**, **RGB565** and **RGB888**
   - Generic **8bit colour**, **RGB16** and **RGB32**
-  - Converting colour formats between **RGB565** and **RGB888** for any given tiles
+  - Converting colour formats among **GRAY8**, **RGB565** and **RGB888** for any given tiles
 - **Region/Window Clipping**
 - **Generic Partial Frame-buffer (PFB)**
   - Transparent for upper layer software/GUI services
@@ -56,7 +56,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** that are 
 
 ### New Features Planned in the Future
 
-- **Image Filters, e.g. Generic Anti-aliasing algorithms**
+- Image Filters, e.g. Generic Anti-aliasing algorithms
 - Stretch and Perspective Transform
 - A2, A4 Support
 - DMAC-350 Support
@@ -366,4 +366,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-26 July 2022
+08 Aug 2022
