@@ -114,7 +114,7 @@ extern "C" {
 
 #define ARM_PIX_SCLTYP(sz)     ARM_CONNECT2(ARM_CONNECT2(uint, sz), _t)
 
-#define ARM_2D_ANGLE(__ANGLE)  ((float)((float)(__ANGLE) * 3.1416926f / 180.0f))
+#define ARM_2D_ANGLE(__ANGLE)  ((float)((float)(__ANGLE) * 3.1415926f / 180.0f))
 
 #if __ARM_2D_HAS_DSP__
 
