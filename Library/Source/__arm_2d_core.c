@@ -22,7 +22,7 @@
  * Description:  Basic Tile operations
  *
  * $Date:        09. Aug 2022
- * $Revision:    V.1.2.0
+ * $Revision:    V.1.2.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -647,6 +647,7 @@ static void __arm_2d_source_side_tile_mirror_preprocess(
             tOffset.iWidth = ptTile->tRegion.tSize.iWidth 
                            - (  ptTileParam->tValidRegion.tLocation.iX 
                              +  ptActualSize->iWidth);
+            ptTileParam->tValidRegion.tLocation.iX = tOffset.iWidth;
         }
         
         //! bottom alignment 
@@ -654,6 +655,7 @@ static void __arm_2d_source_side_tile_mirror_preprocess(
             tOffset.iHeight = ptTile->tRegion.tSize.iHeight 
                            - (  ptTileParam->tValidRegion.tLocation.iY 
                              +  ptActualSize->iHeight);
+            ptTileParam->tValidRegion.tLocation.iY = tOffset.iHeight;
         }
     }
               
