@@ -21,8 +21,8 @@
  * Title:        cmsis_nn_typs.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        18. July 2022
- * $Revision:    V.1.0.2
+ * $Date:        09. Aug 2022
+ * $Revision:    V.1.0.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -477,7 +477,8 @@ struct arm_2d_tile_t {
         uint8_t    bIsRoot              : 1;                                    //!< is this tile a root tile
         uint8_t    bHasEnforcedColour   : 1;                                    //!< does this tile contains enforced colour info
         uint8_t    bDerivedResource     : 1;                                    //!< indicate whether this is a derived resources (when bIsRoot == 0)
-        uint8_t                         : 5;
+        uint8_t    bVirtualResource     : 1;                                    //!< indicate whether the resource should be loaded on-demand
+        uint8_t                         : 4;
         uint8_t                         : 8;
         uint8_t                         : 8;
         arm_2d_color_info_t    tColourInfo;                                     //!< enforced colour
@@ -486,8 +487,8 @@ struct arm_2d_tile_t {
     implement_ex(arm_2d_region_t, tRegion);                                     //!< the region of the tile
 
     union {
-        /*! when bIsRoot is true, phwBuffer is available,
-         *! otherwise ptParent is available
+        /* when bIsRoot is true, phwBuffer is available,
+         * otherwise ptParent is available
          */
         arm_2d_tile_t       *ptParent;                                          //!< a pointer points to the parent tile
         uint8_t             *pchBuffer;                                         //!< a pointer points to a buffer in a 8bit colour type
@@ -496,6 +497,42 @@ struct arm_2d_tile_t {
         
         intptr_t            nAddress;                                           //!< a pointer in integer
     };
+};
+
+/*!
+ * \brief a type for virtual resource
+ *
+ * \note the flag tTile.tInfo.bVirtualResource must be true (1)
+ */
+typedef struct arm_2d_vres_t arm_2d_vres_t;
+struct arm_2d_vres_t {
+
+    /*! base class: tTile */
+    implement_ex( arm_2d_tile_t, tTile);
+    
+    /*!  a reference of an user object  */
+    uintptr_t pTarget;
+    
+    /*!
+     *  \brief a method to load a specific part of an image
+     *  \param[in] pTarget a reference of an user object 
+     *  \param[in] ptVRES a reference of this virtual resource
+     *  \param[in] ptRegion the target region of the image
+     *  \return intptr_t the address of a resource buffer which holds the content
+     */
+    intptr_t  (*Load)   (   uintptr_t pTarget, 
+                            arm_2d_vres_t *ptVRES, 
+                            arm_2d_region_t *ptRegion);
+    
+    /*!
+     *  \brief a method to depose the buffer
+     *  \param[in] pTarget a reference of an user object 
+     *  \param[in] ptVRES a reference of this virtual resource
+     *  \param[in] pBuffer the target buffer
+     */
+    void      (*Depose) (   uintptr_t pTarget, 
+                            arm_2d_vres_t *ptVRES, 
+                            intptr_t pBuffer );
 };
 
 /*----------------------------------------------------------------------------*
