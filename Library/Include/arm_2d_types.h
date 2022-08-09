@@ -604,6 +604,14 @@ typedef struct arm_2d_evt_t {
 #define ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK        _BV(3)
 #define ARM_2D_OP_INFO_PARAM_HAS_ORIGIN             _BV(4)
 
+#define ARM_2D_OP_INFO_PARAM_TILES_MASK             (                           \
+            ARM_2D_OP_INFO_PARAM_HAS_SOURCE         |                           \
+            ARM_2D_OP_INFO_PARAM_HAS_TARGET         |                           \
+            ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK    |                           \
+            ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK    |                           \
+            ARM_2D_OP_INFO_PARAM_HAS_ORIGIN         )
+            
+
 //! \brief an incomplete defintion which is only used for defining pointers
 typedef struct __arm_2d_low_level_io_t __arm_2d_low_level_io_t;
 

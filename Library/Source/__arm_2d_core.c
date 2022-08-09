@@ -125,13 +125,145 @@ struct __arm_2d_op_control ARM_2D_CTRL;
     }
 
 
+
+/*----------------------------------------------------------------------------*
+ * Virtual Resource                                                           *
+ *----------------------------------------------------------------------------*/
+static arm_2d_err_t __load_virtual_resource(const arm_2d_tile_t *ptRootTile,
+                                            __arm_2d_tile_param_t *ptParam)
+{
+    if (NULL == ptRootTile || NULL == ptParam) {
+        return ARM_2D_ERR_NONE;
+    }
+
+    if (!ptRootTile->tInfo.bIsRoot) {
+        return ARM_2D_ERR_NONE;
+    }
+    
+    if (!ptRootTile->tInfo.bVirtualResource) {
+        return ARM_2D_ERR_NONE;
+    }
+    
+    /* a virtual resource must be marked as root tile */
+    arm_2d_vres_t *ptRes = (arm_2d_vres_t *)ptRootTile;
+    
+    if (NULL == ptRes->Load) {
+        return ARM_2D_ERR_MISSING_PARAM;
+    }
+
+    /* load virtual resource */
+    intptr_t nAddress = (ptRes->Load)(  ptRes->pTarget,
+                                        ptRes,
+                                        &ptParam->tValidRegion);
+    
+    if ((intptr_t)NULL == nAddress) {
+        return ARM_2D_ERR_IO_ERROR;
+    }
+    
+    ptRes->tTile.nAddress = nAddress;
+    /* update param */
+    ptParam->pBuffer = (void *)nAddress;
+    ptParam->nOffset = 0;
+    ptParam->iStride = ptParam->tValidRegion.tSize.iWidth;
+    ptParam->tValidRegion.tLocation = (arm_2d_location_t){0,0};
+
+    return ARM_2D_ERR_NONE;
+}
+
+static void __depose_virtual_resource(const arm_2d_tile_t *ptRootTile)
+{
+    if (NULL == ptRootTile) {
+        return;
+    }
+
+    if (!ptRootTile->tInfo.bIsRoot) {
+        return ;
+    }
+    
+    if (!ptRootTile->tInfo.bVirtualResource) {
+        return ;
+    }
+    
+    /* a virtual resource must be marked as root tile */
+    arm_2d_vres_t *ptRes = (arm_2d_vres_t *)ptRootTile;
+    
+    if (NULL == ptRes->Depose) {
+        return ;
+    }
+
+    /* depose virtual resource */
+    (ptRes->Depose)(ptRes->pTarget,
+                    ptRes,
+                    ptRes->tTile.nAddress);
+}
+
 /*----------------------------------------------------------------------------*
  * Invoking Low level operations                                              *
  *----------------------------------------------------------------------------*/
 
 void __arm_2d_sub_task_depose(arm_2d_op_core_t *ptOP)
 {
-    
+    assert(NULL != ptOP);
+    switch(ptOP->ptOp->Info.Param.chValue & ARM_2D_OP_INFO_PARAM_TILES_MASK) {
+        case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
+            |   ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK: {
+                arm_2d_op_msk_t *ptThis = (arm_2d_op_msk_t *)ptOP;
+                __depose_virtual_resource(this.Mask.ptTile);
+            }
+            break;
+        
+        case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
+            |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE: {
+                arm_2d_op_src_t *ptThis = (arm_2d_op_src_t *)ptOP;
+                __depose_virtual_resource(this.Source.ptTile);
+            }
+            break;
+        
+        case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
+            |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE
+            |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK:
+        case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
+            |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE
+            |   ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK:
+        case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
+            |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE
+            |   ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK
+            |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK: {
+                arm_2d_op_src_msk_t *ptThis = (arm_2d_op_src_msk_t *)ptOP;
+                __depose_virtual_resource(this.Source.ptTile);
+                __depose_virtual_resource(this.Mask.ptSourceSide);
+                __depose_virtual_resource(this.Mask.ptTargetSide);
+            }
+            break;
+
+        case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
+            |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE
+            |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN:{
+                arm_2d_op_src_orig_t *ptThis = (arm_2d_op_src_orig_t *)ptOP;
+                __depose_virtual_resource(this.Origin.ptTile);
+            }
+            break;
+
+        case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
+            |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN
+            |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE
+            |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK:
+        case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
+            |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN
+            |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE
+            |   ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK:
+        case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
+            |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN
+            |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE
+            |   ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK
+            |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK: {
+                arm_2d_op_src_orig_msk_t *ptThis = (arm_2d_op_src_orig_msk_t *)ptOP;
+                __depose_virtual_resource(this.Origin.ptTile);
+                __depose_virtual_resource(this.Mask.ptOriginSide);
+                __depose_virtual_resource(this.Mask.ptTargetSide);
+            }
+            break;
+    }
 }
 
 __WEAK
@@ -373,78 +505,6 @@ arm_fsm_rt_t __arm_2d_issue_sub_task_copy_origin_masks(
     __arm_2d_sub_task_depose((arm_2d_op_core_t *)ptThis);
     return tResult;
 }
-
-/*----------------------------------------------------------------------------*
- * Virtual Resource                                                           *
- *----------------------------------------------------------------------------*/
-static arm_2d_err_t __load_virtual_resource(const arm_2d_tile_t *ptRootTile,
-                                            __arm_2d_tile_param_t *ptParam)
-{
-    if (NULL == ptRootTile || NULL == ptParam) {
-        return ARM_2D_ERR_NONE;
-    }
-
-    if (!ptRootTile->tInfo.bIsRoot) {
-        return ARM_2D_ERR_NONE;
-    }
-    
-    if (!ptRootTile->tInfo.bVirtualResource) {
-        return ARM_2D_ERR_NONE;
-    }
-    
-    /* a virtual resource must be marked as root tile */
-    arm_2d_vres_t *ptRes = (arm_2d_vres_t *)ptRootTile;
-    
-    if (NULL == ptRes->Load) {
-        return ARM_2D_ERR_MISSING_PARAM;
-    }
-
-    /* load virtual resource */
-    intptr_t nAddress = (ptRes->Load)(  ptRes->pTarget,
-                                        ptRes,
-                                        &ptParam->tValidRegion);
-    
-    if ((intptr_t)NULL == nAddress) {
-        return ARM_2D_ERR_IO_ERROR;
-    }
-    
-    ptRes->tTile.nAddress = nAddress;
-    /* update param */
-    ptParam->pBuffer = (void *)nAddress;
-    ptParam->nOffset = 0;
-    ptParam->iStride = ptParam->tValidRegion.tSize.iWidth;
-    ptParam->tValidRegion.tLocation = (arm_2d_location_t){0,0};
-
-    return ARM_2D_ERR_NONE;
-}
-
-static void __depose_virtual_resource(const arm_2d_tile_t *ptRootTile)
-{
-    if (NULL == ptRootTile) {
-        return;
-    }
-
-    if (!ptRootTile->tInfo.bIsRoot) {
-        return ;
-    }
-    
-    if (!ptRootTile->tInfo.bVirtualResource) {
-        return ;
-    }
-    
-    /* a virtual resource must be marked as root tile */
-    arm_2d_vres_t *ptRes = (arm_2d_vres_t *)ptRootTile;
-    
-    if (NULL == ptRes->Depose) {
-        return ;
-    }
-
-    /* depose virtual resource */
-    (ptRes->Depose)(ptRes->pTarget,
-                    ptRes,
-                    ptRes->tTile.nAddress);
-}
-
 
 /*----------------------------------------------------------------------------*
  * Region Calculation                                                         *
@@ -852,7 +912,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
             /*! \brief masks are not supported in fill with origin mode */
             assert(!OP_CORE.ptOp->Info.Param.bHasSrcMask);
             assert(!OP_CORE.ptOp->Info.Param.bHasDesMask);
-        
+            
             //! handle mirroring
             do {
                 __arm_2d_source_side_tile_mirror_preprocess(
