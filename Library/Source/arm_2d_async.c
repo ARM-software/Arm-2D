@@ -367,9 +367,12 @@ void __arm_2d_notify_sub_task_cpl(  __arm_2d_sub_task_t *ptTask,
     assert(NULL != ptOP);
     assert(ptOP->Status.u4SubTaskCount > 0);
 
-    //! free sub task
+    /* free sub task */
     __arm_2d_sub_task_free(ptTask);
-    
+
+    /* depose resources hold by the sub task */
+    __arm_2d_sub_task_depose(ptOP);
+
     //if (bFromHW) {
         arm_2d_notif_aync_sub_task_cpl(ptOP->pUserParam);
     //}

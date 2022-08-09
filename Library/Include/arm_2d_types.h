@@ -22,7 +22,7 @@
  * Description:  Public header file to contain the Arm-2D structs
  *
  * $Date:        09. Aug 2022
- * $Revision:    V.1.0.3
+ * $Revision:    V.1.0.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -525,7 +525,7 @@ struct arm_2d_vres_t {
                             arm_2d_region_t *ptRegion);
     
     /*!
-     *  \brief a method to depose the buffer
+     *  \brief a method to despose the buffer
      *  \param[in] pTarget a reference of an user object 
      *  \param[in] ptVRES a reference of this virtual resource
      *  \param[in] pBuffer the target buffer

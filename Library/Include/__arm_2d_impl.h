@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        24. May 2022
- * $Revision:    V.1.2.1
+ * $Date:        09. Aug 2022
+ * $Revision:    V.1.2.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -447,6 +447,9 @@ arm_fsm_rt_t __arm_2d_op_frontend_op_decoder(arm_2d_op_core_t *ptThis);
 extern
 arm_fsm_rt_t __arm_2d_op_depose(arm_2d_op_core_t *ptThis, 
                                 arm_fsm_rt_t tResult);
+
+extern 
+void __arm_2d_sub_task_depose(arm_2d_op_core_t *ptOP);
 /*----------------------------------------------------------------------------*
  * Utilities                                                                  *
  *----------------------------------------------------------------------------*/

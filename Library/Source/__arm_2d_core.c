@@ -21,8 +21,8 @@
  * Title:        __arm-2d_core.c
  * Description:  Basic Tile operations
  *
- * $Date:        07. July 2022
- * $Revision:    V.1.1.1
+ * $Date:        09. Aug 2022
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -126,8 +126,13 @@ struct __arm_2d_op_control ARM_2D_CTRL;
 
 
 /*----------------------------------------------------------------------------*
- * Region Calculation                                                         *
+ * Invoking Low level operations                                              *
  *----------------------------------------------------------------------------*/
+
+void __arm_2d_sub_task_depose(arm_2d_op_core_t *ptOP)
+{
+    
+}
 
 __WEAK
 arm_fsm_rt_t __arm_2d_issue_sub_task_tile_process(  
@@ -144,6 +149,8 @@ arm_fsm_rt_t __arm_2d_issue_sub_task_tile_process(
 
     /* call default software implementation */
     ARM_2D_RUN_DEFAULT( 0, __arm_2d_io_func_t);
+    
+    __arm_2d_sub_task_depose((arm_2d_op_core_t *)ptThis);
     return tResult;
 }
 
@@ -167,6 +174,8 @@ arm_fsm_rt_t __arm_2d_issue_sub_task_fill(
     /* call default software implementation */
     ARM_2D_RUN_DEFAULT( 1,__arm_2d_io_func_t );
 
+    __arm_2d_sub_task_depose((arm_2d_op_core_t *)ptThis);
+    
     return tResult;
 }
 
@@ -205,6 +214,8 @@ arm_fsm_rt_t __arm_2d_issue_sub_task_fill_with_mask(
     /* call default software implementation */
     ARM_2D_RUN_DEFAULT( 1,__arm_2d_io_func_t );
 
+    __arm_2d_sub_task_depose((arm_2d_op_core_t *)ptThis);
+
     return tResult;
 }
 
@@ -226,7 +237,9 @@ arm_fsm_rt_t __arm_2d_issue_sub_task_copy(arm_2d_op_cp_t *ptThis,
     
     /* call default software implementation */
     ARM_2D_RUN_DEFAULT(0,__arm_2d_io_func_t );
-    
+
+    __arm_2d_sub_task_depose((arm_2d_op_core_t *)ptThis);
+
     return tResult;
 }
 
@@ -265,7 +278,8 @@ arm_fsm_rt_t __arm_2d_issue_sub_task_copy_with_mask(
     
     /* call default software implementation */
     ARM_2D_RUN_DEFAULT(0,__arm_2d_io_func_t );
-    
+
+    __arm_2d_sub_task_depose((arm_2d_op_core_t *)ptThis);
     return tResult;
 }
 
@@ -293,6 +307,7 @@ arm_fsm_rt_t __arm_2d_issue_sub_task_fill_origin(
     /* call default software implementation */
     ARM_2D_RUN_DEFAULT( 1,__arm_2d_io_func_t );
 
+    __arm_2d_sub_task_depose((arm_2d_op_core_t *)ptThis);
     return tResult;
 }
 
@@ -319,7 +334,8 @@ arm_fsm_rt_t __arm_2d_issue_sub_task_copy_origin(
     
     /* call default software implementation */
     ARM_2D_RUN_DEFAULT(0,__arm_2d_io_func_t );
-    
+
+    __arm_2d_sub_task_depose((arm_2d_op_core_t *)ptThis);
     return tResult;
 }
 
@@ -353,11 +369,86 @@ arm_fsm_rt_t __arm_2d_issue_sub_task_copy_origin_masks(
     
     /* call default software implementation */
     ARM_2D_RUN_DEFAULT(0,__arm_2d_io_func_t );
-    
+
+    __arm_2d_sub_task_depose((arm_2d_op_core_t *)ptThis);
     return tResult;
 }
 
+/*----------------------------------------------------------------------------*
+ * Virtual Resource                                                           *
+ *----------------------------------------------------------------------------*/
+static arm_2d_err_t __load_virtual_resource(const arm_2d_tile_t *ptRootTile,
+                                            __arm_2d_tile_param_t *ptParam)
+{
+    if (NULL == ptRootTile || NULL == ptParam) {
+        return ARM_2D_ERR_NONE;
+    }
 
+    if (!ptRootTile->tInfo.bIsRoot) {
+        return ARM_2D_ERR_NONE;
+    }
+    
+    if (!ptRootTile->tInfo.bVirtualResource) {
+        return ARM_2D_ERR_NONE;
+    }
+    
+    /* a virtual resource must be marked as root tile */
+    arm_2d_vres_t *ptRes = (arm_2d_vres_t *)ptRootTile;
+    
+    if (NULL == ptRes->Load) {
+        return ARM_2D_ERR_MISSING_PARAM;
+    }
+
+    /* load virtual resource */
+    intptr_t nAddress = (ptRes->Load)(  ptRes->pTarget,
+                                        ptRes,
+                                        &ptParam->tValidRegion);
+    
+    if ((intptr_t)NULL == nAddress) {
+        return ARM_2D_ERR_IO_ERROR;
+    }
+    
+    ptRes->tTile.nAddress = nAddress;
+    /* update param */
+    ptParam->pBuffer = (void *)nAddress;
+    ptParam->nOffset = 0;
+    ptParam->iStride = ptParam->tValidRegion.tSize.iWidth;
+    ptParam->tValidRegion.tLocation = (arm_2d_location_t){0,0};
+
+    return ARM_2D_ERR_NONE;
+}
+
+static void __depose_virtual_resource(const arm_2d_tile_t *ptRootTile)
+{
+    if (NULL == ptRootTile) {
+        return;
+    }
+
+    if (!ptRootTile->tInfo.bIsRoot) {
+        return ;
+    }
+    
+    if (!ptRootTile->tInfo.bVirtualResource) {
+        return ;
+    }
+    
+    /* a virtual resource must be marked as root tile */
+    arm_2d_vres_t *ptRes = (arm_2d_vres_t *)ptRootTile;
+    
+    if (NULL == ptRes->Depose) {
+        return ;
+    }
+
+    /* depose virtual resource */
+    (ptRes->Depose)(ptRes->pTarget,
+                    ptRes,
+                    ptRes->tTile.nAddress);
+}
+
+
+/*----------------------------------------------------------------------------*
+ * Region Calculation                                                         *
+ *----------------------------------------------------------------------------*/
 
 ARM_NONNULL(1,2)
 static const arm_2d_tile_t * __arm_2d_tile_region_caculator( 
@@ -433,7 +524,6 @@ static const arm_2d_tile_t * __arm_2d_tile_region_caculator(
 
     return ptTile;
 }
-
 
 ARM_NONNULL(1,2)
 static
@@ -784,8 +874,16 @@ arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
                 }
                 */
             } while(0);
-        
-        
+
+            /* load virtual resource if any */
+            do {
+                arm_2d_err_t tErr = 
+                    __load_virtual_resource(ptOrigin, &tOriginTileParam);
+                if (tErr != ARM_2D_ERR_NONE) {
+                    return (arm_fsm_rt_t)tErr;
+                }
+            } while(0);
+
             tResult = __arm_2d_issue_sub_task_fill_origin(
                                                     ptThis,
                                                     &tSourceTileParam,
@@ -812,7 +910,26 @@ arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
                                             wMode);
                 }
             } while(0);
-        
+
+            /* load virtual resource if any */
+            do {
+                arm_2d_err_t tErr = 
+                    __load_virtual_resource(ptSource, &tSourceTileParam);
+                if (tErr != ARM_2D_ERR_NONE) {
+                    return (arm_fsm_rt_t)tErr;
+                }
+
+                tErr = __load_virtual_resource(ptSourceMask, &tSourceMaskParam);
+                if (tErr != ARM_2D_ERR_NONE) {
+                    return (arm_fsm_rt_t)tErr;
+                }
+
+                tErr = __load_virtual_resource(ptTargetMask, &tTargetMaskParam);
+                if (tErr != ARM_2D_ERR_NONE) {
+                    return (arm_fsm_rt_t)tErr;
+                }
+            } while(0);
+
             if (    (OP_CORE.ptOp->Info.Param.bHasSrcMask)
                ||   (OP_CORE.ptOp->Info.Param.bHasDesMask)){
                
@@ -864,7 +981,26 @@ arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
                                                         wMode);
                 }
             } while(0);
-            
+
+            /* load virtual resource if any */
+            do {
+                arm_2d_err_t tErr = 
+                    __load_virtual_resource(ptOrigin, &tOriginTileParam);
+                if (tErr != ARM_2D_ERR_NONE) {
+                    return (arm_fsm_rt_t)tErr;
+                }
+                
+                tErr = __load_virtual_resource(ptSourceMask, &tSourceMaskParam);
+                if (tErr != ARM_2D_ERR_NONE) {
+                    return (arm_fsm_rt_t)tErr;
+                }
+
+                tErr = __load_virtual_resource(ptTargetMask, &tTargetMaskParam);
+                if (tErr != ARM_2D_ERR_NONE) {
+                    return (arm_fsm_rt_t)tErr;
+                }
+            } while(0);
+
             if (    (OP_CORE.ptOp->Info.Param.bHasSrcMask)
                ||   (OP_CORE.ptOp->Info.Param.bHasDesMask)){
                 tResult = __arm_2d_issue_sub_task_copy_origin_masks( 
@@ -910,8 +1046,25 @@ arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
                 }
             } while(0);
 
-            
-            
+            /* load virtual resource if any */
+            do {
+                arm_2d_err_t tErr = 
+                    __load_virtual_resource(ptSource, &tSourceTileParam);
+                if (tErr != ARM_2D_ERR_NONE) {
+                    return (arm_fsm_rt_t)tErr;
+                }
+                
+                tErr = __load_virtual_resource(ptSourceMask, &tSourceMaskParam);
+                if (tErr != ARM_2D_ERR_NONE) {
+                    return (arm_fsm_rt_t)tErr;
+                }
+
+                tErr = __load_virtual_resource(ptTargetMask, &tTargetMaskParam);
+                if (tErr != ARM_2D_ERR_NONE) {
+                    return (arm_fsm_rt_t)tErr;
+                }
+            } while(0);
+
             if (    (OP_CORE.ptOp->Info.Param.bHasSrcMask)
                ||   (OP_CORE.ptOp->Info.Param.bHasDesMask)){
                 tResult = __arm_2d_issue_sub_task_copy_with_mask( 
