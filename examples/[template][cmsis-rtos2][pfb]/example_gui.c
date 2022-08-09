@@ -21,6 +21,7 @@
 #include "platform.h"
 #include "example_gui.h"
 #include "arm_extra_controls.h"
+#include "arm_2d_helper.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -36,40 +37,168 @@
 #endif
 
 /*============================ MACROS ========================================*/
+#if __GLCD_CFG_COLOUR_DEPTH__ == 8
+
+#   define c_tileHelium           c_tileHeliumGRAY8
+
+#elif __GLCD_CFG_COLOUR_DEPTH__ == 16
+
+#   define c_tileHelium           c_tileHeliumRGB565
+
+#elif __GLCD_CFG_COLOUR_DEPTH__ == 32
+
+#   define c_tileHelium           c_tileHeliumCCCA8888
+#else
+#   error Unsupported colour depth!
+#endif
+
+#ifndef __VIRTUAL_RESOURCE_DEMO_USE_HEAP__
+#   define __VIRTUAL_RESOURCE_DEMO_USE_HEAP__       0
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
-
-#define arm_2d_layer(__TILE_ADDR, __TRANS, __X, __Y, ...)                       \
-    {                                                                           \
-        .ptTile = (__TILE_ADDR),                                                \
-        .tRegion.tLocation.iX = (__X),                                          \
-        .tRegion.tLocation.iY = (__Y),                                          \
-        .chTransparency = (__TRANS),                                            \
-        __VA_ARGS__                                                             \
-    }
-
 /*============================ TYPES =========================================*/
+typedef struct {
+    intptr_t pResource;
+} resource_loader_t;
+
 /*============================ GLOBAL VARIABLES ==============================*/
+
+extern const arm_2d_tile_t c_tileHelium ;
+
+
 /*============================ PROTOTYPES ====================================*/
+/*!
+ *  \brief a method to load a specific part of an image
+ *  \param[in] pTarget a reference of an user object 
+ *  \param[in] ptVRES a reference of this virtual resource
+ *  \param[in] ptRegion the target region of the image
+ *  \return intptr_t the address of a resource buffer which holds the content
+ */
+static intptr_t __picture_loader   (uintptr_t pTarget, 
+                                    arm_2d_vres_t *ptVRES, 
+                                    arm_2d_region_t *ptRegion);
+    
+/*!
+ *  \brief a method to despose the buffer
+ *  \param[in] pTarget a reference of an user object 
+ *  \param[in] ptVRES a reference of this virtual resource
+ *  \param[in] pBuffer the target buffer
+ */
+static void __buffer_deposer (  uintptr_t pTarget, 
+                                arm_2d_vres_t *ptVRES, 
+                                intptr_t pBuffer );
+                            
 /*============================ LOCAL VARIABLES ===============================*/
 
+static resource_loader_t s_tLoader = {
+    .pResource = (intptr_t)&c_tileHelium,
+};
 
-extern const uint8_t c_bmpWhiteDot[19*20*sizeof(uint16_t)];
-extern const arm_2d_tile_t c_tPictureWhiteDot;
+static arm_2d_vres_t s_tBigImage = {
+
+    /* tile header */
+    .tTile = {
+        .tRegion = {
+            .tSize = {
+                .iWidth = 320,
+                .iHeight = 256,
+            },
+        },
+        .tInfo = {
+            .bIsRoot = true,
+            .bHasEnforcedColour = true,
+            .bVirtualResource = true,
+            .tColourInfo = {
+                .chScheme = ARM_2D_COLOUR_RGB565,
+            },
+        },
+    },
+    .pTarget    = (uintptr_t)&s_tLoader,
+    .Load       = &__picture_loader,
+    .Depose     = &__buffer_deposer,
+};
 
 
 /*============================ IMPLEMENTATION ================================*/
 
-static volatile uint32_t s_wSystemTimeInMs = 0;
-static volatile bool s_bTimeout = false;
-extern void platform_1ms_event_handler(void);
-
-void platform_1ms_event_handler(void)
+/*!
+ *  \brief a method to load a specific part of an image
+ *  \param[in] pTarget a reference of an user object 
+ *  \param[in] ptVRES a reference of this virtual resource
+ *  \param[in] ptRegion the target region of the image
+ *  \return intptr_t the address of a resource buffer which holds the content
+ */
+static intptr_t __picture_loader   (uintptr_t pTarget, 
+                                    arm_2d_vres_t *ptVRES, 
+                                    arm_2d_region_t *ptRegion)
 {
-    s_wSystemTimeInMs++; 
-    if (!(s_wSystemTimeInMs & (_BV(10) - 1))) {
-        s_bTimeout = true;
+    resource_loader_t *ptLoader = (resource_loader_t *)pTarget;
+    size_t tBufferSize = ptRegion->tSize.iHeight * ptRegion->tSize.iWidth * sizeof(COLOUR_INT);
+    COLOUR_INT *pBuffer = NULL;
+
+#if __VIRTUAL_RESOURCE_DEMO_USE_HEAP__
+    pBuffer = malloc(tBufferSize);
+    assert(NULL != pBuffer);
+    
+    if (NULL == pBuffer) {
+        return (intptr_t)NULL;
     }
+#else
+    static COLOUR_INT s_tImageBuffer[PFB_BLOCK_WIDTH * PFB_BLOCK_HEIGHT];
+    pBuffer = s_tImageBuffer;
+    assert(sizeof(s_tImageBuffer) >= tBufferSize);
+    
+    if (tBufferSize > sizeof(s_tImageBuffer)) {
+        return (intptr_t)NULL;
+    }
+#endif
+    /* load content into the buffer */
+    /* this part of code is just simple a demo, you should implement your own */
+    do {
+        arm_2d_tile_t *ptTile = (arm_2d_tile_t *)ptLoader->pResource;
+        COLOUR_INT *pSource = (COLOUR_INT *)(ptTile->nAddress);
+        COLOUR_INT *pTarget = pBuffer;
+        int16_t iSourceStride = ptTile->tRegion.tSize.iWidth;
+        int16_t iTargetStride = ptRegion->tSize.iWidth;
+        /* calculate offset */
+        pSource += ptRegion->tLocation.iY * iSourceStride + ptRegion->tLocation.iX;
+        
+        for (int_fast16_t y = 0; y < ptRegion->tSize.iHeight; y++) {
+            memcpy(pTarget, pSource, sizeof(COLOUR_INT) * iTargetStride);
+            
+            pTarget += iTargetStride;
+            pSource += iSourceStride;
+        }
+        
+    } while(0);
+    
+    return (intptr_t)pBuffer;
 }
+
+/*!
+ *  \brief a method to despose the buffer
+ *  \param[in] pTarget a reference of an user object 
+ *  \param[in] ptVRES a reference of this virtual resource
+ *  \param[in] pBuffer the target buffer
+ */
+static void __buffer_deposer (  uintptr_t pTarget, 
+                                arm_2d_vres_t *ptVRES, 
+                                intptr_t pBuffer )
+{
+#if __VIRTUAL_RESOURCE_DEMO_USE_HEAP__
+    resource_loader_t *ptLoader = (resource_loader_t *)pTarget;
+    
+    if ((intptr_t)NULL != pBuffer) {
+        free((void *)pBuffer);
+    }
+#else
+    ARM_2D_UNUSED(pTarget);
+    ARM_2D_UNUSED(ptVRES);
+    ARM_2D_UNUSED(pBuffer);
+#endif
+}
+
 
 void example_gui_init(void)
 {
@@ -93,10 +222,18 @@ void example_gui_on_refresh_evt_handler(const arm_2d_tile_t *ptFrameBuffer)
 
 void example_gui_refresh(const arm_2d_tile_t *ptFrameBuffer, bool bIsNewFrame)
 {
-    arm_2d_rgb16_fill_colour(ptFrameBuffer, NULL, GLCD_COLOR_NAVY);
-    
-    busy_wheel2_show(ptFrameBuffer, bIsNewFrame);
+    arm_2d_fill_colour(ptFrameBuffer, NULL, GLCD_COLOR_NAVY);
 
+    arm_2d_align_centre(ptFrameBuffer->tRegion, s_tBigImage.tTile.tRegion.tSize) {
+        arm_2d_tile_copy(   &s_tBigImage.tTile,     /* source tile */
+                            ptFrameBuffer,          /* target frame buffer */
+                            &__centre_region, 
+                            ARM_2D_CP_MODE_COPY);
+    }
+
+    arm_2d_op_wait_async(NULL);
+
+    busy_wheel2_show(ptFrameBuffer, bIsNewFrame);
     //spinning_wheel_show(ptFrameBuffer, bIsNewFrame);
 
     example_gui_on_refresh_evt_handler(ptFrameBuffer);

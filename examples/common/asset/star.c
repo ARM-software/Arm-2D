@@ -531,7 +531,7 @@ const arm_2d_tile_t c_tileStarGRAY8 = {
             .chScheme = ARM_2D_COLOUR_GRAY8,
         },
     },
-    .pwBuffer = (uint32_t*)c_bmpStarGRAY8,
+    .pchBuffer = (uint8_t*)c_bmpStarGRAY8,
 };
 
 
@@ -553,7 +553,7 @@ const arm_2d_tile_t c_tileStarRGB565 = {
             .chScheme = ARM_2D_COLOUR_RGB565,
         },
     },
-    .pwBuffer = (uint32_t*)c_bmpStarRGB565,
+    .phwBuffer = (uint16_t*)c_bmpStarRGB565,
 };
 
 

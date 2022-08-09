@@ -91,6 +91,7 @@ extern "C" {
         },                                                                      \
         *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
          ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
+         arm_2d_op_wait_async(NULL)                                             \
         )
                 
 #define __arm_2d_align_centre3(__region, __width, __height)                     \

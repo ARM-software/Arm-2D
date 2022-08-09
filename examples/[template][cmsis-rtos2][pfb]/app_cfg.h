@@ -59,6 +59,7 @@
 #   define APP_SCREEN_HEIGHT        GLCD_HEIGHT
 #endif
 
+#define __VIRTUAL_RESOURCE_DEMO_USE_HEAP__      0
 
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/

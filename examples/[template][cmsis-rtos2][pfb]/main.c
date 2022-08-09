@@ -114,8 +114,8 @@ void display_task(void)
 
     //! call partial framebuffer helper service
     while(arm_fsm_rt_cpl != arm_2d_helper_pfb_task( 
-                                &s_tExamplePFB, 
-                                (arm_2d_region_list_item_t *)s_tDirtyRegions));
+                                &s_tExamplePFB, NULL));
+                                //(arm_2d_region_list_item_t *)s_tDirtyRegions));
     
     //! update performance info
     do {

@@ -11764,7 +11764,7 @@ const arm_2d_tile_t c_tileWatchPanelGRAY8 = {
             .chScheme = ARM_2D_COLOUR_GRAY8,
         },
     },
-    .pwBuffer = (uint32_t*)c_bmpWatchPanelGRAY8,
+    .pchBuffer = (uint8_t*)c_bmpWatchPanelGRAY8,
 };
 
 
@@ -11786,7 +11786,7 @@ const arm_2d_tile_t c_tileWatchPanelRGB565 = {
             .chScheme = ARM_2D_COLOUR_RGB565,
         },
     },
-    .pwBuffer = (uint32_t*)c_bmpWatchPanelRGB565,
+    .phwBuffer = (uint16_t*)c_bmpWatchPanelRGB565,
 };
 
 
