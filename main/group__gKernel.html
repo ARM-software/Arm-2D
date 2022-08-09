@@ -636,6 +636,8 @@ Macros</h2></td></tr>
 <tr class="memitem:ga0593a5fcaddee75b1a3ce23c4c94f5df"><td class="memItemLeft" align="right" valign="top"><a id="ga0593a5fcaddee75b1a3ce23c4c94f5df" name="ga0593a5fcaddee75b1a3ce23c4c94f5df"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_OP_INFO_PARAM_HAS_ORIGIN</b>&#160;&#160;&#160;_BV(4)</td></tr>
 <tr class="separator:ga0593a5fcaddee75b1a3ce23c4c94f5df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5f7f6f18fe4ab77f89c674b0a8be9f3a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga5f7f6f18fe4ab77f89c674b0a8be9f3a">ARM_2D_OP_INFO_PARAM_TILES_MASK</a></td></tr>
+<tr class="separator:ga5f7f6f18fe4ab77f89c674b0a8be9f3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaab013a91e0bb930476d0e4ace60db7e8"><td class="memItemLeft" align="right" valign="top"><a id="gaab013a91e0bb930476d0e4ace60db7e8" name="gaab013a91e0bb930476d0e4ace60db7e8"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>__ARM_2D_OP_STATUS_BUSY_msk</b>&#160;&#160;&#160;(1 &lt;&lt; 4)</td></tr>
 <tr class="separator:gaab013a91e0bb930476d0e4ace60db7e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -4151,6 +4153,26 @@ target side mask </td></tr>
 <b>Value:</b><div class="fragment"><div class="line">                                    (   ARM_2D_M_COLOUR_SZ_32BIT_msk            \</div>
 <div class="line">                                    |   ARM_2D_M_COLOUR_HAS_ALPHA_msk)          \</div>
 <div class="line">                                    |   ARM_2D_M_COLOUR_VARIANT_msk             )</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ga5f7f6f18fe4ab77f89c674b0a8be9f3a" name="ga5f7f6f18fe4ab77f89c674b0a8be9f3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5f7f6f18fe4ab77f89c674b0a8be9f3a">&#9670;&nbsp;</a></span>ARM_2D_OP_INFO_PARAM_TILES_MASK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_2D_OP_INFO_PARAM_TILES_MASK</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">            (                           \</div>
+<div class="line">            ARM_2D_OP_INFO_PARAM_HAS_SOURCE         |                           \</div>
+<div class="line">            ARM_2D_OP_INFO_PARAM_HAS_TARGET         |                           \</div>
+<div class="line">            ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK    |                           \</div>
+<div class="line">            ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK    |                           \</div>
+<div class="line">            ARM_2D_OP_INFO_PARAM_HAS_ORIGIN         )</div>
 </div><!-- fragment -->
 </div>
 </div>
