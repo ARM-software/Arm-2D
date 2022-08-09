@@ -13,7 +13,7 @@
 
 ## Features
 
-#### In this version ( ver1.0.0-preview5)
+#### In this version ( ver1.1.0-preview)
 
 The Arm-2D library provides **Low-Level 2D Image Processing Services** that are mainly used in **Deep Embedded Display system**. The supported features include but not limited to:
 
@@ -51,6 +51,9 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** that are 
   - APIs can be used in **Synchronous** manner (  **Classic and Blocking** ) and/or **Asynchronous** manner ( **Event-Driven** )
   - Supports both **bare-metal** and **RTOS** environment
   - Ultra small memory footprint
+- **Support Virtual Resource**
+  - Support loading resources from external memories which is not mapped to 4G memory space
+
 
 
 
