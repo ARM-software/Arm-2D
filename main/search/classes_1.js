@@ -129,5 +129,6 @@ var searchData=
   ['arm_5f2d_5ftile_5ft_126',['arm_2d_tile_t',['../group__gKernel.html#structarm__2d__tile__t',1,'']]],
   ['arm_5f2d_5ftile_5ft_2e_5f_5funnamed20_5f_5f_127',['arm_2d_tile_t.__unnamed20__',['../group__gKernel.html#structarm__2d__tile__t_8____unnamed20____',1,'']]],
   ['arm_5f2d_5ftile_5ft_2e_5f_5funnamed22_5f_5f_128',['arm_2d_tile_t.__unnamed22__',['../group__gKernel.html#unionarm__2d__tile__t_8____unnamed22____',1,'']]],
-  ['arm_5f2d_5fversion_5ft_129',['arm_2d_version_t',['../group__gKernel.html#structarm__2d__version__t',1,'']]]
+  ['arm_5f2d_5fversion_5ft_129',['arm_2d_version_t',['../group__gKernel.html#structarm__2d__version__t',1,'']]],
+  ['arm_5f2d_5fvres_5ft_130',['arm_2d_vres_t',['../group__gKernel.html#structarm__2d__vres__t',1,'']]]
 ];

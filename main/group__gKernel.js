@@ -35,6 +35,12 @@ var group__gKernel =
     [ "arm_2d_tile_t", "group__gKernel.html#structarm__2d__tile__t", [
       [ "arm_2d_region_t", "group__gKernel.html#a233b05087f132d3ec5f826c99046e094", null ]
     ] ],
+    [ "arm_2d_vres_t", "group__gKernel.html#structarm__2d__vres__t", [
+      [ "arm_2d_tile_t", "group__gKernel.html#ae848d0a6320ae364a3a03e4445f99745", null ],
+      [ "pTarget", "group__gKernel.html#ac3cc19238dcaabfd6a5ac6001a610392", null ],
+      [ "Load", "group__gKernel.html#a7c7e317c38766f23f576ff91cc8c9aa7", null ],
+      [ "Depose", "group__gKernel.html#aac7f2f65b1219ec71d177457ffb7cad5", null ]
+    ] ],
     [ "arm_2d_task_t", "group__gKernel.html#structarm__2d__task__t", null ],
     [ "arm_2d_op_evt_t", "group__gKernel.html#structarm__2d__op__evt__t", [
       [ "fnHandler", "group__gKernel.html#a8f828fa395c4ae69fe956ae232c0893b", null ],
