@@ -21,8 +21,8 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        07. july 2022
- * $Revision:    V.1.1.2
+ * $Date:        09. Aug 2022
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -204,37 +204,20 @@ bool arm_2d_is_point_inside_region( const arm_2d_region_t *ptRegion,
     return false;
 }
 
-
-/*
-  HOW IT WORKS:
-
-   Root Tile (Output Tile)
-  +------------------------------------------------------------------------+
-  |     ... ...                                                            |
-  |                                                                        |
-  |                   Parent Tile                                          |
-  |                 +------------------------------------+                 |
-  |                 |        Child Tile                  |                 |
-  |                 |     +------------------------------+---------+       |
-  |                 |     |                              |/////////|       |
-  |                 |     |       Valid Region           |/////////|       |
-  |                 |     |                              |/////////|       |
-  |                 +-----+------------------------------+/////////|       |
-  |                       |////////////////////////////////////////|       |
-  |                       |////////////////////////////////////////|       |
-  |                       +----------------------------------------+       |
-  |                                                                        |
-  +------------------------------------------------------------------------+
- */
 ARM_NONNULL(1,2)
-const arm_2d_tile_t *arm_2d_tile_get_root(  const arm_2d_tile_t *ptTile,
+const arm_2d_tile_t *__arm_2d_tile_get_root(const arm_2d_tile_t *ptTile,
                                             arm_2d_region_t *ptValidRegion,
-                                            arm_2d_location_t *ptOffset)
+                                            arm_2d_location_t *ptOffset,
+                                            arm_2d_tile_t **ppFirstDerivedChild)
 {
     assert(NULL != ptTile);
     assert(NULL != ptValidRegion);
 
     *ptValidRegion = ptTile->tRegion;
+
+    if (NULL != ppFirstDerivedChild) {
+        *ppFirstDerivedChild = NULL;        /* initialise */
+    }
 
     if (NULL != ptOffset) {
         ptOffset->iX = 0;
@@ -246,11 +229,21 @@ const arm_2d_tile_t *arm_2d_tile_get_root(  const arm_2d_tile_t *ptTile,
     }
 
     do {
+        if (ptTile->tInfo.bDerivedResource) {
+            if (NULL != ppFirstDerivedChild) {
+                if (NULL == *ppFirstDerivedChild) {
+                    *ppFirstDerivedChild = ptTile;
+                }
+            }
+        }
+
         //! get parent
         ptTile = (const arm_2d_tile_t *)ptTile->ptParent;
         if (NULL == ptTile) {
             break;
         }
+        
+
 
         /*! \note Calculate the relative position between valid region and
          *!       the tile's original region. Usually, the tile's region
@@ -325,7 +318,34 @@ const arm_2d_tile_t *arm_2d_tile_get_root(  const arm_2d_tile_t *ptTile,
     return ptTile;
 }
 
+/*
+  HOW IT WORKS:
 
+   Root Tile (Output Tile)
+  +------------------------------------------------------------------------+
+  |     ... ...                                                            |
+  |                                                                        |
+  |                   Parent Tile                                          |
+  |                 +------------------------------------+                 |
+  |                 |        Child Tile                  |                 |
+  |                 |     +------------------------------+---------+       |
+  |                 |     |                              |/////////|       |
+  |                 |     |       Valid Region           |/////////|       |
+  |                 |     |                              |/////////|       |
+  |                 +-----+------------------------------+/////////|       |
+  |                       |////////////////////////////////////////|       |
+  |                       |////////////////////////////////////////|       |
+  |                       +----------------------------------------+       |
+  |                                                                        |
+  +------------------------------------------------------------------------+
+ */
+ARM_NONNULL(1,2)
+const arm_2d_tile_t *arm_2d_tile_get_root(  const arm_2d_tile_t *ptTile,
+                                            arm_2d_region_t *ptValidRegion,
+                                            arm_2d_location_t *ptOffset)
+{
+    return __arm_2d_tile_get_root(ptTile, ptValidRegion, ptOffset, NULL);
+}
 
 ARM_NONNULL(1,2)
 arm_2d_cmp_t arm_2d_tile_width_compare( const arm_2d_tile_t *ptTarget,
@@ -497,7 +517,6 @@ arm_2d_region_t *arm_2d_tile_region_diff(   const arm_2d_tile_t *ptTarget,
                           |////////////////////////////////////////|
                           |////////////////////////////////////////|
                           +----------------------------------------+
-
  */
 ARM_NONNULL(1,2,3)
 arm_2d_tile_t *arm_2d_tile_generate_child(
@@ -542,11 +561,8 @@ arm_2d_tile_t *arm_2d_tile_generate_child(
     ptOutput->tInfo = ptParentTile->tInfo;
     ptOutput->tInfo.bIsRoot = false;
     
-    #if 0
-    if (!ptParentTile->tInfo.bIsRoot && ptParentTile->tInfo.bDerivedResource) {
-        ptOutput->tInfo.bDerivedResource = true;
-    }
-    #endif
+    /* user has to manually set this flag to true to indicate a derived resource */
+    ptOutput->tInfo.bDerivedResource = false;
 
     ptOutput->ptParent = (arm_2d_tile_t *)ptParentTile;
 

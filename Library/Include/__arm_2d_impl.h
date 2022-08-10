@@ -292,6 +292,7 @@ typedef struct __arm_2d_tile_param_t {
     uint8_t                                 : 6;
     
     arm_2d_region_t     tValidRegion;
+    arm_2d_tile_t      *ptDerivedResource;
 } __arm_2d_tile_param_t;
 
 typedef struct __arm_2d_param_copy_t {
@@ -467,6 +468,13 @@ arm_2d_err_t  __arm_mask_validate(  const arm_2d_tile_t *ptSource,
                                     const arm_2d_tile_t *ptTarget,
                                     const arm_2d_tile_t *ptDesMask,
                                     uint32_t wMode);
+
+extern
+ARM_NONNULL(1,2)
+const arm_2d_tile_t *__arm_2d_tile_get_root(const arm_2d_tile_t *ptTile,
+                                            arm_2d_region_t *ptValidRegion,
+                                            arm_2d_location_t *ptOffset,
+                                            arm_2d_tile_t **ppFirstDerivedChild);
 
 /*----------------------------------------------------------------------------*
  * Default Software Implementations                                           *

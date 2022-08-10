@@ -528,16 +528,23 @@ static const arm_2d_tile_t * __arm_2d_tile_region_caculator(
     assert(NULL != ptTile);
     assert(NULL != ptOut);
     
-    bool bDerivedResource =     ptTile->tInfo.bDerivedResource 
-                          &&    !ptTile->tInfo.bIsRoot;
-    
+
     
     //memset(ptOut, 0, sizeof(__arm_2d_tile_param_t));
     
-    ptTile = arm_2d_tile_get_root(  ptTile,                           
+    ptTile = __arm_2d_tile_get_root(  ptTile,                           
                                     &tValidRegion,                   
-                                    NULL);                
-             
+                                    NULL,
+                                    &ptOut->ptDerivedResource);                
+    
+    bool bDerivedResource = false;
+    
+    if (NULL != ptOut->ptDerivedResource) {
+        if (!ptOut->ptDerivedResource->tInfo.bIsRoot) {
+            bDerivedResource = true;
+        }
+    }
+    
     if (NULL != ptTile) {    
 
         //! check if enforced colour is allowed
@@ -622,57 +629,65 @@ static void __arm_2d_source_side_tile_mirror_preprocess(
                                         uint32_t wMode)
 {
     //! right and/or bottom alignment
-    arm_2d_size_t tOffset = {0};
+    arm_2d_location_t tOffset = {0};
     
     if (ptTileParam->bDerivedResource) {
         //!< treat the content inside the valid region as the one to be mirrored
         //! right alignment 
         if (wMode & ARM_2D_CP_MODE_X_MIRROR) {
-            tOffset.iWidth = ptTileParam->tValidRegion.tLocation.iX;
-            tOffset.iWidth += ptTileParam->tValidRegion.tSize.iWidth 
-                            - ptActualSize->iWidth;
+        
+            tOffset.iX = ptTileParam->ptDerivedResource->tRegion.tLocation.iX;
+            tOffset.iX +=  ( ptTileParam->ptDerivedResource->tRegion.tLocation.iX
+                           + ptTileParam->ptDerivedResource->tRegion.tSize.iWidth)
+                       -   (  ptTileParam->tValidRegion.tLocation.iX
+                           +  ptActualSize->iWidth);
+
+            ptTileParam->tValidRegion.tLocation.iX = tOffset.iX;
         }
         
         //! bottom alignment 
         if (wMode & ARM_2D_CP_MODE_Y_MIRROR) {
-            tOffset.iHeight = ptTileParam->tValidRegion.tLocation.iY;
-            tOffset.iHeight += ptTileParam->tValidRegion.tSize.iHeight 
-                             - ptActualSize->iHeight;
+            tOffset.iY = ptTileParam->ptDerivedResource->tRegion.tLocation.iY;
+            tOffset.iY +=  ( ptTileParam->ptDerivedResource->tRegion.tLocation.iY
+                           + ptTileParam->ptDerivedResource->tRegion.tSize.iHeight)
+                       -   (  ptTileParam->tValidRegion.tLocation.iY
+                           +  ptActualSize->iHeight);
+            ptTileParam->tValidRegion.tLocation.iY = tOffset.iY;
         }
     } else {
 
         //!< treat valid region as a logic region to indicate the area for mirroring.
         //! right alignment 
         if (wMode & ARM_2D_CP_MODE_X_MIRROR) {
-            tOffset.iWidth = ptTile->tRegion.tSize.iWidth 
+            tOffset.iX = ptTile->tRegion.tSize.iWidth 
                            - (  ptTileParam->tValidRegion.tLocation.iX 
                              +  ptActualSize->iWidth);
-            ptTileParam->tValidRegion.tLocation.iX = tOffset.iWidth;
+            ptTileParam->tValidRegion.tLocation.iX = tOffset.iX;
         }
         
         //! bottom alignment 
         if (wMode & ARM_2D_CP_MODE_Y_MIRROR) {
-            tOffset.iHeight = ptTile->tRegion.tSize.iHeight 
+            tOffset.iY = ptTile->tRegion.tSize.iHeight 
                            - (  ptTileParam->tValidRegion.tLocation.iY 
                              +  ptActualSize->iHeight);
-            ptTileParam->tValidRegion.tLocation.iY = tOffset.iHeight;
+            ptTileParam->tValidRegion.tLocation.iY = tOffset.iY;
         }
     }
               
     if (chPixelLenInBit >= 8) {
         
-        ptTileParam->nOffset += ( tOffset.iHeight * ptTile->tRegion.tSize.iWidth 
-                    + tOffset.iWidth);
+        ptTileParam->nOffset += ( tOffset.iY * ptTile->tRegion.tSize.iWidth 
+                    + tOffset.iX);
         
         ptTileParam->pBuffer = ptTile->pchBuffer 
                   + (ptTileParam->nOffset * chPixelLenInBit >> 3);
     } else {
-        ptTileParam->nOffset += tOffset.iWidth;
+        ptTileParam->nOffset += tOffset.iX;
     
         (*(uintptr_t *)&(ptTileParam->pBuffer)) += 
                   + ((ptTile->tRegion.tSize.iWidth 
-                     *  chPixelLenInBit + 7) >> 3) * tOffset.iHeight
-                  + ((tOffset.iWidth * chPixelLenInBit) >> 3);
+                     *  chPixelLenInBit + 7) >> 3) * tOffset.iY
+                  + ((tOffset.iX * chPixelLenInBit) >> 3);
     }
 }
 
@@ -909,7 +924,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
             }
         }
     }
-
+    
     arm_2d_size_t tActualSize = {
         .iWidth = MIN(  tSourceTileParam.tValidRegion.tSize.iWidth, 
                         tTargetTileParam.tValidRegion.tSize.iWidth),
@@ -917,10 +932,6 @@ arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
                         tTargetTileParam.tValidRegion.tSize.iHeight),
     };
 
-    /* trim source valid region */
-    tSourceTileParam.tValidRegion.tSize = tActualSize;
-    
-    
 
     if (wMode & ARM_2D_CP_MODE_FILL) {                                          //!< tiling (tile fill) operation
 
@@ -967,25 +978,6 @@ arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
                                                     &tOriginTileParam,
                                                     &tTargetTileParam);
         } else {
-        
-            /* trim source mask valid region */
-            if (NULL != ptSourceMask) {
-                tSourceMaskParam.tValidRegion.tSize.iWidth = 
-                    MIN(tSourceMaskParam.tValidRegion.tSize.iWidth, 
-                        tSourceTileParam.tValidRegion.tSize.iWidth);
-                tSourceMaskParam.tValidRegion.tSize.iHeight = 
-                    MIN(tSourceMaskParam.tValidRegion.tSize.iHeight, 
-                        tSourceTileParam.tValidRegion.tSize.iHeight);
-            }
-
-            if (NULL != ptTargetMask) {
-                tTargetMaskParam.tValidRegion.tSize.iWidth = 
-                    MIN(tTargetMaskParam.tValidRegion.tSize.iWidth, 
-                        tTargetTileParam.tValidRegion.tSize.iWidth);
-                tTargetMaskParam.tValidRegion.tSize.iHeight = 
-                    MIN(tTargetMaskParam.tValidRegion.tSize.iHeight, 
-                        tTargetTileParam.tValidRegion.tSize.iHeight);
-            }
 
             //! handle mirroring
             do {
@@ -1006,6 +998,28 @@ arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
                                             wMode);
                 }
             } while(0);
+
+            /* trim source valid region */
+            tSourceTileParam.tValidRegion.tSize = tActualSize;
+
+            /* trim source mask valid region */
+            if (NULL != ptSourceMask) {
+                tSourceMaskParam.tValidRegion.tSize.iWidth = 
+                    MIN(tSourceMaskParam.tValidRegion.tSize.iWidth, 
+                        tSourceTileParam.tValidRegion.tSize.iWidth);
+                tSourceMaskParam.tValidRegion.tSize.iHeight = 
+                    MIN(tSourceMaskParam.tValidRegion.tSize.iHeight, 
+                        tSourceTileParam.tValidRegion.tSize.iHeight);
+            }
+
+            if (NULL != ptTargetMask) {
+                tTargetMaskParam.tValidRegion.tSize.iWidth = 
+                    MIN(tTargetMaskParam.tValidRegion.tSize.iWidth, 
+                        tTargetTileParam.tValidRegion.tSize.iWidth);
+                tTargetMaskParam.tValidRegion.tSize.iHeight = 
+                    MIN(tTargetMaskParam.tValidRegion.tSize.iHeight, 
+                        tTargetTileParam.tValidRegion.tSize.iHeight);
+            }
 
             /* load virtual resource if any */
             do {
@@ -1071,6 +1085,9 @@ arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
                 }
             } while(0);
 
+            /* trim source valid region */
+            tSourceTileParam.tValidRegion.tSize = tActualSize;
+
             /* trim source mask valid region */
             if (NULL != ptTargetMask) {
                 tTargetMaskParam.tValidRegion.tSize.iWidth = 
@@ -1120,23 +1137,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
             }
         } else {
 
-            if (NULL != ptSourceMask) {
-                tSourceMaskParam.tValidRegion.tSize.iWidth = 
-                    MIN(tSourceMaskParam.tValidRegion.tSize.iWidth, 
-                        tSourceTileParam.tValidRegion.tSize.iWidth);
-                tSourceMaskParam.tValidRegion.tSize.iHeight = 
-                    MIN(tSourceMaskParam.tValidRegion.tSize.iHeight, 
-                        tSourceTileParam.tValidRegion.tSize.iHeight);
-            }
 
-            if (NULL != ptTargetMask) {
-                tTargetMaskParam.tValidRegion.tSize.iWidth = 
-                    MIN(tTargetMaskParam.tValidRegion.tSize.iWidth, 
-                        tTargetTileParam.tValidRegion.tSize.iWidth);
-                tTargetMaskParam.tValidRegion.tSize.iHeight = 
-                    MIN(tTargetMaskParam.tValidRegion.tSize.iHeight, 
-                        tTargetTileParam.tValidRegion.tSize.iHeight);
-            }
 
             //! handle mirroring
             do {
@@ -1163,6 +1164,27 @@ arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
                                                         wMode);
                 }
             } while(0);
+
+            /* trim source valid region */
+            tSourceTileParam.tValidRegion.tSize = tActualSize;
+
+            if (NULL != ptSourceMask) {
+                tSourceMaskParam.tValidRegion.tSize.iWidth = 
+                    MIN(tSourceMaskParam.tValidRegion.tSize.iWidth, 
+                        tSourceTileParam.tValidRegion.tSize.iWidth);
+                tSourceMaskParam.tValidRegion.tSize.iHeight = 
+                    MIN(tSourceMaskParam.tValidRegion.tSize.iHeight, 
+                        tSourceTileParam.tValidRegion.tSize.iHeight);
+            }
+
+            if (NULL != ptTargetMask) {
+                tTargetMaskParam.tValidRegion.tSize.iWidth = 
+                    MIN(tTargetMaskParam.tValidRegion.tSize.iWidth, 
+                        tTargetTileParam.tValidRegion.tSize.iWidth);
+                tTargetMaskParam.tValidRegion.tSize.iHeight = 
+                    MIN(tTargetMaskParam.tValidRegion.tSize.iHeight, 
+                        tTargetTileParam.tValidRegion.tSize.iHeight);
+            }
 
             /* load virtual resource if any */
             do {
