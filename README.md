@@ -337,7 +337,6 @@ def_low_lv_io(__ARM_2D_IO_FILL_RGB32, __arm_2d_rgb32_sw_tile_fill);
 
 ### 5.2 The Temporary Limitations
 
-- The library currently can only be used in the C environment. C++ support will be added later.
 - The GCC support for Cortex-M55 (helium acceleration) is broken (waiting for tool-chain update). 
 - Generic Anti-aliasing algorithms haven't been introduced, but anti-alias in transform (i.e. rotation and scaling) is supported.
 - The library currently only provides default software algorithms and a **[Helium](https://developer.arm.com/architectures/instruction-sets/simd-isas/helium) based acceleration library**. 
@@ -369,4 +368,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-08 Aug 2022
+09 Aug 2022
