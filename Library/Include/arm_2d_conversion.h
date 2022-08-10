@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the APIs for colour space
  *               conversions
  *
- * $Date:        17. June 2022
- * $Revision:    V.1.0.2
+ * $Date:        09. Aug 2022
+ * $Revision:    V.1.0.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -47,6 +47,7 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wunknown-warning-option"
 #   pragma clang diagnostic ignored "-Wreserved-identifier"
 #   pragma clang diagnostic ignored "-Wsign-conversion"
+#   pragma clang diagnostic ignored "-Wnarrowing"
 #elif defined(__IS_COMPILER_IAR__)
 #   pragma diag_suppress=Go029 
 #endif
