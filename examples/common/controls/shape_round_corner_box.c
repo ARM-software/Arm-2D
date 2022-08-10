@@ -74,7 +74,7 @@ void draw_round_corner_box( const arm_2d_tile_t *ptTarget,
 {
     assert(NULL != ptTarget);
     ARM_2D_UNUSED(bIsNewFrame);
-
+    uint16_t hwFillAlpha = (0xFF * chAlpha) >> 8;
     if (NULL == ptRegion) {
         ptRegion = (const arm_2d_region_t *)&(ptTarget->tRegion);
     }
@@ -124,7 +124,7 @@ void draw_round_corner_box( const arm_2d_tile_t *ptTarget,
             },
         }, 
         (__arm_2d_color_t){tColour},
-        chAlpha);
+        hwFillAlpha);
     
     arm_2d_op_wait_async(NULL);
 
@@ -142,7 +142,7 @@ void draw_round_corner_box( const arm_2d_tile_t *ptTarget,
             },
         }, 
         (__arm_2d_color_t){tColour},
-        chAlpha);
+        hwFillAlpha);
 
     arm_2d_op_wait_async(NULL);
                             
@@ -190,7 +190,7 @@ void draw_round_corner_box( const arm_2d_tile_t *ptTarget,
             },
         }, 
         (__arm_2d_color_t){tColour},
-        chAlpha);
+        hwFillAlpha);
 
     arm_2d_op_wait_async(NULL);
 }
