@@ -258,10 +258,10 @@ void example_gui_refresh(const arm_2d_tile_t *ptFrameBuffer, bool bIsNewFrame)
 
     arm_2d_op_wait_async(NULL);
 
-    //busy_wheel2_show(ptFrameBuffer, bIsNewFrame);
+    busy_wheel2_show(ptFrameBuffer, bIsNewFrame);
     //spinning_wheel_show(ptFrameBuffer, bIsNewFrame);
 
-    //example_gui_on_refresh_evt_handler(ptFrameBuffer);
+    example_gui_on_refresh_evt_handler(ptFrameBuffer);
     
     arm_2d_op_wait_async(NULL);
 }

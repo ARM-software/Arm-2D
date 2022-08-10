@@ -24,7 +24,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** that are 
   - Filling-Colour with an Alpha-Mask
     - For drawing icons/texts with anti-alias in a specified colour
     - Supports an optional ***Opacity*** ratio can be applied.
-- **Image Copy (Tiling) **
+- **Image Copy (Tiling)**
   - With or without Colour-Keying (a.k.a colour masking)
   - Supports four mirroring modes: No-mirroring, X-mirroring, Y-mirroring and XY-mirroring
   - Supports **alpha masks** on the source side and/or the target side 
