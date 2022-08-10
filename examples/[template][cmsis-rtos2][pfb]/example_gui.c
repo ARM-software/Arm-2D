@@ -110,7 +110,7 @@ static arm_2d_vres_t s_tBigImage = {
             .bHasEnforcedColour = true,
             .bVirtualResource = true,
             .tColourInfo = {
-                .chScheme = ARM_2D_COLOUR_RGB565,
+                .chScheme = ARM_2D_COLOUR,
             },
         },
     },

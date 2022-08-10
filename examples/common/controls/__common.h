@@ -29,6 +29,7 @@
 
 #   define __arm_2d_color_t         arm_2d_color_gray8_t
 #   define COLOUR_INT               uint8_t
+#   define ARM_2D_COLOUR            ARM_2D_COLOUR_GRAY8
 
 #   define arm_2d_draw_pattern      arm_2d_c8bit_draw_pattern
 #   define arm_2dp_fill_colour_with_opacity                                     \
@@ -82,6 +83,7 @@
 
 #   define __arm_2d_color_t         arm_2d_color_rgb565_t
 #   define COLOUR_INT               uint16_t
+#   define ARM_2D_COLOUR            ARM_2D_COLOUR_RGB565
 
 #   define arm_2d_draw_pattern      arm_2d_rgb16_draw_pattern 
 #   define arm_2dp_fill_colour_with_opacity                                     \
@@ -135,6 +137,7 @@
 
 #   define __arm_2d_color_t         arm_2d_color_cccn888_t
 #   define COLOUR_INT               uint32_t
+#   define ARM_2D_COLOUR            ARM_2D_COLOUR_CCCA8888
 
 #   define arm_2d_draw_pattern      arm_2d_rgb32_draw_pattern 
 #   define arm_2dp_fill_colour_with_opacity                                     \
