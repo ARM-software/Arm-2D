@@ -119,6 +119,24 @@ static arm_2d_vres_t s_tBigImage = {
     .Depose     = &__buffer_deposer,
 };
 
+static
+const arm_2d_tile_t c_tChildImage = {
+    .tRegion = {
+        .tLocation = {
+            .iX = 160,
+            .iY = 128,
+        },
+        .tSize = {
+            .iWidth = 160,
+            .iHeight = 128,
+        },
+    },
+    .tInfo = {
+        .bIsRoot = false,
+        .bDerivedResource = true,
+    },
+    .ptParent = (arm_2d_tile_t *)&s_tBigImage.tTile,
+};
 
 /*============================ IMPLEMENTATION ================================*/
 
@@ -229,14 +247,21 @@ void example_gui_refresh(const arm_2d_tile_t *ptFrameBuffer, bool bIsNewFrame)
                             ptFrameBuffer,          /* target frame buffer */
                             &__centre_region, 
                             ARM_2D_CP_MODE_COPY);
+
+        arm_2d_op_wait_async(NULL);
+
+        arm_2d_tile_copy(   &c_tChildImage,         /* source tile */
+                            ptFrameBuffer,          /* target frame buffer */
+                            &__centre_region, 
+                            ARM_2D_CP_MODE_XY_MIRROR);
     }
 
     arm_2d_op_wait_async(NULL);
 
-    busy_wheel2_show(ptFrameBuffer, bIsNewFrame);
+    //busy_wheel2_show(ptFrameBuffer, bIsNewFrame);
     //spinning_wheel_show(ptFrameBuffer, bIsNewFrame);
 
-    example_gui_on_refresh_evt_handler(ptFrameBuffer);
+    //example_gui_on_refresh_evt_handler(ptFrameBuffer);
     
     arm_2d_op_wait_async(NULL);
 }
