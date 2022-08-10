@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        23. July 2022
- * $Revision:    V.1.1.0
+ * $Date:        10. Aug 2022
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -166,10 +166,12 @@ typedef struct arm_2d_scene_player_t {
                     uint8_t chState;
                     arm_2d_tile_t tSceneWindow;
                     arm_2d_tile_t tTemp;
+                    int16_t iOffset;
                 }Erase;
                 struct {
                     uint8_t chState;
                     arm_2d_tile_t tSceneWindow;
+                    int16_t iOffset;
                 }Slide;
             };
             __arm_2d_helper_scene_switch_t tConfig;                             //!< the switching configuration

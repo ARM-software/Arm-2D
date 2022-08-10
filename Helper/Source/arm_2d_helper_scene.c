@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        08. Aug 2022
- * $Revision:    V.1.2.0
+ * $Date:        10. Aug 2022
+ * $Revision:    V.1.3.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -457,24 +457,26 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
         switch (this.Switch.chState) {
             case START:
                 this.Switch.lTimeStamp = lTimeStamp;
+                this.Switch.Erase.iOffset = 0;
                 this.Switch.chState++;
                 //break;
             case ERASE:
                 nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
                 
-                iOffset = ((int64_t)iTargetDistance * (int64_t)nElapsed 
+                this.Switch.Erase.iOffset = ((int64_t)iTargetDistance * (int64_t)nElapsed 
                            / arm_2d_helper_convert_ms_to_ticks( 
                                 (this.Switch.hwPeriod) >> 1));
-                iOffset = MIN(iTargetDistance, iOffset);
+                this.Switch.Erase.iOffset = MIN(iTargetDistance, this.Switch.Erase.iOffset);
 
-                if (iOffset >= iTargetDistance) {
+                if (this.Switch.Erase.iOffset >= iTargetDistance) {
                     this.Runtime.bSwitchCPL = true;
                     SCENE_SWITCH_RESET_FSM();
                 }
                 break;
         }
     }
-
+    iOffset = this.Switch.Erase.iOffset;
+    
     /* handle default background */
     do {
         bool bIgnoreBG;
@@ -702,14 +704,14 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
 {
     enum {
         START = 0,
-        ERASE,
+        SLIDE,
     };
 
     arm_2d_scene_player_t *ptThis = (arm_2d_scene_player_t *)pTarget;
     arm_2d_scene_t *ptScene = NULL;
     
     int16_t iTargetDistance = 0;
-    int16_t iOffset = 0;
+    //int16_t iOffset = 0;
     
     switch(this.Switch.tConfig.Feature.chMode) {
         case ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT:
@@ -733,17 +735,18 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
         switch (this.Switch.chState) {
             case START:
                 this.Switch.lTimeStamp = lTimeStamp;
+                this.Switch.Slide.iOffset = 0;
                 this.Switch.chState++;
                 //break;
-            case ERASE:
+            case SLIDE:
                 nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
                 
-                iOffset = ((int64_t)iTargetDistance * (int64_t)nElapsed 
+                this.Switch.Slide.iOffset = ((int64_t)iTargetDistance * (int64_t)nElapsed 
                            / arm_2d_helper_convert_ms_to_ticks( 
                                 (this.Switch.hwPeriod) >> 1));
-                iOffset = MIN(iTargetDistance, iOffset);
+                this.Switch.Slide.iOffset = MIN(iTargetDistance, this.Switch.Slide.iOffset);
 
-                if (iOffset >= iTargetDistance) {
+                if (this.Switch.Slide.iOffset >= iTargetDistance) {
                     this.Runtime.bSwitchCPL = true;
                     SCENE_SWITCH_RESET_FSM();
                 }
@@ -806,21 +809,21 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
         
         switch(this.Switch.tConfig.Feature.chMode) {
             case ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT:
-                tWindow.tLocation.iX = -iOffset;
+                tWindow.tLocation.iX = -this.Switch.Slide.iOffset;
                 arm_2d_tile_generate_child( ptTile, 
                                             &tWindow, 
                                             &this.Switch.Slide.tSceneWindow, 
                                             false);
                 break;
             case ARM_2D_SCENE_SWITCH_MODE_SLIDE_RIGHT:
-                tWindow.tLocation.iX = iOffset;
+                tWindow.tLocation.iX = this.Switch.Slide.iOffset;
                 arm_2d_tile_generate_child( ptTile, 
                                             &tWindow, 
                                             &this.Switch.Slide.tSceneWindow, 
                                             false);
                 break;
             case ARM_2D_SCENE_SWITCH_MODE_SLIDE_UP:
-                tWindow.tLocation.iY = -iOffset;
+                tWindow.tLocation.iY = -this.Switch.Slide.iOffset;
                 arm_2d_tile_generate_child( ptTile, 
                                             &tWindow, 
                                             &this.Switch.Slide.tSceneWindow, 
@@ -828,7 +831,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
                 break;
 
             case ARM_2D_SCENE_SWITCH_MODE_SLIDE_DOWN:
-                tWindow.tLocation.iY = iOffset;
+                tWindow.tLocation.iY = this.Switch.Slide.iOffset;
                 arm_2d_tile_generate_child( ptTile, 
                                             &tWindow, 
                                             &this.Switch.Slide.tSceneWindow, 
@@ -860,7 +863,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
         
         switch(this.Switch.tConfig.Feature.chMode) {
             case ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT:
-                tWindow.tLocation.iX = iTargetDistance - iOffset;
+                tWindow.tLocation.iX = iTargetDistance - this.Switch.Slide.iOffset;
                 arm_2d_tile_generate_child( ptTile, 
                                             &tWindow, 
                                             &this.Switch.Slide.tSceneWindow, 
@@ -868,7 +871,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
                 break;
 
             case ARM_2D_SCENE_SWITCH_MODE_SLIDE_RIGHT:
-                tWindow.tLocation.iX = -(iTargetDistance - iOffset);
+                tWindow.tLocation.iX = -(iTargetDistance - this.Switch.Slide.iOffset);
                 arm_2d_tile_generate_child( ptTile, 
                                             &tWindow, 
                                             &this.Switch.Slide.tSceneWindow, 
@@ -876,7 +879,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
                 break;
 
             case ARM_2D_SCENE_SWITCH_MODE_SLIDE_UP:
-                tWindow.tLocation.iY = iTargetDistance - iOffset;
+                tWindow.tLocation.iY = iTargetDistance - this.Switch.Slide.iOffset;
                 arm_2d_tile_generate_child( ptTile, 
                                             &tWindow, 
                                             &this.Switch.Slide.tSceneWindow, 
@@ -884,7 +887,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
                 break;
 
             case ARM_2D_SCENE_SWITCH_MODE_SLIDE_DOWN:
-                tWindow.tLocation.iY = -(iTargetDistance - iOffset);
+                tWindow.tLocation.iY = -(iTargetDistance - this.Switch.Slide.iOffset);
                 arm_2d_tile_generate_child( ptTile, 
                                             &tWindow, 
                                             &this.Switch.Slide.tSceneWindow, 
