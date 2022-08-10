@@ -41,6 +41,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** that are 
   - Supports the **Dirty Regions** when performing the low level refreshing
   - Supports swapping high and low bytes for RGB16 pixels
   - Has built-in frame buffer pool and supports 3-FB scheme
+  - Introduce a **Scene Players** with various scene switching modes (Fade-In-Fade-Out, Slide, Erase etc.)
 - **Transform** (i.e. rotation and scaling)
   - Supports Colour-keying by default
   - Supports an optional **Opacity** ratio
@@ -325,7 +326,7 @@ def_low_lv_io(__ARM_2D_IO_FILL_RGB32, __arm_2d_rgb32_sw_tile_fill);
 
 - The library focus on Cortex-M processors in principle.
 - The library should be compiled with the following compilers:
-  - Arm Compiler 5 (Deprecated)
+  - Arm Compiler 5 (**Deprecated**)
   - Arm Compiler 6
   - GCC
   - LLVM
@@ -368,4 +369,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-09 Aug 2022
+10 Aug 2022
