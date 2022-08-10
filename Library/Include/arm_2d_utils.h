@@ -542,8 +542,13 @@ struct __arm_slist_node_t {
 
 
 /* redefine macros */
+#if defined(__cplusplus)
+#   define ARM_PRIVATE(...)                                                     \
+        struct  {                                                               \
+            __VA_ARGS__                                                         \
+        };
 
-#if defined(__ARM_2D_IMPL__) || defined(__IS_COMPILER_IAR__)
+#elif defined(__ARM_2D_IMPL__) || defined(__IS_COMPILER_IAR__)
 
 #   define ARM_PRIVATE(...)                                                     \
         struct  {                                                               \
