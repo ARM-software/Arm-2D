@@ -88,6 +88,7 @@ var group__gHelper =
     [ "ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER", "group__gHelper.html#ga432fd371b045e6ae90f816466f76fa38", null ],
     [ "init_arm_2d_helper_pfb", "group__gHelper.html#ga377f8339912a8b31e11f45f6af81a1de", null ],
     [ "update_arm_2d_helper_pfb_on_draw_handler", "group__gHelper.html#ga8769bf582db2a83c923cb8be4887b8fb", null ],
+    [ "arm_2d_helper_is_time_out", "group__gHelper.html#ga1a9fc78e58e98bcae35de207f9296597", null ],
     [ "arm_2d_helper_draw_handler_t", "group__gHelper.html#ga895cc320ceab0ca0bd10b999787b2d6c", null ],
     [ "arm_2d_helper_render_handler_t", "group__gHelper.html#ga03c2991d31bd58c8a1d5303fb9460f39", null ],
     [ "arm_2d_scene_player_switch_mode_t", "group__gHelper.html#gab79c6ab3540af636c218dc40fa065ac3", [
@@ -136,6 +137,5 @@ var group__gHelper =
     [ "arm_2d_helper_convert_ticks_to_ms", "group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf", null ],
     [ "arm_2d_helper_convert_ms_to_ticks", "group__gHelper.html#ga22a1338673baaec12c475e371d7593be", null ],
     [ "arm_2d_helper_get_reference_clock_frequency", "group__gHelper.html#gace60efc807106e1526fcc9f673f19b12", null ],
-    [ "arm_2d_helper_get_system_timestamp", "group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185", null ],
-    [ "arm_2d_helper_is_time_out", "group__gHelper.html#ga2107c2ae68e1cb25029cc9b1c04725af", null ]
+    [ "arm_2d_helper_get_system_timestamp", "group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185", null ]
 ];
