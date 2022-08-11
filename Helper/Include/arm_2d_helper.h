@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        17. June 2022
- * $Revision:    V.1.0.1
+ * $Date:        11. Aug 2022
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -114,31 +114,39 @@ extern "C" {
             ARM_CONNECT2(   __arm_2d_align_centre,                              \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
+/*!
+ * \brief set an alarm with given period and check the status
+ *
+ * \param[in] wMS a time period in millisecond
+ * \param[in] ... an optional timestamp holder
+ *
+ * \return bool whether it is timeout
+ */
+#define arm_2d_helper_is_time_out(__MS, ...)                                    \
+    __arm_2d_helper_is_time_out((__MS), (NULL, ##__VA_ARGS__))
+
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ PROTOTYPES ====================================*/
 
-/*!
- * \brief set an alarm with given period and check the status
- *
- * \param[in] wMS a time period in millisecond
- *
- * \return bool whether it is timeout
- */
-__STATIC_INLINE bool arm_2d_helper_is_time_out(uint32_t wMS)
+__STATIC_INLINE bool __arm_2d_helper_is_time_out(uint32_t wMS, int64_t *plTimestamp)
 {
     int64_t lTimestamp = arm_2d_helper_get_system_timestamp();
     static int64_t s_lTimestamp = 0;
-    if (0 == s_lTimestamp) {
-        s_lTimestamp = arm_2d_helper_convert_ms_to_ticks(wMS);
-        s_lTimestamp += lTimestamp;
+    if (NULL == plTimestamp) {
+        plTimestamp = &s_lTimestamp;
+    }
+
+    if (0 == *plTimestamp) {
+        *plTimestamp = arm_2d_helper_convert_ms_to_ticks(wMS);
+        *plTimestamp += lTimestamp;
         
         return false;
     }
 
-    if (lTimestamp >= s_lTimestamp) {
-        s_lTimestamp = arm_2d_helper_convert_ms_to_ticks(wMS) + lTimestamp;
+    if (lTimestamp >= *plTimestamp) {
+        *plTimestamp = arm_2d_helper_convert_ms_to_ticks(wMS) + lTimestamp;
         return true;
     }
 
