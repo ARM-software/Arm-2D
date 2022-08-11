@@ -16,6 +16,17 @@
  * limitations under the License.
  */
 
+/* ----------------------------------------------------------------------
+ * Project:      Arm-2D Library
+ * Title:        #include "arm_2d_helper_pfb.c"
+ * Description:  the pfb helper service source code
+ *
+ * $Date:        11. Aug 2022
+ * $Revision:    V.1.1.0
+ *
+ * Target Processor:  Cortex-M cores
+ * -------------------------------------------------------------------- */
+
 /*============================ INCLUDES ======================================*/
 #define __ARM_2D_IMPL__
 
@@ -230,9 +241,11 @@ void arm_2d_helper_swap_rgb16(uint16_t *phwBuffer, uint32_t wCount)
     }
 }
 
-static 
-void __arm_2d_helper_flush_pfb(arm_2d_helper_pfb_t *ptThis)
+ARM_NONNULL(1)
+void arm_2d_helper_pfb_flush(arm_2d_helper_pfb_t *ptThis)
 {
+    assert(NULL != ptThis);
+
     arm_2d_pfb_t *ptPFB = NULL;
     
     arm_irq_safe {
@@ -265,7 +278,7 @@ void __arm_2d_helper_enqueue_pfb(arm_2d_helper_pfb_t *ptThis)
     }
     
     if (bIsFlushRequested) {
-        __arm_2d_helper_flush_pfb(ptThis);
+        arm_2d_helper_pfb_flush(ptThis);
     }
     
 }
@@ -546,7 +559,7 @@ void arm_2d_helper_pfb_report_rendering_complete(arm_2d_helper_pfb_t *ptThis,
         ARM_LIST_STACK_PUSH(this.Adapter.ptFreeList, ptPFB);
     }
     
-    __arm_2d_helper_flush_pfb(ptThis);
+    arm_2d_helper_pfb_flush(ptThis);
 }
 
 
