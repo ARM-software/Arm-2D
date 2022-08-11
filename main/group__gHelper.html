@@ -364,6 +364,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gab2cec999a9abbf7ec42bed4352a17b88"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gab2cec999a9abbf7ec42bed4352a17b88">arm_2d_helper_pfb_task</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis, <a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptDirtyRegions)</td></tr>
 <tr class="memdesc:gab2cec999a9abbf7ec42bed4352a17b88"><td class="mdescLeft">&#160;</td><td class="mdescRight">the task function for pfb helper  <a href="group__gHelper.html#gab2cec999a9abbf7ec42bed4352a17b88">More...</a><br /></td></tr>
 <tr class="separator:gab2cec999a9abbf7ec42bed4352a17b88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8568abf593c04cf6df798e82cda60676"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga8568abf593c04cf6df798e82cda60676">arm_2d_helper_pfb_flush</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis)</td></tr>
+<tr class="memdesc:ga8568abf593c04cf6df798e82cda60676"><td class="mdescLeft">&#160;</td><td class="mdescRight">flush the FPB FIFO  <a href="group__gHelper.html#ga8568abf593c04cf6df798e82cda60676">More...</a><br /></td></tr>
+<tr class="separator:ga8568abf593c04cf6df798e82cda60676"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7f397129da5a5d78a7dd6325ab3405ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c">arm_2d_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga7f397129da5a5d78a7dd6325ab3405ef">arm_2d_helper_pfb_update_dependency</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis, uint_fast8_t chMask, const <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__dependency__t">arm_2d_helper_pfb_dependency_t</a> *ptDependency)</td></tr>
 <tr class="memdesc:ga7f397129da5a5d78a7dd6325ab3405ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">update PFB dependency (event handlers)  <a href="group__gHelper.html#ga7f397129da5a5d78a7dd6325ab3405ef">More...</a><br /></td></tr>
 <tr class="separator:ga7f397129da5a5d78a7dd6325ab3405ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -2681,6 +2684,35 @@ cycles used in LCD flushing </td></tr>
     <tr><td class="paramname">arm_fsm_rt_on_going</td><td>the refreshing work is on-going </td></tr>
     <tr><td class="paramname">arm_fsm_rt_wait_for_obj</td><td>user's OnDrawing event handler wants to wait for some objects, e.g. semaphore etc. </td></tr>
     <tr><td class="paramname">&lt;0</td><td>An error is detected </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga8568abf593c04cf6df798e82cda60676" name="ga8568abf593c04cf6df798e82cda60676"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8568abf593c04cf6df798e82cda60676">&#9670;&nbsp;</a></span>arm_2d_helper_pfb_flush()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_helper_pfb_flush </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>flush the FPB FIFO </p>
+<dl class="section note"><dt>Note</dt><dd>This function is THREAD-SAFE </dd>
+<dd>
+For normal usage, please DO NOT use this function unless you know what you are doing. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>an initialised PFB control block </td></tr>
   </table>
   </dd>
 </dl>
