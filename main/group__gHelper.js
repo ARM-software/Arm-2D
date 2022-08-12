@@ -5,6 +5,7 @@ var group__gHelper =
     ] ],
     [ "arm_2d_scene_t", "group__gHelper.html#structarm__2d__scene__t", [
       [ "ptNext", "group__gHelper.html#a58b6fe1c4ab89fd6a89c8344fcbe85e7", null ],
+      [ "ptPlayer", "group__gHelper.html#a02317320d49833d7d6f3fc959d95e5f5", null ],
       [ "ptDirtyRegion", "group__gHelper.html#a14ff6b13dd709cab6c029631f073ccd4", null ],
       [ "fnBackground", "group__gHelper.html#adfd244e234641aff86db898b9a0120cf", null ],
       [ "fnScene", "group__gHelper.html#a11df8d98a8cddbc856d69808ded8c733", null ],
@@ -129,6 +130,7 @@ var group__gHelper =
     [ "arm_2d_scene_player_set_switching_period", "group__gHelper.html#gac437acd591ac725054b4216fa2351013", null ],
     [ "arm_2d_scene_player_task", "group__gHelper.html#ga9d3b273bce58d135be740ba682ec11b7", null ],
     [ "arm_2d_helper_pfb_init", "group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99", null ],
+    [ "arm_2d_helper_pfb_get_display_area", "group__gHelper.html#gaf0eef5fe61bc11d102d2180025ada377", null ],
     [ "arm_2d_helper_pfb_task", "group__gHelper.html#gab2cec999a9abbf7ec42bed4352a17b88", null ],
     [ "arm_2d_helper_pfb_flush", "group__gHelper.html#ga8568abf593c04cf6df798e82cda60676", null ],
     [ "arm_2d_helper_pfb_update_dependency", "group__gHelper.html#ga7f397129da5a5d78a7dd6325ab3405ef", null ],
