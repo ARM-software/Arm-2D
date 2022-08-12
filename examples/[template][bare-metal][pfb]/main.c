@@ -22,6 +22,7 @@
 #include "arm_2d_helper.h"
 #include "arm_2d_disp_adapter_0.h"
 #include "scene_player_demo.h"
+#include "virtual_resource_demo.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -127,6 +128,11 @@ int main (void)
  
     disp_adapter0_init();
     scene_player_demo_init();
+    
+#if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
+    virtual_resource_demo_init();
+#endif
+
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
                                             ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT);
     arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 1000);
