@@ -3650,7 +3650,7 @@
 
   <Group>
     <GroupName>arm-2d-helper</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -3735,6 +3735,30 @@
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\Helper\Include\template\arm_2d_disp_adapter.h</PathWithFileName>
       <FilenameWithoutPath>arm_2d_disp_adapter.h</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>9</GroupNumber>
+      <FileNumber>88</FileNumber>
+      <FileType>5</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\Helper\Include\template\arm_2d_scene.h</PathWithFileName>
+      <FilenameWithoutPath>arm_2d_scene.h</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>9</GroupNumber>
+      <FileNumber>89</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\Helper\Source\template\arm_2d_scene.c</PathWithFileName>
+      <FilenameWithoutPath>arm_2d_scene.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

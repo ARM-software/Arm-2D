@@ -21,8 +21,9 @@
 #include "platform.h"
 #include "arm_2d_helper.h"
 #include "arm_2d_disp_adapter_0.h"
-#include "scene_player_demo.h"
 #include "virtual_resource_demo.h"
+#include "arm_2d_scene_0.h"
+#include "arm_2d_scene_1.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -127,7 +128,10 @@ int main (void)
     printf("\r\nArm-2D Bare-metal Template\r\n");
  
     disp_adapter0_init();
-    scene_player_demo_init();
+
+
+    arm_2d_scene0_init(&DISP0_ADAPTER);
+    arm_2d_scene1_init(&DISP0_ADAPTER);
     
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
     virtual_resource_demo_init();

@@ -16,10 +16,16 @@
  * limitations under the License.
  */
 
-#ifndef __SCENE_PLAYER_DEMO_H__
-#define __SCENE_PLAYER_DEMO_H__
+#ifndef __ARM_2D_SCENE1_H__
+#define __ARM_2D_SCENE1_H__
 
 /*============================ INCLUDES ======================================*/
+
+#include "arm_2d.h"
+
+#ifdef __RTE_ACCELERATION_ARM_2D_SCENE1__
+
+#include "arm_2d_helper_scene.h"
 
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
@@ -28,7 +34,8 @@
 /*============================ PROTOTYPES ====================================*/
 
 extern
-void scene_player_demo_init(void);
+void arm_2d_scene1_init(arm_2d_scene_player_t *ptDispAdapter);
 
+#endif
 
 #endif

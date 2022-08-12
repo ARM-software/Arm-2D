@@ -15,6 +15,7 @@
 
   <project>
     <PathAndName>.\gcc_watch_panel.uvprojx</PathAndName>
+    <NodeIsExpanded>1</NodeIsExpanded>
   </project>
 
 </ProjectWorkspace>
