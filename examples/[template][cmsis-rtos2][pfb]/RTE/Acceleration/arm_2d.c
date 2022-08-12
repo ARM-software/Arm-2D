@@ -21,8 +21,8 @@
  * Title:        arm-2d.c
  * Description:  Tables for pixel pipeline OPs
  *
- * $Date:        31. May 2022
- * $Revision:    V.1.0.1
+ * $Date:        11. Aug 2022
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -37,9 +37,11 @@
 
 
 #define __ARM_2D_COMPILATION_UNIT
+#include "../Source/__arm_2d_core.c"
 
-#include "..\Source\__arm_2d_core.c"
-#include "..\Source\__arm_2d_tile.c"
+#define __ARM_2D_COMPILATION_UNIT
+#include "../Source/__arm_2d_tile.c"
+
 
 #ifdef   __cplusplus
 extern "C" {

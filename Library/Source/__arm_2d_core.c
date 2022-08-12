@@ -21,8 +21,8 @@
  * Title:        __arm-2d_core.c
  * Description:  Basic Tile operations
  *
- * $Date:        09. Aug 2022
- * $Revision:    V.1.2.1
+ * $Date:        11. Aug 2022
+ * $Revision:    V.1.2.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -36,7 +36,7 @@
 #endif
 
 #ifdef __ARM_2D_COMPILATION_UNIT
-
+#undef __ARM_2D_COMPILATION_UNIT
 
 #define __ARM_2D_IMPL__
 

@@ -21,11 +21,12 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        17. June 2022
- * $Revision:    V.1.0.1
+ * $Date:        11. Aug 2022
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
+
 #ifndef __ARM_2D_HELPER_PFB_H__
 #define __ARM_2D_HELPER_PFB_H__
 
@@ -487,6 +488,17 @@ extern
 ARM_NONNULL(1)
 arm_fsm_rt_t arm_2d_helper_pfb_task(arm_2d_helper_pfb_t *ptThis, 
                                     arm_2d_region_list_item_t *ptDirtyRegions);
+
+/*!
+ * \brief flush the FPB FIFO 
+ * \note This function is THREAD-SAFE
+ * \note For normal usage, please DO NOT use this function unless you know what
+ *       you are doing.
+ * \param[in] ptThis an initialised PFB control block
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_pfb_flush(arm_2d_helper_pfb_t *ptThis);
 
 /*!
  * \brief update PFB dependency (event handlers)

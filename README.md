@@ -40,8 +40,10 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** that are 
   - No limitation on PFB size and shape (it could be a line or a rectangular with any size)
   - Supports the **Dirty Regions** when performing the low level refreshing
   - Supports swapping high and low bytes for RGB16 pixels
-  - Has built-in frame buffer pool and supports 3-FB scheme
-  - Introduce a **Scene Players** with various scene switching modes (Fade-In-Fade-Out, Slide, Erase etc.)
+  - Introduce a **Scene Player** with various scene switching modes (Fade-In-Fade-Out, Slide, Erase etc.)
+  - Support Various Buffer Modes with a built-in framebuffer pool. 
+    - Single Buffer/Double-Buffers/Three-Buffers
+    - Direct Mode
 - **Transform** (i.e. rotation and scaling)
   - Supports Colour-keying by default
   - Supports an optional **Opacity** ratio
@@ -369,4 +371,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-10 Aug 2022
+11 Aug 2022
