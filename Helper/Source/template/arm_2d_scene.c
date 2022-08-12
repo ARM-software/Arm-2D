@@ -119,7 +119,7 @@ static void __on_scene%Instance%_frame_complete(arm_2d_scene_t *ptScene)
 
 
 static
-IMPL_PFB_ON_DRAW(__pfb_draw_scene%Instance%_background_handler)
+IMPL_PFB_ON_DRAW(__pfb_draw_scene%Instance%_background)
 {
     ARM_2D_UNUSED(pTarget);
     ARM_2D_UNUSED(bIsNewFrame);
@@ -135,7 +135,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene%Instance%_background_handler)
 }
 
 static
-IMPL_PFB_ON_DRAW(__pfb_draw_scene%Instance%_handler)
+IMPL_PFB_ON_DRAW(__pfb_draw_scene%Instance%)
 {
     ARM_2D_UNUSED(pTarget);
     ARM_2D_UNUSED(ptTile);
@@ -228,15 +228,17 @@ void arm_2d_scene%Instance%_init(arm_2d_scene_player_t *ptDispAdapter)
     assert(NULL != ptScene);
     
     *ptScene = (arm_2d_scene_t){
-        .fnBackground   = NULL,
-        .fnScene        = &__pfb_draw_scene%Instance%_handler,
+        
+        /* If you don't need dirty region list, please comment the following line */
         .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
         
         /* Please uncommon the callbacks if you need them
          */
         //.fnOnBGStart    = &__on_scene%Instance%_background_start,
+        //.fnBackground   = &__pfb_draw_scene%Instance%_background,
         //.fnOnBGComplete = &__on_scene%Instance%_background_complete,
         //.fnOnFrameStart = &__on_scene%Instance%_frame_start,
+        .fnScene        = &__pfb_draw_scene%Instance%,
         .fnOnFrameCPL   = &__on_scene%Instance%_frame_complete,
         .fnDepose       = &__on_scene%Instance%_depose,
     };
