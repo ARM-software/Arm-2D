@@ -23,7 +23,7 @@
 /* ARM::Acceleration:Arm-2D Helper:Display Adapter:1.1.0 */
 #define __RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER0__
 
-/* ARM::Acceleration:Arm-2D Helper:PFB:1.3.3 */
+/* ARM::Acceleration:Arm-2D Helper:PFB:1.3.4 */
 #define __RTE_ACCELERATION_ARM_2D_HELPER_PFB__
 /* ARM::Acceleration:Arm-2D:Alpha-Blending:1.1.0-preview */
 #define __RTE_ACCELERATION_ARM_2D_ALPHA_BLENDING__
