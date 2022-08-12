@@ -22,7 +22,7 @@
  * Description:  Public header file for the scene service
  *
  * $Date:        11. Aug 2022
- * $Revision:    V.1.3.1
+ * $Revision:    V.1.3.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -125,6 +125,7 @@ void arm_2d_scene_player_append_scenes( arm_2d_scene_player_t *ptThis,
     
     do {
         arm_2d_scene_t *ptScene = ptScenes++;
+        ptScene->ptPlayer = ptThis;
         arm_irq_safe {
             ARM_LIST_QUEUE_ENQUEUE(this.SceneFIFO.ptHead,
                                    this.SceneFIFO.ptTail,

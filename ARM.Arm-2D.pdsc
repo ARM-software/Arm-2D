@@ -237,7 +237,18 @@
 #define __RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER%Instance%__
           </RTE_Components_h>
         </component>
-        
+
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cversion="1.0.0" condition="Arm-2D-Helper" maxInstances="1024">
+          <description>A template for scene</description>
+          <files>
+            <file category="sourceC"     name="Helper/Source/template/arm_2d_scene.c" attr="config" version="1.0.0" />
+            <file category="header"      name="Helper/Include/template/arm_2d_scene.h" attr="config" version="1.0.0" />
+          </files>
+          <RTE_Components_h>
+#define __RTE_ACCELERATION_ARM_2D_SCENE%Instance%__
+          </RTE_Components_h>
+        </component>
+
         <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cversion="1.0.0" condition="Arm-2D-CORE">
           <description>A example module to print ASCII strings to target string.</description>
           <files>
@@ -251,7 +262,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.2.1" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.2.2" condition="Arm-2D-EXTRA">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <file category="include"     name="examples/common/controls/" />
@@ -266,6 +277,7 @@
             <file category="sourceC"     name="examples/common/asset/SpinWheel.c" />
             <file category="sourceC"     name="examples/common/asset/blue_slashes.c" />
             <file category="sourceC"     name="examples/common/asset/wave.c" />
+            <file category="sourceC"     name="examples/common/asset/cmsis_logo.c" />
           </files>
           <RTE_Components_h>
 

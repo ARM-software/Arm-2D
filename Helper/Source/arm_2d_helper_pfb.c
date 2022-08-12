@@ -204,6 +204,13 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
     return ARM_2D_ERR_NONE;
 }
 
+ARM_NONNULL(1)
+arm_2d_region_t arm_2d_helper_pfb_get_display_area(arm_2d_helper_pfb_t *ptThis)
+{
+    assert(NULL != ptThis);
+    
+    return this.tCFG.tDisplayArea;
+}
 
 __WEAK 
 void arm_2d_helper_swap_rgb16(uint16_t *phwBuffer, uint32_t wCount)

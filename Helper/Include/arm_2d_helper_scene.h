@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        10. Aug 2022
- * $Revision:    V.1.2.0
+ * $Date:        11. Aug 2022
+ * $Revision:    V.1.2.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -108,6 +108,10 @@ typedef union __arm_2d_helper_scene_switch_t {
     uint16_t hwSetting;                                                         //!< the setting value
 }__arm_2d_helper_scene_switch_t;
 
+
+
+typedef struct arm_2d_scene_player_t arm_2d_scene_player_t;
+
 /*!
  * \brief a class for describing scenes which are the combination of a
  *        background and a foreground with a dirty-region-list support
@@ -116,6 +120,7 @@ typedef union __arm_2d_helper_scene_switch_t {
 typedef struct arm_2d_scene_t arm_2d_scene_t;
 struct arm_2d_scene_t {
     arm_2d_scene_t *ptNext;                                                     //!< next scene
+    arm_2d_scene_player_t *ptPlayer;                                            //!< points to the host scene player
     arm_2d_region_list_item_t       *ptDirtyRegion;                             //!< dirty region list for the foreground 
     arm_2d_helper_draw_handler_t    *fnBackground;                              //!< the function pointer for the background 
     arm_2d_helper_draw_handler_t    *fnScene;                                   //!< the function pointer for the foreground
@@ -138,7 +143,7 @@ struct arm_2d_scene_t {
  * \brief a class to manage scenes
  * 
  */
-typedef struct arm_2d_scene_player_t {
+struct arm_2d_scene_player_t {
     inherit(arm_2d_helper_pfb_t);                                               //!< inherit from arm_2d_helper_pfb_t
     
     ARM_PRIVATE(
@@ -179,7 +184,7 @@ typedef struct arm_2d_scene_player_t {
             int64_t lTimeStamp;
         }Switch;
     )
-} arm_2d_scene_player_t;
+};
 
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ LOCAL VARIABLES ===============================*/

@@ -474,6 +474,15 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
                                     arm_2d_helper_pfb_cfg_t *ptCFG);
 
 /*!
+ * \brief get the display (screen) region
+ * \param[in] ptThis the pfb helper control block
+ * \return arm_2d_region_t the screen region
+ */
+extern
+ARM_NONNULL(1)
+arm_2d_region_t arm_2d_helper_pfb_get_display_area(arm_2d_helper_pfb_t *ptThis);
+
+/*!
  * \brief the task function for pfb helper
  * \param[in] ptThis an initialised PFB control block
  * \param[in] ptDirtyRegions a region list pending for refresh, NULL means 
