@@ -22,7 +22,7 @@
  * Description:  Public header file for the all helper services
  *
  * $Date:        11. Aug 2022
- * $Revision:    V.1.1.0
+ * $Revision:    V.1.1.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -34,6 +34,7 @@
 #include "arm_2d.h"
 #include "./arm_2d_helper_pfb.h"
 #include "./arm_2d_helper_scene.h"
+#include "./arm_2d_disp_adapters.h"
 
 #ifdef   __cplusplus
 extern "C" {

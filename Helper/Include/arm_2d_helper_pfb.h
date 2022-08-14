@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        11. Aug 2022
- * $Revision:    V.1.1.0
+ * $Date:        14. Aug 2022
+ * $Revision:    V.1.1.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -309,13 +309,15 @@ extern "C" {
 
 /*============================ TYPES =========================================*/
 
+typedef struct arm_2d_helper_pfb_t arm_2d_helper_pfb_t;
 /*!
  * \brief the header of a PFB block
  */
 typedef struct arm_2d_pfb_t {
-    struct arm_2d_pfb_t *ptNext;                //!< next pfb block
-    arm_2d_tile_t tTile;                        //!< descriptor
-    bool bIsNewFrame;                           //!< a flag to indicate the starting of a frame
+    struct arm_2d_pfb_t *ptNext;                                                //!< next pfb block
+    arm_2d_helper_pfb_t *ptPFBHelper;                                           //!< the pfb helper service current PFB block comes from
+    arm_2d_tile_t tTile;                                                        //!< descriptor
+    bool bIsNewFrame;                                                           //!< a flag to indicate the starting of a frame
 }arm_2d_pfb_t;
 
 /*!
@@ -422,7 +424,7 @@ typedef struct arm_2d_helper_pfb_cfg_t {
  * \brief the PFB helper control block
  * 
  */
-typedef struct arm_2d_helper_pfb_t {
+struct arm_2d_helper_pfb_t{
 
 ARM_PRIVATE(
     arm_2d_helper_pfb_cfg_t tCFG;                               //!< user configuration 
@@ -456,7 +458,7 @@ ARM_PRIVATE(
         int32_t nRenderingCycle;                                //!< cycles used in LCD flushing
     } Statistics;                                               //!< performance statistics
 
-} arm_2d_helper_pfb_t;
+};
 
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -472,6 +474,15 @@ extern
 ARM_NONNULL(1,2)
 arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis, 
                                     arm_2d_helper_pfb_cfg_t *ptCFG);
+
+/*!
+ * \brief get the display (screen) region
+ * \param[in] ptThis the pfb helper control block
+ * \return arm_2d_region_t the screen region
+ */
+extern
+ARM_NONNULL(1)
+arm_2d_region_t arm_2d_helper_pfb_get_display_area(arm_2d_helper_pfb_t *ptThis);
 
 /*!
  * \brief the task function for pfb helper

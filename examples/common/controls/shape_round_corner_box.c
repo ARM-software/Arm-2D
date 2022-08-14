@@ -74,11 +74,12 @@ void draw_round_corner_box( const arm_2d_tile_t *ptTarget,
 {
     assert(NULL != ptTarget);
     ARM_2D_UNUSED(bIsNewFrame);
-    uint16_t hwFillAlpha = (0xFF * chAlpha) >> 8;
+    uint16_t hwFillAlpha = (0xFF == chAlpha) ? 0xFF : (0xFF * chAlpha) >> 8;
+    
     if (NULL == ptRegion) {
         ptRegion = (const arm_2d_region_t *)&(ptTarget->tRegion);
     }
-    
+
     arm_2d_region_t tRegion = *ptRegion;
     
     //! copy the top left corner

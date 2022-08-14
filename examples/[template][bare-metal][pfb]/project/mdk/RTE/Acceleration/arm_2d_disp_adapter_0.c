@@ -27,7 +27,6 @@
 #include "arm_2d_helper.h"
 #include "arm_extra_lcd_printf.h"
 #include "arm_extra_controls.h"
-#include "__common.h"
 #include "arm_2d_disp_adapter_0.h"
 
 #if defined(__clang__)
@@ -274,7 +273,7 @@ static void __user_scene_player_init(void)
 }
 
 /*----------------------------------------------------------------------------*
- * Benchmark Entry                                                            *
+ * Display Adapter Entry                                                      *
  *----------------------------------------------------------------------------*/
 
 void disp_adapter0_init(void)
@@ -333,6 +332,90 @@ arm_fsm_rt_t disp_adapter0_task(void)
 {
     return arm_2d_scene_player_task(&DISP0_ADAPTER);
 }
+
+
+/*----------------------------------------------------------------------------*
+ * Virtual Resource Helper                                                    *
+ *----------------------------------------------------------------------------*/
+
+#if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
+
+
+intptr_t __disp_adapter0_vres_asset_loader (
+                                            uintptr_t pObj, 
+                                            arm_2d_vres_t *ptVRES, 
+                                            arm_2d_region_t *ptRegion)
+{
+    
+    size_t tBufferSize = ptRegion->tSize.iHeight * ptRegion->tSize.iWidth * sizeof(COLOUR_INT);
+    COLOUR_INT *pBuffer = NULL;
+
+#if __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
+    pBuffer = malloc(tBufferSize);
+    assert(NULL != pBuffer);
+    
+    if (NULL == pBuffer) {
+        return (intptr_t)NULL;
+    }
+#else
+    static COLOUR_INT s_tImageBuffer[   __DISP0_CFG_PFB_BLOCK_WIDTH__ 
+                                    *   __DISP0_CFG_PFB_BLOCK_HEIGHT__];
+    pBuffer = s_tImageBuffer;
+    assert(sizeof(s_tImageBuffer) >= tBufferSize);
+    
+    if (tBufferSize > sizeof(s_tImageBuffer)) {
+        return (intptr_t)NULL;
+    }
+#endif
+    /* load content into the buffer */
+    /* this part of code is just simple a demo, you should implement your own */
+    do {
+        
+        COLOUR_INT *pSrc = 
+            (COLOUR_INT *)
+                __disp_adapter0_vres_get_asset_address(pObj, ptVRES);
+        COLOUR_INT *pDes = pBuffer;
+        int16_t iSourceStride = ptVRES->tTile.tRegion.tSize.iWidth;
+        int16_t iTargetStride = ptRegion->tSize.iWidth;
+        /* calculate offset */
+        pSrc += ptRegion->tLocation.iY * iSourceStride + ptRegion->tLocation.iX;
+        
+        for (int_fast16_t y = 0; y < ptRegion->tSize.iHeight; y++) {
+            __disp_adapter0_vres_read_memory( 
+                                            pObj, 
+                                            pDes, 
+                                            (uintptr_t)pSrc, 
+                                            sizeof(COLOUR_INT) * iTargetStride);
+            
+            pDes += iTargetStride;
+            pSrc += iSourceStride;
+        }
+        
+    } while(0);
+    
+    return (intptr_t)pBuffer;
+}
+
+
+void __disp_adapter0_vres_buffer_deposer (
+                                            uintptr_t pTarget, 
+                                            arm_2d_vres_t *ptVRES, 
+                                            intptr_t pBuffer )
+{
+#if __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
+    resource_loader_t *ptLoader = (resource_loader_t *)pTarget;
+    
+    if ((intptr_t)NULL != pBuffer) {
+        free((void *)pBuffer);
+    }
+#else
+    ARM_2D_UNUSED(pTarget);
+    ARM_2D_UNUSED(ptVRES);
+    ARM_2D_UNUSED(pBuffer);
+#endif
+}
+
+#endif
 
 
 #if defined(__clang__)

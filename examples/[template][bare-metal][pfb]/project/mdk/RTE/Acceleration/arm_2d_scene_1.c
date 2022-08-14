@@ -17,10 +17,13 @@
  */
 
 /*============================ INCLUDES ======================================*/
-#include "./scene_player_demo.h"
-#include "platform.h"
+
+#include "arm_2d.h"
+
+#ifdef __RTE_ACCELERATION_ARM_2D_SCENE1__
+
+#include "arm_2d_scene_1.h"
 #include "arm_2d_helper.h"
-#include "arm_2d_disp_adapter_0.h"
 #include "arm_extra_controls.h"
 
 #include <stdlib.h>
@@ -76,126 +79,46 @@ extern const arm_2d_tile_t c_tileCMSISLogoMask;
 /*============================ IMPLEMENTATION ================================*/
 
 
-static void __on_scene_depose(arm_2d_scene_t *ptScene)
+static void __on_scene1_depose(arm_2d_scene_t *ptScene)
 {
+    ptScene->ptPlayer = NULL;
     free(ptScene);
 }
 
 /*----------------------------------------------------------------------------*
- * Scene 0                                                                    *
+ * Scene 1                                                           *
  *----------------------------------------------------------------------------*/
 
-static void __on_scene0_frame_complete(arm_2d_scene_t *ptScene)
+static void __on_scene1_background_start(arm_2d_scene_t *ptScene)
 {
     ARM_2D_UNUSED(ptScene);
-    
-    /* switch to next scene after 3s */
-    if (arm_2d_helper_is_time_out(3000)) {
-        arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
-    }
 }
 
-//static
-//IMPL_PFB_ON_DRAW(__pfb_draw_scene0_background_handler)
-//{
-//    ARM_2D_UNUSED(pTarget);
-//    ARM_2D_UNUSED(bIsNewFrame);
-
-//    arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
-
-//    arm_2d_op_wait_async(NULL);
-
-//    return arm_fsm_rt_cpl;
-//}
-
-static
-IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
+static void __on_scene1_background_complete(arm_2d_scene_t *ptScene)
 {
-    ARM_2D_UNUSED(pTarget);
-    ARM_2D_UNUSED(ptTile);
-    ARM_2D_UNUSED(bIsNewFrame);
-    arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-    
-    arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
-    
-    arm_2d_align_centre(ptTile->tRegion, c_tileCMSISLogo.tRegion.tSize) {
-        arm_2d_tile_copy_with_src_mask( &c_tileCMSISLogo,
-                                        &c_tileCMSISLogoMask,
-                                        ptTile,
-                                        &__centre_region,
-                                        ARM_2D_CP_MODE_COPY);
-    }
-
-    arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
-    arm_lcd_text_location(0,0);
-    arm_lcd_puts("Scene 0");
-
-    arm_2d_op_wait_async(NULL);
-
-    return arm_fsm_rt_cpl;
+    ARM_2D_UNUSED(ptScene);
 }
 
-static void __app_scene0_init(void)
+
+static void __on_scene1_frame_start(arm_2d_scene_t *ptScene)
 {
-
-    /*! define dirty regions */
-    IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
-
-        /* a region for the busy wheel */
-        ADD_REGION_TO_LIST(s_tDirtyRegions,
-            0  /* initialize at runtime later */
-        ),
-        
-        /* top left corner for text display */
-        ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
-            .tLocation = {
-                .iX = 0,
-                .iY = 0,
-            },
-            .tSize = {
-                .iWidth = __DISP0_CFG_SCEEN_WIDTH__,
-                .iHeight = 8,
-            },
-        ),
-
-    END_IMPL_ARM_2D_REGION_LIST()
-    
-    s_tDirtyRegions[0].tRegion.tLocation = (arm_2d_location_t){
-        .iX = ((__DISP0_CFG_SCEEN_WIDTH__ - c_tileCMSISLogo.tRegion.tSize.iWidth) >> 1),
-        .iY = ((__DISP0_CFG_SCEEN_HEIGHT__ - c_tileCMSISLogo.tRegion.tSize.iHeight) >> 1),
-    };
-    s_tDirtyRegions[0].tRegion.tSize = c_tileCMSISLogo.tRegion.tSize;
-    
-    
-    arm_2d_scene_t *ptScene = (arm_2d_scene_t *)malloc(sizeof(arm_2d_scene_t));
-    assert(NULL != ptScene);
-    
-    *ptScene = (arm_2d_scene_t){
-        .fnBackground   = NULL,
-        .fnScene        = &__pfb_draw_scene0_handler,
-        .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
-        .fnOnBGStart    = NULL,
-        .fnOnBGComplete = NULL,
-        .fnOnFrameStart = NULL,
-        .fnOnFrameCPL   = &__on_scene0_frame_complete,
-        .fnDepose       = &__on_scene_depose,
-    };
-    arm_2d_scene_player_append_scenes( &DISP0_ADAPTER, ptScene, 1);
+    ARM_2D_UNUSED(ptScene);
 }
- 
-/*----------------------------------------------------------------------------*
- * Scene 1                                                                    *
- *----------------------------------------------------------------------------*/
 
 static void __on_scene1_frame_complete(arm_2d_scene_t *ptScene)
 {
     ARM_2D_UNUSED(ptScene);
     
-//    /* switch to next scene after 3s */
-//    if (arm_2d_helper_is_time_out(3000)) {
-//        arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
-//    }
+#if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
+    /* switch to next scene after 3s */
+    if (arm_2d_helper_is_time_out(3000)) {
+        arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
+    }
+#endif
 }
+
+
+
 
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene1_background_handler)
@@ -203,13 +126,15 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene1_background_handler)
     ARM_2D_UNUSED(pTarget);
     ARM_2D_UNUSED(bIsNewFrame);
 
-    arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
+    /*-----------------------draw back ground begin-----------------------*/
 
+
+
+    /*-----------------------draw back ground end  -----------------------*/
     arm_2d_op_wait_async(NULL);
 
     return arm_fsm_rt_cpl;
 }
-
 
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene1_handler)
@@ -218,27 +143,34 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene1_handler)
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
     
-    arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+    /*-----------------------draw the foreground begin-----------------------*/
+    
+    /* following code is just a demo, you can remove them */
     
     arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
     
     progress_bar_drill_show(ptTile, 0, bIsNewFrame);
-    
+
+    /* draw text at the top-left corner */
+    arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
     arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
     arm_lcd_text_location(0,0);
     arm_lcd_puts("Scene 1");
-    
+
+    /*-----------------------draw the foreground end  -----------------------*/
     arm_2d_op_wait_async(NULL);
 
     return arm_fsm_rt_cpl;
 }
 
-static void __app_scene1_init(void)
-{
 #define PROGRESSBAR_WIDTH       (__DISP0_CFG_SCEEN_WIDTH__ * 3 >> 3)
 
+void arm_2d_scene1_init(arm_2d_scene_player_t *ptDispAdapter)
+{
+    assert(NULL != ptDispAdapter);
+
     /*! define dirty regions */
-    IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static const)
+    IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
 
         /* a region for the busy wheel */
         ADD_REGION_TO_LIST(s_tDirtyRegions,
@@ -252,7 +184,9 @@ static void __app_scene1_init(void)
             },
         ),
         
-        /* top left corner for text display */
+        /* add the last region:
+         * it is the top left corner for text display 
+         */
         ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
             .tLocation = {
                 .iX = 0,
@@ -266,32 +200,30 @@ static void __app_scene1_init(void)
 
     END_IMPL_ARM_2D_REGION_LIST()
     
+    
     arm_2d_scene_t *ptScene = (arm_2d_scene_t *)malloc(sizeof(arm_2d_scene_t));
     assert(NULL != ptScene);
     
     *ptScene = (arm_2d_scene_t){
-        .fnBackground   = &__pfb_draw_scene1_background_handler,
+        .fnBackground   = NULL,
         .fnScene        = &__pfb_draw_scene1_handler,
         .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
-        .fnOnBGStart    = NULL,
-        .fnOnBGComplete = NULL,
-        .fnOnFrameStart = NULL,
+        
+        /* Please uncommon the callbacks if you need them
+         */
+        //.fnOnBGStart    = &__on_scene1_background_start,
+        //.fnOnBGComplete = &__on_scene1_background_complete,
+        //.fnOnFrameStart = &__on_scene1_frame_start,
         .fnOnFrameCPL   = &__on_scene1_frame_complete,
-        .fnDepose       = &__on_scene_depose,
+        .fnDepose       = &__on_scene1_depose,
     };
-    arm_2d_scene_player_append_scenes( &DISP0_ADAPTER, ptScene, 1);
-}
-
-
-
-void scene_player_demo_init(void)
-{
-    __app_scene0_init();
-    __app_scene1_init();
+    arm_2d_scene_player_append_scenes( ptDispAdapter, ptScene, 1);
 }
 
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
+#endif
+
 #endif
 

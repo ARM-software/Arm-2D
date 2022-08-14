@@ -24,6 +24,7 @@
 #ifdef __RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER%Instance%__
 
 #include "arm_2d_helper_scene.h"
+#include "__common.h"
 
 /*============================ INCLUDES ======================================*/
 /*============================ MACROS ========================================*/
@@ -71,10 +72,49 @@
 #   define __DISP%Instance%_CFG_ITERATION_CNT               30
 #endif
 
+// <q>Enable the virtual resource helper service
+// <i> Introduce a helper service for loading virtual resources.
+// <i> This feature is disabled by default.
+#ifndef __DISP%Instance%_CFG_VIRTUAL_RESOURCE_HELPER__
+#   define __DISP%Instance%_CFG_VIRTUAL_RESOURCE_HELPER__   0
+#endif
+
+// <q>Use heap to allocate buffer in the virtual resource helper service
+// <i> Use malloc and free in the virtual resource helper service. When disabled, a static buffer in the size of current display adapter PFB will be used. 
+// <i> This feature is disabled by default.
+#ifndef __DISP%Instance%_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
+#   define __DISP%Instance%_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__   0
+#endif
 // <<< end of configuration section >>>
 
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
+
+#if __DISP%Instance%_CFG_VIRTUAL_RESOURCE_HELPER__
+#define disp_adapter%Instance%_impl_vres(__COLOUR_FORMAT, __WIDTH, __HEIGHT,...)\
+{                                                                               \
+    .tTile = {                                                                  \
+        .tRegion = {                                                            \
+            .tSize = {                                                          \
+                .iWidth = (__WIDTH),                                            \
+                .iHeight =(__HEIGHT),                                           \
+            },                                                                  \
+        },                                                                      \
+        .tInfo = {                                                              \
+            .bIsRoot = true,                                                    \
+            .bHasEnforcedColour = true,                                         \
+            .bVirtualResource = true,                                           \
+            .tColourInfo = {                                                    \
+                .chScheme = (__COLOUR_FORMAT),                                  \
+            },                                                                  \
+        },                                                                      \
+    },                                                                          \
+    .Load       = &__disp_adapter%Instance%_vres_asset_loader,                  \
+    .Depose     = &__disp_adapter%Instance%_vres_buffer_deposer,                \
+    __VA_ARGS__                                                                 \
+}
+#endif
+
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 ARM_NOINIT
@@ -88,6 +128,73 @@ void disp_adapter%Instance%_init(void);
 
 extern
 arm_fsm_rt_t disp_adapter%Instance%_task(void);
+
+
+#if __DISP%Instance%_CFG_VIRTUAL_RESOURCE_HELPER__
+/*!
+ *  \brief a method to load a specific part of an image
+ *  \note It is NOT an API for users to call, plese leave it alone
+ *
+ *  \param[in] pTarget a reference of an user object 
+ *  \param[in] ptVRES a reference of this virtual resource
+ *  \param[in] ptRegion the target region of the image
+ *  \return intptr_t the address of a resource buffer which holds the content
+ */
+intptr_t __disp_adapter%Instance%_vres_asset_loader   (
+                                                uintptr_t pTarget, 
+                                                arm_2d_vres_t *ptVRES, 
+                                                arm_2d_region_t *ptRegion);
+    
+/*!
+ *  \brief a method to despose the buffer
+ *  \note It is NOT an API for users to call, plese leave it alone
+ *
+ *  \param[in] pTarget a reference of an user object 
+ *  \param[in] ptVRES a reference of this virtual resource
+ *  \param[in] pBuffer the target buffer
+ */
+void __disp_adapter%Instance%_vres_buffer_deposer (  uintptr_t pTarget, 
+                                                            arm_2d_vres_t *ptVRES, 
+                                                            intptr_t pBuffer );
+
+/*!
+ * \brief A user implemented function to return the address for specific asset
+ *        stored in external memory, e.g. SPI Flash
+ * \note You MUST provide an implementation when 
+ *       __DISP%Instance%_CFG_VIRTUAL_RESOURCE_HELPER__ is enabled(1)
+ *
+ * \param[in] pObj an pointer of user defined object, it is used for OOC
+ * \note You can ignore pObj if you don't care/don't use OOC 
+ *
+ * \param[in] ptVRES the target virtual resource object
+ * \return uintptr_t the address of the target asset in external memory
+ */
+extern
+uintptr_t __disp_adapter%Instance%_vres_get_asset_address(
+                                                        uintptr_t pObj,
+                                                        arm_2d_vres_t *ptVRES);
+
+/*!
+ * \brief A user implemented function to copy content from external memory
+ *        (e.g. SPI Flash) to a local buffer with specified address and size.
+ *
+ * \note You MUST provide an implementation when 
+ *       __DISP%Instance%_CFG_VIRTUAL_RESOURCE_HELPER__ is enabled(1)
+ *
+ * \param[in] pObj an pointer of user defined object, it is used for OOC
+ * \note You can ignore pObj if you don't care/don't use OOC 
+ *
+ * \param[in] pBuffer the address of the local buffer
+ * \param[in] pAddress the address in the external memory
+ * \param[in] nSizeInByte number of bytes to read
+ */
+extern
+void __disp_adapter%Instance%_vres_read_memory( intptr_t pObj, 
+                                                COLOUR_INT *pBuffer,
+                                                uintptr_t pAddress,
+                                                size_t nSizeInByte);
+
+#endif
 
 #endif
 

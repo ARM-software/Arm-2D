@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        11. Aug 2022
- * $Revision:    V.1.1.0
+ * $Date:        14. Aug 2022
+ * $Revision:    V.1.1.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -204,6 +204,13 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
     return ARM_2D_ERR_NONE;
 }
 
+ARM_NONNULL(1)
+arm_2d_region_t arm_2d_helper_pfb_get_display_area(arm_2d_helper_pfb_t *ptThis)
+{
+    assert(NULL != ptThis);
+    
+    return this.tCFG.tDisplayArea;
+}
 
 __WEAK 
 void arm_2d_helper_swap_rgb16(uint16_t *phwBuffer, uint32_t wCount)
@@ -256,6 +263,8 @@ void arm_2d_helper_pfb_flush(arm_2d_helper_pfb_t *ptThis)
     }
 
     if (NULL != ptPFB) {
+        ptPFB->ptPFBHelper = ptThis;
+
         // call handler
         (*this.tCFG.Dependency.evtOnLowLevelRendering.fnHandler)(
                         this.tCFG.Dependency.evtOnLowLevelRendering.pTarget,

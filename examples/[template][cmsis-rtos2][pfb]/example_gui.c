@@ -75,7 +75,7 @@ extern const arm_2d_tile_t c_tileHelium ;
  *  \param[in] ptRegion the target region of the image
  *  \return intptr_t the address of a resource buffer which holds the content
  */
-static intptr_t __picture_loader   (uintptr_t pTarget, 
+static intptr_t __vres_asset_loader   (uintptr_t pTarget, 
                                     arm_2d_vres_t *ptVRES, 
                                     arm_2d_region_t *ptRegion);
     
@@ -85,7 +85,7 @@ static intptr_t __picture_loader   (uintptr_t pTarget,
  *  \param[in] ptVRES a reference of this virtual resource
  *  \param[in] pBuffer the target buffer
  */
-static void __buffer_deposer (  uintptr_t pTarget, 
+static void __vres_buffer_deposer (  uintptr_t pTarget, 
                                 arm_2d_vres_t *ptVRES, 
                                 intptr_t pBuffer );
                             
@@ -95,29 +95,36 @@ static resource_loader_t s_tLoader = {
     .pResource = (intptr_t)&c_tileHelium,
 };
 
-static arm_2d_vres_t s_tBigImage = {
+#define impl_vres(__COLOUR_FORMAT, __WIDTH, __HEIGHT, ...)                      \
+{                                                                               \
+    .tTile = {                                                                  \
+        .tRegion = {                                                            \
+            .tSize = {                                                          \
+                .iWidth = (__WIDTH),                                            \
+                .iHeight =(__HEIGHT),                                           \
+            },                                                                  \
+        },                                                                      \
+        .tInfo = {                                                              \
+            .bIsRoot = true,                                                    \
+            .bHasEnforcedColour = true,                                         \
+            .bVirtualResource = true,                                           \
+            .tColourInfo = {                                                    \
+                .chScheme = (__COLOUR_FORMAT),                                  \
+            },                                                                  \
+        },                                                                      \
+    },                                                                          \
+    .Load       = &__vres_asset_loader,                                         \
+    .Depose     = &__vres_buffer_deposer,                                       \
+    __VA_ARGS__                                                                 \
+}
 
-    /* tile header */
-    .tTile = {
-        .tRegion = {
-            .tSize = {
-                .iWidth = 320,
-                .iHeight = 256,
-            },
-        },
-        .tInfo = {
-            .bIsRoot = true,
-            .bHasEnforcedColour = true,
-            .bVirtualResource = true,
-            .tColourInfo = {
-                .chScheme = ARM_2D_COLOUR,
-            },
-        },
-    },
-    .pTarget    = (uintptr_t)&s_tLoader,
-    .Load       = &__picture_loader,
-    .Depose     = &__buffer_deposer,
-};
+static arm_2d_vres_t s_tBigImage = 
+    impl_vres(   
+        ARM_2D_COLOUR, 
+        320, 
+        256, 
+        .pTarget = (uintptr_t)&s_tLoader
+    );
 
 static
 const arm_2d_tile_t c_tChildImage = {
@@ -140,6 +147,37 @@ const arm_2d_tile_t c_tChildImage = {
 
 /*============================ IMPLEMENTATION ================================*/
 
+
+void arm_2d_helper_vres_read_memory(intptr_t pObj, 
+                                    COLOUR_INT *pBuffer,
+                                    uintptr_t pAddress,
+                                    size_t nSizeInByte)
+{
+    ARM_2D_UNUSED(pObj);
+    memcpy(pBuffer, (void * const)pAddress, nSizeInByte);
+}
+
+uintptr_t arm_2d_helper_vres_get_asset_address(uintptr_t pObj,
+                                               arm_2d_vres_t *ptVRES)
+{
+    ARM_2D_UNUSED(ptVRES);
+    resource_loader_t *ptLoader = (resource_loader_t *)pObj;
+    arm_2d_tile_t *ptTile = (arm_2d_tile_t *)ptLoader->pResource;
+    
+    return ptTile->nAddress;
+}
+
+
+extern
+void arm_2d_helper_vres_read_memory(intptr_t pObj, 
+                                    COLOUR_INT *pBuffer,
+                                    uintptr_t pAddress,
+                                    size_t nSizeInByte);
+
+extern 
+uintptr_t arm_2d_helper_vres_get_asset_address(uintptr_t pObj,
+                                               arm_2d_vres_t *ptVRES);
+                                               
 /*!
  *  \brief a method to load a specific part of an image
  *  \param[in] pTarget a reference of an user object 
@@ -147,11 +185,11 @@ const arm_2d_tile_t c_tChildImage = {
  *  \param[in] ptRegion the target region of the image
  *  \return intptr_t the address of a resource buffer which holds the content
  */
-static intptr_t __picture_loader   (uintptr_t pTarget, 
+static intptr_t __vres_asset_loader   (  uintptr_t pObj, 
                                     arm_2d_vres_t *ptVRES, 
                                     arm_2d_region_t *ptRegion)
 {
-    resource_loader_t *ptLoader = (resource_loader_t *)pTarget;
+    
     size_t tBufferSize = ptRegion->tSize.iHeight * ptRegion->tSize.iWidth * sizeof(COLOUR_INT);
     COLOUR_INT *pBuffer = NULL;
 
@@ -174,19 +212,23 @@ static intptr_t __picture_loader   (uintptr_t pTarget,
     /* load content into the buffer */
     /* this part of code is just simple a demo, you should implement your own */
     do {
-        arm_2d_tile_t *ptTile = (arm_2d_tile_t *)ptLoader->pResource;
-        COLOUR_INT *pSource = (COLOUR_INT *)(ptTile->nAddress);
-        COLOUR_INT *pTarget = pBuffer;
-        int16_t iSourceStride = ptTile->tRegion.tSize.iWidth;
+        
+        COLOUR_INT *pSrc = 
+            (COLOUR_INT *)arm_2d_helper_vres_get_asset_address(pObj, ptVRES);
+        COLOUR_INT *pDes = pBuffer;
+        int16_t iSourceStride = ptVRES->tTile.tRegion.tSize.iWidth;
         int16_t iTargetStride = ptRegion->tSize.iWidth;
         /* calculate offset */
-        pSource += ptRegion->tLocation.iY * iSourceStride + ptRegion->tLocation.iX;
+        pSrc += ptRegion->tLocation.iY * iSourceStride + ptRegion->tLocation.iX;
         
         for (int_fast16_t y = 0; y < ptRegion->tSize.iHeight; y++) {
-            memcpy(pTarget, pSource, sizeof(COLOUR_INT) * iTargetStride);
+            arm_2d_helper_vres_read_memory( pObj, 
+                                            pDes, 
+                                            (uintptr_t)pSrc, 
+                                            sizeof(COLOUR_INT) * iTargetStride);
             
-            pTarget += iTargetStride;
-            pSource += iSourceStride;
+            pDes += iTargetStride;
+            pSrc += iSourceStride;
         }
         
     } while(0);
@@ -200,7 +242,7 @@ static intptr_t __picture_loader   (uintptr_t pTarget,
  *  \param[in] ptVRES a reference of this virtual resource
  *  \param[in] pBuffer the target buffer
  */
-static void __buffer_deposer (  uintptr_t pTarget, 
+static void __vres_buffer_deposer (  uintptr_t pTarget, 
                                 arm_2d_vres_t *ptVRES, 
                                 intptr_t pBuffer )
 {
