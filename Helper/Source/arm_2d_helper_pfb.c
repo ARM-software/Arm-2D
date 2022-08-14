@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        11. Aug 2022
- * $Revision:    V.1.1.0
+ * $Date:        14. Aug 2022
+ * $Revision:    V.1.1.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -263,6 +263,8 @@ void arm_2d_helper_pfb_flush(arm_2d_helper_pfb_t *ptThis)
     }
 
     if (NULL != ptPFB) {
+        ptPFB->ptPFBHelper = ptThis;
+
         // call handler
         (*this.tCFG.Dependency.evtOnLowLevelRendering.fnHandler)(
                         this.tCFG.Dependency.evtOnLowLevelRendering.pTarget,
