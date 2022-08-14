@@ -20,6 +20,7 @@ var group__gHelper =
     ] ],
     [ "arm_2d_pfb_t", "group__gHelper.html#structarm__2d__pfb__t", [
       [ "ptNext", "group__gHelper.html#a7a2190986a8d5be647ea2fae4c3e1caf", null ],
+      [ "ptPFBHelper", "group__gHelper.html#ada5ebe34cc1e12b0d9ac77d0ba1e983b", null ],
       [ "tTile", "group__gHelper.html#a5c06645aaf74ac1f648bc144d614c7aa", null ],
       [ "bIsNewFrame", "group__gHelper.html#a4b9c82f196be65325800ed8a5d1fd0d3", null ]
     ] ],
