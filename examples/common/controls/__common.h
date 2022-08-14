@@ -79,6 +79,10 @@
 #   define arm_2dp_tile_rotation                arm_2dp_gray8_tile_rotation
 #   define arm_2dp_tile_rotation_with_alpha                                     \
                 arm_2dp_gray8_tile_rotation_with_alpha
+#   define arm_2dp_tile_rotation_with_src_mask_and_opacity                      \
+                arm_2dp_gray8_tile_rotation_with_src_mask_and_opacity
+#   define arm_2dp_tile_rotation_with_src_mask                                  \
+                arm_2dp_gray8_tile_rotation_with_src_mask
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
 #   define __arm_2d_color_t         arm_2d_color_rgb565_t
@@ -133,6 +137,10 @@
 #   define arm_2dp_tile_rotation                arm_2dp_rgb565_tile_rotation
 #   define arm_2dp_tile_rotation_with_alpha                                     \
                 arm_2dp_rgb565_tile_rotation_with_alpha
+#   define arm_2dp_tile_rotation_with_src_mask_and_opacity                      \
+                arm_2dp_rgb565_tile_rotation_with_src_mask_and_opacity
+#   define arm_2dp_tile_rotation_with_src_mask                                  \
+                arm_2dp_rgb565_tile_rotation_with_src_mask
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
 #   define __arm_2d_color_t         arm_2d_color_cccn888_t
@@ -187,7 +195,10 @@
 #   define arm_2dp_tile_rotation                arm_2dp_cccn888_tile_rotation
 #   define arm_2dp_tile_rotation_with_alpha                                     \
                 arm_2dp_cccn888_tile_rotation_with_alpha
-
+#   define arm_2dp_tile_rotation_with_src_mask_and_opacity                      \
+                arm_2dp_cccn888_tile_rotation_with_src_mask_and_opacity
+#   define arm_2dp_tile_rotation_with_src_mask                                  \
+                arm_2dp_cccn888_tile_rotation_with_src_mask
 #else
 #   error Unsupported colour depth!
 #endif

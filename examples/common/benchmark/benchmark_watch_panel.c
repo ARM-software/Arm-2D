@@ -19,6 +19,7 @@
 /*============================ INCLUDES ======================================*/
 #include "benchmark_watch_panel.h"
 #include "arm_extra_controls.h"
+#include "arm_2d_helper.h"
 #include <math.h>
 
 #if defined(__clang__)
@@ -115,14 +116,16 @@ typedef struct floating_range_t {
 
 
 typedef struct {
-    arm_2d_op_trans_opa_t tOP;
+    arm_2d_op_trans_msk_opa_t tOP;
     const arm_2d_tile_t *ptTile;
+    const arm_2d_tile_t *ptMask;
     float fAngle;
     float fAngleSpeed;
     arm_2d_location_t tCentre;
     arm_2d_location_t *ptTargetCentre;
     arm_2d_region_t *ptRegion;
     uint8_t chOpacity;
+    bool    bUpdateAnglePerSec;
 } demo_gears_t;
 
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -133,6 +136,8 @@ extern
 const arm_2d_tile_t c_tileGear02;
 extern
 const arm_2d_tile_t c_tilePointerSec;
+extern
+const arm_2d_tile_t c_tilePointerSecMask;
 
 extern 
 const arm_2d_tile_t c_tileWatchPanel;
@@ -226,22 +231,24 @@ demo_gears_t s_tGears[] = {
 
     {
         .ptTile = &c_tilePointerSec,
-        .fAngleSpeed = 1.0f,
+        .ptMask = &c_tilePointerSecMask,
+        .fAngleSpeed = 6.0f, // 6 degree per seconde)
         .tCentre = {
-            .iX = 7,
-            .iY = 110,
+            .iX = 4,
+            .iY = 99,
         },
         .ptRegion = (arm_2d_region_t []){ {
             .tLocation = {
-                .iX = ((__GLCD_CFG_SCEEN_WIDTH__ - 222) >> 1),
-                .iY = ((__GLCD_CFG_SCEEN_HEIGHT__ - 222) >>1),
+                .iX = ((__GLCD_CFG_SCEEN_WIDTH__ - 198) >> 1),
+                .iY = ((__GLCD_CFG_SCEEN_HEIGHT__ - 198) >>1),
             },
             .tSize = {
-                .iWidth = 222,
-                .iHeight = 222,
+                .iWidth = 198,
+                .iHeight = 198,
             },
         }},
         .chOpacity = 255,
+        .bUpdateAnglePerSec = true,
     },
 };
 
@@ -387,37 +394,71 @@ void example_gui_refresh(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
 
 #endif
 
+    bool bUpdatePerSec = false;
+    
+    if (bIsNewFrame) {
+        if (arm_2d_helper_is_time_out(1000)) {
+            bUpdatePerSec = true;
+        }
+    }
+
+
     /*! for each item (ptItem) inside array s_tGears */
     arm_foreach (demo_gears_t, s_tGears, ptItem) {
 
-        if (bIsNewFrame) {
+        if (ptItem->bUpdateAnglePerSec) {
+            if (bUpdatePerSec) {
+                ptItem->fAngle += ARM_2D_ANGLE(ptItem->fAngleSpeed);
+                ptItem->fAngle = fmodf(ptItem->fAngle,ARM_2D_ANGLE(360));
+            }
+        } else if (bIsNewFrame) {
             ptItem->fAngle += ARM_2D_ANGLE(ptItem->fAngleSpeed);
-
             ptItem->fAngle = fmodf(ptItem->fAngle,ARM_2D_ANGLE(360));
-
         }
 
-        if (255 == ptItem->chOpacity) {
+        if (NULL != ptItem->ptMask) {
+            if (255 == ptItem->chOpacity) {
+                arm_2dp_tile_rotation_with_src_mask(
+                    (arm_2d_op_trans_msk_t *)&(ptItem->tOP),                    //!< control block
+                    ptItem->ptTile,                                             //!< source tile
+                    ptItem->ptMask,                                             //!< source mask
+                    ptTile,                                                     //!< target tile
+                    ptItem->ptRegion,                                           //!< target region
+                    ptItem->tCentre,                                            //!< pivot on source
+                    ptItem->fAngle                                              //!< rotation angle 
+                );
+            } else {
+                arm_2dp_tile_rotation_with_src_mask_and_opacity(
+                    &(ptItem->tOP),                                             //!< control block
+                    ptItem->ptTile,                                             //!< source tile
+                    ptItem->ptMask,                                             //!< source mask
+                    ptTile,                                                     //!< target tile
+                    ptItem->ptRegion,                                           //!< target region
+                    ptItem->tCentre,                                            //!< pivot on source
+                    ptItem->fAngle,                                             //!< rotation angle 
+                    ptItem->chOpacity                                           //!< opacity
+                );
+            }
+        } else if (255 == ptItem->chOpacity) {
         
-            arm_2dp_tile_rotation(   (arm_2d_op_trans_t *)&(_->tOP),
-                                            ptItem->ptTile,     //!< source tile
-                                            ptTile,             //!< target tile
-                                            ptItem->ptRegion,   //!< target region
-                                            ptItem->tCentre,    //!< center point
-                                            ptItem->fAngle,     //!< rotation angle
-                                            GLCD_COLOR_BLACK,   //!< masking colour
-                                            ptItem->ptTargetCentre);
+            arm_2dp_tile_rotation(  (arm_2d_op_trans_t *)&(_->tOP),
+                                    ptItem->ptTile,                             //!< source tile
+                                    ptTile,                                     //!< target tile
+                                    ptItem->ptRegion,                           //!< target region
+                                    ptItem->tCentre,                            //!< center point
+                                    ptItem->fAngle,                             //!< rotation angle
+                                    GLCD_COLOR_BLACK,                           //!< masking colour
+                                    ptItem->ptTargetCentre);
         } else {
-            arm_2dp_tile_rotation_with_alpha(
-                                            &(ptItem->tOP),
-                                            ptItem->ptTile,     //!< source tile
-                                            ptTile,             //!< target tile
-                                            ptItem->ptRegion,   //!< target region
-                                            ptItem->tCentre,    //!< center point
-                                            ptItem->fAngle,     //!< rotation angle
-                                            GLCD_COLOR_BLACK,   //!< masking colour
-                                            ptItem->chOpacity,  //!< Opacity
-                                            ptItem->ptTargetCentre);
+            arm_2dp_tile_rotation_with_alpha(   (arm_2d_op_trans_opa_t *)&(ptItem->tOP),
+                                                ptItem->ptTile,                 //!< source tile
+                                                ptTile,                         //!< target tile
+                                                ptItem->ptRegion,               //!< target region
+                                                ptItem->tCentre,                //!< center point
+                                                ptItem->fAngle,                 //!< rotation angle
+                                                GLCD_COLOR_BLACK,               //!< masking colour
+                                                ptItem->chOpacity,              //!< Opacity
+                                                ptItem->ptTargetCentre);
         }
     }
 #else
