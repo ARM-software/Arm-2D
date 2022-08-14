@@ -232,7 +232,12 @@ demo_gears_t s_tGears[] = {
     {
         .ptTile = &c_tilePointerSec,
         .ptMask = &c_tilePointerSecMask,
+    #if defined(__ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__)  \
+    &&  __ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__
         .fAngleSpeed = 6.0f, // 6 degree per seconde)
+    #else
+        .fAngleSpeed = 1.0f,
+    #endif
         .tCentre = {
             .iX = 4,
             .iY = 99,
@@ -248,7 +253,10 @@ demo_gears_t s_tGears[] = {
             },
         }},
         .chOpacity = 255,
+    #if defined(__ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__)  \
+    &&  __ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__
         .bUpdateAnglePerSec = true,
+    #endif
     },
 };
 

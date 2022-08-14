@@ -133,6 +133,13 @@ extern "C" {
 #ifndef __ARM_2D_CFG_BENCHMARK_TINY_MODE__
 #   define __ARM_2D_CFG_BENCHMARK_TINY_MODE__   0
 #endif
+
+// <q> Enable Stopwatch mode in the Benchmark:Watch-panel
+// <i> Only update the second-hand (i.e. red pointer) every second in the watch-panel demo
+// <i> This feature is disabled by default.
+#ifndef __ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__
+#   define __ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__    0
+#endif
 //</h>
 // </h>
 
