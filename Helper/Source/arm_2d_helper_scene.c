@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        11. Aug 2022
- * $Revision:    V.1.3.2
+ * $Date:        15. Aug 2022
+ * $Revision:    V.1.3.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -958,7 +958,20 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             
         case DRAW_BACKGROUND_PREPARE:
             if (NULL == ptScene->fnBackground) {
-                this.Runtime.chState = DRAW_SCENE_PREPARE;
+                /* if the dirty region list is available, draw fnScene directly 
+                 * as background 
+                 */
+                if (NULL != ptScene->ptDirtyRegion && NULL != ptScene->fnScene) {
+                    ARM_2D_INVOKE(ptScene->fnOnBGStart, ptScene);
+            
+                    ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(   
+                        &this.use_as__arm_2d_helper_pfb_t,
+                        ptScene->fnScene,
+                        ptScene);
+                    this.Runtime.chState = DRAW_BACKGROUND;
+                } else {
+                    this.Runtime.chState = DRAW_SCENE_PREPARE;
+                }
                 break;
             } else {
                 ARM_2D_INVOKE(ptScene->fnOnBGStart, ptScene);
