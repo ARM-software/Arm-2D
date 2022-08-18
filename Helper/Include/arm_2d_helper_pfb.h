@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        14. Aug 2022
- * $Revision:    V.1.1.1
+ * $Date:        18. Aug 2022
+ * $Revision:    V.1.1.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -454,6 +454,7 @@ ARM_PRIVATE(
 )   
 
     struct {
+        int64_t lTimestamp;                                     //!< PLEASE DO NOT USE
         int32_t nTotalCycle;                                    //!< cycles used by drawing 
         int32_t nRenderingCycle;                                //!< cycles used in LCD flushing
     } Statistics;                                               //!< performance statistics

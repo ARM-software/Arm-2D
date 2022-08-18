@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        14. Aug 2022
- * $Revision:    V.1.1.1
+ * $Date:        18. Aug 2022
+ * $Revision:    V.1.1.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -516,15 +516,6 @@ bool __arm_2d_helper_pfb_drawing_iteration_end(arm_2d_helper_pfb_t *ptThis)
 }
 
 
-__WEAK void arm_2d_helper_perf_counter_start(void)
-{
-}
-
-__WEAK int32_t arm_2d_helper_perf_counter_stop(void)
-{
-    return 0;
-}
-
 __WEAK int64_t arm_2d_helper_get_system_timestamp(void)
 {
 #if defined(__PERF_COUNTER__)
@@ -552,6 +543,21 @@ int64_t arm_2d_helper_convert_ms_to_ticks(uint32_t wMS)
     int64_t lResult = arm_2d_helper_get_reference_clock_frequency() 
                     * (int64_t)wMS / 1000ul;
     return lResult ? lResult : 1;
+}
+
+
+
+__WEAK void __arm_2d_helper_perf_counter_start(int64_t *plTimestamp)
+{
+    assert(NULL != plTimestamp);
+    *plTimestamp = arm_2d_helper_get_system_timestamp();
+}
+
+__WEAK int32_t __arm_2d_helper_perf_counter_stop(int64_t *plTimestamp)
+{
+    assert(NULL != plTimestamp);
+    return (int32_t)(   (int64_t)arm_2d_helper_get_system_timestamp() 
+                    -   (int64_t)*plTimestamp);
 }
 
 
@@ -614,9 +620,9 @@ ARM_PT_BEGIN(this.Adapter.chPT)
     this.Statistics.nTotalCycle = 0;
     this.Statistics.nRenderingCycle = 0;
     this.Adapter.bIsNewFrame = true;
-    arm_2d_helper_perf_counter_start(); 
+    __arm_2d_helper_perf_counter_start(&this.Statistics.lTimestamp); 
     do {
-        this.Statistics.nRenderingCycle += arm_2d_helper_perf_counter_stop(); 
+        this.Statistics.nRenderingCycle += __arm_2d_helper_perf_counter_stop(&this.Statistics.lTimestamp); 
 
         /* begin of the drawing iteration, 
          * try to request the tile of frame buffer
@@ -669,7 +675,7 @@ ARM_PT_BEGIN(this.Adapter.chPT)
 
     ARM_PT_ENTRY(this.Adapter.chPT)
         
-        arm_2d_helper_perf_counter_start(); 
+        __arm_2d_helper_perf_counter_start(&this.Statistics.lTimestamp); 
         // draw all the gui elements on target frame buffer
         tResult = this.tCFG.Dependency.evtOnDrawing.fnHandler(
                                         this.tCFG.Dependency.evtOnDrawing.pTarget,
@@ -679,7 +685,7 @@ ARM_PT_BEGIN(this.Adapter.chPT)
         arm_2d_op_wait_async(NULL);
         
         this.Adapter.bIsNewFrame = false;
-        this.Statistics.nTotalCycle += arm_2d_helper_perf_counter_stop();                                 
+        this.Statistics.nTotalCycle += __arm_2d_helper_perf_counter_stop(&this.Statistics.lTimestamp);                                 
 
         if (arm_fsm_rt_on_going == tResult) {
     ARM_PT_GOTO_PREV_ENTRY()
@@ -692,10 +698,10 @@ ARM_PT_BEGIN(this.Adapter.chPT)
     ARM_PT_YIELD(this.Adapter.chPT)
         }
         
-        arm_2d_helper_perf_counter_start(); 
+        __arm_2d_helper_perf_counter_start(&this.Statistics.lTimestamp); 
     } while(__arm_2d_helper_pfb_drawing_iteration_end(ptThis));
     
-    this.Statistics.nRenderingCycle += arm_2d_helper_perf_counter_stop();
+    this.Statistics.nRenderingCycle += __arm_2d_helper_perf_counter_stop(&this.Statistics.lTimestamp);
 ARM_PT_END(this.Adapter.chPT)
     
     return arm_fsm_rt_cpl;
