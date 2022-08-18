@@ -83,6 +83,7 @@ var group__gHelper =
     [ "arm_2d_helper_pfb_t.__unnamed128__.Adapter.__unnamed132__", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed128_____8Adapter_8____unnamed132____", null ],
     [ "arm_2d_helper_pfb_t.__unnamed128__.Adapter.FlushFIFO", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed128_____8Adapter_8FlushFIFO", null ],
     [ "arm_2d_helper_pfb_t.Statistics", "group__gHelper.html#structarm__2d__helper__pfb__t_8Statistics", [
+      [ "lTimestamp", "group__gHelper.html#a5a48f3e42ab73764014d124cd2764be4", null ],
       [ "nTotalCycle", "group__gHelper.html#aad0c95f31d24233a32300ac6e851506f", null ],
       [ "nRenderingCycle", "group__gHelper.html#a5ae6646bd6957664dcc13172aa268290", null ]
     ] ],
