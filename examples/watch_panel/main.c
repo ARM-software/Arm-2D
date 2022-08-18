@@ -49,18 +49,6 @@
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
-__OVERRIDE_WEAK
-void arm_2d_helper_perf_counter_start(void)
-{
-    start_cycle_counter();
-}
-
-__OVERRIDE_WEAK
-int32_t arm_2d_helper_perf_counter_stop(void)
-{
-    return stop_cycle_counter();
-}
-
 __OVERRIDE_WEAK 
 int64_t arm_2d_helper_get_system_timestamp(void)
 {
