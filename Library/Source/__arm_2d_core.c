@@ -21,8 +21,8 @@
  * Title:        __arm-2d_core.c
  * Description:  Basic Tile operations
  *
- * $Date:        11. Aug 2022
- * $Revision:    V.1.2.2
+ * $Date:        18. Aug 2022
+ * $Revision:    V.1.3.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -932,11 +932,12 @@ arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
                         tTargetTileParam.tValidRegion.tSize.iHeight),
     };
 
+    /* trim source valid region */
+    tSourceTileParam.tValidRegion.tSize = tActualSize;
 
     if (wMode & ARM_2D_CP_MODE_FILL) {                                          //!< tiling (tile fill) operation
 
         if (OP_CORE.ptOp->Info.Param.bHasOrigin) {
-        
             /*! \brief masks are not supported in fill with origin mode */
             assert(!OP_CORE.ptOp->Info.Param.bHasSrcMask);
             assert(!OP_CORE.ptOp->Info.Param.bHasDesMask);
@@ -998,9 +999,6 @@ arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
                                             wMode);
                 }
             } while(0);
-
-            /* trim source valid region */
-            tSourceTileParam.tValidRegion.tSize = tActualSize;
 
             /* trim source mask valid region */
             if (NULL != ptSourceMask) {
@@ -1085,8 +1083,8 @@ arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
                 }
             } while(0);
 
-            /* trim source valid region */
-            tSourceTileParam.tValidRegion.tSize = tActualSize;
+//            /* trim source valid region */
+//            tSourceTileParam.tValidRegion.tSize = tActualSize;
 
             /* trim source mask valid region */
             if (NULL != ptTargetMask) {
@@ -1165,8 +1163,8 @@ arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
                 }
             } while(0);
 
-            /* trim source valid region */
-            tSourceTileParam.tValidRegion.tSize = tActualSize;
+//            /* trim source valid region */
+//            tSourceTileParam.tValidRegion.tSize = tActualSize;
 
             if (NULL != ptSourceMask) {
                 tSourceMaskParam.tValidRegion.tSize.iWidth = 
