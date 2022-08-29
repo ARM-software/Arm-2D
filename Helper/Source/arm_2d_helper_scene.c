@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        15. Aug 2022
- * $Revision:    V.1.3.3
+ * $Date:        29. Aug 2022
+ * $Revision:    V.1.3.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -782,12 +782,16 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
             /* draw the new scene background */
             ptScene = this.SceneFIFO.ptHead->ptNext;
             
-            bIgnoreBG = this.Switch.tConfig.Feature.bIgnoreNewSceneBG;
-            bIgnoreScene = this.Switch.tConfig.Feature.bIgnoreNewScene;
-            bIgnoreBG = ptScene->bOnSwitchingIgnoreBG || bIgnoreBG;
-            bIgnoreScene = ptScene->bOnSwitchingIgnoreScene || bIgnoreScene;
+            if (NULL != ptScene) {
+                bIgnoreBG = this.Switch.tConfig.Feature.bIgnoreNewSceneBG;
+                bIgnoreScene = this.Switch.tConfig.Feature.bIgnoreNewScene;
+                bIgnoreBG = ptScene->bOnSwitchingIgnoreBG || bIgnoreBG;
+                bIgnoreScene = ptScene->bOnSwitchingIgnoreScene || bIgnoreScene;
 
-            if (bIgnoreBG && bIgnoreScene) {
+                if (bIgnoreBG && bIgnoreScene) {
+                    bDrawDefaultBG = true;
+                }
+            } else {
                 bDrawDefaultBG = true;
             }
         } else {
