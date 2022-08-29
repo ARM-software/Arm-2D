@@ -238,11 +238,11 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cversion="1.0.0" condition="Arm-2D-Helper" maxInstances="1024">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cversion="1.1.0" condition="Arm-2D-Helper" maxInstances="1024">
           <description>A template for scene</description>
           <files>
-            <file category="sourceC"     name="Helper/Source/template/arm_2d_scene.c" attr="config" version="1.0.0" />
-            <file category="header"      name="Helper/Include/template/arm_2d_scene.h" attr="config" version="1.0.0" />
+            <file category="sourceC"     name="Helper/Source/template/arm_2d_scene.c" attr="config" version="1.1.0" />
+            <file category="header"      name="Helper/Include/template/arm_2d_scene.h" attr="config" version="1.1.0" />
           </files>
           <RTE_Components_h>
 #define __RTE_ACCELERATION_ARM_2D_SCENE%Instance%__
