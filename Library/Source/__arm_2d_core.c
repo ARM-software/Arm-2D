@@ -21,8 +21,8 @@
  * Title:        __arm-2d_core.c
  * Description:  Basic Tile operations
  *
- * $Date:        18. Aug 2022
- * $Revision:    V.1.3.0
+ * $Date:        29. Aug 2022
+ * $Revision:    V.1.3.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -170,22 +170,27 @@ static arm_2d_err_t __load_virtual_resource(const arm_2d_tile_t *ptRootTile,
     return ARM_2D_ERR_NONE;
 }
 
-static void __depose_virtual_resource(const arm_2d_tile_t *ptRootTile)
+static void __depose_virtual_resource(const arm_2d_tile_t *ptSourceTile)
 {
-    if (NULL == ptRootTile) {
+    if (NULL == ptSourceTile) {
         return;
     }
+    arm_2d_region_t tValidRegion;
+    ptSourceTile = __arm_2d_tile_get_root(  ptSourceTile, 
+                                            &tValidRegion, 
+                                            NULL, 
+                                            NULL);
 
-    if (!ptRootTile->tInfo.bIsRoot) {
+    if (NULL == ptSourceTile) {
         return ;
     }
     
-    if (!ptRootTile->tInfo.bVirtualResource) {
+    if (!ptSourceTile->tInfo.bVirtualResource) {
         return ;
     }
 
     /* a virtual resource must be marked as root tile */
-    arm_2d_vres_t *ptRes = (arm_2d_vres_t *)ptRootTile;
+    arm_2d_vres_t *ptRes = (arm_2d_vres_t *)ptSourceTile;
 
     intptr_t nAddress = ptRes->tTile.nAddress;
     ptRes->tTile.nAddress = (intptr_t)NULL;
