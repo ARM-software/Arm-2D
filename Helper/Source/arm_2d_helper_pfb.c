@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        18. Aug 2022
- * $Revision:    V.1.1.2
+ * $Date:        29. Aug 2022
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -147,6 +147,37 @@ Author: Adam Dunkels
 /*============================ PROTOTYPES ====================================*/
 /*============================ IMPLEMENTATION ================================*/
 
+ARM_NONNULL(1)
+arm_2d_pfb_t *__arm_2d_helper_pfb_new(arm_2d_helper_pfb_t *ptThis)
+{
+    assert(NULL != ptThis);
+    
+    arm_2d_pfb_t *ptPFB = NULL;
+    arm_irq_safe {
+        this.Adapter.hwFreePFBCount--;
+        ARM_LIST_STACK_POP(this.Adapter.ptFreeList, ptPFB);
+    }
+    
+    ptPFB->ptPFBHelper = ptThis;
+    
+    return ptPFB;
+}
+
+ARM_NONNULL(1)
+void __arm_2d_helper_pfb_free(arm_2d_helper_pfb_t *ptThis, arm_2d_pfb_t *ptPFB)
+{
+    assert(NULL != ptThis);
+    
+    if (NULL == ptPFB) {
+        return ;
+    }
+
+    arm_irq_safe {
+        ARM_LIST_STACK_PUSH(this.Adapter.ptFreeList, ptPFB);
+        this.Adapter.hwFreePFBCount++;
+    }
+}
+
 ARM_NONNULL(1,2)
 arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis, 
                             arm_2d_helper_pfb_cfg_t *ptCFG)
@@ -179,6 +210,7 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
             return ARM_2D_ERR_INVALID_PARAM;
         }
         
+        this.Adapter.hwFreePFBCount = 0;
         // add PFBs to pool
         do {
             ptItem->tTile = (arm_2d_tile_t) {
@@ -188,7 +220,11 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
                 .tInfo.bIsRoot = true,
                 .pchBuffer = (uint8_t *)((uintptr_t)ptItem + sizeof(arm_2d_pfb_t)),
             };
-            ARM_LIST_STACK_PUSH(this.Adapter.ptFreeList, ptItem);
+            
+            // update buffer size
+            ptItem->u24Size = wBufferSize;
+            //ARM_LIST_STACK_PUSH(this.Adapter.ptFreeList, ptItem);
+            __arm_2d_helper_pfb_free(ptThis, ptItem);
             
             // update pointer
             ptItem = (arm_2d_pfb_t *)(  (uintptr_t)ptItem 
@@ -344,6 +380,7 @@ static bool __arm_2d_helper_pfb_get_next_dirty_region(arm_2d_helper_pfb_t *ptThi
     return true;
 }
 
+
 /*! \brief begin a iteration of drawing and request a frame buffer from 
  *         low level display driver.
  *  \param[in] ptThis the PFB helper control block
@@ -359,8 +396,17 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                                     arm_2d_helper_pfb_t *ptThis,
                                     arm_2d_region_list_item_t *ptDirtyRegions)
 { 
+//    arm_irq_safe {
+//        ARM_LIST_STACK_POP(this.Adapter.ptFreeList, this.Adapter.ptCurrent);
+//    }
+    this.Adapter.ptCurrent = NULL;
     arm_irq_safe {
-        ARM_LIST_STACK_POP(this.Adapter.ptFreeList, this.Adapter.ptCurrent);
+        /* allocating pfb only when the number of free PFB blocks is larger than
+         * the reserved threashold
+         */
+        if (this.Adapter.hwFreePFBCount > this.tCFG.FrameBuffer.u4PoolReserve) {
+            this.Adapter.ptCurrent = __arm_2d_helper_pfb_new(ptThis);
+        }
     }
     
     if (NULL == this.Adapter.ptCurrent) {
@@ -570,9 +616,10 @@ void arm_2d_helper_pfb_report_rendering_complete(arm_2d_helper_pfb_t *ptThis,
     
     ptPFB->tTile.tRegion.tLocation = (arm_2d_location_t) {0,0};
     
-    arm_irq_safe {
-        ARM_LIST_STACK_PUSH(this.Adapter.ptFreeList, ptPFB);
-    }
+//    arm_irq_safe {
+//        ARM_LIST_STACK_PUSH(this.Adapter.ptFreeList, ptPFB);
+//    }
+    __arm_2d_helper_pfb_free(ptThis, ptPFB);
     
     arm_2d_helper_pfb_flush(ptThis);
 }

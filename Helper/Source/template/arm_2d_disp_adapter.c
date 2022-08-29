@@ -60,8 +60,8 @@
 #   define STR(__A)         __STR(__A)
 #endif
 
-#ifndef __DISP%Instance%_CFG_ITERATION_CNT
-#   define __DISP%Instance%_CFG_ITERATION_CNT       30
+#ifndef __DISP%Instance%_CFG_ITERATION_CNT__
+#   define __DISP%Instance%_CFG_ITERATION_CNT__     30
 #endif
 
 #ifndef __DISP%Instance%_CFG_PFB_BLOCK_WIDTH__
@@ -103,7 +103,7 @@ static struct {
     .wMax = 0,
     .dwTotal = 0,
     .wAverage = 0,
-    .wIterations = __DISP%Instance%_CFG_ITERATION_CNT,
+    .wIterations = __DISP%Instance%_CFG_ITERATION_CNT__,
 };
 
 
@@ -122,7 +122,7 @@ static void on_frame_complete(arm_2d_scene_t *ptScene)
     int32_t nTotalLCDCycCount = DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nRenderingCycle;
     BENCHMARK.wLCDLatency = nTotalLCDCycCount;
 
-    if (__DISP%Instance%_CFG_ITERATION_CNT) {
+    if (__DISP%Instance%_CFG_ITERATION_CNT__) {
         if (BENCHMARK.wIterations) {
             BENCHMARK.wMin = MIN((uint32_t)nTotalCyclCount, BENCHMARK.wMin);
             BENCHMARK.wMax = MAX(nTotalCyclCount, (int32_t)BENCHMARK.wMax);
@@ -131,7 +131,7 @@ static void on_frame_complete(arm_2d_scene_t *ptScene)
 
             if (0 == BENCHMARK.wIterations) {
                 BENCHMARK.wAverage =
-                    (uint32_t)(BENCHMARK.dwTotal / (uint64_t)__DISP%Instance%_CFG_ITERATION_CNT);
+                    (uint32_t)(BENCHMARK.dwTotal / (uint64_t)__DISP%Instance%_CFG_ITERATION_CNT__);
 //                BENCHMARK.fFPS30Freq = (float)
 //                ((      (double)(BENCHMARK.wAverage * 30) 
 //                    /   (double)arm_2d_helper_get_reference_clock_frequency()) 
@@ -140,7 +140,7 @@ static void on_frame_complete(arm_2d_scene_t *ptScene)
                 BENCHMARK.wMin = UINT32_MAX;
                 BENCHMARK.wMax = 0;
                 BENCHMARK.dwTotal = 0;
-                BENCHMARK.wIterations = __DISP%Instance%_CFG_ITERATION_CNT;
+                BENCHMARK.wIterations = __DISP%Instance%_CFG_ITERATION_CNT__;
             }
         }
     }
@@ -167,7 +167,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
     
     busy_wheel2_show(ptTile, bIsNewFrame);
     
-    if (__DISP%Instance%_CFG_ITERATION_CNT) {
+    if (__DISP%Instance%_CFG_ITERATION_CNT__) {
         arm_2dp_fill_colour_with_opacity(
                     NULL, 
                     ptTile, 
@@ -258,14 +258,24 @@ static void __user_scene_player_init(void)
         COLOUR_INT,                                                             //!< colour date type
         __DISP%Instance%_CFG_PFB_BLOCK_WIDTH__,                                 //!< PFB block width
         __DISP%Instance%_CFG_PFB_BLOCK_HEIGHT__,                                //!< PFB block height
-        1,                                                                      //!< number of PFB in the PFB pool
-        {
+        __DISP%Instance%_CFG_PFB_HEAP_SIZE__                                    //!< number of PFB in the PFB pool
+
+#if     __DISP%Instance%_CFG_VIRTUAL_RESOURCE_HELPER__                          \
+    &&  !__DISP%Instance%_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
+        + 3
+#endif
+        ,{
             .evtOnLowLevelRendering = {
                 //! callback for low level rendering
                 .fnHandler = &__glcd%Instance%_pfb_render_handler,
             },
         },
         //.FrameBuffer.bSwapRGB16 = true,
+
+#if     __DISP%Instance%_CFG_VIRTUAL_RESOURCE_HELPER__                          \
+    &&  !__DISP%Instance%_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
+        .FrameBuffer.u4PoolReserve = 3,                                         // reserve 3 PFB blocks for the virtual resource service
+#endif
     ) < 0) {
         //! error detected
         assert(false);
@@ -358,14 +368,15 @@ intptr_t __disp_adapter%Instance%_vres_asset_loader (
         return (intptr_t)NULL;
     }
 #else
-    static COLOUR_INT s_tImageBuffer[   __DISP%Instance%_CFG_PFB_BLOCK_WIDTH__ 
-                                    *   __DISP%Instance%_CFG_PFB_BLOCK_HEIGHT__];
-    pBuffer = s_tImageBuffer;
-    assert(sizeof(s_tImageBuffer) >= tBufferSize);
+    arm_2d_pfb_t *ptPFB = __arm_2d_helper_pfb_new(&DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t);
+    assert(NULL != ptPFB);
     
-    if (tBufferSize > sizeof(s_tImageBuffer)) {
+    assert(ptPFB->u24Size >= tBufferSize);
+    
+    if (tBufferSize > ptPFB->u24Size) {
         return (intptr_t)NULL;
     }
+    pBuffer = (COLOUR_INT *)((uintptr_t)ptPFB + sizeof(arm_2d_pfb_t));
 #endif
     /* load content into the buffer */
     do {
@@ -414,7 +425,12 @@ void __disp_adapter%Instance%_vres_buffer_deposer (
 #else
     ARM_2D_UNUSED(pTarget);
     ARM_2D_UNUSED(ptVRES);
-    ARM_2D_UNUSED(pBuffer);
+    if (NULL == pBuffer) {
+        return ;
+    }
+    
+    arm_2d_pfb_t *ptPFB = (arm_2d_pfb_t *)((uintptr_t)pBuffer - sizeof(arm_2d_pfb_t));
+    __arm_2d_helper_pfb_free(&DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t, ptPFB);
 #endif
 }
 

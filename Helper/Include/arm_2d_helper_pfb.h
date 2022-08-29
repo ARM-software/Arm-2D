@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        18. Aug 2022
- * $Revision:    V.1.1.2
+ * $Date:        29. Aug 2022
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -317,7 +317,9 @@ typedef struct arm_2d_pfb_t {
     struct arm_2d_pfb_t *ptNext;                                                //!< next pfb block
     arm_2d_helper_pfb_t *ptPFBHelper;                                           //!< the pfb helper service current PFB block comes from
     arm_2d_tile_t tTile;                                                        //!< descriptor
-    bool bIsNewFrame;                                                           //!< a flag to indicate the starting of a frame
+    uint32_t u24Size                : 24;
+    uint32_t                        : 7;
+    uint32_t bIsNewFrame            : 1;                                        //!< a flag to indicate the starting of a frame
 }arm_2d_pfb_t;
 
 /*!
@@ -413,7 +415,9 @@ typedef struct arm_2d_helper_pfb_cfg_t {
         uint16_t       bDoNOTUpdateDefaultFrameBuffer   : 1;    //!< A flag to disable automatically default-framebuffer-registration
         uint16_t       bDisableDynamicFPBSize           : 1;    //!< A flag to disable resize of the PFB block
         uint16_t       bSwapRGB16                       : 1;    //!< A flag to enable swapping high and low bytes of an RGB16 pixel
-        uint16_t                                        : 13;
+        uint16_t                                        : 9;
+        uint16_t       u4PoolReserve                    : 4;    //!< reserve specific number of PFB for other helper services
+
     } FrameBuffer;                                              //!< frame buffer context
     
     arm_2d_helper_pfb_dependency_t Dependency;                  //!< user registered dependency
@@ -442,9 +446,10 @@ ARM_PRIVATE(
             uint8_t                 bIsNewFrame  : 1;
             uint8_t                 bIsFlushRequested :1;
         };
-        
+        uint16_t                    hwFreePFBCount;
         arm_2d_pfb_t               *ptCurrent;
         arm_2d_pfb_t               *ptFreeList;
+        
         struct {
             arm_2d_pfb_t           *ptHead;
             arm_2d_pfb_t           *ptTail;
@@ -585,6 +590,25 @@ uint32_t arm_2d_helper_get_reference_clock_frequency(void);
  */
 extern
 int64_t arm_2d_helper_get_system_timestamp(void);
+
+/*!
+ * \brief try to get a PFB block from the pool
+ * \param[in] ptThis the PFB control block
+ * \retval NULL the pool is empty
+ * \retval !NULL a valid pfb block 
+ */
+extern
+ARM_NONNULL(1)
+arm_2d_pfb_t *__arm_2d_helper_pfb_new(arm_2d_helper_pfb_t *ptThis);
+
+/*!
+ * \brief free a PFB block to the pool
+ * \param[in] ptThis the PFB control block
+ * \param[in] ptPFB the target PFB block
+ */
+extern
+ARM_NONNULL(1)
+void __arm_2d_helper_pfb_free(arm_2d_helper_pfb_t *ptThis, arm_2d_pfb_t *ptPFB);
 
 /*! @} */
 

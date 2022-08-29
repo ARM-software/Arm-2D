@@ -66,10 +66,16 @@
 #   define __DISP%Instance%_CFG_PFB_BLOCK_HEIGHT__          240
 #endif
 
+// <o>PFB Block Count <1-65535>
+// <i> The number of blocks in the PFB pool.
+#ifndef __DISP%Instance%_CFG_PFB_HEAP_SIZE__
+#   define __DISP%Instance%_CFG_PFB_HEAP_SIZE__             1
+#endif
+
 // <o>Number of iterations <0-2000>
 // <i> run number of iterations before calculate the FPS.
-#ifndef __DISP%Instance%_CFG_ITERATION_CNT
-#   define __DISP%Instance%_CFG_ITERATION_CNT               30
+#ifndef __DISP%Instance%_CFG_ITERATION_CNT__
+#   define __DISP%Instance%_CFG_ITERATION_CNT__             30
 #endif
 
 // <q>Enable the virtual resource helper service
