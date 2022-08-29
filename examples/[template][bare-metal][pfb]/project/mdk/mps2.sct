@@ -20,7 +20,7 @@ LR_IROM1 0x00000000 0x00400000  {    ; load region size_region
         * (.bss.noinit.arm_2d_pfb_pool)
     }
     
-    ARM_LIB_HEAP  +0 ALIGN 8 EMPTY 0x00000200  {
+    ARM_LIB_HEAP  +0 ALIGN 8 EMPTY 0x00040000  {
     }
     
     PERIPHERAL_UART0 0x40004000 UNINIT {

@@ -23,7 +23,7 @@ LR_IROM1 0x08000000 0x00100000  {    ; load region size_region
         * (.bss.noinit.arm_2d_pfb_pool)
     }
 
-    ARM_LIB_HEAP  +0 ALIGN 8 EMPTY 0x00000200 {
+    ARM_LIB_HEAP  +0 ALIGN 8 EMPTY 0x00008000 {
     }
     
 }
