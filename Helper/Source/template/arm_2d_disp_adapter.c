@@ -368,27 +368,30 @@ intptr_t __disp_adapter%Instance%_vres_asset_loader (
     }
 #endif
     /* load content into the buffer */
-    /* this part of code is just simple a demo, you should implement your own */
     do {
+        size_t nPixelSize = sizeof(COLOUR_INT);
         
-        COLOUR_INT *pSrc = 
-            (COLOUR_INT *)
-                __disp_adapter%Instance%_vres_get_asset_address(pObj, ptVRES);
-        COLOUR_INT *pDes = pBuffer;
+        if (0 != ptVRES->tTile.tColourInfo.chScheme) {
+            nPixelSize = (1 << (ptVRES->tTile.tColourInfo.u3ColourSZ - 3));
+            assert(nPixelSize >= 1);
+        }
+        
+        uintptr_t pSrc = __disp_adapter%Instance%_vres_get_asset_address(pObj, ptVRES);
+        uintptr_t pDes = (uintptr_t)pBuffer;
         int16_t iSourceStride = ptVRES->tTile.tRegion.tSize.iWidth;
         int16_t iTargetStride = ptRegion->tSize.iWidth;
         /* calculate offset */
-        pSrc += ptRegion->tLocation.iY * iSourceStride + ptRegion->tLocation.iX;
+        pSrc += (ptRegion->tLocation.iY * iSourceStride + ptRegion->tLocation.iX) * nPixelSize;
         
         for (int_fast16_t y = 0; y < ptRegion->tSize.iHeight; y++) {
             __disp_adapter%Instance%_vres_read_memory( 
                                             pObj, 
-                                            pDes, 
+                                            (void *)pDes, 
                                             (uintptr_t)pSrc, 
-                                            sizeof(COLOUR_INT) * iTargetStride);
+                                            nPixelSize * iTargetStride);
             
-            pDes += iTargetStride;
-            pSrc += iSourceStride;
+            pDes += iTargetStride * nPixelSize;
+            pSrc += iSourceStride * nPixelSize;
         }
         
     } while(0);
