@@ -604,7 +604,7 @@
       </file>
       <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_disp_adapter.c" version="1.1.0">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Helper" maxInstances="8"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="1.2.0" condition="Arm-2D-Helper" maxInstances="8"/>
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery-GCC"/>
@@ -612,7 +612,7 @@
       </file>
       <file attr="config" category="header" name="Helper\Include\template\arm_2d_disp_adapter.h" version="1.1.0">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Helper" maxInstances="8"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="1.2.0" condition="Arm-2D-Helper" maxInstances="8"/>
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery-GCC"/>
@@ -620,7 +620,7 @@
       </file>
       <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_scene.c" version="1.0.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_0.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Helper" maxInstances="1024"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Helper" maxInstances="1024"/>
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery-GCC"/>
@@ -628,7 +628,7 @@
       </file>
       <file attr="config" category="header" name="Helper\Include\template\arm_2d_scene.h" version="1.0.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_0.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Helper" maxInstances="1024"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Helper" maxInstances="1024"/>
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery-GCC"/>
@@ -636,7 +636,7 @@
       </file>
       <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_scene.c" version="1.0.0">
         <instance index="1">RTE\Acceleration\arm_2d_scene_1.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Helper" maxInstances="1024"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Helper" maxInstances="1024"/>
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery-GCC"/>
@@ -644,7 +644,7 @@
       </file>
       <file attr="config" category="header" name="Helper\Include\template\arm_2d_scene.h" version="1.0.0">
         <instance index="1">RTE\Acceleration\arm_2d_scene_1.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Helper" maxInstances="1024"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Helper" maxInstances="1024"/>
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery-GCC"/>

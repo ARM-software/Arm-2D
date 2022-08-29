@@ -20,12 +20,12 @@
 #define __RTE_ACCELERATION_ARM_2D_EXTRA_CONTROLS__
 /* ARM::Acceleration:Arm-2D Extras:LCD ASCII Printf:1.0.0 */
 #define __RTE_ACCELERATION_ARM_2D_EXTRA_LCD_PRINTF__
-/* ARM::Acceleration:Arm-2D Helper:Display Adapter:1.1.0 */
+/* ARM::Acceleration:Arm-2D Helper:Display Adapter:1.2.0 */
 #define __RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER0__
 
-/* ARM::Acceleration:Arm-2D Helper:PFB:1.3.4 */
+/* ARM::Acceleration:Arm-2D Helper:PFB:1.3.6 */
 #define __RTE_ACCELERATION_ARM_2D_HELPER_PFB__
-/* ARM::Acceleration:Arm-2D Helper:Scene:1.0.0 */
+/* ARM::Acceleration:Arm-2D Helper:Scene:1.1.0 */
 #define __RTE_ACCELERATION_ARM_2D_SCENE0__
 #define __RTE_ACCELERATION_ARM_2D_SCENE1__
 

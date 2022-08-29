@@ -22,7 +22,9 @@
 
 #ifdef __RTE_ACCELERATION_ARM_2D_SCENE1__
 
+#define __USER_SCENE1_IMPLEMENT__
 #include "arm_2d_scene_1.h"
+
 #include "arm_2d_helper.h"
 #include "arm_extra_controls.h"
 
@@ -89,7 +91,13 @@ static void __on_scene1_depose(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
     
     ptScene->ptPlayer = NULL;
-    free(ptScene);
+    
+    /* reset timestamp */
+    this.lTimestamp = 0;
+
+    if (this.bUserAllocated) {
+        free(ptScene);
+    }
 }
 
 /*----------------------------------------------------------------------------*
@@ -100,14 +108,14 @@ static void __on_scene1_background_start(arm_2d_scene_t *ptScene)
 {
     user_scene_1_t *ptThis = (user_scene_1_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-    ARM_2D_UNUSED(ptScene);
+
 }
 
 static void __on_scene1_background_complete(arm_2d_scene_t *ptScene)
 {
     user_scene_1_t *ptThis = (user_scene_1_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-    ARM_2D_UNUSED(ptScene);
+
 }
 
 
@@ -115,13 +123,13 @@ static void __on_scene1_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_1_t *ptThis = (user_scene_1_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-    ARM_2D_UNUSED(ptScene);
+
 }
 
 static void __on_scene1_frame_complete(arm_2d_scene_t *ptScene)
 {
     user_scene_1_t *ptThis = (user_scene_1_t *)ptScene;
-    ARM_2D_UNUSED(ptScene);
+    ARM_2D_UNUSED(ptThis);
     
     /* switch to next scene after 3s */
     if (arm_2d_helper_is_time_out(3000, &this.lTimestamp)) {
@@ -135,7 +143,7 @@ static void __on_scene1_frame_complete(arm_2d_scene_t *ptScene)
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene1_background_handler)
 {
-    ARM_2D_UNUSED(pTarget);
+    user_scene_1_t *ptThis = (user_scene_1_t *)pTarget;
     ARM_2D_UNUSED(bIsNewFrame);
 
     /*-----------------------draw back ground begin-----------------------*/
@@ -151,7 +159,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene1_background_handler)
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene1_handler)
 {
-    ARM_2D_UNUSED(pTarget);
+    user_scene_1_t *ptThis = (user_scene_1_t *)pTarget;
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
     
@@ -160,7 +168,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene1_handler)
     /* following code is just a demo, you can remove them */
     
     arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
-    
+
     progress_bar_drill_show(ptTile, 0, bIsNewFrame);
 
     /* draw text at the top-left corner */
@@ -177,14 +185,17 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene1_handler)
 
 #define PROGRESSBAR_WIDTH       (__DISP0_CFG_SCEEN_WIDTH__ * 3 >> 3)
 
-void arm_2d_scene1_init(arm_2d_scene_player_t *ptDispAdapter)
+ARM_NONNULL(1)
+user_scene_1_t *__arm_2d_scene1_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_1_t *ptScene)
 {
+    bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
 
     /*! define dirty regions */
     IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
 
-        /* a region for the busy wheel */
+        /* a dirty region to be specified at runtime*/
         ADD_REGION_TO_LIST(s_tDirtyRegions,
             .tLocation = {
                 .iX = ((__DISP0_CFG_SCEEN_WIDTH__ - PROGRESSBAR_WIDTH) >> 1),
@@ -211,25 +222,18 @@ void arm_2d_scene1_init(arm_2d_scene_player_t *ptDispAdapter)
         ),
 
     END_IMPL_ARM_2D_REGION_LIST()
+
     
-    /* get the screen region */
-    arm_2d_region_t tScreen
-        = arm_2d_helper_pfb_get_display_area(
-            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
-    
-    /* initialise dirty region 0 at runtime
-     * this demo shows that we create a region in the centre of a screen(320*240)
-     * for a image stored in the tile c_tileCMSISLogoMask
-     */
-    s_tDirtyRegions[0].tRegion.tLocation = (arm_2d_location_t){
-        .iX = ((tScreen.tSize.iWidth - c_tileCMSISLogoMask.tRegion.tSize.iWidth) >> 1),
-        .iY = ((tScreen.tSize.iHeight - c_tileCMSISLogoMask.tRegion.tSize.iHeight) >> 1),
-    };
-    s_tDirtyRegions[0].tRegion.tSize = c_tileCMSISLogoMask.tRegion.tSize;
-    
-    
-    user_scene_1_t *ptScene = (user_scene_1_t *)malloc(sizeof(user_scene_1_t));
-    assert(NULL != ptScene);
+    if (NULL == ptScene) {
+        ptScene = (user_scene_1_t *)malloc(sizeof(user_scene_1_t));
+        assert(NULL != ptScene);
+        if (NULL == ptScene) {
+            return NULL;
+        }
+        bUserAllocated = true;
+    } else {
+        memset(ptScene, 0, sizeof(user_scene_1_t));
+    }
     
     *ptScene = (user_scene_1_t){
         .use_as__arm_2d_scene_t = {
@@ -246,11 +250,17 @@ void arm_2d_scene1_init(arm_2d_scene_player_t *ptDispAdapter)
         .fnOnFrameCPL   = &__on_scene1_frame_complete,
         .fnDepose       = &__on_scene1_depose,
         },
+        .bUserAllocated = bUserAllocated,
     };
+
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
                                         &ptScene->use_as__arm_2d_scene_t, 
                                         1);
+
+    return ptScene;
 }
+
+
 
 
 #if defined(__clang__)

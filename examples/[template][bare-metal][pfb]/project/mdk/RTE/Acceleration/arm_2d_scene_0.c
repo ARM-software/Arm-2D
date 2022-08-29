@@ -251,6 +251,9 @@ user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter,
     if (NULL == ptScene) {
         ptScene = (user_scene_0_t *)malloc(sizeof(user_scene_0_t));
         assert(NULL != ptScene);
+        if (NULL == ptScene) {
+            return NULL;
+        }
         bUserAllocated = true;
     } else {
         memset(ptScene, 0, sizeof(user_scene_0_t));

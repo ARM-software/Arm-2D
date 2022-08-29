@@ -46,7 +46,28 @@ extern "C" {
 
 
 /*============================ MACROS ========================================*/
+
+/* OOC header, please DO NOT modify  */
+#ifdef __USER_SCENE1_IMPLEMENT__
+#   undef __USER_SCENE1_IMPLEMENT__
+#   define __ARM_2D_IMPL__
+#endif
+#include "arm_2d_utils.h"
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
+
+/*!
+ * \brief initalize scene1 and add it to a user specified scene player
+ * \param[in] __DISP_ADAPTER_PTR the target display adatper (i.e. scene player)
+ * \param[in] ... this is an optional parameter. When it is NULL, a new 
+ *            user_scene_1_t will be allocated from HEAP and freed on
+ *            the deposing event. When it is non-NULL, the life-cycle is managed
+ *            by user.
+ * \return user_scene_1_t* the user_scene_1_t instance
+ */
+#define arm_2d_scene1_init(__DISP_ADAPTER_PTR, ...)                    \
+            __arm_2d_scene1_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
+
 /*============================ TYPES =========================================*/
 /*!
  * \brief a user class for scene 1
@@ -55,16 +76,24 @@ typedef struct user_scene_1_t user_scene_1_t;
 
 struct user_scene_1_t {
     implement(arm_2d_scene_t);                                                  //! derived from class: arm_2d_scene_t
-    
-    /* place your member here */
+
+ARM_PRIVATE(
+    /* place your private member here, following two are examples */
     int64_t lTimestamp;
+    bool bUserAllocated;
+
+)
+    /* place your public member here */
+    
 };
 
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
+ARM_NONNULL(1)
 extern
-void arm_2d_scene1_init(arm_2d_scene_player_t *ptDispAdapter);
+user_scene_1_t *__arm_2d_scene1_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_1_t *ptScene);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
