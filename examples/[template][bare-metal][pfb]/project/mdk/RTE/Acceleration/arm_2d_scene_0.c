@@ -22,7 +22,9 @@
 
 #ifdef __RTE_ACCELERATION_ARM_2D_SCENE0__
 
+#define __USER_SCENE0_IMPLEMENT__
 #include "arm_2d_scene_0.h"
+
 #include "arm_2d_helper.h"
 #include "arm_extra_controls.h"
 
@@ -44,6 +46,7 @@
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wunused-function"
+#   pragma clang diagnostic ignored "-Wmissing-declarations"  
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic push
@@ -69,6 +72,9 @@
 #endif
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
+#undef this
+#define this (*ptThis)
+
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 
@@ -81,36 +87,52 @@ extern const arm_2d_tile_t c_tileCMSISLogoMask;
 
 static void __on_scene0_depose(arm_2d_scene_t *ptScene)
 {
+    user_scene_0_t *ptThis = (user_scene_0_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+    
     ptScene->ptPlayer = NULL;
-    free(ptScene);
+    
+    /* reset timestamp */
+    this.lTimestamp = 0;
+
+    if (this.bUserAllocated) {
+        free(ptScene);
+    }
 }
 
 /*----------------------------------------------------------------------------*
- * Scene 0                                                           *
+ * Scene 0                                                                    *
  *----------------------------------------------------------------------------*/
 
 static void __on_scene0_background_start(arm_2d_scene_t *ptScene)
 {
-    ARM_2D_UNUSED(ptScene);
+    user_scene_0_t *ptThis = (user_scene_0_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
 }
 
 static void __on_scene0_background_complete(arm_2d_scene_t *ptScene)
 {
-    ARM_2D_UNUSED(ptScene);
+    user_scene_0_t *ptThis = (user_scene_0_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
 }
 
 
 static void __on_scene0_frame_start(arm_2d_scene_t *ptScene)
 {
-    ARM_2D_UNUSED(ptScene);
+    user_scene_0_t *ptThis = (user_scene_0_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
 }
 
 static void __on_scene0_frame_complete(arm_2d_scene_t *ptScene)
 {
-    ARM_2D_UNUSED(ptScene);
+    user_scene_0_t *ptThis = (user_scene_0_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
     
     /* switch to next scene after 3s */
-    if (arm_2d_helper_is_time_out(3000)) {
+    if (arm_2d_helper_is_time_out(3000, &this.lTimestamp)) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 }
@@ -121,7 +143,7 @@ static void __on_scene0_frame_complete(arm_2d_scene_t *ptScene)
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene0_background_handler)
 {
-    ARM_2D_UNUSED(pTarget);
+    user_scene_0_t *ptThis = (user_scene_0_t *)pTarget;
     ARM_2D_UNUSED(bIsNewFrame);
 
     /*-----------------------draw back ground begin-----------------------*/
@@ -137,7 +159,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene0_background_handler)
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
 {
-    ARM_2D_UNUSED(pTarget);
+    user_scene_0_t *ptThis = (user_scene_0_t *)pTarget;
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
     
@@ -180,8 +202,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
     return arm_fsm_rt_cpl;
 }
 
-void arm_2d_scene0_init(arm_2d_scene_player_t *ptDispAdapter)
+ARM_NONNULL(1)
+user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_0_t *ptScene)
 {
+    bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
 
     /*! define dirty regions */
@@ -201,7 +226,7 @@ void arm_2d_scene0_init(arm_2d_scene_player_t *ptDispAdapter)
                 .iY = 0,
             },
             .tSize = {
-                .iWidth = 320,
+                .iWidth = __GLCD_CFG_SCEEN_WIDTH__,
                 .iHeight = 8,
             },
         ),
@@ -223,25 +248,40 @@ void arm_2d_scene0_init(arm_2d_scene_player_t *ptDispAdapter)
     };
     s_tDirtyRegions[0].tRegion.tSize = c_tileCMSISLogoMask.tRegion.tSize;
     
+    if (NULL == ptScene) {
+        ptScene = (user_scene_0_t *)malloc(sizeof(user_scene_0_t));
+        assert(NULL != ptScene);
+        bUserAllocated = true;
+    } else {
+        memset(ptScene, 0, sizeof(user_scene_0_t));
+    }
     
-    arm_2d_scene_t *ptScene = (arm_2d_scene_t *)malloc(sizeof(arm_2d_scene_t));
-    assert(NULL != ptScene);
-    
-    *ptScene = (arm_2d_scene_t){
-        .fnBackground   = NULL,
+    *ptScene = (user_scene_0_t){
+        .use_as__arm_2d_scene_t = {
+        /* Please uncommon the callbacks if you need them
+         */
+        //.fnBackground   = &__pfb_draw_scene0_background_handler,
         .fnScene        = &__pfb_draw_scene0_handler,
         .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
         
-        /* Please uncommon the callbacks if you need them
-         */
+
         //.fnOnBGStart    = &__on_scene0_background_start,
         //.fnOnBGComplete = &__on_scene0_background_complete,
         //.fnOnFrameStart = &__on_scene0_frame_start,
         .fnOnFrameCPL   = &__on_scene0_frame_complete,
         .fnDepose       = &__on_scene0_depose,
+        },
+        .bUserAllocated = bUserAllocated,
     };
-    arm_2d_scene_player_append_scenes( ptDispAdapter, ptScene, 1);
+
+    arm_2d_scene_player_append_scenes(  ptDispAdapter, 
+                                        &ptScene->use_as__arm_2d_scene_t, 
+                                        1);
+
+    return ptScene;
 }
+
+
 
 
 #if defined(__clang__)

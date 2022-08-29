@@ -44,6 +44,7 @@
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wunused-function"
+#   pragma clang diagnostic ignored "-Wmissing-declarations"  
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic push
@@ -69,6 +70,9 @@
 #endif
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
+#undef this
+#define this (*ptThis)
+
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 
@@ -81,40 +85,48 @@ extern const arm_2d_tile_t c_tileCMSISLogoMask;
 
 static void __on_scene1_depose(arm_2d_scene_t *ptScene)
 {
+    user_scene_1_t *ptThis = (user_scene_1_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+    
     ptScene->ptPlayer = NULL;
     free(ptScene);
 }
 
 /*----------------------------------------------------------------------------*
- * Scene 1                                                           *
+ * Scene 1                                                                    *
  *----------------------------------------------------------------------------*/
 
 static void __on_scene1_background_start(arm_2d_scene_t *ptScene)
 {
+    user_scene_1_t *ptThis = (user_scene_1_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
     ARM_2D_UNUSED(ptScene);
 }
 
 static void __on_scene1_background_complete(arm_2d_scene_t *ptScene)
 {
+    user_scene_1_t *ptThis = (user_scene_1_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
     ARM_2D_UNUSED(ptScene);
 }
 
 
 static void __on_scene1_frame_start(arm_2d_scene_t *ptScene)
 {
+    user_scene_1_t *ptThis = (user_scene_1_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
     ARM_2D_UNUSED(ptScene);
 }
 
 static void __on_scene1_frame_complete(arm_2d_scene_t *ptScene)
 {
+    user_scene_1_t *ptThis = (user_scene_1_t *)ptScene;
     ARM_2D_UNUSED(ptScene);
     
-#if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
     /* switch to next scene after 3s */
-    if (arm_2d_helper_is_time_out(3000)) {
-        arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
+    if (arm_2d_helper_is_time_out(3000, &this.lTimestamp)) {
+        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
-#endif
 }
 
 
@@ -193,31 +205,51 @@ void arm_2d_scene1_init(arm_2d_scene_player_t *ptDispAdapter)
                 .iY = 0,
             },
             .tSize = {
-                .iWidth = __DISP0_CFG_SCEEN_WIDTH__,
+                .iWidth = __GLCD_CFG_SCEEN_WIDTH__,
                 .iHeight = 8,
             },
         ),
 
     END_IMPL_ARM_2D_REGION_LIST()
     
+    /* get the screen region */
+    arm_2d_region_t tScreen
+        = arm_2d_helper_pfb_get_display_area(
+            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
     
-    arm_2d_scene_t *ptScene = (arm_2d_scene_t *)malloc(sizeof(arm_2d_scene_t));
+    /* initialise dirty region 0 at runtime
+     * this demo shows that we create a region in the centre of a screen(320*240)
+     * for a image stored in the tile c_tileCMSISLogoMask
+     */
+    s_tDirtyRegions[0].tRegion.tLocation = (arm_2d_location_t){
+        .iX = ((tScreen.tSize.iWidth - c_tileCMSISLogoMask.tRegion.tSize.iWidth) >> 1),
+        .iY = ((tScreen.tSize.iHeight - c_tileCMSISLogoMask.tRegion.tSize.iHeight) >> 1),
+    };
+    s_tDirtyRegions[0].tRegion.tSize = c_tileCMSISLogoMask.tRegion.tSize;
+    
+    
+    user_scene_1_t *ptScene = (user_scene_1_t *)malloc(sizeof(user_scene_1_t));
     assert(NULL != ptScene);
     
-    *ptScene = (arm_2d_scene_t){
-        .fnBackground   = NULL,
+    *ptScene = (user_scene_1_t){
+        .use_as__arm_2d_scene_t = {
+        /* Please uncommon the callbacks if you need them
+         */
+        //.fnBackground   = &__pfb_draw_scene1_background_handler,
         .fnScene        = &__pfb_draw_scene1_handler,
         .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
         
-        /* Please uncommon the callbacks if you need them
-         */
+
         //.fnOnBGStart    = &__on_scene1_background_start,
         //.fnOnBGComplete = &__on_scene1_background_complete,
         //.fnOnFrameStart = &__on_scene1_frame_start,
         .fnOnFrameCPL   = &__on_scene1_frame_complete,
         .fnDepose       = &__on_scene1_depose,
+        },
     };
-    arm_2d_scene_player_append_scenes( ptDispAdapter, ptScene, 1);
+    arm_2d_scene_player_append_scenes(  ptDispAdapter, 
+                                        &ptScene->use_as__arm_2d_scene_t, 
+                                        1);
 }
 
 

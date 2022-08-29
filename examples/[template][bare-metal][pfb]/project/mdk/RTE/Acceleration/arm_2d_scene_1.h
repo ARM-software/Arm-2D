@@ -27,14 +27,54 @@
 
 #include "arm_2d_helper_scene.h"
 
+#ifdef   __cplusplus
+extern "C" {
+#endif
+
+#if defined(__clang__)
+#   pragma clang diagnostic push
+#   pragma clang diagnostic ignored "-Wunknown-warning-option"
+#   pragma clang diagnostic ignored "-Wreserved-identifier"
+#   pragma clang diagnostic ignored "-Wmissing-declarations"  
+#elif __IS_COMPILER_ARM_COMPILER_5__
+#elif __IS_COMPILER_GCC__
+#   pragma GCC diagnostic push
+#   pragma GCC diagnostic ignored "-Wformat="
+#   pragma GCC diagnostic ignored "-Wpedantic"
+#endif
+
+
+
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
+/*!
+ * \brief a user class for scene 1
+ */
+typedef struct user_scene_1_t user_scene_1_t;
+
+struct user_scene_1_t {
+    implement(arm_2d_scene_t);                                                  //! derived from class: arm_2d_scene_t
+    
+    /* place your member here */
+    int64_t lTimestamp;
+};
+
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
 extern
 void arm_2d_scene1_init(arm_2d_scene_player_t *ptDispAdapter);
+
+#if defined(__clang__)
+#   pragma clang diagnostic pop
+#elif __IS_COMPILER_GCC__
+#   pragma GCC diagnostic pop
+#endif
+
+#ifdef   __cplusplus
+}
+#endif
 
 #endif
 
