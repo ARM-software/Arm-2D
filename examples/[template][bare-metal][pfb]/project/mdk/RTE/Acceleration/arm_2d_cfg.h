@@ -109,16 +109,22 @@ extern "C" {
 #endif
 
 // <h>Benchmark
-// <o>Width of the PFB block
+// <o>Width of the PFB block <8-32767>
 // <i> The width of your PFB block size used in arm-2d benchmark
 #ifndef BENCHMARK_PFB_BLOCK_WIDTH
 #   define BENCHMARK_PFB_BLOCK_WIDTH            320
 #endif
 
-// <o>Height of the PFB block
+// <o>Height of the PFB block <8-32767>
 // <i> The height of your PFB block size used in arm-2d benchmark
 #ifndef BENCHMARK_PFB_BLOCK_HEIGHT
 #   define BENCHMARK_PFB_BLOCK_HEIGHT           240
+#endif
+
+// <o>PFB Block Count <1-65535>
+// <i> The number of blocks in the PFB pool.
+#ifndef BENCHMARK_PFB_HEAP_SIZE
+#   define BENCHMARK_PFB_HEAP_SIZE              1
 #endif
 
 // <o>Number of iterations <1-2000>
@@ -132,6 +138,13 @@ extern "C" {
 // <i> This feature is disabled by default.
 #ifndef __ARM_2D_CFG_BENCHMARK_TINY_MODE__
 #   define __ARM_2D_CFG_BENCHMARK_TINY_MODE__   0
+#endif
+
+// <q> Enable Stopwatch mode in the Benchmark:Watch-panel
+// <i> Only update the second-hand (i.e. red pointer) every second in the watch-panel demo
+// <i> This feature is disabled by default.
+#ifndef __ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__
+#   define __ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__    0
 #endif
 //</h>
 // </h>

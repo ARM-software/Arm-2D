@@ -66,17 +66,23 @@
 #   define __DISP0_CFG_PFB_BLOCK_HEIGHT__          240
 #endif
 
+// <o>PFB Block Count <1-65535>
+// <i> The number of blocks in the PFB pool.
+#ifndef __DISP0_CFG_PFB_HEAP_SIZE__
+#   define __DISP0_CFG_PFB_HEAP_SIZE__             1
+#endif
+
 // <o>Number of iterations <0-2000>
 // <i> run number of iterations before calculate the FPS.
-#ifndef __DISP0_CFG_ITERATION_CNT
-#   define __DISP0_CFG_ITERATION_CNT               30
+#ifndef __DISP0_CFG_ITERATION_CNT__
+#   define __DISP0_CFG_ITERATION_CNT__             30
 #endif
 
 // <q>Enable the virtual resource helper service
 // <i> Introduce a helper service for loading virtual resources.
 // <i> This feature is disabled by default.
 #ifndef __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
-#   define __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__   1
+#   define __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__   0
 #endif
 
 // <q>Use heap to allocate buffer in the virtual resource helper service

@@ -73,6 +73,10 @@
 #   define BENCHMARK_PFB_BLOCK_HEIGHT            __GLCD_CFG_SCEEN_HEIGHT__
 #endif
 
+#ifndef BENCHMARK_PFB_HEAP_SIZE
+#   define BENCHMARK_PFB_HEAP_SIZE              1
+#endif
+
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 #   define __arm_2d_color_t         arm_2d_color_gray8_t
 #   define COLOUR_INT               uint8_t
@@ -289,7 +293,7 @@ void arm_2d_scene_player_init(void)
         COLOUR_INT,                                                             //!< colour date type
         BENCHMARK_PFB_BLOCK_WIDTH,                                              //!< PFB block width
         BENCHMARK_PFB_BLOCK_HEIGHT,                                             //!< PFB block height
-        1,                                                                      //!< number of PFB in the PFB pool
+        BENCHMARK_PFB_HEAP_SIZE,                                                //!< number of PFB in the PFB pool
         {
             .evtOnLowLevelRendering = {
                 //! callback for low level rendering
