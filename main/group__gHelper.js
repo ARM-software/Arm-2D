@@ -22,7 +22,7 @@ var group__gHelper =
       [ "ptNext", "group__gHelper.html#a7a2190986a8d5be647ea2fae4c3e1caf", null ],
       [ "ptPFBHelper", "group__gHelper.html#ada5ebe34cc1e12b0d9ac77d0ba1e983b", null ],
       [ "tTile", "group__gHelper.html#a5c06645aaf74ac1f648bc144d614c7aa", null ],
-      [ "bIsNewFrame", "group__gHelper.html#a4b9c82f196be65325800ed8a5d1fd0d3", null ]
+      [ "bIsNewFrame", "group__gHelper.html#a76e6266c8c4e89571a516ed07af1727e", null ]
     ] ],
     [ "arm_2d_region_list_item_t", "group__gHelper.html#structarm__2d__region__list__item__t", [
       [ "ptNext", "group__gHelper.html#aaeee77d805398d4495a984869fcbde9e", null ],
@@ -76,7 +76,8 @@ var group__gHelper =
       [ "hwPFBNum", "group__gHelper.html#a75594dcac11af071a52375d4f16427bd", null ],
       [ "bDoNOTUpdateDefaultFrameBuffer", "group__gHelper.html#a506e5cc591a5b598b60a4bbac83b5415", null ],
       [ "bDisableDynamicFPBSize", "group__gHelper.html#a3491f099ff99db25de694b559954bd68", null ],
-      [ "bSwapRGB16", "group__gHelper.html#a545d827276ad405ea34db579f2ef9e2c", null ]
+      [ "bSwapRGB16", "group__gHelper.html#a545d827276ad405ea34db579f2ef9e2c", null ],
+      [ "u4PoolReserve", "group__gHelper.html#a430f59062291820e08b2cf816d7ef490", null ]
     ] ],
     [ "arm_2d_helper_pfb_t.__unnamed128__", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed128____", null ],
     [ "arm_2d_helper_pfb_t.__unnamed128__.Adapter", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed128_____8Adapter", null ],
@@ -141,5 +142,7 @@ var group__gHelper =
     [ "arm_2d_helper_convert_ticks_to_ms", "group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf", null ],
     [ "arm_2d_helper_convert_ms_to_ticks", "group__gHelper.html#ga22a1338673baaec12c475e371d7593be", null ],
     [ "arm_2d_helper_get_reference_clock_frequency", "group__gHelper.html#gace60efc807106e1526fcc9f673f19b12", null ],
-    [ "arm_2d_helper_get_system_timestamp", "group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185", null ]
+    [ "arm_2d_helper_get_system_timestamp", "group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185", null ],
+    [ "__arm_2d_helper_pfb_new", "group__gHelper.html#gaa7855ac916c44e531c4c8a9c5ec0e69e", null ],
+    [ "__arm_2d_helper_pfb_free", "group__gHelper.html#ga484b485061778cdf3a2cb4373374c581", null ]
 ];
