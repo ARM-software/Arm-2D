@@ -92,23 +92,15 @@ static arm_2d_vres_t s_tBigImage =
     );
 
 static
-const arm_2d_tile_t c_tChildImage = {
-    .tRegion = {
-        .tLocation = {
-            .iX = 160,
-            .iY = 128,
-        },
-        .tSize = {
-            .iWidth = 160,
-            .iHeight = 128,
-        },
-    },
-    .tInfo = {
-        .bIsRoot = false,
-        .bDerivedResource = true,
-    },
-    .ptParent = (arm_2d_tile_t *)&s_tBigImage.tTile,
-};
+const arm_2d_tile_t c_tChildImage = 
+    impl_child_tile(
+        s_tBigImage.tTile,
+        160,
+        128,
+        160,
+        128
+    );
+
 
 /*============================ IMPLEMENTATION ================================*/
 
@@ -116,7 +108,7 @@ const arm_2d_tile_t c_tChildImage = {
  * Virtual Resource Helper User Implemented Interfaces                        *
  *----------------------------------------------------------------------------*/
 void __disp_adapter0_vres_read_memory(intptr_t pObj, 
-                                    COLOUR_INT *pBuffer,
+                                    void *pBuffer,
                                     uintptr_t pAddress,
                                     size_t nSizeInByte)
 {

@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        11. Aug 2022
- * $Revision:    V.1.1.1
+ * $Date:        03. Sept 2022
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -54,11 +54,15 @@ extern "C" {
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
-#define __declare_tile(__NAME)                                                  \
-            extern const arm_2d_tile_t __NAME;
-#define declare_tile(__NAME)            __declare_tile(__NAME)
+#define __declare_tile(__name)                                                  \
+            extern const arm_2d_tile_t __name;
+#define declare_tile(__name)            __declare_tile(__name)
 
-#define __implement_tile(__NAME, __WIDTH, __HEIGHT, __TYPE, ...)                \
+#define dcl_tile(__name)                declare_tile(__name)
+#define dcl_fb(__name)                  declare_tile(__name)
+
+
+#define __impl_fb(__NAME, __WIDTH, __HEIGHT, __TYPE, ...)                       \
             ARM_NOINIT static __TYPE                                            \
                 __NAME##Buffer[(__WIDTH) * (__HEIGHT)];                         \
             const arm_2d_tile_t __NAME = {                                      \
@@ -70,8 +74,8 @@ extern "C" {
                 __VA_ARGS__                                                     \
             };
             
-#define implement_tile(__NAME, __WIDTH, __HEIGHT, __TYPE, ...)                  \
-            __implement_tile(__NAME, __WIDTH, __HEIGHT, __TYPE, ##__VA_ARGS__)
+#define impl_fb(__NAME, __WIDTH, __HEIGHT, __TYPE, ...)                         \
+            __impl_fb(__NAME, __WIDTH, __HEIGHT, __TYPE, ##__VA_ARGS__)
                         
 #define get_tile_buffer_pixel_count(__NAME)                                     \
             (uint32_t)(     (__NAME.tRegion.tSize.iWidth)                       \
@@ -81,6 +85,22 @@ extern "C" {
             (get_2d_layer_buffer_pixel_count(__NAME) * sizeof(TYPE))
 
 
+#define impl_child_tile(__PARENT, __X, __Y, __WIDTH, __HEIGHT, ...) {           \
+        .tRegion = {                                                            \
+            .tLocation = {                                                      \
+                .iX = (__X),                                                    \
+                .iY = (__Y),                                                    \
+            },                                                                  \
+            .tSize = {                                                          \
+                .iWidth = (__WIDTH),                                            \
+                .iHeight = (__HEIGHT),                                          \
+            },                                                                  \
+        },                                                                      \
+        .tInfo.bIsRoot = false,                                                 \
+        .tInfo.bDerivedResource = true,                                         \
+        .ptParent = (arm_2d_tile_t *)&(__PARENT),                               \
+        __VA_ARGS__                                                             \
+    }
 
 #define __arm_2d_align_centre2(__region, __size)                                \
     for (arm_2d_region_t __centre_region = {                                    \

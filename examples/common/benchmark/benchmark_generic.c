@@ -135,8 +135,10 @@ const arm_2d_tile_t c_tilePictureSun;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
-declare_tile(c_tLayerB)
-implement_tile(c_tLayerB, 90, 50, __arm_2d_color_t);
+dcl_fb(c_tLayerB)
+
+/* implement a 50*50 framebuffer */
+impl_fb(c_tLayerB, 90, 50, __arm_2d_color_t);
 
 
 ARM_NOINIT static uint8_t s_bmpFadeMask[__GLCD_CFG_SCEEN_WIDTH__ >> 1];
