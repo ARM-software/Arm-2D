@@ -236,22 +236,30 @@ Macros</h2></td></tr>
 <tr class="memitem:gac44b19321f46fd234d067343f789c3b6"><td class="memItemLeft" align="right" valign="top"><a id="gac44b19321f46fd234d067343f789c3b6" name="gac44b19321f46fd234d067343f789c3b6"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>impl_pfb_on_low_lv_rendering</b>(__NAME)&#160;&#160;&#160;            IMPL_PFB_ON_LOW_LV_RENDERING(__NAME)</td></tr>
 <tr class="separator:gac44b19321f46fd234d067343f789c3b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabd2fb6ea496de4693d7157023254e471"><td class="memItemLeft" align="right" valign="top"><a id="gabd2fb6ea496de4693d7157023254e471" name="gabd2fb6ea496de4693d7157023254e471"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>__declare_tile</b>(__NAME)&#160;&#160;&#160;            extern const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> __NAME;</td></tr>
-<tr class="separator:gabd2fb6ea496de4693d7157023254e471"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8ff1a2d6d72b77d9af31174201f62949"><td class="memItemLeft" align="right" valign="top"><a id="ga8ff1a2d6d72b77d9af31174201f62949" name="ga8ff1a2d6d72b77d9af31174201f62949"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>declare_tile</b>(__NAME)&#160;&#160;&#160;__declare_tile(__NAME)</td></tr>
-<tr class="separator:ga8ff1a2d6d72b77d9af31174201f62949"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac56ea3b2253030bccf6826ff80c73c94"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gac56ea3b2253030bccf6826ff80c73c94">__implement_tile</a>(__NAME,  __WIDTH,  __HEIGHT,  __TYPE, ...)</td></tr>
-<tr class="separator:gac56ea3b2253030bccf6826ff80c73c94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae7719d32fd484c295076b9f3e8593aab"><td class="memItemLeft" align="right" valign="top"><a id="gae7719d32fd484c295076b9f3e8593aab" name="gae7719d32fd484c295076b9f3e8593aab"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>implement_tile</b>(__NAME,  __WIDTH,  __HEIGHT,  __TYPE, ...)&#160;&#160;&#160;            __implement_tile(__NAME, __WIDTH, __HEIGHT, __TYPE, ##__VA_ARGS__)</td></tr>
-<tr class="separator:gae7719d32fd484c295076b9f3e8593aab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga10ff19a7fa51fd6fa82bfed93b6c9fbe"><td class="memItemLeft" align="right" valign="top"><a id="ga10ff19a7fa51fd6fa82bfed93b6c9fbe" name="ga10ff19a7fa51fd6fa82bfed93b6c9fbe"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>__declare_tile</b>(__name)&#160;&#160;&#160;            extern const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> __name;</td></tr>
+<tr class="separator:ga10ff19a7fa51fd6fa82bfed93b6c9fbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2611a9ef273b4e05f926c42273f8cbaa"><td class="memItemLeft" align="right" valign="top"><a id="ga2611a9ef273b4e05f926c42273f8cbaa" name="ga2611a9ef273b4e05f926c42273f8cbaa"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>declare_tile</b>(__name)&#160;&#160;&#160;__declare_tile(__name)</td></tr>
+<tr class="separator:ga2611a9ef273b4e05f926c42273f8cbaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga52569e84d2cd7f12d84398cb1f2f5cdc"><td class="memItemLeft" align="right" valign="top"><a id="ga52569e84d2cd7f12d84398cb1f2f5cdc" name="ga52569e84d2cd7f12d84398cb1f2f5cdc"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>dcl_tile</b>(__name)&#160;&#160;&#160;declare_tile(__name)</td></tr>
+<tr class="separator:ga52569e84d2cd7f12d84398cb1f2f5cdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga35c72d3f4f9efaa986bf68ce01300782"><td class="memItemLeft" align="right" valign="top"><a id="ga35c72d3f4f9efaa986bf68ce01300782" name="ga35c72d3f4f9efaa986bf68ce01300782"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>dcl_fb</b>(__name)&#160;&#160;&#160;declare_tile(__name)</td></tr>
+<tr class="separator:ga35c72d3f4f9efaa986bf68ce01300782"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga126dd1df12c3b8e8f859a27766e99b8a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga126dd1df12c3b8e8f859a27766e99b8a">__impl_fb</a>(__NAME,  __WIDTH,  __HEIGHT,  __TYPE, ...)</td></tr>
+<tr class="separator:ga126dd1df12c3b8e8f859a27766e99b8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad50097e4c6d104f0deaf8062188f551f"><td class="memItemLeft" align="right" valign="top"><a id="gad50097e4c6d104f0deaf8062188f551f" name="gad50097e4c6d104f0deaf8062188f551f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>impl_fb</b>(__NAME,  __WIDTH,  __HEIGHT,  __TYPE, ...)&#160;&#160;&#160;            __impl_fb(__NAME, __WIDTH, __HEIGHT, __TYPE, ##__VA_ARGS__)</td></tr>
+<tr class="separator:gad50097e4c6d104f0deaf8062188f551f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0f6932c29834326e8499ecad35dd034c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga0f6932c29834326e8499ecad35dd034c">get_tile_buffer_pixel_count</a>(__NAME)</td></tr>
 <tr class="separator:ga0f6932c29834326e8499ecad35dd034c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga75ac3fb5f86d86d11e972f47d109bfcd"><td class="memItemLeft" align="right" valign="top"><a id="ga75ac3fb5f86d86d11e972f47d109bfcd" name="ga75ac3fb5f86d86d11e972f47d109bfcd"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>get_tile_buffer_size</b>(__NAME,  __TYPE)&#160;&#160;&#160;            (get_2d_layer_buffer_pixel_count(__NAME) * sizeof(TYPE))</td></tr>
 <tr class="separator:ga75ac3fb5f86d86d11e972f47d109bfcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga71b49fa67f80fa18d329dfd11b262276"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga71b49fa67f80fa18d329dfd11b262276">impl_child_tile</a>(__PARENT,  __X,  __Y,  __WIDTH,  __HEIGHT, ...)</td></tr>
+<tr class="separator:ga71b49fa67f80fa18d329dfd11b262276"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabe887edb3b7ce6eeec2b309bbf32c383"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gabe887edb3b7ce6eeec2b309bbf32c383">__arm_2d_align_centre2</a>(__region,  __size)</td></tr>
 <tr class="separator:gabe887edb3b7ce6eeec2b309bbf32c383"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga68f37bbc40dcb5d4c8286cebf2303a7a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga68f37bbc40dcb5d4c8286cebf2303a7a">__arm_2d_align_centre3</a>(__region,  __width,  __height)</td></tr>
@@ -2098,14 +2106,14 @@ cycles used in LCD flushing </td></tr>
 
 </div>
 </div>
-<a id="gac56ea3b2253030bccf6826ff80c73c94" name="gac56ea3b2253030bccf6826ff80c73c94"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac56ea3b2253030bccf6826ff80c73c94">&#9670;&nbsp;</a></span>__implement_tile</h2>
+<a id="ga126dd1df12c3b8e8f859a27766e99b8a" name="ga126dd1df12c3b8e8f859a27766e99b8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga126dd1df12c3b8e8f859a27766e99b8a">&#9670;&nbsp;</a></span>__impl_fb</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define __implement_tile</td>
+          <td class="memname">#define __impl_fb</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">__NAME, </td>
@@ -2171,6 +2179,74 @@ cycles used in LCD flushing </td></tr>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">            (uint32_t)(     (__NAME.tRegion.tSize.iWidth)                       \</div>
 <div class="line">                        *   (__NAME.tRegion.tSize.iHeight))</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ga71b49fa67f80fa18d329dfd11b262276" name="ga71b49fa67f80fa18d329dfd11b262276"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga71b49fa67f80fa18d329dfd11b262276">&#9670;&nbsp;</a></span>impl_child_tile</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define impl_child_tile</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__PARENT, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__X, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__Y, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__WIDTH, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__HEIGHT, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">        {           \</div>
+<div class="line">        .tRegion = {                                                            \</div>
+<div class="line">            .tLocation = {                                                      \</div>
+<div class="line">                .iX = (__X),                                                    \</div>
+<div class="line">                .iY = (__Y),                                                    \</div>
+<div class="line">            },                                                                  \</div>
+<div class="line">            .tSize = {                                                          \</div>
+<div class="line">                .iWidth = (__WIDTH),                                            \</div>
+<div class="line">                .iHeight = (__HEIGHT),                                          \</div>
+<div class="line">            },                                                                  \</div>
+<div class="line">        },                                                                      \</div>
+<div class="line">        .tInfo.bIsRoot = <span class="keyword">false</span>,                                                 \</div>
+<div class="line">        .tInfo.bDerivedResource = <span class="keyword">true</span>,                                         \</div>
+<div class="line">        .ptParent = (<a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *)&amp;(__PARENT),                               \</div>
+<div class="line">        __VA_ARGS__                                                             \</div>
+<div class="line">    }</div>
 </div><!-- fragment -->
 </div>
 </div>
