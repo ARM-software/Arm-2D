@@ -196,7 +196,7 @@ uintptr_t __disp_adapter%Instance%_vres_get_asset_address(
  */
 extern
 void __disp_adapter%Instance%_vres_read_memory( intptr_t pObj, 
-                                                COLOUR_INT *pBuffer,
+                                                void *pBuffer,
                                                 uintptr_t pAddress,
                                                 size_t nSizeInByte);
 
