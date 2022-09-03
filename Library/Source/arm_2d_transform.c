@@ -18,8 +18,8 @@
 
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
- * Title:        arm-2d_rotation.c
- * Description:  APIs for tile rotation
+ * Title:        arm-2d_transform.c
+ * Description:  APIs for tile transform
  *
  * $Date:        20 May 2022
  * $Revision:    V.1.0.3
