@@ -24,6 +24,7 @@
 #ifdef __RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER0__
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "arm_2d_helper.h"
 #include "arm_extra_lcd_printf.h"
 #include "arm_extra_controls.h"
@@ -350,6 +351,21 @@ arm_fsm_rt_t disp_adapter0_task(void)
 
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 
+__WEAK
+void * __disp_adapter0_aligned_malloc(size_t nSize, size_t nAlign)
+{
+    void * pMem = malloc(nSize);
+    assert( 0 == ((uintptr_t)pMem & (nAlign - 1)));
+    return pMem;
+}
+
+__WEAK
+void __disp_adapter0_free(void *pMem)
+{
+    if (NULL != pMem) {
+        free(pMem);
+    }
+}
 
 intptr_t __disp_adapter0_vres_asset_loader (
                                             uintptr_t pObj, 
@@ -359,9 +375,15 @@ intptr_t __disp_adapter0_vres_asset_loader (
     
     size_t tBufferSize = ptRegion->tSize.iHeight * ptRegion->tSize.iWidth * sizeof(COLOUR_INT);
     COLOUR_INT *pBuffer = NULL;
-
+    size_t nPixelSize = sizeof(COLOUR_INT);
+    
+    if (0 != ptVRES->tTile.tColourInfo.chScheme) {
+        nPixelSize = (1 << (ptVRES->tTile.tColourInfo.u3ColourSZ - 3));
+        assert(nPixelSize >= 1);
+    }
+        
 #if __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
-    pBuffer = malloc(tBufferSize);
+    pBuffer = __disp_adapter0_aligned_malloc(tBufferSize, nPixelSize);
     assert(NULL != pBuffer);
     
     if (NULL == pBuffer) {
@@ -380,13 +402,6 @@ intptr_t __disp_adapter0_vres_asset_loader (
 #endif
     /* load content into the buffer */
     do {
-        size_t nPixelSize = sizeof(COLOUR_INT);
-        
-        if (0 != ptVRES->tTile.tColourInfo.chScheme) {
-            nPixelSize = (1 << (ptVRES->tTile.tColourInfo.u3ColourSZ - 3));
-            assert(nPixelSize >= 1);
-        }
-        
         uintptr_t pSrc = __disp_adapter0_vres_get_asset_address(pObj, ptVRES);
         uintptr_t pDes = (uintptr_t)pBuffer;
         int16_t iSourceStride = ptVRES->tTile.tRegion.tSize.iWidth;
@@ -417,10 +432,11 @@ void __disp_adapter0_vres_buffer_deposer (
                                             intptr_t pBuffer )
 {
 #if __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
-    resource_loader_t *ptLoader = (resource_loader_t *)pTarget;
-    
+    ARM_2D_UNUSED(pTarget);
+    ARM_2D_UNUSED(ptVRES);
+
     if ((intptr_t)NULL != pBuffer) {
-        free((void *)pBuffer);
+        __disp_adapter0_free((void *)pBuffer);
     }
 #else
     ARM_2D_UNUSED(pTarget);
