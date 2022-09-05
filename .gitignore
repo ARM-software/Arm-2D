@@ -12,18 +12,8 @@
 *.dbgconf
 *.crf
 *.elf
-si4/pixelpipe.si4project/pixelpipe.sip_xsb
-si4/pixelpipe.si4project/pixelpipe.sip_xr
-si4/pixelpipe.si4project/pixelpipe.sip_xm
-si4/pixelpipe.si4project/pixelpipe.sip_xf
-si4/pixelpipe.si4project/pixelpipe.sip_xc
-si4/pixelpipe.si4project/pixelpipe.sip_xad
-si4/pixelpipe.si4project/pixelpipe.sip_xab
-si4/pixelpipe.si4project/pixelpipe.sip_sym
 sym
-si4/pixelpipe.si4project/pixelpipe.siproj_settings.xml
-si4/pixelpipe.si4project/pixelpipe.siproj
-si4/pixelpipe.si4project/pixelpipe.sip_xsd
+si4
 *.sisc
 *._ac
 *.hex
@@ -48,3 +38,5 @@ build
 *.gabriel
 *.scvd
 .DS_Store
+*@*
+RTE_Components.h
