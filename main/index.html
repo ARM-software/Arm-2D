@@ -121,7 +121,7 @@ Branch Summary</h1>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Features</h1>
 <h3><a class="anchor" id="autotoc_md2"></a>
-In this version ( ver1.1.0-preview1-dev)</h3>
+In this version ( ver1.1.0-preview1)</h3>
 <p >The Arm-2D library provides <b>Low-Level 2D Image Processing Services</b> that are mainly used in <b>Deep Embedded Display system</b>. The supported features include but not limited to:</p>
 <ul>
 <li><b>Support Accelerating LVGL</b> (<b>v8.3.0</b> or newer)</li>
@@ -446,8 +446,8 @@ New Features Planned in the Future</h2>
 <h2><a class="anchor" id="autotoc_md18"></a>
 5.1 The Generic Limitations</h2>
 <ul>
-<li>The library focus on Cortex-M processors in principle.</li>
-<li>The library should be compiled with the following compilers:<ul>
+<li>The library focus on Cortex-M processors.</li>
+<li>The library supports the following compilers:<ul>
 <li>Arm Compiler 5 (<b>Deprecated</b>)</li>
 <li>Arm Compiler 6</li>
 <li>GCC</li>
@@ -455,48 +455,47 @@ New Features Planned in the Future</h2>
 <li>IAR</li>
 </ul>
 </li>
-<li>The library focus on <b>Low Level Pixel Processing Acceleration</b><ul>
+<li>The library focus on <b>Accelerating Low Level Pixel Processing</b><ul>
 <li>In principle, the library will <b>NOT</b> provide APIs for content creation, such as drawing shapes, text display etc., but simple point drawing and colour-filling APIs .</li>
-<li>In principle, the library will <b>NOT</b> provide data structures or related algorithms essential for creating a GUI, for example, element tree, GUI message handling and the tree traversal algorithms.</li>
+<li>In principle, the library will <b>NOT</b> provide data structures or algorithms essential for creating a GUI, for example, the element tree, the GUI message handling and the tree traversal algorithms.</li>
 </ul>
 </li>
 </ul>
 <h2><a class="anchor" id="autotoc_md19"></a>
 5.2 The Temporary Limitations</h2>
 <ul>
-<li>The GCC support for Cortex-M55 (helium acceleration) is broken (waiting for tool-chain update).</li>
-<li>Generic Anti-aliasing algorithms haven't been introduced, but anti-alias in transform (i.e. rotation and scaling) is supported.</li>
+<li>The GCC support of Cortex-M55 (helium acceleration) is broken (waiting for tool-chain update).</li>
+<li>The generic Anti-aliasing algorithms haven't been introduced, but anti-alias in transform (i.e. rotation and scaling) is supported.</li>
 <li>The library currently only provides default software algorithms and a <b><a href="https://developer.arm.com/architectures/instruction-sets/simd-isas/helium">Helium</a> based acceleration library</b>.<ul>
-<li>Although planned, no accelerator support is implemented for now.</li>
 <li>Although planned and implemented, the <a href="https://developer.arm.com/architectures/instruction-sets/custom-instructions">ACI (Arm Custom Instruction)</a> acceleration solutions are not open-source for now. Please contact local Arm FAE for details.</li>
 </ul>
 </li>
 <li>The provided example projects only run on <a href="https://developer.arm.com/tools-and-software/development-boards/fpga-prototyping-boards/mps2">MPS2</a>, <a href="https://developer.arm.com/tools-and-software/development-boards/fpga-prototyping-boards/mps3">MPS3</a>, <a href="https://developer.arm.com/tools-and-software/open-source-software/arm-platforms-software/cortex-m-platforms-software">FVP</a> and some 3rd party development platforms, e.g. <b>STM32F746G-Discovery</b> and <b>Raspberry Pi Pico</b>.<ul>
-<li>Feel free to try the library on your own devices. The library depends on No specific peripheral.</li>
+<li>Feel free to try the library on your own devices. The library depends on no specific peripheral.</li>
 </ul>
 </li>
-<li>Example projects are based on MDK (one of the most popular development environments for Cortex-M processors ).</li>
+<li>Most of the example projects are created in MDK.</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md20"></a>
 6 Feedback</h1>
-<p >As mentioned at the beginning, the purpose of this project is to explore and demonstrate the possibilities of delivering smart-phone-like modern GUI using low-cost and resource constraint micro-controllers. We expect that arm-2d could inspire more similar initiatives and engineering practices. Hence, your feedback and thoughts are precious to us.</p>
-<p >If you can to spend some time and try the library, please feel free to leave your thoughts. It would be nice to contains following information:</p>
+<p >As mentioned before, this project aims to explore and demonstrate the possibilities of delivering modern GUI using low-cost and resource constraint micro-controllers. We expect that arm-2d could inspire more similar initiatives and engineering practices. Hence, your feedback and thoughts are precious to us.</p>
+<p >If you can spend some time and try the library, please feel free to leave your thoughts. It would be nice to cover the following perspectives:</p>
 <ul>
-<li>The target application and/or industry segment which you want to introduce a GUI using Cortex-M processors</li>
+<li>The target industrial segments in which you want to introduce a GUI using Cortex-M processors</li>
 <li>The resources of your platform, such as the size of the RAM, ROM, system frequency, the average power consumption etc.</li>
-<li>The LCD resolution and target frame-rate (FPS)</li>
+<li>The LCD resolution and target frame rate (FPS)</li>
 <li>Algorithms that you find most useful but missing</li>
-<li>About the device<ul>
-<li>Does it contain HW accelerators for 2D image processing?</li>
+<li>About the device</li>
+<li>- Does it contain HW accelerators for 2D image processing?<ul>
 <li>What is the feature set of this 2D accelerator?</li>
-<li>Does it contain features that are currently missing in this library?</li>
+<li>Does it include features that are currently missing in this library?</li>
 </ul>
 </li>
-<li>Any other thoughts or suggestions.</li>
+<li>Any other thoughts or suggestions?</li>
 </ul>
 <p >Thank you for your time.</p>
 <p ><em><b>Arm-2D Development Team.</b></em></p>
-<p >11 Aug 2022 </p>
+<p >05 Sept 2022 </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->
