@@ -13,7 +13,7 @@
 
 ## Features
 
-#### In this version ( ver1.1.0-preview1-dev)
+#### In this version ( ver1.1.0-preview1)
 
 The Arm-2D library provides **Low-Level 2D Image Processing Services** that are mainly used in **Deep Embedded Display system**. The supported features include but not limited to:
 
@@ -326,49 +326,53 @@ def_low_lv_io(__ARM_2D_IO_FILL_RGB32, __arm_2d_rgb32_sw_tile_fill);
 
 ### 5.1 The Generic Limitations
 
-- The library focus on Cortex-M processors in principle.
-- The library should be compiled with the following compilers:
+- The library focus on Cortex-M processors.
+- The library supports the following compilers:
   - Arm Compiler 5 (**Deprecated**)
   - Arm Compiler 6
   - GCC
   - LLVM
   - IAR
-- The library focus on **Low Level Pixel Processing Acceleration**
+- The library focus on **Accelerating Low Level Pixel Processing**
   - In principle, the library will **NOT** provide APIs for content creation, such as drawing shapes, text display etc., but simple point drawing and colour-filling APIs .
-  - In principle, the library will **NOT** provide data structures or related algorithms essential for creating a GUI, for example, element tree, GUI message handling and the tree traversal algorithms.
+  - In principle, the library will **NOT** provide data structures or algorithms essential for creating a GUI, for example, the element tree, the GUI message handling and the tree traversal algorithms.
 
 
 ### 5.2 The Temporary Limitations
 
-- The GCC support for Cortex-M55 (helium acceleration) is broken (waiting for tool-chain update). 
-- Generic Anti-aliasing algorithms haven't been introduced, but anti-alias in transform (i.e. rotation and scaling) is supported.
+- The GCC support of Cortex-M55 (helium acceleration) is broken (waiting for tool-chain update). 
+- The generic Anti-aliasing algorithms haven't been introduced, but anti-alias in transform (i.e. rotation and scaling) is supported.
 - The library currently only provides default software algorithms and a **[Helium](https://developer.arm.com/architectures/instruction-sets/simd-isas/helium) based acceleration library**. 
-  - Although planned, no accelerator support is implemented for now.
   - Although planned and implemented, the [ACI (Arm Custom Instruction)](https://developer.arm.com/architectures/instruction-sets/custom-instructions) acceleration solutions are not open-source for now. Please contact local Arm FAE for details. 
 - The provided example projects only run on [MPS2](https://developer.arm.com/tools-and-software/development-boards/fpga-prototyping-boards/mps2), [MPS3](https://developer.arm.com/tools-and-software/development-boards/fpga-prototyping-boards/mps3), [FVP](https://developer.arm.com/tools-and-software/open-source-software/arm-platforms-software/cortex-m-platforms-software) and some 3rd party development platforms, e.g. **STM32F746G-Discovery** and **Raspberry Pi Pico**. 
-  - Feel free to try the library on your own devices. The library depends on No specific peripheral. 
-- Example projects are based on MDK (one of the most popular development environments for Cortex-M processors ).
+  - Feel free to try the library on your own devices. The library depends on no specific peripheral. 
+- Most of the example projects are created in MDK.
 
 
 ## 6 Feedback
 
-As mentioned at the beginning, the purpose of this project is to explore and demonstrate the possibilities of delivering smart-phone-like modern GUI using low-cost and resource constraint micro-controllers. We expect that arm-2d could inspire more similar initiatives and engineering practices. Hence, your feedback and thoughts are precious to us. 
+As mentioned before, this project aims to explore and demonstrate the possibilities of delivering modern GUI using low-cost and resource constraint micro-controllers. We expect that arm-2d could inspire more similar initiatives and engineering practices. Hence, your feedback and thoughts are precious to us. 
 
-If you can to spend some time and try the library, please feel free to leave your thoughts. It would be nice to contains following information:
+If you can spend some time and try the library, please feel free to leave your thoughts. It would be nice to cover the following perspectives:
 
-- The target application and/or industry segment which you want to introduce a GUI using Cortex-M processors
+- The target industrial segments in which you want to introduce a GUI using Cortex-M processors
+
 - The resources of your platform, such as the size of the RAM, ROM, system frequency, the average power consumption etc.
-- The LCD resolution and target frame-rate (FPS)
-- Algorithms that you find most useful but missing
-- About the device
-  - Does it contain HW accelerators for 2D image processing? 
-  - What is the feature set of this 2D accelerator?
-  - Does it contain features that are currently missing in this library?
-- Any other thoughts or suggestions.
 
+- The LCD resolution and target frame rate (FPS)
+
+- Algorithms that you find most useful but missing
+
+- About the device
+
+- - Does it contain HW accelerators for 2D image processing? 
+  - What is the feature set of this 2D accelerator?
+  - Does it include features that are currently missing in this library?
+
+- Any other thoughts or suggestions?
 
 Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-11 Aug 2022
+05 Sept 2022
