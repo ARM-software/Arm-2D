@@ -212,26 +212,56 @@ extern "C" {
  * Misc                                                                       *
  *----------------------------------------------------------------------------*/
 
+/*! 
+ * \brief a macro to mark unused variables and let the compiler happy
+ */
 #ifndef ARM_2D_UNUSED
 #   define ARM_2D_UNUSED(__VAR)     (void)(__VAR)
 #endif
 
+/*! 
+ * \brief a macro to test the boolean result for a given value using a given 
+ *         bitmask
+ * \param[in] __VALUE the target value
+ * \param[in] __BITS a bitmask
+ * \retval true all bits in the bitmask is 1
+ * \retval false not all bits in the bitmask is 1 
+ */
 #ifndef ARM_TEST_BITS
 #   define ARM_TEST_BITS(__VALUE, __BITS)   ((__BITS) == ((__VALUE) & (__BITS)))
 #endif
 
+/*! 
+ * \brief get the number of items in an given array
+ */
 #ifndef dimof
 #   define dimof(__array)          (sizeof(__array)/sizeof(__array[0]))
 #endif
 
+/*! 
+ * \brief get the offset of a given member in a specified structure/union
+ * \param __type the host type
+ * \param __member the name of the target member
+ * \return size_t the offset (in bytes)
+ */
 #ifndef offsetof
 #   define offsetof(__type, __member)                                           \
             ((uintptr_t)&(((__type *)NULL)->__member))
 #endif
 
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __ARM_TO_STRING(__STR)          #__STR
+
+/*!
+ * \brief convert a string to C string
+ */
 #define ARM_TO_STRING(__STR)            __ARM_TO_STRING(__STR)
 
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __ARM_VA_NUM_ARGS_IMPL( _0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,      \
                                 _13,_14,_15,_16,__N,...)      __N
 
