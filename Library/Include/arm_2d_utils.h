@@ -588,12 +588,18 @@ extern "C" {
 #   endif
 #endif
 
+#undef __ARM_ALIGN
+
+/*!
+ * \note do NOT use this macro directly
+ */
+#define __ARM_ALIGN(__N)        __attribute__((aligned(__N)))
+
 /*!
  * \brief an attribute to specify aligment requirement
  * \note it works for both functions and static/global variables
  */
 #ifndef ARM_ALIGN
-#   define __ARM_ALIGN(__N)        __attribute__((aligned(__N)))
 #   define ARM_ALIGN(__N)          __ARM_ALIGN(__N)
 #endif
 
@@ -620,6 +626,12 @@ extern "C" {
  * 
  */
 #define ARM_2D_SAFE_NAME(...)    ARM_CONNECT(__,__LINE__,##__VA_ARGS__)
+
+/*!
+ * \brief A macro to generate a safe name, usually used in macro template as the 
+ *        name of local variables
+ * 
+ */
 #define arm_2d_safe_name(...)    ARM_2D_SAFE_NAME(__VA_ARGS__)
 
 #undef arm_irq_safe
@@ -650,10 +662,26 @@ extern "C" {
 #undef __ARM_2D_ORIG_FUNC
 
 #if defined(__IS_COMPILER_ARM_COMPILER_6__)
+
+/*!
+ * \note do NOT use this macro directly
+ */
 #   define __ARM_2D_WRAP_FUNC(__FUNC)           $Sub$$##__FUNC
+
+/*!
+ * \note do NOT use this macro directly
+ */
 #   define __ARM_2D_ORIG_FUNC(__FUNC)           $Super$$## __FUNC
 #else
+
+/*!
+ * \note do NOT use this macro directly
+ */
 #   define __ARM_2D_WRAP_FUNC(x) __wrap_ ## x
+
+/*!
+ * \note do NOT use this macro directly
+ */
 #   define __ARM_2D_ORIG_FUNC(x) __real_ ## x
 #endif
 
@@ -673,6 +701,9 @@ extern "C" {
 
 /*  ALL the parameters passed to following macros must be pointer variables. */
 
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __ARM_LIST_STACK_PUSH(__P_TOP, __P_NODE)                                \
         do {                                                                    \
             ((__arm_slist_node_t *)(__P_NODE))->ptNext =                        \
@@ -680,11 +711,26 @@ extern "C" {
             (*(__arm_slist_node_t **)&(__P_TOP)) =                              \
                 (__arm_slist_node_t *)(__P_NODE);                               \
         } while(0)
+        
+/*! 
+ * \brief push a item to a list
+ * \param[in] __P_TOP a pointer points to the first item of a list
+ * \param[in] __P_NODE a pointer points to the new item
+ */
 #define ARM_LIST_STACK_PUSH(__P_TOP, __P_NODE)                                  \
             __ARM_LIST_STACK_PUSH((__P_TOP), (__P_NODE))
+
+/*! 
+ * \brief insert a item after a specified node
+ * \param[in] __P_TARGET a pointer points to the target node
+ * \param[in] __P_NODE a pointer points to the new item
+ */
 #define ARM_LIST_INSERT_AFTER(__P_TARGET, __P_NODE)                             \
             __ARM_LIST_STACK_PUSH((__P_TARGET), (__P_NODE))
 
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __ARM_LIST_STACK_POP(__P_TOP, __P_NODE)                                 \
         do {                                                                    \
             (*(__arm_slist_node_t **)&(__P_NODE)) =                             \
@@ -695,12 +741,26 @@ extern "C" {
                 ((__arm_slist_node_t *)(__P_NODE))->ptNext = NULL;              \
             }                                                                   \
         } while(0)
+
+/*! 
+ * \brief pop a item from a list
+ * \param[in] __P_TOP a pointer points to the first item of a list
+ * \param[out] __P_NODE a pointer variable for the node
+ */
 #define ARM_LIST_STACK_POP(__P_TOP, __P_NODE)                                   \
             __ARM_LIST_STACK_POP((__P_TOP), (__P_NODE))
+
+/*! 
+ * \brief remove a item after a specified node
+ * \param[in] __P_TARGET a pointer points to the target node
+ * \param[out] __P_NODE a pointer variable for the node
+ */
 #define ARM_LIST_REMOVE_AFTER(__P_TARGET, __P_NODE)                             \
             ARM_LIST_STACK_POP((__P_TARGET), (__P_NODE))
 
-
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __ARM_LIST_QUEUE_ENQUEUE(__HEAD, __TAIL, __ITEM)                        \
     do {                                                                        \
         if (NULL == (__TAIL)) {                                                 \
@@ -716,9 +776,19 @@ extern "C" {
         }                                                                       \
         ((__arm_slist_node_t *)(__ITEM))->ptNext = NULL;                        \
     } while(0)
+
+/*! 
+ * \brief enter a node to a queue
+ * \param[in] __HEAD a pointer points to the queue head
+ * \param[in] __TAIL a pointer points to the queue tail
+ * \param[in] __ITEM a pointer variable for the new node
+ */
 #define ARM_LIST_QUEUE_ENQUEUE(__HEAD, __TAIL, __ITEM)                          \
             __ARM_LIST_QUEUE_ENQUEUE((__HEAD), (__TAIL), (__ITEM))
 
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __ARM_LIST_QUEUE_DEQUEUE(__HEAD, __TAIL, __ITEM)                        \
     do {                                                                        \
         (*(__arm_slist_node_t **)&(__ITEM)) =  (__arm_slist_node_t *)(__HEAD);  \
@@ -731,13 +801,29 @@ extern "C" {
         }                                                                       \
     } while(0)
 
+/*! 
+ * \brief fetch a node from a queue
+ * \param[in] __HEAD a pointer points to the queue head
+ * \param[in] __TAIL a pointer points to the queue tail
+ * \param[out] __ITEM a pointer variable for the node
+ */
 #define ARM_LIST_QUEUE_DEQUEUE(__HEAD, __TAIL, __ITEM)                          \
             __ARM_LIST_QUEUE_DEQUEUE((__HEAD), (__TAIL), (__ITEM))
 
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __ARM_LIST_QUEUE_PEEK(__HEAD, __TAIL, __ITEM)                           \
     do {                                                                        \
         (*(__arm_slist_node_t **)&(__ITEM)) =  (__arm_slist_node_t *)(__HEAD);  \
     } while(0)
+
+/*! 
+ * \brief peek a node from a queue
+ * \param[in] __HEAD a pointer points to the queue head
+ * \param[in] __TAIL a pointer points to the queue tail
+ * \param[out] __ITEM a pointer variable for the node
+ */
 #define ARM_LIST_QUEUE_PEEK(__HEAD, __TAIL, __ITEM)                             \
             __ARM_LIST_QUEUE_PEEK((__HEAD), (__TAIL), (__ITEM))                 \
 
