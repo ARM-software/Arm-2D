@@ -36,6 +36,7 @@
 #include "./arm_2d_helper_scene.h"
 #include "./arm_2d_disp_adapters.h"
 #include <stdlib.h>
+#include <assert.h>
 
 #ifdef   __cplusplus
 extern "C" {
@@ -81,11 +82,12 @@ extern "C" {
 #define impl_heap_fb(__tile_name, __width, __height, __colour_type)             \
     arm_using(                                                                  \
         arm_2d_tile_t __tile_name = {                                           \
-            .phwBuffer = malloc((__width) * (__height) * sizeof(__colour_type)),\
+            .pchBuffer = malloc((__width) * (__height) * sizeof(__colour_type)),\
         },                                                                      \
         ({__tile_name.tRegion.tSize.iWidth = (__width);                         \
          __tile_name.tRegion.tSize.iHeight = (__height);                        \
          __tile_name.tInfo.bIsRoot = true;                                      \
+         assert(NULL != __tile_name.pchBuffer);                                 \
         }),                                                                     \
         ({ arm_2d_op_wait_async(NULL); free(__tile_name.phwBuffer); }) )
 
