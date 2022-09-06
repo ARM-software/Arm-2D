@@ -21,8 +21,8 @@
  * Title:        arm_2d_utils.h
  * Description:  Public header file for Arm-2D Library
  *
- * $Date:        18. July 2022
- * $Revision:    V.1.0.3
+ * $Date:        06. Sept 2022
+ * $Revision:    V.1.1.0
  *
  * -------------------------------------------------------------------- */
 
@@ -145,24 +145,66 @@ extern "C" {
 #undef inherit
 #undef inherit_ex
 
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __implement_ex(__type, __name)                                          \
             union {                                                             \
                 __type  __name;                                                 \
                 __type;                                                         \
             }
 
+/*!
+ * \note do NOT use this macro
+ */
 #define __inherit_ex(__type, __name)                                            \
             __type  __name                                                      \
 
+
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __implement(__type)             __implement_ex( __type,                 \
                                                         use_as__##__type)
 
+
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __inherit(__type)               __inherit_ex(__type,use_as__##__type)
 
+
+/*!
+ * \brief inherit a given class
+ * \param __type the base class, you can use .use_as__<__type> for referencing 
+ *               the base.
+ * \note this macro supports microsoft extensions (-fms-extensions)
+ */
 #define implement(__type)               __implement(__type)
+
+/*!
+ * \brief inherit a given class and give it an alias name
+ * \param __type the base class
+ * \param __name an alias name for referencing the base class
+ * \note this macro supports microsoft extensions (-fms-extensions)
+ */
 #define implement_ex(__type, __name)    __implement_ex(__type, __name)
 
+
+/*!
+ * \brief inherit a given class
+ * \param __type the base class, you can use .use_as__<__type> for referencing 
+ *               the base.
+ * \note this macro does NOT support microsoft extensions (-fms-extensions)
+ */
 #define inherit(__type)                 __inherit(__type)
+
+/*!
+ * \brief inherit a given class and give it an alias name
+ * \param __type the base class
+ * \param __name an alias name for referencing the base class
+ * \note this macro does NOT support microsoft extensions (-fms-extensions)
+ */
 #define inherit_ex(__type, __name)      __inherit_ex(__type, __name)
 
 
@@ -226,52 +268,137 @@ extern "C" {
             } while(0)
 #endif
 
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __ARM_CONNECT2(__A, __B)                        __A##__B
+
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __ARM_CONNECT2_ALT(__A, __B)                    __A##__B
+
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __ARM_CONNECT3(__A, __B, __C)                   __A##__B##__C
+
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __ARM_CONNECT4(__A, __B, __C, __D)              __A##__B##__C##__D
+
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __ARM_CONNECT5(__A, __B, __C, __D, __E)         __A##__B##__C##__D##__E
+
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __ARM_CONNECT6(__A, __B, __C, __D, __E, __F)                            \
                                     __A##__B##__C##__D##__E##__F
+
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __ARM_CONNECT7(__A, __B, __C, __D, __E, __F, __G)                       \
                                     __A##__B##__C##__D##__E##__F##__G
+
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __ARM_CONNECT8(__A, __B, __C, __D, __E, __F, __G, __H)                  \
                                     __A##__B##__C##__D##__E##__F##__G##__H
+
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __ARM_CONNECT9(__A, __B, __C, __D, __E, __F, __G, __H, __I)             \
                                     __A##__B##__C##__D##__E##__F##__G##__H##__I
 
+/*! 
+ * \brief connect two symbol names as one
+ */
 #define ARM_CONNECT2(__A, __B)                  __ARM_CONNECT2(__A, __B)
+
+/*! 
+ * \brief connect two symbol names as one
+ */
 #define ARM_CONNECT2_ALT(__A, __B)              __ARM_CONNECT2_ALT(__A, __B)
+
+/*! 
+ * \brief connect three symbol names as one
+ */
 #define ARM_CONNECT3(__A, __B, __C)             __ARM_CONNECT3(__A, __B, __C)
+
+/*! 
+ * \brief connect four symbol names as one
+ */
 #define ARM_CONNECT4(__A, __B, __C, __D)        __ARM_CONNECT4(__A, __B, __C, __D)
+
+/*! 
+ * \brief connect five symbol names as one
+ */
 #define ARM_CONNECT5(__A, __B, __C, __D, __E)                                   \
                 __ARM_CONNECT5(__A, __B, __C, __D, __E)
+
+/*! 
+ * \brief connect six symbol names as one
+ */
 #define ARM_CONNECT6(__A, __B, __C, __D, __E, __F)                              \
                 __ARM_CONNECT6(__A, __B, __C, __D, __E, __F)
+
+/*! 
+ * \brief connect seven symbol names as one
+ */
 #define ARM_CONNECT7(__A, __B, __C, __D, __E, __F, __G)                         \
                 __ARM_CONNECT7(__A, __B, __C, __D, __E, __F, __G)
+
+/*! 
+ * \brief connect eight symbol names as one
+ */
 #define ARM_CONNECT8(__A, __B, __C, __D, __E, __F, __G, __H)                    \
                 __ARM_CONNECT8(__A, __B, __C, __D, __E, __F, __G, __H)
+
+/*! 
+ * \brief connect nine symbol names as one
+ */
 #define ARM_CONNECT9(__A, __B, __C, __D, __E, __F, __G, __H, __I)               \
                 __ARM_CONNECT9(__A, __B, __C, __D, __E, __F, __G, __H, __I)
 
+/*! 
+ * \brief connect up to 9 symbol names as one
+ */
 #define arm_connect(...)                                                        \
             ARM_CONNECT2_ALT(ARM_CONNECT, __ARM_VA_NUM_ARGS(__VA_ARGS__))       \
                 (__VA_ARGS__)
 
+/*! 
+ * \brief connect up to 9 symbol names as one
+ */
 #define ARM_CONNECT(...)        arm_connect(__VA_ARGS__)
 
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __ARM_USING1(__declare)                                                 \
             for (__declare, *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;  \
                  ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;           \
                 )
 
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __ARM_USING2(__declare, __on_leave_expr)                                \
             for (__declare, *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;  \
                  ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;           \
                  (__on_leave_expr)                                              \
                 )
 
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __ARM_USING3(__declare, __on_enter_expr, __on_leave_expr)               \
             for (__declare, *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;  \
                  ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL ?          \
@@ -279,6 +406,9 @@ extern "C" {
                  (__on_leave_expr)                                              \
                 )
 
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __ARM_USING4(__dcl1, __dcl2, __on_enter_expr, __on_leave_expr)          \
             for (__dcl1,__dcl2,*ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)= NULL;\
                  ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL ?          \
@@ -286,18 +416,74 @@ extern "C" {
                  (__on_leave_expr)                                              \
                 )
 
+/*!
+ * \brief create a code segment with up to two local variables and 
+ *        entering/leaving operations
+ * \note prototype 1
+ *       arm_using(<local variable declare>) {
+ *           code body 
+ *       }
+ * 
+ * \note prototype 2
+ *       arm_using(<local variable>, {code segment before leaving the body}) {
+ *           code body
+ *       }
+ *
+ * \note prototype 3
+ *       arm_using( <local variable>, 
+ *                 {code segment before entering the body},
+ *                 {code segment before leaving the body}
+ *                 ) {
+ *           code body 
+ *       }
+ *
+ * \note prototype 4
+ *       arm_using( <local variable1>,
+                    <local variable2 with the same type as the local variable 1>,
+ *                 {code segment before entering the body},
+ *                 {code segment before leaving the body}
+ *                 ) {
+ *           code body 
+ *       }
+ */
 #define arm_using(...)                                                          \
             ARM_CONNECT2(__ARM_USING, __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
 
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __ARM_WITH2(__type, __addr)                                             \
             ARM_USING(__type *_p=(__addr))
-#define __ARM_WITH3(__type, __addr, __item)                                     \
-            ARM_USING(__type *_p=(__addr), *__item = _p, _p=_p, )
 
+/*!
+ * \note do NOT use this macro directly
+ */
+#define __ARM_WITH3(__type, __addr, __item)                                     \
+            ARM_USING(__type *_p=(__addr), *__item = _p, (void)_p, (void)0)
+
+/*!
+ * \brief a with block to access members of a given object
+ * 
+ * \note prototype 1
+ *       arm_with(<object type>, <address of the object>) {
+ *           you can use _.xxxx to access the members of the object
+ *       }
+ *
+ * \note prototype 2
+ *       arm_with(<object type>, <address of the object>, <name of the iterator>) {
+ *           you can use your own iterator to access the members of the object
+ *       }
+ */
 #define arm_with(...)                                                           \
             ARM_CONNECT2(__ARM_WITH, __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
+/*!
+ * \brief access each items in a given array
+ * \param __type the type of the array
+ * \param __array the target array
+ * \note you can use "_" as the current object (iterator)
+ */
 #define ARM_FOREACH2(__type, __array)                                           \
             arm_using(__type *_ = __array)                                      \
             for (   uint_fast32_t ARM_CONNECT2(count,__LINE__) = dimof(__array);\
@@ -305,6 +491,12 @@ extern "C" {
                     _++, ARM_CONNECT2(count,__LINE__)--                         \
                 )
 
+/*!
+ * \brief access each items in a given array
+ * \param __type the type of the array
+ * \param __array the target array
+ * \param __item a name for the current item (iterator)
+ */
 #define ARM_FOREACH3(__type, __array, __item)                                   \
             arm_using(__type *_ = __array, *__item = _, (void)_, (void)0 )      \
             for (   uint_fast32_t ARM_CONNECT2(count,__LINE__) = dimof(__array);\
@@ -312,6 +504,13 @@ extern "C" {
                     _++, __item = _, ARM_CONNECT2(count,__LINE__)--             \
                 )
 
+/*!
+ * \brief access each items in a given array
+ * \param __type the type of the array
+ * \param __array the target array or the pointer of an memory block
+ * \param __count number of items in the array/memory block
+ * \param __item a name for the current item (iterator)
+ */
 #define ARM_FOREACH4(__type, __array, __count, __item)                          \
             arm_using(__type *_ = __array, *__item = _, (void)_, (void)0)       \
             for (   uint_fast32_t ARM_CONNECT2(count,__LINE__) = (__count);     \
@@ -319,10 +518,17 @@ extern "C" {
                     _++, __item = _, ARM_CONNECT2(count,__LINE__)--             \
                 )
 
+/*!
+ * \brief access each items in a given array
+ * \note there are 3 prototypes, please refer to ARM_FOREACH1/2/3 for details
+ */
 #define arm_foreach(...)                                                        \
             ARM_CONNECT2(ARM_FOREACH, __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
 
+/*!
+ * \brief a wrapper for __attribute__((nonnull))
+ */
 #ifndef ARM_NONNULL
 #   if  defined(__IS_COMPILER_ARM_COMPILER_5__) ||\
         defined(__IS_COMPILER_ARM_COMPILER_6__) ||\
@@ -334,6 +540,10 @@ extern "C" {
 #   endif
 #endif
 
+/*!
+ * \brief an attribute for static variables that no initialisation is required 
+ *        in the C startup process.
+ */
 #ifndef ARM_NOINIT
 #   if     defined(__IS_COMPILER_ARM_COMPILER_5__)
 #       define ARM_NOINIT   __attribute__(( section( ".bss.noinit"),zero_init))
@@ -348,17 +558,28 @@ extern "C" {
 #   endif
 #endif
 
-
+/*!
+ * \brief an attribute to specify aligment requirement
+ * \note it works for both functions and static/global variables
+ */
 #ifndef ARM_ALIGN
 #   define __ARM_ALIGN(__N)        __attribute__((aligned(__N)))
 #   define ARM_ALIGN(__N)          __ARM_ALIGN(__N)
 #endif
 
-
+/*!
+ * \brief local variable decoration for pointers: restrict
+ */
 #ifndef __RESTRICT
 #   define __RESTRICT                __restrict
 #endif
 
+/*!
+ * \brief an decoration for claiming that the immediate following symbol
+ *        (variable / function) is not WEAK. If there is an __WEAK symbol, the
+ *        __OVERRIDE_WEAK one can override it.
+ *         
+ */
 #ifndef __OVERRIDE_WEAK
 #   define __OVERRIDE_WEAK
 #endif
@@ -406,7 +627,14 @@ extern "C" {
 #   define __ARM_2D_ORIG_FUNC(x) __real_ ## x
 #endif
 
+/*!
+ * \brief a symbol wrapper to override a specified function
+ */
 #define ARM_2D_WRAP_FUNC(__FUNC)                __ARM_2D_WRAP_FUNC(__FUNC)
+
+/*!
+ * \brief a symbol wrapper to refer the original function with a given name
+ */
 #define ARM_2D_ORIG_FUNC(__FUNC)                __ARM_2D_ORIG_FUNC(__FUNC)
 
 /*----------------------------------------------------------------------------*
@@ -473,30 +701,47 @@ extern "C" {
         }                                                                       \
     } while(0)
 
-#define ARM_LIST_QUEUE_DEQUEUE(__HEAD, __TAIL, __ITEM)  \
+#define ARM_LIST_QUEUE_DEQUEUE(__HEAD, __TAIL, __ITEM)                          \
             __ARM_LIST_QUEUE_DEQUEUE((__HEAD), (__TAIL), (__ITEM))
 
 #define __ARM_LIST_QUEUE_PEEK(__HEAD, __TAIL, __ITEM)                           \
     do {                                                                        \
         (*(__arm_slist_node_t **)&(__ITEM)) =  (__arm_slist_node_t *)(__HEAD);  \
     } while(0)
-#define ARM_LIST_QUEUE_PEEK(__HEAD, __TAIL, __ITEM)  \
+#define ARM_LIST_QUEUE_PEEK(__HEAD, __TAIL, __ITEM)                             \
             __ARM_LIST_QUEUE_PEEK((__HEAD), (__TAIL), (__ITEM))                 \
 
 /*----------------------------------------------------------------------------*
  * Definition Template                                                        *
  *----------------------------------------------------------------------------*/
 
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __def_low_lv_io(__NAME, __SW, ...)                                      \
 const __arm_2d_low_level_io_t LOW_LEVEL_IO##__NAME = {                          \
     .SW = (__arm_2d_io_func_t *)&(__SW),                                        \
     .HW = (NULL, ##__VA_ARGS__)                                                 \
 }
+
+
+/*!
+ * \brief a template to implement a specified low-level io interface
+ * \param __NAME the IO name
+ * \param __SW the default c implementation
+ * \param ... you can specify an optional implementation using some acceleration.
+ */
 #define def_low_lv_io(__NAME, __SW, ...)                                        \
             __def_low_lv_io(__NAME, __SW, ##__VA_ARGS__)
 
-
+/*!
+ * \note do NOT use this macro directly
+ */
 #define __ref_low_lv_io(__NAME)     &LOW_LEVEL_IO##__NAME
+
+/*!
+ * \brief a symbol wrapper for referencing a specified low-level IO
+ */
 #define ref_low_lv_io(__NAME)       __ref_low_lv_io(__NAME)
 
 /*============================ TYPES =========================================*/
