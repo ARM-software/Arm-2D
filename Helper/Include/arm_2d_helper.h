@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        03. Sept 2022
- * $Revision:    V.1.2.0
+ * $Date:        06. Sept 2022
+ * $Revision:    V.1.2.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -35,6 +35,7 @@
 #include "./arm_2d_helper_pfb.h"
 #include "./arm_2d_helper_scene.h"
 #include "./arm_2d_disp_adapters.h"
+#include <stdlib.h>
 
 #ifdef   __cplusplus
 extern "C" {
@@ -76,7 +77,18 @@ extern "C" {
             
 #define impl_fb(__NAME, __WIDTH, __HEIGHT, __TYPE, ...)                         \
             __impl_fb(__NAME, __WIDTH, __HEIGHT, __TYPE, ##__VA_ARGS__)
-                        
+
+#define impl_heap_fb(__tile_name, __width, __height, __colour_type)             \
+    arm_using(                                                                  \
+        arm_2d_tile_t __tile_name = {                                           \
+            .phwBuffer = malloc((__width) * (__height) * sizeof(__colour_type)),\
+        },                                                                      \
+        ({__tile_name.tRegion.tSize.iWidth = (__width);                         \
+         __tile_name.tRegion.tSize.iHeight = (__height);                        \
+         __tile_name.tInfo.bIsRoot = true;                                      \
+        }),                                                                     \
+        ({ arm_2d_op_wait_async(NULL); free(__tile_name.phwBuffer); }) )
+
 #define get_tile_buffer_pixel_count(__NAME)                                     \
             (uint32_t)(     (__NAME.tRegion.tSize.iWidth)                       \
                         *   (__NAME.tRegion.tSize.iHeight))

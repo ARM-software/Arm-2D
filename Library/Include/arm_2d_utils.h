@@ -269,21 +269,21 @@ extern "C" {
 #define __ARM_USING2(__declare, __on_leave_expr)                                \
             for (__declare, *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;  \
                  ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;           \
-                 __on_leave_expr                                                \
+                 (__on_leave_expr)                                              \
                 )
 
 #define __ARM_USING3(__declare, __on_enter_expr, __on_leave_expr)               \
             for (__declare, *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;  \
                  ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL ?          \
                     ((__on_enter_expr),1) : 0;                                  \
-                 __on_leave_expr                                                \
+                 (__on_leave_expr)                                              \
                 )
 
 #define __ARM_USING4(__dcl1, __dcl2, __on_enter_expr, __on_leave_expr)          \
             for (__dcl1,__dcl2,*ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)= NULL;\
                  ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL ?          \
                     ((__on_enter_expr),1) : 0;                                  \
-                 __on_leave_expr                                                \
+                 (__on_leave_expr)                                              \
                 )
 
 #define arm_using(...)                                                          \
@@ -306,14 +306,14 @@ extern "C" {
                 )
 
 #define ARM_FOREACH3(__type, __array, __item)                                   \
-            arm_using(__type *_ = __array, *__item = _, _ = _, )                \
+            arm_using(__type *_ = __array, *__item = _, (void)_, (void)0 )      \
             for (   uint_fast32_t ARM_CONNECT2(count,__LINE__) = dimof(__array);\
                     ARM_CONNECT2(count,__LINE__) > 0;                           \
                     _++, __item = _, ARM_CONNECT2(count,__LINE__)--             \
                 )
 
 #define ARM_FOREACH4(__type, __array, __count, __item)                          \
-            arm_using(__type *_ = __array, *__item = _, _ = _, )                \
+            arm_using(__type *_ = __array, *__item = _, (void)_, (void)0)       \
             for (   uint_fast32_t ARM_CONNECT2(count,__LINE__) = (__count);     \
                     ARM_CONNECT2(count,__LINE__) > 0;                           \
                     _++, __item = _, ARM_CONNECT2(count,__LINE__)--             \
