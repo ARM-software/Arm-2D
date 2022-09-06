@@ -253,6 +253,8 @@ Macros</h2></td></tr>
 <tr class="memitem:gad50097e4c6d104f0deaf8062188f551f"><td class="memItemLeft" align="right" valign="top"><a id="gad50097e4c6d104f0deaf8062188f551f" name="gad50097e4c6d104f0deaf8062188f551f"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>impl_fb</b>(__NAME,  __WIDTH,  __HEIGHT,  __TYPE, ...)&#160;&#160;&#160;            __impl_fb(__NAME, __WIDTH, __HEIGHT, __TYPE, ##__VA_ARGS__)</td></tr>
 <tr class="separator:gad50097e4c6d104f0deaf8062188f551f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab96c869dd347721f96e7c0f36775f8c1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gab96c869dd347721f96e7c0f36775f8c1">impl_heap_fb</a>(__tile_name,  __width,  __height,  __colour_type)</td></tr>
+<tr class="separator:gab96c869dd347721f96e7c0f36775f8c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0f6932c29834326e8499ecad35dd034c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga0f6932c29834326e8499ecad35dd034c">get_tile_buffer_pixel_count</a>(__NAME)</td></tr>
 <tr class="separator:ga0f6932c29834326e8499ecad35dd034c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga75ac3fb5f86d86d11e972f47d109bfcd"><td class="memItemLeft" align="right" valign="top"><a id="ga75ac3fb5f86d86d11e972f47d109bfcd" name="ga75ac3fb5f86d86d11e972f47d109bfcd"></a>
@@ -2159,6 +2161,55 @@ cycles used in LCD flushing </td></tr>
 <div class="line">                .pchBuffer = (uint8_t *)__NAME##Buffer,                         \</div>
 <div class="line">                __VA_ARGS__                                                     \</div>
 <div class="line">            };</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="gab96c869dd347721f96e7c0f36775f8c1" name="gab96c869dd347721f96e7c0f36775f8c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab96c869dd347721f96e7c0f36775f8c1">&#9670;&nbsp;</a></span>impl_heap_fb</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define impl_heap_fb</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__tile_name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__width, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__height, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__colour_type&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    arm_using(                                                                  \</div>
+<div class="line">        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> __tile_name = {                                           \</div>
+<div class="line">            .phwBuffer = malloc((__width) * (__height) * <span class="keyword">sizeof</span>(__colour_type)),\</div>
+<div class="line">        },                                                                      \</div>
+<div class="line">        ({__tile_name.tRegion.tSize.iWidth = (__width);                         \</div>
+<div class="line">         __tile_name.tRegion.tSize.iHeight = (__height);                        \</div>
+<div class="line">         __tile_name.tInfo.bIsRoot = <span class="keyword">true</span>;                                      \</div>
+<div class="line">        }),                                                                     \</div>
+<div class="line">        ({ <a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL); free(__tile_name.phwBuffer); }) )</div>
 </div><!-- fragment -->
 </div>
 </div>

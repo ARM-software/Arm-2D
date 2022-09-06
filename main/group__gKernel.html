@@ -3537,7 +3537,7 @@ target side mask </td></tr>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">            <span class="keywordflow">for</span> (__declare, *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;  \</div>
 <div class="line">                 ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;           \</div>
-<div class="line">                 __on_leave_expr                                                \</div>
+<div class="line">                 (__on_leave_expr)                                              \</div>
 <div class="line">                )</div>
 </div><!-- fragment -->
 </div>
@@ -3576,7 +3576,7 @@ target side mask </td></tr>
 <b>Value:</b><div class="fragment"><div class="line">            <span class="keywordflow">for</span> (__declare, *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;  \</div>
 <div class="line">                 ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL ?          \</div>
 <div class="line">                    ((__on_enter_expr),1) : 0;                                  \</div>
-<div class="line">                 __on_leave_expr                                                \</div>
+<div class="line">                 (__on_leave_expr)                                              \</div>
 <div class="line">                )</div>
 </div><!-- fragment -->
 </div>
@@ -3621,7 +3621,7 @@ target side mask </td></tr>
 <b>Value:</b><div class="fragment"><div class="line">            <span class="keywordflow">for</span> (__dcl1,__dcl2,*ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)= NULL;\</div>
 <div class="line">                 ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL ?          \</div>
 <div class="line">                    ((__on_enter_expr),1) : 0;                                  \</div>
-<div class="line">                 __on_leave_expr                                                \</div>
+<div class="line">                 (__on_leave_expr)                                              \</div>
 <div class="line">                )</div>
 </div><!-- fragment -->
 </div>
@@ -3690,7 +3690,7 @@ target side mask </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">            arm_using(__type *_ = __array, *__item = _, _ = _, )                \</div>
+<b>Value:</b><div class="fragment"><div class="line">            arm_using(__type *_ = __array, *__item = _, (<span class="keywordtype">void</span>)_, (<span class="keywordtype">void</span>)0 )      \</div>
 <div class="line">            for (   uint_fast32_t ARM_CONNECT2(count,__LINE__) = dimof(__array);\</div>
 <div class="line">                    ARM_CONNECT2(count,__LINE__) &gt; 0;                           \</div>
 <div class="line">                    _++, __item = _, ARM_CONNECT2(count,__LINE__)--             \</div>
@@ -3735,7 +3735,7 @@ target side mask </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">            arm_using(__type *_ = __array, *__item = _, _ = _, )                \</div>
+<b>Value:</b><div class="fragment"><div class="line">            arm_using(__type *_ = __array, *__item = _, (<span class="keywordtype">void</span>)_, (<span class="keywordtype">void</span>)0)       \</div>
 <div class="line">            for (   uint_fast32_t ARM_CONNECT2(count,__LINE__) = (__count);     \</div>
 <div class="line">                    ARM_CONNECT2(count,__LINE__) &gt; 0;                           \</div>
 <div class="line">                    _++, __item = _, ARM_CONNECT2(count,__LINE__)--             \</div>
