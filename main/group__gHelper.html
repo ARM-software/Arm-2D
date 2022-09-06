@@ -1710,7 +1710,7 @@ cycles used in LCD flushing </td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>arm_2d_err_t the result of the initialisation process</dd></dl>
-<div class="fragment"><div class="line"><span class="keyword">static</span> ARM_NOINIT <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> s_tExamplePFB;</div>
+<div class="fragment"><div class="line"><span class="keyword">static</span> <a class="code hl_define" href="group__gKernel.html#ga467717c9835f6c6a75f3d6d8c3aee8c8" title="a wrapper for attribute((nonnull))">ARM_NOINIT</a> <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> s_tExamplePFB;</div>
 <div class="line">...</div>
 <div class="line"><span class="comment">// initialise FPB helper</span></div>
 <div class="line">if (<a class="code hl_define" href="group__gHelper.html#ga457a16ef9330255578354fcd291a9bc2" title="a macro wrapper in uppercase to help initialising PFB service">ARM_2D_HELPER_PFB_INIT</a>(</div>
@@ -2030,7 +2030,7 @@ cycles used in LCD flushing </td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>arm_2d_err_t the result of the initialisation process</dd></dl>
-<div class="fragment"><div class="line"><span class="keyword">static</span> ARM_NOINIT <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> s_tExamplePFB;</div>
+<div class="fragment"><div class="line"><span class="keyword">static</span> <a class="code hl_define" href="group__gKernel.html#ga467717c9835f6c6a75f3d6d8c3aee8c8" title="a wrapper for attribute((nonnull))">ARM_NOINIT</a> <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> s_tExamplePFB;</div>
 <div class="line">...</div>
 <div class="line"><span class="comment">// initialise FPB helper</span></div>
 <div class="line">if (<a class="code hl_define" href="group__gHelper.html#ga377f8339912a8b31e11f45f6af81a1de" title="a macro wrapper in lowercase to help initialising PFB service">init_arm_2d_helper_pfb</a>(</div>
@@ -2151,7 +2151,7 @@ cycles used in LCD flushing </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">            ARM_NOINIT <span class="keyword">static</span> __TYPE                                            \</div>
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#ga467717c9835f6c6a75f3d6d8c3aee8c8" title="a wrapper for attribute((nonnull))">ARM_NOINIT</a> <span class="keyword">static</span> __TYPE                                            \</div>
 <div class="line">                __NAME##Buffer[(__WIDTH) * (__HEIGHT)];                         \</div>
 <div class="line">            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> __NAME = {                                      \</div>
 <div class="line">                .tRegion = {                                                    \</div>
@@ -2201,7 +2201,7 @@ cycles used in LCD flushing </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    arm_using(                                                                  \</div>
+<b>Value:</b><div class="fragment"><div class="line">    <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(                                                                  \</div>
 <div class="line">        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> __tile_name = {                                           \</div>
 <div class="line">            .pchBuffer = malloc((__width) * (__height) * <span class="keyword">sizeof</span>(__colour_type)),\</div>
 <div class="line">        },                                                                      \</div>
@@ -2334,7 +2334,7 @@ cycles used in LCD flushing </td></tr>
 <div class="line">                .iY = ((__region).tSize.iHeight - (__size).iHeight)&gt;&gt; 1,\</div>
 <div class="line">            },                                                                  \</div>
 <div class="line">        },                                                                      \</div>
-<div class="line">        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
+<div class="line">        *<a class="code hl_define" href="group__gKernel.html#gaa612e8299f2fa71ff5829e61c4735fd1" title="connect three symbol names as one">ARM_CONNECT3</a>(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
 <div class="line">         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \</div>
 <div class="line">         arm_2d_op_wait_async(NULL)                                             \</div>
 <div class="line">        )</div>
@@ -2382,7 +2382,7 @@ cycles used in LCD flushing </td></tr>
 <div class="line">                .iY = ((__region).tSize.iHeight - (__height))&gt;&gt; 1,              \</div>
 <div class="line">            },                                                                  \</div>
 <div class="line">        },                                                                      \</div>
-<div class="line">        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
+<div class="line">        *<a class="code hl_define" href="group__gKernel.html#gaa612e8299f2fa71ff5829e61c4735fd1" title="connect three symbol names as one">ARM_CONNECT3</a>(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
 <div class="line">         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \</div>
 <div class="line">         arm_2d_op_wait_async(NULL)                                             \</div>
 <div class="line">        )</div>
@@ -2404,7 +2404,7 @@ cycles used in LCD flushing </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">            ARM_CONNECT2(   __arm_2d_align_centre,                              \</div>
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gad6a67ffa29074439ce99988dac033e42" title="connect two symbol names as one">ARM_CONNECT2</a>(   __arm_2d_align_centre,                              \</div>
 <div class="line">                            <a class="code hl_define" href="group__gKernel.html#gaca9883ddfc8f4f3382d9d0e4a93a5890" title="A macro to count the number of parameters.">__ARM_VA_NUM_ARGS</a>(__VA_ARGS__))(__VA_ARGS__)</div>
 </div><!-- fragment -->
 </div>
