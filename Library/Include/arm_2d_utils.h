@@ -22,7 +22,7 @@
  * Description:  Public header file for Arm-2D Library
  *
  * $Date:        06. Sept 2022
- * $Revision:    V.1.1.0
+ * $Revision:    V.1.1.1
  *
  * -------------------------------------------------------------------- */
 
@@ -51,7 +51,7 @@
 #   include __ARM_2D_HAS_USER_HEADER__
 #endif
 
-/*! \note arm-2d relies on CMSIS 5.4.0 and above.
+/*! \note arm-2d relies on CMSIS 5.8.0 and above.
  */
 #include "cmsis_compiler.h"
 
@@ -73,56 +73,39 @@ extern "C" {
 
 /* The macros to identify compilers */
 
-/*! 
- * \brief to detect IAR 
- */
+/* detect IAR */
 #undef __IS_COMPILER_IAR__
 #if defined(__IAR_SYSTEMS_ICC__)
 #   define __IS_COMPILER_IAR__                  1
 #endif
 
-/*!
- * \brief to detect arm compiler 5
- * 
- */
+/* detect arm compiler 5 */
 #undef __IS_COMPILER_ARM_COMPILER_5__
 #if ((__ARMCC_VERSION >= 5000000) && (__ARMCC_VERSION < 6000000))
 #   define __IS_COMPILER_ARM_COMPILER_5__       1
 #endif
 
 
-/*!
- * \brief to detect arm compiler 6
- * 
- */
+/* detect arm compiler 6 */
 #undef __IS_COMPILER_ARM_COMPILER_6__
 #if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
 #   define __IS_COMPILER_ARM_COMPILER_6__       1
 #endif
 
-/*!
- * \brief to detect arm compilers
- * 
- */
+/* detect arm compilers */
 #undef __IS_COMPILER_ARM_COMPILER__
 #if defined(__IS_COMPILER_ARM_COMPILER_5__) && __IS_COMPILER_ARM_COMPILER_5__   \
 ||  defined(__IS_COMPILER_ARM_COMPILER_6__) && __IS_COMPILER_ARM_COMPILER_6__
 #   define __IS_COMPILER_ARM_COMPILER__         1
 #endif
 
-/*!
- * \brief to detect clang (llvm)
- * 
- */
+/* detect clang (llvm) */
 #undef  __IS_COMPILER_LLVM__
 #if defined(__clang__) && !__IS_COMPILER_ARM_COMPILER_6__
 #   define __IS_COMPILER_LLVM__                 1
 #else
 
-/*!
- * \brief to detect gcc
- * 
- */
+/* detect gcc */
 #   undef __IS_COMPILER_GCC__
 #   if defined(__GNUC__) && !(  defined(__IS_COMPILER_ARM_COMPILER__)           \
                             ||  defined(__IS_COMPILER_LLVM__)                   \
