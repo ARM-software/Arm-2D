@@ -2203,11 +2203,12 @@ cycles used in LCD flushing </td></tr>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    arm_using(                                                                  \</div>
 <div class="line">        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> __tile_name = {                                           \</div>
-<div class="line">            .phwBuffer = malloc((__width) * (__height) * <span class="keyword">sizeof</span>(__colour_type)),\</div>
+<div class="line">            .pchBuffer = malloc((__width) * (__height) * <span class="keyword">sizeof</span>(__colour_type)),\</div>
 <div class="line">        },                                                                      \</div>
 <div class="line">        ({__tile_name.tRegion.tSize.iWidth = (__width);                         \</div>
 <div class="line">         __tile_name.tRegion.tSize.iHeight = (__height);                        \</div>
 <div class="line">         __tile_name.tInfo.bIsRoot = <span class="keyword">true</span>;                                      \</div>
+<div class="line">         assert(NULL != __tile_name.pchBuffer);                                 \</div>
 <div class="line">        }),                                                                     \</div>
 <div class="line">        ({ <a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL); free(__tile_name.phwBuffer); }) )</div>
 </div><!-- fragment -->
