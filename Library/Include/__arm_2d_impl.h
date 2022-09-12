@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        09. Aug 2022
- * $Revision:    V.1.2.2
+ * $Date:        12. Sept 2022
+ * $Revision:    V.1.3.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -243,8 +243,17 @@ enum {
     __ARM_2D_OP_IDX_COPY_WITH_TARGET_MASK,
     __ARM_2D_OP_IDX_FILL_COLOUR,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_COLOUR_KEYING,
-    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK,
-    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_OPACITY,
+    
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A2_MASK,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A4_MASK,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A8_MASK,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A8_MASK,
+    
+    
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A2_MASK_AND_OPACITY,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A4_MASK_AND_OPACITY,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A8_MASK_AND_OPACITY,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_OPACITY = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A8_MASK_AND_OPACITY,
     
     __ARM_2D_OP_IDX_ALPHA_BLENDING,
     __ARM_2D_OP_IDX_ALPHA_BLENDING_WITH_COLOUR_KEYING,
@@ -690,6 +699,30 @@ extern
 arm_fsm_rt_t __arm_2d_rgb32_sw_colour_filling(__arm_2d_sub_task_t *ptTask);
 
 extern 
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_a2_mask(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_a2_mask(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_a2_mask(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_a4_mask(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_a4_mask(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_a4_mask(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
 arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask(
                                         __arm_2d_sub_task_t *ptTask);
 
@@ -701,6 +734,29 @@ extern
 arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask(
                                         __arm_2d_sub_task_t *ptTask);
 
+extern 
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_a2_mask_and_opacity(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_a2_mask_and_opacity(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_a2_mask_and_opacity(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_a4_mask_and_opacity(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_a4_mask_and_opacity(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_a4_mask_and_opacity(
+                                        __arm_2d_sub_task_t *ptTask);
 
 extern 
 arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_and_opacity(

@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the alpha-blending related
  *               APIs
  *
- * $Date:        17. June 2022
- * $Revision:    V.1.0.1
+ * $Date:        12. Sept 2022
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -205,6 +205,102 @@ extern "C" {
                                                  (__COLOUR),                    \
                                                  (__ALPHA))
 
+#define arm_2d_gray8_fill_colour_with_a2_mask(                                  \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __ALPHA_ADDR,   /*   alpha tile address */  \
+                                    __COLOUR)       /*   colour */              \
+            arm_2dp_gray8_fill_colour_with_a2_mask(                             \
+                                      NULL,                                     \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR),                           \
+                                     (__ALPHA_ADDR),                            \
+                                     (__COLOUR))
+
+#define arm_2d_rgb565_fill_colour_with_a2_mask(                                 \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __ALPHA_ADDR,   /*   alpha tile address */  \
+                                    __COLOUR)       /*   colour */              \
+            arm_2dp_rgb565_fill_colour_with_a2_mask(                            \
+                                      NULL,                                     \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR),                           \
+                                     (__ALPHA_ADDR),                            \
+                                     (__COLOUR))
+
+#define arm_2d_rgb888_fill_colour_with_a2_mask(                                 \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __ALPHA_ADDR,   /*   alpha tile address */  \
+                                    __COLOUR)       /*   colour */              \
+            arm_2dp_cccn888_fill_colour_with_a2_mask(                           \
+                                      NULL,                                     \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR),                           \
+                                     (__ALPHA_ADDR),                            \
+                                     (arm_2d_color_cccn888_t){(__COLOUR).tValue})
+
+#define arm_2d_cccn888_fill_colour_with_a2_mask(                                \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __ALPHA_ADDR,   /*   alpha tile address */  \
+                                    __COLOUR)       /*   colour */              \
+            arm_2dp_cccn888_fill_colour_with_a2_mask(                           \
+                                      NULL,                                     \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR),                           \
+                                     (__ALPHA_ADDR),                            \
+                                     (__COLOUR))
+
+#define arm_2d_gray8_fill_colour_with_a4_mask(                                  \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __ALPHA_ADDR,   /*   alpha tile address */  \
+                                    __COLOUR)       /*   colour */              \
+            arm_2dp_gray8_fill_colour_with_a4_mask(                             \
+                                      NULL,                                     \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR),                           \
+                                     (__ALPHA_ADDR),                            \
+                                     (__COLOUR))
+
+#define arm_2d_rgb565_fill_colour_with_a4_mask(                                 \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __ALPHA_ADDR,   /*   alpha tile address */  \
+                                    __COLOUR)       /*   colour */              \
+            arm_2dp_rgb565_fill_colour_with_a4_mask(                            \
+                                      NULL,                                     \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR),                           \
+                                     (__ALPHA_ADDR),                            \
+                                     (__COLOUR))
+
+#define arm_2d_rgb888_fill_colour_with_a4_mask(                                 \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __ALPHA_ADDR,   /*   alpha tile address */  \
+                                    __COLOUR)       /*   colour */              \
+            arm_2dp_cccn888_fill_colour_with_a4_mask(                           \
+                                      NULL,                                     \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR),                           \
+                                     (__ALPHA_ADDR),                            \
+                                     (arm_2d_color_cccn888_t){(__COLOUR).tValue})
+
+#define arm_2d_cccn888_fill_colour_with_a4_mask(                                \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __ALPHA_ADDR,   /*   alpha tile address */  \
+                                    __COLOUR)       /*   colour */              \
+            arm_2dp_cccn888_fill_colour_with_a4_mask(                           \
+                                      NULL,                                     \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR),                           \
+                                     (__ALPHA_ADDR),                            \
+                                     (__COLOUR))
+
 #define arm_2d_gray8_fill_colour_with_mask(                                     \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
@@ -252,6 +348,127 @@ extern "C" {
                                      (__REGION_ADDR),                           \
                                      (__ALPHA_ADDR),                            \
                                      (__COLOUR))
+
+#define arm_2d_gray8_fill_colour_with_a8_mask                                   \
+            arm_2d_gray8_fill_colour_with_mask
+#define arm_2d_rgb565_fill_colour_with_a8_mask                                  \
+            arm_2d_rgb565_fill_colour_with_mask
+#define arm_2d_rgb888_fill_colour_with_a8_mask                                  \
+            arm_2d_rgb888_fill_colour_with_mask
+#define arm_2d_cccn888_fill_colour_with_a8_mask                                 \
+            arm_2d_cccn888_fill_colour_with_mask
+
+#define arm_2d_gray8_fill_colour_with_a2_mask_and_opacity(                      \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __ALPHA_ADDR,   /*   alpha tile address */  \
+                                    __COLOUR,       /*   colour */              \
+                                    __OPACITY)                                  \
+            arm_2dp_gray8_fill_colour_with_a2_mask_and_opacity(                 \
+                                      NULL,                                     \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR),                           \
+                                     (__ALPHA_ADDR),                            \
+                                     (__COLOUR),                                \
+                                     (__OPACITY))
+
+#define arm_2d_rgb565_fill_colour_with_a2_mask_and_opacity(                     \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __ALPHA_ADDR,   /*   alpha tile address */  \
+                                    __COLOUR,       /*   colour */              \
+                                    __OPACITY)                                  \
+            arm_2dp_rgb565_fill_colour_with_a2_mask_and_opacity(                \
+                                      NULL,                                     \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR),                           \
+                                     (__ALPHA_ADDR),                            \
+                                     (__COLOUR),                                \
+                                     (__OPACITY))
+
+#define arm_2d_rgb888_fill_colour_with_a2_mask_and_opacity(                     \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __ALPHA_ADDR,   /*   alpha tile address */  \
+                                    __COLOUR,       /*   colour */              \
+                                    __OPACITY)                                  \
+            arm_2dp_cccn888_fill_colour_with_a2_mask_and_opacity(               \
+                                  NULL,                                         \
+                                 (__TARGET_ADDR),                               \
+                                 (__REGION_ADDR),                               \
+                                 (__ALPHA_ADDR),                                \
+                                 (arm_2d_color_cccn888_t){(__COLOUR).tValue},   \
+                                 (__OPACITY))
+
+#define arm_2d_cccn888_fill_colour_with_a2_mask_and_opacity(                    \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __ALPHA_ADDR,   /*   alpha tile address */  \
+                                    __COLOUR,       /*   colour */              \
+                                    __OPACITY)                                  \
+            arm_2dp_cccn888_fill_colour_with_a2_mask_and_opacity(               \
+                                      NULL,                                     \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR),                           \
+                                     (__ALPHA_ADDR),                            \
+                                     (__COLOUR),                                \
+                                     (__OPACITY))
+
+#define arm_2d_gray8_fill_colour_with_a4_mask_and_opacity(                      \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __ALPHA_ADDR,   /*   alpha tile address */  \
+                                    __COLOUR,       /*   colour */              \
+                                    __OPACITY)                                  \
+            arm_2dp_gray8_fill_colour_with_a4_mask_and_opacity(                 \
+                                      NULL,                                     \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR),                           \
+                                     (__ALPHA_ADDR),                            \
+                                     (__COLOUR),                                \
+                                     (__OPACITY))
+
+#define arm_2d_rgb565_fill_colour_with_a4_mask_and_opacity(                     \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __ALPHA_ADDR,   /*   alpha tile address */  \
+                                    __COLOUR,       /*   colour */              \
+                                    __OPACITY)                                  \
+            arm_2dp_rgb565_fill_colour_with_a4_mask_and_opacity(                \
+                                      NULL,                                     \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR),                           \
+                                     (__ALPHA_ADDR),                            \
+                                     (__COLOUR),                                \
+                                     (__OPACITY))
+
+#define arm_2d_rgb888_fill_colour_with_a4_mask_and_opacity(                     \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __ALPHA_ADDR,   /*   alpha tile address */  \
+                                    __COLOUR,       /*   colour */              \
+                                    __OPACITY)                                  \
+            arm_2dp_cccn888_fill_colour_with_a4_mask_and_opacity(               \
+                                  NULL,                                         \
+                                 (__TARGET_ADDR),                               \
+                                 (__REGION_ADDR),                               \
+                                 (__ALPHA_ADDR),                                \
+                                 (arm_2d_color_cccn888_t){(__COLOUR).tValue},   \
+                                 (__OPACITY))
+
+#define arm_2d_cccn888_fill_colour_with_a4_mask_and_opacity(                    \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __ALPHA_ADDR,   /*   alpha tile address */  \
+                                    __COLOUR,       /*   colour */              \
+                                    __OPACITY)                                  \
+            arm_2dp_cccn888_fill_colour_with_a4_mask_and_opacity(               \
+                                      NULL,                                     \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR),                           \
+                                     (__ALPHA_ADDR),                            \
+                                     (__COLOUR),                                \
+                                     (__OPACITY))
 
 #define arm_2d_gray8_fill_colour_with_mask_and_opacity(                         \
                                     __TARGET_ADDR,  /*   target tile address*/  \
@@ -308,6 +525,15 @@ extern "C" {
                                      (__ALPHA_ADDR),                            \
                                      (__COLOUR),                                \
                                      (__OPACITY))
+
+#define arm_2d_gray8_fill_colour_with_a8_mask_and_opacity                       \
+            arm_2d_gray8_fill_colour_with_mask_and_opacity
+#define arm_2d_rgb565_fill_colour_with_a8_mask_and_opacity                      \
+            arm_2d_rgb565_fill_colour_with_mask_and_opacity
+#define arm_2d_rgb888_fill_colour_with_a8_mask_and_opacity                      \
+            arm_2d_rgb888_fill_colour_with_mask_and_opacity
+#define arm_2d_cccn888_fill_colour_with_a8_mask_and_opacity                     \
+            arm_2d_cccn888_fill_colour_with_mask_and_opacity
 
 #define arm_2d_gray8_alpha_blending_with_colour_keying(                         \
                                       __SRC_ADDR,   /*   source tile address */ \
@@ -740,7 +966,124 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_opacity(
                                                 uint_fast8_t chRatio);
 
 /*----------------------------------------------------------------------------*
- * Fill tile with a specified colour and an alpha mask                        *
+ * Fill tile with a specified colour and an a2 mask                           *
+ *----------------------------------------------------------------------------*/
+
+/*!
+ * \brief fill a target tile with a given gray8 colour and an a2 mask on target side
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region
+ * \param[in] ptAlpha the mask on the target side
+ * \param[in] tColour a gray8 colour
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,4)
+arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_a2_mask(
+                                        arm_2d_op_fill_cl_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_tile_t *ptAlpha,
+                                        arm_2d_color_gray8_t tColour);
+
+/*!
+ * \brief fill a target tile with a given rgb565 colour and an a2 mask on target side
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region
+ * \param[in] ptAlpha the mask on the target side
+ * \param[in] tColour a rgb565 colour
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,4)
+arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_a2_mask( 
+                                        arm_2d_op_fill_cl_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_tile_t *ptAlpha,
+                                        arm_2d_color_rgb565_t tColour);
+
+/*!
+ * \brief fill a target tile with a given cccn888 colour and an a2 mask on target side
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region
+ * \param[in] ptAlpha the mask on the target side
+ * \param[in] tColour a cccn888 colour
+ * \return arm_fsm_rt_t the operation result
+ */
+extern                                  
+ARM_NONNULL(2,4)
+arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_a2_mask( 
+                                        arm_2d_op_fill_cl_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_tile_t *ptAlpha,
+                                        arm_2d_color_cccn888_t tColour);
+
+
+/*----------------------------------------------------------------------------*
+ * Fill tile with a specified colour and an a4 mask                           *
+ *----------------------------------------------------------------------------*/
+
+/*!
+ * \brief fill a target tile with a given gray8 colour and an a4 mask on target side
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region
+ * \param[in] ptAlpha the mask on the target side
+ * \param[in] tColour a gray8 colour
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,4)
+arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_a4_mask(
+                                        arm_2d_op_fill_cl_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_tile_t *ptAlpha,
+                                        arm_2d_color_gray8_t tColour);
+
+/*!
+ * \brief fill a target tile with a given rgb565 colour and an a4 mask on target side
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region
+ * \param[in] ptAlpha the mask on the target side
+ * \param[in] tColour a rgb565 colour
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,4)
+arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_a4_mask( 
+                                        arm_2d_op_fill_cl_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_tile_t *ptAlpha,
+                                        arm_2d_color_rgb565_t tColour);
+
+/*!
+ * \brief fill a target tile with a given cccn888 colour and an a4 mask on target side
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region
+ * \param[in] ptAlpha the mask on the target side
+ * \param[in] tColour a cccn888 colour
+ * \return arm_fsm_rt_t the operation result
+ */
+extern                                  
+ARM_NONNULL(2,4)
+arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_a4_mask( 
+                                        arm_2d_op_fill_cl_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_tile_t *ptAlpha,
+                                        arm_2d_color_cccn888_t tColour);
+
+/*----------------------------------------------------------------------------*
+ * Fill tile with a specified colour and an a8 mask                           *
  *----------------------------------------------------------------------------*/
 
 /*!
@@ -796,6 +1139,135 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_mask(
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
                                         arm_2d_color_cccn888_t tColour);
+
+
+/*----------------------------------------------------------------------------*
+ * Fill tile with a specified colour, an a2 mask and a specified opacity      *
+ *----------------------------------------------------------------------------*/
+
+/*!
+ * \brief fill a target tile with a given gray8 colour, an a2 mask on target side and an opacity
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region
+ * \param[in] ptAlpha the mask on the target side
+ * \param[in] tColour a gray8 colour
+ * \param[in] chOpacity the opacity
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,4)
+arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_a2_mask_and_opacity(
+                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_tile_t *ptAlpha,
+                                        arm_2d_color_gray8_t tColour,
+                                        uint8_t chOpacity);
+
+/*!
+ * \brief fill a target tile with a given rgb565 colour, an a2 mask on target side and an opacity
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region
+ * \param[in] ptAlpha the mask on the target side
+ * \param[in] tColour a rgb565 colour
+ * \param[in] chOpacity the opacity
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,4)
+arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_a2_mask_and_opacity(
+                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_tile_t *ptAlpha,
+                                        arm_2d_color_rgb565_t tColour,
+                                        uint8_t chOpacity);
+
+/*!
+ * \brief fill a target tile with a given cccn888 colour, an a2 mask on target side and an opacity
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region
+ * \param[in] ptAlpha the mask on the target side
+ * \param[in] tColour a cccn888 colour
+ * \param[in] chOpacity the opacity
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,4)
+arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_a2_mask_and_opacity(
+                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_tile_t *ptAlpha,
+                                        arm_2d_color_cccn888_t tColour,
+                                        uint8_t chOpacity);
+
+/*----------------------------------------------------------------------------*
+ * Fill tile with a specified colour, an a4 mask and a specified opacity      *
+ *----------------------------------------------------------------------------*/
+
+/*!
+ * \brief fill a target tile with a given gray8 colour, an a4 mask on target side and an opacity
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region
+ * \param[in] ptAlpha the mask on the target side
+ * \param[in] tColour a gray8 colour
+ * \param[in] chOpacity the opacity
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,4)
+arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_a4_mask_and_opacity(
+                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_tile_t *ptAlpha,
+                                        arm_2d_color_gray8_t tColour,
+                                        uint8_t chOpacity);
+
+/*!
+ * \brief fill a target tile with a given rgb565 colour, an a4 mask on target side and an opacity
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region
+ * \param[in] ptAlpha the mask on the target side
+ * \param[in] tColour a rgb565 colour
+ * \param[in] chOpacity the opacity
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,4)
+arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_a4_mask_and_opacity(
+                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_tile_t *ptAlpha,
+                                        arm_2d_color_rgb565_t tColour,
+                                        uint8_t chOpacity);
+
+/*!
+ * \brief fill a target tile with a given cccn888 colour, an a4 mask on target side and an opacity
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region
+ * \param[in] ptAlpha the mask on the target side
+ * \param[in] tColour a cccn888 colour
+ * \param[in] chOpacity the opacity
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,4)
+arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_a4_mask_and_opacity(
+                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_tile_t *ptAlpha,
+                                        arm_2d_color_cccn888_t tColour,
+                                        uint8_t chOpacity);
 
 /*----------------------------------------------------------------------------*
  * Fill tile with a specified colour, an alpha mask and a specified opacity   *

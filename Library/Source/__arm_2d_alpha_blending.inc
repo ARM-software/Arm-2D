@@ -169,6 +169,106 @@ void __ARM_2D_FUNC(colour_filling_with_opacity)(
                                         uint_fast16_t hwRatio);
 #endif
 
+
+
+
+
+
+
+
+
+
+
+#ifndef __PATCH_COLOUR_FILLING_A2_MASK
+__WEAK
+void __ARM_2D_FUNC(colour_filling_a2_mask)(   
+                            __API_INT_TYPE *__RESTRICT pTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchAlpha,
+                            int16_t iAlphaStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            __API_INT_TYPE Colour)
+{
+    int_fast16_t iHeight = ptCopySize->iHeight;
+    int_fast16_t iWidth  = ptCopySize->iWidth;
+    
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+        for (int_fast16_t x = 0; x < iWidth; x++) {
+            uint16_t hwAlpha = 256 - (*pchAlpha++);
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            hwAlpha -= (hwAlpha == 1);
+#endif
+            __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
+        }
+
+        pchAlpha += (iAlphaStride - iWidth);
+        pTarget += (iTargetStride - iWidth);
+    }
+}
+#else
+extern
+void __ARM_2D_FUNC(colour_filling_a2_mask)(   
+                            __API_INT_TYPE *__RESTRICT pTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchAlpha,
+                            int16_t iAlphaStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            __API_INT_TYPE Colour);
+#endif
+
+
+
+#ifndef __PATCH_COLOUR_FILLING_A4_MASK
+__WEAK
+void __ARM_2D_FUNC(colour_filling_a4_mask)(   
+                            __API_INT_TYPE *__RESTRICT pTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchAlpha,
+                            int16_t iAlphaStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            __API_INT_TYPE Colour)
+{
+    int_fast16_t iHeight = ptCopySize->iHeight;
+    int_fast16_t iWidth  = ptCopySize->iWidth;
+    
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+        for (int_fast16_t x = 0; x < iWidth; x++) {
+            uint16_t hwAlpha = 256 - (*pchAlpha++);
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            hwAlpha -= (hwAlpha == 1);
+#endif
+            __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
+        }
+
+        pchAlpha += (iAlphaStride - iWidth);
+        pTarget += (iTargetStride - iWidth);
+    }
+}
+#else
+extern
+void __ARM_2D_FUNC(colour_filling_a4_mask)(   
+                            __API_INT_TYPE *__RESTRICT pTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchAlpha,
+                            int16_t iAlphaStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            __API_INT_TYPE Colour);
+#endif
+
+
+
+
+
+
+
+
+
+
+
+
+
 #ifndef __PATCH_COLOUR_FILLING_ALPHA_MASK
 __WEAK
 void __ARM_2D_FUNC(colour_filling_mask)(   
@@ -206,6 +306,111 @@ void __ARM_2D_FUNC(colour_filling_mask)(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             __API_INT_TYPE Colour);
 #endif
+
+
+
+
+
+
+
+
+
+#ifndef __PATCH_COLOUR_FILLING_A2_MASK_OPACITY
+__WEAK
+void __ARM_2D_FUNC(colour_filling_a2_mask_opacity)(   
+                            __API_INT_TYPE *__RESTRICT pTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchAlpha,
+                            int16_t iAlphaStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            __API_INT_TYPE Colour,
+                            uint_fast16_t hwOpacity)
+{
+    int_fast16_t iHeight = ptCopySize->iHeight;
+    int_fast16_t iWidth  = ptCopySize->iWidth;
+
+    
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+        for (int_fast16_t x = 0; x < iWidth; x++) {
+            uint16_t hwAlpha = 256 - ((*pchAlpha++) * hwOpacity >> 8);
+            
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            hwAlpha -= (hwAlpha == 2) * 2;
+#endif
+
+            __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
+        }
+
+        pchAlpha += (iAlphaStride - iWidth);
+        pTarget += (iTargetStride - iWidth);
+    }
+}
+#else
+extern
+void __ARM_2D_FUNC(colour_filling_a2_mask_opacity)(   
+                            __API_INT_TYPE *__RESTRICT pTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchAlpha,
+                            int16_t iAlphaStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            __API_INT_TYPE Colour,
+                            uint_fast16_t hwOpacity);
+#endif
+
+
+
+#ifndef __PATCH_COLOUR_FILLING_A4_MASK_OPACITY
+__WEAK
+void __ARM_2D_FUNC(colour_filling_a4_mask_opacity)(   
+                            __API_INT_TYPE *__RESTRICT pTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchAlpha,
+                            int16_t iAlphaStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            __API_INT_TYPE Colour,
+                            uint_fast16_t hwOpacity)
+{
+    int_fast16_t iHeight = ptCopySize->iHeight;
+    int_fast16_t iWidth  = ptCopySize->iWidth;
+
+    
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+        for (int_fast16_t x = 0; x < iWidth; x++) {
+            uint16_t hwAlpha = 256 - ((*pchAlpha++) * hwOpacity >> 8);
+            
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            hwAlpha -= (hwAlpha == 2) * 2;
+#endif
+
+            __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
+        }
+
+        pchAlpha += (iAlphaStride - iWidth);
+        pTarget += (iTargetStride - iWidth);
+    }
+}
+#else
+extern
+void __ARM_2D_FUNC(colour_filling_a4_mask_opacity)(   
+                            __API_INT_TYPE *__RESTRICT pTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchAlpha,
+                            int16_t iAlphaStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            __API_INT_TYPE Colour,
+                            uint_fast16_t hwOpacity);
+#endif
+
+
+
+
+
+
+
+
+
 
 
 

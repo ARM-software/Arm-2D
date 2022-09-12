@@ -21,8 +21,8 @@
  * Title:        __arm_2d_direct.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        29. April 2022
- * $Revision:    V.1.0.2
+ * $Date:        12. Sept 2022
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -822,6 +822,22 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask_opacity(uint32_t *
                                    uint32_t Colour,
                                    uint_fast16_t hwOpacity);
 
+void __arm_2d_impl_cccn888_colour_filling_a2_mask(uint32_t * __restrict pTarget,
+                           int16_t iTargetStride,
+                           uint8_t * __restrict pchAlpha,
+                           int16_t iAlphaStride,
+                           arm_2d_size_t *
+                           __restrict ptCopySize,
+                           uint32_t Colour);
+
+void __arm_2d_impl_cccn888_colour_filling_a4_mask(uint32_t * __restrict pTarget,
+                           int16_t iTargetStride,
+                           uint8_t * __restrict pchAlpha,
+                           int16_t iAlphaStride,
+                           arm_2d_size_t *
+                           __restrict ptCopySize,
+                           uint32_t Colour);
+
 void __arm_2d_impl_cccn888_colour_filling_mask(uint32_t * __restrict pTarget,
                            int16_t iTargetStride,
                            uint8_t * __restrict pchAlpha,
@@ -829,6 +845,28 @@ void __arm_2d_impl_cccn888_colour_filling_mask(uint32_t * __restrict pTarget,
                            arm_2d_size_t *
                            __restrict ptCopySize,
                            uint32_t Colour);
+
+void __arm_2d_impl_cccn888_colour_filling_a2_mask_opacity(uint32_t *
+                               __restrict pTarget,
+                               int16_t iTargetStride,
+                               uint8_t *
+                               __restrict pchAlpha,
+                               int16_t iAlphaStride,
+                               arm_2d_size_t *
+                               __restrict ptCopySize,
+                               uint32_t Colour,
+                               uint_fast16_t hwOpacity);
+
+void __arm_2d_impl_cccn888_colour_filling_a4_mask_opacity(uint32_t *
+                               __restrict pTarget,
+                               int16_t iTargetStride,
+                               uint8_t *
+                               __restrict pchAlpha,
+                               int16_t iAlphaStride,
+                               arm_2d_size_t *
+                               __restrict ptCopySize,
+                               uint32_t Colour,
+                               uint_fast16_t hwOpacity);
 
 void __arm_2d_impl_cccn888_colour_filling_mask_opacity(uint32_t *
                                __restrict pTarget,
@@ -3366,6 +3404,22 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_opacity(uint8_t *
                                                      uint8_t Colour,
                                                      uint_fast16_t hwOpacity);
 
+void __arm_2d_impl_gray8_colour_filling_a2_mask(uint8_t * __restrict pTarget,
+                                                int16_t iTargetStride,
+                                                uint8_t * __restrict pchAlpha,
+                                                int16_t iAlphaStride,
+                                                arm_2d_size_t *
+                                                __restrict ptCopySize,
+                                                uint8_t Colour);
+
+void __arm_2d_impl_gray8_colour_filling_a4_mask(uint8_t * __restrict pTarget,
+                                                int16_t iTargetStride,
+                                                uint8_t * __restrict pchAlpha,
+                                                int16_t iAlphaStride,
+                                                arm_2d_size_t *
+                                                __restrict ptCopySize,
+                                                uint8_t Colour);
+
 void __arm_2d_impl_gray8_colour_filling_mask(uint8_t * __restrict pTarget,
                                              int16_t iTargetStride,
                                              uint8_t * __restrict pchAlpha,
@@ -3373,6 +3427,28 @@ void __arm_2d_impl_gray8_colour_filling_mask(uint8_t * __restrict pTarget,
                                              arm_2d_size_t *
                                              __restrict ptCopySize,
                                              uint8_t Colour);
+
+void __arm_2d_impl_gray8_colour_filling_a2_mask_opacity(uint8_t *
+                                                        __restrict pTarget,
+                                                        int16_t iTargetStride,
+                                                        uint8_t *
+                                                        __restrict pchAlpha,
+                                                        int16_t iAlphaStride,
+                                                        arm_2d_size_t *
+                                                        __restrict ptCopySize,
+                                                        uint8_t Colour,
+                                                        uint_fast16_t hwOpacity);
+
+void __arm_2d_impl_gray8_colour_filling_a4_mask_opacity(uint8_t *
+                                                        __restrict pTarget,
+                                                        int16_t iTargetStride,
+                                                        uint8_t *
+                                                        __restrict pchAlpha,
+                                                        int16_t iAlphaStride,
+                                                        arm_2d_size_t *
+                                                        __restrict ptCopySize,
+                                                        uint8_t Colour,
+                                                        uint_fast16_t hwOpacity);
 
 void __arm_2d_impl_gray8_colour_filling_mask_opacity(uint8_t *
                                                      __restrict pTarget,
@@ -6980,6 +7056,22 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_opacity(uint16_t *
                                                       uint16_t Colour,
                                                       uint_fast16_t hwOpacity);
 
+void __arm_2d_impl_rgb565_colour_filling_a2_mask(uint16_t * __restrict pTarget,
+                                                 int16_t iTargetStride,
+                                                 uint8_t * __restrict pchAlpha,
+                                                 int16_t iAlphaStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptCopySize,
+                                                 uint16_t Colour);
+
+void __arm_2d_impl_rgb565_colour_filling_a4_mask(uint16_t * __restrict pTarget,
+                                                 int16_t iTargetStride,
+                                                 uint8_t * __restrict pchAlpha,
+                                                 int16_t iAlphaStride,
+                                                 arm_2d_size_t *
+                                                 __restrict ptCopySize,
+                                                 uint16_t Colour);
+
 void __arm_2d_impl_rgb565_colour_filling_mask(uint16_t * __restrict pTarget,
                                               int16_t iTargetStride,
                                               uint8_t * __restrict pchAlpha,
@@ -6987,6 +7079,28 @@ void __arm_2d_impl_rgb565_colour_filling_mask(uint16_t * __restrict pTarget,
                                               arm_2d_size_t *
                                               __restrict ptCopySize,
                                               uint16_t Colour);
+
+void __arm_2d_impl_rgb565_colour_filling_a2_mask_opacity(uint16_t *
+                                                      __restrict pTarget,
+                                                      int16_t iTargetStride,
+                                                      uint8_t *
+                                                      __restrict pchAlpha,
+                                                      int16_t iAlphaStride,
+                                                      arm_2d_size_t *
+                                                      __restrict ptCopySize,
+                                                      uint16_t Colour,
+                                                      uint_fast16_t hwOpacity);
+
+void __arm_2d_impl_rgb565_colour_filling_a4_mask_opacity(uint16_t *
+                                                      __restrict pTarget,
+                                                      int16_t iTargetStride,
+                                                      uint8_t *
+                                                      __restrict pchAlpha,
+                                                      int16_t iAlphaStride,
+                                                      arm_2d_size_t *
+                                                      __restrict ptCopySize,
+                                                      uint16_t Colour,
+                                                      uint_fast16_t hwOpacity);
 
 void __arm_2d_impl_rgb565_colour_filling_mask_opacity(uint16_t *
                                                       __restrict pTarget,
