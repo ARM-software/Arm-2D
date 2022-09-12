@@ -69,6 +69,13 @@ extern "C" {
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
+static
+const uint8_t c_chA2MaskTable[4]  = {0, 85, 170, 255};
+
+static
+const uint8_t c_chA4MaskTable[16] = {0, 17, 34,  51, 68, 85, 102, 119,
+                                     136, 153, 170, 187, 204, 221, 238, 255};
+
 /*============================ IMPLEMENTATION ================================*/
 
 
@@ -1149,23 +1156,6 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask(
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*----------------------------------------------------------------------------*
  * Fill tile with a specified colour and an 2bit alpha mask                   *
  *----------------------------------------------------------------------------*/
@@ -1338,17 +1328,6 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_a2_mask(
 
     return arm_fsm_rt_cpl;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 /*----------------------------------------------------------------------------*
@@ -1525,21 +1504,8 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_a4_mask(
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*----------------------------------------------------------------------------*
- * Fill tile with a specified colour, an a2 mask and a specified opacity   *
+ * Fill tile with a specified colour, an a2 mask and a specified opacity      *
  *----------------------------------------------------------------------------*/
 
 ARM_NONNULL(2,4)
@@ -1756,15 +1722,8 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_a2_mask_and_opacity(
 }
 
 
-
-
-
-
-
-
-
 /*----------------------------------------------------------------------------*
- * Fill tile with a specified colour, an a4 mask and a specified opacity   *
+ * Fill tile with a specified colour, an a4 mask and a specified opacity      *
  *----------------------------------------------------------------------------*/
 
 ARM_NONNULL(2,4)
@@ -1979,16 +1938,6 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_a4_mask_and_opacity(
 
     return arm_fsm_rt_cpl;
 }
-
-
-
-
-
-
-
-
-
-
 
 
 /*----------------------------------------------------------------------------*
