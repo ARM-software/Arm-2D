@@ -23,7 +23,7 @@
  * Description:  c code template for drawing pattern
  *
  * $Date:        12. Sept 2022
- * $Revision:    V.1.0.1
+ * $Revision:    V.1.0.2
  *
  * -------------------------------------------------------------------- */
 
@@ -55,6 +55,7 @@ void __ARM_2D_FUNC(draw_pattern_fg_only)(uint8_t *__RESTRICT pchSourceBase,
     //! get in byte offset
     nOffset &= 0x07;
     iSourceStride = (iSourceStride + 7) & ~0x07;
+    iSourceStride >>= 3;
     
     for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
         
@@ -77,7 +78,7 @@ void __ARM_2D_FUNC(draw_pattern_fg_only)(uint8_t *__RESTRICT pchSourceBase,
         }
         //chBitMask = 1;
         
-        pchSourceBase += (iSourceStride >> 3);
+        pchSourceBase += iSourceStride;
         pTargetBase += iTargetStride;
     }
 }
@@ -94,6 +95,7 @@ void __ARM_2D_FUNC(draw_pattern_no_bg_comp)(
     //! get in byte offset
     nOffset &= 0x07;
     iSourceStride = (iSourceStride + 7) & ~0x07;
+    iSourceStride >>= 3;
     
     for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
         
@@ -116,7 +118,7 @@ void __ARM_2D_FUNC(draw_pattern_no_bg_comp)(
         }
         chBitMask = 1;
         
-        pchSourceBase += (iSourceStride >> 3);
+        pchSourceBase += iSourceStride;
         pTargetBase += iTargetStride;
     }
 }
@@ -133,7 +135,8 @@ void __ARM_2D_FUNC(draw_pattern_bg_only)(   uint8_t *__RESTRICT pchSourceBase,
     //! get in byte offset
     nOffset &= 0x07;
     iSourceStride = (iSourceStride + 7) & ~0x07;
-
+    iSourceStride >>= 3;
+    
     for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
         
         uint8_t *__RESTRICT pchSrc = pchSourceBase;
@@ -155,7 +158,7 @@ void __ARM_2D_FUNC(draw_pattern_bg_only)(   uint8_t *__RESTRICT pchSourceBase,
         }
         chBitMask = 1;
         
-        pchSourceBase += (iSourceStride >> 3);
+        pchSourceBase += iSourceStride;
         pTargetBase += iTargetStride;
     }
 }
@@ -174,6 +177,7 @@ void __ARM_2D_FUNC(draw_pattern_bg_fg)( uint8_t *__RESTRICT pchSourceBase,
     //! get in byte offset
     nOffset &= 0x07;
     iSourceStride = (iSourceStride + 7) & ~0x07;
+    iSourceStride >>= 3;
     
     for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
         
@@ -197,7 +201,7 @@ void __ARM_2D_FUNC(draw_pattern_bg_fg)( uint8_t *__RESTRICT pchSourceBase,
         }
         chBitMask = 1;
         
-        pchSourceBase += (iSourceStride >> 3);
+        pchSourceBase += iSourceStride;
         pTargetBase += iTargetStride;
     }
 }
@@ -214,6 +218,7 @@ void __ARM_2D_FUNC(draw_pattern_bg_comp)(   uint8_t *__RESTRICT pchSourceBase,
     //! get in byte offset
     nOffset &= 0x07;
     iSourceStride = (iSourceStride + 7) & ~0x07;
+    iSourceStride >>= 3;
     
     for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
         
@@ -238,7 +243,7 @@ void __ARM_2D_FUNC(draw_pattern_bg_comp)(   uint8_t *__RESTRICT pchSourceBase,
         }
         chBitMask = 1;
         
-        pchSourceBase += (iSourceStride >> 3);
+        pchSourceBase += iSourceStride;
         pTargetBase += iTargetStride;
     }
 }
