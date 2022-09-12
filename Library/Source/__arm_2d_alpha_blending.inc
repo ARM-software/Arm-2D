@@ -186,6 +186,7 @@ void __ARM_2D_FUNC(colour_filling_a2_mask)(
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
                             int16_t iAlphaStride,
+                            int32_t nAlphaOffset,
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             __API_INT_TYPE Colour)
 {
@@ -213,6 +214,7 @@ void __ARM_2D_FUNC(colour_filling_a2_mask)(
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
                             int16_t iAlphaStride,
+                            int32_t nAlphaOffset,
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             __API_INT_TYPE Colour);
 #endif
@@ -226,6 +228,7 @@ void __ARM_2D_FUNC(colour_filling_a4_mask)(
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
                             int16_t iAlphaStride,
+                            int32_t nAlphaOffset,
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             __API_INT_TYPE Colour)
 {
@@ -253,6 +256,7 @@ void __ARM_2D_FUNC(colour_filling_a4_mask)(
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
                             int16_t iAlphaStride,
+                            int32_t nAlphaOffset,
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             __API_INT_TYPE Colour);
 #endif
@@ -322,6 +326,7 @@ void __ARM_2D_FUNC(colour_filling_a2_mask_opacity)(
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
                             int16_t iAlphaStride,
+                            int32_t nAlphaOffset,
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             __API_INT_TYPE Colour,
                             uint_fast16_t hwOpacity)
@@ -353,6 +358,7 @@ void __ARM_2D_FUNC(colour_filling_a2_mask_opacity)(
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
                             int16_t iAlphaStride,
+                            int32_t nAlphaOffset,
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             __API_INT_TYPE Colour,
                             uint_fast16_t hwOpacity);
@@ -367,6 +373,7 @@ void __ARM_2D_FUNC(colour_filling_a4_mask_opacity)(
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
                             int16_t iAlphaStride,
+                            int32_t nAlphaOffset,
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             __API_INT_TYPE Colour,
                             uint_fast16_t hwOpacity)
@@ -398,6 +405,7 @@ void __ARM_2D_FUNC(colour_filling_a4_mask_opacity)(
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
                             int16_t iAlphaStride,
+                            int32_t nAlphaOffset,
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             __API_INT_TYPE Colour,
                             uint_fast16_t hwOpacity);

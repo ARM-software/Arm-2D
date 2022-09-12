@@ -1296,6 +1296,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_a2_mask(
                     ptTask->Param.tCopy.tTarget.iStride,
                     ptTask->Param.tCopy.tSource.pBuffer,                        //!< alpha tile
                     ptTask->Param.tCopy.tSource.iStride,                        //!< alpha tile
+                    ptTask->Param.tCopy.tSource.nOffset,
                     &(ptTask->Param.tCopy.tCopySize),
                     this.chColour);
 
@@ -1313,6 +1314,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_a2_mask(
                     ptTask->Param.tCopy.tTarget.iStride,
                     ptTask->Param.tCopy.tSource.pBuffer,                    //!< alpha tile
                     ptTask->Param.tCopy.tSource.iStride,                    //!< alpha tile
+                    ptTask->Param.tCopy.tSource.nOffset,
                     &(ptTask->Param.tCopy.tCopySize),
                     this.hwColour);
 
@@ -1330,6 +1332,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_a2_mask(
                         ptTask->Param.tCopy.tTarget.iStride,
                         ptTask->Param.tCopy.tSource.pBuffer,                    //!< alpha tile
                         ptTask->Param.tCopy.tSource.iStride,                    //!< alpha tile
+                        ptTask->Param.tCopy.tSource.nOffset,
                         &(ptTask->Param.tCopy.tCopySize),
                         this.wColour);
 
@@ -1478,6 +1481,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_a4_mask(
                     ptTask->Param.tCopy.tTarget.iStride,
                     ptTask->Param.tCopy.tSource.pBuffer,                        //!< alpha tile
                     ptTask->Param.tCopy.tSource.iStride,                        //!< alpha tile
+                    ptTask->Param.tCopy.tSource.nOffset,
                     &(ptTask->Param.tCopy.tCopySize),
                     this.chColour);
 
@@ -1495,6 +1499,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_a4_mask(
                     ptTask->Param.tCopy.tTarget.iStride,
                     ptTask->Param.tCopy.tSource.pBuffer,                    //!< alpha tile
                     ptTask->Param.tCopy.tSource.iStride,                    //!< alpha tile
+                    ptTask->Param.tCopy.tSource.nOffset,
                     &(ptTask->Param.tCopy.tCopySize),
                     this.hwColour);
 
@@ -1512,6 +1517,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_a4_mask(
                         ptTask->Param.tCopy.tTarget.iStride,
                         ptTask->Param.tCopy.tSource.pBuffer,                    //!< alpha tile
                         ptTask->Param.tCopy.tSource.iStride,                    //!< alpha tile
+                        ptTask->Param.tCopy.tSource.nOffset,
                         &(ptTask->Param.tCopy.tCopySize),
                         this.wColour);
 
@@ -1671,6 +1677,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_a2_mask_and_opacity(
                         ptTask->Param.tCopy.tTarget.iStride,
                         ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                         ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
+                        ptTask->Param.tCopy.tSource.nOffset,
                         &(ptTask->Param.tCopy.tCopySize),
                         this.chColour);
     } else {
@@ -1679,6 +1686,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_a2_mask_and_opacity(
                         ptTask->Param.tCopy.tTarget.iStride,
                         ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                         ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
+                        ptTask->Param.tCopy.tSource.nOffset,
                         &(ptTask->Param.tCopy.tCopySize),
                         this.chColour,
                         this.chRatio);
@@ -1699,6 +1707,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_a2_mask_and_opacity(
                         ptTask->Param.tCopy.tTarget.iStride,
                         ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                         ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
+                        ptTask->Param.tCopy.tSource.nOffset,
                         &(ptTask->Param.tCopy.tCopySize),
                         this.hwColour);
     } else {
@@ -1707,6 +1716,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_a2_mask_and_opacity(
                         ptTask->Param.tCopy.tTarget.iStride,
                         ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                         ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
+                        ptTask->Param.tCopy.tSource.nOffset,
                         &(ptTask->Param.tCopy.tCopySize),
                         this.hwColour,
                         this.chRatio);
@@ -1727,6 +1737,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_a2_mask_and_opacity(
                         ptTask->Param.tCopy.tTarget.iStride,
                         ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                         ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
+                        ptTask->Param.tCopy.tSource.nOffset,
                         &(ptTask->Param.tCopy.tCopySize),
                         this.wColour);
     } else {
@@ -1735,6 +1746,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_a2_mask_and_opacity(
                         ptTask->Param.tCopy.tTarget.iStride,
                         ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                         ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
+                        ptTask->Param.tCopy.tSource.nOffset,
                         &(ptTask->Param.tCopy.tCopySize),
                         this.wColour,
                         this.chRatio);
@@ -1890,6 +1902,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_a4_mask_and_opacity(
                         ptTask->Param.tCopy.tTarget.iStride,
                         ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                         ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
+                        ptTask->Param.tCopy.tSource.nOffset,
                         &(ptTask->Param.tCopy.tCopySize),
                         this.chColour);
     } else {
@@ -1898,6 +1911,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_a4_mask_and_opacity(
                         ptTask->Param.tCopy.tTarget.iStride,
                         ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                         ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
+                        ptTask->Param.tCopy.tSource.nOffset,
                         &(ptTask->Param.tCopy.tCopySize),
                         this.chColour,
                         this.chRatio);
@@ -1918,6 +1932,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_a4_mask_and_opacity(
                         ptTask->Param.tCopy.tTarget.iStride,
                         ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                         ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
+                        ptTask->Param.tCopy.tSource.nOffset,
                         &(ptTask->Param.tCopy.tCopySize),
                         this.hwColour);
     } else {
@@ -1926,6 +1941,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_a4_mask_and_opacity(
                         ptTask->Param.tCopy.tTarget.iStride,
                         ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                         ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
+                        ptTask->Param.tCopy.tSource.nOffset,
                         &(ptTask->Param.tCopy.tCopySize),
                         this.hwColour,
                         this.chRatio);
@@ -1946,6 +1962,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_a4_mask_and_opacity(
                         ptTask->Param.tCopy.tTarget.iStride,
                         ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                         ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
+                        ptTask->Param.tCopy.tSource.nOffset,
                         &(ptTask->Param.tCopy.tCopySize),
                         this.wColour);
     } else {
@@ -1954,6 +1971,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_a4_mask_and_opacity(
                         ptTask->Param.tCopy.tTarget.iStride,
                         ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                         ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
+                        ptTask->Param.tCopy.tSource.nOffset,
                         &(ptTask->Param.tCopy.tCopySize),
                         this.wColour,
                         this.chRatio);

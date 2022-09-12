@@ -54,7 +54,7 @@ void __ARM_2D_FUNC(draw_pattern_fg_only)(uint8_t *__RESTRICT pchSourceBase,
 {
     //! get in byte offset
     nOffset &= 0x07;
-    nSourceStride = (iSourceStride + 7) & ~0x07;
+    iSourceStride = (iSourceStride + 7) & ~0x07;
     
     for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
         
