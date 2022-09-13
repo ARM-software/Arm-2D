@@ -211,6 +211,22 @@ extern "C" {
          arm_2d_op_wait_async(NULL)                                             \
         )    
 
+/*!
+ * \brief generate a temporary arm_2d_region_t object with use specified info for
+*         central alignment. 
+ * \param ... parameter list 
+ * 
+ * \note prototype 1:
+ *          arm_2d_align_centre(__region, __size) {
+ *              code body that can use __centre_region
+ *          }
+ * 
+ * \note prototype 2:
+ *          arm_2d_align_entre(__region, __width, __height) {
+ *              code body that can use __centre_region
+ *          }
+ *          
+ */
 #define arm_2d_align_centre(...)                                                \
             ARM_CONNECT2(   __arm_2d_align_centre,                              \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
