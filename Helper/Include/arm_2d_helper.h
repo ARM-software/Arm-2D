@@ -85,37 +85,37 @@ extern "C" {
  * \brief Please do NOT use this macro
  * 
  */
-#define __impl_fb(__NAME, __WIDTH, __HEIGHT, __TYPE, ...)                       \
-            ARM_NOINIT static __TYPE                                            \
-                __NAME##Buffer[(__WIDTH) * (__HEIGHT)];                         \
-            const arm_2d_tile_t __NAME = {                                      \
+#define __impl_fb(__name, __width, __height, __type, ...)                       \
+            ARM_NOINIT static __type                                            \
+                __name##Buffer[(__width) * (__height)];                         \
+            const arm_2d_tile_t __name = {                                      \
                 .tRegion = {                                                    \
-                    .tSize = {(__WIDTH), (__HEIGHT)},                           \
+                    .tSize = {(__width), (__height)},                           \
                 },                                                              \
                 .tInfo.bIsRoot = true,                                          \
-                .pchBuffer = (uint8_t *)__NAME##Buffer,                         \
+                .pchBuffer = (uint8_t *)__name##Buffer,                         \
                 __VA_ARGS__                                                     \
             };
 
 /*!
  * \brief implement a framebuffer 
- * \param __NAME the name of the framebuffer
- * \param __WIDTH the width
- * \param __HEIGHT the height
- * \param __TYPE the type of the pixel
+ * \param __name the name of the framebuffer
+ * \param __width the width
+ * \param __height the height
+ * \param __type the type of the pixel
  * \param ... an optional initialisation for other members of arm_2d_tile_t
  */
-#define impl_fb(__NAME, __WIDTH, __HEIGHT, __TYPE, ...)                         \
-            __impl_fb(__NAME, __WIDTH, __HEIGHT, __TYPE, ##__VA_ARGS__)
+#define impl_fb(__name, __width, __height, __type, ...)                         \
+            __impl_fb(__name, __width, __height, __type, ##__VA_ARGS__)
 
 /*!
  * \brief implement a framebuffer and allocate it from the heap
  * \note  the framebuffer will be freed automatically when run out of the code
  *        body. 
- * \param __NAME the name of the framebuffer
- * \param __WIDTH the width
- * \param __HEIGHT the height
- * \param __TYPE the type of the pixel
+ * \param __tile_name the name of the framebuffer
+ * \param __width the width
+ * \param __height the height
+ * \param __colour_type the type of the pixel
  */
 #define impl_heap_fb(__tile_name, __width, __height, __colour_type)             \
     arm_using(                                                                  \
@@ -131,45 +131,46 @@ extern "C" {
 
 /*!
  * \brief calculate the number of pixels in a given tile
- * \param __NAME the target tile
+ * \param __name the target tile
  * \return uint32_t the number of pixels
  */
-#define get_tile_buffer_pixel_count(__NAME)                                     \
-            (uint32_t)(     (__NAME.tRegion.tSize.iWidth)                       \
-                        *   (__NAME.tRegion.tSize.iHeight))
+#define get_tile_buffer_pixel_count(__name)                                     \
+            (uint32_t)(     (__name.tRegion.tSize.iWidth)                       \
+                        *   (__name.tRegion.tSize.iHeight))
 
 /*!
  * \brief calculate the size of a given framebuffer
- * \param __NAME the target tile
+ * \param __name the target tile
+ * \param __type the pixel type
  * \return uint32_t the buffer size
  */
-#define get_tile_buffer_size(__NAME, __TYPE)                                    \
-            (get_2d_layer_buffer_pixel_count(__NAME) * sizeof(TYPE))
+#define get_tile_buffer_size(__name, __type)                                    \
+            (get_2d_layer_buffer_pixel_count(__name) * sizeof(__type))
 
 
 /*!
  * \brief implement a child tile for a given parent
- * \param __PARENT the parent tile
- * \param __X the x offset in the parent region
- * \param __Y the y offset in the parent region
- * \param __WIDTH the width of the new tile
- * \param __HEIGHT the height of the new tile
+ * \param __parent the parent tile
+ * \param __x the x offset in the parent region
+ * \param __y the y offset in the parent region
+ * \param __width the width of the new tile
+ * \param __height the height of the new tile
  * \param ... an optional initialisation for other members of arm_2d_tile_t
  */
-#define impl_child_tile(__PARENT, __X, __Y, __WIDTH, __HEIGHT, ...) {           \
+#define impl_child_tile(__parent, __x, __y, __width, __height, ...) {           \
         .tRegion = {                                                            \
             .tLocation = {                                                      \
-                .iX = (__X),                                                    \
-                .iY = (__Y),                                                    \
+                .iX = (__x),                                                    \
+                .iY = (__y),                                                    \
             },                                                                  \
             .tSize = {                                                          \
-                .iWidth = (__WIDTH),                                            \
-                .iHeight = (__HEIGHT),                                          \
+                .iWidth = (__width),                                            \
+                .iHeight = (__height),                                          \
             },                                                                  \
         },                                                                      \
         .tInfo.bIsRoot = false,                                                 \
         .tInfo.bDerivedResource = true,                                         \
-        .ptParent = (arm_2d_tile_t *)&(__PARENT),                               \
+        .ptParent = (arm_2d_tile_t *)&(__parent),                               \
         __VA_ARGS__                                                             \
     }
 
@@ -217,13 +218,13 @@ extern "C" {
 /*!
  * \brief set an alarm with given period and check the status
  *
- * \param[in] wMS a time period in millisecond
+ * \param[in] __ms a time period in millisecond
  * \param[in] ... an optional timestamp holder
  *
  * \return bool whether it is timeout
  */
-#define arm_2d_helper_is_time_out(__MS, ...)                                    \
-    __arm_2d_helper_is_time_out((__MS), (NULL, ##__VA_ARGS__))
+#define arm_2d_helper_is_time_out(__ms, ...)                                    \
+    __arm_2d_helper_is_time_out((__ms), (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
