@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        29. Aug 2022
- * $Revision:    V.1.3.4
+ * $Date:        13. Sept 2022
+ * $Revision:    V.1.3.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -95,6 +95,11 @@ typedef enum {
 
 } arm_2d_scene_player_switch_mode_t;
 
+/*!
+ * \brief an internal data structure for scene switching
+ * 
+ * \note Please do not use it.
+ */
 typedef union __arm_2d_helper_scene_switch_t {
     struct {
         uint8_t chMode;                                                         //!< the switch visual effect
