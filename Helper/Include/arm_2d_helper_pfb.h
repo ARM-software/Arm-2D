@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        29. Aug 2022
- * $Revision:    V.1.2.0
+ * $Date:        13. Sept 2022
+ * $Revision:    V.1.2.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -548,10 +548,10 @@ void arm_2d_helper_pfb_report_rendering_complete(   arm_2d_helper_pfb_t *ptThis,
 /*!
  * \brief swap the high and low bytes for each rgb16 pixel
  *
- * \params[in] phwBuffer the pixel buffer
+ * \param[in] phwBuffer the pixel buffer
  * \note the phwBuffer MUST aligned to half-word addresses
  *
- * \params[in] wSize the number of pixels
+ * \param[in] wSize the number of pixels
  */
 extern
 void arm_2d_helper_swap_rgb16(uint16_t *phwBuffer, uint32_t wCount);
