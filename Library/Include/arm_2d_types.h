@@ -302,28 +302,28 @@ enum {
 #define ARM_2D_M_COLOUR_SZ_16BIT            4       //!< 16bits
 #define ARM_2D_M_COLOUR_SZ_32BIT            5       //!< true colour
 
-#define ARM_2D_M_COLOUR_SZ_1BIT_msk         (ARM_2D_M_COLOUR_SZ_1BIT << 1)
-#define ARM_2D_M_COLOUR_SZ_2BIT_msk         (ARM_2D_M_COLOUR_SZ_2BIT << 1)
-#define ARM_2D_M_COLOUR_SZ_4BIT_msk         (ARM_2D_M_COLOUR_SZ_4BIT << 1)
-#define ARM_2D_M_COLOUR_SZ_8BIT_msk         (ARM_2D_M_COLOUR_SZ_8BIT << 1)
-#define ARM_2D_M_COLOUR_SZ_16BIT_msk        (ARM_2D_M_COLOUR_SZ_16BIT<< 1)
-#define ARM_2D_M_COLOUR_SZ_32BIT_msk        (ARM_2D_M_COLOUR_SZ_32BIT<< 1)
-#define ARM_2D_M_COLOUR_SZ_msk              (0x07 << 1),
+#define ARM_2D_M_COLOUR_SZ_1BIT_msk         (ARM_2D_M_COLOUR_SZ_1BIT << 1)      //!< bitmask for 1bit colour formats
+#define ARM_2D_M_COLOUR_SZ_2BIT_msk         (ARM_2D_M_COLOUR_SZ_2BIT << 1)      //!< bitmask for 2bit colour formats
+#define ARM_2D_M_COLOUR_SZ_4BIT_msk         (ARM_2D_M_COLOUR_SZ_4BIT << 1)      //!< bitmask for 4bit colour formats
+#define ARM_2D_M_COLOUR_SZ_8BIT_msk         (ARM_2D_M_COLOUR_SZ_8BIT << 1)      //!< bitmask for 8bit colour formats
+#define ARM_2D_M_COLOUR_SZ_16BIT_msk        (ARM_2D_M_COLOUR_SZ_16BIT<< 1)      //!< bitmask for 16bit colour formats
+#define ARM_2D_M_COLOUR_SZ_32BIT_msk        (ARM_2D_M_COLOUR_SZ_32BIT<< 1)      //!< bitmask for 32bit colour formats
+#define ARM_2D_M_COLOUR_SZ_msk              (0x07 << 1),                        //!< bitmask for the SZ bitfield
 
-#define ARM_2D_M_COLOUR_LITTLE_ENDIAN       0
-#define ARM_2D_M_COLOUR_BIG_ENDIAN          1
+#define ARM_2D_M_COLOUR_LITTLE_ENDIAN       0       //!< pixels are stored in little endian
+#define ARM_2D_M_COLOUR_BIG_ENDIAN          1       //!< pixels are stored big endian
 
-#define ARM_2D_M_COLOUR_LITTLE_ENDIAN_msk   (ARM_2D_M_COLOUR_LITTLE_ENDIAN << 4)
-#define ARM_2D_M_COLOUR_BIG_ENDIAN_msk      (ARM_2D_M_COLOUR_BIG_ENDIAN    << 4)
+#define ARM_2D_M_COLOUR_LITTLE_ENDIAN_msk   (ARM_2D_M_COLOUR_LITTLE_ENDIAN << 4)//!< bitmask for little-endian
+#define ARM_2D_M_COLOUR_BIG_ENDIAN_msk      (ARM_2D_M_COLOUR_BIG_ENDIAN    << 4)//!< bitmask for big-endian
 
-#define ARM_2D_M_COLOUR_NO_ALPHA            0
-#define ARM_2D_M_COLOUR_HAS_ALPHA           1
+#define ARM_2D_M_COLOUR_NO_ALPHA            0       //!< there is no alpha channel in each pixel
+#define ARM_2D_M_COLOUR_HAS_ALPHA           1       //!< there is an alpha channel in each pixel
 
-#define ARM_2D_M_COLOUR_NO_ALPHA_msk        (ARM_2D_M_COLOUR_NO_ALPHA  << 0)
-#define ARM_2D_M_COLOUR_HAS_ALPHA_msk       (ARM_2D_M_COLOUR_HAS_ALPHA << 0)
+#define ARM_2D_M_COLOUR_NO_ALPHA_msk        (ARM_2D_M_COLOUR_NO_ALPHA  << 0)    //!< bitmask for no-alpha-channel-in-pixel
+#define ARM_2D_M_COLOUR_HAS_ALPHA_msk       (ARM_2D_M_COLOUR_HAS_ALPHA << 0)    //!< bitmask for has-alpha-channel-in-pixel
     
-#define ARM_2D_M_COLOUR_VARIANT_pos         5
-#define ARM_2D_M_COLOUR_VARIANT_msk         (0x07 << ARM_2D_M_COLOUR_VARIANT_pos)
+#define ARM_2D_M_COLOUR_VARIANT_pos         5                                   
+#define ARM_2D_M_COLOUR_VARIANT_msk         (0x07<<ARM_2D_M_COLOUR_VARIANT_pos)
 
 /*!
  * \brief enumerations for colour types
