@@ -1,8 +1,8 @@
 var searchData=
 [
   ['iheight_0',['iHeight',['../group__gKernel.html#a44f7520235d22c8906b2c192442a0c31',1,'arm_2d_size_t']]],
-  ['impl_5fchild_5ftile_1',['impl_child_tile',['../group__gHelper.html#ga71b49fa67f80fa18d329dfd11b262276',1,'arm_2d_helper.h']]],
-  ['impl_5ffb_2',['impl_fb',['../group__gHelper.html#gad50097e4c6d104f0deaf8062188f551f',1,'arm_2d_helper.h']]],
+  ['impl_5fchild_5ftile_1',['impl_child_tile',['../group__gHelper.html#ga4397e169debb8a49e989b0c344381ff1',1,'arm_2d_helper.h']]],
+  ['impl_5ffb_2',['impl_fb',['../group__gHelper.html#gaa0d9dc9ffe2b62ec35dbbb0595de35cc',1,'arm_2d_helper.h']]],
   ['impl_5fheap_5ffb_3',['impl_heap_fb',['../group__gHelper.html#gab96c869dd347721f96e7c0f36775f8c1',1,'arm_2d_helper.h']]],
   ['implement_4',['implement',['../group__gKernel.html#ga295397fe5671506e3687a730d4dfdb8a',1,'arm_2d_utils.h']]],
   ['implement_5fex_5',['implement_ex',['../group__gKernel.html#gabc7a8afaf410f95e3922d2fd904a016c',1,'arm_2d_utils.h']]],
