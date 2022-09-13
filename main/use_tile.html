@@ -178,10 +178,10 @@ $(document).ready(function(){initNavTree('use_tile.html',''); initResizable(); }
 <div class="line"><span class="preprocessor">#define implement_tile(__NAME, __WIDTH, __HEIGHT, __TYPE)           \</span></div>
 <div class="line"><span class="preprocessor">            __implement_tile(__NAME, __WIDTH, __HEIGHT, __TYPE)</span></div>
 </div><!-- fragment --><p >For example, we can create two visual layers with size <b>100*100</b> and <em><b>200*50</b></em> respectively and using colour <em><b><a class="el" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a></b></em> for pixels:</p>
-<div class="fragment"><div class="line">declare_tile(c_tLayerA)</div>
+<div class="fragment"><div class="line"><a class="code hl_define" href="group__gHelper.html#ga2611a9ef273b4e05f926c42273f8cbaa" title="declare a tile">declare_tile</a>(c_tLayerA)</div>
 <div class="line">implement_tile(c_tLayerA, 100, 100, <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a>);</div>
 <div class="line"> </div>
-<div class="line">declare_tile(c_tLayerB)</div>
+<div class="line"><a class="code hl_define" href="group__gHelper.html#ga2611a9ef273b4e05f926c42273f8cbaa" title="declare a tile">declare_tile</a>(c_tLayerB)</div>
 <div class="line">implement_tile(c_tLayerB, 200, 50, <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a>);</div>
 </div><!-- fragment --><p >These layers are stored in RAM, which are used as sources and targets for 2D operations.</p>
 <p >Note that in the aforementioned macro template, we use <em><b>ARM_NOINIT</b></em> to decorate the display buffer, its definition is shown below:</p>

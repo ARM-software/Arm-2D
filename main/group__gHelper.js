@@ -92,6 +92,18 @@ var group__gHelper =
     [ "ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER", "group__gHelper.html#ga432fd371b045e6ae90f816466f76fa38", null ],
     [ "init_arm_2d_helper_pfb", "group__gHelper.html#ga377f8339912a8b31e11f45f6af81a1de", null ],
     [ "update_arm_2d_helper_pfb_on_draw_handler", "group__gHelper.html#ga8769bf582db2a83c923cb8be4887b8fb", null ],
+    [ "__declare_tile", "group__gHelper.html#ga10ff19a7fa51fd6fa82bfed93b6c9fbe", null ],
+    [ "declare_tile", "group__gHelper.html#ga2611a9ef273b4e05f926c42273f8cbaa", null ],
+    [ "dcl_tile", "group__gHelper.html#ga52569e84d2cd7f12d84398cb1f2f5cdc", null ],
+    [ "dcl_fb", "group__gHelper.html#ga35c72d3f4f9efaa986bf68ce01300782", null ],
+    [ "__impl_fb", "group__gHelper.html#ga126dd1df12c3b8e8f859a27766e99b8a", null ],
+    [ "impl_fb", "group__gHelper.html#gad50097e4c6d104f0deaf8062188f551f", null ],
+    [ "impl_heap_fb", "group__gHelper.html#gab96c869dd347721f96e7c0f36775f8c1", null ],
+    [ "get_tile_buffer_pixel_count", "group__gHelper.html#ga0f6932c29834326e8499ecad35dd034c", null ],
+    [ "get_tile_buffer_size", "group__gHelper.html#ga75ac3fb5f86d86d11e972f47d109bfcd", null ],
+    [ "impl_child_tile", "group__gHelper.html#ga71b49fa67f80fa18d329dfd11b262276", null ],
+    [ "__arm_2d_align_centre2", "group__gHelper.html#gabe887edb3b7ce6eeec2b309bbf32c383", null ],
+    [ "__arm_2d_align_centre3", "group__gHelper.html#ga68f37bbc40dcb5d4c8286cebf2303a7a", null ],
     [ "arm_2d_helper_is_time_out", "group__gHelper.html#ga1a9fc78e58e98bcae35de207f9296597", null ],
     [ "arm_2d_helper_draw_handler_t", "group__gHelper.html#ga895cc320ceab0ca0bd10b999787b2d6c", null ],
     [ "arm_2d_helper_render_handler_t", "group__gHelper.html#ga03c2991d31bd58c8a1d5303fb9460f39", null ],
@@ -144,5 +156,6 @@ var group__gHelper =
     [ "arm_2d_helper_get_reference_clock_frequency", "group__gHelper.html#gace60efc807106e1526fcc9f673f19b12", null ],
     [ "arm_2d_helper_get_system_timestamp", "group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185", null ],
     [ "__arm_2d_helper_pfb_new", "group__gHelper.html#gaa7855ac916c44e531c4c8a9c5ec0e69e", null ],
-    [ "__arm_2d_helper_pfb_free", "group__gHelper.html#ga484b485061778cdf3a2cb4373374c581", null ]
+    [ "__arm_2d_helper_pfb_free", "group__gHelper.html#ga484b485061778cdf3a2cb4373374c581", null ],
+    [ "__arm_2d_helper_is_time_out", "group__gHelper.html#ga9e560f87a40e54229ec23502cecc3bdb", null ]
 ];
