@@ -18,11 +18,11 @@
 
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
- * Title:        cmsis_nn_typs.h
+ * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        12. Sept 2022
- * $Revision:    V.1.0.5
+ * $Date:        13. Sept 2022
+ * $Revision:    V.1.0.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -322,14 +322,15 @@ enum {
 #define ARM_2D_M_COLOUR_NO_ALPHA_msk        (ARM_2D_M_COLOUR_NO_ALPHA  << 0)    //!< bitmask for no-alpha-channel-in-pixel
 #define ARM_2D_M_COLOUR_HAS_ALPHA_msk       (ARM_2D_M_COLOUR_HAS_ALPHA << 0)    //!< bitmask for has-alpha-channel-in-pixel
     
-#define ARM_2D_M_COLOUR_VARIANT_pos         5                                   
-#define ARM_2D_M_COLOUR_VARIANT_msk         (0x07<<ARM_2D_M_COLOUR_VARIANT_pos)
+#define ARM_2D_M_COLOUR_VARIANT_pos         5                                   //!< offset for the VARIANT bitfield                              
+#define ARM_2D_M_COLOUR_VARIANT_msk         (0x07<<ARM_2D_M_COLOUR_VARIANT_pos) //!< bitmask for the VARIANT bitfield
 
 /*!
  * \brief enumerations for colour types
  * 
  */
 enum {
+    ARM_2D_COLOUR_MONOCHROME  =   ARM_2D_COLOUR_SZ_1BIT_msk,
     ARM_2D_COLOUR_BIN         =   ARM_2D_COLOUR_SZ_1BIT_msk,
     ARM_2D_COLOUR_1BIT        =   ARM_2D_COLOUR_SZ_1BIT_msk,
     
@@ -372,34 +373,37 @@ enum {
 };
 
 /* macros for colour formats */
-#define ARM_2D_M_COLOUR_BIN         ARM_2D_M_COLOUR_SZ_1BIT_msk
-#define ARM_2D_M_COLOUR_1BIT        ARM_2D_M_COLOUR_SZ_1BIT_msk
+#define ARM_2D_M_COLOUR_MONOCHROME  ARM_2D_M_COLOUR_SZ_1BIT_msk                 //!< macro for the monochrome
+#define ARM_2D_M_COLOUR_BIN         ARM_2D_M_COLOUR_SZ_1BIT_msk                 //!< macro for the 1bit colour format (alias)
+#define ARM_2D_M_COLOUR_1BIT        ARM_2D_M_COLOUR_SZ_1BIT_msk                 //!< macro for the 1bin colour format (alias)
 
-#define ARM_2D_M_COLOUR_MASK_A2     ARM_2D_M_COLOUR_SZ_2BIT_msk
-#define ARM_2D_M_COLOUR_MASK_A4     ARM_2D_M_COLOUR_SZ_4BIT_msk
+#define ARM_2D_M_COLOUR_MASK_A2     ARM_2D_M_COLOUR_SZ_2BIT_msk                 //!< macro for the 2bit alpha mask
+#define ARM_2D_M_COLOUR_MASK_A4     ARM_2D_M_COLOUR_SZ_4BIT_msk                 //!< macro for the 4bit alpha mask
 
-#define ARM_2D_M_COLOUR_8BIT        ARM_2D_M_COLOUR_SZ_8BIT_msk
-#define ARM_2D_M_COLOUR_GRAY8       ARM_2D_M_COLOUR_SZ_8BIT_msk
-#define ARM_2D_M_COLOUR_MASK_A8     ARM_2D_M_COLOUR_SZ_8BIT_msk
+#define ARM_2D_M_COLOUR_8BIT        ARM_2D_M_COLOUR_SZ_8BIT_msk                 //!< macro for the generic 8bit colour formats
+#define ARM_2D_M_COLOUR_GRAY8       ARM_2D_M_COLOUR_SZ_8BIT_msk                 //!< macro for the gray8 colour format
+#define ARM_2D_M_COLOUR_MASK_A8     ARM_2D_M_COLOUR_SZ_8BIT_msk                 //!< macro for the 8bit alpha mask
 
-#define ARM_2D_M_COLOUR_16BIT       ARM_2D_M_COLOUR_SZ_16BIT_msk
-#define ARM_2D_M_COLOUR_RGB16       ARM_2D_M_COLOUR_SZ_16BIT_msk
-#define ARM_2D_M_COLOUR_RGB565      ARM_2D_M_COLOUR_RGB16
+#define ARM_2D_M_COLOUR_16BIT       ARM_2D_M_COLOUR_SZ_16BIT_msk                //!< macro for the generic 16bit colour formats
+#define ARM_2D_M_COLOUR_RGB16       ARM_2D_M_COLOUR_SZ_16BIT_msk                //!< macro for the generic 16bit colour formats
+#define ARM_2D_M_COLOUR_RGB565      ARM_2D_M_COLOUR_RGB16                       //!< macro for the rgb565 
     
 /* won't support
 #define ARM_2D_M_COLOUR_RGB565_BE   (   ARM_2D_M_COLOUR_SZ_16BIT_msk            \
                                     |   ARM_2D_M_COLOUR_BIG_ENDIAN_msk          )
  */
  
-#define ARM_2D_M_COLOUR_32BIT       ARM_2D_M_COLOUR_SZ_32BIT_msk
-#define ARM_2D_M_COLOUR_RGB32       ARM_2D_M_COLOUR_SZ_32BIT_msk
+#define ARM_2D_M_COLOUR_32BIT       ARM_2D_M_COLOUR_SZ_32BIT_msk                //!< macro for the generic 32bit colour formats
+#define ARM_2D_M_COLOUR_RGB32       ARM_2D_M_COLOUR_SZ_32BIT_msk                //!< macro for the generic 32bit colour formats
 
-#define ARM_2D_M_COLOUR_CCCN888     ARM_2D_M_COLOUR_RGB32
+#define ARM_2D_M_COLOUR_CCCN888     ARM_2D_M_COLOUR_RGB32                       //!< macro for the generic 32bit colour formats with an reserved channel at the highest byte
+
+/*! macro for the generic 32bit colour formats with an alpha channel at the highest byte */
 #define ARM_2D_M_COLOUR_CCCA8888    (   ARM_2D_M_COLOUR_SZ_32BIT_msk            \
                                     |   ARM_2D_M_COLOUR_HAS_ALPHA_msk)
 
-#define ARM_2D_M_COLOUR_RGB888      ARM_2D_M_COLOUR_CCCN888
-#define ARM_2D_M_COLOUR_RGBA8888    ARM_2D_M_COLOUR_CCCA8888
+#define ARM_2D_M_COLOUR_RGB888      ARM_2D_M_COLOUR_CCCN888                     //!< macro for the RGB888 (BGRN8888)
+#define ARM_2D_M_COLOUR_BGRAA8888   ARM_2D_M_COLOUR_CCCA8888                    //!< macro for the BGRA8888
 
 /* not supported yet
 #define ARM_2D_M_COLOUR_NCCC888     (   ARM_2D_M_COLOUR_RGB32                   \
@@ -408,6 +412,7 @@ enum {
                                     |   ARM_2D_M_COLOUR_HAS_ALPHA_msk           \
                                     |   ARM_2D_M_COLOUR_BIG_ENDIAN_msk          )
 */
+/*! macro for a special colour format which access only one channel in RGB32 */
 #define ARM_2D_M_CHANNEL_8in32      (   ARM_2D_M_COLOUR_SZ_32BIT_msk            \
                                     |   ARM_2D_M_COLOUR_HAS_ALPHA_msk)          \
                                     |   ARM_2D_M_COLOUR_VARIANT_msk             )
