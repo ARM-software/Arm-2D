@@ -21,8 +21,8 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        11. Aug 2022
- * $Revision:    V.1.2.1
+ * $Date:        14. Sept 2022
+ * $Revision:    V.1.3.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -840,56 +840,56 @@ arm_fsm_rt_t __arm_2d_rgb32_sw_tile_fill( __arm_2d_sub_task_t *ptTask)
 
 #define ARM_2D_CP_MODE_ONLY                 ARM_2D_CP_MODE_COPY
 
-#define __API_MM_COLOUR                     c8bit
-#define __API_MM_COLOUR_UPPERCASE           C8BIT
-#define __API_MM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_8BIT
-#define __API_MM_INT_TYPE                   uint8_t
-#define __API_MM_OP                         ARM_2D_OP_TILE_COPY
-#define __API_MM_OP_TYPE                    arm_2d_op_cp_t
-#define __API_MM_MIRROR_TYPE                only
-#define __API_MM_MIRROR_TYPE_UPPERCASE      ONLY
-#define __API_MM_OP_IDX                     __ARM_2D_OP_IDX_COPY
-#define __API_MM_IO                         __ARM_2D_IO_COPY
+#define __API_MCM_COLOUR                     c8bit
+#define __API_MCM_COLOUR_UPPERCASE           C8BIT
+#define __API_MCM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_8BIT
+#define __API_MCM_INT_TYPE                   uint8_t
+#define __API_MCM_OP                         ARM_2D_OP_TILE_COPY
+#define __API_MCM_OP_TYPE                    arm_2d_op_cp_t
+#define __API_MCM_MIRROR_TYPE                only
+#define __API_MCM_MIRROR_TYPE_UPPERCASE      ONLY
+#define __API_MCM_OP_IDX                     __ARM_2D_OP_IDX_COPY
+#define __API_MCM_IO                         __ARM_2D_IO_COPY
 #define ARM_2D_COLOUR_C8BIT                 ARM_2D_COLOUR_8BIT
 
 
 #define __arm_2d_impl_c8bit_copy_only       __arm_2d_impl_c8bit_copy
 #define arm_2dp_c8bit_tile_copy_with_only   arm_2dp_c8bit_tile_copy_only
 
-#include "__arm_2d_meta_mirror.inc"
+#include "__arm_2d_meta_copy_mirror.inc"
 
-#define __API_MM_COLOUR                     rgb16
-#define __API_MM_COLOUR_UPPERCASE           RGB16
-#define __API_MM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_16BIT
-#define __API_MM_INT_TYPE                   uint16_t
-#define __API_MM_OP                         ARM_2D_OP_TILE_COPY
-#define __API_MM_OP_TYPE                    arm_2d_op_cp_t
-#define __API_MM_MIRROR_TYPE                only
-#define __API_MM_MIRROR_TYPE_UPPERCASE      ONLY
+#define __API_MCM_COLOUR                     rgb16
+#define __API_MCM_COLOUR_UPPERCASE           RGB16
+#define __API_MCM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_16BIT
+#define __API_MCM_INT_TYPE                   uint16_t
+#define __API_MCM_OP                         ARM_2D_OP_TILE_COPY
+#define __API_MCM_OP_TYPE                    arm_2d_op_cp_t
+#define __API_MCM_MIRROR_TYPE                only
+#define __API_MCM_MIRROR_TYPE_UPPERCASE      ONLY
 #define __arm_2d_impl_rgb16_copy_only       __arm_2d_impl_rgb16_copy
-#define __API_MM_OP_IDX                     __ARM_2D_OP_IDX_COPY
-#define __API_MM_IO                         __ARM_2D_IO_COPY
+#define __API_MCM_OP_IDX                     __ARM_2D_OP_IDX_COPY
+#define __API_MCM_IO                         __ARM_2D_IO_COPY
 
 
 #define arm_2dp_rgb16_tile_copy_with_only   arm_2dp_rgb16_tile_copy_only
 
-#include "__arm_2d_meta_mirror.inc"
+#include "__arm_2d_meta_copy_mirror.inc"
 
-#define __API_MM_COLOUR                     rgb32
-#define __API_MM_COLOUR_UPPERCASE           RGB32
-#define __API_MM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_32BIT
-#define __API_MM_INT_TYPE                   uint32_t
-#define __API_MM_OP                         ARM_2D_OP_TILE_COPY
-#define __API_MM_OP_TYPE                    arm_2d_op_cp_t
-#define __API_MM_MIRROR_TYPE                only
-#define __API_MM_MIRROR_TYPE_UPPERCASE      ONLY
+#define __API_MCM_COLOUR                     rgb32
+#define __API_MCM_COLOUR_UPPERCASE           RGB32
+#define __API_MCM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_32BIT
+#define __API_MCM_INT_TYPE                   uint32_t
+#define __API_MCM_OP                         ARM_2D_OP_TILE_COPY
+#define __API_MCM_OP_TYPE                    arm_2d_op_cp_t
+#define __API_MCM_MIRROR_TYPE                only
+#define __API_MCM_MIRROR_TYPE_UPPERCASE      ONLY
 #define __arm_2d_impl_rgb32_copy_only       __arm_2d_impl_rgb32_copy
-#define __API_MM_OP_IDX                     __ARM_2D_OP_IDX_COPY
-#define __API_MM_IO                         __ARM_2D_IO_COPY
+#define __API_MCM_OP_IDX                     __ARM_2D_OP_IDX_COPY
+#define __API_MCM_IO                         __ARM_2D_IO_COPY
 
 #define arm_2dp_rgb32_tile_copy_with_only   arm_2dp_rgb32_tile_copy_only
 
-#include "__arm_2d_meta_mirror.inc"
+#include "__arm_2d_meta_copy_mirror.inc"
 
 
 #else
@@ -1028,48 +1028,48 @@ arm_fsm_rt_t __arm_2d_rgb32_sw_tile_copy_only( __arm_2d_sub_task_t *ptTask)
 
 #if 1
 
-#define __API_MM_COLOUR                     c8bit
-#define __API_MM_COLOUR_UPPERCASE           C8BIT
-#define __API_MM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_8BIT
-#define __API_MM_INT_TYPE                   uint8_t
-#define __API_MM_OP                         ARM_2D_OP_TILE_COPY
-#define __API_MM_OP_TYPE                    arm_2d_op_cp_t
-#define __API_MM_MIRROR_TYPE                x_mirror
-#define __API_MM_MIRROR_TYPE_UPPERCASE      X_MIRROR
+#define __API_MCM_COLOUR                     c8bit
+#define __API_MCM_COLOUR_UPPERCASE           C8BIT
+#define __API_MCM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_8BIT
+#define __API_MCM_INT_TYPE                   uint8_t
+#define __API_MCM_OP                         ARM_2D_OP_TILE_COPY
+#define __API_MCM_OP_TYPE                    arm_2d_op_cp_t
+#define __API_MCM_MIRROR_TYPE                x_mirror
+#define __API_MCM_MIRROR_TYPE_UPPERCASE      X_MIRROR
 
-#define __API_MM_OP_IDX                     __ARM_2D_OP_IDX_COPY_WITH
-#define __API_MM_IO                         __ARM_2D_IO_COPY_WITH
+#define __API_MCM_OP_IDX                     __ARM_2D_OP_IDX_COPY_WITH
+#define __API_MCM_IO                         __ARM_2D_IO_COPY_WITH
 
 #define ARM_2D_COLOUR_C8BIT                 ARM_2D_COLOUR_8BIT
 
-#include "__arm_2d_meta_mirror.inc"
+#include "__arm_2d_meta_copy_mirror.inc"
 
-#define __API_MM_COLOUR                     rgb16
-#define __API_MM_COLOUR_UPPERCASE           RGB16
-#define __API_MM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_16BIT
-#define __API_MM_INT_TYPE                   uint16_t
-#define __API_MM_OP                         ARM_2D_OP_TILE_COPY
-#define __API_MM_OP_TYPE                    arm_2d_op_cp_t
-#define __API_MM_MIRROR_TYPE                x_mirror
-#define __API_MM_MIRROR_TYPE_UPPERCASE      X_MIRROR
+#define __API_MCM_COLOUR                     rgb16
+#define __API_MCM_COLOUR_UPPERCASE           RGB16
+#define __API_MCM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_16BIT
+#define __API_MCM_INT_TYPE                   uint16_t
+#define __API_MCM_OP                         ARM_2D_OP_TILE_COPY
+#define __API_MCM_OP_TYPE                    arm_2d_op_cp_t
+#define __API_MCM_MIRROR_TYPE                x_mirror
+#define __API_MCM_MIRROR_TYPE_UPPERCASE      X_MIRROR
 
-#define __API_MM_OP_IDX                     __ARM_2D_OP_IDX_COPY_WITH
-#define __API_MM_IO                         __ARM_2D_IO_COPY_WITH
-#include "__arm_2d_meta_mirror.inc"
+#define __API_MCM_OP_IDX                     __ARM_2D_OP_IDX_COPY_WITH
+#define __API_MCM_IO                         __ARM_2D_IO_COPY_WITH
+#include "__arm_2d_meta_copy_mirror.inc"
 
-#define __API_MM_COLOUR                     rgb32
-#define __API_MM_COLOUR_UPPERCASE           RGB32
-#define __API_MM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_32BIT
-#define __API_MM_INT_TYPE                   uint32_t
-#define __API_MM_OP                         ARM_2D_OP_TILE_COPY
-#define __API_MM_OP_TYPE                    arm_2d_op_cp_t
-#define __API_MM_MIRROR_TYPE                x_mirror
-#define __API_MM_MIRROR_TYPE_UPPERCASE      X_MIRROR
+#define __API_MCM_COLOUR                     rgb32
+#define __API_MCM_COLOUR_UPPERCASE           RGB32
+#define __API_MCM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_32BIT
+#define __API_MCM_INT_TYPE                   uint32_t
+#define __API_MCM_OP                         ARM_2D_OP_TILE_COPY
+#define __API_MCM_OP_TYPE                    arm_2d_op_cp_t
+#define __API_MCM_MIRROR_TYPE                x_mirror
+#define __API_MCM_MIRROR_TYPE_UPPERCASE      X_MIRROR
 
-#define __API_MM_OP_IDX                     __ARM_2D_OP_IDX_COPY_WITH
-#define __API_MM_IO                         __ARM_2D_IO_COPY_WITH
+#define __API_MCM_OP_IDX                     __ARM_2D_OP_IDX_COPY_WITH
+#define __API_MCM_IO                         __ARM_2D_IO_COPY_WITH
 
-#include "__arm_2d_meta_mirror.inc"
+#include "__arm_2d_meta_copy_mirror.inc"
 
 
 #else
@@ -1211,48 +1211,48 @@ arm_fsm_rt_t __arm_2d_rgb32_sw_tile_copy_x_mirror( __arm_2d_sub_task_t *ptTask)
 
 #if 1
 
-#define __API_MM_COLOUR                     c8bit
-#define __API_MM_COLOUR_UPPERCASE           C8BIT
-#define __API_MM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_8BIT
-#define __API_MM_INT_TYPE                   uint8_t
-#define __API_MM_OP                         ARM_2D_OP_TILE_COPY
-#define __API_MM_OP_TYPE                    arm_2d_op_cp_t
-#define __API_MM_MIRROR_TYPE                y_mirror
-#define __API_MM_MIRROR_TYPE_UPPERCASE      Y_MIRROR
+#define __API_MCM_COLOUR                     c8bit
+#define __API_MCM_COLOUR_UPPERCASE           C8BIT
+#define __API_MCM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_8BIT
+#define __API_MCM_INT_TYPE                   uint8_t
+#define __API_MCM_OP                         ARM_2D_OP_TILE_COPY
+#define __API_MCM_OP_TYPE                    arm_2d_op_cp_t
+#define __API_MCM_MIRROR_TYPE                y_mirror
+#define __API_MCM_MIRROR_TYPE_UPPERCASE      Y_MIRROR
 
-#define __API_MM_OP_IDX                     __ARM_2D_OP_IDX_COPY_WITH
-#define __API_MM_IO                         __ARM_2D_IO_COPY_WITH
+#define __API_MCM_OP_IDX                     __ARM_2D_OP_IDX_COPY_WITH
+#define __API_MCM_IO                         __ARM_2D_IO_COPY_WITH
 
 #define ARM_2D_COLOUR_C8BIT                 ARM_2D_COLOUR_8BIT
 
-#include "__arm_2d_meta_mirror.inc"
+#include "__arm_2d_meta_copy_mirror.inc"
 
-#define __API_MM_COLOUR                     rgb16
-#define __API_MM_COLOUR_UPPERCASE           RGB16
-#define __API_MM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_16BIT
-#define __API_MM_INT_TYPE                   uint16_t
-#define __API_MM_OP                         ARM_2D_OP_TILE_COPY
-#define __API_MM_OP_TYPE                    arm_2d_op_cp_t
-#define __API_MM_MIRROR_TYPE                y_mirror
-#define __API_MM_MIRROR_TYPE_UPPERCASE      Y_MIRROR
+#define __API_MCM_COLOUR                     rgb16
+#define __API_MCM_COLOUR_UPPERCASE           RGB16
+#define __API_MCM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_16BIT
+#define __API_MCM_INT_TYPE                   uint16_t
+#define __API_MCM_OP                         ARM_2D_OP_TILE_COPY
+#define __API_MCM_OP_TYPE                    arm_2d_op_cp_t
+#define __API_MCM_MIRROR_TYPE                y_mirror
+#define __API_MCM_MIRROR_TYPE_UPPERCASE      Y_MIRROR
 
-#define __API_MM_OP_IDX                     __ARM_2D_OP_IDX_COPY_WITH
-#define __API_MM_IO                         __ARM_2D_IO_COPY_WITH
-#include "__arm_2d_meta_mirror.inc"
+#define __API_MCM_OP_IDX                     __ARM_2D_OP_IDX_COPY_WITH
+#define __API_MCM_IO                         __ARM_2D_IO_COPY_WITH
+#include "__arm_2d_meta_copy_mirror.inc"
 
-#define __API_MM_COLOUR                     rgb32
-#define __API_MM_COLOUR_UPPERCASE           RGB32
-#define __API_MM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_32BIT
-#define __API_MM_INT_TYPE                   uint32_t
-#define __API_MM_OP                         ARM_2D_OP_TILE_COPY
-#define __API_MM_OP_TYPE                    arm_2d_op_cp_t
-#define __API_MM_MIRROR_TYPE                y_mirror
-#define __API_MM_MIRROR_TYPE_UPPERCASE      Y_MIRROR
+#define __API_MCM_COLOUR                     rgb32
+#define __API_MCM_COLOUR_UPPERCASE           RGB32
+#define __API_MCM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_32BIT
+#define __API_MCM_INT_TYPE                   uint32_t
+#define __API_MCM_OP                         ARM_2D_OP_TILE_COPY
+#define __API_MCM_OP_TYPE                    arm_2d_op_cp_t
+#define __API_MCM_MIRROR_TYPE                y_mirror
+#define __API_MCM_MIRROR_TYPE_UPPERCASE      Y_MIRROR
 
-#define __API_MM_OP_IDX                     __ARM_2D_OP_IDX_COPY_WITH
-#define __API_MM_IO                         __ARM_2D_IO_COPY_WITH
+#define __API_MCM_OP_IDX                     __ARM_2D_OP_IDX_COPY_WITH
+#define __API_MCM_IO                         __ARM_2D_IO_COPY_WITH
 
-#include "__arm_2d_meta_mirror.inc"
+#include "__arm_2d_meta_copy_mirror.inc"
 
 
 #else
@@ -1394,48 +1394,48 @@ arm_fsm_rt_t __arm_2d_rgb32_sw_tile_copy_y_mirror( __arm_2d_sub_task_t *ptTask)
 
 #if 1
 
-#define __API_MM_COLOUR                     c8bit
-#define __API_MM_COLOUR_UPPERCASE           C8BIT
-#define __API_MM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_8BIT
-#define __API_MM_INT_TYPE                   uint8_t
-#define __API_MM_OP                         ARM_2D_OP_TILE_COPY
-#define __API_MM_OP_TYPE                    arm_2d_op_cp_t
-#define __API_MM_MIRROR_TYPE                xy_mirror
-#define __API_MM_MIRROR_TYPE_UPPERCASE      XY_MIRROR
+#define __API_MCM_COLOUR                     c8bit
+#define __API_MCM_COLOUR_UPPERCASE           C8BIT
+#define __API_MCM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_8BIT
+#define __API_MCM_INT_TYPE                   uint8_t
+#define __API_MCM_OP                         ARM_2D_OP_TILE_COPY
+#define __API_MCM_OP_TYPE                    arm_2d_op_cp_t
+#define __API_MCM_MIRROR_TYPE                xy_mirror
+#define __API_MCM_MIRROR_TYPE_UPPERCASE      XY_MIRROR
 
-#define __API_MM_OP_IDX                     __ARM_2D_OP_IDX_COPY_WITH
-#define __API_MM_IO                         __ARM_2D_IO_COPY_WITH
+#define __API_MCM_OP_IDX                     __ARM_2D_OP_IDX_COPY_WITH
+#define __API_MCM_IO                         __ARM_2D_IO_COPY_WITH
 
 #define ARM_2D_COLOUR_C8BIT                 ARM_2D_COLOUR_8BIT
 
-#include "__arm_2d_meta_mirror.inc"
+#include "__arm_2d_meta_copy_mirror.inc"
 
-#define __API_MM_COLOUR                     rgb16
-#define __API_MM_COLOUR_UPPERCASE           RGB16
-#define __API_MM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_16BIT
-#define __API_MM_INT_TYPE                   uint16_t
-#define __API_MM_OP                         ARM_2D_OP_TILE_COPY
-#define __API_MM_OP_TYPE                    arm_2d_op_cp_t
-#define __API_MM_MIRROR_TYPE                xy_mirror
-#define __API_MM_MIRROR_TYPE_UPPERCASE      XY_MIRROR
+#define __API_MCM_COLOUR                     rgb16
+#define __API_MCM_COLOUR_UPPERCASE           RGB16
+#define __API_MCM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_16BIT
+#define __API_MCM_INT_TYPE                   uint16_t
+#define __API_MCM_OP                         ARM_2D_OP_TILE_COPY
+#define __API_MCM_OP_TYPE                    arm_2d_op_cp_t
+#define __API_MCM_MIRROR_TYPE                xy_mirror
+#define __API_MCM_MIRROR_TYPE_UPPERCASE      XY_MIRROR
 
-#define __API_MM_OP_IDX                     __ARM_2D_OP_IDX_COPY_WITH
-#define __API_MM_IO                         __ARM_2D_IO_COPY_WITH
-#include "__arm_2d_meta_mirror.inc"
+#define __API_MCM_OP_IDX                     __ARM_2D_OP_IDX_COPY_WITH
+#define __API_MCM_IO                         __ARM_2D_IO_COPY_WITH
+#include "__arm_2d_meta_copy_mirror.inc"
 
-#define __API_MM_COLOUR                     rgb32
-#define __API_MM_COLOUR_UPPERCASE           RGB32
-#define __API_MM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_32BIT
-#define __API_MM_INT_TYPE                   uint32_t
-#define __API_MM_OP                         ARM_2D_OP_TILE_COPY
-#define __API_MM_OP_TYPE                    arm_2d_op_cp_t
-#define __API_MM_MIRROR_TYPE                xy_mirror
-#define __API_MM_MIRROR_TYPE_UPPERCASE      XY_MIRROR
+#define __API_MCM_COLOUR                     rgb32
+#define __API_MCM_COLOUR_UPPERCASE           RGB32
+#define __API_MCM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_32BIT
+#define __API_MCM_INT_TYPE                   uint32_t
+#define __API_MCM_OP                         ARM_2D_OP_TILE_COPY
+#define __API_MCM_OP_TYPE                    arm_2d_op_cp_t
+#define __API_MCM_MIRROR_TYPE                xy_mirror
+#define __API_MCM_MIRROR_TYPE_UPPERCASE      XY_MIRROR
 
-#define __API_MM_OP_IDX                     __ARM_2D_OP_IDX_COPY_WITH
-#define __API_MM_IO                         __ARM_2D_IO_COPY_WITH
+#define __API_MCM_OP_IDX                     __ARM_2D_OP_IDX_COPY_WITH
+#define __API_MCM_IO                         __ARM_2D_IO_COPY_WITH
 
-#include "__arm_2d_meta_mirror.inc"
+#include "__arm_2d_meta_copy_mirror.inc"
 
 
 #else
@@ -1574,6 +1574,64 @@ arm_fsm_rt_t __arm_2d_rgb32_sw_tile_copy_xy_mirror( __arm_2d_sub_task_t *ptTask)
  * Fill Only                                                                  *
  *----------------------------------------------------------------------------*/
 
+#if 1
+
+#define __API_MFM_COLOUR                     c8bit
+#define __API_MFM_COLOUR_UPPERCASE           C8BIT
+#define __API_MFM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_8BIT
+#define __API_MFM_INT_TYPE                   uint8_t
+#define __API_MFM_OP                         ARM_2D_OP_TILE_FILL
+#define __API_MFM_OP_TYPE                    arm_2d_op_cp_t
+#define __API_MFM_MIRROR_TYPE                only
+#define __API_MFM_MIRROR_TYPE_UPPERCASE      ONLY
+#define __API_MFM_OP_IDX                     __ARM_2D_OP_IDX_FILL
+#define __API_MFM_IO_COPY                   __ARM_2D_IO_COPY
+#define __API_MFM_IO_FILL                   __ARM_2D_IO_FILL
+
+#define ARM_2D_COLOUR_C8BIT                 ARM_2D_COLOUR_8BIT
+
+#define __arm_2d_impl_c8bit_fill_only       __arm_2d_impl_c8bit_fill
+#define arm_2dp_c8bit_tile_fill_with_only   arm_2dp_c8bit_tile_fill_only
+
+#include "__arm_2d_meta_fill_mirror.inc"
+
+#define __API_MFM_COLOUR                     rgb16
+#define __API_MFM_COLOUR_UPPERCASE           RGB16
+#define __API_MFM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_16BIT
+#define __API_MFM_INT_TYPE                   uint16_t
+#define __API_MFM_OP                         ARM_2D_OP_TILE_FILL
+#define __API_MFM_OP_TYPE                    arm_2d_op_cp_t
+#define __API_MFM_MIRROR_TYPE                only
+#define __API_MFM_MIRROR_TYPE_UPPERCASE      ONLY
+#define __API_MFM_OP_IDX                     __ARM_2D_OP_IDX_FILL
+#define __API_MFM_IO_COPY                   __ARM_2D_IO_COPY
+#define __API_MFM_IO_FILL                   __ARM_2D_IO_FILL
+
+#define __arm_2d_impl_rgb16_fill_only       __arm_2d_impl_rgb16_fill
+#define arm_2dp_rgb16_tile_fill_with_only   arm_2dp_rgb16_tile_fill_only
+
+#include "__arm_2d_meta_fill_mirror.inc"
+
+#define __API_MFM_COLOUR                     rgb32
+#define __API_MFM_COLOUR_UPPERCASE           RGB32
+#define __API_MFM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_32BIT
+#define __API_MFM_INT_TYPE                   uint32_t
+#define __API_MFM_OP                         ARM_2D_OP_TILE_FILL
+#define __API_MFM_OP_TYPE                    arm_2d_op_cp_t
+#define __API_MFM_MIRROR_TYPE                only
+#define __API_MFM_MIRROR_TYPE_UPPERCASE      ONLY
+#define __arm_2d_impl_rgb32_fill_only       __arm_2d_impl_rgb32_fill
+#define __API_MFM_OP_IDX                     __ARM_2D_OP_IDX_FILL
+#define __API_MFM_IO_COPY                   __ARM_2D_IO_COPY
+#define __API_MFM_IO_FILL                   __ARM_2D_IO_FILL
+
+#define arm_2dp_rgb32_tile_fill_with_only   arm_2dp_rgb32_tile_fill_only
+
+#include "__arm_2d_meta_fill_mirror.inc"
+
+
+#else
+
 ARM_NONNULL(2,3)
 arm_fsm_rt_t arm_2dp_c8bit_tile_fill_only(  arm_2d_op_cp_t *ptOP,
                                             const arm_2d_tile_t *ptSource,
@@ -1703,9 +1761,62 @@ arm_fsm_rt_t __arm_2d_rgb32_sw_tile_fill_only( __arm_2d_sub_task_t *ptTask)
     return arm_fsm_rt_cpl;
 }
 
+#endif
+
 /*----------------------------------------------------------------------------*
  * Fill with X mirroring                                                      *
  *----------------------------------------------------------------------------*/
+
+#if 1
+
+#define __API_MFM_COLOUR                     c8bit
+#define __API_MFM_COLOUR_UPPERCASE           C8BIT
+#define __API_MFM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_8BIT
+#define __API_MFM_INT_TYPE                   uint8_t
+#define __API_MFM_OP                         ARM_2D_OP_TILE_FILL
+#define __API_MFM_OP_TYPE                    arm_2d_op_cp_t
+#define __API_MFM_MIRROR_TYPE                x_mirror
+#define __API_MFM_MIRROR_TYPE_UPPERCASE      X_MIRROR
+#define __API_MFM_OP_IDX                     __ARM_2D_OP_IDX_FILL_WITH
+#define __API_MFM_IO_COPY                   __ARM_2D_IO_COPY_WITH
+#define __API_MFM_IO_FILL                   __ARM_2D_IO_FILL_WITH
+
+#define ARM_2D_COLOUR_C8BIT                 ARM_2D_COLOUR_8BIT
+
+#include "__arm_2d_meta_fill_mirror.inc"
+
+#define __API_MFM_COLOUR                     rgb16
+#define __API_MFM_COLOUR_UPPERCASE           RGB16
+#define __API_MFM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_16BIT
+#define __API_MFM_INT_TYPE                   uint16_t
+#define __API_MFM_OP                         ARM_2D_OP_TILE_FILL
+#define __API_MFM_OP_TYPE                    arm_2d_op_cp_t
+#define __API_MFM_MIRROR_TYPE                x_mirror
+#define __API_MFM_MIRROR_TYPE_UPPERCASE      X_MIRROR
+#define __API_MFM_OP_IDX                     __ARM_2D_OP_IDX_FILL_WITH
+#define __API_MFM_IO_COPY                   __ARM_2D_IO_COPY_WITH
+#define __API_MFM_IO_FILL                   __ARM_2D_IO_FILL_WITH
+
+#include "__arm_2d_meta_fill_mirror.inc"
+
+#define __API_MFM_COLOUR                     rgb32
+#define __API_MFM_COLOUR_UPPERCASE           RGB32
+#define __API_MFM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_32BIT
+#define __API_MFM_INT_TYPE                   uint32_t
+#define __API_MFM_OP                         ARM_2D_OP_TILE_FILL
+#define __API_MFM_OP_TYPE                    arm_2d_op_cp_t
+#define __API_MFM_MIRROR_TYPE                x_mirror
+#define __API_MFM_MIRROR_TYPE_UPPERCASE      X_MIRROR
+
+#define __API_MFM_OP_IDX                     __ARM_2D_OP_IDX_FILL_WITH
+#define __API_MFM_IO_COPY                   __ARM_2D_IO_COPY_WITH
+#define __API_MFM_IO_FILL                   __ARM_2D_IO_FILL_WITH
+
+
+#include "__arm_2d_meta_fill_mirror.inc"
+
+
+#else
 
 ARM_NONNULL(2,3)
 arm_fsm_rt_t arm_2dp_c8bit_tile_fill_with_x_mirror(  
@@ -1841,9 +1952,61 @@ arm_fsm_rt_t __arm_2d_rgb32_sw_tile_fill_x_mirror( __arm_2d_sub_task_t *ptTask)
     return arm_fsm_rt_cpl;
 }
 
+#endif
+
 /*----------------------------------------------------------------------------*
  * Fill with Y mirroring                                                      *
  *----------------------------------------------------------------------------*/
+
+#if 1
+
+#define __API_MFM_COLOUR                     c8bit
+#define __API_MFM_COLOUR_UPPERCASE           C8BIT
+#define __API_MFM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_8BIT
+#define __API_MFM_INT_TYPE                   uint8_t
+#define __API_MFM_OP                         ARM_2D_OP_TILE_FILL
+#define __API_MFM_OP_TYPE                    arm_2d_op_cp_t
+#define __API_MFM_MIRROR_TYPE                y_mirror
+#define __API_MFM_MIRROR_TYPE_UPPERCASE      Y_MIRROR
+#define __API_MFM_OP_IDX                     __ARM_2D_OP_IDX_FILL_WITH
+#define __API_MFM_IO_COPY                   __ARM_2D_IO_COPY_WITH
+#define __API_MFM_IO_FILL                   __ARM_2D_IO_FILL_WITH
+
+#define ARM_2D_COLOUR_C8BIT                 ARM_2D_COLOUR_8BIT
+
+#include "__arm_2d_meta_fill_mirror.inc"
+
+#define __API_MFM_COLOUR                     rgb16
+#define __API_MFM_COLOUR_UPPERCASE           RGB16
+#define __API_MFM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_16BIT
+#define __API_MFM_INT_TYPE                   uint16_t
+#define __API_MFM_OP                         ARM_2D_OP_TILE_FILL
+#define __API_MFM_OP_TYPE                    arm_2d_op_cp_t
+#define __API_MFM_MIRROR_TYPE                y_mirror
+#define __API_MFM_MIRROR_TYPE_UPPERCASE      Y_MIRROR
+#define __API_MFM_OP_IDX                     __ARM_2D_OP_IDX_FILL_WITH
+#define __API_MFM_IO_COPY                   __ARM_2D_IO_COPY_WITH
+#define __API_MFM_IO_FILL                   __ARM_2D_IO_FILL_WITH
+
+#include "__arm_2d_meta_fill_mirror.inc"
+
+#define __API_MFM_COLOUR                     rgb32
+#define __API_MFM_COLOUR_UPPERCASE           RGB32
+#define __API_MFM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_32BIT
+#define __API_MFM_INT_TYPE                   uint32_t
+#define __API_MFM_OP                         ARM_2D_OP_TILE_FILL
+#define __API_MFM_OP_TYPE                    arm_2d_op_cp_t
+#define __API_MFM_MIRROR_TYPE                y_mirror
+#define __API_MFM_MIRROR_TYPE_UPPERCASE      Y_MIRROR
+#define __API_MFM_OP_IDX                     __ARM_2D_OP_IDX_FILL_WITH
+#define __API_MFM_IO_COPY                   __ARM_2D_IO_COPY_WITH
+#define __API_MFM_IO_FILL                   __ARM_2D_IO_FILL_WITH
+
+
+#include "__arm_2d_meta_fill_mirror.inc"
+
+
+#else
 
 ARM_NONNULL(2,3)
 arm_fsm_rt_t arm_2dp_c8bit_tile_fill_with_y_mirror(  
@@ -1980,9 +2143,61 @@ arm_fsm_rt_t __arm_2d_rgb32_sw_tile_fill_y_mirror( __arm_2d_sub_task_t *ptTask)
     return arm_fsm_rt_cpl;
 }
 
+#endif
+
 /*----------------------------------------------------------------------------*
  * Fill with XY mirroring                                                      *
  *----------------------------------------------------------------------------*/
+
+#if 1
+
+#define __API_MFM_COLOUR                     c8bit
+#define __API_MFM_COLOUR_UPPERCASE           C8BIT
+#define __API_MFM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_8BIT
+#define __API_MFM_INT_TYPE                   uint8_t
+#define __API_MFM_OP                         ARM_2D_OP_TILE_FILL
+#define __API_MFM_OP_TYPE                    arm_2d_op_cp_t
+#define __API_MFM_MIRROR_TYPE                xy_mirror
+#define __API_MFM_MIRROR_TYPE_UPPERCASE      XY_MIRROR
+#define __API_MFM_OP_IDX                     __ARM_2D_OP_IDX_FILL_WITH
+#define __API_MFM_IO_COPY                   __ARM_2D_IO_COPY_WITH
+#define __API_MFM_IO_FILL                   __ARM_2D_IO_FILL_WITH
+
+#define ARM_2D_COLOUR_C8BIT                 ARM_2D_COLOUR_8BIT
+
+#include "__arm_2d_meta_fill_mirror.inc"
+
+#define __API_MFM_COLOUR                     rgb16
+#define __API_MFM_COLOUR_UPPERCASE           RGB16
+#define __API_MFM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_16BIT
+#define __API_MFM_INT_TYPE                   uint16_t
+#define __API_MFM_OP                         ARM_2D_OP_TILE_FILL
+#define __API_MFM_OP_TYPE                    arm_2d_op_cp_t
+#define __API_MFM_MIRROR_TYPE                xy_mirror
+#define __API_MFM_MIRROR_TYPE_UPPERCASE      XY_MIRROR
+#define __API_MFM_OP_IDX                     __ARM_2D_OP_IDX_FILL_WITH
+#define __API_MFM_IO_COPY                   __ARM_2D_IO_COPY_WITH
+#define __API_MFM_IO_FILL                   __ARM_2D_IO_FILL_WITH
+
+#include "__arm_2d_meta_fill_mirror.inc"
+
+#define __API_MFM_COLOUR                     rgb32
+#define __API_MFM_COLOUR_UPPERCASE           RGB32
+#define __API_MFM_COLOUR_SZ                  ARM_2D_COLOUR_SZ_32BIT
+#define __API_MFM_INT_TYPE                   uint32_t
+#define __API_MFM_OP                         ARM_2D_OP_TILE_FILL
+#define __API_MFM_OP_TYPE                    arm_2d_op_cp_t
+#define __API_MFM_MIRROR_TYPE                xy_mirror
+#define __API_MFM_MIRROR_TYPE_UPPERCASE      XY_MIRROR
+#define __API_MFM_OP_IDX                     __ARM_2D_OP_IDX_FILL_WITH
+#define __API_MFM_IO_COPY                   __ARM_2D_IO_COPY_WITH
+#define __API_MFM_IO_FILL                   __ARM_2D_IO_FILL_WITH
+
+
+#include "__arm_2d_meta_fill_mirror.inc"
+
+
+#else
 
 ARM_NONNULL(2,3)
 arm_fsm_rt_t arm_2dp_c8bit_tile_fill_with_xy_mirror(  
@@ -2119,7 +2334,7 @@ arm_fsm_rt_t __arm_2d_rgb32_sw_tile_fill_xy_mirror( __arm_2d_sub_task_t *ptTask)
     return arm_fsm_rt_cpl;
 }
 
-
+#endif
 
 /*----------------------------------------------------------------------------*
  * Copy/Fill with colour-keying and Mirroring                                 *
@@ -2455,7 +2670,7 @@ def_low_lv_io(__ARM_2D_IO_COPY_RGB16, __arm_2d_rgb16_sw_tile_copy);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_RGB32, __arm_2d_rgb32_sw_tile_copy);
 
-#if 0
+
 __WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_ONLY_C8BIT, __arm_2d_c8bit_sw_tile_copy_only);
 __WEAK
@@ -2487,7 +2702,7 @@ def_low_lv_io(__ARM_2D_IO_COPY_WITH_XY_MIRROR_RGB16, __arm_2d_rgb16_sw_tile_copy
 __WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_WITH_XY_MIRROR_RGB32, __arm_2d_rgb32_sw_tile_copy_xy_mirror);
 
-#endif
+
 
 __WEAK
 def_low_lv_io(__ARM_2D_IO_FILL_ONLY_C8BIT, __arm_2d_c8bit_sw_tile_fill_only);
@@ -2496,12 +2711,14 @@ def_low_lv_io(__ARM_2D_IO_FILL_ONLY_RGB16, __arm_2d_rgb16_sw_tile_fill_only);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_FILL_ONLY_RGB32, __arm_2d_rgb32_sw_tile_fill_only);
 
+
 __WEAK
 def_low_lv_io(__ARM_2D_IO_FILL_WITH_X_MIRROR_C8BIT, __arm_2d_c8bit_sw_tile_fill_x_mirror);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_FILL_WITH_X_MIRROR_RGB16, __arm_2d_rgb16_sw_tile_fill_x_mirror);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_FILL_WITH_X_MIRROR_RGB32, __arm_2d_rgb32_sw_tile_fill_x_mirror);
+
 
 __WEAK
 def_low_lv_io(__ARM_2D_IO_FILL_WITH_Y_MIRROR_C8BIT, __arm_2d_c8bit_sw_tile_fill_y_mirror);
@@ -2598,7 +2815,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_RGB32 = {
     },
 };
 
-#if 0
+
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_ONLY_C8BIT = {
     .Info = {
         .Colour = {
@@ -2821,7 +3038,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_XY_MIRROR_RGB32 = {
     },
 };
 
-#endif
+
 
 const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_ONLY_C8BIT = {
     .Info = {
@@ -2932,6 +3149,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_X_MIRROR_RGB32 = {
 };
 
 
+
 const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_Y_MIRROR_C8BIT = {
     .Info = {
         .Colour = {
@@ -2985,6 +3203,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_Y_MIRROR_RGB32 = {
         },
     },
 };
+
 
 const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_XY_MIRROR_C8BIT = {
     .Info = {
