@@ -274,6 +274,7 @@ Macros</h2></td></tr>
 <tr class="memdesc:ga68f37bbc40dcb5d4c8286cebf2303a7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Please do NOT use this macro.  <a href="group__gHelper.html#ga68f37bbc40dcb5d4c8286cebf2303a7a">More...</a><br /></td></tr>
 <tr class="separator:ga68f37bbc40dcb5d4c8286cebf2303a7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaaad43aef0ad2472379061137f374b72c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaaad43aef0ad2472379061137f374b72c">arm_2d_align_centre</a>(...)</td></tr>
+<tr class="memdesc:gaaad43aef0ad2472379061137f374b72c"><td class="mdescLeft">&#160;</td><td class="mdescRight">generate a temporary <a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object with use specified info for central alignment.  <a href="group__gHelper.html#gaaad43aef0ad2472379061137f374b72c">More...</a><br /></td></tr>
 <tr class="separator:gaaad43aef0ad2472379061137f374b72c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae4ab75c458c5e2ba0355ba76dff03735"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gae4ab75c458c5e2ba0355ba76dff03735">arm_2d_helper_is_time_out</a>(__ms, ...)&#160;&#160;&#160;    <a class="el" href="group__gHelper.html#ga9e560f87a40e54229ec23502cecc3bdb">__arm_2d_helper_is_time_out</a>((__ms), (NULL, ##__VA_ARGS__))</td></tr>
 <tr class="memdesc:gae4ab75c458c5e2ba0355ba76dff03735"><td class="mdescLeft">&#160;</td><td class="mdescRight">set an alarm with given period and check the status  <a href="group__gHelper.html#gae4ab75c458c5e2ba0355ba76dff03735">More...</a><br /></td></tr>
@@ -2650,6 +2651,17 @@ cycles used in LCD flushing </td></tr>
 <b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gad6a67ffa29074439ce99988dac033e42" title="connect two symbol names as one">ARM_CONNECT2</a>(   __arm_2d_align_centre,                              \</div>
 <div class="line">                            <a class="code hl_define" href="group__gKernel.html#gaca9883ddfc8f4f3382d9d0e4a93a5890" title="A macro to count the number of parameters.">__ARM_VA_NUM_ARGS</a>(__VA_ARGS__))(__VA_ARGS__)</div>
 </div><!-- fragment -->
+<p>generate a temporary <a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object with use specified info for central alignment. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">...</td><td>parameter list</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>prototype 1: <a class="el" href="group__gHelper.html#gaaad43aef0ad2472379061137f374b72c" title="generate a temporary arm_2d_region_t object with use specified info for central alignment.">arm_2d_align_centre(__region, __size)</a> { code body that can use __centre_region }</dd>
+<dd>
+prototype 2: arm_2d_align_entre(__region, __width, __height) { code body that can use __centre_region } </dd></dl>
+
 </div>
 </div>
 <a id="gae4ab75c458c5e2ba0355ba76dff03735" name="gae4ab75c458c5e2ba0355ba76dff03735"></a>

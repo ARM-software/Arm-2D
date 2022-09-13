@@ -104,6 +104,7 @@ var group__gHelper =
     [ "impl_child_tile", "group__gHelper.html#ga4397e169debb8a49e989b0c344381ff1", null ],
     [ "__arm_2d_align_centre2", "group__gHelper.html#gabe887edb3b7ce6eeec2b309bbf32c383", null ],
     [ "__arm_2d_align_centre3", "group__gHelper.html#ga68f37bbc40dcb5d4c8286cebf2303a7a", null ],
+    [ "arm_2d_align_centre", "group__gHelper.html#gaaad43aef0ad2472379061137f374b72c", null ],
     [ "arm_2d_helper_is_time_out", "group__gHelper.html#gae4ab75c458c5e2ba0355ba76dff03735", null ],
     [ "arm_2d_helper_draw_handler_t", "group__gHelper.html#ga895cc320ceab0ca0bd10b999787b2d6c", null ],
     [ "arm_2d_helper_render_handler_t", "group__gHelper.html#ga03c2991d31bd58c8a1d5303fb9460f39", null ],
