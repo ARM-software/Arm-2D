@@ -193,12 +193,13 @@ void __ARM_2D_FUNC(colour_filling_a2_mask)(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *__RESTRICT pchMask = pchAlpha;
-        uint8_t chBitMask = 0x03 << nAlphaOffset;
+        int32_t nOffset = nAlphaOffset;
+        uint8_t chBitMask = 0x03 << nOffset;
         __API_INT_TYPE * __RESTRICT pTarget = pTargetBase;
         
         for (int_fast16_t x = 0; x < iWidth; x++) {
         
-            uint16_t hwTempAlpha = c_chA2MaskTable[(*pchMask & chBitMask)];
+            uint16_t hwTempAlpha = c_chA2MaskTable[(*pchMask & chBitMask) >> nOffset];
         
             uint16_t hwAlpha = 256 - hwTempAlpha;
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -207,8 +208,10 @@ void __ARM_2D_FUNC(colour_filling_a2_mask)(
             __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
             
             chBitMask <<= 2;
+            nOffset += 2;
             if (!chBitMask) {
                 chBitMask = 0x03;
+                nOffset = 0;
                 pchMask++;
             }
         }
@@ -253,12 +256,13 @@ void __ARM_2D_FUNC(colour_filling_a4_mask)(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *__RESTRICT pchMask = pchAlpha;
-        uint8_t chBitMask = 0x0F << nAlphaOffset;
+        int32_t nOffset = nAlphaOffset;
+        uint8_t chBitMask = 0x0F << nOffset;
         __API_INT_TYPE * __RESTRICT pTarget = pTargetBase;
         
         for (int_fast16_t x = 0; x < iWidth; x++) {
         
-            uint16_t hwTempAlpha = c_chA4MaskTable[(*pchMask & chBitMask)];
+            uint16_t hwTempAlpha = c_chA4MaskTable[(*pchMask & chBitMask) >> nOffset];
         
             uint16_t hwAlpha = 256 - hwTempAlpha;
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -268,8 +272,10 @@ void __ARM_2D_FUNC(colour_filling_a4_mask)(
             
             
             chBitMask <<= 4;
+            nOffset += 4;
             if (!chBitMask) {
                 chBitMask = 0x0F;
+                nOffset = 0;
                 pchMask++;
             }
         }
@@ -356,11 +362,12 @@ void __ARM_2D_FUNC(colour_filling_a2_mask_opacity)(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *__RESTRICT pchMask = pchAlpha;
-        uint8_t chBitMask = 0x03 << nAlphaOffset;
+        int32_t nOffset = nAlphaOffset;
+        uint8_t chBitMask = 0x03 << nOffset;
         __API_INT_TYPE * __RESTRICT pTarget = pTargetBase;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwTempAlpha = c_chA2MaskTable[(*pchMask & chBitMask)];
+            uint16_t hwTempAlpha = c_chA2MaskTable[(*pchMask & chBitMask) >> nOffset];
             
             uint16_t hwAlpha = 256 - (hwTempAlpha * hwOpacity >> 8);
             
@@ -371,8 +378,10 @@ void __ARM_2D_FUNC(colour_filling_a2_mask_opacity)(
             __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
             
             chBitMask <<= 2;
+            nOffset += 2;
             if (!chBitMask) {
                 chBitMask = 0x03;
+                nOffset = 0;
                 pchMask++;
             }
         }
@@ -421,11 +430,12 @@ void __ARM_2D_FUNC(colour_filling_a4_mask_opacity)(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *__RESTRICT pchMask = pchAlpha;
-        uint8_t chBitMask = 0x0F << nAlphaOffset;
+        int32_t nOffset = nAlphaOffset;
+        uint8_t chBitMask = 0x0F << nOffset;
         __API_INT_TYPE * __RESTRICT pTarget = pTargetBase;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwTempAlpha = c_chA4MaskTable[(*pchMask & chBitMask)];
+            uint16_t hwTempAlpha = c_chA4MaskTable[(*pchMask & chBitMask) >> nOffset];
             
             uint16_t hwAlpha = 256 - (hwTempAlpha * hwOpacity >> 8);
             
@@ -436,7 +446,9 @@ void __ARM_2D_FUNC(colour_filling_a4_mask_opacity)(
             __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
             
             chBitMask <<= 4;
+            nOffset += 4;
             if (!chBitMask) {
+                nOffset = 0;
                 chBitMask = 0x0F;
                 pchMask++;
             }
