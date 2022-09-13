@@ -22,7 +22,7 @@
  * Description:  Public header file to contain the Arm-2D structs
  *
  * $Date:        13. Sept 2022
- * $Revision:    V.1.0.6
+ * $Revision:    V.1.0.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -611,12 +611,13 @@ typedef struct arm_2d_evt_t {
 } arm_2d_evt_t;
 
 
-#define ARM_2D_OP_INFO_PARAM_HAS_SOURCE             _BV(0)
-#define ARM_2D_OP_INFO_PARAM_HAS_TARGET             _BV(1)
-#define ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK        _BV(2)
-#define ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK        _BV(3)
-#define ARM_2D_OP_INFO_PARAM_HAS_ORIGIN             _BV(4)
+#define ARM_2D_OP_INFO_PARAM_HAS_SOURCE             _BV(0)                      //!< opcode has source tile info
+#define ARM_2D_OP_INFO_PARAM_HAS_TARGET             _BV(1)                      //!< opcode has target tile info
+#define ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK        _BV(2)                      //!< opcode has source mask info
+#define ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK        _BV(3)                      //!< opcode has target mask info
+#define ARM_2D_OP_INFO_PARAM_HAS_ORIGIN             _BV(4)                      //!< opcode has original tile info
 
+/*! a bitmask for INFO_PARAM_HAS_xxxx bitfields */
 #define ARM_2D_OP_INFO_PARAM_TILES_MASK             (                           \
             ARM_2D_OP_INFO_PARAM_HAS_SOURCE         |                           \
             ARM_2D_OP_INFO_PARAM_HAS_TARGET         |                           \
@@ -701,9 +702,9 @@ enum {
     ARM_2D_PREF_ACC_DONT_CARE             = 3,
 };
 
-#define __ARM_2D_OP_STATUS_BUSY_msk         (1 << 4)
-#define __ARM_2D_OP_STATUS_IO_ERROR_msk     (1 << 5)
-#define __ARM_2D_OP_STATUS_CPL_msk          (1 << 6)
+#define __ARM_2D_OP_STATUS_BUSY_msk         (1 << 4)                            //!< bitmask for the busy flag
+#define __ARM_2D_OP_STATUS_IO_ERROR_msk     (1 << 5)                            //!< bitmask for the IO error flag
+#define __ARM_2D_OP_STATUS_CPL_msk          (1 << 6)                            //!< bitmask for the complete flag
 
 /*!
  * \brief a type for 2D operation status

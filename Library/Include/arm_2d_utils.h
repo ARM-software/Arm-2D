@@ -21,8 +21,8 @@
  * Title:        arm_2d_utils.h
  * Description:  Public header file for Arm-2D Library
  *
- * $Date:        06. Sept 2022
- * $Revision:    V.1.1.1
+ * $Date:        13. Sept 2022
+ * $Revision:    V.1.1.2
  *
  * -------------------------------------------------------------------- */
 
@@ -159,7 +159,7 @@ extern "C" {
 
 /*!
  * \brief inherit a given class
- * \param __type the base class, you can use .use_as__<__type> for referencing 
+ * \param __type the base class, you can use .use_as__{__type} for referencing 
  *               the base.
  * \note this macro supports microsoft extensions (-fms-extensions)
  */
@@ -176,7 +176,7 @@ extern "C" {
 
 /*!
  * \brief inherit a given class
- * \param __type the base class, you can use .use_as__<__type> for referencing 
+ * \param __type the base class, you can use .use_as__{__type} for referencing 
  *               the base.
  * \note this macro does NOT support microsoft extensions (-fms-extensions)
  */
@@ -433,17 +433,17 @@ extern "C" {
  * \brief create a code segment with up to two local variables and 
  *        entering/leaving operations
  * \note prototype 1
- *       arm_using(<local variable declare>) {
+ *       arm_using(local variable declaration) {
  *           code body 
  *       }
  * 
  * \note prototype 2
- *       arm_using(<local variable>, {code segment before leaving the body}) {
+ *       arm_using(local variable declaration, {code segment before leaving the body}) {
  *           code body
  *       }
  *
  * \note prototype 3
- *       arm_using( <local variable>, 
+ *       arm_using( local variable declaration, 
  *                 {code segment before entering the body},
  *                 {code segment before leaving the body}
  *                 ) {
@@ -451,8 +451,8 @@ extern "C" {
  *       }
  *
  * \note prototype 4
- *       arm_using( <local variable1>,
-                    <local variable2 with the same type as the local variable 1>,
+ *       arm_using( local variable1 declaration,
+                    local variable2 with the same type as the local variable 1,
  *                 {code segment before entering the body},
  *                 {code segment before leaving the body}
  *                 ) {
@@ -479,12 +479,12 @@ extern "C" {
  * \brief a with block to access members of a given object
  * 
  * \note prototype 1
- *       arm_with(<object type>, <address of the object>) {
+ *       arm_with(object type, address of the object) {
  *           you can use _.xxxx to access the members of the object
  *       }
  *
  * \note prototype 2
- *       arm_with(<object type>, <address of the object>, <name of the iterator>) {
+ *       arm_with(object type, address of the object, name of the iterator) {
  *           you can use your own iterator to access the members of the object
  *       }
  */
