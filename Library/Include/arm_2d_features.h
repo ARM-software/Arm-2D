@@ -22,8 +22,8 @@
  * Description:  Public header file to indicate features avaialble for this
  *               arm-2d library variant.
  *
- * $Date:        18. July 2022
- * $Revision:    V.1.0.3
+ * $Date:        13. Sept 2022
+ * $Revision:    V.1.0.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -58,26 +58,26 @@ extern "C" {
 #undef __ARM_2D_HAS_HELIUM_FLOAT__
 
 #if defined(__ARM_FEATURE_MVE) && __ARM_FEATURE_MVE
-#   define __ARM_2D_HAS_HELIUM__                        1
-#   define __ARM_2D_HAS_HELIUM_INTEGER__                1
+#   define __ARM_2D_HAS_HELIUM__                        1       //!< target MCU has the Helium extension
+#   define __ARM_2D_HAS_HELIUM_INTEGER__                1       //!< target MCU has the Helium integer extension
 #   if (__ARM_FEATURE_MVE & 2)
-#       define __ARM_2D_HAS_HELIUM_FLOAT__              1
+#       define __ARM_2D_HAS_HELIUM_FLOAT__              1       //!< target MCU has the Helium floating point extension
 #   else
-#       define __ARM_2D_HAS_HELIUM_FLOAT__              0
+#       define __ARM_2D_HAS_HELIUM_FLOAT__              0       //!< target MCU has no Helium floating point extension
 #   endif
 #else
-#   define __ARM_2D_HAS_HELIUM__                        0
-#   define __ARM_2D_HAS_HELIUM_INTEGER__                0
-#   define __ARM_2D_HAS_HELIUM_FLOAT__                  0
+#   define __ARM_2D_HAS_HELIUM__                        0       //!< target MCU has no Helium extension
+#   define __ARM_2D_HAS_HELIUM_INTEGER__                0       //!< target MCU has no Helium integer extension
+#   define __ARM_2D_HAS_HELIUM_FLOAT__                  0       //!< target MCU has no Helium floating point extension
 #endif
 
 
 #ifndef __ARM_2D_HAS_CDE__
-#   define __ARM_2D_HAS_CDE__                           0
+#   define __ARM_2D_HAS_CDE__                           0       //!< target MCU has no ACI implementation
 #endif
 
 #ifndef __ARM_2D_HAS_HW_ACC__
-#   define __ARM_2D_HAS_HW_ACC__                        0
+#   define __ARM_2D_HAS_HW_ACC__                        0       //!< target MCU has no hardware acceleration for 2D operations
 #endif
 #if defined(__ARM_2D_HAS_HW_ACC__) && __ARM_2D_HAS_HW_ACC__
 #   if defined(__ARM_2D_HAS_ASYNC__) && !__ARM_2D_HAS_ASYNC__
@@ -87,31 +87,31 @@ extern "C" {
  warning.
 #   endif
 #   undef __ARM_2D_HAS_ASYNC__
-#   define __ARM_2D_HAS_ASYNC__                         1
+#   define __ARM_2D_HAS_ASYNC__                         1       //!< enable asynchronous mode (enable pipeline)
 #endif
 
 #ifndef __ARM_2D_HAS_ASYNC__
-#   define __ARM_2D_HAS_ASYNC__                         1
+#   define __ARM_2D_HAS_ASYNC__                         1       //!< enable asynchronous mode (enable pipeline)
 #endif
 #if defined(__ARM_2D_HAS_ASYNC__) &&  __ARM_2D_HAS_ASYNC__
 #   if  !defined(__ARM_2D_CFG_DEFAULT_SUB_TASK_POOL_SIZE__) ||                        \
         __ARM_2D_CFG_DEFAULT_SUB_TASK_POOL_SIZE__ < 4
-#       define __ARM_2D_CFG_DEFAULT_SUB_TASK_POOL_SIZE__      4
+#       define __ARM_2D_CFG_DEFAULT_SUB_TASK_POOL_SIZE__      4 //!< default pool size for sub-tasks
 #   endif
 #endif
 
 #undef __ARM_2D_HAS_FPU__
 #if defined(__ARM_FP)
-#define __ARM_2D_HAS_FPU__                              1
+#define __ARM_2D_HAS_FPU__                              1       //!< target MCU has FPU
 #else
-#define __ARM_2D_HAS_FPU__                              0
+#define __ARM_2D_HAS_FPU__                              0       //!< target MCU has no FPU
 #endif
 
 #undef __ARM_2D_HAS_DSP__
 #if defined(__ARM_FEATURE_DSP) && __ARM_FEATURE_DSP
-#define __ARM_2D_HAS_DSP__                              1
+#define __ARM_2D_HAS_DSP__                              1       //!< target MCU has a (simple) DSP extension
 #else
-#define __ARM_2D_HAS_DSP__                              0
+#define __ARM_2D_HAS_DSP__                              0       //!< target MCU has no DSP extension
 #endif
 
 #ifndef __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
@@ -120,10 +120,12 @@ extern "C" {
 /*! \brief  __ARM_2D_HAS_INTERPOLATION_ROTATION__ is deprecated 
  *!         add this for backward compatible
  */
+
+/*! enable the anti-alias support in transform operations */
 #       define __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__                              \
                 __ARM_2D_HAS_INTERPOLATION_ROTATION__
 #   else
-#       define __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__        0
+#       define __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__        0     //!< disable the anti-alias support in transform operations
 #   endif
 #endif
 
@@ -133,7 +135,7 @@ extern "C" {
  */
 #if !__ARM_2D_HAS_FPU__
 #   undef __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__
-#   define __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__   1
+#   define __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__   1      //!< use fixed point numbers in transform operations
 #elif   !__ARM_2D_HAS_HELIUM__                                                  \
     &&  !defined(__ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__)
     /*! \note For Armv7-m processors and Armv8-m processors that have no Helium
@@ -141,16 +143,16 @@ extern "C" {
      *!       float point rotation even if FPU can accelerate float point
      *!       operations.
      */
-#   define __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__   1
+#   define __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__   1      //!< use fixed point numbers in transform operations
 #endif
 
 #if __ARM_2D_HAS_HELIUM_INTEGER__ && !__ARM_2D_HAS_HELIUM_FLOAT__
 #   undef __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__
-#   define __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__   1
+#   define __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__   1      //!< use fixed point numbers in transform operations
 #endif
 
 #ifndef __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__
-#   define __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__   1
+#   define __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__   1      //!< use fixed point numbers in transform operations
 #endif
 
 /*! \note In your application, if you do need to use RGBA8888 for some resources
@@ -158,7 +160,7 @@ extern "C" {
  *!       related APIs, please set this macro to 1 in your project.
  */
 #ifndef __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-#   define __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__  1
+#   define __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__  1      //!< enable the support for CCCA8888
 #endif
 
 /*----------------------------------------------------------------------------*
@@ -199,6 +201,7 @@ extern "C" {
  is deprecated, please use __ARM_2D_CFG_UNSAFE_IGNORE_CALIB_IN_TRANSFORM__\
  instead.
 
+/*! disable the small angle calibration in transform operations */
 #       define __ARM_2D_CFG_UNSAFE_IGNORE_CALIB_IN_TRANSFORM__                  \
                 __ARM_2D_CFG_UNSAFE_IGNORE_CALIB_IN_ROTATION_FOR_PERFORMANCE__
 #   endif
@@ -214,6 +217,7 @@ extern "C" {
  is deprecated, please use __ARM_2D_CFG_UNSAFE_NO_SATURATION_IN_FIXED_POINT__\
  instead.
 
+/*! disable the saturation protection in fixed point operations */
 #       define  __ARM_2D_CFG_UNSAFE_NO_SATURATION_IN_FIXED_POINT__              \
             __ARM_2D_CFG_UNSAFE_NO_SATURATION_IN_FIXED_POINT_FOR_PERFROMANCE__
 #endif

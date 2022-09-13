@@ -159,7 +159,7 @@ extern "C" {
 
 /*!
  * \brief inherit a given class
- * \param __type the base class, you can use .use_as__{__type} for referencing 
+ * \param __type the base class, you can use .use_as_xxxxx for referencing 
  *               the base.
  * \note this macro supports microsoft extensions (-fms-extensions)
  */
@@ -176,7 +176,7 @@ extern "C" {
 
 /*!
  * \brief inherit a given class
- * \param __type the base class, you can use .use_as__{__type} for referencing 
+ * \param __type the base class, you can use .use_as_xxxxx for referencing 
  *               the base.
  * \note this macro does NOT support microsoft extensions (-fms-extensions)
  */
