@@ -227,6 +227,30 @@ IMPL_PFB_ON_DRAW(__pfb_draw_background_handler)
     return arm_fsm_rt_cpl;
 }
 
+static
+IMPL_PFB_ON_DRAW(__pfb_draw_navigation_on_switching)
+{
+    ARM_2D_UNUSED(pTarget);
+    ARM_2D_UNUSED(bIsNewFrame);
+
+    arm_lcd_text_set_colour(GLCD_COLOR_LIGHT_GREY, GLCD_COLOR_WHITE);
+    arm_lcd_text_location( (__DISP0_CFG_SCEEN_HEIGHT__ + 7) / 8 - 2, 
+                            (__DISP0_CFG_SCEEN_WIDTH__ / 6) - 24);
+    arm_lcd_printf("arm-2d v" 
+                    ARM_TO_STRING(ARM_2D_VERSION_MAJOR)
+                    "."
+                    ARM_TO_STRING(ARM_2D_VERSION_MINOR)
+                    "."
+                    ARM_TO_STRING(ARM_2D_VERSION_PATCH)
+                    "-"
+                    ARM_2D_VERSION_STR
+                    );
+
+    arm_2d_op_wait_async(NULL);
+
+    return arm_fsm_rt_cpl;
+}
+
 __WEAK
 IMPL_PFB_ON_LOW_LV_RENDERING(__glcd0_pfb_render_handler)
 {
@@ -292,8 +316,14 @@ void disp_adapter0_init(void)
     arm_extra_controls_init();
     
     __user_scene_player_init();
-    
-    do {
+
+    /* register event handler for evtOnDrawNavigation */
+    arm_2d_scene_player_register_on_draw_navigation_event_handler(
+                                            &DISP0_ADAPTER,
+                                            __pfb_draw_navigation_on_switching,
+                                            NULL);
+
+    if (!__DISP0_CFG_DISABLE_DEFAULT_SCENE__) {
         /*! define dirty regions */
         IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, const static)
 
@@ -336,7 +366,7 @@ void disp_adapter0_init(void)
                                         &DISP0_ADAPTER,
                                         (arm_2d_scene_t *)s_tScenes,
                                         dimof(s_tScenes));
-    } while(0);
+    }
 }
 
 arm_fsm_rt_t disp_adapter0_task(void)
