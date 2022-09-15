@@ -175,10 +175,10 @@ const arm_2d_tile_t c_tile{0}Mask = {{
 tail2BitAlpha="""
 
 
-extern const arm_2d_tile_t c_tile{0}2BitMask;
+extern const arm_2d_tile_t c_tile{0}A2Mask;
 
-__attribute__((section(\"arm2d.tile.c_tile{0}2BitMask\")))
-const arm_2d_tile_t c_tile{0}2BitMask = {{
+__attribute__((section(\"arm2d.tile.c_tile{0}A2Mask\")))
+const arm_2d_tile_t c_tile{0}A2Mask = {{
     .tRegion = {{
         .tSize = {{
             .iWidth = {1},
@@ -192,17 +192,17 @@ const arm_2d_tile_t c_tile{0}2BitMask = {{
             .chScheme = ARM_2D_COLOUR_MASK_A2,
         }},
     }},
-    .pchBuffer = (uint8_t *)c_bmp{0}2BitAlpha,
+    .pchBuffer = (uint8_t *)c_bmp{0}A2Alpha,
 }};
 """
 
 tail4BitAlpha="""
 
 
-extern const arm_2d_tile_t c_tile{0}4BitMask;
+extern const arm_2d_tile_t c_tile{0}A4Mask;
 
-__attribute__((section(\"arm2d.tile.c_tile{0}4BitMask\")))
-const arm_2d_tile_t c_tile{0}4BitMask = {{
+__attribute__((section(\"arm2d.tile.c_tile{0}A4Mask\")))
+const arm_2d_tile_t c_tile{0}A4Mask = {{
     .tRegion = {{
         .tSize = {{
             .iWidth = {1},
@@ -216,7 +216,7 @@ const arm_2d_tile_t c_tile{0}4BitMask = {{
             .chScheme = ARM_2D_COLOUR_MASK_A4,
         }},
     }},
-    .pchBuffer = (uint8_t *)c_bmp{0}4BitAlpha,
+    .pchBuffer = (uint8_t *)c_bmp{0}A4Alpha,
 }};
 """
 
@@ -357,8 +357,8 @@ def main(argv):
                     return ((byteArr & 0x03) << 6) |  ((byteArr & 0xc0) >> 6) | ((byteArr & 0x30) >> 2 ) | ((byteArr & 0x0c) << 2)
 
 
-                print('__attribute__((aligned(4), section(\"arm2d.asset.c_bmp%s2BitAlpha\")))' % (arr_name), file=o)
-                print('static const uint8_t c_bmp%s2BitAlpha[%d*%d] = {' % (arr_name, row, col),file=o)
+                print('__attribute__((aligned(4), section(\"arm2d.asset.c_bmp%sA2Alpha\")))' % (arr_name), file=o)
+                print('static const uint8_t c_bmp%sA2Alpha[%d*%d] = {' % (arr_name, (row+3)/4, col),file=o)
                 cnt = 0
                 alpha = data[...,3].astype(np.uint8)
                 for eachRow in alpha:
@@ -391,8 +391,8 @@ def main(argv):
                 return ((byteArr & 0x0f) << 4) |  ((byteArr & 0xf0) >> 4)
 
 
-            print('__attribute__((aligned(4), section(\"arm2d.asset.c_bmp%s4BitAlpha\")))' % (arr_name), file=o)
-            print('static const uint8_t c_bmp%s4BitAlpha[%d*%d] = {' % (arr_name, row, col),file=o)
+            print('__attribute__((aligned(4), section(\"arm2d.asset.c_bmp%sA4Alpha\")))' % (arr_name), file=o)
+            print('static const uint8_t c_bmp%sA4Alpha[%d*%d] = {' % (arr_name, (row+1)/2, col),file=o)
             cnt = 0
             alpha = data[...,3].astype(np.uint8)
             for eachRow in alpha:
@@ -539,10 +539,10 @@ def main(argv):
             print(tailAlpha.format(arr_name, str(row), str(col)), file=o)
 
             if args.a2 or args.format == 'all':
-                print(tail2BitAlpha.format(arr_name, str(int((row + 3)/4)), str(col)), file=o)
+                print(tail2BitAlpha.format(arr_name, str(row), str(col)), file=o)
 
             if args.a4 or args.format == 'all':
-                print(tail4BitAlpha.format(arr_name, str(int((row + 1)/2)), str(col)), file=o)
+                print(tail4BitAlpha.format(arr_name, str(row), str(col)), file=o)
 
 
         print(tail.format(arr_name, str(row), str(col)), file=o)

@@ -120,11 +120,23 @@ const arm_2d_tile_t c_tileSoftwareMask2;
 extern 
 const arm_2d_tile_t c_tileSoftwareMask;
 
+extern 
+const arm_2d_tile_t c_tileSoftwareA2Mask;
+
+extern 
+const arm_2d_tile_t c_tileSoftwareA4Mask;
+
 extern
 const arm_2d_tile_t c_tileCMSISLogo;
 
 extern 
 const arm_2d_tile_t c_tileCMSISLogoMask;
+
+extern 
+const arm_2d_tile_t c_tileCMSISLogoA2Mask;
+
+extern 
+const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
 extern 
 const arm_2d_tile_t c_tileCMSISLogoMask2;
@@ -370,10 +382,10 @@ void show_icon_without_background(const arm_2d_tile_t *ptTarget, bool bIsNewFram
 
     arm_2d_align_centre(ptTarget->tRegion, c_tileSoftwareMask.tRegion.tSize) {
         
-        arm_2d_fill_colour_with_mask_and_opacity(   
+        arm_2d_fill_colour_with_a2_mask_and_opacity(   
                                 ptTarget, 
                                 &__centre_region, 
-                                &c_tileSoftwareMask, 
+                                &c_tileSoftwareA2Mask, 
                                 (__arm_2d_color_t){GLCD_COLOR_DARK_GREY},
                                 128);
     
@@ -382,9 +394,9 @@ void show_icon_without_background(const arm_2d_tile_t *ptTarget, bool bIsNewFram
         __centre_region.tLocation.iX -= 2;
         __centre_region.tLocation.iY -= 2;
     
-        arm_2d_fill_colour_with_mask(   ptTarget, 
+        arm_2d_fill_colour_with_a4_mask(   ptTarget, 
                                         &__centre_region, 
-                                        &c_tileSoftwareMask, 
+                                        &c_tileSoftwareA4Mask, 
                                         (__arm_2d_color_t){GLCD_COLOR_WHITE});
         arm_2d_op_wait_async(NULL);
     }
@@ -570,10 +582,10 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
                 ptLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode 
                     &~ ARM_2D_CP_MODE_FILL);
 #else
-            arm_2d_fill_colour_with_mask(
+            arm_2d_fill_colour_with_a4_mask(
                     &tTempPanel,
                     &__centre_region,
-                    &c_tileCMSISLogoMask,
+                    &c_tileCMSISLogoA4Mask,
                     (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY}
                 );
 #endif

@@ -83,6 +83,14 @@
                 arm_2dp_gray8_tile_rotation_with_src_mask_and_opacity
 #   define arm_2dp_tile_rotation_with_src_mask                                  \
                 arm_2dp_gray8_tile_rotation_with_src_mask
+#   define arm_2d_fill_colour_with_a2_mask_and_opacity                          \
+                arm_2d_gray8_fill_colour_with_a2_mask_and_opacity
+#   define arm_2d_fill_colour_with_a4_mask                                      \
+                arm_2d_gray8_fill_colour_with_a4_mask
+#   define arm_2d_fill_colour_with_a4_mask_and_opacity                          \
+                arm_2d_gray8_fill_colour_with_a4_mask_and_opacity
+#   define arm_2d_fill_colour_with_a2_mask                                      \
+                arm_2d_gray8_fill_colour_with_a2_mask
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
 #   define __arm_2d_color_t         arm_2d_color_rgb565_t
@@ -141,6 +149,14 @@
                 arm_2dp_rgb565_tile_rotation_with_src_mask_and_opacity
 #   define arm_2dp_tile_rotation_with_src_mask                                  \
                 arm_2dp_rgb565_tile_rotation_with_src_mask
+#   define arm_2d_fill_colour_with_a2_mask_and_opacity                          \
+                arm_2d_rgb565_fill_colour_with_a2_mask_and_opacity
+#   define arm_2d_fill_colour_with_a4_mask                                      \
+                arm_2d_rgb565_fill_colour_with_a4_mask
+#   define arm_2d_fill_colour_with_a4_mask_and_opacity                          \
+                arm_2d_rgb565_fill_colour_with_a4_mask_and_opacity
+#   define arm_2d_fill_colour_with_a2_mask                                      \
+                arm_2d_rgb565_fill_colour_with_a2_mask
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
 #   define __arm_2d_color_t         arm_2d_color_cccn888_t
@@ -199,6 +215,14 @@
                 arm_2dp_cccn888_tile_rotation_with_src_mask_and_opacity
 #   define arm_2dp_tile_rotation_with_src_mask                                  \
                 arm_2dp_cccn888_tile_rotation_with_src_mask
+#   define arm_2d_fill_colour_with_a2_mask_and_opacity                          \
+                arm_2d_cccn888_fill_colour_with_a2_mask_and_opacity
+#   define arm_2d_fill_colour_with_a4_mask                                      \
+                arm_2d_cccn888_fill_colour_with_a4_mask
+#   define arm_2d_fill_colour_with_a4_mask_and_opacity                          \
+                arm_2d_cccn888_fill_colour_with_a4_mask_and_opacity
+#   define arm_2d_fill_colour_with_a2_mask                                      \
+                arm_2d_cccn888_fill_colour_with_a2_mask
 #else
 #   error Unsupported colour depth!
 #endif

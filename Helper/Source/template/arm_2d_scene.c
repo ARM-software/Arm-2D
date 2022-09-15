@@ -80,6 +80,8 @@
 
 extern const arm_2d_tile_t c_tileCMSISLogo;
 extern const arm_2d_tile_t c_tileCMSISLogoMask;
+extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
+extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
@@ -181,10 +183,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene%Instance%_handler)
 #else
     /* draw the cmsis logo using mask in the centre of the screen */
     arm_2d_align_centre(ptTile->tRegion, c_tileCMSISLogo.tRegion.tSize) {
-        arm_2d_fill_colour_with_mask_and_opacity(   
+        arm_2d_fill_colour_with_a4_mask_and_opacity(   
                                             ptTile, 
                                             &__centre_region, 
-                                            &c_tileCMSISLogoMask, 
+                                            &c_tileCMSISLogoA4Mask, 
                                             (__arm_2d_color_t){GLCD_COLOR_BLACK},
                                             64);
     }
