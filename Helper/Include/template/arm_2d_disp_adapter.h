@@ -78,6 +78,12 @@
 #   define __DISP%Instance%_CFG_ITERATION_CNT__             30
 #endif
 
+// <q>Disable the default scene
+// <i> Remove the default scene for this display adapter. We highly recommend you to disable the default scene when creating real applications.
+#ifndef __DISP%Instance%_CFG_DISABLE_DEFAULT_SCENE__
+#   define __DISP%Instance%_CFG_DISABLE_DEFAULT_SCENE__     1
+#endif
+
 // <q>Enable the virtual resource helper service
 // <i> Introduce a helper service for loading virtual resources.
 // <i> This feature is disabled by default.

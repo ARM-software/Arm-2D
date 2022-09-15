@@ -138,8 +138,8 @@ int main (void)
 #endif
 
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
-                                            ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT);
-    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 1000);
+                                            ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);
+    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 3000);
     
     arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
     
