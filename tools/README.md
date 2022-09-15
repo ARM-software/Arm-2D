@@ -13,7 +13,7 @@ The `arm_2d_tile_t` descriptors are used as the standard input and output in mos
 
 - Support popular image formats, e.g. PNG, JPG, JPEG, BMP etc.
 - Output formats:
-  - RGB565 with an optional alpha-mask
+  - RGB565 with an optional alpha-mask (A2, A4 and A8)
   - RGBA8888 with alpha-masks, one in a separate alpha-mask and the other in `ARM_2D_CHANNEL_8in32` format. 
 - Support resize before conversion 
 - Support rotation before conversion
@@ -37,6 +37,7 @@ img2c.py [***-h***] [***--format*** \<***FORMAT***\>] [***--name \<NAME\>***] [*
 | --format ***Format***     | RGB Format, i.e. rgb565, rgb32, all (***default***)          | Optional |
 | --dim ***Width Height***  | Resize the image with the given width and height             | Optional |
 | --rot ***angle***         | Rotate the image with the given angle in degrees             | Optional |
+| --a2, --a4                | introduce extra A2 / A4 masks when it is possible.           | Optional |
 
 
 ## Example:
