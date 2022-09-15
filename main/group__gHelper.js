@@ -1,7 +1,7 @@
 var group__gHelper =
 [
-    [ "__arm_2d_helper_scene_switch_t", "group__gHelper.html#union____arm__2d__helper__scene__switch__t", [
-      [ "hwSetting", "group__gHelper.html#a045e8d2fef0751cbb821f47c9e26b978", null ]
+    [ "__arm_2d_helper_scene_switch_t", "group__gHelper.html#struct____arm__2d__helper__scene__switch__t", [
+      [ "evtOnDrawNavigation", "group__gHelper.html#abdf685f72f796076bdefb539fbd7784e", null ]
     ] ],
     [ "arm_2d_scene_t", "group__gHelper.html#structarm__2d__scene__t", [
       [ "ptNext", "group__gHelper.html#a58b6fe1c4ab89fd6a89c8344fcbe85e7", null ],
@@ -43,13 +43,16 @@ var group__gHelper =
     ] ],
     [ "arm_2d_helper_pfb_cfg_t", "group__gHelper.html#structarm__2d__helper__pfb__cfg__t", [
       [ "tDisplayArea", "group__gHelper.html#adc4ca6df76cda6514cff8a4cec3918ca", null ],
-      [ "FrameBuffer", "group__gHelper.html#ac8f9a9f89e83901489cc8739240fc002", null ],
+      [ "FrameBuffer", "group__gHelper.html#a431bc049248b2546480954506a382b98", null ],
       [ "Dependency", "group__gHelper.html#a65ec336911098eaed7b2ac60038dda6e", null ]
     ] ],
     [ "arm_2d_helper_pfb_t", "group__gHelper.html#structarm__2d__helper__pfb__t", [
-      [ "Statistics", "group__gHelper.html#a83ab0c07ac62b20eb9beef146458e152", null ]
+      [ "Statistics", "group__gHelper.html#a59b3f025fd0399fd3399035d33e7c55f", null ]
     ] ],
-    [ "__arm_2d_helper_scene_switch_t.Feature", "group__gHelper.html#struct____arm__2d__helper__scene__switch__t_8Feature", [
+    [ "__arm_2d_helper_scene_switch_t.__unnamed113__", "group__gHelper.html#union____arm__2d__helper__scene__switch__t_8____unnamed113____", [
+      [ "hwSetting", "group__gHelper.html#a89f6a468cb00f472eca2978007155e41", null ]
+    ] ],
+    [ "__arm_2d_helper_scene_switch_t.__unnamed113__.Feature", "group__gHelper.html#struct____arm__2d__helper__scene__switch__t_8____unnamed113_____8Feature", [
       [ "chMode", "group__gHelper.html#a32e1ccd08315dddf03bcc84d8e25eb46", null ],
       [ "bIgnoreOldSceneBG", "group__gHelper.html#a293bd1e526f3a9b72e8a9c323c835373", null ],
       [ "bIgnoreOldScene", "group__gHelper.html#a28bde530bc229b73e7327109ca751c3b", null ],
@@ -57,18 +60,18 @@ var group__gHelper =
       [ "bIgnoreNewScene", "group__gHelper.html#a0d79e6b6fd0828d4792ccd87b5c78bd1", null ],
       [ "u2DefaultBG", "group__gHelper.html#afebb53e17c0600849d68596f532ed3fe", null ]
     ] ],
-    [ "arm_2d_scene_t.__unnamed114__", "group__gHelper.html#structarm__2d__scene__t_8____unnamed114____", [
+    [ "arm_2d_scene_t.__unnamed116__", "group__gHelper.html#structarm__2d__scene__t_8____unnamed116____", [
       [ "bOnSwitchingIgnoreBG", "group__gHelper.html#a2912f0746294e6c0c0f91d3f82914112", null ],
       [ "bOnSwitchingIgnoreScene", "group__gHelper.html#a1a6c67905a7be94f1ce72b9b25f9a1a7", null ]
     ] ],
-    [ "arm_2d_scene_player_t.__unnamed116__", "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed116____", null ],
-    [ "arm_2d_scene_player_t.__unnamed116__.SceneFIFO", "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed116_____8SceneFIFO", null ],
-    [ "arm_2d_scene_player_t.__unnamed116__.Runtime", "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed116_____8Runtime", null ],
-    [ "arm_2d_scene_player_t.__unnamed116__.Switch", "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed116_____8Switch", null ],
-    [ "arm_2d_scene_player_t.__unnamed116__.Switch.__unnamed121__", "group__gHelper.html#unionarm__2d__scene__player__t_8____unnamed116_____8Switch_8____unnamed121____", null ],
-    [ "arm_2d_scene_player_t.__unnamed116__.Switch.__unnamed121__.Fade", "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed116_____8Switch_8____unnamed121_____8Fade", null ],
-    [ "arm_2d_scene_player_t.__unnamed116__.Switch.__unnamed121__.Erase", "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed116_____8Switch_8____unnamed121_____8Erase", null ],
-    [ "arm_2d_scene_player_t.__unnamed116__.Switch.__unnamed121__.Slide", "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed116_____8Switch_8____unnamed121_____8Slide", null ],
+    [ "arm_2d_scene_player_t.__unnamed118__", "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed118____", null ],
+    [ "arm_2d_scene_player_t.__unnamed118__.SceneFIFO", "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed118_____8SceneFIFO", null ],
+    [ "arm_2d_scene_player_t.__unnamed118__.Runtime", "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed118_____8Runtime", null ],
+    [ "arm_2d_scene_player_t.__unnamed118__.Switch", "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed118_____8Switch", null ],
+    [ "arm_2d_scene_player_t.__unnamed118__.Switch.__unnamed123__", "group__gHelper.html#unionarm__2d__scene__player__t_8____unnamed118_____8Switch_8____unnamed123____", null ],
+    [ "arm_2d_scene_player_t.__unnamed118__.Switch.__unnamed123__.Fade", "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed118_____8Switch_8____unnamed123_____8Fade", null ],
+    [ "arm_2d_scene_player_t.__unnamed118__.Switch.__unnamed123__.Erase", "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed118_____8Switch_8____unnamed123_____8Erase", null ],
+    [ "arm_2d_scene_player_t.__unnamed118__.Switch.__unnamed123__.Slide", "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed118_____8Switch_8____unnamed123_____8Slide", null ],
     [ "arm_2d_helper_pfb_cfg_t.FrameBuffer", "group__gHelper.html#structarm__2d__helper__pfb__cfg__t_8FrameBuffer", [
       [ "ptPFBs", "group__gHelper.html#ae32199e047789740867bc43fd74278d1", null ],
       [ "tFrameSize", "group__gHelper.html#a3b6ffb221416cc974d254f474a88bb0d", null ],
@@ -79,10 +82,10 @@ var group__gHelper =
       [ "bSwapRGB16", "group__gHelper.html#a545d827276ad405ea34db579f2ef9e2c", null ],
       [ "u4PoolReserve", "group__gHelper.html#a430f59062291820e08b2cf816d7ef490", null ]
     ] ],
-    [ "arm_2d_helper_pfb_t.__unnamed128__", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed128____", null ],
-    [ "arm_2d_helper_pfb_t.__unnamed128__.Adapter", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed128_____8Adapter", null ],
-    [ "arm_2d_helper_pfb_t.__unnamed128__.Adapter.__unnamed132__", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed128_____8Adapter_8____unnamed132____", null ],
-    [ "arm_2d_helper_pfb_t.__unnamed128__.Adapter.FlushFIFO", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed128_____8Adapter_8FlushFIFO", null ],
+    [ "arm_2d_helper_pfb_t.__unnamed130__", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed130____", null ],
+    [ "arm_2d_helper_pfb_t.__unnamed130__.Adapter", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed130_____8Adapter", null ],
+    [ "arm_2d_helper_pfb_t.__unnamed130__.Adapter.__unnamed134__", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed130_____8Adapter_8____unnamed134____", null ],
+    [ "arm_2d_helper_pfb_t.__unnamed130__.Adapter.FlushFIFO", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed130_____8Adapter_8FlushFIFO", null ],
     [ "arm_2d_helper_pfb_t.Statistics", "group__gHelper.html#structarm__2d__helper__pfb__t_8Statistics", [
       [ "lTimestamp", "group__gHelper.html#a5a48f3e42ab73764014d124cd2764be4", null ],
       [ "nTotalCycle", "group__gHelper.html#aad0c95f31d24233a32300ac6e851506f", null ],
@@ -133,10 +136,10 @@ var group__gHelper =
       [ "__ARM_2D_SCENE_SWTICH_MODE_IGNORE_pos", "group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a9580496edc69fd9df47d2831b851ddcb", null ],
       [ "__ARM_2D_SCENE_SWTICH_MODE_DEFAULT_BG_msk", "group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a375717dacb0691fd18fde3d2d077358e", null ],
       [ "__ARM_2D_SCENE_SWTICH_MODE_DEFAULT_BG_pos", "group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a2cc645510fbbc71dfdbe795658bb7be0", null ],
-      [ "ARM_2D_PFB_DEPEND_ON_LOW_LEVEL_RENDERING", "group__gHelper.html#gga8420dba71b9cc240cf981b0bef892004ad07b975cfa54daf24ef1ecff43df374b", null ],
-      [ "ARM_2D_PFB_DEPEND_ON_DRAWING", "group__gHelper.html#gga8420dba71b9cc240cf981b0bef892004ade6d8cce78f88aedc433f3550699e9bd", null ],
-      [ "ARM_2D_PFB_DEPEND_ON_LOW_LEVEL_SYNC_UP", "group__gHelper.html#gga8420dba71b9cc240cf981b0bef892004ad7df2fe2d2065398cf935e34b6afedeb", null ],
-      [ "ARM_2D_PFB_DEPEND_ON_FRAME_SYNC_UP", "group__gHelper.html#gga8420dba71b9cc240cf981b0bef892004adf9795f2b046202ae537509960d6e873", null ]
+      [ "ARM_2D_PFB_DEPEND_ON_LOW_LEVEL_RENDERING", "group__gHelper.html#gga39b4e25c4e8f5fed29720be17a532fa8ad07b975cfa54daf24ef1ecff43df374b", null ],
+      [ "ARM_2D_PFB_DEPEND_ON_DRAWING", "group__gHelper.html#gga39b4e25c4e8f5fed29720be17a532fa8ade6d8cce78f88aedc433f3550699e9bd", null ],
+      [ "ARM_2D_PFB_DEPEND_ON_LOW_LEVEL_SYNC_UP", "group__gHelper.html#gga39b4e25c4e8f5fed29720be17a532fa8ad7df2fe2d2065398cf935e34b6afedeb", null ],
+      [ "ARM_2D_PFB_DEPEND_ON_FRAME_SYNC_UP", "group__gHelper.html#gga39b4e25c4e8f5fed29720be17a532fa8adf9795f2b046202ae537509960d6e873", null ]
     ] ],
     [ "arm_2d_scene_player_flush_fifo", "group__gHelper.html#ga7248c19138fa0d1352e5c07f197cd0d8", null ],
     [ "arm_2d_scene_player_append_scenes", "group__gHelper.html#ga5725f716e87b58d67316d4536234181b", null ],
@@ -144,6 +147,7 @@ var group__gHelper =
     [ "arm_2d_scene_player_set_switching_mode", "group__gHelper.html#ga0e70b98a3dd350877f4daacc0d5b9ffb", null ],
     [ "arm_2d_scene_player_get_switching_mode", "group__gHelper.html#gab9a94a3220a7dacc1384dcd0ca1d81af", null ],
     [ "arm_2d_scene_player_set_switching_period", "group__gHelper.html#gac437acd591ac725054b4216fa2351013", null ],
+    [ "arm_2d_scene_player_register_on_draw_navigation_event_handler", "group__gHelper.html#ga962e51f25ce1e26e822b7394c8a34943", null ],
     [ "arm_2d_scene_player_task", "group__gHelper.html#ga9d3b273bce58d135be740ba682ec11b7", null ],
     [ "arm_2d_helper_pfb_init", "group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99", null ],
     [ "arm_2d_helper_pfb_get_display_area", "group__gHelper.html#gaf0eef5fe61bc11d102d2180025ada377", null ],
