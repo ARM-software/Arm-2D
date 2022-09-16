@@ -21,8 +21,8 @@
  * Title:        __arm-2d_core.c
  * Description:  Basic Tile operations
  *
- * $Date:        29. Aug 2022
- * $Revision:    V.1.3.1
+ * $Date:        16. Sept 2022
+ * $Revision:    V.1.4.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -1624,9 +1624,12 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
                 tHeaderRegion.tSize.iWidth  = tDrawRegion.tSize.iWidth 
                                             - tClippdRegion.tSize.iWidth;
                 tHeaderRegion.tLocation.iX += tClippdRegion.tSize.iWidth;
-                tHeaderRegion.tSize.iHeight = tClippdRegion.tSize.iHeight 
-                                            - tTargetRegion.tLocation.iY;
-                tHeaderRegion.tLocation.iY = tTargetRegion.tLocation.iY;
+                
+                if (tTargetRegion.tLocation.iY < 0) {
+                    tHeaderRegion.tSize.iHeight = tClippdRegion.tSize.iHeight 
+                                                - tTargetRegion.tLocation.iY;
+                    tHeaderRegion.tLocation.iY = tTargetRegion.tLocation.iY;
+                }
 
                 tResult = __tile_clipped_pave(  &this,
                                                 ptTarget,
@@ -1635,7 +1638,7 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
                                                 this.wMode);
                                     
                 //arm_2d_region_t tClippedRegion;
-                if (tResult < 0) {
+                if (tResult < 0 && tResult != ARM_2D_ERR_OUT_OF_REGION) {
                     return tResult;
                 }
             }
@@ -1672,9 +1675,12 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
                 arm_2d_region_t tFirstColumnRegion = tDrawRegion;
                 tFirstColumnRegion.tSize.iHeight = tDrawRegion.tSize.iHeight - tClippdRegion.tSize.iHeight;
                 tFirstColumnRegion.tLocation.iY += tClippdRegion.tSize.iHeight;
-                tFirstColumnRegion.tSize.iWidth = tClippdRegion.tSize.iWidth 
-                                                - tTargetRegion.tLocation.iX;
-                tFirstColumnRegion.tLocation.iX = tTargetRegion.tLocation.iX;
+                
+                if (tTargetRegion.tLocation.iX < 0) {
+                    tFirstColumnRegion.tSize.iWidth = tClippdRegion.tSize.iWidth 
+                                                    - tTargetRegion.tLocation.iX;
+                    tFirstColumnRegion.tLocation.iX = tTargetRegion.tLocation.iX;
+                }
 
                 tResult = __tile_clipped_pave(  &this,
                                                 ptTarget,
@@ -1682,7 +1688,7 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
                                                 NULL,
                                                 this.wMode);
                                     
-                if (tResult < 0) {
+                if (tResult < 0 && tResult != ARM_2D_ERR_OUT_OF_REGION) {
                     return tResult;
                 }
             }
