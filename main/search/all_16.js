@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['source_0',['Source',['../group__gAlpha.html#a05009056f36c3df894607f5d4dd1c991',1,'arm_2d_op_alpha_t::Source()'],['../group__gAlpha.html#a4879006f79b8cdbcead329280d2c4ab4',1,'arm_2d_op_alpha_cl_key_t::Source()']]],
-  ['statistics_1',['Statistics',['../group__gHelper.html#a59b3f025fd0399fd3399035d33e7c55f',1,'arm_2d_helper_pfb_t']]]
+  ['readme_0',['README',['../index.html',1,'']]],
+  ['ref_5flow_5flv_5fio_1',['ref_low_lv_io',['../group__gKernel.html#gae3cfa68806c0c6c9fa7bb2a36453eef5',1,'arm_2d_utils.h']]]
 ];

@@ -341,7 +341,7 @@ Macros</h2></td></tr>
 <tr class="memitem:gaca9883ddfc8f4f3382d9d0e4a93a5890"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gaca9883ddfc8f4f3382d9d0e4a93a5890">__ARM_VA_NUM_ARGS</a>(...)</td></tr>
 <tr class="memdesc:gaca9883ddfc8f4f3382d9d0e4a93a5890"><td class="mdescLeft">&#160;</td><td class="mdescRight">A macro to count the number of parameters.  <a href="group__gKernel.html#gaca9883ddfc8f4f3382d9d0e4a93a5890">More...</a><br /></td></tr>
 <tr class="separator:gaca9883ddfc8f4f3382d9d0e4a93a5890"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga65d234ce6028b539a276e06ac62aa2bc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga65d234ce6028b539a276e06ac62aa2bc">ARM_2D_INVOKE</a>(__FUNC_PTR, ...)</td></tr>
+<tr class="memitem:ga65d234ce6028b539a276e06ac62aa2bc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga65d234ce6028b539a276e06ac62aa2bc">ARM_2D_INVOKE</a>(__FUNC_PTR, ...)&#160;&#160;&#160;            ((NULL == (__FUNC_PTR)) ? 0 : ((*(__FUNC_PTR))(__VA_ARGS__)))</td></tr>
 <tr class="memdesc:ga65d234ce6028b539a276e06ac62aa2bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">detect whether GNU extension is enabled in compilation or not  <a href="group__gKernel.html#ga65d234ce6028b539a276e06ac62aa2bc">More...</a><br /></td></tr>
 <tr class="separator:ga65d234ce6028b539a276e06ac62aa2bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga231c5e93dfebab0cd794f41a500de60b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga231c5e93dfebab0cd794f41a500de60b">__ARM_CONNECT2</a>(__A,  __B)&#160;&#160;&#160;__A##__B</td></tr>
@@ -3919,16 +3919,11 @@ target side mask </td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td>
+          <td></td><td>&#160;&#160;&#160;            ((NULL == (__FUNC_PTR)) ? 0 : ((*(__FUNC_PTR))(__VA_ARGS__)))</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">            <span class="keywordflow">do</span> {                                                                \</div>
-<div class="line">                if (NULL != (__FUNC_PTR)) {                                     \</div>
-<div class="line">                    (*(__FUNC_PTR))(__VA_ARGS__);                               \</div>
-<div class="line">                }                                                               \</div>
-<div class="line">            } <span class="keywordflow">while</span>(0)</div>
-</div><!-- fragment -->
+
 <p>detect whether GNU extension is enabled in compilation or not </p>
 <p >A macro to safely invode a function pointer</p>
 <dl class="params"><dt>Parameters</dt><dd>
