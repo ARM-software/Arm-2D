@@ -40,6 +40,7 @@ var group__gHelper =
       [ "evtOnLowLevelRendering", "group__gHelper.html#a85bd7ad0d6a3c150a6ef8ac6ee9aaeed", null ],
       [ "evtOnDrawing", "group__gHelper.html#a75436e9711701c092b4bafcc1c868d25", null ],
       [ "evtOnLowLevelSyncUp", "group__gHelper.html#a0ed423f1f6490f8cc89abd55f886f4cd", null ],
+      [ "evtOnEachFrameCPL", "group__gHelper.html#a3a09c78af2a4f90fdfed477c0844e4fc", null ],
       [ "Navigation", "group__gHelper.html#a9408298d3065c060ffc2213f5afe3812", null ]
     ] ],
     [ "arm_2d_helper_pfb_cfg_t", "group__gHelper.html#structarm__2d__helper__pfb__cfg__t", [
@@ -90,6 +91,7 @@ var group__gHelper =
       [ "nTotalCycle", "group__gHelper.html#aad0c95f31d24233a32300ac6e851506f", null ],
       [ "nRenderingCycle", "group__gHelper.html#a5ae6646bd6957664dcc13172aa268290", null ]
     ] ],
+    [ "arm_2d_scene_player_register_on_draw_navigation_event_handler", "group__gHelper.html#gad6fc637dca8975a459de5fe0ad0f47fa", null ],
     [ "ARM_2D_HELPER_PFB_INIT", "group__gHelper.html#ga457a16ef9330255578354fcd291a9bc2", null ],
     [ "ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER", "group__gHelper.html#ga432fd371b045e6ae90f816466f76fa38", null ],
     [ "init_arm_2d_helper_pfb", "group__gHelper.html#ga377f8339912a8b31e11f45f6af81a1de", null ],
@@ -139,6 +141,7 @@ var group__gHelper =
       [ "ARM_2D_PFB_DEPEND_ON_DRAWING", "group__gHelper.html#gga8420dba71b9cc240cf981b0bef892004ade6d8cce78f88aedc433f3550699e9bd", null ],
       [ "ARM_2D_PFB_DEPEND_ON_LOW_LEVEL_SYNC_UP", "group__gHelper.html#gga8420dba71b9cc240cf981b0bef892004ad7df2fe2d2065398cf935e34b6afedeb", null ],
       [ "ARM_2D_PFB_DEPEND_ON_FRAME_SYNC_UP", "group__gHelper.html#gga8420dba71b9cc240cf981b0bef892004adf9795f2b046202ae537509960d6e873", null ],
+      [ "ARM_2D_PFB_DEPEND_ON_EACH_FRAME_CPL", "group__gHelper.html#gga8420dba71b9cc240cf981b0bef892004a3cacf8720d5c156fcc2a53a4edcc76b0", null ],
       [ "ARM_2D_PFB_DEPEND_ON_NAVIGATION", "group__gHelper.html#gga8420dba71b9cc240cf981b0bef892004a5ad9b404a26865d867e60c3d2dbbacdf", null ]
     ] ],
     [ "arm_2d_scene_player_flush_fifo", "group__gHelper.html#ga7248c19138fa0d1352e5c07f197cd0d8", null ],
@@ -147,7 +150,7 @@ var group__gHelper =
     [ "arm_2d_scene_player_set_switching_mode", "group__gHelper.html#ga0e70b98a3dd350877f4daacc0d5b9ffb", null ],
     [ "arm_2d_scene_player_get_switching_mode", "group__gHelper.html#gab9a94a3220a7dacc1384dcd0ca1d81af", null ],
     [ "arm_2d_scene_player_set_switching_period", "group__gHelper.html#gac437acd591ac725054b4216fa2351013", null ],
-    [ "arm_2d_scene_player_register_on_draw_navigation_event_handler", "group__gHelper.html#ga13a6c8cc87d1725debe39cf0dde9dd0d", null ],
+    [ "__arm_2d_scene_player_register_on_draw_navigation_event_handler", "group__gHelper.html#ga516674d7d321e4ecb058fd3b8ddbab70", null ],
     [ "arm_2d_scene_player_task", "group__gHelper.html#ga9d3b273bce58d135be740ba682ec11b7", null ],
     [ "arm_2d_helper_pfb_init", "group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99", null ],
     [ "arm_2d_helper_pfb_get_display_area", "group__gHelper.html#gaf0eef5fe61bc11d102d2180025ada377", null ],

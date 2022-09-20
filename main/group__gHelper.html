@@ -185,6 +185,9 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:gad6fc637dca8975a459de5fe0ad0f47fa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gad6fc637dca8975a459de5fe0ad0f47fa">arm_2d_scene_player_register_on_draw_navigation_event_handler</a>( __DISP_ADAPTER_ADDR,  __DRAW_HANDLER,  __USER_TARGET_ADDR,  ...)</td></tr>
+<tr class="memdesc:gad6fc637dca8975a459de5fe0ad0f47fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">register / update the evtOnDrawNavigation event handler. You can use this event to draw an ALWAY-TOP navigation bar or title during switching period.  <a href="group__gHelper.html#gad6fc637dca8975a459de5fe0ad0f47fa">More...</a><br /></td></tr>
+<tr class="separator:gad6fc637dca8975a459de5fe0ad0f47fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga457a16ef9330255578354fcd291a9bc2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga457a16ef9330255578354fcd291a9bc2">ARM_2D_HELPER_PFB_INIT</a>(__CB_ADDR,  __SCREEN_WIDTH,  __SCREEN_HEIGHT,  __PIXEL_TYPE,  __WIDTH,  __HEIGHT,  __PFB_NUM,  ...)</td></tr>
 <tr class="memdesc:ga457a16ef9330255578354fcd291a9bc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">a macro wrapper in uppercase to help initialising PFB service  <a href="group__gHelper.html#ga457a16ef9330255578354fcd291a9bc2">More...</a><br /></td></tr>
 <tr class="separator:ga457a16ef9330255578354fcd291a9bc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -355,7 +358,9 @@ Enumerations</h2></td></tr>
 , <br />
 &#160;&#160;<a class="el" href="group__gHelper.html#gga8420dba71b9cc240cf981b0bef892004adf9795f2b046202ae537509960d6e873">ARM_2D_PFB_DEPEND_ON_FRAME_SYNC_UP</a> = _BV(3)
 , <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#gga8420dba71b9cc240cf981b0bef892004a5ad9b404a26865d867e60c3d2dbbacdf">ARM_2D_PFB_DEPEND_ON_NAVIGATION</a> = _BV(4)
+&#160;&#160;<a class="el" href="group__gHelper.html#gga8420dba71b9cc240cf981b0bef892004a3cacf8720d5c156fcc2a53a4edcc76b0">ARM_2D_PFB_DEPEND_ON_EACH_FRAME_CPL</a> = _BV(4)
+, <br />
+&#160;&#160;<a class="el" href="group__gHelper.html#gga8420dba71b9cc240cf981b0bef892004a5ad9b404a26865d867e60c3d2dbbacdf">ARM_2D_PFB_DEPEND_ON_NAVIGATION</a> = _BV(5)
 <br />
  }</td></tr>
 <tr class="memdesc:ga8420dba71b9cc240cf981b0bef892004"><td class="mdescLeft">&#160;</td><td class="mdescRight">the enumeration for events  <a href="group__gHelper.html#ga8420dba71b9cc240cf981b0bef892004">More...</a><br /></td></tr>
@@ -381,9 +386,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gac437acd591ac725054b4216fa2351013"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gac437acd591ac725054b4216fa2351013">arm_2d_scene_player_set_switching_period</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis, uint_fast16_t hwMS)</td></tr>
 <tr class="memdesc:gac437acd591ac725054b4216fa2351013"><td class="mdescLeft">&#160;</td><td class="mdescRight">configure the scene switching period  <a href="group__gHelper.html#gac437acd591ac725054b4216fa2351013">More...</a><br /></td></tr>
 <tr class="separator:gac437acd591ac725054b4216fa2351013"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga13a6c8cc87d1725debe39cf0dde9dd0d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c">arm_2d_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga13a6c8cc87d1725debe39cf0dde9dd0d">arm_2d_scene_player_register_on_draw_navigation_event_handler</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis, <a class="el" href="group__gHelper.html#ga895cc320ceab0ca0bd10b999787b2d6c">arm_2d_helper_draw_handler_t</a> *fnHandler, void *pTarget)</td></tr>
-<tr class="memdesc:ga13a6c8cc87d1725debe39cf0dde9dd0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">register / update the evtOnDrawNavigation event handler. You can use this event to draw an ALWAY-TOP navigation bar or title during switching period.  <a href="group__gHelper.html#ga13a6c8cc87d1725debe39cf0dde9dd0d">More...</a><br /></td></tr>
-<tr class="separator:ga13a6c8cc87d1725debe39cf0dde9dd0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga516674d7d321e4ecb058fd3b8ddbab70"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c">arm_2d_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga516674d7d321e4ecb058fd3b8ddbab70">__arm_2d_scene_player_register_on_draw_navigation_event_handler</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis, <a class="el" href="group__gHelper.html#ga895cc320ceab0ca0bd10b999787b2d6c">arm_2d_helper_draw_handler_t</a> *fnHandler, void *pTarget, <a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptDirtyRegions)</td></tr>
+<tr class="memdesc:ga516674d7d321e4ecb058fd3b8ddbab70"><td class="mdescLeft">&#160;</td><td class="mdescRight">register / update the evtOnDrawNavigation event handler. You can use this event to draw an ALWAY-TOP navigation bar or title during switching period.  <a href="group__gHelper.html#ga516674d7d321e4ecb058fd3b8ddbab70">More...</a><br /></td></tr>
+<tr class="separator:ga516674d7d321e4ecb058fd3b8ddbab70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9d3b273bce58d135be740ba682ec11b7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga9d3b273bce58d135be740ba682ec11b7">arm_2d_scene_player_task</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis)</td></tr>
 <tr class="memdesc:ga9d3b273bce58d135be740ba682ec11b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">the scene player task function  <a href="group__gHelper.html#ga9d3b273bce58d135be740ba682ec11b7">More...</a><br /></td></tr>
 <tr class="separator:ga9d3b273bce58d135be740ba682ec11b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -884,6 +889,12 @@ event handler for drawing GUI </td></tr>
 evtOnLowLevelSyncUp</td>
 <td class="fielddoc">
 low level rendering handler wants to sync-up (return arm_fsm_rt_wait_for_obj) </td></tr>
+<tr><td class="fieldtype">
+<a id="a3a09c78af2a4f90fdfed477c0844e4fc" name="a3a09c78af2a4f90fdfed477c0844e4fc"></a><a class="el" href="group__gKernel.html#structarm__2d__evt__t">arm_2d_evt_t</a></td>
+<td class="fieldname">
+evtOnEachFrameCPL</td>
+<td class="fielddoc">
+event handler for each frame complete </td></tr>
 <tr><td class="fieldtype">
 <a id="a9408298d3065c060ffc2213f5afe3812" name="a9408298d3065c060ffc2213f5afe3812"></a>struct <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__dependency__t_8Navigation">arm_2d_helper_pfb_dependency_t.Navigation</a></td>
 <td class="fieldname">
@@ -1660,6 +1671,64 @@ cycles used in LCD flushing </td></tr>
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="gad6fc637dca8975a459de5fe0ad0f47fa" name="gad6fc637dca8975a459de5fe0ad0f47fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad6fc637dca8975a459de5fe0ad0f47fa">&#9670;&nbsp;</a></span>arm_2d_scene_player_register_on_draw_navigation_event_handler</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define arm_2d_scene_player_register_on_draw_navigation_event_handler</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__DISP_ADAPTER_ADDR, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__DRAW_HANDLER, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__USER_TARGET_ADDR, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_function" href="group__gHelper.html#ga516674d7d321e4ecb058fd3b8ddbab70" title="register / update the evtOnDrawNavigation event handler. You can use this event to draw an ALWAY-TOP ...">__arm_2d_scene_player_register_on_draw_navigation_event_handler</a>(    \</div>
+<div class="line">                                                        (__DISP_ADAPTER_ADDR),  \</div>
+<div class="line">                                                        (__DRAW_HANDLER),       \</div>
+<div class="line">                                                        (__USER_TARGET_ADDR),   \</div>
+<div class="line">                                                        (NULL,##__VA_ARGS__))</div>
+</div><!-- fragment -->
+<p>register / update the evtOnDrawNavigation event handler. You can use this event to draw an ALWAY-TOP navigation bar or title during switching period. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target scene player </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fnHandler</td><td>the event handler to draw the navigation bar and/or titles </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pTarget</td><td>the address of an user specified object. If it is NULL, ptThis will be used instead. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">...</td><td>an optional dirty region list for the navigation layer. If ommited, NULL is used. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>if the optional dirty region list is omitted and the normal scene doesn't cover the region of the content in the navigation layer, you won't see the content. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>arm_2d_err_t the operation result </dd></dl>
+
+</div>
+</div>
 <a id="ga457a16ef9330255578354fcd291a9bc2" name="ga457a16ef9330255578354fcd291a9bc2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga457a16ef9330255578354fcd291a9bc2">&#9670;&nbsp;</a></span>ARM_2D_HELPER_PFB_INIT</h2>
 
@@ -2892,6 +2961,8 @@ prototype 2: arm_2d_align_entre(__region, __width, __height) { code body that ca
 </td></tr>
 <tr><td class="fieldname"><a id="gga8420dba71b9cc240cf981b0bef892004adf9795f2b046202ae537509960d6e873" name="gga8420dba71b9cc240cf981b0bef892004adf9795f2b046202ae537509960d6e873"></a>ARM_2D_PFB_DEPEND_ON_FRAME_SYNC_UP&#160;</td><td class="fielddoc"><p >On Frame Sync-up Event. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="gga8420dba71b9cc240cf981b0bef892004a3cacf8720d5c156fcc2a53a4edcc76b0" name="gga8420dba71b9cc240cf981b0bef892004a3cacf8720d5c156fcc2a53a4edcc76b0"></a>ARM_2D_PFB_DEPEND_ON_EACH_FRAME_CPL&#160;</td><td class="fielddoc"><p >On Each Frame Complete Event. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="gga8420dba71b9cc240cf981b0bef892004a5ad9b404a26865d867e60c3d2dbbacdf" name="gga8420dba71b9cc240cf981b0bef892004a5ad9b404a26865d867e60c3d2dbbacdf"></a>ARM_2D_PFB_DEPEND_ON_NAVIGATION&#160;</td><td class="fielddoc"><p >On Drawing Navigation Event. </p>
 </td></tr>
 </table>
@@ -3097,14 +3168,14 @@ prototype 2: arm_2d_align_entre(__region, __width, __height) { code body that ca
 
 </div>
 </div>
-<a id="ga13a6c8cc87d1725debe39cf0dde9dd0d" name="ga13a6c8cc87d1725debe39cf0dde9dd0d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga13a6c8cc87d1725debe39cf0dde9dd0d">&#9670;&nbsp;</a></span>arm_2d_scene_player_register_on_draw_navigation_event_handler()</h2>
+<a id="ga516674d7d321e4ecb058fd3b8ddbab70" name="ga516674d7d321e4ecb058fd3b8ddbab70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga516674d7d321e4ecb058fd3b8ddbab70">&#9670;&nbsp;</a></span>__arm_2d_scene_player_register_on_draw_navigation_event_handler()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c">arm_2d_err_t</a> arm_2d_scene_player_register_on_draw_navigation_event_handler </td>
+          <td class="memname"><a class="el" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c">arm_2d_err_t</a> __arm_2d_scene_player_register_on_draw_navigation_event_handler </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *&#160;</td>
           <td class="paramname"><em>ptThis</em>, </td>
@@ -3119,7 +3190,13 @@ prototype 2: arm_2d_align_entre(__region, __width, __height) { code body that ca
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>pTarget</em>&#160;</td>
+          <td class="paramname"><em>pTarget</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *&#160;</td>
+          <td class="paramname"><em>ptDirtyRegions</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -3135,9 +3212,11 @@ prototype 2: arm_2d_align_entre(__region, __width, __height) { code body that ca
     <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target scene player </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">fnHandler</td><td>the event handler to draw the navigation bar and/or titles </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">pTarget</td><td>the address of an user specified object. If it is NULL, ptThis will be used instead. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptDirtyRegions</td><td>a dirty region list for the navigation layer. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>if ptDirtyRegions is NULL and the normal scene doesn't cover the region of the content in the navigation layer, you won't see the content. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>arm_2d_err_t the operation result </dd></dl>
 
 </div>
