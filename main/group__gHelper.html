@@ -109,7 +109,8 @@ $(document).ready(function(){initNavTree('group__gHelper.html',''); initResizabl
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">7 Helper Services</div></div>
 </div><!--header-->
 <div class="contents">
@@ -119,6 +120,9 @@ Data Structures</h2></td></tr>
 <tr class="memitem:union____arm__2d__helper__scene__switch__t"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#union____arm__2d__helper__scene__switch__t">__arm_2d_helper_scene_switch_t</a></td></tr>
 <tr class="memdesc:union____arm__2d__helper__scene__switch__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">an internal data structure for scene switching  <a href="group__gHelper.html#union____arm__2d__helper__scene__switch__t">More...</a><br /></td></tr>
 <tr class="separator:union____arm__2d__helper__scene__switch__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structarm__2d__scene__switch__mode__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__scene__switch__mode__t">arm_2d_scene_switch_mode_t</a></td></tr>
+<tr class="memdesc:structarm__2d__scene__switch__mode__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">scene switching mode descriptor  <a href="group__gHelper.html#structarm__2d__scene__switch__mode__t">More...</a><br /></td></tr>
+<tr class="separator:structarm__2d__scene__switch__mode__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structarm__2d__scene__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__scene__t">arm_2d_scene_t</a></td></tr>
 <tr class="memdesc:structarm__2d__scene__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">a class for describing scenes which are the combination of a background and a foreground with a dirty-region-list support  <a href="group__gHelper.html#structarm__2d__scene__t">More...</a><br /></td></tr>
 <tr class="separator:structarm__2d__scene__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -185,9 +189,12 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gad6fc637dca8975a459de5fe0ad0f47fa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gad6fc637dca8975a459de5fe0ad0f47fa">arm_2d_scene_player_register_on_draw_navigation_event_handler</a>( __DISP_ADAPTER_ADDR,  __DRAW_HANDLER,  __USER_TARGET_ADDR,  ...)</td></tr>
-<tr class="memdesc:gad6fc637dca8975a459de5fe0ad0f47fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">register / update the evtOnDrawNavigation event handler. You can use this event to draw an ALWAY-TOP navigation bar or title during switching period.  <a href="group__gHelper.html#gad6fc637dca8975a459de5fe0ad0f47fa">More...</a><br /></td></tr>
-<tr class="separator:gad6fc637dca8975a459de5fe0ad0f47fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab4d9017b3c62793b9f3ba7609f636654"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gab4d9017b3c62793b9f3ba7609f636654">arm_2d_scene_player_register_on_draw_navigation_event_handler</a>( __DISP_ADAPTER_PTR,  __DRAW_HANDLER,  __USER_TARGET_PTR,  ...)</td></tr>
+<tr class="memdesc:gab4d9017b3c62793b9f3ba7609f636654"><td class="mdescLeft">&#160;</td><td class="mdescRight">register / update the evtOnDrawNavigation event handler. You can use this event to draw an ALWAY-TOP navigation bar or title during switching period.  <a href="group__gHelper.html#gab4d9017b3c62793b9f3ba7609f636654">More...</a><br /></td></tr>
+<tr class="separator:gab4d9017b3c62793b9f3ba7609f636654"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga08773fb38a9dcc194ea2b4b6a447b5b8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga08773fb38a9dcc194ea2b4b6a447b5b8">arm_2d_scene_player_set_switching_mode</a>(__DISP_ADAPTER_PTR,  __SWITCH_MODE,  ...)</td></tr>
+<tr class="memdesc:ga08773fb38a9dcc194ea2b4b6a447b5b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">configure the scene switching mode  <a href="group__gHelper.html#ga08773fb38a9dcc194ea2b4b6a447b5b8">More...</a><br /></td></tr>
+<tr class="separator:ga08773fb38a9dcc194ea2b4b6a447b5b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga457a16ef9330255578354fcd291a9bc2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga457a16ef9330255578354fcd291a9bc2">ARM_2D_HELPER_PFB_INIT</a>(__CB_ADDR,  __SCREEN_WIDTH,  __SCREEN_HEIGHT,  __PIXEL_TYPE,  __WIDTH,  __HEIGHT,  __PFB_NUM,  ...)</td></tr>
 <tr class="memdesc:ga457a16ef9330255578354fcd291a9bc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">a macro wrapper in uppercase to help initialising PFB service  <a href="group__gHelper.html#ga457a16ef9330255578354fcd291a9bc2">More...</a><br /></td></tr>
 <tr class="separator:ga457a16ef9330255578354fcd291a9bc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -298,53 +305,53 @@ Typedefs</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:gab79c6ab3540af636c218dc40fa065ac3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gab79c6ab3540af636c218dc40fa065ac3">arm_2d_scene_player_switch_mode_t</a> { <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a1f69b20bf76422b70eabb66dca574e92">ARM_2D_SCENE_SWITCH_MODE_NONE</a> = 0
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a416989811443930b2d7cf186135580b2">ARM_2D_SCENE_SWITCH_CFG_NONE</a> = 0
 , <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a8e8c0f29cb01066949382ef605156bba">ARM_2D_SCENE_SWITCH_MODE_USER</a> = 1
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a11b0ad1005d9022ef71697b05865065c">ARM_2D_SCENE_SWITCH_CFG_USER</a> = 1
 , <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a3d0166fae9fc8b501b30da348e954e57">ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE</a> = 2
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a6f169320129a8b1117f33b8d9c1891cb">ARM_2D_SCENE_SWITCH_CFG_FADE_WHITE</a> = 2
 , <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a74a8e9a453b4bf69d132b0132653df40">ARM_2D_SCENE_SWITCH_MODE_FADE_BLACK</a> = 3
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a63dbb7e788c9a21cdfe1f212399e049f">ARM_2D_SCENE_SWITCH_CFG_FADE_BLACK</a> = 3
 , <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a92f732028b403fbc5499100a0a04cc97">ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT</a> = 4
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3ab9e1a8fafe358571b487f848c7534b40">ARM_2D_SCENE_SWITCH_CFG_SLIDE_LEFT</a> = 4
 , <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3abd4de2afcb13d1dbd09fc91fd8a47fd9">ARM_2D_SCENE_SWITCH_MODE_SLIDE_RIGHT</a>
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3abb0d9f9e20165a9935aef62d4108c982">ARM_2D_SCENE_SWITCH_CFG_SLIDE_RIGHT</a>
 , <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3ab715e8b17c5b53a58d2277c1475f8581">ARM_2D_SCENE_SWITCH_MODE_SLIDE_UP</a>
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3aa416368cd1714f333c53c5302eeac9fd">ARM_2D_SCENE_SWITCH_CFG_SLIDE_UP</a>
 , <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a1f1b88c5cde8aee059453d1770f18b52">ARM_2D_SCENE_SWITCH_MODE_SLIDE_DOWN</a>
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a87c51f95171d3b2c3ca025d210a4409f">ARM_2D_SCENE_SWITCH_CFG_SLIDE_DOWN</a>
 , <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3ad9fc734610d638063c0403e66ab8f837">ARM_2D_SCENE_SWITCH_MODE_ERASE_LEFT</a> = 8
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3abb9c4970d695e67f4f6a17c51fb5337f">ARM_2D_SCENE_SWITCH_CFG_ERASE_LEFT</a> = 8
 , <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a379aeaa5ec28f2b5689a7d775af3792c">ARM_2D_SCENE_SWITCH_MODE_ERASE_RIGHT</a>
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a919f15685db60166b13c974133cdf5e4">ARM_2D_SCENE_SWITCH_CFG_ERASE_RIGHT</a>
 , <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a95eb7b227d1f0c6bb42b80294a0feaa7">ARM_2D_SCENE_SWITCH_MODE_ERASE_UP</a>
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3ad37448bf20da2fc588ec0c151344d9fb">ARM_2D_SCENE_SWITCH_CFG_ERASE_UP</a>
 , <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a5feddf494f0ff72e9424e69113b685e9">ARM_2D_SCENE_SWITCH_MODE_ERASE_DOWN</a>
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a4eb1e0e932f8b010938f9db92569eea1">ARM_2D_SCENE_SWITCH_CFG_ERASE_DOWN</a>
 , <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a7da53f55b3fdcd19b31e025adc1ec199">__ARM_2D_SCENE_SWITCH_MODE_VALID</a>
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a65ffe6ddd0d38fabf60f2ddbc60bfc55">__ARM_2D_SCENE_SWITCH_CFG_VALID</a>
 , <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a6ce9a165043401f9adcca688bf252f8f">ARM_2D_SCENE_SWITCH_MODE_IGNORE_OLD_BG</a> = _BV(8)
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a678a43f7f780c450d7180508b5b8825a">ARM_2D_SCENE_SWITCH_CFG_IGNORE_OLD_BG</a> = _BV(8)
 , <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3aec2ea8de63832c503b99bb10cef1eca7">ARM_2D_SCENE_SWITCH_MODE_IGNORE_OLD_SCEBE</a> = _BV(9)
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a155a81a92c9de54c6c628a0ac96e15ee">ARM_2D_SCENE_SWITCH_CFG_IGNORE_OLD_SCEBE</a> = _BV(9)
 , <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a07bfc088749398894a7e10c6079d8df4">ARM_2D_SCENE_SWITCH_MODE_IGNORE_NEW_BG</a> = _BV(10)
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a09b5c1d5fcd130e3d816c84408969213">ARM_2D_SCENE_SWITCH_CFG_IGNORE_NEW_BG</a> = _BV(10)
 , <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3abe7a470de60221ff5af6cb9c792efba5">ARM_2D_SCENE_SWITCH_MODE_IGNORE_NEW_SCEBE</a> = _BV(11)
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3ac18dbdd088eae1880e6032b406cc5dba">ARM_2D_SCENE_SWITCH_CFG_IGNORE_NEW_SCEBE</a> = _BV(11)
 , <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a8c8b1f687831cd0ce45fe91a9a118227">ARM_2D_SCENE_SWITCH_MODE_DEFAULT_BG_WHITE</a> = 0 &lt;&lt; 12
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a13fa875a506b5b243aa40bc4d7059f21">ARM_2D_SCENE_SWITCH_CFG_DEFAULT_BG_WHITE</a> = 0 &lt;&lt; 12
 , <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a22a7d1275b625f302a764c6bd2601cf0">ARM_2D_SCENE_SWITCH_MODE_DEFAULT_BG_BLACK</a> = 1 &lt;&lt; 12
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a45696eaf53f86434d05d9d13fd7a213f">ARM_2D_SCENE_SWITCH_CFG_DEFAULT_BG_BLACK</a> = 1 &lt;&lt; 12
 , <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a6c9980407b63267c0a0b15e420709a32">ARM_2D_SCENE_SWITCH_MODE_DEFAULT_BG_USER</a> = 2 &lt;&lt; 12
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3adf18e305cf63d786a0e22579e16d5df7">ARM_2D_SCENE_SWITCH_CFG_DEFAULT_BG_USER</a> = 2 &lt;&lt; 12
 , <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a972800b2c122479e33facc8f751cf99f">__ARM_2D_SCENE_SWTICH_MODE_IGNORE_msk</a> = 0x0F &lt;&lt; 8
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a0d93b57a7030f8827689be0fef49667a">__ARM_2D_SCENE_SWTICH_CFG_IGNORE_msk</a> = 0x0F &lt;&lt; 8
 , <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a9580496edc69fd9df47d2831b851ddcb">__ARM_2D_SCENE_SWTICH_MODE_IGNORE_pos</a> = 8
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a43a6f5b4d42a489e7c56a843c5c5ae30">__ARM_2D_SCENE_SWTICH_CFG_IGNORE_pos</a> = 8
 , <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a375717dacb0691fd18fde3d2d077358e">__ARM_2D_SCENE_SWTICH_MODE_DEFAULT_BG_msk</a> = 3 &lt;&lt; 12
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3aa02b4e4dcf8da01bb5efc0988d485197">__ARM_2D_SCENE_SWTICH_CFG_DEFAULT_BG_msk</a> = 3 &lt;&lt; 12
 , <br />
-&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a2cc645510fbbc71dfdbe795658bb7be0">__ARM_2D_SCENE_SWTICH_MODE_DEFAULT_BG_pos</a> = 12
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3ad756321ec6360e1cd88ccaa9cc941b44">__ARM_2D_SCENE_SWTICH_CFG_DEFAULT_BG_pos</a> = 12
 <br />
  }</td></tr>
 <tr class="memdesc:gab79c6ab3540af636c218dc40fa065ac3"><td class="mdescLeft">&#160;</td><td class="mdescRight">scene switching mode  <a href="group__gHelper.html#gab79c6ab3540af636c218dc40fa065ac3">More...</a><br /></td></tr>
@@ -377,12 +384,12 @@ Functions</h2></td></tr>
 <tr class="memitem:gae6df5a7c480a7e3f44a926772ba78cb8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gae6df5a7c480a7e3f44a926772ba78cb8">arm_2d_scene_player_switch_to_next_scene</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis)</td></tr>
 <tr class="memdesc:gae6df5a7c480a7e3f44a926772ba78cb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">request switching to the next scene safely  <a href="group__gHelper.html#gae6df5a7c480a7e3f44a926772ba78cb8">More...</a><br /></td></tr>
 <tr class="separator:gae6df5a7c480a7e3f44a926772ba78cb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0e70b98a3dd350877f4daacc0d5b9ffb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga0e70b98a3dd350877f4daacc0d5b9ffb">arm_2d_scene_player_set_switching_mode</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis, uint_fast16_t hwSettings)</td></tr>
-<tr class="memdesc:ga0e70b98a3dd350877f4daacc0d5b9ffb"><td class="mdescLeft">&#160;</td><td class="mdescRight">configure the scene switching mode  <a href="group__gHelper.html#ga0e70b98a3dd350877f4daacc0d5b9ffb">More...</a><br /></td></tr>
-<tr class="separator:ga0e70b98a3dd350877f4daacc0d5b9ffb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab9a94a3220a7dacc1384dcd0ca1d81af"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gab9a94a3220a7dacc1384dcd0ca1d81af">arm_2d_scene_player_get_switching_mode</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis)</td></tr>
-<tr class="memdesc:gab9a94a3220a7dacc1384dcd0ca1d81af"><td class="mdescLeft">&#160;</td><td class="mdescRight">read the current scene switching mode  <a href="group__gHelper.html#gab9a94a3220a7dacc1384dcd0ca1d81af">More...</a><br /></td></tr>
-<tr class="separator:gab9a94a3220a7dacc1384dcd0ca1d81af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga141d41ffe2e75ff8cd17f9e9f553d0bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga141d41ffe2e75ff8cd17f9e9f553d0bc">__arm_2d_scene_player_set_switching_mode</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis, <a class="el" href="group__gHelper.html#structarm__2d__scene__switch__mode__t">arm_2d_scene_switch_mode_t</a> *ptMode, uint16_t hwSettings)</td></tr>
+<tr class="memdesc:ga141d41ffe2e75ff8cd17f9e9f553d0bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">configure the scene switching mode  <a href="group__gHelper.html#ga141d41ffe2e75ff8cd17f9e9f553d0bc">More...</a><br /></td></tr>
+<tr class="separator:ga141d41ffe2e75ff8cd17f9e9f553d0bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga36e4f860adbf479e6928621878e5b744"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga36e4f860adbf479e6928621878e5b744">arm_2d_scene_player_get_switching_cfg</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis)</td></tr>
+<tr class="memdesc:ga36e4f860adbf479e6928621878e5b744"><td class="mdescLeft">&#160;</td><td class="mdescRight">read the current scene switching mode  <a href="group__gHelper.html#ga36e4f860adbf479e6928621878e5b744">More...</a><br /></td></tr>
+<tr class="separator:ga36e4f860adbf479e6928621878e5b744"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac437acd591ac725054b4216fa2351013"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gac437acd591ac725054b4216fa2351013">arm_2d_scene_player_set_switching_period</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis, uint_fast16_t hwMS)</td></tr>
 <tr class="memdesc:gac437acd591ac725054b4216fa2351013"><td class="mdescLeft">&#160;</td><td class="mdescRight">configure the scene switching period  <a href="group__gHelper.html#gac437acd591ac725054b4216fa2351013">More...</a><br /></td></tr>
 <tr class="separator:gac437acd591ac725054b4216fa2351013"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -434,6 +441,45 @@ Functions</h2></td></tr>
 <tr class="memitem:ga9e560f87a40e54229ec23502cecc3bdb"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga9e560f87a40e54229ec23502cecc3bdb">__arm_2d_helper_is_time_out</a> (uint32_t wMS, int64_t *plTimestamp)</td></tr>
 <tr class="memdesc:ga9e560f87a40e54229ec23502cecc3bdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">set an alarm with given period and check the status  <a href="group__gHelper.html#ga9e560f87a40e54229ec23502cecc3bdb">More...</a><br /></td></tr>
 <tr class="separator:ga9e560f87a40e54229ec23502cecc3bdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga96ee9c2f862ecc82c12497fd33ec5e34"><td class="memItemLeft" align="right" valign="top"><a id="ga96ee9c2f862ecc82c12497fd33ec5e34" name="ga96ee9c2f862ecc82c12497fd33ec5e34"></a>
+<a class="el" href="group__gHelper.html#structarm__2d__scene__switch__mode__t">arm_2d_scene_switch_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_SCENE_SWITCH_MODE_NONE</b></td></tr>
+<tr class="separator:ga96ee9c2f862ecc82c12497fd33ec5e34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga07aa53079821899420823924a49b07c3"><td class="memItemLeft" align="right" valign="top"><a id="ga07aa53079821899420823924a49b07c3" name="ga07aa53079821899420823924a49b07c3"></a>
+<a class="el" href="group__gHelper.html#structarm__2d__scene__switch__mode__t">arm_2d_scene_switch_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_SCENE_SWITCH_MODE_USER</b></td></tr>
+<tr class="separator:ga07aa53079821899420823924a49b07c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9a1959345f6a5aa02dff5d40a9ab4d9a"><td class="memItemLeft" align="right" valign="top"><a id="ga9a1959345f6a5aa02dff5d40a9ab4d9a" name="ga9a1959345f6a5aa02dff5d40a9ab4d9a"></a>
+<a class="el" href="group__gHelper.html#structarm__2d__scene__switch__mode__t">arm_2d_scene_switch_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE</b></td></tr>
+<tr class="separator:ga9a1959345f6a5aa02dff5d40a9ab4d9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga76da5eabe15f074dfed26628307ce7c1"><td class="memItemLeft" align="right" valign="top"><a id="ga76da5eabe15f074dfed26628307ce7c1" name="ga76da5eabe15f074dfed26628307ce7c1"></a>
+<a class="el" href="group__gHelper.html#structarm__2d__scene__switch__mode__t">arm_2d_scene_switch_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_SCENE_SWITCH_MODE_FADE_BLACK</b></td></tr>
+<tr class="separator:ga76da5eabe15f074dfed26628307ce7c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga92b3af0b04c0ee8034d741013ab00a6f"><td class="memItemLeft" align="right" valign="top"><a id="ga92b3af0b04c0ee8034d741013ab00a6f" name="ga92b3af0b04c0ee8034d741013ab00a6f"></a>
+<a class="el" href="group__gHelper.html#structarm__2d__scene__switch__mode__t">arm_2d_scene_switch_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT</b></td></tr>
+<tr class="separator:ga92b3af0b04c0ee8034d741013ab00a6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab22c0699d7631218a2a119b931dfe56e"><td class="memItemLeft" align="right" valign="top"><a id="gab22c0699d7631218a2a119b931dfe56e" name="gab22c0699d7631218a2a119b931dfe56e"></a>
+<a class="el" href="group__gHelper.html#structarm__2d__scene__switch__mode__t">arm_2d_scene_switch_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_SCENE_SWITCH_MODE_SLIDE_RIGHT</b></td></tr>
+<tr class="separator:gab22c0699d7631218a2a119b931dfe56e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga67c15d89681a1c8386de0b5d13c9964f"><td class="memItemLeft" align="right" valign="top"><a id="ga67c15d89681a1c8386de0b5d13c9964f" name="ga67c15d89681a1c8386de0b5d13c9964f"></a>
+<a class="el" href="group__gHelper.html#structarm__2d__scene__switch__mode__t">arm_2d_scene_switch_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_SCENE_SWITCH_MODE_SLIDE_UP</b></td></tr>
+<tr class="separator:ga67c15d89681a1c8386de0b5d13c9964f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad92d09c4e37e6197cc02a2cba9863d49"><td class="memItemLeft" align="right" valign="top"><a id="gad92d09c4e37e6197cc02a2cba9863d49" name="gad92d09c4e37e6197cc02a2cba9863d49"></a>
+<a class="el" href="group__gHelper.html#structarm__2d__scene__switch__mode__t">arm_2d_scene_switch_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_SCENE_SWITCH_MODE_SLIDE_DOWN</b></td></tr>
+<tr class="separator:gad92d09c4e37e6197cc02a2cba9863d49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga093af7a238d100158103e982726eb53d"><td class="memItemLeft" align="right" valign="top"><a id="ga093af7a238d100158103e982726eb53d" name="ga093af7a238d100158103e982726eb53d"></a>
+<a class="el" href="group__gHelper.html#structarm__2d__scene__switch__mode__t">arm_2d_scene_switch_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_SCENE_SWITCH_MODE_ERASE_LEFT</b></td></tr>
+<tr class="separator:ga093af7a238d100158103e982726eb53d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga118064eff15397cf208b4c00c9053ef3"><td class="memItemLeft" align="right" valign="top"><a id="ga118064eff15397cf208b4c00c9053ef3" name="ga118064eff15397cf208b4c00c9053ef3"></a>
+<a class="el" href="group__gHelper.html#structarm__2d__scene__switch__mode__t">arm_2d_scene_switch_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_SCENE_SWITCH_MODE_ERASE_RIGHT</b></td></tr>
+<tr class="separator:ga118064eff15397cf208b4c00c9053ef3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaee5d6c224377583af1aad88745f3a95b"><td class="memItemLeft" align="right" valign="top"><a id="gaee5d6c224377583af1aad88745f3a95b" name="gaee5d6c224377583af1aad88745f3a95b"></a>
+<a class="el" href="group__gHelper.html#structarm__2d__scene__switch__mode__t">arm_2d_scene_switch_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_SCENE_SWITCH_MODE_ERASE_UP</b></td></tr>
+<tr class="separator:gaee5d6c224377583af1aad88745f3a95b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabfd152c75dca5beb6f64d5cb8e659a3e"><td class="memItemLeft" align="right" valign="top"><a id="gabfd152c75dca5beb6f64d5cb8e659a3e" name="gabfd152c75dca5beb6f64d5cb8e659a3e"></a>
+<a class="el" href="group__gHelper.html#structarm__2d__scene__switch__mode__t">arm_2d_scene_switch_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_SCENE_SWITCH_MODE_ERASE_DOWN</b></td></tr>
+<tr class="separator:gabfd152c75dca5beb6f64d5cb8e659a3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
@@ -464,6 +510,36 @@ Feature</td>
 hwSetting</td>
 <td class="fielddoc">
 the setting value </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structarm__2d__scene__switch__mode__t" id="structarm__2d__scene__switch__mode__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structarm__2d__scene__switch__mode__t">&#9670;&nbsp;</a></span>arm_2d_scene_switch_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct arm_2d_scene_switch_mode_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p >scene switching mode descriptor </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a8d98fc5df986d9a2db7ccd4df5b41ddf" name="a8d98fc5df986d9a2db7ccd4df5b41ddf"></a>uint8_t</td>
+<td class="fieldname">
+chEffects</td>
+<td class="fielddoc">
+switching effects </td></tr>
+<tr><td class="fieldtype">
+<a id="abb828a64c4ccfbd867ffd5461824968a" name="abb828a64c4ccfbd867ffd5461824968a"></a><a class="el" href="group__gHelper.html#ga895cc320ceab0ca0bd10b999787b2d6c">arm_2d_helper_draw_handler_t</a> *</td>
+<td class="fieldname">
+fnSwitchDrawer</td>
+<td class="fielddoc">
+switching algorithm </td></tr>
 </table>
 
 </div>
@@ -707,7 +783,7 @@ struct {</td></tr>
 <td class="fieldname">
 arm_2d_helper_pfb_t</td>
 <td class="fielddoc">
-inherit from <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> <p >points to the head of the FIFO points to the tail of the FIFO Scene FIFO a flag to request switching-to-the next-scene indication of scene switching completion the state of the FSM used by runtime. scene player runtime the switching configuration the switching should finish in specified millisecond </p>
+inherit from <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> <p >points to the head of the FIFO points to the tail of the FIFO Scene FIFO a flag to request switching-to-the next-scene indication of scene switching completion the state of the FSM used by runtime. scene player runtime the switching mode FSM state FSM state opacity of the cover the colour of the cover FSM state scene window a temp tile erase offset FSM state scene window slide offset the switching configuration the switching should finish in specified millisecond </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a id="ac20c0c1e50a53fc9ead070d99c049f5d" name="ac20c0c1e50a53fc9ead070d99c049f5d"></a>struct <a class="el" href="group__gHelper.html#structarm__2d__scene__player__t_8____unnamed116____">arm_2d_scene_player_t.__unnamed116__</a></td>
@@ -1165,6 +1241,12 @@ chState</td>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a3235d33a6e740a26ae5679e1a1af4158" name="a3235d33a6e740a26ae5679e1a1af4158"></a><a class="el" href="group__gHelper.html#structarm__2d__scene__switch__mode__t">arm_2d_scene_switch_mode_t</a> *</td>
+<td class="fieldname">
+ptMode</td>
+<td class="fielddoc">
+</td></tr>
 <tr><td class="fieldtype">
 <a id="af305c6d0358b1c49ff391eb2f6d1605a" name="af305c6d0358b1c49ff391eb2f6d1605a"></a>union <a class="el" href="group__gHelper.html#unionarm__2d__scene__player__t_8____unnamed116_____8Switch_8____unnamed121____">arm_2d_scene_player_t.__unnamed116__.Switch.__unnamed121__</a></td>
 <td class="fieldname">
@@ -1671,8 +1753,8 @@ cycles used in LCD flushing </td></tr>
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="gad6fc637dca8975a459de5fe0ad0f47fa" name="gad6fc637dca8975a459de5fe0ad0f47fa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gad6fc637dca8975a459de5fe0ad0f47fa">&#9670;&nbsp;</a></span>arm_2d_scene_player_register_on_draw_navigation_event_handler</h2>
+<a id="gab4d9017b3c62793b9f3ba7609f636654" name="gab4d9017b3c62793b9f3ba7609f636654"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab4d9017b3c62793b9f3ba7609f636654">&#9670;&nbsp;</a></span>arm_2d_scene_player_register_on_draw_navigation_event_handler</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1681,7 +1763,7 @@ cycles used in LCD flushing </td></tr>
           <td class="memname">#define arm_2d_scene_player_register_on_draw_navigation_event_handler</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">__DISP_ADAPTER_ADDR, </td>
+          <td class="paramname">__DISP_ADAPTER_PTR, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1693,7 +1775,7 @@ cycles used in LCD flushing </td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">__USER_TARGET_ADDR, </td>
+          <td class="paramname">__USER_TARGET_PTR, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1709,23 +1791,70 @@ cycles used in LCD flushing </td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_function" href="group__gHelper.html#ga516674d7d321e4ecb058fd3b8ddbab70" title="register / update the evtOnDrawNavigation event handler. You can use this event to draw an ALWAY-TOP ...">__arm_2d_scene_player_register_on_draw_navigation_event_handler</a>(    \</div>
-<div class="line">                                                        (__DISP_ADAPTER_ADDR),  \</div>
+<div class="line">                                                        (__DISP_ADAPTER_PTR),   \</div>
 <div class="line">                                                        (__DRAW_HANDLER),       \</div>
-<div class="line">                                                        (__USER_TARGET_ADDR),   \</div>
+<div class="line">                                                        (__USER_TARGET_PTR),    \</div>
 <div class="line">                                                        (NULL,##__VA_ARGS__))</div>
 </div><!-- fragment -->
 <p>register / update the evtOnDrawNavigation event handler. You can use this event to draw an ALWAY-TOP navigation bar or title during switching period. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target scene player </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">fnHandler</td><td>the event handler to draw the navigation bar and/or titles </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">pTarget</td><td>the address of an user specified object. If it is NULL, ptThis will be used instead. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__DISP_ADAPTER_PTR</td><td>the target scene player </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__DRAW_HANDLER</td><td>the event handler to draw the navigation bar and/or titles </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__USER_TARGET_PTR</td><td>the address of an user specified object. If it is NULL, ptThis will be used instead. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">...</td><td>an optional dirty region list for the navigation layer. If ommited, NULL is used. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>if the optional dirty region list is omitted and the normal scene doesn't cover the region of the content in the navigation layer, you won't see the content. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>arm_2d_err_t the operation result </dd></dl>
+
+</div>
+</div>
+<a id="ga08773fb38a9dcc194ea2b4b6a447b5b8" name="ga08773fb38a9dcc194ea2b4b6a447b5b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga08773fb38a9dcc194ea2b4b6a447b5b8">&#9670;&nbsp;</a></span>arm_2d_scene_player_set_switching_mode</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define arm_2d_scene_player_set_switching_mode</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__DISP_ADAPTER_PTR, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__SWITCH_MODE, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_function" href="group__gHelper.html#ga141d41ffe2e75ff8cd17f9e9f553d0bc" title="configure the scene switching mode">__arm_2d_scene_player_set_switching_mode</a>((__DISP_ADAPTER_PTR),      \</div>
+<div class="line">                                                     &amp;(__SWITCH_MODE),          \</div>
+<div class="line">                                                     (0,##__VA_ARGS__))</div>
+</div><!-- fragment -->
+<p>configure the scene switching mode </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">__DISP_ADAPTER_PTR</td><td>the target scene player </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__SWITCH_MODE</td><td>a switching mode object </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">...</td><td>an optional configurations for the switching </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -2887,53 +3016,53 @@ prototype 2: arm_2d_align_entre(__region, __width, __height) { code body that ca
 
 <p>scene switching mode </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a1f69b20bf76422b70eabb66dca574e92" name="ggab79c6ab3540af636c218dc40fa065ac3a1f69b20bf76422b70eabb66dca574e92"></a>ARM_2D_SCENE_SWITCH_MODE_NONE&#160;</td><td class="fielddoc"><p >no switching visual effect </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a416989811443930b2d7cf186135580b2" name="ggab79c6ab3540af636c218dc40fa065ac3a416989811443930b2d7cf186135580b2"></a>ARM_2D_SCENE_SWITCH_CFG_NONE&#160;</td><td class="fielddoc"><p >no switching visual effect </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a8e8c0f29cb01066949382ef605156bba" name="ggab79c6ab3540af636c218dc40fa065ac3a8e8c0f29cb01066949382ef605156bba"></a>ARM_2D_SCENE_SWITCH_MODE_USER&#160;</td><td class="fielddoc"><p >user defined switching visual effect </p>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a11b0ad1005d9022ef71697b05865065c" name="ggab79c6ab3540af636c218dc40fa065ac3a11b0ad1005d9022ef71697b05865065c"></a>ARM_2D_SCENE_SWITCH_CFG_USER&#160;</td><td class="fielddoc"><p >user defined switching visual effect </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a3d0166fae9fc8b501b30da348e954e57" name="ggab79c6ab3540af636c218dc40fa065ac3a3d0166fae9fc8b501b30da348e954e57"></a>ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE&#160;</td><td class="fielddoc"><p >fade in fade out (white) </p>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a6f169320129a8b1117f33b8d9c1891cb" name="ggab79c6ab3540af636c218dc40fa065ac3a6f169320129a8b1117f33b8d9c1891cb"></a>ARM_2D_SCENE_SWITCH_CFG_FADE_WHITE&#160;</td><td class="fielddoc"><p >fade in fade out (white) </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a74a8e9a453b4bf69d132b0132653df40" name="ggab79c6ab3540af636c218dc40fa065ac3a74a8e9a453b4bf69d132b0132653df40"></a>ARM_2D_SCENE_SWITCH_MODE_FADE_BLACK&#160;</td><td class="fielddoc"><p >fade in fade out (black) </p>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a63dbb7e788c9a21cdfe1f212399e049f" name="ggab79c6ab3540af636c218dc40fa065ac3a63dbb7e788c9a21cdfe1f212399e049f"></a>ARM_2D_SCENE_SWITCH_CFG_FADE_BLACK&#160;</td><td class="fielddoc"><p >fade in fade out (black) </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a92f732028b403fbc5499100a0a04cc97" name="ggab79c6ab3540af636c218dc40fa065ac3a92f732028b403fbc5499100a0a04cc97"></a>ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT&#160;</td><td class="fielddoc"><p >slide left </p>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3ab9e1a8fafe358571b487f848c7534b40" name="ggab79c6ab3540af636c218dc40fa065ac3ab9e1a8fafe358571b487f848c7534b40"></a>ARM_2D_SCENE_SWITCH_CFG_SLIDE_LEFT&#160;</td><td class="fielddoc"><p >slide left </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3abd4de2afcb13d1dbd09fc91fd8a47fd9" name="ggab79c6ab3540af636c218dc40fa065ac3abd4de2afcb13d1dbd09fc91fd8a47fd9"></a>ARM_2D_SCENE_SWITCH_MODE_SLIDE_RIGHT&#160;</td><td class="fielddoc"><p >slide right </p>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3abb0d9f9e20165a9935aef62d4108c982" name="ggab79c6ab3540af636c218dc40fa065ac3abb0d9f9e20165a9935aef62d4108c982"></a>ARM_2D_SCENE_SWITCH_CFG_SLIDE_RIGHT&#160;</td><td class="fielddoc"><p >slide right </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3ab715e8b17c5b53a58d2277c1475f8581" name="ggab79c6ab3540af636c218dc40fa065ac3ab715e8b17c5b53a58d2277c1475f8581"></a>ARM_2D_SCENE_SWITCH_MODE_SLIDE_UP&#160;</td><td class="fielddoc"><p >slide up </p>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3aa416368cd1714f333c53c5302eeac9fd" name="ggab79c6ab3540af636c218dc40fa065ac3aa416368cd1714f333c53c5302eeac9fd"></a>ARM_2D_SCENE_SWITCH_CFG_SLIDE_UP&#160;</td><td class="fielddoc"><p >slide up </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a1f1b88c5cde8aee059453d1770f18b52" name="ggab79c6ab3540af636c218dc40fa065ac3a1f1b88c5cde8aee059453d1770f18b52"></a>ARM_2D_SCENE_SWITCH_MODE_SLIDE_DOWN&#160;</td><td class="fielddoc"><p >slide down </p>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a87c51f95171d3b2c3ca025d210a4409f" name="ggab79c6ab3540af636c218dc40fa065ac3a87c51f95171d3b2c3ca025d210a4409f"></a>ARM_2D_SCENE_SWITCH_CFG_SLIDE_DOWN&#160;</td><td class="fielddoc"><p >slide down </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3ad9fc734610d638063c0403e66ab8f837" name="ggab79c6ab3540af636c218dc40fa065ac3ad9fc734610d638063c0403e66ab8f837"></a>ARM_2D_SCENE_SWITCH_MODE_ERASE_LEFT&#160;</td><td class="fielddoc"><p >erase to the right </p>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3abb9c4970d695e67f4f6a17c51fb5337f" name="ggab79c6ab3540af636c218dc40fa065ac3abb9c4970d695e67f4f6a17c51fb5337f"></a>ARM_2D_SCENE_SWITCH_CFG_ERASE_LEFT&#160;</td><td class="fielddoc"><p >erase to the right </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a379aeaa5ec28f2b5689a7d775af3792c" name="ggab79c6ab3540af636c218dc40fa065ac3a379aeaa5ec28f2b5689a7d775af3792c"></a>ARM_2D_SCENE_SWITCH_MODE_ERASE_RIGHT&#160;</td><td class="fielddoc"><p >erase to the left </p>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a919f15685db60166b13c974133cdf5e4" name="ggab79c6ab3540af636c218dc40fa065ac3a919f15685db60166b13c974133cdf5e4"></a>ARM_2D_SCENE_SWITCH_CFG_ERASE_RIGHT&#160;</td><td class="fielddoc"><p >erase to the left </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a95eb7b227d1f0c6bb42b80294a0feaa7" name="ggab79c6ab3540af636c218dc40fa065ac3a95eb7b227d1f0c6bb42b80294a0feaa7"></a>ARM_2D_SCENE_SWITCH_MODE_ERASE_UP&#160;</td><td class="fielddoc"><p >erase to the top </p>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3ad37448bf20da2fc588ec0c151344d9fb" name="ggab79c6ab3540af636c218dc40fa065ac3ad37448bf20da2fc588ec0c151344d9fb"></a>ARM_2D_SCENE_SWITCH_CFG_ERASE_UP&#160;</td><td class="fielddoc"><p >erase to the top </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a5feddf494f0ff72e9424e69113b685e9" name="ggab79c6ab3540af636c218dc40fa065ac3a5feddf494f0ff72e9424e69113b685e9"></a>ARM_2D_SCENE_SWITCH_MODE_ERASE_DOWN&#160;</td><td class="fielddoc"><p >erase to the bottom </p>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a4eb1e0e932f8b010938f9db92569eea1" name="ggab79c6ab3540af636c218dc40fa065ac3a4eb1e0e932f8b010938f9db92569eea1"></a>ARM_2D_SCENE_SWITCH_CFG_ERASE_DOWN&#160;</td><td class="fielddoc"><p >erase to the bottom </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a7da53f55b3fdcd19b31e025adc1ec199" name="ggab79c6ab3540af636c218dc40fa065ac3a7da53f55b3fdcd19b31e025adc1ec199"></a>__ARM_2D_SCENE_SWITCH_MODE_VALID&#160;</td><td class="fielddoc"><p >For internal user only. </p>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a65ffe6ddd0d38fabf60f2ddbc60bfc55" name="ggab79c6ab3540af636c218dc40fa065ac3a65ffe6ddd0d38fabf60f2ddbc60bfc55"></a>__ARM_2D_SCENE_SWITCH_CFG_VALID&#160;</td><td class="fielddoc"><p >For internal user only. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a6ce9a165043401f9adcca688bf252f8f" name="ggab79c6ab3540af636c218dc40fa065ac3a6ce9a165043401f9adcca688bf252f8f"></a>ARM_2D_SCENE_SWITCH_MODE_IGNORE_OLD_BG&#160;</td><td class="fielddoc"><p >ignore the background of the old scene </p>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a678a43f7f780c450d7180508b5b8825a" name="ggab79c6ab3540af636c218dc40fa065ac3a678a43f7f780c450d7180508b5b8825a"></a>ARM_2D_SCENE_SWITCH_CFG_IGNORE_OLD_BG&#160;</td><td class="fielddoc"><p >ignore the background of the old scene </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3aec2ea8de63832c503b99bb10cef1eca7" name="ggab79c6ab3540af636c218dc40fa065ac3aec2ea8de63832c503b99bb10cef1eca7"></a>ARM_2D_SCENE_SWITCH_MODE_IGNORE_OLD_SCEBE&#160;</td><td class="fielddoc"><p >ignore the old scene </p>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a155a81a92c9de54c6c628a0ac96e15ee" name="ggab79c6ab3540af636c218dc40fa065ac3a155a81a92c9de54c6c628a0ac96e15ee"></a>ARM_2D_SCENE_SWITCH_CFG_IGNORE_OLD_SCEBE&#160;</td><td class="fielddoc"><p >ignore the old scene </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a07bfc088749398894a7e10c6079d8df4" name="ggab79c6ab3540af636c218dc40fa065ac3a07bfc088749398894a7e10c6079d8df4"></a>ARM_2D_SCENE_SWITCH_MODE_IGNORE_NEW_BG&#160;</td><td class="fielddoc"><p >ignore the background of the new scene </p>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a09b5c1d5fcd130e3d816c84408969213" name="ggab79c6ab3540af636c218dc40fa065ac3a09b5c1d5fcd130e3d816c84408969213"></a>ARM_2D_SCENE_SWITCH_CFG_IGNORE_NEW_BG&#160;</td><td class="fielddoc"><p >ignore the background of the new scene </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3abe7a470de60221ff5af6cb9c792efba5" name="ggab79c6ab3540af636c218dc40fa065ac3abe7a470de60221ff5af6cb9c792efba5"></a>ARM_2D_SCENE_SWITCH_MODE_IGNORE_NEW_SCEBE&#160;</td><td class="fielddoc"><p >ignore the new scene </p>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3ac18dbdd088eae1880e6032b406cc5dba" name="ggab79c6ab3540af636c218dc40fa065ac3ac18dbdd088eae1880e6032b406cc5dba"></a>ARM_2D_SCENE_SWITCH_CFG_IGNORE_NEW_SCEBE&#160;</td><td class="fielddoc"><p >ignore the new scene </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a8c8b1f687831cd0ce45fe91a9a118227" name="ggab79c6ab3540af636c218dc40fa065ac3a8c8b1f687831cd0ce45fe91a9a118227"></a>ARM_2D_SCENE_SWITCH_MODE_DEFAULT_BG_WHITE&#160;</td><td class="fielddoc"><p >use white as default background </p>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a13fa875a506b5b243aa40bc4d7059f21" name="ggab79c6ab3540af636c218dc40fa065ac3a13fa875a506b5b243aa40bc4d7059f21"></a>ARM_2D_SCENE_SWITCH_CFG_DEFAULT_BG_WHITE&#160;</td><td class="fielddoc"><p >use white as default background </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a22a7d1275b625f302a764c6bd2601cf0" name="ggab79c6ab3540af636c218dc40fa065ac3a22a7d1275b625f302a764c6bd2601cf0"></a>ARM_2D_SCENE_SWITCH_MODE_DEFAULT_BG_BLACK&#160;</td><td class="fielddoc"><p >use black as default background </p>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a45696eaf53f86434d05d9d13fd7a213f" name="ggab79c6ab3540af636c218dc40fa065ac3a45696eaf53f86434d05d9d13fd7a213f"></a>ARM_2D_SCENE_SWITCH_CFG_DEFAULT_BG_BLACK&#160;</td><td class="fielddoc"><p >use black as default background </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a6c9980407b63267c0a0b15e420709a32" name="ggab79c6ab3540af636c218dc40fa065ac3a6c9980407b63267c0a0b15e420709a32"></a>ARM_2D_SCENE_SWITCH_MODE_DEFAULT_BG_USER&#160;</td><td class="fielddoc"><p >use user defined default background </p>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3adf18e305cf63d786a0e22579e16d5df7" name="ggab79c6ab3540af636c218dc40fa065ac3adf18e305cf63d786a0e22579e16d5df7"></a>ARM_2D_SCENE_SWITCH_CFG_DEFAULT_BG_USER&#160;</td><td class="fielddoc"><p >use user defined default background </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a972800b2c122479e33facc8f751cf99f" name="ggab79c6ab3540af636c218dc40fa065ac3a972800b2c122479e33facc8f751cf99f"></a>__ARM_2D_SCENE_SWTICH_MODE_IGNORE_msk&#160;</td><td class="fielddoc"><p >For internal user only. </p>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a0d93b57a7030f8827689be0fef49667a" name="ggab79c6ab3540af636c218dc40fa065ac3a0d93b57a7030f8827689be0fef49667a"></a>__ARM_2D_SCENE_SWTICH_CFG_IGNORE_msk&#160;</td><td class="fielddoc"><p >For internal user only. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a9580496edc69fd9df47d2831b851ddcb" name="ggab79c6ab3540af636c218dc40fa065ac3a9580496edc69fd9df47d2831b851ddcb"></a>__ARM_2D_SCENE_SWTICH_MODE_IGNORE_pos&#160;</td><td class="fielddoc"><p >For internal user only. </p>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a43a6f5b4d42a489e7c56a843c5c5ae30" name="ggab79c6ab3540af636c218dc40fa065ac3a43a6f5b4d42a489e7c56a843c5c5ae30"></a>__ARM_2D_SCENE_SWTICH_CFG_IGNORE_pos&#160;</td><td class="fielddoc"><p >For internal user only. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a375717dacb0691fd18fde3d2d077358e" name="ggab79c6ab3540af636c218dc40fa065ac3a375717dacb0691fd18fde3d2d077358e"></a>__ARM_2D_SCENE_SWTICH_MODE_DEFAULT_BG_msk&#160;</td><td class="fielddoc"><p >For internal user only. </p>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3aa02b4e4dcf8da01bb5efc0988d485197" name="ggab79c6ab3540af636c218dc40fa065ac3aa02b4e4dcf8da01bb5efc0988d485197"></a>__ARM_2D_SCENE_SWTICH_CFG_DEFAULT_BG_msk&#160;</td><td class="fielddoc"><p >For internal user only. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a2cc645510fbbc71dfdbe795658bb7be0" name="ggab79c6ab3540af636c218dc40fa065ac3a2cc645510fbbc71dfdbe795658bb7be0"></a>__ARM_2D_SCENE_SWTICH_MODE_DEFAULT_BG_pos&#160;</td><td class="fielddoc"><p >For internal user only. </p>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3ad756321ec6360e1cd88ccaa9cc941b44" name="ggab79c6ab3540af636c218dc40fa065ac3ad756321ec6360e1cd88ccaa9cc941b44"></a>__ARM_2D_SCENE_SWTICH_CFG_DEFAULT_BG_pos&#160;</td><td class="fielddoc"><p >For internal user only. </p>
 </td></tr>
 </table>
 
@@ -3067,14 +3196,14 @@ prototype 2: arm_2d_align_entre(__region, __width, __height) { code body that ca
 
 </div>
 </div>
-<a id="ga0e70b98a3dd350877f4daacc0d5b9ffb" name="ga0e70b98a3dd350877f4daacc0d5b9ffb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga0e70b98a3dd350877f4daacc0d5b9ffb">&#9670;&nbsp;</a></span>arm_2d_scene_player_set_switching_mode()</h2>
+<a id="ga141d41ffe2e75ff8cd17f9e9f553d0bc" name="ga141d41ffe2e75ff8cd17f9e9f553d0bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga141d41ffe2e75ff8cd17f9e9f553d0bc">&#9670;&nbsp;</a></span>__arm_2d_scene_player_set_switching_mode()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void arm_2d_scene_player_set_switching_mode </td>
+          <td class="memname">void __arm_2d_scene_player_set_switching_mode </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *&#160;</td>
           <td class="paramname"><em>ptThis</em>, </td>
@@ -3082,7 +3211,13 @@ prototype 2: arm_2d_align_entre(__region, __width, __height) { code body that ca
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint_fast16_t&#160;</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__scene__switch__mode__t">arm_2d_scene_switch_mode_t</a> *&#160;</td>
+          <td class="paramname"><em>ptMode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
           <td class="paramname"><em>hwSettings</em>&#160;</td>
         </tr>
         <tr>
@@ -3097,21 +3232,22 @@ prototype 2: arm_2d_align_entre(__region, __width, __height) { code body that ca
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target scene player </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">hwSettings</td><td>a combination of valid settings defined in arm_2d_scene_player_switch_mode_t </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptMode</td><td>a switching mode object </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hwSettings</td><td>configurations for the switching </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="gab9a94a3220a7dacc1384dcd0ca1d81af" name="gab9a94a3220a7dacc1384dcd0ca1d81af"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab9a94a3220a7dacc1384dcd0ca1d81af">&#9670;&nbsp;</a></span>arm_2d_scene_player_get_switching_mode()</h2>
+<a id="ga36e4f860adbf479e6928621878e5b744" name="ga36e4f860adbf479e6928621878e5b744"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga36e4f860adbf479e6928621878e5b744">&#9670;&nbsp;</a></span>arm_2d_scene_player_get_switching_cfg()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t arm_2d_scene_player_get_switching_mode </td>
+          <td class="memname">uint16_t arm_2d_scene_player_get_switching_cfg </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *&#160;</td>
           <td class="paramname"><em>ptThis</em></td><td>)</td>
