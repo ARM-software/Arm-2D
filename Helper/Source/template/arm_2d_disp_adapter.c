@@ -333,7 +333,7 @@ void disp_adapter%Instance%_init(void)
         IMPL_ARM_2D_REGION_LIST(s_tNavDirtyRegionList, const static)
 
             /* a region for the status bar on the bottom of the screen */
-            ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
+            ADD_LAST_REGION_TO_LIST(s_tNavDirtyRegionList,
                 .tLocation = {
                     .iX = 0,
                     .iY = __DISP%Instance%_CFG_SCEEN_HEIGHT__ - 17},
