@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        15. Sept 2022
- * $Revision:    V.1.3.6
+ * $Date:        20. Sept 2022
+ * $Revision:    V.1.3.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -100,21 +100,19 @@ typedef enum {
  * 
  * \note Please do not use it.
  */
-typedef struct __arm_2d_helper_scene_switch_t {
-    union {
-        struct {
-            uint8_t chMode;                                                     //!< the switch visual effect
-            uint8_t bIgnoreOldSceneBG       : 1;                                //!< when set, ignore the background of the old scene
-            uint8_t bIgnoreOldScene         : 1;                                //!< when set, ignore the old scene
-            uint8_t bIgnoreNewSceneBG       : 1;                                //!< when set, ignore the background of the new scene
-            uint8_t bIgnoreNewScene         : 1;                                //!< when set, ignore the new scene
-            uint8_t u2DefaultBG             : 2;                                //!< the default background
-            uint8_t                         : 2;
-        } Feature;
-        uint16_t hwSetting;                                                     //!< the setting value
-    };
+typedef union __arm_2d_helper_scene_switch_t {
 
-    arm_2d_helper_draw_evt_t            evtOnDrawNavigation;                    //!< draw the navigation bar and/or titles during switching
+    struct {
+        uint8_t chMode;                                                     //!< the switch visual effect
+        uint8_t bIgnoreOldSceneBG       : 1;                                //!< when set, ignore the background of the old scene
+        uint8_t bIgnoreOldScene         : 1;                                //!< when set, ignore the old scene
+        uint8_t bIgnoreNewSceneBG       : 1;                                //!< when set, ignore the background of the new scene
+        uint8_t bIgnoreNewScene         : 1;                                //!< when set, ignore the new scene
+        uint8_t u2DefaultBG             : 2;                                //!< the default background
+        uint8_t                         : 2;
+    } Feature;
+    uint16_t hwSetting;                                                     //!< the setting value
+
 }__arm_2d_helper_scene_switch_t;
 
 
@@ -275,9 +273,10 @@ void arm_2d_scene_player_set_switching_period(  arm_2d_scene_player_t *ptThis,
  * \param[in] fnHandler the event handler to draw the navigation bar and/or titles
  * \param[in] pTarget the address of an user specified object. If it is NULL, 
  *            ptThis will be used instead. 
+ * \return arm_2d_err_t the operation result
  */
 ARM_NONNULL(1,2)
-void arm_2d_scene_player_register_on_draw_navigation_event_handler(
+arm_2d_err_t arm_2d_scene_player_register_on_draw_navigation_event_handler(
                                         arm_2d_scene_player_t *ptThis,
                                         arm_2d_helper_draw_handler_t *fnHandler,
                                         void *pTarget);

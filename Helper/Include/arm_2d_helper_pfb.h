@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        13. Sept 2022
- * $Revision:    V.1.2.1
+ * $Date:        20. Sept 2022
+ * $Revision:    V.1.3.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -381,6 +381,7 @@ enum {
     ARM_2D_PFB_DEPEND_ON_DRAWING                = _BV(1),   //!< On Drawing Event
     ARM_2D_PFB_DEPEND_ON_LOW_LEVEL_SYNC_UP      = _BV(2),   //!< On Low Level Sync-up Event
     ARM_2D_PFB_DEPEND_ON_FRAME_SYNC_UP          = _BV(3),   //!< On Frame Sync-up Event
+    ARM_2D_PFB_DEPEND_ON_NAVIGATION             = _BV(4),   //!< On Drawing Navigation Event
 };
 
 /*!
@@ -389,14 +390,20 @@ enum {
  */
 typedef struct arm_2d_helper_pfb_dependency_t {
     //! event handler for low level rendering
-    arm_2d_helper_render_evt_t  evtOnLowLevelRendering;                           
+    arm_2d_helper_render_evt_t  evtOnLowLevelRendering;
 
     //! event handler for drawing GUI
     arm_2d_helper_draw_evt_t    evtOnDrawing;  
 
     //! low level rendering handler wants to sync-up (return arm_fsm_rt_wait_for_obj)
     arm_2d_evt_t                evtOnLowLevelSyncUp;  
-    
+
+    //! event handler for drawing GUI
+    struct {
+        arm_2d_helper_draw_evt_t    evtOnDrawing;
+        arm_2d_region_list_item_t  *ptDirtyRegion;
+    } Navigation;
+
 } arm_2d_helper_pfb_dependency_t;
 
 /*!
@@ -445,6 +452,7 @@ ARM_PRIVATE(
         struct {
             uint8_t                 bIsNewFrame  : 1;
             uint8_t                 bIsFlushRequested :1;
+            uint8_t                 bNoAdditionalDirtyRegionList;
         };
         uint16_t                    hwFreePFBCount;
         arm_2d_pfb_t               *ptCurrent;

@@ -274,11 +274,8 @@ extern "C" {
  * \param[in] ... an optional parameter list
  */
 #   define ARM_2D_INVOKE(__FUNC_PTR, ...)                                       \
-            do {                                                                \
-                if (NULL != (__FUNC_PTR)) {                                     \
-                    (*(__FUNC_PTR))(__VA_ARGS__);                               \
-                }                                                               \
-            } while(0)
+            ((NULL == (__FUNC_PTR)) ? 0 : ((*(__FUNC_PTR))(__VA_ARGS__)))
+
 #endif
 
 /*!

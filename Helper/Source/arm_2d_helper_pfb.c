@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        29. Aug 2022
- * $Revision:    V.1.2.0
+ * $Date:        20. Sept 2022
+ * $Revision:    V.1.3.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -360,10 +360,30 @@ void __arm_2d_helper_low_level_rendering(arm_2d_helper_pfb_t *ptThis)
 static bool __arm_2d_helper_pfb_get_next_dirty_region(arm_2d_helper_pfb_t *ptThis)
 {
     if (NULL == this.Adapter.ptDirtyRegion) {
-        // no dirty region list
-        this.Adapter.bFirstIteration = true;
-        
-        return false;
+    
+        /* check whether has already been switched to the navigation dirty 
+         * region list 
+         */
+        if (this.Adapter.bNoAdditionalDirtyRegionList) {
+            // no dirty region is available
+            this.Adapter.bFirstIteration = true;
+            
+            return false;
+        } else if ( (NULL != this.tCFG.Dependency.Navigation.evtOnDrawing.fnHandler)
+               &&   (NULL != this.tCFG.Dependency.Navigation.ptDirtyRegion)) {
+            
+            /* switch to navigation dirty region list */
+            this.Adapter.ptDirtyRegion = this.tCFG.Dependency.Navigation.ptDirtyRegion;
+            this.Adapter.bNoAdditionalDirtyRegionList = true;
+            
+            this.Adapter.bIsRegionChanged = true;
+            return true;
+        } else {
+            // no dirty region is available
+            this.Adapter.bFirstIteration = true;
+            
+            return false;
+        }
     } 
     
     this.Adapter.ptDirtyRegion = this.Adapter.ptDirtyRegion->ptNext;
@@ -417,6 +437,10 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
 
     if (this.Adapter.bFirstIteration) {
         this.Adapter.ptDirtyRegion = ptDirtyRegions;
+        
+        /* reset flag */
+        this.Adapter.bNoAdditionalDirtyRegionList = false;
+        
         //this.Adapter.bFirstIteration = false;
         this.Adapter.bIsRegionChanged = true;
     }
@@ -639,15 +663,19 @@ arm_2d_err_t arm_2d_helper_pfb_update_dependency(
             this.tCFG.Dependency.evtOnLowLevelRendering 
                 = ptDependency->evtOnLowLevelRendering;
         }
-        
+
         if (chMask & ARM_2D_PFB_DEPEND_ON_DRAWING) {
             this.tCFG.Dependency.evtOnDrawing 
                 = ptDependency->evtOnDrawing;
         }
-        
+
         if (chMask & ARM_2D_PFB_DEPEND_ON_LOW_LEVEL_SYNC_UP) {
             this.tCFG.Dependency.evtOnLowLevelSyncUp 
                 = ptDependency->evtOnLowLevelSyncUp;
+        }
+
+        if (chMask & ARM_2D_PFB_DEPEND_ON_NAVIGATION) {
+            this.tCFG.Dependency.Navigation = ptDependency->Navigation;
         }
     }
     
@@ -723,16 +751,31 @@ ARM_PT_BEGIN(this.Adapter.chPT)
     ARM_PT_ENTRY(this.Adapter.chPT)
         
         __arm_2d_helper_perf_counter_start(&this.Statistics.lTimestamp); 
-        // draw all the gui elements on target frame buffer
+        /* draw all the gui elements on target frame buffer */
         tResult = this.tCFG.Dependency.evtOnDrawing.fnHandler(
                                         this.tCFG.Dependency.evtOnDrawing.pTarget,
                                         this.Adapter.ptFrameBuffer,
                                         this.Adapter.bIsNewFrame);
         // just in case some one forgot to do this...
         arm_2d_op_wait_async(NULL);
-        
-        this.Adapter.bIsNewFrame = false;
-        this.Statistics.nTotalCycle += __arm_2d_helper_perf_counter_stop(&this.Statistics.lTimestamp);                                 
+
+        this.Statistics.nTotalCycle += __arm_2d_helper_perf_counter_stop(&this.Statistics.lTimestamp);
+
+        /* draw navigation layer */
+        if (NULL != this.tCFG.Dependency.Navigation.evtOnDrawing.fnHandler) {
+            if (arm_fsm_rt_cpl == tResult) {
+    ARM_PT_ENTRY(this.Adapter.chPT)
+                __arm_2d_helper_perf_counter_start(&this.Statistics.lTimestamp); 
+
+                tResult = this.tCFG.Dependency.Navigation.evtOnDrawing.fnHandler(
+                                        this.tCFG.Dependency.Navigation.evtOnDrawing.pTarget,
+                                        this.Adapter.ptFrameBuffer,
+                                        this.Adapter.bIsNewFrame);
+                arm_2d_op_wait_async(NULL);
+                
+                this.Statistics.nTotalCycle += __arm_2d_helper_perf_counter_stop(&this.Statistics.lTimestamp);
+            }
+        }
 
         if (arm_fsm_rt_on_going == tResult) {
     ARM_PT_GOTO_PREV_ENTRY()
@@ -744,7 +787,8 @@ ARM_PT_BEGIN(this.Adapter.chPT)
         } else { 
     ARM_PT_YIELD(this.Adapter.chPT)
         }
-        
+
+        this.Adapter.bIsNewFrame = false;
         __arm_2d_helper_perf_counter_start(&this.Statistics.lTimestamp); 
     } while(__arm_2d_helper_pfb_drawing_iteration_end(ptThis));
     

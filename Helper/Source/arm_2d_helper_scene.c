@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        15. Sept 2022
- * $Revision:    V.1.3.6
+ * $Date:        20. Sept 2022
+ * $Revision:    V.1.3.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -197,18 +197,22 @@ void arm_2d_scene_player_set_switching_period(  arm_2d_scene_player_t *ptThis,
 }
 
 ARM_NONNULL(1,2)
-void arm_2d_scene_player_register_on_draw_navigation_event_handler(
+arm_2d_err_t arm_2d_scene_player_register_on_draw_navigation_event_handler(
                                         arm_2d_scene_player_t *ptThis,
                                         arm_2d_helper_draw_handler_t *fnHandler,
                                         void *pTarget)
 {
     assert(NULL != ptThis);
     assert(NULL != fnHandler);
-    
-    this.Switch.tConfig.evtOnDrawNavigation.fnHandler = fnHandler;
-    this.Switch.tConfig.evtOnDrawNavigation.pTarget = (pTarget == NULL)
-                                                    ? ptThis 
-                                                    : pTarget;
+    arm_2d_helper_pfb_dependency_t tDependency = {
+        .Navigation.evtOnDrawing.fnHandler = fnHandler,
+        .Navigation.evtOnDrawing.pTarget = ((pTarget == NULL) ? ptThis : pTarget),
+    };
+
+    return arm_2d_helper_pfb_update_dependency(
+                                    &ptThis->use_as__arm_2d_helper_pfb_t, 
+                                    ARM_2D_PFB_DEPEND_ON_NAVIGATION,
+                                    &tDependency);
 }
 
 
@@ -221,11 +225,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_user)
 
     /* doing nothing at all */
     this.Runtime.bSwitchCPL = true;
-
-    ARM_2D_INVOKE(this.Switch.tConfig.evtOnDrawNavigation.fnHandler,
-                  this.Switch.tConfig.evtOnDrawNavigation.pTarget,
-                  ptTile,
-                  bIsNewFrame);
 
     return arm_fsm_rt_cpl;
 }
@@ -410,11 +409,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
                                         tColour,
                                         this.Switch.Fade.chOpacity);
     } while(0);
-
-    ARM_2D_INVOKE(this.Switch.tConfig.evtOnDrawNavigation.fnHandler,
-                  this.Switch.tConfig.evtOnDrawNavigation.pTarget,
-                  ptTile,
-                  bIsNewFrame);
 
     arm_2d_op_wait_async(NULL);
 
@@ -721,11 +715,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
         
     } while(0);
 
-    ARM_2D_INVOKE(this.Switch.tConfig.evtOnDrawNavigation.fnHandler,
-                  this.Switch.tConfig.evtOnDrawNavigation.pTarget,
-                  ptTile,
-                  bIsNewFrame);
-
     arm_2d_op_wait_async(NULL);
 
     return arm_fsm_rt_cpl;
@@ -946,11 +935,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
                             this.Switch.tConfig.Feature.bIgnoreNewScene);
         
     } while(0);
-
-    ARM_2D_INVOKE(this.Switch.tConfig.evtOnDrawNavigation.fnHandler,
-                  this.Switch.tConfig.evtOnDrawNavigation.pTarget,
-                  ptTile,
-                  bIsNewFrame);
 
     arm_2d_op_wait_async(NULL);
 
