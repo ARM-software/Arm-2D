@@ -197,16 +197,19 @@ void arm_2d_scene_player_set_switching_period(  arm_2d_scene_player_t *ptThis,
 }
 
 ARM_NONNULL(1,2)
-arm_2d_err_t arm_2d_scene_player_register_on_draw_navigation_event_handler(
-                                        arm_2d_scene_player_t *ptThis,
-                                        arm_2d_helper_draw_handler_t *fnHandler,
-                                        void *pTarget)
+arm_2d_err_t __arm_2d_scene_player_register_on_draw_navigation_event_handler(
+                                    arm_2d_scene_player_t *ptThis,
+                                    arm_2d_helper_draw_handler_t *fnHandler,
+                                    void *pTarget,
+                                    arm_2d_region_list_item_t *ptDirtyRegions)
 {
     assert(NULL != ptThis);
     assert(NULL != fnHandler);
+
     arm_2d_helper_pfb_dependency_t tDependency = {
         .Navigation.evtOnDrawing.fnHandler = fnHandler,
         .Navigation.evtOnDrawing.pTarget = ((pTarget == NULL) ? ptThis : pTarget),
+        .Navigation.ptDirtyRegion = ptDirtyRegions,
     };
 
     return arm_2d_helper_pfb_update_dependency(

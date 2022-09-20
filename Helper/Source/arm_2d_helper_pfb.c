@@ -22,7 +22,7 @@
  * Description:  the pfb helper service source code
  *
  * $Date:        20. Sept 2022
- * $Revision:    V.1.3.0
+ * $Revision:    V.1.3.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -223,7 +223,7 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
             
             // update buffer size
             ptItem->u24Size = wBufferSize;
-            //ARM_LIST_STACK_PUSH(this.Adapter.ptFreeList, ptItem);
+
             __arm_2d_helper_pfb_free(ptThis, ptItem);
             
             // update pointer
@@ -640,9 +640,6 @@ void arm_2d_helper_pfb_report_rendering_complete(arm_2d_helper_pfb_t *ptThis,
     
     ptPFB->tTile.tRegion.tLocation = (arm_2d_location_t) {0,0};
     
-//    arm_irq_safe {
-//        ARM_LIST_STACK_PUSH(this.Adapter.ptFreeList, ptPFB);
-//    }
     __arm_2d_helper_pfb_free(ptThis, ptPFB);
     
     arm_2d_helper_pfb_flush(ptThis);
@@ -672,6 +669,11 @@ arm_2d_err_t arm_2d_helper_pfb_update_dependency(
         if (chMask & ARM_2D_PFB_DEPEND_ON_LOW_LEVEL_SYNC_UP) {
             this.tCFG.Dependency.evtOnLowLevelSyncUp 
                 = ptDependency->evtOnLowLevelSyncUp;
+        }
+        
+        if (chMask & ARM_2D_PFB_DEPEND_ON_EACH_FRAME_CPL) {
+            this.tCFG.Dependency.evtOnEachFrameCPL
+                = ptDependency->evtOnEachFrameCPL;
         }
 
         if (chMask & ARM_2D_PFB_DEPEND_ON_NAVIGATION) {
@@ -744,7 +746,7 @@ ARM_PT_BEGIN(this.Adapter.chPT)
                 continue;
             } else if (-1 == (intptr_t)this.Adapter.ptFrameBuffer) {
                 /* display driver wants to end the drawing */
-                return arm_fsm_rt_cpl;
+                goto label_pfb_task_rt_cpl;
             }
         } while(NULL == this.Adapter.ptFrameBuffer);
 
@@ -794,7 +796,12 @@ ARM_PT_BEGIN(this.Adapter.chPT)
     
     this.Statistics.nRenderingCycle += __arm_2d_helper_perf_counter_stop(&this.Statistics.lTimestamp);
 ARM_PT_END(this.Adapter.chPT)
-    
+
+label_pfb_task_rt_cpl:
+    /* invoke the On Each Frame Complete Event */
+    ARM_2D_INVOKE(  this.tCFG.Dependency.evtOnEachFrameCPL.fnHandler,
+                    this.tCFG.Dependency.evtOnEachFrameCPL.pTarget);
+
     return arm_fsm_rt_cpl;
 }
 

@@ -112,39 +112,11 @@ static struct {
 static void __on_frame_start(arm_2d_scene_t *ptScene)
 {
     ARM_2D_UNUSED(ptScene);
-    
 }
 
-static void on_frame_complete(arm_2d_scene_t *ptScene)
+static void __on_frame_complete(arm_2d_scene_t *ptScene)
 {
     ARM_2D_UNUSED(ptScene);
-    
-    int32_t nTotalCyclCount = DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nTotalCycle;
-    int32_t nTotalLCDCycCount = DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nRenderingCycle;
-    BENCHMARK.wLCDLatency = nTotalLCDCycCount;
-
-    if (__DISP%Instance%_CFG_ITERATION_CNT__) {
-        if (BENCHMARK.wIterations) {
-            BENCHMARK.wMin = MIN((uint32_t)nTotalCyclCount, BENCHMARK.wMin);
-            BENCHMARK.wMax = MAX(nTotalCyclCount, (int32_t)BENCHMARK.wMax);
-            BENCHMARK.dwTotal += nTotalCyclCount;
-            BENCHMARK.wIterations--;
-
-            if (0 == BENCHMARK.wIterations) {
-                BENCHMARK.wAverage =
-                    (uint32_t)(BENCHMARK.dwTotal / (uint64_t)__DISP%Instance%_CFG_ITERATION_CNT__);
-//                BENCHMARK.fFPS30Freq = (float)
-//                ((      (double)(BENCHMARK.wAverage * 30) 
-//                    /   (double)arm_2d_helper_get_reference_clock_frequency()) 
-//                 * ((float)SystemCoreClock / 1000000.0f));
-                 
-                BENCHMARK.wMin = UINT32_MAX;
-                BENCHMARK.wMax = 0;
-                BENCHMARK.dwTotal = 0;
-                BENCHMARK.wIterations = __DISP%Instance%_CFG_ITERATION_CNT__;
-            }
-        }
-    }
 }
 
 
@@ -167,37 +139,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
     }
     
     busy_wheel2_show(ptTile, bIsNewFrame);
-    
-    if (__DISP%Instance%_CFG_ITERATION_CNT__) {
-        arm_2dp_fill_colour_with_opacity(
-                    NULL, 
-                    ptTile, 
-                    (arm_2d_region_t []){
-                        {
-                            .tLocation = {
-                                .iX = 0,
-                                .iY = __DISP%Instance%_CFG_SCEEN_HEIGHT__ - 17},
-                            .tSize = {
-                                .iWidth = __DISP%Instance%_CFG_SCEEN_WIDTH__,
-                                .iHeight = 9,
-                            },
-                        },
-                    }, 
-                    (__arm_2d_color_t){__RGB(64,64,64)}, 
-                    255 - 32);
-        arm_2d_op_wait_async(NULL);
-        
-        arm_lcd_text_location( (__DISP%Instance%_CFG_SCEEN_HEIGHT__ + 7) / 8 - 2, 0);
-        if (BENCHMARK.wAverage) {
-            arm_lcd_printf(
-                "FPS: %3d:%dms   ",
-                arm_2d_helper_get_reference_clock_frequency() / BENCHMARK.wAverage,
-                (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wAverage));
-        }
-        arm_lcd_printf( 
-            "LCD Latency: %2dms", 
-            (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wLCDLatency) );
-    } 
     
     arm_2d_op_wait_async(NULL);
 
@@ -228,11 +169,44 @@ IMPL_PFB_ON_DRAW(__pfb_draw_background_handler)
 }
 
 static
-IMPL_PFB_ON_DRAW(__pfb_draw_navigation_on_switching)
+IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
 {
     ARM_2D_UNUSED(pTarget);
     ARM_2D_UNUSED(bIsNewFrame);
 
+    /* draw real-time FPS info */
+    if (__DISP%Instance%_CFG_ITERATION_CNT__) {
+        arm_2dp_fill_colour_with_opacity(
+                    NULL, 
+                    ptTile, 
+                    (arm_2d_region_t []){
+                        {
+                            .tLocation = {
+                                .iX = 0,
+                                .iY = __DISP%Instance%_CFG_SCEEN_HEIGHT__ - 17},
+                            .tSize = {
+                                .iWidth = __DISP%Instance%_CFG_SCEEN_WIDTH__,
+                                .iHeight = 9,
+                            },
+                        },
+                    }, 
+                    (__arm_2d_color_t){__RGB(64,64,64)}, 
+                    255 - 32);
+        arm_2d_op_wait_async(NULL);
+        arm_lcd_text_set_colour(GLCD_COLOR_GREEN, GLCD_COLOR_WHITE);
+        arm_lcd_text_location( (__DISP%Instance%_CFG_SCEEN_HEIGHT__ + 7) / 8 - 2, 0);
+        if (BENCHMARK.wAverage) {
+            arm_lcd_printf(
+                "FPS: %3d:%dms   ",
+                arm_2d_helper_get_reference_clock_frequency() / BENCHMARK.wAverage,
+                (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wAverage));
+        }
+        arm_lcd_printf( 
+            "LCD Latency: %2dms", 
+            (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wLCDLatency) );
+    }
+
+    /* draw verion info on the bottom right corner */
     arm_lcd_text_set_colour(GLCD_COLOR_LIGHT_GREY, GLCD_COLOR_WHITE);
     arm_lcd_text_location( (__DISP%Instance%_CFG_SCEEN_HEIGHT__ + 7) / 8 - 2, 
                             (__DISP%Instance%_CFG_SCEEN_WIDTH__ / 6) - 24);
@@ -270,6 +244,40 @@ IMPL_PFB_ON_LOW_LV_RENDERING(__glcd%Instance%_pfb_render_handler)
                     (arm_2d_pfb_t *)ptPFB);
 }
 
+static bool __on_each_frame_complete(void *ptTarget)
+{
+    ARM_2D_UNUSED(ptTarget);
+    
+    int32_t nTotalCyclCount = DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nTotalCycle;
+    int32_t nTotalLCDCycCount = DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nRenderingCycle;
+    BENCHMARK.wLCDLatency = nTotalLCDCycCount;
+
+    /* calculate real-time FPS */
+    if (__DISP%Instance%_CFG_ITERATION_CNT__) {
+        if (BENCHMARK.wIterations) {
+            BENCHMARK.wMin = MIN((uint32_t)nTotalCyclCount, BENCHMARK.wMin);
+            BENCHMARK.wMax = MAX(nTotalCyclCount, (int32_t)BENCHMARK.wMax);
+            BENCHMARK.dwTotal += nTotalCyclCount;
+            BENCHMARK.wIterations--;
+
+            if (0 == BENCHMARK.wIterations) {
+                BENCHMARK.wAverage =
+                    (uint32_t)(BENCHMARK.dwTotal / (uint64_t)__DISP%Instance%_CFG_ITERATION_CNT__);
+//                BENCHMARK.fFPS30Freq = (float)
+//                ((      (double)(BENCHMARK.wAverage * 30) 
+//                    /   (double)arm_2d_helper_get_reference_clock_frequency()) 
+//                 * ((float)SystemCoreClock / 1000000.0f));
+                 
+                BENCHMARK.wMin = UINT32_MAX;
+                BENCHMARK.wMax = 0;
+                BENCHMARK.dwTotal = 0;
+                BENCHMARK.wIterations = __DISP%Instance%_CFG_ITERATION_CNT__;
+            }
+        }
+    }
+    
+    return true;
+}
 
 static void __user_scene_player_init(void)
 {
@@ -294,6 +302,9 @@ static void __user_scene_player_init(void)
                 //! callback for low level rendering
                 .fnHandler = &__glcd%Instance%_pfb_render_handler,
             },
+            .evtOnEachFrameCPL = {
+                .fnHandler = &__on_each_frame_complete,
+            },
         },
         //.FrameBuffer.bSwapRGB16 = true,
 
@@ -317,29 +328,11 @@ void disp_adapter%Instance%_init(void)
     
     __user_scene_player_init();
 
-    /* register event handler for evtOnDrawNavigation */
-    arm_2d_scene_player_register_on_draw_navigation_event_handler(
-                                            &DISP%Instance%_ADAPTER,
-                                            __pfb_draw_navigation_on_switching,
-                                            NULL);
+    do {
+        /*! define dirty regions for the navigation layer */
+        IMPL_ARM_2D_REGION_LIST(s_tNavDirtyRegionList, const static)
 
-    if (!__DISP%Instance%_CFG_DISABLE_DEFAULT_SCENE__) {
-        /*! define dirty regions */
-        IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, const static)
-
-            /* a region for the busy wheel */
-            ADD_REGION_TO_LIST(s_tDirtyRegions,
-                .tLocation = {
-                    .iX = ((__DISP%Instance%_CFG_SCEEN_WIDTH__ - 100) >> 1),
-                    .iY = ((__DISP%Instance%_CFG_SCEEN_HEIGHT__ - 100) >> 1),
-                },
-                .tSize = {
-                    .iWidth = 100,
-                    .iHeight = 100,
-                },
-            ),
-
-            /* a region for the status bar on the top of the screen */
+            /* a region for the status bar on the bottom of the screen */
             ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
                 .tLocation = {
                     .iX = 0,
@@ -351,6 +344,31 @@ void disp_adapter%Instance%_init(void)
             ),
 
         END_IMPL_ARM_2D_REGION_LIST()
+        /* register event handler for evtOnDrawNavigation */
+        arm_2d_scene_player_register_on_draw_navigation_event_handler(
+                        &DISP%Instance%_ADAPTER,
+                        __pfb_draw_navigation,
+                        NULL,
+                        (arm_2d_region_list_item_t *)s_tNavDirtyRegionList);
+    } while(0);
+    
+    if (!__DISP%Instance%_CFG_DISABLE_DEFAULT_SCENE__) {
+        /*! define dirty regions */
+        IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, const static)
+
+            /* a region for the busy wheel */
+            ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
+                .tLocation = {
+                    .iX = ((__DISP%Instance%_CFG_SCEEN_WIDTH__ - 100) >> 1),
+                    .iY = ((__DISP%Instance%_CFG_SCEEN_HEIGHT__ - 100) >> 1),
+                },
+                .tSize = {
+                    .iWidth = 100,
+                    .iHeight = 100,
+                },
+            ),
+
+        END_IMPL_ARM_2D_REGION_LIST()
         
         static arm_2d_scene_t s_tScenes[] = {
             [0] = {
@@ -358,7 +376,7 @@ void disp_adapter%Instance%_init(void)
                 .fnScene        = &__pfb_draw_handler,
                 .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
                 .fnOnFrameStart = &__on_frame_start,
-                .fnOnFrameCPL   = &on_frame_complete,
+                .fnOnFrameCPL   = &__on_frame_complete,
                 .fnDepose       = NULL,
             },
         };

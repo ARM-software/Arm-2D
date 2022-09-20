@@ -53,6 +53,34 @@ extern "C" {
 
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
+
+/*!
+ * \brief register / update the evtOnDrawNavigation event handler. You can use 
+ *        this event to draw an ALWAY-TOP navigation bar or title during switching
+ *        period.
+ *
+ * \param[in] ptThis the target scene player
+ * \param[in] fnHandler the event handler to draw the navigation bar and/or titles
+ * \param[in] pTarget the address of an user specified object. If it is NULL, 
+ *            ptThis will be used instead.
+ * \param[in] ...  an optional dirty region list for the navigation layer. If 
+ *            ommited, NULL is used.
+ * \note if the optional dirty region list is omitted and the normal scene 
+ *       doesn't cover the region of the content in the navigation layer, 
+ *       you won't see the content. 
+ * \return arm_2d_err_t the operation result
+ */
+#define arm_2d_scene_player_register_on_draw_navigation_event_handler(          \
+                                                        __DISP_ADAPTER_ADDR,    \
+                                                        __DRAW_HANDLER,         \
+                                                        __USER_TARGET_ADDR,     \
+                                                        ...)                    \
+            __arm_2d_scene_player_register_on_draw_navigation_event_handler(    \
+                                                        (__DISP_ADAPTER_ADDR),  \
+                                                        (__DRAW_HANDLER),       \
+                                                        (__USER_TARGET_ADDR),   \
+                                                        (NULL,##__VA_ARGS__))
+
 /*============================ TYPES =========================================*/
 
 /*!
@@ -264,6 +292,7 @@ ARM_NONNULL(1)
 void arm_2d_scene_player_set_switching_period(  arm_2d_scene_player_t *ptThis,
                                                 uint_fast16_t hwMS);
 
+
 /*!
  * \brief register / update the evtOnDrawNavigation event handler. You can use 
  *        this event to draw an ALWAY-TOP navigation bar or title during switching
@@ -272,14 +301,18 @@ void arm_2d_scene_player_set_switching_period(  arm_2d_scene_player_t *ptThis,
  * \param[in] ptThis the target scene player
  * \param[in] fnHandler the event handler to draw the navigation bar and/or titles
  * \param[in] pTarget the address of an user specified object. If it is NULL, 
- *            ptThis will be used instead. 
+ *            ptThis will be used instead.
+ * \param[in] ptDirtyRegions a dirty region list for the navigation layer. 
+ * \note if ptDirtyRegions is NULL and the normal scene doesn't cover the region
+ *       of the content in the navigation layer, you won't see the content. 
  * \return arm_2d_err_t the operation result
  */
 ARM_NONNULL(1,2)
-arm_2d_err_t arm_2d_scene_player_register_on_draw_navigation_event_handler(
-                                        arm_2d_scene_player_t *ptThis,
-                                        arm_2d_helper_draw_handler_t *fnHandler,
-                                        void *pTarget);
+arm_2d_err_t __arm_2d_scene_player_register_on_draw_navigation_event_handler(
+                                    arm_2d_scene_player_t *ptThis,
+                                    arm_2d_helper_draw_handler_t *fnHandler,
+                                    void *pTarget,
+                                    arm_2d_region_list_item_t *ptDirtyRegions);
 
 /*!
  * \brief the scene player task function

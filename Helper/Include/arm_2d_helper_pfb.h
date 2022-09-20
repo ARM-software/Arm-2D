@@ -22,7 +22,7 @@
  * Description:  Public header file for the PFB helper service 
  *
  * $Date:        20. Sept 2022
- * $Revision:    V.1.3.0
+ * $Revision:    V.1.3.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -381,7 +381,8 @@ enum {
     ARM_2D_PFB_DEPEND_ON_DRAWING                = _BV(1),   //!< On Drawing Event
     ARM_2D_PFB_DEPEND_ON_LOW_LEVEL_SYNC_UP      = _BV(2),   //!< On Low Level Sync-up Event
     ARM_2D_PFB_DEPEND_ON_FRAME_SYNC_UP          = _BV(3),   //!< On Frame Sync-up Event
-    ARM_2D_PFB_DEPEND_ON_NAVIGATION             = _BV(4),   //!< On Drawing Navigation Event
+    ARM_2D_PFB_DEPEND_ON_EACH_FRAME_CPL         = _BV(4),   //!< On Each Frame Complete Event
+    ARM_2D_PFB_DEPEND_ON_NAVIGATION             = _BV(5),   //!< On Drawing Navigation Event
 };
 
 /*!
@@ -397,6 +398,9 @@ typedef struct arm_2d_helper_pfb_dependency_t {
 
     //! low level rendering handler wants to sync-up (return arm_fsm_rt_wait_for_obj)
     arm_2d_evt_t                evtOnLowLevelSyncUp;  
+
+    //! event handler for each frame complete
+    arm_2d_evt_t                evtOnEachFrameCPL;  
 
     //! event handler for drawing GUI
     struct {
