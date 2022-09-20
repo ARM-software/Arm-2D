@@ -22,7 +22,7 @@
  * Description:  Public header file for the scene service
  *
  * $Date:        20. Sept 2022
- * $Revision:    V.1.3.7
+ * $Revision:    V.1.3.8
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -59,10 +59,11 @@ extern "C" {
  *        this event to draw an ALWAY-TOP navigation bar or title during switching
  *        period.
  *
- * \param[in] ptThis the target scene player
- * \param[in] fnHandler the event handler to draw the navigation bar and/or titles
- * \param[in] pTarget the address of an user specified object. If it is NULL, 
- *            ptThis will be used instead.
+ * \param[in] __DISP_ADAPTER_PTR the target scene player
+ * \param[in] __DRAW_HANDLER the event handler to draw the navigation bar and/or
+ *            titles
+ * \param[in] __USER_TARGET_PTR the address of an user specified object. If it 
+ *            is NULL, ptThis will be used instead.
  * \param[in] ...  an optional dirty region list for the navigation layer. If 
  *            ommited, NULL is used.
  * \note if the optional dirty region list is omitted and the normal scene 
@@ -71,15 +72,29 @@ extern "C" {
  * \return arm_2d_err_t the operation result
  */
 #define arm_2d_scene_player_register_on_draw_navigation_event_handler(          \
-                                                        __DISP_ADAPTER_ADDR,    \
+                                                        __DISP_ADAPTER_PTR,     \
                                                         __DRAW_HANDLER,         \
-                                                        __USER_TARGET_ADDR,     \
+                                                        __USER_TARGET_PTR,      \
                                                         ...)                    \
             __arm_2d_scene_player_register_on_draw_navigation_event_handler(    \
-                                                        (__DISP_ADAPTER_ADDR),  \
+                                                        (__DISP_ADAPTER_PTR),   \
                                                         (__DRAW_HANDLER),       \
-                                                        (__USER_TARGET_ADDR),   \
+                                                        (__USER_TARGET_PTR),    \
                                                         (NULL,##__VA_ARGS__))
+
+/*!
+ * \brief configure the scene switching mode
+ *
+ * \param[in] __DISP_ADAPTER_PTR the target scene player
+ * \param[in] __SWITCH_MODE a switching mode object
+ * \param[in] ... an optional configurations for the switching
+ */
+#define arm_2d_scene_player_set_switching_mode(__DISP_ADAPTER_PTR,              \
+                                               __SWITCH_MODE,                   \
+                                               ...)                             \
+            __arm_2d_scene_player_set_switching_mode((__DISP_ADAPTER_PTR),      \
+                                                     &(__SWITCH_MODE),          \
+                                                     (0,##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
 
@@ -89,39 +104,39 @@ extern "C" {
 typedef enum {
 
     /* valid switching visual effects begin */
-    ARM_2D_SCENE_SWITCH_MODE_NONE           = 0,                                //!< no switching visual effect
-    ARM_2D_SCENE_SWITCH_MODE_USER           = 1,                                //!< user defined switching visual effect
-    ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE     = 2,                                //!< fade in fade out (white)
-    ARM_2D_SCENE_SWITCH_MODE_FADE_BLACK     = 3,                                //!< fade in fade out (black)
-    ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT     = 4,                                //!< slide left
-    ARM_2D_SCENE_SWITCH_MODE_SLIDE_RIGHT,                                       //!< slide right
-    ARM_2D_SCENE_SWITCH_MODE_SLIDE_UP,                                          //!< slide up
-    ARM_2D_SCENE_SWITCH_MODE_SLIDE_DOWN,                                        //!< slide down
-    ARM_2D_SCENE_SWITCH_MODE_ERASE_LEFT     = 8,                                //!< erase to the right
-    ARM_2D_SCENE_SWITCH_MODE_ERASE_RIGHT,                                       //!< erase to the left
-    ARM_2D_SCENE_SWITCH_MODE_ERASE_UP,                                          //!< erase to the top
-    ARM_2D_SCENE_SWITCH_MODE_ERASE_DOWN,                                        //!< erase to the bottom
-    
+    ARM_2D_SCENE_SWITCH_CFG_NONE           = 0,                                 //!< no switching visual effect
+    ARM_2D_SCENE_SWITCH_CFG_USER           = 1,                                 //!< user defined switching visual effect
+    ARM_2D_SCENE_SWITCH_CFG_FADE_WHITE     = 2,                                 //!< fade in fade out (white)
+    ARM_2D_SCENE_SWITCH_CFG_FADE_BLACK     = 3,                                 //!< fade in fade out (black)
+    ARM_2D_SCENE_SWITCH_CFG_SLIDE_LEFT     = 4,                                 //!< slide left
+    ARM_2D_SCENE_SWITCH_CFG_SLIDE_RIGHT,                                        //!< slide right
+    ARM_2D_SCENE_SWITCH_CFG_SLIDE_UP,                                           //!< slide up
+    ARM_2D_SCENE_SWITCH_CFG_SLIDE_DOWN,                                         //!< slide down
+    ARM_2D_SCENE_SWITCH_CFG_ERASE_LEFT     = 8,                                 //!< erase to the right
+    ARM_2D_SCENE_SWITCH_CFG_ERASE_RIGHT,                                        //!< erase to the left
+    ARM_2D_SCENE_SWITCH_CFG_ERASE_UP,                                           //!< erase to the top
+    ARM_2D_SCENE_SWITCH_CFG_ERASE_DOWN,                                         //!< erase to the bottom
+
     /* valid switching visual effects end */
-    __ARM_2D_SCENE_SWITCH_MODE_VALID,                                           //!< For internal user only
+    __ARM_2D_SCENE_SWITCH_CFG_VALID,                                            //!< For internal user only
     
+    ARM_2D_SCENE_SWITCH_CFG_IGNORE_OLD_BG          = _BV(8),                    //!< ignore the background of the old scene
+    ARM_2D_SCENE_SWITCH_CFG_IGNORE_OLD_SCEBE       = _BV(9),                    //!< ignore the old scene
+    ARM_2D_SCENE_SWITCH_CFG_IGNORE_NEW_BG          = _BV(10),                   //!< ignore the background of the new scene
+    ARM_2D_SCENE_SWITCH_CFG_IGNORE_NEW_SCEBE       = _BV(11),                   //!< ignore the new scene
+    
+    ARM_2D_SCENE_SWITCH_CFG_DEFAULT_BG_WHITE       = 0 << 12,                   //!< use white as default background
+    ARM_2D_SCENE_SWITCH_CFG_DEFAULT_BG_BLACK       = 1 << 12,                   //!< use black as default background
+    ARM_2D_SCENE_SWITCH_CFG_DEFAULT_BG_USER        = 2 << 12,                   //!< use user defined default background
 
-    
-    ARM_2D_SCENE_SWITCH_MODE_IGNORE_OLD_BG          = _BV(8),                   //!< ignore the background of the old scene
-    ARM_2D_SCENE_SWITCH_MODE_IGNORE_OLD_SCEBE       = _BV(9),                   //!< ignore the old scene
-    ARM_2D_SCENE_SWITCH_MODE_IGNORE_NEW_BG          = _BV(10),                  //!< ignore the background of the new scene
-    ARM_2D_SCENE_SWITCH_MODE_IGNORE_NEW_SCEBE       = _BV(11),                  //!< ignore the new scene
-    
-    ARM_2D_SCENE_SWITCH_MODE_DEFAULT_BG_WHITE       = 0 << 12,                  //!< use white as default background
-    ARM_2D_SCENE_SWITCH_MODE_DEFAULT_BG_BLACK       = 1 << 12,                  //!< use black as default background
-    ARM_2D_SCENE_SWITCH_MODE_DEFAULT_BG_USER        = 2 << 12,                  //!< use user defined default background
-
-    __ARM_2D_SCENE_SWTICH_MODE_IGNORE_msk           = 0x0F << 8,                //!< For internal user only
-    __ARM_2D_SCENE_SWTICH_MODE_IGNORE_pos           = 8,                        //!< For internal user only
-    __ARM_2D_SCENE_SWTICH_MODE_DEFAULT_BG_msk       = 3 << 12,                  //!< For internal user only
-    __ARM_2D_SCENE_SWTICH_MODE_DEFAULT_BG_pos       = 12,                       //!< For internal user only
+    __ARM_2D_SCENE_SWTICH_CFG_IGNORE_msk           = 0x0F << 8,                 //!< For internal user only
+    __ARM_2D_SCENE_SWTICH_CFG_IGNORE_pos           = 8,                         //!< For internal user only
+    __ARM_2D_SCENE_SWTICH_CFG_DEFAULT_BG_msk       = 3 << 12,                   //!< For internal user only
+    __ARM_2D_SCENE_SWTICH_CFG_DEFAULT_BG_pos       = 12,                        //!< For internal user only
 
 } arm_2d_scene_player_switch_mode_t;
+
+
 
 /*!
  * \brief an internal data structure for scene switching
@@ -131,18 +146,26 @@ typedef enum {
 typedef union __arm_2d_helper_scene_switch_t {
 
     struct {
-        uint8_t chMode;                                                     //!< the switch visual effect
-        uint8_t bIgnoreOldSceneBG       : 1;                                //!< when set, ignore the background of the old scene
-        uint8_t bIgnoreOldScene         : 1;                                //!< when set, ignore the old scene
-        uint8_t bIgnoreNewSceneBG       : 1;                                //!< when set, ignore the background of the new scene
-        uint8_t bIgnoreNewScene         : 1;                                //!< when set, ignore the new scene
-        uint8_t u2DefaultBG             : 2;                                //!< the default background
+        uint8_t chMode;                                                         //!< the switch visual effect
+        uint8_t bIgnoreOldSceneBG       : 1;                                    //!< when set, ignore the background of the old scene
+        uint8_t bIgnoreOldScene         : 1;                                    //!< when set, ignore the old scene
+        uint8_t bIgnoreNewSceneBG       : 1;                                    //!< when set, ignore the background of the new scene
+        uint8_t bIgnoreNewScene         : 1;                                    //!< when set, ignore the new scene
+        uint8_t u2DefaultBG             : 2;                                    //!< the default background
         uint8_t                         : 2;
     } Feature;
-    uint16_t hwSetting;                                                     //!< the setting value
+    uint16_t hwSetting;                                                         //!< the setting value
 
 }__arm_2d_helper_scene_switch_t;
 
+
+/*!
+ * \brief scene switching mode descriptor
+ */
+typedef const struct {
+    uint8_t                         chEffects;                                  //!< switching effects
+    arm_2d_helper_draw_handler_t    *fnSwitchDrawer;                            //!< switching algorithm
+} arm_2d_scene_switch_mode_t;
 
 
 typedef struct arm_2d_scene_player_t arm_2d_scene_player_t;
@@ -195,23 +218,24 @@ struct arm_2d_scene_player_t {
         } Runtime;                                                              //!< scene player runtime
         
         struct {
+            arm_2d_scene_switch_mode_t *ptMode;                                 //!< the switching mode
             union {
-                uint8_t chState;
+                uint8_t chState;                                                //!< FSM state
                 struct {
-                    uint8_t chState;
-                    uint8_t chOpacity;
-                    bool bIsFadeBlack;
+                    uint8_t chState;                                            //!< FSM state
+                    uint8_t chOpacity;                                          //!< opacity of the cover
+                    bool bIsFadeBlack;                                          //!< the colour of the cover
                 }Fade;
                 struct {
-                    uint8_t chState;
-                    arm_2d_tile_t tSceneWindow;
-                    arm_2d_tile_t tTemp;
-                    int16_t iOffset;
+                    uint8_t chState;                                            //!< FSM state
+                    arm_2d_tile_t tSceneWindow;                                 //!< scene window
+                    arm_2d_tile_t tTemp;                                        //!< a temp tile
+                    int16_t iOffset;                                            //!< erase offset
                 }Erase;
                 struct {
-                    uint8_t chState;
-                    arm_2d_tile_t tSceneWindow;
-                    int16_t iOffset;
+                    uint8_t chState;                                            //!< FSM state
+                    arm_2d_tile_t tSceneWindow;                                 //!< scene window
+                    int16_t iOffset;                                            //!< slide offset
                 }Slide;
             };
             __arm_2d_helper_scene_switch_t tConfig;                             //!< the switching configuration
@@ -222,6 +246,43 @@ struct arm_2d_scene_player_t {
 };
 
 /*============================ GLOBAL VARIABLES ==============================*/
+
+extern
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_NONE;
+
+extern
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_USER;
+
+extern
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE;
+
+extern
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FADE_BLACK;
+
+extern
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT;
+
+extern
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_SLIDE_RIGHT;
+
+extern
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_SLIDE_UP;
+
+extern
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_SLIDE_DOWN;
+
+extern
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_ERASE_LEFT;
+
+extern
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_ERASE_RIGHT;
+
+extern
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_ERASE_UP;
+
+extern
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_ERASE_DOWN;
+
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ PROTOTYPES ====================================*/
 
@@ -263,13 +324,14 @@ void arm_2d_scene_player_switch_to_next_scene(arm_2d_scene_player_t *ptThis);
  * \brief configure the scene switching mode
  *
  * \param[in] ptThis the target scene player
- * \param[in] hwSettings a combination of valid settings defined in
- *            arm_2d_scene_player_switch_mode_t
+ * \param[in] ptMode a switching mode object
+ * \param[in] hwSettings configurations for the switching
  */
 extern
 ARM_NONNULL(1)
-void arm_2d_scene_player_set_switching_mode(arm_2d_scene_player_t *ptThis,
-                                            uint_fast16_t hwSettings);
+void __arm_2d_scene_player_set_switching_mode(arm_2d_scene_player_t *ptThis,
+                                              arm_2d_scene_switch_mode_t *ptMode,
+                                              uint16_t hwSettings);
                                             
 /*!
  * \brief read the current scene switching mode
@@ -279,7 +341,7 @@ void arm_2d_scene_player_set_switching_mode(arm_2d_scene_player_t *ptThis,
  */
 extern
 ARM_NONNULL(1)
-uint16_t arm_2d_scene_player_get_switching_mode(arm_2d_scene_player_t *ptThis);
+uint16_t arm_2d_scene_player_get_switching_cfg(arm_2d_scene_player_t *ptThis);
 
 /*!
  * \brief configure the scene switching period

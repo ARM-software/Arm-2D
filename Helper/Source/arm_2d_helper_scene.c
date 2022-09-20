@@ -22,7 +22,7 @@
  * Description:  Public header file for the scene service
  *
  * $Date:        20. Sept 2022
- * $Revision:    V.1.3.7
+ * $Revision:    V.1.3.8
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -73,9 +73,86 @@
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
-/*============================ GLOBAL VARIABLES ==============================*/
-/*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
+
+extern
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_user);
+
+static
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade);
+
+static
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide);
+
+static
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase);
+
+/*============================ GLOBAL VARIABLES ==============================*/
+
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_NONE = {
+    .chEffects =                ARM_2D_SCENE_SWITCH_CFG_NONE,
+    .fnSwitchDrawer =           NULL,
+};
+
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_USER = {
+    .chEffects =                ARM_2D_SCENE_SWITCH_CFG_USER,
+    .fnSwitchDrawer =           &__pfb_draw_scene_mode_user,
+};
+
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE = {
+    .chEffects =                ARM_2D_SCENE_SWITCH_CFG_FADE_WHITE,
+    .fnSwitchDrawer =           &__pfb_draw_scene_mode_fade,
+};
+
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FADE_BLACK = {
+    .chEffects =                ARM_2D_SCENE_SWITCH_CFG_FADE_BLACK,
+    .fnSwitchDrawer =           &__pfb_draw_scene_mode_fade,
+};
+
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT = {
+    .chEffects =                ARM_2D_SCENE_SWITCH_CFG_SLIDE_LEFT,
+    .fnSwitchDrawer =           __pfb_draw_scene_mode_slide,
+};
+
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_SLIDE_RIGHT = {
+    .chEffects =                ARM_2D_SCENE_SWITCH_CFG_SLIDE_RIGHT,
+    .fnSwitchDrawer =           __pfb_draw_scene_mode_slide,
+};
+
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_SLIDE_UP = {
+    .chEffects =                ARM_2D_SCENE_SWITCH_CFG_SLIDE_UP,
+    .fnSwitchDrawer =           __pfb_draw_scene_mode_slide,
+};
+
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_SLIDE_DOWN = {
+    .chEffects =                ARM_2D_SCENE_SWITCH_CFG_SLIDE_DOWN,
+    .fnSwitchDrawer =           __pfb_draw_scene_mode_slide,
+};
+
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_ERASE_LEFT = {
+    .chEffects =                ARM_2D_SCENE_SWITCH_CFG_ERASE_LEFT,
+    .fnSwitchDrawer =           __pfb_draw_scene_mode_erase,
+};
+
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_ERASE_RIGHT = {
+    .chEffects =                ARM_2D_SCENE_SWITCH_CFG_ERASE_RIGHT,
+    .fnSwitchDrawer =           __pfb_draw_scene_mode_erase,
+};
+
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_ERASE_UP = {
+    .chEffects =                ARM_2D_SCENE_SWITCH_CFG_ERASE_UP,
+    .fnSwitchDrawer =           __pfb_draw_scene_mode_erase,
+};
+
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_ERASE_DOWN = {
+    .chEffects =                ARM_2D_SCENE_SWITCH_CFG_ERASE_DOWN,
+    .fnSwitchDrawer =           __pfb_draw_scene_mode_erase,
+};
+
+
+/*============================ PROTOTYPES ====================================*/
+
+
 /*============================ IMPLEMENTATION ================================*/
 
 /*-----------------------------------------------------------------------------*
@@ -168,21 +245,28 @@ static void __arm_2d_scene_player_next_scene(arm_2d_scene_player_t *ptThis)
 }
 
 ARM_NONNULL(1)
-void arm_2d_scene_player_set_switching_mode(arm_2d_scene_player_t *ptThis,
-                                            uint_fast16_t hwSettings)
+void __arm_2d_scene_player_set_switching_mode(  arm_2d_scene_player_t *ptThis,
+                                                arm_2d_scene_switch_mode_t *ptMode,
+                                                uint16_t hwSettings)
 {
     assert(NULL != ptThis);
     
+    this.Switch.ptMode = ptMode;
+    if (NULL == ptMode) {
+        return ;
+    }
+
     /* valid input */
-    assert(     (   (hwSettings & __ARM_2D_SCENE_SWTICH_MODE_DEFAULT_BG_msk) 
-                >>  __ARM_2D_SCENE_SWTICH_MODE_DEFAULT_BG_pos) 
+    assert(     (   (hwSettings & __ARM_2D_SCENE_SWTICH_CFG_DEFAULT_BG_msk) 
+                >>  __ARM_2D_SCENE_SWTICH_CFG_DEFAULT_BG_pos) 
             <   3);
-            
+
     this.Switch.tConfig.hwSetting = hwSettings;
+    this.Switch.tConfig.Feature.chMode = ptMode->chEffects;
 }
 
 ARM_NONNULL(1)
-uint16_t arm_2d_scene_player_get_switching_mode(arm_2d_scene_player_t *ptThis)
+uint16_t arm_2d_scene_player_get_switching_cfg(arm_2d_scene_player_t *ptThis)
 {
     assert(NULL != ptThis);
     return this.Switch.tConfig.hwSetting;
@@ -251,13 +335,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_default_background)
     arm_2d_scene_player_t *ptThis = (arm_2d_scene_player_t *)pTarget;
     
     switch(this.Switch.tConfig.Feature.u2DefaultBG) {
-    case 0: /* ARM_2D_SCENE_SWITCH_MODE_DEFAULT_BG_WHITE */
+    case 0: /* ARM_2D_SCENE_SWITCH_CFG_DEFAULT_BG_WHITE */
         arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
         break;
-    case 1: /* ARM_2D_SCENE_SWITCH_MODE_DEFAULT_BG_BLACK */
+    case 1: /* ARM_2D_SCENE_SWITCH_CFG_DEFAULT_BG_BLACK */
         arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
         break;
-    case 2: /* ARM_2D_SCENE_SWITCH_MODE_DEFAULT_BG_USER */
+    case 2: /* ARM_2D_SCENE_SWITCH_CFG_DEFAULT_BG_USER */
     case 3:
         __pfb_draw_scene_mode_user_default_background(pTarget, ptTile, bIsNewFrame);
         break;
@@ -285,9 +369,12 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
     bool bIgnoreBG = true;
     bool bIgnoreScene = true;
     
-    __arm_2d_color_t tColour    = this.Switch.Fade.bIsFadeBlack 
-                                ?   (__arm_2d_color_t){GLCD_COLOR_BLACK}
-                                :   (__arm_2d_color_t){GLCD_COLOR_WHITE};
+    __arm_2d_color_t tColour    
+        =   (   ARM_2D_SCENE_SWITCH_CFG_FADE_BLACK
+            ==  this.Switch.tConfig.Feature.chMode)
+        ?   (__arm_2d_color_t){GLCD_COLOR_BLACK}
+        :   (__arm_2d_color_t){GLCD_COLOR_WHITE};
+
 
     uint16_t hwKeepPeriod = MIN(this.Switch.hwPeriod / 3, 500);
     
@@ -461,12 +548,12 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
     int16_t iOffset = 0;
     
     switch(this.Switch.tConfig.Feature.chMode) {
-        case ARM_2D_SCENE_SWITCH_MODE_ERASE_LEFT:
-        case ARM_2D_SCENE_SWITCH_MODE_ERASE_RIGHT:
+        case ARM_2D_SCENE_SWITCH_CFG_ERASE_LEFT:
+        case ARM_2D_SCENE_SWITCH_CFG_ERASE_RIGHT:
             iTargetDistance = ptTile->tRegion.tSize.iWidth;
             break;
-        case ARM_2D_SCENE_SWITCH_MODE_ERASE_UP:
-        case ARM_2D_SCENE_SWITCH_MODE_ERASE_DOWN:
+        case ARM_2D_SCENE_SWITCH_CFG_ERASE_UP:
+        case ARM_2D_SCENE_SWITCH_CFG_ERASE_DOWN:
             iTargetDistance = ptTile->tRegion.tSize.iHeight;
             break;
         default:
@@ -556,7 +643,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
         };
         
         switch(this.Switch.tConfig.Feature.chMode) {
-            case ARM_2D_SCENE_SWITCH_MODE_ERASE_LEFT:
+            case ARM_2D_SCENE_SWITCH_CFG_ERASE_LEFT:
                 tWindow.tSize.iWidth -= iOffset;
                 arm_2d_tile_generate_child( ptTile, 
                                             &tWindow, 
@@ -569,7 +656,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
                                             &this.Switch.Erase.tSceneWindow, 
                                             false);
                 break;
-            case ARM_2D_SCENE_SWITCH_MODE_ERASE_RIGHT:
+            case ARM_2D_SCENE_SWITCH_CFG_ERASE_RIGHT:
                 tWindow.tSize.iWidth -= iOffset;
                 tWindow.tLocation.iX += iOffset;
 
@@ -585,7 +672,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
                                             &this.Switch.Erase.tSceneWindow, 
                                             false);
                 break;
-            case ARM_2D_SCENE_SWITCH_MODE_ERASE_UP:
+            case ARM_2D_SCENE_SWITCH_CFG_ERASE_UP:
                 tWindow.tSize.iHeight -= iOffset;
                 arm_2d_tile_generate_child( ptTile, 
                                             &tWindow, 
@@ -599,7 +686,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
                                             false);
                 break;
 
-            case ARM_2D_SCENE_SWITCH_MODE_ERASE_DOWN:
+            case ARM_2D_SCENE_SWITCH_CFG_ERASE_DOWN:
                 tWindow.tSize.iHeight -= iOffset;
                 tWindow.tLocation.iY += iOffset;
 
@@ -640,7 +727,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
         tWindow = (arm_2d_region_t){ .tSize = ptTile->tRegion.tSize };
         
         switch(this.Switch.tConfig.Feature.chMode) {
-            case ARM_2D_SCENE_SWITCH_MODE_ERASE_LEFT:
+            case ARM_2D_SCENE_SWITCH_CFG_ERASE_LEFT:
                 tWindow.tSize.iWidth = iOffset;
                 tWindow.tLocation.iX = iTargetDistance - iOffset;
 
@@ -657,7 +744,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
                                             false);
                 break;
 
-            case ARM_2D_SCENE_SWITCH_MODE_ERASE_RIGHT:
+            case ARM_2D_SCENE_SWITCH_CFG_ERASE_RIGHT:
                 tWindow.tSize.iWidth = iOffset;
                 arm_2d_tile_generate_child( ptTile, 
                                             &tWindow, 
@@ -671,7 +758,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
                                             false);
                 break;
 
-            case ARM_2D_SCENE_SWITCH_MODE_ERASE_UP:
+            case ARM_2D_SCENE_SWITCH_CFG_ERASE_UP:
                 tWindow.tSize.iHeight = iOffset;
                 tWindow.tLocation.iY = iTargetDistance - iOffset;
 
@@ -688,7 +775,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
                                             false);
                 break;
 
-            case ARM_2D_SCENE_SWITCH_MODE_ERASE_DOWN:
+            case ARM_2D_SCENE_SWITCH_CFG_ERASE_DOWN:
                 tWindow.tSize.iHeight = iOffset;
                 arm_2d_tile_generate_child( ptTile, 
                                             &tWindow, 
@@ -724,7 +811,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
 }
 
 
-
+static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
 {
     enum {
@@ -739,12 +826,12 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
     //int16_t iOffset = 0;
     
     switch(this.Switch.tConfig.Feature.chMode) {
-        case ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT:
-        case ARM_2D_SCENE_SWITCH_MODE_SLIDE_RIGHT:
+        case ARM_2D_SCENE_SWITCH_CFG_SLIDE_LEFT:
+        case ARM_2D_SCENE_SWITCH_CFG_SLIDE_RIGHT:
             iTargetDistance = ptTile->tRegion.tSize.iWidth;
             break;
-        case ARM_2D_SCENE_SWITCH_MODE_SLIDE_UP:
-        case ARM_2D_SCENE_SWITCH_MODE_SLIDE_DOWN:
+        case ARM_2D_SCENE_SWITCH_CFG_SLIDE_UP:
+        case ARM_2D_SCENE_SWITCH_CFG_SLIDE_DOWN:
             iTargetDistance = ptTile->tRegion.tSize.iHeight;
             break;
         default:
@@ -837,21 +924,21 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
         };
         
         switch(this.Switch.tConfig.Feature.chMode) {
-            case ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT:
+            case ARM_2D_SCENE_SWITCH_CFG_SLIDE_LEFT:
                 tWindow.tLocation.iX = -this.Switch.Slide.iOffset;
                 arm_2d_tile_generate_child( ptTile, 
                                             &tWindow, 
                                             &this.Switch.Slide.tSceneWindow, 
                                             false);
                 break;
-            case ARM_2D_SCENE_SWITCH_MODE_SLIDE_RIGHT:
+            case ARM_2D_SCENE_SWITCH_CFG_SLIDE_RIGHT:
                 tWindow.tLocation.iX = this.Switch.Slide.iOffset;
                 arm_2d_tile_generate_child( ptTile, 
                                             &tWindow, 
                                             &this.Switch.Slide.tSceneWindow, 
                                             false);
                 break;
-            case ARM_2D_SCENE_SWITCH_MODE_SLIDE_UP:
+            case ARM_2D_SCENE_SWITCH_CFG_SLIDE_UP:
                 tWindow.tLocation.iY = -this.Switch.Slide.iOffset;
                 arm_2d_tile_generate_child( ptTile, 
                                             &tWindow, 
@@ -859,7 +946,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
                                             false);
                 break;
 
-            case ARM_2D_SCENE_SWITCH_MODE_SLIDE_DOWN:
+            case ARM_2D_SCENE_SWITCH_CFG_SLIDE_DOWN:
                 tWindow.tLocation.iY = this.Switch.Slide.iOffset;
                 arm_2d_tile_generate_child( ptTile, 
                                             &tWindow, 
@@ -891,7 +978,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
         tWindow = (arm_2d_region_t){ .tSize = ptTile->tRegion.tSize };
         
         switch(this.Switch.tConfig.Feature.chMode) {
-            case ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT:
+            case ARM_2D_SCENE_SWITCH_CFG_SLIDE_LEFT:
                 tWindow.tLocation.iX = iTargetDistance - this.Switch.Slide.iOffset;
                 arm_2d_tile_generate_child( ptTile, 
                                             &tWindow, 
@@ -899,7 +986,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
                                             false);
                 break;
 
-            case ARM_2D_SCENE_SWITCH_MODE_SLIDE_RIGHT:
+            case ARM_2D_SCENE_SWITCH_CFG_SLIDE_RIGHT:
                 tWindow.tLocation.iX = -(iTargetDistance - this.Switch.Slide.iOffset);
                 arm_2d_tile_generate_child( ptTile, 
                                             &tWindow, 
@@ -907,7 +994,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
                                             false);
                 break;
 
-            case ARM_2D_SCENE_SWITCH_MODE_SLIDE_UP:
+            case ARM_2D_SCENE_SWITCH_CFG_SLIDE_UP:
                 tWindow.tLocation.iY = iTargetDistance - this.Switch.Slide.iOffset;
                 arm_2d_tile_generate_child( ptTile, 
                                             &tWindow, 
@@ -915,7 +1002,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
                                             false);
                 break;
 
-            case ARM_2D_SCENE_SWITCH_MODE_SLIDE_DOWN:
+            case ARM_2D_SCENE_SWITCH_CFG_SLIDE_DOWN:
                 tWindow.tLocation.iY = -(iTargetDistance - this.Switch.Slide.iOffset);
                 arm_2d_tile_generate_child( ptTile, 
                                             &tWindow, 
@@ -943,8 +1030,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
 
     return arm_fsm_rt_cpl;
 }
-
-
 
 /*-----------------------------------------------------------------------------*
  * Misc                                                                        *
@@ -1062,11 +1147,14 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             ARM_2D_INVOKE(ptScene->fnOnFrameCPL, ptScene);
 
             if (this.Runtime.bNextSceneReq) {
-            
-                if (    (    ARM_2D_SCENE_SWITCH_MODE_NONE 
+                /* update switching mode */
+                this.Switch.tConfig.Feature.chMode = this.Switch.ptMode->chEffects;
+                
+                if (    (    ARM_2D_SCENE_SWITCH_CFG_NONE 
                         ==   this.Switch.tConfig.Feature.chMode)
                    ||   (   this.Switch.tConfig.Feature.chMode
-                        >=  __ARM_2D_SCENE_SWITCH_MODE_VALID)) {
+                        >=  __ARM_2D_SCENE_SWITCH_CFG_VALID)
+                   ||   (NULL == this.Switch.ptMode)) {
                    /* no or unsupported visual effect for switching*/
                     this.Runtime.chState = SWITCH_SCENE_POST;
                 } else {
@@ -1085,51 +1173,15 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             break;
         
         case SWITCH_SCENE_PREPARE: {
-                arm_2d_helper_draw_handler_t *fnSwitchDrawer = NULL;
-
-                assert(     this.Switch.tConfig.Feature.chMode 
-                        !=  ARM_2D_SCENE_SWITCH_MODE_NONE);
                 
-                switch (this.Switch.tConfig.Feature.chMode) {
-                    default:
-                    case ARM_2D_SCENE_SWITCH_MODE_NONE:
-                    case ARM_2D_SCENE_SWITCH_MODE_USER:
-                        /* use user defined switching drawer */
-                        fnSwitchDrawer = __pfb_draw_scene_mode_user;
-                        break;
-
-                    case ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE:
-                        this.Switch.Fade.bIsFadeBlack = false;
-                        /* fade in fade out */
-                        fnSwitchDrawer = __pfb_draw_scene_mode_fade;
-                        break;
-                    case ARM_2D_SCENE_SWITCH_MODE_FADE_BLACK:
-                        this.Switch.Fade.bIsFadeBlack = true;
-                        /* fade in fade out */
-                        fnSwitchDrawer = __pfb_draw_scene_mode_fade;
-                        break;
-
-                    case ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT:
-                    case ARM_2D_SCENE_SWITCH_MODE_SLIDE_RIGHT:
-                    case ARM_2D_SCENE_SWITCH_MODE_SLIDE_UP:
-                    case ARM_2D_SCENE_SWITCH_MODE_SLIDE_DOWN:
-                        /* slide effect */
-                        fnSwitchDrawer = __pfb_draw_scene_mode_slide;
-                        break;
-
-                    case ARM_2D_SCENE_SWITCH_MODE_ERASE_LEFT:
-                    case ARM_2D_SCENE_SWITCH_MODE_ERASE_RIGHT:
-                    case ARM_2D_SCENE_SWITCH_MODE_ERASE_UP:
-                    case ARM_2D_SCENE_SWITCH_MODE_ERASE_DOWN:
-                        /* erase effect */
-                        fnSwitchDrawer = __pfb_draw_scene_mode_erase;
-                        break;
-                }
                 
+                assert(     this.Switch.ptMode->chEffects 
+                        !=  ARM_2D_SCENE_SWITCH_CFG_NONE);
+
                 /* update drawer */
                 ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(
                     &this.use_as__arm_2d_helper_pfb_t,
-                    fnSwitchDrawer,
+                    this.Switch.ptMode->fnSwitchDrawer,
                     ptThis);
                 
                 /* reset flag */
