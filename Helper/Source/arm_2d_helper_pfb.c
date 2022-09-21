@@ -22,7 +22,7 @@
  * Description:  the pfb helper service source code
  *
  * $Date:        20. Sept 2022
- * $Revision:    V.1.3.1
+ * $Revision:    V.1.3.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -357,42 +357,44 @@ void __arm_2d_helper_low_level_rendering(arm_2d_helper_pfb_t *ptThis)
 }
 
 
+__STATIC_INLINE bool __when_dirty_region_list_is_empty(arm_2d_helper_pfb_t *ptThis)
+{
+    /* check whether has already been switched to the navigation dirty 
+     * region list 
+     */
+    if (this.Adapter.bNoAdditionalDirtyRegionList) {
+        // no dirty region is available
+        this.Adapter.bFirstIteration = true;
+        
+        return false;
+    } else if ( (NULL != this.tCFG.Dependency.Navigation.evtOnDrawing.fnHandler)
+           &&   (NULL != this.tCFG.Dependency.Navigation.ptDirtyRegion)) {
+        
+        /* switch to navigation dirty region list */
+        this.Adapter.ptDirtyRegion = this.tCFG.Dependency.Navigation.ptDirtyRegion;
+        this.Adapter.bNoAdditionalDirtyRegionList = true;
+        
+        this.Adapter.bIsRegionChanged = true;
+        return true;
+    } else {
+        // no dirty region is available
+        this.Adapter.bFirstIteration = true;
+        
+        return false;
+    }
+}
+
 static bool __arm_2d_helper_pfb_get_next_dirty_region(arm_2d_helper_pfb_t *ptThis)
 {
     if (NULL == this.Adapter.ptDirtyRegion) {
-    
-        /* check whether has already been switched to the navigation dirty 
-         * region list 
-         */
-        if (this.Adapter.bNoAdditionalDirtyRegionList) {
-            // no dirty region is available
-            this.Adapter.bFirstIteration = true;
-            
-            return false;
-        } else if ( (NULL != this.tCFG.Dependency.Navigation.evtOnDrawing.fnHandler)
-               &&   (NULL != this.tCFG.Dependency.Navigation.ptDirtyRegion)) {
-            
-            /* switch to navigation dirty region list */
-            this.Adapter.ptDirtyRegion = this.tCFG.Dependency.Navigation.ptDirtyRegion;
-            this.Adapter.bNoAdditionalDirtyRegionList = true;
-            
-            this.Adapter.bIsRegionChanged = true;
-            return true;
-        } else {
-            // no dirty region is available
-            this.Adapter.bFirstIteration = true;
-            
-            return false;
-        }
+        return __when_dirty_region_list_is_empty(ptThis);
     } 
     
     this.Adapter.ptDirtyRegion = this.Adapter.ptDirtyRegion->ptNext;
     
     if (NULL == this.Adapter.ptDirtyRegion) {
         // reach last item in a chain
-        this.Adapter.bFirstIteration = true;
-        
-        return false;
+        return __when_dirty_region_list_is_empty(ptThis);
     } else {
         this.Adapter.bIsRegionChanged = true;
     }
