@@ -50,6 +50,9 @@
 extern
 const arm_2d_tile_t c_tileWhiteDotAlphaQuarter;
 
+extern
+const arm_2d_tile_t c_tileWhiteDotMask;
+
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
@@ -63,6 +66,95 @@ impl_fb(s_tCorner, 7, 7, uint8_t,
         },
     },
 )
+
+
+const arm_2d_tile_t c_tileWhiteDotAlphaQ4 = {
+    .tRegion = {
+        .tLocation = {
+            .iX = 7,
+            .iY = 7,
+        },
+        .tSize = {
+            .iWidth = 7,
+            .iHeight = 7,
+        },
+    },
+    .tInfo = {
+        .bIsRoot = false,
+        .bHasEnforcedColour = true,
+        .bDerivedResource = true,
+        .tColourInfo = {
+            .chScheme = ARM_2D_COLOUR_8BIT,
+        },
+    },
+    .ptParent = (arm_2d_tile_t *)&c_tileWhiteDotMask,
+};
+
+const arm_2d_tile_t c_tileWhiteDotAlphaQ1 = {
+    .tRegion = {
+        .tLocation = {
+            .iX = 7,
+            .iY = 0,
+        },
+        .tSize = {
+            .iWidth = 7,
+            .iHeight = 7,
+        },
+    },
+    .tInfo = {
+        .bIsRoot = false,
+        .bHasEnforcedColour = true,
+        .bDerivedResource = true,
+        .tColourInfo = {
+            .chScheme = ARM_2D_COLOUR_8BIT,
+        },
+    },
+    .ptParent = (arm_2d_tile_t *)&c_tileWhiteDotMask,
+};
+
+const arm_2d_tile_t c_tileWhiteDotAlphaQ2 = {
+    .tRegion = {
+        .tLocation = {
+            .iX = 0,
+            .iY = 0,
+        },
+        .tSize = {
+            .iWidth = 7,
+            .iHeight = 7,
+        },
+    },
+    .tInfo = {
+        .bIsRoot = false,
+        .bHasEnforcedColour = true,
+        .bDerivedResource = true,
+        .tColourInfo = {
+            .chScheme = ARM_2D_COLOUR_8BIT,
+        },
+    },
+    .ptParent = (arm_2d_tile_t *)&c_tileWhiteDotMask,
+};
+
+const arm_2d_tile_t c_tileWhiteDotAlphaQ3 = {
+    .tRegion = {
+        .tLocation = {
+            .iX = 0,
+            .iY = 7,
+        },
+        .tSize = {
+            .iWidth = 7,
+            .iHeight = 7,
+        },
+    },
+    .tInfo = {
+        .bIsRoot = false,
+        .bHasEnforcedColour = true,
+        .bDerivedResource = true,
+        .tColourInfo = {
+            .chScheme = ARM_2D_COLOUR_8BIT,
+        },
+    },
+    .ptParent = (arm_2d_tile_t *)&c_tileWhiteDotMask,
+};
 
 /*============================ IMPLEMENTATION ================================*/
 
@@ -81,7 +173,8 @@ void draw_round_corner_box( const arm_2d_tile_t *ptTarget,
     }
 
     arm_2d_region_t tRegion = *ptRegion;
-    
+
+#if 0
     //! copy the top left corner
     arm_2d_c8bit_tile_copy_with_xy_mirror(  &c_tileWhiteDotAlphaQuarter, 
                                             &s_tCorner, 
@@ -194,6 +287,107 @@ void draw_round_corner_box( const arm_2d_tile_t *ptTarget,
         hwFillAlpha);
 
     arm_2d_op_wait_async(NULL);
+#else
+    //! copy the top left corner
+    arm_2d_fill_colour_with_mask_and_opacity(   
+                                            ptTarget, 
+                                            &tRegion, 
+                                            &c_tileWhiteDotAlphaQ2, 
+                                            (__arm_2d_color_t){tColour},
+                                            chAlpha);
+                                                
+    arm_2d_op_wait_async(NULL);
+
+    //! copy the top right corner
+    tRegion.tLocation.iX += ptRegion->tSize.iWidth - s_tCorner.tRegion.tSize.iWidth;
+                            
+    arm_2d_fill_colour_with_mask_and_opacity(   
+                                            ptTarget, 
+                                            &tRegion, 
+                                            &c_tileWhiteDotAlphaQ1, 
+                                            (__arm_2d_color_t){tColour},
+                                            chAlpha);
+
+    arm_2d_op_wait_async(NULL);
+
+    arm_2dp_fill_colour_with_opacity(   
+        NULL,
+        ptTarget, 
+        &(arm_2d_region_t) {
+            .tSize = {
+                .iHeight = s_tCorner.tRegion.tSize.iHeight,
+                .iWidth = tRegion.tSize.iWidth - s_tCorner.tRegion.tSize.iWidth * 2,
+            },
+            .tLocation = {
+                .iX = ptRegion->tLocation.iX + s_tCorner.tRegion.tSize.iWidth,
+                .iY = ptRegion->tLocation.iY,
+            },
+        }, 
+        (__arm_2d_color_t){tColour},
+        hwFillAlpha);
+    
+    arm_2d_op_wait_async(NULL);
+
+    arm_2dp_fill_colour_with_opacity(   
+        NULL,
+        ptTarget, 
+        &(arm_2d_region_t) {
+            .tSize = {
+                .iHeight = tRegion.tSize.iHeight - s_tCorner.tRegion.tSize.iHeight * 2,
+                .iWidth = tRegion.tSize.iWidth,
+            },
+            .tLocation = {
+                .iX = ptRegion->tLocation.iX,
+                .iY = ptRegion->tLocation.iY + s_tCorner.tRegion.tSize.iHeight,
+            },
+        }, 
+        (__arm_2d_color_t){tColour},
+        hwFillAlpha);
+
+    arm_2d_op_wait_async(NULL);
+                            
+    //! copy the bottom right corner 
+    tRegion.tLocation.iY += ptRegion->tSize.iHeight - s_tCorner.tRegion.tSize.iHeight;
+
+    arm_2d_fill_colour_with_mask_and_opacity(   
+                                            ptTarget, 
+                                            &tRegion, 
+                                            &c_tileWhiteDotAlphaQ4, 
+                                            (__arm_2d_color_t){tColour},
+                                            chAlpha);
+
+    arm_2d_op_wait_async(NULL);
+
+    //! copy the bottom left corner 
+    tRegion.tLocation.iX = ptRegion->tLocation.iX;
+                            
+    arm_2d_fill_colour_with_mask_and_opacity(  
+                                            ptTarget, 
+                                            &tRegion, 
+                                            &c_tileWhiteDotAlphaQ3, 
+                                            (__arm_2d_color_t){tColour},
+                                            chAlpha);
+
+    arm_2d_op_wait_async(NULL);
+
+    arm_2dp_fill_colour_with_opacity(   
+        NULL,
+        ptTarget, 
+        &(arm_2d_region_t) {
+            .tSize = {
+                .iHeight = s_tCorner.tRegion.tSize.iHeight,
+                .iWidth = tRegion.tSize.iWidth - s_tCorner.tRegion.tSize.iWidth * 2,
+            },
+            .tLocation = {
+                .iX = tRegion.tLocation.iX + s_tCorner.tRegion.tSize.iWidth,
+                .iY = tRegion.tLocation.iY,
+            },
+        }, 
+        (__arm_2d_color_t){tColour},
+        hwFillAlpha);
+
+    arm_2d_op_wait_async(NULL);
+#endif
 }
 
 
