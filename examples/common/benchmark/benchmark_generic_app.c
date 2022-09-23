@@ -237,6 +237,49 @@ IMPL_PFB_ON_DRAW(__pfb_draw_background_handler)
     return arm_fsm_rt_cpl;
 }
 
+#if __ARM_2D_CFG_BENCHMARK_ENABLE_ASYNC_FLUSHING__
+
+/* using asynchronous flushing, e.g. using DMA + ISR to offload CPU etc. 
+ * It can significantly reduce the LCD Latency hence improve the overrall 
+ * framerate. 
+ */
+
+void benchmark_insert_async_flushing_complete_event_handler(void)
+{
+    arm_2d_helper_pfb_report_rendering_complete(
+                    &BENCHMARK_DISP_ADAPTER.use_as__arm_2d_helper_pfb_t);
+}
+
+__WEAK
+IMPL_PFB_ON_LOW_LV_RENDERING(__pfb_render_handler)
+{
+    const arm_2d_tile_t *ptTile = &(ptPFB->tTile);
+
+    ARM_2D_UNUSED(pTarget);
+    ARM_2D_UNUSED(bIsNewFrame);
+
+    if (0 == BENCHMARK.wIterations || s_bDrawInfo) {
+        /* request an asynchronous flushing */
+        benchmark_request_async_flushing(
+                        pTarget,
+                        bIsNewFrame,
+                        ptTile->tRegion.tLocation.iX,
+                        ptTile->tRegion.tLocation.iY,
+                        ptTile->tRegion.tSize.iWidth,
+                        ptTile->tRegion.tSize.iHeight,
+                        (const COLOUR_INT *)ptTile->pchBuffer);
+    } else {
+        arm_2d_helper_pfb_report_rendering_complete(
+            &BENCHMARK_DISP_ADAPTER.use_as__arm_2d_helper_pfb_t);
+    }
+}
+
+#else
+/* using asynchronous flushing, i.e. use CPU to flush LCD.
+ * The LCD Latency will be high and reduce the overral framerate.
+ * Meanwhile, in developing stage, this method can ensure a robust flushing. 
+ */
+
 __WEAK 
 void Disp0_DrawBitmap(  int16_t x, 
                         int16_t y, 
@@ -261,6 +304,7 @@ void Benchmark_DrawBitmap(  int16_t x,
     Disp0_DrawBitmap(x, y, width, height, bitmap);
 }
 
+
 __WEAK
 IMPL_PFB_ON_LOW_LV_RENDERING(__pfb_render_handler)
 {
@@ -277,9 +321,9 @@ IMPL_PFB_ON_LOW_LV_RENDERING(__pfb_render_handler)
                         (const uint8_t *)ptTile->pchBuffer);
     }
     arm_2d_helper_pfb_report_rendering_complete(
-                            &BENCHMARK_DISP_ADAPTER.use_as__arm_2d_helper_pfb_t
-                        );
+        &BENCHMARK_DISP_ADAPTER.use_as__arm_2d_helper_pfb_t);
 }
+#endif
 
 
 void arm_2d_scene_player_init(void)

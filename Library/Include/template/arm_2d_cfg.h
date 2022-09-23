@@ -86,65 +86,71 @@ extern "C" {
 //     <16=>    16Bits
 //     <32=>    32Bits
 // <i> The colour depth of your LCD
-#define __GLCD_CFG_COLOUR_DEPTH__               16
+#define __GLCD_CFG_COLOUR_DEPTH__                           16
 
 // <o>Width of the screen <8-32767>
 // <i> The width of your screen
 // <i> Default: 320
 #ifndef __GLCD_CFG_SCEEN_WIDTH__
-#   define __GLCD_CFG_SCEEN_WIDTH__             320
+#   define __GLCD_CFG_SCEEN_WIDTH__                         320
 #endif
 
 // <o>Height of the screen <8-32767>
 // <i> The height of your screen
 // <i> Default: 240
 #ifndef __GLCD_CFG_SCEEN_HEIGHT__
-#   define __GLCD_CFG_SCEEN_HEIGHT__            240
+#   define __GLCD_CFG_SCEEN_HEIGHT__                        240
 #endif
 
 // <o> The size of the LCD printf text buffer <16-65535>
 // <i> The text buffer size for the lcd printf service. It determins how many character you can use in one printf string.
 #ifndef __LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__
-#   define __LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__  64
+#   define __LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__              64
 #endif
 
 // <h>Benchmark
 // <o>Width of the PFB block <8-32767>
 // <i> The width of your PFB block size used in arm-2d benchmark
 #ifndef BENCHMARK_PFB_BLOCK_WIDTH
-#   define BENCHMARK_PFB_BLOCK_WIDTH            320
+#   define BENCHMARK_PFB_BLOCK_WIDTH                        320
 #endif
 
 // <o>Height of the PFB block <8-32767>
 // <i> The height of your PFB block size used in arm-2d benchmark
 #ifndef BENCHMARK_PFB_BLOCK_HEIGHT
-#   define BENCHMARK_PFB_BLOCK_HEIGHT           240
+#   define BENCHMARK_PFB_BLOCK_HEIGHT                       240
 #endif
 
 // <o>PFB Block Count <1-65535>
 // <i> The number of blocks in the PFB pool.
 #ifndef BENCHMARK_PFB_HEAP_SIZE
-#   define BENCHMARK_PFB_HEAP_SIZE              1
+#   define BENCHMARK_PFB_HEAP_SIZE                          1
+#endif
+
+// <q>Enable the helper service for Asynchronous Flushing
+// <i> Please select this option when using asynchronous flushing, e.g. DMA + ISR 
+#ifndef __ARM_2D_CFG_BENCHMARK_ENABLE_ASYNC_FLUSHING__
+#   define __ARM_2D_CFG_BENCHMARK_ENABLE_ASYNC_FLUSHING__   1
 #endif
 
 // <o>Number of iterations <1-2000>
-// <i> run number of iterations used in arm-2d benchmark before calculate the result.
+// <i> run number of iterations in arm-2d benchmark before calculating the result.
 #ifndef ITERATION_CNT
-#   define ITERATION_CNT                        1000
+#   define ITERATION_CNT                                    1000
 #endif
 
 // <q>Use Tiny mode to run benchmark
 // <i> Enable this mode to reduce the benchmark memory footprint (removing background picture etc.)
 // <i> This feature is disabled by default.
 #ifndef __ARM_2D_CFG_BENCHMARK_TINY_MODE__
-#   define __ARM_2D_CFG_BENCHMARK_TINY_MODE__   0
+#   define __ARM_2D_CFG_BENCHMARK_TINY_MODE__               0
 #endif
 
 // <q> Enable Stopwatch mode in the Benchmark:Watch-panel
 // <i> Only update the second-hand (i.e. red pointer) every second in the watch-panel demo
 // <i> This feature is disabled by default.
 #ifndef __ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__
-#   define __ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__    0
+#   define __ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__        0
 #endif
 //</h>
 // </h>
