@@ -130,8 +130,8 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * Title:        #include &quot;arm_2d_helper_pfb.h&quot;</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * Description:  Public header file for the PFB helper service </span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        20. Sept 2022</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.3.1</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        23. Sept 2022</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.3.2</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> * Target Processor:  Cortex-M cores</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment"> * -------------------------------------------------------------------- */</span></div>
@@ -570,7 +570,7 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span>        uint16_t                    hwFreePFBCount;</div>
 <div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span>        <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a>               *ptCurrent;</div>
 <div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span>        <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a>               *ptFreeList;</div>
-<div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span>        </div>
+<div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span>        <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a>               *ptFlushing;</div>
 <div class="line"><a id="l00465" name="l00465"></a><span class="lineno">  465</span>        <span class="keyword">struct </span>{</div>
 <div class="line"><a id="l00466" name="l00466"></a><span class="lineno">  466</span>            <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a>           *ptHead;</div>
 <div class="line"><a id="l00467" name="l00467"></a><span class="lineno">  467</span>            <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a>           *ptTail;</div>
@@ -662,7 +662,7 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l00553" name="l00553"></a><span class="lineno">  553</span><span class="comment"> *  \param[in] ptPFB the used PFB block</span></div>
 <div class="line"><a id="l00554" name="l00554"></a><span class="lineno">  554</span><span class="comment"> */</span></div>
 <div class="line"><a id="l00555" name="l00555"></a><span class="lineno">  555</span>extern</div>
-<div class="line"><a id="l00556" name="l00556"></a><span class="lineno">  556</span>ARM_NONNULL(1,2)</div>
+<div class="line"><a id="l00556" name="l00556"></a><span class="lineno">  556</span>ARM_NONNULL(1)</div>
 <div class="line"><a id="l00557" name="l00557"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga2fb25b4b8c12a021f686b0383960b012">  557</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga2fb25b4b8c12a021f686b0383960b012" title="tell PFB helper that a low level LCD flushing work is complete">arm_2d_helper_pfb_report_rendering_complete</a>(   <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis,</div>
 <div class="line"><a id="l00558" name="l00558"></a><span class="lineno">  558</span>                                                    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> *ptPFB);</div>
 <div class="line"><a id="l00559" name="l00559"></a><span class="lineno">  559</span><span class="comment"></span> </div>
