@@ -22,7 +22,7 @@
  * Description:  the pfb helper service source code
  *
  * $Date:        23. Sept 2022
- * $Revision:    V.1.3.2
+ * $Revision:    V.1.3.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -648,14 +648,19 @@ void __arm_2d_helper_pfb_report_rendering_complete( arm_2d_helper_pfb_t *ptThis,
     arm_irq_safe {
         if (NULL == ptPFB) {
             ptPFB = this.Adapter.ptFlushing;
-        } else {
+            this.Adapter.ptFlushing = NULL;
+        } /*else {
             assert(ptPFB == this.Adapter.ptFlushing);
             ARM_2D_UNUSED(ptPFB);
             ARM_2D_UNUSED(ptThis);
-        }
-        this.Adapter.ptFlushing = NULL;
+        } */
     }
-    
+
+    if (NULL == ptPFB) {
+        assert(false);  /* this should not happen */
+        return ;
+    }
+
     ptPFB->tTile.tRegion.tLocation = (arm_2d_location_t) {0,0};
     
     __arm_2d_helper_pfb_free(ptThis, ptPFB);
