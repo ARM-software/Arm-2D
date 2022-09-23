@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        20. Sept 2022
- * $Revision:    V.1.3.1
+ * $Date:        23. Sept 2022
+ * $Revision:    V.1.3.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -461,7 +461,7 @@ ARM_PRIVATE(
         uint16_t                    hwFreePFBCount;
         arm_2d_pfb_t               *ptCurrent;
         arm_2d_pfb_t               *ptFreeList;
-        
+        arm_2d_pfb_t               *ptFlushing;
         struct {
             arm_2d_pfb_t           *ptHead;
             arm_2d_pfb_t           *ptTail;
@@ -553,7 +553,7 @@ arm_2d_err_t arm_2d_helper_pfb_update_dependency(
  *  \param[in] ptPFB the used PFB block
  */
 extern
-ARM_NONNULL(1,2)
+ARM_NONNULL(1)
 void arm_2d_helper_pfb_report_rendering_complete(   arm_2d_helper_pfb_t *ptThis,
                                                     arm_2d_pfb_t *ptPFB);
 
