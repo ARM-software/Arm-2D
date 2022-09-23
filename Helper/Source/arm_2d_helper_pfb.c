@@ -635,11 +635,10 @@ __WEAK int32_t __arm_2d_helper_perf_counter_stop(int64_t *plTimestamp)
 
 
 ARM_NONNULL(1)
-void arm_2d_helper_pfb_report_rendering_complete(arm_2d_helper_pfb_t *ptThis,
-                                                 arm_2d_pfb_t *ptPFB)
+void __arm_2d_helper_pfb_report_rendering_complete( arm_2d_helper_pfb_t *ptThis,
+                                                    arm_2d_pfb_t *ptPFB)
 {
     assert(NULL != ptThis);
-    assert(NULL != ptPFB);
 
     /* note: in fact, user can only pass either NULL or this.Adapter.ptFlushing
      *       to the ptPFB. This makes ptPFB useless. We only keep it for 

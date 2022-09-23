@@ -294,6 +294,22 @@ extern "C" {
                                     (__CB_ADDR),                                \
                                     (__HANDLER),##__VA_ARGRS__)
 
+/*!
+ *  \brief tell PFB helper that a low level LCD flushing work is complete
+ *  \note This function is THREAD-SAFE, You can call this function asynchronously, 
+ *        e.g.
+ *        - A ISR to indicate DMA-transfer complete event or 
+ *        - A different Thread
+ *  \param[in] ptThis the PFB control block
+ *  \param[in] ... the used PFB block.
+ *  \note please do not use this parameter, it is only kept for backward
+ *        compatability.
+ */
+#define arm_2d_helper_pfb_report_rendering_complete(__PFB_HELPER_PTR,...)       \
+            __arm_2d_helper_pfb_report_rendering_complete((__PFB_HELPER_PTR),   \
+                                                          (NULL,##__VA_ARGS__))
+
+
 #define impl_arm_2d_region_list(__NAME, ...)                                    \
             IMPL_ARM_2D_REGION_LIST(__NAME,##__VA_ARGS__)
 #define add_region_to_list(__NAME, ...)                                         \
@@ -554,7 +570,7 @@ arm_2d_err_t arm_2d_helper_pfb_update_dependency(
  */
 extern
 ARM_NONNULL(1)
-void arm_2d_helper_pfb_report_rendering_complete(   arm_2d_helper_pfb_t *ptThis,
+void __arm_2d_helper_pfb_report_rendering_complete( arm_2d_helper_pfb_t *ptThis,
                                                     arm_2d_pfb_t *ptPFB);
 
 /*!
