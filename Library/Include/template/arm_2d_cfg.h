@@ -130,7 +130,7 @@ extern "C" {
 // <q>Enable the helper service for Asynchronous Flushing
 // <i> Please select this option when using asynchronous flushing, e.g. DMA + ISR 
 #ifndef __ARM_2D_CFG_BENCHMARK_ENABLE_ASYNC_FLUSHING__
-#   define __ARM_2D_CFG_BENCHMARK_ENABLE_ASYNC_FLUSHING__   1
+#   define __ARM_2D_CFG_BENCHMARK_ENABLE_ASYNC_FLUSHING__   0
 #endif
 
 // <o>Number of iterations <1-2000>
