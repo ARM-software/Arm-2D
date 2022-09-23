@@ -240,8 +240,7 @@ IMPL_PFB_ON_LOW_LV_RENDERING(__glcd%Instance%_pfb_render_handler)
                     (const uint8_t *)ptTile->pchBuffer);
 
     arm_2d_helper_pfb_report_rendering_complete(
-                    &DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t,
-                    (arm_2d_pfb_t *)ptPFB);
+                    &DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t);
 }
 
 static bool __on_each_frame_complete(void *ptTarget)

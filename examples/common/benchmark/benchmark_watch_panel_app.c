@@ -120,7 +120,7 @@ void Disp0_DrawBitmap(  int16_t x,
 
 /*============================ LOCAL VARIABLES ===============================*/
 
-static ARM_NOINIT arm_2d_scene_player_t s_tScenePlayer;
+ARM_NOINIT arm_2d_scene_player_t BENCHMARK_DISP_ADAPTER;
 
 static struct {
     uint32_t wMin;
@@ -156,8 +156,8 @@ static void on_frame_complete(arm_2d_scene_t *ptScene)
 {
     ARM_2D_UNUSED(ptScene);
     
-    int32_t nTotalCyclCount = s_tScenePlayer.use_as__arm_2d_helper_pfb_t.Statistics.nTotalCycle;
-    int32_t nTotalLCDCycCount = s_tScenePlayer.use_as__arm_2d_helper_pfb_t.Statistics.nRenderingCycle;
+    int32_t nTotalCyclCount = BENCHMARK_DISP_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nTotalCycle;
+    int32_t nTotalLCDCycCount = BENCHMARK_DISP_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nRenderingCycle;
     BENCHMARK.wLCDLatency = nTotalLCDCycCount;
 
     if (BENCHMARK.wIterations) {
@@ -300,18 +300,18 @@ IMPL_PFB_ON_LOW_LV_RENDERING(__pfb_render_handler)
                         ptTile->tRegion.tSize.iHeight,
                         (const uint8_t *)ptTile->pchBuffer);
     }
-    arm_2d_helper_pfb_report_rendering_complete(&s_tScenePlayer.use_as__arm_2d_helper_pfb_t,
-                                                (arm_2d_pfb_t *)ptPFB);
+    arm_2d_helper_pfb_report_rendering_complete(
+        &BENCHMARK_DISP_ADAPTER.use_as__arm_2d_helper_pfb_t);
 }
 
 
 void arm_2d_scene_player_init(void)
 {
-    memset(&s_tScenePlayer, 0, sizeof(s_tScenePlayer));
+    memset(&BENCHMARK_DISP_ADAPTER, 0, sizeof(BENCHMARK_DISP_ADAPTER));
 
     //! initialise FPB helper
     if (ARM_2D_HELPER_PFB_INIT(
-        &s_tScenePlayer.use_as__arm_2d_helper_pfb_t,                            //!< FPB Helper object
+        &BENCHMARK_DISP_ADAPTER.use_as__arm_2d_helper_pfb_t,                            //!< FPB Helper object
         __GLCD_CFG_SCEEN_WIDTH__,                                               //!< screen width
         __GLCD_CFG_SCEEN_HEIGHT__,                                              //!< screen height
         COLOUR_INT,                                                             //!< colour date type
@@ -380,13 +380,13 @@ void arm_2d_run_benchmark(void)
             },
         };
         arm_2d_scene_player_append_scenes( 
-                                        &s_tScenePlayer,
+                                        &BENCHMARK_DISP_ADAPTER,
                                         (arm_2d_scene_t *)s_tBenchmarkScene,
                                         dimof(s_tBenchmarkScene));
     } while(0);
     
     while(true) {
-        arm_2d_scene_player_task(&s_tScenePlayer);
+        arm_2d_scene_player_task(&BENCHMARK_DISP_ADAPTER);
     }
 }
 
