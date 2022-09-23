@@ -78,6 +78,12 @@
 #   define __DISP%Instance%_CFG_ITERATION_CNT__             30
 #endif
 
+// <q>Enable the helper service for Asynchronous Flushing
+// <i> Please select this option when using asynchronous flushing, e.g. DMA + ISR 
+#ifndef __DISP%Instance%_CFG_ENABLE_ASYNC_FLUSHING__
+#   define __DISP%Instance%_CFG_ENABLE_ASYNC_FLUSHING__     0
+#endif
+
 // <q>Disable the default scene
 // <i> Remove the default scene for this display adapter. We highly recommend you to disable the default scene when creating real applications.
 #ifndef __DISP%Instance%_CFG_DISABLE_DEFAULT_SCENE__
@@ -166,8 +172,8 @@ intptr_t __disp_adapter%Instance%_vres_asset_loader   (
  *  \param[in] pBuffer the target buffer
  */
 void __disp_adapter%Instance%_vres_buffer_deposer (  uintptr_t pTarget, 
-                                                            arm_2d_vres_t *ptVRES, 
-                                                            intptr_t pBuffer );
+                                                arm_2d_vres_t *ptVRES, 
+                                                intptr_t pBuffer );
 
 /*!
  * \brief A user implemented function to return the address for specific asset
@@ -205,6 +211,45 @@ void __disp_adapter%Instance%_vres_read_memory( intptr_t pObj,
                                                 void *pBuffer,
                                                 uintptr_t pAddress,
                                                 size_t nSizeInByte);
+
+
+/*!
+ * \brief It is an user implemented function that request an LCD flushing in 
+ *        asynchronous manner. 
+ * \note User MUST implement this function when 
+ *       __DISP%Instance%_CFG_ENABLE_ASYNC_FLUSHING__ is set to '1'
+ *
+ * \param[in] pTarget an user specified object address
+ * \param[in] bIsNewFrame whether this flushing request is the first iteration 
+ *            of a new frame.
+ * \param[in] iX the x coordinate of a flushing window in the target screen
+ * \param[in] iY the y coordinate of a flushing window in the target screen
+ * \param[in] iWidth the width of a flushing window
+ * \param[in] iHeight the height of a flushing window
+ * \param[in] pBuffer the frame buffer address
+ */
+extern void __disp_adapter%Instance%_request_async_flushing( 
+                                                    void *pTarget,
+                                                    bool bIsNewFrame,
+                                                    int16_t iX, 
+                                                    int16_t iY,
+                                                    int16_t iWidth,
+                                                    int16_t iHeight,
+                                                    const COLOUR_INT *pBuffer);
+
+
+/*!
+ * \brief the handler for the asynchronous flushing complete event.
+ * \note When __DISP%Instance%_CFG_ENABLE_ASYNC_FLUSHING__ is set to '1', user 
+ *       MUST call this function to notify the PFB helper that the previous
+ *       asynchronous flushing is complete. 
+ * \note When people using DMA+ISR to offload CPU, this fucntion is called in 
+ *       the DMA transfer complete ISR.
+ */
+extern
+void disp_adapter%Instance%_insert_async_flushing_complete_event_handler(void);
+
+
 
 #endif
 

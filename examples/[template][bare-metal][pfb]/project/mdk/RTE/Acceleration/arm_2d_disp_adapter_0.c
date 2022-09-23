@@ -225,6 +225,45 @@ IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
     return arm_fsm_rt_cpl;
 }
 
+#if __DISP0_CFG_ENABLE_ASYNC_FLUSHING__
+
+/* using asynchronous flushing, e.g. using DMA + ISR to offload CPU etc. 
+ * It can significantly reduce the LCD Latency hence improve the overrall 
+ * framerate. 
+ */
+
+void disp_adapter0_insert_async_flushing_complete_event_handler(void)
+{
+    arm_2d_helper_pfb_report_rendering_complete(
+                    &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t);
+}
+
+__WEAK
+IMPL_PFB_ON_LOW_LV_RENDERING(__glcd0_pfb_render_handler)
+{
+    const arm_2d_tile_t *ptTile = &(ptPFB->tTile);
+
+    ARM_2D_UNUSED(pTarget);
+    ARM_2D_UNUSED(bIsNewFrame);
+
+    /* request an asynchronous flushing */
+    __disp_adapter0_request_async_flushing(
+                    pTarget,
+                    bIsNewFrame,
+                    ptTile->tRegion.tLocation.iX,
+                    ptTile->tRegion.tLocation.iY,
+                    ptTile->tRegion.tSize.iWidth,
+                    ptTile->tRegion.tSize.iHeight,
+                    (const COLOUR_INT *)ptTile->pchBuffer);
+
+}
+
+#else
+/* using asynchronous flushing, i.e. use CPU to flush LCD.
+ * The LCD Latency will be high and reduce the overral framerate.
+ * Meanwhile, in developing stage, this method can ensure a robust flushing. 
+ */
+
 __WEAK
 IMPL_PFB_ON_LOW_LV_RENDERING(__glcd0_pfb_render_handler)
 {
@@ -240,9 +279,9 @@ IMPL_PFB_ON_LOW_LV_RENDERING(__glcd0_pfb_render_handler)
                     (const uint8_t *)ptTile->pchBuffer);
 
     arm_2d_helper_pfb_report_rendering_complete(
-                    &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t,
-                    (arm_2d_pfb_t *)ptPFB);
+                    &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t);
 }
+#endif
 
 static bool __on_each_frame_complete(void *ptTarget)
 {
