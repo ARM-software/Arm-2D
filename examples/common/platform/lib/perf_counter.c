@@ -40,13 +40,6 @@
 
 
 /* IO definitions (access restrictions to peripheral registers) */
-/**
-    \defgroup CMSIS_glob_defs CMSIS Global Defines
-
-    <strong>IO Type Qualifiers</strong> are used
-    \li to specify the access to peripheral variables.
-    \li for automatic generation of peripheral register debug information.
-*/
 #ifdef __cplusplus
   #define   __I     volatile             /*!< Defines 'read only' permissions */
 #else
@@ -61,14 +54,12 @@
 #define     __IOM    volatile            /*! Defines 'read / write' structure member permissions */
 
 /* Memory mapping of Core Hardware */
-#define SCS_BASE            (0xE000E000UL)                             /*!< System Control Space Base Address */
-#define SysTick_BASE        (SCS_BASE +  0x0010UL)                     /*!< SysTick Base Address */
-#define SCB_BASE            (SCS_BASE +  0x0D00UL)                    /*!< System Control Block Base Address */
+#define SCS_BASE            (0xE000E000UL)                                      /*!< System Control Space Base Address */
+#define SysTick_BASE        (SCS_BASE +  0x0010UL)                              /*!< SysTick Base Address */
+#define SCB_BASE            (SCS_BASE +  0x0D00UL)                              /*!< System Control Block Base Address */
 
-#define SysTick             ((SysTick_Type   *)     SysTick_BASE     ) /*!< SysTick configuration struct */
-#define SCB                 ((SCB_Type       *)     SCB_BASE      )   /*!< SCB configuration struct */
-
-
+#define SysTick             ((SysTick_Type   *)     SysTick_BASE     )          /*!< SysTick configuration struct */
+#define SCB                 ((SCB_Type       *)     SCB_BASE      )             /*!< SCB configuration struct */
 
 /* SysTick Control / Status Register Definitions */
 #define SysTick_CTRL_COUNTFLAG_Pos         16U                                            /*!< SysTick CTRL: COUNTFLAG Position */
@@ -103,9 +94,6 @@
 
 /*@} end of group CMSIS_SysTick */
 
-
-
-
 #define SCB_ICSR_PENDSTCLR_Pos             25U                                            /*!< SCB ICSR: PENDSTCLR Position */
 #define SCB_ICSR_PENDSTCLR_Msk             (1UL << SCB_ICSR_PENDSTCLR_Pos)                /*!< SCB ICSR: PENDSTCLR Mask */
 
@@ -119,7 +107,7 @@
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 
-/*
+/*!
   \brief  Structure type to access the System Timer (SysTick).
  */
 typedef struct
@@ -130,7 +118,7 @@ typedef struct
   __IM  uint32_t CALIB;                  /*!< Offset: 0x00C (R/ )  SysTick Calibration Register */
 } SysTick_Type;
 
-/*
+/*!
   \brief  Structure type to access the System Control Block (SCB).
  */
 typedef struct
@@ -159,10 +147,10 @@ typedef struct
 } SCB_Type;
 
 struct __task_cycle_info_t {
-    task_cycle_info_t       tInfo;
-    int64_t                 lLastTimeStamp;
-    task_cycle_info_agent_t tList;
-    uint32_t                wMagicWord;
+    task_cycle_info_t       tInfo;             //!< cycle information
+    int64_t                 lLastTimeStamp;    //!< previous timestamp
+    task_cycle_info_agent_t tList;             //!< the root of the agent list
+    uint32_t                wMagicWord;        //!< an magic word for validation
 } ;
 
 
@@ -170,213 +158,190 @@ struct __task_cycle_info_t {
 extern uint32_t SystemCoreClock;
 
 /*============================ LOCAL VARIABLES ===============================*/
-volatile static int32_t s_nCycleCounts = 0;
-volatile static int32_t s_nOffset = 0;
+volatile int64_t g_lLastTimeStamp = 0;
+volatile int32_t g_nOffset = 0;
 volatile static int32_t s_nUSUnit = 1;
 volatile static int32_t s_nMSUnit = 1;
 volatile static int32_t s_nMSResidule = 0;
+volatile static int32_t s_nUSResidule = 0;
 volatile static int32_t s_nSystemMS = 0;
+volatile static int32_t s_nSystemUS = 0;
 
-volatile static int64_t s_lSystemClockCounts = 0; 
+volatile static int64_t s_lSystemClockCounts = 0;
 
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ IMPLEMENTATION ================================*/
 /*============================ INCLUDES ======================================*/
 
-
-/**
-  \brief   System Tick Configuration
-  \details Initializes the System Timer and its interrupt, and starts the System Tick Timer.
-           Counter is in free running mode to generate periodic interrupts.
-  \param [in]  ticks  Number of ticks between two interrupts.
-  \return          0  Function succeeded.
-  \return          1  Function failed.
-  \note    When the variable <b>__Vendor_SysTickConfig</b> is set to 1, then the
-           function <b>SysTick_Config</b> is not included. In this case, the file <b><i>device</i>.h</b>
-           must contain a vendor-specific implementation of this function.
- */
 __STATIC_INLINE uint32_t SysTick_Config(uint32_t ticks)
 {
     if ((ticks - 1UL) > SysTick_LOAD_RELOAD_Msk)
     {
-        return (1UL);                                                   /* Reload value impossible */
+        return (1UL);                                                           /* Reload value impossible */
     }
-  
+
     //__IRQ_SAFE {
         SysTick->CTRL  = 0;
-        
-        SysTick->LOAD  = (uint32_t)(ticks - 1UL);                         /* set reload register */
-        //NVIC_SetPriority (SysTick_IRQn, (1UL << __NVIC_PRIO_BITS) - 1UL); /* set Priority for Systick Interrupt */
-        SysTick->VAL   = 0UL;                                             /* Load the SysTick Counter Value */
+
+        SysTick->LOAD  = (uint32_t)(ticks - 1UL);                               /* set reload register */
+        //NVIC_SetPriority (SysTick_IRQn, (1UL << __NVIC_PRIO_BITS) - 1UL);     /* set Priority for Systick Interrupt */
+        SysTick->VAL   = 0UL;                                                   /* Load the SysTick Counter Value */
         SysTick->CTRL  =   SysTick_CTRL_CLKSOURCE_Msk |
                            SysTick_CTRL_TICKINT_Msk   |
-                           SysTick_CTRL_ENABLE_Msk;                     /* Enable SysTick IRQ and SysTick Timer */
+                           SysTick_CTRL_ENABLE_Msk;                             /* Enable SysTick IRQ and SysTick Timer */
         //SCB->ICSR      = SCB_ICSR_PENDSTCLR_Msk;
     //}
-    return (0UL);                                                     /* Function successful */
+    return (0UL);                                                               /* Function successful */
 }
 
 void user_code_insert_to_systick_handler(void)
 {
     uint32_t wLoad = SysTick->LOAD + 1;
-    s_nCycleCounts += wLoad;
     s_lSystemClockCounts += wLoad;
-    
-    //! update system ms counter
-    s_nMSResidule += wLoad;
-    int32_t nMS = s_nMSResidule / s_nMSUnit;
-    s_nMSResidule -= nMS * s_nMSUnit;
-    s_nSystemMS += nMS;
+
+    // update system ms counter
+    do {
+        s_nMSResidule += wLoad;
+        int32_t nMS = s_nMSResidule / s_nMSUnit;
+        s_nMSResidule -= nMS * s_nMSUnit;
+        s_nSystemMS += nMS;
+    } while(0);
+
+    // update system us counter
+    do {
+        s_nUSResidule += wLoad;
+        int32_t nUS = s_nUSResidule / s_nUSUnit;
+        s_nUSResidule -= nUS * s_nUSUnit;
+        s_nSystemUS += nUS;
+    } while(0);
 
 }
 
-__WEAK 
+__WEAK
 void __perf_os_patch_init(void)
 {
 }
 
 
-/*! \brief   initialise cycle counter service
- *!          and don't forget to tell the function whether the systick is already
- *!          used by user applications. 
- *!          Don't worry, this cycle counter service won't affect your existing
- *!          systick service.
- *! \param bSysTickIsOccupied  A boolean value which indicates whether SysTick
- *!          is already used by user application.
- */
-void init_cycle_counter(bool bSysTickIsOccupied)
+void update_perf_counter(void)
+{
+    s_nUSUnit = SystemCoreClock / 1000000ul;
+    s_nMSUnit = SystemCoreClock / 1000ul;
+    
+    __IRQ_SAFE {
+        g_lLastTimeStamp = get_system_ticks();
+        g_nOffset = get_system_ticks() - g_lLastTimeStamp;
+    }
+}
+
+
+void init_cycle_counter(bool bIsSysTickOccupied)
 {
     __IRQ_SAFE {
-        if (!bSysTickIsOccupied) {
-            SysTick_Config(0x01000000);             //!< use the longest period
+        if (!bIsSysTickOccupied) {
+            SysTick_Config(0x01000000);             // use the longest period
         }
         SCB->ICSR      = SCB_ICSR_PENDSTCLR_Msk;
     }
     
-    start_cycle_counter();
-    //s_nSystemClockCounts = s_nCycleCounts;
-    s_nOffset = stop_cycle_counter();
-    
-    s_nUSUnit = SystemCoreClock / 1000000ul;
-    s_nMSUnit = SystemCoreClock / 1000ul;
-    
-#if     defined(__IS_COMPILER_ARM_COMPILER_5__)                                 \
-    ||  defined(__IS_COMPILER_ARM_COMPILER_6__)                                 \
-    //||  defined(__IS_COMPILER_GCC__)
-    extern void __ensure_systick_wrapper(void);
-    __ensure_systick_wrapper();
-#endif
+    update_perf_counter();
+    s_lSystemClockCounts = 0;                       // reset system cycle counter
+    s_nSystemMS = 0;                                // reset system millisecond counter
+    s_nSystemUS = 0;                                // reset system microsecond counter
 
     __perf_os_patch_init();
 }
 
-/*! \brief try to start the performance counter
- *! \retval false the LOAD register is too small
- *! \retval true performance counter starts
-*/
-bool start_cycle_counter(void)
-{
-    if (SysTick->LOAD < PERF_CNT_COMPENSATION_THRESHOLD) {
-        return false;
-    }
-    
-    __IRQ_SAFE {
-        s_nCycleCounts =  (int32_t)SysTick->VAL - (int32_t)SysTick->LOAD;
-    }
-    return true;
-}
-
 /*! \note this function should only be called when irq is disabled
- *!       hence SysTick-LOAD and (SCB->ICSR & SCB_ICSR_PENDSTSET_Msk)
- *!       won't change. 
+ *        hence SysTick-LOAD and (SCB->ICSR & SCB_ICSR_PENDSTSET_Msk)
+ *        won't change.
  */
 __STATIC_INLINE int32_t check_systick(void)
 {
     int32_t nTemp = (int32_t)SysTick->LOAD - (int32_t)SysTick->VAL;
 
-    /*! \note Since we cannot stop counting temporarily, there are several 
-     *!       conditions which we should take into consideration:
-     *!       Condition 1: when assigning nTemp with the register value (LOAD-VAL), 
-     *!           the underflow didn't happen but when we check the PENDSTSET bit,
-     *!           the underflow happens, for this condition, we should not
-     *!           do any compensation. When this happens, the (LOAD-nTemp) is  
-     *!           smaller than PERF_CNT_COMPENSATION_THRESHOLD (a small value) as
-     *!           long as LOAD is bigger than (or equals to) the 
-     *!           PERF_CNT_COMPENSATION_THRESHOLD;
-     *!       Condition 2: when assigning nTemp with the register value (LOAD-VAL), 
-     *!           the VAL is zero and underflow happened and the PENDSTSET bit
-     *!           is set, for this condition, we should not do any compensation.
-     *!           When this happens, the (LOAD-nTemp) is equals to zero.
-     *!       Condition 3: when assigning nTemp with the register value (LOAD-VAL),
-     *!           the underflow has already happened, hence the PENDSTSET 
-     *!           is set, for this condition, we should compensate the return 
-     *!           value. When this happens, the (LOAD-nTemp) is bigger than (or
-     *!           equals to) PERF_CNT_COMPENSATION_THRESHOLD.
-     *!       The following code implements an equivalent logic.
+    /*        Since we cannot stop counting temporarily, there are several
+     *        conditions which we should take into consideration:
+     *        - Condition 1: when assigning nTemp with the register value (LOAD-VAL),
+     *            the underflow didn't happen but when we check the PENDSTSET bit,
+     *            the underflow happens, for this condition, we should not
+     *            do any compensation. When this happens, the (LOAD-nTemp) is
+     *            smaller than PERF_CNT_COMPENSATION_THRESHOLD (a small value) as
+     *            long as LOAD is bigger than (or equals to) the
+     *            PERF_CNT_COMPENSATION_THRESHOLD;
+     *        - Condition 2: when assigning nTemp with the register value (LOAD-VAL),
+     *            the VAL is zero and underflow happened and the PENDSTSET bit
+     *            is set, for this condition, we should not do any compensation.
+     *            When this happens, the (LOAD-nTemp) is equals to zero.
+     *        - Condition 3: when assigning nTemp with the register value (LOAD-VAL),
+     *            the underflow has already happened, hence the PENDSTSET
+     *            is set, for this condition, we should compensate the return
+     *            value. When this happens, the (LOAD-nTemp) is bigger than (or
+     *            equals to) PERF_CNT_COMPENSATION_THRESHOLD.
+     *        The following code implements an equivalent logic.
      */
     if (SCB->ICSR & SCB_ICSR_PENDSTSET_Msk){
         if (((int32_t)SysTick->LOAD - nTemp) >= PERF_CNT_COMPENSATION_THRESHOLD) {
             nTemp += SysTick->LOAD + 1;
-        } 
+        }
     }
-    
+
     return nTemp;
 }
 
-/*! \brief calculate the elapsed cycle count since the last start point
- *! 
- *! \note you can have multiple stop_cycle_counter following one start point
- *!  
- *! \return the elapsed cycle count.
- */ 
-int32_t stop_cycle_counter(void)
-{
-    int32_t nTemp = 0;
-
-    __IRQ_SAFE {
-        nTemp = check_systick() + s_nCycleCounts;
-    }
-
-    return nTemp - s_nOffset;
-}
-
-#if defined(__IS_COMPILER_IAR__)
 __attribute__((constructor))
-#else
-__attribute__((constructor(255)))
-#endif
 void __perf_counter_init(void)
 {
     init_cycle_counter(true);
 }
 
+
 void delay_us(int32_t nUs)
 {
-    int64_t lUs = nUs * s_nUSUnit;
-    
-    if (lUs <= PERF_CNT_DELAY_US_COMPENSATION) {
+    int64_t lUs = (int64_t)nUs * (int64_t)s_nUSUnit;
+    int32_t iCompensate = g_nOffset > PERF_CNT_DELAY_US_COMPENSATION
+                        ? g_nOffset 
+                        : PERF_CNT_DELAY_US_COMPENSATION;
+
+    if (lUs <= iCompensate) {
         return ;
-    } 
-    
-    lUs -= PERF_CNT_DELAY_US_COMPENSATION;
-    
+    }
+
+    lUs -= iCompensate;
+
     lUs += get_system_ticks();
     while(get_system_ticks() < lUs);
 }
 
+
 void delay_ms(int32_t nMs)
 {
-    int64_t lUs = nMs * s_nMSUnit;
-    
-    if (lUs <= PERF_CNT_DELAY_US_COMPENSATION) {
+    int64_t lUs = (int64_t)nMs * (int64_t)s_nMSUnit;
+    int32_t iCompensate = g_nOffset > PERF_CNT_DELAY_US_COMPENSATION
+                        ? g_nOffset 
+                        : PERF_CNT_DELAY_US_COMPENSATION;
+
+    if (lUs <= iCompensate) {
         return ;
-    } 
-    
-    lUs -= PERF_CNT_DELAY_US_COMPENSATION;
-    
+    }
+
+    lUs -= iCompensate;
+
     lUs += get_system_ticks();
     while(get_system_ticks() < lUs);
+}
+
+__attribute__((noinline))
+int64_t get_system_ticks(void)
+{
+    int64_t lTemp = 0;
+
+    __IRQ_SAFE {
+        lTemp = check_systick() + s_lSystemClockCounts;
+    }
+
+    return lTemp;
 }
 
 /*! \note the prototype of this clock() is different from the one defined in
@@ -384,60 +349,54 @@ void delay_ms(int32_t nMs)
  *!           not big enough in Cortex-M system to hold a time-stamp. clock()
  *!           defined here returns the timestamp since the begining of main()
  *!           and its unit is clock cycle (rather than 1ms). Hence, for a system
- *!           running under several hundreds MHz or even 1GHz, e.g. RT10xx from 
- *!           NXP, it is very easy to see a counter overflow as clock_t is 
+ *!           running under several hundreds MHz or even 1GHz, e.g. RT10xx from
+ *!           NXP, it is very easy to see a counter overflow as clock_t is
  *!           defined as uint32_t in timer.h.
  *!           Since we are not allowed to change the defintion of clock_t in
- *!           official header file, i.e. time.h, I use a compatible prototype 
- *!           after I checked the AAPCS spec. So, the return of the clock() is 
- *!           int64_t, which will use the R0 to store the lower 32bits and R1 
+ *!           official header file, i.e. time.h, I use a compatible prototype
+ *!           after I checked the AAPCS spec. So, the return of the clock() is
+ *!           int64_t, which will use the R0 to store the lower 32bits and R1
  *!           to store the higher 32bits. When you are using the prototype from
- *!           timer.h, caller will only take the lower 32bits stored in R0 and 
+ *!           timer.h, caller will only take the lower 32bits stored in R0 and
  *!           the higher 32bits stored in R1 will be ignored.
- *! 
+ *!
  *!           If you want to use the non-overflow version of this clock(), please
- *!           1) define the MACRO: __PERF_CNT_USE_LONG_CLOCK__ in your project 
+ *!           1) define the MACRO: __PERF_CNT_USE_LONG_CLOCK__ in your project
  *!           and 2) do not include system header file <time.h>
  *!
  */
 #if !defined(__IS_COMPILER_IAR__)
-__attribute__((nothrow)) 
+__attribute__((nothrow))
 #endif
+__attribute__((noinline))
 int64_t clock(void)
 {
-    int64_t lTemp = 0;
-    
-    __IRQ_SAFE {
-        lTemp = check_systick() + s_lSystemClockCounts;
-    }
-
-    return lTemp;
-}
-
-int64_t get_system_ticks(void)
-{
-    int64_t lTemp = 0;
-    
-    __IRQ_SAFE {
-        lTemp = check_systick() + s_lSystemClockCounts;
-    }
-
-    return lTemp;
+    return get_system_ticks();
 }
 
 int32_t get_system_ms(void)
 {
     int32_t nTemp = 0;
-    
+
     __IRQ_SAFE {
         nTemp = s_nSystemMS + (check_systick() + s_nMSResidule) / s_nMSUnit;
     }
-    
+
     return nTemp;
 }
 
+int32_t get_system_us(void)
+{
+    int32_t nTemp = 0;
 
-__WEAK 
+    __IRQ_SAFE {
+        nTemp = s_nSystemUS + (check_systick() + s_nUSResidule) / s_nUSUnit;
+    }
+
+    return nTemp;
+}
+
+__WEAK
 task_cycle_info_t * get_rtos_task_cycle_info(void)
 {
     return NULL;
@@ -445,14 +404,14 @@ task_cycle_info_t * get_rtos_task_cycle_info(void)
 
 void init_task_cycle_counter(void)
 {
-    struct __task_cycle_info_t * ptRootAgent = 
+    struct __task_cycle_info_t * ptRootAgent =
         (struct __task_cycle_info_t *)get_rtos_task_cycle_info();
     if (NULL == ptRootAgent) {
         return ;
     }
-    
+
     memset(ptRootAgent, 0, sizeof(struct __task_cycle_info_t));
-    
+
     ptRootAgent->tList.ptInfo = &(ptRootAgent->tInfo);
     ptRootAgent->tInfo.lStart = get_system_ticks();
     ptRootAgent->wMagicWord = MAGIC_WORD_CANARY;
@@ -469,7 +428,7 @@ task_cycle_info_t *init_task_cycle_info(task_cycle_info_t *ptInfo)
 
         ptInfo->bEnabled = true;
     } while(0);
-    
+
     return ptInfo;
 }
 
@@ -517,33 +476,33 @@ task_cycle_info_agent_t *register_task_cycle_agent(task_cycle_info_t *ptInfo,
             if (NULL == ptAgent || NULL == ptInfo) {
                 break;
             }
-            
-            struct __task_cycle_info_t * ptRootAgent = 
+
+            struct __task_cycle_info_t * ptRootAgent =
                 (struct __task_cycle_info_t *)get_rtos_task_cycle_info();
             if (NULL == ptRootAgent) {
                 break;
             }
-            
+
             ptRootAgent->wMagicWord = MAGIC_WORD_AGENT_LIST_VALID;
-            
+
             ptAgent->ptInfo = ptInfo;
-            
-            //! push to the stack
+
+            // push to the stack
             do {
-                //! set next-list
+                // set next-list
                 ptAgent->ptNext = ptRootAgent->tList.ptNext;
                 ptRootAgent->tList.ptNext = ptAgent;
-                
-                //! set prev-list
+
+                // set prev-list
                 ptAgent->ptPrev = &(ptRootAgent->tList);
                 if (NULL != ptAgent->ptNext) {
                     ptAgent->ptNext->ptPrev = ptAgent;
                 }
             } while(0);
-        
+
         } while(0);
     }
-    
+
     return ptAgent;
 }
 
@@ -555,30 +514,30 @@ unregister_task_cycle_agent(task_cycle_info_agent_t *ptAgent)
             if (NULL == ptAgent) {
                 break;
             }
-            
+
             task_cycle_info_agent_t *ptPrev = ptAgent->ptPrev;
             if (NULL == ptPrev) {
                 break;      /* this should not happen */
             }
             if (ptPrev->ptNext != ptAgent) {
-                //! already removed
+                // already removed
                 break;
             }
-            
+
             //! remove agent from the next-list
             ptPrev->ptNext = ptAgent->ptNext;
-            
+
             if (NULL != ptAgent->ptNext) {
-                //! remove agent from the prev-list 
+                // remove agent from the prev-list
                 ptAgent->ptNext->ptPrev = ptPrev;
             }
-            
+
             ptAgent->ptNext = NULL;
             ptAgent->ptPrev = NULL;
-            
+
         } while(0);
     }
-    
+
     return ptAgent;
 }
 
@@ -587,12 +546,12 @@ void __on_context_switch_in(uint32_t *pwStack)
 {
     struct __task_cycle_info_t *ptRootAgent = (struct __task_cycle_info_t *)pwStack;
     uint64_t dwTimeStamp = get_system_ticks();
-    
+
     ptRootAgent->lLastTimeStamp = dwTimeStamp;
     ptRootAgent->tInfo.hwActiveCount++;
 
     if (MAGIC_WORD_AGENT_LIST_VALID == ptRootAgent->wMagicWord) {
-        //! update all agents
+        // update all agents
         task_cycle_info_agent_t *ptAgent = ptRootAgent->tList.ptNext;
         while(NULL != ptAgent) {
             if (NULL != ptAgent->ptInfo) {
@@ -608,13 +567,13 @@ void __on_context_switch_in(uint32_t *pwStack)
 void __on_context_switch_out(uint32_t *pwStack)
 {
     struct __task_cycle_info_t *ptRootAgent = (struct __task_cycle_info_t *)pwStack;
-    int64_t lCycleUsed = get_system_ticks() - ptRootAgent->lLastTimeStamp;
-    
+    int64_t lCycleUsed = get_system_ticks() - ptRootAgent->lLastTimeStamp - g_nOffset;
+
     ptRootAgent->tInfo.nUsedRecent = lCycleUsed;
     ptRootAgent->tInfo.lUsedTotal += lCycleUsed;
-    
+
     if (MAGIC_WORD_AGENT_LIST_VALID == ptRootAgent->wMagicWord) {
-        //! update all agents
+        // update all agents
         task_cycle_info_agent_t *ptAgent = ptRootAgent->tList.ptNext;
         while(NULL != ptAgent) {
             if (NULL != ptAgent->ptInfo) {
@@ -628,18 +587,19 @@ void __on_context_switch_out(uint32_t *pwStack)
     }
 }
 
+__attribute__((noinline))
 void __start_task_cycle_counter(task_cycle_info_t *ptInfo)
 {
-    struct __task_cycle_info_t * ptRootAgent = 
+    struct __task_cycle_info_t * ptRootAgent =
         (struct __task_cycle_info_t *)get_rtos_task_cycle_info();
     if (NULL == ptRootAgent) {
         return ;
     }
-    
+
     __IRQ_SAFE {
         ptRootAgent->lLastTimeStamp = get_system_ticks();
         ptRootAgent->tInfo.lUsedTotal = 0;
-        
+
         if (NULL != ptInfo) {
             ptInfo->lUsedTotal = 0;
             ptInfo->bEnabled = true;
@@ -647,32 +607,34 @@ void __start_task_cycle_counter(task_cycle_info_t *ptInfo)
     }
 }
 
-
+__attribute__((noinline))
 int64_t __stop_task_cycle_counter(task_cycle_info_t *ptInfo)
 {
-    struct __task_cycle_info_t * ptRootAgent = 
+    struct __task_cycle_info_t * ptRootAgent =
         (struct __task_cycle_info_t *)get_rtos_task_cycle_info();
     if (NULL == ptRootAgent) {
         return 0;
     }
-    
+
     int64_t lCycles = 0;
-    int64_t lCycleUsed;
+
     __IRQ_SAFE {
-        lCycleUsed = get_system_ticks() - ptRootAgent->lLastTimeStamp;
-        lCycles = ptRootAgent->tInfo.lUsedTotal + lCycleUsed;
-    }
-    
-    if (NULL != ptInfo) {
-        if (ptInfo->bEnabled) {
-            ptInfo->nUsedRecent = lCycleUsed;
-            ptInfo->lUsedTotal += lCycleUsed;
-            ptInfo->bEnabled = false;
+        int64_t lCycleUsed = get_system_ticks() - ptRootAgent->lLastTimeStamp - g_nOffset;
+        ptRootAgent->tInfo.lUsedTotal += lCycleUsed;
+
+        if (NULL != ptInfo) {
+            if (ptInfo->bEnabled) {
+                ptInfo->nUsedRecent = lCycleUsed;
+                ptInfo->lUsedTotal += lCycleUsed;
+                ptInfo->bEnabled = false;
+            }
+
+            lCycles = ptInfo->lUsedTotal;
+        } else {
+            lCycles = ptRootAgent->tInfo.lUsedTotal;
         }
-        
-        return ptInfo->lUsedTotal;
     }
-    
+
     return lCycles;
 }
 

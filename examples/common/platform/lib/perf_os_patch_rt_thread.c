@@ -27,7 +27,7 @@
 
 #undef __WRAP_FUNC
 #undef WRAP_FUNC
-#if defined(__IS_COMPILER_ARM_COMPILER__) && __IS_COMPILER_ARM_COMPILER__ 
+#if defined(__IS_COMPILER_ARM_COMPILER__) && __IS_COMPILER_ARM_COMPILER__
 
 #   define __WRAP_FUNC(__NAME)     $Sub$$##__NAME
 #   define __ORIG_FUNC(__NAME)     $Super$$##__NAME
@@ -49,11 +49,9 @@ struct __task_cycle_info_t {
     uint32_t                wMagicWord;
 } ;
 
-
-
 #ifndef RT_USING_HOOK
-#error In order to use perf_counter:RT-Thread-Patch, please define RT_USING_HOOK\
- in rtconfig.h. If you don't want to use this patch, please un-select it in RTE.
+#error "In order to use perf_counter:RT-Thread-Patch, please define RT_USING_HOOK \
+in rtconfig.h. If you don't want to use this patch, please un-select it in RTE."
 #endif
 
 
@@ -71,18 +69,42 @@ void __rt_thread_scheduler_hook(struct rt_thread *from, struct rt_thread *to)
     if (NULL != from) {
         __on_context_switch_out(from->stack_addr);
     }
-    
+
     __on_context_switch_in(to->stack_addr);
 }
 
-#if RTTHREAD_VERSION <= 40100
-void __perf_os_patch_init(void)
-{
-    rt_scheduler_sethook(&__rt_thread_scheduler_hook);
-}
-#endif
-
 task_cycle_info_t * get_rtos_task_cycle_info(void)
-{   
+{
     return &(((struct __task_cycle_info_t *)rt_current_thread->stack_addr)->tInfo);
 }
+
+void __perf_os_patch_init(void)
+{
+#ifdef PKG_PERF_COUNTER_USING_THREAD_STATISTIC
+    rt_tick_sethook(user_code_insert_to_systick_handler);
+#endif
+#if !defined(PKG_USING_PERF_COUNTER) || (defined(PKG_PERF_COUNTER_USING_THREAD_STATISTIC))
+    rt_scheduler_sethook(__rt_thread_scheduler_hook);
+#endif
+}
+
+#ifdef PKG_USING_PERF_COUNTER
+void __ensure_systick_wrapper(void)
+{
+}
+
+#ifdef PKG_PERF_COUNTER_USING_THREAD_STATISTIC
+#define DBG_TAG    "perf_counter"
+#define DBG_LVL    DBG_INFO
+#include <rtdbg.h>
+
+static int _perf_counter_init(void)
+{
+    extern uint32_t SystemCoreClock;
+    init_cycle_counter(true);
+    LOG_I("perf_counter init, SystemCoreClock:%d", SystemCoreClock);
+    return 0;
+}
+INIT_PREV_EXPORT(_perf_counter_init);
+#endif /* PKG_PERF_COUNTER_USING_THREAD_STATISTIC */
+#endif /* PKG_USING_PERF_COUNTER */

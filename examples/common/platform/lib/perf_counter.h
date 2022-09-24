@@ -29,64 +29,79 @@ extern "C" {
 #endif
 /*============================ MACROS ========================================*/
 
+/*!
+ * \addtogroup gBasic 1 Basic
+ * @{
+ */
 #define __PERF_COUNTER_VER_MAJOR__          1
 #define __PERF_COUNTER_VER_MINOR__          9
-#define __PERF_COUNTER_VER_REVISE__         4
+#define __PERF_COUNTER_VER_REVISE__         9
+
+#define __PERF_COUNTER_VER_STR__            "rel"
 
 #define __PER_COUNTER_VER__    (__PERF_COUNTER_VER_MAJOR__ * 10000ul            \
                                +__PERF_COUNTER_VER_MINOR__ * 100ul              \
                                +__PERF_COUNTER_VER_REVISE__)
-                               
-//! \name The macros to identify the compiler
-//! @{
 
-//! \note for IAR
+
+/*! @} */
+
+/*!
+ * \addtogroup gHelper 3 Helper
+ * @{
+ */
+
+// for IAR
 #undef __IS_COMPILER_IAR__
 #if defined(__IAR_SYSTEMS_ICC__)
 #   define __IS_COMPILER_IAR__                  1
 #endif
 
-//! \note for arm compiler 5
+// for arm compiler 5
 #undef __IS_COMPILER_ARM_COMPILER_5__
 #if ((__ARMCC_VERSION >= 5000000) && (__ARMCC_VERSION < 6000000))
 #   define __IS_COMPILER_ARM_COMPILER_5__       1
 #endif
-//! @}
 
-//! \note for arm compiler 6
+
+//for arm compiler 6
 
 #undef __IS_COMPILER_ARM_COMPILER_6__
 #if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
 #   define __IS_COMPILER_ARM_COMPILER_6__       1
 #endif
-
 #undef __IS_COMPILER_ARM_COMPILER__
 #if defined(__IS_COMPILER_ARM_COMPILER_5__) && __IS_COMPILER_ARM_COMPILER_5__   \
 ||  defined(__IS_COMPILER_ARM_COMPILER_6__) && __IS_COMPILER_ARM_COMPILER_6__
-
 #   define __IS_COMPILER_ARM_COMPILER__         1
-
 #endif
 
-
+// for clang
 #undef  __IS_COMPILER_LLVM__
 #if defined(__clang__) && !__IS_COMPILER_ARM_COMPILER_6__
 #   define __IS_COMPILER_LLVM__                 1
 #else
-//! \note for gcc
+
+// for gcc
 #   undef __IS_COMPILER_GCC__
 #   if defined(__GNUC__) && !(  defined(__IS_COMPILER_ARM_COMPILER__)           \
-                            ||  defined(__IS_COMPILER_LLVM__))
+                            ||  defined(__IS_COMPILER_LLVM__)                   \
+                            ||  defined(__IS_COMPILER_IAR__))
 #       define __IS_COMPILER_GCC__              1
 #   endif
-//! @}
+
 #endif
-//! @}
+
+
+#ifdef __PERF_COUNT_PLATFORM_SPECIFIC_HEADER__
+#   include __PERF_COUNT_PLATFORM_SPECIFIC_HEADER__
+#endif
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
 #   pragma clang diagnostic ignored "-Wunknown-warning-option"
 #   pragma clang diagnostic ignored "-Wreserved-identifier"
+#   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #   pragma clang diagnostic ignored "-Wunused-but-set-variable"
@@ -104,7 +119,7 @@ extern "C" {
 #endif
 
 #ifndef __PLOOC_VA_NUM_ARGS_IMPL
-#   define __PLOOC_VA_NUM_ARGS_IMPL(   _0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,   \
+#   define __PLOOC_VA_NUM_ARGS_IMPL( _0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,     \
                                     _12,_13,_14,_15,_16,__N,...)      __N
 #endif
 
@@ -115,7 +130,7 @@ extern "C" {
 #endif
 
 #ifndef UNUSED_PARAM
-#   define UNUSED_PARAM(__VAR)     (__VAR) = (__VAR)
+#   define UNUSED_PARAM(__VAR)     (void)(__VAR)
 #endif
 
 #undef __CONNECT2
@@ -152,26 +167,23 @@ extern "C" {
                                                     __A##__B##__C##__D##__E##__F##__G##__H
 #define __CONNECT9(__A, __B, __C, __D, __E, __F, __G, __H, __I)                 \
                                                     __A##__B##__C##__D##__E##__F##__G##__H##__I
-                                                    
+
 #define ALT_CONNECT2(__A, __B)              __CONNECT2(__A, __B)
 #define CONNECT2(__A, __B)                  __CONNECT2(__A, __B)
 #define CONNECT3(__A, __B, __C)             __CONNECT3(__A, __B, __C)
 #define CONNECT4(__A, __B, __C, __D)        __CONNECT4(__A, __B, __C, __D)
-#define CONNECT5(__A, __B, __C, __D, __E)   __CONNECT5(__A, __B, __C, __D, __E)       
+#define CONNECT5(__A, __B, __C, __D, __E)   __CONNECT5(__A, __B, __C, __D, __E)
 #define CONNECT6(__A, __B, __C, __D, __E, __F)                                  \
-                                            __CONNECT6(__A, __B, __C, __D, __E, __F) 
+                                            __CONNECT6(__A, __B, __C, __D, __E, __F)
 #define CONNECT7(__A, __B, __C, __D, __E, __F, __G)                             \
-                                            __CONNECT7(__A, __B, __C, __D, __E, __F, __G) 
+                                            __CONNECT7(__A, __B, __C, __D, __E, __F, __G)
 #define CONNECT8(__A, __B, __C, __D, __E, __F, __G, __H)                        \
-                                            __CONNECT8(__A, __B, __C, __D, __E, __F, __G, __H) 
+                                            __CONNECT8(__A, __B, __C, __D, __E, __F, __G, __H)
 #define CONNECT9(__A, __B, __C, __D, __E, __F, __G, __H, __I)                   \
                                             __CONNECT9(__A, __B, __C, __D, __E, __F, __G, __H, __I)
-       
+
 #define CONNECT(...)                                                            \
             ALT_CONNECT2(CONNECT, __PLOOC_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
-
-
-
 
 #undef __using1
 #undef __using2
@@ -196,14 +208,14 @@ extern "C" {
                     ((__on_enter_expr),1) : 0;                                  \
                  (__on_leave_expr)                                              \
                 )
-                
+
 #define __using4(__dcl1, __dcl2, __on_enter_expr, __on_leave_expr)              \
             for (__dcl1, __dcl2, *CONNECT3(__using_, __LINE__,_ptr) = NULL;     \
                  CONNECT3(__using_, __LINE__,_ptr)++ == NULL ?                  \
                     ((__on_enter_expr),1) : 0;                                  \
                  (__on_leave_expr)                                              \
                 )
-               
+
 #define using(...)                                                              \
                 CONNECT2(__using, __PLOOC_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
@@ -258,7 +270,7 @@ extern "C" {
                             SAFE_NAME(temp2);}),                                \
                         __set_PRIMASK(SAFE_NAME(temp)))
 #endif
-            
+
 #ifndef __IRQ_SAFE
 #   define __IRQ_SAFE                                                           \
             using(  uint32_t SAFE_NAME(temp) =                                  \
@@ -268,32 +280,56 @@ extern "C" {
                         __set_PRIMASK(SAFE_NAME(temp)))
 #endif
 
+#ifndef __perf_counter_printf__
+#   define __perf_counter_printf__      printf
+#endif
 
 #if __PLOOC_VA_NUM_ARGS() != 0
 #warning Please enable GNC extensions, it is required by __cycleof__() and \
 __super_loop_monitor__()
 #endif
 
+//#if defined(__PERF_COUNTER_CFG_USE_SYSTICK_WRAPPER__)
+#   if defined(__IS_COMPILER_ARM_COMPILER_5__) && __IS_COMPILER_ARM_COMPILER_5__
+#       pragma import(__ensure_systick_wrapper)
+#   elif    (defined(__GNUC__) || defined(__clang__))                           \
+        &&  (!defined(__IS_COMPILER_IAR__) || !__IS_COMPILER_IAR__)
+__asm(".global __ensure_systick_wrapper\n\t");
+#   endif
+//#endif
+/*! @} */
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
+
+/*!
+ * \addtogroup gBasic 1 Basic
+ * @{
+ */
 
 #define __cycleof__(__STR, ...)                                                 \
             using(int64_t _ = get_system_ticks(), __cycle_count__ = _,          \
                 _=_, {                                                          \
-                _ = get_system_ticks() - _;                                     \
+                _ = get_system_ticks() - _ - g_nOffset;                         \
                 __cycle_count__ = _;                                            \
                 if (__PLOOC_VA_NUM_ARGS(__VA_ARGS__) == 0) {                    \
-                    printf("\r\n");                                             \
-                    printf("-[Cycle Report]");                                  \
-                    printf("--------------------------------------------\r\n"); \
-                    printf(__STR " total cycle count: %d [%08x]\r\n",           \
+                    __perf_counter_printf__("\r\n");                            \
+                    __perf_counter_printf__("-[Cycle Report]");                 \
+                    __perf_counter_printf__(                                    \
+                        "--------------------------------------------\r\n");    \
+                    __perf_counter_printf__(                                    \
+                        __STR " total cycle count: %d [%08x]\r\n",              \
                             (int)_, (int)_);                                    \
                 } else {                                                        \
                     __VA_ARGS__                                                 \
                 };                                                              \
             })
 
+/*! @} */
 
-
+/*!
+ * \addtogroup gRTOS 2 RTOS Support
+ * @{
+ */
 #define __super_loop_monitor__(__N, ...)                                        \
     using(                                                                      \
         struct {                                                                \
@@ -305,13 +341,14 @@ __super_loop_monitor__()
     for(start_task_cycle_counter();; ({                                         \
         if (!(--SAFE_NAME(cnt))) {                                              \
             __cpu_usage__.lTimeElapsed                                          \
-                = get_system_ticks() - __cpu_usage__.lStart;                    \
+                = get_system_ticks() - __cpu_usage__.lStart - g_nOffset;        \
             __cpu_usage__.lTaskUsedCycles = stop_task_cycle_counter();          \
                                                                                 \
             if (__PLOOC_VA_NUM_ARGS(__VA_ARGS__) == 0) {                        \
-                printf("%s CPU Usage %2.3f%%\r\n", __func__,                    \
-                        (float)((double)__cpu_usage__.lTaskUsedCycles * 100.0 / \
-                                (double)__cpu_usage__.lTimeElapsed));           \
+                __perf_counter_printf__(                                        \
+                    "%s CPU Usage %2.3f%%\r\n", __func__,                       \
+                    (float)((double)__cpu_usage__.lTaskUsedCycles * 100.0 /     \
+                            (double)__cpu_usage__.lTimeElapsed));               \
             } else {                                                            \
                 __VA_ARGS__;                                                    \
             }                                                                   \
@@ -330,7 +367,7 @@ typedef struct {
     uint16_t                        : 15;
     uint16_t            bEnabled    : 1;
 } task_cycle_info_t;
-    
+
 typedef struct task_cycle_info_agent_t task_cycle_info_agent_t;
 
 struct task_cycle_info_agent_t {
@@ -339,68 +376,111 @@ struct task_cycle_info_agent_t {
     task_cycle_info_agent_t *ptPrev;
 };
 
+/*! @} */
 
 /*============================ GLOBAL VARIABLES ==============================*/
+extern volatile int64_t g_lLastTimeStamp;
+extern volatile int32_t g_nOffset;
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ PROTOTYPES ====================================*/
 
 
-
-
-/*! \brief try to set a start pointer for the performance counter
- *! \retval false the LOAD register is too small
- *! \retval true performance counter starts
-*/
-extern bool start_cycle_counter(void);
-
-/*! \brief calculate the elapsed cycle count since the last start point
- *! 
- *! \note you can have multiple stop_cycle_counter following one start point
- *!  
- *! \return the elapsed cycle count.
- */ 
-extern int32_t stop_cycle_counter(void);
-
-/* Function : delay specified us with the help from systick
+/*!
+ * \addtogroup gBasic 1 Basic
+ * @{
  */
-extern void delay_us(int32_t iUs);
 
-/* Function : delay specified ms with the help from systick
+/*!
+ * \brief get the elapsed cycles since perf_counter is initialised
+ * \return int64_t the elpased cycles
+ */
+__attribute__((noinline))
+extern int64_t get_system_ticks(void);
+
+/*!
+ * \brief get the elapsed milliseconds since perf_counter is initialised
+ * \return int32_t the elapsed milliseconds
+ */
+extern int32_t get_system_ms(void);
+
+/*!
+ * \brief get the elapsed microsecond since perf_counter is initialised
+ * \return int32_t the elapsed microsecond
+ */
+extern int32_t get_system_us(void);
+
+/*!
+ * \brief try to set a start pointer for the performance counter
+ */
+__STATIC_INLINE
+void start_cycle_counter(void)
+{
+    g_lLastTimeStamp = get_system_ticks();
+}
+
+/*!
+ * \brief calculate the elapsed cycle count since the last start point
+ * \note  you can have multiple stop_cycle_counter following one start point
+ * \return int32_t the elapsed cycle count
+ */
+__STATIC_INLINE
+int32_t stop_cycle_counter(void)
+{
+    int32_t nTemp = (int32_t)(get_system_ticks() - g_lLastTimeStamp);
+
+    return nTemp - g_nOffset;
+}
+
+/*!
+ * \brief delay specified time in microsecond
+ * \param[in] nUs time in microsecond
+ */
+extern void delay_us(int32_t nUs);
+
+/*!
+ * \brief delay specified time in millisecond
+ * \param[in] nMs time in millisecond
  */
 extern void delay_ms(int32_t nMs);
 
+#ifdef __PERF_CNT_USE_LONG_CLOCK__
 /*! \note the prototype of this clock() is different from the one defined in
  *!           time.h. As clock_t is usually defined as unsigned int, it is
  *!           not big enough in Cortex-M system to hold a time-stamp. clock()
  *!           defined here returns the timestamp since the begining of main()
  *!           and its unit is clock cycle (rather than 1ms). Hence, for a system
- *!           running under several hundreds MHz or even 1GHz, e.g. RT10xx from 
- *!           NXP, it is very easy to see a counter overflow as clock_t is 
+ *!           running under several hundreds MHz or even 1GHz, e.g. RT10xx from
+ *!           NXP, it is very easy to see a counter overflow as clock_t is
  *!           defined as uint32_t in timer.h.
  *!           Since we are not allowed to change the defintion of clock_t in
- *!           official header file, i.e. time.h, I use a compatible prototype 
- *!           after I checked the AAPCS spec. So, the return of the clock() is 
- *!           int64_t, which will use the R0 to store the lower 32bits and R1 
+ *!           official header file, i.e. time.h, I use a compatible prototype
+ *!           after I checked the AAPCS spec. So, the return of the clock() is
+ *!           int64_t, which will use the R0 to store the lower 32bits and R1
  *!           to store the higher 32bits. When you are using the prototype from
- *!           timer.h, caller will only take the lower 32bits stored in R0 and 
+ *!           timer.h, caller will only take the lower 32bits stored in R0 and
  *!           the higher 32bits stored in R1 will be ignored.
- *! 
+ *!
  *!           If you want to use the non-overflow version of this clock(), please
- *!           1) define the MACRO: __PERF_CNT_USE_LONG_CLOCK__ in your project 
+ *!           1) define the MACRO: __PERF_CNT_USE_LONG_CLOCK__ in your project
  *!           and 2) do not include system header file <time.h>
  *!
  */
-#ifdef __PERF_CNT_USE_LONG_CLOCK__
 #if !defined(__IS_COMPILER_IAR__)
-__attribute__((nothrow)) 
+__attribute__((nothrow))
 #endif
+__attribute__((noinline))
 extern int64_t clock(void);
 #endif
 
-extern int64_t get_system_ticks(void);
 
-extern int32_t get_system_ms(void);
 
+
+/*! @} */
+
+/*!
+ * \addtogroup gRTOS
+ * @{
+ */
 
 #if defined(__PERF_CNT_USE_RTOS__)
 
@@ -408,79 +488,92 @@ extern int32_t get_system_ms(void);
  */
 extern void init_task_cycle_counter(void);
 
-/*! \brief provide cycle information for target task if perf_counter is used
- *!        together with an RTOS in the support list.
- *!        
- *!        Support RTOS List:
- *!           - RTX5
+/*! \brief provide cycle information for target task
+ *  \details Support RTOS List:
+ *           - RTX5
+ *           - RT-Thread
+ *           - ThreadX
+ *           - FreeRTOS
+ *
+ * \return task_cycle_info_t* the cycle info object passed to this function
  */
 extern task_cycle_info_t * get_rtos_task_cycle_info(void);
 
 
-/*! \brief intialize a given task_cycle_info_t object and enable it before 
- *!        registering it.
+/*!
+ * \brief intialize a given task_cycle_info_t object and enable it before
+ *        registering it.
+ * \return task_cycle_info_t* the cycle info object passed to this function
  */
 extern task_cycle_info_t *init_task_cycle_info(task_cycle_info_t *ptInfo);
 
 /*! \brief enable a given task_cycle_info_t object
- *! 
- *! \param ptInfo the address of target task_cycle_info_t object
- *! \return previous status
+ *
+ * \param[in] ptInfo the address of target task_cycle_info_t object
+ * \return bool previous status
  */
 extern bool enable_task_cycle_info(task_cycle_info_t *ptInfo);
 
 /*! \brief disable a given task_cycle_info_t object
- *! 
- *! \param ptInfo the address of target task_cycle_info_t object
- *! \return previous status
+ *
+ * \param[in] ptInfo the address of target task_cycle_info_t object
+ * \return bool previous status
  */
 extern bool disable_task_cycle_info(task_cycle_info_t *ptInfo);
 
 /*! \brief resume the enabled status of a given task_cycle_info_t object
- *!
- *! \param ptInfo the address of target task_cycle_info_t object
- *! \param bEnabledStatus the previous status
+ *
+ * \param[in] ptInfo the address of target task_cycle_info_t object
+ * \param[in] bEnabledStatus the previous status
  */
-extern 
+extern
 void resume_task_cycle_info(task_cycle_info_t *ptInfo, bool bEnabledStatus);
 
-/*! \brief register a global virtual cycle counter agent to the current task
- *! 
- *! \note the ptAgent it is better to be allocated as a static variable, global
- *!       variable or comes from heap or pool
+/*! 
+ * \brief register a global virtual cycle counter agent to the current task
+ * \param[in] ptInfo the address of target task_cycle_info_t object
+ * \param[in] ptAgent an list node for the task_cycle_info_t object
+ * \note the ptAgent it is better to be allocated as a static variable, global
+ *       variable or comes from heap or pool
+ *
+ * \return task_cycle_info_agent_t* the agent passed to this function
  */
 extern
 task_cycle_info_agent_t *register_task_cycle_agent(
                                             task_cycle_info_t *ptInfo,
                                             task_cycle_info_agent_t *ptAgent);
 
-/*! \brief remove a global virtual cycle counter agent from the current task
- *! 
+/*!
+ * \brief remove a global virtual cycle counter agent from the current task
+ * \param[in] ptAgent the list node currently in use
+ * \return task_cycle_info_agent_t* the agent passed to this function
  */
 extern
 task_cycle_info_agent_t *
 unregister_task_cycle_agent(task_cycle_info_agent_t *ptAgent);
 
 /*! \brief reset and start the virtual cycle counter for the current task
- *!
- *! \param ptInfo the target task_cycle_info_t object
+ *
+ * \param[in] ptInfo the target task_cycle_info_t object
  */
+__attribute__((noinline))
 extern void __start_task_cycle_counter(task_cycle_info_t *ptInfo);
 
-/*! \brief calculate the elapsed cycle count for current task since the last 
- *!        start point
- *! 
- *! \note you can call stop_cycle_counter() multiple times following one 
- *!       start_task_cycle_counter()
- *!
- *! \param ptInfo the target task_cycle_info_t object
- *!
- *! \note  When ptInfo is NULL, it returns current task cycle info, when ptInfo
- *!        is non-NULL, it returns the total used cycles of the specified 
- *!        task_cycle_info_t object.
- *!
- *! \return the elapsed cycle count.
+/*! \brief calculate the elapsed cycle count for current task since the last
+ *        start point
+ *
+ * \note you can call stop_cycle_counter() multiple times following one
+ *       start_task_cycle_counter()
+ *
+ * \param[in] ptInfo the target task_cycle_info_t object
+ *
+ * \note  When ptInfo is NULL, it returns current task cycle info, when ptInfo
+ *        is non-NULL, it returns the total used cycles of the specified
+ *        task_cycle_info_t object.
+ *
+ * \return int64_t the elapsed cycle count.
  */
+__attribute__((noinline))
 extern int64_t __stop_task_cycle_counter(task_cycle_info_t *ptInfo);
 
 
@@ -502,55 +595,71 @@ extern int64_t __stop_task_cycle_counter(task_cycle_info_t *ptInfo);
 #   define resume_task_cycle_info(...)
 #endif
 
+/*! @} */
+
+/*!
+ * \addtogroup gBasic 1 Basic
+ * @{
+ */
+
 /*----------------------------------------------------------------------------*
  * Please ignore the following APIs unless you have encountered some known    *
  * special conditions                                                         *
- *----------------------------------------------------------------------------*/ 
- 
+ *----------------------------------------------------------------------------*/
+
 
 /*! \brief   initialise cycle counter service
- *!          and don't forget to tell the function whether the systick is already
- *!          used by user applications. 
- *!          Don't worry, this cycle counter service won't affect your existing
- *!          systick service.
- *!
- *! \note    Usually the perf_counter can initialise itself with the help of
- *!          __attribute__((constructor(255))), this works fine in Arm Compiler
- *!          5 (armcc), Arm Compiler 6 (armclang), arm gcc and llvm. It doesn't
- *!          work for IAR. So, when you are using IAR, please call this function
- *!          manually to initialise the perf_counter service.
- *!
- *! \note    Perf_counter library assumes that:
- *!          a. Your project has already using SysTick
- *!          b. It assumes that you have already implemented the SysTick_Handler
- *!          c. It assumes that you have enabled the exception handling for 
- *!             SysTick.
- *!          If these are not the case, please:
- *!          a. Add an empty SysTick_Handler to your project if you don't have 
- *!             one
- *!          b. Make sure you have the SysTick Exception handling enabled
- *!          c. And call function init_cycle_counter(false) if you doesn't 
- *!             use SysTick in your project at all.
- *!
- *! \param bSysTickIsOccupied  A boolean value which indicates whether SysTick
- *!          is already used by user application.
+ *  \note    - don't forget to tell the function whether the systick is already
+ *           used by user applications.
+ *           Don't worry, this cycle counter service won't affect your existing
+ *           systick service.
+ *
+ *  \note    - Usually the perf_counter can initialise itself with the help of
+ *           __attribute__((constructor(255))), this works fine in Arm Compiler
+ *           5 (armcc), Arm Compiler 6 (armclang), arm gcc and llvm. It doesn't
+ *           work for IAR. So, when you are using IAR, please call this function
+ *           manually to initialise the perf_counter service.
+ *
+ *  \note    - Perf_counter library assumes that:
+ *           1. Your project has already using SysTick
+ *           2. It assumes that you have already implemented the SysTick_Handler
+ *           3. It assumes that you have enabled the exception handling for
+ *              SysTick.
+ *           If these are not the case, please:
+ *               1. Add an empty SysTick_Handler to your project if you don't have
+ *              one
+ *               2. Make sure you have the SysTick Exception handling enabled
+ *               3. And call function init_cycle_counter(false) if you doesn't
+ *              use SysTick in your project at all.
+ *
+ *  \param[in] bIsSysTickOccupied  A boolean value which indicates whether SysTick
+ *           is already used by user application.
  */
-extern void init_cycle_counter(bool bSysTickIsOccupied);
+extern void init_cycle_counter(bool bIsSysTickOccupied);
 
 
-/*! \note  if you are using a compiler other than armcc or armclang, e.g. iar,
- *!        arm gcc etc, the systick_wrapper_ual.o doesn't work with the linker
- *!        of your target toolchain as it use the $Super$$ which is only supported
- *!        by armlink. For this condition, you have to manually put this function
- *!        into your existing SysTick_Handler to make the perf_counter library
- *!        work.
- *! 
- *! \note  if you are using Arm Compiler 5 (armcc) or Arm Compiler 6 (armclang)
- *!        you do NOT have to insert this function into your SysTick_Handler,
- *!        the systick_wrapper_ual.s will do the work for you.
+/*!
+ * \brief a system timer handler inserted to the SysTick_Handler
+ * 
+ * \note  - if you are using a compiler other than armcc or armclang, e.g. iar,
+ *        arm gcc etc, the systick_wrapper_ual.o doesn't work with the linker
+ *        of your target toolchain as it use the $Super$$ which is only supported
+ *        by armlink. For this condition, you have to manually put this function
+ *        into your existing SysTick_Handler to make the perf_counter library
+ *        work.
+ *
+ * \note  - if you are using Arm Compiler 5 (armcc) or Arm Compiler 6 (armclang)
+ *        you do NOT have to insert this function into your SysTick_Handler,
+ *        the systick_wrapper_ual.s will do the work for you.
  */
 extern void user_code_insert_to_systick_handler(void);
 
+/*!
+ * \brief update perf_counter as SystemCoreClock has been updated.
+ */
+extern void update_perf_counter(void);
+
+/*! @} */
 
 //#if defined(__clang__)
 //#   pragma clang diagnostic pop
