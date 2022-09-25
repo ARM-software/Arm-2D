@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        12. Sept 2022
- * $Revision:    V.1.3.0
+ * $Date:        25. Sept 2022
+ * $Revision:    V.1.3.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -477,6 +477,15 @@ arm_2d_err_t  __arm_mask_validate(  const arm_2d_tile_t *ptSource,
                                     const arm_2d_tile_t *ptTarget,
                                     const arm_2d_tile_t *ptDesMask,
                                     uint32_t wMode);
+
+extern
+ARM_NONNULL(1,2)
+const arm_2d_tile_t *__arm_2d_tile_get_1st_derived_child_or_root(
+                                            const arm_2d_tile_t *ptTile,
+                                            arm_2d_region_t *ptValidRegion,
+                                            arm_2d_location_t *ptOffset,
+                                            arm_2d_tile_t **ppFirstDerivedChild,
+                                            bool bQuitWhenFindFirstDerivedChild);
 
 extern
 ARM_NONNULL(1,2)

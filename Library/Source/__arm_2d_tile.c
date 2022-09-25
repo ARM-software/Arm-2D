@@ -21,8 +21,8 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        14. Sept 2022
- * $Revision:    V.1.3.0
+ * $Date:        25. Sept 2022
+ * $Revision:    V.1.3.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -205,11 +205,14 @@ bool arm_2d_is_point_inside_region( const arm_2d_region_t *ptRegion,
     return false;
 }
 
+
 ARM_NONNULL(1,2)
-const arm_2d_tile_t *__arm_2d_tile_get_root(const arm_2d_tile_t *ptTile,
+const arm_2d_tile_t *__arm_2d_tile_get_1st_derived_child_or_root(
+                                            const arm_2d_tile_t *ptTile,
                                             arm_2d_region_t *ptValidRegion,
                                             arm_2d_location_t *ptOffset,
-                                            arm_2d_tile_t **ppFirstDerivedChild)
+                                            arm_2d_tile_t **ppFirstDerivedChild,
+                                            bool bQuitWhenFindFirstDerivedChild)
 {
     assert(NULL != ptTile);
     assert(NULL != ptValidRegion);
@@ -235,6 +238,10 @@ const arm_2d_tile_t *__arm_2d_tile_get_root(const arm_2d_tile_t *ptTile,
                 if (NULL == *ppFirstDerivedChild) {
                     *ppFirstDerivedChild = ptTile;
                 }
+            }
+            
+            if (bQuitWhenFindFirstDerivedChild) {
+                return ptTile;
             }
         }
 
@@ -319,6 +326,20 @@ const arm_2d_tile_t *__arm_2d_tile_get_root(const arm_2d_tile_t *ptTile,
     return ptTile;
 }
 
+
+ARM_NONNULL(1,2)
+const arm_2d_tile_t *__arm_2d_tile_get_root(const arm_2d_tile_t *ptTile,
+                                            arm_2d_region_t *ptValidRegion,
+                                            arm_2d_location_t *ptOffset,
+                                            arm_2d_tile_t **ppFirstDerivedChild)
+{
+    return __arm_2d_tile_get_1st_derived_child_or_root( ptTile, 
+                                                        ptValidRegion, 
+                                                        ptOffset, 
+                                                        ppFirstDerivedChild, 
+                                                        false);
+}
+
 /*
   HOW IT WORKS:
 
@@ -345,7 +366,11 @@ const arm_2d_tile_t *arm_2d_tile_get_root(  const arm_2d_tile_t *ptTile,
                                             arm_2d_region_t *ptValidRegion,
                                             arm_2d_location_t *ptOffset)
 {
-    return __arm_2d_tile_get_root(ptTile, ptValidRegion, ptOffset, NULL);
+    return __arm_2d_tile_get_1st_derived_child_or_root( ptTile, 
+                                                        ptValidRegion, 
+                                                        ptOffset, 
+                                                        NULL, 
+                                                        false);
 }
 
 ARM_NONNULL(1,2)
