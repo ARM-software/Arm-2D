@@ -44,6 +44,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** that are 
   - Support Various Buffer Modes with a built-in framebuffer pool. 
     - Single Buffer/Double-Buffers/Three-Buffers
     - Direct Mode
+    - Enhanced Asynchronous Flushing Support (i.e. DMA + ISR)
 - **Transform** (i.e. rotation and scaling)
   - Supports Colour-keying by default
   - Supports an optional **Opacity** ratio
@@ -64,7 +65,6 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** that are 
 
 - Image Filters, e.g. Generic Anti-aliasing algorithms
 - Stretch and Perspective Transform
-- A2, A4 Support
 - DMAC-350 Support
 
 
@@ -375,4 +375,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-05 Sept 2022
+26 Sept 2022
