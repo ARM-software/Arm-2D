@@ -47,7 +47,7 @@ extern "C" {
 // <i> Note that enabling this feature suffers a non-negligible performance drop.
 // <i> This feature is disabled by default.
 #ifndef __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
-#   define __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__                      0
+#   define __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__                      1
 #endif
 
 // <q>Enable support for accessing individual colour channels
