@@ -21,8 +21,8 @@
  * Title:        arm-2d_transform.c
  * Description:  APIs for tile transform
  *
- * $Date:        25 Sept 2022
- * $Revision:    V.1.1.0
+ * $Date:        26 Sept 2022
+ * $Revision:    V.1.1.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -1184,15 +1184,15 @@ __arm_2d_gray8_sw_transform_with_src_mask(__arm_2d_sub_task_t *ptTask)
     ARM_2D_IMPL(arm_2d_op_trans_msk_t, ptTask->ptOP);
     assert(ARM_2D_COLOUR_8BIT == OP_CORE.ptOp->Info.Colour.chScheme);
 
-    ptTask->Param.tCopyOrig.tOrigin.pBuffer -= 
-          ptTask->Param.tCopyOrig.tOrigin.nOffset;
+    ptTask->Param.tCopyOrigMask.use_as____arm_2d_param_copy_orig_t.tOrigin.pBuffer -= 
+          ptTask->Param.tCopyOrigMask.use_as____arm_2d_param_copy_orig_t.tOrigin.nOffset;
+
+    ptTask->Param.tCopyOrigMask.tOrigMask.pBuffer -=
+        ptTask->Param.tCopyOrigMask.tOrigMask.nOffset;
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
     bool bIsMaskChannel8In32 = (ARM_2D_CHANNEL_8in32
             ==  ptTask->Param.tCopyOrigMask.tOrigMask.tColour.chScheme);
-
-    ptTask->Param.tCopyOrigMask.tOrigMask.pBuffer -=
-        ptTask->Param.tCopyOrigMask.tOrigMask.nOffset;
 
     if (bIsMaskChannel8In32) {
         __arm_2d_impl_gray8_transform_with_src_chn_mask(
@@ -1215,15 +1215,15 @@ __arm_2d_rgb565_sw_transform_with_src_mask(__arm_2d_sub_task_t *ptTask)
     ARM_2D_IMPL(arm_2d_op_trans_msk_t, ptTask->ptOP);
     assert(ARM_2D_COLOUR_RGB565 == OP_CORE.ptOp->Info.Colour.chScheme);
 
-    ptTask->Param.tCopyOrig.tOrigin.pBuffer -= 
-          ptTask->Param.tCopyOrig.tOrigin.nOffset * 2;
+    ptTask->Param.tCopyOrigMask.use_as____arm_2d_param_copy_orig_t.tOrigin.pBuffer -= 
+          ptTask->Param.tCopyOrigMask.use_as____arm_2d_param_copy_orig_t.tOrigin.nOffset * 2;
+
+    ptTask->Param.tCopyOrigMask.tOrigMask.pBuffer -=
+        ptTask->Param.tCopyOrigMask.tOrigMask.nOffset;
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
     bool bIsMaskChannel8In32 = (ARM_2D_CHANNEL_8in32
             ==  ptTask->Param.tCopyOrigMask.tOrigMask.tColour.chScheme);
-
-    ptTask->Param.tCopyOrigMask.tOrigMask.pBuffer -=
-        ptTask->Param.tCopyOrigMask.tOrigMask.nOffset;
 
     if (bIsMaskChannel8In32) {
         __arm_2d_impl_rgb565_transform_with_src_chn_mask(
@@ -1246,15 +1246,15 @@ __arm_2d_cccn888_sw_transform_with_src_mask(__arm_2d_sub_task_t *ptTask)
     ARM_2D_IMPL(arm_2d_op_trans_msk_t, ptTask->ptOP);
     assert(ARM_2D_COLOUR_SZ_32BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
 
-    ptTask->Param.tCopyOrig.tOrigin.pBuffer -= 
-          ptTask->Param.tCopyOrig.tOrigin.nOffset * 4;
+    ptTask->Param.tCopyOrigMask.use_as____arm_2d_param_copy_orig_t.tOrigin.pBuffer -= 
+          ptTask->Param.tCopyOrigMask.use_as____arm_2d_param_copy_orig_t.tOrigin.nOffset * 4;
+
+    ptTask->Param.tCopyOrigMask.tOrigMask.pBuffer -=
+        ptTask->Param.tCopyOrigMask.tOrigMask.nOffset;
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
     bool bIsMaskChannel8In32 = (ARM_2D_CHANNEL_8in32
             ==  ptTask->Param.tCopyOrigMask.tOrigMask.tColour.chScheme);
-
-    ptTask->Param.tCopyOrigMask.tOrigMask.pBuffer -=
-        ptTask->Param.tCopyOrigMask.tOrigMask.nOffset;
 
     if (bIsMaskChannel8In32) {
         __arm_2d_impl_cccn888_transform_with_src_chn_mask(
@@ -1408,8 +1408,9 @@ __arm_2d_gray8_sw_transform_with_src_mask_and_opacity(__arm_2d_sub_task_t *ptTas
     ARM_2D_IMPL(arm_2d_op_trans_msk_opa_t, ptTask->ptOP);
     assert(ARM_2D_COLOUR_8BIT == OP_CORE.ptOp->Info.Colour.chScheme);
 
-    ptTask->Param.tCopyOrig.tOrigin.pBuffer -= 
-          ptTask->Param.tCopyOrig.tOrigin.nOffset;
+    ptTask->Param.tCopyOrigMask.use_as____arm_2d_param_copy_orig_t.tOrigin.pBuffer -= 
+          ptTask->Param.tCopyOrigMask.use_as____arm_2d_param_copy_orig_t.tOrigin.nOffset;
+
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
     bool bIsMaskChannel8In32 = (ARM_2D_CHANNEL_8in32
@@ -1459,8 +1460,8 @@ __arm_2d_rgb565_sw_transform_with_src_mask_and_opacity(__arm_2d_sub_task_t *ptTa
     ARM_2D_IMPL(arm_2d_op_trans_msk_opa_t, ptTask->ptOP);
     assert(ARM_2D_COLOUR_RGB565 == OP_CORE.ptOp->Info.Colour.chScheme);
 
-    ptTask->Param.tCopyOrig.tOrigin.pBuffer -= 
-          ptTask->Param.tCopyOrig.tOrigin.nOffset * 2;
+    ptTask->Param.tCopyOrigMask.use_as____arm_2d_param_copy_orig_t.tOrigin.pBuffer -= 
+          ptTask->Param.tCopyOrigMask.use_as____arm_2d_param_copy_orig_t.tOrigin.nOffset * 2;
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
     bool bIsMaskChannel8In32 = (ARM_2D_CHANNEL_8in32
@@ -1509,8 +1510,8 @@ __arm_2d_cccn888_sw_transform_with_src_mask_and_opacity(__arm_2d_sub_task_t *ptT
     ARM_2D_IMPL(arm_2d_op_trans_msk_opa_t, ptTask->ptOP);
     assert(ARM_2D_COLOUR_SZ_32BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
 
-    ptTask->Param.tCopyOrig.tOrigin.pBuffer -= 
-          ptTask->Param.tCopyOrig.tOrigin.nOffset * 4;
+    ptTask->Param.tCopyOrigMask.use_as____arm_2d_param_copy_orig_t.tOrigin.pBuffer -= 
+          ptTask->Param.tCopyOrigMask.use_as____arm_2d_param_copy_orig_t.tOrigin.nOffset * 4;
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
     bool bIsMaskChannel8In32 = (ARM_2D_CHANNEL_8in32
