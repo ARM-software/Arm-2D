@@ -328,7 +328,7 @@ void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget,
                                                   &__centre_region,
                                                   &tileMaskFB,
                                                   (__arm_2d_color_t){Colour},
-                                                  128);
+                                                  224);
     }
 #endif
 

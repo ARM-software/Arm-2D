@@ -485,6 +485,16 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\wave.c</FilePath>
             </File>
+            <File>
+              <FileName>QuaterArc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\QuaterArc.c</FilePath>
+            </File>
+            <File>
+              <FileName>GreenCircle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\GreenCircle.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1623,6 +1633,16 @@
               <FileName>wave.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
+            <File>
+              <FileName>QuaterArc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\QuaterArc.c</FilePath>
+            </File>
+            <File>
+              <FileName>GreenCircle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\GreenCircle.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2830,6 +2850,16 @@
               <FileName>wave.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
+            <File>
+              <FileName>QuaterArc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\QuaterArc.c</FilePath>
+            </File>
+            <File>
+              <FileName>GreenCircle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\GreenCircle.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4039,6 +4069,16 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\wave.c</FilePath>
             </File>
+            <File>
+              <FileName>QuaterArc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\QuaterArc.c</FilePath>
+            </File>
+            <File>
+              <FileName>GreenCircle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\GreenCircle.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5177,6 +5217,16 @@
               <FileName>wave.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
+            <File>
+              <FileName>QuaterArc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\QuaterArc.c</FilePath>
+            </File>
+            <File>
+              <FileName>GreenCircle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\GreenCircle.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6386,6 +6436,16 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\wave.c</FilePath>
             </File>
+            <File>
+              <FileName>QuaterArc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\QuaterArc.c</FilePath>
+            </File>
+            <File>
+              <FileName>GreenCircle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\GreenCircle.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -7593,6 +7653,16 @@
               <FileName>wave.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
+            <File>
+              <FileName>QuaterArc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\QuaterArc.c</FilePath>
+            </File>
+            <File>
+              <FileName>GreenCircle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\GreenCircle.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8802,6 +8872,16 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\wave.c</FilePath>
             </File>
+            <File>
+              <FileName>QuaterArc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\QuaterArc.c</FilePath>
+            </File>
+            <File>
+              <FileName>GreenCircle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\GreenCircle.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -10010,6 +10090,16 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\wave.c</FilePath>
             </File>
+            <File>
+              <FileName>QuaterArc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\QuaterArc.c</FilePath>
+            </File>
+            <File>
+              <FileName>GreenCircle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\GreenCircle.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -11148,6 +11238,16 @@
               <FileName>wave.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
+            <File>
+              <FileName>QuaterArc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\QuaterArc.c</FilePath>
+            </File>
+            <File>
+              <FileName>GreenCircle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\GreenCircle.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -12356,6 +12456,16 @@
               <FileName>wave.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
+            <File>
+              <FileName>QuaterArc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\QuaterArc.c</FilePath>
+            </File>
+            <File>
+              <FileName>GreenCircle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\GreenCircle.c</FilePath>
             </File>
           </Files>
         </Group>
