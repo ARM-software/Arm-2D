@@ -40,3 +40,4 @@ build
 .DS_Store
 *@*
 RTE_Components.h
+Pre_Include_Global.h
