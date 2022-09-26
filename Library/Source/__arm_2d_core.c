@@ -21,8 +21,8 @@
  * Title:        __arm-2d_core.c
  * Description:  Basic Tile operations
  *
- * $Date:        16. Sept 2022
- * $Revision:    V.1.4.0
+ * $Date:        26. Sept 2022
+ * $Revision:    V.1.5.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -1997,6 +1997,47 @@ arm_fsm_rt_t arm_2d_task(arm_2d_task_t *ptTask)
  * Utilieis                                                                   *
  *----------------------------------------------------------------------------*/
 
+bool __arm_2d_valid_mask(   const arm_2d_tile_t *ptAlpha, 
+                            uint_fast8_t chAllowMask)
+{
+    do {
+        if (NULL == ptAlpha) {
+            break;
+        }
+        arm_2d_region_t tTemp;
+        ptAlpha = arm_2d_tile_get_root(ptAlpha, &tTemp, NULL);
+        if (NULL == ptAlpha) {
+            break;
+        }
+        
+        if (0 == ptAlpha->bHasEnforcedColour) {
+            break;
+        } 
+        
+        if (    (ARM_2D_COLOUR_MASK_A8 == ptAlpha->tColourInfo.chScheme)
+           &&   (chAllowMask & __ARM_2D_MASK_ALLOW_A8)) {
+            return true;
+        }
+
+        if (    (ARM_2D_CHANNEL_8in32 == ptAlpha->tColourInfo.chScheme)
+           &&   (chAllowMask & __ARM_2D_MASK_ALLOW_8in32)) {
+            return true;
+        }
+
+        if (    (ARM_2D_COLOUR_MASK_A4 == ptAlpha->tColourInfo.chScheme)
+           &&   (chAllowMask & __ARM_2D_MASK_ALLOW_A4)) {
+            return true;
+        }
+
+        if (    (ARM_2D_COLOUR_MASK_A2 == ptAlpha->tColourInfo.chScheme)
+           &&   (chAllowMask & __ARM_2D_MASK_ALLOW_A2)) {
+            return true;
+        }
+    } while(0);
+    
+    return false;
+}
+
 arm_2d_err_t  __arm_mask_validate(  const arm_2d_tile_t *ptSource,
                                     const arm_2d_tile_t *ptSrcMask,
                                     const arm_2d_tile_t *ptTarget,
@@ -2007,13 +2048,12 @@ arm_2d_err_t  __arm_mask_validate(  const arm_2d_tile_t *ptSource,
     
     if (NULL != ptSrcMask) {
         //! valid source mask tile
-        if (0 == ptSrcMask->bHasEnforcedColour) {
-            return ARM_2D_ERR_INVALID_PARAM;
-        } else if ( (ARM_2D_COLOUR_SZ_8BIT != ptSrcMask->tColourInfo.u3ColourSZ)
-        #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-               &&   (ARM_2D_CHANNEL_8in32 != ptSrcMask->tColourInfo.chScheme)
-        #endif
-               ) {
+        if (!__arm_2d_valid_mask(ptSrcMask, 
+                                    __ARM_2D_MASK_ALLOW_A8
+                            #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+                                |   __ARM_2D_MASK_ALLOW_8in32
+                            #endif
+                                )) {
             return ARM_2D_ERR_INVALID_PARAM;
         }
         
@@ -2030,13 +2070,12 @@ arm_2d_err_t  __arm_mask_validate(  const arm_2d_tile_t *ptSource,
     
     if (NULL != ptDesMask) {
         //! valid target mask tile
-        if (0 == ptDesMask->bHasEnforcedColour) {
-            return ARM_2D_ERR_INVALID_PARAM;
-        } else if ( (ARM_2D_COLOUR_SZ_8BIT != ptDesMask->tColourInfo.u3ColourSZ)
-        #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-               &&   (ARM_2D_CHANNEL_8in32 != ptDesMask->tColourInfo.chScheme)
-        #endif
-               ) {
+        if (!__arm_2d_valid_mask(ptDesMask, 
+                                    __ARM_2D_MASK_ALLOW_A8
+                            #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+                                |   __ARM_2D_MASK_ALLOW_8in32
+                            #endif
+                                )) {
             return ARM_2D_ERR_INVALID_PARAM;
         }
         

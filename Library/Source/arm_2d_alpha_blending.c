@@ -21,8 +21,8 @@
  * Title:        arm-2d.c
  * Description:  APIs for various alpha related operations
  *
- * $Date:        12. Sept 2022
- * $Revision:    V.1.1.0
+ * $Date:        26. Sept 2022
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -958,10 +958,12 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_mask(
     ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptOP);
 
     //! valid alpha mask tile
-    if (0 == ptAlpha->bHasEnforcedColour) {
-        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-    } else if ( (ARM_2D_COLOUR_SZ_8BIT != ptAlpha->tColourInfo.u3ColourSZ)
-           &&   (ARM_2D_CHANNEL_8in32 != ptAlpha->tColourInfo.chScheme)) {
+    if (!__arm_2d_valid_mask(   ptAlpha, 
+                                __ARM_2D_MASK_ALLOW_A8
+                        #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+                            |   __ARM_2D_MASK_ALLOW_8in32
+                        #endif
+                            )) {
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
     }
 
@@ -983,6 +985,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_mask(
 
 }
 
+
 ARM_NONNULL(2,4)
 arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask(
                                         arm_2d_op_fill_cl_msk_t *ptOP,
@@ -997,10 +1000,12 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask(
     ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptOP);
 
     //! valid alpha mask tile
-    if (0 == ptAlpha->bHasEnforcedColour) {
-        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-    } else if ( (ARM_2D_COLOUR_SZ_8BIT != ptAlpha->tColourInfo.u3ColourSZ)
-           &&   (ARM_2D_CHANNEL_8in32 != ptAlpha->tColourInfo.chScheme)) {
+    if (!__arm_2d_valid_mask(   ptAlpha, 
+                                __ARM_2D_MASK_ALLOW_A8
+                        #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+                            |   __ARM_2D_MASK_ALLOW_8in32
+                        #endif
+                            )) {
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
     }
 
@@ -1036,10 +1041,12 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_mask(
     ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptOP);
 
     //! valid alpha mask tile
-    if (0 == ptAlpha->bHasEnforcedColour) {
-        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-    } else if ( (ARM_2D_COLOUR_SZ_8BIT != ptAlpha->tColourInfo.u3ColourSZ)
-           &&   (ARM_2D_CHANNEL_8in32 != ptAlpha->tColourInfo.chScheme)) {
+    if (!__arm_2d_valid_mask(   ptAlpha, 
+                                __ARM_2D_MASK_ALLOW_A8
+                        #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+                            |   __ARM_2D_MASK_ALLOW_8in32
+                        #endif
+                            )) {
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
     }
 
@@ -1174,9 +1181,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_a2_mask(
     ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptOP);
 
     //! valid alpha mask tile
-    if (0 == ptAlpha->bHasEnforcedColour) {
-        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-    } else if (ARM_2D_COLOUR_SZ_2BIT != ptAlpha->tColourInfo.u3ColourSZ) {
+    if (!__arm_2d_valid_mask(ptAlpha, __ARM_2D_MASK_ALLOW_A2 )) {
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
     }
 
@@ -1212,9 +1217,8 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_a2_mask(
     ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptOP);
 
     //! valid alpha mask tile
-    if (0 == ptAlpha->bHasEnforcedColour) {
-        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-    } else if (ARM_2D_COLOUR_SZ_2BIT != ptAlpha->tColourInfo.u3ColourSZ) {
+    //! valid alpha mask tile
+    if (!__arm_2d_valid_mask(ptAlpha, __ARM_2D_MASK_ALLOW_A2 )) {
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
     }
 
@@ -1250,9 +1254,8 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_a2_mask(
     ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptOP);
 
     //! valid alpha mask tile
-    if (0 == ptAlpha->bHasEnforcedColour) {
-        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-    } else if (ARM_2D_COLOUR_SZ_2BIT != ptAlpha->tColourInfo.u3ColourSZ) {
+    //! valid alpha mask tile
+    if (!__arm_2d_valid_mask(ptAlpha, __ARM_2D_MASK_ALLOW_A2 )) {
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
     }
 
@@ -1348,9 +1351,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_a4_mask(
     ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptOP);
 
     //! valid alpha mask tile
-    if (0 == ptAlpha->bHasEnforcedColour) {
-        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-    } else if (ARM_2D_COLOUR_SZ_4BIT != ptAlpha->tColourInfo.u3ColourSZ) {
+    if (!__arm_2d_valid_mask(ptAlpha, __ARM_2D_MASK_ALLOW_A4 )) {
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
     }
 
@@ -1424,9 +1425,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_a4_mask(
     ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptOP);
 
     //! valid alpha mask tile
-    if (0 == ptAlpha->bHasEnforcedColour) {
-        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-    } else if (ARM_2D_COLOUR_SZ_4BIT != ptAlpha->tColourInfo.u3ColourSZ) {
+    if (!__arm_2d_valid_mask(ptAlpha, __ARM_2D_MASK_ALLOW_A4 )) {
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
     }
 
@@ -1524,9 +1523,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_a2_mask_and_opacity(
     ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptOP);
 
     //! valid alpha mask tile
-    if (0 == ptAlpha->bHasEnforcedColour) {
-        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-    } else if (ARM_2D_COLOUR_SZ_2BIT != ptAlpha->tColourInfo.u3ColourSZ) {
+    if (!__arm_2d_valid_mask(ptAlpha, __ARM_2D_MASK_ALLOW_A2 )) {
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
     }
 
@@ -1565,9 +1562,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_a2_mask_and_opacity(
     ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptOP);
 
     //! valid alpha mask tile
-    if (0 == ptAlpha->bHasEnforcedColour) {
-        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-    } else if (ARM_2D_COLOUR_SZ_2BIT != ptAlpha->tColourInfo.u3ColourSZ) {
+    if (!__arm_2d_valid_mask(ptAlpha, __ARM_2D_MASK_ALLOW_A2 )) {
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
     }
 
@@ -1605,9 +1600,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_a2_mask_and_opacity(
     ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptOP);
 
     //! valid alpha mask tile
-    if (0 == ptAlpha->bHasEnforcedColour) {
-        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-    } else if (ARM_2D_COLOUR_SZ_2BIT != ptAlpha->tColourInfo.u3ColourSZ) {
+    if (!__arm_2d_valid_mask(ptAlpha, __ARM_2D_MASK_ALLOW_A2 )) {
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
     }
 
@@ -1742,9 +1735,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_a4_mask_and_opacity(
     ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptOP);
 
     //! valid alpha mask tile
-    if (0 == ptAlpha->bHasEnforcedColour) {
-        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-    } else if (ARM_2D_COLOUR_SZ_4BIT != ptAlpha->tColourInfo.u3ColourSZ) {
+    if (!__arm_2d_valid_mask(ptAlpha, __ARM_2D_MASK_ALLOW_A4 )) {
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
     }
 
@@ -1783,9 +1774,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_a4_mask_and_opacity(
     ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptOP);
 
     //! valid alpha mask tile
-    if (0 == ptAlpha->bHasEnforcedColour) {
-        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-    } else if (ARM_2D_COLOUR_SZ_4BIT != ptAlpha->tColourInfo.u3ColourSZ) {
+    if (!__arm_2d_valid_mask(ptAlpha, __ARM_2D_MASK_ALLOW_A4 )) {
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
     }
 
@@ -1823,9 +1812,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_a4_mask_and_opacity(
     ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptOP);
 
     //! valid alpha mask tile
-    if (0 == ptAlpha->bHasEnforcedColour) {
-        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-    } else if (ARM_2D_COLOUR_SZ_4BIT != ptAlpha->tColourInfo.u3ColourSZ) {
+    if (!__arm_2d_valid_mask(ptAlpha, __ARM_2D_MASK_ALLOW_A4 )) {
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
     }
 
@@ -1960,10 +1947,12 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_mask_and_opacity(
     ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptOP);
 
     //! valid alpha mask tile
-    if (0 == ptAlpha->bHasEnforcedColour) {
-        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-    } else if ( (ARM_2D_COLOUR_SZ_8BIT != ptAlpha->tColourInfo.u3ColourSZ)
-           &&   (ARM_2D_CHANNEL_8in32 != ptAlpha->tColourInfo.chScheme)) {
+    if (!__arm_2d_valid_mask(ptAlpha, 
+                                __ARM_2D_MASK_ALLOW_A8
+                        #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+                            |   __ARM_2D_MASK_ALLOW_8in32
+                        #endif
+                            )) {
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
     }
 
@@ -2002,10 +1991,12 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask_and_opacity(
     ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptOP);
 
     //! valid alpha mask tile
-    if (0 == ptAlpha->bHasEnforcedColour) {
-        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-    } else if ( (ARM_2D_COLOUR_SZ_8BIT != ptAlpha->tColourInfo.u3ColourSZ)
-           &&   (ARM_2D_CHANNEL_8in32 != ptAlpha->tColourInfo.chScheme)) {
+    if (!__arm_2d_valid_mask(ptAlpha, 
+                                __ARM_2D_MASK_ALLOW_A8
+                        #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+                            |   __ARM_2D_MASK_ALLOW_8in32
+                        #endif
+                            )) {
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
     }
 
@@ -2043,10 +2034,12 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_mask_and_opacity(
     ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptOP);
 
     //! valid alpha mask tile
-    if (0 == ptAlpha->bHasEnforcedColour) {
-        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-    } else if ( (ARM_2D_COLOUR_SZ_8BIT != ptAlpha->tColourInfo.u3ColourSZ)
-           &&   (ARM_2D_CHANNEL_8in32 != ptAlpha->tColourInfo.chScheme)) {
+    if (!__arm_2d_valid_mask(ptAlpha, 
+                                __ARM_2D_MASK_ALLOW_A8
+                        #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+                            |   __ARM_2D_MASK_ALLOW_8in32
+                        #endif
+                            )) {
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
     }
 

@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        25. Sept 2022
- * $Revision:    V.1.3.1
+ * $Date:        26. Sept 2022
+ * $Revision:    V.1.3.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -216,7 +216,15 @@ typedef struct __arm_2d_point_adj_alpha_t{
     }tMatrix[4];
 } __arm_2d_point_adj_alpha_t;
 
-
+/*!
+ * \brief private enum for mask validation 
+ */
+enum {
+    __ARM_2D_MASK_ALLOW_8in32 = _BV(0),     //!< allow 8in32 mode
+    __ARM_2D_MASK_ALLOW_A2    = _BV(1),     //!< allow A2
+    __ARM_2D_MASK_ALLOW_A4    = _BV(2),     //!< allow A4
+    __ARM_2D_MASK_ALLOW_A8    = _BV(3),     //!< allow A8
+};
 
 
 //! \name Operation Index: used for logging and debugging purpose
@@ -477,6 +485,10 @@ arm_2d_err_t  __arm_mask_validate(  const arm_2d_tile_t *ptSource,
                                     const arm_2d_tile_t *ptTarget,
                                     const arm_2d_tile_t *ptDesMask,
                                     uint32_t wMode);
+
+extern
+bool __arm_2d_valid_mask(   const arm_2d_tile_t *ptAlpha, 
+                            uint_fast8_t chAllowMask);
 
 extern
 ARM_NONNULL(1,2)
