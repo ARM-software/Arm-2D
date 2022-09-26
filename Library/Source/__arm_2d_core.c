@@ -767,9 +767,11 @@ arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
     if (!OP_CORE.ptOp->Info.Param.bHasOrigin) {                                 //!< no origin 
         if (OP_CORE.ptOp->Info.Param.bHasSrcMask) {
             arm_2d_op_src_msk_t *ptOP = (arm_2d_op_src_msk_t *)ptThis;  
-            
-            ptSourceMask = ptOP->Mask.ptSourceSide;
-            
+
+            ptSourceMask = arm_2d_tile_get_root( ptOP->Mask.ptSourceSide, 
+                                                &tSourceMaskParam.tValidRegion, 
+                                                NULL);
+
             if (NULL != ptSourceMask) {
                 ptSourceMask = arm_2d_tile_generate_child( 
                                             ptSourceMask,
@@ -788,7 +790,11 @@ arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
         
         if (OP_CORE.ptOp->Info.Param.bHasDesMask) {
             arm_2d_op_src_msk_t *ptOP = (arm_2d_op_src_msk_t *)ptThis;
-            ptTargetMask = ptOP->Mask.ptTargetSide;
+            
+            ptTargetMask = arm_2d_tile_get_root( ptOP->Mask.ptTargetSide, 
+                                    &tTargetMaskParam.tValidRegion, 
+                                    NULL);
+            
             if (NULL != ptTargetMask) {
                 uint_fast8_t chTargetMaskPixelLenInBit = 8;
                 
@@ -849,8 +855,10 @@ arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
     } else {                                                                    //!< has origin
         if (OP_CORE.ptOp->Info.Param.bHasSrcMask) {
             arm_2d_op_src_orig_msk_t *ptOP = (arm_2d_op_src_orig_msk_t *)ptThis;  
-            
-            ptSourceMask = ptOP->Mask.ptOriginSide;
+
+            ptSourceMask = arm_2d_tile_get_root( ptOP->Mask.ptOriginSide, 
+                                                &tSourceMaskParam.tValidRegion, 
+                                                NULL);
             
             if (NULL != ptSourceMask) {
                 ptSourceMask = arm_2d_tile_generate_child( 
@@ -870,7 +878,11 @@ arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
         
         if (OP_CORE.ptOp->Info.Param.bHasDesMask) {
             arm_2d_op_src_orig_msk_t *ptOP = (arm_2d_op_src_orig_msk_t *)ptThis;
-            ptTargetMask = ptOP->Mask.ptTargetSide;
+            
+            ptTargetMask = arm_2d_tile_get_root( ptOP->Mask.ptTargetSide, 
+                                                &tTargetMaskParam.tValidRegion, 
+                                                NULL);
+            
             if (NULL != ptTargetMask) {
                 uint_fast8_t chTargetMaskPixelLenInBit = 8;
                 
