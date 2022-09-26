@@ -21,6 +21,7 @@
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
+#include "__common.h"
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
@@ -32,5 +33,10 @@ void spinning_wheel_init(void);
 
 extern
 void spinning_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame);
+
+extern
+void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget, 
+                            COLOUR_INT Colour, 
+                            bool bIsNewFrame);
 
 #endif

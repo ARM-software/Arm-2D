@@ -72,6 +72,8 @@
 extern uint32_t SystemCoreClock;
 
 extern const arm_2d_tile_t c_tileSpinWheelMask;
+extern const arm_2d_tile_t c_tileQuaterArcMask;
+extern const arm_2d_tile_t c_tileGreenCircleMask;
 
 /*============================ PROTOTYPES ====================================*/
 
@@ -86,6 +88,15 @@ impl_fb(s_tileSpinWheelMask,
         .tInfo.bHasEnforcedColour = true,
         );
 
+static
+const arm_2d_tile_t c_tileGreenCircleQuaterMask = 
+    impl_child_tile(
+        c_tileGreenCircleMask,
+        27,
+        27,
+        28,
+        28,
+    );
 
 /*============================ IMPLEMENTATION ================================*/
 
@@ -147,6 +158,179 @@ void spinning_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
                                 (__arm_2d_color_t){GLCD_COLOR_WHITE});
         arm_2d_op_wait_async(NULL);
     }
+
+}
+
+
+void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget, 
+                            COLOUR_INT Colour, 
+                            bool bIsNewFrame)
+{
+    assert(NULL != ptTarget);
+    ARM_2D_UNUSED(ptTarget);
+    ARM_2D_UNUSED(bIsNewFrame);
+    static float s_fAngle = 0.0f;
+
+
+
+#if 0
+
+    arm_2d_align_centre(ptTarget->tRegion, 61, 61) {
+
+        arm_2d_fill_colour_with_mask_and_opacity( ptTarget,
+                                                  &__centre_region,
+                                                  &c_tileQuaterArcMask,
+                                                  (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY},
+                                                  128);
+        static arm_2d_op_rotate_t s_tMaskRotateCB = {0};
+        
+        const arm_2d_location_t c_tCentre = {
+            .iX = 30,
+            .iY = 30,
+        };
+
+        //! spin mask
+        do {
+            
+            memset(s_tileSpinWheelMask.pchBuffer, 0, sizeof(s_tileSpinWheelMaskBuffer));
+            
+            arm_2d_gray8_tile_rotation(//&s_tMaskRotateBG,
+                                        &c_tileQuaterArcMask,
+                                        &s_tileSpinWheelMask,
+                                        NULL,
+                                        c_tCentre,
+                                        ARM_2D_ANGLE(90.0f),
+                                        0x00);
+
+            arm_2d_op_wait_async(NULL);
+            
+            arm_2d_fill_colour_with_mask_and_opacity( ptTarget,
+                                                      &__centre_region,
+                                                      &s_tileSpinWheelMask,
+                                                      (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY},
+                                                      128);
+            
+            arm_2d_op_wait_async(NULL);
+        } while (0);
+        
+        do {
+            
+            memset(s_tileSpinWheelMask.pchBuffer, 0, sizeof(s_tileSpinWheelMaskBuffer));
+            
+            arm_2d_gray8_tile_rotation(//&s_tMaskRotateBG,
+                                        &c_tileQuaterArcMask,
+                                        &s_tileSpinWheelMask,
+                                        NULL,
+                                        c_tCentre,
+                                        ARM_2D_ANGLE(180.0f),
+                                        0x00);
+
+            arm_2d_op_wait_async(NULL);
+            
+            arm_2d_fill_colour_with_mask_and_opacity( ptTarget,
+                                                      &__centre_region,
+                                                      &s_tileSpinWheelMask,
+                                                      (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY},
+                                                      128);
+            
+            arm_2d_op_wait_async(NULL);
+        } while (0);
+
+        do {
+            
+            memset(s_tileSpinWheelMask.pchBuffer, 0, sizeof(s_tileSpinWheelMaskBuffer));
+            
+            arm_2d_gray8_tile_rotation(//&s_tMaskRotateBG,
+                                        &c_tileQuaterArcMask,
+                                        &s_tileSpinWheelMask,
+                                        NULL,
+                                        c_tCentre,
+                                        ARM_2D_ANGLE(270.0f),
+                                        0x00);
+
+            arm_2d_op_wait_async(NULL);
+            
+            arm_2d_fill_colour_with_mask_and_opacity( ptTarget,
+                                                      &__centre_region,
+                                                      &s_tileSpinWheelMask,
+                                                      (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY},
+                                                      128);
+            
+            arm_2d_op_wait_async(NULL);
+        } while (0);
+
+        do {
+            
+            memset(s_tileSpinWheelMask.pchBuffer, 0, sizeof(s_tileSpinWheelMaskBuffer));
+
+            if (bIsNewFrame) {
+                s_fAngle += ARM_2D_ANGLE(6.0f);
+                s_fAngle = fmodf(s_fAngle,ARM_2D_ANGLE(360));
+            }
+
+            arm_2dp_gray8_tile_rotation(&s_tMaskRotateCB,
+                                        &c_tileQuaterArcMask,
+                                        &s_tileSpinWheelMask,
+                                        NULL,
+                                        c_tCentre,
+                                        s_fAngle,
+                                        0x00);
+
+            arm_2d_op_wait_async(NULL);
+            
+            arm_2d_fill_colour_with_mask_and_opacity( ptTarget,
+                                                      &__centre_region,
+                                                      &s_tileSpinWheelMask,
+                                                      (__arm_2d_color_t){Colour},
+                                                      128);
+            
+            arm_2d_op_wait_async(NULL);
+        } while (0);
+    }
+#else
+    arm_2d_align_centre(ptTarget->tRegion, 55, 55) {
+        arm_2d_fill_colour_with_mask_and_opacity(  
+                                        ptTarget,
+                                        &__centre_region,
+                                        &c_tileGreenCircleMask,
+                                        (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY},
+                                        128);
+        arm_2d_op_wait_async(NULL);
+        
+        memset(s_tileSpinWheelMask.pchBuffer, 0, sizeof(s_tileSpinWheelMaskBuffer));
+        arm_2d_tile_t tileMaskFB = s_tileSpinWheelMask;
+        static arm_2d_op_rotate_t s_tMaskRotateCB = {0};
+        
+        const arm_2d_location_t c_tCentre = {
+            .iX = 0,
+            .iY = 0,
+        };
+        
+        tileMaskFB.tRegion.tSize.iWidth = 55;
+        tileMaskFB.tRegion.tSize.iHeight = 55;
+        
+        if (bIsNewFrame) {
+            s_fAngle += ARM_2D_ANGLE(6.0f);
+            s_fAngle = fmodf(s_fAngle,ARM_2D_ANGLE(360));
+        }
+
+        arm_2dp_gray8_tile_rotation(&s_tMaskRotateCB,
+                                    &c_tileGreenCircleQuaterMask,
+                                    &tileMaskFB,
+                                    NULL,
+                                    c_tCentre,
+                                    s_fAngle,
+                                    0x00);
+
+        arm_2d_op_wait_async(NULL);
+        
+        arm_2d_fill_colour_with_mask_and_opacity( ptTarget,
+                                                  &__centre_region,
+                                                  &tileMaskFB,
+                                                  (__arm_2d_color_t){Colour},
+                                                  128);
+    }
+#endif
 
 }
 

@@ -262,7 +262,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.2.3" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.2.4" condition="Arm-2D-EXTRA">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <file category="include"     name="examples/common/controls/" />
@@ -278,6 +278,8 @@
             <file category="sourceC"     name="examples/common/asset/blue_slashes.c" />
             <file category="sourceC"     name="examples/common/asset/wave.c" />
             <file category="sourceC"     name="examples/common/asset/cmsis_logo.c" />
+            <file category="sourceC"     name="examples/common/asset/GreenCircle.c" />
+            <file category="sourceC"     name="examples/common/asset/QuaterArc.c" />
           </files>
           <RTE_Components_h>
 
