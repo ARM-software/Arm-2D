@@ -77,21 +77,14 @@ extern const arm_2d_tile_t c_tileSpinWheelMask;
 
 /*============================ LOCAL VARIABLES ===============================*/
 
-ARM_NOINIT static uint8_t s_tileSpinWheelMaskBuffer[61 * 61];
-const static arm_2d_tile_t s_tileSpinWheelMask = {
-    .pchBuffer = (uint8_t *)s_tileSpinWheelMaskBuffer,
-    .tRegion = {
-        .tSize = {61, 61},
-    },
-    .tInfo = {
-        .bIsRoot = true,
-        .bHasEnforcedColour = true,
-        .tColourInfo = {
-            .chScheme = ARM_2D_COLOUR_8BIT,
-        },
-    },
-};
-
+impl_fb(s_tileSpinWheelMask, 
+        61, 
+        61, 
+        arm_2d_color_gray8_t,
+        
+        .tInfo.tColourInfo.chScheme = ARM_2D_COLOUR_8BIT,
+        .tInfo.bHasEnforcedColour = true,
+        );
 
 
 /*============================ IMPLEMENTATION ================================*/
