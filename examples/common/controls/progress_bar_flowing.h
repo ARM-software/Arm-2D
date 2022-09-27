@@ -21,9 +21,67 @@
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
+#include "__common.h"
 
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
+
+#define __progress_bar_flowing_show0( __TARGET_TILE_PTR,                        \
+                                    __PROGRESS,                                 \
+                                    __IS_NEW_FRAME)                             \
+            __progress_bar_flowing_show((__TARGET_TILE_PTR),                    \
+                                        (__PROGRESS),                           \
+                                        (bIsNewFrame),                          \
+                                        __RGB(0x94, 0xd2, 0x52),                \
+                                        GLCD_COLOR_WHITE,                       \
+                                        __RGB(0xa5, 0xc6, 0xef))
+
+#define __progress_bar_flowing_show1( __TARGET_TILE_PTR,                        \
+                                    __PROGRESS,                                 \
+                                    __IS_NEW_FRAME,                             \
+                                    __BAR_COLOUR)                               \
+            __progress_bar_flowing_show((__TARGET_TILE_PTR),                    \
+                                        (__PROGRESS),                           \
+                                        (bIsNewFrame),                          \
+                                        (__BAR_COLOUR),                         \
+                                        GLCD_COLOR_WHITE,                       \
+                                        __RGB(0xa5, 0xc6, 0xef))
+
+#define __progress_bar_flowing_show2( __TARGET_TILE_PTR,                        \
+                                    __PROGRESS,                                 \
+                                    __IS_NEW_FRAME,                             \
+                                    __BAR_COLOUR,                               \
+                                    __PITCH_COLOUR)                             \
+            __progress_bar_flowing_show((__TARGET_TILE_PTR),                    \
+                                        (__PROGRESS),                           \
+                                        (bIsNewFrame),                          \
+                                        (__BAR_COLOUR),                         \
+                                        (__PITCH_COLOUR),                       \
+                                        __RGB(0xa5, 0xc6, 0xef))
+
+#define __progress_bar_flowing_show3( __TARGET_TILE_PTR,                        \
+                                    __PROGRESS,                                 \
+                                    __IS_NEW_FRAME,                             \
+                                    __BAR_COLOUR,                               \
+                                    __PITCH_COLOUR,                             \
+                                    __BOARDER_COLOUR)                           \
+            __progress_bar_flowing_show((__TARGET_TILE_PTR),                    \
+                                        (__PROGRESS),                           \
+                                        (bIsNewFrame),                          \
+                                        (__BAR_COLOUR),                         \
+                                        (__PITCH_COLOUR),                       \
+                                        (__BOARDER_COLOUR))
+
+#define progress_bar_flowing_show(  __TARGET_TILE_PTR,                          \
+                                    __PROGRESS,                                 \
+                                    __IS_NEW_FRAME,                             \
+                                    ...)                                        \
+            ARM_CONNECT2(   __progress_bar_flowing_show,                        \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(                    \
+                                        (__TARGET_TILE_PTR),                    \
+                                        (__PROGRESS),                           \
+                                        (bIsNewFrame),##__VA_ARGS__)
+
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
@@ -31,10 +89,13 @@
 extern
 void progress_bar_flowing_init(void);
 
-extern
-void progress_bar_flowing_show( const arm_2d_tile_t *ptTarget, 
-                                int_fast16_t iProgress, 
-                                bool bIsNewFrame);
 
+extern
+void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget, 
+                                    int_fast16_t iProgress,
+                                    bool bIsNewFrame, 
+                                    COLOUR_INT tBarColour,
+                                    COLOUR_INT tPitchColour,
+                                    COLOUR_INT tBoarderColour);
 
 #endif

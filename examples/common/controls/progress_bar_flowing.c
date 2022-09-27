@@ -71,9 +71,14 @@ void progress_bar_flowing_init(void)
     s_lWavingTime = s_lLastTime + arm_2d_helper_convert_ms_to_ticks(3000);
 }
 
-void progress_bar_flowing_show( const arm_2d_tile_t *ptTarget, 
-                                int_fast16_t iProgress, 
-                                bool bIsNewFrame)
+
+
+void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget, 
+                                    int_fast16_t iProgress,
+                                    bool bIsNewFrame, 
+                                    COLOUR_INT tBarColour,
+                                    COLOUR_INT tPitchColour,
+                                    COLOUR_INT tBoarderColour)
 {
     int_fast16_t iWidth = ptTarget->tRegion.tSize.iWidth * 3 >> 3;         //!< 3/8 Width
  
@@ -94,7 +99,10 @@ void progress_bar_flowing_show( const arm_2d_tile_t *ptTarget,
     };
     
     //! draw a white box
-    arm_2d_fill_colour(ptTarget, &tBarRegion, __RGB(0xa5, 0xc6, 0xef)/*0xA63D*/);
+    arm_2d_fill_colour( ptTarget, 
+                        &tBarRegion, 
+                        //__RGB(0xa5, 0xc6, 0xef)/*0xA63D*/
+                        tBoarderColour);
     
     //! pave inter texture
     tBarRegion.tSize.iHeight-=2;
@@ -110,7 +118,11 @@ void progress_bar_flowing_show( const arm_2d_tile_t *ptTarget,
     } 
     
     //! draw the inner stripe
-    arm_2d_fill_colour(ptTarget, &tBarRegion, __RGB(0x94, 0xd2, 0x52) /*0x968A */);
+    arm_2d_fill_colour( ptTarget, 
+                        &tBarRegion, 
+                        //__RGB(0x94, 0xd2, 0x52) /*0x968A */
+                        tBarColour
+                        );
     
     //! draw wave
     do {
@@ -129,7 +141,7 @@ void progress_bar_flowing_show( const arm_2d_tile_t *ptTarget,
         arm_2d_fill_colour_with_mask(   &tileInnerSlot,
                                         &tInnerRegion,
                                         &c_tileWaveMask,
-                                        (__arm_2d_color_t) {GLCD_COLOR_WHITE});
+                                        (__arm_2d_color_t) {tPitchColour});
         
         //! update offset
         if (bIsNewFrame) {
