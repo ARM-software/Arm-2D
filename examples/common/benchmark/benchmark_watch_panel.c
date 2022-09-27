@@ -150,6 +150,7 @@ extern const arm_2d_tile_t c_tileStarMask;
 extern const arm_2d_tile_t c_tileStarMask2;
 
 extern const arm_2d_tile_t c_tileCircleBackgroundMask;
+extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -176,7 +177,7 @@ static floating_range_t s_ptFloatingBoxes[] = {
 
 static
 demo_gears_t s_tGears[] = {
-
+#if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
     {
         .ptTile = &c_tileGear02,
         .fAngleSpeed = 3.0f,
@@ -207,7 +208,7 @@ demo_gears_t s_tGears[] = {
         .chOpacity = 255,
     },
 
-#if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
+
     {
         .ptTile = &c_tileGear01,
         .fAngleSpeed = -0.5f,
@@ -352,9 +353,10 @@ void example_gui_refresh(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
 #if 1
 
 
-    arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
-
+   
 #if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
+     arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
+
     static arm_2d_tile_t s_tPanelTile;
     
     arm_2d_tile_generate_child( ptTile,
@@ -399,6 +401,44 @@ void example_gui_refresh(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
 
 
     } while(0);
+#else
+    arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
+
+    spinning_wheel2_show(   ptTile,
+                            __RGB(0x92, 0xD0, 0x50), 
+                            bIsNewFrame);
+
+    arm_2d_align_centre(ptTile->tRegion, 200, 200) {
+    
+        arm_2d_align_top_centre(__centre_region, c_tileCMSISLogoA4Mask.tRegion.tSize) {
+            __top_centre_region.tLocation.iX += __centre_region.tLocation.iX;
+            __top_centre_region.tLocation.iY += __centre_region.tLocation.iY + 20;
+
+            arm_2d_fill_colour_with_a4_mask_and_opacity(
+                                        ptTile,
+                                        &__top_centre_region,
+                                        &c_tileCMSISLogoA4Mask,
+                                        (__arm_2d_color_t){__RGB(0x92, 0xD0, 0x50)},
+                                        64);
+        
+        }
+        
+        arm_2d_align_bottom_centre(__centre_region, 200, 24) {
+            __bottom_centre_region.tLocation.iX += __centre_region.tLocation.iX;
+            __bottom_centre_region.tLocation.iY += __centre_region.tLocation.iY - 40;
+            
+            arm_2d_tile_t tPanel;
+            arm_2d_tile_generate_child( ptTile,
+                                        &__bottom_centre_region,
+                                        &tPanel,
+                                        false);
+            progress_bar_flowing_show(  &tPanel, 0, bIsNewFrame,
+                                        GLCD_COLOR_BLACK,
+                                        __RGB(0x92, 0xD0, 0x50),
+                                        __RGB(16,16,16)
+                                        );
+        }
+    }
 
 #endif
 
@@ -530,7 +570,7 @@ void example_gui_refresh(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
      #else
         static arm_2d_op_trans_msk_opa_t s_tStarOP;
         const arm_2d_tile_t *ptSrcMask = 
-        #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+        #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__ && !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
             &c_tileStarMask2; //!< 8in32 channel mask
         #else
             &c_tileStarMask;    //!< normal 8bit mask

@@ -500,6 +500,21 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\SpinWheel.c</FilePath>
             </File>
+            <File>
+              <FileName>GreenCircle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\GreenCircle.c</FilePath>
+            </File>
+            <File>
+              <FileName>QuaterArc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\QuaterArc.c</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\cmsis_logo.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1730,6 +1745,21 @@
               <FileName>SpinWheel.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\SpinWheel.c</FilePath>
+            </File>
+            <File>
+              <FileName>GreenCircle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\GreenCircle.c</FilePath>
+            </File>
+            <File>
+              <FileName>QuaterArc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\QuaterArc.c</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\cmsis_logo.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3030,6 +3060,21 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\SpinWheel.c</FilePath>
             </File>
+            <File>
+              <FileName>GreenCircle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\GreenCircle.c</FilePath>
+            </File>
+            <File>
+              <FileName>QuaterArc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\QuaterArc.c</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\cmsis_logo.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4261,6 +4306,21 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\SpinWheel.c</FilePath>
             </File>
+            <File>
+              <FileName>GreenCircle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\GreenCircle.c</FilePath>
+            </File>
+            <File>
+              <FileName>QuaterArc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\QuaterArc.c</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\cmsis_logo.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5491,6 +5551,21 @@
               <FileName>SpinWheel.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\SpinWheel.c</FilePath>
+            </File>
+            <File>
+              <FileName>GreenCircle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\GreenCircle.c</FilePath>
+            </File>
+            <File>
+              <FileName>QuaterArc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\QuaterArc.c</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\cmsis_logo.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6792,6 +6867,21 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\SpinWheel.c</FilePath>
             </File>
+            <File>
+              <FileName>GreenCircle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\GreenCircle.c</FilePath>
+            </File>
+            <File>
+              <FileName>QuaterArc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\QuaterArc.c</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\cmsis_logo.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -8023,6 +8113,21 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\SpinWheel.c</FilePath>
             </File>
+            <File>
+              <FileName>GreenCircle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\GreenCircle.c</FilePath>
+            </File>
+            <File>
+              <FileName>QuaterArc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\QuaterArc.c</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\cmsis_logo.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -9253,6 +9358,21 @@
               <FileName>SpinWheel.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\SpinWheel.c</FilePath>
+            </File>
+            <File>
+              <FileName>GreenCircle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\GreenCircle.c</FilePath>
+            </File>
+            <File>
+              <FileName>QuaterArc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\QuaterArc.c</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\cmsis_logo.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -10587,6 +10707,21 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\SpinWheel.c</FilePath>
             </File>
+            <File>
+              <FileName>GreenCircle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\GreenCircle.c</FilePath>
+            </File>
+            <File>
+              <FileName>QuaterArc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\QuaterArc.c</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\cmsis_logo.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -11818,6 +11953,21 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\SpinWheel.c</FilePath>
             </File>
+            <File>
+              <FileName>GreenCircle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\GreenCircle.c</FilePath>
+            </File>
+            <File>
+              <FileName>QuaterArc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\QuaterArc.c</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\cmsis_logo.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -12979,6 +13129,21 @@
               <FileName>SpinWheel.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\SpinWheel.c</FilePath>
+            </File>
+            <File>
+              <FileName>GreenCircle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\GreenCircle.c</FilePath>
+            </File>
+            <File>
+              <FileName>QuaterArc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\QuaterArc.c</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\cmsis_logo.c</FilePath>
             </File>
           </Files>
         </Group>
