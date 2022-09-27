@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        13. Sept 2022
- * $Revision:    V.1.2.2
+ * $Date:        26. Sept 2022
+ * $Revision:    V.1.3.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -174,6 +174,244 @@ extern "C" {
         __VA_ARGS__                                                             \
     }
 
+/*----------------------------------------------------------------------------*
+ * Helper Macros for Alignment                                                *
+ *----------------------------------------------------------------------------*/
+ 
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define __arm_2d_align_top_left2(__region, __size)                              \
+    for (arm_2d_region_t __top_left_region = {                                  \
+            .tSize = (__size),                                                  \
+            .tLocation = {                                                      \
+                .iX = 0,                                                        \
+                .iY = 0,                                                        \
+            },                                                                  \
+        },                                                                      \
+        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
+         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
+         arm_2d_op_wait_async(NULL)                                             \
+        )
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define __arm_2d_align_top_left3(__region, __width, __height)                   \
+    for (arm_2d_region_t __top_left_region = {                                  \
+            .tSize = {                                                          \
+                .iWidth = (__width),                                            \
+                .iHeight = (__height),                                          \
+            },                                                                  \
+            .tLocation = {                                                      \
+                .iX = 0,                                                        \
+                .iY = 0,                                                        \
+            },                                                                  \
+        },                                                                      \
+        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
+         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
+         arm_2d_op_wait_async(NULL)                                             \
+        )
+
+/*!
+ * \brief generate a temporary arm_2d_region_t object with use specified info for
+*         top-left alignment. 
+ * \param ... parameter list 
+ * 
+ * \note prototype 1:
+ *          __arm_2d_align_top_left(__region, __size) {
+ *              code body that can use __top_left_region
+ *          }
+ * 
+ * \note prototype 2:
+ *          __arm_2d_align_top_left(__region, __width, __height) {
+ *              code body that can use __top_left_region
+ *          }
+ *          
+ */
+#define arm_2d_align_top_left(...)                                              \
+            ARM_CONNECT2(   __arm_2d_align_top_left,                            \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define __arm_2d_align_top_centre2(__region, __size)                            \
+    for (arm_2d_region_t __top_centre_region = {                                \
+            .tSize = (__size),                                                  \
+            .tLocation = {                                                      \
+                .iX = ((__region).tSize.iWidth - (__size).iWidth)  >> 1,        \
+                .iY = 0,                                                        \
+            },                                                                  \
+        },                                                                      \
+        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
+         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
+         arm_2d_op_wait_async(NULL)                                             \
+        )
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define __arm_2d_align_top_centre3(__region, __width, __height)                 \
+    for (arm_2d_region_t __top_centre_region = {                                \
+            .tSize = {                                                          \
+                .iWidth = (__width),                                            \
+                .iHeight = (__height),                                          \
+            },                                                                  \
+            .tLocation = {                                                      \
+                .iX = ((__region).tSize.iWidth - (__width))  >> 1,              \
+                .iY = 0,                                                        \
+            },                                                                  \
+        },                                                                      \
+        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
+         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
+         arm_2d_op_wait_async(NULL)                                             \
+        )
+
+/*!
+ * \brief generate a temporary arm_2d_region_t object with use specified info for
+*         top-central alignment. 
+ * \param ... parameter list 
+ * 
+ * \note prototype 1:
+ *          arm_2d_align_top_centre(__region, __size) {
+ *              code body that can use __top_centre_region
+ *          }
+ * 
+ * \note prototype 2:
+ *          arm_2d_align_top_centre(__region, __width, __height) {
+ *              code body that can use __top_centre_region
+ *          }
+ *          
+ */
+#define arm_2d_align_top_centre(...)                                            \
+            ARM_CONNECT2(   __arm_2d_align_top_centre,                          \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define __arm_2d_align_top_right2(__region, __size)                             \
+    for (arm_2d_region_t __top_right_region = {                                 \
+            .tSize = (__size),                                                  \
+            .tLocation = {                                                      \
+                .iX = ((__region).tSize.iWidth - (__size).iWidth),              \
+                .iY = 0,                                                        \
+            },                                                                  \
+        },                                                                      \
+        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
+         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
+         arm_2d_op_wait_async(NULL)                                             \
+        )
+
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define __arm_2d_align_top_right3(__region, __width, __height)                  \
+    for (arm_2d_region_t __top_right_region = {                                 \
+            .tSize = {                                                          \
+                .iWidth = (__width),                                            \
+                .iHeight = (__height),                                          \
+            },                                                                  \
+            .tLocation = {                                                      \
+                .iX = ((__region).tSize.iWidth - (__width)),                    \
+                .iY = 0,                                                        \
+            },                                                                  \
+        },                                                                      \
+        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
+         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
+         arm_2d_op_wait_async(NULL)                                             \
+        )
+
+/*!
+ * \brief generate a temporary arm_2d_region_t object with use specified info for
+*         top-right alignment. 
+ * \param ... parameter list 
+ * 
+ * \note prototype 1:
+ *          __arm_2d_align_top_right(__region, __size) {
+ *              code body that can use __top_right_region
+ *          }
+ * 
+ * \note prototype 2:
+ *          __arm_2d_align_top_right(__region, __width, __height) {
+ *              code body that can use __top_right_region
+ *          }
+ *          
+ */
+#define arm_2d_align_top_right(...)                                             \
+            ARM_CONNECT2(   __arm_2d_align_top_right,                           \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+
+
+
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define __arm_2d_align_mid_left2(__region, __size)                              \
+    for (arm_2d_region_t __mid_left_region = {                                  \
+            .tSize = (__size),                                                  \
+            .tLocation = {                                                      \
+                .iX = 0,                                                        \
+                .iY = ((__region).tSize.iHeight - (__size).iHeight)>> 1,        \
+            },                                                                  \
+        },                                                                      \
+        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
+         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
+         arm_2d_op_wait_async(NULL)                                             \
+        )
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define __arm_2d_align_mid_left3(__region, __width, __height)                   \
+    for (arm_2d_region_t __mid_left_region = {                                  \
+            .tSize = {                                                          \
+                .iWidth = (__width),                                            \
+                .iHeight = (__height),                                          \
+            },                                                                  \
+            .tLocation = {                                                      \
+                .iX = 0,                                                        \
+                .iY = ((__region).tSize.iHeight - (__height))>> 1,              \
+            },                                                                  \
+        },                                                                      \
+        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
+         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
+         arm_2d_op_wait_async(NULL)                                             \
+        )
+
+/*!
+ * \brief generate a temporary arm_2d_region_t object with use specified info for
+*         middle-left alignment. 
+ * \param ... parameter list 
+ * 
+ * \note prototype 1:
+ *          arm_2d_align_mid_left(__region, __size) {
+ *              code body that can use __mid_left_region
+ *          }
+ * 
+ * \note prototype 2:
+ *          arm_2d_align_mid_left(__region, __width, __height) {
+ *              code body that can use __mid_left_region
+ *          }
+ *          
+ */
+#define arm_2d_align_mid_left(...)                                              \
+            ARM_CONNECT2(   __arm_2d_align_mid_left,                            \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+
 /*!
  * \brief Please do NOT use this macro
  * 
@@ -182,8 +420,8 @@ extern "C" {
     for (arm_2d_region_t __centre_region = {                                    \
             .tSize = (__size),                                                  \
             .tLocation = {                                                      \
-                .iX = ((__region).tSize.iWidth - (__size).iWidth)  >> 1,\
-                .iY = ((__region).tSize.iHeight - (__size).iHeight)>> 1,\
+                .iX = ((__region).tSize.iWidth - (__size).iWidth)  >> 1,        \
+                .iY = ((__region).tSize.iHeight - (__size).iHeight)>> 1,        \
             },                                                                  \
         },                                                                      \
         *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
@@ -209,7 +447,7 @@ extern "C" {
         *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
          ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
          arm_2d_op_wait_async(NULL)                                             \
-        )    
+        )
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with use specified info for
@@ -222,13 +460,244 @@ extern "C" {
  *          }
  * 
  * \note prototype 2:
- *          arm_2d_align_entre(__region, __width, __height) {
+ *          arm_2d_align_centre(__region, __width, __height) {
  *              code body that can use __centre_region
  *          }
  *          
  */
 #define arm_2d_align_centre(...)                                                \
             ARM_CONNECT2(   __arm_2d_align_centre,                              \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define __arm_2d_align_mid_right2(__region, __size)                             \
+    for (arm_2d_region_t __mid_right_region = {                                 \
+            .tSize = (__size),                                                  \
+            .tLocation = {                                                      \
+                .iX = ((__region).tSize.iWidth - (__size).iWidth),              \
+                .iY = ((__region).tSize.iHeight - (__size).iHeight)>> 1,        \
+            },                                                                  \
+        },                                                                      \
+        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
+         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
+         arm_2d_op_wait_async(NULL)                                             \
+        )
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define __arm_2d_align_mid_right3(__region, __width, __height)                  \
+    for (arm_2d_region_t __mid_right_region = {                                 \
+            .tSize = {                                                          \
+                .iWidth = (__width),                                            \
+                .iHeight = (__height),                                          \
+            },                                                                  \
+            .tLocation = {                                                      \
+                .iX = ((__region).tSize.iWidth - (__width)),                    \
+                .iY = ((__region).tSize.iHeight - (__height))>> 1,              \
+            },                                                                  \
+        },                                                                      \
+        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
+         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
+         arm_2d_op_wait_async(NULL)                                             \
+        )
+
+/*!
+ * \brief generate a temporary arm_2d_region_t object with use specified info for
+*         middle-right alignment. 
+ * \param ... parameter list 
+ * 
+ * \note prototype 1:
+ *          arm_2d_align_mid_right(__region, __size) {
+ *              code body that can use __mid_right_region
+ *          }
+ * 
+ * \note prototype 2:
+ *          arm_2d_align_mid_right(__region, __width, __height) {
+ *              code body that can use __mid_right_region
+ *          }
+ *          
+ */
+#define arm_2d_align_mid_right(...)                                             \
+            ARM_CONNECT2(   __arm_2d_align_mid_right,                           \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define __arm_2d_align_bottom_left2(__region, __size)                           \
+    for (arm_2d_region_t __bottom_left_region = {                               \
+            .tSize = (__size),                                                  \
+            .tLocation = {                                                      \
+                .iX = 0,                                                        \
+                .iY = ((__region).tSize.iHeight - (__size).iHeight),            \
+            },                                                                  \
+        },                                                                      \
+        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
+         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
+         arm_2d_op_wait_async(NULL)                                             \
+        )
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define __arm_2d_align_bottom_left3(__region, __width, __height)                \
+    for (arm_2d_region_t __bottom_left_region = {                               \
+            .tSize = {                                                          \
+                .iWidth = (__width),                                            \
+                .iHeight = (__height),                                          \
+            },                                                                  \
+            .tLocation = {                                                      \
+                .iX = 0,                                                        \
+                .iY = ((__region).tSize.iHeight - (__height)),                  \
+            },                                                                  \
+        },                                                                      \
+        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
+         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
+         arm_2d_op_wait_async(NULL)                                             \
+        )
+
+/*!
+ * \brief generate a temporary arm_2d_region_t object with use specified info for
+*         bottom-left alignment. 
+ * \param ... parameter list 
+ * 
+ * \note prototype 1:
+ *          __arm_2d_align_bottom_left(__region, __size) {
+ *              code body that can use __bottom_left_region
+ *          }
+ * 
+ * \note prototype 2:
+ *          __arm_2d_align_bottom_left(__region, __width, __height) {
+ *              code body that can use __bottom_left_region
+ *          }
+ *          
+ */
+#define arm_2d_align_bottom_left(...)                                           \
+            ARM_CONNECT2(   __arm_2d_align_bottom_left,                         \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define __arm_2d_align_bottom_centre2(__region, __size)                         \
+    for (arm_2d_region_t __bottom_centre_region = {                             \
+            .tSize = (__size),                                                  \
+            .tLocation = {                                                      \
+                .iX = ((__region).tSize.iWidth - (__size).iWidth)  >> 1,        \
+                .iY = ((__region).tSize.iHeight - (__size).iHeight),            \
+            },                                                                  \
+        },                                                                      \
+        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
+         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
+         arm_2d_op_wait_async(NULL)                                             \
+        )
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define __arm_2d_align_bottom_centre3(__region, __width, __height)              \
+    for (arm_2d_region_t __bottom_centre_region = {                             \
+            .tSize = {                                                          \
+                .iWidth = (__width),                                            \
+                .iHeight = (__height),                                          \
+            },                                                                  \
+            .tLocation = {                                                      \
+                .iX = ((__region).tSize.iWidth - (__width))  >> 1,              \
+                .iY = ((__region).tSize.iHeight - (__height)),                  \
+            },                                                                  \
+        },                                                                      \
+        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
+         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
+         arm_2d_op_wait_async(NULL)                                             \
+        )
+
+/*!
+ * \brief generate a temporary arm_2d_region_t object with use specified info for
+*         bottom-central alignment. 
+ * \param ... parameter list 
+ * 
+ * \note prototype 1:
+ *          arm_2d_align_bottom_centre(__region, __size) {
+ *              code body that can use __bottom_centre_region
+ *          }
+ * 
+ * \note prototype 2:
+ *          arm_2d_align_bottom_centre(__region, __width, __height) {
+ *              code body that can use __bottom_centre_region
+ *          }
+ *          
+ */
+#define arm_2d_align_bottom_centre(...)                                         \
+            ARM_CONNECT2(   __arm_2d_align_bottom_centre,                       \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define __arm_2d_align_bottom_right2(__region, __size)                          \
+    for (arm_2d_region_t __bottom_right_region = {                              \
+            .tSize = (__size),                                                  \
+            .tLocation = {                                                      \
+                .iX = ((__region).tSize.iWidth - (__size).iWidth),              \
+                .iY = ((__region).tSize.iHeight - (__size).iHeight),            \
+            },                                                                  \
+        },                                                                      \
+        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
+         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
+         arm_2d_op_wait_async(NULL)                                             \
+        )
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define __arm_2d_align_bottom_right3(__region, __width, __height)               \
+    for (arm_2d_region_t __bottom_right_region = {                              \
+            .tSize = {                                                          \
+                .iWidth = (__width),                                            \
+                .iHeight = (__height),                                          \
+            },                                                                  \
+            .tLocation = {                                                      \
+                .iX = ((__region).tSize.iWidth - (__width)),                    \
+                .iY = ((__region).tSize.iHeight - (__height)),                  \
+            },                                                                  \
+        },                                                                      \
+        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
+         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
+         arm_2d_op_wait_async(NULL)                                             \
+        )
+
+/*!
+ * \brief generate a temporary arm_2d_region_t object with use specified info for
+*         bottom-right alignment. 
+ * \param ... parameter list 
+ * 
+ * \note prototype 1:
+ *          __arm_2d_align_bottom_right(__region, __size) {
+ *              code body that can use __bottom_right_region
+ *          }
+ * 
+ * \note prototype 2:
+ *          __arm_2d_align_bottom_right(__region, __width, __height) {
+ *              code body that can use __bottom_right_region
+ *          }
+ *          
+ */
+#define arm_2d_align_bottom_right(...)                                          \
+            ARM_CONNECT2(   __arm_2d_align_bottom_right,                        \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
 /*!
