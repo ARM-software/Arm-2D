@@ -21,8 +21,8 @@
  * Title:        arm_2d_utils.h
  * Description:  Public header file for Arm-2D Library
  *
- * $Date:        13. Sept 2022
- * $Revision:    V.1.1.2
+ * $Date:        30. Sept 2022
+ * $Revision:    V.1.1.3
  *
  * -------------------------------------------------------------------- */
 
@@ -201,6 +201,15 @@ extern "C" {
 #ifndef ARM_2D_UNUSED
 #   define ARM_2D_UNUSED(__VAR)     (void)(__VAR)
 #endif
+
+#undef ARM_TYPE_CONVERT
+/*!
+ * \brief convert a given variable to a specified type, the converted result 
+ *        can be used as lvalue. 
+ * \param __VAR the target variable
+ * \param __TYPE the target type
+ */
+#define ARM_TYPE_CONVERT(__VAR, __TYPE)          (*((__TYPE *)&(__VAR)))
 
 /*! 
  * \brief a macro to test the boolean result for a given value using a given 

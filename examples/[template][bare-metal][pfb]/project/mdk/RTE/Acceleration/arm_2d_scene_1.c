@@ -145,7 +145,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene1_background_handler)
 {
     user_scene_1_t *ptThis = (user_scene_1_t *)pTarget;
     ARM_2D_UNUSED(bIsNewFrame);
-
+    ARM_2D_UNUSED(ptTile);
     /*-----------------------draw back ground begin-----------------------*/
 
 

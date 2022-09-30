@@ -45,6 +45,7 @@
 #   pragma clang diagnostic ignored "-Wunused-variable"
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #   pragma clang diagnostic ignored "-Wdouble-promotion"
+#   pragma clang diagnostic ignored "-Wembedded-directive"
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic push

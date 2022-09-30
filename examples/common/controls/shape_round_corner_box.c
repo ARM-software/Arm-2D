@@ -65,7 +65,7 @@ impl_fb(s_tCorner, 7, 7, uint8_t,
             .chScheme = ARM_2D_COLOUR_8BIT,
         },
     },
-)
+);
 
 
 const arm_2d_tile_t c_tileWhiteDotAlphaQ4 = {

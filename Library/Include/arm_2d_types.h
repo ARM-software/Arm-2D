@@ -22,7 +22,7 @@
  * Description:  Public header file to contain the Arm-2D structs
  *
  * $Date:        30. Sept 2022
- * $Revision:    V.1.0.8
+ * $Revision:    V.1.0.9
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -68,8 +68,14 @@ extern "C" {
 /*============================ MACROS ========================================*/
 
 /* A patch for GCC support */
-#if defined(__IS_COMPILER_GCC__) && __IS_COMPILER_GCC__ && __ARM_2D_HAS_HELIUM__
-#   pragma GCC warning "As GCC has compilation issues for supporting Helium, the scalar version is used."
+#if defined(__IS_COMPILER_ARM_COMPILER_6__) && __IS_COMPILER_ARM_COMPILER_6__ && __ARM_2D_HAS_HELIUM__
+
+#   ifndef __ARM_2D_SUPPRESS_GCC_HELIUM_PATCH_WARNING__
+#       pragma GCC warning "As GCC has compilation issues for supporting Helium,\
+ the scalar version is used. You can define a macro\
+ __ARM_2D_SUPPRESS_GCC_HELIUM_PATCH_WARNING__ to suppress this warning."
+#   endif
+
 #   undef __ARM_2D_HAS_HELIUM__
 #   undef __ARM_2D_HAS_HELIUM_INTEGER__
 #   undef __ARM_2D_HAS_HELIUM_FLOAT__

@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        20. Sept 2022
- * $Revision:    V.1.3.8
+ * $Date:        30. Sept 2022
+ * $Revision:    V.1.3.9
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -53,6 +53,7 @@
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #   pragma clang diagnostic ignored "-Wimplicit-int-conversion"
 #   pragma clang diagnostic ignored "-Wmissing-prototypes"
+#   pragma clang diagnostic ignored "-Wpedantic"
 #elif defined(__IS_COMPILER_GCC__)
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wstrict-aliasing"

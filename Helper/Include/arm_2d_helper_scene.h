@@ -22,7 +22,7 @@
  * Description:  Public header file for the scene service
  *
  * $Date:        20. Sept 2022
- * $Revision:    V.1.3.8
+ * $Revision:    V.1.3.9
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -43,6 +43,7 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wreserved-identifier"
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wpadded"
+#   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #endif
 
 /*!

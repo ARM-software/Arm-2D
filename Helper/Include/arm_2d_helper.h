@@ -95,7 +95,7 @@ extern "C" {
                 .tInfo.bIsRoot = true,                                          \
                 .pchBuffer = (uint8_t *)__name##Buffer,                         \
                 __VA_ARGS__                                                     \
-            };
+            }
 
 /*!
  * \brief implement a framebuffer 

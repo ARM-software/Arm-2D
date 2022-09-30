@@ -139,15 +139,12 @@ static void __on_scene0_frame_complete(arm_2d_scene_t *ptScene)
     }
 }
 
-
-
-
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene0_background_handler)
 {
     user_scene_0_t *ptThis = (user_scene_0_t *)pTarget;
+    ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
-
     /*-----------------------draw back ground begin-----------------------*/
 
 

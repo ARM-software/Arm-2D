@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        23. Sept 2022
- * $Revision:    V.1.3.4
+ * $Date:        30. Sept 2022
+ * $Revision:    V.1.3.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -56,6 +56,7 @@
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #   pragma clang diagnostic ignored "-Wcast-align"
 #   pragma clang diagnostic ignored "-Wconditional-uninitialized"
+#   pragma clang diagnostic ignored "-Wunreachable-code-return"
 #elif defined(__IS_COMPILER_GCC__)
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wpedantic"
