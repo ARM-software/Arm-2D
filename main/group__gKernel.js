@@ -214,6 +214,7 @@ var group__gKernel =
     [ "inherit", "group__gKernel.html#ga4b362915d65708c32e2b83db54425d7a", null ],
     [ "inherit_ex", "group__gKernel.html#ga22f94c7e7b097ac219c0e1d1b8129807", null ],
     [ "ARM_2D_UNUSED", "group__gKernel.html#ga206ba077ba0d890fd0be935fc5d15dda", null ],
+    [ "ARM_TYPE_CONVERT", "group__gKernel.html#ga3c45a3337bb53f0c465f975dffe0bed0", null ],
     [ "ARM_TEST_BITS", "group__gKernel.html#ga399c089faf3ca129f0a98cc7d952cf21", null ],
     [ "dimof", "group__gKernel.html#ga7b6c484887a402bba1af11b457264553", null ],
     [ "offsetof", "group__gKernel.html#ga8a4dba3eaaa8e7d90abb2eff93092042", null ],

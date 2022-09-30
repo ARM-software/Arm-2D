@@ -322,6 +322,9 @@ Macros</h2></td></tr>
 <tr class="memitem:ga206ba077ba0d890fd0be935fc5d15dda"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga206ba077ba0d890fd0be935fc5d15dda">ARM_2D_UNUSED</a>(__VAR)&#160;&#160;&#160;(void)(__VAR)</td></tr>
 <tr class="memdesc:ga206ba077ba0d890fd0be935fc5d15dda"><td class="mdescLeft">&#160;</td><td class="mdescRight">a macro to mark unused variables and let the compiler happy  <a href="group__gKernel.html#ga206ba077ba0d890fd0be935fc5d15dda">More...</a><br /></td></tr>
 <tr class="separator:ga206ba077ba0d890fd0be935fc5d15dda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3c45a3337bb53f0c465f975dffe0bed0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga3c45a3337bb53f0c465f975dffe0bed0">ARM_TYPE_CONVERT</a>(__VAR,  __TYPE)&#160;&#160;&#160;(*((__TYPE *)&amp;(__VAR)))</td></tr>
+<tr class="memdesc:ga3c45a3337bb53f0c465f975dffe0bed0"><td class="mdescLeft">&#160;</td><td class="mdescRight">convert a given variable to a specified type, the converted result can be used as lvalue.  <a href="group__gKernel.html#ga3c45a3337bb53f0c465f975dffe0bed0">More...</a><br /></td></tr>
+<tr class="separator:ga3c45a3337bb53f0c465f975dffe0bed0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga399c089faf3ca129f0a98cc7d952cf21"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga399c089faf3ca129f0a98cc7d952cf21">ARM_TEST_BITS</a>(__VALUE,  __BITS)&#160;&#160;&#160;((__BITS) == ((__VALUE) &amp; (__BITS)))</td></tr>
 <tr class="memdesc:ga399c089faf3ca129f0a98cc7d952cf21"><td class="mdescLeft">&#160;</td><td class="mdescRight">a macro to test the boolean result for a given value using a given bitmask  <a href="group__gKernel.html#ga399c089faf3ca129f0a98cc7d952cf21">More...</a><br /></td></tr>
 <tr class="separator:ga399c089faf3ca129f0a98cc7d952cf21"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -3600,6 +3603,43 @@ target side mask </td></tr>
 </div><div class="memdoc">
 
 <p>a macro to mark unused variables and let the compiler happy </p>
+
+</div>
+</div>
+<a id="ga3c45a3337bb53f0c465f975dffe0bed0" name="ga3c45a3337bb53f0c465f975dffe0bed0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3c45a3337bb53f0c465f975dffe0bed0">&#9670;&nbsp;</a></span>ARM_TYPE_CONVERT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_TYPE_CONVERT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__VAR, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__TYPE&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;(*((__TYPE *)&amp;(__VAR)))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>convert a given variable to a specified type, the converted result can be used as lvalue. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">__VAR</td><td>the target variable </td></tr>
+    <tr><td class="paramname">__TYPE</td><td>the target type </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
