@@ -1023,6 +1023,16 @@
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\template\arm_2d_scene.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_2d_helper_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Helper\Include\arm_2d_helper_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2268,6 +2278,16 @@
               <FileName>arm_2d_scene.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\template\arm_2d_scene.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Helper\Include\arm_2d_helper_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3583,6 +3603,16 @@
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\template\arm_2d_scene.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_2d_helper_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Helper\Include\arm_2d_helper_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4829,6 +4859,16 @@
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\template\arm_2d_scene.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_2d_helper_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Helper\Include\arm_2d_helper_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6074,6 +6114,16 @@
               <FileName>arm_2d_scene.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\template\arm_2d_scene.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Helper\Include\arm_2d_helper_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7390,6 +7440,16 @@
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\template\arm_2d_scene.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_2d_helper_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Helper\Include\arm_2d_helper_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -8635,6 +8695,16 @@
               <FileName>arm_2d_scene.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\template\arm_2d_scene.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Helper\Include\arm_2d_helper_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9984,6 +10054,16 @@
                 </FileArmAds>
               </FileOption>
             </File>
+            <File>
+              <FileName>arm_2d_helper_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Helper\Include\arm_2d_helper_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -11229,6 +11309,16 @@
               <FileName>arm_2d_scene.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\template\arm_2d_scene.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Helper\Include\arm_2d_helper_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -12476,6 +12566,16 @@
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\template\arm_2d_scene.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_2d_helper_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Helper\Include\arm_2d_helper_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -13703,6 +13803,16 @@
               <FileName>arm_2d_scene.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\template\arm_2d_scene.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Helper\Include\arm_2d_helper_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -486,6 +486,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\arm_2d_helper_scene.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_2d_helper_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1238,6 +1243,11 @@
               <FileName>arm_2d_helper_scene.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\arm_2d_helper_scene.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
             </File>
           </Files>
         </Group>

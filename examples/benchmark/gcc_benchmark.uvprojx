@@ -508,6 +508,16 @@
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\arm_2d_helper_scene.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_2d_helper_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Helper\Include\arm_2d_helper_list.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
