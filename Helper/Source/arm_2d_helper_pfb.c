@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        30. Sept 2022
- * $Revision:    V.1.3.5
+ * $Date:        03. Oct 2022
+ * $Revision:    V.1.3.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -744,9 +744,10 @@ ARM_PT_BEGIN(this.Adapter.chPT)
     } while(__arm_2d_helper_pfb_drawing_iteration_end(ptThis));
     
     this.Statistics.nRenderingCycle += __arm_2d_helper_perf_counter_stop(&this.Statistics.lTimestamp);
+    
+label_pfb_task_rt_cpl:
 ARM_PT_END(this.Adapter.chPT)
 
-label_pfb_task_rt_cpl:
     /* invoke the On Each Frame Complete Event */
     ARM_2D_INVOKE(  this.tCFG.Dependency.evtOnEachFrameCPL.fnHandler,
                     this.tCFG.Dependency.evtOnEachFrameCPL.pTarget);
