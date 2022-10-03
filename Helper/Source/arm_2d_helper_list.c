@@ -73,8 +73,30 @@
 /*============================ PROTOTYPES ====================================*/
 /*============================ IMPLEMENTATION ================================*/
 
+ARM_NONNULL(1,2)
+arm_2d_err_t __arm_2d_list_view_init(   __arm_2d_list_view_t *ptThis,
+                                        __arm_2d_list_view_cfg_t *ptCFG)
+{
+    ARM_2D_UNUSED(ptThis);
+    ARM_2D_UNUSED(ptCFG);
+    
+    return ARM_2D_ERR_NONE;
+}
 
 
+ARM_NONNULL(1,2)
+arm_fsm_rt_t __arm_2d_list_view_show(   __arm_2d_list_view_t *ptThis,
+                                        const arm_2d_tile_t *ptTarget,
+                                        arm_2d_region_t *ptRegion,
+                                        bool bIsNewFrame)
+{
+    ARM_2D_UNUSED(ptThis);
+    ARM_2D_UNUSED(ptTarget);
+    ARM_2D_UNUSED(ptRegion);
+    ARM_2D_UNUSED(bIsNewFrame);
+    
+    return arm_fsm_rt_on_going;
+}
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

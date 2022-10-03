@@ -71,7 +71,7 @@ typedef struct arm_2d_list_view_item_t arm_2d_list_view_item_t;
  * \brief runtime parameters passed to on-draw-list-view-item event handler
  */
 typedef struct arm_2d_list_view_item_param_t {
-    uint8_t     bIsChecked   : 1;       /*!< is this item in checked status */
+    uint8_t     bIsChecked   : 1;       /*!< is this item checked */
     uint8_t     bIsSelected  : 1;       /*!< is this item seleteced */
     uint8_t     chOpacity;              /*!< opacity proposal */
     uint16_t    hwRatio;                /*!< other ratio proposal */
@@ -130,7 +130,7 @@ ARM_PRIVATE(
     union {
         uint16_t                                    hwAttribute;                /*!< 16bit attribute value */
         struct {
-            uint16_t                                bIsValid    : 1;            /*!< whether this item is valid or not */
+            uint16_t                                bIsEnabled  : 1;            /*!< whether this item is enabled or not */
             uint16_t                                bIsVisible  : 1;            /*!< visibility */
             uint16_t                                            : 2;            /*!< reserved */
             uint16_t                                u4Alignment : 4;            /*!< alignment: see ARM_2D_ALIGN_xxxx */
@@ -184,8 +184,9 @@ typedef arm_2d_list_view_item_t *__arm_2d_list_view_item_iterator(
  *  \brief the target working area for one list view item
  */
 typedef struct __arm_2d_list_view_work_area_t {
-    arm_2d_list_view_item_t *ptItem;                                            /*!< the target item */
-    arm_2d_region_t         tRegion;                                            /*!< the target region on the list */
+    arm_2d_list_view_item_t        *ptItem;                                     /*!< the target item */
+    arm_2d_region_t                 tRegion;                                    /*!< the target region on the list */
+    arm_2d_list_view_item_param_t   tParam;                                     /*!< paramters for the target item */
 } __arm_2d_list_view_work_area_t;
 
 
@@ -215,18 +216,19 @@ typedef struct __arm_2d_list_view_cfg_t {
  */
 struct __arm_2d_list_view_t {
 ARM_PRIVATE(
-    __arm_2d_list_view_cfg_t    tCFG;                                           /*!< list view configuration */
+    __arm_2d_list_view_cfg_t            tCFG;                                   /*!< list view configuration */
     struct {
-        arm_2d_tile_t           tileList;                                       /*!< the target tile for the list */
-        arm_2d_region_t         tDrawRegion;                                    /*!< the current draw region */
-        arm_2d_list_view_item_t *ptSelected;                                    /*!< the current item */
-        uint16_t                hwSelection;                                    /*!< item selection */
-        int16_t                 iOffset;                                        /*!< list offset */
+        arm_2d_tile_t                   tileList;                               /*!< the target tile for the list */
+        arm_2d_region_t                 tDrawRegion;                            /*!< the current draw region */
+        arm_2d_list_view_item_t        *ptSelected;                             /*!< the current item */
+        __arm_2d_list_view_work_area_t  tWorkingArea;                           /*!< the working area */
+        
+        uint16_t                        hwSelection;                            /*!< item selection */
+        int16_t                         iOffset;                                /*!< list offset */
+        uint64_t                        lTimestamp;                             /*!< timestamp used by animation */
+        int16_t                         iSpeed;                                 /*!< moving speed */
+        uint8_t                         chState;
 
-        struct {
-            uint64_t            lTimestamp;                                     /*!< timestamp used by animation */
-            int16_t             iSpeed;                                         /*!< moving speed */
-        } Animation;                                                            /*!< list animation */
     } Runtime;                                                                  /*!< list runtime */
 )
 };
@@ -235,7 +237,32 @@ ARM_PRIVATE(
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ PROTOTYPES ====================================*/
 
+/*!
+ * \brief initialize a target list view object
+ * \param[in] ptThis the target list view object
+ * \param[in] ptCFG the user specified configuration
+ * \return arm_2d_err_t the operation result
+ */
+extern
+ARM_NONNULL(1,2)
+arm_2d_err_t __arm_2d_list_view_init(   __arm_2d_list_view_t *ptThis,
+                                        __arm_2d_list_view_cfg_t *ptCFG);
 
+/*!
+ * \brief show a given list view
+ * \param[in] ptThis the target list view object
+ * \param[in] ptTarget the target framebuffer
+ * \param[in] ptRegion the target region
+ * \param[in] bIsNewFrame a flag to indicate whether current iteration is the 
+ *            first one of a new frame.
+ * \return arm_fsm_rt_t the fsm status
+ */
+extern
+ARM_NONNULL(1,2)
+arm_fsm_rt_t __arm_2d_list_view_show(   __arm_2d_list_view_t *ptThis,
+                                        const arm_2d_tile_t *ptTarget,
+                                        arm_2d_region_t *ptRegion,
+                                        bool bIsNewFrame);
 /*! @} */
 
 #if defined(__clang__)
