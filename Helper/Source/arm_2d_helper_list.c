@@ -29,11 +29,13 @@
 
 /*============================ INCLUDES ======================================*/
 
-#define __ARM_2D_IMPL__
+#define __ARM_2D_HELPER_LIST_VIEW_IMPLEMENT__
+
 #include <stdbool.h>
 #include <stdint.h>
 #include <assert.h>
 #include "arm_2d_helper.h"
+#include "arm_2d_helper_list.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
