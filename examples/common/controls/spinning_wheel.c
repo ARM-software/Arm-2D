@@ -19,13 +19,11 @@
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
 #include "arm_2d_helper.h"
-#include <math.h>
 
 #include "__common.h"
 
 #include "./spinning_wheel.h"
 #include "./shape_round_corner_box.h"
-#include <time.h>
 
 #if defined(__clang__)
 #   pragma clang diagnostic push

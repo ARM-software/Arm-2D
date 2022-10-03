@@ -1,5 +1,11 @@
-#include "roller_list.h"
+#include "arm_2d.h"
+#include "arm_2d_helper.h"
+#include <math.h>
 
+#include "__common.h"
+
+#include "./roller_list.h"
+#include "./shape_round_corner_box.h"
 /*
  * LTOP_SPACE       +--------+
  * +----+           |        | +----+
