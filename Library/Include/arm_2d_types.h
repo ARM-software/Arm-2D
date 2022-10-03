@@ -68,7 +68,7 @@ extern "C" {
 /*============================ MACROS ========================================*/
 
 /* A patch for GCC support */
-#if defined(__IS_COMPILER_ARM_COMPILER_6__) && __IS_COMPILER_ARM_COMPILER_6__ && __ARM_2D_HAS_HELIUM__
+#if defined(__IS_COMPILER_GCC__) && __IS_COMPILER_ARM_GCC__ && __ARM_2D_HAS_HELIUM__
 
 #   ifndef __ARM_2D_SUPPRESS_GCC_HELIUM_PATCH_WARNING__
 #       pragma GCC warning "As GCC has compilation issues for supporting Helium,\
