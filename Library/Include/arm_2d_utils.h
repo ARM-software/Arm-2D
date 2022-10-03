@@ -21,8 +21,8 @@
  * Title:        arm_2d_utils.h
  * Description:  Public header file for Arm-2D Library
  *
- * $Date:        30. Sept 2022
- * $Revision:    V.1.1.3
+ * $Date:        03. Oct 2022
+ * $Revision:    V.1.2.0
  *
  * -------------------------------------------------------------------- */
 
@@ -815,6 +815,79 @@ extern "C" {
  */
 #define ARM_LIST_QUEUE_PEEK(__HEAD, __TAIL, __ITEM)                             \
             __ARM_LIST_QUEUE_PEEK((__HEAD), (__TAIL), (__ITEM))                 \
+
+/*----------------------------------------------------------------------------*
+ * PT Operations                                                              *
+ *----------------------------------------------------------------------------*/
+/*
+Protothreads open source BSD-style license
+The protothreads library is released under an open source license that allows 
+both commercial and non-commercial use without restrictions. The only 
+requirement is that credits is given in the source code and in the documentation 
+for your product.
+
+The full license text follows.
+
+Copyright (c) 2004-2005, Swedish Institute of Computer Science.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+1. Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.
+3. Neither the name of the Institute nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS `AS IS' AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGE.
+
+Author: Adam Dunkels
+*/
+
+#define ARM_PT_BEGIN(__STATE)                                                   \
+            enum {                                                              \
+                count_offset = __COUNTER__ + 1,                                 \
+            };                                                                  \
+            switch (__STATE) {                                                  \
+                case __COUNTER__ - count_offset: 
+
+#define ARM_PT_ENTRY(__STATE, ...)                                              \
+            (__STATE) = (__COUNTER__ - count_offset + 1) >> 1;                  \
+            __VA_ARGS__                                                         \
+            case (__COUNTER__ - count_offset) >> 1: (__STATE) = (__STATE);
+            
+#define ARM_PT_YIELD(__STATE)                                                   \
+            ARM_PT_ENTRY(__STATE, return arm_fsm_rt_on_going;)
+            
+#define ARM_PT_END(__STATE)                                                     \
+            __STATE = 0;                                                        \
+            break;}
+
+#define ARM_PT_GOTO_PREV_ENTRY()    return arm_fsm_rt_on_going;
+
+            
+#define ARM_PT_REPORT_STATUS(__STATE, __VAL)                                    \
+            ARM_PT_ENTRY(__STATE,                                               \
+                return (arm_fsm_rt_t)(__VAL);                                   \
+            )
+            
+#define ARM_PT_RETURN(__STATE, __VAL)                                           \
+            __STATE = 0;                                                        \
+            return (arm_fsm_rt_t)(__VAL);
 
 /*----------------------------------------------------------------------------*
  * Definition Template                                                        *
