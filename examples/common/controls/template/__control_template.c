@@ -41,6 +41,19 @@
 #endif
 
 /*============================ MACROS ========================================*/
+
+#if __GLCD_CFG_COLOUR_DEPTH__ == 8
+
+
+#elif __GLCD_CFG_COLOUR_DEPTH__ == 16
+
+
+#elif __GLCD_CFG_COLOUR_DEPTH__ == 32
+
+#else
+#   error Unsupported colour depth!
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/

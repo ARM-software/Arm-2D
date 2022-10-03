@@ -20,8 +20,7 @@
 #include "./arm_extra_controls.h"
 #include "./__common.h"
 #include "arm_2d.h"
-#include <math.h>
-#include <time.h>
+
 #include <assert.h>
 
 #if defined(__clang__)
@@ -45,7 +44,6 @@
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
-extern uint32_t SystemCoreClock;
 
 extern const arm_2d_tile_t c_tileSmallDotMask;
 

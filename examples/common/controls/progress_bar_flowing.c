@@ -20,7 +20,7 @@
 #include "./progress_bar_flowing.h"
 #include "./__common.h"
 #include "arm_2d.h"
-#include <math.h>
+
 #include <assert.h>
 #include "arm_2d_helper.h"
 

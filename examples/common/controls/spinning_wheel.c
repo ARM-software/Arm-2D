@@ -46,19 +46,12 @@
 
 /*============================ MACROS ========================================*/
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
-#define arm_2d_fill_colour_with_mask                                            \
-            arm_2d_gray8_fill_colour_with_mask
-#   define __arm_2d_color_t         arm_2d_color_gray8_t
+
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
-#define arm_2d_fill_colour_with_mask                                            \
-            arm_2d_rgb565_fill_colour_with_mask
-#   define __arm_2d_color_t         arm_2d_color_rgb565_t
+
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
-#define arm_2d_fill_colour_with_mask                                            \
-            arm_2d_cccn888_fill_colour_with_mask
-#   define __arm_2d_color_t         arm_2d_color_cccn888_t
 
 #else
 #   error Unsupported colour depth!
@@ -67,7 +60,6 @@
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
-extern uint32_t SystemCoreClock;
 
 extern const arm_2d_tile_t c_tileSpinWheelMask;
 extern const arm_2d_tile_t c_tileQuaterArcMask;

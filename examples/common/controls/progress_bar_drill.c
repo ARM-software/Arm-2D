@@ -20,7 +20,7 @@
 #include "./progress_bar_drill.h"
 #include "./__common.h"
 #include "arm_2d.h"
-#include <math.h>
+
 #include <assert.h>
 
 #include "arm_2d_helper.h"
@@ -136,15 +136,17 @@ void progress_bar_drill_show(   const arm_2d_tile_t *ptTarget,
                             &tInnerRegion);
         //! update offset
         if (bIsNewFrame) {
-            int64_t lClocks = arm_2d_helper_get_system_timestamp();
-            int32_t nElapsed = (int32_t)((lClocks - s_lLastTime));
-            
-            if (nElapsed >= (int32_t)s_wUnit) {
-                s_lLastTime = lClocks;
+            if (arm_2d_helper_is_time_out(s_wUnit, &s_lLastTime)) {
+//            int64_t lClocks = arm_2d_helper_get_system_timestamp();
+//            int32_t nElapsed = (int32_t)((lClocks - s_lLastTime));
+//            
+//            if (nElapsed >= (int32_t)s_wUnit) {
+//                s_lLastTime = lClocks;
                 s_chOffset++;
                 if (s_chOffset >= c_tileBlueSlash.tRegion.tSize.iWidth) {
                     s_chOffset = 0;
                 }
+//            }
             }
         }
 
