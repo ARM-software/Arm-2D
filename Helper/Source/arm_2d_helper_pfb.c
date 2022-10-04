@@ -699,7 +699,7 @@ ARM_PT_BEGIN(this.Adapter.chPT)
             }
         } while(NULL == this.Adapter.ptFrameBuffer);
 
-    ARM_PT_ENTRY(this.Adapter.chPT)
+    ARM_PT_ENTRY()
         
         __arm_2d_helper_perf_counter_start(&this.Statistics.lTimestamp); 
         /* draw all the gui elements on target frame buffer */
@@ -715,7 +715,7 @@ ARM_PT_BEGIN(this.Adapter.chPT)
         /* draw navigation layer */
         if (NULL != this.tCFG.Dependency.Navigation.evtOnDrawing.fnHandler) {
             if (arm_fsm_rt_cpl == tResult) {
-    ARM_PT_ENTRY(this.Adapter.chPT)
+    ARM_PT_ENTRY()
                 __arm_2d_helper_perf_counter_start(&this.Statistics.lTimestamp); 
 
                 tResult = this.tCFG.Dependency.Navigation.evtOnDrawing.fnHandler(
@@ -732,11 +732,11 @@ ARM_PT_BEGIN(this.Adapter.chPT)
     ARM_PT_GOTO_PREV_ENTRY()
         } else if (tResult < 0) {
             // error was reported
-    ARM_PT_RETURN(this.Adapter.chPT, tResult)
+    ARM_PT_RETURN(tResult)
         } else if (arm_fsm_rt_wait_for_obj == tResult) {
-    ARM_PT_REPORT_STATUS(this.Adapter.chPT, tResult)
+    ARM_PT_REPORT_STATUS(tResult)
         } else { 
-    ARM_PT_YIELD(this.Adapter.chPT)
+    ARM_PT_YIELD()
         }
 
         this.Adapter.bIsNewFrame = false;
@@ -746,7 +746,7 @@ ARM_PT_BEGIN(this.Adapter.chPT)
     this.Statistics.nRenderingCycle += __arm_2d_helper_perf_counter_stop(&this.Statistics.lTimestamp);
     
 label_pfb_task_rt_cpl:
-ARM_PT_END(this.Adapter.chPT)
+ARM_PT_END()
 
     /* invoke the On Each Frame Complete Event */
     ARM_2D_INVOKE(  this.tCFG.Dependency.evtOnEachFrameCPL.fnHandler,

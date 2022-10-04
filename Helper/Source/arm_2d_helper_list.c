@@ -77,9 +77,21 @@ ARM_NONNULL(1,2)
 arm_2d_err_t __arm_2d_list_view_init(   __arm_2d_list_view_t *ptThis,
                                         __arm_2d_list_view_cfg_t *ptCFG)
 {
-    ARM_2D_UNUSED(ptThis);
-    ARM_2D_UNUSED(ptCFG);
-    
+    assert(NULL != ptThis);
+    assert(NULL != ptCFG);
+    assert(NULL != ptCFG->fnCalculator);
+    assert(NULL != ptCFG->fnIterator);
+
+    memset(ptThis, 0, sizeof(__arm_2d_list_view_t));
+    this.tCFG = *ptCFG;
+
+    if (this.tCFG.hwSwitchingPeriodInMs) {
+        this.Runtime.iPeriod 
+            = arm_2d_helper_convert_ms_to_ticks(this.tCFG.hwSwitchingPeriodInMs);
+    } else {
+        this.Runtime.iPeriod = arm_2d_helper_convert_ms_to_ticks(500);          /*!< use 500 ms as default */
+    }
+
     return ARM_2D_ERR_NONE;
 }
 
@@ -87,15 +99,135 @@ arm_2d_err_t __arm_2d_list_view_init(   __arm_2d_list_view_t *ptThis,
 ARM_NONNULL(1,2)
 arm_fsm_rt_t __arm_2d_list_view_show(   __arm_2d_list_view_t *ptThis,
                                         const arm_2d_tile_t *ptTarget,
-                                        arm_2d_region_t *ptRegion,
+                                        const arm_2d_region_t *ptRegion,
                                         bool bIsNewFrame)
 {
-    ARM_2D_UNUSED(ptThis);
-    ARM_2D_UNUSED(ptTarget);
+    assert(NULL != ptThis);
+    assert(NULL != ptTarget);
+
     ARM_2D_UNUSED(ptRegion);
     ARM_2D_UNUSED(bIsNewFrame);
+
+ARM_PT_BEGIN(this.Runtime.chState)
+
+    /* runtime initialize */
+    do {
+        if (NULL == ptRegion) {
+            ptRegion = &ptTarget->tRegion;
+        }
+        
+        /* validation for this.tCFG.tListSize */
+        if (this.tCFG.tListSize.iWidth <= 0) {
+            this.tCFG.tListSize.iWidth = ptRegion->tSize.iWidth;
+        }
+        if (this.tCFG.tListSize.iHeight <= 0) {
+            this.tCFG.tListSize.iHeight = ptRegion->tSize.iHeight;
+        }
+
+        /* get target tile */
+        if (NULL == arm_2d_tile_generate_child(ptTarget, 
+                                               ptRegion,
+                                               &this.Runtime.tileList, 
+                                               false)) {
+            /* nothing to draw: use the unified exist point */
+            goto label_end_of_list_view_task;
+        }
+        
+        if (bIsNewFrame) {
+            int64_t lTimestamp = arm_2d_helper_get_system_timestamp();
+            if (this.Runtime.iTargetOffset != this.Runtime.iOffset) {
+                /* code for update this.Runtime.iOffset */
+                int32_t nElapsed = (int32_t)(lTimestamp - this.Runtime.lTimestamp);
+                
+                if (nElapsed < this.Runtime.iPeriod) {
+                    int32_t iDelta = this.Runtime.iTargetOffset - this.Runtime.iStartOffset;
+                    iDelta = nElapsed * iDelta / this.Runtime.iPeriod;
+                    
+                    this.Runtime.iOffset = this.Runtime.iStartOffset + iDelta;
+                } else {
+                    /* timeout */
+                    this.Runtime.iOffset = this.Runtime.iTargetOffset;
+                    this.Runtime.lTimestamp = lTimestamp;
+                }
+            } else {
+                this.Runtime.lTimestamp = lTimestamp;    /* reset timestamp */
+            }
+        }
+        
+    } while(0);
+
+    assert(NULL != this.tCFG.fnCalculator);
     
-    return arm_fsm_rt_on_going;
+    /* loop until finishing drawing all visiable area */
+    do {
+        /* call calculator: it should handle the padding */
+        if (NULL == ARM_2D_INVOKE(  this.tCFG.fnCalculator,
+                        ARM_2D_PARAM(
+                            ptThis, this.Runtime.iOffset
+                        ))) {
+            /* finish: use the unified exist point */
+            goto label_end_of_list_view_task;
+        }
+        arm_2d_list_view_item_t *ptItem = this.Runtime.tWorkingArea.ptItem;
+        assert(NULL != ptItem);
+        
+        /* update this.Runtime.tWorkingArea.tRegion with margin */
+        this.Runtime.tWorkingArea.tRegion.tLocation.iX += ptItem->Margin.chLeft;
+        this.Runtime.tWorkingArea.tRegion.tLocation.iY += ptItem->Margin.chTop;
+
+        this.Runtime.tWorkingArea.tRegion.tSize.iWidth 
+            -= ptItem->Margin.chLeft + ptItem->Margin.chRight;
+        if (0 == this.Runtime.tWorkingArea.tRegion.tSize.iWidth) {
+            continue;
+        }
+        
+        this.Runtime.tWorkingArea.tRegion.tSize.iHeight 
+            -= ptItem->Margin.chTop + ptItem->Margin.chBottom;
+        if (0 == this.Runtime.tWorkingArea.tRegion.tSize.iHeight) {
+            continue;
+        }
+
+        /* update selected field */
+        this.Runtime.tWorkingArea.tParam.bIsSelected 
+            = (this.Runtime.hwSelection == ptItem->hwID);
+            
+ARM_PT_ENTRY()
+        arm_2d_tile_t tItemTile;
+        if (NULL == arm_2d_tile_generate_child(&this.Runtime.tileList, 
+                                               &this.Runtime.tWorkingArea.tRegion,
+                                               &tItemTile,
+                                               false)) {
+            continue;
+        }
+
+        /* I hope this won't be optimized away... */
+        ptItem = this.Runtime.tWorkingArea.ptItem;
+
+        /* draw item */
+        arm_fsm_rt_t tResult = ARM_2D_INVOKE(ptItem->fnOnDrawItem,
+                                    ARM_2D_PARAM(
+                                        ptItem,
+                                        &tItemTile,
+                                        bIsNewFrame,
+                                        &this.Runtime.tWorkingArea.tParam
+                                    ));
+
+        if (arm_fsm_rt_on_going == tResult) {
+    ARM_PT_GOTO_PREV_ENTRY()
+        } else if (tResult < 0) {
+            // error was reported
+    ARM_PT_RETURN(tResult)
+        } else if (arm_fsm_rt_wait_for_obj == tResult) {
+    ARM_PT_REPORT_STATUS(tResult)
+        } 
+
+ARM_PT_YIELD()
+    } while(true);
+
+label_end_of_list_view_task:
+ARM_PT_END()
+    
+    return arm_fsm_rt_cpl;
 }
 
 #if defined(__clang__)

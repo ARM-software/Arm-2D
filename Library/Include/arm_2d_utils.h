@@ -275,6 +275,15 @@ extern "C" {
 #   warning Please enable GNU extensions, it is required by the Arm-2D.
 #endif
 
+
+#undef ARM_2D_PARAM
+
+/*!
+ * \brief a macro helper to be used with ARM_2D_INVODE to improve the 
+ *        readability of the code
+ */
+#define ARM_2D_PARAM(...)           __VA_ARGS__
+
 #ifndef ARM_2D_INVOKE
 /*!
  * \brief A macro to safely invode a function pointer
@@ -862,31 +871,32 @@ Author: Adam Dunkels
             enum {                                                              \
                 count_offset = __COUNTER__ + 1,                                 \
             };                                                                  \
+            uint8_t *ptPTState = &(__STATE);                                    \
             switch (__STATE) {                                                  \
                 case __COUNTER__ - count_offset: 
 
-#define ARM_PT_ENTRY(__STATE, ...)                                              \
-            (__STATE) = (__COUNTER__ - count_offset + 1) >> 1;                  \
+#define ARM_PT_ENTRY(...)                                                       \
+            (*ptPTState) = (__COUNTER__ - count_offset + 1) >> 1;               \
             __VA_ARGS__                                                         \
-            case (__COUNTER__ - count_offset) >> 1: (__STATE) = (__STATE);
+            case (__COUNTER__ - count_offset) >> 1: (void)(*ptPTState);
             
-#define ARM_PT_YIELD(__STATE)                                                   \
-            ARM_PT_ENTRY(__STATE, return arm_fsm_rt_on_going;)
+#define ARM_PT_YIELD()                                                          \
+            ARM_PT_ENTRY(return arm_fsm_rt_on_going;)
             
-#define ARM_PT_END(__STATE)                                                     \
-            __STATE = 0;                                                        \
+#define ARM_PT_END()                                                            \
+            (*ptPTState) = 0;                                                   \
             break;}
 
 #define ARM_PT_GOTO_PREV_ENTRY()    return arm_fsm_rt_on_going;
 
             
-#define ARM_PT_REPORT_STATUS(__STATE, __VAL)                                    \
-            ARM_PT_ENTRY(__STATE,                                               \
+#define ARM_PT_REPORT_STATUS(__VAL)                                             \
+            ARM_PT_ENTRY(                                                       \
                 return (arm_fsm_rt_t)(__VAL);                                   \
             )
             
-#define ARM_PT_RETURN(__STATE, __VAL)                                           \
-            __STATE = 0;                                                        \
+#define ARM_PT_RETURN(__VAL)                                                    \
+            (*ptPTState) = 0;                                                   \
             return (arm_fsm_rt_t)(__VAL);
 
 /*----------------------------------------------------------------------------*
