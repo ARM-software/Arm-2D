@@ -16,25 +16,11 @@
  * limitations under the License.
  */
 
-
-
-#ifndef __CONTROL_H__
-#define __CONTROL_H__
+#ifndef __CONTROL_TEMPLATE_H__
+#define __CONTROL_TEMPLATE_H__
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
-#include "./__common.h"
-#include "./busy_wheel.h"
-#include "./shape_round_corner_box.h"
-#include "./spinning_wheel.h"
-#include "./progress_bar_drill.h"
-#include "./progress_bar_flowing.h"
-#include "./progress_bar_simple.h"
-#include "./number_list.h"
-
-#if defined(__RTE_ACCELERATION_ARM_2D_EXTRA_LCD_PRINTF__)
-#   include "./arm_extra_lcd_printf.h"
-#endif
 
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
@@ -43,13 +29,11 @@
 /*============================ PROTOTYPES ====================================*/
 
 extern
-void arm_extra_controls_init(void);
+void control_template_init(void);
 
 extern
-void arm_2d_draw_box(const arm_2d_tile_t *ptTarget,
-                     const arm_2d_region_t *ptRegion,
-                     int16_t iBorderWidth, 
-                     COLOUR_INT tColour,
-                     uint8_t chOpacity);
+void control_template_show(const arm_2d_tile_t *ptTile, 
+                    const arm_2d_tile_t *ptRegion, 
+                    bool bIsNewFrame);
 
 #endif
