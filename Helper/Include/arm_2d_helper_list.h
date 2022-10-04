@@ -127,6 +127,7 @@ ARM_PRIVATE(
     uint16_t hwID;                                                              /*!< the ID used by the list iterator */
     uint16_t                                        : 16;                       /*!< reserved */
 )
+    __arm_2d_list_view_t                            *ptListView;                /*!< the parent list view */
     union {
         uint16_t                                    hwAttribute;                /*!< 16bit attribute value */
         struct {

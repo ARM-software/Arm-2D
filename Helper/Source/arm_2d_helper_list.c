@@ -195,6 +195,8 @@ ARM_PT_BEGIN(this.Runtime.chState)
         arm_2d_list_view_item_t *ptItem = this.Runtime.tWorkingArea.ptItem;
         assert(NULL != ptItem);
         
+        ptItem->ptListView = ptThis;
+        
         /* update this.Runtime.tWorkingArea.tRegion with margin */
         this.Runtime.tWorkingArea.tRegion.tLocation.iX += ptItem->Margin.chLeft;
         this.Runtime.tWorkingArea.tRegion.tLocation.iY += ptItem->Margin.chTop;
