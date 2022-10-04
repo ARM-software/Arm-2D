@@ -49,7 +49,7 @@ bool device_specific_init(void)
     GLCD_Initialize();                          /* Initialize the GLCD            */
 
     /* display initial screen */
-    GLCD_SetFont(&GLCD_Font_6x8);
+//    GLCD_SetFont(&ARM_2D_FONT_6x8);
     GLCD_SetBackgroundColor(GLCD_COLOR_BLACK);
     GLCD_ClearScreen();
     //GLCD_SetBackgroundColor(GLCD_COLOR_BLUE);

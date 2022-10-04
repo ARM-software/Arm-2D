@@ -32,19 +32,7 @@
    ---------------------------------------------------------------------------*/
 
 #include <stdint.h>
-
-
-/* Font definitions */
-typedef struct {
-        uint16_t width;         ///< Character width
-        uint16_t height;        ///< Character height
-        uint32_t offset;        ///< Character offset
-        uint32_t count;         ///< Character count
-  const uint8_t *bitmap;        ///< Characters bitmaps
-} const GLCD_FONT;
-
-extern GLCD_FONT GLCD_Font_6x8;
-extern GLCD_FONT GLCD_Font_16x24;
+#include "./arm_extra_lcd_printf.h"
 
 extern const uint8_t Font_6x8_h[(144-32)*8];
 const uint8_t Font_6x8_h[(144-32)*8] = {
@@ -729,8 +717,8 @@ static const uint8_t Font_16x24_h[(144-32)*48] = {
   0x38, 0x0C, 0x18, 0x0C, 0x0C, 0x18, 0x0C, 0x18, 0x0C, 0x30, 0x0C, 0x60, 0x00, 0x00, 0x00, 0x00,
 };
 
-extern GLCD_FONT GLCD_Font_6x8;
-GLCD_FONT GLCD_Font_6x8 = {
+extern arm_2d_font_t ARM_2D_FONT_6x8;
+arm_2d_font_t ARM_2D_FONT_6x8 = {
   6,                                    ///< Character width
   8,                                    ///< Character height
   32,                                   ///< Character offset
@@ -738,8 +726,8 @@ GLCD_FONT GLCD_Font_6x8 = {
   Font_6x8_h                            ///< Characters bitmaps
 };
 
-extern GLCD_FONT GLCD_Font_16x24;
-GLCD_FONT GLCD_Font_16x24 = {
+extern arm_2d_font_t ARM_2D_FONT_16x24;
+arm_2d_font_t ARM_2D_FONT_16x24 = {
   16,                                   ///< Character width
   24,                                   ///< Character height
   32,                                   ///< Character offset

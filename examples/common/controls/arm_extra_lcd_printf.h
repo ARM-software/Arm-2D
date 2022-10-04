@@ -66,7 +66,20 @@ extern "C" {
         } while(0)
 
 /*============================ TYPES =========================================*/
+/* Font definitions */
+typedef struct {
+        int16_t iWidth;             //!< Character width
+        int16_t iHeight;            //!< Character height
+        uint32_t nOffset;           //!< Character offset
+        uint32_t nCount;            //!< Character count
+  const uint8_t *chBitmap;          //!< Characters bitmaps
+} const arm_2d_font_t;
+
 /*============================ GLOBAL VARIABLES ==============================*/
+
+extern const arm_2d_font_t    ARM_2D_FONT_16x24;
+extern const arm_2d_font_t    ARM_2D_FONT_6x8;
+
 /*============================ PROTOTYPES ====================================*/
 
 
@@ -78,6 +91,9 @@ void arm_lcd_puts(const char *str);
 
 extern 
 void arm_lcd_text_location(uint8_t chY, uint8_t chX);
+
+extern
+void lcd_draw_char(int16_t iX, int16_t iY, char chChar);
 
 extern 
 void arm_lcd_text_set_colour(   COLOUR_INT_TYPE wForeground, 
@@ -101,6 +117,9 @@ void arm_lcd_text_set_display_mode(uint32_t wMode);
 
 extern 
 void arm_lcd_text_set_draw_region(arm_2d_region_t *ptRegion);
+
+extern
+arm_2d_err_t arm_lcd_text_set_font(arm_2d_font_t *ptFont);
 
 #ifdef __cplusplus
 }

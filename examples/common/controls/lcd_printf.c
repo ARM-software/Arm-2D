@@ -51,20 +51,10 @@
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
-/* Font definitions */
-typedef struct {
-        uint16_t width;         ///< Character width
-        uint16_t height;        ///< Character height
-        uint32_t offset;        ///< Character offset
-        uint32_t count;         ///< Character count
-  const uint8_t *bitmap;        ///< Characters bitmaps
-} const GLCD_FONT;
-
 /*============================ GLOBAL VARIABLES ==============================*/
 extern
 const uint8_t Font_6x8_h[(144-32)*8];
-extern const GLCD_FONT    GLCD_Font_16x24;
-extern const GLCD_FONT    GLCD_Font_6x8;
+
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -83,6 +73,11 @@ static struct {
     
     arm_2d_tile_t *ptTargetFB;
     uint32_t       wMode;
+    
+    arm_2d_font_t *ptFont;
+    arm_2d_tile_t tileFont;
+    arm_2d_tile_t tileChar;
+    
 } s_tLCDTextControl = {
     .tRegion = { 
         .tSize = {
@@ -98,6 +93,34 @@ static struct {
     .wMode = ARM_2D_DRW_PATN_MODE_COPY,
             //| ARM_2D_DRW_PATN_MODE_NO_FG_COLOR    
             //| ARM_2D_DRW_PATH_MODE_COMP_FG_COLOUR 
+    .ptFont = &ARM_2D_FONT_6x8,
+    
+    .tileFont = {
+        .tRegion = {
+            .tSize = {
+                .iWidth = 6,
+                .iHeight = 8 * 112,
+            },
+        },
+        .tInfo = {
+            .bIsRoot = true,
+            .bHasEnforcedColour = true,
+            .tColourInfo = {
+                .chScheme = ARM_2D_COLOUR_BIN,
+            },
+        },
+        .pchBuffer = (uint8_t *)Font_6x8_h,
+    },
+    
+    .tileChar = {
+        .tRegion = {
+            .tSize = {
+                .iWidth = 6,
+                .iHeight = 8,
+            },
+        },
+        .ptParent = (arm_2d_tile_t *)&s_tLCDTextControl.tileFont,
+    }
 };
 
 /*============================ IMPLEMENTATION ================================*/
@@ -143,60 +166,70 @@ void arm_lcd_text_location(uint8_t chY, uint8_t chX)
     s_tLCDTextControl.tTextLocation.chX = chX;
     s_tLCDTextControl.tTextLocation.chY = chY;
     
-    if (    s_tLCDTextControl.tTextLocation.chX * GLCD_Font_6x8.width
+    if (    s_tLCDTextControl.tTextLocation.chX *  s_tLCDTextControl.ptFont->iWidth
         >=  s_tLCDTextControl.tRegion.tSize.iWidth ) {
         s_tLCDTextControl.tTextLocation.chX = 0;
         s_tLCDTextControl.tTextLocation.chY++;
-        if (    s_tLCDTextControl.tTextLocation.chY * GLCD_Font_6x8.height 
+        if (    s_tLCDTextControl.tTextLocation.chY * s_tLCDTextControl.ptFont->iHeight 
             >= s_tLCDTextControl.tRegion.tSize.iHeight) {
             s_tLCDTextControl.tTextLocation.chY = 0;
         }
     }
 }
 
-static void lcd_draw_char(int16_t iX, int16_t iY, char chChar)
+arm_2d_err_t arm_lcd_text_set_font(arm_2d_font_t *ptFont)
 {
-    const static arm_2d_tile_t s_tileFont6x8 = {
-        .tRegion = {
-            .tSize = {
-                .iWidth = 6,
-                .iHeight = 8 * 112,
-            },
-        },
-        .tInfo = {
-            .bIsRoot = true,
-            .bHasEnforcedColour = true,
-            .tColourInfo = {
-                .chScheme = ARM_2D_COLOUR_BIN,
-            },
-        },
-        .pchBuffer = (uint8_t *)Font_6x8_h,
-    };   
- 
-    static arm_2d_tile_t s_tileChar = {
-        .tRegion = {
-            .tSize = {
-                .iWidth = 6,
-                .iHeight = 8,
-            },
-        },
-        .ptParent = (arm_2d_tile_t *)&s_tileFont6x8,
-    };
+    if (NULL == ptFont) {
+        ptFont = &ARM_2D_FONT_6x8;   /* use default font */
+    }
+
+    do {
+        if (NULL == ptFont->chBitmap) {
+            break;
+        }
+        if (    (0 == ptFont->iHeight) 
+            ||  (0 == ptFont->iWidth)
+            ||  (0 == ptFont->nCount)) {
+            break;
+        }
+        
+        s_tLCDTextControl.ptFont = ptFont;
+        
+        /* update tileFont */
+        s_tLCDTextControl.tileFont.tRegion.tSize.iWidth = ptFont->iWidth;
+        s_tLCDTextControl.tileFont.tRegion.tSize.iHeight = ptFont->iHeight * ptFont->nCount;
+        s_tLCDTextControl.tileFont.pchBuffer = (uint8_t *)ptFont->chBitmap;
+        
+        /* update tileChar */
+        s_tLCDTextControl.tileChar.tRegion.tSize.iWidth = ptFont->iWidth;
+        s_tLCDTextControl.tileChar.tRegion.tSize.iHeight = ptFont->iHeight;
+
+
+        /* reset draw pointer */
+        arm_lcd_text_location(0,0);
+        
+        return ARM_2D_ERR_NONE;
+    } while(0);
     
-    s_tileChar.tRegion.tLocation.iY = 
-        (chChar - (int16_t)GLCD_Font_6x8.offset) * 8;
+    return ARM_2D_ERR_INVALID_PARAM;
+}
+
+void lcd_draw_char(int16_t iX, int16_t iY, char chChar)
+{
+    s_tLCDTextControl.tileChar.tRegion.tLocation.iY = 
+        (chChar - (int16_t)s_tLCDTextControl.ptFont->nOffset) * 8;
     
     arm_2d_region_t tDrawRegion = {
         .tLocation = {.iX = iX, .iY = iY},
-        .tSize = s_tileChar.tRegion.tSize,
+        .tSize = s_tLCDTextControl.tileChar.tRegion.tSize,
     };
     
-    arm_2d_draw_pattern(  &s_tileChar, 
-                                s_tLCDTextControl.ptTargetFB, 
-                                &tDrawRegion,
-                                s_tLCDTextControl.wMode,
-                                s_tLCDTextControl.tColour.tForeground,
-                                s_tLCDTextControl.tColour.tBackground);
+    arm_2d_draw_pattern(&s_tLCDTextControl.tileChar, 
+                        s_tLCDTextControl.ptTargetFB, 
+                        &tDrawRegion,
+                        s_tLCDTextControl.wMode,
+                        s_tLCDTextControl.tColour.tForeground,
+                        s_tLCDTextControl.tColour.tBackground);
     arm_2d_op_wait_async(NULL);
 }
 
@@ -212,7 +245,7 @@ void arm_lcd_puts(const char *str)
             s_tLCDTextControl.tTextLocation.chX += 8;
             s_tLCDTextControl.tTextLocation.chX &= ~(_BV(3)-1);
 
-            if (    s_tLCDTextControl.tTextLocation.chX * GLCD_Font_6x8.width 
+            if (    s_tLCDTextControl.tTextLocation.chX * s_tLCDTextControl.ptFont->iWidth 
                 >=  s_tLCDTextControl.tRegion.tSize.iWidth ) {
                 s_tLCDTextControl.tTextLocation.chX = 0;
                 s_tLCDTextControl.tTextLocation.chY++;
@@ -223,19 +256,19 @@ void arm_lcd_puts(const char *str)
             }
         } else {
         
-            int16_t iX = s_tLCDTextControl.tTextLocation.chX * GLCD_Font_6x8.width;
-            int16_t iY = s_tLCDTextControl.tTextLocation.chY * GLCD_Font_6x8.height;
+            int16_t iX = s_tLCDTextControl.tTextLocation.chX * s_tLCDTextControl.ptFont->iWidth;
+            int16_t iY = s_tLCDTextControl.tTextLocation.chY * s_tLCDTextControl.ptFont->iHeight;
         
             lcd_draw_char(  s_tLCDTextControl.tRegion.tLocation.iX + iX, 
                             s_tLCDTextControl.tRegion.tLocation.iY + iY, 
                             *str);
                             
             s_tLCDTextControl.tTextLocation.chX++;
-            if (    s_tLCDTextControl.tTextLocation.chX * GLCD_Font_6x8.width 
+            if (    s_tLCDTextControl.tTextLocation.chX * s_tLCDTextControl.ptFont->iWidth 
                 >=  s_tLCDTextControl.tRegion.tSize.iWidth ) {
                 s_tLCDTextControl.tTextLocation.chX = 0;
                 s_tLCDTextControl.tTextLocation.chY++;
-                if (    s_tLCDTextControl.tTextLocation.chY * GLCD_Font_6x8.height 
+                if (    s_tLCDTextControl.tTextLocation.chY * s_tLCDTextControl.ptFont->iHeight 
                     >= s_tLCDTextControl.tRegion.tSize.iHeight) {
                     s_tLCDTextControl.tTextLocation.chY = 0;
                 }

@@ -87,9 +87,6 @@ extern "C" {
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 
-extern const GLCD_FONT    GLCD_Font_16x24;
-extern const GLCD_FONT    GLCD_Font_6x8;
-
 extern uint32_t SystemCoreClock;
 /*============================ PROTOTYPES ====================================*/
 
