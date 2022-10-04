@@ -203,9 +203,10 @@ typedef struct __arm_2d_list_view_work_area_t {
  */
 typedef
 __arm_2d_list_view_work_area_t *__arm_2d_list_view_region_calculator_t(
-                                                __arm_2d_list_view_t *ptThis,
-                                                int16_t iOffset
-                                            );
+                                __arm_2d_list_view_t *ptThis,
+                                __arm_2d_list_view_item_iterator *fnIterator,
+                                int16_t iOffset
+                            );
 
 /*!
  *  \brief list view configuration structure
@@ -224,25 +225,35 @@ typedef struct __arm_2d_list_view_cfg_t {
  * \brief the list view class
  */
 struct __arm_2d_list_view_t {
-ARM_PRIVATE(
-    __arm_2d_list_view_cfg_t            tCFG;                                   /*!< list view configuration */
+
+    ARM_PRIVATE(
+        __arm_2d_list_view_cfg_t            tCFG;                               /*!< list view configuration */
+    )
+
     struct {
-        arm_2d_tile_t                   tileList;                               /*!< the target tile for the list */
-        arm_2d_tile_t                   tileItem;                               /*!< the target tile for list items */
-        arm_2d_region_t                 tDrawRegion;                            /*!< the current draw region */
-        //arm_2d_list_view_item_t        *ptSelected;                             /*!< the current item */
-        __arm_2d_list_view_work_area_t  tWorkingArea;                           /*!< the working area */
-        
-        uint16_t                        hwSelection;                            /*!< item selection */
-        int16_t                         iPeriod;                                /*!< time to run target distance */
-        uint64_t                        lTimestamp;                             /*!< timestamp used by animation */
-        int16_t                         iOffset;                                /*!< list offset */
-        int16_t                         iStartOffset;                           /*!< the start offset */
-        int16_t                         iTargetOffset;                          /*!< the target list offset */
-        uint8_t                         chState;                                /*!< state used by list view task */
-        uint8_t                         chCalcState;                            /*!< state used by calculator */
+    
+        ARM_PROTECTED(
+            arm_2d_tile_t                   tileList;                           /*!< the target tile for the list */
+            arm_2d_region_t                 tDrawRegion;                        /*!< the current draw region */
+        )
+
+        ARM_PRIVATE(
+            arm_2d_tile_t                   tileItem;                           /*!< the target tile for list items */
+            //arm_2d_list_view_item_t        *ptSelected;                       /*!< the current item */
+            __arm_2d_list_view_work_area_t  tWorkingArea;                       /*!< the working area */
+            
+            uint16_t                        hwSelection;                        /*!< item selection */
+            int16_t                         iPeriod;                            /*!< time to run target distance */
+            uint64_t                        lTimestamp;                         /*!< timestamp used by animation */
+            int16_t                         iOffset;                            /*!< list offset */
+            int16_t                         iStartOffset;                       /*!< the start offset */
+            int16_t                         iTargetOffset;                      /*!< the target list offset */
+            uint8_t                         chState;                            /*!< state used by list view task */
+        )
+
     } Runtime;                                                                  /*!< list runtime */
-)
+    
+
 };
 
 

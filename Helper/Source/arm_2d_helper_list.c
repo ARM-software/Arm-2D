@@ -187,8 +187,9 @@ ARM_PT_BEGIN(this.Runtime.chState)
         /* call calculator: it should handle the padding */
         if (NULL == ARM_2D_INVOKE(  this.tCFG.fnCalculator,
                         ARM_2D_PARAM(
-                            ptThis, this.Runtime.iOffset
-                        ))) {
+                            ptThis, 
+                            this.tCFG.fnIterator,
+                            this.Runtime.iOffset))) {
             /* finish: use the unified exist point */
             goto label_end_of_list_view_task;
         }

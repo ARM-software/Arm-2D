@@ -22,8 +22,8 @@
  * Description:  Public header file to indicate features avaialble for this
  *               arm-2d library variant.
  *
- * $Date:        13. Sept 2022
- * $Revision:    V.1.0.4
+ * $Date:        04. Oct 2022
+ * $Revision:    V.1.0.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -36,6 +36,13 @@
 
 #ifdef   __cplusplus
 extern "C" {
+#endif
+
+#if defined(__clang__)
+#   pragma clang diagnostic push
+#   pragma clang diagnostic ignored "-Wunknown-warning-option"
+#   pragma clang diagnostic ignored "-Wreserved-identifier"
+#   pragma clang diagnostic ignored "-Wmicrosoft-anon-tag"
 #endif
 
 /*!
