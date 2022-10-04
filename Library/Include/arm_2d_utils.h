@@ -21,8 +21,8 @@
  * Title:        arm_2d_utils.h
  * Description:  Public header file for Arm-2D Library
  *
- * $Date:        03. Oct 2022
- * $Revision:    V.1.2.0
+ * $Date:        04. Oct 2022
+ * $Revision:    V.1.2.1
  *
  * -------------------------------------------------------------------- */
 
@@ -972,11 +972,16 @@ struct __arm_slist_node_t {
 
 /* un-define macros */
 #undef ARM_PRIVATE
-
+#undef ARM_PROTECTED
 
 /* redefine macros */
 #if defined(__cplusplus)
 #   define ARM_PRIVATE(...)                                                     \
+        struct  {                                                               \
+            __VA_ARGS__                                                         \
+        };
+
+#   define ARM_PROTECTED(...)                                                   \
         struct  {                                                               \
             __VA_ARGS__                                                         \
         };
@@ -988,8 +993,30 @@ struct __arm_slist_node_t {
             __VA_ARGS__                                                         \
         } __ALIGNED(__alignof__(struct {__VA_ARGS__}));
 
+#   define ARM_PROTECTED(...)                                                   \
+        struct  {                                                               \
+            __VA_ARGS__                                                         \
+        } __ALIGNED(__alignof__(struct {__VA_ARGS__}));
+
+#elif defined(__ARM_2D_INHERIT__)
+
+#   define ARM_PRIVATE(...)                                                     \
+        uint8_t ARM_CONNECT3(chMask,__LINE__,__COUNTER__)                       \
+                [sizeof(struct {__VA_ARGS__})]                                  \
+                __ALIGNED(__alignof__(struct {__VA_ARGS__}));
+
+#   define ARM_PROTECTED(...)                                                   \
+        struct  {                                                               \
+            __VA_ARGS__                                                         \
+        } __ALIGNED(__alignof__(struct {__VA_ARGS__}));
+
 #else
 #   define ARM_PRIVATE(...)                                                     \
+        uint8_t ARM_CONNECT3(chMask,__LINE__,__COUNTER__)                       \
+                [sizeof(struct {__VA_ARGS__})]                                  \
+                __ALIGNED(__alignof__(struct {__VA_ARGS__}));
+
+#   define ARM_PROTECTED(...)                                                   \
         uint8_t ARM_CONNECT3(chMask,__LINE__,__COUNTER__)                       \
                 [sizeof(struct {__VA_ARGS__})]                                  \
                 __ALIGNED(__alignof__(struct {__VA_ARGS__}));
@@ -1001,4 +1028,4 @@ struct __arm_slist_node_t {
 /* post un-define macros */
 
 #undef __ARM_2D_IMPL__
-
+#undef __ARM_2D_INHERIT__

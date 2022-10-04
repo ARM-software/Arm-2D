@@ -56,6 +56,9 @@ extern "C" {
 #ifdef __ARM_2D_HELPER_LIST_VIEW_IMPLEMENT__
 #   undef   __ARM_2D_HELPER_LIST_VIEW_IMPLEMENT__
 #   define  __ARM_2D_IMPL__
+#elif defined(__ARM_2D_HELPER_LIST_VIEW_INHERIT__)
+#   undef __ARM_2D_HELPER_LIST_VIEW_INHERIT__
+#   define  __ARM_2D_INHERIT__
 #endif
 #include "arm_2d_utils.h"
 
@@ -122,7 +125,7 @@ enum {
  */
 struct arm_2d_list_view_item_t {
 
-ARM_PRIVATE(
+ARM_PROTECTED(
     arm_2d_list_view_item_t                         *ptNext;                    /*!< list item pointer */
     uint16_t hwID;                                                              /*!< the ID used by the list iterator */
     uint16_t                                        : 16;                       /*!< reserved */

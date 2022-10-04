@@ -216,7 +216,6 @@ ARM_PT_BEGIN(this.Runtime.chState)
         /* update selected field */
         this.Runtime.tWorkingArea.tParam.bIsSelected 
             = (this.Runtime.hwSelection == ptItem->hwID);
-            
 
         if (NULL == arm_2d_tile_generate_child(&this.Runtime.tileList, 
                                                &this.Runtime.tWorkingArea.tRegion,
