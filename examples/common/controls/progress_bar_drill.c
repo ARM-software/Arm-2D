@@ -85,7 +85,7 @@ ARM_NOINIT static uint32_t s_wUnit;
 void progress_bar_drill_init(void)
 {
     s_lLastTime = arm_2d_helper_get_system_timestamp();
-    s_wUnit = (uint32_t)arm_2d_helper_convert_ms_to_ticks(PROGRESS_BAR_DRILL_SPEED);
+    s_wUnit = PROGRESS_BAR_DRILL_SPEED;
 }
 
 void progress_bar_drill_show(   const arm_2d_tile_t *ptTarget, 
