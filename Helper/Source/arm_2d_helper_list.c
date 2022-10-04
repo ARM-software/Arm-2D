@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list view related services
  *
- * $Date:        03. Oct 2022
- * $Revision:    V.0.5.0
+ * $Date:        04. Oct 2022
+ * $Revision:    V.0.6.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -104,7 +104,8 @@ arm_fsm_rt_t __arm_2d_list_view_show(   __arm_2d_list_view_t *ptThis,
 {
     assert(NULL != ptThis);
     assert(NULL != ptTarget);
-
+    arm_fsm_rt_t tResult;
+    
     ARM_2D_UNUSED(ptRegion);
     ARM_2D_UNUSED(bIsNewFrame);
 
@@ -156,6 +157,29 @@ ARM_PT_BEGIN(this.Runtime.chState)
         
     } while(0);
 
+    /* draw background */
+    do {
+    ARM_PT_ENTRY()
+
+        tResult = ARM_2D_INVOKE(this.tCFG.fnOnDrawListViewBackground,
+                                ARM_2D_PARAM(   
+                                    ptThis, 
+                                    &this.Runtime.tileList, 
+                                    bIsNewFrame));
+
+        if (arm_fsm_rt_on_going == tResult) {
+    ARM_PT_GOTO_PREV_ENTRY()
+        } else if (tResult < 0) {
+            // error was reported
+    ARM_PT_RETURN(tResult)
+        } else if (arm_fsm_rt_cpl != tResult) {
+    ARM_PT_REPORT_STATUS(tResult)
+        } 
+
+    ARM_PT_YIELD()
+    } while(0);
+
+
     assert(NULL != this.tCFG.fnCalculator);
     
     /* loop until finishing drawing all visiable area */
@@ -191,44 +215,95 @@ ARM_PT_BEGIN(this.Runtime.chState)
         this.Runtime.tWorkingArea.tParam.bIsSelected 
             = (this.Runtime.hwSelection == ptItem->hwID);
             
-ARM_PT_ENTRY()
-        arm_2d_tile_t tItemTile;
+
         if (NULL == arm_2d_tile_generate_child(&this.Runtime.tileList, 
                                                &this.Runtime.tWorkingArea.tRegion,
-                                               &tItemTile,
+                                               &this.Runtime.tileItem,
                                                false)) {
             continue;
         }
 
-        /* I hope this won't be optimized away... */
-        ptItem = this.Runtime.tWorkingArea.ptItem;
-
-        /* draw item */
-        arm_fsm_rt_t tResult = ARM_2D_INVOKE(ptItem->fnOnDrawItem,
-                                    ARM_2D_PARAM(
-                                        ptItem,
-                                        &tItemTile,
+        /* draw list view item background */
+        do {
+        ARM_PT_ENTRY()
+            ptItem = this.Runtime.tWorkingArea.ptItem;
+            
+            tResult = ARM_2D_INVOKE(this.tCFG.fnOnDrawItemBackground,
+                                    ARM_2D_PARAM(   
+                                        ptItem, 
+                                        &this.Runtime.tileItem, 
                                         bIsNewFrame,
-                                        &this.Runtime.tWorkingArea.tParam
-                                    ));
+                                        &this.Runtime.tWorkingArea.tParam));
+
+            if (arm_fsm_rt_on_going == tResult) {
+        ARM_PT_GOTO_PREV_ENTRY()
+            } else if (tResult < 0) {
+                // error was reported
+        ARM_PT_RETURN(tResult)
+            } else if (arm_fsm_rt_cpl != tResult) {
+        ARM_PT_REPORT_STATUS(tResult)
+            } 
+
+        ARM_PT_YIELD()
+        } while(0);
+
+        /* draw list view item */
+        do {
+        ARM_PT_ENTRY()
+            ptItem = this.Runtime.tWorkingArea.ptItem;
+
+            /* draw item */
+            tResult = ARM_2D_INVOKE(ptItem->fnOnDrawItem,
+                                        ARM_2D_PARAM(
+                                            ptItem,
+                                            &this.Runtime.tileItem,
+                                            bIsNewFrame,
+                                            &this.Runtime.tWorkingArea.tParam
+                                        ));
+
+            if (arm_fsm_rt_on_going == tResult) {
+        ARM_PT_GOTO_PREV_ENTRY()
+            } else if (tResult < 0) {
+                // error was reported
+        ARM_PT_RETURN(tResult)
+            } else if (arm_fsm_rt_cpl != tResult) {
+        ARM_PT_REPORT_STATUS(tResult)
+            } 
+        ARM_PT_YIELD()
+        } while(0);
+
+    } while(true);
+
+    /* draw list view cover */
+    do {
+    ARM_PT_ENTRY()
+
+        tResult = ARM_2D_INVOKE(this.tCFG.fnOnDrawListViewCover,
+                                ARM_2D_PARAM(   
+                                    ptThis, 
+                                    &this.Runtime.tileList, 
+                                    bIsNewFrame));
 
         if (arm_fsm_rt_on_going == tResult) {
     ARM_PT_GOTO_PREV_ENTRY()
         } else if (tResult < 0) {
             // error was reported
     ARM_PT_RETURN(tResult)
-        } else if (arm_fsm_rt_wait_for_obj == tResult) {
+        } else if (arm_fsm_rt_cpl != tResult) {
     ARM_PT_REPORT_STATUS(tResult)
         } 
 
-ARM_PT_YIELD()
-    } while(true);
+    ARM_PT_YIELD()
+    } while(0);
+
 
 label_end_of_list_view_task:
 ARM_PT_END()
     
     return arm_fsm_rt_cpl;
 }
+
+
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

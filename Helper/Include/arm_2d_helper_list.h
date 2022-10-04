@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list view related services
  *
- * $Date:        03. Oct 2022
- * $Revision:    V.0.5.0
+ * $Date:        04. Oct 2022
+ * $Revision:    V.0.6.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -155,6 +155,7 @@ ARM_PRIVATE(
     arm_2d_draw_list_view_item_handler_t           *fnOnDrawItem;               /*!< on-draw-list-view-item event handler */
 };
 
+
 /*!
  * \brief intructions for how to move the list view item iterator
  * \note For internal use only
@@ -211,6 +212,7 @@ typedef struct __arm_2d_list_view_cfg_t {
     __arm_2d_list_view_region_calculator_t  *fnCalculator;                      /*!< the region calculator */
     arm_2d_draw_list_view_item_handler_t    *fnOnDrawItemBackground;            /*!< the On-Draw-List-View-Item-Background event handler */
     arm_2d_helper_draw_handler_t            *fnOnDrawListViewBackground;        /*!< the On-Draw-List-View-Background event handler */
+    arm_2d_helper_draw_handler_t            *fnOnDrawListViewCover;             /*!< the On-Draw-List-View-Cover event handler */
     uint16_t hwSwitchingPeriodInMs;                                             /*!< A constant period (in ms) for switching item, zero means using default value */
 } __arm_2d_list_view_cfg_t;
 
@@ -222,6 +224,7 @@ ARM_PRIVATE(
     __arm_2d_list_view_cfg_t            tCFG;                                   /*!< list view configuration */
     struct {
         arm_2d_tile_t                   tileList;                               /*!< the target tile for the list */
+        arm_2d_tile_t                   tileItem;                               /*!< the target tile for list items */
         arm_2d_region_t                 tDrawRegion;                            /*!< the current draw region */
         //arm_2d_list_view_item_t        *ptSelected;                             /*!< the current item */
         __arm_2d_list_view_work_area_t  tWorkingArea;                           /*!< the working area */
@@ -237,6 +240,7 @@ ARM_PRIVATE(
     } Runtime;                                                                  /*!< list runtime */
 )
 };
+
 
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ LOCAL VARIABLES ===============================*/
