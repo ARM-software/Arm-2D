@@ -243,7 +243,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-Ofast -flto -fdata-sections -ffunction-sections -fms-extensions -mcpu=cortex-m7 -mfloat-abi=hard -mfpu=fpv5-sp-d16 -std=gnu11</MiscControls>
-              <Define>NDEBUG,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1,__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__=1</Define>
+              <Define>__GLCD_CFG_SCEEN_WIDTH__=480,__GLCD_CFG_SCEEN_HEIGHT__=272,BENCHMARK_PFB_BLOCK_WIDTH=480,BENCHMARK_PFB_BLOCK_HEIGHT=120,NDEBUG,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1,__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__=1</Define>
               <Undefine></Undefine>
               <IncludePath>..\common\platform;..\common\platform\lib;..\common\platform\stm32f746g-discovery;..\common\controls;..\..\Library\Include;.;..\..\Helper\Include;..\..\Library\Include\template;..\common\benchmark</IncludePath>
             </VariousControls>

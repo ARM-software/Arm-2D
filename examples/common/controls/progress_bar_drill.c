@@ -40,6 +40,11 @@
 #   pragma clang diagnostic ignored "-Wunused-const-variable"
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
 #   pragma clang diagnostic ignored "-Wmissing-variable-declarations"
+#elif __IS_COMPILER_GCC__
+#   pragma GCC diagnostic push
+#   pragma GCC diagnostic ignored "-Wpedantic"
+#   pragma GCC diagnostic ignored "-Wstrict-aliasing"
+#   pragma GCC diagnostic ignored "-Wunused-value"
 #endif
 
 /*============================ MACROS ========================================*/
@@ -165,4 +170,6 @@ void progress_bar_drill_show(   const arm_2d_tile_t *ptTarget,
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
+#elif __IS_COMPILER_GCC__
+#   pragma GCC diagnostic pop
 #endif

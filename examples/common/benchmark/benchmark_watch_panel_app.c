@@ -186,6 +186,8 @@ void example_gui_on_refresh_evt_handler(const arm_2d_tile_t *ptFrameBuffer)
 
     if (0 == BENCHMARK.wIterations) {
 
+    arm_lcd_text_set_font(&ARM_2D_FONT_6x8);
+
 #if !defined(__USE_FVP__)
         arm_lcd_text_location( __GLCD_CFG_SCEEN_HEIGHT__ / 8 - 7, 0);
         arm_lcd_puts(  "Transform Test, running "
@@ -238,6 +240,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_background_handler)
                             ptTile,
                             NULL);
 #endif
+
+    arm_lcd_text_set_font(&ARM_2D_FONT_6x8);
 
     arm_print_banner("Arm-2D Benchmark");
     

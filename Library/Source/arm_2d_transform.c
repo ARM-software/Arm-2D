@@ -69,6 +69,9 @@ extern "C" {
 #   pragma diag_suppress=Pa093
 #elif defined(__IS_COMPILER_GCC__)
 #   pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
+#   pragma GCC diagnostic ignored "-Wpedantic"
+#   pragma GCC diagnostic ignored "-Wstrict-aliasing"
+#   pragma GCC diagnostic ignored "-Wunused-value"
 #endif
 
 #include <arm_math.h>

@@ -183,6 +183,10 @@ arm_2d_err_t arm_lcd_text_set_font(arm_2d_font_t *ptFont)
         ptFont = &ARM_2D_FONT_6x8;   /* use default font */
     }
 
+    if (s_tLCDTextControl.ptFont == ptFont) {
+        return ARM_2D_ERR_NONE;
+    }
+
     do {
         if (NULL == ptFont->chBitmap) {
             break;

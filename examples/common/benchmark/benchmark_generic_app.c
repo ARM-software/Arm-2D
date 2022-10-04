@@ -173,6 +173,7 @@ void example_gui_on_refresh_evt_handler(const arm_2d_tile_t *ptFrameBuffer)
 
     if (0 == BENCHMARK.wIterations) {
 
+    arm_lcd_text_set_font(&ARM_2D_FONT_6x8);
 #if !defined(__USE_FVP__)
         arm_lcd_text_location( __GLCD_CFG_SCEEN_HEIGHT__ / 8 - 7, 0);
         arm_lcd_puts(  "All-in-One Test, running "
@@ -217,7 +218,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_background_handler)
     ARM_2D_UNUSED(bIsNewFrame);
 
     arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
-    
+
+    arm_lcd_text_set_font(&ARM_2D_FONT_6x8);
     arm_print_banner("Arm-2D Benchmark");
     
 #if !defined(__USE_FVP__)
