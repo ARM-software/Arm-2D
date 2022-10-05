@@ -145,10 +145,16 @@ static void __on_scene_depose(arm_2d_scene_t *ptScene)
 }
 
 
-//static void __on_scene0_frame_complete(arm_2d_scene_t *ptScene)
-//{
-//    ARM_2D_UNUSED(ptScene);
-//}
+
+static void __on_scene0_frame_complete(arm_2d_scene_t *ptScene)
+{
+    ARM_2D_UNUSED(ptScene);
+    
+    /* switch to next scene after 2s */
+    if (arm_2d_helper_is_time_out(2000)) {
+        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+    }
+}
 
 //static
 //IMPL_PFB_ON_DRAW(__pfb_draw_scene0_background_handler)
@@ -244,7 +250,7 @@ static void __app_scene0_init(void)
         .fnOnBGStart    = NULL,
         .fnOnBGComplete = NULL,
         .fnOnFrameStart = NULL,
-        //.fnOnFrameCPL   = &__on_scene0_frame_complete,
+        .fnOnFrameCPL   = &__on_scene0_frame_complete,
         .fnDepose       = &__on_scene_depose,
     };
     arm_2d_scene_player_append_scenes( &DISP0_ADAPTER, ptScene, 1);
