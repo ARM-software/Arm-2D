@@ -82,7 +82,7 @@ IMPL_PFB_ON_DRAW(__arm_2d_number_list_draw_background)
 {
     ARM_2D_UNUSED(bIsNewFrame);
     
-    arm_2d_number_list_t *ptThis = (arm_2d_number_list_t *)pTarget;
+    number_list_t *ptThis = (number_list_t *)pTarget;
 
 
     if (!this.tNumListCFG.bIgnoreBackground) {
@@ -150,7 +150,7 @@ arm_fsm_rt_t __arm_2d_number_list_draw_list_view_item(
                                       bool bIsNewFrame,
                                       arm_2d_list_view_item_param_t *ptParam)
 {
-    arm_2d_number_list_t *ptThis = (arm_2d_number_list_t *)ptItem->ptListView;
+    number_list_t *ptThis = (number_list_t *)ptItem->ptListView;
     ARM_2D_UNUSED(ptItem);
     ARM_2D_UNUSED(bIsNewFrame);
     ARM_2D_UNUSED(ptTile);
@@ -178,7 +178,7 @@ static arm_2d_list_view_item_t *__arm_2d_number_list_iterator(
                                         uint_fast16_t hwID
                                     )
 {
-    arm_2d_number_list_t *ptThis = (arm_2d_number_list_t *)ptListView;
+    number_list_t *ptThis = (number_list_t *)ptListView;
     int32_t nIterationIndex;
     switch (tDirection) {
         default:
@@ -274,13 +274,6 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         uint16_t hwItemCount = 0; 
         uint32_t nTotalLength = 0;
         
-//        ptItem = ARM_2D_INVOKE(fnIterator, 
-//                    ARM_2D_PARAM(
-//                        ptThis, 
-//                        __ARM_2D_LIST_VIEW_GET_CURRENT,
-//                        0));
-//      uint16_t hwIDSave = ptItem->hwID;
-        
         /* update the iStartOffset */
         ptItem = ARM_2D_INVOKE(fnIterator, 
                     ARM_2D_PARAM(
@@ -316,13 +309,6 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         this.tCFG.nTotalLength = nTotalLength;
         this.tCFG.hwItemCount = hwItemCount;
         
-//        /* resume the selection */
-//        ARM_2D_INVOKE(fnIterator, 
-//                    ARM_2D_PARAM(
-//                        ptThis, 
-//                        __ARM_2D_LIST_VIEW_GET_ITEM_AND_MOVE_POINTER,
-//                        hwIDSave));
-        
     } while(0);
 
     if (this.tCFG.nTotalLength) {
@@ -345,11 +331,11 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         
         /* move the nOffset to the top invisible area */
         do {
-            int32_t nStartX = nOffset 
+            int32_t nStartY = nOffset 
                             +   this.CalMidAligned.iStartOffset 
                             +   ptItem->Padding.chPrevious;
                     
-            if (nStartX <= 0) {
+            if (nStartY <= 0) {
                 break;
             } 
             nOffset -= this.tCFG.nTotalLength;
@@ -361,12 +347,12 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         int32_t nTempOffset = nOffset;
         
         while(NULL != ptItem) {
-            int32_t nX1 = nTempOffset 
+            int32_t nY1 = nTempOffset 
                             +   this.CalMidAligned.iStartOffset 
                             +   ptItem->Padding.chPrevious;
-            int32_t nX2 = nX1 + ptItem->tSize.iHeight - 1;
+            int32_t nY2 = nY1 + ptItem->tSize.iHeight - 1;
         
-            if (nX1 >= 0 || nX2 >=0) {
+            if (nY1 >= 0 || nY2 >=0) {
                 /* we find the top item */
                 break;
             }
@@ -454,7 +440,18 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             = this.CalMidAligned.iTopVisiableOffset 
             + this.CalMidAligned.iStartOffset 
             +   ptItem->Padding.chPrevious;
-        
+
+    ARM_PT_YIELD( &this.Runtime.tWorkingArea )
+
+        if (    this.CalMidAligned.hwTopVisibleItemID 
+            ==  this.CalMidAligned.hwBottomVisibleItemID) {
+            /* reach the centre item */
+            break;
+        }
+
+        /* resume local context */
+        ptItem = this.Runtime.tWorkingArea.ptItem;
+
         /* update top visiable item id and offset */
         do {
             this.CalMidAligned.iTopVisiableOffset += ptItem->tSize.iHeight 
@@ -480,13 +477,9 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             this.CalMidAligned.hwTopVisibleItemID = ptItem->hwID;
         } while(0);
         
-    ARM_PT_YIELD( &this.Runtime.tWorkingArea )
 
-        if (    this.CalMidAligned.hwTopVisibleItemID 
-            ==  this.CalMidAligned.hwBottomVisibleItemID) {
-            /* reach the centre item */
-            break;
-        }
+
+
 
         /* move to the bottom item */
         ptItem = ARM_2D_INVOKE(fnIterator, 
@@ -504,6 +497,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             + this.CalMidAligned.iStartOffset 
             +   ptItem->Padding.chPrevious;
 
+    ARM_PT_YIELD( &this.Runtime.tWorkingArea )
 
         /* update bottom visiable item id and offset */
         do {
@@ -533,13 +527,13 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
 
         } while(0);
         
-    ARM_PT_YIELD( &this.Runtime.tWorkingArea )
 
-        if (    this.CalMidAligned.hwTopVisibleItemID 
-            ==  this.CalMidAligned.hwBottomVisibleItemID) {
-            /* reach the centre item */
-            break;
-        }
+
+//        if (    this.CalMidAligned.hwTopVisibleItemID 
+//            ==  this.CalMidAligned.hwBottomVisibleItemID) {
+//            /* reach the centre item */
+//            break;
+//        }
 
     } while(true);
 
@@ -550,13 +544,15 @@ ARM_PT_END()
 
 
 ARM_NONNULL(1,2)
-void number_list_init(  arm_2d_number_list_t *ptThis, 
-                        arm_2d_number_list_cfg_t *ptCFG)
+void number_list_init(  number_list_t *ptThis, 
+                        number_list_cfg_t *ptCFG)
 {
     assert(NULL != ptThis);
     assert(NULL != ptCFG);
     assert(ptCFG->hwCount > 0);
     static const char c_chDefaultFormatString[] = {"%d"};
+
+    int16_t iItemHeight = 24 + ptCFG->chPrviousePadding + ptCFG->chNextPadding;
 
     /* call base class contructor */
     do {
@@ -567,7 +563,7 @@ void number_list_init(  arm_2d_number_list_t *ptThis,
             //.fnOnDrawItemBackground =       &__arm_2d_number_list_draw_list_view_item_background,
             .hwSwitchingPeriodInMs = ptCFG->hwSwitchingPeriodInMs,
             .hwItemCount = ptCFG->hwCount,
-            .nTotalLength = ptCFG->hwCount * 24,
+            //.nTotalLength = ptCFG->hwCount * iItemHeight,
         };
 
         __arm_2d_list_view_init(&this.use_as____arm_2d_list_view_t, &tCFG);
@@ -607,7 +603,7 @@ void number_list_init(  arm_2d_number_list_t *ptThis,
 }
 
 ARM_NONNULL(1,2)
-arm_fsm_rt_t number_list_show(  arm_2d_number_list_t *ptThis,
+arm_fsm_rt_t number_list_show(  number_list_t *ptThis,
                         const arm_2d_tile_t *ptTile, 
                         const arm_2d_region_t *ptRegion, 
                         bool bIsNewFrame)

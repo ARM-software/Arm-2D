@@ -51,7 +51,7 @@ extern "C" {
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 
-typedef struct arm_2d_number_list_cfg_t {
+typedef struct number_list_cfg_t {
     const char *pchFormatString;
     int32_t nStart;
     int16_t iDelta;
@@ -65,35 +65,35 @@ typedef struct arm_2d_number_list_cfg_t {
     int16_t hwSwitchingPeriodInMs;
     bool bIgnoreBackground;
     uint8_t chOpacity;
-} arm_2d_number_list_cfg_t;
+} number_list_cfg_t;
 
 
-typedef struct arm_2d_number_list_t {
+typedef struct number_list_t {
     implement(__arm_2d_list_view_t);
 
 ARM_PRIVATE(
-    arm_2d_number_list_cfg_t tNumListCFG;
+    number_list_cfg_t tNumListCFG;
     arm_2d_list_view_item_t tTempItem;
     
     int32_t nSelection;
     int32_t nIterationIndex;
 )
 
-} arm_2d_number_list_t;
+} number_list_t;
 
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
 extern
 ARM_NONNULL(1,2)
-void number_list_init(  arm_2d_number_list_t *ptThis, 
-                        arm_2d_number_list_cfg_t *ptCFG);
+void number_list_init(  number_list_t *ptThis, 
+                        number_list_cfg_t *ptCFG);
 
 
 
 extern
 ARM_NONNULL(1,2)
-arm_fsm_rt_t number_list_show(  arm_2d_number_list_t *ptThis,
+arm_fsm_rt_t number_list_show(  number_list_t *ptThis,
                                 const arm_2d_tile_t *ptTile, 
                                 const arm_2d_region_t *ptRegion, 
                                 bool bIsNewFrame);

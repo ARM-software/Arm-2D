@@ -251,7 +251,7 @@ ARM_PROTECTED(
             //arm_2d_list_view_item_t        *ptSelected;                       /*!< the current item */
 
             uint16_t                        hwSelection;                        /*!< item selection */
-            int16_t                         iPeriod;                            /*!< time to run target distance */
+            int32_t                         nPeriod;                            /*!< time to run target distance */
             uint64_t                        lTimestamp;                         /*!< timestamp used by animation */
             int32_t                         nOffset;                            /*!< list offset */
             int32_t                         nStartOffset;                       /*!< the start offset */

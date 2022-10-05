@@ -86,10 +86,10 @@ arm_2d_err_t __arm_2d_list_view_init(   __arm_2d_list_view_t *ptThis,
     this.tCFG = *ptCFG;
 
     if (this.tCFG.hwSwitchingPeriodInMs) {
-        this.Runtime.iPeriod 
+        this.Runtime.nPeriod 
             = arm_2d_helper_convert_ms_to_ticks(this.tCFG.hwSwitchingPeriodInMs);
     } else {
-        this.Runtime.iPeriod = arm_2d_helper_convert_ms_to_ticks(500);          /*!< use 500 ms as default */
+        this.Runtime.nPeriod = arm_2d_helper_convert_ms_to_ticks(500);          /*!< use 500 ms as default */
     }
 
     return ARM_2D_ERR_NONE;
@@ -140,9 +140,9 @@ ARM_PT_BEGIN(this.Runtime.chState)
                 /* code for update this.Runtime.iOffset */
                 int32_t nElapsed = (int32_t)(lTimestamp - this.Runtime.lTimestamp);
                 
-                if (nElapsed < this.Runtime.iPeriod) {
+                if (nElapsed < this.Runtime.nPeriod) {
                     int32_t iDelta = this.Runtime.nTargetOffset - this.Runtime.nStartOffset;
-                    iDelta = nElapsed * iDelta / this.Runtime.iPeriod;
+                    iDelta = nElapsed * iDelta / this.Runtime.nPeriod;
                     
                     this.Runtime.nOffset = this.Runtime.nStartOffset + iDelta;
                 } else {
