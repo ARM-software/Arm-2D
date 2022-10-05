@@ -719,18 +719,24 @@ static const uint8_t Font_16x24_h[(144-32)*48] = {
 
 extern arm_2d_font_t ARM_2D_FONT_6x8;
 arm_2d_font_t ARM_2D_FONT_6x8 = {
-  6,                                    ///< Character width
-  8,                                    ///< Character height
-  32,                                   ///< Character offset
-  112,                                  ///< Character count
-  Font_6x8_h                            ///< Characters bitmaps
+    .tSize = {
+      6,                                //!< Character width
+      8,                                //!< Character height
+    },
+    32,                                 //!< Character offset
+    112,                                //!< Character count
+    8,                                  //!< Character byte stride
+    Font_6x8_h                          //!< Characters bitmaps
 };
 
 extern arm_2d_font_t ARM_2D_FONT_16x24;
 arm_2d_font_t ARM_2D_FONT_16x24 = {
-  16,                                   ///< Character width
-  24,                                   ///< Character height
-  32,                                   ///< Character offset
-  112,                                  ///< Character count
-  Font_16x24_h                          ///< Characters bitmaps
+    .tSize = {
+        16,                             //!< Character width
+        24,                             //!< Character height
+    },
+    32,                                 //!< Character offset
+    112,                                //!< Character count
+    48,                                 //!< Character byte stride
+    Font_16x24_h                        //!< Characters bitmaps
 };

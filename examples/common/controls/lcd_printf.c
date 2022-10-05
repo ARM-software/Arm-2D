@@ -166,11 +166,11 @@ void arm_lcd_text_location(uint8_t chY, uint8_t chX)
     s_tLCDTextControl.tTextLocation.chX = chX;
     s_tLCDTextControl.tTextLocation.chY = chY;
     
-    if (    s_tLCDTextControl.tTextLocation.chX *  s_tLCDTextControl.ptFont->iWidth
+    if (    s_tLCDTextControl.tTextLocation.chX *  s_tLCDTextControl.ptFont->tSize.iWidth
         >=  s_tLCDTextControl.tRegion.tSize.iWidth ) {
         s_tLCDTextControl.tTextLocation.chX = 0;
         s_tLCDTextControl.tTextLocation.chY++;
-        if (    s_tLCDTextControl.tTextLocation.chY * s_tLCDTextControl.ptFont->iHeight 
+        if (    s_tLCDTextControl.tTextLocation.chY * s_tLCDTextControl.ptFont->tSize.iHeight 
             >= s_tLCDTextControl.tRegion.tSize.iHeight) {
             s_tLCDTextControl.tTextLocation.chY = 0;
         }
@@ -191,8 +191,8 @@ arm_2d_err_t arm_lcd_text_set_font(arm_2d_font_t *ptFont)
         if (NULL == ptFont->chBitmap) {
             break;
         }
-        if (    (0 == ptFont->iHeight) 
-            ||  (0 == ptFont->iWidth)
+        if (    (0 == ptFont->tSize.iHeight) 
+            ||  (0 == ptFont->tSize.iWidth)
             ||  (0 == ptFont->nCount)) {
             break;
         }
@@ -200,14 +200,12 @@ arm_2d_err_t arm_lcd_text_set_font(arm_2d_font_t *ptFont)
         s_tLCDTextControl.ptFont = ptFont;
         
         /* update tileFont */
-        s_tLCDTextControl.tileFont.tRegion.tSize.iWidth = ptFont->iWidth;
-        s_tLCDTextControl.tileFont.tRegion.tSize.iHeight = ptFont->iHeight * ptFont->nCount;
+        s_tLCDTextControl.tileFont.tRegion.tSize.iWidth = ptFont->tSize.iWidth;
+        s_tLCDTextControl.tileFont.tRegion.tSize.iHeight = ptFont->tSize.iHeight * ptFont->nCount;
         s_tLCDTextControl.tileFont.pchBuffer = (uint8_t *)ptFont->chBitmap;
         
         /* update tileChar */
-        s_tLCDTextControl.tileChar.tRegion.tSize.iWidth = ptFont->iWidth;
-        s_tLCDTextControl.tileChar.tRegion.tSize.iHeight = ptFont->iHeight;
-
+        s_tLCDTextControl.tileChar.tRegion.tSize = ptFont->tSize;
 
         /* reset draw pointer */
         arm_lcd_text_location(0,0);
@@ -221,7 +219,7 @@ arm_2d_err_t arm_lcd_text_set_font(arm_2d_font_t *ptFont)
 void lcd_draw_char(int16_t iX, int16_t iY, char chChar)
 {
     s_tLCDTextControl.tileChar.tRegion.tLocation.iY = 
-        (chChar - (int16_t)s_tLCDTextControl.ptFont->nOffset) * 8;
+        (chChar - (int16_t)s_tLCDTextControl.ptFont->nOffset) * s_tLCDTextControl.ptFont->tSize.iHeight;
     
     arm_2d_region_t tDrawRegion = {
         .tLocation = {.iX = iX, .iY = iY},
@@ -249,7 +247,7 @@ void arm_lcd_puts(const char *str)
             s_tLCDTextControl.tTextLocation.chX += 8;
             s_tLCDTextControl.tTextLocation.chX &= ~(_BV(3)-1);
 
-            if (    s_tLCDTextControl.tTextLocation.chX * s_tLCDTextControl.ptFont->iWidth 
+            if (    s_tLCDTextControl.tTextLocation.chX * s_tLCDTextControl.ptFont->tSize.iWidth 
                 >=  s_tLCDTextControl.tRegion.tSize.iWidth ) {
                 s_tLCDTextControl.tTextLocation.chX = 0;
                 s_tLCDTextControl.tTextLocation.chY++;
@@ -260,19 +258,19 @@ void arm_lcd_puts(const char *str)
             }
         } else {
         
-            int16_t iX = s_tLCDTextControl.tTextLocation.chX * s_tLCDTextControl.ptFont->iWidth;
-            int16_t iY = s_tLCDTextControl.tTextLocation.chY * s_tLCDTextControl.ptFont->iHeight;
+            int16_t iX = s_tLCDTextControl.tTextLocation.chX * s_tLCDTextControl.ptFont->tSize.iWidth;
+            int16_t iY = s_tLCDTextControl.tTextLocation.chY * s_tLCDTextControl.ptFont->tSize.iHeight;
         
             lcd_draw_char(  s_tLCDTextControl.tRegion.tLocation.iX + iX, 
                             s_tLCDTextControl.tRegion.tLocation.iY + iY, 
                             *str);
                             
             s_tLCDTextControl.tTextLocation.chX++;
-            if (    s_tLCDTextControl.tTextLocation.chX * s_tLCDTextControl.ptFont->iWidth 
+            if (    s_tLCDTextControl.tTextLocation.chX * s_tLCDTextControl.ptFont->tSize.iWidth 
                 >=  s_tLCDTextControl.tRegion.tSize.iWidth ) {
                 s_tLCDTextControl.tTextLocation.chX = 0;
                 s_tLCDTextControl.tTextLocation.chY++;
-                if (    s_tLCDTextControl.tTextLocation.chY * s_tLCDTextControl.ptFont->iHeight 
+                if (    s_tLCDTextControl.tTextLocation.chY * s_tLCDTextControl.ptFont->tSize.iHeight 
                     >= s_tLCDTextControl.tRegion.tSize.iHeight) {
                     s_tLCDTextControl.tTextLocation.chY = 0;
                 }
