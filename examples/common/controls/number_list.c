@@ -228,12 +228,6 @@ static arm_2d_list_view_item_t *__arm_2d_number_list_iterator(
                 .Runtime.tileList.tRegion.tSize.iWidth;
     }
 
-    
-//    if (nIterationIndex < 0) {
-//        nIterationIndex += this.tNumListCFG.hwCount;
-//    } else if (nIterationIndex >= this.tNumListCFG.hwCount) {
-//        nIterationIndex -= this.tNumListCFG.hwCount;
-//    }
     nIterationIndex %= this.tNumListCFG.hwCount;
 
     /* update item id : pretend that this is a different list view item */
@@ -566,6 +560,17 @@ void number_list_init(  number_list_t *ptThis,
             .nTotalLength = ptCFG->hwCount * iItemHeight,
             .tListSize = ptCFG->tListSize,
         };
+
+        /* you can override the default implementations */
+        if (NULL != ptCFG->fnOnDrawListViewBackground) {
+            tCFG.fnOnDrawListViewBackground = ptCFG->fnOnDrawListViewBackground;
+        }
+        if (NULL != ptCFG->fnOnDrawListViewCover) {
+            tCFG.fnOnDrawListViewCover = ptCFG->fnOnDrawListViewCover;
+        }
+        if (NULL != ptCFG->fnOnDrawItemBackground) {
+            tCFG.fnOnDrawItemBackground = ptCFG->fnOnDrawItemBackground;
+        }
 
         __arm_2d_list_view_init(&this.use_as____arm_2d_list_view_t, &tCFG);
     } while(0);

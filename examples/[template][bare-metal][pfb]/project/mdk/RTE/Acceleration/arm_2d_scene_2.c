@@ -82,6 +82,8 @@ extern const arm_2d_tile_t c_tileCMSISLogo;
 extern const arm_2d_tile_t c_tileCMSISLogoMask;
 extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
+
+extern const arm_2d_tile_t c_tileListCoverMask;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
@@ -170,7 +172,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
     
     /* following code is just a demo, you can remove them */
     
-    arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
+    arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
 
 
     while(arm_fsm_rt_cpl != number_list_show(   &s_tNumberList, 
@@ -179,9 +181,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
                                                 bIsNewFrame));
 
 
-    arm_2d_align_centre(ptTile->tRegion, 42, 26) {
-        arm_2d_draw_box(ptTile, &__centre_region, 2, GLCD_COLOR_GREEN, 255);
-    }
+//    arm_2d_align_centre(ptTile->tRegion, 42, 26) {
+//        arm_2d_draw_box(ptTile, &__centre_region, 2, GLCD_COLOR_GREEN, 255);
+//    }
 
     /* draw text at the top-left corner */
     arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
@@ -193,6 +195,25 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
     /*-----------------------draw the foreground end  -----------------------*/
     arm_2d_op_wait_async(NULL);
 
+    return arm_fsm_rt_cpl;
+}
+
+static 
+IMPL_PFB_ON_DRAW(__arm_2d_number_list_draw_cover)
+{
+    ARM_2D_UNUSED(bIsNewFrame);
+    
+    number_list_t *ptThis = (number_list_t *)pTarget;
+
+    arm_2d_align_centre(ptTile->tRegion, c_tileListCoverMask.tRegion.tSize) {
+        arm_2d_fill_colour_with_mask(   ptTile, 
+                                        &__centre_region, 
+                                        &c_tileListCoverMask, 
+                                        (__arm_2d_color_t){GLCD_COLOR_BLACK});
+    }
+
+    arm_2d_op_wait_async(NULL);
+    
     return arm_fsm_rt_cpl;
 }
 
@@ -210,13 +231,16 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
             .nStart = 0,
             .iDelta = 1,
             .tFontColour = GLCD_COLOR_WHITE,
+            .tBackgroundColour = GLCD_COLOR_BLACK,
             .chNextPadding = 3,
             .chPrviousePadding = 3,
             .tListSize = {
                 .iHeight = 80,
-                .iWidth = 40,
+                .iWidth = 28,
             },
-            .tBackgroundColour = GLCD_COLOR_BLACK,
+            
+            /* draw list cover */
+            .fnOnDrawListViewCover = &__arm_2d_number_list_draw_cover,
         };
         
         number_list_init(&s_tNumberList, &tCFG);

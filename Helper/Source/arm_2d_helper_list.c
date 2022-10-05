@@ -113,8 +113,10 @@ ARM_PT_BEGIN(this.Runtime.chState)
 
     /* runtime initialize */
     do {
+        arm_2d_region_t tListRegion = {0};
         if (NULL == ptRegion) {
-            ptRegion = &ptTarget->tRegion;
+            tListRegion.tSize = ptTarget->tRegion.tSize;
+            ptRegion = &tListRegion;
         }
         
         /* validation for this.tCFG.tListSize */
@@ -206,7 +208,8 @@ ARM_PT_BEGIN(this.Runtime.chState)
                             this.tCFG.fnIterator,
                             this.Runtime.nOffset))) {
             /* finish: use the unified exist point */
-            goto label_end_of_list_view_task;
+            //goto label_end_of_list_view_task;
+            break;
         }
         arm_2d_list_view_item_t *ptItem = this.Runtime.tWorkingArea.ptItem;
         assert(NULL != ptItem);

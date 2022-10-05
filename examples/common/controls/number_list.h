@@ -66,6 +66,11 @@ typedef struct number_list_cfg_t {
     int16_t hwSwitchingPeriodInMs;
     bool bIgnoreBackground;
     uint8_t chOpacity;
+
+    arm_2d_draw_list_view_item_handler_t    *fnOnDrawItemBackground;            /*!< the On-Draw-List-View-Item-Background event handler */
+    arm_2d_helper_draw_handler_t            *fnOnDrawListViewBackground;        /*!< the On-Draw-List-View-Background event handler */
+    arm_2d_helper_draw_handler_t            *fnOnDrawListViewCover;             /*!< the On-Draw-List-View-Cover event handler */
+
 } number_list_cfg_t;
 
 
