@@ -168,7 +168,7 @@ ARM_PT_BEGIN(this.Runtime.chState)
                                     bIsNewFrame));
 
         if (arm_fsm_rt_on_going == tResult) {
-    ARM_PT_GOTO_PREV_ENTRY()
+    ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_on_going)
         } else if (tResult < 0) {
             // error was reported
     ARM_PT_RETURN(tResult)
@@ -176,7 +176,7 @@ ARM_PT_BEGIN(this.Runtime.chState)
     ARM_PT_REPORT_STATUS(tResult)
         } 
 
-    ARM_PT_YIELD()
+    ARM_PT_YIELD(arm_fsm_rt_on_going)
     } while(0);
 
 
@@ -238,7 +238,7 @@ ARM_PT_BEGIN(this.Runtime.chState)
                                         &this.Runtime.tWorkingArea.tParam));
 
             if (arm_fsm_rt_on_going == tResult) {
-        ARM_PT_GOTO_PREV_ENTRY()
+        ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_on_going)
             } else if (tResult < 0) {
                 // error was reported
         ARM_PT_RETURN(tResult)
@@ -246,7 +246,7 @@ ARM_PT_BEGIN(this.Runtime.chState)
         ARM_PT_REPORT_STATUS(tResult)
             } 
 
-        ARM_PT_YIELD()
+        ARM_PT_YIELD(arm_fsm_rt_on_going)
         } while(0);
 
         /* draw list view item */
@@ -264,14 +264,14 @@ ARM_PT_BEGIN(this.Runtime.chState)
                                         ));
 
             if (arm_fsm_rt_on_going == tResult) {
-        ARM_PT_GOTO_PREV_ENTRY()
+        ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_on_going)
             } else if (tResult < 0) {
                 // error was reported
         ARM_PT_RETURN(tResult)
             } else if (arm_fsm_rt_cpl != tResult) {
         ARM_PT_REPORT_STATUS(tResult)
             } 
-        ARM_PT_YIELD()
+        ARM_PT_YIELD(arm_fsm_rt_on_going)
         } while(0);
 
     } while(true);
@@ -287,7 +287,7 @@ ARM_PT_BEGIN(this.Runtime.chState)
                                     bIsNewFrame));
 
         if (arm_fsm_rt_on_going == tResult) {
-    ARM_PT_GOTO_PREV_ENTRY()
+    ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_on_going)
         } else if (tResult < 0) {
             // error was reported
     ARM_PT_RETURN(tResult)
@@ -295,7 +295,7 @@ ARM_PT_BEGIN(this.Runtime.chState)
     ARM_PT_REPORT_STATUS(tResult)
         } 
 
-    ARM_PT_YIELD()
+    ARM_PT_YIELD(arm_fsm_rt_on_going)
     } while(0);
 
 

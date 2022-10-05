@@ -880,24 +880,24 @@ Author: Adam Dunkels
             __VA_ARGS__                                                         \
             case (__COUNTER__ - count_offset) >> 1: (void)(*ptPTState);
             
-#define ARM_PT_YIELD()                                                          \
-            ARM_PT_ENTRY(return arm_fsm_rt_on_going;)
+#define ARM_PT_YIELD(...)                                                       \
+            ARM_PT_ENTRY(return __VA_ARGS__;)
             
 #define ARM_PT_END()                                                            \
             (*ptPTState) = 0;                                                   \
             break;}
 
-#define ARM_PT_GOTO_PREV_ENTRY()    return arm_fsm_rt_on_going;
+#define ARM_PT_GOTO_PREV_ENTRY(...)    return __VA_ARGS__;
 
             
-#define ARM_PT_REPORT_STATUS(__VAL)                                             \
+#define ARM_PT_REPORT_STATUS(...)                                               \
             ARM_PT_ENTRY(                                                       \
-                return (arm_fsm_rt_t)(__VAL);                                   \
+                return __VA_ARGS__;                                             \
             )
             
-#define ARM_PT_RETURN(__VAL)                                                    \
+#define ARM_PT_RETURN(...)                                                      \
             (*ptPTState) = 0;                                                   \
-            return (arm_fsm_rt_t)(__VAL);
+            return __VA_ARGS__;
 
 /*----------------------------------------------------------------------------*
  * Definition Template                                                        *

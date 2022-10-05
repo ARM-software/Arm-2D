@@ -46,6 +46,9 @@
 #   pragma clang diagnostic ignored "-Wunused-const-variable"
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
 #   pragma clang diagnostic ignored "-Wmissing-variable-declarations"
+#   pragma clang diagnostic ignored "-Wformat-nonliteral"
+#   pragma clang diagnostic ignored "-Wsign-compare"
+#   pragma clang diagnostic ignored "-Wcovered-switch-default"
 #endif
 
 /*============================ MACROS ========================================*/
@@ -131,7 +134,7 @@ int __printf(const arm_2d_region_t *ptRegion, const char *format, ...)
     real_size = MIN(sizeof(s_chBuffer)-1, real_size);
     s_chBuffer[real_size] = '\0';
 
-    arm_2d_align_centre( *ptRegion, real_size * 16, 24) {
+    arm_2d_align_centre( *ptRegion, (int16_t)real_size * 16, 24) {
         arm_lcd_text_set_draw_region(&__centre_region);
         arm_lcd_puts(s_chBuffer);
         arm_lcd_text_set_draw_region(NULL);
@@ -200,6 +203,7 @@ static arm_2d_list_view_item_t *__arm_2d_number_list_iterator(
         case __ARM_2D_LIST_VIEW_GET_FIRST_ITEM:
             this.nIterationIndex = 0;
             nIterationIndex = this.nIterationIndex;
+            break;
         case __ARM_2D_LIST_VIEW_GET_CURRENT:
             nIterationIndex = this.nIterationIndex;
             break;
@@ -223,7 +227,7 @@ static arm_2d_list_view_item_t *__arm_2d_number_list_iterator(
     }
 
     /* update item id : pretend that this is a different list view item */
-    this.tTempItem.hwID = nIterationIndex;
+    this.tTempItem.hwID = (uint16_t)nIterationIndex;
 
     return &this.tTempItem;
 }
@@ -287,6 +291,10 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
                         0));
         }
         
+        if (0 == hwItemCount) {
+            return NULL;
+        }
+        
         this.tCFG.nTotalLength = nTotalLength;
         this.tCFG.hwItemCount = hwItemCount;
         
@@ -306,8 +314,22 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
     /* get the inital offset */
     this.CalMidAligned.nOffset = nOffset;
 
-    
-
+    /* find the first visible item */
+    do {
+        /* move to the first item */
+        ptItem = ARM_2D_INVOKE(fnIterator, 
+                    ARM_2D_PARAM(
+                        ptThis, 
+                        __ARM_2D_LIST_VIEW_GET_FIRST_ITEM,
+                        0));
+        if (NULL == ptItem) {
+            /* no valid item, return NULL */
+            ARM_PT_RETURN(NULL)
+        }
+        
+        
+        
+    } while(0);
 ARM_PT_END()
 
     return NULL;

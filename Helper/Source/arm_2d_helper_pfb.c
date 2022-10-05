@@ -729,14 +729,14 @@ ARM_PT_BEGIN(this.Adapter.chPT)
         }
 
         if (arm_fsm_rt_on_going == tResult) {
-    ARM_PT_GOTO_PREV_ENTRY()
+    ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_on_going)
         } else if (tResult < 0) {
             // error was reported
     ARM_PT_RETURN(tResult)
         } else if (arm_fsm_rt_wait_for_obj == tResult) {
     ARM_PT_REPORT_STATUS(tResult)
         } else { 
-    ARM_PT_YIELD()
+    ARM_PT_YIELD(arm_fsm_rt_on_going)
         }
 
         this.Adapter.bIsNewFrame = false;
