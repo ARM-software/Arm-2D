@@ -103,7 +103,7 @@ IMPL_PFB_ON_DRAW(__arm_2d_number_list_draw_background)
 //                                      arm_2d_list_item_t *ptThis,
 //                                      const arm_2d_tile_t *ptTile,
 //                                      bool bIsNewFrame,
-//                                      arm_2d_list_core_item_param_t *ptParam)
+//                                      arm_2d_list_item_param_t *ptParam)
 //{
 //    ARM_2D_UNUSED(ptThis);
 //    ARM_2D_UNUSED(bIsNewFrame);
@@ -150,7 +150,7 @@ arm_fsm_rt_t __arm_2d_number_list_draw_list_core_item(
                                       arm_2d_list_item_t *ptItem,
                                       const arm_2d_tile_t *ptTile,
                                       bool bIsNewFrame,
-                                      arm_2d_list_core_item_param_t *ptParam)
+                                      arm_2d_list_item_param_t *ptParam)
 {
     number_list_t *ptThis = (number_list_t *)ptItem->ptListView;
     ARM_2D_UNUSED(ptItem);
@@ -184,35 +184,35 @@ static arm_2d_list_item_t *__arm_2d_number_list_iterator(
     int32_t nIterationIndex;
     switch (tDirection) {
         default:
-        case __ARM_2D_LIST_VIEW_GET_ITEM_WITH_ID_WITHOUT_MOVE_POINTER:
+        case __ARM_2D_LIST_GET_ITEM_WITH_ID_WITHOUT_MOVE_POINTER:
             nIterationIndex = hwID;
             break;
-        case __ARM_2D_LIST_VIEW_GET_ITEM_AND_MOVE_POINTER:
+        case __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER:
             this.nIterationIndex = hwID;
             nIterationIndex = this.nIterationIndex;
             break;
-        case __ARM_2D_LIST_VIEW_GET_PREVIOUS:
+        case __ARM_2D_LIST_GET_PREVIOUS:
             this.nIterationIndex--;
             nIterationIndex = this.nIterationIndex;
             break;
-        case __ARM_2D_LIST_VIEW_GET_NEXT:
+        case __ARM_2D_LIST_GET_NEXT:
             this.nIterationIndex++;
             nIterationIndex = this.nIterationIndex;
             break;
-        case __ARM_2D_LIST_VIEW_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER:
+        case __ARM_2D_LIST_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER:
             nIterationIndex = 0;
             break;
-        case __ARM_2D_LIST_VIEW_GET_FIRST_ITEM:
+        case __ARM_2D_LIST_GET_FIRST_ITEM:
             this.nIterationIndex = 0;
             nIterationIndex = this.nIterationIndex;
             break;
-        case __ARM_2D_LIST_VIEW_GET_CURRENT:
+        case __ARM_2D_LIST_GET_CURRENT:
             nIterationIndex = this.nIterationIndex;
             break;
-        case __ARM_2D_LIST_VIEW_GET_LAST_ITEM_WITHOUT_MOVE_POINTER:
+        case __ARM_2D_LIST_GET_LAST_ITEM_WITHOUT_MOVE_POINTER:
             nIterationIndex = this.tNumListCFG.hwCount - 1;
             break;
-        case __ARM_2D_LIST_VIEW_GET_LAST_ITEM:
+        case __ARM_2D_LIST_GET_LAST_ITEM:
             this.nIterationIndex = this.tNumListCFG.hwCount - 1;
             nIterationIndex = this.nIterationIndex;
             break;
@@ -230,7 +230,7 @@ static arm_2d_list_item_t *__arm_2d_number_list_iterator(
 
     nIterationIndex %= this.tNumListCFG.hwCount;
 
-    /* update item id : pretend that this is a different list view item */
+    /* update item id : pretend that this is a different list core item */
     this.tTempItem.hwID = (uint16_t)nIterationIndex;
 
     return &this.tTempItem;
@@ -255,8 +255,8 @@ void number_list_init(  number_list_t *ptThis,
             
             /* vertical list, centre aligned style */
             .fnCalculator =                 &ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED_VERTICAL,
-            .fnOnDrawListViewBackground =   &__arm_2d_number_list_draw_background,
-            //.fnOnDrawItemBackground =       &__arm_2d_number_list_draw_list_core_item_background,
+            .fnOnDrawListBackground =   &__arm_2d_number_list_draw_background,
+            //.fnOnDrawListItemBackground =       &__arm_2d_number_list_draw_list_core_item_background,
             .hwSwitchingPeriodInMs = ptCFG->hwSwitchingPeriodInMs,
             .hwItemCount = ptCFG->hwCount,
             .nTotalLength = ptCFG->hwCount * iItemHeight,
@@ -264,14 +264,14 @@ void number_list_init(  number_list_t *ptThis,
         };
 
         /* you can override the default implementations */
-        if (NULL != ptCFG->fnOnDrawListViewBackground) {
-            tCFG.fnOnDrawListViewBackground = ptCFG->fnOnDrawListViewBackground;
+        if (NULL != ptCFG->fnOnDrawListBackground) {
+            tCFG.fnOnDrawListBackground = ptCFG->fnOnDrawListBackground;
         }
-        if (NULL != ptCFG->fnOnDrawListViewCover) {
-            tCFG.fnOnDrawListViewCover = ptCFG->fnOnDrawListViewCover;
+        if (NULL != ptCFG->fnOnDrawListCover) {
+            tCFG.fnOnDrawListCover = ptCFG->fnOnDrawListCover;
         }
-        if (NULL != ptCFG->fnOnDrawItemBackground) {
-            tCFG.fnOnDrawItemBackground = ptCFG->fnOnDrawItemBackground;
+        if (NULL != ptCFG->fnOnDrawListItemBackground) {
+            tCFG.fnOnDrawListItemBackground = ptCFG->fnOnDrawListItemBackground;
         }
 
         __arm_2d_list_core_init(&this.use_as____arm_2d_list_core_t, &tCFG);

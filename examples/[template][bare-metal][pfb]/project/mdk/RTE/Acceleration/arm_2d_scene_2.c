@@ -240,7 +240,7 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
             },
             
             /* draw list cover */
-            .fnOnDrawListViewCover = &__arm_2d_number_list_draw_cover,
+            .fnOnDrawListCover = &__arm_2d_number_list_draw_cover,
         };
         
         number_list_init(&s_tNumberList, &tCFG);

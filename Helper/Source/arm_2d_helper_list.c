@@ -19,7 +19,7 @@
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
  * Title:        #include "arm_2d_helper_list.h"
- * Description:  Public header file for list view related services
+ * Description:  Public header file for list core related services
  *
  * $Date:        05. Oct 2022
  * $Revision:    V.0.7.0
@@ -179,7 +179,7 @@ ARM_PT_BEGIN(this.Runtime.chState)
     do {
     ARM_PT_ENTRY()
 
-        tResult = ARM_2D_INVOKE(this.tCFG.fnOnDrawListViewBackground,
+        tResult = ARM_2D_INVOKE(this.tCFG.fnOnDrawListBackground,
                                 ARM_2D_PARAM(   
                                     ptThis, 
                                     &this.Runtime.tileList, 
@@ -244,12 +244,12 @@ ARM_PT_BEGIN(this.Runtime.chState)
             continue;
         }
 
-        /* draw list view item background */
+        /* draw list core item background */
         do {
         ARM_PT_ENTRY()
             ptItem = this.Runtime.tWorkingArea.ptItem;
             
-            tResult = ARM_2D_INVOKE(this.tCFG.fnOnDrawItemBackground,
+            tResult = ARM_2D_INVOKE(this.tCFG.fnOnDrawListItemBackground,
                                     ARM_2D_PARAM(   
                                         ptItem, 
                                         &this.Runtime.tileItem, 
@@ -268,7 +268,7 @@ ARM_PT_BEGIN(this.Runtime.chState)
         ARM_PT_YIELD(arm_fsm_rt_on_going)
         } while(0);
 
-        /* draw list view item */
+        /* draw list item */
         do {
         ARM_PT_ENTRY()
             ptItem = this.Runtime.tWorkingArea.ptItem;
@@ -295,11 +295,11 @@ ARM_PT_BEGIN(this.Runtime.chState)
 
     } while(true);
 
-    /* draw list view cover */
+    /* draw list cover */
     do {
     ARM_PT_ENTRY()
 
-        tResult = ARM_2D_INVOKE(this.tCFG.fnOnDrawListViewCover,
+        tResult = ARM_2D_INVOKE(this.tCFG.fnOnDrawListCover,
                                 ARM_2D_PARAM(   
                                     ptThis, 
                                     &this.Runtime.tileList, 
@@ -327,10 +327,10 @@ ARM_PT_END()
 /*----------------------------------------------------------------------------*
  * Region Calculator                                                          *
  *----------------------------------------------------------------------------*/
-__arm_2d_list_core_work_area_t *
+__arm_2d_list_work_area_t *
 ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED_VERTICAL (
                                 __arm_2d_list_core_t *ptThis,
-                                __arm_2d_list_core_item_iterator *fnIterator,
+                                __arm_2d_list_item_iterator *fnIterator,
                                 int32_t nOffset
                             )
 {
@@ -347,7 +347,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
          ptItem = ARM_2D_INVOKE(fnIterator, 
                     ARM_2D_PARAM(
                         ptThis, 
-                        __ARM_2D_LIST_VIEW_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER,
+                        __ARM_2D_LIST_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER,
                         0));
         this.CalMidAligned.iStartOffset
             = (     this.Runtime.tileList.tRegion.tSize.iHeight 
@@ -367,7 +367,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         ptItem = ARM_2D_INVOKE(fnIterator, 
                     ARM_2D_PARAM(
                         ptThis, 
-                        __ARM_2D_LIST_VIEW_GET_FIRST_ITEM,
+                        __ARM_2D_LIST_GET_FIRST_ITEM,
                         0));
         if (NULL == ptItem) {
             /* no valid item, return NULL */
@@ -385,7 +385,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             ptItem = ARM_2D_INVOKE(fnIterator, 
                     ARM_2D_PARAM(
                         ptThis, 
-                        __ARM_2D_LIST_VIEW_GET_NEXT,
+                        __ARM_2D_LIST_GET_NEXT,
                         0));
             if (NULL == ptItem) {
                 break;
@@ -411,7 +411,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         ptItem = ARM_2D_INVOKE(fnIterator, 
                     ARM_2D_PARAM(
                         ptThis, 
-                        __ARM_2D_LIST_VIEW_GET_FIRST_ITEM,
+                        __ARM_2D_LIST_GET_FIRST_ITEM,
                         0));
         if (NULL == ptItem) {
             /* no valid item, return NULL */
@@ -455,7 +455,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             ptItem = ARM_2D_INVOKE(fnIterator, 
                         ARM_2D_PARAM(
                             ptThis, 
-                            __ARM_2D_LIST_VIEW_GET_NEXT,
+                            __ARM_2D_LIST_GET_NEXT,
                             0));
 
             /* just in case the iterator won't support ring mode */
@@ -463,7 +463,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
                 ptItem = ARM_2D_INVOKE(fnIterator, 
                     ARM_2D_PARAM(
                         ptThis, 
-                        __ARM_2D_LIST_VIEW_GET_FIRST_ITEM,
+                        __ARM_2D_LIST_GET_FIRST_ITEM,
                         0));
             }
         }
@@ -486,7 +486,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             ptItem = ARM_2D_INVOKE(fnIterator, 
                         ARM_2D_PARAM(
                             ptThis, 
-                            __ARM_2D_LIST_VIEW_GET_NEXT,
+                            __ARM_2D_LIST_GET_NEXT,
                             0));
 
             /* just in case the iterator won't support ring mode */
@@ -494,7 +494,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
                 ptItem = ARM_2D_INVOKE(fnIterator, 
                     ARM_2D_PARAM(
                         ptThis, 
-                        __ARM_2D_LIST_VIEW_GET_FIRST_ITEM,
+                        __ARM_2D_LIST_GET_FIRST_ITEM,
                         0));
                 /* this should not happen as we checked before */
                 assert(NULL != ptItem);
@@ -518,7 +518,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         ptItem = ARM_2D_INVOKE(fnIterator, 
                     ARM_2D_PARAM(
                         ptThis, 
-                        __ARM_2D_LIST_VIEW_GET_ITEM_AND_MOVE_POINTER,
+                        __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
                         this.CalMidAligned.hwTopVisibleItemID));
         assert(NULL != ptItem);
         
@@ -551,14 +551,14 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             ptItem = ARM_2D_INVOKE(fnIterator, 
                         ARM_2D_PARAM(
                             ptThis, 
-                            __ARM_2D_LIST_VIEW_GET_NEXT,
+                            __ARM_2D_LIST_GET_NEXT,
                             0));
             /* just in case the iterator won't support ring mode */
             if (NULL == ptItem) {
                 ptItem = ARM_2D_INVOKE(fnIterator, 
                     ARM_2D_PARAM(
                         ptThis, 
-                        __ARM_2D_LIST_VIEW_GET_FIRST_ITEM,
+                        __ARM_2D_LIST_GET_FIRST_ITEM,
                         0));
                 /* this should not happen as we checked before */
                 assert(NULL != ptItem);
@@ -570,7 +570,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         ptItem = ARM_2D_INVOKE(fnIterator, 
                     ARM_2D_PARAM(
                         ptThis, 
-                        __ARM_2D_LIST_VIEW_GET_ITEM_AND_MOVE_POINTER,
+                        __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
                         this.CalMidAligned.hwBottomVisibleItemID));
         assert(NULL != ptItem);
         
@@ -590,14 +590,14 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             ptItem = ARM_2D_INVOKE(fnIterator, 
                         ARM_2D_PARAM(
                             ptThis, 
-                            __ARM_2D_LIST_VIEW_GET_PREVIOUS,
+                            __ARM_2D_LIST_GET_PREVIOUS,
                             0));
             /* just in case the iterator won't support ring mode */
             if (NULL == ptItem) {
                 ptItem = ARM_2D_INVOKE(fnIterator, 
                     ARM_2D_PARAM(
                         ptThis, 
-                        __ARM_2D_LIST_VIEW_GET_LAST_ITEM,
+                        __ARM_2D_LIST_GET_LAST_ITEM,
                         0));
                 /* this should not happen as we checked before */
                 assert(NULL != ptItem);
