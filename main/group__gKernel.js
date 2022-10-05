@@ -222,6 +222,7 @@ var group__gKernel =
     [ "ARM_TO_STRING", "group__gKernel.html#gae1b849eccd10a282fdee383c4414892c", null ],
     [ "__ARM_VA_NUM_ARGS_IMPL", "group__gKernel.html#gac759dfb1a0e6aec6503e8de16f0651f8", null ],
     [ "__ARM_VA_NUM_ARGS", "group__gKernel.html#gaca9883ddfc8f4f3382d9d0e4a93a5890", null ],
+    [ "ARM_2D_PARAM", "group__gKernel.html#ga95be7513dcbea973ba6ff0e412dd273c", null ],
     [ "ARM_2D_INVOKE", "group__gKernel.html#ga65d234ce6028b539a276e06ac62aa2bc", null ],
     [ "__ARM_CONNECT2", "group__gKernel.html#ga231c5e93dfebab0cd794f41a500de60b", null ],
     [ "__ARM_CONNECT2_ALT", "group__gKernel.html#gab8ba27816dfb41e9db5f6f85e7faebe7", null ],
