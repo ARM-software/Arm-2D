@@ -173,6 +173,8 @@ typedef enum {
     __ARM_2D_LIST_VIEW_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER,
     __ARM_2D_LIST_VIEW_GET_FIRST_ITEM,
     __ARM_2D_LIST_VIEW_GET_CURRENT,
+    __ARM_2D_LIST_VIEW_GET_LAST_ITEM_WITHOUT_MOVE_POINTER,
+    __ARM_2D_LIST_VIEW_GET_LAST_ITEM,
 } arm_2d_list_iterator_dir_t;
 
 /*!
@@ -241,13 +243,13 @@ ARM_PROTECTED(
         ARM_PROTECTED(
             arm_2d_tile_t                   tileList;                           /*!< the target tile for the list */
             arm_2d_region_t                 tDrawRegion;                        /*!< the current draw region */
+            __arm_2d_list_view_work_area_t  tWorkingArea;                       /*!< the working area */
         )
 
         ARM_PRIVATE(
             arm_2d_tile_t                   tileItem;                           /*!< the target tile for list items */
             //arm_2d_list_view_item_t        *ptSelected;                       /*!< the current item */
-            __arm_2d_list_view_work_area_t  tWorkingArea;                       /*!< the working area */
-            
+
             uint16_t                        hwSelection;                        /*!< item selection */
             int16_t                         iPeriod;                            /*!< time to run target distance */
             uint64_t                        lTimestamp;                         /*!< timestamp used by animation */
@@ -266,6 +268,11 @@ ARM_PROTECTED(
             bool bListHeightChanged;
             int16_t iStartOffset;
             int32_t nOffset;
+            int16_t iTopVisiableOffset;
+            uint16_t hwTopVisibleItemID;
+            
+            int16_t iBottomVisibleOffset;
+            uint16_t hwBottomVisibleItemID;
         } CalMidAligned;
     };
 )
