@@ -327,7 +327,7 @@ ARM_PT_END()
  * Region Calculator                                                          *
  *----------------------------------------------------------------------------*/
 __arm_2d_list_view_work_area_t *
-ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED (
+ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED_VERTICAL (
                                 __arm_2d_list_view_t *ptThis,
                                 __arm_2d_list_view_item_iterator *fnIterator,
                                 int32_t nOffset

@@ -282,11 +282,12 @@ ARM_PROTECTED(
 /*============================ GLOBAL VARIABLES ==============================*/
 
 /*!
- *  \brief a list view calculator putting selected item in the list centre
+ *  \brief a list view calculator for vertical lists, which puts selected item
+ *         in the centre of the target list
  */
 extern 
 __arm_2d_list_view_region_calculator_t 
-    ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED;
+    ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED_VERTICAL;
 
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ PROTOTYPES ====================================*/
