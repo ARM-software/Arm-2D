@@ -131,6 +131,7 @@ int main (void)
 
     arm_2d_scene0_init(&DISP0_ADAPTER);
     arm_2d_scene1_init(&DISP0_ADAPTER);
+    arm_2d_scene2_init(&DISP0_ADAPTER);
     
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
     virtual_resource_demo_init();
