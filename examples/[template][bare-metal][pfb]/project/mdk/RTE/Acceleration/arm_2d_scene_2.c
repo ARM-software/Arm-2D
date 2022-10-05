@@ -172,15 +172,17 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
     
     arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
 
-    
-    arm_2d_align_centre(ptTile->tRegion, 40, 100) {
 
-        while(arm_fsm_rt_cpl != number_list_show(   &s_tNumberList, 
-                                                    ptTile, 
-                                                    &__centre_region, 
-                                                    bIsNewFrame));
+    while(arm_fsm_rt_cpl != number_list_show(   &s_tNumberList, 
+                                                ptTile, 
+                                                NULL, 
+                                                bIsNewFrame));
+
+
+    arm_2d_align_centre(ptTile->tRegion, 42, 26) {
+        arm_2d_draw_box(ptTile, &__centre_region, 2, GLCD_COLOR_GREEN, 255);
     }
-    
+
     /* draw text at the top-left corner */
     arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
     arm_lcd_text_set_font(&ARM_2D_FONT_6x8);
@@ -208,6 +210,12 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
             .nStart = 0,
             .iDelta = 1,
             .tFontColour = GLCD_COLOR_WHITE,
+            .chNextPadding = 3,
+            .chPrviousePadding = 3,
+            .tListSize = {
+                .iHeight = 80,
+                .iWidth = 40,
+            },
             .tBackgroundColour = GLCD_COLOR_BLACK,
         };
         

@@ -135,6 +135,8 @@ int __printf(const arm_2d_region_t *ptRegion, const char *format, ...)
     s_chBuffer[real_size] = '\0';
 
     arm_2d_align_centre( *ptRegion, (int16_t)real_size * 16, 24) {
+        __centre_region.tLocation.iY += 2;  /* add an offset for 16x24 digits */
+        
         arm_lcd_text_set_draw_region(&__centre_region);
         arm_lcd_puts(s_chBuffer);
         arm_lcd_text_set_draw_region(NULL);
@@ -263,8 +265,10 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
                         __ARM_2D_LIST_VIEW_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER,
                         0));
         this.CalMidAligned.iStartOffset
-            = (this.Runtime.tileList.tRegion.tSize.iHeight 
-            - ptItem->tSize.iHeight) >> 1;
+            = (     this.Runtime.tileList.tRegion.tSize.iHeight 
+                -   ptItem->tSize.iHeight) 
+            >> 1;
+        this.CalMidAligned.iStartOffset -= ptItem->Padding.chPrevious;
     }
 
     /* update total length and item count */
@@ -476,10 +480,6 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             }
             this.CalMidAligned.hwTopVisibleItemID = ptItem->hwID;
         } while(0);
-        
-
-
-
 
         /* move to the bottom item */
         ptItem = ARM_2D_INVOKE(fnIterator, 
@@ -593,7 +593,7 @@ void number_list_init(  number_list_t *ptThis,
     this.tTempItem.bIsVisible = true;
     this.tTempItem.u4Alignment = ARM_2D_ALIGN_CENTRE;
     
-    this.tTempItem.Padding.chPrevious = ptCFG->chNextPadding;
+    this.tTempItem.Padding.chPrevious = ptCFG->chPrviousePadding;
     this.tTempItem.Padding.chNext = ptCFG->chNextPadding;
     this.tTempItem.tSize = ptCFG->tItemSize;
 
