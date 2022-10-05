@@ -230,50 +230,49 @@ static arm_2d_list_view_item_t *__arm_2d_number_list_iterator(
 
 static
 __arm_2d_list_view_work_area_t *__arm_2d_number_list_region_calculator(
-                                __arm_2d_list_view_t *ptListView,
+                                __arm_2d_list_view_t *ptThis,
                                 __arm_2d_list_view_item_iterator *fnIterator,
                                 int32_t nOffset
                             )
 {
 
-    arm_2d_number_list_t *ptThis = (arm_2d_number_list_t *)ptListView;
     arm_2d_list_view_item_t *ptItem = NULL;
     
-ARM_PT_BEGIN(this.Calculator.chState)
+ARM_PT_BEGIN(this.CalMidAligned.chState)
 
     /* update start-offset */
-    if (this.Calculator.bListHeightChanged) {
-        this.Calculator.bListHeightChanged = false;
+    if (this.CalMidAligned.bListHeightChanged) {
+        this.CalMidAligned.bListHeightChanged = false;
         
          /* update the iStartOffset */
          ptItem = ARM_2D_INVOKE(fnIterator, 
                     ARM_2D_PARAM(
-                        ptListView, 
+                        ptThis, 
                         __ARM_2D_LIST_VIEW_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER,
                         0));
-        this.Calculator.iStartOffset
-            = (ptListView->Runtime.tileList.tRegion.tSize.iHeight 
+        this.CalMidAligned.iStartOffset
+            = (this.Runtime.tileList.tRegion.tSize.iHeight 
             - ptItem->tSize.iHeight) >> 1;
     }
 
     /* update total length and item count */
-    if (    (0 == this.use_as____arm_2d_list_view_t.tCFG.nTotalLength)
-        ||  (0 == this.use_as____arm_2d_list_view_t.tCFG.hwItemCount)) {
-        uint16_t hwIDSave;
+    if (    (0 == this.tCFG.nTotalLength)
+        ||  (0 == this.tCFG.hwItemCount)) {
+
         uint16_t hwItemCount = 0; 
         uint32_t nTotalLength = 0;
+
+//        ptItem = ARM_2D_INVOKE(fnIterator, 
+//                    ARM_2D_PARAM(
+//                        ptThis, 
+//                        __ARM_2D_LIST_VIEW_GET_CURRENT,
+//                        0));
+//      uint16_t hwIDSave = ptItem->hwID;
+        
         /* update the iStartOffset */
         ptItem = ARM_2D_INVOKE(fnIterator, 
                     ARM_2D_PARAM(
-                        ptListView, 
-                        __ARM_2D_LIST_VIEW_GET_CURRENT,
-                        0));
-        
-        hwIDSave = ptItem->hwID;
-        
-        ptItem = ARM_2D_INVOKE(fnIterator, 
-                    ARM_2D_PARAM(
-                        ptListView, 
+                        ptThis, 
                         __ARM_2D_LIST_VIEW_GET_FIRST_ITEM,
                         0));
         
@@ -283,15 +282,31 @@ ARM_PT_BEGIN(this.Calculator.chState)
             
             ptItem = ARM_2D_INVOKE(fnIterator, 
                     ARM_2D_PARAM(
-                        ptListView, 
+                        ptThis, 
                         __ARM_2D_LIST_VIEW_GET_NEXT,
                         0));
         }
-        this.use_as____arm_2d_list_view_t.tCFG.nTotalLength = nTotalLength;
-        this.use_as____arm_2d_list_view_t.tCFG.hwItemCount = hwItemCount;
+        
+        this.tCFG.nTotalLength = nTotalLength;
+        this.tCFG.hwItemCount = hwItemCount;
+        
+//        /* resume the selection */
+//        ARM_2D_INVOKE(fnIterator, 
+//                    ARM_2D_PARAM(
+//                        ptThis, 
+//                        __ARM_2D_LIST_VIEW_GET_ITEM_AND_MOVE_POINTER,
+//                        hwIDSave));
+        
     } while(0);
 
+    if (this.tCFG.nTotalLength) {
+        nOffset = nOffset % this.tCFG.nTotalLength;
+    }
+    
+    /* get the inital offset */
+    this.CalMidAligned.nOffset = nOffset;
 
+    
 
 ARM_PT_END()
 
@@ -352,7 +367,8 @@ void number_list_init(  arm_2d_number_list_t *ptThis,
 
     this.tTempItem.fnOnDrawItem = &__arm_2d_number_list_draw_list_view_item;
     
-    this.Calculator.bListHeightChanged = true;
+    /* request updating StartOffset */
+    this.use_as____arm_2d_list_view_t.CalMidAligned.bListHeightChanged = true;
 }
 
 ARM_NONNULL(1,2)

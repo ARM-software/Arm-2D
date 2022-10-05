@@ -59,6 +59,7 @@ typedef struct arm_2d_number_list_cfg_t {
     COLOUR_INT tFontColour;
     COLOUR_INT tBackgroundColour;
     arm_2d_size_t tItemSize;
+    
     int8_t chPrviousePadding;
     int8_t chNextPadding;
     int16_t hwSwitchingPeriodInMs;
@@ -76,13 +77,6 @@ ARM_PRIVATE(
     
     int32_t nSelection;
     int32_t nIterationIndex;
-    
-    struct {
-        int32_t nOffset;
-        uint8_t chState;
-        bool bListHeightChanged;
-        int16_t iStartOffset;
-    } Calculator;
 )
 
 } arm_2d_number_list_t;

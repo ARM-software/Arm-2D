@@ -232,9 +232,9 @@ typedef struct __arm_2d_list_view_cfg_t {
  */
 struct __arm_2d_list_view_t {
 
-    ARM_PROTECTED(
-        __arm_2d_list_view_cfg_t            tCFG;                               /*!< list view configuration */
-    )
+ARM_PROTECTED(
+    __arm_2d_list_view_cfg_t            tCFG;                               /*!< list view configuration */
+)
 
     struct {
     
@@ -258,7 +258,17 @@ struct __arm_2d_list_view_t {
         )
 
     } Runtime;                                                                  /*!< list runtime */
-    
+
+ARM_PROTECTED(
+    union {
+        struct {
+            uint8_t chState;
+            bool bListHeightChanged;
+            int16_t iStartOffset;
+            int32_t nOffset;
+        } CalMidAligned;
+    };
+)
 
 };
 
