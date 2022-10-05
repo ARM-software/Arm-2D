@@ -22,8 +22,7 @@
 #include "arm_2d_helper.h"
 #include "arm_2d_disp_adapter_0.h"
 #include "virtual_resource_demo.h"
-#include "arm_2d_scene_0.h"
-#include "arm_2d_scene_1.h"
+#include "arm_2d_scenes.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
