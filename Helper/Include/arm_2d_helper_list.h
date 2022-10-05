@@ -169,6 +169,10 @@ typedef enum {
     __ARM_2D_LIST_VIEW_GET_ITEM_AND_MOVE_POINTER,
     __ARM_2D_LIST_VIEW_GET_PREVIOUS,
     __ARM_2D_LIST_VIEW_GET_NEXT,
+
+    __ARM_2D_LIST_VIEW_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER,
+    __ARM_2D_LIST_VIEW_GET_FIRST_ITEM,
+    __ARM_2D_LIST_VIEW_GET_CURRENT,
 } arm_2d_list_iterator_dir_t;
 
 /*!
@@ -205,7 +209,7 @@ typedef
 __arm_2d_list_view_work_area_t *__arm_2d_list_view_region_calculator_t(
                                 __arm_2d_list_view_t *ptThis,
                                 __arm_2d_list_view_item_iterator *fnIterator,
-                                int16_t iOffset
+                                int32_t nOffset
                             );
 
 /*!
@@ -219,6 +223,8 @@ typedef struct __arm_2d_list_view_cfg_t {
     arm_2d_helper_draw_handler_t            *fnOnDrawListViewBackground;        /*!< the On-Draw-List-View-Background event handler */
     arm_2d_helper_draw_handler_t            *fnOnDrawListViewCover;             /*!< the On-Draw-List-View-Cover event handler */
     uint16_t hwSwitchingPeriodInMs;                                             /*!< A constant period (in ms) for switching item, zero means using default value */
+    uint16_t hwItemCount;                                                       /*!< the total number of items, 0 means update later */
+    int32_t nTotalLength;                                                       /*!< the total lenght of the list, 0 means update later */
 } __arm_2d_list_view_cfg_t;
 
 /*!
@@ -226,7 +232,7 @@ typedef struct __arm_2d_list_view_cfg_t {
  */
 struct __arm_2d_list_view_t {
 
-    ARM_PRIVATE(
+    ARM_PROTECTED(
         __arm_2d_list_view_cfg_t            tCFG;                               /*!< list view configuration */
     )
 
@@ -245,9 +251,9 @@ struct __arm_2d_list_view_t {
             uint16_t                        hwSelection;                        /*!< item selection */
             int16_t                         iPeriod;                            /*!< time to run target distance */
             uint64_t                        lTimestamp;                         /*!< timestamp used by animation */
-            int16_t                         iOffset;                            /*!< list offset */
-            int16_t                         iStartOffset;                       /*!< the start offset */
-            int16_t                         iTargetOffset;                      /*!< the target list offset */
+            int32_t                         nOffset;                            /*!< list offset */
+            int32_t                         nStartOffset;                       /*!< the start offset */
+            int32_t                         nTargetOffset;                      /*!< the target list offset */
             uint8_t                         chState;                            /*!< state used by list view task */
         )
 

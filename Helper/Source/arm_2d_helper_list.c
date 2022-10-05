@@ -136,18 +136,18 @@ ARM_PT_BEGIN(this.Runtime.chState)
         
         if (bIsNewFrame) {
             int64_t lTimestamp = arm_2d_helper_get_system_timestamp();
-            if (this.Runtime.iTargetOffset != this.Runtime.iOffset) {
+            if (this.Runtime.nTargetOffset != this.Runtime.nOffset) {
                 /* code for update this.Runtime.iOffset */
                 int32_t nElapsed = (int32_t)(lTimestamp - this.Runtime.lTimestamp);
                 
                 if (nElapsed < this.Runtime.iPeriod) {
-                    int32_t iDelta = this.Runtime.iTargetOffset - this.Runtime.iStartOffset;
+                    int32_t iDelta = this.Runtime.nTargetOffset - this.Runtime.nStartOffset;
                     iDelta = nElapsed * iDelta / this.Runtime.iPeriod;
                     
-                    this.Runtime.iOffset = this.Runtime.iStartOffset + iDelta;
+                    this.Runtime.nOffset = this.Runtime.nStartOffset + iDelta;
                 } else {
                     /* timeout */
-                    this.Runtime.iOffset = this.Runtime.iTargetOffset;
+                    this.Runtime.nOffset = this.Runtime.nTargetOffset;
                     this.Runtime.lTimestamp = lTimestamp;
                 }
             } else {
@@ -189,7 +189,7 @@ ARM_PT_BEGIN(this.Runtime.chState)
                         ARM_2D_PARAM(
                             ptThis, 
                             this.tCFG.fnIterator,
-                            this.Runtime.iOffset))) {
+                            this.Runtime.nOffset))) {
             /* finish: use the unified exist point */
             goto label_end_of_list_view_task;
         }
