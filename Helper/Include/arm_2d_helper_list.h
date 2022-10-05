@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list view related services
  *
- * $Date:        04. Oct 2022
- * $Revision:    V.0.6.0
+ * $Date:        05. Oct 2022
+ * $Revision:    V.0.7.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -280,6 +280,14 @@ ARM_PROTECTED(
 
 
 /*============================ GLOBAL VARIABLES ==============================*/
+
+/*!
+ *  \brief a list view calculator putting selected item in the list centre
+ */
+extern 
+__arm_2d_list_view_region_calculator_t 
+    ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED;
+
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ PROTOTYPES ====================================*/
 
@@ -309,6 +317,7 @@ arm_fsm_rt_t __arm_2d_list_view_show(   __arm_2d_list_view_t *ptThis,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         bool bIsNewFrame);
+
 /*! @} */
 
 #if defined(__clang__)
