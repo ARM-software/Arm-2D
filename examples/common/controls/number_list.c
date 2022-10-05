@@ -99,11 +99,11 @@ IMPL_PFB_ON_DRAW(__arm_2d_number_list_draw_background)
 }
 
 //static 
-//arm_fsm_rt_t __arm_2d_number_list_draw_list_view_item_background( 
-//                                      arm_2d_list_view_item_t *ptThis,
+//arm_fsm_rt_t __arm_2d_number_list_draw_list_core_item_background( 
+//                                      arm_2d_list_item_t *ptThis,
 //                                      const arm_2d_tile_t *ptTile,
 //                                      bool bIsNewFrame,
-//                                      arm_2d_list_view_item_param_t *ptParam)
+//                                      arm_2d_list_core_item_param_t *ptParam)
 //{
 //    ARM_2D_UNUSED(ptThis);
 //    ARM_2D_UNUSED(bIsNewFrame);
@@ -146,11 +146,11 @@ int __printf(const arm_2d_region_t *ptRegion, const char *format, ...)
 }
 
 static 
-arm_fsm_rt_t __arm_2d_number_list_draw_list_view_item( 
-                                      arm_2d_list_view_item_t *ptItem,
+arm_fsm_rt_t __arm_2d_number_list_draw_list_core_item( 
+                                      arm_2d_list_item_t *ptItem,
                                       const arm_2d_tile_t *ptTile,
                                       bool bIsNewFrame,
-                                      arm_2d_list_view_item_param_t *ptParam)
+                                      arm_2d_list_core_item_param_t *ptParam)
 {
     number_list_t *ptThis = (number_list_t *)ptItem->ptListView;
     ARM_2D_UNUSED(ptItem);
@@ -174,8 +174,8 @@ arm_fsm_rt_t __arm_2d_number_list_draw_list_view_item(
     return arm_fsm_rt_cpl;
 }
 
-static arm_2d_list_view_item_t *__arm_2d_number_list_iterator(
-                                        __arm_2d_list_view_t *ptListView,
+static arm_2d_list_item_t *__arm_2d_number_list_iterator(
+                                        __arm_2d_list_core_t *ptListView,
                                         arm_2d_list_iterator_dir_t tDirection,
                                         uint_fast16_t hwID
                                     )
@@ -224,7 +224,7 @@ static arm_2d_list_view_item_t *__arm_2d_number_list_iterator(
     }
     if (this.tTempItem.tSize.iWidth <= 0) {
         this.tTempItem.tSize.iWidth 
-            = this.use_as____arm_2d_list_view_t
+            = this.use_as____arm_2d_list_core_t
                 .Runtime.tileList.tRegion.tSize.iWidth;
     }
 
@@ -250,13 +250,13 @@ void number_list_init(  number_list_t *ptThis,
 
     /* call base class contructor */
     do {
-        __arm_2d_list_view_cfg_t tCFG = {
+        __arm_2d_list_core_cfg_t tCFG = {
             .fnIterator =                   &__arm_2d_number_list_iterator,
             
             /* vertical list, centre aligned style */
             .fnCalculator =                 &ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED_VERTICAL,
             .fnOnDrawListViewBackground =   &__arm_2d_number_list_draw_background,
-            //.fnOnDrawItemBackground =       &__arm_2d_number_list_draw_list_view_item_background,
+            //.fnOnDrawItemBackground =       &__arm_2d_number_list_draw_list_core_item_background,
             .hwSwitchingPeriodInMs = ptCFG->hwSwitchingPeriodInMs,
             .hwItemCount = ptCFG->hwCount,
             .nTotalLength = ptCFG->hwCount * iItemHeight,
@@ -274,7 +274,7 @@ void number_list_init(  number_list_t *ptThis,
             tCFG.fnOnDrawItemBackground = ptCFG->fnOnDrawItemBackground;
         }
 
-        __arm_2d_list_view_init(&this.use_as____arm_2d_list_view_t, &tCFG);
+        __arm_2d_list_core_init(&this.use_as____arm_2d_list_core_t, &tCFG);
     } while(0);
 
     this.tNumListCFG = *ptCFG;
@@ -304,10 +304,10 @@ void number_list_init(  number_list_t *ptThis,
     this.tTempItem.Padding.chNext = ptCFG->chNextPadding;
     this.tTempItem.tSize = ptCFG->tItemSize;
 
-    this.tTempItem.fnOnDrawItem = &__arm_2d_number_list_draw_list_view_item;
+    this.tTempItem.fnOnDrawItem = &__arm_2d_number_list_draw_list_core_item;
     
     /* request updating StartOffset */
-    this.use_as____arm_2d_list_view_t.CalMidAligned.bListHeightChanged = true;
+    this.use_as____arm_2d_list_core_t.CalMidAligned.bListHeightChanged = true;
 }
 
 ARM_NONNULL(1,2)
@@ -317,7 +317,7 @@ arm_fsm_rt_t number_list_show(  number_list_t *ptThis,
                         bool bIsNewFrame)
 {
 
-    return __arm_2d_list_view_show( &this.use_as____arm_2d_list_view_t,
+    return __arm_2d_list_core_show( &this.use_as____arm_2d_list_core_t,
                                     ptTile,
                                     ptRegion,
                                     bIsNewFrame);

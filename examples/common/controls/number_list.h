@@ -67,7 +67,7 @@ typedef struct number_list_cfg_t {
     bool bIgnoreBackground;
     uint8_t chOpacity;
 
-    arm_2d_draw_list_view_item_handler_t    *fnOnDrawItemBackground;            /*!< the On-Draw-List-View-Item-Background event handler */
+    arm_2d_draw_list_core_item_handler_t    *fnOnDrawItemBackground;            /*!< the On-Draw-List-View-Item-Background event handler */
     arm_2d_helper_draw_handler_t            *fnOnDrawListViewBackground;        /*!< the On-Draw-List-View-Background event handler */
     arm_2d_helper_draw_handler_t            *fnOnDrawListViewCover;             /*!< the On-Draw-List-View-Cover event handler */
 
@@ -75,11 +75,11 @@ typedef struct number_list_cfg_t {
 
 
 typedef struct number_list_t {
-    implement(__arm_2d_list_view_t);
+    implement(__arm_2d_list_core_t);
 
 ARM_PRIVATE(
     number_list_cfg_t tNumListCFG;
-    arm_2d_list_view_item_t tTempItem;
+    arm_2d_list_item_t tTempItem;
     
     int32_t nSelection;
     int32_t nIterationIndex;

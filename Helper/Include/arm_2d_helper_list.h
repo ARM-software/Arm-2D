@@ -65,20 +65,20 @@ extern "C" {
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 
-typedef struct __arm_2d_list_view_t __arm_2d_list_view_t;
+typedef struct __arm_2d_list_core_t __arm_2d_list_core_t;
 
 
-typedef struct arm_2d_list_view_item_t arm_2d_list_view_item_t;
+typedef struct arm_2d_list_item_t arm_2d_list_item_t;
 
 /*! 
  * \brief runtime parameters passed to on-draw-list-view-item event handler
  */
-typedef struct arm_2d_list_view_item_param_t {
+typedef struct arm_2d_list_core_item_param_t {
     uint8_t     bIsChecked   : 1;       /*!< is this item checked */
     uint8_t     bIsSelected  : 1;       /*!< is this item seleteced */
     uint8_t     chOpacity;              /*!< opacity proposal */
     uint16_t    hwRatio;                /*!< other ratio proposal */
-} arm_2d_list_view_item_param_t;
+} arm_2d_list_core_item_param_t;
 
 /*!
  * \brief the prototype of On-Drawing-List-View-Item event handler
@@ -89,11 +89,11 @@ typedef struct arm_2d_list_view_item_param_t {
  * \param[in] ptParam the runtime paramters
  * \return arm_fsm_rt_t the status of the FSM.  
  */
-typedef arm_fsm_rt_t arm_2d_draw_list_view_item_handler_t( 
-                                      arm_2d_list_view_item_t *ptThis,
+typedef arm_fsm_rt_t arm_2d_draw_list_core_item_handler_t( 
+                                      arm_2d_list_item_t *ptThis,
                                       const arm_2d_tile_t *ptTile,
                                       bool bIsNewFrame,
-                                      arm_2d_list_view_item_param_t *ptParam);
+                                      arm_2d_list_core_item_param_t *ptParam);
 
 /*! 
  * \brief alignment 
@@ -123,14 +123,14 @@ enum {
 /*! 
  * \brief the list view item class
  */
-struct arm_2d_list_view_item_t {
+struct arm_2d_list_item_t {
 
 ARM_PROTECTED(
-    arm_2d_list_view_item_t                         *ptNext;                    /*!< list item pointer */
+    arm_2d_list_item_t                         *ptNext;                    /*!< list item pointer */
     uint16_t hwID;                                                              /*!< the ID used by the list iterator */
     uint16_t                                        : 16;                       /*!< reserved */
 )
-    __arm_2d_list_view_t                            *ptListView;                /*!< the parent list view */
+    __arm_2d_list_core_t                            *ptListView;                /*!< the parent list view */
     union {
         uint16_t                                    hwAttribute;                /*!< 16bit attribute value */
         struct {
@@ -156,7 +156,7 @@ ARM_PROTECTED(
     arm_2d_size_t                                   tSize;                      /*!< the size of the item */
 
     uintptr_t                                       pTarget;                    /*!< user specified object */
-    arm_2d_draw_list_view_item_handler_t           *fnOnDrawItem;               /*!< on-draw-list-view-item event handler */
+    arm_2d_draw_list_core_item_handler_t           *fnOnDrawItem;               /*!< on-draw-list-view-item event handler */
 };
 
 
@@ -183,10 +183,10 @@ typedef enum {
  * \param[in] ptThis the target list view object
  * \param[in] tDirection the direction for fetching a list item.
  * \param[in] hwID the ID of the target item
- * \return arm_2d_list_view_item_t* a list view item
+ * \return arm_2d_list_item_t* a list view item
  */
-typedef arm_2d_list_view_item_t *__arm_2d_list_view_item_iterator(
-                                        __arm_2d_list_view_t *ptThis,
+typedef arm_2d_list_item_t *__arm_2d_list_core_item_iterator(
+                                        __arm_2d_list_core_t *ptThis,
                                         arm_2d_list_iterator_dir_t tDirection,
                                         uint_fast16_t hwID
                                     );
@@ -194,48 +194,48 @@ typedef arm_2d_list_view_item_t *__arm_2d_list_view_item_iterator(
 /*!
  *  \brief the target working area for one list view item
  */
-typedef struct __arm_2d_list_view_work_area_t {
-    arm_2d_list_view_item_t        *ptItem;                                     /*!< the target item */
+typedef struct __arm_2d_list_core_work_area_t {
+    arm_2d_list_item_t        *ptItem;                                     /*!< the target item */
     arm_2d_region_t                 tRegion;                                    /*!< the target region on the list */
-    arm_2d_list_view_item_param_t   tParam;                                     /*!< paramters for the target item */
-} __arm_2d_list_view_work_area_t;
+    arm_2d_list_core_item_param_t   tParam;                                     /*!< paramters for the target item */
+} __arm_2d_list_core_work_area_t;
 
 
 /*!
  * \brief the list region calculaor prototype
  * \param[in] ptThis the target list view object
  * \param[in] iOffset the offset in the list view
- * \return __arm_2d_list_view_target_area_t* the working area for a target list view item
+ * \return __arm_2d_list_core_target_area_t* the working area for a target list view item
  */
 typedef
-__arm_2d_list_view_work_area_t *__arm_2d_list_view_region_calculator_t(
-                                __arm_2d_list_view_t *ptThis,
-                                __arm_2d_list_view_item_iterator *fnIterator,
+__arm_2d_list_core_work_area_t *__arm_2d_list_core_region_calculator_t(
+                                __arm_2d_list_core_t *ptThis,
+                                __arm_2d_list_core_item_iterator *fnIterator,
                                 int32_t nOffset
                             );
 
 /*!
  *  \brief list view configuration structure
  */
-typedef struct __arm_2d_list_view_cfg_t {
+typedef struct __arm_2d_list_core_cfg_t {
     arm_2d_size_t tListSize;                                                    /*!< the size of the list */
-    __arm_2d_list_view_item_iterator        *fnIterator;                        /*!< the item iterator */
-    __arm_2d_list_view_region_calculator_t  *fnCalculator;                      /*!< the region calculator */
-    arm_2d_draw_list_view_item_handler_t    *fnOnDrawItemBackground;            /*!< the On-Draw-List-View-Item-Background event handler */
+    __arm_2d_list_core_item_iterator        *fnIterator;                        /*!< the item iterator */
+    __arm_2d_list_core_region_calculator_t  *fnCalculator;                      /*!< the region calculator */
+    arm_2d_draw_list_core_item_handler_t    *fnOnDrawItemBackground;            /*!< the On-Draw-List-View-Item-Background event handler */
     arm_2d_helper_draw_handler_t            *fnOnDrawListViewBackground;        /*!< the On-Draw-List-View-Background event handler */
     arm_2d_helper_draw_handler_t            *fnOnDrawListViewCover;             /*!< the On-Draw-List-View-Cover event handler */
     uint16_t hwSwitchingPeriodInMs;                                             /*!< A constant period (in ms) for switching item, zero means using default value */
     uint16_t hwItemCount;                                                       /*!< the total number of items, 0 means update later */
     int32_t nTotalLength;                                                       /*!< the total lenght of the list, 0 means update later */
-} __arm_2d_list_view_cfg_t;
+} __arm_2d_list_core_cfg_t;
 
 /*!
  * \brief the list view class
  */
-struct __arm_2d_list_view_t {
+struct __arm_2d_list_core_t {
 
 ARM_PROTECTED(
-    __arm_2d_list_view_cfg_t            tCFG;                               /*!< list view configuration */
+    __arm_2d_list_core_cfg_t            tCFG;                               /*!< list view configuration */
 )
 
     struct {
@@ -243,7 +243,7 @@ ARM_PROTECTED(
         ARM_PROTECTED(
             arm_2d_tile_t                   tileTarget;                         /*!< the target draw area */
             arm_2d_tile_t                   tileList;                           /*!< the target tile for the list */
-            __arm_2d_list_view_work_area_t  tWorkingArea;                       /*!< the working area */
+            __arm_2d_list_core_work_area_t  tWorkingArea;                       /*!< the working area */
         )
 
         ARM_PRIVATE(
@@ -286,7 +286,7 @@ ARM_PROTECTED(
  *         in the centre of the target list
  */
 extern 
-__arm_2d_list_view_region_calculator_t 
+__arm_2d_list_core_region_calculator_t 
     ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED_VERTICAL;
 
 /*============================ LOCAL VARIABLES ===============================*/
@@ -300,8 +300,8 @@ __arm_2d_list_view_region_calculator_t
  */
 extern
 ARM_NONNULL(1,2)
-arm_2d_err_t __arm_2d_list_view_init(   __arm_2d_list_view_t *ptThis,
-                                        __arm_2d_list_view_cfg_t *ptCFG);
+arm_2d_err_t __arm_2d_list_core_init(   __arm_2d_list_core_t *ptThis,
+                                        __arm_2d_list_core_cfg_t *ptCFG);
 
 /*!
  * \brief show a given list view
@@ -314,7 +314,7 @@ arm_2d_err_t __arm_2d_list_view_init(   __arm_2d_list_view_t *ptThis,
  */
 extern
 ARM_NONNULL(1,2)
-arm_fsm_rt_t __arm_2d_list_view_show(   __arm_2d_list_view_t *ptThis,
+arm_fsm_rt_t __arm_2d_list_core_show(   __arm_2d_list_core_t *ptThis,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         bool bIsNewFrame);

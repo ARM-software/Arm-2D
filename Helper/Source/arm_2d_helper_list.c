@@ -74,15 +74,15 @@
 /*============================ IMPLEMENTATION ================================*/
 
 ARM_NONNULL(1,2)
-arm_2d_err_t __arm_2d_list_view_init(   __arm_2d_list_view_t *ptThis,
-                                        __arm_2d_list_view_cfg_t *ptCFG)
+arm_2d_err_t __arm_2d_list_core_init(   __arm_2d_list_core_t *ptThis,
+                                        __arm_2d_list_core_cfg_t *ptCFG)
 {
     assert(NULL != ptThis);
     assert(NULL != ptCFG);
     assert(NULL != ptCFG->fnCalculator);
     assert(NULL != ptCFG->fnIterator);
 
-    memset(ptThis, 0, sizeof(__arm_2d_list_view_t));
+    memset(ptThis, 0, sizeof(__arm_2d_list_core_t));
     this.tCFG = *ptCFG;
 
     if (this.tCFG.hwSwitchingPeriodInMs) {
@@ -96,8 +96,9 @@ arm_2d_err_t __arm_2d_list_view_init(   __arm_2d_list_view_t *ptThis,
 }
 
 
+
 ARM_NONNULL(1,2)
-arm_fsm_rt_t __arm_2d_list_view_show(   __arm_2d_list_view_t *ptThis,
+arm_fsm_rt_t __arm_2d_list_core_show(   __arm_2d_list_core_t *ptThis,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         bool bIsNewFrame)
@@ -133,7 +134,7 @@ ARM_PT_BEGIN(this.Runtime.chState)
                                                &this.Runtime.tileTarget, 
                                                false)) {
             /* nothing to draw: use the unified exist point */
-            goto label_end_of_list_view_task;
+            goto label_end_of_list_core_task;
         }
 
 //        arm_2d_region_t tListRegion = {
@@ -147,7 +148,7 @@ ARM_PT_BEGIN(this.Runtime.chState)
                                                    &this.Runtime.tileList, 
                                                    false)) {
                 /* nothing to draw: use the unified exist point */
-                goto label_end_of_list_view_task;
+                goto label_end_of_list_core_task;
             }
         }
         
@@ -208,10 +209,10 @@ ARM_PT_BEGIN(this.Runtime.chState)
                             this.tCFG.fnIterator,
                             this.Runtime.nOffset))) {
             /* finish: use the unified exist point */
-            //goto label_end_of_list_view_task;
+            //goto label_end_of_list_core_task;
             break;
         }
-        arm_2d_list_view_item_t *ptItem = this.Runtime.tWorkingArea.ptItem;
+        arm_2d_list_item_t *ptItem = this.Runtime.tWorkingArea.ptItem;
         assert(NULL != ptItem);
         
         ptItem->ptListView = ptThis;
@@ -317,7 +318,7 @@ ARM_PT_BEGIN(this.Runtime.chState)
     } while(0);
 
 
-label_end_of_list_view_task:
+label_end_of_list_core_task:
 ARM_PT_END()
     
     return arm_fsm_rt_cpl;
@@ -326,15 +327,15 @@ ARM_PT_END()
 /*----------------------------------------------------------------------------*
  * Region Calculator                                                          *
  *----------------------------------------------------------------------------*/
-__arm_2d_list_view_work_area_t *
+__arm_2d_list_core_work_area_t *
 ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED_VERTICAL (
-                                __arm_2d_list_view_t *ptThis,
-                                __arm_2d_list_view_item_iterator *fnIterator,
+                                __arm_2d_list_core_t *ptThis,
+                                __arm_2d_list_core_item_iterator *fnIterator,
                                 int32_t nOffset
                             )
 {
 
-    arm_2d_list_view_item_t *ptItem = NULL;
+    arm_2d_list_item_t *ptItem = NULL;
     
 ARM_PT_BEGIN(this.CalMidAligned.chState)
 
