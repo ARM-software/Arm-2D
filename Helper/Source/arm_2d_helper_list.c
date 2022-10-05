@@ -128,6 +128,20 @@ ARM_PT_BEGIN(this.Runtime.chState)
         /* get target tile */
         if (NULL == arm_2d_tile_generate_child(ptTarget, 
                                                ptRegion,
+                                               &this.Runtime.tileTarget, 
+                                               false)) {
+            /* nothing to draw: use the unified exist point */
+            goto label_end_of_list_view_task;
+        }
+
+        arm_2d_region_t tListRegion = {
+            .tSize = this.tCFG.tListSize,
+        };
+
+
+        /* get target tile */
+        if (NULL == arm_2d_tile_generate_child(&this.Runtime.tileTarget, 
+                                               &tListRegion,
                                                &this.Runtime.tileList, 
                                                false)) {
             /* nothing to draw: use the unified exist point */

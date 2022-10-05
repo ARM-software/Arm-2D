@@ -563,7 +563,8 @@ void number_list_init(  number_list_t *ptThis,
             //.fnOnDrawItemBackground =       &__arm_2d_number_list_draw_list_view_item_background,
             .hwSwitchingPeriodInMs = ptCFG->hwSwitchingPeriodInMs,
             .hwItemCount = ptCFG->hwCount,
-            //.nTotalLength = ptCFG->hwCount * iItemHeight,
+            .nTotalLength = ptCFG->hwCount * iItemHeight,
+            .tListSize = ptCFG->tListSize,
         };
 
         __arm_2d_list_view_init(&this.use_as____arm_2d_list_view_t, &tCFG);

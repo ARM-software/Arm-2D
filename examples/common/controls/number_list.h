@@ -59,7 +59,8 @@ typedef struct number_list_cfg_t {
     COLOUR_INT tFontColour;
     COLOUR_INT tBackgroundColour;
     arm_2d_size_t tItemSize;
-    
+    arm_2d_size_t tListSize;
+
     int8_t chPrviousePadding;
     int8_t chNextPadding;
     int16_t hwSwitchingPeriodInMs;

@@ -241,14 +241,13 @@ ARM_PROTECTED(
     struct {
     
         ARM_PROTECTED(
+            arm_2d_tile_t                   tileTarget;                         /*!< the target draw area */
             arm_2d_tile_t                   tileList;                           /*!< the target tile for the list */
-            arm_2d_region_t                 tDrawRegion;                        /*!< the current draw region */
             __arm_2d_list_view_work_area_t  tWorkingArea;                       /*!< the working area */
         )
 
         ARM_PRIVATE(
             arm_2d_tile_t                   tileItem;                           /*!< the target tile for list items */
-            //arm_2d_list_view_item_t        *ptSelected;                       /*!< the current item */
 
             uint16_t                        hwSelection;                        /*!< item selection */
             int32_t                         nPeriod;                            /*!< time to run target distance */
