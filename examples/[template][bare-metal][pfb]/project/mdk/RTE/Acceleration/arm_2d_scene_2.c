@@ -88,7 +88,7 @@ extern const arm_2d_tile_t c_tileListCoverMask;
 /*============================ LOCAL VARIABLES ===============================*/
 
 ARM_NOINIT 
-static number_list_t s_tNumberList;
+static number_list_t s_tNumberList[3];
 
 /*============================ IMPLEMENTATION ================================*/
 
@@ -101,7 +101,10 @@ static void __on_scene2_depose(arm_2d_scene_t *ptScene)
     ptScene->ptPlayer = NULL;
     
     /* reset timestamp */
-    this.lTimestamp = 0;
+    
+    arm_foreach(int64_t,this.lTimestamp) {
+        *_ = 0;
+    }
 
     if (this.bUserAllocated) {
         free(ptScene);
@@ -139,10 +142,16 @@ static void __on_scene2_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_2_t *ptThis = (user_scene_2_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    if (arm_2d_helper_is_time_out(1000, &this.lTimestamp)) {
-        numer_list_move_selection(&s_tNumberList, 1, 1000);
-//        __arm_2d_list_core_move_offset(&s_tNumberList.use_as____arm_2d_list_core_t,
-//                                        10);
+    if (arm_2d_helper_is_time_out(100, &this.lTimestamp[0])) {
+        numer_list_move_selection(&s_tNumberList[0], 1, 100);
+    }
+    
+    if (arm_2d_helper_is_time_out(1000, &this.lTimestamp[1])) {
+        numer_list_move_selection(&s_tNumberList[1], 1, 1000);
+    }
+    
+    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[2])) {
+        numer_list_move_selection(&s_tNumberList[2], 1, 10000);
     }
     
 //    /* switch to next scene after 3s */
@@ -180,12 +189,23 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
     
     arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
 
-
-    while(arm_fsm_rt_cpl != number_list_show(   &s_tNumberList, 
-                                                ptTile, 
-                                                NULL, 
-                                                bIsNewFrame));
-
+    arm_2d_align_centre(ptTile->tRegion, 90, 80) {
+        __centre_region.tSize.iWidth = 30;
+        while(arm_fsm_rt_cpl != number_list_show(   &s_tNumberList[2], 
+                                                    ptTile, 
+                                                    &__centre_region, 
+                                                    bIsNewFrame));
+        __centre_region.tLocation.iX += 30;
+        while(arm_fsm_rt_cpl != number_list_show(   &s_tNumberList[1], 
+                                                    ptTile, 
+                                                    &__centre_region, 
+                                                    bIsNewFrame));
+        __centre_region.tLocation.iX += 30;
+        while(arm_fsm_rt_cpl != number_list_show(   &s_tNumberList[0], 
+                                                    ptTile, 
+                                                    &__centre_region, 
+                                                    bIsNewFrame));
+    }
 
 //    arm_2d_align_centre(ptTile->tRegion, 42, 26) {
 //        arm_2d_draw_box(ptTile, &__centre_region, 2, GLCD_COLOR_GREEN, 255);
@@ -248,10 +268,34 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
             /* draw list cover */
             .fnOnDrawListCover = &__arm_2d_number_list_draw_cover,
         };
-        
-        number_list_init(&s_tNumberList, &tCFG);
+        number_list_init(&s_tNumberList[0], &tCFG);
+        number_list_init(&s_tNumberList[1], &tCFG);
     } while(0);
-
+    
+    /* initialize number list */
+    do {
+        number_list_cfg_t tCFG = {
+            .hwCount = 6,
+            .nStart = 0,
+            .iDelta = 1,
+            .tFontColour = GLCD_COLOR_WHITE,
+            .tBackgroundColour = GLCD_COLOR_BLACK,
+            .chNextPadding = 3,
+            .chPrviousePadding = 3,
+            .tListSize = {
+                .iHeight = 80,
+                .iWidth = 28,
+            },
+            
+            /* draw list cover */
+            .fnOnDrawListCover = &__arm_2d_number_list_draw_cover,
+        };
+        number_list_init(&s_tNumberList[2], &tCFG);
+    } while(0);
+    
+    numer_list_move_selection(&s_tNumberList[0], 1, 100);
+    numer_list_move_selection(&s_tNumberList[1], 1, 1000);
+    numer_list_move_selection(&s_tNumberList[2], 1, 10000);
 
     /*! define dirty regions */
     IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
