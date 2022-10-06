@@ -1,20 +1,57 @@
 #!/bin/bash
 # Version: 1.0
 # Date: 2022-05-31
-# This bash script generates CMSIS-NN Documentation:
+# This bash script generates CMSIS-Driver Documentation:
 #
 # Pre-requisites:
 # - bash shell (for Windows: install git for Windows)
-# - doxygen 1.8.6
+# - doxygen 1.9.2
+# - git
+# - gh cli
 
 set -o pipefail
 
-DIRNAME=$(dirname $(readlink -f $0))
+DIRNAME=$(dirname $(realpath $0))
 DOXYGEN=$(which doxygen)
 REQ_DXY_VERSION="1.9.2"
-DESCRIBE=$(readlink -f ${DIRNAME}/../Scripts/git/git_describe.sh)
-CHANGELOG=$(readlink -f ${DIRNAME}/../Scripts/git/gen_changelog.sh)
+REQUIRED_GEN_PACK_LIB="0.5.1"
 
+############ gen-pack library ###########
+
+function install_lib() {
+  local URL="https://github.com/Open-CMSIS-Pack/gen-pack/archive/refs/tags/v$1.tar.gz"
+  echo "Downloading gen_pack lib to '$2'"
+  mkdir -p "$2"
+  curl -L "${URL}" -s | tar -xzf - --strip-components 1 -C "$2" || exit 1
+}
+
+function load_lib() {
+  if [[ -d ${GEN_PACK_LIB} ]]; then
+    . "${GEN_PACK_LIB}/gen-pack"
+    return 0
+  fi
+  local GLOBAL_LIB="/usr/local/share/gen-pack/${REQUIRED_GEN_PACK_LIB}"
+  local USER_LIB="${HOME}/.local/share/gen-pack/${REQUIRED_GEN_PACK_LIB}"
+  if [[ ! -d "${GLOBAL_LIB}" && ! -d "${USER_LIB}" ]]; then
+    echo "Required gen_pack lib not found!" >&2
+    install_lib "${REQUIRED_GEN_PACK_LIB}" "${USER_LIB}"
+  fi
+
+  if [[ -d "${GLOBAL_LIB}" ]]; then
+    . "${GLOBAL_LIB}/gen-pack"
+  elif [[ -d "${USER_LIB}" ]]; then
+    . "${USER_LIB}/gen-pack"
+  else
+    echo "Required gen-pack lib is not installed!" >&2
+    exit 1
+  fi
+}
+
+load_lib
+find_git
+find_ghcli
+
+#########################################
 
 if [[ ! -f "${DOXYGEN}" ]]; then
   echo "Doxygen not found!" >&2
@@ -43,8 +80,7 @@ rm -rf ${DIRNAME}/html
 sed -e "s/{projectNumber}/${VERSION}/" "${DIRNAME}/arm2d.dxy.in" \
   > "${DIRNAME}/arm2d.dxy"
 
-# echo "${CHANGELOG} -f html > history.txt"
-# /bin/bash "${CHANGELOG}" -f html 1> history.txt 2>/dev/null
+# git_changelog -f html > history.txt
 
 echo "${DOXYGEN} arm2d.dxy"
 "${DOXYGEN}" arm2d.dxy
@@ -57,7 +93,7 @@ fi
 projectName=$(grep -E "PROJECT_NAME\s+=" "${DIRNAME}/arm2d.dxy" | sed -r -e 's/[^"]*"([^"]+)"/\1/')
 datetime=$(date -u +'%a %b %e %Y %H:%M:%S')
 year=$(date -u +'%Y')
-if [[ "${year}" != "2022" ]]; then 
+if [[ "${year}" != "2022" ]]; then
   year="2022-${year}"
 fi
 sed -e "s/{datetime}/${datetime}/" "${DIRNAME}/Doxygen_Templates/footer.js.in" \

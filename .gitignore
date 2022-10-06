@@ -41,3 +41,6 @@ build
 *@*
 RTE_Components.h
 Pre_Include_Global.h
+/documentation/arm2d.dxy
+/documentation/linkchecker-out.csv
+/output
