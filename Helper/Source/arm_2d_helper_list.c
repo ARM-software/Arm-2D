@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        05. Oct 2022
- * $Revision:    V.0.7.0
+ * $Date:        06. Oct 2022
+ * $Revision:    V.0.7.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -137,10 +137,6 @@ ARM_PT_BEGIN(this.Runtime.chState)
             goto label_end_of_list_core_task;
         }
 
-//        arm_2d_region_t tListRegion = {
-//            .tSize = this.tCFG.tListSize,
-//        };
-
         arm_2d_align_centre(this.Runtime.tileTarget.tRegion, this.tCFG.tListSize) {
             /* get target tile */
             if (NULL == arm_2d_tile_generate_child(&this.Runtime.tileTarget, 
@@ -156,7 +152,6 @@ ARM_PT_BEGIN(this.Runtime.chState)
             int64_t lTimestamp = arm_2d_helper_get_system_timestamp();
             if (this.Runtime.nTargetOffset != this.Runtime.nOffset) {
                 if (0 == this.Runtime.lTimestamp) {
-                    printf("\r\n");
                     this.Runtime.lTimestamp = lTimestamp;
                 } else {
                     /* code for update this.Runtime.iOffset */
@@ -384,8 +379,6 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
         }
        
         arm_2d_list_item_t *ptItem = NULL;
-        
-        
         
         /* update the iStartOffset */
         ptItem = ARM_2D_INVOKE(fnIterator, 
