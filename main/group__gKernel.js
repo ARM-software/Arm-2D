@@ -222,7 +222,6 @@ var group__gKernel =
     [ "ARM_TO_STRING", "group__gKernel.html#gae1b849eccd10a282fdee383c4414892c", null ],
     [ "__ARM_VA_NUM_ARGS_IMPL", "group__gKernel.html#gac759dfb1a0e6aec6503e8de16f0651f8", null ],
     [ "__ARM_VA_NUM_ARGS", "group__gKernel.html#gaca9883ddfc8f4f3382d9d0e4a93a5890", null ],
-    [ "ARM_2D_PARAM", "group__gKernel.html#ga95be7513dcbea973ba6ff0e412dd273c", null ],
     [ "ARM_2D_INVOKE", "group__gKernel.html#ga65d234ce6028b539a276e06ac62aa2bc", null ],
     [ "__ARM_CONNECT2", "group__gKernel.html#ga231c5e93dfebab0cd794f41a500de60b", null ],
     [ "__ARM_CONNECT2_ALT", "group__gKernel.html#gab8ba27816dfb41e9db5f6f85e7faebe7", null ],
@@ -362,7 +361,6 @@ var group__gKernel =
       [ "arm_fsm_rt_wait_for_res", "group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fca562c08f6021b1434f1797ccbe7dfd2e3", null ]
     ] ],
     [ "arm_2d_err_t", "group__gKernel.html#ga27a24a896295488772e6d847c790fd1c", [
-      [ "ARM_2D_ERR_NOT_AVAILABLE", "group__gKernel.html#gga27a24a896295488772e6d847c790fd1ca00c5128b49967bd7d5924c8b6a9b005b", null ],
       [ "ARM_2D_ERR_UNSUPPORTED_COLOUR", "group__gKernel.html#gga27a24a896295488772e6d847c790fd1ca8fd670a66215d2e91066f99f5588c329", null ],
       [ "ARM_2D_ERR_BUSY", "group__gKernel.html#gga27a24a896295488772e6d847c790fd1ca41102c5d32c1c956c4eca7213a029016", null ],
       [ "ARM_2D_ERR_INSUFFICIENT_RESOURCE", "group__gKernel.html#gga27a24a896295488772e6d847c790fd1ca25ac1a9b8c65ab398f6722a72e7dc6d6", null ],
