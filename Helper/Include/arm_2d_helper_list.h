@@ -330,12 +330,12 @@ arm_fsm_rt_t __arm_2d_list_core_show(   __arm_2d_list_core_t *ptThis,
  * \param[in] iSteps number of steps, here negative value means move to previous
  *            items and positive value means move to next items
  * \note for current stage, ring mode is permanently enabled.
- * \param[in] iFinishInMs 
- *              - (iFinishInMs > 0) the list should turn to those
+ * \param[in] nFinishInMs 
+ *              - (nFinishInMs > 0) the list should turn to those
  *                  steps in specified time (ms)
- *              - (iFinishInMs < 0) use the configuration passed at the  
+ *              - (nFinishInMs < 0) use the configuration passed at the  
  *                  initialisation stage.
- *              - (iFinishInMs == 0) do not change current configuration
+ *              - (nFinishInMs == 0) do not change current configuration
  *
  * \return arm_2d_err_t the operation result
  */
@@ -343,13 +343,21 @@ extern
 ARM_NONNULL(1)
 arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis, 
                                                 int16_t iSteps,
-                                                int16_t iFinishInMs);
+                                                int32_t nFinishInMs);
 
-
+/*!
+ * \brief move selection with specified pixel offset
+ * \param[in] ptThis the target list core object
+ * \param[in] iOffset number of pixels, here negative value means move to previous
+ *            items and positive value means move to next items
+ * \note for current stage, ring mode is permanently enabled.
+ *
+ * \return arm_2d_err_t the operation result
+ */
 extern
 ARM_NONNULL(1)
-arm_2d_err_t __arm_2d_list_core_move_offset(__arm_2d_list_core_t *ptThis, 
-                                            int16_t iOffset);
+void __arm_2d_list_core_move_offset(__arm_2d_list_core_t *ptThis, 
+                                    int16_t iOffset);
 /*! @} */
 
 #if defined(__clang__)

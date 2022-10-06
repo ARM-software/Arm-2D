@@ -108,7 +108,7 @@ extern
 ARM_NONNULL(1)
 arm_2d_err_t numer_list_move_selection( number_list_t *ptThis,
                                         int16_t iSteps,
-                                        int16_t iFinishInMs);
+                                        int32_t nFinishInMs);
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif

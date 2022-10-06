@@ -170,7 +170,13 @@ ARM_PT_BEGIN(this.Runtime.chState)
                         this.Runtime.nOffset = this.Runtime.nStartOffset + iDelta;
                     } else {
                         /* timeout */
+                        
                         this.Runtime.nOffset = this.Runtime.nTargetOffset;
+                        if (this.tCFG.nTotalLength) {
+                            this.Runtime.nOffset = this.Runtime.nOffset % this.tCFG.nTotalLength;
+                        }
+                        this.Runtime.nTargetOffset = this.Runtime.nOffset;
+                        
                         this.Runtime.nStartOffset = this.Runtime.nTargetOffset;
                         this.Runtime.lTimestamp = 0;
                     }
@@ -330,8 +336,8 @@ ARM_PT_END()
 }
 
 ARM_NONNULL(1)
-arm_2d_err_t __arm_2d_list_core_move_offset(__arm_2d_list_core_t *ptThis, 
-                                            int16_t iOffset)
+void __arm_2d_list_core_move_offset(__arm_2d_list_core_t *ptThis, 
+                                    int16_t iOffset)
 {
     assert(NULL != ptThis);
 
@@ -339,14 +345,12 @@ arm_2d_err_t __arm_2d_list_core_move_offset(__arm_2d_list_core_t *ptThis,
         this.Runtime.nOffset += iOffset;
         this.Runtime.nTargetOffset = this.Runtime.nOffset;
     }
-
-    return ARM_2D_ERR_NONE;
 }
 
 ARM_NONNULL(1)
 arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis, 
                                         int16_t iSteps,
-                                        int16_t iFinishInMs)
+                                        int32_t nFinishInMs)
 {
     assert(NULL != ptThis);
     int64_t lPeriod = this.Runtime.lPeriod;
@@ -354,9 +358,9 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
     uint16_t hwTargetID;
     
     /* update nPeriod */
-    if (iFinishInMs > 0) {
-        lPeriod = arm_2d_helper_convert_ms_to_ticks(iFinishInMs);
-    } else if (iFinishInMs < 0) {
+    if (nFinishInMs > 0) {
+        lPeriod = arm_2d_helper_convert_ms_to_ticks(nFinishInMs);
+    } else if (nFinishInMs < 0) {
         if (this.tCFG.hwSwitchingPeriodInMs) {
             lPeriod 
                 = arm_2d_helper_convert_ms_to_ticks(this.tCFG.hwSwitchingPeriodInMs);
