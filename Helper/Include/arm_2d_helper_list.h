@@ -191,13 +191,19 @@ typedef arm_2d_list_item_t *__arm_2d_list_item_iterator(
                                         uint_fast16_t hwID
                                     );
 
+typedef enum {
+    ARM_2D_LIST_VERTICAL,
+    ARM_2D_LIST_HORIZONTAL,
+} arm_2d_list_dir_t;
+
 /*!
  *  \brief the target working area for one list core item
  */
 typedef struct __arm_2d_list_work_area_t {
-    arm_2d_list_item_t        *ptItem;                                          /*!< the target item */
-    arm_2d_region_t                 tRegion;                                    /*!< the target region on the list */
-    arm_2d_list_item_param_t   tParam;                                     /*!< paramters for the target item */
+    arm_2d_list_item_t         *ptItem;                                         /*!< the target item */
+    arm_2d_region_t             tRegion;                                        /*!< the target region on the list */
+    arm_2d_list_item_param_t    tParam;                                         /*!< paramters for the target item */
+    arm_2d_list_dir_t           tDirection;                                     /*!< list direction (only region calculator knows ) */
 } __arm_2d_list_work_area_t;
 
 
@@ -248,13 +254,12 @@ ARM_PROTECTED(
 
         ARM_PRIVATE(
             arm_2d_tile_t                   tileItem;                           /*!< the target tile for list items */
-
-            uint16_t                        hwSelection;                        /*!< item selection */
-            int32_t                         nPeriod;                            /*!< time to run target distance */
-            uint64_t                        lTimestamp;                         /*!< timestamp used by animation */
+            int64_t                         lPeriod;                            /*!< time to run target distance */
+            int64_t                         lTimestamp;                         /*!< timestamp used by animation */
             int32_t                         nOffset;                            /*!< list offset */
             int32_t                         nStartOffset;                       /*!< the start offset */
             int32_t                         nTargetOffset;                      /*!< the target list offset */
+            uint16_t                        hwSelection;                        /*!< item selection */
             uint8_t                         chState;                            /*!< state used by list core task */
         )
 
@@ -319,6 +324,32 @@ arm_fsm_rt_t __arm_2d_list_core_show(   __arm_2d_list_core_t *ptThis,
                                         const arm_2d_region_t *ptRegion,
                                         bool bIsNewFrame);
 
+/*!
+ * \brief move selection with specified steps
+ * \param[in] ptThis the target list core object
+ * \param[in] iSteps number of steps, here negative value means move to previous
+ *            items and positive value means move to next items
+ * \note for current stage, ring mode is permanently enabled.
+ * \param[in] iFinishInMs 
+ *              - (iFinishInMs > 0) the list should turn to those
+ *                  steps in specified time (ms)
+ *              - (iFinishInMs < 0) use the configuration passed at the  
+ *                  initialisation stage.
+ *              - (iFinishInMs == 0) do not change current configuration
+ *
+ * \return arm_2d_err_t the operation result
+ */
+extern
+ARM_NONNULL(1)
+arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis, 
+                                                int16_t iSteps,
+                                                int16_t iFinishInMs);
+
+
+extern
+ARM_NONNULL(1)
+arm_2d_err_t __arm_2d_list_core_move_offset(__arm_2d_list_core_t *ptThis, 
+                                            int16_t iOffset);
 /*! @} */
 
 #if defined(__clang__)

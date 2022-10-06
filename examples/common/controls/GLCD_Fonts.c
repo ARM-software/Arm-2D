@@ -725,7 +725,6 @@ arm_2d_font_t ARM_2D_FONT_6x8 = {
     },
     32,                                 //!< Character offset
     112,                                //!< Character count
-    8,                                  //!< Character byte stride
     Font_6x8_h                          //!< Characters bitmaps
 };
 
@@ -737,6 +736,5 @@ arm_2d_font_t ARM_2D_FONT_16x24 = {
     },
     32,                                 //!< Character offset
     112,                                //!< Character count
-    48,                                 //!< Character byte stride
     Font_16x24_h                        //!< Characters bitmaps
 };

@@ -186,17 +186,26 @@ static arm_2d_list_item_t *__arm_2d_number_list_iterator(
         default:
         case __ARM_2D_LIST_GET_ITEM_WITH_ID_WITHOUT_MOVE_POINTER:
             nIterationIndex = hwID;
+            nIterationIndex %= this.tNumListCFG.hwCount;
             break;
         case __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER:
             this.nIterationIndex = hwID;
+            this.nIterationIndex %= this.tNumListCFG.hwCount;
             nIterationIndex = this.nIterationIndex;
             break;
         case __ARM_2D_LIST_GET_PREVIOUS:
-            this.nIterationIndex--;
+            
+            if (this.nIterationIndex) {
+                this.nIterationIndex--;
+            } else {
+                this.nIterationIndex = this.tNumListCFG.hwCount - 1;
+            }
             nIterationIndex = this.nIterationIndex;
             break;
         case __ARM_2D_LIST_GET_NEXT:
             this.nIterationIndex++;
+            this.nIterationIndex %= this.tNumListCFG.hwCount;
+            
             nIterationIndex = this.nIterationIndex;
             break;
         case __ARM_2D_LIST_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER:
@@ -312,15 +321,26 @@ void number_list_init(  number_list_t *ptThis,
 
 ARM_NONNULL(1,2)
 arm_fsm_rt_t number_list_show(  number_list_t *ptThis,
-                        const arm_2d_tile_t *ptTile, 
-                        const arm_2d_region_t *ptRegion, 
-                        bool bIsNewFrame)
+                                const arm_2d_tile_t *ptTile, 
+                                const arm_2d_region_t *ptRegion, 
+                                bool bIsNewFrame)
 {
 
     return __arm_2d_list_core_show( &this.use_as____arm_2d_list_core_t,
                                     ptTile,
                                     ptRegion,
                                     bIsNewFrame);
+}
+
+
+ARM_NONNULL(1)
+arm_2d_err_t numer_list_move_selection( number_list_t *ptThis,
+                                        int16_t iSteps,
+                                        int16_t iFinishInMs)
+{
+    return __arm_2d_list_core_move_selection(&this.use_as____arm_2d_list_core_t,
+                                             iSteps,
+                                             iFinishInMs);
 }
 
 #if defined(__clang__)

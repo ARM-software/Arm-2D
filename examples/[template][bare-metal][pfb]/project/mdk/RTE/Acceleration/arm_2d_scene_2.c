@@ -139,6 +139,12 @@ static void __on_scene2_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_2_t *ptThis = (user_scene_2_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
+    if (arm_2d_helper_is_time_out(1000, &this.lTimestamp)) {
+        numer_list_move_selection(&s_tNumberList, 1, 1000);
+//        __arm_2d_list_core_move_offset(&s_tNumberList.use_as____arm_2d_list_core_t,
+//                                        10);
+    }
+    
 //    /* switch to next scene after 3s */
 //    if (arm_2d_helper_is_time_out(3000, &this.lTimestamp)) {
 //        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);

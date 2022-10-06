@@ -21,8 +21,8 @@
  * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        30. Sept 2022
- * $Revision:    V.1.0.9
+ * $Date:        06. Oct 2022
+ * $Revision:    V.1.0.10
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -111,6 +111,7 @@ typedef enum {
  * 
  */
 typedef enum {
+    ARM_2D_ERR_NOT_AVAILABLE            = -12,  //!< service is not available or not initialissed
     ARM_2D_ERR_UNSUPPORTED_COLOUR       = -11,  //!< the specified colour is not supported
     ARM_2D_ERR_BUSY                     = -10,  //!< service is busy
     ARM_2D_ERR_INSUFFICIENT_RESOURCE    = -9,   //!< insufficient resource

@@ -33,6 +33,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <assert.h>
 #include "arm_2d_helper.h"
 #include "arm_2d_helper_list.h"
@@ -86,15 +87,14 @@ arm_2d_err_t __arm_2d_list_core_init(   __arm_2d_list_core_t *ptThis,
     this.tCFG = *ptCFG;
 
     if (this.tCFG.hwSwitchingPeriodInMs) {
-        this.Runtime.nPeriod 
+        this.Runtime.lPeriod 
             = arm_2d_helper_convert_ms_to_ticks(this.tCFG.hwSwitchingPeriodInMs);
     } else {
-        this.Runtime.nPeriod = arm_2d_helper_convert_ms_to_ticks(500);          /*!< use 500 ms as default */
+        this.Runtime.lPeriod = arm_2d_helper_convert_ms_to_ticks(500);          /*!< use 500 ms as default */
     }
 
     return ARM_2D_ERR_NONE;
 }
-
 
 
 ARM_NONNULL(1,2)
@@ -151,25 +151,30 @@ ARM_PT_BEGIN(this.Runtime.chState)
                 goto label_end_of_list_core_task;
             }
         }
-        
+
         if (bIsNewFrame) {
             int64_t lTimestamp = arm_2d_helper_get_system_timestamp();
             if (this.Runtime.nTargetOffset != this.Runtime.nOffset) {
-                /* code for update this.Runtime.iOffset */
-                int32_t nElapsed = (int32_t)(lTimestamp - this.Runtime.lTimestamp);
-                
-                if (nElapsed < this.Runtime.nPeriod) {
-                    int32_t iDelta = this.Runtime.nTargetOffset - this.Runtime.nStartOffset;
-                    iDelta = nElapsed * iDelta / this.Runtime.nPeriod;
-                    
-                    this.Runtime.nOffset = this.Runtime.nStartOffset + iDelta;
-                } else {
-                    /* timeout */
-                    this.Runtime.nOffset = this.Runtime.nTargetOffset;
+                if (0 == this.Runtime.lTimestamp) {
+                    printf("\r\n");
                     this.Runtime.lTimestamp = lTimestamp;
+                } else {
+                    /* code for update this.Runtime.iOffset */
+                    int64_t lElapsed = (lTimestamp - this.Runtime.lTimestamp);
+                    
+                    int32_t iDelta = 0;
+                    if (lElapsed < this.Runtime.lPeriod) {
+                        iDelta = this.Runtime.nTargetOffset - this.Runtime.nStartOffset;
+                        iDelta = (int32_t)(lElapsed * (int64_t)iDelta / this.Runtime.lPeriod);
+                        
+                        this.Runtime.nOffset = this.Runtime.nStartOffset + iDelta;
+                    } else {
+                        /* timeout */
+                        this.Runtime.nOffset = this.Runtime.nTargetOffset;
+                        this.Runtime.nStartOffset = this.Runtime.nTargetOffset;
+                        this.Runtime.lTimestamp = 0;
+                    }
                 }
-            } else {
-                this.Runtime.lTimestamp = lTimestamp;    /* reset timestamp */
             }
         }
         
@@ -323,6 +328,176 @@ ARM_PT_END()
     
     return arm_fsm_rt_cpl;
 }
+
+ARM_NONNULL(1)
+arm_2d_err_t __arm_2d_list_core_move_offset(__arm_2d_list_core_t *ptThis, 
+                                            int16_t iOffset)
+{
+    assert(NULL != ptThis);
+
+    arm_irq_safe {
+        this.Runtime.nOffset += iOffset;
+        this.Runtime.nTargetOffset = this.Runtime.nOffset;
+    }
+
+    return ARM_2D_ERR_NONE;
+}
+
+ARM_NONNULL(1)
+arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis, 
+                                        int16_t iSteps,
+                                        int16_t iFinishInMs)
+{
+    assert(NULL != ptThis);
+    int64_t lPeriod = this.Runtime.lPeriod;
+    int32_t nOffsetChange = 0;
+    uint16_t hwTargetID;
+    
+    /* update nPeriod */
+    if (iFinishInMs > 0) {
+        lPeriod = arm_2d_helper_convert_ms_to_ticks(iFinishInMs);
+    } else if (iFinishInMs < 0) {
+        if (this.tCFG.hwSwitchingPeriodInMs) {
+            lPeriod 
+                = arm_2d_helper_convert_ms_to_ticks(this.tCFG.hwSwitchingPeriodInMs);
+        } else {
+            lPeriod = arm_2d_helper_convert_ms_to_ticks(500);
+        }
+    }
+
+    if (0 == iSteps) {
+        /* nothing to do */
+        this.Runtime.lPeriod = lPeriod;
+        return ARM_2D_ERR_NONE;
+    }
+
+    /* calculate offset */
+    do {
+        __arm_2d_list_item_iterator *fnIterator = this.tCFG.fnIterator;
+        assert(NULL != fnIterator);
+        if (NULL == fnIterator) {
+            return ARM_2D_ERR_NOT_AVAILABLE;
+        }
+       
+        arm_2d_list_item_t *ptItem = NULL;
+        
+        
+        
+        /* update the iStartOffset */
+        ptItem = ARM_2D_INVOKE(fnIterator, 
+                    ARM_2D_PARAM(
+                        ptThis, 
+                        __ARM_2D_LIST_GET_CURRENT, 0));
+        
+        if (NULL == ptItem) {
+            return ARM_2D_ERR_NOT_AVAILABLE;
+        }
+        
+        uint16_t hwSaveID = ptItem->hwID;
+        
+        do {
+            ptItem = ARM_2D_INVOKE(fnIterator, 
+                        ARM_2D_PARAM(
+                            ptThis, 
+                            __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
+                            this.Runtime.hwSelection));
+
+            if (NULL == ptItem) {
+                return ARM_2D_ERR_NOT_AVAILABLE;
+            }
+            
+            
+            
+            if (iSteps > 0) {
+            
+                do {
+                    ptItem = ARM_2D_INVOKE(fnIterator, 
+                        ARM_2D_PARAM(
+                            ptThis, 
+                            __ARM_2D_LIST_GET_NEXT,
+                            this.Runtime.hwSelection));
+                    
+                    if (NULL == ptItem) {
+                        /* just in case the iterator doesn't support ring mode */
+                        ptItem = ARM_2D_INVOKE(fnIterator, 
+                                    ARM_2D_PARAM(
+                                        ptThis, 
+                                        __ARM_2D_LIST_GET_FIRST_ITEM,
+                                        this.Runtime.hwSelection));
+                        assert(NULL != ptItem);
+                        
+                        if (NULL == ptItem) {
+                            /* this shouldn't happen */
+                            return ARM_2D_ERR_NOT_AVAILABLE;
+                        }
+                    }
+                    
+                    if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_VERTICAL) {
+                        nOffsetChange -= ptItem->tSize.iHeight;
+                    } else {
+                        nOffsetChange -= ptItem->tSize.iWidth;
+                    }
+                    
+                    nOffsetChange -= ptItem->Padding.chNext;
+                    nOffsetChange -= ptItem->Padding.chPrevious;
+                } while(--iSteps);
+
+            } else {
+                do {
+                    ptItem = ARM_2D_INVOKE(fnIterator, 
+                        ARM_2D_PARAM(
+                            ptThis, 
+                            __ARM_2D_LIST_GET_PREVIOUS,
+                            this.Runtime.hwSelection));
+                    
+                    if (NULL == ptItem) {
+                        /* just in case the iterator doesn't support ring mode */
+                        ptItem = ARM_2D_INVOKE(fnIterator, 
+                                    ARM_2D_PARAM(
+                                        ptThis, 
+                                        __ARM_2D_LIST_GET_LAST_ITEM,
+                                        this.Runtime.hwSelection));
+                        assert(NULL != ptItem);
+                        
+                        if (NULL == ptItem) {
+                            /* this shouldn't happen */
+                            return ARM_2D_ERR_NOT_AVAILABLE;
+                        }
+                    }
+                    
+                    if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_VERTICAL) {
+                        nOffsetChange += ptItem->tSize.iHeight;
+                    } else {
+                        nOffsetChange += ptItem->tSize.iWidth;
+                    }
+                    
+                    nOffsetChange += ptItem->Padding.chNext;
+                    nOffsetChange += ptItem->Padding.chPrevious;
+                } while(++iSteps);
+            }
+
+            hwTargetID = ptItem->hwID;
+        } while(0);
+
+        /* resume id */
+        ARM_2D_INVOKE(fnIterator, 
+                    ARM_2D_PARAM(
+                        ptThis, 
+                        __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
+                        hwSaveID));
+    } while(0);
+
+    arm_irq_safe {
+        this.Runtime.hwSelection = hwTargetID;
+        this.Runtime.nStartOffset = this.Runtime.nOffset;
+        this.Runtime.nTargetOffset += nOffsetChange;
+        this.Runtime.lPeriod = lPeriod;
+        this.Runtime.lTimestamp = 0;
+    }
+    
+    return ARM_2D_ERR_NONE;
+}
+
 
 /*----------------------------------------------------------------------------*
  * Region Calculator                                                          *
@@ -583,6 +758,13 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             +   ptItem->Padding.chPrevious;
 
     ARM_PT_YIELD( &this.Runtime.tWorkingArea )
+
+
+        if (    this.CalMidAligned.hwTopVisibleItemID 
+            ==  this.CalMidAligned.hwBottomVisibleItemID) {
+            /* reach the centre item */
+            break;
+        }
 
         /* update bottom visiable item id and offset */
         do {

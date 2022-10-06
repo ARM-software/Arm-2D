@@ -71,7 +71,6 @@ typedef struct {
         arm_2d_size_t tSize;        //!< CharSize
         uint32_t nOffset;           //!< Character offset
         uint32_t nCount;            //!< Character count
-        int16_t iByteStride;        //!< the number of byte per line
   const uint8_t *chBitmap;          //!< Characters bitmaps
 } const arm_2d_font_t;
 
