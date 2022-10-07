@@ -22,7 +22,7 @@
  * Description:  Public header file for list core related services
  *
  * $Date:        05. Oct 2022
- * $Revision:    V.0.7.0
+ * $Revision:    V.0.8.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -294,6 +294,9 @@ extern
 __arm_2d_list_region_calculator_t 
     ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED_VERTICAL;
 
+extern
+__arm_2d_list_region_calculator_t
+    ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL;
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ PROTOTYPES ====================================*/
 
