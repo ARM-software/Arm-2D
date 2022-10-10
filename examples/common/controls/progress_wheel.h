@@ -16,12 +16,13 @@
  * limitations under the License.
  */
 
-#ifndef __SPINNING_WHEEL_H__
-#define __SPINNING_WHEEL_H__
+#ifndef __PROGRESS_WHEEL_H__
+#define __PROGRESS_WHEEL_H__
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
 #include "__common.h"
+
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
@@ -29,12 +30,13 @@
 /*============================ PROTOTYPES ====================================*/
 
 extern
-void progress_wheel_transform_show(
-                const arm_2d_tile_t 	*ptTarget, 			//!< target tile
-                const arm_2d_tile_t 	*c_tile_myCIRCLE,	//!< source tile
-                const arm_2d_region_t  	alignment_region,	//!< target region
-                float 					fAngle,				//!< rotation angle
-                const uint16_t 			fCircleDiameter,	//!< DIAMETER						
-                bool 					bIsNewFrame);
+void progress_wheel_init(void);
+
+extern
+void progress_wheel_show(   const arm_2d_tile_t *ptTarget,
+                            const arm_2d_region_t *ptRegion,
+                            int16_t iProgress,
+                            const uint16_t fCircleDiameter,
+                            bool bIsNewFrame);
 
 #endif

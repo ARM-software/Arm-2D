@@ -154,6 +154,13 @@ static void __on_scene2_frame_complete(arm_2d_scene_t *ptScene)
         numer_list_move_selection(&s_tNumberList[2], 1, 10000);
     }
     
+    if (arm_2d_helper_is_time_out(10, &this.lTimestamp[3])) {
+        this.iProgress += 4;
+        if (this.iProgress > 1000) {
+            this.iProgress = 0;
+        }
+    }
+    
 //    /* switch to next scene after 3s */
 //    if (arm_2d_helper_is_time_out(3000, &this.lTimestamp)) {
 //        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
@@ -189,7 +196,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
     
     arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
 
-    arm_2d_align_centre(ptTile->tRegion, 90, 80) {
+    arm_2d_align_centre(ptTile->tRegion, 150, 80) {
+
+        __centre_region.tLocation.iX += 60;
         __centre_region.tSize.iWidth = 30;
         while(arm_fsm_rt_cpl != number_list_show(   &s_tNumberList[2], 
                                                     ptTile, 
@@ -205,6 +214,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
                                                     ptTile, 
                                                     &__centre_region, 
                                                     bIsNewFrame));
+        
+        __centre_region.tLocation.iX -= 150;
+        __centre_region.tSize.iWidth = 60;
+        progress_wheel_show(ptTile, &__centre_region, this.iProgress, 60, bIsNewFrame);
     }
 
 //    arm_2d_align_centre(ptTile->tRegion, 42, 26) {
@@ -249,6 +262,8 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
+    
+    progress_wheel_init();
 
     /* initialize number list */
     do {

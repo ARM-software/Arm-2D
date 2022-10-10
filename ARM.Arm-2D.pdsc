@@ -263,7 +263,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.2.6" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.2.7" condition="Arm-2D-EXTRA">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <file category="include"     name="examples/common/controls/" />
@@ -275,6 +275,7 @@
             <file category="sourceC"     name="examples/common/controls/progress_bar_flowing.c" />
             <file category="sourceC"     name="examples/common/controls/progress_bar_simple.c" />
             <file category="sourceC"     name="examples/common/controls/number_list.c" />
+            <file category="sourceC"     name="examples/common/controls/progress_wheel.c" />
             <file category="sourceC"     name="examples/common/asset/white_dot.c" />
             <file category="sourceC"     name="examples/common/asset/SpinWheel.c" />
             <file category="sourceC"     name="examples/common/asset/blue_slashes.c" />
