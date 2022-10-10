@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        30. Sept 2022
- * $Revision:    V.1.3.9
+ * $Date:        10. Oct 2022
+ * $Revision:    V.1.3.10
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -212,6 +212,14 @@ void arm_2d_scene_player_append_scenes( arm_2d_scene_player_t *ptThis,
     } while(--hwCount);
 }
 
+
+ARM_NONNULL(1)
+void arm_2d_scene_player_update_scene_background(arm_2d_scene_player_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    this.Runtime.bUpdateBG = true;
+}
 
 /*-----------------------------------------------------------------------------*
  * Scene Switching                                                             *
@@ -1162,6 +1170,10 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
                     this.Runtime.chState = SWITCH_SCENE_PREPARE;
                     /* also return arm_fsm_rt_cpl to indicate the completion of a frame */
                 }
+            } else if (this.Runtime.bUpdateBG) {
+                /* user request to draw background again */
+                this.Runtime.bUpdateBG = false;
+                this.Runtime.chState = DRAW_BACKGROUND_PREPARE;
             } else {
                 this.Runtime.chState = DRAW_SCENE_START;
             }

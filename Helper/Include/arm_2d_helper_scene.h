@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        20. Sept 2022
- * $Revision:    V.1.3.9
+ * $Date:        10. Oct 2022
+ * $Revision:    V.1.3.10
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -214,7 +214,8 @@ struct arm_2d_scene_player_t {
         struct {
             uint8_t bNextSceneReq   : 1;                                        //!< a flag to request switching-to-the next-scene
             uint8_t bSwitchCPL      : 1;                                        //!< indication of scene switching completion
-            uint8_t                 : 6;
+            uint8_t bUpdateBG       : 1;                                        //!< update the background of the current scene
+            uint8_t                 : 5;
             uint8_t chState;                                                    //!< the state of the FSM used by runtime.
         } Runtime;                                                              //!< scene player runtime
         
@@ -308,6 +309,13 @@ ARM_NONNULL(1)
 void arm_2d_scene_player_append_scenes(arm_2d_scene_player_t *ptThis, 
                                             arm_2d_scene_t *ptScenes,
                                             int_fast16_t hwCount);
+
+/*!
+ * \brief request updating the background of the current scene
+ * \param[in] ptThis the target scene player
+ */
+ARM_NONNULL(1)
+void arm_2d_scene_player_update_scene_background(arm_2d_scene_player_t *ptThis);
 
 /*!
  * \brief request switching to the next scene safely
