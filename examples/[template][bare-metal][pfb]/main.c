@@ -128,7 +128,6 @@ int main (void)
  
     disp_adapter0_init();
 
-
     arm_2d_scene0_init(&DISP0_ADAPTER);
     arm_2d_scene1_init(&DISP0_ADAPTER);
 
