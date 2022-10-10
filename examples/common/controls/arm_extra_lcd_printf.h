@@ -59,6 +59,7 @@ extern "C" {
 /*============================ MACROFIED FUNCTIONS ===========================*/
 #define arm_print_banner(__STR)                                                 \
         do {                                                                    \
+            arm_lcd_text_set_font(&ARM_2D_FONT_6x8);                            \
             arm_lcd_text_location(                                              \
                 (__GLCD_CFG_SCEEN_HEIGHT__ / 8) / 2 - 1,                        \
                 ((__GLCD_CFG_SCEEN_WIDTH__ / 6) - sizeof(__STR)) / 2);          \
@@ -66,6 +67,15 @@ extern "C" {
         } while(0)
 
 /*============================ TYPES =========================================*/
+
+typedef struct {
+    arm_2d_tile_t tChar;
+    int8_t chKerning;
+    int8_t chAdvance;
+    int8_t BearingX;
+    int8_t BearingY;
+} arm_2d_char_t;
+
 /* Font definitions */
 typedef struct {
         arm_2d_size_t tSize;        //!< CharSize
