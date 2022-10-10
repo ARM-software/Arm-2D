@@ -176,6 +176,7 @@ var group__gHelper =
     ] ],
     [ "arm_2d_scene_player_flush_fifo", "group__gHelper.html#ga7248c19138fa0d1352e5c07f197cd0d8", null ],
     [ "arm_2d_scene_player_append_scenes", "group__gHelper.html#ga5725f716e87b58d67316d4536234181b", null ],
+    [ "arm_2d_scene_player_update_scene_background", "group__gHelper.html#ga459552534c34589f0cdfa16496b0c312", null ],
     [ "arm_2d_scene_player_switch_to_next_scene", "group__gHelper.html#gae6df5a7c480a7e3f44a926772ba78cb8", null ],
     [ "__arm_2d_scene_player_set_switching_mode", "group__gHelper.html#ga141d41ffe2e75ff8cd17f9e9f553d0bc", null ],
     [ "arm_2d_scene_player_get_switching_cfg", "group__gHelper.html#ga36e4f860adbf479e6928621878e5b744", null ],

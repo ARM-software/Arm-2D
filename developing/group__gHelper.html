@@ -456,6 +456,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga5725f716e87b58d67316d4536234181b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga5725f716e87b58d67316d4536234181b">arm_2d_scene_player_append_scenes</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis, <a class="el" href="group__gHelper.html#structarm__2d__scene__t">arm_2d_scene_t</a> *ptScenes, int_fast16_t hwCount)</td></tr>
 <tr class="memdesc:ga5725f716e87b58d67316d4536234181b"><td class="mdescLeft">&#160;</td><td class="mdescRight">append a set of scenes to a scene player  <a href="group__gHelper.html#ga5725f716e87b58d67316d4536234181b">More...</a><br /></td></tr>
 <tr class="separator:ga5725f716e87b58d67316d4536234181b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga459552534c34589f0cdfa16496b0c312"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga459552534c34589f0cdfa16496b0c312">arm_2d_scene_player_update_scene_background</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis)</td></tr>
+<tr class="memdesc:ga459552534c34589f0cdfa16496b0c312"><td class="mdescLeft">&#160;</td><td class="mdescRight">request updating the background of the current scene  <a href="group__gHelper.html#ga459552534c34589f0cdfa16496b0c312">More...</a><br /></td></tr>
+<tr class="separator:ga459552534c34589f0cdfa16496b0c312"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae6df5a7c480a7e3f44a926772ba78cb8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gae6df5a7c480a7e3f44a926772ba78cb8">arm_2d_scene_player_switch_to_next_scene</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis)</td></tr>
 <tr class="memdesc:gae6df5a7c480a7e3f44a926772ba78cb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">request switching to the next scene safely  <a href="group__gHelper.html#gae6df5a7c480a7e3f44a926772ba78cb8">More...</a><br /></td></tr>
 <tr class="separator:gae6df5a7c480a7e3f44a926772ba78cb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -858,7 +861,7 @@ struct {</td></tr>
 <td class="fieldname">
 arm_2d_helper_pfb_t</td>
 <td class="fielddoc">
-inherit from <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> <p >points to the head of the FIFO points to the tail of the FIFO Scene FIFO a flag to request switching-to-the next-scene indication of scene switching completion the state of the FSM used by runtime. scene player runtime the switching mode FSM state FSM state opacity of the cover the colour of the cover FSM state scene window a temp tile erase offset FSM state scene window slide offset the switching configuration the switching should finish in specified millisecond </p>
+inherit from <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> <p >points to the head of the FIFO points to the tail of the FIFO Scene FIFO a flag to request switching-to-the next-scene indication of scene switching completion update the background of the current scene the state of the FSM used by runtime. scene player runtime the switching mode FSM state FSM state opacity of the cover the colour of the cover FSM state scene window a temp tile erase offset FSM state scene window slide offset the switching configuration the switching should finish in specified millisecond </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a id="ac20c0c1e50a53fc9ead070d99c049f5d" name="ac20c0c1e50a53fc9ead070d99c049f5d"></a>struct <a class="el" href="group__gHelper.html#structarm__2d__scene__player__t_8____unnamed116____">arm_2d_scene_player_t.__unnamed116__</a></td>
@@ -1291,6 +1294,12 @@ bNextSceneReq: 1</td>
 <a id="a97f8e2466a24e7c33b7b708b7c11f1ec" name="a97f8e2466a24e7c33b7b708b7c11f1ec"></a>uint8_t</td>
 <td class="fieldname">
 bSwitchCPL: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="aa451c9cbeab2e70bd80d01cee5a21b10" name="aa451c9cbeab2e70bd80d01cee5a21b10"></a>uint8_t</td>
+<td class="fieldname">
+bUpdateBG: 1</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
@@ -4265,6 +4274,32 @@ prototype 2: __arm_2d_align_bottom_right(__region, __width, __height) { code bod
     <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target scene player </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ptScenes</td><td>a scene array </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">hwCount</td><td>the number of scenes in the array </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga459552534c34589f0cdfa16496b0c312" name="ga459552534c34589f0cdfa16496b0c312"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga459552534c34589f0cdfa16496b0c312">&#9670;&nbsp;</a></span>arm_2d_scene_player_update_scene_background()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_scene_player_update_scene_background </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>request updating the background of the current scene </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target scene player </td></tr>
   </table>
   </dd>
 </dl>
