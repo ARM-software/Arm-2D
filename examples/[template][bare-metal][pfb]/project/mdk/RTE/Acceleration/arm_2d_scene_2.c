@@ -217,7 +217,12 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
         
         __centre_region.tLocation.iX -= 150;
         __centre_region.tSize.iWidth = 60;
-        progress_wheel_show(ptTile, &__centre_region, this.iProgress, 60, bIsNewFrame);
+        progress_wheel_show(ptTile, 
+                            &__centre_region,       
+                            this.iProgress,         /* progress 0~1000 */
+                            60,                     /* diameter */
+                            255 - 32,               /* opacity */
+                            bIsNewFrame);
     }
 
 //    arm_2d_align_centre(ptTile->tRegion, 42, 26) {

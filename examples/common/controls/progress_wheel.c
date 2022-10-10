@@ -79,10 +79,12 @@ void progress_wheel_init(void)
     
 }
 
+ARM_NONNULL(1)
 void progress_wheel_show(   const arm_2d_tile_t *ptTarget,
                             const arm_2d_region_t *ptRegion,
                             int16_t iProgress,
-                            const uint16_t fDiameter,
+                            const int16_t iDiameter,
+                            uint8_t chOpacity,
                             bool bIsNewFrame)
 {
 
@@ -108,65 +110,56 @@ void progress_wheel_show(   const arm_2d_tile_t *ptTarget,
     };
 
     if (bIsNewFrame) {
-        s_fScale = (float)(     (float)fDiameter 
+        s_fScale = (float)(     (float)iDiameter 
                             /   ((float)c_tileQuaterArc.tRegion.tSize.iWidth *2.0f));
 
         s_fAngle = ARM_2D_ANGLE((float)iProgress * 36.0f / 100.0f);
     }
 
-
-    if(s_fAngle >= ARM_2D_ANGLE(270)){
-        tRotationRegion.tSize.iWidth = ((ptRegion->tSize.iWidth + 1) >> 1) + 1;
-    }
-
-    arm_2dp_tile_transform_with_src_mask_and_opacity(
-                &s_tOP[0], 
-                &c_tileQuaterArc,
-                &c_tileQuaterArcMask,
-                ptTarget,
-                &tRotationRegion,
-                tCentre,
-                s_fAngle + ARM_2D_ANGLE(90),
-                s_fScale,
-                255,
-                &tTargetCentre);
-        
-    arm_2d_op_wait_async((arm_2d_op_core_t *)&s_tOP[0]);
-
-
+    tRotationRegion.tSize.iWidth = ((ptRegion->tSize.iWidth + 1) >> 1);
+    tRotationRegion.tSize.iHeight = ((ptRegion->tSize.iHeight + 1) >> 1);
+    
     if(s_fAngle < ARM_2D_ANGLE(90)){
+        arm_2d_region_t tQuater = tRotationRegion;
+        tQuater.tLocation.iX += ((ptRegion->tSize.iWidth + 1) >> 1);
+        tQuater.tLocation.iY += ((ptRegion->tSize.iWidth + 1) >> 1);
+        
         arm_2dp_tile_transform_with_src_mask_and_opacity(
             &s_tOP[1],
             &c_tileQuaterArc,
             &c_tileQuaterArcMask,
             ptTarget,
-            &tRotationRegion,
+            &tQuater,
             tCentre,
             ARM_2D_ANGLE(180),
             s_fScale,
-            255,
+            chOpacity,
             &tTargetCentre);
         
         arm_2d_op_wait_async((arm_2d_op_core_t *)&s_tOP[1]);
     }
 
     if(s_fAngle < ARM_2D_ANGLE(180)){
+        arm_2d_region_t tQuater = tRotationRegion;
+        tQuater.tLocation.iY += ((ptRegion->tSize.iWidth + 1) >> 1);
+    
         arm_2dp_tile_transform_with_src_mask_and_opacity(
             &s_tOP[2],
             &c_tileQuaterArc,
             &c_tileQuaterArcMask,
             ptTarget,
-            &tRotationRegion,
+            &tQuater,
             tCentre,
             ARM_2D_ANGLE(270),
             s_fScale,
-            255,
+            chOpacity,
             &tTargetCentre);
             
         arm_2d_op_wait_async((arm_2d_op_core_t *)&s_tOP[2]);
     } 
 
     if(s_fAngle < ARM_2D_ANGLE(270)){
+    
         arm_2dp_tile_transform_with_src_mask_and_opacity(
             &s_tOP[3],
             &c_tileQuaterArc,
@@ -176,11 +169,34 @@ void progress_wheel_show(   const arm_2d_tile_t *ptTarget,
             tCentre,
             ARM_2D_ANGLE(0),
             s_fScale,
-            255,
+            chOpacity,
             &tTargetCentre);
 
         arm_2d_op_wait_async((arm_2d_op_core_t *)&s_tOP[3]);
     }
+
+    if (s_fAngle < ARM_2D_ANGLE(90)) {
+        tRotationRegion.tLocation.iX += ((ptRegion->tSize.iWidth + 1) >> 1);
+    } else if (s_fAngle < ARM_2D_ANGLE(180)) {
+        tRotationRegion.tLocation.iY += ((ptRegion->tSize.iHeight + 1) >> 1);
+        tRotationRegion.tLocation.iX += ((ptRegion->tSize.iWidth + 1) >> 1);        
+    } else if (s_fAngle < ARM_2D_ANGLE(270)) {
+        tRotationRegion.tLocation.iY += ((ptRegion->tSize.iHeight + 1) >> 1);
+    }
+    
+    arm_2dp_tile_transform_with_src_mask_and_opacity(
+                &s_tOP[0], 
+                &c_tileQuaterArc,
+                &c_tileQuaterArcMask,
+                ptTarget,
+                &tRotationRegion,
+                tCentre,
+                s_fAngle + ARM_2D_ANGLE(90),
+                s_fScale,
+                chOpacity,
+                &tTargetCentre);
+        
+    arm_2d_op_wait_async((arm_2d_op_core_t *)&s_tOP[0]);
 
 }
 

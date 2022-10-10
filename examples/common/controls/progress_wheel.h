@@ -33,10 +33,12 @@ extern
 void progress_wheel_init(void);
 
 extern
+ARM_NONNULL(1)
 void progress_wheel_show(   const arm_2d_tile_t *ptTarget,
                             const arm_2d_region_t *ptRegion,
                             int16_t iProgress,
-                            const uint16_t fCircleDiameter,
+                            const int16_t iDiameter,
+                            uint8_t chOpacity,
                             bool bIsNewFrame);
 
 #endif
