@@ -66,7 +66,7 @@ else
 fi
 
 if [ -z "$VERSION" ]; then
-  VERSION_FULL=$(/bin/bash ${DESCRIBE} "v")
+  VERSION_FULL=$(git_describe "v")
   VERSION=${VERSION_FULL%+*}
 else
   VERSION_FULL=${VERSION}
