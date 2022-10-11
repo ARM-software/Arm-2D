@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the APIs for colour space
  *               conversions
  *
- * $Date:        17. June 2022
- * $Revision:    V.1.0.2
+ * $Date:        11. Oct 2022
+ * $Revision:    V.1.0.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -55,29 +55,66 @@ extern "C" {
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
+#define arm_2dp_c8bit_draw_point        arm_2dp_gray8_draw_point
+#define arm_2dp_rgb16_draw_point        arm_2dp_rgb565_draw_point
+#define arm_2dp_rgb32_draw_point        arm_2dp_cccn888_draw_point
+
 #define arm_2d_c8bit_draw_point(__TARGET_ADDR,  /* target tile address */       \
                                 __LOCATION,     /* point coordinate */          \
                                 __COLOUR)       /* target colour */             \
-            arm_2dp_c8bit_draw_point(NULL,                                      \
+            arm_2dp_gray8_draw_point(NULL,                                      \
                                      (__TARGET_ADDR),                           \
                                      (__LOCATION),                              \
-                                     (__COLOUR))
+                                     (__COLOUR),                                \
+                                     (255))
 
 #define arm_2d_rgb16_draw_point(__TARGET_ADDR,  /* target tile address */       \
                                 __LOCATION,     /* point coordinate */          \
                                 __COLOUR)       /* target colour */             \
-            arm_2dp_rgb16_draw_point(NULL,                                      \
+            arm_2dp_rgb565_draw_point(NULL,                                     \
                                      (__TARGET_ADDR),                           \
                                      (__LOCATION),                              \
-                                     (__COLOUR))
+                                     (__COLOUR),                                \
+                                     (255))
 
 #define arm_2d_rgb32_draw_point(__TARGET_ADDR,  /* target tile address */       \
                                 __LOCATION,     /* point coordinate */          \
                                 __COLOUR)       /* target colour */             \
-            arm_2dp_rgb32_draw_point(NULL,                                      \
+            arm_2dp_cccn888_draw_point(NULL,                                    \
                                      (__TARGET_ADDR),                           \
                                      (__LOCATION),                              \
-                                     (__COLOUR))
+                                     (__COLOUR),                                \
+                                     (255))
+
+#define arm_2d_gray8_draw_point(__TARGET_ADDR,  /* target tile address */       \
+                                __LOCATION,     /* point coordinate */          \
+                                __COLOUR,       /* target colour */             \
+                                ...)                                            \
+            arm_2dp_gray8_draw_point(NULL,                                      \
+                                     (__TARGET_ADDR),                           \
+                                     (__LOCATION),                              \
+                                     (__COLOUR),                                \
+                                     (255,##__VA_ARGS__))
+
+#define arm_2d_rgb565_draw_point(__TARGET_ADDR,  /* target tile address */      \
+                                __LOCATION,     /* point coordinate */          \
+                                __COLOUR,       /* target colour */             \
+                                ...)                                            \
+            arm_2dp_rgb565_draw_point(NULL,                                     \
+                                     (__TARGET_ADDR),                           \
+                                     (__LOCATION),                              \
+                                     (__COLOUR),                                \
+                                     (255,##__VA_ARGS__))
+
+#define arm_2d_cccn888_draw_point(__TARGET_ADDR,  /* target tile address */     \
+                                __LOCATION,     /* point coordinate */          \
+                                __COLOUR,       /* target colour */             \
+                                ...)                                            \
+            arm_2dp_cccn888_draw_point(NULL,                                    \
+                                     (__TARGET_ADDR),                           \
+                                     (__LOCATION),                              \
+                                     (__COLOUR),                                \
+                                     (255,##__VA_ARGS__))
 
 
 #define arm_2d_c8bit_draw_pattern(  __PATTERN_ADDR, /* pattern tile address */  \
@@ -165,9 +202,23 @@ typedef struct arm_2d_op_fill_cl_t {
     };
 } arm_2d_op_fill_cl_t;
 
-/*! \note arm_2d_op_fill_cl_t inherits from arm_2d_op_t explicitly 
+/*! 
+ *  \brief the control block for drawing point 
+ *  \note arm_2d_op_drw_pt_t inherits from arm_2d_op_t explicitly 
  */
-typedef arm_2d_op_fill_cl_t arm_2d_op_drw_pt_t;
+typedef struct arm_2d_op_drw_pt_t {
+    inherit(arm_2d_op_core_t);                  //!< base
+    struct {
+        const arm_2d_tile_t     *ptTile;        //!< target tile 
+        const arm_2d_region_t   *ptRegion;      //!< target region
+    } Target;
+    union {
+        uint8_t  chColour;                      //!< 8bit colour
+        uint16_t hwColour;                      //!< 16bit colour
+        uint32_t wColour;                       //!< 32bit colour
+    };
+    uint8_t chOpaicty;
+} arm_2d_op_drw_pt_t;
 
 /*!
  *  \brief the control block for draw-bit-pattern operations
@@ -296,11 +347,12 @@ __STATIC_INLINE void arm_2d_rgb32_draw_point_fast(
 }
 
 /*!
- *  \brief draw a point with a given 8bit colour
+ *  \brief draw a point with a given gray8 colour
  *  \param[in] ptOP the control block, NULL means using the default control block
  *  \param[in] ptTarget the target root tile
  *  \param[in] tLocation the target location
  *  \param[in] chColour an 8bit colour
+ *  \param[in] chOpacity the point opacity
  *  \return arm_fsm_rt_t the operation result
  *
  *  \note As those draw point APIs involve the region calculation
@@ -312,17 +364,19 @@ __STATIC_INLINE void arm_2d_rgb32_draw_point_fast(
  */
 extern
 ARM_NONNULL(2)
-arm_fsm_rt_t arm_2dp_c8bit_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
+arm_fsm_rt_t arm_2dp_gray8_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_location_t tLocation,
-                                        uint_fast8_t chColour);
+                                        uint_fast8_t chColour,
+                                        uint8_t chOpacity);
 
 /*!
- *  \brief draw a point with a given 16bit colour
+ *  \brief draw a point with a given rgb565 colour
  *  \param[in] ptOP the control block, NULL means using the default control block
  *  \param[in] ptTarget the target root tile
  *  \param[in] tLocation the target location
  *  \param[in] hwColour an 16bit colour
+ *  \param[in] chOpacity the point opacity
  *  \return arm_fsm_rt_t the operation result
  *
  *  \note As those draw point APIs involve the region calculation
@@ -334,17 +388,19 @@ arm_fsm_rt_t arm_2dp_c8bit_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
  */
 extern
 ARM_NONNULL(2)
-arm_fsm_rt_t arm_2dp_rgb16_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
+arm_fsm_rt_t arm_2dp_rgb565_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_location_t tLocation,
-                                        uint_fast16_t hwColour);
+                                        uint_fast16_t hwColour,
+                                        uint8_t chOpacity);
 
 /*!
- *  \brief draw a point with a given 32bit colour
+ *  \brief draw a point with a given cccn888 colour
  *  \param[in] ptOP the control block, NULL means using the default control block
  *  \param[in] ptTarget the target root tile
  *  \param[in] tLocation the target location
  *  \param[in] wColour an 32bit colour
+ *  \param[in] chOpacity the point opacity
  *  \return arm_fsm_rt_t the operation result
  *
  *  \note As those draw point APIs involve the region calculation
@@ -356,10 +412,11 @@ arm_fsm_rt_t arm_2dp_rgb16_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
  */
 extern
 ARM_NONNULL(2)
-arm_fsm_rt_t arm_2dp_rgb32_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
+arm_fsm_rt_t arm_2dp_cccn888_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_location_t tLocation,
-                                        uint32_t wColour);
+                                        uint32_t wColour,
+                                        uint8_t chOpacity);
 
 
 #if 0       // todo: draw point with alpha

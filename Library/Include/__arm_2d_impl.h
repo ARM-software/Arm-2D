@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        26. Sept 2022
- * $Revision:    V.1.3.2
+ * $Date:        11. Oct 2022
+ * $Revision:    V.1.3.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -419,7 +419,8 @@ ARM_PRIVATE(
         
         arm_2d_op_drw_patn_t                tDrawPattern;
         arm_2d_op_trans_t                   tTransform;
-        arm_2d_op_trans_opa_t               tRotateOpacity;
+        arm_2d_op_trans_opa_t               tTransformOpacity;
+        arm_2d_op_trans_msk_opa_t           tTransformMaskOpacity;
         
         arm_2d_op_msk_t                     tBasicMask;
         arm_2d_op_src_msk_t                 tSourceMask;

@@ -21,8 +21,8 @@
  * Title:        arm-2d_draw.c
  * Description:  APIs for basic drawing
  *
- * $Date:        21. April 2022
- * $Revision:    V.1.0.0
+ * $Date:        11. Oct 2022
+ * $Revision:    V.1.0.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -115,26 +115,13 @@ extern "C" {
  * Draw a point with specified colour                                         *
  *----------------------------------------------------------------------------*/
 
-/*!
- *  \brief draw a point with a given 8bit colour
- *  \param[in] ptOP the control block, NULL means using the default control block
- *  \param[in] ptTarget the target root tile
- *  \param[in] tLocation the target location
- *  \param[in] chColour an 8bit colour
- *  \return arm_fsm_rt_t the operation result
- *
- *  \note As those draw point APIs involve the region calculation
- *        which is only useful when partial framebuffer is used, it is slow.
- *        For gettting better performance, if the target tile is root and the 
- *        target location is inside the target region, please use the
- *        functions with "_fast" posfix.
- *        
- */
+
 ARM_NONNULL(2)
-arm_fsm_rt_t arm_2dp_c8bit_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
+arm_fsm_rt_t arm_2dp_gray8_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_location_t tLocation,
-                                        uint_fast8_t chColour)
+                                        uint_fast8_t chColour,
+                                        uint8_t chOpacity)
 {
     assert(NULL != ptTarget);
 
@@ -145,6 +132,12 @@ arm_fsm_rt_t arm_2dp_c8bit_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
     }
 
     //memset(ptThis, 0, sizeof(*ptThis));
+
+    if (0 == chOpacity) {
+        return arm_fsm_rt_cpl;
+    } else {
+        this.chOpaicty = chOpacity;
+    }
 
     arm_2d_region_t tPointRegion = {
         .tLocation = tLocation,
@@ -158,29 +151,18 @@ arm_fsm_rt_t arm_2dp_c8bit_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
     this.Target.ptRegion = &tPointRegion;
     this.chColour = chColour;
 
+
+
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
 
-/*!
- *  \brief draw a point with a given 16bit colour
- *  \param[in] ptOP the control block, NULL means using the default control block
- *  \param[in] ptTarget the target root tile
- *  \param[in] tLocation the target location
- *  \param[in] hwColour an 16bit colour
- *  \return arm_fsm_rt_t the operation result
- *
- *  \note As those draw point APIs involve the region calculation
- *        which is only useful when partial framebuffer is used, it is slow.
- *        For gettting better performance, if the target tile is root and the 
- *        target location is inside the target region, please use the
- *        functions with "_fast" posfix.
- *        
- */
+
 ARM_NONNULL(2)
-arm_fsm_rt_t arm_2dp_rgb16_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
+arm_fsm_rt_t arm_2dp_rgb565_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_location_t tLocation,
-                                        uint_fast16_t hwColour)
+                                        uint_fast16_t hwColour,
+                                        uint8_t chOpacity)
 {
     assert(NULL != ptTarget);
 
@@ -191,6 +173,12 @@ arm_fsm_rt_t arm_2dp_rgb16_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
     }
 
     //memset(ptThis, 0, sizeof(*ptThis));
+
+    if (0 == chOpacity) {
+        return arm_fsm_rt_cpl;
+    } else {
+        this.chOpaicty = chOpacity;
+    }
 
     arm_2d_region_t tPointRegion = {
         .tLocation = tLocation,
@@ -207,26 +195,13 @@ arm_fsm_rt_t arm_2dp_rgb16_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
 
-/*!
- *  \brief draw a point with a given 32bit colour
- *  \param[in] ptOP the control block, NULL means using the default control block
- *  \param[in] ptTarget the target root tile
- *  \param[in] tLocation the target location
- *  \param[in] wColour an 32bit colour
- *  \return arm_fsm_rt_t the operation result
- *
- *  \note As those draw point APIs involve the region calculation
- *        which is only useful when partial framebuffer is used, it is slow.
- *        For gettting better performance, if the target tile is root and the 
- *        target location is inside the target region, please use the
- *        functions with "_fast" posfix.
- *        
- */
+
 ARM_NONNULL(2)
-arm_fsm_rt_t arm_2dp_rgb32_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
+arm_fsm_rt_t arm_2dp_cccn888_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_location_t tLocation,
-                                        uint32_t wColour)
+                                        uint32_t wColour,
+                                        uint8_t chOpacity)
 {
     assert(NULL != ptTarget);
 
@@ -237,6 +212,12 @@ arm_fsm_rt_t arm_2dp_rgb32_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
     }
 
     //memset(ptThis, 0, sizeof(*ptThis));
+
+    if (0 == chOpacity) {
+        return arm_fsm_rt_cpl;
+    } else {
+        this.chOpaicty = chOpacity;
+    }
 
     arm_2d_region_t tPointRegion = {
         .tLocation = tLocation,
@@ -257,18 +238,43 @@ arm_fsm_rt_t __arm_2d_sw_draw_point(__arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_drw_pt_t, ptTask->ptOP)
 
-    switch (OP_CORE.ptOp->Info.Colour.u3ColourSZ) {
-        case ARM_2D_COLOUR_SZ_8BIT:
-            (*(uint8_t *)ptTask->Param.tTileProcess.pBuffer) = this.chColour;
-            break;
-        case ARM_2D_COLOUR_SZ_16BIT:
-            (*(uint16_t *)ptTask->Param.tTileProcess.pBuffer) = this.hwColour;
-            break;
-        case ARM_2D_COLOUR_SZ_32BIT:
-            (*(uint32_t *)ptTask->Param.tTileProcess.pBuffer) = this.wColour;
-            break;
-        default:
-            return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
+    if (255 == this.chOpaicty) {
+        switch (OP_CORE.ptOp->Info.Colour.u3ColourSZ) {
+            case ARM_2D_COLOUR_SZ_8BIT:
+                (*(uint8_t *)ptTask->Param.tTileProcess.pBuffer) = this.chColour;
+                break;
+            case ARM_2D_COLOUR_SZ_16BIT:
+                (*(uint16_t *)ptTask->Param.tTileProcess.pBuffer) = this.hwColour;
+                break;
+            case ARM_2D_COLOUR_SZ_32BIT:
+                (*(uint32_t *)ptTask->Param.tTileProcess.pBuffer) = this.wColour;
+                break;
+            default:
+                return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
+        }
+    } else {
+        switch (OP_CORE.ptOp->Info.Colour.u3ColourSZ) {
+            case ARM_2D_COLOUR_SZ_8BIT:
+                __ARM_2D_PIXEL_BLENDING_OPA_GRAY8(  
+                    &this.chColour, 
+                    (uint8_t *)ptTask->Param.tTileProcess.pBuffer,
+                    this.chOpaicty);
+                break;
+            case ARM_2D_COLOUR_SZ_16BIT:
+                __ARM_2D_PIXEL_BLENDING_OPA_RGB565(  
+                    &this.hwColour, 
+                    (uint16_t *)ptTask->Param.tTileProcess.pBuffer,
+                    this.chOpaicty);
+                break;
+            case ARM_2D_COLOUR_SZ_32BIT:
+                __ARM_2D_PIXEL_BLENDING_OPA_CCCN888(  
+                    &this.wColour, 
+                    (uint32_t *)ptTask->Param.tTileProcess.pBuffer,
+                    this.chOpaicty);
+                break;
+            default:
+                return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
+        }
     }
 
     return arm_fsm_rt_cpl;
