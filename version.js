@@ -3,7 +3,7 @@ const versions = {
     "": "document.write('Version",
     "": "');0",
     "latest": "1.1.0-preview1",
-    "developing": "1.1.0-preview1.119",
+    "developing": "1.1.0-preview1.120",
     "v1.0.0-preview4": "1.0.0-preview4",
     "v1.0.0-preview3": "1.0.0-preview3",
     "v1.0.0-preview": "1.0.0-preview0"
