@@ -22,6 +22,7 @@
 /*============================ INCLUDES ======================================*/
 #include <stdint.h>
 #include "arm_2d.h"
+#include "__common.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -97,13 +98,21 @@ typedef arm_2d_char_descriptor_t *arm_2d_font_get_char_descriptor_handler_t(
                                         arm_2d_char_descriptor_t *ptDescriptor,
                                         uint8_t *pchCharCode);
 
+typedef arm_fsm_rt_t arm_2d_font_draw_char_handler_t(
+                                            const arm_2d_tile_t *ptTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            arm_2d_tile_t *ptileChar,
+                                            COLOUR_INT tForeColour
+                                        );
+
 /* Font definitions */
 struct arm_2d_font_t {
     arm_2d_tile_t tileFont;
     arm_2d_size_t tCharSize;                                                    //!< CharSize
-    uint32_t nCount;                                                        //!< Character count
-  //const uint8_t *chBitmap;                                                      //!< Characters bitmaps
-  arm_2d_font_get_char_descriptor_handler_t *fnGetCharDescriptor;               //!< On-Get-Char-Descriptor event handler
+    uint32_t nCount;                                                            //!< Character count
+    //const uint8_t *chBitmap;                                                  //!< Characters bitmaps
+    arm_2d_font_get_char_descriptor_handler_t *fnGetCharDescriptor;             //!< On-Get-Char-Descriptor event handler
+    arm_2d_font_draw_char_handler_t           *fnDrawChar;                      //!< On-Draw-Char event handler
 };
 
 typedef struct arm_2d_a1_font_t {
@@ -133,7 +142,7 @@ extern
 void arm_lcd_text_location(uint8_t chY, uint8_t chX);
 
 extern
-int8_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t *pchCharCode);
+int8_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode);
 
 extern 
 void arm_lcd_text_set_colour(   COLOUR_INT_TYPE wForeground, 
