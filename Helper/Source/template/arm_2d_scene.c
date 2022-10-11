@@ -191,7 +191,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene%Instance%_handler)
 
     /* draw text at the top-left corner */
     arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-    arm_lcd_text_set_font(&ARM_2D_FONT_6x8);
+    arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
     arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
     arm_lcd_text_location(0,0);
     arm_lcd_puts("Scene %Instance%");

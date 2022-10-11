@@ -175,7 +175,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
     ARM_2D_UNUSED(pTarget);
     ARM_2D_UNUSED(bIsNewFrame);
 
-    arm_lcd_text_set_font(&ARM_2D_FONT_6x8);
+    arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
 
     /* draw real-time FPS info */
     if (__DISP0_CFG_ITERATION_CNT__) {

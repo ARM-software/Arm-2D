@@ -717,24 +717,60 @@ static const uint8_t Font_16x24_h[(144-32)*48] = {
   0x38, 0x0C, 0x18, 0x0C, 0x0C, 0x18, 0x0C, 0x18, 0x0C, 0x30, 0x0C, 0x60, 0x00, 0x00, 0x00, 0x00,
 };
 
-extern arm_2d_font_t ARM_2D_FONT_6x8;
-arm_2d_font_t ARM_2D_FONT_6x8 = {
-    .tSize = {
-      6,                                //!< Character width
-      8,                                //!< Character height
+extern const arm_2d_a1_font_t ARM_2D_FONT_6x8;
+const arm_2d_a1_font_t ARM_2D_FONT_6x8 = {
+    .use_as__arm_2d_font_t = {
+        .tileFont = {
+            .tRegion = {
+                .tSize = {
+                    .iWidth = 6,
+                    .iHeight = 8 * 112,
+                },
+            },
+            .tInfo = {
+                .bIsRoot = true,
+                .bHasEnforcedColour = true,
+                .tColourInfo = {
+                    .chScheme = ARM_2D_COLOUR_BIN,
+                },
+            },
+            .pchBuffer = (uint8_t *)Font_6x8_h,   //!< Characters bitmaps
+        },
+        .tCharSize = {
+            .iWidth = 6,
+            .iHeight = 8,
+        },
+        .nCount =  112,                             //!< Character count
+        .fnGetCharDescriptor = &ARM_2D_A1_FONT_GET_CHAR_DESCRIPTOR_HANDLER,
     },
-    32,                                 //!< Character offset
-    112,                                //!< Character count
-    Font_6x8_h                          //!< Characters bitmaps
+    .nOffset = 32,                          //!< Character offset
 };
 
-extern arm_2d_font_t ARM_2D_FONT_16x24;
-arm_2d_font_t ARM_2D_FONT_16x24 = {
-    .tSize = {
-        16,                             //!< Character width
-        24,                             //!< Character height
+extern const arm_2d_a1_font_t ARM_2D_FONT_16x24;
+const arm_2d_a1_font_t ARM_2D_FONT_16x24 = {
+    .use_as__arm_2d_font_t = {
+        .tileFont = {
+            .tRegion = {
+                .tSize = {
+                    .iWidth = 16,
+                    .iHeight = 24 * 112,
+                },
+            },
+            .tInfo = {
+                .bIsRoot = true,
+                .bHasEnforcedColour = true,
+                .tColourInfo = {
+                    .chScheme = ARM_2D_COLOUR_BIN,
+                },
+            },
+            .pchBuffer = (uint8_t *)Font_16x24_h,   //!< Characters bitmaps
+        },
+        .tCharSize = {
+            .iWidth = 16,
+            .iHeight = 24,
+        },
+        .nCount =  112,                             //!< Character count
+        .fnGetCharDescriptor = &ARM_2D_A1_FONT_GET_CHAR_DESCRIPTOR_HANDLER,
     },
-    32,                                 //!< Character offset
-    112,                                //!< Character count
-    Font_16x24_h                        //!< Characters bitmaps
+    .nOffset = 32,                                  //!< Character offset
 };

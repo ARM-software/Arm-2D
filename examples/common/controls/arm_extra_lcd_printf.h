@@ -27,6 +27,20 @@
 extern "C" {
 #endif
 
+#if defined(__clang__)
+#   pragma clang diagnostic push
+#   pragma clang diagnostic ignored "-Wunknown-warning-option"
+#   pragma clang diagnostic ignored "-Wreserved-identifier"
+#   pragma clang diagnostic ignored "-Wmissing-declarations"
+#   pragma clang diagnostic ignored "-Wpadded"
+#elif __IS_COMPILER_ARM_COMPILER_5__
+#elif __IS_COMPILER_GCC__
+#   pragma GCC diagnostic push
+#   pragma GCC diagnostic ignored "-Wformat="
+#   pragma GCC diagnostic ignored "-Wpedantic"
+#   pragma GCC diagnostic ignored "-Wpadded"
+#endif
+
 /*============================ MACROS ========================================*/
 #ifndef __GLCD_CFG_COLOUR_DEPTH__
 #   warning Please specify the colour depth by defining the macro __GLCD_CFG_COLOUR_DEPTH__, default value 16 is used for now
@@ -59,7 +73,7 @@ extern "C" {
 /*============================ MACROFIED FUNCTIONS ===========================*/
 #define arm_print_banner(__STR)                                                 \
         do {                                                                    \
-            arm_lcd_text_set_font(&ARM_2D_FONT_6x8);                            \
+            arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);      \
             arm_lcd_text_location(                                              \
                 (__GLCD_CFG_SCEEN_HEIGHT__ / 8) / 2 - 1,                        \
                 ((__GLCD_CFG_SCEEN_WIDTH__ / 6) - sizeof(__STR)) / 2);          \
@@ -69,25 +83,42 @@ extern "C" {
 /*============================ TYPES =========================================*/
 
 typedef struct {
-    arm_2d_tile_t tChar;
+    arm_2d_tile_t tileChar;
     int8_t chKerning;
-    int8_t chAdvance;
     int8_t BearingX;
     int8_t BearingY;
-} arm_2d_char_t;
+    int8_t chCodeLength;
+} arm_2d_char_descriptor_t;
+
+typedef struct arm_2d_font_t arm_2d_font_t;
+
+typedef arm_2d_char_descriptor_t *arm_2d_font_get_char_descriptor_handler_t(
+                                        const arm_2d_font_t *ptFont, 
+                                        arm_2d_char_descriptor_t *ptDescriptor,
+                                        uint8_t *pchCharCode);
 
 /* Font definitions */
-typedef struct {
-        arm_2d_size_t tSize;        //!< CharSize
-        uint32_t nOffset;           //!< Character offset
-        uint32_t nCount;            //!< Character count
-  const uint8_t *chBitmap;          //!< Characters bitmaps
-} const arm_2d_font_t;
+struct arm_2d_font_t {
+    arm_2d_tile_t tileFont;
+    arm_2d_size_t tCharSize;                                                    //!< CharSize
+    uint32_t nCount;                                                        //!< Character count
+  //const uint8_t *chBitmap;                                                      //!< Characters bitmaps
+  arm_2d_font_get_char_descriptor_handler_t *fnGetCharDescriptor;               //!< On-Get-Char-Descriptor event handler
+};
+
+typedef struct arm_2d_a1_font_t {
+    implement(arm_2d_font_t);
+    uint32_t nOffset;                                                           //!< Character offset
+} arm_2d_a1_font_t;
 
 /*============================ GLOBAL VARIABLES ==============================*/
 
-extern const arm_2d_font_t    ARM_2D_FONT_16x24;
-extern const arm_2d_font_t    ARM_2D_FONT_6x8;
+extern const arm_2d_a1_font_t    ARM_2D_FONT_16x24;
+extern const arm_2d_a1_font_t    ARM_2D_FONT_6x8;
+
+extern
+arm_2d_font_get_char_descriptor_handler_t
+    ARM_2D_A1_FONT_GET_CHAR_DESCRIPTOR_HANDLER;
 
 /*============================ PROTOTYPES ====================================*/
 
@@ -102,7 +133,7 @@ extern
 void arm_lcd_text_location(uint8_t chY, uint8_t chX);
 
 extern
-void lcd_draw_char(int16_t iX, int16_t iY, char chChar);
+int8_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t *pchCharCode);
 
 extern 
 void arm_lcd_text_set_colour(   COLOUR_INT_TYPE wForeground, 
@@ -128,7 +159,13 @@ extern
 void arm_lcd_text_set_draw_region(arm_2d_region_t *ptRegion);
 
 extern
-arm_2d_err_t arm_lcd_text_set_font(arm_2d_font_t *ptFont);
+arm_2d_err_t arm_lcd_text_set_font(const arm_2d_font_t *ptFont);
+
+#if defined(__clang__)
+#   pragma clang diagnostic pop
+#elif __IS_COMPILER_GCC__
+#   pragma GCC diagnostic pop
+#endif
 
 #ifdef __cplusplus
 }

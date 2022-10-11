@@ -158,7 +158,7 @@ arm_fsm_rt_t __arm_2d_number_list_draw_list_core_item(
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(ptParam);
     
-    arm_lcd_text_set_font(&ARM_2D_FONT_16x24);
+    arm_lcd_text_set_font(&ARM_2D_FONT_16x24.use_as__arm_2d_font_t);
     arm_lcd_text_set_colour(this.tNumListCFG.tFontColour, this.tNumListCFG.tBackgroundColour);
     arm_lcd_text_set_display_mode(ARM_2D_DRW_PATN_MODE_COPY);
     
