@@ -1,5 +1,13 @@
 var NAVTREEINDEX2 =
 {
+"group__gKernel.html#affd00185d2d6d71145d204cf976fd14f":[5,0,54,1],
+"group__gKernel.html#ga02d2d99e3f389b08357114da882e8e77":[5,0,143],
+"group__gKernel.html#ga040556b8689612eec17479e02e3fc31a":[5,0,161],
+"group__gKernel.html#ga0593a5fcaddee75b1a3ce23c4c94f5df":[5,0,195],
+"group__gKernel.html#ga06a44c9b3da26f938ebf0780fc693e9b":[5,0,201],
+"group__gKernel.html#ga0ec19d4c98606a830a90ac39aac41a5e":[5,0,203],
+"group__gKernel.html#ga11b2dbdafc85d9d678e52447cc25f9ac":[5,0,216],
+"group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989":[5,0,227],
 "group__gKernel.html#ga14a09993e474bef1266e2572146b8341":[5,0,229],
 "group__gKernel.html#ga1682db336ec45448e7c1d46dbb7c553f":[5,0,153],
 "group__gKernel.html#ga17fea46439a9f655a68d9b186838163e":[5,0,213],
@@ -241,13 +249,5 @@ var NAVTREEINDEX2 =
 "group__gKernel.html#structarm__2d__tile__t_8____unnamed20____":[5,0,40],
 "group__gKernel.html#structarm__2d__version__t":[5,0,31],
 "group__gKernel.html#structarm__2d__vres__t":[5,0,16],
-"group__gKernel.html#union____arm__2d__op__info__t":[5,0,20],
-"group__gKernel.html#union____arm__2d__op__info__t_8Info_8LowLevelIO":[5,0,50],
-"group__gKernel.html#union____arm__2d__op__info__t_8Info_8LowLevelInterfaceIndex":[5,0,46],
-"group__gKernel.html#union____arm__2d__op__info__t_8Info_8Param":[5,0,44],
-"group__gKernel.html#unionarm__2d__color__accc8888__t":[5,0,6],
-"group__gKernel.html#unionarm__2d__color__bgra8888__t":[5,0,3],
-"group__gKernel.html#unionarm__2d__color__ccca8888__t":[5,0,5],
-"group__gKernel.html#unionarm__2d__color__cccn888__t":[5,0,7],
-"group__gKernel.html#unionarm__2d__color__gray8__t":[5,0,1]
+"group__gKernel.html#union____arm__2d__op__info__t":[5,0,20]
 };
