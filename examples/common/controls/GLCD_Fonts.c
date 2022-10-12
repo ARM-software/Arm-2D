@@ -34,6 +34,14 @@
 #include <stdint.h>
 #include "./arm_extra_lcd_printf.h"
 
+#if defined(__clang__)
+#   pragma clang diagnostic push
+#   pragma clang diagnostic ignored "-Wunknown-warning-option"
+#   pragma clang diagnostic ignored "-Wreserved-identifier"
+#   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
+#   pragma clang diagnostic ignored "-Wcast-qual"
+#endif
+
 extern const uint8_t Font_6x8_h[(144-32)*8];
 const uint8_t Font_6x8_h[(144-32)*8] = {
   /* 0x20: Space ' ' */

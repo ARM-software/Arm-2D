@@ -41,6 +41,7 @@
 #   pragma clang diagnostic ignored "-Wpedantic"
 #   pragma clang diagnostic ignored "-Wimplicit-int-conversion"
 #   pragma clang diagnostic ignored "-Wpadded"
+#   pragma clang diagnostic ignored "-Wunreachable-code"
 #endif
 
 /*============================ MACROS ========================================*/

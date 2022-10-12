@@ -55,7 +55,7 @@
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
-#define c_tileQuaterArc     c_tileQuaterArcCCCN888
+#define c_tileQuaterArc     c_tileQuaterArcCCCA8888
 
 #else
 #   error Unsupported colour depth!

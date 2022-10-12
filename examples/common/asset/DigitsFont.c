@@ -17,6 +17,8 @@
 #   pragma clang diagnostic ignored "-Wcast-qual"
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
 #   pragma clang diagnostic ignored "-Wgnu-variable-sized-type-not-at-end"
+#   pragma clang diagnostic ignored "-Wimplicit-int-conversion"
+#   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)
 #   pragma diag_suppress=1296
 #endif
@@ -2114,6 +2116,14 @@ const arm_2d_tile_t c_tileDigitsFontA4Mask = {
 };
 
 
+
+
+static 
+arm_fsm_rt_t __digit_font_a2_draw_char( const arm_2d_tile_t *ptTile,
+                                        const arm_2d_region_t *ptRegion,
+                                        arm_2d_tile_t *ptileChar,
+                                        COLOUR_INT tForeColour);
+                                        
 static 
 arm_fsm_rt_t __digit_font_a4_draw_char( const arm_2d_tile_t *ptTile,
                                         const arm_2d_region_t *ptRegion,
@@ -2121,12 +2131,100 @@ arm_fsm_rt_t __digit_font_a4_draw_char( const arm_2d_tile_t *ptTile,
                                         COLOUR_INT tForeColour);
 
 static 
+arm_fsm_rt_t __digit_font_a8_draw_char( const arm_2d_tile_t *ptTile,
+                                        const arm_2d_region_t *ptRegion,
+                                        arm_2d_tile_t *ptileChar,
+                                        COLOUR_INT tForeColour);
+
+static 
 arm_2d_char_descriptor_t *
-__digit_font_a4_get_char_descriptor(const arm_2d_font_t *ptFont, 
+__digit_font_get_char_descriptor(const arm_2d_font_t *ptFont, 
                                     arm_2d_char_descriptor_t *ptDescriptor,
                                     uint8_t *pchCharCode);
 
+struct {
+    implement(arm_2d_user_font_t);
 
+    arm_2d_char_idx_t tNumbers;
+    arm_2d_char_idx_t tABCDEF;
+    arm_2d_char_idx_t tMinor;
+    arm_2d_char_idx_t tPlus;
+    arm_2d_char_idx_t tDot;
+    arm_2d_char_idx_t tE;
+    arm_2d_char_idx_t tBlank;
+} ARM_2D_FONT_A2_DIGITS_ONLY = {
+
+    .use_as__arm_2d_user_font_t = {
+        .use_as__arm_2d_font_t = {
+            .tileFont = {
+                .tRegion = {
+                    .tSize = {
+                        .iWidth = 15,
+                        .iHeight = 336,
+                    },
+                },
+                .tInfo = {
+                    .bIsRoot = true,
+                    .bHasEnforcedColour = true,
+                    .tColourInfo = {
+                        .chScheme = ARM_2D_COLOUR_MASK_A2,
+                    },
+                },
+                .pchBuffer = (uint8_t *)c_bmpDigitsFontA2Alpha,
+            },
+            .tCharSize = {
+                .iWidth = 15,
+                .iHeight = 16,
+            },
+            .nCount =  20,                             //!< Character count
+            .fnGetCharDescriptor = &__digit_font_get_char_descriptor,
+            .fnDrawChar = &__digit_font_a2_draw_char,
+        },
+        .hwCount = 7,
+        .hwDefaultCharIndex = 6, /* tBlank */
+    },
+    
+    .tNumbers = {
+        .chStartCode = {'0'},
+        .hwCount = 10,
+        .hwOffset = 0,
+    },
+    
+    .tABCDEF = {
+        .chStartCode = {'A'},
+        .hwCount = 6,
+        .hwOffset = 10,
+    },
+    
+    .tMinor = {
+        .chStartCode = {'-'},
+        .hwCount = 1,
+        .hwOffset = 16,
+    },
+    
+    .tPlus = {
+        .chStartCode = {'+'},
+        .hwCount = 1,
+        .hwOffset = 17,
+    },
+
+    .tDot = {
+        .chStartCode = {'.'},
+        .hwCount = 1,
+        .hwOffset = 18,
+    },
+
+    .tE = {
+        .chStartCode = {'e'},
+        .hwCount = 1,
+        .hwOffset = 20,
+    },
+    .tBlank = {
+        .chStartCode = {' '},
+        .hwCount = 1,
+        .hwOffset = 19,
+    },
+};
 
 
 struct {
@@ -2164,7 +2262,7 @@ struct {
                 .iHeight = 16,
             },
             .nCount =  20,                             //!< Character count
-            .fnGetCharDescriptor = &__digit_font_a4_get_char_descriptor,
+            .fnGetCharDescriptor = &__digit_font_get_char_descriptor,
             .fnDrawChar = &__digit_font_a4_draw_char,
         },
         .hwCount = 7,
@@ -2213,8 +2311,110 @@ struct {
     },
 };
 
+struct {
+    implement(arm_2d_user_font_t);
+
+    arm_2d_char_idx_t tNumbers;
+    arm_2d_char_idx_t tABCDEF;
+    arm_2d_char_idx_t tMinor;
+    arm_2d_char_idx_t tPlus;
+    arm_2d_char_idx_t tDot;
+    arm_2d_char_idx_t tE;
+    arm_2d_char_idx_t tBlank;
+} ARM_2D_FONT_A8_DIGITS_ONLY = {
+
+    .use_as__arm_2d_user_font_t = {
+        .use_as__arm_2d_font_t = {
+            .tileFont = {
+                .tRegion = {
+                    .tSize = {
+                        .iWidth = 15,
+                        .iHeight = 336,
+                    },
+                },
+                .tInfo = {
+                    .bIsRoot = true,
+                    .bHasEnforcedColour = true,
+                    .tColourInfo = {
+                        .chScheme = ARM_2D_COLOUR_MASK_A8,
+                    },
+                },
+                .pchBuffer = (uint8_t *)c_bmpDigitsFontAlpha,
+            },
+            .tCharSize = {
+                .iWidth = 15,
+                .iHeight = 16,
+            },
+            .nCount =  20,                             //!< Character count
+            .fnGetCharDescriptor = &__digit_font_get_char_descriptor,
+            .fnDrawChar = &__digit_font_a8_draw_char,
+        },
+        .hwCount = 7,
+        .hwDefaultCharIndex = 6, /* tBlank */
+    },
+    
+    .tNumbers = {
+        .chStartCode = {'0'},
+        .hwCount = 10,
+        .hwOffset = 0,
+    },
+    
+    .tABCDEF = {
+        .chStartCode = {'A'},
+        .hwCount = 6,
+        .hwOffset = 10,
+    },
+    
+    .tMinor = {
+        .chStartCode = {'-'},
+        .hwCount = 1,
+        .hwOffset = 16,
+    },
+    
+    .tPlus = {
+        .chStartCode = {'+'},
+        .hwCount = 1,
+        .hwOffset = 17,
+    },
+
+    .tDot = {
+        .chStartCode = {'.'},
+        .hwCount = 1,
+        .hwOffset = 18,
+    },
+
+    .tE = {
+        .chStartCode = {'e'},
+        .hwCount = 1,
+        .hwOffset = 20,
+    },
+    .tBlank = {
+        .chStartCode = {' '},
+        .hwCount = 1,
+        .hwOffset = 19,
+    },
+};
+
+
+
 #undef this
 #define this (*ptThis)
+
+static
+arm_fsm_rt_t __digit_font_a2_draw_char(
+                                            const arm_2d_tile_t *ptTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            arm_2d_tile_t *ptileChar,
+                                            COLOUR_INT tForeColour
+                                        )
+{
+    return arm_2d_fill_colour_with_a2_mask( ptTile, 
+                                            ptRegion,
+                                            ptileChar,
+                                            (__arm_2d_color_t){tForeColour});
+}
+
+
 
 static
 arm_fsm_rt_t __digit_font_a4_draw_char(
@@ -2231,8 +2431,22 @@ arm_fsm_rt_t __digit_font_a4_draw_char(
 }
 
 static
+arm_fsm_rt_t __digit_font_a8_draw_char(
+                                            const arm_2d_tile_t *ptTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            arm_2d_tile_t *ptileChar,
+                                            COLOUR_INT tForeColour
+                                        )
+{
+    return arm_2d_fill_colour_with_mask( ptTile, 
+                                            ptRegion,
+                                            ptileChar,
+                                            (__arm_2d_color_t){tForeColour});
+}
+
+static
 arm_2d_char_descriptor_t *
-__digit_font_a4_get_char_descriptor(
+__digit_font_get_char_descriptor(
                                         const arm_2d_font_t *ptFont, 
                                         arm_2d_char_descriptor_t *ptDescriptor,
                                         uint8_t *pchCharCode)

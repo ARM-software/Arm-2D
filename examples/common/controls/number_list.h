@@ -92,7 +92,10 @@ ARM_PRIVATE(
 
 /*============================ GLOBAL VARIABLES ==============================*/
 
+extern arm_2d_user_font_t ARM_2D_FONT_A2_DIGITS_ONLY;
 extern arm_2d_user_font_t ARM_2D_FONT_A4_DIGITS_ONLY;
+extern arm_2d_user_font_t ARM_2D_FONT_A8_DIGITS_ONLY;
+
 /*============================ PROTOTYPES ====================================*/
 
 extern
