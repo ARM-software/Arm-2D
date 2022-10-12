@@ -130,8 +130,8 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * Title:        #include &quot;arm_2d_helper_pfb.h&quot;</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * Description:  Public header file for the PFB helper service </span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        03. Oct 2022</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.3.5</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        13. Oct 2022</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.3.6</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> * Target Processor:  Cortex-M cores</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment"> * -------------------------------------------------------------------- */</span></div>
@@ -693,73 +693,38 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l00584" name="l00584"></a><span class="lineno">  584</span>extern</div>
 <div class="line"><a id="l00585" name="l00585"></a><span class="lineno"><a class="line" href="group__gHelper.html#gaf07a91ddd548e926e5737db7800c16a9">  585</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#gaf07a91ddd548e926e5737db7800c16a9" title="swap the high and low bytes for each rgb16 pixel">arm_2d_helper_swap_rgb16</a>(uint16_t *phwBuffer, uint32_t wCount);</div>
 <div class="line"><a id="l00586" name="l00586"></a><span class="lineno">  586</span><span class="comment"></span> </div>
-<div class="line"><a id="l00587" name="l00587"></a><span class="lineno">  587</span><span class="comment">/*! </span></div>
-<div class="line"><a id="l00588" name="l00588"></a><span class="lineno">  588</span><span class="comment"> * \brief convert ticks of a reference timer to millisecond </span></div>
-<div class="line"><a id="l00589" name="l00589"></a><span class="lineno">  589</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00590" name="l00590"></a><span class="lineno">  590</span><span class="comment"> * \param[in] lTick the tick count</span></div>
-<div class="line"><a id="l00591" name="l00591"></a><span class="lineno">  591</span><span class="comment"> * \return int64_t the millisecond</span></div>
+<div class="line"><a id="l00587" name="l00587"></a><span class="lineno">  587</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00588" name="l00588"></a><span class="lineno">  588</span><span class="comment"> * \brief try to get a PFB block from the pool</span></div>
+<div class="line"><a id="l00589" name="l00589"></a><span class="lineno">  589</span><span class="comment"> * \param[in] ptThis the PFB control block</span></div>
+<div class="line"><a id="l00590" name="l00590"></a><span class="lineno">  590</span><span class="comment"> * \retval NULL the pool is empty</span></div>
+<div class="line"><a id="l00591" name="l00591"></a><span class="lineno">  591</span><span class="comment"> * \retval !NULL a valid pfb block </span></div>
 <div class="line"><a id="l00592" name="l00592"></a><span class="lineno">  592</span><span class="comment"> */</span></div>
 <div class="line"><a id="l00593" name="l00593"></a><span class="lineno">  593</span>extern</div>
-<div class="line"><a id="l00594" name="l00594"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf">  594</a></span>int64_t <a class="code hl_function" href="group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf" title="convert ticks of a reference timer to millisecond">arm_2d_helper_convert_ticks_to_ms</a>(int64_t lTick);</div>
-<div class="line"><a id="l00595" name="l00595"></a><span class="lineno">  595</span><span class="comment"></span> </div>
-<div class="line"><a id="l00596" name="l00596"></a><span class="lineno">  596</span><span class="comment">/*! </span></div>
-<div class="line"><a id="l00597" name="l00597"></a><span class="lineno">  597</span><span class="comment"> * \brief convert millisecond into ticks of the reference timer </span></div>
-<div class="line"><a id="l00598" name="l00598"></a><span class="lineno">  598</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00599" name="l00599"></a><span class="lineno">  599</span><span class="comment"> * \param[in] wMS the target time in millisecond</span></div>
-<div class="line"><a id="l00600" name="l00600"></a><span class="lineno">  600</span><span class="comment"> * \return int64_t the ticks</span></div>
+<div class="line"><a id="l00594" name="l00594"></a><span class="lineno">  594</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00595" name="l00595"></a><span class="lineno"><a class="line" href="group__gHelper.html#gaa7855ac916c44e531c4c8a9c5ec0e69e">  595</a></span><a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> *<a class="code hl_function" href="group__gHelper.html#gaa7855ac916c44e531c4c8a9c5ec0e69e" title="try to get a PFB block from the pool">__arm_2d_helper_pfb_new</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis);</div>
+<div class="line"><a id="l00596" name="l00596"></a><span class="lineno">  596</span><span class="comment"></span> </div>
+<div class="line"><a id="l00597" name="l00597"></a><span class="lineno">  597</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00598" name="l00598"></a><span class="lineno">  598</span><span class="comment"> * \brief free a PFB block to the pool</span></div>
+<div class="line"><a id="l00599" name="l00599"></a><span class="lineno">  599</span><span class="comment"> * \param[in] ptThis the PFB control block</span></div>
+<div class="line"><a id="l00600" name="l00600"></a><span class="lineno">  600</span><span class="comment"> * \param[in] ptPFB the target PFB block</span></div>
 <div class="line"><a id="l00601" name="l00601"></a><span class="lineno">  601</span><span class="comment"> */</span></div>
 <div class="line"><a id="l00602" name="l00602"></a><span class="lineno">  602</span>extern</div>
-<div class="line"><a id="l00603" name="l00603"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga22a1338673baaec12c475e371d7593be">  603</a></span>int64_t <a class="code hl_function" href="group__gHelper.html#ga22a1338673baaec12c475e371d7593be" title="convert millisecond into ticks of the reference timer">arm_2d_helper_convert_ms_to_ticks</a>(uint32_t wMS);</div>
-<div class="line"><a id="l00604" name="l00604"></a><span class="lineno">  604</span><span class="comment"></span> </div>
-<div class="line"><a id="l00605" name="l00605"></a><span class="lineno">  605</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00606" name="l00606"></a><span class="lineno">  606</span><span class="comment"> * \brief get the reference clock frequency</span></div>
-<div class="line"><a id="l00607" name="l00607"></a><span class="lineno">  607</span><span class="comment"> * \return uint32_t the frequency</span></div>
-<div class="line"><a id="l00608" name="l00608"></a><span class="lineno">  608</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00609" name="l00609"></a><span class="lineno">  609</span>extern</div>
-<div class="line"><a id="l00610" name="l00610"></a><span class="lineno"><a class="line" href="group__gHelper.html#gace60efc807106e1526fcc9f673f19b12">  610</a></span>uint32_t <a class="code hl_function" href="group__gHelper.html#gace60efc807106e1526fcc9f673f19b12" title="get the reference clock frequency">arm_2d_helper_get_reference_clock_frequency</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00611" name="l00611"></a><span class="lineno">  611</span><span class="comment"></span> </div>
-<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span><span class="comment"> * \brief get the current system stamp from the reference clock</span></div>
-<div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span><span class="comment"> * </span></div>
-<div class="line"><a id="l00615" name="l00615"></a><span class="lineno">  615</span><span class="comment"> * \return int64_t the timestamp in ticks (no overflow issue)</span></div>
-<div class="line"><a id="l00616" name="l00616"></a><span class="lineno">  616</span><span class="comment"> * \note you have to call arm_2d_helper_convert_ticks_to_ms() to convert the </span></div>
-<div class="line"><a id="l00617" name="l00617"></a><span class="lineno">  617</span><span class="comment"> *       the timestamp into milliseconds when required.</span></div>
-<div class="line"><a id="l00618" name="l00618"></a><span class="lineno">  618</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span>extern</div>
-<div class="line"><a id="l00620" name="l00620"></a><span class="lineno"><a class="line" href="group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185">  620</a></span>int64_t <a class="code hl_function" href="group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185" title="get the current system stamp from the reference clock">arm_2d_helper_get_system_timestamp</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span><span class="comment"></span> </div>
-<div class="line"><a id="l00622" name="l00622"></a><span class="lineno">  622</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span><span class="comment"> * \brief try to get a PFB block from the pool</span></div>
-<div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span><span class="comment"> * \param[in] ptThis the PFB control block</span></div>
-<div class="line"><a id="l00625" name="l00625"></a><span class="lineno">  625</span><span class="comment"> * \retval NULL the pool is empty</span></div>
-<div class="line"><a id="l00626" name="l00626"></a><span class="lineno">  626</span><span class="comment"> * \retval !NULL a valid pfb block </span></div>
-<div class="line"><a id="l00627" name="l00627"></a><span class="lineno">  627</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00628" name="l00628"></a><span class="lineno">  628</span>extern</div>
-<div class="line"><a id="l00629" name="l00629"></a><span class="lineno">  629</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00630" name="l00630"></a><span class="lineno"><a class="line" href="group__gHelper.html#gaa7855ac916c44e531c4c8a9c5ec0e69e">  630</a></span><a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> *<a class="code hl_function" href="group__gHelper.html#gaa7855ac916c44e531c4c8a9c5ec0e69e" title="try to get a PFB block from the pool">__arm_2d_helper_pfb_new</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis);</div>
-<div class="line"><a id="l00631" name="l00631"></a><span class="lineno">  631</span><span class="comment"></span> </div>
-<div class="line"><a id="l00632" name="l00632"></a><span class="lineno">  632</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00633" name="l00633"></a><span class="lineno">  633</span><span class="comment"> * \brief free a PFB block to the pool</span></div>
-<div class="line"><a id="l00634" name="l00634"></a><span class="lineno">  634</span><span class="comment"> * \param[in] ptThis the PFB control block</span></div>
-<div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span><span class="comment"> * \param[in] ptPFB the target PFB block</span></div>
-<div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span>extern</div>
-<div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00639" name="l00639"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga484b485061778cdf3a2cb4373374c581">  639</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga484b485061778cdf3a2cb4373374c581" title="free a PFB block to the pool">__arm_2d_helper_pfb_free</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis, <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> *ptPFB);</div>
-<div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span><span class="comment"></span> </div>
-<div class="line"><a id="l00641" name="l00641"></a><span class="lineno">  641</span><span class="comment">/*! @} */</span></div>
-<div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span> </div>
-<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span><span class="preprocessor">#if defined(__clang__)</span></div>
-<div class="line"><a id="l00644" name="l00644"></a><span class="lineno">  644</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
-<div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00646" name="l00646"></a><span class="lineno">  646</span> </div>
-<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
-<div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span>}</div>
-<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span> </div>
-<div class="line"><a id="l00651" name="l00651"></a><span class="lineno">  651</span> </div>
-<div class="line"><a id="l00652" name="l00652"></a><span class="lineno">  652</span> </div>
-<div class="line"><a id="l00653" name="l00653"></a><span class="lineno">  653</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00603" name="l00603"></a><span class="lineno">  603</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00604" name="l00604"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga484b485061778cdf3a2cb4373374c581">  604</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga484b485061778cdf3a2cb4373374c581" title="free a PFB block to the pool">__arm_2d_helper_pfb_free</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis, <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> *ptPFB);</div>
+<div class="line"><a id="l00605" name="l00605"></a><span class="lineno">  605</span><span class="comment"></span> </div>
+<div class="line"><a id="l00606" name="l00606"></a><span class="lineno">  606</span><span class="comment">/*! @} */</span></div>
+<div class="line"><a id="l00607" name="l00607"></a><span class="lineno">  607</span> </div>
+<div class="line"><a id="l00608" name="l00608"></a><span class="lineno">  608</span><span class="preprocessor">#if defined(__clang__)</span></div>
+<div class="line"><a id="l00609" name="l00609"></a><span class="lineno">  609</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
+<div class="line"><a id="l00610" name="l00610"></a><span class="lineno">  610</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00611" name="l00611"></a><span class="lineno">  611</span> </div>
+<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
+<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span>}</div>
+<div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00615" name="l00615"></a><span class="lineno">  615</span> </div>
+<div class="line"><a id="l00616" name="l00616"></a><span class="lineno">  616</span> </div>
+<div class="line"><a id="l00617" name="l00617"></a><span class="lineno">  617</span> </div>
+<div class="line"><a id="l00618" name="l00618"></a><span class="lineno">  618</span><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
