@@ -123,7 +123,7 @@ IMPL_PFB_ON_DRAW(__arm_2d_number_list_draw_background)
 
 
 static 
-int __printf(const arm_2d_region_t *ptRegion, const char *format, ...)
+int __printf(number_list_t *ptThis, const arm_2d_region_t *ptRegion, const char *format, ...)
 {
     int real_size;
     static char s_chBuffer[__LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__ + 1];
@@ -133,10 +133,11 @@ int __printf(const arm_2d_region_t *ptRegion, const char *format, ...)
     va_end(ap);
     real_size = MIN(sizeof(s_chBuffer)-1, real_size);
     s_chBuffer[real_size] = '\0';
+    
+    int16_t iWidth = this.tNumListCFG.ptFont->tCharSize.iWidth;
+    int16_t iHeight = this.tNumListCFG.ptFont->tCharSize.iHeight;
 
-    arm_2d_align_centre( *ptRegion, (int16_t)real_size * 16, 24) {
-        __centre_region.tLocation.iY += 2;  /* add an offset for 16x24 digits */
-        
+    arm_2d_align_centre( *ptRegion, (int16_t)real_size * iWidth, iHeight) {
         arm_lcd_text_set_draw_region(&__centre_region);
         arm_lcd_puts(s_chBuffer);
         arm_lcd_text_set_draw_region(NULL);
@@ -157,15 +158,17 @@ arm_fsm_rt_t __arm_2d_number_list_draw_list_core_item(
     ARM_2D_UNUSED(bIsNewFrame);
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(ptParam);
-    
-    arm_lcd_text_set_font(&ARM_2D_FONT_16x24.use_as__arm_2d_font_t);
+
+    arm_lcd_text_set_font(this.tNumListCFG.ptFont);
+
     arm_lcd_text_set_colour(this.tNumListCFG.tFontColour, this.tNumListCFG.tBackgroundColour);
     arm_lcd_text_set_display_mode(ARM_2D_DRW_PATN_MODE_COPY);
     
     arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
     
     /* print numbers */
-    __printf(&ptTile->tRegion,
+    __printf(ptThis,
+             &ptTile->tRegion,
              this.tNumListCFG.pchFormatString,
              this.tNumListCFG.nStart + ptItem->hwID * this.tNumListCFG.iDelta);
     
@@ -188,13 +191,14 @@ static arm_2d_list_item_t *__arm_2d_number_list_iterator(
             nIterationIndex = hwID;
             nIterationIndex %= this.tNumListCFG.hwCount;
             break;
+
         case __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER:
             this.nIterationIndex = hwID;
             this.nIterationIndex %= this.tNumListCFG.hwCount;
             nIterationIndex = this.nIterationIndex;
             break;
+
         case __ARM_2D_LIST_GET_PREVIOUS:
-            
             if (this.nIterationIndex) {
                 this.nIterationIndex--;
             } else {
@@ -202,25 +206,31 @@ static arm_2d_list_item_t *__arm_2d_number_list_iterator(
             }
             nIterationIndex = this.nIterationIndex;
             break;
+
         case __ARM_2D_LIST_GET_NEXT:
             this.nIterationIndex++;
             this.nIterationIndex %= this.tNumListCFG.hwCount;
             
             nIterationIndex = this.nIterationIndex;
             break;
+
         case __ARM_2D_LIST_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER:
             nIterationIndex = 0;
             break;
+
         case __ARM_2D_LIST_GET_FIRST_ITEM:
             this.nIterationIndex = 0;
             nIterationIndex = this.nIterationIndex;
             break;
+
         case __ARM_2D_LIST_GET_CURRENT:
             nIterationIndex = this.nIterationIndex;
             break;
+
         case __ARM_2D_LIST_GET_LAST_ITEM_WITHOUT_MOVE_POINTER:
             nIterationIndex = this.tNumListCFG.hwCount - 1;
             break;
+
         case __ARM_2D_LIST_GET_LAST_ITEM:
             this.nIterationIndex = this.tNumListCFG.hwCount - 1;
             nIterationIndex = this.nIterationIndex;
@@ -229,7 +239,7 @@ static arm_2d_list_item_t *__arm_2d_number_list_iterator(
 
     /* validate item size */
     if (this.tTempItem.tSize.iHeight <= 0) {
-        this.tTempItem.tSize.iHeight = 24;
+        this.tTempItem.tSize.iHeight = this.tNumListCFG.ptFont->tCharSize.iHeight;
     }
     if (this.tTempItem.tSize.iWidth <= 0) {
         this.tTempItem.tSize.iWidth 
@@ -253,18 +263,26 @@ void number_list_init(  number_list_t *ptThis,
     assert(NULL != ptThis);
     assert(NULL != ptCFG);
     assert(ptCFG->hwCount > 0);
+
     static const char c_chDefaultFormatString[] = {"%d"};
 
-    int16_t iItemHeight = 24 + ptCFG->chPrviousePadding + ptCFG->chNextPadding;
+
+    int16_t iItemHeight = ptCFG->chPrviousePadding + ptCFG->chNextPadding;
+
+    if (NULL != ptCFG->ptFont) {
+        iItemHeight += ptCFG->ptFont->tCharSize.iHeight;
+    } else {
+        iItemHeight += 8;
+    }
 
     /* call base class contructor */
     do {
         __arm_2d_list_core_cfg_t tCFG = {
-            .fnIterator =                   &__arm_2d_number_list_iterator,
+            .fnIterator = &__arm_2d_number_list_iterator,
             
             /* vertical list, centre aligned style */
-            .fnCalculator =                 &ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED_VERTICAL,
-            .fnOnDrawListBackground =   &__arm_2d_number_list_draw_background,
+            .fnCalculator = &ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED_VERTICAL,
+            .fnOnDrawListBackground = &__arm_2d_number_list_draw_background,
             //.fnOnDrawListItemBackground =       &__arm_2d_number_list_draw_list_core_item_background,
             .hwSwitchingPeriodInMs = ptCFG->hwSwitchingPeriodInMs,
             .hwItemCount = ptCFG->hwCount,
@@ -287,6 +305,10 @@ void number_list_init(  number_list_t *ptThis,
     } while(0);
 
     this.tNumListCFG = *ptCFG;
+    
+    if (NULL == this.tNumListCFG.ptFont) {
+        this.tNumListCFG.ptFont = (arm_2d_font_t *)&ARM_2D_FONT_6x8;
+    }
     
     /* validation */
     if (!this.tNumListCFG.hwCount) {

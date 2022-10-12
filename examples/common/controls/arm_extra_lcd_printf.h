@@ -120,6 +120,19 @@ typedef struct arm_2d_a1_font_t {
     uint32_t nOffset;                                                           //!< Character offset
 } arm_2d_a1_font_t;
 
+typedef struct arm_2d_char_idx_t {
+    uint8_t chStartCode[4];
+    uint16_t hwCount;
+    uint16_t hwOffset;
+} arm_2d_char_idx_t;
+
+typedef struct arm_2d_user_font_t {
+    implement(arm_2d_font_t);
+    uint16_t hwCount;
+    uint16_t hwDefaultCharIndex;
+    arm_2d_char_idx_t tLookUpTable[];
+} arm_2d_user_font_t;
+
 /*============================ GLOBAL VARIABLES ==============================*/
 
 extern const arm_2d_a1_font_t    ARM_2D_FONT_16x24;

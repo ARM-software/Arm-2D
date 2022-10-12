@@ -217,10 +217,15 @@ int8_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode)
     assert(NULL != ppchCharCode);
     assert(NULL != (*ppchCharCode));
 
-    ARM_2D_INVOKE(s_tLCDTextControl.ptFont->fnGetCharDescriptor,
+    if (NULL == ARM_2D_INVOKE(s_tLCDTextControl.ptFont->fnGetCharDescriptor,
         ARM_2D_PARAM(   s_tLCDTextControl.ptFont,
                         &s_tLCDTextControl.tCharDescriptor,
-                        (uint8_t *)(*ppchCharCode)));
+                        (uint8_t *)(*ppchCharCode)))) {
+        assert(false);
+        
+        (*ppchCharCode) += 1;
+        return 0;
+    }
 
     (*ppchCharCode) += s_tLCDTextControl.tCharDescriptor.chCodeLength;
 

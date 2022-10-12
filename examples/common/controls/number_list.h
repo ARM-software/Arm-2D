@@ -22,7 +22,10 @@
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
 #include "arm_2d_helper_list.h"
+#include "arm_extra_lcd_printf.h"
 #include "./__common.h"
+
+
 
 #ifdef   __cplusplus
 extern "C" {
@@ -67,10 +70,10 @@ typedef struct number_list_cfg_t {
     bool bIgnoreBackground;
     uint8_t chOpacity;
 
-    arm_2d_draw_list_item_handler_t    *fnOnDrawListItemBackground;            /*!< the On-Draw-List-Core-Item-Background event handler */
-    arm_2d_helper_draw_handler_t            *fnOnDrawListBackground;        /*!< the On-Draw-List-Core-Background event handler */
-    arm_2d_helper_draw_handler_t            *fnOnDrawListCover;             /*!< the On-Draw-List-Core-Cover event handler */
-
+    arm_2d_draw_list_item_handler_t *fnOnDrawListItemBackground;                /*!< the On-Draw-List-Core-Item-Background event handler */
+    arm_2d_helper_draw_handler_t    *fnOnDrawListBackground;                    /*!< the On-Draw-List-Core-Background event handler */
+    arm_2d_helper_draw_handler_t    *fnOnDrawListCover;                         /*!< the On-Draw-List-Core-Cover event handler */
+    arm_2d_font_t                   *ptFont;                                    /*!< user specified font */
 } number_list_cfg_t;
 
 
@@ -88,6 +91,8 @@ ARM_PRIVATE(
 } number_list_t;
 
 /*============================ GLOBAL VARIABLES ==============================*/
+
+extern arm_2d_user_font_t ARM_2D_FONT_A4_DIGITS_ONLY;
 /*============================ PROTOTYPES ====================================*/
 
 extern

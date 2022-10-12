@@ -1387,9 +1387,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_a4_mask(
     ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptOP);
 
     //! valid alpha mask tile
-    if (0 == ptAlpha->bHasEnforcedColour) {
-        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-    } else if (ARM_2D_COLOUR_SZ_4BIT != ptAlpha->tColourInfo.u3ColourSZ) {
+    if (!__arm_2d_valid_mask(ptAlpha, __ARM_2D_MASK_ALLOW_A4 )) {
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
     }
 

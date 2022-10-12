@@ -46,7 +46,8 @@
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wunused-function"
-#   pragma clang diagnostic ignored "-Wmissing-declarations"  
+#   pragma clang diagnostic ignored "-Wmissing-declarations"
+#   pragma clang diagnostic ignored "-Wgnu-variable-sized-type-not-at-end"
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic push
@@ -76,22 +77,22 @@
 #define this (*ptThis)
 
 /*============================ TYPES =========================================*/
-/*============================ GLOBAL VARIABLES ==============================*/
 
-extern const arm_2d_tile_t c_tileCMSISLogo;
-extern const arm_2d_tile_t c_tileCMSISLogoMask;
-extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
-extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
+
+
+
+/*============================ GLOBAL VARIABLES ==============================*/
 
 extern const arm_2d_tile_t c_tileListCoverMask;
 /*============================ PROTOTYPES ====================================*/
+
+
 /*============================ LOCAL VARIABLES ===============================*/
 
 ARM_NOINIT 
 static number_list_t s_tNumberList[3];
 
 /*============================ IMPLEMENTATION ================================*/
-
 
 static void __on_scene2_depose(arm_2d_scene_t *ptScene)
 {
@@ -101,7 +102,6 @@ static void __on_scene2_depose(arm_2d_scene_t *ptScene)
     ptScene->ptPlayer = NULL;
     
     /* reset timestamp */
-    
     arm_foreach(int64_t,this.lTimestamp) {
         *_ = 0;
     }
@@ -225,16 +225,12 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
                             bIsNewFrame);
     }
 
-//    arm_2d_align_centre(ptTile->tRegion, 42, 26) {
-//        arm_2d_draw_box(ptTile, &__centre_region, 2, GLCD_COLOR_GREEN, 255);
-//    }
-
     /* draw text at the top-left corner */
     arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-    arm_lcd_text_set_font(&ARM_2D_FONT_6x8);
+    arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
     arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
     arm_lcd_text_location(0,0);
-    arm_lcd_puts("Scene 2");
+    arm_lcd_puts("scene 2");
 
     /*-----------------------draw the foreground end  -----------------------*/
     arm_2d_op_wait_async(NULL);
@@ -284,7 +280,7 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
                 .iHeight = 80,
                 .iWidth = 28,
             },
-            
+            .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY,
             /* draw list cover */
             .fnOnDrawListCover = &__arm_2d_number_list_draw_cover,
         };
@@ -306,7 +302,7 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
                 .iHeight = 80,
                 .iWidth = 28,
             },
-            
+            .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY,
             /* draw list cover */
             .fnOnDrawListCover = &__arm_2d_number_list_draw_cover,
         };
@@ -341,20 +337,20 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
 
     END_IMPL_ARM_2D_REGION_LIST()
     
-    /* get the screen region */
-    arm_2d_region_t tScreen
-        = arm_2d_helper_pfb_get_display_area(
-            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
-    
-    /* initialise dirty region 0 at runtime
-     * this demo shows that we create a region in the centre of a screen(320*240)
-     * for a image stored in the tile c_tileCMSISLogoMask
-     */
-    s_tDirtyRegions[0].tRegion.tLocation = (arm_2d_location_t){
-        .iX = ((tScreen.tSize.iWidth - c_tileCMSISLogoMask.tRegion.tSize.iWidth) >> 1),
-        .iY = ((tScreen.tSize.iHeight - c_tileCMSISLogoMask.tRegion.tSize.iHeight) >> 1),
-    };
-    s_tDirtyRegions[0].tRegion.tSize = c_tileCMSISLogoMask.tRegion.tSize;
+//    /* get the screen region */
+//    arm_2d_region_t tScreen
+//        = arm_2d_helper_pfb_get_display_area(
+//            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
+//    
+//    /* initialise dirty region 0 at runtime
+//     * this demo shows that we create a region in the centre of a screen(320*240)
+//     * for a image stored in the tile c_tileCMSISLogoMask
+//     */
+//    s_tDirtyRegions[0].tRegion.tLocation = (arm_2d_location_t){
+//        .iX = ((tScreen.tSize.iWidth - c_tileCMSISLogoMask.tRegion.tSize.iWidth) >> 1),
+//        .iY = ((tScreen.tSize.iHeight - c_tileCMSISLogoMask.tRegion.tSize.iHeight) >> 1),
+//    };
+//    s_tDirtyRegions[0].tRegion.tSize = c_tileCMSISLogoMask.tRegion.tSize;
     
     if (NULL == ptScene) {
         ptScene = (user_scene_2_t *)malloc(sizeof(user_scene_2_t));

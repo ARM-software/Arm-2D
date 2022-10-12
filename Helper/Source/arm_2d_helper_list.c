@@ -319,8 +319,6 @@ ARM_PT_BEGIN(this.Runtime.chState)
         } else if (arm_fsm_rt_cpl != tResult) {
     ARM_PT_REPORT_STATUS(tResult)
         } 
-
-    ARM_PT_YIELD(arm_fsm_rt_on_going)
     } while(0);
 
 
@@ -704,9 +702,9 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
 
     ARM_PT_YIELD( &this.Runtime.tWorkingArea )
 
-        if (    this.CalMidAligned.hwTopVisibleItemID 
-            ==  this.CalMidAligned.hwBottomVisibleItemID) {
-            /* reach the centre item */
+
+        if (    this.CalMidAligned.iBottomVisibleOffset 
+            <=  this.CalMidAligned.iTopVisiableOffset) {
             break;
         }
 
@@ -756,10 +754,8 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
 
     ARM_PT_YIELD( &this.Runtime.tWorkingArea )
 
-
-        if (    this.CalMidAligned.hwTopVisibleItemID 
-            ==  this.CalMidAligned.hwBottomVisibleItemID) {
-            /* reach the centre item */
+        if (    this.CalMidAligned.iBottomVisibleOffset 
+            <=  this.CalMidAligned.iTopVisiableOffset) {
             break;
         }
 
@@ -1005,9 +1001,8 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
 
     ARM_PT_YIELD( &this.Runtime.tWorkingArea )
 
-        if (    this.CalMidAligned.hwTopVisibleItemID 
-            ==  this.CalMidAligned.hwBottomVisibleItemID) {
-            /* reach the centre item */
+        if (    this.CalMidAligned.iBottomVisibleOffset 
+            <=  this.CalMidAligned.iTopVisiableOffset) {
             break;
         }
 
@@ -1058,9 +1053,8 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
     ARM_PT_YIELD( &this.Runtime.tWorkingArea )
 
 
-        if (    this.CalMidAligned.hwTopVisibleItemID 
-            ==  this.CalMidAligned.hwBottomVisibleItemID) {
-            /* reach the centre item */
+        if (    this.CalMidAligned.iBottomVisibleOffset 
+            <=  this.CalMidAligned.iTopVisiableOffset) {
             break;
         }
 
