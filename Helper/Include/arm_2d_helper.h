@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        03. Oct 2022
- * $Revision:    V.1.3.1
+ * $Date:        13. Oct 2022
+ * $Revision:    V.1.3.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -717,6 +717,43 @@ extern "C" {
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ PROTOTYPES ====================================*/
+
+
+/*! 
+ * \brief convert ticks of a reference timer to millisecond 
+ *
+ * \param[in] lTick the tick count
+ * \return int64_t the millisecond
+ */
+extern
+int64_t arm_2d_helper_convert_ticks_to_ms(int64_t lTick);
+
+/*! 
+ * \brief convert millisecond into ticks of the reference timer 
+ *
+ * \param[in] wMS the target time in millisecond
+ * \return int64_t the ticks
+ */
+extern
+int64_t arm_2d_helper_convert_ms_to_ticks(uint32_t wMS);
+
+/*!
+ * \brief get the reference clock frequency
+ * \return uint32_t the frequency
+ */
+extern
+uint32_t arm_2d_helper_get_reference_clock_frequency(void);
+
+/*!
+ * \brief get the current system stamp from the reference clock
+ * 
+ * \return int64_t the timestamp in ticks (no overflow issue)
+ * \note you have to call arm_2d_helper_convert_ticks_to_ms() to convert the 
+ *       the timestamp into milliseconds when required.
+ */
+extern
+int64_t arm_2d_helper_get_system_timestamp(void);
+
 
 /*!
  * \brief set an alarm with given period and check the status

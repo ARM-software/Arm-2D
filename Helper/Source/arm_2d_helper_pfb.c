@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        03. Oct 2022
- * $Revision:    V.1.3.6
+ * $Date:        13. Oct 2022
+ * $Revision:    V.1.3.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -515,38 +515,6 @@ bool __arm_2d_helper_pfb_drawing_iteration_end(arm_2d_helper_pfb_t *ptThis)
 
     return true;
 }
-
-
-__WEAK int64_t arm_2d_helper_get_system_timestamp(void)
-{
-#if defined(__PERF_COUNTER__)
-    return get_system_ticks();
-#else
-    return (int64_t)clock();
-#endif
-}
-
-__WEAK 
-uint32_t arm_2d_helper_get_reference_clock_frequency(void)
-{
-    extern uint32_t SystemCoreClock;
-    return SystemCoreClock;
-}
-
-
-int64_t arm_2d_helper_convert_ticks_to_ms(int64_t lTick)
-{
-    return (lTick * 1000) / (int64_t)arm_2d_helper_get_reference_clock_frequency();
-}
-
-int64_t arm_2d_helper_convert_ms_to_ticks(uint32_t wMS)
-{
-    int64_t lResult = arm_2d_helper_get_reference_clock_frequency() 
-                    * (int64_t)wMS / 1000ul;
-    return lResult ? lResult : 1;
-}
-
-
 
 __WEAK void __arm_2d_helper_perf_counter_start(int64_t *plTimestamp)
 {
