@@ -22,8 +22,8 @@
  * Description:  Public header file to indicate features avaialble for this
  *               arm-2d library variant.
  *
- * $Date:        04. Oct 2022
- * $Revision:    V.1.0.5
+ * $Date:        13. Oct 2022
+ * $Revision:    V.1.0.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -160,6 +160,10 @@ extern "C" {
 
 #ifndef __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__
 #   define __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__   1      //!< use fixed point numbers in transform operations
+#endif
+
+#ifndef __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__
+#   define __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__     1
 #endif
 
 /*! \note In your application, if you do need to use RGBA8888 for some resources

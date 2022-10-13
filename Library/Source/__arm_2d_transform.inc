@@ -222,6 +222,25 @@ void __ARM_2D_FUNC(transform)( __arm_2d_param_copy_orig_t *ptParam,
             }
         #endif
 
+#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
+    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__                                     \
+    &&  defined(__ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__)   \
+    &&  __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__
+
+            arm_2d_location_t tOriginLocation = {
+                .iX = tPoint.fX,
+                .iY = tPoint.fY,
+            };
+
+            if (    (tOriginLocation.iX < -1)
+                ||  (tOriginLocation.iY < -1)
+                ||  (tOriginLocation.iX > ptParam->tOrigin.tValidRegion.tSize.iWidth)
+                ||  (tOriginLocation.iY > ptParam->tOrigin.tValidRegion.tSize.iHeight)) {
+                pTargetBase++;
+                continue;
+            }
+#endif
+
             __ARM_2D_FUNC(get_pixel_colour)(
                                 &tPoint,
                                 &ptParam->tOrigin.tValidRegion,
@@ -370,6 +389,25 @@ void __ARM_2D_FUNC(transform)(   __arm_2d_param_copy_orig_t *ptParam,
                 tPointFast.Y -= __CALIBFX;
             }
         #endif
+
+#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
+    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__                                     \
+    &&  defined(__ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__)   \
+    &&  __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__
+
+            arm_2d_location_t tOriginLocation = {
+                .iX = tPointFast.X >> 16,
+                .iY = tPointFast.Y >> 16,
+            };
+
+            if (    (tOriginLocation.iX < -1)
+                ||  (tOriginLocation.iY < -1)
+                ||  (tOriginLocation.iX > ptParam->tOrigin.tValidRegion.tSize.iWidth)
+                ||  (tOriginLocation.iY > ptParam->tOrigin.tValidRegion.tSize.iHeight)) {
+                pTargetBase++;
+                continue;
+            }
+#endif
 
             __ARM_2D_FUNC(get_pixel_colour)(
                                         &tPointFast,
@@ -608,6 +646,25 @@ void __ARM_2D_FUNC(transform_with_opacity)(__arm_2d_param_copy_orig_t *ptParam,
             }
         #endif
 
+#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
+    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__                                     \
+    &&  defined(__ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__)   \
+    &&  __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__
+
+            arm_2d_location_t tOriginLocation = {
+                .iX = tPoint.fX,
+                .iY = tPoint.fY,
+            };
+
+            if (    (tOriginLocation.iX < -1)
+                ||  (tOriginLocation.iY < -1)
+                ||  (tOriginLocation.iX > ptParam->tOrigin.tValidRegion.tSize.iWidth)
+                ||  (tOriginLocation.iY > ptParam->tOrigin.tValidRegion.tSize.iHeight)) {
+                pTargetBase++;
+                continue;
+            }
+#endif
+
             __ARM_2D_FUNC(get_pixel_colour_with_alpha) (
                                &tPoint,
                                &ptParam->tOrigin.
@@ -697,6 +754,25 @@ void __ARM_2D_FUNC(transform_with_opacity)(__arm_2d_param_copy_orig_t *ptParam,
                 tPointFast.Y -= __CALIBFX;
             }
         #endif
+
+#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
+    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__                                     \
+    &&  defined(__ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__)   \
+    &&  __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__
+
+            arm_2d_location_t tOriginLocation = {
+                .iX = tPointFast.X >> 16,
+                .iY = tPointFast.Y >> 16,
+            };
+
+            if (    (tOriginLocation.iX < -1)
+                ||  (tOriginLocation.iY < -1)
+                ||  (tOriginLocation.iX > ptParam->tOrigin.tValidRegion.tSize.iWidth)
+                ||  (tOriginLocation.iY > ptParam->tOrigin.tValidRegion.tSize.iHeight)) {
+                pTargetBase++;
+                continue;
+            }
+#endif
 
             __ARM_2D_FUNC(get_pixel_colour_with_alpha) (
                             &tPointFast,
