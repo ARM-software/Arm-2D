@@ -1,7 +1,5 @@
 //--- list of versions ---
 const versions = {
-    "": "document.write('Version",
-    "": "');0",
     "latest": "1.1.0-preview1",
     "developing": "1.1.0-preview1.126",
     "v1.0.0-preview4": "1.0.0-preview4",
