@@ -491,6 +491,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_2d_helper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -555,6 +560,11 @@
               <FileName>progress_bar_simple.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\progress_bar_simple.c</FilePath>
+            </File>
+            <File>
+              <FileName>number_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\number_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -645,6 +655,11 @@
               <FileName>wave.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
+            <File>
+              <FileName>DigitsFont.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\DigitsFont.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1249,6 +1264,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_2d_helper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1313,6 +1333,11 @@
               <FileName>progress_bar_simple.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\controls\progress_bar_simple.c</FilePath>
+            </File>
+            <File>
+              <FileName>number_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\number_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1403,6 +1428,11 @@
               <FileName>wave.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\wave.c</FilePath>
+            </File>
+            <File>
+              <FileName>DigitsFont.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\DigitsFont.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -515,6 +515,11 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\cmsis_logo.c</FilePath>
             </File>
+            <File>
+              <FileName>DigitsFont.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\DigitsFont.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -604,6 +609,11 @@
               <FileName>arm_extra_controls.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
+            </File>
+            <File>
+              <FileName>number_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\number_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1032,6 +1042,11 @@
               <FileName>arm_2d_helper_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1771,6 +1786,11 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\cmsis_logo.c</FilePath>
             </File>
+            <File>
+              <FileName>DigitsFont.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\DigitsFont.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1860,6 +1880,11 @@
               <FileName>arm_extra_controls.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
+            </File>
+            <File>
+              <FileName>number_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\number_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2288,6 +2313,11 @@
               <FileName>arm_2d_helper_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3095,6 +3125,11 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\cmsis_logo.c</FilePath>
             </File>
+            <File>
+              <FileName>DigitsFont.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\DigitsFont.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3184,6 +3219,11 @@
               <FileName>arm_extra_controls.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
+            </File>
+            <File>
+              <FileName>number_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\number_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3612,6 +3652,11 @@
               <FileName>arm_2d_helper_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4351,6 +4396,11 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\cmsis_logo.c</FilePath>
             </File>
+            <File>
+              <FileName>DigitsFont.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\DigitsFont.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4440,6 +4490,11 @@
               <FileName>arm_extra_controls.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
+            </File>
+            <File>
+              <FileName>number_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\number_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4868,6 +4923,11 @@
               <FileName>arm_2d_helper_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5607,6 +5667,11 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\cmsis_logo.c</FilePath>
             </File>
+            <File>
+              <FileName>DigitsFont.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\DigitsFont.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5696,6 +5761,11 @@
               <FileName>arm_extra_controls.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
+            </File>
+            <File>
+              <FileName>number_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\number_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6124,6 +6194,11 @@
               <FileName>arm_2d_helper_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6932,6 +7007,11 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\cmsis_logo.c</FilePath>
             </File>
+            <File>
+              <FileName>DigitsFont.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\DigitsFont.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -7021,6 +7101,11 @@
               <FileName>arm_extra_controls.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
+            </File>
+            <File>
+              <FileName>number_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\number_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7449,6 +7534,11 @@
               <FileName>arm_2d_helper_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8188,6 +8278,11 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\cmsis_logo.c</FilePath>
             </File>
+            <File>
+              <FileName>DigitsFont.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\DigitsFont.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -8277,6 +8372,11 @@
               <FileName>arm_extra_controls.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
+            </File>
+            <File>
+              <FileName>number_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\number_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8705,6 +8805,11 @@
               <FileName>arm_2d_helper_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9444,6 +9549,11 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\cmsis_logo.c</FilePath>
             </File>
+            <File>
+              <FileName>DigitsFont.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\DigitsFont.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -9533,6 +9643,11 @@
               <FileName>arm_extra_controls.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
+            </File>
+            <File>
+              <FileName>number_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\number_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -10063,6 +10178,11 @@
               <FileName>arm_2d_helper_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -10802,6 +10922,11 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\cmsis_logo.c</FilePath>
             </File>
+            <File>
+              <FileName>DigitsFont.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\DigitsFont.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -10891,6 +11016,11 @@
               <FileName>arm_extra_controls.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
+            </File>
+            <File>
+              <FileName>number_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\number_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -11319,6 +11449,11 @@
               <FileName>arm_2d_helper_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -12058,6 +12193,11 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\cmsis_logo.c</FilePath>
             </File>
+            <File>
+              <FileName>DigitsFont.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\DigitsFont.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -12147,6 +12287,11 @@
               <FileName>arm_extra_controls.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
+            </File>
+            <File>
+              <FileName>number_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\number_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -12575,6 +12720,11 @@
               <FileName>arm_2d_helper_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -13245,6 +13395,11 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\cmsis_logo.c</FilePath>
             </File>
+            <File>
+              <FileName>DigitsFont.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\DigitsFont.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -13334,6 +13489,11 @@
               <FileName>arm_extra_controls.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\controls\arm_extra_controls.h</FilePath>
+            </File>
+            <File>
+              <FileName>number_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\controls\number_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -13813,6 +13973,11 @@
               <FileName>arm_2d_helper_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\arm_2d_helper_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_helper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Helper\Source\arm_2d_helper.c</FilePath>
             </File>
           </Files>
         </Group>
