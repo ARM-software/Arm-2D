@@ -68,8 +68,28 @@
 /*============================ TYPES =========================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ GLOBAL VARIABLES ==============================*/
+static uint32_t s_wMSUnit = 1;
+static bool s_bInitialized = false;
 /*============================ PROTOTYPES ====================================*/
 /*============================ IMPLEMENTATION ================================*/
+
+void arm_2d_helper_init(void)
+{
+    arm_irq_safe {
+        do {
+            if (s_bInitialized) {
+                break;
+            }
+            s_bInitialized = true;
+
+            s_wMSUnit = arm_2d_helper_get_reference_clock_frequency() / 1000ul;
+            if (s_wMSUnit == 0) {
+                s_wMSUnit = 1;
+            }
+        } while(0);
+    }
+}
+
 
 __WEAK int64_t arm_2d_helper_get_system_timestamp(void)
 {
@@ -90,15 +110,17 @@ uint32_t arm_2d_helper_get_reference_clock_frequency(void)
 
 int64_t arm_2d_helper_convert_ticks_to_ms(int64_t lTick)
 {
-    return (lTick * 1000) / (int64_t)arm_2d_helper_get_reference_clock_frequency();
+    return lTick / (int64_t)s_wMSUnit;
 }
 
 int64_t arm_2d_helper_convert_ms_to_ticks(uint32_t wMS)
 {
-    int64_t lResult = arm_2d_helper_get_reference_clock_frequency() 
-                    * (int64_t)wMS / 1000ul;
+    int64_t lResult = (int64_t)s_wMSUnit * (int64_t)wMS;
     return lResult ? lResult : 1;
 }
+
+
+
 
 
 #if defined(__clang__)

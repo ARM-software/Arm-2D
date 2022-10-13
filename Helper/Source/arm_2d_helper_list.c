@@ -149,33 +149,16 @@ ARM_PT_BEGIN(this.Runtime.chState)
         }
 
         if (bIsNewFrame) {
-            int64_t lTimestamp = arm_2d_helper_get_system_timestamp();
-            if (this.Runtime.nTargetOffset != this.Runtime.nOffset) {
-                if (0 == this.Runtime.lTimestamp) {
-                    this.Runtime.lTimestamp = lTimestamp;
-                } else {
-                    /* code for update this.Runtime.iOffset */
-                    int64_t lElapsed = (lTimestamp - this.Runtime.lTimestamp);
-                    
-                    int32_t iDelta = 0;
-                    if (lElapsed < this.Runtime.lPeriod) {
-                        iDelta = this.Runtime.nTargetOffset - this.Runtime.nStartOffset;
-                        iDelta = (int32_t)(lElapsed * (int64_t)iDelta / this.Runtime.lPeriod);
-                        
-                        this.Runtime.nOffset = this.Runtime.nStartOffset + iDelta;
-                    } else {
-                        /* timeout */
-                        
-                        this.Runtime.nOffset = this.Runtime.nTargetOffset;
-                        if (this.tCFG.nTotalLength) {
-                            this.Runtime.nOffset = this.Runtime.nOffset % this.tCFG.nTotalLength;
-                        }
-                        this.Runtime.nTargetOffset = this.Runtime.nOffset;
-                        
-                        this.Runtime.nStartOffset = this.Runtime.nTargetOffset;
-                        this.Runtime.lTimestamp = 0;
-                    }
+            if (__arm_2d_helper_time_liner_slider(this.Runtime.nStartOffset,    /* from */
+                                                  this.Runtime.nTargetOffset,   /* to */
+                                                  this.Runtime.lPeriod,         /* finish in specified period */
+                                                  &this.Runtime.nOffset,        /* output offset */
+                                                  &this.Runtime.lTimestamp)) {  /* timestamp */
+                if (this.tCFG.nTotalLength) {
+                    this.Runtime.nOffset = this.Runtime.nOffset % this.tCFG.nTotalLength;
                 }
+                this.Runtime.nTargetOffset = this.Runtime.nOffset;
+                this.Runtime.nStartOffset = this.Runtime.nTargetOffset;
             }
         }
         

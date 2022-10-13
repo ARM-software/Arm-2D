@@ -113,6 +113,8 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
     assert(NULL != ptThis);
     assert(NULL != ptCFG);
     
+    arm_2d_helper_init();
+    
     memset(ptThis, 0, sizeof(this));
     this.tCFG = *ptCFG;
     

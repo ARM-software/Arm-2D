@@ -711,13 +711,45 @@ extern "C" {
  * \return bool whether it is timeout
  */
 #define arm_2d_helper_is_time_out(__ms, ...)                                    \
-    __arm_2d_helper_is_time_out((__ms), (NULL, ##__VA_ARGS__))
+    __arm_2d_helper_is_time_out(arm_2d_helper_convert_ms_to_ticks(__ms),        \
+                                (NULL, ##__VA_ARGS__))
+
+
+/*!
+ * \brief calculate the stroke of a liner slider based on time
+ *
+ * \param[in] __from the start of the slider
+ * \param[in] __to the end of the slider
+ * \param[in] __ms a given period (ms) in which the slider should finish the 
+ *            whole stroke
+ * \param[out] __stroke_ptr the address of an int32_t stroke variable
+ * \param[in] ... an optional address of a timestamp variable, if you omit it,
+ *             NULL will be passed, and the code that call this funtion will not
+ *              be reentrant.
+ * \retval true the slider has finished the whole stroke
+ * \retval false the slider hasn't reach the target end
+ */
+#define arm_2d_helper_time_liner_slider( __from,                                \
+                                         __to,                                  \
+                                         __ms,                                  \
+                                         __strode_ptr,                          \
+                                         ...)                                   \
+            arm_2d_helper_time_liner_slider((__from),                           \
+                                            (__to),                             \
+           arm_2d_helper_convert_ms_to_ticks(__ms),                             \
+                                            (__stroke_ptr),                     \
+                                            (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ PROTOTYPES ====================================*/
 
+/*!
+ * \brief initialize helper services
+ */
+extern
+void arm_2d_helper_init(void);
 
 /*! 
  * \brief convert ticks of a reference timer to millisecond 
@@ -758,13 +790,13 @@ int64_t arm_2d_helper_get_system_timestamp(void);
 /*!
  * \brief set an alarm with given period and check the status
  * 
- * \param[in] wMS a time period in millisecond
+ * \param[in] lPeriod a time period in ticks
  * \param[in] plTimestamp a pointer points to an int64_t integer, if NULL is 
  *            passed, an static local variable inside the function will be used
  * \return bool whether it is timeout or not
  */
 __STATIC_INLINE 
-bool __arm_2d_helper_is_time_out(uint32_t wMS, int64_t *plTimestamp)
+bool __arm_2d_helper_is_time_out(int64_t lPeriod, int64_t *plTimestamp)
 {
     int64_t lTimestamp = arm_2d_helper_get_system_timestamp();
     static int64_t s_lTimestamp = 0;
@@ -773,17 +805,75 @@ bool __arm_2d_helper_is_time_out(uint32_t wMS, int64_t *plTimestamp)
     }
 
     if (0 == *plTimestamp) {
-        *plTimestamp = arm_2d_helper_convert_ms_to_ticks(wMS);
+        *plTimestamp = lPeriod;
         *plTimestamp += lTimestamp;
         
         return false;
     }
 
     if (lTimestamp >= *plTimestamp) {
-        *plTimestamp = arm_2d_helper_convert_ms_to_ticks(wMS) + lTimestamp;
+        *plTimestamp = lPeriod + lTimestamp;
         return true;
     }
 
+    return false;
+}
+
+/*!
+ * \brief calculate the stroke of a liner slider based on time
+ *
+ * \param[in] nFrom the start of the slider
+ * \param[in] nTo the end of the slider
+ * \param[in] lPeriod a given period in which the slider should finish the whole
+ *            stroke
+ * \param[out] pnStroke the address of an int32_t stroke variable
+ * \param[in] plTimestamp the address of a timestamp variable, if you pass NULL
+ *            the code that call this funtion will not be reentrant.
+ * \retval true the slider has finished the whole stroke
+ * \retval false the slider hasn't reach the target end
+ */
+__STATIC_INLINE
+bool __arm_2d_helper_time_liner_slider( int32_t nFrom, 
+                                        int32_t nTo, 
+                                        int64_t lPeriod,
+                                        int32_t *pnStroke,
+                                        int64_t *plTimestamp)
+{
+    int64_t lTimestamp = arm_2d_helper_get_system_timestamp();
+    
+    static int64_t s_lTimestamp = 0;
+    if (NULL == plTimestamp) {
+        plTimestamp = &s_lTimestamp;
+    }
+    
+    if (nFrom == nTo) {
+        return true;
+    } else {
+        if (0 == *plTimestamp) {
+            *plTimestamp = lTimestamp;
+        } else {
+            /* code for update this.Runtime.iOffset */
+            int64_t lElapsed = (lTimestamp - *plTimestamp);
+            
+            int32_t iDelta = 0;
+            if (lElapsed < lPeriod) {
+                iDelta = nTo - nFrom;
+                iDelta = (int32_t)(lElapsed * (int64_t)iDelta / lPeriod);
+                if (NULL != pnStroke) {
+                    (*pnStroke) = nFrom + iDelta;
+                }
+            } else {
+                /* timeout */
+                if (NULL != pnStroke) {
+                    (*pnStroke) = nTo;
+                }
+                *plTimestamp = 0;
+                
+                return true;
+            }
+        }
+    }
+    
     return false;
 }
 
