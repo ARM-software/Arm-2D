@@ -140,6 +140,7 @@ var group__gHelper =
     [ "__arm_2d_align_bottom_right3", "group__gHelper.html#ga5a0a74379d45633b1a8b84e8e455cd60", null ],
     [ "arm_2d_align_bottom_right", "group__gHelper.html#ga443bb80caebb268326e6fc2c6c5391eb", null ],
     [ "arm_2d_helper_is_time_out", "group__gHelper.html#gae4ab75c458c5e2ba0355ba76dff03735", null ],
+    [ "arm_2d_helper_time_liner_slider", "group__gHelper.html#ga58cd35c9ad89c164f264503596517c21", null ],
     [ "arm_2d_helper_draw_handler_t", "group__gHelper.html#ga895cc320ceab0ca0bd10b999787b2d6c", null ],
     [ "arm_2d_helper_render_handler_t", "group__gHelper.html#ga03c2991d31bd58c8a1d5303fb9460f39", null ],
     [ "arm_2d_scene_player_switch_mode_t", "group__gHelper.html#gab79c6ab3540af636c218dc40fa065ac3", [
@@ -192,9 +193,11 @@ var group__gHelper =
     [ "arm_2d_helper_swap_rgb16", "group__gHelper.html#gaf07a91ddd548e926e5737db7800c16a9", null ],
     [ "__arm_2d_helper_pfb_new", "group__gHelper.html#gaa7855ac916c44e531c4c8a9c5ec0e69e", null ],
     [ "__arm_2d_helper_pfb_free", "group__gHelper.html#ga484b485061778cdf3a2cb4373374c581", null ],
+    [ "arm_2d_helper_init", "group__gHelper.html#ga9ab5e975303c28c98f1ae62babb8286d", null ],
     [ "arm_2d_helper_convert_ticks_to_ms", "group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf", null ],
     [ "arm_2d_helper_convert_ms_to_ticks", "group__gHelper.html#ga22a1338673baaec12c475e371d7593be", null ],
     [ "arm_2d_helper_get_reference_clock_frequency", "group__gHelper.html#gace60efc807106e1526fcc9f673f19b12", null ],
     [ "arm_2d_helper_get_system_timestamp", "group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185", null ],
-    [ "__arm_2d_helper_is_time_out", "group__gHelper.html#ga9e560f87a40e54229ec23502cecc3bdb", null ]
+    [ "__arm_2d_helper_is_time_out", "group__gHelper.html#ga7e3c8c8f8298d8ffaae2c8dc8500578f", null ],
+    [ "__arm_2d_helper_time_liner_slider", "group__gHelper.html#gab27d1fbf0e04685918ccfe53e00d1ddb", null ]
 ];

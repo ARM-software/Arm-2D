@@ -1,5 +1,8 @@
 var NAVTREEINDEX2 =
 {
+"group__gKernel.html#afcec6e72ec1717659666cbeb104b1ab9":[5,0,45,5],
+"group__gKernel.html#afcfe4e9ad6eb4f402d0001a14d888e5f":[5,0,10,0],
+"group__gKernel.html#afeb5df3f822f7a00695ae7445e1b1105":[5,0,20,0],
 "group__gKernel.html#affd00185d2d6d71145d204cf976fd14f":[5,0,54,1],
 "group__gKernel.html#ga02d2d99e3f389b08357114da882e8e77":[5,0,143],
 "group__gKernel.html#ga040556b8689612eec17479e02e3fc31a":[5,0,161],
@@ -246,8 +249,5 @@ var NAVTREEINDEX2 =
 "group__gKernel.html#structarm__2d__task__t":[5,0,17],
 "group__gKernel.html#structarm__2d__task__t_8____unnamed24____":[5,0,42],
 "group__gKernel.html#structarm__2d__tile__t":[5,0,15],
-"group__gKernel.html#structarm__2d__tile__t_8____unnamed20____":[5,0,40],
-"group__gKernel.html#structarm__2d__version__t":[5,0,31],
-"group__gKernel.html#structarm__2d__vres__t":[5,0,16],
-"group__gKernel.html#union____arm__2d__op__info__t":[5,0,20]
+"group__gKernel.html#structarm__2d__tile__t_8____unnamed20____":[5,0,40]
 };
