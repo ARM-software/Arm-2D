@@ -18,12 +18,12 @@
 
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
- * Title:        #include "arm_2d.h"
+ * Title:        #include "arm_2d_draw.h"
  * Description:  Public header file to contain the APIs for colour space
  *               conversions
  *
- * $Date:        11. Oct 2022
- * $Revision:    V.1.0.3
+ * $Date:        13. Oct 2022
+ * $Revision:    V.1.0.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -219,6 +219,7 @@ typedef struct arm_2d_op_drw_pt_t {
         uint32_t wColour;                       //!< 32bit colour
     };
     uint8_t chOpaicty;
+    arm_2d_region_t tTargetRegion;
 } arm_2d_op_drw_pt_t;
 
 /*!

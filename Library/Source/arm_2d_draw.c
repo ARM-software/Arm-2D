@@ -21,8 +21,8 @@
  * Title:        arm-2d_draw.c
  * Description:  APIs for basic drawing
  *
- * $Date:        11. Oct 2022
- * $Revision:    V.1.0.3
+ * $Date:        13. Oct 2022
+ * $Revision:    V.1.0.4
  *
  * Target Processor:  Cortex-M cores
  *
@@ -127,30 +127,26 @@ arm_fsm_rt_t arm_2dp_gray8_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
 
     ARM_2D_IMPL(arm_2d_op_drw_pt_t, ptOP);
 
+    if (0 == chOpacity) {
+        return arm_fsm_rt_cpl;
+    }
+
     if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
         return arm_fsm_rt_on_going;
     }
 
     //memset(ptThis, 0, sizeof(*ptThis));
 
-    if (0 == chOpacity) {
-        return arm_fsm_rt_cpl;
-    } else {
-        this.chOpaicty = chOpacity;
-    }
-
-    arm_2d_region_t tPointRegion = {
-        .tLocation = tLocation,
-        .tSize = {1,1},
-    };
+    this.tTargetRegion.tLocation = tLocation;
+    this.tTargetRegion.tSize = (arm_2d_size_t){1,1};
 
     OP_CORE.ptOp = &ARM_2D_OP_DRAW_POINT_C8BIT;
     OP_CORE.Preference.u2ACCMethods = ARM_2D_PREF_ACC_SW_ONLY;
 
     this.Target.ptTile = ptTarget;
-    this.Target.ptRegion = &tPointRegion;
+    this.Target.ptRegion = &this.tTargetRegion;
     this.chColour = chColour;
-
+    this.chOpaicty = chOpacity;
 
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
@@ -168,29 +164,26 @@ arm_fsm_rt_t arm_2dp_rgb565_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
 
     ARM_2D_IMPL(arm_2d_op_drw_pt_t, ptOP);
 
+    if (0 == chOpacity) {
+        return arm_fsm_rt_cpl;
+    }
+
     if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
         return arm_fsm_rt_on_going;
     }
 
     //memset(ptThis, 0, sizeof(*ptThis));
 
-    if (0 == chOpacity) {
-        return arm_fsm_rt_cpl;
-    } else {
-        this.chOpaicty = chOpacity;
-    }
-
-    arm_2d_region_t tPointRegion = {
-        .tLocation = tLocation,
-        .tSize = {1,1},
-    };
+    this.tTargetRegion.tLocation = tLocation;
+    this.tTargetRegion.tSize = (arm_2d_size_t){1,1};
 
     OP_CORE.ptOp = &ARM_2D_OP_DRAW_POINT_RGB16;
     OP_CORE.Preference.u2ACCMethods = ARM_2D_PREF_ACC_SW_ONLY;
 
     this.Target.ptTile = ptTarget;
-    this.Target.ptRegion = &tPointRegion;
+    this.Target.ptRegion = &this.tTargetRegion;
     this.hwColour = hwColour;
+    this.chOpaicty = chOpacity;
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
@@ -207,29 +200,26 @@ arm_fsm_rt_t arm_2dp_cccn888_draw_point(  arm_2d_op_drw_pt_t  *ptOP,
 
     ARM_2D_IMPL(arm_2d_op_drw_pt_t, ptOP);
 
+    if (0 == chOpacity) {
+        return arm_fsm_rt_cpl;
+    }
+
     if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
         return arm_fsm_rt_on_going;
     }
 
     //memset(ptThis, 0, sizeof(*ptThis));
 
-    if (0 == chOpacity) {
-        return arm_fsm_rt_cpl;
-    } else {
-        this.chOpaicty = chOpacity;
-    }
-
-    arm_2d_region_t tPointRegion = {
-        .tLocation = tLocation,
-        .tSize = {1,1},
-    };
+    this.tTargetRegion.tLocation = tLocation;
+    this.tTargetRegion.tSize = (arm_2d_size_t){1,1};
 
     OP_CORE.ptOp = &ARM_2D_OP_DRAW_POINT_RGB32;
     OP_CORE.Preference.u2ACCMethods = ARM_2D_PREF_ACC_SW_ONLY;
 
     this.Target.ptTile = ptTarget;
-    this.Target.ptRegion = &tPointRegion;
+    this.Target.ptRegion = &this.tTargetRegion;
     this.wColour = wColour;
+    this.chOpaicty = chOpacity;
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
