@@ -366,9 +366,10 @@ static void __user_scene_player_init(void)
 
 void disp_adapter0_init(void)
 {
-    arm_extra_controls_init();
-    
+
     __user_scene_player_init();
+
+    arm_extra_controls_init();
 
     do {
         /*! define dirty regions for the navigation layer */

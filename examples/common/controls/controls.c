@@ -19,6 +19,8 @@
 /*============================ INCLUDES ======================================*/
 #include "./arm_extra_controls.h"
 
+#include "arm_2d_helper.h"
+
 #if defined(__clang__)
 #   pragma clang diagnostic push
 #   pragma clang diagnostic ignored "-Wunknown-warning-option"
@@ -44,6 +46,8 @@
 
 void arm_extra_controls_init(void)
 {
+    arm_2d_helper_init();
+
     busy_wheel_init();
     spinning_wheel_init();
     progress_bar_drill_init();
