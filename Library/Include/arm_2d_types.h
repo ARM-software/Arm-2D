@@ -21,8 +21,8 @@
  * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        06. Oct 2022
- * $Revision:    V.1.0.10
+ * $Date:        14. Oct 2022
+ * $Revision:    V.1.0.11
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -68,7 +68,7 @@ extern "C" {
 /*============================ MACROS ========================================*/
 
 /* A patch for GCC support */
-#if defined(__IS_COMPILER_GCC__) && __IS_COMPILER_ARM_GCC__ && __ARM_2D_HAS_HELIUM__
+#if defined(__IS_COMPILER_GCC__) && __IS_COMPILER_GCC__ && __ARM_2D_HAS_HELIUM__
 
 #   ifndef __ARM_2D_SUPPRESS_GCC_HELIUM_PATCH_WARNING__
 #       pragma GCC warning "As GCC has compilation issues for supporting Helium,\
