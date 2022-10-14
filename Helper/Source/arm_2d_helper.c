@@ -35,6 +35,10 @@
 #include <time.h>
 #include "arm_2d_helper.h"
 
+#if defined(__PERF_COUNTER__)
+#   include "perf_counter.h"
+#endif
+
 #if defined(__clang__)
 #   pragma clang diagnostic push
 #   pragma clang diagnostic ignored "-Wunknown-warning-option"
