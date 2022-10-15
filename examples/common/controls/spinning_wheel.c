@@ -69,15 +69,6 @@ extern const arm_2d_tile_t c_tileGreenCircleMask;
 
 /*============================ LOCAL VARIABLES ===============================*/
 
-impl_fb(s_tileSpinWheelMask, 
-        61, 
-        61, 
-        arm_2d_color_gray8_t,
-        
-        .tInfo.tColourInfo.chScheme = ARM_2D_COLOUR_8BIT,
-        .tInfo.bHasEnforcedColour = true,
-        );
-
 static
 const arm_2d_tile_t c_tileGreenCircleQuaterMask = 
     impl_child_tile(
@@ -113,41 +104,36 @@ void spinning_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
         arm_2d_op_wait_async(NULL);
     }
 
+    
     //! spin mask
     do {
-        static arm_2d_op_rotate_t s_tMaskRotateCB = {0};
+        static arm_2d_op_fill_cl_msk_opa_trans_t s_tMaskRotateCB = {0};
     
         if (bIsNewFrame) {
             s_fAngle += ARM_2D_ANGLE(6.0f);
             s_fAngle = fmodf(s_fAngle,ARM_2D_ANGLE(360));
         }
 
-        const arm_2d_location_t c_tCentre = {
-            .iX = 30,
-            .iY = 30,
+        arm_2d_location_t c_tCentre = {
+            .iX = c_tileSpinWheelMask.tRegion.tSize.iWidth >> 1,
+            .iY = c_tileSpinWheelMask.tRegion.tSize.iHeight >> 1,
         };
 
-        memset(s_tileSpinWheelMask.pchBuffer, 0, sizeof(s_tileSpinWheelMaskBuffer));
-        
-        arm_2dp_gray8_tile_rotation(&s_tMaskRotateCB,
-                                    &c_tileSpinWheelMask,
-                                    &s_tileSpinWheelMask,
-                                    NULL,
-                                    c_tCentre,
-                                    s_fAngle,
-                                    0x00);
+        arm_2d_align_centre(ptTarget->tRegion, c_tileSpinWheelMask.tRegion.tSize) {
+            arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform(
+                                            &s_tMaskRotateCB,
+                                            &c_tileSpinWheelMask,
+                                            ptTarget,
+                                            &__centre_region,
+                                            c_tCentre,
+                                            s_fAngle,
+                                            1.0f,
+                                            GLCD_COLOR_WHITE,
+                                            254);
 
-        arm_2d_op_wait_async(NULL);
+            arm_2d_op_wait_async(NULL);
+        }
     } while(0);
-
-    arm_2d_align_centre(ptTarget->tRegion, s_tileSpinWheelMask.tRegion.tSize) {
-        arm_2d_fill_colour_with_mask(
-                                ptTarget, 
-                                &__centre_region, 
-                                &s_tileSpinWheelMask, 
-                                (__arm_2d_color_t){GLCD_COLOR_WHITE});
-        arm_2d_op_wait_async(NULL);
-    }
 
 }
 
@@ -286,39 +272,34 @@ void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget,
                                         (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY},
                                         128);
         arm_2d_op_wait_async(NULL);
-        
-        memset(s_tileSpinWheelMask.pchBuffer, 0, sizeof(s_tileSpinWheelMaskBuffer));
-        arm_2d_tile_t tileMaskFB = s_tileSpinWheelMask;
-        static arm_2d_op_rotate_t s_tMaskRotateCB = {0};
+
+        static arm_2d_op_fill_cl_msk_opa_trans_t s_tMaskRotateCB = {0};
         
         const arm_2d_location_t c_tCentre = {
             .iX = 0,
             .iY = 0,
         };
-        
-        tileMaskFB.tRegion.tSize.iWidth = 55;
-        tileMaskFB.tRegion.tSize.iHeight = 55;
+
         
         if (bIsNewFrame) {
             s_fAngle += ARM_2D_ANGLE(6.0f);
             s_fAngle = fmodf(s_fAngle,ARM_2D_ANGLE(360));
         }
 
-        arm_2dp_gray8_tile_rotation(&s_tMaskRotateCB,
-                                    &c_tileGreenCircleQuaterMask,
-                                    &tileMaskFB,
-                                    NULL,
-                                    c_tCentre,
-                                    s_fAngle,
-                                    0x00);
+        arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform(
+                                        &s_tMaskRotateCB,
+                                        &c_tileGreenCircleQuaterMask,
+                                        ptTarget,
+                                        &__centre_region,
+                                        c_tCentre,
+                                        s_fAngle,
+                                        1.0f,
+                                        Colour,
+                                        64
+                                    );
 
         arm_2d_op_wait_async(NULL);
         
-        arm_2d_fill_colour_with_mask_and_opacity( ptTarget,
-                                                  &__centre_region,
-                                                  &tileMaskFB,
-                                                  (__arm_2d_color_t){Colour},
-                                                  224);
     }
 #endif
 

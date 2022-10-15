@@ -381,8 +381,8 @@ void __MTWM_FUNC(transform_with_mask)(
     &&  __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__
 
         arm_2d_location_t tOriginLocation = {
-            .iX = tPoint.fX,
-            .iY = tPoint.fY,
+            .iX = tPoint.fX - ptParam->tOrigin.tValidRegion.tLocation.iX,
+            .iY = tPoint.fY - ptParam->tOrigin.tValidRegion.tLocation.iY,
         };
 
         if (    (tOriginLocation.iX < -1)
@@ -661,8 +661,8 @@ void __MTWM_FUNC(transform_with_mask)(
     &&  __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__
 
         arm_2d_location_t tOriginLocation = {
-            .iX = tPointFast.X >> 16,
-            .iY = tPointFast.Y >> 16,
+            .iX = (tPointFast.X >> 16) - ptParam->tOrigin.tValidRegion.tLocation.iX,
+            .iY = (tPointFast.Y >> 16) - ptParam->tOrigin.tValidRegion.tLocation.iY,
         };
 
         if (    (tOriginLocation.iX < -1)

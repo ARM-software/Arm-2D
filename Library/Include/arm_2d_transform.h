@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_transform.h"
  * Description:  Public header file to contain the APIs for transform
  *
- * $Date:        17 June 2022
- * $Revision:    V.1.0.1
+ * $Date:        14 Oct 2022
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1406,6 +1406,117 @@ extern "C" {
         })
 
 
+
+
+
+
+
+#define arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform(              \
+                                        __CB_ADDR,                              \
+                                        __MASK_ADDR,                            \
+                                        __DES_TILE_ADDR,                        \
+                                        __DES_REGION_ADDR,                      \
+                                        __CENTRE,                               \
+                                        __ANGLE,                                \
+                                        __SCALE,                                \
+                                        __MSK_COLOUR,                           \
+                                        __RATIO,...)                            \
+        ({assert(NULL != (__CB_ADDR)); if (bIsNewFrame) {                       \
+            arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_prepare(  \
+                                        (__CB_ADDR),                            \
+                                        (__MASK_ADDR),                          \
+                                        (__CENTRE),                             \
+                                        (float)(__ANGLE),                       \
+                                        (float)(__SCALE),                       \
+                                        (__MSK_COLOUR),                         \
+                                        (__RATIO));                             \
+        };                                                                      \
+        arm_2dp_tile_transform((arm_2d_op_trans_t *)(__CB_ADDR),                \
+                            (__DES_TILE_ADDR),                                  \
+                            (__DES_REGION_ADDR),                                \
+                            (NULL,##__VA_ARGS__));                              \
+        })
+
+#define arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform(             \
+                                        __CB_ADDR,                              \
+                                        __MASK_ADDR,                            \
+                                        __DES_TILE_ADDR,                        \
+                                        __DES_REGION_ADDR,                      \
+                                        __CENTRE,                               \
+                                        __ANGLE,                                \
+                                        __SCALE,                                \
+                                        __MSK_COLOUR,                           \
+                                        __RATIO,...)                            \
+        ({assert(NULL != (__CB_ADDR)); if (bIsNewFrame) {                       \
+            arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_prepare( \
+                                        (__CB_ADDR),                            \
+                                        (__MASK_ADDR),                          \
+                                        (__CENTRE),                             \
+                                        (float)(__ANGLE),                       \
+                                        (float)(__SCALE),                       \
+                                        (__MSK_COLOUR),                         \
+                                        (__RATIO));                             \
+        };                                                                      \
+        arm_2dp_tile_transform((arm_2d_op_trans_t *)(__CB_ADDR),                \
+                            (__DES_TILE_ADDR),                                  \
+                            (__DES_REGION_ADDR),                                \
+                            (NULL,##__VA_ARGS__));                              \
+        })
+
+#define arm_2dp_rgb888_fill_colour_with_mask_opacity_and_transform(             \
+                                        __CB_ADDR,                              \
+                                        __MASK_ADDR,                            \
+                                        __DES_TILE_ADDR,                        \
+                                        __DES_REGION_ADDR,                      \
+                                        __CENTRE,                               \
+                                        __ANGLE,                                \
+                                        __SCALE,                                \
+                                        __MSK_COLOUR,                           \
+                                        __RATIO,...)                            \
+        ({assert(NULL != (__CB_ADDR)); if (bIsNewFrame) {                       \
+            arm_2dp_rgb888_fill_colour_with_mask_opacity_and_transform_prepare( \
+                                        (__CB_ADDR),                            \
+                                        (__MASK_ADDR),                          \
+                                        (__CENTRE),                             \
+                                        (float)(__ANGLE),                       \
+                                        (float)(__SCALE),                       \
+                                        (__MSK_COLOUR),                         \
+                                        (__RATIO));                             \
+        };                                                                      \
+        arm_2dp_tile_transform((arm_2d_op_trans_t *)(__CB_ADDR),                \
+                            (__DES_TILE_ADDR),                                  \
+                            (__DES_REGION_ADDR),                                \
+                            (NULL,##__VA_ARGS__));                              \
+        })
+
+#define arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform(            \
+                                        __CB_ADDR,                              \
+                                        __MASK_ADDR,                            \
+                                        __DES_TILE_ADDR,                        \
+                                        __DES_REGION_ADDR,                      \
+                                        __CENTRE,                               \
+                                        __ANGLE,                                \
+                                        __SCALE,                                \
+                                        __MSK_COLOUR,                           \
+                                        __RATIO,...)                            \
+        ({assert(NULL != (__CB_ADDR)); if (bIsNewFrame) {                       \
+            arm_2dp_rgb888_fill_colour_with_mask_opacity_and_transform_prepare( \
+                                        (__CB_ADDR),                            \
+                                        (__MASK_ADDR),                          \
+                                        (__CENTRE),                             \
+                                        (float)(__ANGLE),                       \
+                                        (float)(__SCALE),                       \
+                                        (__MSK_COLOUR),                         \
+                                        (__RATIO));                             \
+        };                                                                      \
+        arm_2dp_tile_transform((arm_2d_op_trans_t *)(__CB_ADDR),                \
+                            (__DES_TILE_ADDR),                                  \
+                            (__DES_REGION_ADDR),                                \
+                            (NULL,##__VA_ARGS__));                              \
+        })
+
+
+
 #define arm_2dp_gray8_tile_transform_with_src_mask(                             \
                                         __CB_ADDR,                              \
                                         __SRC_TILE_ADDR,                        \
@@ -2784,6 +2895,11 @@ typedef struct arm_2d_op_trans_opa_t {
 } arm_2d_op_trans_opa_t;
 
 
+/*! \brief arm_2d_op_fill_cl_msk_opa_trans_t is alias of arm_2d_op_trans_opa_t
+ */
+typedef arm_2d_op_trans_opa_t arm_2d_op_fill_cl_msk_opa_trans_t;
+
+
 /*! \brief arm_2d_op_trans_msk_t is inherit from arm_2d_op_src_orig_msk_t
  */
 typedef struct arm_2d_op_trans_msk_t {
@@ -3089,6 +3205,76 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_with_src_mask_and_opacity_prepare(
                                         const arm_2d_location_t tCentre,
                                         float fAngle,
                                         float fScale,
+                                        uint_fast8_t chOpacity);
+
+
+/*!
+ * \brief prepare for a gray8 colour-filling with a mask, a given opacity and 
+ *        transform
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptMask the target mask
+ * \param[in] tCentre the pivot in the source tile
+ * \param[in] fAngle the rotation angle
+ * \param[in] fScale the scaling factor
+ * \param[in] chFillColour the colour to fill
+ * \param[in] chOpacity the opacity
+ * \return arm_2d_err_t the result of the preparing process
+ */
+extern
+ARM_NONNULL(2)
+arm_2d_err_t arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_prepare(
+                                        arm_2d_op_fill_cl_msk_opa_trans_t *ptOP,
+                                        const arm_2d_tile_t *ptMask,
+                                        const arm_2d_location_t tCentre,
+                                        float fAngle,
+                                        float fScale,
+                                        uint_fast8_t chFillColour,
+                                        uint_fast8_t chOpacity);
+
+/*!
+ * \brief prepare for a rgb565 colour-filling with a mask, a given opacity and 
+ *        transform
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptMask the target mask
+ * \param[in] tCentre the pivot in the source tile
+ * \param[in] fAngle the rotation angle
+ * \param[in] fScale the scaling factor
+ * \param[in] hwFillColour the colour to fill
+ * \param[in] chOpacity the opacity
+ * \return arm_2d_err_t the result of the preparing process
+ */
+extern
+ARM_NONNULL(2)
+arm_2d_err_t arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_prepare(
+                                        arm_2d_op_fill_cl_msk_opa_trans_t *ptOP,
+                                        const arm_2d_tile_t *ptMask,
+                                        const arm_2d_location_t tCentre,
+                                        float fAngle,
+                                        float fScale,
+                                        uint_fast16_t hwFillColour,
+                                        uint_fast8_t chOpacity);
+
+/*!
+ * \brief prepare for a cccn888 colour-filling with a mask, a given opacity and 
+ *        transform
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptMask the target mask
+ * \param[in] tCentre the pivot in the source tile
+ * \param[in] fAngle the rotation angle
+ * \param[in] fScale the scaling factor
+ * \param[in] wFillColour the colour to fill
+ * \param[in] chOpacity the opacity
+ * \return arm_2d_err_t the result of the preparing process
+ */
+extern
+ARM_NONNULL(2)
+arm_2d_err_t arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_prepare(
+                                        arm_2d_op_fill_cl_msk_opa_trans_t *ptOP,
+                                        const arm_2d_tile_t *ptMask,
+                                        const arm_2d_location_t tCentre,
+                                        float fAngle,
+                                        float fScale,
+                                        uint32_t wFillColour,
                                         uint_fast8_t chOpacity);
 
 /*!
