@@ -1692,15 +1692,11 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_opacity_and_transform(
     ARM_TYPE_CONVERT(ptTask->Param.tCopyOrig.tOrigin.pBuffer, intptr_t) -= 
           ptTask->Param.tCopyOrig.tOrigin.nOffset;
 
-    if (255 == this.chOpacity) {
-        __arm_2d_impl_gray8_transform(  &(ptTask->Param.tCopyOrig),
-                                        &this.tTransform);
-    } else {
-        __arm_2d_impl_gray8_colour_filling_mask_opacity_transform(  
-                                            &(ptTask->Param.tCopyOrig),
-                                            &this.tTransform,
-                                            this.chOpacity);
-    }
+    __arm_2d_impl_gray8_colour_filling_mask_opacity_transform(  
+                                        &(ptTask->Param.tCopyOrig),
+                                        &this.tTransform,
+                                        this.chOpacity);
+
 
     return arm_fsm_rt_cpl;
 }
@@ -1714,15 +1710,10 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_opacity_and_transform(
     ARM_TYPE_CONVERT(ptTask->Param.tCopyOrig.tOrigin.pBuffer, intptr_t) -= 
           ptTask->Param.tCopyOrig.tOrigin.nOffset;
 
-    if (255 == this.chOpacity) {
-        __arm_2d_impl_rgb565_transform( &(ptTask->Param.tCopyOrig),
-                                        &this.tTransform);
-    } else {
-        __arm_2d_impl_rgb565_colour_filling_mask_opacity_transform(   
-                                                &(ptTask->Param.tCopyOrig),
-                                                &this.tTransform,
-                                                this.chOpacity);
-    }
+    __arm_2d_impl_rgb565_colour_filling_mask_opacity_transform(   
+                                            &(ptTask->Param.tCopyOrig),
+                                            &this.tTransform,
+                                            this.chOpacity);
 
     return arm_fsm_rt_cpl;
 }
@@ -1736,15 +1727,12 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_opacity_and_transform(
     ARM_TYPE_CONVERT(ptTask->Param.tCopyOrig.tOrigin.pBuffer, intptr_t) -= 
           ptTask->Param.tCopyOrig.tOrigin.nOffset;
 
-    if (255 == this.chOpacity) {
-        __arm_2d_impl_cccn888_transform(&(ptTask->Param.tCopyOrig),
-                                        &this.tTransform);
-    } else {
-        __arm_2d_impl_cccn888_colour_filling_mask_opacity_transform(  
-                                                &(ptTask->Param.tCopyOrig),
-                                                &this.tTransform,
-                                                this.chOpacity);
-    }
+
+    __arm_2d_impl_cccn888_colour_filling_mask_opacity_transform(  
+                                            &(ptTask->Param.tCopyOrig),
+                                            &this.tTransform,
+                                            this.chOpacity);
+
     return arm_fsm_rt_cpl;
 }
 
