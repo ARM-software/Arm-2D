@@ -190,8 +190,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
 #endif
 
     /* draw text at the top-left corner */
+
     arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
     arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
+    arm_lcd_text_set_draw_region(NULL);
     arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
     arm_lcd_text_location(0,0);
     arm_lcd_puts("Scene 0");
@@ -204,7 +206,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
 
 ARM_NONNULL(1)
 user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_0_t *ptScene)
+                                        user_scene_0_t *ptThis)
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
@@ -248,18 +250,18 @@ user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter,
     };
     s_tDirtyRegions[0].tRegion.tSize = c_tileCMSISLogoMask.tRegion.tSize;
     
-    if (NULL == ptScene) {
-        ptScene = (user_scene_0_t *)malloc(sizeof(user_scene_0_t));
-        assert(NULL != ptScene);
-        if (NULL == ptScene) {
+    if (NULL == ptThis) {
+        ptThis = (user_scene_0_t *)malloc(sizeof(user_scene_0_t));
+        assert(NULL != ptThis);
+        if (NULL == ptThis) {
             return NULL;
         }
         bUserAllocated = true;
     } else {
-        memset(ptScene, 0, sizeof(user_scene_0_t));
+        memset(ptThis, 0, sizeof(user_scene_0_t));
     }
     
-    *ptScene = (user_scene_0_t){
+    *ptThis = (user_scene_0_t){
         .use_as__arm_2d_scene_t = {
         /* Please uncommon the callbacks if you need them
          */
@@ -278,10 +280,10 @@ user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter,
     };
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
-                                        &ptScene->use_as__arm_2d_scene_t, 
+                                        &this.use_as__arm_2d_scene_t, 
                                         1);
 
-    return ptScene;
+    return ptThis;
 }
 
 

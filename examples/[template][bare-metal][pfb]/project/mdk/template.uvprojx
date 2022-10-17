@@ -9465,7 +9465,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cvendor="ARM" Cversion="1.2.9" condition="Arm-2D-EXTRA">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cvendor="ARM" Cversion="1.2.10" condition="Arm-2D-EXTRA">
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9532,17 +9532,17 @@
       <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.1.3" condition="Arm-2D-Helper" maxInstances="1000">
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
-          <targetInfo instances="3" name="AN547-Cortex-M55_r0" versionMatchMode=""/>
-          <targetInfo instances="3" name="DO_NOT_USE_V2M-MPS3-CM33" versionMatchMode=""/>
-          <targetInfo instances="3" name="FastModel" versionMatchMode=""/>
-          <targetInfo instances="3" name="STM32F746G-Discovery" versionMatchMode=""/>
-          <targetInfo instances="3" name="STM32F746G-Discovery-AC5" versionMatchMode=""/>
-          <targetInfo instances="3" name="V2M-MPS2-CM0+" versionMatchMode=""/>
-          <targetInfo instances="3" name="V2M-MPS2-CM33" versionMatchMode=""/>
-          <targetInfo instances="3" name="V2M-MPS2-CM4" versionMatchMode=""/>
-          <targetInfo instances="3" name="V2M-MPS2-CM7" versionMatchMode=""/>
-          <targetInfo instances="3" name="V2M-MPS3-CM55" versionMatchMode=""/>
-          <targetInfo instances="3" name="V2M-MPS3-CM85" versionMatchMode=""/>
+          <targetInfo instances="4" name="AN547-Cortex-M55_r0" versionMatchMode=""/>
+          <targetInfo instances="4" name="DO_NOT_USE_V2M-MPS3-CM33" versionMatchMode=""/>
+          <targetInfo instances="4" name="FastModel" versionMatchMode=""/>
+          <targetInfo instances="4" name="STM32F746G-Discovery" versionMatchMode=""/>
+          <targetInfo instances="4" name="STM32F746G-Discovery-AC5" versionMatchMode=""/>
+          <targetInfo instances="4" name="V2M-MPS2-CM0+" versionMatchMode=""/>
+          <targetInfo instances="4" name="V2M-MPS2-CM33" versionMatchMode=""/>
+          <targetInfo instances="4" name="V2M-MPS2-CM4" versionMatchMode=""/>
+          <targetInfo instances="4" name="V2M-MPS2-CM7" versionMatchMode=""/>
+          <targetInfo instances="4" name="V2M-MPS3-CM55" versionMatchMode=""/>
+          <targetInfo instances="4" name="V2M-MPS3-CM85" versionMatchMode=""/>
         </targetInfos>
       </component>
       <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Alpha-Blending" Cvendor="ARM" Cversion="1.1.0-preview" condition="Arm-2D-CORE">
@@ -9954,7 +9954,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_disp_adapter.c" version="1.4.1">
+      <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_disp_adapter.c" version="1.4.3">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.c</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="1.4.3" condition="Arm-2D-Helper" maxInstances="8"/>
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
@@ -9972,7 +9972,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="Helper\Include\template\arm_2d_disp_adapter.h" version="1.4.1">
+      <file attr="config" category="header" name="Helper\Include\template\arm_2d_disp_adapter.h" version="1.4.3">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.h</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="1.4.3" condition="Arm-2D-Helper" maxInstances="8"/>
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
@@ -10002,7 +10002,7 @@
         <package name="Arm-2D" schemaVersion="1.4" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/developing/cmsis-pack/" vendor="Arm" version="1.0.0-preview-beta6"/>
         <targetInfos/>
       </file>
-      <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_scene.c" version="1.1.2">
+      <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_scene.c" version="1.1.3">
         <instance index="0">RTE\Acceleration\arm_2d_scene_0.c</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.1.3" condition="Arm-2D-Helper" maxInstances="1000"/>
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
@@ -10020,7 +10020,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="Helper\Include\template\arm_2d_scene.h" version="1.1.2">
+      <file attr="config" category="header" name="Helper\Include\template\arm_2d_scene.h" version="1.1.3">
         <instance index="0">RTE\Acceleration\arm_2d_scene_0.h</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.1.3" condition="Arm-2D-Helper" maxInstances="1000"/>
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
@@ -10094,6 +10094,42 @@
       </file>
       <file attr="config" category="header" name="Helper\Include\template\arm_2d_scene.h" version="1.1.2">
         <instance index="2">RTE\Acceleration\arm_2d_scene_2.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.1.3" condition="Arm-2D-Helper" maxInstances="1000"/>
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+        <targetInfos>
+          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_scene.c" version="1.1.3">
+        <instance index="3">RTE\Acceleration\arm_2d_scene_3.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.1.3" condition="Arm-2D-Helper" maxInstances="1000"/>
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+        <targetInfos>
+          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="Helper\Include\template\arm_2d_scene.h" version="1.1.3">
+        <instance index="3">RTE\Acceleration\arm_2d_scene_3.h</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.1.3" condition="Arm-2D-Helper" maxInstances="1000"/>
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>

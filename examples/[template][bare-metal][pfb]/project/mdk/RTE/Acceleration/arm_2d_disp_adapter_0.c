@@ -175,7 +175,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
     ARM_2D_UNUSED(pTarget);
     ARM_2D_UNUSED(bIsNewFrame);
 
+    arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
     arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
+    arm_lcd_text_set_draw_region(NULL);
 
     /* draw real-time FPS info */
     if (__DISP0_CFG_ITERATION_CNT__) {
@@ -366,7 +368,6 @@ static void __user_scene_player_init(void)
 
 void disp_adapter0_init(void)
 {
-
     __user_scene_player_init();
 
     arm_extra_controls_init();

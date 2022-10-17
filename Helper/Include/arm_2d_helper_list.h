@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        05. Oct 2022
- * $Revision:    V.0.8.0
+ * $Date:        17. Oct 2022
+ * $Revision:    V.0.9.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -46,10 +46,7 @@ extern "C" {
 #endif
 
 
-/*!
- * \addtogroup gHelper 7 Helper Services
- * @{
- */
+
 /*============================ MACROS ========================================*/
 
 /* OOC header, please DO NOT modify  */
@@ -62,6 +59,23 @@ extern "C" {
 #endif
 #include "arm_2d_utils.h"
 
+
+/*! 
+ *  \addtogroup Deprecated
+ *  @{
+ */
+#define ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED_VERTICAL                     \
+            ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_VERTICAL
+
+#define ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL                   \
+            ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL
+
+/*! @} */
+
+/*!
+ * \addtogroup gHelper 7 Helper Services
+ * @{
+ */
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 
@@ -127,21 +141,23 @@ struct arm_2d_list_item_t {
 
 ARM_PROTECTED(
     arm_2d_list_item_t                              *ptNext;                    /*!< list item pointer */
-    uint16_t hwID;                                                              /*!< the ID used by the list iterator */
-    uint16_t                                        : 16;                       /*!< reserved */
 )
-    __arm_2d_list_core_t                            *ptListView;                /*!< the parent list core */
+
+    uint16_t hwID;                                                              /*!< the ID used by the list iterator */
+
     union {
         uint16_t                                    hwAttribute;                /*!< 16bit attribute value */
         struct {
             uint16_t                                bIsEnabled  : 1;            /*!< whether this item is enabled or not */
             uint16_t                                bIsVisible  : 1;            /*!< visibility */
-            uint16_t                                            : 2;            /*!< reserved */
+            uint16_t                                bIsReadOnly : 1;            /*!< indicate whether this item is readonly or not */
+            uint16_t                                            : 1;            /*!< reserved */
             uint16_t                                u4Alignment : 4;            /*!< alignment: see ARM_2D_ALIGN_xxxx */
             uint16_t                                            : 8;            /*!< reserved */
         };
     };
-
+    __arm_2d_list_core_t                            *ptListView;                /*!< the parent list core */
+    
     struct {
         int8_t chPrevious;                                                      /*!< padding between this item and the previous one */
         int8_t chNext;                                                          /*!< padding between this item and the next one */
@@ -226,12 +242,14 @@ __arm_2d_list_work_area_t *__arm_2d_list_region_calculator_t(
 typedef struct __arm_2d_list_core_cfg_t {
     arm_2d_size_t tListSize;                                                    /*!< the size of the list */
     __arm_2d_list_item_iterator             *fnIterator;                        /*!< the item iterator */
-    __arm_2d_list_region_calculator_t  *fnCalculator;                           /*!< the region calculator */
+    __arm_2d_list_region_calculator_t       *fnCalculator;                      /*!< the region calculator */
     arm_2d_draw_list_item_handler_t         *fnOnDrawListItemBackground;        /*!< the On-Draw-List-Item-Background event handler */
     arm_2d_helper_draw_handler_t            *fnOnDrawListBackground;            /*!< the On-Draw-List-Background event handler */
     arm_2d_helper_draw_handler_t            *fnOnDrawListCover;                 /*!< the On-Draw-List-Cover event handler */
     uint16_t hwSwitchingPeriodInMs;                                             /*!< A constant period (in ms) for switching item, zero means using default value */
     uint16_t hwItemCount;                                                       /*!< the total number of items, 0 means update later */
+    uint16_t hwItemSizeInByte;                                                  /*!< the size of the item (in byte) */
+    arm_2d_list_item_t                      *ptItems;                           /*!< an optional pointer for items (array/list) */
     int32_t nTotalLength;                                                       /*!< the total lenght of the list, 0 means update later */
 } __arm_2d_list_core_cfg_t;
 
@@ -249,7 +267,12 @@ ARM_PROTECTED(
         ARM_PROTECTED(
             arm_2d_tile_t                   tileTarget;                         /*!< the target draw area */
             arm_2d_tile_t                   tileList;                           /*!< the target tile for the list */
-            __arm_2d_list_work_area_t  tWorkingArea;                            /*!< the working area */
+            __arm_2d_list_work_area_t       tWorkingArea;                       /*!< the working area */
+            union {
+                struct {
+                    uint16_t hwIndex;                                           /*!< array iterator index */
+                } Array;                                                        /*!< arrat iterator */
+            } Iterator;                                                         /*!< iterator control block */
         )
 
         ARM_PRIVATE(
@@ -287,16 +310,27 @@ ARM_PROTECTED(
 /*============================ GLOBAL VARIABLES ==============================*/
 
 /*!
- *  \brief a list core calculator for vertical lists, which puts selected item
+ *  \brief a list calculator for vertical lists, which puts selected item
  *         in the centre of the target list
  */
 extern 
 __arm_2d_list_region_calculator_t 
-    ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED_VERTICAL;
+    ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_VERTICAL;
 
+/*!
+ *  \brief a list calculator for horizontal lists, which puts selected item
+ *         in the centre of the target list
+ */
 extern
 __arm_2d_list_region_calculator_t
-    ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL;
+    ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL;
+    
+
+/*!
+ *  \brief a list iterator for the list that stores items in an array
+ */
+extern __arm_2d_list_item_iterator ARM_2D_LIST_ITERATOR_ARRAY;
+
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ PROTOTYPES ====================================*/
 

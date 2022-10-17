@@ -62,6 +62,12 @@
 
 
 __OVERRIDE_WEAK 
+int64_t arm_2d_helper_get_system_timestamp(void)
+{
+    return get_system_ticks();
+}
+
+__OVERRIDE_WEAK 
 void Disp0_DrawBitmap(  int16_t x, 
                             int16_t y, 
                             int16_t width, 
@@ -109,6 +115,7 @@ int main (void)
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
     virtual_resource_demo_init();
 #endif
+    arm_2d_scene3_init(&DISP0_ADAPTER);
     arm_2d_scene2_init(&DISP0_ADAPTER);
     
     

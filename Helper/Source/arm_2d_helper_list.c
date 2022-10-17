@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        06. Oct 2022
- * $Revision:    V.0.8.0
+ * $Date:        17. Oct 2022
+ * $Revision:    V.0.9.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -91,6 +91,10 @@ arm_2d_err_t __arm_2d_list_core_init(   __arm_2d_list_core_t *ptThis,
             = arm_2d_helper_convert_ms_to_ticks(this.tCFG.hwSwitchingPeriodInMs);
     } else {
         this.Runtime.lPeriod = arm_2d_helper_convert_ms_to_ticks(500);          /*!< use 500 ms as default */
+    }
+    
+    if (this.tCFG.hwItemSizeInByte < sizeof(arm_2d_list_item_t)) {
+        this.tCFG.hwItemSizeInByte = sizeof(arm_2d_list_item_t);
     }
 
     return ARM_2D_ERR_NONE;
@@ -204,7 +208,9 @@ ARM_PT_BEGIN(this.Runtime.chState)
         arm_2d_list_item_t *ptItem = this.Runtime.tWorkingArea.ptItem;
         assert(NULL != ptItem);
         
-        ptItem->ptListView = ptThis;
+        if (!ptItem->bIsReadOnly) {
+            ptItem->ptListView = ptThis;
+        }
         
         /* update this.Runtime.tWorkingArea.tRegion with margin */
         this.Runtime.tWorkingArea.tRegion.tLocation.iX += ptItem->Margin.chLeft;
@@ -383,9 +389,7 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
             if (NULL == ptItem) {
                 return ARM_2D_ERR_NOT_AVAILABLE;
             }
-            
-            
-            
+
             if (iSteps > 0) {
             
                 do {
@@ -1074,6 +1078,86 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
 ARM_PT_END()
 
     return NULL;
+}
+
+
+/*----------------------------------------------------------------------------*
+ * Iterator                                                                   *
+ *----------------------------------------------------------------------------*/
+
+arm_2d_list_item_t *ARM_2D_LIST_ITERATOR_ARRAY(
+                                        __arm_2d_list_core_t *ptThis,
+                                        arm_2d_list_iterator_dir_t tDirection,
+                                        uint_fast16_t hwID
+                                    )
+{
+    int32_t nIterationIndex;
+    switch (tDirection) {
+        default:
+        case __ARM_2D_LIST_GET_ITEM_WITH_ID_WITHOUT_MOVE_POINTER:
+            nIterationIndex = hwID;
+            nIterationIndex %= this.tCFG.hwItemCount;
+            break;
+
+        case __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER:
+            this.Runtime.Iterator.Array.hwIndex = hwID;
+            this.Runtime.Iterator.Array.hwIndex %= this.tCFG.hwItemCount;
+            nIterationIndex = this.Runtime.Iterator.Array.hwIndex;
+            break;
+
+        case __ARM_2D_LIST_GET_PREVIOUS:
+            if (this.Runtime.Iterator.Array.hwIndex) {
+                this.Runtime.Iterator.Array.hwIndex--;
+            } else {
+                this.Runtime.Iterator.Array.hwIndex = this.tCFG.hwItemCount - 1;
+            }
+            nIterationIndex = this.Runtime.Iterator.Array.hwIndex;
+            break;
+
+        case __ARM_2D_LIST_GET_NEXT:
+            this.Runtime.Iterator.Array.hwIndex++;
+            this.Runtime.Iterator.Array.hwIndex %= this.tCFG.hwItemCount;
+            
+            nIterationIndex = this.Runtime.Iterator.Array.hwIndex ;
+            break;
+
+        case __ARM_2D_LIST_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER:
+            nIterationIndex = 0;
+            break;
+
+        case __ARM_2D_LIST_GET_FIRST_ITEM:
+            this.Runtime.Iterator.Array.hwIndex  = 0;
+            nIterationIndex = this.Runtime.Iterator.Array.hwIndex ;
+            break;
+
+        case __ARM_2D_LIST_GET_CURRENT:
+            nIterationIndex = this.Runtime.Iterator.Array.hwIndex ;
+            break;
+
+        case __ARM_2D_LIST_GET_LAST_ITEM_WITHOUT_MOVE_POINTER:
+            nIterationIndex = this.tCFG.hwItemCount - 1;
+            break;
+
+        case __ARM_2D_LIST_GET_LAST_ITEM:
+            this.Runtime.Iterator.Array.hwIndex  = this.tCFG.hwItemCount - 1;
+            nIterationIndex = this.Runtime.Iterator.Array.hwIndex ;
+            break;
+    }
+
+
+
+    nIterationIndex %= this.tCFG.hwItemCount;
+
+#define __REF_ITEM_ARRAY(__PTR, __INDEX) (arm_2d_list_item_t *)                 \
+                                    (   ((uintptr_t)(__PTR))                    \
+                                    +   this.tCFG.hwItemSizeInByte * (__INDEX))
+    arm_2d_list_item_t *ptItem 
+        = __REF_ITEM_ARRAY(this.tCFG.ptItems, nIterationIndex);
+    if (!(ptItem->bIsReadOnly)) {
+        ptItem->hwID = nIterationIndex;
+    }
+    
+    return ptItem;
 }
 
 
