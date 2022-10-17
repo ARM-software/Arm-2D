@@ -26,6 +26,7 @@
 #ifdef __RTE_ACCELERATION_ARM_2D_SCENE2__
 
 #include "arm_2d_helper_scene.h"
+#include "arm_extra_controls.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -82,6 +83,7 @@ ARM_PRIVATE(
     int64_t lTimestamp[4];
     bool bUserAllocated;
     int16_t iProgress;
+    number_list_t tNumberList[3];
 )
     /* place your public member here */
     

@@ -88,10 +88,6 @@ extern const arm_2d_tile_t c_tileListCoverMask;
 
 
 /*============================ LOCAL VARIABLES ===============================*/
-
-ARM_NOINIT 
-static number_list_t s_tNumberList[3];
-
 /*============================ IMPLEMENTATION ================================*/
 
 static void __on_scene2_depose(arm_2d_scene_t *ptScene)
@@ -142,16 +138,16 @@ static void __on_scene2_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_2_t *ptThis = (user_scene_2_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    if (arm_2d_helper_is_time_out(100, &this.lTimestamp[0])) {
-        numer_list_move_selection(&s_tNumberList[0], 1, 100);
+    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
+        numer_list_move_selection(&this.tNumberList[0], 100, 10000);
     }
     
-    if (arm_2d_helper_is_time_out(1000, &this.lTimestamp[1])) {
-        numer_list_move_selection(&s_tNumberList[1], 1, 1000);
+    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[1])) {
+        numer_list_move_selection(&this.tNumberList[1], 10, 10000);
     }
     
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[2])) {
-        numer_list_move_selection(&s_tNumberList[2], 1, 10000);
+        numer_list_move_selection(&this.tNumberList[2], 1, 10000);
     }
     
     if (arm_2d_helper_is_time_out(10, &this.lTimestamp[3])) {
@@ -200,17 +196,17 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
 
         __centre_region.tLocation.iX += 60;
         __centre_region.tSize.iWidth = 30;
-        while(arm_fsm_rt_cpl != number_list_show(   &s_tNumberList[2], 
+        while(arm_fsm_rt_cpl != number_list_show(   &this.tNumberList[2], 
                                                     ptTile, 
                                                     &__centre_region, 
                                                     bIsNewFrame));
         __centre_region.tLocation.iX += 30;
-        while(arm_fsm_rt_cpl != number_list_show(   &s_tNumberList[1], 
+        while(arm_fsm_rt_cpl != number_list_show(   &this.tNumberList[1], 
                                                     ptTile, 
                                                     &__centre_region, 
                                                     bIsNewFrame));
         __centre_region.tLocation.iX += 30;
-        while(arm_fsm_rt_cpl != number_list_show(   &s_tNumberList[0], 
+        while(arm_fsm_rt_cpl != number_list_show(   &this.tNumberList[0], 
                                                     ptTile, 
                                                     &__centre_region, 
                                                     bIsNewFrame));
@@ -261,96 +257,12 @@ ARM_NONNULL(1)
 user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter, 
                                         user_scene_2_t *ptScene)
 {
+    
+    
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
     
     progress_wheel_init();
-
-    /* initialize number list */
-    do {
-        number_list_cfg_t tCFG = {
-            .hwCount = 10,
-            .nStart = 0,
-            .iDelta = 1,
-            .tFontColour = GLCD_COLOR_WHITE,
-            .tBackgroundColour = GLCD_COLOR_BLACK,
-            .chNextPadding = 3,
-            .chPrviousePadding = 3,
-            .tListSize = {
-                .iHeight = 80,
-                .iWidth = 28,
-            },
-            .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY,
-            /* draw list cover */
-            .fnOnDrawListCover = &__arm_2d_number_list_draw_cover,
-        };
-        number_list_init(&s_tNumberList[0], &tCFG);
-        number_list_init(&s_tNumberList[1], &tCFG);
-    } while(0);
-    
-    /* initialize number list */
-    do {
-        number_list_cfg_t tCFG = {
-            .hwCount = 6,
-            .nStart = 0,
-            .iDelta = 1,
-            .tFontColour = GLCD_COLOR_WHITE,
-            .tBackgroundColour = GLCD_COLOR_BLACK,
-            .chNextPadding = 3,
-            .chPrviousePadding = 3,
-            .tListSize = {
-                .iHeight = 80,
-                .iWidth = 28,
-            },
-            .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY,
-            /* draw list cover */
-            .fnOnDrawListCover = &__arm_2d_number_list_draw_cover,
-        };
-        number_list_init(&s_tNumberList[2], &tCFG);
-    } while(0);
-    
-    numer_list_move_selection(&s_tNumberList[0], 1, 100);
-    numer_list_move_selection(&s_tNumberList[1], 1, 1000);
-    numer_list_move_selection(&s_tNumberList[2], 1, 10000);
-
-    /*! define dirty regions */
-    IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
-
-        /* a dirty region to be specified at runtime*/
-        ADD_REGION_TO_LIST(s_tDirtyRegions,
-            0  /* initialize at runtime later */
-        ),
-        
-        /* add the last region:
-         * it is the top left corner for text display 
-         */
-        ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
-            .tLocation = {
-                .iX = 0,
-                .iY = 0,
-            },
-            .tSize = {
-                .iWidth = __GLCD_CFG_SCEEN_WIDTH__,
-                .iHeight = 8,
-            },
-        ),
-
-    END_IMPL_ARM_2D_REGION_LIST()
-    
-//    /* get the screen region */
-//    arm_2d_region_t tScreen
-//        = arm_2d_helper_pfb_get_display_area(
-//            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
-//    
-//    /* initialise dirty region 0 at runtime
-//     * this demo shows that we create a region in the centre of a screen(320*240)
-//     * for a image stored in the tile c_tileCMSISLogoMask
-//     */
-//    s_tDirtyRegions[0].tRegion.tLocation = (arm_2d_location_t){
-//        .iX = ((tScreen.tSize.iWidth - c_tileCMSISLogoMask.tRegion.tSize.iWidth) >> 1),
-//        .iY = ((tScreen.tSize.iHeight - c_tileCMSISLogoMask.tRegion.tSize.iHeight) >> 1),
-//    };
-//    s_tDirtyRegions[0].tRegion.tSize = c_tileCMSISLogoMask.tRegion.tSize;
     
     if (NULL == ptScene) {
         ptScene = (user_scene_2_t *)malloc(sizeof(user_scene_2_t));
@@ -380,6 +292,56 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
         },
         .bUserAllocated = bUserAllocated,
     };
+
+    user_scene_2_t *ptThis = (user_scene_2_t *)ptScene;
+
+    /* initialize number list */
+    do {
+        number_list_cfg_t tCFG = {
+            .hwCount = 10,
+            .nStart = 0,
+            .iDelta = 1,
+            .tFontColour = GLCD_COLOR_WHITE,
+            .tBackgroundColour = GLCD_COLOR_BLACK,
+            .chNextPadding = 3,
+            .chPrviousePadding = 3,
+            .tListSize = {
+                .iHeight = 80,
+                .iWidth = 28,
+            },
+            .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY,
+            /* draw list cover */
+            .fnOnDrawListCover = &__arm_2d_number_list_draw_cover,
+        };
+        number_list_init(&this.tNumberList[0], &tCFG);
+        number_list_init(&this.tNumberList[1], &tCFG);
+    } while(0);
+    
+    /* initialize number list */
+    do {
+        number_list_cfg_t tCFG = {
+            .hwCount = 6,
+            .nStart = 0,
+            .iDelta = 1,
+            .tFontColour = GLCD_COLOR_WHITE,
+            .tBackgroundColour = GLCD_COLOR_BLACK,
+            .chNextPadding = 3,
+            .chPrviousePadding = 3,
+            .tListSize = {
+                .iHeight = 80,
+                .iWidth = 28,
+            },
+            .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY,
+            /* draw list cover */
+            .fnOnDrawListCover = &__arm_2d_number_list_draw_cover,
+        };
+        number_list_init(&this.tNumberList[2], &tCFG);
+    } while(0);
+    
+    numer_list_move_selection(&this.tNumberList[0], 100,   10000);
+    numer_list_move_selection(&this.tNumberList[1], 10,    10000);
+    numer_list_move_selection(&this.tNumberList[2], 1,     10000);
+
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
                                         &ptScene->use_as__arm_2d_scene_t, 

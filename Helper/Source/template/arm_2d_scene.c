@@ -204,7 +204,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene%Instance%_handler)
 
 ARM_NONNULL(1)
 user_scene_%Instance%_t *__arm_2d_scene%Instance%_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_%Instance%_t *ptScene)
+                                        user_scene_%Instance%_t *ptThis)
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
@@ -248,18 +248,18 @@ user_scene_%Instance%_t *__arm_2d_scene%Instance%_init(   arm_2d_scene_player_t 
     };
     s_tDirtyRegions[0].tRegion.tSize = c_tileCMSISLogoMask.tRegion.tSize;
     
-    if (NULL == ptScene) {
-        ptScene = (user_scene_%Instance%_t *)malloc(sizeof(user_scene_%Instance%_t));
-        assert(NULL != ptScene);
-        if (NULL == ptScene) {
+    if (NULL == ptThis) {
+        ptThis = (user_scene_%Instance%_t *)malloc(sizeof(user_scene_%Instance%_t));
+        assert(NULL != ptThis);
+        if (NULL == ptThis) {
             return NULL;
         }
         bUserAllocated = true;
     } else {
-        memset(ptScene, 0, sizeof(user_scene_%Instance%_t));
+        memset(ptThis, 0, sizeof(user_scene_%Instance%_t));
     }
     
-    *ptScene = (user_scene_%Instance%_t){
+    *ptThis = (user_scene_%Instance%_t){
         .use_as__arm_2d_scene_t = {
         /* Please uncommon the callbacks if you need them
          */
@@ -278,10 +278,10 @@ user_scene_%Instance%_t *__arm_2d_scene%Instance%_init(   arm_2d_scene_player_t 
     };
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
-                                        &ptScene->use_as__arm_2d_scene_t, 
+                                        &this.use_as__arm_2d_scene_t, 
                                         1);
 
-    return ptScene;
+    return ptThis;
 }
 
 
