@@ -21,7 +21,30 @@
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
+#include "./__common.h"
 
+#ifdef   __cplusplus
+extern "C" {
+#endif
+
+#if defined(__clang__)
+#   pragma clang diagnostic push
+#   pragma clang diagnostic ignored "-Wmissing-declarations"
+#   pragma clang diagnostic ignored "-Wmicrosoft-anon-tag"
+#   pragma clang diagnostic ignored "-Wpadded"
+#endif
+
+/*============================ MACROS ========================================*/
+
+/* OOC header, please DO NOT modify  */
+#ifdef __CONTROL_TEMPLATE_IMPLEMENT__
+#   undef   __CONTROL_TEMPLATE_IMPLEMENT__
+#   define  __ARM_2D_IMPL__
+#elif defined(__CONTROL_TEMPLATE_INHERIT__)
+#   undef   __CONTROL_TEMPLATE_INHERIT__
+#   define __ARM_2D_INHERIT__
+#endif
+#include "arm_2d_utils.h"
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
@@ -32,8 +55,16 @@ extern
 void control_template_init(void);
 
 extern
-void control_template_show(const arm_2d_tile_t *ptTile, 
-                    const arm_2d_tile_t *ptRegion, 
-                    bool bIsNewFrame);
+void control_template_show( const arm_2d_tile_t *ptTile, 
+                            const arm_2d_tile_t *ptRegion, 
+                            bool bIsNewFrame);
+
+#if defined(__clang__)
+#   pragma clang diagnostic pop
+#endif
+
+#ifdef   __cplusplus
+}
+#endif
 
 #endif
