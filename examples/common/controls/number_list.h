@@ -45,7 +45,7 @@ extern "C" {
 #   undef   __NUMBER_LIST_IMPLEMENT__
 #   define  __ARM_2D_IMPL__
 #elif defined(__NUMBER_LIST_INHERIT__)
-#   undef   __NUMBER_LIST_IMPLEMENT__
+#   undef   __NUMBER_LIST_INHERIT__
 #   define __ARM_2D_INHERIT__
 #endif
 #include "arm_2d_utils.h"
