@@ -138,7 +138,7 @@ void list_view_init(list_view_t *ptThis,
     } while(0);
 
     /* request updating StartOffset */
-    this.use_as____arm_2d_list_core_t.CalMidAligned.bListHeightChanged = true;
+    //this.use_as____arm_2d_list_core_t.CalMidAligned.bListHeightChanged = true;
 }
 
 
@@ -158,11 +158,11 @@ arm_fsm_rt_t list_view_show(list_view_t *ptThis,
 
 
 ARM_NONNULL(1)
-arm_2d_err_t list_view_move_selection(  list_view_t *ptThis,
+void list_view_move_selection(  list_view_t *ptThis,
                                         int16_t iSteps,
                                         int32_t nFinishInMs)
 {
-    return __arm_2d_list_core_move_selection(&this.use_as____arm_2d_list_core_t,
+    return __arm_2d_list_core_move_request(&this.use_as____arm_2d_list_core_t,
                                              iSteps,
                                              nFinishInMs);
 }

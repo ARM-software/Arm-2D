@@ -136,7 +136,7 @@ my_list_item_t s_tListArray[] = {
                 5,5,
             },
             
-            .tSize = { 100, 100 },
+            .tSize = { 120, 100 },
             .fnOnDrawItem = &__list_view_item_0_draw_item,
         },
     },
@@ -151,7 +151,7 @@ my_list_item_t s_tListArray[] = {
             .Padding = {
                 5,5,
             },
-            .tSize = { 100, 100 },
+            .tSize = { 80, 100 },
             .fnOnDrawItem = &__list_view_item_1_draw_item,
         },
     },
@@ -182,7 +182,7 @@ my_list_item_t s_tListArray[] = {
             .Padding = {
                 5,5,
             },
-            .tSize = { 100, 100 },
+            .tSize = { 60, 100 },
             .fnOnDrawItem = &__list_view_item_3_draw_item,
         },
     },
@@ -461,7 +461,7 @@ user_scene_3_t *__arm_2d_scene3_init(   arm_2d_scene_player_t *ptDispAdapter,
     } while(0);
 
 
-    list_view_move_selection(&this.tListView, 12, 10000);
+    list_view_move_selection(&this.tListView, 12, 13000);
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
                                         &this.use_as__arm_2d_scene_t, 

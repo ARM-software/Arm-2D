@@ -322,7 +322,7 @@ void number_list_init(  number_list_t *ptThis,
     this.tTempItem.fnOnDrawItem = &__arm_2d_number_list_draw_list_core_item;
     
     /* request updating StartOffset */
-    this.use_as____arm_2d_list_core_t.CalMidAligned.bListHeightChanged = true;
+    //this.use_as____arm_2d_list_core_t.CalMidAligned.bListHeightChanged = true;
 }
 
 ARM_NONNULL(1,2)
@@ -340,11 +340,11 @@ arm_fsm_rt_t number_list_show(  number_list_t *ptThis,
 
 
 ARM_NONNULL(1)
-arm_2d_err_t numer_list_move_selection( number_list_t *ptThis,
+void numer_list_move_selection( number_list_t *ptThis,
                                         int16_t iSteps,
                                         int32_t nFinishInMs)
 {
-    return __arm_2d_list_core_move_selection(&this.use_as____arm_2d_list_core_t,
+    return __arm_2d_list_core_move_request( &this.use_as____arm_2d_list_core_t,
                                              iSteps,
                                              nFinishInMs);
 }

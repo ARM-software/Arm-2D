@@ -268,6 +268,7 @@ ARM_PROTECTED(
             arm_2d_tile_t                   tileTarget;                         /*!< the target draw area */
             arm_2d_tile_t                   tileList;                           /*!< the target tile for the list */
             __arm_2d_list_work_area_t       tWorkingArea;                       /*!< the working area */
+            uint8_t                         bIsRegCalInit;                      /*!< indicate whether the region calcluator is initialized or not */
             union {
                 struct {
                     uint16_t hwIndex;                                           /*!< array iterator index */
@@ -284,6 +285,10 @@ ARM_PROTECTED(
             int32_t                         nTargetOffset;                      /*!< the target list offset */
             uint16_t                        hwSelection;                        /*!< item selection */
             uint8_t                         chState;                            /*!< state used by list core task */
+            struct {
+                int16_t iSteps;                                                 /*!< steps to move */
+                int32_t nFinishInMs;                                            /*!< finish in ms */
+            } MoveReq;
         )
 
     } Runtime;                                                                  /*!< list runtime */
@@ -362,7 +367,7 @@ arm_fsm_rt_t __arm_2d_list_core_show(   __arm_2d_list_core_t *ptThis,
                                         bool bIsNewFrame);
 
 /*!
- * \brief move selection with specified steps
+ * \brief request to move selection with specified steps
  * \param[in] ptThis the target list core object
  * \param[in] iSteps number of steps, here negative value means move to previous
  *            items and positive value means move to next items
@@ -373,12 +378,10 @@ arm_fsm_rt_t __arm_2d_list_core_show(   __arm_2d_list_core_t *ptThis,
  *              - (nFinishInMs < 0) use the configuration passed at the  
  *                  initialisation stage.
  *              - (nFinishInMs == 0) do not change current configuration
- *
- * \return arm_2d_err_t the operation result
  */
 extern
 ARM_NONNULL(1)
-arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis, 
+void __arm_2d_list_core_move_request(   __arm_2d_list_core_t *ptThis, 
                                                 int16_t iSteps,
                                                 int32_t nFinishInMs);
 

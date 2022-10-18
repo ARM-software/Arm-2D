@@ -114,7 +114,7 @@ arm_fsm_rt_t number_list_show(  number_list_t *ptThis,
 
 extern
 ARM_NONNULL(1)
-arm_2d_err_t numer_list_move_selection( number_list_t *ptThis,
+void numer_list_move_selection( number_list_t *ptThis,
                                         int16_t iSteps,
                                         int32_t nFinishInMs);
 #if defined(__clang__)
