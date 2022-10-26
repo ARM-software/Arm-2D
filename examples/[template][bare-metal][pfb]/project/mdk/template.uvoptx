@@ -1756,41 +1756,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>106</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>&lt;1&gt;E:/git/Arm-2D/Helper/Source/arm_2d_helper_list.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>137</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134274136</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>&lt;1&gt;E:/git/Arm-2D/examples/common/controls/list_view.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\template\list_view.c\137</Expression>
-        </Bp>
-        <Bp>
-          <Number>2</Number>
-          <Type>0</Type>
           <LineNumber>374</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134246154</Address>
+          <Address>134243772</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -1802,11 +1770,11 @@
           <Expression>\\template\arm_2d_helper_list.c\374</Expression>
         </Bp>
         <Bp>
-          <Number>3</Number>
+          <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>107</LineNumber>
+          <LineNumber>372</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134245942</Address>
+          <Address>134243754</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -1815,28 +1783,60 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>&lt;1&gt;E:/git/Arm-2D/Helper/Source/arm_2d_helper_list.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\template\arm_2d_helper_list.c\107</Expression>
+          <Expression>\\template\arm_2d_helper_list.c\372</Expression>
         </Bp>
         <Bp>
-          <Number>4</Number>
+          <Number>2</Number>
           <Type>0</Type>
-          <LineNumber>0</LineNumber>
+          <LineNumber>843</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>426</Address>
+          <Address>134220592</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename></Filename>
+          <Filename>&lt;1&gt;E:/git/Arm-2D/Helper/Source/arm_2d_helper_list.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>0x000001AA</Expression>
+          <Expression>\\template\E:/git/Arm-2D/Helper/Source/arm_2d_helper_list.c\843</Expression>
+        </Bp>
+        <Bp>
+          <Number>3</Number>
+          <Type>0</Type>
+          <LineNumber>809</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134220452</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>&lt;1&gt;E:/git/Arm-2D/Helper/Source/arm_2d_helper_list.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\template\E:/git/Arm-2D/Helper/Source/arm_2d_helper_list.c\809</Expression>
+        </Bp>
+        <Bp>
+          <Number>4</Number>
+          <Type>0</Type>
+          <LineNumber>913</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134220888</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>&lt;1&gt;E:/git/Arm-2D/Helper/Source/arm_2d_helper_list.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\template\E:/git/Arm-2D/Helper/Source/arm_2d_helper_list.c\913</Expression>
         </Bp>
         <Bp>
           <Number>5</Number>
           <Type>0</Type>
-          <LineNumber>372</LineNumber>
+          <LineNumber>137</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -1845,7 +1845,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>&lt;1&gt;E:/git/Arm-2D/Helper/Source/arm_2d_helper_list.c</Filename>
+          <Filename>&lt;1&gt;E:/git/Arm-2D/examples/common/controls/list_view.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
@@ -2636,6 +2636,11 @@
           <AccSizeX>0</AccSizeX>
         </Mm>
       </MemoryWindow4>
+      <ScvdPack>
+        <Filename>C:\Users\gabriel\AppData\Local\Arm\Packs\Keil\ARM_Compiler\1.7.2\EventRecorder.scvd</Filename>
+        <Type>Keil.ARM_Compiler.1.7.2</Type>
+        <SubType>1</SubType>
+      </ScvdPack>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>

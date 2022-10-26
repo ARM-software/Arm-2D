@@ -77,8 +77,7 @@ const arm_2d_tile_t c_tileWhiteDotMask;
 
 ARM_NOINIT static arm_2d_location_t s_tDotsLocation[8];
 ARM_NOINIT static uint8_t s_tAlphaTable[8];
-ARM_NOINIT static int64_t s_lLastTime, s_lLastTime2;
-ARM_NOINIT static uint32_t s_wUnit;
+static int64_t s_lLastTime, s_lLastTime2;
 /*============================ IMPLEMENTATION ================================*/
 
 
@@ -92,9 +91,6 @@ void busy_wheel_init(void)
         s_tDotsLocation[n].iX = (int16_t)(cosf(__PI * (float)n / 4.0f) * __RADIUS) + iYOffset;
         s_tAlphaTable[n] = (uint8_t)((float)n * 255.0f / 8.0f);
     }
-    s_lLastTime = arm_2d_helper_get_system_timestamp();
-    s_lLastTime2 = s_lLastTime;
-    s_wUnit = (uint32_t)arm_2d_helper_convert_ms_to_ticks(BUSY_WHEEL_SPIN_SPEED);
 }
 
 void busy_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
@@ -108,10 +104,7 @@ void busy_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
     arm_2d_region_t tTargetRegion = c_tileWhiteDot.tRegion;
     
     if (bIsNewFrame) {
-        int64_t lClocks = arm_2d_helper_get_system_timestamp();
-        int32_t nElapsed = (int32_t)((lClocks - s_lLastTime));
-        if (nElapsed >= (int32_t)s_wUnit) {
-            s_lLastTime = lClocks;
+        if (arm_2d_helper_is_time_out(BUSY_WHEEL_SPIN_SPEED, &s_lLastTime)) {
             s_chOffset++;
             s_chOffset &= 0x07;
         }
@@ -148,10 +141,7 @@ void busy_wheel2_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
     arm_2d_region_t tTargetRegion = c_tileWhiteDot.tRegion;
     
     if (bIsNewFrame) {
-        int64_t lClocks = arm_2d_helper_get_system_timestamp();
-        int32_t nElapsed = (int32_t)((lClocks - s_lLastTime2));
-        if (nElapsed >= (int32_t)s_wUnit) {
-            s_lLastTime2 = lClocks;
+        if (arm_2d_helper_is_time_out(BUSY_WHEEL_SPIN_SPEED, &s_lLastTime2)) {
             s_chOffset++;
             s_chOffset &= 0x07;
         }

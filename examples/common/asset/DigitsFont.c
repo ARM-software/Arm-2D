@@ -2156,22 +2156,13 @@ struct {
 
     .use_as__arm_2d_user_font_t = {
         .use_as__arm_2d_font_t = {
-            .tileFont = {
-                .tRegion = {
-                    .tSize = {
-                        .iWidth = 15,
-                        .iHeight = 336,
-                    },
-                },
-                .tInfo = {
-                    .bIsRoot = true,
-                    .bHasEnforcedColour = true,
-                    .tColourInfo = {
-                        .chScheme = ARM_2D_COLOUR_MASK_A2,
-                    },
-                },
-                .pchBuffer = (uint8_t *)c_bmpDigitsFontA2Alpha,
-            },
+            .tileFont = impl_child_tile(
+                c_tileDigitsFontA2Mask,
+                0,          /* x offset */
+                0,          /* y offset */
+                15,         /* width */
+                336         /* height */
+            ),
             .tCharSize = {
                 .iWidth = 15,
                 .iHeight = 16,
@@ -2241,22 +2232,13 @@ struct {
 
     .use_as__arm_2d_user_font_t = {
         .use_as__arm_2d_font_t = {
-            .tileFont = {
-                .tRegion = {
-                    .tSize = {
-                        .iWidth = 15,
-                        .iHeight = 336,
-                    },
-                },
-                .tInfo = {
-                    .bIsRoot = true,
-                    .bHasEnforcedColour = true,
-                    .tColourInfo = {
-                        .chScheme = ARM_2D_COLOUR_MASK_A4,
-                    },
-                },
-                .pchBuffer = (uint8_t *)c_bmpDigitsFontA4Alpha,
-            },
+            .tileFont = impl_child_tile(
+                c_tileDigitsFontA4Mask,
+                0,          /* x offset */
+                0,          /* y offset */
+                15,         /* width */
+                336         /* height */
+            ),
             .tCharSize = {
                 .iWidth = 15,
                 .iHeight = 16,
@@ -2325,22 +2307,14 @@ struct {
 
     .use_as__arm_2d_user_font_t = {
         .use_as__arm_2d_font_t = {
-            .tileFont = {
-                .tRegion = {
-                    .tSize = {
-                        .iWidth = 15,
-                        .iHeight = 336,
-                    },
-                },
-                .tInfo = {
-                    .bIsRoot = true,
-                    .bHasEnforcedColour = true,
-                    .tColourInfo = {
-                        .chScheme = ARM_2D_COLOUR_MASK_A8,
-                    },
-                },
-                .pchBuffer = (uint8_t *)c_bmpDigitsFontAlpha,
-            },
+            .tileFont = impl_child_tile(
+                c_tileDigitsFontMask,
+                0,          /* x offset */
+                0,          /* y offset */
+                15,         /* width */
+                336         /* height */
+             ),
+
             .tCharSize = {
                 .iWidth = 15,
                 .iHeight = 16,
