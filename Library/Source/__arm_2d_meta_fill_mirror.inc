@@ -69,21 +69,21 @@
 #define ___MFM_OPCODE(__OP, __MIRROR, __COLOUR)    __OP##_##__MIRROR##_##__COLOUR
 
 #undef __MFM_OPCODE
-#define ____MFM_OPCODE(__OP, __MIRROR, __COLOUR)                                 \
+#define ____MFM_OPCODE(__OP, __MIRROR, __COLOUR)                                \
             ___MFM_OPCODE(__OP, __MIRROR, __COLOUR)
-#define __MFM_OPCODE                                                             \
-            ____MFM_OPCODE(  __API_MFM_OP,                                        \
-                            __API_MFM_MIRROR_TYPE_UPPERCASE,                     \
+#define __MFM_OPCODE                                                            \
+            ____MFM_OPCODE(  __API_MFM_OP,                                      \
+                            __API_MFM_MIRROR_TYPE_UPPERCASE,                    \
                             __API_MFM_COLOUR_UPPERCASE)
 
 #undef ____MFM_IMPL_FUNC
 #undef ___MFM_IMPL_FUNC
 #undef __MFM_IMPL_FUNC
-#define ____MFM_IMPL_FUNC(__NAME, __COLOUR, __MIRROR)                             \
+#define ____MFM_IMPL_FUNC(__NAME, __COLOUR, __MIRROR)                           \
             __arm_2d_impl_##__COLOUR##_##__NAME##_##__MIRROR
-#define ___MFM_IMPL_FUNC(__NAME, __COLOUR, __MIRROR)                              \
+#define ___MFM_IMPL_FUNC(__NAME, __COLOUR, __MIRROR)                            \
             ____MFM_IMPL_FUNC(__NAME, __COLOUR, __MIRROR) 
-#define __MFM_IMPL_FUNC(__NAME)                                                   \
+#define __MFM_IMPL_FUNC(__NAME)                                                 \
             ___MFM_IMPL_FUNC(__NAME, __API_MFM_COLOUR, __API_MFM_MIRROR_TYPE)
 
 
@@ -100,11 +100,11 @@
 #undef ____MFM_API_FUNC
 #undef ___MFM_API_FUNC
 #undef __MFM_API_FUNC
-#define ____MFM_API_FUNC(__NAME, __COLOUR, __MIRROR)                             \
+#define ____MFM_API_FUNC(__NAME, __COLOUR, __MIRROR)                            \
             arm_2dp_##__COLOUR##_##__NAME##_with_##__MIRROR
-#define ___MFM_API_FUNC(__NAME, __COLOUR, __MIRROR)                              \
+#define ___MFM_API_FUNC(__NAME, __COLOUR, __MIRROR)                             \
             ____MFM_API_FUNC(__NAME, __COLOUR, __MIRROR) 
-#define __MFM_API_FUNC(__NAME)                                                   \
+#define __MFM_API_FUNC(__NAME)                                                  \
             ___MFM_API_FUNC(__NAME, __API_MFM_COLOUR, __API_MFM_MIRROR_TYPE)
 
 #if 0

@@ -66,21 +66,21 @@
 #define ___MCM_OPCODE(__OP, __MIRROR, __COLOUR)    __OP##_##__MIRROR##_##__COLOUR
 
 #undef __MCM_OPCODE
-#define ____MCM_OPCODE(__OP, __MIRROR, __COLOUR)                                 \
+#define ____MCM_OPCODE(__OP, __MIRROR, __COLOUR)                                \
             ___MCM_OPCODE(__OP, __MIRROR, __COLOUR)
-#define __MCM_OPCODE                                                             \
-            ____MCM_OPCODE(  __API_MCM_OP,                                        \
-                            __API_MCM_MIRROR_TYPE_UPPERCASE,                     \
+#define __MCM_OPCODE                                                            \
+            ____MCM_OPCODE(  __API_MCM_OP,                                      \
+                            __API_MCM_MIRROR_TYPE_UPPERCASE,                    \
                             __API_MCM_COLOUR_UPPERCASE)
 
 #undef ____MCM_IMPL_FUNC
 #undef ___MCM_IMPL_FUNC
 #undef __MCM_IMPL_FUNC
-#define ____MCM_IMPL_FUNC(__NAME, __COLOUR, __MIRROR)                             \
+#define ____MCM_IMPL_FUNC(__NAME, __COLOUR, __MIRROR)                           \
             __arm_2d_impl_##__COLOUR##_##__NAME##_##__MIRROR
-#define ___MCM_IMPL_FUNC(__NAME, __COLOUR, __MIRROR)                              \
+#define ___MCM_IMPL_FUNC(__NAME, __COLOUR, __MIRROR)                            \
             ____MCM_IMPL_FUNC(__NAME, __COLOUR, __MIRROR) 
-#define __MCM_IMPL_FUNC(__NAME)                                                   \
+#define __MCM_IMPL_FUNC(__NAME)                                                 \
             ___MCM_IMPL_FUNC(__NAME, __API_MCM_COLOUR, __API_MCM_MIRROR_TYPE)
 
 
@@ -97,11 +97,11 @@
 #undef ____MCM_API_FUNC
 #undef ___MCM_API_FUNC
 #undef __MCM_API_FUNC
-#define ____MCM_API_FUNC(__NAME, __COLOUR, __MIRROR)                             \
+#define ____MCM_API_FUNC(__NAME, __COLOUR, __MIRROR)                            \
             arm_2dp_##__COLOUR##_##__NAME##_with_##__MIRROR
-#define ___MCM_API_FUNC(__NAME, __COLOUR, __MIRROR)                              \
+#define ___MCM_API_FUNC(__NAME, __COLOUR, __MIRROR)                             \
             ____MCM_API_FUNC(__NAME, __COLOUR, __MIRROR) 
-#define __MCM_API_FUNC(__NAME)                                                   \
+#define __MCM_API_FUNC(__NAME)                                                  \
             ___MCM_API_FUNC(__NAME, __API_MCM_COLOUR, __API_MCM_MIRROR_TYPE)
 
 #if 0
@@ -144,9 +144,9 @@ const __arm_2d_op_info_t __MCM_OPCODE = {
 
 ARM_NONNULL(2,3)
 arm_fsm_rt_t __MCM_API_FUNC(tile_copy)( __API_MCM_OP_TYPE *ptOP,
-                                            const arm_2d_tile_t *ptSource,
-                                            const arm_2d_tile_t *ptTarget,
-                                            const arm_2d_region_t *ptRegion)
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion)
 {
 
     assert(NULL != ptSource);
