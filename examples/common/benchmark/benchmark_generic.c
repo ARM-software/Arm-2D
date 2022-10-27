@@ -175,38 +175,41 @@ const arm_2d_tile_t c_tileFadeMask = {
 
 static arm_2d_layer_t s_ptRefreshLayers[] = {
 #if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
-    arm_2d_layer(&c_tileHelium, 255, -50, -100),
+    [BENCHMARK_LAYER_HELIUM] = 
+        arm_2d_layer(&c_tileHelium, 255, -50, -100),
 #endif
-
-    arm_2d_layer(   NULL, 128, 10, 80, 
-                    .tRegion.tSize.iWidth = 100, 
-                    .tRegion.tSize.iHeight = 100
-                ),
-    arm_2d_layer(   &c_tLayerB, 112, 50, 150),
-    arm_2d_layer(   &c_tilePictureSun, 255, 0, 0, 
+    [BENCHMARK_LAYER_RED_OPA] = 
+        arm_2d_layer(   NULL, 128, 10, 80, 
+                        .tRegion.tSize.iWidth = 100, 
+                        .tRegion.tSize.iHeight = 100
+                    ),
+    [BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING] = 
+        arm_2d_layer(   &c_tLayerB, 112, 50, 150),
+    [BENCHMARK_LAYER_ICON] = 
+        arm_2d_layer(&c_tilePictureSun, 255, 0, 0, 
                     .bIsIrregular = true, 
                     .tKeyColour = GLCD_COLOR_WHITE),
 };
 
 static floating_range_t s_ptFloatingBoxes[] = {
 #if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
-    {
+    [BENCHMARK_LAYER_HELIUM] = {
         .tRegion = {{0-200, 0-200}, {__GLCD_CFG_SCEEN_WIDTH__ + 400, 256 + 400}},
         .ptLayer = &s_ptRefreshLayers[BENCHMARK_LAYER_HELIUM],
         .tOffset = {-1, -1},
     },
 #endif
-    {
+    [BENCHMARK_LAYER_RED_OPA] = {
         .tRegion = {{0, 0}, {__GLCD_CFG_SCEEN_WIDTH__, __GLCD_CFG_SCEEN_HEIGHT__}},
         .ptLayer = &s_ptRefreshLayers[BENCHMARK_LAYER_RED_OPA],
         .tOffset = {5, -2},
     },
-    {
+    [BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING] = {
         .tRegion = {{0, 0}, {__GLCD_CFG_SCEEN_WIDTH__, __GLCD_CFG_SCEEN_HEIGHT__}},
         .ptLayer = &s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING],
         .tOffset = {-2, 4},
     },
-    {
+    [BENCHMARK_LAYER_ICON] = {
         .tRegion = {{-100, -100}, {__GLCD_CFG_SCEEN_WIDTH__+200, __GLCD_CFG_SCEEN_HEIGHT__+200}},
         .ptLayer = &s_ptRefreshLayers[BENCHMARK_LAYER_ICON],
         .tOffset = {5, 5},
@@ -625,14 +628,37 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
                                 
                                 
     
-    //!< fill background with CMSISlogo (with colour-keying)
-    arm_2d_tile_copy_with_colour_keying(
-        &c_tilePictureSun,
-        s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].ptTile,
-        NULL,
-        GLCD_COLOR_WHITE,
-        s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode);
-                                                
+    //!< fill a given tile with the sun icon (with colour-keying)
+    switch(s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode) {
+        case ARM_2D_CP_MODE_FILL:
+            arm_2d_tile_fill_with_colour_keying_only(
+                &c_tilePictureSun,
+                s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].ptTile,
+                NULL,
+                GLCD_COLOR_WHITE);
+                break;
+        case ARM_2D_CP_MODE_FILL | ARM_2D_CP_MODE_X_MIRROR:
+            arm_2d_tile_fill_with_colour_keying_and_x_mirror(
+                &c_tilePictureSun,
+                s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].ptTile,
+                NULL,
+                GLCD_COLOR_WHITE);
+                break;
+        case ARM_2D_CP_MODE_FILL | ARM_2D_CP_MODE_Y_MIRROR:
+            arm_2d_tile_fill_with_colour_keying_and_y_mirror(
+                &c_tilePictureSun,
+                s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].ptTile,
+                NULL,
+                GLCD_COLOR_WHITE);
+                break;
+        case ARM_2D_CP_MODE_FILL | ARM_2D_CP_MODE_XY_MIRROR:
+            arm_2d_tile_fill_with_colour_keying_and_xy_mirror(
+                &c_tilePictureSun,
+                s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].ptTile,
+                NULL,
+                GLCD_COLOR_WHITE);
+                break;
+    }
     
     arm_foreach(arm_2d_layer_t, ptLayers, hwCount, ptLayer) {
         arm_2d_region_t tRegion = ptLayer->tRegion;
@@ -650,12 +676,44 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
                             ptLayer->chOpacity,
                             (__arm_2d_color_t){ ptLayer->tKeyColour });
             } else {
-                arm_2d_tile_copy_with_colour_keying( 
-                                            ptLayer->ptTile,
-                                            ptFrameBuffer,
-                                            &tRegion,
-                                            ptLayer->tKeyColour,
-                                            ptLayer->wMode);
+                switch(ptLayer->wMode) {
+                    case ARM_2D_CP_MODE_COPY:
+                        arm_2d_tile_copy_with_colour_keying_only( 
+                                                    ptLayer->ptTile,
+                                                    ptFrameBuffer,
+                                                    &tRegion,
+                                                    ptLayer->tKeyColour);
+                        break;
+                    case ARM_2D_CP_MODE_X_MIRROR:
+                        arm_2d_tile_copy_with_colour_keying_and_x_mirror( 
+                                                    ptLayer->ptTile,
+                                                    ptFrameBuffer,
+                                                    &tRegion,
+                                                    ptLayer->tKeyColour);
+                        break;
+                    case ARM_2D_CP_MODE_Y_MIRROR:
+                        arm_2d_tile_copy_with_colour_keying_and_y_mirror( 
+                                                    ptLayer->ptTile,
+                                                    ptFrameBuffer,
+                                                    &tRegion,
+                                                    ptLayer->tKeyColour);
+                        break;
+                    case ARM_2D_CP_MODE_XY_MIRROR:
+                        arm_2d_tile_copy_with_colour_keying_and_xy_mirror( 
+                                                    ptLayer->ptTile,
+                                                    ptFrameBuffer,
+                                                    &tRegion,
+                                                    ptLayer->tKeyColour);
+                        break;
+//                    default:
+//                        arm_2d_tile_copy_with_colour_keying( 
+//                                                    ptLayer->ptTile,
+//                                                    ptFrameBuffer,
+//                                                    &tRegion,
+//                                                    ptLayer->tKeyColour,
+//                                                    ptLayer->wMode);
+//                        break;
+                }
             }
         } else {
             if (255 != ptLayer->chOpacity) {

@@ -760,6 +760,36 @@
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_transform_helium.c</FilePath>
             </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_copy_mirror_wrapper.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_copy_mirror_wrapper.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_with_colour_keying_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_colour_keying_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_with_colour_keying_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_colour_keying_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1923,6 +1953,36 @@
               <FileName>__arm_2d_transform_helium.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_transform_helium.c</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_copy_mirror_wrapper.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_copy_mirror_wrapper.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_with_colour_keying_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_colour_keying_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_with_colour_keying_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_colour_keying_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc</FilePath>
             </File>
           </Files>
         </Group>
@@ -3155,6 +3215,36 @@
               <FileName>__arm_2d_transform_helium.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_transform_helium.c</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_copy_mirror_wrapper.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_copy_mirror_wrapper.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_with_colour_keying_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_colour_keying_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_with_colour_keying_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_colour_keying_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc</FilePath>
             </File>
           </Files>
         </Group>
@@ -4389,6 +4479,36 @@
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_transform_helium.c</FilePath>
             </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_copy_mirror_wrapper.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_copy_mirror_wrapper.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_with_colour_keying_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_colour_keying_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_with_colour_keying_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_colour_keying_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5552,6 +5672,36 @@
               <FileName>__arm_2d_transform_helium.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_transform_helium.c</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_copy_mirror_wrapper.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_copy_mirror_wrapper.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_with_colour_keying_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_colour_keying_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_with_colour_keying_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_colour_keying_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc</FilePath>
             </File>
           </Files>
         </Group>
@@ -6786,6 +6936,36 @@
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_transform_helium.c</FilePath>
             </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_copy_mirror_wrapper.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_copy_mirror_wrapper.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_with_colour_keying_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_colour_keying_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_with_colour_keying_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_colour_keying_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -8018,6 +8198,36 @@
               <FileName>__arm_2d_transform_helium.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_transform_helium.c</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_copy_mirror_wrapper.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_copy_mirror_wrapper.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_with_colour_keying_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_colour_keying_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_with_colour_keying_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_colour_keying_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc</FilePath>
             </File>
           </Files>
         </Group>
@@ -9252,6 +9462,36 @@
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_transform_helium.c</FilePath>
             </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_copy_mirror_wrapper.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_copy_mirror_wrapper.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_with_colour_keying_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_colour_keying_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_with_colour_keying_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_colour_keying_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -10485,6 +10725,36 @@
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_transform_helium.c</FilePath>
             </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_copy_mirror_wrapper.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_copy_mirror_wrapper.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_with_colour_keying_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_colour_keying_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_with_colour_keying_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_colour_keying_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -11648,6 +11918,36 @@
               <FileName>__arm_2d_transform_helium.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_transform_helium.c</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_copy_mirror_wrapper.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_copy_mirror_wrapper.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_with_colour_keying_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_colour_keying_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_with_colour_keying_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_colour_keying_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc</FilePath>
             </File>
           </Files>
         </Group>
@@ -12881,6 +13181,36 @@
               <FileName>__arm_2d_transform_helium.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_transform_helium.c</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_copy_mirror_wrapper.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_copy_mirror_wrapper.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_with_colour_keying_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_colour_keying_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_with_colour_keying_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_colour_keying_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc</FilePath>
             </File>
           </Files>
         </Group>
