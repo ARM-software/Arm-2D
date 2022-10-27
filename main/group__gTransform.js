@@ -86,6 +86,7 @@ var group__gTransform =
       [ "ptOriginSide", "group__gTransform.html#a9f82291558b0618554a69191e259b352", null ],
       [ "ptTargetSide", "group__gTransform.html#a8bad2a9f967b1ca4f848ef67c7f41add", null ]
     ] ],
+    [ "arm_2d_op_fill_cl_msk_opa_trans_t", "group__gTransform.html#ga9c6bb51b7b8851f0d640d54a06027f69", null ],
     [ "arm_2dp_gray8_tile_transform_prepare", "group__gTransform.html#ga2bb592e69d78a6cc144bac0b8643e7ba", null ],
     [ "arm_2dp_rgb565_tile_transform_prepare", "group__gTransform.html#ga1fd0bd47e86e342c19bf132d6d55e4f8", null ],
     [ "arm_2dp_cccn888_tile_transform_prepare", "group__gTransform.html#ga39b02e374bc45c13ecd0df392345f467", null ],
@@ -98,5 +99,8 @@ var group__gTransform =
     [ "arm_2dp_gray8_tile_transform_with_src_mask_and_opacity_prepare", "group__gTransform.html#ga37ed5416e0317649fc1da4e2bb132701", null ],
     [ "arm_2dp_rgb565_tile_transform_with_src_mask_and_opacity_prepare", "group__gTransform.html#ga7227caa15719c85c9e648f34b0de21fe", null ],
     [ "arm_2dp_cccn888_tile_transform_with_src_mask_and_opacity_prepare", "group__gTransform.html#gac32c311302bfd5ea432e26d33e15c12f", null ],
+    [ "arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_prepare", "group__gTransform.html#gaba5c5d17108bff1283dfb564aa0f7c50", null ],
+    [ "arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_prepare", "group__gTransform.html#ga22232f2fdf0d21ca0919baf6ecb0e0d5", null ],
+    [ "arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_prepare", "group__gTransform.html#gad9d33d43c90d236486a4e9fd8c349f7f", null ],
     [ "arm_2dp_tile_transform", "group__gTransform.html#ga86c351a1272f5af292756c4f86f8e8d2", null ]
 ];
