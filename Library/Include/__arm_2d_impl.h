@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        14. Oct 2022
- * $Revision:    V.1.3.4
+ * $Date:        27. Oct 2022
+ * $Revision:    V.1.3.5
  *
  * Target Processor:  Cortex-M cores
  *
@@ -246,6 +246,16 @@ enum {
     __ARM_2D_OP_IDX_FILL_WITH_XY_MIRROR,
     
     __ARM_2D_OP_IDX_COPY_WITH_COLOUR_KEYING,
+    __ARM_2D_OP_IDX_COPY_ONLY_WITH_COLOUR_KEYING,
+    __ARM_2D_OP_IDX_COPY_WITH_COLOUR_KEYING_AND_X_MIRROR,
+    __ARM_2D_OP_IDX_COPY_WITH_COLOUR_KEYING_AND_Y_MIRROR,
+    __ARM_2D_OP_IDX_COPY_WITH_COLOUR_KEYING_AND_XY_MIRROR,
+
+    __ARM_2D_OP_IDX_FILL_ONLY_WITH_COLOUR_KEYING,
+    __ARM_2D_OP_IDX_FILL_WITH_COLOUR_KEYING_AND_X_MIRROR,
+    __ARM_2D_OP_IDX_FILL_WITH_COLOUR_KEYING_AND_Y_MIRROR,
+    __ARM_2D_OP_IDX_FILL_WITH_COLOUR_KEYING_AND_XY_MIRROR,
+
     __ARM_2D_OP_IDX_COPY_WITH_MASKS,
     __ARM_2D_OP_IDX_COPY_WITH_SOURCE_MASK,
     __ARM_2D_OP_IDX_COPY_WITH_TARGET_MASK,
@@ -697,11 +707,60 @@ arm_fsm_rt_t __arm_2d_c8bit_sw_tile_copy_with_colour_keying(
 extern 
 arm_fsm_rt_t __arm_2d_rgb16_sw_tile_copy_with_colour_keying(
                                         __arm_2d_sub_task_t *ptTask);
-                           
+
 extern 
 arm_fsm_rt_t __arm_2d_rgb32_sw_tile_copy_with_colour_keying(
                                         __arm_2d_sub_task_t *ptTask);
-                           
+
+extern 
+arm_fsm_rt_t __arm_2d_c8bit_sw_tile_copy_with_colour_keying_only(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_rgb16_sw_tile_copy_with_colour_keying_only(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_rgb32_sw_tile_copy_with_colour_keying_only(
+                                        __arm_2d_sub_task_t *ptTask);
+
+
+extern 
+arm_fsm_rt_t __arm_2d_c8bit_sw_tile_copy_with_colour_keying_and_x_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_rgb16_sw_tile_copy_with_colour_keying_and_x_mirror(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_rgb32_sw_tile_copy_with_colour_keying_and_x_mirror(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_c8bit_sw_tile_copy_with_colour_keying_and_y_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_rgb16_sw_tile_copy_with_colour_keying_and_y_mirror(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_rgb32_sw_tile_copy_with_colour_keying_and_y_mirror(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_c8bit_sw_tile_copy_with_colour_keying_and_xy_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_rgb16_sw_tile_copy_with_colour_keying_and_xy_mirror(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_rgb32_sw_tile_copy_with_colour_keying_and_xy_mirror(
+                                        __arm_2d_sub_task_t *ptTask);
+
 extern
 arm_fsm_rt_t __arm_2d_c8bit_sw_tile_fill_with_colour_keying( 
                                         __arm_2d_sub_task_t *ptTask);
@@ -713,7 +772,55 @@ arm_fsm_rt_t __arm_2d_rgb16_sw_tile_fill_with_colour_keying(
 extern
 arm_fsm_rt_t __arm_2d_rgb32_sw_tile_fill_with_colour_keying( 
                                         __arm_2d_sub_task_t *ptTask);
-       
+
+extern
+arm_fsm_rt_t __arm_2d_c8bit_sw_tile_fill_with_colour_keying_only( 
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb16_sw_tile_fill_with_colour_keying_only( 
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb32_sw_tile_fill_with_colour_keying_only( 
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_c8bit_sw_tile_fill_with_colour_keying_and_x_mirror( 
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb16_sw_tile_fill_with_colour_keying_and_x_mirror( 
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb32_sw_tile_fill_with_colour_keying_and_x_mirror( 
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_c8bit_sw_tile_fill_with_colour_keying_and_y_mirror( 
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb16_sw_tile_fill_with_colour_keying_and_y_mirror( 
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb32_sw_tile_fill_with_colour_keying_and_y_mirror( 
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_c8bit_sw_tile_fill_with_colour_keying_and_xy_mirror( 
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb16_sw_tile_fill_with_colour_keying_and_xy_mirror( 
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb32_sw_tile_fill_with_colour_keying_and_xy_mirror( 
+                                        __arm_2d_sub_task_t *ptTask);
+
 extern 
 arm_fsm_rt_t __arm_2d_c8bit_sw_colour_filling(__arm_2d_sub_task_t *ptTask);
        

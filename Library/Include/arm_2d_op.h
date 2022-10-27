@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        14. Oct 2022
- * $Revision:    V.1.3.1
+ * $Date:        27. Oct 2022
+ * $Revision:    V.1.4.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -143,6 +143,79 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_RGB16;
     
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_RGB32;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_ONLY_C8BIT;
+    
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_ONLY_RGB16;
+    
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_ONLY_RGB32;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_AND_X_MIRROR_C8BIT;
+    
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_AND_X_MIRROR_RGB16;
+    
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_AND_X_MIRROR_RGB32;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_AND_Y_MIRROR_C8BIT;
+    
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_AND_Y_MIRROR_RGB16;
+    
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_AND_Y_MIRROR_RGB32;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_AND_XY_MIRROR_C8BIT;
+    
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_AND_XY_MIRROR_RGB16;
+    
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_AND_XY_MIRROR_RGB32;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_COLOUR_KEYING_ONLY_C8BIT;
+    
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_COLOUR_KEYING_ONLY_RGB16;
+    
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_COLOUR_KEYING_ONLY_RGB32;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_COLOUR_KEYING_AND_X_MIRROR_C8BIT;
+    
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_COLOUR_KEYING_AND_X_MIRROR_RGB16;
+    
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_COLOUR_KEYING_AND_X_MIRROR_RGB32;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_COLOUR_KEYING_AND_Y_MIRROR_C8BIT;
+    
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_COLOUR_KEYING_AND_Y_MIRROR_RGB16;
+    
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_COLOUR_KEYING_AND_Y_MIRROR_RGB32;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_COLOUR_KEYING_AND_XY_MIRROR_C8BIT;
+    
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_COLOUR_KEYING_AND_XY_MIRROR_RGB16;
+    
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_COLOUR_KEYING_AND_XY_MIRROR_RGB32;
+
 
 
 /*----------------------------------------------------------------------------*

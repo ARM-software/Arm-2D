@@ -21,8 +21,8 @@
  * Title:        arm_2d_tile.h
  * Description:  Public header file to contain the basic tile operations
  *
- * $Date:        09. Aug 2022
- * $Revision:    V.1.0.3
+ * $Date:        27. Oct 2022
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -367,6 +367,301 @@ extern "C" {
                                     (__DES_REGION_ADDR),                        \
                                     (__MSK_COLOUR),                             \
                                     (__MODE))
+
+#define arm_2d_c8bit_tile_copy_with_colour_keying_only(                         \
+                                __SRC_ADDR,         /*   source tile address */ \
+                                __DES_ADDR,         /*   target tile address */ \
+                                __DES_REGION_ADDR,  /*   target region address*/\
+                                __MSK_COLOUR)       /*   mask(key) colour */    \
+            arm_2dp_c8bit_tile_copy_with_colour_keying_only(                    \
+                                    NULL,                                       \
+                                    (__SRC_ADDR),                               \
+                                    (__DES_ADDR),                               \
+                                    (__DES_REGION_ADDR),                        \
+                                    (__MSK_COLOUR))
+
+               
+#define arm_2d_rgb16_tile_copy_with_colour_keying_only(                         \
+                                __SRC_ADDR,         /*   source tile address */ \
+                                __DES_ADDR,         /*   target tile address */ \
+                                __DES_REGION_ADDR,  /*   target region address*/\
+                                __MSK_COLOUR)       /*   mask(key) colour */    \
+            arm_2dp_rgb16_tile_copy_with_colour_keying_only(                    \
+                                    NULL,                                       \
+                                    (__SRC_ADDR),                               \
+                                    (__DES_ADDR),                               \
+                                    (__DES_REGION_ADDR),                        \
+                                    (__MSK_COLOUR))
+
+#define arm_2d_rgb32_tile_copy_with_colour_keying_only(                         \
+                                __SRC_ADDR,         /*   source tile address */ \
+                                __DES_ADDR,         /*   target tile address */ \
+                                __DES_REGION_ADDR,  /*   target region address*/\
+                                __MSK_COLOUR)       /*   mask(key) colour */    \
+            arm_2dp_rgb32_tile_copy_with_colour_keying_only(                    \
+                                    NULL,                                       \
+                                    (__SRC_ADDR),                               \
+                                    (__DES_ADDR),                               \
+                                    (__DES_REGION_ADDR),                        \
+                                    (__MSK_COLOUR))
+
+
+#define arm_2d_c8bit_tile_copy_with_colour_keying_and_x_mirror(                 \
+                                __SRC_ADDR,         /*   source tile address */ \
+                                __DES_ADDR,         /*   target tile address */ \
+                                __DES_REGION_ADDR,  /*   target region address*/\
+                                __MSK_COLOUR)       /*   mask(key) colour */    \
+            arm_2dp_c8bit_tile_copy_with_colour_keying_and_x_mirror(            \
+                                    NULL,                                       \
+                                    (__SRC_ADDR),                               \
+                                    (__DES_ADDR),                               \
+                                    (__DES_REGION_ADDR),                        \
+                                    (__MSK_COLOUR))
+
+#define arm_2d_rgb16_tile_copy_with_colour_keying_and_x_mirror(                 \
+                                __SRC_ADDR,         /*   source tile address */ \
+                                __DES_ADDR,         /*   target tile address */ \
+                                __DES_REGION_ADDR,  /*   target region address*/\
+                                __MSK_COLOUR)       /*   mask(key) colour */    \
+            arm_2dp_rgb16_tile_copy_with_colour_keying_and_x_mirror(            \
+                                    NULL,                                       \
+                                    (__SRC_ADDR),                               \
+                                    (__DES_ADDR),                               \
+                                    (__DES_REGION_ADDR),                        \
+                                    (__MSK_COLOUR))
+
+#define arm_2d_rgb32_tile_copy_with_colour_keying_and_x_mirror(                 \
+                                __SRC_ADDR,         /*   source tile address */ \
+                                __DES_ADDR,         /*   target tile address */ \
+                                __DES_REGION_ADDR,  /*   target region address*/\
+                                __MSK_COLOUR)       /*   mask(key) colour */    \
+            arm_2dp_rgb32_tile_copy_with_colour_keying_and_x_mirror(            \
+                                    NULL,                                       \
+                                    (__SRC_ADDR),                               \
+                                    (__DES_ADDR),                               \
+                                    (__DES_REGION_ADDR),                        \
+                                    (__MSK_COLOUR))
+
+#define arm_2d_c8bit_tile_copy_with_colour_keying_and_y_mirror(                 \
+                                __SRC_ADDR,         /*   source tile address */ \
+                                __DES_ADDR,         /*   target tile address */ \
+                                __DES_REGION_ADDR,  /*   target region address*/\
+                                __MSK_COLOUR)       /*   mask(key) colour */    \
+            arm_2dp_c8bit_tile_copy_with_colour_keying_and_y_mirror(            \
+                                    NULL,                                       \
+                                    (__SRC_ADDR),                               \
+                                    (__DES_ADDR),                               \
+                                    (__DES_REGION_ADDR),                        \
+                                    (__MSK_COLOUR))
+
+#define arm_2d_rgb16_tile_copy_with_colour_keying_and_y_mirror(                 \
+                                __SRC_ADDR,         /*   source tile address */ \
+                                __DES_ADDR,         /*   target tile address */ \
+                                __DES_REGION_ADDR,  /*   target region address*/\
+                                __MSK_COLOUR)       /*   mask(key) colour */    \
+            arm_2dp_rgb16_tile_copy_with_colour_keying_and_y_mirror(            \
+                                    NULL,                                       \
+                                    (__SRC_ADDR),                               \
+                                    (__DES_ADDR),                               \
+                                    (__DES_REGION_ADDR),                        \
+                                    (__MSK_COLOUR))
+
+#define arm_2d_rgb32_tile_copy_with_colour_keying_and_y_mirror(                 \
+                                __SRC_ADDR,         /*   source tile address */ \
+                                __DES_ADDR,         /*   target tile address */ \
+                                __DES_REGION_ADDR,  /*   target region address*/\
+                                __MSK_COLOUR)       /*   mask(key) colour */    \
+            arm_2dp_rgb32_tile_copy_with_colour_keying_and_y_mirror(            \
+                                    NULL,                                       \
+                                    (__SRC_ADDR),                               \
+                                    (__DES_ADDR),                               \
+                                    (__DES_REGION_ADDR),                        \
+                                    (__MSK_COLOUR))
+
+#define arm_2d_c8bit_tile_copy_with_colour_keying_and_xy_mirror(                \
+                                __SRC_ADDR,         /*   source tile address */ \
+                                __DES_ADDR,         /*   target tile address */ \
+                                __DES_REGION_ADDR,  /*   target region address*/\
+                                __MSK_COLOUR)       /*   mask(key) colour */    \
+            arm_2dp_c8bit_tile_copy_with_colour_keying_and_xy_mirror(           \
+                                    NULL,                                       \
+                                    (__SRC_ADDR),                               \
+                                    (__DES_ADDR),                               \
+                                    (__DES_REGION_ADDR),                        \
+                                    (__MSK_COLOUR))
+
+#define arm_2d_rgb16_tile_copy_with_colour_keying_and_xy_mirror(                \
+                                __SRC_ADDR,         /*   source tile address */ \
+                                __DES_ADDR,         /*   target tile address */ \
+                                __DES_REGION_ADDR,  /*   target region address*/\
+                                __MSK_COLOUR)       /*   mask(key) colour */    \
+            arm_2dp_rgb16_tile_copy_with_colour_keying_and_xy_mirror(           \
+                                    NULL,                                       \
+                                    (__SRC_ADDR),                               \
+                                    (__DES_ADDR),                               \
+                                    (__DES_REGION_ADDR),                        \
+                                    (__MSK_COLOUR))
+
+#define arm_2d_rgb32_tile_copy_with_colour_keying_and_xy_mirror(                \
+                                __SRC_ADDR,         /*   source tile address */ \
+                                __DES_ADDR,         /*   target tile address */ \
+                                __DES_REGION_ADDR,  /*   target region address*/\
+                                __MSK_COLOUR)       /*   mask(key) colour */    \
+            arm_2dp_rgb32_tile_copy_with_colour_keying_and_xy_mirror(           \
+                                    NULL,                                       \
+                                    (__SRC_ADDR),                               \
+                                    (__DES_ADDR),                               \
+                                    (__DES_REGION_ADDR),                        \
+                                    (__MSK_COLOUR))
+
+#define arm_2d_c8bit_tile_fill_with_colour_keying_only(                         \
+                                __SRC_ADDR,         /*   source tile address */ \
+                                __DES_ADDR,         /*   target tile address */ \
+                                __DES_REGION_ADDR,  /*   target region address*/\
+                                __MSK_COLOUR)       /*   mask(key) colour */    \
+            arm_2dp_c8bit_tile_fill_with_colour_keying_only(                    \
+                                    NULL,                                       \
+                                    (__SRC_ADDR),                               \
+                                    (__DES_ADDR),                               \
+                                    (__DES_REGION_ADDR),                        \
+                                    (__MSK_COLOUR))
+
+               
+#define arm_2d_rgb16_tile_fill_with_colour_keying_only(                         \
+                                __SRC_ADDR,         /*   source tile address */ \
+                                __DES_ADDR,         /*   target tile address */ \
+                                __DES_REGION_ADDR,  /*   target region address*/\
+                                __MSK_COLOUR)       /*   mask(key) colour */    \
+            arm_2dp_rgb16_tile_fill_with_colour_keying_only(                    \
+                                    NULL,                                       \
+                                    (__SRC_ADDR),                               \
+                                    (__DES_ADDR),                               \
+                                    (__DES_REGION_ADDR),                        \
+                                    (__MSK_COLOUR))
+
+#define arm_2d_rgb32_tile_fill_with_colour_keying_only(                         \
+                                __SRC_ADDR,         /*   source tile address */ \
+                                __DES_ADDR,         /*   target tile address */ \
+                                __DES_REGION_ADDR,  /*   target region address*/\
+                                __MSK_COLOUR)       /*   mask(key) colour */    \
+            arm_2dp_rgb32_tile_fill_with_colour_keying_only(                    \
+                                    NULL,                                       \
+                                    (__SRC_ADDR),                               \
+                                    (__DES_ADDR),                               \
+                                    (__DES_REGION_ADDR),                        \
+                                    (__MSK_COLOUR))
+
+
+#define arm_2d_c8bit_tile_fill_with_colour_keying_and_x_mirror(                 \
+                                __SRC_ADDR,         /*   source tile address */ \
+                                __DES_ADDR,         /*   target tile address */ \
+                                __DES_REGION_ADDR,  /*   target region address*/\
+                                __MSK_COLOUR)       /*   mask(key) colour */    \
+            arm_2dp_c8bit_tile_fill_with_colour_keying_and_x_mirror(            \
+                                    NULL,                                       \
+                                    (__SRC_ADDR),                               \
+                                    (__DES_ADDR),                               \
+                                    (__DES_REGION_ADDR),                        \
+                                    (__MSK_COLOUR))
+
+#define arm_2d_rgb16_tile_fill_with_colour_keying_and_x_mirror(                 \
+                                __SRC_ADDR,         /*   source tile address */ \
+                                __DES_ADDR,         /*   target tile address */ \
+                                __DES_REGION_ADDR,  /*   target region address*/\
+                                __MSK_COLOUR)       /*   mask(key) colour */    \
+            arm_2dp_rgb16_tile_fill_with_colour_keying_and_x_mirror(            \
+                                    NULL,                                       \
+                                    (__SRC_ADDR),                               \
+                                    (__DES_ADDR),                               \
+                                    (__DES_REGION_ADDR),                        \
+                                    (__MSK_COLOUR))
+
+#define arm_2d_rgb32_tile_fill_with_colour_keying_and_x_mirror(                 \
+                                __SRC_ADDR,         /*   source tile address */ \
+                                __DES_ADDR,         /*   target tile address */ \
+                                __DES_REGION_ADDR,  /*   target region address*/\
+                                __MSK_COLOUR)       /*   mask(key) colour */    \
+            arm_2dp_rgb32_tile_fill_with_colour_keying_and_x_mirror(            \
+                                    NULL,                                       \
+                                    (__SRC_ADDR),                               \
+                                    (__DES_ADDR),                               \
+                                    (__DES_REGION_ADDR),                        \
+                                    (__MSK_COLOUR))
+
+#define arm_2d_c8bit_tile_fill_with_colour_keying_and_y_mirror(                 \
+                                __SRC_ADDR,         /*   source tile address */ \
+                                __DES_ADDR,         /*   target tile address */ \
+                                __DES_REGION_ADDR,  /*   target region address*/\
+                                __MSK_COLOUR)       /*   mask(key) colour */    \
+            arm_2dp_c8bit_tile_fill_with_colour_keying_and_y_mirror(            \
+                                    NULL,                                       \
+                                    (__SRC_ADDR),                               \
+                                    (__DES_ADDR),                               \
+                                    (__DES_REGION_ADDR),                        \
+                                    (__MSK_COLOUR))
+
+#define arm_2d_rgb16_tile_fill_with_colour_keying_and_y_mirror(                 \
+                                __SRC_ADDR,         /*   source tile address */ \
+                                __DES_ADDR,         /*   target tile address */ \
+                                __DES_REGION_ADDR,  /*   target region address*/\
+                                __MSK_COLOUR)       /*   mask(key) colour */    \
+            arm_2dp_rgb16_tile_fill_with_colour_keying_and_y_mirror(            \
+                                    NULL,                                       \
+                                    (__SRC_ADDR),                               \
+                                    (__DES_ADDR),                               \
+                                    (__DES_REGION_ADDR),                        \
+                                    (__MSK_COLOUR))
+
+#define arm_2d_rgb32_tile_fill_with_colour_keying_and_y_mirror(                 \
+                                __SRC_ADDR,         /*   source tile address */ \
+                                __DES_ADDR,         /*   target tile address */ \
+                                __DES_REGION_ADDR,  /*   target region address*/\
+                                __MSK_COLOUR)       /*   mask(key) colour */    \
+            arm_2dp_rgb32_tile_fill_with_colour_keying_and_y_mirror(            \
+                                    NULL,                                       \
+                                    (__SRC_ADDR),                               \
+                                    (__DES_ADDR),                               \
+                                    (__DES_REGION_ADDR),                        \
+                                    (__MSK_COLOUR))
+
+#define arm_2d_c8bit_tile_fill_with_colour_keying_and_xy_mirror(                \
+                                __SRC_ADDR,         /*   source tile address */ \
+                                __DES_ADDR,         /*   target tile address */ \
+                                __DES_REGION_ADDR,  /*   target region address*/\
+                                __MSK_COLOUR)       /*   mask(key) colour */    \
+            arm_2dp_c8bit_tile_fill_with_colour_keying_and_xy_mirror(           \
+                                    NULL,                                       \
+                                    (__SRC_ADDR),                               \
+                                    (__DES_ADDR),                               \
+                                    (__DES_REGION_ADDR),                        \
+                                    (__MSK_COLOUR))
+
+#define arm_2d_rgb16_tile_fill_with_colour_keying_and_xy_mirror(                \
+                                __SRC_ADDR,         /*   source tile address */ \
+                                __DES_ADDR,         /*   target tile address */ \
+                                __DES_REGION_ADDR,  /*   target region address*/\
+                                __MSK_COLOUR)       /*   mask(key) colour */    \
+            arm_2dp_rgb16_tile_fill_with_colour_keying_and_xy_mirror(           \
+                                    NULL,                                       \
+                                    (__SRC_ADDR),                               \
+                                    (__DES_ADDR),                               \
+                                    (__DES_REGION_ADDR),                        \
+                                    (__MSK_COLOUR))
+
+#define arm_2d_rgb32_tile_fill_with_colour_keying_and_xy_mirror(                \
+                                __SRC_ADDR,         /*   source tile address */ \
+                                __DES_ADDR,         /*   target tile address */ \
+                                __DES_REGION_ADDR,  /*   target region address*/\
+                                __MSK_COLOUR)       /*   mask(key) colour */    \
+            arm_2dp_rgb32_tile_fill_with_colour_keying_and_xy_mirror(           \
+                                    NULL,                                       \
+                                    (__SRC_ADDR),                               \
+                                    (__DES_ADDR),                               \
+                                    (__DES_REGION_ADDR),                        \
+                                    (__MSK_COLOUR))
+
+
+
 
 
 /*
@@ -1264,6 +1559,544 @@ arm_fsm_rt_t arm_2dp_rgb32_tile_copy_with_colour_keying(
                                             const arm_2d_region_t *ptRegion,
                                             uint32_t wMaskColour,
                                             uint32_t wMode);
+
+
+/*----------------------------------------------------------------------------*
+ * Copy tile to destination with colour-keying                                *
+ *----------------------------------------------------------------------------*/
+
+/*! 
+ * \brief tile copy with colour-keying
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] chMaskColour the key colour in any 8bit colour format
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_c8bit_tile_copy_with_colour_keying_only(
+                                            arm_2d_op_cp_cl_key_t *ptOP,
+                                            const arm_2d_tile_t *ptSource, 
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            uint8_t chMaskColour);
+
+/*! 
+ * \brief tile copy with colour-keying
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] hwMaskColour the key colour in any 16bit colour format
+ * \return arm_fsm_rt_t the operation result
+ * 
+ * \note  alpha channel is not handled, i.e. rgba5551
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_rgb16_tile_copy_with_colour_keying_only(
+                                            arm_2d_op_cp_cl_key_t *ptOP,
+                                            const arm_2d_tile_t *ptSource, 
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            uint16_t hwMaskColour);
+
+
+/*! 
+ * \brief tile copy with colour-keying
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] wMaskColour the key colour in any 32bit colour format
+ * \return arm_fsm_rt_t the operation result
+ * 
+ * \note  alpha channel is not handled
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_rgb32_tile_copy_with_colour_keying_only(
+                                            arm_2d_op_cp_cl_key_t *ptOP,
+                                            const arm_2d_tile_t *ptSource, 
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            uint32_t wMaskColour);
+
+
+/*----------------------------------------------------------------------------*
+ * Copy tile to destination with colour-keying and x-mirroring                *
+ *----------------------------------------------------------------------------*/
+
+/*! 
+ * \brief tile copy with colour-keying and x-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] chMaskColour the key colour in any 8bit colour format
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_c8bit_tile_copy_with_colour_keying_and_x_mirror(
+                                            arm_2d_op_cp_cl_key_t *ptOP,
+                                            const arm_2d_tile_t *ptSource, 
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            uint8_t chMaskColour);
+
+/*! 
+ * \brief tile copy with colour-keying and x-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] hwMaskColour the key colour in any 16bit colour format
+ * \return arm_fsm_rt_t the operation result
+ * 
+ * \note  alpha channel is not handled, i.e. rgba5551
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_rgb16_tile_copy_with_colour_keying_and_x_mirror(
+                                            arm_2d_op_cp_cl_key_t *ptOP,
+                                            const arm_2d_tile_t *ptSource, 
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            uint16_t hwMaskColour);
+
+
+/*! 
+ * \brief tile copy with colour-keying and x-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] wMaskColour the key colour in any 32bit colour format
+ * \return arm_fsm_rt_t the operation result
+ * 
+ * \note  alpha channel is not handled
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_rgb32_tile_copy_with_colour_keying_and_x_mirror(
+                                            arm_2d_op_cp_cl_key_t *ptOP,
+                                            const arm_2d_tile_t *ptSource, 
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            uint32_t wMaskColour);
+
+
+/*----------------------------------------------------------------------------*
+ * Copy tile to destination with colour-keying and y-mirroring                *
+ *----------------------------------------------------------------------------*/
+
+/*! 
+ * \brief tile copy with colour-keying and y-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] chMaskColour the key colour in any 8bit colour format
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_c8bit_tile_copy_with_colour_keying_and_y_mirror(
+                                            arm_2d_op_cp_cl_key_t *ptOP,
+                                            const arm_2d_tile_t *ptSource, 
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            uint8_t chMaskColour);
+
+/*! 
+ * \brief tile copy with colour-keying and y-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] hwMaskColour the key colour in any 16bit colour format
+ * \return arm_fsm_rt_t the operation result
+ * 
+ * \note  alpha channel is not handled, i.e. rgba5551
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_rgb16_tile_copy_with_colour_keying_and_y_mirror(
+                                            arm_2d_op_cp_cl_key_t *ptOP,
+                                            const arm_2d_tile_t *ptSource, 
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            uint16_t hwMaskColour);
+
+
+/*! 
+ * \brief tile copy with colour-keying and y-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] wMaskColour the key colour in any 32bit colour format
+ * \return arm_fsm_rt_t the operation result
+ * 
+ * \note  alpha channel is not handled
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_rgb32_tile_copy_with_colour_keying_and_y_mirror(
+                                            arm_2d_op_cp_cl_key_t *ptOP,
+                                            const arm_2d_tile_t *ptSource, 
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            uint32_t wMaskColour);
+
+/*----------------------------------------------------------------------------*
+ * Copy tile to destination with colour-keying and xy-mirroring                *
+ *----------------------------------------------------------------------------*/
+
+/*! 
+ * \brief tile copy with colour-keying and xy-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] chMaskColour the key colour in any 8bit colour format
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_c8bit_tile_copy_with_colour_keying_and_xy_mirror(
+                                            arm_2d_op_cp_cl_key_t *ptOP,
+                                            const arm_2d_tile_t *ptSource, 
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            uint8_t chMaskColour);
+
+/*! 
+ * \brief tile copy with colour-keying and xy-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] hwMaskColour the key colour in any 16bit colour format
+ * \return arm_fsm_rt_t the operation result
+ * 
+ * \note  alpha channel is not handled, i.e. rgba5551
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_rgb16_tile_copy_with_colour_keying_and_xy_mirror(
+                                            arm_2d_op_cp_cl_key_t *ptOP,
+                                            const arm_2d_tile_t *ptSource, 
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            uint16_t hwMaskColour);
+
+
+/*! 
+ * \brief tile copy with colour-keying and xy-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] wMaskColour the key colour in any 32bit colour format
+ * \return arm_fsm_rt_t the operation result
+ * 
+ * \note  alpha channel is not handled
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_rgb32_tile_copy_with_colour_keying_and_xy_mirror(
+                                            arm_2d_op_cp_cl_key_t *ptOP,
+                                            const arm_2d_tile_t *ptSource, 
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            uint32_t wMaskColour);
+
+
+/*----------------------------------------------------------------------------*
+ * Tile filling (tiling) to destination with colour-keying                    *
+ *----------------------------------------------------------------------------*/
+
+/*! 
+ * \brief tile filling (tiling) with colour-keying
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] chMaskColour the key colour in any 8bit colour format
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_c8bit_tile_fill_with_colour_keying_only(
+                                            arm_2d_op_cp_cl_key_t *ptOP,
+                                            const arm_2d_tile_t *ptSource, 
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            uint8_t chMaskColour);
+
+/*! 
+ * \brief tile filling (tiling) with colour-keying
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] hwMaskColour the key colour in any 16bit colour format
+ * \return arm_fsm_rt_t the operation result
+ * 
+ * \note  alpha channel is not handled, i.e. rgba5551
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_rgb16_tile_fill_with_colour_keying_only(
+                                            arm_2d_op_cp_cl_key_t *ptOP,
+                                            const arm_2d_tile_t *ptSource, 
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            uint16_t hwMaskColour);
+
+
+/*! 
+ * \brief tile filling (tiling) with colour-keying
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] wMaskColour the key colour in any 32bit colour format
+ * \return arm_fsm_rt_t the operation result
+ * 
+ * \note  alpha channel is not handled
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_rgb32_tile_fill_with_colour_keying_only(
+                                            arm_2d_op_cp_cl_key_t *ptOP,
+                                            const arm_2d_tile_t *ptSource, 
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            uint32_t wMaskColour);
+
+
+/*----------------------------------------------------------------------------*
+ * Tile filling (tiling) to destination with colour-keying and x-mirroring    *
+ *----------------------------------------------------------------------------*/
+
+/*! 
+ * \brief tile filling (tiling) with colour-keying and x-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] chMaskColour the key colour in any 8bit colour format
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_c8bit_tile_fill_with_colour_keying_and_x_mirror(
+                                            arm_2d_op_cp_cl_key_t *ptOP,
+                                            const arm_2d_tile_t *ptSource, 
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            uint8_t chMaskColour);
+
+/*! 
+ * \brief tile filling (tiling) with colour-keying and x-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] hwMaskColour the key colour in any 16bit colour format
+ * \return arm_fsm_rt_t the operation result
+ * 
+ * \note  alpha channel is not handled, i.e. rgba5551
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_rgb16_tile_fill_with_colour_keying_and_x_mirror(
+                                            arm_2d_op_cp_cl_key_t *ptOP,
+                                            const arm_2d_tile_t *ptSource, 
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            uint16_t hwMaskColour);
+
+
+/*! 
+ * \brief tile filling (tiling) with colour-keying and x-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] wMaskColour the key colour in any 32bit colour format
+ * \return arm_fsm_rt_t the operation result
+ * 
+ * \note  alpha channel is not handled
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_rgb32_tile_fill_with_colour_keying_and_x_mirror(
+                                            arm_2d_op_cp_cl_key_t *ptOP,
+                                            const arm_2d_tile_t *ptSource, 
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            uint32_t wMaskColour);
+
+
+/*----------------------------------------------------------------------------*
+ * Tile filling (tiling) to destination with colour-keying and y-mirroring    *
+ *----------------------------------------------------------------------------*/
+
+/*! 
+ * \brief tile filling (tiling) with colour-keying and y-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] chMaskColour the key colour in any 8bit colour format
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_c8bit_tile_fill_with_colour_keying_and_y_mirror(
+                                            arm_2d_op_cp_cl_key_t *ptOP,
+                                            const arm_2d_tile_t *ptSource, 
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            uint8_t chMaskColour);
+
+/*! 
+ * \brief tile filling (tiling) with colour-keying and y-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] hwMaskColour the key colour in any 16bit colour format
+ * \return arm_fsm_rt_t the operation result
+ * 
+ * \note  alpha channel is not handled, i.e. rgba5551
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_rgb16_tile_fill_with_colour_keying_and_y_mirror(
+                                            arm_2d_op_cp_cl_key_t *ptOP,
+                                            const arm_2d_tile_t *ptSource, 
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            uint16_t hwMaskColour);
+
+
+/*! 
+ * \brief tile filling (tiling) with colour-keying and y-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] wMaskColour the key colour in any 32bit colour format
+ * \return arm_fsm_rt_t the operation result
+ * 
+ * \note  alpha channel is not handled
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_rgb32_tile_fill_with_colour_keying_and_y_mirror(
+                                            arm_2d_op_cp_cl_key_t *ptOP,
+                                            const arm_2d_tile_t *ptSource, 
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            uint32_t wMaskColour);
+
+/*----------------------------------------------------------------------------*
+ * Tile filling (tiling) to destination with colour-keying and xy-mirroring   *
+ *----------------------------------------------------------------------------*/
+
+/*! 
+ * \brief tile filling (tiling) with colour-keying and xy-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] chMaskColour the key colour in any 8bit colour format
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_c8bit_tile_fill_with_colour_keying_and_xy_mirror(
+                                            arm_2d_op_cp_cl_key_t *ptOP,
+                                            const arm_2d_tile_t *ptSource, 
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            uint8_t chMaskColour);
+
+/*! 
+ * \brief tile filling (tiling) with colour-keying and xy-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] hwMaskColour the key colour in any 16bit colour format
+ * \return arm_fsm_rt_t the operation result
+ * 
+ * \note  alpha channel is not handled, i.e. rgba5551
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_rgb16_tile_fill_with_colour_keying_and_xy_mirror(
+                                            arm_2d_op_cp_cl_key_t *ptOP,
+                                            const arm_2d_tile_t *ptSource, 
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            uint16_t hwMaskColour);
+
+
+/*! 
+ * \brief tile filling (tiling) with colour-keying and xy-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] wMaskColour the key colour in any 32bit colour format
+ * \return arm_fsm_rt_t the operation result
+ * 
+ * \note  alpha channel is not handled
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_rgb32_tile_fill_with_colour_keying_and_xy_mirror(
+                                            arm_2d_op_cp_cl_key_t *ptOP,
+                                            const arm_2d_tile_t *ptSource, 
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            uint32_t wMaskColour);
+
+
+
+
 
 /*! @} */
 
