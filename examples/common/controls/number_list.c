@@ -344,7 +344,7 @@ void numer_list_move_selection( number_list_t *ptThis,
                                         int16_t iSteps,
                                         int32_t nFinishInMs)
 {
-    __arm_2d_list_core_move_request( &this.use_as____arm_2d_list_core_t,
+    return __arm_2d_list_core_move_request( &this.use_as____arm_2d_list_core_t,
                                              iSteps,
                                              nFinishInMs);
 }
