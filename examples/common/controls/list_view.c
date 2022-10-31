@@ -98,7 +98,6 @@ void list_view_init(list_view_t *ptThis,
     assert(NULL != ptCFG);
     assert(NULL != ptCFG->fnIterator);
 
-    static const char c_chDefaultFormatString[] = {"%d"};
     this.tListViewCFG = *ptCFG;
 
     /* validation */
@@ -162,7 +161,7 @@ void list_view_move_selection(  list_view_t *ptThis,
                                         int16_t iSteps,
                                         int32_t nFinishInMs)
 {
-    return __arm_2d_list_core_move_request(&this.use_as____arm_2d_list_core_t,
+    __arm_2d_list_core_move_request(&this.use_as____arm_2d_list_core_t,
                                              iSteps,
                                              nFinishInMs);
 }

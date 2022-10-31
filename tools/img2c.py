@@ -33,6 +33,7 @@ import argparse
 import os
 
 
+
 hdr="""
 /* Generated on {0} from {1} */
 /* Re-sized : {2} */
@@ -313,18 +314,50 @@ def main(argv):
         resized = True
 
 
-    # palettised
     mode = image.mode
-    if mode == 'P':
+
+    # Modes supported by Pillow
+
+    # 1 (1-bit pixels, black and white, stored with one pixel per byte), the value is in 0-1.
+    # L (8-bit pixels, black and white), the value is in 0-255.
+    # P (8-bit pixels, mapped to any other mode using a color palette), the value is in 0-255.
+    # RGB (3×8-bit pixels, true color), the value is in [0-255, 0-255, 0-255].
+    # RGBA (4×8-bit pixels, true color with transparency mask), the value is in [0-255, 0-255, 0-255, 0-255]
+    # CMYK (4×8-bit pixels, color separation)
+    # YCbCr (3×8-bit pixels, color video format)
+    # LAB (3×8-bit pixels, the L*a*b color space)
+    # HSV (3×8-bit pixels, Hue, Saturation, Value color space)
+    # I (32-bit signed integer pixels)
+    # F (32-bit floating point pixels)
+    # LA (L with alpha)
+    # PA (P with alpha)
+    # RGBX (true color with padding)
+    # RGBa (true color with premultiplied alpha)
+    # La (L with premultiplied alpha)
+    # I;16 (16-bit unsigned integer pixels)
+    # I;16L (16-bit little endian unsigned integer pixels)
+    # I;16B (16-bit big endian unsigned integer pixels)
+    # I;16N (16-bit native endian unsigned integer pixels)
+    # BGR;15 (15-bit reversed true colour)
+    # BGR;16 (16-bit reversed true colour)
+    # BGR;24 (24-bit reversed true colour)
+    # BGR;32 (32-bit reversed true colour)
+
+    # handle {P, LA, RGB, RGBA} for now
+    if mode == 'P' or mode == 'LA':
         image = image.convert('RGBA')
         mode = 'RGBA'
-    # greyscale
     if mode == 'L':
         image = image.convert('RGB')
         mode = 'RGB'
-
     (row, col) = image.size
     data = np.asarray(image)
+
+    # C Array format width
+    WIDTH_ALPHA = 16
+    WIDTH_GRAY8 = 32
+    WIDTH_RGB565 = 16
+    WIDTH_RGB32 = 16
 
     with open(outputfile,"w") as o:
 
@@ -341,7 +374,7 @@ def main(argv):
                 print("/* -%d- */" % (cnt), file=o)
                 for eachPix in eachRow:
                     alpha = eachPix[3]
-                    if lineWidth % 16 == 15:
+                    if lineWidth % WIDTH_ALPHA == (WIDTH_ALPHA - 1):
                         print("0x%02x," %(alpha) ,file=o)
                     else:
                         print("0x%02x" %(alpha), end =", ",file=o)
@@ -375,7 +408,7 @@ def main(argv):
                     packedBytes = RevBitPairPerByte(np.packbits(bitsArr[idx]))
 
                     for elt in packedBytes:
-                        if lineWidth % 16 == 15:
+                        if lineWidth % WIDTH_ALPHA == (WIDTH_ALPHA-1):
                             print("0x%02x," %(elt) ,file=o)
                         else:
                             print("0x%02x" %(elt), end =", ",file=o)
@@ -384,45 +417,46 @@ def main(argv):
                     print('',file=o)
                 print('};', file=o)
 
-        # 4-bit Alpha channel
-        if args.a4 or args.format == 'all':
+            # 4-bit Alpha channel
+            if args.a4 or args.format == 'all':
 
-            def RevBitQuadPerByte(byteArr):
-                return ((byteArr & 0x0f) << 4) |  ((byteArr & 0xf0) >> 4)
+                def RevBitQuadPerByte(byteArr):
+                    return ((byteArr & 0x0f) << 4) |  ((byteArr & 0xf0) >> 4)
 
 
-            print('__attribute__((aligned(4), section(\"arm2d.asset.c_bmp%sA4Alpha\")))' % (arr_name), file=o)
-            print('static const uint8_t c_bmp%sA4Alpha[%d*%d] = {' % (arr_name, (row+1)/2, col),file=o)
-            cnt = 0
-            alpha = data[...,3].astype(np.uint8)
-            for eachRow in alpha:
-                lineWidth=0
-                print("/* -%d- */" % (cnt), file=o)
+                print('__attribute__((aligned(4), section(\"arm2d.asset.c_bmp%sA4Alpha\")))' % (arr_name), file=o)
+                print('static const uint8_t c_bmp%sA4Alpha[%d*%d] = {' % (arr_name, (row+1)/2, col),file=o)
+                cnt = 0
+                alpha = data[...,3].astype(np.uint8)
+                for eachRow in alpha:
+                    lineWidth=0
+                    print("/* -%d- */" % (cnt), file=o)
 
-                bitsArr = np.unpackbits(eachRow.astype(np.uint8))
+                    bitsArr = np.unpackbits(eachRow.astype(np.uint8))
 
-                # generate indexes for MSB bit quadruplet every byte
-                idx = np.arange(0, np.size(bitsArr), 8)
-                idx=np.reshape(np.column_stack(
-                        (np.column_stack((idx+0, idx+1)), np.column_stack((idx+2, idx+3)))),
-                        (1,-1)),
+                    # generate indexes for MSB bit quadruplet every byte
+                    idx = np.arange(0, np.size(bitsArr), 8)
+                    idx=np.reshape(np.column_stack(
+                            (np.column_stack((idx+0, idx+1)), np.column_stack((idx+2, idx+3)))),
+                            (1,-1)),
 
-                # extraction + endianness conversion
-                packedBytes = RevBitQuadPerByte(np.packbits(bitsArr[idx]))
+                    # extraction + endianness conversion
+                    packedBytes = RevBitQuadPerByte(np.packbits(bitsArr[idx]))
 
-                for elt in packedBytes:
-                    if lineWidth % 16 == 15:
-                        print("0x%02x," %(elt) ,file=o)
-                    else:
-                        print("0x%02x" %(elt), end =", ",file=o)
-                    lineWidth+=1
-                cnt+=1
-                print('',file=o)
-            print('};', file=o)
+                    for elt in packedBytes:
+                        if lineWidth % WIDTH_ALPHA == (WIDTH_ALPHA - 1):
+                            print("0x%02x," %(elt) ,file=o)
+                        else:
+                            print("0x%02x" %(elt), end =", ",file=o)
+                        lineWidth+=1
+                    cnt+=1
+                    print('',file=o)
+                print('};', file=o)
 
 
         # Gray8 channel array
         if args.format == 'gray8' or args.format == 'all':
+
             R = (data[...,0]).astype(np.uint16)
             G = (data[...,1]).astype(np.uint16)
             B = (data[...,2]).astype(np.uint16)
@@ -437,7 +471,7 @@ def main(argv):
                 lineWidth=0
                 print("/* -%d- */" % (cnt), file=o)
                 for eachPix in eachRow:
-                    if lineWidth % 32 == 31:
+                    if lineWidth % WIDTH_GRAY8 == (WIDTH_GRAY8 - 1):
                         print("0x%02x," %(eachPix) ,file=o)
                     else:
                         print("0x%02x" %(eachPix), end =", ", file=o)
@@ -464,7 +498,7 @@ def main(argv):
                 lineWidth=0
                 print("/* -%d- */" % (cnt), file=o)
                 for eachPix in eachRow:
-                    if lineWidth % 16 == 15:
+                    if lineWidth % WIDTH_RGB565 == (WIDTH_RGB565 - 1):
                         print("0x%04x," %(eachPix) ,file=o)
                     else:
                         print("0x%04x" %(eachPix), end =", ", file=o)
@@ -503,7 +537,7 @@ def main(argv):
                 lineWidth=0
                 print("/* -%d- */" % (cnt), file=o)
                 for eachPix in eachRow:
-                    if lineWidth % 16 == 15:
+                    if lineWidth % WIDTH_RGB32 == (WIDTH_RGB32 - 1):
                         print("0x%08x," %(eachPix) ,file=o)
                     else:
                         print("0x%08x" %(eachPix), end =", ", file=o)
