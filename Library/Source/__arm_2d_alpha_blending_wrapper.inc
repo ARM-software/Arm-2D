@@ -105,7 +105,7 @@
 #define __ABW_TYPE(__NAME)   ___ABW_TYPE(__NAME, __API_ABW_COLOUR)
 
 
- 
+
 arm_fsm_rt_t __ABW_FUNC(tile_copy_with_src_mask)( __arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_cp_msk_t, ptTask->ptOP);
@@ -755,7 +755,7 @@ arm_fsm_rt_t __ABW_FUNC(tile_copy_with_mask)( __arm_2d_sub_task_t *ptTask)
 }
 #endif
 
- 
+
 arm_fsm_rt_t __ABW_FUNC(tile_fill_with_src_mask)( __arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_cp_msk_t, ptTask->ptOP);
