@@ -135,7 +135,7 @@ $(document).ready(function(){initNavTree('arm__2d__alpha__blending_8h_source.htm
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * Description:  Public header file to contain the alpha related APIs</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        03. Oct 2022</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.2.0</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.2.1</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> * Target Processor:  Cortex-M cores</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment"> * -------------------------------------------------------------------- */</span></div>
@@ -2307,83 +2307,316 @@ $(document).ready(function(){initNavTree('arm__2d__alpha__blending_8h_source.htm
 <div class="line"><a id="l02194" name="l02194"></a><span class="lineno"> 2194</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
 <div class="line"><a id="l02195" name="l02195"></a><span class="lineno"> 2195</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion); </div>
 <div class="line"><a id="l02196" name="l02196"></a><span class="lineno"> 2196</span> </div>
-<div class="line"><a id="l02197" name="l02197"></a><span class="lineno"> 2197</span> </div>
-<div class="line"><a id="l02198" name="l02198"></a><span class="lineno"> 2198</span> </div>
-<div class="line"><a id="l02199" name="l02199"></a><span class="lineno"> 2199</span><span class="comment">/*----------------------------------------------------------------------------*</span></div>
-<div class="line"><a id="l02200" name="l02200"></a><span class="lineno"> 2200</span><span class="comment"> * Copy tile to destination with a target mask and a specified mode           *</span></div>
-<div class="line"><a id="l02201" name="l02201"></a><span class="lineno"> 2201</span><span class="comment"> *----------------------------------------------------------------------------*/</span></div>
-<div class="line"><a id="l02202" name="l02202"></a><span class="lineno"> 2202</span><span class="comment"></span> </div>
-<div class="line"><a id="l02203" name="l02203"></a><span class="lineno"> 2203</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l02204" name="l02204"></a><span class="lineno"> 2204</span><span class="comment"> * \brief copy a source tile to a target tile with a target mask in a given mode</span></div>
-<div class="line"><a id="l02205" name="l02205"></a><span class="lineno"> 2205</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
-<div class="line"><a id="l02206" name="l02206"></a><span class="lineno"> 2206</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
-<div class="line"><a id="l02207" name="l02207"></a><span class="lineno"> 2207</span><span class="comment"> * \param[in] ptTarget the target tile</span></div>
-<div class="line"><a id="l02208" name="l02208"></a><span class="lineno"> 2208</span><span class="comment"> * \param[in] ptDesMask the mask on the target side</span></div>
-<div class="line"><a id="l02209" name="l02209"></a><span class="lineno"> 2209</span><span class="comment"> * \param[in] ptRegion the target region</span></div>
-<div class="line"><a id="l02210" name="l02210"></a><span class="lineno"> 2210</span><span class="comment"> * \param[in] wMode the copy mode</span></div>
-<div class="line"><a id="l02211" name="l02211"></a><span class="lineno"> 2211</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
-<div class="line"><a id="l02212" name="l02212"></a><span class="lineno"> 2212</span><span class="comment"> */</span></div>
-<div class="line"><a id="l02213" name="l02213"></a><span class="lineno"> 2213</span>extern</div>
-<div class="line"><a id="l02214" name="l02214"></a><span class="lineno"> 2214</span>ARM_NONNULL(2,3,4)</div>
-<div class="line"><a id="l02215" name="l02215"></a><span class="lineno"><a class="line" href="group__gAlpha.html#gaf0689852984a0ca409f762087bcd26c2"> 2215</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gAlpha.html#gaf0689852984a0ca409f762087bcd26c2" title="copy a source tile to a target tile with a target mask in a given mode">arm_2dp_gray8_tile_copy_with_des_mask</a>(</div>
-<div class="line"><a id="l02216" name="l02216"></a><span class="lineno"> 2216</span>                                        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__msk__t" title="the base class for operations with a target tile, a source tile and masks">arm_2d_op_cp_msk_t</a> *ptOP,</div>
-<div class="line"><a id="l02217" name="l02217"></a><span class="lineno"> 2217</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
-<div class="line"><a id="l02218" name="l02218"></a><span class="lineno"> 2218</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
-<div class="line"><a id="l02219" name="l02219"></a><span class="lineno"> 2219</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptDesMask,</div>
-<div class="line"><a id="l02220" name="l02220"></a><span class="lineno"> 2220</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
-<div class="line"><a id="l02221" name="l02221"></a><span class="lineno"> 2221</span>                                        uint32_t wMode); </div>
-<div class="line"><a id="l02222" name="l02222"></a><span class="lineno"> 2222</span><span class="comment"></span> </div>
-<div class="line"><a id="l02223" name="l02223"></a><span class="lineno"> 2223</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l02224" name="l02224"></a><span class="lineno"> 2224</span><span class="comment"> * \brief copy a source tile to a target tile with a target mask in a given mode</span></div>
-<div class="line"><a id="l02225" name="l02225"></a><span class="lineno"> 2225</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
-<div class="line"><a id="l02226" name="l02226"></a><span class="lineno"> 2226</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
-<div class="line"><a id="l02227" name="l02227"></a><span class="lineno"> 2227</span><span class="comment"> * \param[in] ptTarget the target tile</span></div>
-<div class="line"><a id="l02228" name="l02228"></a><span class="lineno"> 2228</span><span class="comment"> * \param[in] ptDesMask the mask on the target side</span></div>
-<div class="line"><a id="l02229" name="l02229"></a><span class="lineno"> 2229</span><span class="comment"> * \param[in] ptRegion the target region</span></div>
-<div class="line"><a id="l02230" name="l02230"></a><span class="lineno"> 2230</span><span class="comment"> * \param[in] wMode the copy mode</span></div>
-<div class="line"><a id="l02231" name="l02231"></a><span class="lineno"> 2231</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
-<div class="line"><a id="l02232" name="l02232"></a><span class="lineno"> 2232</span><span class="comment"> */</span></div>
-<div class="line"><a id="l02233" name="l02233"></a><span class="lineno"> 2233</span>extern</div>
-<div class="line"><a id="l02234" name="l02234"></a><span class="lineno"> 2234</span>ARM_NONNULL(2,3,4)</div>
-<div class="line"><a id="l02235" name="l02235"></a><span class="lineno"><a class="line" href="group__gAlpha.html#ga67bb801939d0a09c919b23554d2205f7"> 2235</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gAlpha.html#ga67bb801939d0a09c919b23554d2205f7" title="copy a source tile to a target tile with a target mask in a given mode">arm_2dp_rgb565_tile_copy_with_des_mask</a>(</div>
-<div class="line"><a id="l02236" name="l02236"></a><span class="lineno"> 2236</span>                                        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__msk__t" title="the base class for operations with a target tile, a source tile and masks">arm_2d_op_cp_msk_t</a> *ptOP,</div>
-<div class="line"><a id="l02237" name="l02237"></a><span class="lineno"> 2237</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
-<div class="line"><a id="l02238" name="l02238"></a><span class="lineno"> 2238</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
-<div class="line"><a id="l02239" name="l02239"></a><span class="lineno"> 2239</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptDesMask,</div>
-<div class="line"><a id="l02240" name="l02240"></a><span class="lineno"> 2240</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
-<div class="line"><a id="l02241" name="l02241"></a><span class="lineno"> 2241</span>                                        uint32_t wMode);</div>
-<div class="line"><a id="l02242" name="l02242"></a><span class="lineno"> 2242</span><span class="comment"></span> </div>
-<div class="line"><a id="l02243" name="l02243"></a><span class="lineno"> 2243</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l02244" name="l02244"></a><span class="lineno"> 2244</span><span class="comment"> * \brief copy a source tile to a target tile with a target mask in a given mode</span></div>
-<div class="line"><a id="l02245" name="l02245"></a><span class="lineno"> 2245</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
-<div class="line"><a id="l02246" name="l02246"></a><span class="lineno"> 2246</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
-<div class="line"><a id="l02247" name="l02247"></a><span class="lineno"> 2247</span><span class="comment"> * \param[in] ptTarget the target tile</span></div>
-<div class="line"><a id="l02248" name="l02248"></a><span class="lineno"> 2248</span><span class="comment"> * \param[in] ptDesMask the mask on the target side</span></div>
-<div class="line"><a id="l02249" name="l02249"></a><span class="lineno"> 2249</span><span class="comment"> * \param[in] ptRegion the target region</span></div>
-<div class="line"><a id="l02250" name="l02250"></a><span class="lineno"> 2250</span><span class="comment"> * \param[in] wMode the copy mode</span></div>
-<div class="line"><a id="l02251" name="l02251"></a><span class="lineno"> 2251</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
-<div class="line"><a id="l02252" name="l02252"></a><span class="lineno"> 2252</span><span class="comment"> */</span></div>
-<div class="line"><a id="l02253" name="l02253"></a><span class="lineno"> 2253</span>extern</div>
-<div class="line"><a id="l02254" name="l02254"></a><span class="lineno"> 2254</span>ARM_NONNULL(2,3,4)</div>
-<div class="line"><a id="l02255" name="l02255"></a><span class="lineno"><a class="line" href="group__gAlpha.html#gac05711b03941ef70c070c04ff7b135a1"> 2255</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gAlpha.html#gac05711b03941ef70c070c04ff7b135a1" title="copy a source tile to a target tile with a target mask in a given mode">arm_2dp_cccn888_tile_copy_with_des_mask</a>(</div>
-<div class="line"><a id="l02256" name="l02256"></a><span class="lineno"> 2256</span>                                        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__msk__t" title="the base class for operations with a target tile, a source tile and masks">arm_2d_op_cp_msk_t</a> *ptOP,</div>
-<div class="line"><a id="l02257" name="l02257"></a><span class="lineno"> 2257</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
-<div class="line"><a id="l02258" name="l02258"></a><span class="lineno"> 2258</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
-<div class="line"><a id="l02259" name="l02259"></a><span class="lineno"> 2259</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptDesMask,</div>
-<div class="line"><a id="l02260" name="l02260"></a><span class="lineno"> 2260</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
-<div class="line"><a id="l02261" name="l02261"></a><span class="lineno"> 2261</span>                                        uint32_t wMode); </div>
-<div class="line"><a id="l02262" name="l02262"></a><span class="lineno"> 2262</span><span class="comment"></span> </div>
-<div class="line"><a id="l02263" name="l02263"></a><span class="lineno"> 2263</span><span class="comment">/*! @} */</span></div>
-<div class="line"><a id="l02264" name="l02264"></a><span class="lineno"> 2264</span> </div>
-<div class="line"><a id="l02265" name="l02265"></a><span class="lineno"> 2265</span><span class="preprocessor">#if defined(__clang__)</span></div>
-<div class="line"><a id="l02266" name="l02266"></a><span class="lineno"> 2266</span><span class="preprocessor">#pragma clang diagnostic pop</span></div>
-<div class="line"><a id="l02267" name="l02267"></a><span class="lineno"> 2267</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l02268" name="l02268"></a><span class="lineno"> 2268</span> </div>
-<div class="line"><a id="l02269" name="l02269"></a><span class="lineno"> 2269</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
-<div class="line"><a id="l02270" name="l02270"></a><span class="lineno"> 2270</span>}</div>
-<div class="line"><a id="l02271" name="l02271"></a><span class="lineno"> 2271</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l02272" name="l02272"></a><span class="lineno"> 2272</span> </div>
-<div class="line"><a id="l02273" name="l02273"></a><span class="lineno"> 2273</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l02197" name="l02197"></a><span class="lineno"> 2197</span><span class="comment">/*----------------------------------------------------------------------------*</span></div>
+<div class="line"><a id="l02198" name="l02198"></a><span class="lineno"> 2198</span><span class="comment"> * Fill tile to destination with a specified source mask                      *</span></div>
+<div class="line"><a id="l02199" name="l02199"></a><span class="lineno"> 2199</span><span class="comment"> *----------------------------------------------------------------------------*/</span><span class="comment"></span></div>
+<div class="line"><a id="l02200" name="l02200"></a><span class="lineno"> 2200</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l02201" name="l02201"></a><span class="lineno"> 2201</span><span class="comment"> * \brief fill a source tile to a target tile with a source mask</span></div>
+<div class="line"><a id="l02202" name="l02202"></a><span class="lineno"> 2202</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
+<div class="line"><a id="l02203" name="l02203"></a><span class="lineno"> 2203</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
+<div class="line"><a id="l02204" name="l02204"></a><span class="lineno"> 2204</span><span class="comment"> * \param[in] ptSrcMask the mask on the source side</span></div>
+<div class="line"><a id="l02205" name="l02205"></a><span class="lineno"> 2205</span><span class="comment"> * \param[in] ptTarget the target tile</span></div>
+<div class="line"><a id="l02206" name="l02206"></a><span class="lineno"> 2206</span><span class="comment"> * \param[in] ptRegion the target region</span></div>
+<div class="line"><a id="l02207" name="l02207"></a><span class="lineno"> 2207</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
+<div class="line"><a id="l02208" name="l02208"></a><span class="lineno"> 2208</span><span class="comment"> */</span></div>
+<div class="line"><a id="l02209" name="l02209"></a><span class="lineno"> 2209</span>extern</div>
+<div class="line"><a id="l02210" name="l02210"></a><span class="lineno"> 2210</span>ARM_NONNULL(2,3,4)</div>
+<div class="line"><a id="l02211" name="l02211"></a><span class="lineno"><a class="line" href="group__gAlpha.html#gab187cf3153b71311506b046ada3069cc"> 2211</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gAlpha.html#gab187cf3153b71311506b046ada3069cc" title="fill a source tile to a target tile with a source mask">arm_2dp_gray8_tile_fill_with_src_mask_only</a>(</div>
+<div class="line"><a id="l02212" name="l02212"></a><span class="lineno"> 2212</span>                                        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__msk__t" title="the base class for operations with a target tile, a source tile and masks">arm_2d_op_cp_msk_t</a> *ptOP,</div>
+<div class="line"><a id="l02213" name="l02213"></a><span class="lineno"> 2213</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
+<div class="line"><a id="l02214" name="l02214"></a><span class="lineno"> 2214</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSrcMask,</div>
+<div class="line"><a id="l02215" name="l02215"></a><span class="lineno"> 2215</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
+<div class="line"><a id="l02216" name="l02216"></a><span class="lineno"> 2216</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion); </div>
+<div class="line"><a id="l02217" name="l02217"></a><span class="lineno"> 2217</span><span class="comment"></span> </div>
+<div class="line"><a id="l02218" name="l02218"></a><span class="lineno"> 2218</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l02219" name="l02219"></a><span class="lineno"> 2219</span><span class="comment"> * \brief fill a source tile to a target tile with a source mask</span></div>
+<div class="line"><a id="l02220" name="l02220"></a><span class="lineno"> 2220</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
+<div class="line"><a id="l02221" name="l02221"></a><span class="lineno"> 2221</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
+<div class="line"><a id="l02222" name="l02222"></a><span class="lineno"> 2222</span><span class="comment"> * \param[in] ptSrcMask the mask on the source side</span></div>
+<div class="line"><a id="l02223" name="l02223"></a><span class="lineno"> 2223</span><span class="comment"> * \param[in] ptTarget the target tile</span></div>
+<div class="line"><a id="l02224" name="l02224"></a><span class="lineno"> 2224</span><span class="comment"> * \param[in] ptRegion the target region</span></div>
+<div class="line"><a id="l02225" name="l02225"></a><span class="lineno"> 2225</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
+<div class="line"><a id="l02226" name="l02226"></a><span class="lineno"> 2226</span><span class="comment"> */</span></div>
+<div class="line"><a id="l02227" name="l02227"></a><span class="lineno"> 2227</span>extern</div>
+<div class="line"><a id="l02228" name="l02228"></a><span class="lineno"> 2228</span>ARM_NONNULL(2,3,4)</div>
+<div class="line"><a id="l02229" name="l02229"></a><span class="lineno"><a class="line" href="group__gAlpha.html#gad3d04352c234f7ebb8c2e9999b302e06"> 2229</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gAlpha.html#gad3d04352c234f7ebb8c2e9999b302e06" title="fill a source tile to a target tile with a source mask">arm_2dp_rgb565_tile_fill_with_src_mask_only</a>(</div>
+<div class="line"><a id="l02230" name="l02230"></a><span class="lineno"> 2230</span>                                        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__msk__t" title="the base class for operations with a target tile, a source tile and masks">arm_2d_op_cp_msk_t</a> *ptOP,</div>
+<div class="line"><a id="l02231" name="l02231"></a><span class="lineno"> 2231</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
+<div class="line"><a id="l02232" name="l02232"></a><span class="lineno"> 2232</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSrcMask,</div>
+<div class="line"><a id="l02233" name="l02233"></a><span class="lineno"> 2233</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
+<div class="line"><a id="l02234" name="l02234"></a><span class="lineno"> 2234</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion);</div>
+<div class="line"><a id="l02235" name="l02235"></a><span class="lineno"> 2235</span><span class="comment"></span> </div>
+<div class="line"><a id="l02236" name="l02236"></a><span class="lineno"> 2236</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l02237" name="l02237"></a><span class="lineno"> 2237</span><span class="comment"> * \brief fill a source tile to a target tile with a source mask</span></div>
+<div class="line"><a id="l02238" name="l02238"></a><span class="lineno"> 2238</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
+<div class="line"><a id="l02239" name="l02239"></a><span class="lineno"> 2239</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
+<div class="line"><a id="l02240" name="l02240"></a><span class="lineno"> 2240</span><span class="comment"> * \param[in] ptSrcMask the mask on the source side</span></div>
+<div class="line"><a id="l02241" name="l02241"></a><span class="lineno"> 2241</span><span class="comment"> * \param[in] ptTarget the target tile</span></div>
+<div class="line"><a id="l02242" name="l02242"></a><span class="lineno"> 2242</span><span class="comment"> * \param[in] ptRegion the target region</span></div>
+<div class="line"><a id="l02243" name="l02243"></a><span class="lineno"> 2243</span><span class="comment"> * \param[in] wMode the fill mode</span></div>
+<div class="line"><a id="l02244" name="l02244"></a><span class="lineno"> 2244</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
+<div class="line"><a id="l02245" name="l02245"></a><span class="lineno"> 2245</span><span class="comment"> */</span></div>
+<div class="line"><a id="l02246" name="l02246"></a><span class="lineno"> 2246</span>extern</div>
+<div class="line"><a id="l02247" name="l02247"></a><span class="lineno"> 2247</span>ARM_NONNULL(2,3,4)</div>
+<div class="line"><a id="l02248" name="l02248"></a><span class="lineno"><a class="line" href="group__gAlpha.html#ga82d5c1df9542592390d600ad631c57fa"> 2248</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gAlpha.html#ga82d5c1df9542592390d600ad631c57fa" title="fill a source tile to a target tile with a source mask">arm_2dp_cccn888_tile_fill_with_src_mask_only</a>(</div>
+<div class="line"><a id="l02249" name="l02249"></a><span class="lineno"> 2249</span>                                        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__msk__t" title="the base class for operations with a target tile, a source tile and masks">arm_2d_op_cp_msk_t</a> *ptOP,</div>
+<div class="line"><a id="l02250" name="l02250"></a><span class="lineno"> 2250</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
+<div class="line"><a id="l02251" name="l02251"></a><span class="lineno"> 2251</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSrcMask,</div>
+<div class="line"><a id="l02252" name="l02252"></a><span class="lineno"> 2252</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
+<div class="line"><a id="l02253" name="l02253"></a><span class="lineno"> 2253</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion); </div>
+<div class="line"><a id="l02254" name="l02254"></a><span class="lineno"> 2254</span> </div>
+<div class="line"><a id="l02255" name="l02255"></a><span class="lineno"> 2255</span> </div>
+<div class="line"><a id="l02256" name="l02256"></a><span class="lineno"> 2256</span><span class="comment">/*----------------------------------------------------------------------------*</span></div>
+<div class="line"><a id="l02257" name="l02257"></a><span class="lineno"> 2257</span><span class="comment"> * Fill tile to destination with a specified source mask and x-mirroring      *</span></div>
+<div class="line"><a id="l02258" name="l02258"></a><span class="lineno"> 2258</span><span class="comment"> *----------------------------------------------------------------------------*/</span><span class="comment"></span></div>
+<div class="line"><a id="l02259" name="l02259"></a><span class="lineno"> 2259</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l02260" name="l02260"></a><span class="lineno"> 2260</span><span class="comment"> * \brief fill a source tile to a target tile with a source mask and x-mirroring</span></div>
+<div class="line"><a id="l02261" name="l02261"></a><span class="lineno"> 2261</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
+<div class="line"><a id="l02262" name="l02262"></a><span class="lineno"> 2262</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
+<div class="line"><a id="l02263" name="l02263"></a><span class="lineno"> 2263</span><span class="comment"> * \param[in] ptSrcMask the mask on the source side</span></div>
+<div class="line"><a id="l02264" name="l02264"></a><span class="lineno"> 2264</span><span class="comment"> * \param[in] ptTarget the target tile</span></div>
+<div class="line"><a id="l02265" name="l02265"></a><span class="lineno"> 2265</span><span class="comment"> * \param[in] ptRegion the target region</span></div>
+<div class="line"><a id="l02266" name="l02266"></a><span class="lineno"> 2266</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
+<div class="line"><a id="l02267" name="l02267"></a><span class="lineno"> 2267</span><span class="comment"> */</span></div>
+<div class="line"><a id="l02268" name="l02268"></a><span class="lineno"> 2268</span>extern</div>
+<div class="line"><a id="l02269" name="l02269"></a><span class="lineno"> 2269</span>ARM_NONNULL(2,3,4)</div>
+<div class="line"><a id="l02270" name="l02270"></a><span class="lineno"><a class="line" href="group__gAlpha.html#ga2734c74b63ce7d102751410aac35090b"> 2270</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gAlpha.html#ga2734c74b63ce7d102751410aac35090b" title="fill a source tile to a target tile with a source mask and x-mirroring">arm_2dp_gray8_tile_fill_with_src_mask_and_x_mirror</a>(</div>
+<div class="line"><a id="l02271" name="l02271"></a><span class="lineno"> 2271</span>                                        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__msk__t" title="the base class for operations with a target tile, a source tile and masks">arm_2d_op_cp_msk_t</a> *ptOP,</div>
+<div class="line"><a id="l02272" name="l02272"></a><span class="lineno"> 2272</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
+<div class="line"><a id="l02273" name="l02273"></a><span class="lineno"> 2273</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSrcMask,</div>
+<div class="line"><a id="l02274" name="l02274"></a><span class="lineno"> 2274</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
+<div class="line"><a id="l02275" name="l02275"></a><span class="lineno"> 2275</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion); </div>
+<div class="line"><a id="l02276" name="l02276"></a><span class="lineno"> 2276</span><span class="comment"></span> </div>
+<div class="line"><a id="l02277" name="l02277"></a><span class="lineno"> 2277</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l02278" name="l02278"></a><span class="lineno"> 2278</span><span class="comment"> * \brief fill a source tile to a target tile with a source mask and x-mirroring</span></div>
+<div class="line"><a id="l02279" name="l02279"></a><span class="lineno"> 2279</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
+<div class="line"><a id="l02280" name="l02280"></a><span class="lineno"> 2280</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
+<div class="line"><a id="l02281" name="l02281"></a><span class="lineno"> 2281</span><span class="comment"> * \param[in] ptSrcMask the mask on the source side</span></div>
+<div class="line"><a id="l02282" name="l02282"></a><span class="lineno"> 2282</span><span class="comment"> * \param[in] ptTarget the target tile</span></div>
+<div class="line"><a id="l02283" name="l02283"></a><span class="lineno"> 2283</span><span class="comment"> * \param[in] ptRegion the target region</span></div>
+<div class="line"><a id="l02284" name="l02284"></a><span class="lineno"> 2284</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
+<div class="line"><a id="l02285" name="l02285"></a><span class="lineno"> 2285</span><span class="comment"> */</span></div>
+<div class="line"><a id="l02286" name="l02286"></a><span class="lineno"> 2286</span>extern</div>
+<div class="line"><a id="l02287" name="l02287"></a><span class="lineno"> 2287</span>ARM_NONNULL(2,3,4)</div>
+<div class="line"><a id="l02288" name="l02288"></a><span class="lineno"><a class="line" href="group__gAlpha.html#ga95b5839c8fc55e95eb94a75a8b602161"> 2288</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gAlpha.html#ga95b5839c8fc55e95eb94a75a8b602161" title="fill a source tile to a target tile with a source mask and x-mirroring">arm_2dp_rgb565_tile_fill_with_src_mask_and_x_mirror</a>(</div>
+<div class="line"><a id="l02289" name="l02289"></a><span class="lineno"> 2289</span>                                        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__msk__t" title="the base class for operations with a target tile, a source tile and masks">arm_2d_op_cp_msk_t</a> *ptOP,</div>
+<div class="line"><a id="l02290" name="l02290"></a><span class="lineno"> 2290</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
+<div class="line"><a id="l02291" name="l02291"></a><span class="lineno"> 2291</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSrcMask,</div>
+<div class="line"><a id="l02292" name="l02292"></a><span class="lineno"> 2292</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
+<div class="line"><a id="l02293" name="l02293"></a><span class="lineno"> 2293</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion);</div>
+<div class="line"><a id="l02294" name="l02294"></a><span class="lineno"> 2294</span><span class="comment"></span> </div>
+<div class="line"><a id="l02295" name="l02295"></a><span class="lineno"> 2295</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l02296" name="l02296"></a><span class="lineno"> 2296</span><span class="comment"> * \brief fill a source tile to a target tile with a source mask and x-mirroring</span></div>
+<div class="line"><a id="l02297" name="l02297"></a><span class="lineno"> 2297</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
+<div class="line"><a id="l02298" name="l02298"></a><span class="lineno"> 2298</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
+<div class="line"><a id="l02299" name="l02299"></a><span class="lineno"> 2299</span><span class="comment"> * \param[in] ptSrcMask the mask on the source side</span></div>
+<div class="line"><a id="l02300" name="l02300"></a><span class="lineno"> 2300</span><span class="comment"> * \param[in] ptTarget the target tile</span></div>
+<div class="line"><a id="l02301" name="l02301"></a><span class="lineno"> 2301</span><span class="comment"> * \param[in] ptRegion the target region</span></div>
+<div class="line"><a id="l02302" name="l02302"></a><span class="lineno"> 2302</span><span class="comment"> * \param[in] wMode the fill mode</span></div>
+<div class="line"><a id="l02303" name="l02303"></a><span class="lineno"> 2303</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
+<div class="line"><a id="l02304" name="l02304"></a><span class="lineno"> 2304</span><span class="comment"> */</span></div>
+<div class="line"><a id="l02305" name="l02305"></a><span class="lineno"> 2305</span>extern</div>
+<div class="line"><a id="l02306" name="l02306"></a><span class="lineno"> 2306</span>ARM_NONNULL(2,3,4)</div>
+<div class="line"><a id="l02307" name="l02307"></a><span class="lineno"><a class="line" href="group__gAlpha.html#gafa064f0bbfc2c3b138a61fd0e65aea33"> 2307</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gAlpha.html#gafa064f0bbfc2c3b138a61fd0e65aea33" title="fill a source tile to a target tile with a source mask and x-mirroring">arm_2dp_cccn888_tile_fill_with_src_mask_and_x_mirror</a>(</div>
+<div class="line"><a id="l02308" name="l02308"></a><span class="lineno"> 2308</span>                                        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__msk__t" title="the base class for operations with a target tile, a source tile and masks">arm_2d_op_cp_msk_t</a> *ptOP,</div>
+<div class="line"><a id="l02309" name="l02309"></a><span class="lineno"> 2309</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
+<div class="line"><a id="l02310" name="l02310"></a><span class="lineno"> 2310</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSrcMask,</div>
+<div class="line"><a id="l02311" name="l02311"></a><span class="lineno"> 2311</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
+<div class="line"><a id="l02312" name="l02312"></a><span class="lineno"> 2312</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion); </div>
+<div class="line"><a id="l02313" name="l02313"></a><span class="lineno"> 2313</span> </div>
+<div class="line"><a id="l02314" name="l02314"></a><span class="lineno"> 2314</span><span class="comment">/*----------------------------------------------------------------------------*</span></div>
+<div class="line"><a id="l02315" name="l02315"></a><span class="lineno"> 2315</span><span class="comment"> * Fill tile to destination with a specified source mask and y-mirroring      *</span></div>
+<div class="line"><a id="l02316" name="l02316"></a><span class="lineno"> 2316</span><span class="comment"> *----------------------------------------------------------------------------*/</span><span class="comment"></span></div>
+<div class="line"><a id="l02317" name="l02317"></a><span class="lineno"> 2317</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l02318" name="l02318"></a><span class="lineno"> 2318</span><span class="comment"> * \brief fill a source tile to a target tile with a source mask and y-mirroring</span></div>
+<div class="line"><a id="l02319" name="l02319"></a><span class="lineno"> 2319</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
+<div class="line"><a id="l02320" name="l02320"></a><span class="lineno"> 2320</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
+<div class="line"><a id="l02321" name="l02321"></a><span class="lineno"> 2321</span><span class="comment"> * \param[in] ptSrcMask the mask on the source side</span></div>
+<div class="line"><a id="l02322" name="l02322"></a><span class="lineno"> 2322</span><span class="comment"> * \param[in] ptTarget the target tile</span></div>
+<div class="line"><a id="l02323" name="l02323"></a><span class="lineno"> 2323</span><span class="comment"> * \param[in] ptRegion the target region</span></div>
+<div class="line"><a id="l02324" name="l02324"></a><span class="lineno"> 2324</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
+<div class="line"><a id="l02325" name="l02325"></a><span class="lineno"> 2325</span><span class="comment"> */</span></div>
+<div class="line"><a id="l02326" name="l02326"></a><span class="lineno"> 2326</span>extern</div>
+<div class="line"><a id="l02327" name="l02327"></a><span class="lineno"> 2327</span>ARM_NONNULL(2,3,4)</div>
+<div class="line"><a id="l02328" name="l02328"></a><span class="lineno"><a class="line" href="group__gAlpha.html#ga97b9ac2e554e4857fb631858acd07207"> 2328</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gAlpha.html#ga97b9ac2e554e4857fb631858acd07207" title="fill a source tile to a target tile with a source mask and y-mirroring">arm_2dp_gray8_tile_fill_with_src_mask_and_y_mirror</a>(</div>
+<div class="line"><a id="l02329" name="l02329"></a><span class="lineno"> 2329</span>                                        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__msk__t" title="the base class for operations with a target tile, a source tile and masks">arm_2d_op_cp_msk_t</a> *ptOP,</div>
+<div class="line"><a id="l02330" name="l02330"></a><span class="lineno"> 2330</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
+<div class="line"><a id="l02331" name="l02331"></a><span class="lineno"> 2331</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSrcMask,</div>
+<div class="line"><a id="l02332" name="l02332"></a><span class="lineno"> 2332</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
+<div class="line"><a id="l02333" name="l02333"></a><span class="lineno"> 2333</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion); </div>
+<div class="line"><a id="l02334" name="l02334"></a><span class="lineno"> 2334</span><span class="comment"></span> </div>
+<div class="line"><a id="l02335" name="l02335"></a><span class="lineno"> 2335</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l02336" name="l02336"></a><span class="lineno"> 2336</span><span class="comment"> * \brief fill a source tile to a target tile with a source mask and y-mirroring</span></div>
+<div class="line"><a id="l02337" name="l02337"></a><span class="lineno"> 2337</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
+<div class="line"><a id="l02338" name="l02338"></a><span class="lineno"> 2338</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
+<div class="line"><a id="l02339" name="l02339"></a><span class="lineno"> 2339</span><span class="comment"> * \param[in] ptSrcMask the mask on the source side</span></div>
+<div class="line"><a id="l02340" name="l02340"></a><span class="lineno"> 2340</span><span class="comment"> * \param[in] ptTarget the target tile</span></div>
+<div class="line"><a id="l02341" name="l02341"></a><span class="lineno"> 2341</span><span class="comment"> * \param[in] ptRegion the target region</span></div>
+<div class="line"><a id="l02342" name="l02342"></a><span class="lineno"> 2342</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
+<div class="line"><a id="l02343" name="l02343"></a><span class="lineno"> 2343</span><span class="comment"> */</span></div>
+<div class="line"><a id="l02344" name="l02344"></a><span class="lineno"> 2344</span>extern</div>
+<div class="line"><a id="l02345" name="l02345"></a><span class="lineno"> 2345</span>ARM_NONNULL(2,3,4)</div>
+<div class="line"><a id="l02346" name="l02346"></a><span class="lineno"><a class="line" href="group__gAlpha.html#ga589c7ea34aab7478a338d5bfcbe1dfed"> 2346</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gAlpha.html#ga589c7ea34aab7478a338d5bfcbe1dfed" title="fill a source tile to a target tile with a source mask and y-mirroring">arm_2dp_rgb565_tile_fill_with_src_mask_and_y_mirror</a>(</div>
+<div class="line"><a id="l02347" name="l02347"></a><span class="lineno"> 2347</span>                                        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__msk__t" title="the base class for operations with a target tile, a source tile and masks">arm_2d_op_cp_msk_t</a> *ptOP,</div>
+<div class="line"><a id="l02348" name="l02348"></a><span class="lineno"> 2348</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
+<div class="line"><a id="l02349" name="l02349"></a><span class="lineno"> 2349</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSrcMask,</div>
+<div class="line"><a id="l02350" name="l02350"></a><span class="lineno"> 2350</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
+<div class="line"><a id="l02351" name="l02351"></a><span class="lineno"> 2351</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion);</div>
+<div class="line"><a id="l02352" name="l02352"></a><span class="lineno"> 2352</span><span class="comment"></span> </div>
+<div class="line"><a id="l02353" name="l02353"></a><span class="lineno"> 2353</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l02354" name="l02354"></a><span class="lineno"> 2354</span><span class="comment"> * \brief fill a source tile to a target tile with a source mask and y-mirroring</span></div>
+<div class="line"><a id="l02355" name="l02355"></a><span class="lineno"> 2355</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
+<div class="line"><a id="l02356" name="l02356"></a><span class="lineno"> 2356</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
+<div class="line"><a id="l02357" name="l02357"></a><span class="lineno"> 2357</span><span class="comment"> * \param[in] ptSrcMask the mask on the source side</span></div>
+<div class="line"><a id="l02358" name="l02358"></a><span class="lineno"> 2358</span><span class="comment"> * \param[in] ptTarget the target tile</span></div>
+<div class="line"><a id="l02359" name="l02359"></a><span class="lineno"> 2359</span><span class="comment"> * \param[in] ptRegion the target region</span></div>
+<div class="line"><a id="l02360" name="l02360"></a><span class="lineno"> 2360</span><span class="comment"> * \param[in] wMode the fill mode</span></div>
+<div class="line"><a id="l02361" name="l02361"></a><span class="lineno"> 2361</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
+<div class="line"><a id="l02362" name="l02362"></a><span class="lineno"> 2362</span><span class="comment"> */</span></div>
+<div class="line"><a id="l02363" name="l02363"></a><span class="lineno"> 2363</span>extern</div>
+<div class="line"><a id="l02364" name="l02364"></a><span class="lineno"> 2364</span>ARM_NONNULL(2,3,4)</div>
+<div class="line"><a id="l02365" name="l02365"></a><span class="lineno"><a class="line" href="group__gAlpha.html#ga16ddac6576eec5c3884321f2ced45fa2"> 2365</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gAlpha.html#ga16ddac6576eec5c3884321f2ced45fa2" title="fill a source tile to a target tile with a source mask and y-mirroring">arm_2dp_cccn888_tile_fill_with_src_mask_and_y_mirror</a>(</div>
+<div class="line"><a id="l02366" name="l02366"></a><span class="lineno"> 2366</span>                                        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__msk__t" title="the base class for operations with a target tile, a source tile and masks">arm_2d_op_cp_msk_t</a> *ptOP,</div>
+<div class="line"><a id="l02367" name="l02367"></a><span class="lineno"> 2367</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
+<div class="line"><a id="l02368" name="l02368"></a><span class="lineno"> 2368</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSrcMask,</div>
+<div class="line"><a id="l02369" name="l02369"></a><span class="lineno"> 2369</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
+<div class="line"><a id="l02370" name="l02370"></a><span class="lineno"> 2370</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion); </div>
+<div class="line"><a id="l02371" name="l02371"></a><span class="lineno"> 2371</span> </div>
+<div class="line"><a id="l02372" name="l02372"></a><span class="lineno"> 2372</span> </div>
+<div class="line"><a id="l02373" name="l02373"></a><span class="lineno"> 2373</span><span class="comment">/*----------------------------------------------------------------------------*</span></div>
+<div class="line"><a id="l02374" name="l02374"></a><span class="lineno"> 2374</span><span class="comment"> * Fill tile to destination with a specified source mask and xy-mirroring      *</span></div>
+<div class="line"><a id="l02375" name="l02375"></a><span class="lineno"> 2375</span><span class="comment"> *----------------------------------------------------------------------------*/</span><span class="comment"></span></div>
+<div class="line"><a id="l02376" name="l02376"></a><span class="lineno"> 2376</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l02377" name="l02377"></a><span class="lineno"> 2377</span><span class="comment"> * \brief fill a source tile to a target tile with a source mask and xy-mirroring</span></div>
+<div class="line"><a id="l02378" name="l02378"></a><span class="lineno"> 2378</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
+<div class="line"><a id="l02379" name="l02379"></a><span class="lineno"> 2379</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
+<div class="line"><a id="l02380" name="l02380"></a><span class="lineno"> 2380</span><span class="comment"> * \param[in] ptSrcMask the mask on the source side</span></div>
+<div class="line"><a id="l02381" name="l02381"></a><span class="lineno"> 2381</span><span class="comment"> * \param[in] ptTarget the target tile</span></div>
+<div class="line"><a id="l02382" name="l02382"></a><span class="lineno"> 2382</span><span class="comment"> * \param[in] ptRegion the target region</span></div>
+<div class="line"><a id="l02383" name="l02383"></a><span class="lineno"> 2383</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
+<div class="line"><a id="l02384" name="l02384"></a><span class="lineno"> 2384</span><span class="comment"> */</span></div>
+<div class="line"><a id="l02385" name="l02385"></a><span class="lineno"> 2385</span>extern</div>
+<div class="line"><a id="l02386" name="l02386"></a><span class="lineno"> 2386</span>ARM_NONNULL(2,3,4)</div>
+<div class="line"><a id="l02387" name="l02387"></a><span class="lineno"><a class="line" href="group__gAlpha.html#ga330eec0538d7ff657fd83729c844c66c"> 2387</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gAlpha.html#ga330eec0538d7ff657fd83729c844c66c" title="fill a source tile to a target tile with a source mask and xy-mirroring">arm_2dp_gray8_tile_fill_with_src_mask_and_xy_mirror</a>(</div>
+<div class="line"><a id="l02388" name="l02388"></a><span class="lineno"> 2388</span>                                        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__msk__t" title="the base class for operations with a target tile, a source tile and masks">arm_2d_op_cp_msk_t</a> *ptOP,</div>
+<div class="line"><a id="l02389" name="l02389"></a><span class="lineno"> 2389</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
+<div class="line"><a id="l02390" name="l02390"></a><span class="lineno"> 2390</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSrcMask,</div>
+<div class="line"><a id="l02391" name="l02391"></a><span class="lineno"> 2391</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
+<div class="line"><a id="l02392" name="l02392"></a><span class="lineno"> 2392</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion); </div>
+<div class="line"><a id="l02393" name="l02393"></a><span class="lineno"> 2393</span><span class="comment"></span> </div>
+<div class="line"><a id="l02394" name="l02394"></a><span class="lineno"> 2394</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l02395" name="l02395"></a><span class="lineno"> 2395</span><span class="comment"> * \brief fill a source tile to a target tile with a source mask and xy-mirroring</span></div>
+<div class="line"><a id="l02396" name="l02396"></a><span class="lineno"> 2396</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
+<div class="line"><a id="l02397" name="l02397"></a><span class="lineno"> 2397</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
+<div class="line"><a id="l02398" name="l02398"></a><span class="lineno"> 2398</span><span class="comment"> * \param[in] ptSrcMask the mask on the source side</span></div>
+<div class="line"><a id="l02399" name="l02399"></a><span class="lineno"> 2399</span><span class="comment"> * \param[in] ptTarget the target tile</span></div>
+<div class="line"><a id="l02400" name="l02400"></a><span class="lineno"> 2400</span><span class="comment"> * \param[in] ptRegion the target region</span></div>
+<div class="line"><a id="l02401" name="l02401"></a><span class="lineno"> 2401</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
+<div class="line"><a id="l02402" name="l02402"></a><span class="lineno"> 2402</span><span class="comment"> */</span></div>
+<div class="line"><a id="l02403" name="l02403"></a><span class="lineno"> 2403</span>extern</div>
+<div class="line"><a id="l02404" name="l02404"></a><span class="lineno"> 2404</span>ARM_NONNULL(2,3,4)</div>
+<div class="line"><a id="l02405" name="l02405"></a><span class="lineno"><a class="line" href="group__gAlpha.html#ga8b0ba8a3e661e672db7c86b661f025dd"> 2405</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gAlpha.html#ga8b0ba8a3e661e672db7c86b661f025dd" title="fill a source tile to a target tile with a source mask and xy-mirroring">arm_2dp_rgb565_tile_fill_with_src_mask_and_xy_mirror</a>(</div>
+<div class="line"><a id="l02406" name="l02406"></a><span class="lineno"> 2406</span>                                        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__msk__t" title="the base class for operations with a target tile, a source tile and masks">arm_2d_op_cp_msk_t</a> *ptOP,</div>
+<div class="line"><a id="l02407" name="l02407"></a><span class="lineno"> 2407</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
+<div class="line"><a id="l02408" name="l02408"></a><span class="lineno"> 2408</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSrcMask,</div>
+<div class="line"><a id="l02409" name="l02409"></a><span class="lineno"> 2409</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
+<div class="line"><a id="l02410" name="l02410"></a><span class="lineno"> 2410</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion);</div>
+<div class="line"><a id="l02411" name="l02411"></a><span class="lineno"> 2411</span><span class="comment"></span> </div>
+<div class="line"><a id="l02412" name="l02412"></a><span class="lineno"> 2412</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l02413" name="l02413"></a><span class="lineno"> 2413</span><span class="comment"> * \brief fill a source tile to a target tile with a source mask and xy-mirroring</span></div>
+<div class="line"><a id="l02414" name="l02414"></a><span class="lineno"> 2414</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
+<div class="line"><a id="l02415" name="l02415"></a><span class="lineno"> 2415</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
+<div class="line"><a id="l02416" name="l02416"></a><span class="lineno"> 2416</span><span class="comment"> * \param[in] ptSrcMask the mask on the source side</span></div>
+<div class="line"><a id="l02417" name="l02417"></a><span class="lineno"> 2417</span><span class="comment"> * \param[in] ptTarget the target tile</span></div>
+<div class="line"><a id="l02418" name="l02418"></a><span class="lineno"> 2418</span><span class="comment"> * \param[in] ptRegion the target region</span></div>
+<div class="line"><a id="l02419" name="l02419"></a><span class="lineno"> 2419</span><span class="comment"> * \param[in] wMode the fill mode</span></div>
+<div class="line"><a id="l02420" name="l02420"></a><span class="lineno"> 2420</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
+<div class="line"><a id="l02421" name="l02421"></a><span class="lineno"> 2421</span><span class="comment"> */</span></div>
+<div class="line"><a id="l02422" name="l02422"></a><span class="lineno"> 2422</span>extern</div>
+<div class="line"><a id="l02423" name="l02423"></a><span class="lineno"> 2423</span>ARM_NONNULL(2,3,4)</div>
+<div class="line"><a id="l02424" name="l02424"></a><span class="lineno"><a class="line" href="group__gAlpha.html#gaef54e4de4e5a4a2d445ab97c271ca587"> 2424</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gAlpha.html#gaef54e4de4e5a4a2d445ab97c271ca587" title="fill a source tile to a target tile with a source mask and xy-mirroring">arm_2dp_cccn888_tile_fill_with_src_mask_and_xy_mirror</a>(</div>
+<div class="line"><a id="l02425" name="l02425"></a><span class="lineno"> 2425</span>                                        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__msk__t" title="the base class for operations with a target tile, a source tile and masks">arm_2d_op_cp_msk_t</a> *ptOP,</div>
+<div class="line"><a id="l02426" name="l02426"></a><span class="lineno"> 2426</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
+<div class="line"><a id="l02427" name="l02427"></a><span class="lineno"> 2427</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSrcMask,</div>
+<div class="line"><a id="l02428" name="l02428"></a><span class="lineno"> 2428</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
+<div class="line"><a id="l02429" name="l02429"></a><span class="lineno"> 2429</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion); </div>
+<div class="line"><a id="l02430" name="l02430"></a><span class="lineno"> 2430</span> </div>
+<div class="line"><a id="l02431" name="l02431"></a><span class="lineno"> 2431</span> </div>
+<div class="line"><a id="l02432" name="l02432"></a><span class="lineno"> 2432</span><span class="comment">/*----------------------------------------------------------------------------*</span></div>
+<div class="line"><a id="l02433" name="l02433"></a><span class="lineno"> 2433</span><span class="comment"> * Copy tile to destination with a target mask and a specified mode           *</span></div>
+<div class="line"><a id="l02434" name="l02434"></a><span class="lineno"> 2434</span><span class="comment"> *----------------------------------------------------------------------------*/</span></div>
+<div class="line"><a id="l02435" name="l02435"></a><span class="lineno"> 2435</span><span class="comment"></span> </div>
+<div class="line"><a id="l02436" name="l02436"></a><span class="lineno"> 2436</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l02437" name="l02437"></a><span class="lineno"> 2437</span><span class="comment"> * \brief copy a source tile to a target tile with a target mask in a given mode</span></div>
+<div class="line"><a id="l02438" name="l02438"></a><span class="lineno"> 2438</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
+<div class="line"><a id="l02439" name="l02439"></a><span class="lineno"> 2439</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
+<div class="line"><a id="l02440" name="l02440"></a><span class="lineno"> 2440</span><span class="comment"> * \param[in] ptTarget the target tile</span></div>
+<div class="line"><a id="l02441" name="l02441"></a><span class="lineno"> 2441</span><span class="comment"> * \param[in] ptDesMask the mask on the target side</span></div>
+<div class="line"><a id="l02442" name="l02442"></a><span class="lineno"> 2442</span><span class="comment"> * \param[in] ptRegion the target region</span></div>
+<div class="line"><a id="l02443" name="l02443"></a><span class="lineno"> 2443</span><span class="comment"> * \param[in] wMode the copy mode</span></div>
+<div class="line"><a id="l02444" name="l02444"></a><span class="lineno"> 2444</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
+<div class="line"><a id="l02445" name="l02445"></a><span class="lineno"> 2445</span><span class="comment"> */</span></div>
+<div class="line"><a id="l02446" name="l02446"></a><span class="lineno"> 2446</span>extern</div>
+<div class="line"><a id="l02447" name="l02447"></a><span class="lineno"> 2447</span>ARM_NONNULL(2,3,4)</div>
+<div class="line"><a id="l02448" name="l02448"></a><span class="lineno"><a class="line" href="group__gAlpha.html#gaf0689852984a0ca409f762087bcd26c2"> 2448</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gAlpha.html#gaf0689852984a0ca409f762087bcd26c2" title="copy a source tile to a target tile with a target mask in a given mode">arm_2dp_gray8_tile_copy_with_des_mask</a>(</div>
+<div class="line"><a id="l02449" name="l02449"></a><span class="lineno"> 2449</span>                                        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__msk__t" title="the base class for operations with a target tile, a source tile and masks">arm_2d_op_cp_msk_t</a> *ptOP,</div>
+<div class="line"><a id="l02450" name="l02450"></a><span class="lineno"> 2450</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
+<div class="line"><a id="l02451" name="l02451"></a><span class="lineno"> 2451</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
+<div class="line"><a id="l02452" name="l02452"></a><span class="lineno"> 2452</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptDesMask,</div>
+<div class="line"><a id="l02453" name="l02453"></a><span class="lineno"> 2453</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
+<div class="line"><a id="l02454" name="l02454"></a><span class="lineno"> 2454</span>                                        uint32_t wMode); </div>
+<div class="line"><a id="l02455" name="l02455"></a><span class="lineno"> 2455</span><span class="comment"></span> </div>
+<div class="line"><a id="l02456" name="l02456"></a><span class="lineno"> 2456</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l02457" name="l02457"></a><span class="lineno"> 2457</span><span class="comment"> * \brief copy a source tile to a target tile with a target mask in a given mode</span></div>
+<div class="line"><a id="l02458" name="l02458"></a><span class="lineno"> 2458</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
+<div class="line"><a id="l02459" name="l02459"></a><span class="lineno"> 2459</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
+<div class="line"><a id="l02460" name="l02460"></a><span class="lineno"> 2460</span><span class="comment"> * \param[in] ptTarget the target tile</span></div>
+<div class="line"><a id="l02461" name="l02461"></a><span class="lineno"> 2461</span><span class="comment"> * \param[in] ptDesMask the mask on the target side</span></div>
+<div class="line"><a id="l02462" name="l02462"></a><span class="lineno"> 2462</span><span class="comment"> * \param[in] ptRegion the target region</span></div>
+<div class="line"><a id="l02463" name="l02463"></a><span class="lineno"> 2463</span><span class="comment"> * \param[in] wMode the copy mode</span></div>
+<div class="line"><a id="l02464" name="l02464"></a><span class="lineno"> 2464</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
+<div class="line"><a id="l02465" name="l02465"></a><span class="lineno"> 2465</span><span class="comment"> */</span></div>
+<div class="line"><a id="l02466" name="l02466"></a><span class="lineno"> 2466</span>extern</div>
+<div class="line"><a id="l02467" name="l02467"></a><span class="lineno"> 2467</span>ARM_NONNULL(2,3,4)</div>
+<div class="line"><a id="l02468" name="l02468"></a><span class="lineno"><a class="line" href="group__gAlpha.html#ga67bb801939d0a09c919b23554d2205f7"> 2468</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gAlpha.html#ga67bb801939d0a09c919b23554d2205f7" title="copy a source tile to a target tile with a target mask in a given mode">arm_2dp_rgb565_tile_copy_with_des_mask</a>(</div>
+<div class="line"><a id="l02469" name="l02469"></a><span class="lineno"> 2469</span>                                        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__msk__t" title="the base class for operations with a target tile, a source tile and masks">arm_2d_op_cp_msk_t</a> *ptOP,</div>
+<div class="line"><a id="l02470" name="l02470"></a><span class="lineno"> 2470</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
+<div class="line"><a id="l02471" name="l02471"></a><span class="lineno"> 2471</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
+<div class="line"><a id="l02472" name="l02472"></a><span class="lineno"> 2472</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptDesMask,</div>
+<div class="line"><a id="l02473" name="l02473"></a><span class="lineno"> 2473</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
+<div class="line"><a id="l02474" name="l02474"></a><span class="lineno"> 2474</span>                                        uint32_t wMode);</div>
+<div class="line"><a id="l02475" name="l02475"></a><span class="lineno"> 2475</span><span class="comment"></span> </div>
+<div class="line"><a id="l02476" name="l02476"></a><span class="lineno"> 2476</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l02477" name="l02477"></a><span class="lineno"> 2477</span><span class="comment"> * \brief copy a source tile to a target tile with a target mask in a given mode</span></div>
+<div class="line"><a id="l02478" name="l02478"></a><span class="lineno"> 2478</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
+<div class="line"><a id="l02479" name="l02479"></a><span class="lineno"> 2479</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
+<div class="line"><a id="l02480" name="l02480"></a><span class="lineno"> 2480</span><span class="comment"> * \param[in] ptTarget the target tile</span></div>
+<div class="line"><a id="l02481" name="l02481"></a><span class="lineno"> 2481</span><span class="comment"> * \param[in] ptDesMask the mask on the target side</span></div>
+<div class="line"><a id="l02482" name="l02482"></a><span class="lineno"> 2482</span><span class="comment"> * \param[in] ptRegion the target region</span></div>
+<div class="line"><a id="l02483" name="l02483"></a><span class="lineno"> 2483</span><span class="comment"> * \param[in] wMode the copy mode</span></div>
+<div class="line"><a id="l02484" name="l02484"></a><span class="lineno"> 2484</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
+<div class="line"><a id="l02485" name="l02485"></a><span class="lineno"> 2485</span><span class="comment"> */</span></div>
+<div class="line"><a id="l02486" name="l02486"></a><span class="lineno"> 2486</span>extern</div>
+<div class="line"><a id="l02487" name="l02487"></a><span class="lineno"> 2487</span>ARM_NONNULL(2,3,4)</div>
+<div class="line"><a id="l02488" name="l02488"></a><span class="lineno"><a class="line" href="group__gAlpha.html#gac05711b03941ef70c070c04ff7b135a1"> 2488</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gAlpha.html#gac05711b03941ef70c070c04ff7b135a1" title="copy a source tile to a target tile with a target mask in a given mode">arm_2dp_cccn888_tile_copy_with_des_mask</a>(</div>
+<div class="line"><a id="l02489" name="l02489"></a><span class="lineno"> 2489</span>                                        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__msk__t" title="the base class for operations with a target tile, a source tile and masks">arm_2d_op_cp_msk_t</a> *ptOP,</div>
+<div class="line"><a id="l02490" name="l02490"></a><span class="lineno"> 2490</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
+<div class="line"><a id="l02491" name="l02491"></a><span class="lineno"> 2491</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
+<div class="line"><a id="l02492" name="l02492"></a><span class="lineno"> 2492</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptDesMask,</div>
+<div class="line"><a id="l02493" name="l02493"></a><span class="lineno"> 2493</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
+<div class="line"><a id="l02494" name="l02494"></a><span class="lineno"> 2494</span>                                        uint32_t wMode); </div>
+<div class="line"><a id="l02495" name="l02495"></a><span class="lineno"> 2495</span><span class="comment"></span> </div>
+<div class="line"><a id="l02496" name="l02496"></a><span class="lineno"> 2496</span><span class="comment">/*! @} */</span></div>
+<div class="line"><a id="l02497" name="l02497"></a><span class="lineno"> 2497</span> </div>
+<div class="line"><a id="l02498" name="l02498"></a><span class="lineno"> 2498</span><span class="preprocessor">#if defined(__clang__)</span></div>
+<div class="line"><a id="l02499" name="l02499"></a><span class="lineno"> 2499</span><span class="preprocessor">#pragma clang diagnostic pop</span></div>
+<div class="line"><a id="l02500" name="l02500"></a><span class="lineno"> 2500</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l02501" name="l02501"></a><span class="lineno"> 2501</span> </div>
+<div class="line"><a id="l02502" name="l02502"></a><span class="lineno"> 2502</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
+<div class="line"><a id="l02503" name="l02503"></a><span class="lineno"> 2503</span>}</div>
+<div class="line"><a id="l02504" name="l02504"></a><span class="lineno"> 2504</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l02505" name="l02505"></a><span class="lineno"> 2505</span> </div>
+<div class="line"><a id="l02506" name="l02506"></a><span class="lineno"> 2506</span><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
