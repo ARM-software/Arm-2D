@@ -12,7 +12,16 @@
 ; </h>
  *----------------------------------------------------------------------------*/
 #define __ROM_BASE     0x10000000
-#define __ROM_SIZE     0x00300000
+#define __ROM_SIZE     0x00080000
+
+/*--------------------- Flash Configuration ----------------------------------
+; <h> Flash Configuration
+;   <o0> Flash1 Base Address <0x0-0xFFFFFFFF:8>
+;   <o1> Flash1 Size (in Bytes) <0x0-0xFFFFFFFF:8>
+; </h>
+ *----------------------------------------------------------------------------*/
+#define __ROM1_BASE    0x11000000
+#define __ROM1_SIZE    0x00100000
 
 /*--------------------- Embedded RAM Configuration ---------------------------
 ; <h> RAM Configuration
@@ -21,7 +30,7 @@
 ; </h>
  *----------------------------------------------------------------------------*/
 #define __RAM1_BASE     0x30000000
-#define __RAM1_SIZE     0x00400000
+#define __RAM1_SIZE     0x00080000
 
 
 /*--------------------- Embedded RAM Configuration ---------------------------
@@ -55,7 +64,6 @@ LR_ROM __ROM_BASE __ROM_SIZE  {                                                 
         *.o (RESET, +First)
         * (InRoot$$Sections)
         ;   *(Veneer$$CMSE)                                                     ; uncomment for secure applications
-        * (+RO-CODE)
         ;   * (+XO)
     }
 
@@ -63,7 +71,6 @@ LR_ROM __ROM_BASE __ROM_SIZE  {                                                 
     }
 
     RW_RAM1 +0 __RAM1_RW_SIZE {
-        * (+RO-DATA)
         * (+RW +ZI)
     }
 
@@ -77,6 +84,12 @@ LR_ROM __ROM_BASE __ROM_SIZE  {                                                 
   
     PERIPHERAL_UART0 0x41303000 UNINIT {
         *(:gdef:UART0)
+    }
+}
+
+LR_ROM1 __ROM1_BASE __ROM1_SIZE {
+    ER_ROM1 __ROM1_BASE __ROM1_SIZE {
+        * (+RO)
     }
 }
 
