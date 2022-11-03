@@ -1,5 +1,17 @@
 var NAVTREEINDEX2 =
 {
+"group__gKernel.html#a7ab9bae0edae834bd1b221ed16f9f5a9":[5,0,41,2],
+"group__gKernel.html#a7c66e904cad6508e4945d09f2145413f":[5,0,45,2],
+"group__gKernel.html#a7c7e317c38766f23f576ff91cc8c9aa7":[5,0,16,2],
+"group__gKernel.html#a7eaf57395ac174e3588fa638bd4fdac4":[5,0,20,1],
+"group__gKernel.html#a7f612e916edb730626c520af4d82fe98":[5,0,48,0],
+"group__gKernel.html#a8055fbd7e6d6d450d2856f8b30379a5a":[5,0,31,0],
+"group__gKernel.html#a831516650d9e1ad301d96668244c7093":[5,0,50,0],
+"group__gKernel.html#a8bad2a9f967b1ca4f848ef67c7f41add":[5,0,71,1],
+"group__gKernel.html#a8bad2a9f967b1ca4f848ef67c7f41add":[5,0,64,1],
+"group__gKernel.html#a8baeec3b7715b9505d90e374936e1901":[5,0,54,0],
+"group__gKernel.html#a8ca4c52fadfcbc94c68db2f5452531d3":[5,0,21,0],
+"group__gKernel.html#a8f828fa395c4ae69fe956ae232c0893b":[5,0,18,0],
 "group__gKernel.html#a90e6755985306ac4dc9b589669c71591":[5,0,18,1],
 "group__gKernel.html#a912063b5c4243a0ed4e1a655e3cb3082":[5,0,11,1],
 "group__gKernel.html#a953434e6f818bd41905c39ea14698e00":[5,0,45,1],
@@ -237,17 +249,5 @@ var NAVTREEINDEX2 =
 "group__gKernel.html#structarm__2d__color__rgb888__t_8____unnamed8____":[5,0,34],
 "group__gKernel.html#structarm__2d__evt__t":[5,0,19],
 "group__gKernel.html#structarm__2d__location__t":[5,0,10],
-"group__gKernel.html#structarm__2d__op__core__t":[5,0,22],
-"group__gKernel.html#structarm__2d__op__core__t_8____unnamed46____":[5,0,55],
-"group__gKernel.html#structarm__2d__op__core__t_8____unnamed46_____8Preference":[5,0,56],
-"group__gKernel.html#structarm__2d__op__evt__t":[5,0,18],
-"group__gKernel.html#structarm__2d__op__msk__t":[5,0,24],
-"group__gKernel.html#structarm__2d__op__msk__t_8Mask":[5,0,59],
-"group__gKernel.html#structarm__2d__op__msk__t_8Target":[5,0,58],
-"group__gKernel.html#structarm__2d__op__src__msk__t":[5,0,26],
-"group__gKernel.html#structarm__2d__op__src__msk__t_8Mask":[5,0,64],
-"group__gKernel.html#structarm__2d__op__src__msk__t_8Source":[5,0,63],
-"group__gKernel.html#structarm__2d__op__src__msk__t_8Target":[5,0,62],
-"group__gKernel.html#structarm__2d__op__src__orig__msk__t":[5,0,28],
-"group__gKernel.html#structarm__2d__op__src__orig__msk__t_8Mask":[5,0,71]
+"group__gKernel.html#structarm__2d__op__core__t":[5,0,22]
 };
