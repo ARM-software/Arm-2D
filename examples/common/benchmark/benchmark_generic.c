@@ -574,7 +574,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
          */
         arm_2d_align_centre(tTempPanel.tRegion, c_tileCMSISLogoMask.tRegion.tSize) {
 
-#if 1
+#if 0
 
             //!< copy CMSIS logo (with masks) to the centre of the right panel
             arm_2d_tile_copy_with_masks(
