@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d.h"
  * Description:  Public header file to contain the alpha related APIs
  *
- * $Date:        03. Oct 2022
- * $Revision:    V.1.2.1
+ * $Date:        04. Oct 2022
+ * $Revision:    V.1.2.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -159,7 +159,12 @@ extern "C" {
                                             (__REGION_ADDR),                    \
                                             (__ALPHA))
 
-#define arm_2d_gray8_copy_with_opacity( __SRC_ADDR,   /* source tile address */ \
+#define arm_2dp_gray8_tile_copy_with_opacity    arm_2dp_gray8_alpha_blending
+#define arm_2dp_rgb565_tile_copy_with_opacity   arm_2dp_rgb565_alpha_blending
+#define arm_2dp_cccn888_tile_copy_with_opacity  arm_2dp_cccn888_alpha_blending
+
+#define arm_2d_gray8_tile_copy_with_opacity(                                    \
+                                        __SRC_ADDR,   /* source tile address */ \
                                         __DES_ADDR,   /* target tile address */ \
                                         __REGION_ADDR,/* region address */      \
                                         __ALPHA)      /* alpha */               \
@@ -169,7 +174,8 @@ extern "C" {
                                             (__REGION_ADDR),                    \
                                             (__ALPHA))
 
-#define arm_2d_rgb565_copy_with_opacity(__SRC_ADDR,   /* source tile address */ \
+#define arm_2d_rgb565_tile_copy_with_opacity(                                   \
+                                        __SRC_ADDR,   /* source tile address */ \
                                         __DES_ADDR,   /* target tile address */ \
                                         __REGION_ADDR,/* region address */      \
                                         __ALPHA)      /* alpha */               \
@@ -179,7 +185,8 @@ extern "C" {
                                             (__REGION_ADDR),                    \
                                             (__ALPHA))
                                             
-#define arm_2d_rgb888_copy_with_opacity(__SRC_ADDR,   /* source tile address */ \
+#define arm_2d_rgb888_tile_copy_with_opacity(                                   \
+                                        __SRC_ADDR,   /* source tile address */ \
                                         __DES_ADDR,   /* target tile address */ \
                                         __REGION_ADDR,/* region address */      \
                                         __ALPHA)      /* alpha */               \
@@ -189,10 +196,11 @@ extern "C" {
                                             (__REGION_ADDR),                    \
                                             (__ALPHA))
 
-#define arm_2d_cccn888_copy_with_opacity(__SRC_ADDR,   /*source tile address */ \
-                                         __DES_ADDR,   /*target tile address */ \
-                                         __REGION_ADDR,/*region address */      \
-                                         __ALPHA)      /*alpha */               \
+#define arm_2d_cccn888_tile_copy_with_opacity(                                  \
+                                        __SRC_ADDR,   /* source tile address */ \
+                                        __DES_ADDR,   /* target tile address */ \
+                                        __REGION_ADDR,/* region address */      \
+                                        __ALPHA)      /* alpha */               \
             arm_2dp_cccn888_alpha_blending(  NULL,                              \
                                             (__SRC_ADDR),                       \
                                             (__DES_ADDR),                       \
@@ -632,9 +640,14 @@ extern "C" {
                                                  (__COLOUR))
 
 
+#define arm_2dp_gray8_tile_copy_with_colour_keying_and_opacity                  \
+            arm_2dp_gray8_alpha_blending_with_colour_keying
+#define arm_2dp_rgb565_tile_copy_with_colour_keying_and_opacity                 \
+            arm_2dp_rgb565_alpha_blending_with_colour_keying
+#define arm_2dp_cccn888_tile_copy_with_colour_keying_and_opacity                \
+            arm_2dp_cccn888_alpha_blending_with_colour_keying
 
-
-#define arm_2d_gray8_copy_with_colour_keying_and_opacity(                       \
+#define arm_2d_gray8_tile_copy_with_colour_keying_and_opacity(                  \
                                       __SRC_ADDR,   /*   source tile address */ \
                                       __DES_ADDR,   /*   target tile address */ \
                                       __REGION_ADDR,/*   region address */      \
@@ -648,7 +661,7 @@ extern "C" {
                                                  (__ALPHA),                     \
                                                  (__COLOUR))
 
-#define arm_2d_rgb565_copy_with_colour_keying_and_opacity(                      \
+#define arm_2d_rgb565_tile_copy_with_colour_keying_and_opacity(                 \
                                       __SRC_ADDR,   /*   source tile address */ \
                                       __DES_ADDR,   /*   target tile address */ \
                                       __REGION_ADDR,/*   region address */      \
@@ -662,7 +675,7 @@ extern "C" {
                                                  (__ALPHA),                     \
                                                  (__COLOUR))
 
-#define arm_2d_rgb888_copy_with_colour_keying_and_opacity(                      \
+#define arm_2d_rgb888_tile_copy_with_colour_keying_and_opacity(                 \
                                       __SRC_ADDR,   /*   source tile address */ \
                                       __DES_ADDR,   /*   target tile address */ \
                                       __REGION_ADDR,/*   region address */      \
@@ -676,7 +689,7 @@ extern "C" {
                                     (__ALPHA),                                  \
                                     (arm_2d_color_cccn888_t){(__COLOUR).tValue})
 
-#define arm_2d_cccn888_copy_with_colour_keying_and_opacity(                     \
+#define arm_2d_cccn888_tile_copy_with_colour_keying_and_opacity(                \
                                       __SRC_ADDR,   /*   source tile address */ \
                                       __DES_ADDR,   /*   target tile address */ \
                                       __REGION_ADDR,/*   region address */      \

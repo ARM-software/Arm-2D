@@ -119,11 +119,11 @@ void busy_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
         tTargetRegion.tLocation.iX += s_tDotsLocation[chIndex].iX;
         tTargetRegion.tLocation.iY += s_tDotsLocation[chIndex].iY;
     
-        arm_2d_alpha_blending_with_colour_keying(   &c_tileWhiteDot,
-                                                    ptTarget,
-                                                    &tTargetRegion,
-                                                    s_tAlphaTable[n],
-                                                    (__arm_2d_color_t){0});
+        arm_2d_tile_copy_with_colour_keying_and_opacity(&c_tileWhiteDot,
+                                                        ptTarget,
+                                                        &tTargetRegion,
+                                                        s_tAlphaTable[n],
+                                                        (__arm_2d_color_t){0});
                                                 
         arm_2d_op_wait_async(NULL);
     }

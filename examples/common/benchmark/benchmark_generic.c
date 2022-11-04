@@ -760,7 +760,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
             }
         } else {
             if (255 != ptLayer->chOpacity) {
-                arm_2d_alpha_blending(   ptLayer->ptTile,
+                arm_2d_tile_copy_with_opacity(  ptLayer->ptTile,
                                                 ptFrameBuffer,
                                                 &tRegion,
                                                 ptLayer->chOpacity);
