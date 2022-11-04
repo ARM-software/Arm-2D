@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        03. Nov 2022
- * $Revision:    V.1.5.1
+ * $Date:        04. Nov 2022
+ * $Revision:    V.1.5.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -312,6 +312,78 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_RGB565;
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_ONLY_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_ONLY_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_ONLY_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_X_MIRROR_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_X_MIRROR_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_X_MIRROR_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_Y_MIRROR_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_Y_MIRROR_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_Y_MIRROR_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_XY_MIRROR_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_XY_MIRROR_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_XY_MIRROR_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_ONLY_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_ONLY_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_ONLY_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_X_MIRROR_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_X_MIRROR_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_X_MIRROR_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_Y_MIRROR_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_Y_MIRROR_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_Y_MIRROR_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_XY_MIRROR_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_XY_MIRROR_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_XY_MIRROR_CCCN888;
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_GRAY8;

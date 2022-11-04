@@ -21,8 +21,8 @@
  * Title:        arm-2d.c
  * Description:  APIs for various alpha related operations
  *
- * $Date:        03. Oct 2022
- * $Revision:    V.1.3.0
+ * $Date:        04. Oct 2022
+ * $Revision:    V.1.4.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -2665,6 +2665,82 @@ def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_CCCN888,
                 __arm_2d_cccn888_sw_tile_fill_with_masks);
 
 __WEAK
+def_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_ONLY_GRAY8, 
+                __arm_2d_gray8_sw_tile_copy_with_masks);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_ONLY_GRAY8, 
+                __arm_2d_gray8_sw_tile_fill_with_masks);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_ONLY_RGB565, 
+                __arm_2d_rgb565_sw_tile_copy_with_masks);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_ONLY_RGB565, 
+                __arm_2d_rgb565_sw_tile_fill_with_masks);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_ONLY_CCCN888, 
+                __arm_2d_cccn888_sw_tile_copy_with_masks);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_ONLY_CCCN888, 
+                __arm_2d_cccn888_sw_tile_fill_with_masks);
+
+__WEAK
+def_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_X_MIRROR_GRAY8, 
+                __arm_2d_gray8_sw_tile_copy_with_masks);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_X_MIRROR_GRAY8, 
+                __arm_2d_gray8_sw_tile_fill_with_masks);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_X_MIRROR_RGB565, 
+                __arm_2d_rgb565_sw_tile_copy_with_masks);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_X_MIRROR_RGB565, 
+                __arm_2d_rgb565_sw_tile_fill_with_masks);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_X_MIRROR_CCCN888, 
+                __arm_2d_cccn888_sw_tile_copy_with_masks);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_X_MIRROR_CCCN888, 
+                __arm_2d_cccn888_sw_tile_fill_with_masks);
+
+__WEAK
+def_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_Y_MIRROR_GRAY8, 
+                __arm_2d_gray8_sw_tile_copy_with_masks);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_Y_MIRROR_GRAY8, 
+                __arm_2d_gray8_sw_tile_fill_with_masks);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_Y_MIRROR_RGB565, 
+                __arm_2d_rgb565_sw_tile_copy_with_masks);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_Y_MIRROR_RGB565, 
+                __arm_2d_rgb565_sw_tile_fill_with_masks);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_Y_MIRROR_CCCN888, 
+                __arm_2d_cccn888_sw_tile_copy_with_masks);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_Y_MIRROR_CCCN888, 
+                __arm_2d_cccn888_sw_tile_fill_with_masks);
+
+__WEAK
+def_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_XY_MIRROR_GRAY8, 
+                __arm_2d_gray8_sw_tile_copy_with_masks);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_XY_MIRROR_GRAY8, 
+                __arm_2d_gray8_sw_tile_fill_with_masks);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_XY_MIRROR_RGB565, 
+                __arm_2d_rgb565_sw_tile_copy_with_masks);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_XY_MIRROR_RGB565, 
+                __arm_2d_rgb565_sw_tile_fill_with_masks);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_XY_MIRROR_CCCN888, 
+                __arm_2d_cccn888_sw_tile_copy_with_masks);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_XY_MIRROR_CCCN888, 
+                __arm_2d_cccn888_sw_tile_fill_with_masks);
+
+__WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_WITH_SRC_MASK_GRAY8, 
                 __arm_2d_gray8_sw_tile_copy_with_src_mask);
 __WEAK
@@ -3369,6 +3445,497 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_CCCN888 = {
         .LowLevelIO = {
             .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_CCCN888),
             .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_CCCN888),
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_ONLY_GRAY8 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_GRAY8,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasSrcMask    = true,
+            .bHasDesMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_MASKS_ONLY,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_ONLY_GRAY8),
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_ONLY_RGB565 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_RGB565,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasSrcMask    = true,
+            .bHasDesMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_MASKS_ONLY,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_ONLY_RGB565),
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_ONLY_CCCN888 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_CCCN888,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasSrcMask    = true,
+            .bHasDesMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_MASKS_ONLY,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_ONLY_CCCN888),
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_ONLY_GRAY8 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_GRAY8,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasSrcMask    = true,
+            .bHasDesMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_FILL_WITH_MASKS_ONLY,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_ONLY_GRAY8),
+            .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_ONLY_GRAY8),
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_ONLY_RGB565 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_RGB565,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasSrcMask    = true,
+            .bHasDesMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_FILL_WITH_MASKS_ONLY,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_ONLY_RGB565),
+            .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_ONLY_RGB565),
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_ONLY_CCCN888 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_CCCN888,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasSrcMask    = true,
+            .bHasDesMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_FILL_WITH_MASKS_ONLY,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_ONLY_CCCN888),
+            .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_ONLY_CCCN888),
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_X_MIRROR_GRAY8 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_GRAY8,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasSrcMask    = true,
+            .bHasDesMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_MASKS_AND_X_MIRROR,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_X_MIRROR_GRAY8),
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_X_MIRROR_RGB565 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_RGB565,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasSrcMask    = true,
+            .bHasDesMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_MASKS_AND_X_MIRROR,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_X_MIRROR_RGB565),
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_X_MIRROR_CCCN888 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_CCCN888,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasSrcMask    = true,
+            .bHasDesMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_MASKS_AND_X_MIRROR,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_X_MIRROR_CCCN888),
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_X_MIRROR_GRAY8 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_GRAY8,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasSrcMask    = true,
+            .bHasDesMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_FILL_WITH_MASKS_AND_X_MIRROR,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_X_MIRROR_GRAY8),
+            .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_X_MIRROR_GRAY8),
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_X_MIRROR_RGB565 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_RGB565,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasSrcMask    = true,
+            .bHasDesMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_FILL_WITH_MASKS_AND_X_MIRROR,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_X_MIRROR_RGB565),
+            .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_X_MIRROR_RGB565),
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_X_MIRROR_CCCN888 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_CCCN888,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasSrcMask    = true,
+            .bHasDesMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_FILL_WITH_MASKS_AND_X_MIRROR,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_X_MIRROR_CCCN888),
+            .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_X_MIRROR_CCCN888),
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_Y_MIRROR_GRAY8 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_GRAY8,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasSrcMask    = true,
+            .bHasDesMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_MASKS_AND_Y_MIRROR,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_Y_MIRROR_GRAY8),
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_Y_MIRROR_RGB565 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_RGB565,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasSrcMask    = true,
+            .bHasDesMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_MASKS_AND_Y_MIRROR,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_Y_MIRROR_RGB565),
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_Y_MIRROR_CCCN888 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_CCCN888,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasSrcMask    = true,
+            .bHasDesMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_MASKS_AND_Y_MIRROR,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_Y_MIRROR_CCCN888),
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_Y_MIRROR_GRAY8 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_GRAY8,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasSrcMask    = true,
+            .bHasDesMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_FILL_WITH_MASKS_AND_Y_MIRROR,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_Y_MIRROR_GRAY8),
+            .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_Y_MIRROR_GRAY8),
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_Y_MIRROR_RGB565 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_RGB565,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasSrcMask    = true,
+            .bHasDesMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_FILL_WITH_MASKS_AND_Y_MIRROR,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_Y_MIRROR_RGB565),
+            .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_Y_MIRROR_RGB565),
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_Y_MIRROR_CCCN888 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_CCCN888,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasSrcMask    = true,
+            .bHasDesMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_FILL_WITH_MASKS_AND_Y_MIRROR,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_Y_MIRROR_CCCN888),
+            .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_Y_MIRROR_CCCN888),
+        },
+    },
+};
+
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_XY_MIRROR_GRAY8 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_GRAY8,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasSrcMask    = true,
+            .bHasDesMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_MASKS_AND_XY_MIRROR,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_XY_MIRROR_GRAY8),
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_XY_MIRROR_RGB565 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_RGB565,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasSrcMask    = true,
+            .bHasDesMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_MASKS_AND_XY_MIRROR,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_XY_MIRROR_RGB565),
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_XY_MIRROR_CCCN888 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_CCCN888,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasSrcMask    = true,
+            .bHasDesMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_MASKS_AND_XY_MIRROR,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_XY_MIRROR_CCCN888),
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_XY_MIRROR_GRAY8 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_GRAY8,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasSrcMask    = true,
+            .bHasDesMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_FILL_WITH_MASKS_AND_XY_MIRROR,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_XY_MIRROR_GRAY8),
+            .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_XY_MIRROR_GRAY8),
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_XY_MIRROR_RGB565 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_RGB565,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasSrcMask    = true,
+            .bHasDesMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_FILL_WITH_MASKS_AND_XY_MIRROR,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_XY_MIRROR_RGB565),
+            .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_XY_MIRROR_RGB565),
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_XY_MIRROR_CCCN888 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_CCCN888,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasSrcMask    = true,
+            .bHasDesMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_FILL_WITH_MASKS_AND_XY_MIRROR,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_XY_MIRROR_CCCN888),
+            .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_XY_MIRROR_CCCN888),
         },
     },
 };
