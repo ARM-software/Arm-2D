@@ -392,11 +392,11 @@ void example_gui_refresh(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
                 .iHeight = 221,
             },
         };
-        arm_2d_alpha_blending_with_colour_keying(
+        arm_2d_tile_copy_with_colour_keying_and_opacity(
                                     &c_tileWatchPanel,
                                     ptTile,
                                     &tPanelRegion,
-                                    64,    //!< 50% opacity
+                                    64,    //!< 25% opacity
                                     (__arm_2d_color_t){GLCD_COLOR_BLACK});
 
 
