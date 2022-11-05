@@ -1129,6 +1129,383 @@ extern "C" {
                                         (__DES_ADDR),                           \
                                         (__REGION))
 
+#define arm_2d_gray8_tile_copy_with_masks_only(                                 \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION)       /*   region address */      \
+            arm_2dp_gray8_tile_copy_with_masks_only(                            \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION))
+
+
+#define arm_2d_rgb565_tile_copy_with_masks_only(                                \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION)       /*   region address */      \
+            arm_2dp_rgb565_tile_copy_with_masks_only(                           \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION))
+
+
+#define arm_2d_rgb888_tile_copy_with_masks_only                                 \
+            arm_2d_cccn888_tile_copy_with_masks_only
+
+#define arm_2d_cccn888_tile_copy_with_masks_only(                               \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION)       /*   region address */      \
+            arm_2dp_cccn888_tile_copy_with_masks_only(                          \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION))
+
+#define arm_2d_gray8_tile_copy_with_masks_and_x_mirror(                         \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION)       /*   region address */      \
+            arm_2dp_gray8_tile_copy_with_masks_and_x_mirror(                    \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION))
+
+
+#define arm_2d_rgb565_tile_copy_with_masks_and_x_mirror(                        \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION)       /*   region address */      \
+            arm_2dp_rgb565_tile_copy_with_masks_and_x_mirror(                   \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION))
+
+
+#define arm_2d_rgb888_tile_copy_with_masks_and_x_mirror                         \
+            arm_2d_cccn888_tile_copy_with_masks_and_x_mirror
+
+#define arm_2d_cccn888_tile_copy_with_masks_and_x_mirror(                       \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION)       /*   region address */      \
+            arm_2dp_cccn888_tile_copy_with_masks_and_x_mirror(                  \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION))
+
+#define arm_2d_gray8_tile_copy_with_masks_and_y_mirror(                         \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION)       /*   region address */      \
+            arm_2dp_gray8_tile_copy_with_masks_and_y_mirror(                    \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION))
+
+
+#define arm_2d_rgb565_tile_copy_with_masks_and_y_mirror(                        \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION)       /*   region address */      \
+            arm_2dp_rgb565_tile_copy_with_masks_and_y_mirror(                   \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION))
+
+
+#define arm_2d_rgb888_tile_copy_with_masks_and_y_mirror                         \
+            arm_2d_cccn888_tile_copy_with_masks_and_y_mirror
+
+#define arm_2d_cccn888_tile_copy_with_masks_and_y_mirror(                       \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION)       /*   region address */      \
+            arm_2dp_cccn888_tile_copy_with_masks_and_y_mirror(                  \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION))
+
+#define arm_2d_gray8_tile_copy_with_masks_and_xy_mirror(                        \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION)       /*   region address */      \
+            arm_2dp_gray8_tile_copy_with_masks_and_xy_mirror(                   \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION))
+
+
+#define arm_2d_rgb565_tile_copy_with_masks_and_xy_mirror(                       \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION)       /*   region address */      \
+            arm_2dp_rgb565_tile_copy_with_masks_and_xy_mirror(                  \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION))
+
+
+#define arm_2d_rgb888_tile_copy_with_masks_and_xy_mirror                        \
+            arm_2d_cccn888_tile_copy_with_masks_and_xy_mirror
+
+#define arm_2d_cccn888_tile_copy_with_masks_and_xy_mirror(                      \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION)       /*   region address */      \
+            arm_2dp_cccn888_tile_copy_with_masks_and_xy_mirror(                 \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION))
+
+#define arm_2d_gray8_tile_fill_with_masks_only(                                 \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION)       /*   region address */      \
+            arm_2dp_gray8_tile_fill_with_masks_only(                            \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION))
+
+
+#define arm_2d_rgb565_tile_fill_with_masks_only(                                \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION)       /*   region address */      \
+            arm_2dp_rgb565_tile_fill_with_masks_only(                           \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION))
+
+
+#define arm_2d_rgb888_tile_fill_with_masks_only                                 \
+            arm_2d_cccn888_tile_fill_with_masks_only
+
+#define arm_2d_cccn888_tile_fill_with_masks_only(                               \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION)       /*   region address */      \
+            arm_2dp_cccn888_tile_fill_with_masks_only(                          \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION))
+
+#define arm_2d_gray8_tile_fill_with_masks_and_x_mirror(                         \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION)       /*   region address */      \
+            arm_2dp_gray8_tile_fill_with_masks_and_x_mirror(                    \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION))
+
+
+#define arm_2d_rgb565_tile_fill_with_masks_and_x_mirror(                        \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION)       /*   region address */      \
+            arm_2dp_rgb565_tile_fill_with_masks_and_x_mirror(                   \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION))
+
+
+#define arm_2d_rgb888_tile_fill_with_masks_and_x_mirror                         \
+            arm_2d_cccn888_tile_fill_with_masks_and_x_mirror
+
+#define arm_2d_cccn888_tile_fill_with_masks_and_x_mirror(                       \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION)       /*   region address */      \
+            arm_2dp_cccn888_tile_fill_with_masks_and_x_mirror(                  \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION))
+
+#define arm_2d_gray8_tile_fill_with_masks_and_y_mirror(                         \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION)       /*   region address */      \
+            arm_2dp_gray8_tile_fill_with_masks_and_y_mirror(                    \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION))
+
+
+#define arm_2d_rgb565_tile_fill_with_masks_and_y_mirror(                        \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION)       /*   region address */      \
+            arm_2dp_rgb565_tile_fill_with_masks_and_y_mirror(                   \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION))
+
+
+#define arm_2d_rgb888_tile_fill_with_masks_and_y_mirror                         \
+            arm_2d_cccn888_tile_fill_with_masks_and_y_mirror
+
+#define arm_2d_cccn888_tile_fill_with_masks_and_y_mirror(                       \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION)       /*   region address */      \
+            arm_2dp_cccn888_tile_fill_with_masks_and_y_mirror(                  \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION))
+
+#define arm_2d_gray8_tile_fill_with_masks_and_xy_mirror(                        \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION)       /*   region address */      \
+            arm_2dp_gray8_tile_fill_with_masks_and_xy_mirror(                   \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION))
+
+
+#define arm_2d_rgb565_tile_fill_with_masks_and_xy_mirror(                       \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION)       /*   region address */      \
+            arm_2dp_rgb565_tile_fill_with_masks_and_xy_mirror(                  \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION))
+
+
+#define arm_2d_rgb888_tile_fill_with_masks_and_xy_mirror                        \
+            arm_2d_cccn888_tile_fill_with_masks_and_xy_mirror
+
+#define arm_2d_cccn888_tile_fill_with_masks_and_xy_mirror(                      \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION)       /*   region address */      \
+            arm_2dp_cccn888_tile_fill_with_masks_and_xy_mirror(                 \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION))
+
+
 #define arm_2d_gray8_tile_copy_with_des_mask(                                   \
                                     __SRC_ADDR,     /*   source tile address */ \
                                     __DES_ADDR,     /*   target tile address */ \
@@ -1142,7 +1519,6 @@ extern "C" {
                                         (__DES_MSK_ADDR),                       \
                                         (__REGION),                             \
                                         (__MODE))
-
 
 #define arm_2d_rgb565_tile_copy_with_des_mask(                                  \
                                     __SRC_ADDR,     /*   source tile address */ \
@@ -1839,7 +2215,7 @@ arm_fsm_rt_t arm_2dp_cccn888_alpha_blending_with_colour_keying(
                                                 arm_2d_color_cccn888_t tColour);
 
 /*----------------------------------------------------------------------------*
- * Copy tile to destination with both a source mask and a target mask         *
+ * Copy tile to target tile with a source mask, a target mask and a given mode*
  *----------------------------------------------------------------------------*/
 
 /*!
@@ -1906,7 +2282,526 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_masks(
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_tile_t *ptDesMask,
                                         const arm_2d_region_t *ptRegion,
-                                        uint32_t wMode); 
+                                        uint32_t wMode);
+
+/*----------------------------------------------------------------------------*
+ * Copy tile to target tile with a source mask and a target mask              *
+ *----------------------------------------------------------------------------*/
+
+/*!
+ * \brief copy a source tile to a target tile with masks
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptDesMask the mask on the target side
+ * \param[in] ptRegion the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3,4,5)
+arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_masks_only(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_tile_t *ptDesMask,
+                                        const arm_2d_region_t *ptRegion); 
+
+/*!
+ * \brief copy a source tile to a target tile with masks
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptDesMask the mask on the target side
+ * \param[in] ptRegion the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3,4,5)
+arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_masks_only(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_tile_t *ptDesMask,
+                                        const arm_2d_region_t *ptRegion);
+
+/*!
+ * \brief copy a source tile to a target tile with masks
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptDesMask the mask on the target side
+ * \param[in] ptRegion the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3,4,5)
+arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_masks_only(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_tile_t *ptDesMask,
+                                        const arm_2d_region_t *ptRegion); 
+
+
+/*----------------------------------------------------------------------------*
+ * Copy tile to target tile with a source mask, a target mask and x-mirroring *
+ *----------------------------------------------------------------------------*/
+
+/*!
+ * \brief copy a source tile to a target tile with masks and x-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptDesMask the mask on the target side
+ * \param[in] ptRegion the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3,4,5)
+arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_masks_and_x_mirror(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_tile_t *ptDesMask,
+                                        const arm_2d_region_t *ptRegion); 
+
+/*!
+ * \brief copy a source tile to a target tile with masks and x-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptDesMask the mask on the target side
+ * \param[in] ptRegion the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3,4,5)
+arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_masks_and_x_mirror(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_tile_t *ptDesMask,
+                                        const arm_2d_region_t *ptRegion);
+
+/*!
+ * \brief copy a source tile to a target tile with masks and x-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptDesMask the mask on the target side
+ * \param[in] ptRegion the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3,4,5)
+arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_masks_and_x_mirror(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_tile_t *ptDesMask,
+                                        const arm_2d_region_t *ptRegion);
+
+
+/*----------------------------------------------------------------------------*
+ * Copy tile to target tile with a source mask, a target mask and y-mirroring *
+ *----------------------------------------------------------------------------*/
+
+/*!
+ * \brief copy a source tile to a target tile with masks and y-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptDesMask the mask on the target side
+ * \param[in] ptRegion the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3,4,5)
+arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_masks_and_y_mirror(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_tile_t *ptDesMask,
+                                        const arm_2d_region_t *ptRegion); 
+
+/*!
+ * \brief copy a source tile to a target tile with masks and y-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptDesMask the mask on the target side
+ * \param[in] ptRegion the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3,4,5)
+arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_masks_and_y_mirror(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_tile_t *ptDesMask,
+                                        const arm_2d_region_t *ptRegion);
+
+/*!
+ * \brief copy a source tile to a target tile with masks and y-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptDesMask the mask on the target side
+ * \param[in] ptRegion the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3,4,5)
+arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_masks_and_y_mirror(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_tile_t *ptDesMask,
+                                        const arm_2d_region_t *ptRegion);
+
+
+/*----------------------------------------------------------------------------*
+ * Copy tile to target tile with a source mask, a target mask and xy-mirroring *
+ *----------------------------------------------------------------------------*/
+
+/*!
+ * \brief copy a source tile to a target tile with masks and xy-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptDesMask the mask on the target side
+ * \param[in] ptRegion the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3,4,5)
+arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_masks_and_xy_mirror(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_tile_t *ptDesMask,
+                                        const arm_2d_region_t *ptRegion); 
+
+/*!
+ * \brief copy a source tile to a target tile with masks and xy-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptDesMask the mask on the target side
+ * \param[in] ptRegion the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3,4,5)
+arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_masks_and_xy_mirror(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_tile_t *ptDesMask,
+                                        const arm_2d_region_t *ptRegion);
+
+/*!
+ * \brief copy a source tile to a target tile with masks and xy-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptDesMask the mask on the target side
+ * \param[in] ptRegion the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3,4,5)
+arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_masks_and_xy_mirror(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_tile_t *ptDesMask,
+                                        const arm_2d_region_t *ptRegion);
+
+/*----------------------------------------------------------------------------*
+ * Fill tile to target tile with a source mask and a target mask              *
+ *----------------------------------------------------------------------------*/
+
+/*!
+ * \brief fill a source tile to a target tile with masks
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptDesMask the mask on the target side
+ * \param[in] ptRegion the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3,4,5)
+arm_fsm_rt_t arm_2dp_gray8_tile_fill_with_masks_only(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_tile_t *ptDesMask,
+                                        const arm_2d_region_t *ptRegion); 
+
+/*!
+ * \brief fill a source tile to a target tile with masks
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptDesMask the mask on the target side
+ * \param[in] ptRegion the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3,4,5)
+arm_fsm_rt_t arm_2dp_rgb565_tile_fill_with_masks_only(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_tile_t *ptDesMask,
+                                        const arm_2d_region_t *ptRegion);
+
+/*!
+ * \brief fill a source tile to a target tile with masks
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptDesMask the mask on the target side
+ * \param[in] ptRegion the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3,4,5)
+arm_fsm_rt_t arm_2dp_cccn888_tile_fill_with_masks_only(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_tile_t *ptDesMask,
+                                        const arm_2d_region_t *ptRegion); 
+
+
+/*----------------------------------------------------------------------------*
+ * Fill tile to target tile with a source mask, a target mask and x-mirroring *
+ *----------------------------------------------------------------------------*/
+
+/*!
+ * \brief fill a source tile to a target tile with masks and x-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptDesMask the mask on the target side
+ * \param[in] ptRegion the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3,4,5)
+arm_fsm_rt_t arm_2dp_gray8_tile_fill_with_masks_and_x_mirror(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_tile_t *ptDesMask,
+                                        const arm_2d_region_t *ptRegion); 
+
+/*!
+ * \brief fill a source tile to a target tile with masks and x-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptDesMask the mask on the target side
+ * \param[in] ptRegion the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3,4,5)
+arm_fsm_rt_t arm_2dp_rgb565_tile_fill_with_masks_and_x_mirror(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_tile_t *ptDesMask,
+                                        const arm_2d_region_t *ptRegion);
+
+/*!
+ * \brief fill a source tile to a target tile with masks and x-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptDesMask the mask on the target side
+ * \param[in] ptRegion the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3,4,5)
+arm_fsm_rt_t arm_2dp_cccn888_tile_fill_with_masks_and_x_mirror(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_tile_t *ptDesMask,
+                                        const arm_2d_region_t *ptRegion);
+
+
+/*----------------------------------------------------------------------------*
+ * Fill tile to target tile with a source mask, a target mask and y-mirroring *
+ *----------------------------------------------------------------------------*/
+
+/*!
+ * \brief fill a source tile to a target tile with masks and y-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptDesMask the mask on the target side
+ * \param[in] ptRegion the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3,4,5)
+arm_fsm_rt_t arm_2dp_gray8_tile_fill_with_masks_and_y_mirror(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_tile_t *ptDesMask,
+                                        const arm_2d_region_t *ptRegion); 
+
+/*!
+ * \brief fill a source tile to a target tile with masks and y-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptDesMask the mask on the target side
+ * \param[in] ptRegion the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3,4,5)
+arm_fsm_rt_t arm_2dp_rgb565_tile_fill_with_masks_and_y_mirror(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_tile_t *ptDesMask,
+                                        const arm_2d_region_t *ptRegion);
+
+/*!
+ * \brief fill a source tile to a target tile with masks and y-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptDesMask the mask on the target side
+ * \param[in] ptRegion the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3,4,5)
+arm_fsm_rt_t arm_2dp_cccn888_tile_fill_with_masks_and_y_mirror(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_tile_t *ptDesMask,
+                                        const arm_2d_region_t *ptRegion);
+
+
+/*----------------------------------------------------------------------------*
+ * Fill tile to target tile with a source mask, a target mask and xy-mirroring *
+ *----------------------------------------------------------------------------*/
+
+/*!
+ * \brief fill a source tile to a target tile with masks and xy-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptDesMask the mask on the target side
+ * \param[in] ptRegion the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3,4,5)
+arm_fsm_rt_t arm_2dp_gray8_tile_fill_with_masks_and_xy_mirror(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_tile_t *ptDesMask,
+                                        const arm_2d_region_t *ptRegion); 
+
+/*!
+ * \brief fill a source tile to a target tile with masks and xy-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptDesMask the mask on the target side
+ * \param[in] ptRegion the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3,4,5)
+arm_fsm_rt_t arm_2dp_rgb565_tile_fill_with_masks_and_xy_mirror(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_tile_t *ptDesMask,
+                                        const arm_2d_region_t *ptRegion);
+
+/*!
+ * \brief fill a source tile to a target tile with masks and xy-mirroring
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptDesMask the mask on the target side
+ * \param[in] ptRegion the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3,4,5)
+arm_fsm_rt_t arm_2dp_cccn888_tile_fill_with_masks_and_xy_mirror(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_tile_t *ptDesMask,
+                                        const arm_2d_region_t *ptRegion);
+
 
 /*----------------------------------------------------------------------------*
  * Copy tile to destination with a source mask and a specified mode           *

@@ -367,7 +367,7 @@ arm_fsm_rt_t __ABW_FUNC(tile_copy_with_des_mask)( __arm_2d_sub_task_t *ptTask)
     return arm_fsm_rt_cpl;
 }
 
- 
+
 arm_fsm_rt_t __ABW_FUNC(tile_copy_with_masks)( __arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_cp_msk_t, ptTask->ptOP);
@@ -572,7 +572,7 @@ arm_fsm_rt_t __ABW_FUNC(tile_copy_with_masks)( __arm_2d_sub_task_t *ptTask)
         
         if (wMode & (ARM_2D_CP_MODE_Y_MIRROR | ARM_2D_CP_MODE_X_MIRROR)) {
 
-            __ABW_LL_FUNC(masks_copy_mirror)(
+            __ABW_LL_FUNC(src_msk_des_chn_msk_copy_mirror)(
                 ptTask->Param.tCopyMask
                     .use_as____arm_2d_param_copy_t.tSource.pBuffer,
                 ptTask->Param.tCopyMask
@@ -596,7 +596,7 @@ arm_fsm_rt_t __ABW_FUNC(tile_copy_with_masks)( __arm_2d_sub_task_t *ptTask)
             
         } else {
 
-            __ABW_LL_FUNC(masks_copy)(
+            __ABW_LL_FUNC(src_msk_des_chn_msk_copy)(
                 ptTask->Param.tCopyMask
                     .use_as____arm_2d_param_copy_t.tSource.pBuffer,
                 ptTask->Param.tCopyMask
@@ -1052,7 +1052,7 @@ arm_fsm_rt_t __ABW_FUNC(tile_fill_with_des_mask)( __arm_2d_sub_task_t *ptTask)
         
     return arm_fsm_rt_cpl;
 }
- 
+
 arm_fsm_rt_t __ABW_FUNC(tile_fill_with_masks)( __arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_cp_msk_t, ptTask->ptOP);

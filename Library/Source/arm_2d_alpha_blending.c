@@ -497,6 +497,30 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_src_mask(
 #define __arm_2d_impl_rgb565_src_msk_copy_only                  __arm_2d_impl_rgb565_src_msk_copy
 #define __arm_2d_impl_cccn888_src_msk_copy_only                 __arm_2d_impl_cccn888_src_msk_copy
 
+#define __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_copy_only   __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_copy
+#define __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_copy_only  __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_copy
+#define __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_copy_only __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_copy
+
+#define __arm_2d_impl_gray8_src_msk_des_chn_msk_copy_only       __arm_2d_impl_gray8_src_msk_des_chn_msk_copy
+#define __arm_2d_impl_rgb565_src_msk_des_chn_msk_copy_only      __arm_2d_impl_rgb565_src_msk_des_chn_msk_copy
+#define __arm_2d_impl_cccn888_src_msk_des_chn_msk_copy_only     __arm_2d_impl_cccn888_src_msk_des_chn_msk_copy
+
+#define __arm_2d_impl_gray8_src_chn_msk_des_msk_copy_only       __arm_2d_impl_gray8_src_chn_msk_des_msk_copy
+#define __arm_2d_impl_rgb565_src_chn_msk_des_msk_copy_only      __arm_2d_impl_rgb565_src_chn_msk_des_msk_copy
+#define __arm_2d_impl_cccn888_src_chn_msk_des_msk_copy_only     __arm_2d_impl_cccn888_src_chn_msk_des_msk_copy
+
+#define __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_copy_only    __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_copy
+#define __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_copy_only   __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_copy
+#define __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_copy_only  __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_copy
+
+#define __arm_2d_impl_gray8_src_msk_1h_des_msk_copy_only        __arm_2d_impl_gray8_src_msk_1h_des_msk_copy
+#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_only       __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy
+#define __arm_2d_impl_cccn888_src_msk_1h_des_msk_copy_only      __arm_2d_impl_cccn888_src_msk_1h_des_msk_copy
+
+#define __arm_2d_impl_gray8_masks_copy_only                     __arm_2d_impl_gray8_masks_copy
+#define __arm_2d_impl_rgb565_masks_copy_only                    __arm_2d_impl_rgb565_masks_copy
+#define __arm_2d_impl_cccn888_masks_copy_only                   __arm_2d_impl_cccn888_masks_copy
+
 #define __arm_2d_gray8_sw_tile_copy_with_src_mask_only          __arm_2d_gray8_sw_tile_copy_with_src_mask_and_only
 #define __arm_2d_rgb565_sw_tile_copy_with_src_mask_only         __arm_2d_rgb565_sw_tile_copy_with_src_mask_and_only
 #define __arm_2d_cccn888_sw_tile_copy_with_src_mask_only        __arm_2d_cccn888_sw_tile_copy_with_src_mask_and_only
@@ -504,6 +528,14 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_src_mask(
 #define arm_2dp_gray8_tile_copy_with_src_mask_and_only          arm_2dp_gray8_tile_copy_with_src_mask_only
 #define arm_2dp_rgb565_tile_copy_with_src_mask_and_only         arm_2dp_rgb565_tile_copy_with_src_mask_only
 #define arm_2dp_cccn888_tile_copy_with_src_mask_and_only        arm_2dp_cccn888_tile_copy_with_src_mask_only
+
+#define __arm_2d_gray8_sw_tile_copy_with_masks_only          __arm_2d_gray8_sw_tile_copy_with_masks_and_only
+#define __arm_2d_rgb565_sw_tile_copy_with_masks_only         __arm_2d_rgb565_sw_tile_copy_with_masks_and_only
+#define __arm_2d_cccn888_sw_tile_copy_with_masks_only        __arm_2d_cccn888_sw_tile_copy_with_masks_and_only
+
+#define arm_2dp_gray8_tile_copy_with_masks_and_only          arm_2dp_gray8_tile_copy_with_masks_only
+#define arm_2dp_rgb565_tile_copy_with_masks_and_only         arm_2dp_rgb565_tile_copy_with_masks_only
+#define arm_2dp_cccn888_tile_copy_with_masks_and_only        arm_2dp_cccn888_tile_copy_with_masks_only
 
 
 #define __arm_2d_impl_gray8_src_chn_msk_fill_only               __arm_2d_impl_gray8_src_chn_msk_fill
@@ -515,13 +547,48 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_src_mask(
 #define __arm_2d_impl_cccn888_src_msk_fill_only                 __arm_2d_impl_cccn888_src_msk_fill
 
 
+#define __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_fill_only   __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_fill
+#define __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_fill_only  __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_fill
+#define __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_fill_only __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_fill
+
+#define __arm_2d_impl_gray8_src_msk_des_chn_msk_fill_only       __arm_2d_impl_gray8_src_msk_des_chn_msk_fill
+#define __arm_2d_impl_rgb565_src_msk_des_chn_msk_fill_only      __arm_2d_impl_rgb565_src_msk_des_chn_msk_fill
+#define __arm_2d_impl_cccn888_src_msk_des_chn_msk_fill_only     __arm_2d_impl_cccn888_src_msk_des_chn_msk_fill
+
+#define __arm_2d_impl_gray8_src_chn_msk_des_msk_fill_only       __arm_2d_impl_gray8_src_chn_msk_des_msk_fill
+#define __arm_2d_impl_rgb565_src_chn_msk_des_msk_fill_only      __arm_2d_impl_rgb565_src_chn_msk_des_msk_fill
+#define __arm_2d_impl_cccn888_src_chn_msk_des_msk_fill_only     __arm_2d_impl_cccn888_src_chn_msk_des_msk_fill
+
+#define __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_fill_only    __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_fill
+#define __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_fill_only   __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_fill
+#define __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_fill_only  __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_fill
+
+#define __arm_2d_impl_gray8_src_msk_1h_des_msk_fill_only        __arm_2d_impl_gray8_src_msk_1h_des_msk_fill
+#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_only       __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill
+#define __arm_2d_impl_cccn888_src_msk_1h_des_msk_fill_only      __arm_2d_impl_cccn888_src_msk_1h_des_msk_fill
+
+#define __arm_2d_impl_gray8_masks_fill_only                     __arm_2d_impl_gray8_masks_fill
+#define __arm_2d_impl_rgb565_masks_fill_only                    __arm_2d_impl_rgb565_masks_fill
+#define __arm_2d_impl_cccn888_masks_fill_only                   __arm_2d_impl_cccn888_masks_fill
+
+
+
 #define __arm_2d_gray8_sw_tile_fill_with_src_mask_only          __arm_2d_gray8_sw_tile_fill_with_src_mask_and_only
 #define __arm_2d_rgb565_sw_tile_fill_with_src_mask_only         __arm_2d_rgb565_sw_tile_fill_with_src_mask_and_only
 #define __arm_2d_cccn888_sw_tile_fill_with_src_mask_only        __arm_2d_cccn888_sw_tile_fill_with_src_mask_and_only
 
+
+#define __arm_2d_gray8_sw_tile_fill_with_masks_only          __arm_2d_gray8_sw_tile_fill_with_masks_and_only
+#define __arm_2d_rgb565_sw_tile_fill_with_masks_only         __arm_2d_rgb565_sw_tile_fill_with_masks_and_only
+#define __arm_2d_cccn888_sw_tile_fill_with_masks_only        __arm_2d_cccn888_sw_tile_fill_with_masks_and_only
+
 #define arm_2dp_gray8_tile_fill_with_src_mask_and_only          arm_2dp_gray8_tile_fill_with_src_mask_only
 #define arm_2dp_rgb565_tile_fill_with_src_mask_and_only         arm_2dp_rgb565_tile_fill_with_src_mask_only
 #define arm_2dp_cccn888_tile_fill_with_src_mask_and_only        arm_2dp_cccn888_tile_fill_with_src_mask_only
+
+#define arm_2dp_gray8_tile_fill_with_masks_and_only          arm_2dp_gray8_tile_fill_with_masks_only
+#define arm_2dp_rgb565_tile_fill_with_masks_and_only         arm_2dp_rgb565_tile_fill_with_masks_only
+#define arm_2dp_cccn888_tile_fill_with_masks_and_only        arm_2dp_cccn888_tile_fill_with_masks_only
 
 #define __API_CMMW_COLOUR                     gray8
 #define __API_CMMW_COLOUR_UPPERCASE           GRAY8
@@ -2666,79 +2733,79 @@ def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_CCCN888,
 
 __WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_ONLY_GRAY8, 
-                __arm_2d_gray8_sw_tile_copy_with_masks);
+                __arm_2d_gray8_sw_tile_copy_with_masks_only);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_ONLY_GRAY8, 
-                __arm_2d_gray8_sw_tile_fill_with_masks);
+                __arm_2d_gray8_sw_tile_fill_with_masks_only);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_ONLY_RGB565, 
-                __arm_2d_rgb565_sw_tile_copy_with_masks);
+                __arm_2d_rgb565_sw_tile_copy_with_masks_only);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_ONLY_RGB565, 
-                __arm_2d_rgb565_sw_tile_fill_with_masks);
+                __arm_2d_rgb565_sw_tile_fill_with_masks_only);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_ONLY_CCCN888, 
-                __arm_2d_cccn888_sw_tile_copy_with_masks);
+                __arm_2d_cccn888_sw_tile_copy_with_masks_only);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_ONLY_CCCN888, 
-                __arm_2d_cccn888_sw_tile_fill_with_masks);
+                __arm_2d_cccn888_sw_tile_fill_with_masks_only);
 
 __WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_X_MIRROR_GRAY8, 
-                __arm_2d_gray8_sw_tile_copy_with_masks);
+                __arm_2d_gray8_sw_tile_copy_with_masks_and_x_mirror);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_X_MIRROR_GRAY8, 
-                __arm_2d_gray8_sw_tile_fill_with_masks);
+                __arm_2d_gray8_sw_tile_fill_with_masks_and_x_mirror);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_X_MIRROR_RGB565, 
-                __arm_2d_rgb565_sw_tile_copy_with_masks);
+                __arm_2d_rgb565_sw_tile_copy_with_masks_and_x_mirror);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_X_MIRROR_RGB565, 
-                __arm_2d_rgb565_sw_tile_fill_with_masks);
+                __arm_2d_rgb565_sw_tile_fill_with_masks_and_x_mirror);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_X_MIRROR_CCCN888, 
-                __arm_2d_cccn888_sw_tile_copy_with_masks);
+                __arm_2d_cccn888_sw_tile_copy_with_masks_and_x_mirror);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_X_MIRROR_CCCN888, 
-                __arm_2d_cccn888_sw_tile_fill_with_masks);
+                __arm_2d_cccn888_sw_tile_fill_with_masks_and_x_mirror);
 
 __WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_Y_MIRROR_GRAY8, 
-                __arm_2d_gray8_sw_tile_copy_with_masks);
+                __arm_2d_gray8_sw_tile_copy_with_masks_and_y_mirror);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_Y_MIRROR_GRAY8, 
-                __arm_2d_gray8_sw_tile_fill_with_masks);
+                __arm_2d_gray8_sw_tile_fill_with_masks_and_y_mirror);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_Y_MIRROR_RGB565, 
-                __arm_2d_rgb565_sw_tile_copy_with_masks);
+                __arm_2d_rgb565_sw_tile_copy_with_masks_and_y_mirror);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_Y_MIRROR_RGB565, 
-                __arm_2d_rgb565_sw_tile_fill_with_masks);
+                __arm_2d_rgb565_sw_tile_fill_with_masks_and_y_mirror);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_Y_MIRROR_CCCN888, 
-                __arm_2d_cccn888_sw_tile_copy_with_masks);
+                __arm_2d_cccn888_sw_tile_copy_with_masks_and_y_mirror);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_Y_MIRROR_CCCN888, 
-                __arm_2d_cccn888_sw_tile_fill_with_masks);
+                __arm_2d_cccn888_sw_tile_fill_with_masks_and_y_mirror);
 
 __WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_XY_MIRROR_GRAY8, 
-                __arm_2d_gray8_sw_tile_copy_with_masks);
+                __arm_2d_gray8_sw_tile_copy_with_masks_and_xy_mirror);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_XY_MIRROR_GRAY8, 
-                __arm_2d_gray8_sw_tile_fill_with_masks);
+                __arm_2d_gray8_sw_tile_fill_with_masks_and_xy_mirror);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_XY_MIRROR_RGB565, 
-                __arm_2d_rgb565_sw_tile_copy_with_masks);
+                __arm_2d_rgb565_sw_tile_copy_with_masks_and_xy_mirror);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_XY_MIRROR_RGB565, 
-                __arm_2d_rgb565_sw_tile_fill_with_masks);
+                __arm_2d_rgb565_sw_tile_fill_with_masks_and_xy_mirror);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_WITH_MASKS_AND_XY_MIRROR_CCCN888, 
-                __arm_2d_cccn888_sw_tile_copy_with_masks);
+                __arm_2d_cccn888_sw_tile_copy_with_masks_and_xy_mirror);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_FILL_WITH_MASKS_AND_XY_MIRROR_CCCN888, 
-                __arm_2d_cccn888_sw_tile_fill_with_masks);
+                __arm_2d_cccn888_sw_tile_fill_with_masks_and_xy_mirror);
 
 __WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_WITH_SRC_MASK_GRAY8, 
