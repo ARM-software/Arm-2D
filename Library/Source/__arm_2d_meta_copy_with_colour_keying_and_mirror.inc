@@ -19,7 +19,7 @@
 
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
- * Title:        __arm_2d_meta_copy_mirror.inc
+ * Title:        __arm_2d_meta_copy_with_colour_keying_and_mirror.inc
  * Description:  c code template for tile copy with mirroring and colour keying
  *
  * $Date:        27. Oct 2022
@@ -66,42 +66,42 @@
 #define ___MCKM_OPCODE(__OP, __MIRROR, __COLOUR)    __OP##_##__MIRROR##_##__COLOUR
 
 #undef __MCKM_OPCODE
-#define ____MCKM_OPCODE(__OP, __MIRROR, __COLOUR)                                \
+#define ____MCKM_OPCODE(__OP, __MIRROR, __COLOUR)                               \
             ___MCKM_OPCODE(__OP, __MIRROR, __COLOUR)
-#define __MCKM_OPCODE                                                            \
-            ____MCKM_OPCODE(  __API_MCKM_OP,                                      \
-                            __API_MCKM_MIRROR_TYPE_UPPERCASE,                    \
+#define __MCKM_OPCODE                                                           \
+            ____MCKM_OPCODE(  __API_MCKM_OP,                                    \
+                            __API_MCKM_MIRROR_TYPE_UPPERCASE,                   \
                             __API_MCKM_COLOUR_UPPERCASE)
 
 #undef ____MCKM_IMPL_FUNC
 #undef ___MCKM_IMPL_FUNC
 #undef __MCKM_IMPL_FUNC
-#define ____MCKM_IMPL_FUNC(__NAME, __COLOUR, __MIRROR)                           \
+#define ____MCKM_IMPL_FUNC(__NAME, __COLOUR, __MIRROR)                          \
             __arm_2d_impl_##__COLOUR##_##__NAME##_##__MIRROR
-#define ___MCKM_IMPL_FUNC(__NAME, __COLOUR, __MIRROR)                            \
+#define ___MCKM_IMPL_FUNC(__NAME, __COLOUR, __MIRROR)                           \
             ____MCKM_IMPL_FUNC(__NAME, __COLOUR, __MIRROR) 
-#define __MCKM_IMPL_FUNC(__NAME)                                                 \
+#define __MCKM_IMPL_FUNC(__NAME)                                                \
             ___MCKM_IMPL_FUNC(__NAME, __API_MCKM_COLOUR, __API_MCKM_MIRROR_TYPE)
 
 
 #undef ____MCKM_SW_FUNC
 #undef ___MCKM_SW_FUNC
 #undef __MCKM_SW_FUNC
-#define ____MCKM_SW_FUNC(__NAME, __COLOUR, __MIRROR)                             \
+#define ____MCKM_SW_FUNC(__NAME, __COLOUR, __MIRROR)                            \
             __arm_2d_##__COLOUR##_sw_##__NAME##_and_##__MIRROR
-#define ___MCKM_SW_FUNC(__NAME, __COLOUR, __MIRROR)                              \
+#define ___MCKM_SW_FUNC(__NAME, __COLOUR, __MIRROR)                             \
             ____MCKM_SW_FUNC(__NAME, __COLOUR, __MIRROR) 
-#define __MCKM_SW_FUNC(__NAME)                                                   \
+#define __MCKM_SW_FUNC(__NAME)                                                  \
             ___MCKM_SW_FUNC(__NAME, __API_MCKM_COLOUR, __API_MCKM_MIRROR_TYPE)
 
 #undef ____MCKM_API_FUNC
 #undef ___MCKM_API_FUNC
 #undef __MCKM_API_FUNC
-#define ____MCKM_API_FUNC(__NAME, __COLOUR, __MIRROR)                            \
+#define ____MCKM_API_FUNC(__NAME, __COLOUR, __MIRROR)                           \
             arm_2dp_##__COLOUR##_##__NAME##_and_##__MIRROR
-#define ___MCKM_API_FUNC(__NAME, __COLOUR, __MIRROR)                             \
+#define ___MCKM_API_FUNC(__NAME, __COLOUR, __MIRROR)                            \
             ____MCKM_API_FUNC(__NAME, __COLOUR, __MIRROR) 
-#define __MCKM_API_FUNC(__NAME)                                                  \
+#define __MCKM_API_FUNC(__NAME)                                                 \
             ___MCKM_API_FUNC(__NAME, __API_MCKM_COLOUR, __API_MCKM_MIRROR_TYPE)
 
 

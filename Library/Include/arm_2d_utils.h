@@ -22,7 +22,7 @@
  * Description:  Public header file for Arm-2D Library
  *
  * $Date:        04. Oct 2022
- * $Revision:    V.1.2.1
+ * $Revision:    V.1.2.2
  *
  * -------------------------------------------------------------------- */
 
@@ -131,17 +131,19 @@ extern "C" {
 /*!
  * \note do NOT use this macro directly
  */
-#define __implement_ex(__type, __name)                                          \
+#ifdef   __cplusplus
+#   define __implement_ex(__type, __name)   __type  __name
+#else
+#   define __implement_ex(__type, __name)                                       \
             union {                                                             \
                 __type  __name;                                                 \
                 __type;                                                         \
             }
-
+#endif
 /*!
  * \note do NOT use this macro
  */
-#define __inherit_ex(__type, __name)                                            \
-            __type  __name                                                      \
+#define __inherit_ex(__type, __name)   __type  __name
 
 
 /*!
