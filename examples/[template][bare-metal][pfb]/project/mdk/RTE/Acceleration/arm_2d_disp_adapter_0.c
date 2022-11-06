@@ -464,8 +464,6 @@ intptr_t __disp_adapter0_vres_asset_loader (
                                             arm_2d_vres_t *ptVRES, 
                                             arm_2d_region_t *ptRegion)
 {
-    
-    size_t tBufferSize = ptRegion->tSize.iHeight * ptRegion->tSize.iWidth * sizeof(COLOUR_INT);
     COLOUR_INT *pBuffer = NULL;
     size_t nPixelSize = sizeof(COLOUR_INT);
     
@@ -473,11 +471,12 @@ intptr_t __disp_adapter0_vres_asset_loader (
         nPixelSize = (1 << (ptVRES->tTile.tColourInfo.u3ColourSZ - 3));
         assert(nPixelSize >= 1);
     }
-        
+    size_t tBufferSize = ptRegion->tSize.iHeight * ptRegion->tSize.iWidth * nPixelSize;
+
 #if __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
     pBuffer = __disp_adapter0_aligned_malloc(tBufferSize, nPixelSize);
     assert(NULL != pBuffer);
-    
+
     if (NULL == pBuffer) {
         return (intptr_t)NULL;
     }
