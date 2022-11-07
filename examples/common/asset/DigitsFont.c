@@ -701,7 +701,7 @@ static const uint8_t c_bmpDigitsFontAlpha[15*336] = {
 0x00, 0x00, 0x00, 0x01, 0x52, 0xac, 0xd8, 0xe1, 0xda, 0xc3, 0x97, 0x5b, 0x15, 0x00, 0x00, 
 };
 __attribute__((aligned(4), section("arm2d.asset.c_bmpDigitsFontA2Alpha")))
-static const uint8_t c_bmpDigitsFontA2Alpha[4*336] = {
+const uint8_t c_bmpDigitsFontA2Alpha[4*336] = {
 /* -0- */
 0x00, 0xe4, 0x06, 0x00, 
 /* -1- */
@@ -1376,7 +1376,7 @@ static const uint8_t c_bmpDigitsFontA2Alpha[4*336] = {
 0x00, 0xf9, 0x6f, 0x00, 
 };
 __attribute__((aligned(4), section("arm2d.asset.c_bmpDigitsFontA4Alpha")))
-static const uint8_t c_bmpDigitsFontA4Alpha[8*336] = {
+const uint8_t c_bmpDigitsFontA4Alpha[8*336] = {
 /* -0- */
 0x00, 0x00, 0x50, 0xdb, 0x6b, 0x00, 0x00, 0x00, 
 /* -1- */
