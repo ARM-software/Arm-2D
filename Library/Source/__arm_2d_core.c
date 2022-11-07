@@ -145,27 +145,38 @@ static arm_2d_err_t __load_virtual_resource(const arm_2d_tile_t *ptRootTile,
     }
     
     /* a virtual resource must be marked as root tile */
-    arm_2d_vres_t *ptRes = (arm_2d_vres_t *)ptRootTile;
+    arm_2d_vres_t *ptVRES = (arm_2d_vres_t *)ptRootTile;
     
-    if (NULL == ptRes->Load) {
+    if (NULL == ptVRES->Load) {
         return ARM_2D_ERR_MISSING_PARAM;
     }
 
     /* load virtual resource */
-    intptr_t nAddress = (ptRes->Load)(  ptRes->pTarget,
-                                        ptRes,
+    intptr_t nAddress = (ptVRES->Load)( ptVRES->pTarget,
+                                        ptVRES,
                                         &ptParam->tValidRegion);
     
     if ((intptr_t)NULL == nAddress) {
         return ARM_2D_ERR_IO_ERROR;
     }
     
-    ptRes->tTile.nAddress = nAddress;
+    ptVRES->tTile.nAddress = nAddress;
     /* update param */
     ptParam->pBuffer = (void *)nAddress;
-    ptParam->nOffset = 0;
-    ptParam->iStride = ptParam->tValidRegion.tSize.iWidth;
-    ptParam->tValidRegion.tLocation = (arm_2d_location_t){0,0};
+    
+    if (    (0 != ptVRES->tTile.tColourInfo.chScheme) 
+        &&  (ptVRES->tTile.tColourInfo.u3ColourSZ < 3)){
+        size_t nPixelPerByte = 1 << (3 - ptVRES->tTile.tColourInfo.u3ColourSZ);
+        ptParam->nOffset &= (nPixelPerByte - 1);
+        ptParam->tValidRegion.tLocation = (arm_2d_location_t){ptParam->nOffset,0};
+        ptParam->iStride = ptParam->tValidRegion.tSize.iWidth + ptParam->nOffset;
+    } else {
+        ptParam->nOffset = 0;
+        ptParam->tValidRegion.tLocation = (arm_2d_location_t){0,0};
+        ptParam->iStride = ptParam->tValidRegion.tSize.iWidth;
+    }
+    
+    
 
     return ARM_2D_ERR_NONE;
 }
