@@ -36,11 +36,14 @@
 #   pragma clang diagnostic ignored "-Wcast-align"
 #   pragma clang diagnostic ignored "-Wmissing-field-initializers"
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
+#   pragma clang diagnostic ignored "-Wgnu-variable-sized-type-not-at-end"
 #   pragma clang diagnostic ignored "-Wmissing-prototypes"
 #   pragma clang diagnostic ignored "-Wunused-variable"
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wunused-function"
+#   pragma clang diagnostic ignored "-Wmissing-declarations"
+#   pragma clang diagnostic ignored "-Wmissing-variable-declarations"
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic push
@@ -54,41 +57,44 @@
 
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
-#   define c_tileHelium           c_tileHeliumGRAY8
+#   define c_bmpHelium              c_bmpHeliumGRAY8
+#   define c_tileHelium             c_tileHeliumGRAY8
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
-#   define c_tileHelium           c_tileHeliumRGB565
+#   define c_bmpHelium              c_bmpHeliumRGB565
+#   define c_tileHelium             c_tileHeliumRGB565
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
-#   define c_tileHelium           c_tileHeliumCCCA8888
+#   define c_bmpHelium              c_bmpHeliumCCCA8888
+#   define c_tileHelium             c_tileHeliumCCCA8888
 #else
 #   error Unsupported colour depth!
 #endif
 
+#undef this
+#define this (*ptThis)
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
-typedef struct {
-    intptr_t pResource;
-} resource_loader_t;
 
 /*============================ GLOBAL VARIABLES ==============================*/
 
-extern const arm_2d_tile_t c_tileHelium ;
+extern const uint8_t c_bmpHelium;
+extern const arm_2d_tile_t c_tileHelium;
+extern const arm_2d_tile_t c_tileDigitsFontA4Mask;
+extern const uint8_t c_bmpDigitsFontA4Alpha[];
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
-static resource_loader_t s_tLoader = {
-    .pResource = (intptr_t)&c_tileHelium,
-};
 
 static arm_2d_vres_t s_tBigImage = 
     disp_adapter0_impl_vres(   
         ARM_2D_COLOUR, 
         320, 
         256, 
-        .pTarget = (uintptr_t)&s_tLoader
+        .pTarget = (uintptr_t)&c_bmpHelium
     );
 
 static
@@ -101,6 +107,13 @@ const arm_2d_tile_t c_tChildImage =
         128
     );
 
+static arm_2d_vres_t s_vresA4Font = 
+    disp_adapter0_impl_vres(   
+        ARM_2D_COLOUR_MASK_A4, 
+        15, 
+        336, 
+        .pTarget = (uintptr_t)c_bmpDigitsFontA4Alpha,
+    );
 
 /*============================ IMPLEMENTATION ================================*/
 
@@ -128,10 +141,8 @@ uintptr_t __disp_adapter0_vres_get_asset_address(uintptr_t pObj,
      * instead, you should return the address of the target asset (pictures, 
      * masks etc) in the external memory, e.g. SPI Flash 
      */
-    resource_loader_t *ptLoader = (resource_loader_t *)pObj;
-    arm_2d_tile_t *ptTile = (arm_2d_tile_t *)ptLoader->pResource;
     
-    return ptTile->nAddress;
+    return pObj;
 }
 
 /*----------------------------------------------------------------------------*
@@ -150,10 +161,10 @@ static void __on_scene0_frame_complete(arm_2d_scene_t *ptScene)
 {
     ARM_2D_UNUSED(ptScene);
     
-    /* switch to next scene after 2s */
-    if (arm_2d_helper_is_time_out(2000)) {
-        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
-    }
+//    /* switch to next scene after 2s */
+//    if (arm_2d_helper_is_time_out(2000)) {
+//        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+//    }
 }
 
 //static
@@ -168,6 +179,139 @@ static void __on_scene0_frame_complete(arm_2d_scene_t *ptScene)
 
 //    return arm_fsm_rt_cpl;
 //}
+
+
+
+
+
+static
+arm_fsm_rt_t __digit_font_a4_draw_char(
+                                            const arm_2d_tile_t *ptTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            arm_2d_tile_t *ptileChar,
+                                            COLOUR_INT tForeColour
+                                        )
+{
+    return arm_2d_fill_colour_with_a4_mask( ptTile, 
+                                            ptRegion,
+                                            ptileChar,
+                                            (__arm_2d_color_t){tForeColour});
+}
+
+static
+arm_2d_char_descriptor_t *
+__digit_font_get_char_descriptor(
+                                        const arm_2d_font_t *ptFont, 
+                                        arm_2d_char_descriptor_t *ptDescriptor,
+                                        uint8_t *pchCharCode)
+{
+    assert(NULL != ptFont);
+    assert(NULL != ptDescriptor);
+    assert(NULL != pchCharCode);
+    
+    arm_2d_user_font_t *ptThis = (arm_2d_user_font_t *)ptFont;
+    
+    memset(ptDescriptor, 0, sizeof(arm_2d_char_descriptor_t));
+    
+    ptDescriptor->tileChar.tRegion.tSize = ptFont->tCharSize;
+    ptDescriptor->tileChar.ptParent = (arm_2d_tile_t *)&ptFont->tileFont;
+    ptDescriptor->tileChar.tInfo.bDerivedResource = true;
+    ptDescriptor->chCodeLength = 1;
+    
+    arm_foreach( arm_2d_char_idx_t, this.tLookUpTable, this.hwCount, ptItem) {
+        if (    *pchCharCode >= ptItem->chStartCode[0] 
+            &&  *pchCharCode < (ptItem->chStartCode[0] + ptItem->hwCount)) {
+            int16_t iOffset = *pchCharCode - ptItem->chStartCode[0];
+            
+            ptDescriptor->tileChar.tRegion.tLocation.iY 
+                = (int16_t)((ptItem->hwOffset + iOffset) * ptFont->tCharSize.iHeight);
+            return ptDescriptor;
+        }
+    }
+
+    /* default: use blank */
+    ptDescriptor->tileChar.tRegion.tLocation.iY 
+        = (int16_t)(   this.tLookUpTable[this.hwDefaultCharIndex].hwOffset 
+                   *   ptFont->tCharSize.iHeight);
+
+    return ptDescriptor;
+}
+
+struct {
+    implement(arm_2d_user_font_t);
+
+    arm_2d_char_idx_t tNumbers;
+    arm_2d_char_idx_t tABCDEF;
+    arm_2d_char_idx_t tMinor;
+    arm_2d_char_idx_t tPlus;
+    arm_2d_char_idx_t tDot;
+    arm_2d_char_idx_t tE;
+    arm_2d_char_idx_t tBlank;
+} ARM_2D_FONT_VRES_A4_DIGITS_ONLY = {
+
+    .use_as__arm_2d_user_font_t = {
+        .use_as__arm_2d_font_t = {
+            .tileFont = impl_child_tile(
+                s_vresA4Font,
+                0,          /* x offset */
+                0,          /* y offset */
+                15,         /* width */
+                336         /* height */
+            ),
+            .tCharSize = {
+                .iWidth = 15,
+                .iHeight = 16,
+            },
+            .nCount =  20,                             //!< Character count
+            .fnGetCharDescriptor = &__digit_font_get_char_descriptor,
+            .fnDrawChar = &__digit_font_a4_draw_char,
+        },
+        .hwCount = 7,
+        .hwDefaultCharIndex = 6, /* tBlank */
+    },
+    
+    .tNumbers = {
+        .chStartCode = {'0'},
+        .hwCount = 10,
+        .hwOffset = 0,
+    },
+    
+    .tABCDEF = {
+        .chStartCode = {'A'},
+        .hwCount = 6,
+        .hwOffset = 10,
+    },
+    
+    .tMinor = {
+        .chStartCode = {'-'},
+        .hwCount = 1,
+        .hwOffset = 16,
+    },
+    
+    .tPlus = {
+        .chStartCode = {'+'},
+        .hwCount = 1,
+        .hwOffset = 17,
+    },
+
+    .tDot = {
+        .chStartCode = {'.'},
+        .hwCount = 1,
+        .hwOffset = 18,
+    },
+
+    .tE = {
+        .chStartCode = {'e'},
+        .hwCount = 1,
+        .hwOffset = 20,
+    },
+    .tBlank = {
+        .chStartCode = {' '},
+        .hwCount = 1,
+        .hwOffset = 19,
+    },
+};
+
 
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
@@ -196,9 +340,37 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
                             &__centre_region, 
                             ARM_2D_CP_MODE_XY_MIRROR);
     }
+    
+    arm_2d_size_t tCharSize = ARM_2D_FONT_VRES_A4_DIGITS_ONLY
+                                .use_as__arm_2d_user_font_t
+                                    .use_as__arm_2d_font_t.tCharSize;
+
+    /* draw a white bar */
+    arm_2d_align_centre(ptTile->tRegion, 
+                        ptTile->tRegion.tSize.iWidth, 
+                        tCharSize.iHeight * 3 ) {
+        arm_2d_fill_colour_with_opacity(ptTile, 
+                                        &__centre_region,
+                                        (__arm_2d_color_t){GLCD_COLOR_WHITE}, 
+                                        255 - 32);
+    }
+
+    /* draw A4 fonts that stored as a virtual resource */
+    arm_2d_align_centre(ptTile->tRegion, 
+                        tCharSize.iWidth * 8, 
+                        tCharSize.iHeight * 2 ) {
+
+        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+        arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_VRES_A4_DIGITS_ONLY);
+        arm_lcd_text_set_draw_region(&__centre_region);
+        arm_lcd_text_set_colour(GLCD_COLOR_DARK_GREY, GLCD_COLOR_WHITE);
+        arm_lcd_puts("0123456789ABCDEF");
+    }
 
     /* display info */
     arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+    arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
+    arm_lcd_text_set_draw_region(NULL);
     arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
     arm_lcd_text_location(0,0);
     arm_lcd_puts("Virtual Resource Demo");

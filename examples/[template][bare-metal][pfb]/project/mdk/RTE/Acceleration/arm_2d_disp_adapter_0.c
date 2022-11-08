@@ -459,6 +459,8 @@ void __disp_adapter0_free(void *pMem)
     }
 }
 
+
+
 intptr_t __disp_adapter0_vres_asset_loader (
                                             uintptr_t pObj, 
                                             arm_2d_vres_t *ptVRES, 
@@ -466,13 +468,29 @@ intptr_t __disp_adapter0_vres_asset_loader (
 {
     COLOUR_INT *pBuffer = NULL;
     size_t nPixelSize = sizeof(COLOUR_INT);
-    
-    if (0 != ptVRES->tTile.tColourInfo.chScheme) {
-        nPixelSize = (1 << (ptVRES->tTile.tColourInfo.u3ColourSZ - 3));
-        assert(nPixelSize >= 1);
-    }
-    size_t tBufferSize = ptRegion->tSize.iHeight * ptRegion->tSize.iWidth * nPixelSize;
+    size_t tBufferSize;
+    uint32_t nBytesPerLine = ptRegion->tSize.iWidth * nPixelSize;
+    size_t nBitsPerPixel = sizeof(COLOUR_INT) << 3;
 
+    if (0 != ptVRES->tTile.tColourInfo.chScheme) {
+        nBitsPerPixel = (1 << ptVRES->tTile.tColourInfo.u3ColourSZ);
+        if (ptVRES->tTile.tColourInfo.u3ColourSZ >= 3) {
+            nPixelSize = (1 << (ptVRES->tTile.tColourInfo.u3ColourSZ - 3));
+            nBytesPerLine = ptRegion->tSize.iWidth * nPixelSize;
+        } else {
+            /* for A1, A2 and A4 */
+            size_t nPixelPerByte = 1 << (3 - ptVRES->tTile.tColourInfo.u3ColourSZ);
+            int16_t iOffset = ptRegion->tLocation.iX & (nPixelPerByte - 1);
+            
+            uint32_t nBitsPerLine =  nBitsPerPixel * (iOffset + ptRegion->tSize.iWidth);
+            nBytesPerLine = (nBitsPerLine + 7) >> 3;
+        }
+    }
+    
+    /* default condition */
+    tBufferSize = ptRegion->tSize.iHeight * nBytesPerLine;
+    
+    
 #if __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
     pBuffer = __disp_adapter0_aligned_malloc(tBufferSize, nPixelSize);
     assert(NULL != pBuffer);
@@ -492,11 +510,33 @@ intptr_t __disp_adapter0_vres_asset_loader (
     pBuffer = (COLOUR_INT *)((uintptr_t)ptPFB + sizeof(arm_2d_pfb_t));
 #endif
     /* load content into the buffer */
-    do {
+    if (nBitsPerPixel < 8) {
+        /* A1, A2 and A4 support */
         uintptr_t pSrc = __disp_adapter0_vres_get_asset_address(pObj, ptVRES);
         uintptr_t pDes = (uintptr_t)pBuffer;
-        int16_t iSourceStride = ptVRES->tTile.tRegion.tSize.iWidth;
+        
+        uint32_t iBitsperLineInSource = ptVRES->tTile.tRegion.tSize.iWidth * nBitsPerPixel;
+        int16_t iSourceStride = (int16_t)((uint32_t)(iBitsperLineInSource + 7) >> 3);
+
+        /* calculate offset */
+        pSrc += (ptRegion->tLocation.iY * iSourceStride);
+        pSrc += (ptRegion->tLocation.iX * nBitsPerPixel) >> 3;
+        
+        for (int_fast16_t y = 0; y < ptRegion->tSize.iHeight; y++) {
+            __disp_adapter0_vres_read_memory(   pObj, 
+                                                (void *)pDes, 
+                                                (uintptr_t)pSrc, 
+                                                nBytesPerLine);
+
+            pDes += nBytesPerLine;
+            pSrc += iSourceStride;
+        }
+    } else {
+        uintptr_t pSrc = __disp_adapter0_vres_get_asset_address(pObj, ptVRES);
+        uintptr_t pDes = (uintptr_t)pBuffer;
         int16_t iTargetStride = ptRegion->tSize.iWidth;
+        int16_t iSourceStride = ptVRES->tTile.tRegion.tSize.iWidth;
+
         /* calculate offset */
         pSrc += (ptRegion->tLocation.iY * iSourceStride + ptRegion->tLocation.iX) * nPixelSize;
         
@@ -510,7 +550,6 @@ intptr_t __disp_adapter0_vres_asset_loader (
             pDes += iTargetStride * nPixelSize;
             pSrc += iSourceStride * nPixelSize;
         }
-        
     } while(0);
     
     return (intptr_t)pBuffer;

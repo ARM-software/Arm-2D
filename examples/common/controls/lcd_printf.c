@@ -136,6 +136,9 @@ void arm_lcd_text_set_draw_region(arm_2d_region_t *ptRegion)
     }
     
     s_tLCDTextControl.tRegion = *ptRegion;
+    
+    /* reset draw pointer */
+    arm_lcd_text_location(0,0);
 }
 
 void arm_lcd_text_location(uint8_t chY, uint8_t chX)

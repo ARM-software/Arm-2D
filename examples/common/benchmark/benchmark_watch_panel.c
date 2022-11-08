@@ -372,13 +372,10 @@ void example_gui_refresh(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
                                 &s_tPanelTile,
                                 false);
     
-    arm_2d_tile_copy_with_des_mask(
-        s_ptRefreshLayers->ptTile,
-        &s_tPanelTile,
-        &c_tileCircleBackgroundMask,
-        &(s_ptRefreshLayers->tRegion),
-        ARM_2D_CP_MODE_COPY
-    );
+    arm_2d_tile_copy_with_des_mask_only(s_ptRefreshLayers->ptTile,
+                                        &s_tPanelTile,
+                                        &c_tileCircleBackgroundMask,
+                                        &(s_ptRefreshLayers->tRegion));
     
     //! draw the watch panel with transparency effect
     do {
