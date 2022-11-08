@@ -74,12 +74,14 @@ static struct {
         COLOUR_INT_TYPE     tForeground;
         COLOUR_INT_TYPE     tBackground;
     } tColour;
+    uint8_t chOpacity;
     
     arm_2d_tile_t *ptTargetFB;
     uint32_t       wMode;
     
     const arm_2d_font_t *ptFont;
     arm_2d_char_descriptor_t tCharDescriptor;
+    
     
 } s_tLCDTextControl = {
     .tRegion = { 
@@ -97,7 +99,7 @@ static struct {
             //| ARM_2D_DRW_PATN_MODE_NO_FG_COLOR    
             //| ARM_2D_DRW_PATH_MODE_COMP_FG_COLOUR 
     .ptFont = &ARM_2D_FONT_6x8.use_as__arm_2d_font_t,
-    
+    .chOpacity = 255,
 };
 
 /*============================ IMPLEMENTATION ================================*/
@@ -121,6 +123,11 @@ void arm_lcd_text_set_target_framebuffer(arm_2d_tile_t *ptFrameBuffer)
 void arm_lcd_text_set_display_mode(uint32_t wMode)
 {
     s_tLCDTextControl.wMode = wMode;
+}
+
+void arm_lcd_text_set_opacity(uint8_t chOpacity)
+{
+    s_tLCDTextControl.chOpacity = chOpacity;
 }
 
 void arm_lcd_text_set_draw_region(arm_2d_region_t *ptRegion)
@@ -216,7 +223,7 @@ ARM_2D_A1_FONT_GET_CHAR_DESCRIPTOR_HANDLER(
 }
 
 
-int8_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode)
+int8_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8_t chOpacity)
 {
     assert(NULL != ppchCharCode);
     assert(NULL != (*ppchCharCode));
@@ -246,7 +253,8 @@ int8_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode)
                                     s_tLCDTextControl.ptTargetFB,
                                     &tDrawRegion,
                                     &s_tLCDTextControl.tCharDescriptor.tileChar,
-                                    s_tLCDTextControl.tColour.tForeground);
+                                    s_tLCDTextControl.tColour.tForeground,
+                                    chOpacity);
     } else {
         arm_2d_draw_pattern(&s_tLCDTextControl.tCharDescriptor.tileChar, 
                             s_tLCDTextControl.ptTargetFB, 
@@ -287,9 +295,10 @@ void arm_lcd_puts(const char *str)
             int16_t iX = s_tLCDTextControl.tTextLocation.chX * s_tLCDTextControl.ptFont->tCharSize.iWidth;
             int16_t iY = s_tLCDTextControl.tTextLocation.chY * s_tLCDTextControl.ptFont->tCharSize.iHeight;
 
-            lcd_draw_char(s_tLCDTextControl.tRegion.tLocation.iX + iX, 
+            lcd_draw_char(  s_tLCDTextControl.tRegion.tLocation.iX + iX, 
                             s_tLCDTextControl.tRegion.tLocation.iY + iY, 
-                            (uint8_t **)&str);
+                            (uint8_t **)&str,
+                            s_tLCDTextControl.chOpacity);
 
             s_tLCDTextControl.tTextLocation.chX++;
             if (    s_tLCDTextControl.tTextLocation.chX * s_tLCDTextControl.ptFont->tCharSize.iWidth 

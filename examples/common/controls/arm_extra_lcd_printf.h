@@ -71,6 +71,19 @@ extern "C" {
 #   define __GLCD_CFG_SCEEN_HEIGHT__                        320
 #endif
 
+#define IMPL_FONT_DRAW_CHAR(__NAME)                                             \
+            arm_fsm_rt_t __NAME(const arm_2d_tile_t *ptTile,                    \
+                                const arm_2d_region_t *ptRegion,                \
+                                arm_2d_tile_t *ptileChar,                       \
+                                COLOUR_INT tForeColour,                         \
+                                uint_fast8_t chOpacity)
+
+#define IMPL_FONT_GET_CHAR_DESCRIPTOR(__NAME)                                   \
+            arm_2d_char_descriptor_t *__NAME(                                   \
+                                        const arm_2d_font_t *ptFont,            \
+                                        arm_2d_char_descriptor_t *ptDescriptor, \
+                                        uint8_t *pchCharCode)
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 #define arm_print_banner(__STR)                                                 \
         do {                                                                    \
@@ -102,8 +115,8 @@ typedef arm_fsm_rt_t arm_2d_font_draw_char_handler_t(
                                             const arm_2d_tile_t *ptTile,
                                             const arm_2d_region_t *ptRegion,
                                             arm_2d_tile_t *ptileChar,
-                                            COLOUR_INT tForeColour
-                                        );
+                                            COLOUR_INT tForeColour,
+                                            uint_fast8_t chOpacity);
 
 /* Font definitions */
 struct arm_2d_font_t {
@@ -154,12 +167,30 @@ void arm_lcd_puts(const char *str);
 extern 
 void arm_lcd_text_location(uint8_t chY, uint8_t chX);
 
+/*!
+ * \brief draw a char to a given location in the draw region
+ * \param[in] iX the x coordinate
+ * \param[in] iY the y coordinate
+ * \param[in] ppchCharCode a pointer of pointer that points to the string
+ *
+ * \note this function will advance the pointer automatically
+ * 
+ * \param[in] chOpacity the opacity of the char
+ *
+ * \note this chOpacity has NO effect on the default monochrome(A1) font
+ */
 extern
-int8_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode);
+int8_t lcd_draw_char(int16_t iX, 
+                     int16_t iY, 
+                     uint8_t **ppchCharCode, 
+                     uint_fast8_t chOpacity);
 
 extern 
 void arm_lcd_text_set_colour(   COLOUR_INT_TYPE wForeground, 
                                 COLOUR_INT_TYPE wBackground);
+
+extern
+void arm_lcd_text_set_opacity(uint8_t chOpacity);
 
 extern 
 void arm_lcd_text_set_target_framebuffer(arm_2d_tile_t *ptFrameBuffer);

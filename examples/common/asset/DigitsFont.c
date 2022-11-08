@@ -2123,19 +2123,22 @@ static
 arm_fsm_rt_t __digit_font_a2_draw_char( const arm_2d_tile_t *ptTile,
                                         const arm_2d_region_t *ptRegion,
                                         arm_2d_tile_t *ptileChar,
-                                        COLOUR_INT tForeColour);
+                                        COLOUR_INT tForeColour,
+                                        uint_fast8_t chOpacity);
                                         
 static 
 arm_fsm_rt_t __digit_font_a4_draw_char( const arm_2d_tile_t *ptTile,
                                         const arm_2d_region_t *ptRegion,
                                         arm_2d_tile_t *ptileChar,
-                                        COLOUR_INT tForeColour);
+                                        COLOUR_INT tForeColour,
+                                        uint_fast8_t chOpacity);
 
 static 
 arm_fsm_rt_t __digit_font_a8_draw_char( const arm_2d_tile_t *ptTile,
                                         const arm_2d_region_t *ptRegion,
                                         arm_2d_tile_t *ptileChar,
-                                        COLOUR_INT tForeColour);
+                                        COLOUR_INT tForeColour,
+                                        uint_fast8_t chOpacity);
 
 static 
 arm_2d_char_descriptor_t *
@@ -2376,60 +2379,45 @@ struct {
 #define this (*ptThis)
 
 static
-arm_fsm_rt_t __digit_font_a2_draw_char(
-                                            const arm_2d_tile_t *ptTile,
-                                            const arm_2d_region_t *ptRegion,
-                                            arm_2d_tile_t *ptileChar,
-                                            COLOUR_INT tForeColour
-                                        )
+IMPL_FONT_DRAW_CHAR(__digit_font_a2_draw_char)
 {
-    return arm_2d_fill_colour_with_a2_mask( ptTile, 
+    return arm_2d_fill_colour_with_a2_mask_and_opacity( 
+                                            ptTile, 
                                             ptRegion,
                                             ptileChar,
-                                            (__arm_2d_color_t){tForeColour});
-}
-
-
-
-static
-arm_fsm_rt_t __digit_font_a4_draw_char(
-                                            const arm_2d_tile_t *ptTile,
-                                            const arm_2d_region_t *ptRegion,
-                                            arm_2d_tile_t *ptileChar,
-                                            COLOUR_INT tForeColour
-                                        )
-{
-    return arm_2d_fill_colour_with_a4_mask( ptTile, 
-                                            ptRegion,
-                                            ptileChar,
-                                            (__arm_2d_color_t){tForeColour});
+                                            (__arm_2d_color_t){tForeColour},
+                                            chOpacity);
 }
 
 static
-arm_fsm_rt_t __digit_font_a8_draw_char(
-                                            const arm_2d_tile_t *ptTile,
-                                            const arm_2d_region_t *ptRegion,
-                                            arm_2d_tile_t *ptileChar,
-                                            COLOUR_INT tForeColour
-                                        )
+IMPL_FONT_DRAW_CHAR(__digit_font_a4_draw_char)
 {
-    return arm_2d_fill_colour_with_mask( ptTile, 
+    return arm_2d_fill_colour_with_a4_mask_and_opacity( 
+                                            ptTile, 
                                             ptRegion,
                                             ptileChar,
-                                            (__arm_2d_color_t){tForeColour});
+                                            (__arm_2d_color_t){tForeColour},
+                                            chOpacity);
 }
 
 static
-arm_2d_char_descriptor_t *
-__digit_font_get_char_descriptor(
-                                        const arm_2d_font_t *ptFont, 
-                                        arm_2d_char_descriptor_t *ptDescriptor,
-                                        uint8_t *pchCharCode)
+IMPL_FONT_DRAW_CHAR(__digit_font_a8_draw_char)
+{
+    return arm_2d_fill_colour_with_mask_and_opacity( 
+                                            ptTile, 
+                                            ptRegion,
+                                            ptileChar,
+                                            (__arm_2d_color_t){tForeColour},
+                                            chOpacity);
+}
+
+static
+IMPL_FONT_GET_CHAR_DESCRIPTOR(__digit_font_get_char_descriptor)
 {
     assert(NULL != ptFont);
     assert(NULL != ptDescriptor);
     assert(NULL != pchCharCode);
-    
+        
     arm_2d_user_font_t *ptThis = (arm_2d_user_font_t *)ptFont;
     
     memset(ptDescriptor, 0, sizeof(arm_2d_char_descriptor_t));
