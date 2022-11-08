@@ -796,14 +796,24 @@
               <FilePath>..\..\Library\Source\__arm_2d_copy_with_mask_and_mirror_wrapper.inc</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_meta_copy_with_mask_and_mirror.inc</FileName>
+              <FileName>__arm_2d_meta_copy_with_masks_and_mirror.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_mask_and_mirror.inc</FilePath>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_masks_and_mirror.inc</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_meta_fill_with_mask_and_mirror.inc</FileName>
+              <FileName>__arm_2d_meta_fill_with_masks_and_mirror.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_mask_and_mirror.inc</FilePath>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_masks_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_with_des_mask_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_des_mask_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_with_des_mask_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_des_mask_and_mirror.inc</FilePath>
             </File>
           </Files>
         </Group>
@@ -2005,14 +2015,24 @@
               <FilePath>..\..\Library\Source\__arm_2d_copy_with_mask_and_mirror_wrapper.inc</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_meta_copy_with_mask_and_mirror.inc</FileName>
+              <FileName>__arm_2d_meta_copy_with_masks_and_mirror.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_mask_and_mirror.inc</FilePath>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_masks_and_mirror.inc</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_meta_fill_with_mask_and_mirror.inc</FileName>
+              <FileName>__arm_2d_meta_fill_with_masks_and_mirror.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_mask_and_mirror.inc</FilePath>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_masks_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_with_des_mask_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_des_mask_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_with_des_mask_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_des_mask_and_mirror.inc</FilePath>
             </File>
           </Files>
         </Group>
@@ -3282,14 +3302,24 @@
               <FilePath>..\..\Library\Source\__arm_2d_copy_with_mask_and_mirror_wrapper.inc</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_meta_copy_with_mask_and_mirror.inc</FileName>
+              <FileName>__arm_2d_meta_copy_with_masks_and_mirror.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_mask_and_mirror.inc</FilePath>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_masks_and_mirror.inc</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_meta_fill_with_mask_and_mirror.inc</FileName>
+              <FileName>__arm_2d_meta_fill_with_masks_and_mirror.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_mask_and_mirror.inc</FilePath>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_masks_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_with_des_mask_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_des_mask_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_with_des_mask_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_des_mask_and_mirror.inc</FilePath>
             </File>
           </Files>
         </Group>
@@ -4560,14 +4590,24 @@
               <FilePath>..\..\Library\Source\__arm_2d_copy_with_mask_and_mirror_wrapper.inc</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_meta_copy_with_mask_and_mirror.inc</FileName>
+              <FileName>__arm_2d_meta_copy_with_masks_and_mirror.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_mask_and_mirror.inc</FilePath>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_masks_and_mirror.inc</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_meta_fill_with_mask_and_mirror.inc</FileName>
+              <FileName>__arm_2d_meta_fill_with_masks_and_mirror.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_mask_and_mirror.inc</FilePath>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_masks_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_with_des_mask_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_des_mask_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_with_des_mask_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_des_mask_and_mirror.inc</FilePath>
             </File>
           </Files>
         </Group>
@@ -5769,14 +5809,24 @@
               <FilePath>..\..\Library\Source\__arm_2d_copy_with_mask_and_mirror_wrapper.inc</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_meta_copy_with_mask_and_mirror.inc</FileName>
+              <FileName>__arm_2d_meta_copy_with_masks_and_mirror.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_mask_and_mirror.inc</FilePath>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_masks_and_mirror.inc</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_meta_fill_with_mask_and_mirror.inc</FileName>
+              <FileName>__arm_2d_meta_fill_with_masks_and_mirror.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_mask_and_mirror.inc</FilePath>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_masks_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_with_des_mask_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_des_mask_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_with_des_mask_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_des_mask_and_mirror.inc</FilePath>
             </File>
           </Files>
         </Group>
@@ -7047,14 +7097,24 @@
               <FilePath>..\..\Library\Source\__arm_2d_copy_with_mask_and_mirror_wrapper.inc</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_meta_copy_with_mask_and_mirror.inc</FileName>
+              <FileName>__arm_2d_meta_copy_with_masks_and_mirror.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_mask_and_mirror.inc</FilePath>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_masks_and_mirror.inc</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_meta_fill_with_mask_and_mirror.inc</FileName>
+              <FileName>__arm_2d_meta_fill_with_masks_and_mirror.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_mask_and_mirror.inc</FilePath>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_masks_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_with_des_mask_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_des_mask_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_with_des_mask_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_des_mask_and_mirror.inc</FilePath>
             </File>
           </Files>
         </Group>
@@ -8325,14 +8385,24 @@
               <FilePath>..\..\Library\Source\__arm_2d_copy_with_mask_and_mirror_wrapper.inc</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_meta_copy_with_mask_and_mirror.inc</FileName>
+              <FileName>__arm_2d_meta_copy_with_masks_and_mirror.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_mask_and_mirror.inc</FilePath>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_masks_and_mirror.inc</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_meta_fill_with_mask_and_mirror.inc</FileName>
+              <FileName>__arm_2d_meta_fill_with_masks_and_mirror.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_mask_and_mirror.inc</FilePath>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_masks_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_with_des_mask_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_des_mask_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_with_des_mask_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_des_mask_and_mirror.inc</FilePath>
             </File>
           </Files>
         </Group>
@@ -9603,14 +9673,24 @@
               <FilePath>..\..\Library\Source\__arm_2d_copy_with_mask_and_mirror_wrapper.inc</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_meta_copy_with_mask_and_mirror.inc</FileName>
+              <FileName>__arm_2d_meta_copy_with_masks_and_mirror.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_mask_and_mirror.inc</FilePath>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_masks_and_mirror.inc</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_meta_fill_with_mask_and_mirror.inc</FileName>
+              <FileName>__arm_2d_meta_fill_with_masks_and_mirror.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_mask_and_mirror.inc</FilePath>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_masks_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_with_des_mask_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_des_mask_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_with_des_mask_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_des_mask_and_mirror.inc</FilePath>
             </File>
           </Files>
         </Group>
@@ -10881,14 +10961,24 @@
               <FilePath>..\..\Library\Source\__arm_2d_copy_with_mask_and_mirror_wrapper.inc</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_meta_copy_with_mask_and_mirror.inc</FileName>
+              <FileName>__arm_2d_meta_copy_with_masks_and_mirror.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_mask_and_mirror.inc</FilePath>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_masks_and_mirror.inc</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_meta_fill_with_mask_and_mirror.inc</FileName>
+              <FileName>__arm_2d_meta_fill_with_masks_and_mirror.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_mask_and_mirror.inc</FilePath>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_masks_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_with_des_mask_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_des_mask_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_with_des_mask_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_des_mask_and_mirror.inc</FilePath>
             </File>
           </Files>
         </Group>
@@ -12090,14 +12180,24 @@
               <FilePath>..\..\Library\Source\__arm_2d_copy_with_mask_and_mirror_wrapper.inc</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_meta_copy_with_mask_and_mirror.inc</FileName>
+              <FileName>__arm_2d_meta_copy_with_masks_and_mirror.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_mask_and_mirror.inc</FilePath>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_masks_and_mirror.inc</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_meta_fill_with_mask_and_mirror.inc</FileName>
+              <FileName>__arm_2d_meta_fill_with_masks_and_mirror.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_mask_and_mirror.inc</FilePath>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_masks_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_with_des_mask_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_des_mask_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_with_des_mask_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_des_mask_and_mirror.inc</FilePath>
             </File>
           </Files>
         </Group>
@@ -13368,14 +13468,24 @@
               <FilePath>..\..\Library\Source\__arm_2d_copy_with_mask_and_mirror_wrapper.inc</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_meta_copy_with_mask_and_mirror.inc</FileName>
+              <FileName>__arm_2d_meta_copy_with_masks_and_mirror.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_mask_and_mirror.inc</FilePath>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_masks_and_mirror.inc</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_meta_fill_with_mask_and_mirror.inc</FileName>
+              <FileName>__arm_2d_meta_fill_with_masks_and_mirror.inc</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_mask_and_mirror.inc</FilePath>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_masks_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_copy_with_des_mask_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_copy_with_des_mask_and_mirror.inc</FilePath>
+            </File>
+            <File>
+              <FileName>__arm_2d_meta_fill_with_des_mask_and_mirror.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Library\Source\__arm_2d_meta_fill_with_des_mask_and_mirror.inc</FilePath>
             </File>
           </Files>
         </Group>
