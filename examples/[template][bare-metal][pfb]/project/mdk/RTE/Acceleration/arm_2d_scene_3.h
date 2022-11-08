@@ -27,6 +27,8 @@
 
 #include "arm_2d_helper_scene.h"
 #include "list_view.h"
+#include "progress_wheel.h"
+
 #ifdef   __cplusplus
 extern "C" {
 #endif
@@ -79,9 +81,11 @@ struct user_scene_3_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp;
-    bool bUserAllocated;
-    list_view_t tListView;
+    int64_t             lTimestamp[2];
+    bool                bUserAllocated;
+    list_view_t         tListView;
+    progress_wheel_t    tWheel;
+    int16_t             iProgress;
 )
     /* place your public member here */
     

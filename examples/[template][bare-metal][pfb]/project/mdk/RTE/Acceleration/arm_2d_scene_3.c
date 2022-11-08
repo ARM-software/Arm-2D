@@ -124,7 +124,7 @@ enum {
     MY_LIST_ITEM_ID_3,
 };
 
-const static
+static
 my_list_item_t s_tListArray[] = {
     [MY_LIST_ITEM_ID_0] = {
         .use_as__arm_2d_list_item_t = {
@@ -136,7 +136,7 @@ my_list_item_t s_tListArray[] = {
                 5,5,
             },
             
-            .tSize = { 120, 100 },
+            .tSize = { 100, 100 },
             .fnOnDrawItem = &__list_view_item_0_draw_item,
         },
     },
@@ -151,7 +151,7 @@ my_list_item_t s_tListArray[] = {
             .Padding = {
                 5,5,
             },
-            .tSize = { 80, 100 },
+            .tSize = { 100, 100 },
             .fnOnDrawItem = &__list_view_item_1_draw_item,
         },
     },
@@ -182,15 +182,16 @@ my_list_item_t s_tListArray[] = {
             .Padding = {
                 5,5,
             },
-            .tSize = { 60, 100 },
+            .tSize = { 100, 100 },
             .fnOnDrawItem = &__list_view_item_3_draw_item,
         },
     },
 };
 
-
 /*============================ IMPLEMENTATION ================================*/
 
+
+#define ITEM_BG_OPACITY     (255)
 
 static 
 arm_fsm_rt_t __list_view_item_0_draw_item( 
@@ -205,15 +206,21 @@ arm_fsm_rt_t __list_view_item_0_draw_item(
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(ptParam);
 
-    draw_round_corner_box(ptTile, NULL, GLCD_COLOR_BLUE, 64, bIsNewFrame);
+    uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
 
-    arm_2d_align_centre(ptTile->tRegion, 
-                        ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_font_t.tCharSize) {
+    draw_round_corner_box(ptTile, NULL, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
+
+    arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_font_t.tCharSize;
+    tTextSize.iWidth *= 1;
+
+    arm_2d_align_centre(ptTile->tRegion, tTextSize) {
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
         arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
         arm_lcd_text_set_draw_region(&__centre_region);
-        arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
+        arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
+        arm_lcd_text_set_opacity(chOpacity);
         arm_lcd_puts("0");
+        arm_lcd_text_set_opacity(255);
     }
 
     
@@ -229,22 +236,34 @@ arm_fsm_rt_t __list_view_item_1_draw_item(
                                       arm_2d_list_item_param_t *ptParam)
 {
     my_list_item_t *ptThis = (my_list_item_t *)ptItem;
+    user_scene_3_t *ptScene = (user_scene_3_t *)ptItem->pTarget;
     ARM_2D_UNUSED(ptItem);
     ARM_2D_UNUSED(bIsNewFrame);
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(ptParam);
 
-    draw_round_corner_box(ptTile, NULL, GLCD_COLOR_RED, 64, bIsNewFrame);
-    
-    spinning_wheel2_show(ptTile, GLCD_COLOR_GREEN, bIsNewFrame);
+    uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
 
-    arm_2d_align_centre(ptTile->tRegion, 
-                        ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_font_t.tCharSize) {
+    draw_round_corner_box(ptTile, NULL, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
+
+    progress_wheel_show(&ptScene->tWheel, 
+                        ptTile, 
+                        NULL, 
+                        ptScene->iProgress,   /* progress 0~1000 */
+                        chOpacity, 
+                        bIsNewFrame);
+
+    arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_font_t.tCharSize;
+    tTextSize.iWidth *= 1;
+
+    arm_2d_align_centre(ptTile->tRegion, tTextSize) {
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
         arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
         arm_lcd_text_set_draw_region(&__centre_region);
-        arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
+        arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
+        arm_lcd_text_set_opacity(chOpacity);
         arm_lcd_puts("1");
+        arm_lcd_text_set_opacity(255);
     }
     
     return arm_fsm_rt_cpl;
@@ -263,17 +282,21 @@ arm_fsm_rt_t __list_view_item_2_draw_item(
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(ptParam);
     
-    draw_round_corner_box(ptTile, NULL, GLCD_COLOR_YELLOW, 64, bIsNewFrame);
+    uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
 
-    busy_wheel_show(ptTile, bIsNewFrame);
+    draw_round_corner_box(ptTile, NULL, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
 
-    arm_2d_align_centre(ptTile->tRegion, 
-                        ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_font_t.tCharSize) {
+    arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_font_t.tCharSize;
+    tTextSize.iWidth *= 1;
+
+    arm_2d_align_centre(ptTile->tRegion, tTextSize) {
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
         arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
         arm_lcd_text_set_draw_region(&__centre_region);
-        arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
+        arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
+        arm_lcd_text_set_opacity(chOpacity);
         arm_lcd_puts("2");
+        arm_lcd_text_set_opacity(255);
     }
 
 
@@ -293,17 +316,21 @@ arm_fsm_rt_t __list_view_item_3_draw_item(
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(ptParam);
 
-    draw_round_corner_box(ptTile, NULL, GLCD_COLOR_BLACK, 64, bIsNewFrame);
+    uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
 
-    busy_wheel2_show(ptTile, bIsNewFrame);
+    draw_round_corner_box(ptTile, NULL, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
 
-    arm_2d_align_centre(ptTile->tRegion, 
-                        ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_font_t.tCharSize) {
+    arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_font_t.tCharSize;
+    tTextSize.iWidth *= 1;
+
+    arm_2d_align_centre(ptTile->tRegion, tTextSize) {
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
         arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
         arm_lcd_text_set_draw_region(&__centre_region);
-        arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
+        arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
+        arm_lcd_text_set_opacity(chOpacity);
         arm_lcd_puts("3");
+        arm_lcd_text_set_opacity(255);
     }
     
     return arm_fsm_rt_cpl;
@@ -318,7 +345,9 @@ static void __on_scene3_depose(arm_2d_scene_t *ptScene)
     ptScene->ptPlayer = NULL;
     
     /* reset timestamp */
-    this.lTimestamp = 0;
+    arm_foreach(int64_t,this.lTimestamp, ptItem) {
+        *ptItem = 0;
+    }
 
     if (this.bUserAllocated) {
         free(ptScene);
@@ -357,8 +386,12 @@ static void __on_scene3_frame_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
     
     /* switch to next scene after 10s */
-    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp)) {
+    if (arm_2d_helper_is_time_out(12000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+    }
+    
+    if (arm_2d_helper_is_time_out(1500, &this.lTimestamp[1])) {
+        list_view_move_selection(&this.tListView, 1, 300);
     }
 }
 
@@ -389,7 +422,14 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene3_handler)
     
     /* following code is just a demo, you can remove them */
     
-    arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
+    arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
+
+    if (bIsNewFrame) {
+        this.iProgress++;
+        if (this.iProgress > 1000) {
+            this.iProgress = 0;
+        }
+    }
 
     while(arm_fsm_rt_cpl != list_view_show(&this.tListView, ptTile, NULL, bIsNewFrame));
 
@@ -413,7 +453,7 @@ user_scene_3_t *__arm_2d_scene3_init(   arm_2d_scene_player_t *ptDispAdapter,
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
-    
+
     if (NULL == ptThis) {
         ptThis = (user_scene_3_t *)malloc(sizeof(user_scene_3_t));
         assert(NULL != ptThis);
@@ -443,6 +483,7 @@ user_scene_3_t *__arm_2d_scene3_init(   arm_2d_scene_player_t *ptDispAdapter,
         .bUserAllocated = bUserAllocated,
     };
 
+    progress_wheel_init(&this.tWheel, 60, GLCD_COLOR_GREEN);
 
     do {
         list_view_cfg_t tCFG = {
@@ -458,10 +499,11 @@ user_scene_3_t *__arm_2d_scene3_init(   arm_2d_scene_player_t *ptDispAdapter,
         };
         
         list_view_init(&this.tListView, &tCFG);
+        
+        arm_foreach(my_list_item_t, s_tListArray, ptItem) {
+            ptItem->use_as__arm_2d_list_item_t.pTarget = (uintptr_t)ptThis;
+        }
     } while(0);
-
-
-    list_view_move_selection(&this.tListView, 12, 13000);
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
                                         &this.use_as__arm_2d_scene_t, 

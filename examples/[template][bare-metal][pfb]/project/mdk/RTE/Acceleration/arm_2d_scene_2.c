@@ -98,8 +98,8 @@ static void __on_scene2_depose(arm_2d_scene_t *ptScene)
     ptScene->ptPlayer = NULL;
     
     /* reset timestamp */
-    arm_foreach(int64_t,this.lTimestamp) {
-        *_ = 0;
+    arm_foreach(int64_t,this.lTimestamp, ptItem) {
+        *ptItem = 0;
     }
 
     if (this.bUserAllocated) {
@@ -213,10 +213,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
         
         __centre_region.tLocation.iX -= 150;
         __centre_region.tSize.iWidth = 60;
-        progress_wheel_show(ptTile, 
+        progress_wheel_show(&this.tWheel,
+                            ptTile, 
                             &__centre_region,       
                             this.iProgress,         /* progress 0~1000 */
-                            60,                     /* diameter */
                             255 - 32,               /* opacity */
                             bIsNewFrame);
     }
@@ -257,13 +257,10 @@ ARM_NONNULL(1)
 user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter, 
                                         user_scene_2_t *ptScene)
 {
-    
-    
+
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
-    
-    progress_wheel_init();
-    
+
     if (NULL == ptScene) {
         ptScene = (user_scene_2_t *)malloc(sizeof(user_scene_2_t));
         assert(NULL != ptScene);
@@ -294,6 +291,8 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
     };
 
     user_scene_2_t *ptThis = (user_scene_2_t *)ptScene;
+
+    progress_wheel_init(&this.tWheel, 60, GLCD_COLOR_GREEN);
 
     /* initialize number list */
     do {

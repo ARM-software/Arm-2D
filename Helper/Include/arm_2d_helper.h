@@ -745,6 +745,17 @@ extern "C" {
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ PROTOTYPES ====================================*/
 
+
+__STATIC_INLINE uint8_t arm_2d_helper_alpha_mix(uint_fast8_t chAlpha1, 
+                                                uint_fast8_t chAlpha2)
+{
+    chAlpha1 = MIN(255, chAlpha1);
+    chAlpha2 = MIN(255, chAlpha2);
+    return (chAlpha1 == 255) ? chAlpha2 
+                             : ((chAlpha2 == 255) ? chAlpha1 
+                                                  : (chAlpha1 * chAlpha2 >> 8));
+}
+
 /*!
  * \brief initialize helper services
  */
