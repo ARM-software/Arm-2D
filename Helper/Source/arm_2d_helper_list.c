@@ -816,6 +816,25 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             + this.CalMidAligned.iStartOffset 
             +   ptItem->Padding.chPrevious;
 
+        //! calculate distance and opacity
+        do {
+            int16_t iDistance 
+                = this.Runtime.tWorkingArea.tRegion.tLocation.iY
+                + (this.Runtime.tWorkingArea.tRegion.tSize.iHeight >> 1);
+            int16_t iCentre = this.Runtime.tileList.tRegion.tSize.iHeight >> 1;
+            
+            iDistance = iCentre - iDistance;
+            this.Runtime.tWorkingArea.tParam.hwRatio = ABS(iDistance);
+            
+            if (this.Runtime.tWorkingArea.tParam.hwRatio > iCentre) {
+                this.Runtime.tWorkingArea.tParam.chOpacity = 0;
+            } else {
+                this.Runtime.tWorkingArea.tParam.chOpacity 
+                    = 255 - this.Runtime.tWorkingArea.tParam.hwRatio * 255 
+                          / iCentre;
+            }
+        } while(0);
+
     ARM_PT_YIELD( &this.Runtime.tWorkingArea )
 
 
@@ -867,6 +886,25 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             = this.CalMidAligned.iBottomVisibleOffset 
             + this.CalMidAligned.iStartOffset 
             +   ptItem->Padding.chPrevious;
+
+        //! calculate distance and opacity
+        do {
+            int16_t iDistance 
+                = this.Runtime.tWorkingArea.tRegion.tLocation.iY
+                + (this.Runtime.tWorkingArea.tRegion.tSize.iHeight >> 1);
+            int16_t iCentre = this.Runtime.tileList.tRegion.tSize.iHeight >> 1;
+            
+            iDistance = iCentre - iDistance;
+            this.Runtime.tWorkingArea.tParam.hwRatio = ABS(iDistance);
+            
+            if (this.Runtime.tWorkingArea.tParam.hwRatio > iCentre) {
+                this.Runtime.tWorkingArea.tParam.chOpacity = 0;
+            } else {
+                this.Runtime.tWorkingArea.tParam.chOpacity 
+                    = 255 - this.Runtime.tWorkingArea.tParam.hwRatio * 255 
+                          / iCentre;
+            }
+        } while(0);
 
     ARM_PT_YIELD( &this.Runtime.tWorkingArea )
 
@@ -1122,6 +1160,25 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             + this.CalMidAligned.iStartOffset 
             +   ptItem->Padding.chPrevious;
 
+        //! calculate distance and opacity
+        do {
+            int16_t iDistance 
+                = this.Runtime.tWorkingArea.tRegion.tLocation.iX
+                + (this.Runtime.tWorkingArea.tRegion.tSize.iWidth >> 1);
+            int16_t iCentre = this.Runtime.tileList.tRegion.tSize.iWidth >> 1;
+            
+            iDistance = iCentre - iDistance;
+            this.Runtime.tWorkingArea.tParam.hwRatio = ABS(iDistance);
+            
+            if (this.Runtime.tWorkingArea.tParam.hwRatio > iCentre) {
+                this.Runtime.tWorkingArea.tParam.chOpacity = 0;
+            } else {
+                this.Runtime.tWorkingArea.tParam.chOpacity 
+                    = 255 - this.Runtime.tWorkingArea.tParam.hwRatio * 255 
+                          / iCentre;
+            }
+        } while(0);
+
     ARM_PT_YIELD( &this.Runtime.tWorkingArea )
 
         if (    this.CalMidAligned.iBottomVisibleOffset 
@@ -1172,6 +1229,25 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             = this.CalMidAligned.iBottomVisibleOffset 
             + this.CalMidAligned.iStartOffset 
             +   ptItem->Padding.chPrevious;
+
+        //! calculate distance and opacity
+        do {
+            int16_t iDistance 
+                = this.Runtime.tWorkingArea.tRegion.tLocation.iX
+                + (this.Runtime.tWorkingArea.tRegion.tSize.iWidth >> 1);
+            int16_t iCentre = this.Runtime.tileList.tRegion.tSize.iWidth >> 1;
+            
+            iDistance = iCentre - iDistance;
+            this.Runtime.tWorkingArea.tParam.hwRatio = ABS(iDistance);
+            
+            if (this.Runtime.tWorkingArea.tParam.hwRatio > iCentre) {
+                this.Runtime.tWorkingArea.tParam.chOpacity = 0;
+            } else {
+                this.Runtime.tWorkingArea.tParam.chOpacity 
+                    = 255 - this.Runtime.tWorkingArea.tParam.hwRatio * 255 
+                          / iCentre;
+            }
+        } while(0);
 
     ARM_PT_YIELD( &this.Runtime.tWorkingArea )
 
