@@ -97,7 +97,7 @@ static void __on_scene%Instance%_depose(arm_2d_scene_t *ptScene)
     /* reset timestamp */
     this.lTimestamp = 0;
 
-    if (this.bUserAllocated) {
+    if (!this.bUserAllocated) {
         free(ptScene);
     }
 }
@@ -256,8 +256,8 @@ user_scene_%Instance%_t *__arm_2d_scene%Instance%_init(   arm_2d_scene_player_t 
         if (NULL == ptThis) {
             return NULL;
         }
-        bUserAllocated = true;
     } else {
+        bUserAllocated = true;
         memset(ptThis, 0, sizeof(user_scene_%Instance%_t));
     }
     

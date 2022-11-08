@@ -70,42 +70,42 @@
 #define ___MFDMM_OPCODE(__OP, __MIRROR, __COLOUR)    __OP##_##__MIRROR##_##__COLOUR
 
 #undef __MFDMM_OPCODE
-#define ____MFDMM_OPCODE(__OP, __MIRROR, __COLOUR)                               \
+#define ____MFDMM_OPCODE(__OP, __MIRROR, __COLOUR)                              \
             ___MFDMM_OPCODE(__OP, __MIRROR, __COLOUR)
-#define __MFDMM_OPCODE                                                           \
-            ____MFDMM_OPCODE(  __API_MFDMM_OP,                                    \
-                            __API_MFDMM_MIRROR_TYPE_UPPERCASE,                   \
+#define __MFDMM_OPCODE                                                          \
+            ____MFDMM_OPCODE(  __API_MFDMM_OP,                                  \
+                            __API_MFDMM_MIRROR_TYPE_UPPERCASE,                  \
                             __API_MFDMM_COLOUR_UPPERCASE)
 
 #undef ____MFDMM_IMPL_FUNC
 #undef ___MFDMM_IMPL_FUNC
 #undef __MFDMM_IMPL_FUNC
-#define ____MFDMM_IMPL_FUNC(__NAME, __COLOUR, __MIRROR)                          \
+#define ____MFDMM_IMPL_FUNC(__NAME, __COLOUR, __MIRROR)                         \
             __arm_2d_impl_##__COLOUR##_##__NAME##_##__MIRROR
-#define ___MFDMM_IMPL_FUNC(__NAME, __COLOUR, __MIRROR)                           \
+#define ___MFDMM_IMPL_FUNC(__NAME, __COLOUR, __MIRROR)                          \
             ____MFDMM_IMPL_FUNC(__NAME, __COLOUR, __MIRROR) 
-#define __MFDMM_IMPL_FUNC(__NAME)                                                \
+#define __MFDMM_IMPL_FUNC(__NAME)                                               \
             ___MFDMM_IMPL_FUNC(__NAME, __API_MFDMM_COLOUR, __API_MFDMM_MIRROR_TYPE)
 
 
 #undef ____MFDMM_SW_FUNC
 #undef ___MFDMM_SW_FUNC
 #undef __MFDMM_SW_FUNC
-#define ____MFDMM_SW_FUNC(__NAME, __COLOUR, __MIRROR)                            \
+#define ____MFDMM_SW_FUNC(__NAME, __COLOUR, __MIRROR)                           \
             __arm_2d_##__COLOUR##_sw_##__NAME##_and_##__MIRROR
-#define ___MFDMM_SW_FUNC(__NAME, __COLOUR, __MIRROR)                             \
+#define ___MFDMM_SW_FUNC(__NAME, __COLOUR, __MIRROR)                            \
             ____MFDMM_SW_FUNC(__NAME, __COLOUR, __MIRROR) 
-#define __MFDMM_SW_FUNC(__NAME)                                                  \
+#define __MFDMM_SW_FUNC(__NAME)                                                 \
             ___MFDMM_SW_FUNC(__NAME, __API_MFDMM_COLOUR, __API_MFDMM_MIRROR_TYPE)
 
 #undef ____MFDMM_API_FUNC
 #undef ___MFDMM_API_FUNC
 #undef __MFDMM_API_FUNC
-#define ____MFDMM_API_FUNC(__NAME, __COLOUR, __MIRROR)                           \
+#define ____MFDMM_API_FUNC(__NAME, __COLOUR, __MIRROR)                          \
             arm_2dp_##__COLOUR##_##__NAME##_and_##__MIRROR
-#define ___MFDMM_API_FUNC(__NAME, __COLOUR, __MIRROR)                            \
+#define ___MFDMM_API_FUNC(__NAME, __COLOUR, __MIRROR)                           \
             ____MFDMM_API_FUNC(__NAME, __COLOUR, __MIRROR) 
-#define __MFDMM_API_FUNC(__NAME)                                                 \
+#define __MFDMM_API_FUNC(__NAME)                                                \
             ___MFDMM_API_FUNC(__NAME, __API_MFDMM_COLOUR, __API_MFDMM_MIRROR_TYPE)
 
 
@@ -118,7 +118,7 @@ arm_fsm_rt_t __MFDMM_API_FUNC(tile_fill_with_des_mask)(
                                         const arm_2d_region_t *ptRegion)
 {
     assert(NULL != ptSource);
-    assert(NULL != ptSrcMask);
+    assert(NULL != ptDesMask);
     assert(NULL != ptTarget);
     
     ARM_2D_IMPL(__API_MFDMM_OP_TYPE, ptOP);

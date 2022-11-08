@@ -115,7 +115,7 @@ arm_fsm_rt_t __MCDMM_API_FUNC(tile_copy_with_des_mask)(
                                         const arm_2d_region_t *ptRegion)
 {
     assert(NULL != ptSource);
-    assert(NULL != ptSrcMask);
+    assert(NULL != ptDesMask);
     assert(NULL != ptTarget);
     
     ARM_2D_IMPL(__API_MCDMM_OP_TYPE, ptOP);
