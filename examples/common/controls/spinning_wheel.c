@@ -120,7 +120,7 @@ void spinning_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
         };
 
         arm_2d_align_centre(ptTarget->tRegion, c_tileSpinWheelMask.tRegion.tSize) {
-            arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform(
+            arm_2dp_fill_colour_with_mask_opacity_and_transform(
                                             &s_tMaskRotateCB,
                                             &c_tileSpinWheelMask,
                                             ptTarget,
@@ -286,7 +286,7 @@ void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget,
             s_fAngle = fmodf(s_fAngle,ARM_2D_ANGLE(360));
         }
 
-        arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform(
+        arm_2dp_fill_colour_with_mask_opacity_and_transform(
                                         &s_tMaskRotateCB,
                                         &c_tileGreenCircleQuaterMask,
                                         ptTarget,

@@ -159,6 +159,8 @@
                 arm_2d_gray8_fill_colour_with_a4_mask_and_opacity
 #   define arm_2d_fill_colour_with_a2_mask                                      \
                 arm_2d_gray8_fill_colour_with_a2_mask
+#   define arm_2dp_fill_colour_with_mask_opacity_and_transform                  \
+                arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
 #   define __arm_2d_color_t         arm_2d_color_rgb565_t
@@ -293,6 +295,8 @@
                 arm_2d_rgb565_fill_colour_with_a4_mask_and_opacity
 #   define arm_2d_fill_colour_with_a2_mask                                      \
                 arm_2d_rgb565_fill_colour_with_a2_mask
+#   define arm_2dp_fill_colour_with_mask_opacity_and_transform                  \
+                arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
 #   define __arm_2d_color_t         arm_2d_color_cccn888_t
@@ -427,6 +431,8 @@
                 arm_2d_cccn888_fill_colour_with_a4_mask_and_opacity
 #   define arm_2d_fill_colour_with_a2_mask                                      \
                 arm_2d_cccn888_fill_colour_with_a2_mask
+#   define arm_2dp_fill_colour_with_mask_opacity_and_transform                  \
+                arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform
 #else
 #   error Unsupported colour depth!
 #endif

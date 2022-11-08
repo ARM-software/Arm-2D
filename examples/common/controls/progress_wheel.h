@@ -21,22 +21,34 @@
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
-
+#include "__common.h"
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
+typedef struct progress_wheel_t {
+    int16_t iDiameter;
+    COLOUR_INT tColour;
+    float fScale;
+    float fAngle;
+    arm_2d_op_fill_cl_msk_opa_trans_t tOP[4];
+} progress_wheel_t;
+
+
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
 extern
-void progress_wheel_init(void);
+ARM_NONNULL(1)
+void progress_wheel_init(   progress_wheel_t *ptThis, 
+                            int16_t iDiameter, 
+                            COLOUR_INT tColour);
 
 extern
-ARM_NONNULL(1)
-void progress_wheel_show(   const arm_2d_tile_t *ptTarget,
+ARM_NONNULL(1,2)
+void progress_wheel_show(   progress_wheel_t *ptThis,
+                            const arm_2d_tile_t *ptTarget,
                             const arm_2d_region_t *ptRegion,
                             int16_t iProgress,
-                            const int16_t iDiameter,
                             uint8_t chOpacity,
                             bool bIsNewFrame);
 
