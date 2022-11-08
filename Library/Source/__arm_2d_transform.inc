@@ -885,18 +885,6 @@ void __ARM_2D_FUNC(transform_with_opacity)(__arm_2d_param_copy_orig_t *ptParam,
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 #if !__ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__
 static
 void __ARM_2D_FUNC(get_alpha_with_opacity) (arm_2d_point_float_t *ptPoint,
@@ -947,11 +935,11 @@ void __ARM_2D_FUNC(get_alpha_with_opacity) (arm_2d_point_float_t *ptPoint,
     }
 
     if (bIsInside) {
-        uint8_t chAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
+        uint16_t hwAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
                         + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
         
 
-        __API_PIXEL_BLENDING( &MaskColour, pTarget, chAlpha);
+        __API_PIXEL_BLENDING( &MaskColour, pTarget, hwAlpha);
     }
 
 #else
@@ -1021,11 +1009,11 @@ void __ARM_2D_FUNC(get_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
     }
 
     if (bIsInside) {
-        uint8_t chAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
+        uint16_t hwAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
                         + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
         
 
-        __API_PIXEL_BLENDING( &MaskColour, pTarget, chAlpha);
+        __API_PIXEL_BLENDING( &MaskColour, pTarget, hwAlpha);
     }
 
 #else
