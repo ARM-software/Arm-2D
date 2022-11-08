@@ -30,27 +30,27 @@ var NAVTREE =
       [ "Features", "index.html#autotoc_md1", [
         [ "New Features Planned in the Future", "index.html#autotoc_md3", null ]
       ] ],
-      [ "1 Introduction", "index.html#autotoc_md4", [
-        [ "1.1 The Background", "index.html#autotoc_md5", null ],
-        [ "1.2 The Problems in current solutions", "index.html#autotoc_md6", null ],
-        [ "1.3 The Platform", "index.html#autotoc_md7", null ],
-        [ "1.4 Dependency", "index.html#autotoc_md8", null ],
-        [ "1.5 Examples, Benchmark and Templates", "index.html#autotoc_md9", [
-          [ "1.5.1 Summary", "index.html#autotoc_md10", null ],
-          [ "1.5.2 Benchmark", "index.html#autotoc_md11", null ]
+      [ "Documentation", "index.html#autotoc_md4", null ],
+      [ "1 Introduction", "index.html#autotoc_md5", [
+        [ "1.1 The Background", "index.html#autotoc_md6", null ],
+        [ "1.2 The Problems in current solutions", "index.html#autotoc_md7", null ],
+        [ "1.3 The Platform", "index.html#autotoc_md8", null ],
+        [ "1.4 Dependency", "index.html#autotoc_md9", null ],
+        [ "1.5 Examples, Benchmark and Templates", "index.html#autotoc_md10", [
+          [ "1.5.1 Summary", "index.html#autotoc_md11", null ],
+          [ "1.5.2 Benchmark", "index.html#autotoc_md12", null ]
         ] ]
       ] ],
-      [ "2 Folder Hierarchy", "index.html#autotoc_md12", null ],
-      [ "3 Tips For Exploring the Library", "index.html#autotoc_md13", [
-        [ "3.1 \"I am a library user, I only care about how to use the library\"", "index.html#autotoc_md14", null ],
-        [ "3.2 \"I am interested in the implementation\"", "index.html#autotoc_md15", null ]
+      [ "2 Folder Hierarchy", "index.html#autotoc_md13", null ],
+      [ "3 Tips For Exploring the Library", "index.html#autotoc_md14", [
+        [ "3.1 \"I am a library user, I only care about how to use the library\"", "index.html#autotoc_md15", null ],
+        [ "3.2 \"I am interested in the implementation\"", "index.html#autotoc_md16", null ]
       ] ],
-      [ "4 Documentation", "index.html#autotoc_md16", null ],
-      [ "5 Limitations", "index.html#autotoc_md17", [
-        [ "5.1 The Generic Limitations", "index.html#autotoc_md18", null ],
-        [ "5.2 The Temporary Limitations", "index.html#autotoc_md19", null ]
+      [ "4 Limitations", "index.html#autotoc_md17", [
+        [ "4.1 The Generic Limitations", "index.html#autotoc_md18", null ],
+        [ "4.2 The Temporary Limitations", "index.html#autotoc_md19", null ]
       ] ],
-      [ "6 Feedback", "index.html#autotoc_md20", null ]
+      [ "5 Feedback", "index.html#autotoc_md20", null ]
     ] ],
     [ "How to Deploy the Arm-2D Library", "deploy.html", [
       [ "1 How to Get the Arm-2D", "deploy.html#autotoc_md21", null ],
@@ -156,10 +156,10 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "deploy.html",
-"group__gAlpha.html#gab784e7cd4422a8c13e4bdd80fd2dfddf",
-"group__gKernel.html#a20300cbf0fd7048d6c53680add0bae93",
-"group__gKernel.html#gga27a24a896295488772e6d847c790fd1ca8fd670a66215d2e91066f99f5588c329",
-"use_tile.html#autotoc_md74"
+"group__gAlpha.html#ga9c827e92a33e5eaf1b95930cae3268ad",
+"group__gHelper.html#structarm__2d__scene__player__t_8____unnamed119_____8Switch",
+"group__gKernel.html#gaf53e5d3339794160c3b742536cc1783d",
+"intro.html#autotoc_md53"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
