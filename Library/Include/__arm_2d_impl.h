@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        04. Nov 2022
- * $Revision:    V.1.3.8
+ * $Date:        07. Nov 2022
+ * $Revision:    V.1.3.9
  *
  * Target Processor:  Cortex-M cores
  *
@@ -277,7 +277,15 @@ enum {
     __ARM_2D_OP_IDX_FILL_WITH_SOURCE_MASK_AND_XY_MIRROR,
 
     __ARM_2D_OP_IDX_COPY_WITH_TARGET_MASK,
-    
+    __ARM_2D_OP_IDX_COPY_WITH_TARGET_MASK_ONLY,
+    __ARM_2D_OP_IDX_COPY_WITH_TARGET_MASK_AND_X_MIRROR,
+    __ARM_2D_OP_IDX_COPY_WITH_TARGET_MASK_AND_Y_MIRROR,
+    __ARM_2D_OP_IDX_COPY_WITH_TARGET_MASK_AND_XY_MIRROR,
+    __ARM_2D_OP_IDX_FILL_WITH_TARGET_MASK_ONLY,
+    __ARM_2D_OP_IDX_FILL_WITH_TARGET_MASK_AND_X_MIRROR,
+    __ARM_2D_OP_IDX_FILL_WITH_TARGET_MASK_AND_Y_MIRROR,
+    __ARM_2D_OP_IDX_FILL_WITH_TARGET_MASK_AND_XY_MIRROR,
+
     __ARM_2D_OP_IDX_FILL_COLOUR,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_COLOUR_KEYING,
     
@@ -913,7 +921,107 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_des_mask(
 extern
 arm_fsm_rt_t __arm_2d_cccn888_sw_tile_fill_with_des_mask(
                                                 __arm_2d_sub_task_t *ptTask);
-                                                
+
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_des_mask_only(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_tile_fill_with_des_mask_only(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_tile_copy_with_des_mask_only(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_tile_fill_with_des_mask_only(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_des_mask_only(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_tile_fill_with_des_mask_only(
+                                                __arm_2d_sub_task_t *ptTask);
+
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_des_mask_and_x_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_tile_fill_with_des_mask_and_x_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_tile_copy_with_des_mask_and_x_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_tile_fill_with_des_mask_and_x_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_des_mask_and_x_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_tile_fill_with_des_mask_and_x_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_des_mask_and_y_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_tile_fill_with_des_mask_and_y_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_tile_copy_with_des_mask_and_y_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_tile_fill_with_des_mask_and_y_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_des_mask_and_y_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_tile_fill_with_des_mask_and_y_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_des_mask_and_xy_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_tile_fill_with_des_mask_and_xy_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_tile_copy_with_des_mask_and_xy_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_tile_fill_with_des_mask_and_xy_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_des_mask_and_xy_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_tile_fill_with_des_mask_and_xy_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
 
 extern 
 arm_fsm_rt_t __arm_2d_c8bit_sw_tile_copy_with_colour_keying(

@@ -278,10 +278,7 @@ arm_fsm_rt_t __ABW_FUNC(tile_copy_with_des_mask)( __arm_2d_sub_task_t *ptTask)
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #endif
     
-    } else 
-    
-    
-    {
+    } else {
         assert(     ARM_2D_COLOUR_8BIT 
               ==    ptTask->Param.tCopyMask.tDesMask.tColour.chScheme);
               
@@ -875,7 +872,7 @@ arm_fsm_rt_t __ABW_FUNC(tile_fill_with_src_mask)( __arm_2d_sub_task_t *ptTask)
     
     return arm_fsm_rt_cpl;
 }
- 
+
 arm_fsm_rt_t __ABW_FUNC(tile_fill_with_des_mask)( __arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_cp_msk_t, ptTask->ptOP);
