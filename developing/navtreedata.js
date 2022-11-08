@@ -156,10 +156,10 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "deploy.html",
-"group__gAlpha.html#gab784e7cd4422a8c13e4bdd80fd2dfddf",
-"group__gKernel.html#a20300cbf0fd7048d6c53680add0bae93",
-"group__gKernel.html#gga27a24a896295488772e6d847c790fd1ca8fd670a66215d2e91066f99f5588c329",
-"use_tile.html#autotoc_md74"
+"group__gAlpha.html#ga9c827e92a33e5eaf1b95930cae3268ad",
+"group__gHelper.html#structarm__2d__scene__player__t_8____unnamed119_____8Switch",
+"group__gKernel.html#gaf53e5d3339794160c3b742536cc1783d",
+"intro.html#autotoc_md53"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
