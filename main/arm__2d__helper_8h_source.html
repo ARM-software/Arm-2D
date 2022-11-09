@@ -857,150 +857,161 @@ $(document).ready(function(){initNavTree('arm__2d__helper_8h_source.html',''); i
 <div class="line"><a id="l00744" name="l00744"></a><span class="lineno">  744</span><span class="comment">/*============================ GLOBAL VARIABLES ==============================*/</span></div>
 <div class="line"><a id="l00745" name="l00745"></a><span class="lineno">  745</span><span class="comment">/*============================ LOCAL VARIABLES ===============================*/</span></div>
 <div class="line"><a id="l00746" name="l00746"></a><span class="lineno">  746</span><span class="comment">/*============================ PROTOTYPES ====================================*/</span></div>
-<div class="line"><a id="l00747" name="l00747"></a><span class="lineno">  747</span><span class="comment"></span> </div>
-<div class="line"><a id="l00748" name="l00748"></a><span class="lineno">  748</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00749" name="l00749"></a><span class="lineno">  749</span><span class="comment"> * \brief initialize helper services</span></div>
-<div class="line"><a id="l00750" name="l00750"></a><span class="lineno">  750</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00751" name="l00751"></a><span class="lineno">  751</span><span class="keyword">extern</span></div>
-<div class="line"><a id="l00752" name="l00752"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga9ab5e975303c28c98f1ae62babb8286d">  752</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga9ab5e975303c28c98f1ae62babb8286d" title="initialize helper services">arm_2d_helper_init</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00753" name="l00753"></a><span class="lineno">  753</span><span class="comment"></span> </div>
-<div class="line"><a id="l00754" name="l00754"></a><span class="lineno">  754</span><span class="comment">/*! </span></div>
-<div class="line"><a id="l00755" name="l00755"></a><span class="lineno">  755</span><span class="comment"> * \brief convert ticks of a reference timer to millisecond </span></div>
-<div class="line"><a id="l00756" name="l00756"></a><span class="lineno">  756</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00757" name="l00757"></a><span class="lineno">  757</span><span class="comment"> * \param[in] lTick the tick count</span></div>
-<div class="line"><a id="l00758" name="l00758"></a><span class="lineno">  758</span><span class="comment"> * \return int64_t the millisecond</span></div>
-<div class="line"><a id="l00759" name="l00759"></a><span class="lineno">  759</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00760" name="l00760"></a><span class="lineno">  760</span><span class="keyword">extern</span></div>
-<div class="line"><a id="l00761" name="l00761"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf">  761</a></span>int64_t <a class="code hl_function" href="group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf" title="convert ticks of a reference timer to millisecond">arm_2d_helper_convert_ticks_to_ms</a>(int64_t lTick);</div>
-<div class="line"><a id="l00762" name="l00762"></a><span class="lineno">  762</span><span class="comment"></span> </div>
-<div class="line"><a id="l00763" name="l00763"></a><span class="lineno">  763</span><span class="comment">/*! </span></div>
-<div class="line"><a id="l00764" name="l00764"></a><span class="lineno">  764</span><span class="comment"> * \brief convert millisecond into ticks of the reference timer </span></div>
-<div class="line"><a id="l00765" name="l00765"></a><span class="lineno">  765</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00766" name="l00766"></a><span class="lineno">  766</span><span class="comment"> * \param[in] wMS the target time in millisecond</span></div>
-<div class="line"><a id="l00767" name="l00767"></a><span class="lineno">  767</span><span class="comment"> * \return int64_t the ticks</span></div>
-<div class="line"><a id="l00768" name="l00768"></a><span class="lineno">  768</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00769" name="l00769"></a><span class="lineno">  769</span><span class="keyword">extern</span></div>
-<div class="line"><a id="l00770" name="l00770"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga22a1338673baaec12c475e371d7593be">  770</a></span>int64_t <a class="code hl_function" href="group__gHelper.html#ga22a1338673baaec12c475e371d7593be" title="convert millisecond into ticks of the reference timer">arm_2d_helper_convert_ms_to_ticks</a>(uint32_t wMS);</div>
-<div class="line"><a id="l00771" name="l00771"></a><span class="lineno">  771</span><span class="comment"></span> </div>
-<div class="line"><a id="l00772" name="l00772"></a><span class="lineno">  772</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00773" name="l00773"></a><span class="lineno">  773</span><span class="comment"> * \brief get the reference clock frequency</span></div>
-<div class="line"><a id="l00774" name="l00774"></a><span class="lineno">  774</span><span class="comment"> * \return uint32_t the frequency</span></div>
-<div class="line"><a id="l00775" name="l00775"></a><span class="lineno">  775</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00776" name="l00776"></a><span class="lineno">  776</span><span class="keyword">extern</span></div>
-<div class="line"><a id="l00777" name="l00777"></a><span class="lineno"><a class="line" href="group__gHelper.html#gace60efc807106e1526fcc9f673f19b12">  777</a></span>uint32_t <a class="code hl_function" href="group__gHelper.html#gace60efc807106e1526fcc9f673f19b12" title="get the reference clock frequency">arm_2d_helper_get_reference_clock_frequency</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00778" name="l00778"></a><span class="lineno">  778</span><span class="comment"></span> </div>
-<div class="line"><a id="l00779" name="l00779"></a><span class="lineno">  779</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00780" name="l00780"></a><span class="lineno">  780</span><span class="comment"> * \brief get the current system stamp from the reference clock</span></div>
-<div class="line"><a id="l00781" name="l00781"></a><span class="lineno">  781</span><span class="comment"> * </span></div>
-<div class="line"><a id="l00782" name="l00782"></a><span class="lineno">  782</span><span class="comment"> * \return int64_t the timestamp in ticks (no overflow issue)</span></div>
-<div class="line"><a id="l00783" name="l00783"></a><span class="lineno">  783</span><span class="comment"> * \note you have to call arm_2d_helper_convert_ticks_to_ms() to convert the </span></div>
-<div class="line"><a id="l00784" name="l00784"></a><span class="lineno">  784</span><span class="comment"> *       the timestamp into milliseconds when required.</span></div>
-<div class="line"><a id="l00785" name="l00785"></a><span class="lineno">  785</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00786" name="l00786"></a><span class="lineno">  786</span><span class="keyword">extern</span></div>
-<div class="line"><a id="l00787" name="l00787"></a><span class="lineno"><a class="line" href="group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185">  787</a></span>int64_t <a class="code hl_function" href="group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185" title="get the current system stamp from the reference clock">arm_2d_helper_get_system_timestamp</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00788" name="l00788"></a><span class="lineno">  788</span> </div>
+<div class="line"><a id="l00747" name="l00747"></a><span class="lineno">  747</span> </div>
+<div class="line"><a id="l00748" name="l00748"></a><span class="lineno">  748</span> </div>
+<div class="line"><a id="l00749" name="l00749"></a><span class="lineno">  749</span>__STATIC_INLINE uint8_t arm_2d_helper_alpha_mix(uint_fast8_t chAlpha1, </div>
+<div class="line"><a id="l00750" name="l00750"></a><span class="lineno">  750</span>                                                uint_fast8_t chAlpha2)</div>
+<div class="line"><a id="l00751" name="l00751"></a><span class="lineno">  751</span>{</div>
+<div class="line"><a id="l00752" name="l00752"></a><span class="lineno">  752</span>    chAlpha1 = MIN(255, chAlpha1);</div>
+<div class="line"><a id="l00753" name="l00753"></a><span class="lineno">  753</span>    chAlpha2 = MIN(255, chAlpha2);</div>
+<div class="line"><a id="l00754" name="l00754"></a><span class="lineno">  754</span>    <span class="keywordflow">return</span> (uint8_t)((chAlpha1 == 255) ? chAlpha2 </div>
+<div class="line"><a id="l00755" name="l00755"></a><span class="lineno">  755</span>                             : ((chAlpha2 == 255) ? chAlpha1 </div>
+<div class="line"><a id="l00756" name="l00756"></a><span class="lineno">  756</span>                                                  : (chAlpha1 * chAlpha2 &gt;&gt; 8)));</div>
+<div class="line"><a id="l00757" name="l00757"></a><span class="lineno">  757</span>}</div>
+<div class="line"><a id="l00758" name="l00758"></a><span class="lineno">  758</span><span class="comment"></span> </div>
+<div class="line"><a id="l00759" name="l00759"></a><span class="lineno">  759</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00760" name="l00760"></a><span class="lineno">  760</span><span class="comment"> * \brief initialize helper services</span></div>
+<div class="line"><a id="l00761" name="l00761"></a><span class="lineno">  761</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00762" name="l00762"></a><span class="lineno">  762</span><span class="keyword">extern</span></div>
+<div class="line"><a id="l00763" name="l00763"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga9ab5e975303c28c98f1ae62babb8286d">  763</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga9ab5e975303c28c98f1ae62babb8286d" title="initialize helper services">arm_2d_helper_init</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00764" name="l00764"></a><span class="lineno">  764</span><span class="comment"></span> </div>
+<div class="line"><a id="l00765" name="l00765"></a><span class="lineno">  765</span><span class="comment">/*! </span></div>
+<div class="line"><a id="l00766" name="l00766"></a><span class="lineno">  766</span><span class="comment"> * \brief convert ticks of a reference timer to millisecond </span></div>
+<div class="line"><a id="l00767" name="l00767"></a><span class="lineno">  767</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00768" name="l00768"></a><span class="lineno">  768</span><span class="comment"> * \param[in] lTick the tick count</span></div>
+<div class="line"><a id="l00769" name="l00769"></a><span class="lineno">  769</span><span class="comment"> * \return int64_t the millisecond</span></div>
+<div class="line"><a id="l00770" name="l00770"></a><span class="lineno">  770</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00771" name="l00771"></a><span class="lineno">  771</span><span class="keyword">extern</span></div>
+<div class="line"><a id="l00772" name="l00772"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf">  772</a></span>int64_t <a class="code hl_function" href="group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf" title="convert ticks of a reference timer to millisecond">arm_2d_helper_convert_ticks_to_ms</a>(int64_t lTick);</div>
+<div class="line"><a id="l00773" name="l00773"></a><span class="lineno">  773</span><span class="comment"></span> </div>
+<div class="line"><a id="l00774" name="l00774"></a><span class="lineno">  774</span><span class="comment">/*! </span></div>
+<div class="line"><a id="l00775" name="l00775"></a><span class="lineno">  775</span><span class="comment"> * \brief convert millisecond into ticks of the reference timer </span></div>
+<div class="line"><a id="l00776" name="l00776"></a><span class="lineno">  776</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00777" name="l00777"></a><span class="lineno">  777</span><span class="comment"> * \param[in] wMS the target time in millisecond</span></div>
+<div class="line"><a id="l00778" name="l00778"></a><span class="lineno">  778</span><span class="comment"> * \return int64_t the ticks</span></div>
+<div class="line"><a id="l00779" name="l00779"></a><span class="lineno">  779</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00780" name="l00780"></a><span class="lineno">  780</span><span class="keyword">extern</span></div>
+<div class="line"><a id="l00781" name="l00781"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga22a1338673baaec12c475e371d7593be">  781</a></span>int64_t <a class="code hl_function" href="group__gHelper.html#ga22a1338673baaec12c475e371d7593be" title="convert millisecond into ticks of the reference timer">arm_2d_helper_convert_ms_to_ticks</a>(uint32_t wMS);</div>
+<div class="line"><a id="l00782" name="l00782"></a><span class="lineno">  782</span><span class="comment"></span> </div>
+<div class="line"><a id="l00783" name="l00783"></a><span class="lineno">  783</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00784" name="l00784"></a><span class="lineno">  784</span><span class="comment"> * \brief get the reference clock frequency</span></div>
+<div class="line"><a id="l00785" name="l00785"></a><span class="lineno">  785</span><span class="comment"> * \return uint32_t the frequency</span></div>
+<div class="line"><a id="l00786" name="l00786"></a><span class="lineno">  786</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00787" name="l00787"></a><span class="lineno">  787</span><span class="keyword">extern</span></div>
+<div class="line"><a id="l00788" name="l00788"></a><span class="lineno"><a class="line" href="group__gHelper.html#gace60efc807106e1526fcc9f673f19b12">  788</a></span>uint32_t <a class="code hl_function" href="group__gHelper.html#gace60efc807106e1526fcc9f673f19b12" title="get the reference clock frequency">arm_2d_helper_get_reference_clock_frequency</a>(<span class="keywordtype">void</span>);</div>
 <div class="line"><a id="l00789" name="l00789"></a><span class="lineno">  789</span><span class="comment"></span> </div>
 <div class="line"><a id="l00790" name="l00790"></a><span class="lineno">  790</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00791" name="l00791"></a><span class="lineno">  791</span><span class="comment"> * \brief set an alarm with given period and check the status</span></div>
+<div class="line"><a id="l00791" name="l00791"></a><span class="lineno">  791</span><span class="comment"> * \brief get the current system stamp from the reference clock</span></div>
 <div class="line"><a id="l00792" name="l00792"></a><span class="lineno">  792</span><span class="comment"> * </span></div>
-<div class="line"><a id="l00793" name="l00793"></a><span class="lineno">  793</span><span class="comment"> * \param[in] lPeriod a time period in ticks</span></div>
-<div class="line"><a id="l00794" name="l00794"></a><span class="lineno">  794</span><span class="comment"> * \param[in] plTimestamp a pointer points to an int64_t integer, if NULL is </span></div>
-<div class="line"><a id="l00795" name="l00795"></a><span class="lineno">  795</span><span class="comment"> *            passed, an static local variable inside the function will be used</span></div>
-<div class="line"><a id="l00796" name="l00796"></a><span class="lineno">  796</span><span class="comment"> * \return bool whether it is timeout or not</span></div>
-<div class="line"><a id="l00797" name="l00797"></a><span class="lineno">  797</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00798" name="l00798"></a><span class="lineno">  798</span>__STATIC_INLINE </div>
-<div class="line"><a id="l00799" name="l00799"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga7e3c8c8f8298d8ffaae2c8dc8500578f">  799</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#ga7e3c8c8f8298d8ffaae2c8dc8500578f" title="set an alarm with given period and check the status">__arm_2d_helper_is_time_out</a>(int64_t lPeriod, int64_t *plTimestamp)</div>
-<div class="line"><a id="l00800" name="l00800"></a><span class="lineno">  800</span>{</div>
-<div class="line"><a id="l00801" name="l00801"></a><span class="lineno">  801</span>    int64_t lTimestamp = <a class="code hl_function" href="group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185" title="get the current system stamp from the reference clock">arm_2d_helper_get_system_timestamp</a>();</div>
-<div class="line"><a id="l00802" name="l00802"></a><span class="lineno">  802</span>    <span class="keyword">static</span> int64_t s_lTimestamp = 0;</div>
-<div class="line"><a id="l00803" name="l00803"></a><span class="lineno">  803</span>    <span class="keywordflow">if</span> (NULL == plTimestamp) {</div>
-<div class="line"><a id="l00804" name="l00804"></a><span class="lineno">  804</span>        plTimestamp = &amp;s_lTimestamp;</div>
-<div class="line"><a id="l00805" name="l00805"></a><span class="lineno">  805</span>    }</div>
-<div class="line"><a id="l00806" name="l00806"></a><span class="lineno">  806</span> </div>
-<div class="line"><a id="l00807" name="l00807"></a><span class="lineno">  807</span>    <span class="keywordflow">if</span> (0 == *plTimestamp) {</div>
-<div class="line"><a id="l00808" name="l00808"></a><span class="lineno">  808</span>        *plTimestamp = lPeriod;</div>
-<div class="line"><a id="l00809" name="l00809"></a><span class="lineno">  809</span>        *plTimestamp += lTimestamp;</div>
-<div class="line"><a id="l00810" name="l00810"></a><span class="lineno">  810</span>        </div>
-<div class="line"><a id="l00811" name="l00811"></a><span class="lineno">  811</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00812" name="l00812"></a><span class="lineno">  812</span>    }</div>
-<div class="line"><a id="l00813" name="l00813"></a><span class="lineno">  813</span> </div>
-<div class="line"><a id="l00814" name="l00814"></a><span class="lineno">  814</span>    <span class="keywordflow">if</span> (lTimestamp &gt;= *plTimestamp) {</div>
-<div class="line"><a id="l00815" name="l00815"></a><span class="lineno">  815</span>        *plTimestamp = lPeriod + lTimestamp;</div>
-<div class="line"><a id="l00816" name="l00816"></a><span class="lineno">  816</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00817" name="l00817"></a><span class="lineno">  817</span>    }</div>
-<div class="line"><a id="l00818" name="l00818"></a><span class="lineno">  818</span> </div>
-<div class="line"><a id="l00819" name="l00819"></a><span class="lineno">  819</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00820" name="l00820"></a><span class="lineno">  820</span>}</div>
-<div class="line"><a id="l00821" name="l00821"></a><span class="lineno">  821</span><span class="comment"></span> </div>
-<div class="line"><a id="l00822" name="l00822"></a><span class="lineno">  822</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00823" name="l00823"></a><span class="lineno">  823</span><span class="comment"> * \brief calculate the stroke of a liner slider based on time</span></div>
-<div class="line"><a id="l00824" name="l00824"></a><span class="lineno">  824</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00825" name="l00825"></a><span class="lineno">  825</span><span class="comment"> * \param[in] nFrom the start of the slider</span></div>
-<div class="line"><a id="l00826" name="l00826"></a><span class="lineno">  826</span><span class="comment"> * \param[in] nTo the end of the slider</span></div>
-<div class="line"><a id="l00827" name="l00827"></a><span class="lineno">  827</span><span class="comment"> * \param[in] lPeriod a given period in which the slider should finish the whole</span></div>
-<div class="line"><a id="l00828" name="l00828"></a><span class="lineno">  828</span><span class="comment"> *            stroke</span></div>
-<div class="line"><a id="l00829" name="l00829"></a><span class="lineno">  829</span><span class="comment"> * \param[out] pnStroke the address of an int32_t stroke variable</span></div>
-<div class="line"><a id="l00830" name="l00830"></a><span class="lineno">  830</span><span class="comment"> * \param[in] plTimestamp the address of a timestamp variable, if you pass NULL</span></div>
-<div class="line"><a id="l00831" name="l00831"></a><span class="lineno">  831</span><span class="comment"> *            the code that call this funtion will not be reentrant.</span></div>
-<div class="line"><a id="l00832" name="l00832"></a><span class="lineno">  832</span><span class="comment"> * \retval true the slider has finished the whole stroke</span></div>
-<div class="line"><a id="l00833" name="l00833"></a><span class="lineno">  833</span><span class="comment"> * \retval false the slider hasn&#39;t reach the target end</span></div>
-<div class="line"><a id="l00834" name="l00834"></a><span class="lineno">  834</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00835" name="l00835"></a><span class="lineno">  835</span>__STATIC_INLINE</div>
-<div class="line"><a id="l00836" name="l00836"></a><span class="lineno"><a class="line" href="group__gHelper.html#gab27d1fbf0e04685918ccfe53e00d1ddb">  836</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#gab27d1fbf0e04685918ccfe53e00d1ddb" title="calculate the stroke of a liner slider based on time">__arm_2d_helper_time_liner_slider</a>( int32_t nFrom, </div>
-<div class="line"><a id="l00837" name="l00837"></a><span class="lineno">  837</span>                                        int32_t nTo, </div>
-<div class="line"><a id="l00838" name="l00838"></a><span class="lineno">  838</span>                                        int64_t lPeriod,</div>
-<div class="line"><a id="l00839" name="l00839"></a><span class="lineno">  839</span>                                        int32_t *pnStroke,</div>
-<div class="line"><a id="l00840" name="l00840"></a><span class="lineno">  840</span>                                        int64_t *plTimestamp)</div>
-<div class="line"><a id="l00841" name="l00841"></a><span class="lineno">  841</span>{</div>
-<div class="line"><a id="l00842" name="l00842"></a><span class="lineno">  842</span>    int64_t lTimestamp = <a class="code hl_function" href="group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185" title="get the current system stamp from the reference clock">arm_2d_helper_get_system_timestamp</a>();</div>
-<div class="line"><a id="l00843" name="l00843"></a><span class="lineno">  843</span>    </div>
-<div class="line"><a id="l00844" name="l00844"></a><span class="lineno">  844</span>    <span class="keyword">static</span> int64_t s_lTimestamp = 0;</div>
-<div class="line"><a id="l00845" name="l00845"></a><span class="lineno">  845</span>    <span class="keywordflow">if</span> (NULL == plTimestamp) {</div>
-<div class="line"><a id="l00846" name="l00846"></a><span class="lineno">  846</span>        plTimestamp = &amp;s_lTimestamp;</div>
-<div class="line"><a id="l00847" name="l00847"></a><span class="lineno">  847</span>    }</div>
-<div class="line"><a id="l00848" name="l00848"></a><span class="lineno">  848</span>    </div>
-<div class="line"><a id="l00849" name="l00849"></a><span class="lineno">  849</span>    <span class="keywordflow">if</span> (nFrom == nTo) {</div>
-<div class="line"><a id="l00850" name="l00850"></a><span class="lineno">  850</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00851" name="l00851"></a><span class="lineno">  851</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00852" name="l00852"></a><span class="lineno">  852</span>        <span class="keywordflow">if</span> (0 == *plTimestamp) {</div>
-<div class="line"><a id="l00853" name="l00853"></a><span class="lineno">  853</span>            *plTimestamp = lTimestamp;</div>
-<div class="line"><a id="l00854" name="l00854"></a><span class="lineno">  854</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00855" name="l00855"></a><span class="lineno">  855</span>            <span class="comment">/* code for update this.Runtime.iOffset */</span></div>
-<div class="line"><a id="l00856" name="l00856"></a><span class="lineno">  856</span>            int64_t lElapsed = (lTimestamp - *plTimestamp);</div>
-<div class="line"><a id="l00857" name="l00857"></a><span class="lineno">  857</span>            </div>
-<div class="line"><a id="l00858" name="l00858"></a><span class="lineno">  858</span>            int32_t iDelta = 0;</div>
-<div class="line"><a id="l00859" name="l00859"></a><span class="lineno">  859</span>            <span class="keywordflow">if</span> (lElapsed &lt; lPeriod) {</div>
-<div class="line"><a id="l00860" name="l00860"></a><span class="lineno">  860</span>                iDelta = nTo - nFrom;</div>
-<div class="line"><a id="l00861" name="l00861"></a><span class="lineno">  861</span>                iDelta = (int32_t)(lElapsed * (int64_t)iDelta / lPeriod);</div>
-<div class="line"><a id="l00862" name="l00862"></a><span class="lineno">  862</span>                <span class="keywordflow">if</span> (NULL != pnStroke) {</div>
-<div class="line"><a id="l00863" name="l00863"></a><span class="lineno">  863</span>                    (*pnStroke) = nFrom + iDelta;</div>
-<div class="line"><a id="l00864" name="l00864"></a><span class="lineno">  864</span>                }</div>
-<div class="line"><a id="l00865" name="l00865"></a><span class="lineno">  865</span>            } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00866" name="l00866"></a><span class="lineno">  866</span>                <span class="comment">/* timeout */</span></div>
-<div class="line"><a id="l00867" name="l00867"></a><span class="lineno">  867</span>                <span class="keywordflow">if</span> (NULL != pnStroke) {</div>
-<div class="line"><a id="l00868" name="l00868"></a><span class="lineno">  868</span>                    (*pnStroke) = nTo;</div>
-<div class="line"><a id="l00869" name="l00869"></a><span class="lineno">  869</span>                }</div>
-<div class="line"><a id="l00870" name="l00870"></a><span class="lineno">  870</span>                *plTimestamp = 0;</div>
-<div class="line"><a id="l00871" name="l00871"></a><span class="lineno">  871</span>                </div>
-<div class="line"><a id="l00872" name="l00872"></a><span class="lineno">  872</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00873" name="l00873"></a><span class="lineno">  873</span>            }</div>
-<div class="line"><a id="l00874" name="l00874"></a><span class="lineno">  874</span>        }</div>
-<div class="line"><a id="l00875" name="l00875"></a><span class="lineno">  875</span>    }</div>
-<div class="line"><a id="l00876" name="l00876"></a><span class="lineno">  876</span>    </div>
-<div class="line"><a id="l00877" name="l00877"></a><span class="lineno">  877</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00878" name="l00878"></a><span class="lineno">  878</span>}</div>
-<div class="line"><a id="l00879" name="l00879"></a><span class="lineno">  879</span><span class="comment"></span> </div>
-<div class="line"><a id="l00880" name="l00880"></a><span class="lineno">  880</span><span class="comment">/*! @} */</span></div>
-<div class="line"><a id="l00881" name="l00881"></a><span class="lineno">  881</span> </div>
-<div class="line"><a id="l00882" name="l00882"></a><span class="lineno">  882</span><span class="preprocessor">#if defined(__clang__)</span></div>
-<div class="line"><a id="l00883" name="l00883"></a><span class="lineno">  883</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
-<div class="line"><a id="l00884" name="l00884"></a><span class="lineno">  884</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00885" name="l00885"></a><span class="lineno">  885</span> </div>
-<div class="line"><a id="l00886" name="l00886"></a><span class="lineno">  886</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
-<div class="line"><a id="l00887" name="l00887"></a><span class="lineno">  887</span>}</div>
-<div class="line"><a id="l00888" name="l00888"></a><span class="lineno">  888</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00889" name="l00889"></a><span class="lineno">  889</span> </div>
-<div class="line"><a id="l00890" name="l00890"></a><span class="lineno">  890</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00793" name="l00793"></a><span class="lineno">  793</span><span class="comment"> * \return int64_t the timestamp in ticks (no overflow issue)</span></div>
+<div class="line"><a id="l00794" name="l00794"></a><span class="lineno">  794</span><span class="comment"> * \note you have to call arm_2d_helper_convert_ticks_to_ms() to convert the </span></div>
+<div class="line"><a id="l00795" name="l00795"></a><span class="lineno">  795</span><span class="comment"> *       the timestamp into milliseconds when required.</span></div>
+<div class="line"><a id="l00796" name="l00796"></a><span class="lineno">  796</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00797" name="l00797"></a><span class="lineno">  797</span><span class="keyword">extern</span></div>
+<div class="line"><a id="l00798" name="l00798"></a><span class="lineno"><a class="line" href="group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185">  798</a></span>int64_t <a class="code hl_function" href="group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185" title="get the current system stamp from the reference clock">arm_2d_helper_get_system_timestamp</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00799" name="l00799"></a><span class="lineno">  799</span> </div>
+<div class="line"><a id="l00800" name="l00800"></a><span class="lineno">  800</span><span class="comment"></span> </div>
+<div class="line"><a id="l00801" name="l00801"></a><span class="lineno">  801</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00802" name="l00802"></a><span class="lineno">  802</span><span class="comment"> * \brief set an alarm with given period and check the status</span></div>
+<div class="line"><a id="l00803" name="l00803"></a><span class="lineno">  803</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00804" name="l00804"></a><span class="lineno">  804</span><span class="comment"> * \param[in] lPeriod a time period in ticks</span></div>
+<div class="line"><a id="l00805" name="l00805"></a><span class="lineno">  805</span><span class="comment"> * \param[in] plTimestamp a pointer points to an int64_t integer, if NULL is </span></div>
+<div class="line"><a id="l00806" name="l00806"></a><span class="lineno">  806</span><span class="comment"> *            passed, an static local variable inside the function will be used</span></div>
+<div class="line"><a id="l00807" name="l00807"></a><span class="lineno">  807</span><span class="comment"> * \return bool whether it is timeout or not</span></div>
+<div class="line"><a id="l00808" name="l00808"></a><span class="lineno">  808</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00809" name="l00809"></a><span class="lineno">  809</span>__STATIC_INLINE </div>
+<div class="line"><a id="l00810" name="l00810"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga7e3c8c8f8298d8ffaae2c8dc8500578f">  810</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#ga7e3c8c8f8298d8ffaae2c8dc8500578f" title="set an alarm with given period and check the status">__arm_2d_helper_is_time_out</a>(int64_t lPeriod, int64_t *plTimestamp)</div>
+<div class="line"><a id="l00811" name="l00811"></a><span class="lineno">  811</span>{</div>
+<div class="line"><a id="l00812" name="l00812"></a><span class="lineno">  812</span>    int64_t lTimestamp = <a class="code hl_function" href="group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185" title="get the current system stamp from the reference clock">arm_2d_helper_get_system_timestamp</a>();</div>
+<div class="line"><a id="l00813" name="l00813"></a><span class="lineno">  813</span>    <span class="keyword">static</span> int64_t s_lTimestamp = 0;</div>
+<div class="line"><a id="l00814" name="l00814"></a><span class="lineno">  814</span>    <span class="keywordflow">if</span> (NULL == plTimestamp) {</div>
+<div class="line"><a id="l00815" name="l00815"></a><span class="lineno">  815</span>        plTimestamp = &amp;s_lTimestamp;</div>
+<div class="line"><a id="l00816" name="l00816"></a><span class="lineno">  816</span>    }</div>
+<div class="line"><a id="l00817" name="l00817"></a><span class="lineno">  817</span> </div>
+<div class="line"><a id="l00818" name="l00818"></a><span class="lineno">  818</span>    <span class="keywordflow">if</span> (0 == *plTimestamp) {</div>
+<div class="line"><a id="l00819" name="l00819"></a><span class="lineno">  819</span>        *plTimestamp = lPeriod;</div>
+<div class="line"><a id="l00820" name="l00820"></a><span class="lineno">  820</span>        *plTimestamp += lTimestamp;</div>
+<div class="line"><a id="l00821" name="l00821"></a><span class="lineno">  821</span>        </div>
+<div class="line"><a id="l00822" name="l00822"></a><span class="lineno">  822</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00823" name="l00823"></a><span class="lineno">  823</span>    }</div>
+<div class="line"><a id="l00824" name="l00824"></a><span class="lineno">  824</span> </div>
+<div class="line"><a id="l00825" name="l00825"></a><span class="lineno">  825</span>    <span class="keywordflow">if</span> (lTimestamp &gt;= *plTimestamp) {</div>
+<div class="line"><a id="l00826" name="l00826"></a><span class="lineno">  826</span>        *plTimestamp = lPeriod + lTimestamp;</div>
+<div class="line"><a id="l00827" name="l00827"></a><span class="lineno">  827</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00828" name="l00828"></a><span class="lineno">  828</span>    }</div>
+<div class="line"><a id="l00829" name="l00829"></a><span class="lineno">  829</span> </div>
+<div class="line"><a id="l00830" name="l00830"></a><span class="lineno">  830</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00831" name="l00831"></a><span class="lineno">  831</span>}</div>
+<div class="line"><a id="l00832" name="l00832"></a><span class="lineno">  832</span><span class="comment"></span> </div>
+<div class="line"><a id="l00833" name="l00833"></a><span class="lineno">  833</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00834" name="l00834"></a><span class="lineno">  834</span><span class="comment"> * \brief calculate the stroke of a liner slider based on time</span></div>
+<div class="line"><a id="l00835" name="l00835"></a><span class="lineno">  835</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00836" name="l00836"></a><span class="lineno">  836</span><span class="comment"> * \param[in] nFrom the start of the slider</span></div>
+<div class="line"><a id="l00837" name="l00837"></a><span class="lineno">  837</span><span class="comment"> * \param[in] nTo the end of the slider</span></div>
+<div class="line"><a id="l00838" name="l00838"></a><span class="lineno">  838</span><span class="comment"> * \param[in] lPeriod a given period in which the slider should finish the whole</span></div>
+<div class="line"><a id="l00839" name="l00839"></a><span class="lineno">  839</span><span class="comment"> *            stroke</span></div>
+<div class="line"><a id="l00840" name="l00840"></a><span class="lineno">  840</span><span class="comment"> * \param[out] pnStroke the address of an int32_t stroke variable</span></div>
+<div class="line"><a id="l00841" name="l00841"></a><span class="lineno">  841</span><span class="comment"> * \param[in] plTimestamp the address of a timestamp variable, if you pass NULL</span></div>
+<div class="line"><a id="l00842" name="l00842"></a><span class="lineno">  842</span><span class="comment"> *            the code that call this funtion will not be reentrant.</span></div>
+<div class="line"><a id="l00843" name="l00843"></a><span class="lineno">  843</span><span class="comment"> * \retval true the slider has finished the whole stroke</span></div>
+<div class="line"><a id="l00844" name="l00844"></a><span class="lineno">  844</span><span class="comment"> * \retval false the slider hasn&#39;t reach the target end</span></div>
+<div class="line"><a id="l00845" name="l00845"></a><span class="lineno">  845</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00846" name="l00846"></a><span class="lineno">  846</span>__STATIC_INLINE</div>
+<div class="line"><a id="l00847" name="l00847"></a><span class="lineno"><a class="line" href="group__gHelper.html#gab27d1fbf0e04685918ccfe53e00d1ddb">  847</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#gab27d1fbf0e04685918ccfe53e00d1ddb" title="calculate the stroke of a liner slider based on time">__arm_2d_helper_time_liner_slider</a>( int32_t nFrom, </div>
+<div class="line"><a id="l00848" name="l00848"></a><span class="lineno">  848</span>                                        int32_t nTo, </div>
+<div class="line"><a id="l00849" name="l00849"></a><span class="lineno">  849</span>                                        int64_t lPeriod,</div>
+<div class="line"><a id="l00850" name="l00850"></a><span class="lineno">  850</span>                                        int32_t *pnStroke,</div>
+<div class="line"><a id="l00851" name="l00851"></a><span class="lineno">  851</span>                                        int64_t *plTimestamp)</div>
+<div class="line"><a id="l00852" name="l00852"></a><span class="lineno">  852</span>{</div>
+<div class="line"><a id="l00853" name="l00853"></a><span class="lineno">  853</span>    int64_t lTimestamp = <a class="code hl_function" href="group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185" title="get the current system stamp from the reference clock">arm_2d_helper_get_system_timestamp</a>();</div>
+<div class="line"><a id="l00854" name="l00854"></a><span class="lineno">  854</span>    </div>
+<div class="line"><a id="l00855" name="l00855"></a><span class="lineno">  855</span>    <span class="keyword">static</span> int64_t s_lTimestamp = 0;</div>
+<div class="line"><a id="l00856" name="l00856"></a><span class="lineno">  856</span>    <span class="keywordflow">if</span> (NULL == plTimestamp) {</div>
+<div class="line"><a id="l00857" name="l00857"></a><span class="lineno">  857</span>        plTimestamp = &amp;s_lTimestamp;</div>
+<div class="line"><a id="l00858" name="l00858"></a><span class="lineno">  858</span>    }</div>
+<div class="line"><a id="l00859" name="l00859"></a><span class="lineno">  859</span>    </div>
+<div class="line"><a id="l00860" name="l00860"></a><span class="lineno">  860</span>    <span class="keywordflow">if</span> (nFrom == nTo) {</div>
+<div class="line"><a id="l00861" name="l00861"></a><span class="lineno">  861</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00862" name="l00862"></a><span class="lineno">  862</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00863" name="l00863"></a><span class="lineno">  863</span>        <span class="keywordflow">if</span> (0 == *plTimestamp) {</div>
+<div class="line"><a id="l00864" name="l00864"></a><span class="lineno">  864</span>            *plTimestamp = lTimestamp;</div>
+<div class="line"><a id="l00865" name="l00865"></a><span class="lineno">  865</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00866" name="l00866"></a><span class="lineno">  866</span>            <span class="comment">/* code for update this.Runtime.iOffset */</span></div>
+<div class="line"><a id="l00867" name="l00867"></a><span class="lineno">  867</span>            int64_t lElapsed = (lTimestamp - *plTimestamp);</div>
+<div class="line"><a id="l00868" name="l00868"></a><span class="lineno">  868</span>            </div>
+<div class="line"><a id="l00869" name="l00869"></a><span class="lineno">  869</span>            int32_t iDelta = 0;</div>
+<div class="line"><a id="l00870" name="l00870"></a><span class="lineno">  870</span>            <span class="keywordflow">if</span> (lElapsed &lt; lPeriod) {</div>
+<div class="line"><a id="l00871" name="l00871"></a><span class="lineno">  871</span>                iDelta = nTo - nFrom;</div>
+<div class="line"><a id="l00872" name="l00872"></a><span class="lineno">  872</span>                iDelta = (int32_t)(lElapsed * (int64_t)iDelta / lPeriod);</div>
+<div class="line"><a id="l00873" name="l00873"></a><span class="lineno">  873</span>                <span class="keywordflow">if</span> (NULL != pnStroke) {</div>
+<div class="line"><a id="l00874" name="l00874"></a><span class="lineno">  874</span>                    (*pnStroke) = nFrom + iDelta;</div>
+<div class="line"><a id="l00875" name="l00875"></a><span class="lineno">  875</span>                }</div>
+<div class="line"><a id="l00876" name="l00876"></a><span class="lineno">  876</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00877" name="l00877"></a><span class="lineno">  877</span>                <span class="comment">/* timeout */</span></div>
+<div class="line"><a id="l00878" name="l00878"></a><span class="lineno">  878</span>                <span class="keywordflow">if</span> (NULL != pnStroke) {</div>
+<div class="line"><a id="l00879" name="l00879"></a><span class="lineno">  879</span>                    (*pnStroke) = nTo;</div>
+<div class="line"><a id="l00880" name="l00880"></a><span class="lineno">  880</span>                }</div>
+<div class="line"><a id="l00881" name="l00881"></a><span class="lineno">  881</span>                *plTimestamp = 0;</div>
+<div class="line"><a id="l00882" name="l00882"></a><span class="lineno">  882</span>                </div>
+<div class="line"><a id="l00883" name="l00883"></a><span class="lineno">  883</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00884" name="l00884"></a><span class="lineno">  884</span>            }</div>
+<div class="line"><a id="l00885" name="l00885"></a><span class="lineno">  885</span>        }</div>
+<div class="line"><a id="l00886" name="l00886"></a><span class="lineno">  886</span>    }</div>
+<div class="line"><a id="l00887" name="l00887"></a><span class="lineno">  887</span>    </div>
+<div class="line"><a id="l00888" name="l00888"></a><span class="lineno">  888</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00889" name="l00889"></a><span class="lineno">  889</span>}</div>
+<div class="line"><a id="l00890" name="l00890"></a><span class="lineno">  890</span><span class="comment"></span> </div>
+<div class="line"><a id="l00891" name="l00891"></a><span class="lineno">  891</span><span class="comment">/*! @} */</span></div>
+<div class="line"><a id="l00892" name="l00892"></a><span class="lineno">  892</span> </div>
+<div class="line"><a id="l00893" name="l00893"></a><span class="lineno">  893</span><span class="preprocessor">#if defined(__clang__)</span></div>
+<div class="line"><a id="l00894" name="l00894"></a><span class="lineno">  894</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
+<div class="line"><a id="l00895" name="l00895"></a><span class="lineno">  895</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00896" name="l00896"></a><span class="lineno">  896</span> </div>
+<div class="line"><a id="l00897" name="l00897"></a><span class="lineno">  897</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
+<div class="line"><a id="l00898" name="l00898"></a><span class="lineno">  898</span>}</div>
+<div class="line"><a id="l00899" name="l00899"></a><span class="lineno">  899</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00900" name="l00900"></a><span class="lineno">  900</span> </div>
+<div class="line"><a id="l00901" name="l00901"></a><span class="lineno">  901</span><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
