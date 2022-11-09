@@ -191,7 +191,7 @@ IMPL_FONT_DRAW_CHAR(__digit_font_a4_draw_char)
                                             ptRegion,
                                             ptileChar,
                                             (__arm_2d_color_t){tForeColour},
-                                            chOpacity);
+                                            (uint8_t)chOpacity);
 }
 
 static
