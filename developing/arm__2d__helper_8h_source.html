@@ -864,9 +864,9 @@ $(document).ready(function(){initNavTree('arm__2d__helper_8h_source.html',''); i
 <div class="line"><a id="l00751" name="l00751"></a><span class="lineno">  751</span>{</div>
 <div class="line"><a id="l00752" name="l00752"></a><span class="lineno">  752</span>    chAlpha1 = MIN(255, chAlpha1);</div>
 <div class="line"><a id="l00753" name="l00753"></a><span class="lineno">  753</span>    chAlpha2 = MIN(255, chAlpha2);</div>
-<div class="line"><a id="l00754" name="l00754"></a><span class="lineno">  754</span>    <span class="keywordflow">return</span> (chAlpha1 == 255) ? chAlpha2 </div>
+<div class="line"><a id="l00754" name="l00754"></a><span class="lineno">  754</span>    <span class="keywordflow">return</span> (uint8_t)((chAlpha1 == 255) ? chAlpha2 </div>
 <div class="line"><a id="l00755" name="l00755"></a><span class="lineno">  755</span>                             : ((chAlpha2 == 255) ? chAlpha1 </div>
-<div class="line"><a id="l00756" name="l00756"></a><span class="lineno">  756</span>                                                  : (chAlpha1 * chAlpha2 &gt;&gt; 8));</div>
+<div class="line"><a id="l00756" name="l00756"></a><span class="lineno">  756</span>                                                  : (chAlpha1 * chAlpha2 &gt;&gt; 8)));</div>
 <div class="line"><a id="l00757" name="l00757"></a><span class="lineno">  757</span>}</div>
 <div class="line"><a id="l00758" name="l00758"></a><span class="lineno">  758</span><span class="comment"></span> </div>
 <div class="line"><a id="l00759" name="l00759"></a><span class="lineno">  759</span><span class="comment">/*!</span></div>
