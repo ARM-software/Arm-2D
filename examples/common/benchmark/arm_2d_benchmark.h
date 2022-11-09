@@ -32,7 +32,6 @@ extern arm_2d_scene_player_t BENCHMARK_DISP_ADAPTER;
 
 /*============================ PROTOTYPES ====================================*/
 
-__NO_RETURN
 extern
 void arm_2d_run_benchmark(void);
 

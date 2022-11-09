@@ -160,6 +160,15 @@ extern "C" {
 #ifndef __ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__
 #   define __ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__        0
 #endif
+
+
+// <q> Exit benchmark when finished
+// <i> Exit the arm_2d_run_benchmark() after running specified iterations
+// <i> This feature is disabled by default.
+#ifndef __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
+#   define __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__        0
+#endif
+
 //</h>
 // </h>
 

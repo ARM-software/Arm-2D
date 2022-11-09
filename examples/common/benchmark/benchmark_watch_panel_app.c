@@ -65,6 +65,9 @@
 #   define ITERATION_CNT        1
 #endif
 
+#ifndef __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
+#   define __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__        0
+#endif
 
 #ifndef BENCHMARK_PFB_BLOCK_WIDTH
 #   define BENCHMARK_PFB_BLOCK_WIDTH             __GLCD_CFG_SCEEN_WIDTH__
@@ -77,6 +80,7 @@
 #ifndef BENCHMARK_PFB_HEAP_SIZE
 #   define BENCHMARK_PFB_HEAP_SIZE              1
 #endif
+
 
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
@@ -385,8 +389,6 @@ void arm_2d_scene_player_init(void)
 /*----------------------------------------------------------------------------*
  * Benchmark Entry                                                            *
  *----------------------------------------------------------------------------*/
-
-__NO_RETURN
 void arm_2d_run_benchmark(void)
 {
     example_gui_init();
@@ -394,32 +396,6 @@ void arm_2d_run_benchmark(void)
     arm_2d_scene_player_init();
     
     do {
-        /*! define dirty regions */
-        IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, const static)
-
-            /* a region for the busy wheel */
-            ADD_REGION_TO_LIST(s_tDirtyRegions,
-                .tLocation = {
-                    .iX = ((__GLCD_CFG_SCEEN_WIDTH__ - 222) >> 1),
-                    .iY = ((__GLCD_CFG_SCEEN_HEIGHT__ - 222) >> 1),
-                },
-                .tSize = {
-                    .iWidth = 222,
-                    .iHeight = 222,
-                },
-            ),
-
-            /* a region for the status bar on the bottom of the screen */
-            ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
-                .tLocation = {0,__GLCD_CFG_SCEEN_HEIGHT__ - 16},
-                .tSize = {
-                    .iWidth = __GLCD_CFG_SCEEN_WIDTH__,
-                    .iHeight = 16,
-                },
-            ),
-
-        END_IMPL_ARM_2D_REGION_LIST()
-        
         static arm_2d_scene_t s_tBenchmarkScene[] = {
             [0] = {
                 .fnBackground   = &__pfb_draw_background_handler,
@@ -438,6 +414,12 @@ void arm_2d_run_benchmark(void)
     
     while(true) {
         arm_2d_scene_player_task(&BENCHMARK_DISP_ADAPTER);
+
+#if __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
+        if (0 == BENCHMARK.wIterations) {
+            return ;
+        }
+#endif
     }
 }
 
