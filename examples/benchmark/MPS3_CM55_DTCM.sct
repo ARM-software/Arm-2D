@@ -25,26 +25,13 @@
 
 /*--------------------- Embedded RAM Configuration ---------------------------
 ; <h> RAM Configuration
-;   <o0> RAM1 Base Address    <0x0-0xFFFFFFFF:8>
-;   <o1> RAM1 Size (in Bytes) <0x0-0xFFFFFFFF:8>
+;   <o0> RAM Base Address    <0x0-0xFFFFFFFF:8>
+;   <o1> RAM Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ; </h>
  *----------------------------------------------------------------------------*/
-#define __RAM1_BASE     0x30000000
-#define __RAM1_SIZE     0x00080000
+#define __RAM_BASE     0x30000000
+#define __RAM_SIZE     0x00080000
 
-
-/*--------------------- Embedded RAM Configuration ---------------------------
-; <h> RAM Configuration
-;   <o0> RAM2 Base Address    <0x0-0xFFFFFFFF:8>
-;   <o1> RAM2 Size (in Bytes) <0x0-0xFFFFFFFF:8>
-; </h>
- *----------------------------------------------------------------------------*/
-#define __RAM2_BASE     0x70000000
-#define __RAM2_SIZE     0x10000000
-//#define __HEAP_SIZE     0x10000000
-//#define __HEAP_BASE     __RAM2_BASE
-
-#define __HEAP_SIZE     0x00000800
 #define __HEAP_BASE     +0
 
 /*--------------------- Stack / Heap Configuration ---------------------------
@@ -53,10 +40,10 @@
 ;   <o1> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ; </h>
  *----------------------------------------------------------------------------*/
+#define __HEAP_SIZE     0x00000800
 #define __STACK_SIZE    0x00000800
 
-#define __RAM1_RW_SIZE 	(__RAM1_SIZE - __STACK_SIZE - __HEAP_SIZE)
-//#define __RAM1_RW_SIZE 	(__RAM1_SIZE - __STACK_SIZE)
+#define __RAM_RW_SIZE 	(__RAM_SIZE - __STACK_SIZE - __HEAP_SIZE)
 
 LR_ROM __ROM_BASE __ROM_SIZE  {                                                 ; load region size_region
     ER_ROM +0 {                                                                 ; load address = execution address
@@ -66,10 +53,10 @@ LR_ROM __ROM_BASE __ROM_SIZE  {                                                 
         ;   * (+XO)
     }
 
-    ARM_LIB_STACK __RAM1_BASE ALIGN 8 EMPTY __STACK_SIZE {                      ; Reserve empty region for stack
+    ARM_LIB_STACK __RAM_BASE ALIGN 8 EMPTY __STACK_SIZE {                      ; Reserve empty region for stack
     }
 
-    RW_RAM1 +0 __RAM1_RW_SIZE {
+    RW_RAM +0 __RAM_RW_SIZE {
         * (+RW +ZI)
     }
 
@@ -91,12 +78,3 @@ LR_ROM1 __ROM1_BASE __ROM1_SIZE {
         * (+RO)
     }
 }
-
-#if 0
-LD_ROM_FFF __RAM2_BASE __RAM2_SIZE {
-    FFF_MEM_CONTENT +0 {
-        * (fff_mem_file)
-    }
-}
-#endif
-
