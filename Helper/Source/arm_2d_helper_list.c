@@ -702,26 +702,12 @@ arm_2d_list_item_t *__arm_2d_list_core_get_item(
     return ptItem;
 }
 
-
-__arm_2d_list_work_area_t *
-ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED_VERTICAL (
-                                __arm_2d_list_core_t *ptThis,
-                                __arm_2d_list_item_iterator *fnIterator,
-                                int32_t nOffset
-                            )
+static
+bool __arm_2d_list_core_update( __arm_2d_list_core_t *ptThis,
+                                __arm_2d_list_item_iterator *fnIterator)
 {
-
     arm_2d_list_item_t *ptItem = NULL;
-
-    /* reset the calculator */
-    if (!this.Runtime.bIsRegCalInit) {
-        this.Runtime.bIsRegCalInit = true;
-        this.CalMidAligned.chState = 0;
-        this.Runtime.tWorkingArea.tDirection = ARM_2D_LIST_HORIZONTAL;
-    }
-
-ARM_PT_BEGIN(this.CalMidAligned.chState)
-
+    
     /* update start-offset */
     if (this.CalMidAligned.bListHeightChanged) {
         this.CalMidAligned.bListHeightChanged = false;
@@ -734,13 +720,21 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
                             0);
         if (NULL == ptItem) {
             /* no valid item, return NULL */
-            ARM_PT_RETURN(NULL)
+            return false;
         }
 
-        this.CalMidAligned.iStartOffset
+        if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_HORIZONTAL) {
+            this.CalMidAligned.iStartOffset
+            = (     this.Runtime.tileList.tRegion.tSize.iWidth 
+                -   ptItem->tSize.iWidth) 
+            >> 1;
+        } else {
+            this.CalMidAligned.iStartOffset
             = (     this.Runtime.tileList.tRegion.tSize.iHeight 
                 -   ptItem->tSize.iHeight) 
             >> 1;
+        }
+        
         this.CalMidAligned.iStartOffset -= ptItem->Padding.chPrevious;
     }
 
@@ -760,17 +754,22 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
                             
         if (NULL == ptItem) {
             /* no valid item, return NULL */
-            ARM_PT_RETURN(NULL)
+            return false;
         }
         
         uint16_t hwStartID = ptItem->hwID;
         
         do {
             hwItemCount++;
-            nTotalLength += ptItem->tSize.iHeight 
-                          + ptItem->Padding.chPrevious 
-                          + ptItem->Padding.chNext;
-
+            if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_HORIZONTAL) {
+                nTotalLength += ptItem->tSize.iWidth 
+                              + ptItem->Padding.chPrevious 
+                              + ptItem->Padding.chNext;
+            } else {
+                nTotalLength += ptItem->tSize.iHeight 
+                              + ptItem->Padding.chPrevious 
+                              + ptItem->Padding.chNext;
+            }
             ptItem = __arm_2d_list_core_get_item(   
                                 ptThis, 
                                 fnIterator, 
@@ -792,7 +791,33 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         } else if (0 == this.tCFG.nTotalLength) {
             this.tCFG.nTotalLength = nTotalLength;
         }
-    } while(0);
+    }
+    
+    return true;
+}
+
+__arm_2d_list_work_area_t *
+ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED_VERTICAL (
+                                __arm_2d_list_core_t *ptThis,
+                                __arm_2d_list_item_iterator *fnIterator,
+                                int32_t nOffset
+                            )
+{
+
+    arm_2d_list_item_t *ptItem = NULL;
+
+    /* reset the calculator */
+    if (!this.Runtime.bIsRegCalInit) {
+        this.Runtime.bIsRegCalInit = true;
+        this.CalMidAligned.chState = 0;
+        this.Runtime.tWorkingArea.tDirection = ARM_2D_LIST_HORIZONTAL;
+    }
+
+ARM_PT_BEGIN(this.CalMidAligned.chState)
+
+    if (!__arm_2d_list_core_update(ptThis, fnIterator)) {
+        ARM_PT_RETURN(NULL)
+    }
 
     if (this.tCFG.nTotalLength) {
         nOffset = nOffset % this.tCFG.nTotalLength;
@@ -1051,77 +1076,9 @@ ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL (
 
 ARM_PT_BEGIN(this.CalMidAligned.chState)
 
-    /* update start-offset */
-    if (this.CalMidAligned.bListHeightChanged) {
-        this.CalMidAligned.bListHeightChanged = false;
-        
-        /* update the iStartOffset */
-        ptItem = __arm_2d_list_core_get_item(   
-                            ptThis, 
-                            fnIterator, 
-                            __ARM_2D_LIST_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER,
-                            0);
-        if (NULL == ptItem) {
-            /* no valid item, return NULL */
-            ARM_PT_RETURN(NULL)
-        }
-
-        this.CalMidAligned.iStartOffset
-            = (     this.Runtime.tileList.tRegion.tSize.iWidth 
-                -   ptItem->tSize.iWidth) 
-            >> 1;
-        this.CalMidAligned.iStartOffset -= ptItem->Padding.chPrevious;
+    if (!__arm_2d_list_core_update(ptThis, fnIterator)) {
+        ARM_PT_RETURN(NULL)
     }
-
-    /* update total length and item count */
-    if (    (0 == this.tCFG.nTotalLength)
-        ||  (0 == this.tCFG.hwItemCount)) {
-
-        uint16_t hwItemCount = 0; 
-        uint32_t nTotalLength = 0;
-        
-        /* update the iStartOffset */
-        ptItem = __arm_2d_list_core_get_item(   
-                            ptThis, 
-                            fnIterator, 
-                            __ARM_2D_LIST_GET_FIRST_ITEM,
-                            0);
-                            
-        if (NULL == ptItem) {
-            /* no valid item, return NULL */
-            ARM_PT_RETURN(NULL)
-        }
-        
-        uint16_t hwStartID = ptItem->hwID;
-        
-        do {
-            hwItemCount++;
-            nTotalLength += ptItem->tSize.iWidth 
-                          + ptItem->Padding.chPrevious 
-                          + ptItem->Padding.chNext;
-
-            ptItem = __arm_2d_list_core_get_item(   
-                                ptThis, 
-                                fnIterator, 
-                                __ARM_2D_LIST_GET_NEXT,
-                                0);
-
-            if (NULL == ptItem) {
-                break;
-            }
-            if (ptItem->hwID == hwStartID) {
-                break;  /* reach the starting point again */
-            }
-        } while(true);
-        
-        
-        if (0 == this.tCFG.hwItemCount) {
-            this.tCFG.hwItemCount = hwItemCount;
-            this.tCFG.nTotalLength = nTotalLength;
-        } else if (0 == this.tCFG.nTotalLength) {
-            this.tCFG.nTotalLength = nTotalLength;
-        }
-    } while(0);
 
     if (this.tCFG.nTotalLength) {
         nOffset = nOffset % this.tCFG.nTotalLength;
