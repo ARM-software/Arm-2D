@@ -604,6 +604,105 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
  * Region Calculator                                                          *
  *----------------------------------------------------------------------------*/
 
+ARM_NONNULL(1,2)
+arm_2d_list_item_t *__arm_2d_list_core_get_item(
+                        __arm_2d_list_core_t *ptThis,
+                        __arm_2d_list_item_iterator *fnIterator,
+                        arm_2d_list_iterator_dir_t tDirection,
+                        uint16_t hwID)
+{
+    assert(NULL != ptThis);
+    assert(NULL != fnIterator);
+    
+    arm_2d_list_item_t *ptItem = NULL;
+
+    ptItem = ARM_2D_INVOKE(fnIterator, 
+                    ARM_2D_PARAM(
+                        ptThis, 
+                        tDirection,
+                        hwID));
+
+    if (    (tDirection == __ARM_2D_LIST_GET_CURRENT)
+        ||  (tDirection == __ARM_2D_LIST_GET_ITEM_WITH_ID_WITHOUT_MOVE_POINTER)
+        ||  (tDirection == __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER)) {
+        return ptItem;
+    }
+
+    if (NULL == ptItem) {
+        if (tDirection == __ARM_2D_LIST_GET_NEXT) {
+            /* just in case the iterator won't support ring mode */
+            ptItem = ARM_2D_INVOKE(fnIterator, 
+                    ARM_2D_PARAM(
+                        ptThis, 
+                        __ARM_2D_LIST_GET_FIRST_ITEM,
+                        0));
+            assert(NULL != ptItem);
+        } else if (tDirection == __ARM_2D_LIST_GET_PREVIOUS) {
+            /* just in case the iterator won't support ring mode */
+            ptItem = ARM_2D_INVOKE(fnIterator, 
+                    ARM_2D_PARAM(
+                        ptThis, 
+                        __ARM_2D_LIST_GET_LAST_ITEM,
+                        0));
+            assert(NULL != ptItem);
+        } else {
+            return NULL;
+        }
+    }
+
+    do {
+        if (ptItem->bIsEnabled && ptItem->bIsVisible) {
+            break;
+        }
+        
+        switch (tDirection) {
+            case __ARM_2D_LIST_GET_LAST_ITEM_WITHOUT_MOVE_POINTER:
+            case __ARM_2D_LIST_GET_LAST_ITEM:
+            case __ARM_2D_LIST_GET_PREVIOUS:
+                ptItem = ARM_2D_INVOKE(fnIterator, 
+                    ARM_2D_PARAM(
+                        ptThis, 
+                        __ARM_2D_LIST_GET_PREVIOUS,
+                        0));
+                
+                if (NULL == ptItem) {
+                    /* just in case the iterator won't support ring mode */
+                    ptItem = ARM_2D_INVOKE(fnIterator, 
+                            ARM_2D_PARAM(
+                                ptThis, 
+                                __ARM_2D_LIST_GET_LAST_ITEM,
+                                0));
+                    assert(NULL != ptItem);
+                }
+                break;
+            case __ARM_2D_LIST_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER:
+            case __ARM_2D_LIST_GET_FIRST_ITEM:
+            case __ARM_2D_LIST_GET_NEXT:
+                ptItem = ARM_2D_INVOKE(fnIterator, 
+                    ARM_2D_PARAM(
+                        ptThis, 
+                        __ARM_2D_LIST_GET_NEXT,
+                        0));
+                
+                if (NULL == ptItem) {
+                    /* just in case the iterator won't support ring mode */
+                    ptItem = ARM_2D_INVOKE(fnIterator, 
+                            ARM_2D_PARAM(
+                                ptThis, 
+                                __ARM_2D_LIST_GET_FIRST_ITEM,
+                                0));
+                    assert(NULL != ptItem);
+                }
+                break;
+            default:
+                assert(false);
+        }
+    } while(true);
+
+    return ptItem;
+}
+
+
 __arm_2d_list_work_area_t *
 ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED_VERTICAL (
                                 __arm_2d_list_core_t *ptThis,
@@ -618,7 +717,7 @@ ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED_VERTICAL (
     if (!this.Runtime.bIsRegCalInit) {
         this.Runtime.bIsRegCalInit = true;
         this.CalMidAligned.chState = 0;
-        this.Runtime.tWorkingArea.tDirection = ARM_2D_LIST_VERTICAL;
+        this.Runtime.tWorkingArea.tDirection = ARM_2D_LIST_HORIZONTAL;
     }
 
 ARM_PT_BEGIN(this.CalMidAligned.chState)
@@ -627,20 +726,23 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
     if (this.CalMidAligned.bListHeightChanged) {
         this.CalMidAligned.bListHeightChanged = false;
         
-         /* update the iStartOffset */
-         ptItem = ARM_2D_INVOKE(fnIterator, 
-                    ARM_2D_PARAM(
-                        ptThis, 
-                        __ARM_2D_LIST_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER,
-                        0));
+        /* update the iStartOffset */
+        ptItem = __arm_2d_list_core_get_item(   
+                            ptThis, 
+                            fnIterator, 
+                            __ARM_2D_LIST_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER,
+                            0);
+        if (NULL == ptItem) {
+            /* no valid item, return NULL */
+            ARM_PT_RETURN(NULL)
+        }
+
         this.CalMidAligned.iStartOffset
             = (     this.Runtime.tileList.tRegion.tSize.iHeight 
                 -   ptItem->tSize.iHeight) 
             >> 1;
         this.CalMidAligned.iStartOffset -= ptItem->Padding.chPrevious;
     }
-
-
 
     /* update total length and item count */
     if (    (0 == this.tCFG.nTotalLength)
@@ -650,11 +752,12 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         uint32_t nTotalLength = 0;
         
         /* update the iStartOffset */
-        ptItem = ARM_2D_INVOKE(fnIterator, 
-                    ARM_2D_PARAM(
-                        ptThis, 
-                        __ARM_2D_LIST_GET_FIRST_ITEM,
-                        0));
+        ptItem = __arm_2d_list_core_get_item(   
+                            ptThis, 
+                            fnIterator, 
+                            __ARM_2D_LIST_GET_FIRST_ITEM,
+                            0);
+                            
         if (NULL == ptItem) {
             /* no valid item, return NULL */
             ARM_PT_RETURN(NULL)
@@ -667,12 +770,13 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             nTotalLength += ptItem->tSize.iHeight 
                           + ptItem->Padding.chPrevious 
                           + ptItem->Padding.chNext;
-            
-            ptItem = ARM_2D_INVOKE(fnIterator, 
-                    ARM_2D_PARAM(
-                        ptThis, 
-                        __ARM_2D_LIST_GET_NEXT,
-                        0));
+
+            ptItem = __arm_2d_list_core_get_item(   
+                                ptThis, 
+                                fnIterator, 
+                                __ARM_2D_LIST_GET_NEXT,
+                                0);
+
             if (NULL == ptItem) {
                 break;
             }
@@ -681,9 +785,13 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             }
         } while(true);
         
-        this.tCFG.nTotalLength = nTotalLength;
-        this.tCFG.hwItemCount = hwItemCount;
         
+        if (0 == this.tCFG.hwItemCount) {
+            this.tCFG.hwItemCount = hwItemCount;
+            this.tCFG.nTotalLength = nTotalLength;
+        } else if (0 == this.tCFG.nTotalLength) {
+            this.tCFG.nTotalLength = nTotalLength;
+        }
     } while(0);
 
     if (this.tCFG.nTotalLength) {
@@ -694,11 +802,11 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
     /* find the first and last visible items */
     do {
         /* move to the first item */
-        ptItem = ARM_2D_INVOKE(fnIterator, 
-                    ARM_2D_PARAM(
-                        ptThis, 
-                        __ARM_2D_LIST_GET_FIRST_ITEM,
-                        0));
+        ptItem = __arm_2d_list_core_get_item(   
+                            ptThis, 
+                            fnIterator, 
+                            __ARM_2D_LIST_GET_FIRST_ITEM,
+                            0);
         if (NULL == ptItem) {
             /* no valid item, return NULL */
             ARM_PT_RETURN(NULL)
@@ -738,19 +846,14 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
                          + ptItem->Padding.chNext;
             
             /* move to the next */
-            ptItem = ARM_2D_INVOKE(fnIterator, 
-                        ARM_2D_PARAM(
-                            ptThis, 
-                            __ARM_2D_LIST_GET_NEXT,
-                            0));
-
-            /* just in case the iterator won't support ring mode */
+            ptItem = __arm_2d_list_core_get_item(   
+                                ptThis, 
+                                fnIterator, 
+                                __ARM_2D_LIST_GET_NEXT,
+                                0);
             if (NULL == ptItem) {
-                ptItem = ARM_2D_INVOKE(fnIterator, 
-                    ARM_2D_PARAM(
-                        ptThis, 
-                        __ARM_2D_LIST_GET_FIRST_ITEM,
-                        0));
+                /* no valid item, return NULL */
+                ARM_PT_RETURN(NULL)
             }
         }
         
@@ -769,26 +872,20 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
                          + ptItem->Padding.chNext;
 
             /* move to the next */
-            ptItem = ARM_2D_INVOKE(fnIterator, 
-                        ARM_2D_PARAM(
-                            ptThis, 
-                            __ARM_2D_LIST_GET_NEXT,
-                            0));
+            ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_NEXT,
+                    0);
 
-            /* just in case the iterator won't support ring mode */
             if (NULL == ptItem) {
-                ptItem = ARM_2D_INVOKE(fnIterator, 
-                    ARM_2D_PARAM(
-                        ptThis, 
-                        __ARM_2D_LIST_GET_FIRST_ITEM,
-                        0));
-                /* this should not happen as we checked before */
-                assert(NULL != ptItem);
+                /* no valid item, return NULL */
+                ARM_PT_RETURN(NULL)
             }
             
             int32_t nY1 = nTempOffset 
-                            +   this.CalMidAligned.iStartOffset 
-                            +   ptItem->Padding.chPrevious;
+                        +   this.CalMidAligned.iStartOffset 
+                        +   ptItem->Padding.chPrevious;
             
             if (nY1 >= this.Runtime.tileList.tRegion.tSize.iHeight) {
                 /* this item is not visible */
@@ -801,11 +898,12 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
     /* start draw items */
     do {
         /* move to the top item */
-        ptItem = ARM_2D_INVOKE(fnIterator, 
-                    ARM_2D_PARAM(
-                        ptThis, 
-                        __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
-                        this.CalMidAligned.hwTopVisibleItemID));
+        ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
+                    this.CalMidAligned.hwTopVisibleItemID);
+
         assert(NULL != ptItem);
         
         /* prepare working area */
@@ -837,7 +935,6 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
 
     ARM_PT_YIELD( &this.Runtime.tWorkingArea )
 
-
         if (    this.CalMidAligned.iBottomVisibleOffset 
             <=  this.CalMidAligned.iTopVisiableOffset) {
             break;
@@ -853,30 +950,21 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
                                                   + ptItem->Padding.chNext;
             
             /* move to the top item */
-            ptItem = ARM_2D_INVOKE(fnIterator, 
-                        ARM_2D_PARAM(
-                            ptThis, 
-                            __ARM_2D_LIST_GET_NEXT,
-                            0));
-            /* just in case the iterator won't support ring mode */
-            if (NULL == ptItem) {
-                ptItem = ARM_2D_INVOKE(fnIterator, 
-                    ARM_2D_PARAM(
+            ptItem = __arm_2d_list_core_get_item(   
                         ptThis, 
-                        __ARM_2D_LIST_GET_FIRST_ITEM,
-                        0));
-                /* this should not happen as we checked before */
-                assert(NULL != ptItem);
-            }
+                        fnIterator, 
+                        __ARM_2D_LIST_GET_NEXT,
+                        0);
+
             this.CalMidAligned.hwTopVisibleItemID = ptItem->hwID;
         } while(0);
 
         /* move to the bottom item */
-        ptItem = ARM_2D_INVOKE(fnIterator, 
-                    ARM_2D_PARAM(
-                        ptThis, 
-                        __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
-                        this.CalMidAligned.hwBottomVisibleItemID));
+        ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
+                    this.CalMidAligned.hwBottomVisibleItemID);
         assert(NULL != ptItem);
         
         /* prepare working area */
@@ -908,6 +996,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
 
     ARM_PT_YIELD( &this.Runtime.tWorkingArea )
 
+
         if (    this.CalMidAligned.iBottomVisibleOffset 
             <=  this.CalMidAligned.iTopVisiableOffset) {
             break;
@@ -916,20 +1005,14 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         /* update bottom visiable item id and offset */
         do {
             /* move to the top item */
-            ptItem = ARM_2D_INVOKE(fnIterator, 
-                        ARM_2D_PARAM(
-                            ptThis, 
-                            __ARM_2D_LIST_GET_PREVIOUS,
-                            0));
-            /* just in case the iterator won't support ring mode */
-            if (NULL == ptItem) {
-                ptItem = ARM_2D_INVOKE(fnIterator, 
-                    ARM_2D_PARAM(
+            ptItem = __arm_2d_list_core_get_item(   
                         ptThis, 
-                        __ARM_2D_LIST_GET_LAST_ITEM,
-                        0));
-                /* this should not happen as we checked before */
-                assert(NULL != ptItem);
+                        fnIterator, 
+                        __ARM_2D_LIST_GET_PREVIOUS,
+                        0);
+            if (NULL == ptItem) {
+                /* no valid item, return NULL */
+                ARM_PT_RETURN(NULL)
             }
 
             this.CalMidAligned.hwBottomVisibleItemID = ptItem->hwID;
@@ -947,7 +1030,6 @@ ARM_PT_END()
 
     return NULL;
 }
-
 
 
 __arm_2d_list_work_area_t *
@@ -973,12 +1055,17 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
     if (this.CalMidAligned.bListHeightChanged) {
         this.CalMidAligned.bListHeightChanged = false;
         
-         /* update the iStartOffset */
-         ptItem = ARM_2D_INVOKE(fnIterator, 
-                    ARM_2D_PARAM(
-                        ptThis, 
-                        __ARM_2D_LIST_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER,
-                        0));
+        /* update the iStartOffset */
+        ptItem = __arm_2d_list_core_get_item(   
+                            ptThis, 
+                            fnIterator, 
+                            __ARM_2D_LIST_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER,
+                            0);
+        if (NULL == ptItem) {
+            /* no valid item, return NULL */
+            ARM_PT_RETURN(NULL)
+        }
+
         this.CalMidAligned.iStartOffset
             = (     this.Runtime.tileList.tRegion.tSize.iWidth 
                 -   ptItem->tSize.iWidth) 
@@ -994,11 +1081,12 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         uint32_t nTotalLength = 0;
         
         /* update the iStartOffset */
-        ptItem = ARM_2D_INVOKE(fnIterator, 
-                    ARM_2D_PARAM(
-                        ptThis, 
-                        __ARM_2D_LIST_GET_FIRST_ITEM,
-                        0));
+        ptItem = __arm_2d_list_core_get_item(   
+                            ptThis, 
+                            fnIterator, 
+                            __ARM_2D_LIST_GET_FIRST_ITEM,
+                            0);
+                            
         if (NULL == ptItem) {
             /* no valid item, return NULL */
             ARM_PT_RETURN(NULL)
@@ -1011,12 +1099,13 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             nTotalLength += ptItem->tSize.iWidth 
                           + ptItem->Padding.chPrevious 
                           + ptItem->Padding.chNext;
-            
-            ptItem = ARM_2D_INVOKE(fnIterator, 
-                    ARM_2D_PARAM(
-                        ptThis, 
-                        __ARM_2D_LIST_GET_NEXT,
-                        0));
+
+            ptItem = __arm_2d_list_core_get_item(   
+                                ptThis, 
+                                fnIterator, 
+                                __ARM_2D_LIST_GET_NEXT,
+                                0);
+
             if (NULL == ptItem) {
                 break;
             }
@@ -1025,9 +1114,13 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             }
         } while(true);
         
-        this.tCFG.nTotalLength = nTotalLength;
-        this.tCFG.hwItemCount = hwItemCount;
         
+        if (0 == this.tCFG.hwItemCount) {
+            this.tCFG.hwItemCount = hwItemCount;
+            this.tCFG.nTotalLength = nTotalLength;
+        } else if (0 == this.tCFG.nTotalLength) {
+            this.tCFG.nTotalLength = nTotalLength;
+        }
     } while(0);
 
     if (this.tCFG.nTotalLength) {
@@ -1038,11 +1131,11 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
     /* find the first and last visible items */
     do {
         /* move to the first item */
-        ptItem = ARM_2D_INVOKE(fnIterator, 
-                    ARM_2D_PARAM(
-                        ptThis, 
-                        __ARM_2D_LIST_GET_FIRST_ITEM,
-                        0));
+        ptItem = __arm_2d_list_core_get_item(   
+                            ptThis, 
+                            fnIterator, 
+                            __ARM_2D_LIST_GET_FIRST_ITEM,
+                            0);
         if (NULL == ptItem) {
             /* no valid item, return NULL */
             ARM_PT_RETURN(NULL)
@@ -1082,19 +1175,14 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
                          + ptItem->Padding.chNext;
             
             /* move to the next */
-            ptItem = ARM_2D_INVOKE(fnIterator, 
-                        ARM_2D_PARAM(
-                            ptThis, 
-                            __ARM_2D_LIST_GET_NEXT,
-                            0));
-
-            /* just in case the iterator won't support ring mode */
+            ptItem = __arm_2d_list_core_get_item(   
+                                ptThis, 
+                                fnIterator, 
+                                __ARM_2D_LIST_GET_NEXT,
+                                0);
             if (NULL == ptItem) {
-                ptItem = ARM_2D_INVOKE(fnIterator, 
-                    ARM_2D_PARAM(
-                        ptThis, 
-                        __ARM_2D_LIST_GET_FIRST_ITEM,
-                        0));
+                /* no valid item, return NULL */
+                ARM_PT_RETURN(NULL)
             }
         }
         
@@ -1113,21 +1201,15 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
                          + ptItem->Padding.chNext;
 
             /* move to the next */
-            ptItem = ARM_2D_INVOKE(fnIterator, 
-                        ARM_2D_PARAM(
-                            ptThis, 
-                            __ARM_2D_LIST_GET_NEXT,
-                            0));
+            ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_NEXT,
+                    0);
 
-            /* just in case the iterator won't support ring mode */
             if (NULL == ptItem) {
-                ptItem = ARM_2D_INVOKE(fnIterator, 
-                    ARM_2D_PARAM(
-                        ptThis, 
-                        __ARM_2D_LIST_GET_FIRST_ITEM,
-                        0));
-                /* this should not happen as we checked before */
-                assert(NULL != ptItem);
+                /* no valid item, return NULL */
+                ARM_PT_RETURN(NULL)
             }
             
             int32_t nX1 = nTempOffset 
@@ -1145,11 +1227,12 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
     /* start draw items */
     do {
         /* move to the top item */
-        ptItem = ARM_2D_INVOKE(fnIterator, 
-                    ARM_2D_PARAM(
-                        ptThis, 
-                        __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
-                        this.CalMidAligned.hwTopVisibleItemID));
+        ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
+                    this.CalMidAligned.hwTopVisibleItemID);
+
         assert(NULL != ptItem);
         
         /* prepare working area */
@@ -1196,30 +1279,21 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
                                                   + ptItem->Padding.chNext;
             
             /* move to the top item */
-            ptItem = ARM_2D_INVOKE(fnIterator, 
-                        ARM_2D_PARAM(
-                            ptThis, 
-                            __ARM_2D_LIST_GET_NEXT,
-                            0));
-            /* just in case the iterator won't support ring mode */
-            if (NULL == ptItem) {
-                ptItem = ARM_2D_INVOKE(fnIterator, 
-                    ARM_2D_PARAM(
+            ptItem = __arm_2d_list_core_get_item(   
                         ptThis, 
-                        __ARM_2D_LIST_GET_FIRST_ITEM,
-                        0));
-                /* this should not happen as we checked before */
-                assert(NULL != ptItem);
-            }
+                        fnIterator, 
+                        __ARM_2D_LIST_GET_NEXT,
+                        0);
+
             this.CalMidAligned.hwTopVisibleItemID = ptItem->hwID;
         } while(0);
 
         /* move to the bottom item */
-        ptItem = ARM_2D_INVOKE(fnIterator, 
-                    ARM_2D_PARAM(
-                        ptThis, 
-                        __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
-                        this.CalMidAligned.hwBottomVisibleItemID));
+        ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
+                    this.CalMidAligned.hwBottomVisibleItemID);
         assert(NULL != ptItem);
         
         /* prepare working area */
@@ -1260,20 +1334,14 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         /* update bottom visiable item id and offset */
         do {
             /* move to the top item */
-            ptItem = ARM_2D_INVOKE(fnIterator, 
-                        ARM_2D_PARAM(
-                            ptThis, 
-                            __ARM_2D_LIST_GET_PREVIOUS,
-                            0));
-            /* just in case the iterator won't support ring mode */
-            if (NULL == ptItem) {
-                ptItem = ARM_2D_INVOKE(fnIterator, 
-                    ARM_2D_PARAM(
+            ptItem = __arm_2d_list_core_get_item(   
                         ptThis, 
-                        __ARM_2D_LIST_GET_LAST_ITEM,
-                        0));
-                /* this should not happen as we checked before */
-                assert(NULL != ptItem);
+                        fnIterator, 
+                        __ARM_2D_LIST_GET_PREVIOUS,
+                        0);
+            if (NULL == ptItem) {
+                /* no valid item, return NULL */
+                ARM_PT_RETURN(NULL)
             }
 
             this.CalMidAligned.hwBottomVisibleItemID = ptItem->hwID;
