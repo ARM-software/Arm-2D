@@ -135,8 +135,8 @@ my_list_item_t s_tListArray[] = {
             .Padding = {
                 5,5,
             },
-            
-            .tSize = { 100, 100 },
+            .u4Alignment = ARM_2D_ALIGN_TOP,
+            .tSize = { 100, 80 },
             .fnOnDrawItem = &__list_view_item_0_draw_item,
         },
     },
@@ -166,7 +166,8 @@ my_list_item_t s_tListArray[] = {
             .Padding = {
                 5,5,
             },
-            .tSize = { 100, 100 },
+            .u4Alignment = ARM_2D_ALIGN_BOTTOM,
+            .tSize = { 100, 90 },
             .fnOnDrawItem = &__list_view_item_2_draw_item,
         },
     },
@@ -182,7 +183,7 @@ my_list_item_t s_tListArray[] = {
             .Padding = {
                 5,5,
             },
-            .tSize = { 100, 100 },
+            .tSize = { 100, 110 },
             .fnOnDrawItem = &__list_view_item_3_draw_item,
         },
     },
@@ -490,7 +491,7 @@ user_scene_3_t *__arm_2d_scene3_init(   arm_2d_scene_player_t *ptDispAdapter,
             .fnIterator = &ARM_2D_LIST_ITERATOR_ARRAY,
             .fnCalculator = &ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL,
             
-            .tListSize = {0, 100},
+            .tListSize = {0, 110},
             .ptItems = (arm_2d_list_item_t *)s_tListArray,
             .hwCount = dimof(s_tListArray),
             .hwItemSizeInByte = sizeof(my_list_item_t),

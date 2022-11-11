@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        17. Oct 2022
- * $Revision:    V.0.9.0
+ * $Date:        11. Nov 2022
+ * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -229,6 +229,46 @@ ARM_PT_BEGIN(this.Runtime.chState)
         if (!ptItem->bIsReadOnly) {
             ptItem->ptListView = ptThis;
         }
+        
+        /* calculate alignment offset*/
+        do {
+            int16_t iOffset = 0;
+            if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_HORIZONTAL) {
+                /* horizontal list */
+                switch (    ptItem->u4Alignment 
+                       &    (ARM_2D_ALIGN_TOP | ARM_2D_ALIGN_BOTTOM)) {
+                    case ARM_2D_ALIGN_TOP:
+                        /* do nothing */
+                        break;
+                    case ARM_2D_ALIGN_BOTTOM:
+                        iOffset = this.Runtime.tileList.tRegion.tSize.iHeight
+                                 - ptItem->tSize.iHeight;
+                        break;
+                    default:                    /* centre alignment */
+                        iOffset = (    this.Runtime.tileList.tRegion.tSize.iHeight
+                                    -   ptItem->tSize.iHeight) >> 1;
+                        break;
+                };
+                this.Runtime.tWorkingArea.tRegion.tLocation.iY += iOffset;
+            } else {
+                /* vertical list */
+                switch (    ptItem->u4Alignment 
+                       &    (ARM_2D_ALIGN_LEFT | ARM_2D_ALIGN_RIGHT)) {
+                    case ARM_2D_ALIGN_LEFT:
+                        /* do nothing */
+                        break;
+                    case ARM_2D_ALIGN_RIGHT:
+                        iOffset = this.Runtime.tileList.tRegion.tSize.iWidth
+                                 - ptItem->tSize.iWidth;
+                        break;
+                    default:                    /* centre alignment */
+                        iOffset = (    this.Runtime.tileList.tRegion.tSize.iWidth
+                                    -   ptItem->tSize.iWidth) >> 1;
+                        break;
+                };
+                this.Runtime.tWorkingArea.tRegion.tLocation.iX += iOffset;
+            }
+        } while(0);
         
         /* update this.Runtime.tWorkingArea.tRegion with margin */
         this.Runtime.tWorkingArea.tRegion.tLocation.iX += ptItem->Margin.chLeft;
@@ -784,12 +824,10 @@ bool __arm_2d_list_core_update( __arm_2d_list_core_t *ptThis,
             }
         } while(true);
         
-        
+        this.tCFG.nTotalLength = nTotalLength;
+
         if (0 == this.tCFG.hwItemCount) {
             this.tCFG.hwItemCount = hwItemCount;
-            this.tCFG.nTotalLength = nTotalLength;
-        } else if (0 == this.tCFG.nTotalLength) {
-            this.tCFG.nTotalLength = nTotalLength;
         }
     }
     
@@ -810,7 +848,7 @@ ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED_VERTICAL (
     if (!this.Runtime.bIsRegCalInit) {
         this.Runtime.bIsRegCalInit = true;
         this.CalMidAligned.chState = 0;
-        this.Runtime.tWorkingArea.tDirection = ARM_2D_LIST_HORIZONTAL;
+        this.Runtime.tWorkingArea.tDirection = ARM_2D_LIST_VERTICAL;
     }
 
 ARM_PT_BEGIN(this.CalMidAligned.chState)
@@ -938,7 +976,8 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             = this.CalMidAligned.iTopVisiableOffset 
             + this.CalMidAligned.iStartOffset 
             +   ptItem->Padding.chPrevious;
-
+        this.Runtime.tWorkingArea.tRegion.tLocation.iX = 0;
+        
         //! calculate distance and opacity
         do {
             int16_t iDistance 
@@ -999,7 +1038,8 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             = this.CalMidAligned.iBottomVisibleOffset 
             + this.CalMidAligned.iStartOffset 
             +   ptItem->Padding.chPrevious;
-
+        this.Runtime.tWorkingArea.tRegion.tLocation.iX = 0;
+        
         //! calculate distance and opacity
         do {
             int16_t iDistance 
@@ -1199,7 +1239,8 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             = this.CalMidAligned.iTopVisiableOffset 
             + this.CalMidAligned.iStartOffset 
             +   ptItem->Padding.chPrevious;
-
+        this.Runtime.tWorkingArea.tRegion.tLocation.iY = 0;
+        
         //! calculate distance and opacity
         do {
             int16_t iDistance 
@@ -1260,6 +1301,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             = this.CalMidAligned.iBottomVisibleOffset 
             + this.CalMidAligned.iStartOffset 
             +   ptItem->Padding.chPrevious;
+        this.Runtime.tWorkingArea.tRegion.tLocation.iY = 0;
 
         //! calculate distance and opacity
         do {
