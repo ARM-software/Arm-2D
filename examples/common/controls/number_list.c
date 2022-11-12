@@ -265,7 +265,7 @@ void number_list_init(  number_list_t *ptThis,
             .fnIterator = &__arm_2d_number_list_iterator,
             
             /* vertical list, centre aligned style */
-            .fnCalculator = &ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_VERTICAL,
+            .fnCalculator = &ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL,
             .fnOnDrawListBackground = &__arm_2d_number_list_draw_background,
             //.fnOnDrawListItemBackground =       &__arm_2d_number_list_draw_list_core_item_background,
             .hwSwitchingPeriodInMs = ptCFG->hwSwitchingPeriodInMs,

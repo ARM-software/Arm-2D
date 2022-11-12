@@ -22,7 +22,7 @@
  * Description:  Public header file for list core related services
  *
  * $Date:        11. Nov 2022
- * $Revision:    V.1.0.0
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -330,6 +330,23 @@ extern
 __arm_2d_list_region_calculator_t
     ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL;
     
+/*!
+ *  \brief a list calculator for vertical lists, which puts selected item
+ *         in the centre of the target list, item size is fixed and no status 
+ *         checking (i.e. visible or enabled).
+ */
+extern
+__arm_2d_list_region_calculator_t
+ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL;
+
+/*!
+ *  \brief a list calculator for horizontal lists, which puts selected item
+ *         in the centre of the target list, item size is fixed and no status 
+ *         checking (i.e. visible or enabled).
+ */
+extern
+__arm_2d_list_region_calculator_t
+ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_HORIZONTAL;
 
 /*!
  *  \brief a list iterator for the list that stores items in an array
