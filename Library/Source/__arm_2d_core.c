@@ -21,8 +21,8 @@
  * Title:        __arm-2d_core.c
  * Description:  Basic Tile operations
  *
- * $Date:        04. Nov 2022
- * $Revision:    V.1.6.0
+ * $Date:        14. Nov 2022
+ * $Revision:    V.1.6.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -517,7 +517,20 @@ arm_fsm_rt_t __arm_2d_issue_sub_task_copy_origin_masks(
             .tDesMask  = *ptTargetMask,
         },
     };
+
+    if (NULL == ptOriginMask){
+        ptTask->Param.tCopyOrigMask.tOrigMask.bInvalid = true;
+    } else {
+        ptTask->Param.tCopyOrigMask.tOrigMask = *ptOriginMask;
+    }
     
+    if (NULL == ptTargetMask){
+        ptTask->Param.tCopyOrigMask.tDesMask.bInvalid = true;
+    } else {
+        ptTask->Param.tCopyOrigMask.tDesMask = *ptTargetMask;
+    }
+
+
     /* call default software implementation */
     ARM_2D_RUN_DEFAULT(0,__arm_2d_io_func_t );
 

@@ -21,8 +21,8 @@
  * Title:        arm-2d_async.c
  * Description:  Pixel pipeline extensions for support hardware acceleration.
  *
- * $Date:        31. May 2022
- * $Revision:    V.1.0.2
+ * $Date:        14. Nov 2022
+ * $Revision:    V.1.0.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -903,10 +903,21 @@ arm_fsm_rt_t __arm_2d_issue_sub_task_copy_origin_masks(
                             
                             .tOrigin        = *ptOrigin,
                         },
-                        .tOrigMask = *ptOriginMask,
-                        .tDesMask  = *ptTargetMask,
                     },
                 };
+                
+    if (NULL == ptOriginMask){
+        ptTask->Param.tCopyOrigMask.tOrigMask.bInvalid = true;
+    } else {
+        ptTask->Param.tCopyOrigMask.tOrigMask = *ptOriginMask;
+    }
+    
+    if (NULL == ptTargetMask){
+        ptTask->Param.tCopyOrigMask.tDesMask.bInvalid = true;
+    } else {
+        ptTask->Param.tCopyOrigMask.tDesMask = *ptTargetMask;
+    }
+    
     OP_CORE.Status.u4SubTaskCount++;
     
     __arm_2d_sub_task_add(ptTask);
