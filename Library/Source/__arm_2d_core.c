@@ -22,7 +22,7 @@
  * Description:  Basic Tile operations
  *
  * $Date:        14. Nov 2022
- * $Revision:    V.1.6.1
+ * $Revision:    V.1.6.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -513,8 +513,6 @@ arm_fsm_rt_t __arm_2d_issue_sub_task_copy_origin_masks(
                 
                 .tOrigin        = *ptOrigin,
             },
-            .tOrigMask = *ptOriginMask,
-            .tDesMask  = *ptTargetMask,
         },
     };
 
