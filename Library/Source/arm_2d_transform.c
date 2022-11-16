@@ -21,8 +21,8 @@
  * Title:        arm-2d_transform.c
  * Description:  APIs for tile transform
  *
- * $Date:        14 Oct 2022
- * $Revision:    V.1.0.2
+ * $Date:        16 Oct 2022
+ * $Revision:    V.1.0.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -1094,6 +1094,7 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_with_src_mask_prepare(
     this.tTransform.tCenter = tCentre;
     //this.tTransform.Mask.hwColour = chFillColour;
     this.Mask.ptOriginSide = ptSourceMask;
+    this.Mask.ptTargetSide = NULL;
 
     return __arm_2d_transform_preprocess_source((arm_2d_op_trans_t *)ptThis,
                                                 &this.tTransform);
@@ -1135,6 +1136,7 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_with_src_mask_prepare(
     this.tTransform.tCenter = tCentre;
     //this.tTransform.Mask.hwColour = hwFillColour;
     this.Mask.ptOriginSide = ptSourceMask;
+    this.Mask.ptTargetSide = NULL;
 
     return __arm_2d_transform_preprocess_source((arm_2d_op_trans_t *)ptThis,
                                                 &this.tTransform);
@@ -1176,6 +1178,7 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_with_src_mask_prepare(
     this.tTransform.tCenter = tCentre;
     //this.tTransform.Mask.hwColour = wFillColour;
     this.Mask.ptOriginSide = ptSourceMask;
+    this.Mask.ptTargetSide = NULL;
 
     return __arm_2d_transform_preprocess_source((arm_2d_op_trans_t *)ptThis,
                                                 &this.tTransform);
@@ -1319,6 +1322,7 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_with_src_mask_and_opacity_prepare(
     this.tTransform.tCenter = tCentre;
     //this.tTransform.Mask.hwColour = chFillColour;
     this.Mask.ptOriginSide = ptSourceMask;
+    this.Mask.ptTargetSide = NULL;
     this.chOpacity = chOpacity;
 
     return __arm_2d_transform_preprocess_source((arm_2d_op_trans_t *)ptThis,
@@ -1362,6 +1366,7 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_with_src_mask_and_opacity_prepare(
     this.tTransform.tCenter = tCentre;
     //this.tTransform.Mask.hwColour = hwFillColour;
     this.Mask.ptOriginSide = ptSourceMask;
+    this.Mask.ptTargetSide = NULL;
     this.chOpacity = chOpacity;
 
     return __arm_2d_transform_preprocess_source((arm_2d_op_trans_t *)ptThis,
@@ -1405,6 +1410,7 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_with_src_mask_and_opacity_prepare(
     this.tTransform.tCenter = tCentre;
     //this.tTransform.Mask.hwColour = wFillColour;
     this.Mask.ptOriginSide = ptSourceMask;
+    this.Mask.ptTargetSide = NULL;
     this.chOpacity = chOpacity;
 
     return __arm_2d_transform_preprocess_source((arm_2d_op_trans_t *)ptThis,
