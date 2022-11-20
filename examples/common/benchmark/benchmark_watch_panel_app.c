@@ -389,6 +389,9 @@ void arm_2d_scene_player_init(void)
 /*----------------------------------------------------------------------------*
  * Benchmark Entry                                                            *
  *----------------------------------------------------------------------------*/
+#if !__ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
+__NO_RETURN
+#endif
 void arm_2d_run_benchmark(void)
 {
     example_gui_init();

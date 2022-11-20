@@ -24,8 +24,13 @@
 #include <stdarg.h>
 #include "platform.h"
 #include "app_cfg.h"
-
+#include "arm_2d.h"
 #include "RTE_Components.h"
+
+#if __IS_COMPILER_IAR__
+#   undef RTE_Compiler_IO_STDOUT_EVR
+#endif
+
 #ifdef RTE_Compiler_IO_STDOUT_EVR
 #include "EventRecorder.h"
 #endif
