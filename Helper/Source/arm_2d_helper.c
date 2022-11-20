@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        13. Oct 2022
- * $Revision:    V.1.0.0
+ * $Date:        20. Oct 2022
+ * $Revision:    V.1.4.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -57,6 +57,7 @@
 #   pragma clang diagnostic ignored "-Wimplicit-int-conversion"
 #   pragma clang diagnostic ignored "-Wmissing-prototypes"
 #   pragma clang diagnostic ignored "-Wpedantic"
+#   pragma clang diagnostic ignored "-Wtautological-pointer-compare"
 #elif defined(__IS_COMPILER_GCC__)
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wstrict-aliasing"
@@ -124,8 +125,181 @@ int64_t arm_2d_helper_convert_ms_to_ticks(uint32_t wMS)
 }
 
 
+ARM_NONNULL(2)
+bool __arm_2d_helper_is_time_out(int64_t lPeriod, int64_t *plTimestamp)
+{
+    assert(NULL != plTimestamp);
+    
+    int64_t lTimestamp = arm_2d_helper_get_system_timestamp();
 
 
+    if (0 == *plTimestamp) {
+        *plTimestamp = lPeriod;
+        *plTimestamp += lTimestamp;
+        
+        return false;
+    }
+
+    if (lTimestamp >= *plTimestamp) {
+        *plTimestamp = lPeriod + lTimestamp;
+        return true;
+    }
+
+    return false;
+}
+
+ARM_NONNULL(4,5)
+bool __arm_2d_helper_time_liner_slider( int32_t nFrom, 
+                                        int32_t nTo, 
+                                        int64_t lPeriod,
+                                        int32_t *pnStroke,
+                                        int64_t *plTimestamp)
+{
+    assert(NULL != plTimestamp);
+    assert(NULL != pnStroke);
+
+    int64_t lTimestamp = arm_2d_helper_get_system_timestamp();
+
+    if (nFrom == nTo) {
+        return true;
+    } else {
+        if (0 == *plTimestamp) {
+            *plTimestamp = lTimestamp;
+        } else {
+            /* code for update this.Runtime.iOffset */
+            int64_t lElapsed = (lTimestamp - *plTimestamp);
+            
+            int32_t iDelta = 0;
+            if (lElapsed < lPeriod) {
+                iDelta = nTo - nFrom;
+                iDelta = (int32_t)(lElapsed * (int64_t)iDelta / lPeriod);
+
+                //if (NULL != pnStroke) {
+                    (*pnStroke) = nFrom + iDelta;
+                //}
+            } else {
+                /* timeout */
+                //if (NULL != pnStroke) {
+                    (*pnStroke) = nTo;
+                //}
+                *plTimestamp = 0;
+                
+                return true;
+            }
+        }
+    }
+    
+    return false;
+}
+
+
+ARM_NONNULL(4,5)
+bool __arm_2d_helper_time_cos_slider(   int32_t nFrom, 
+                                        int32_t nTo, 
+                                        int64_t lPeriod,
+                                        int32_t *pnStroke,
+                                        int64_t *plTimestamp)
+{
+    int64_t lTimestamp = arm_2d_helper_get_system_timestamp();
+    assert(NULL != plTimestamp);
+    assert(NULL != pnStroke);
+
+    if (nFrom == nTo) {
+        return true;
+    } else {
+        if (0 == *plTimestamp) {
+            *plTimestamp = lTimestamp;
+        } else {
+            /* code for update this.Runtime.iOffset */
+            int64_t lElapsed = (lTimestamp - *plTimestamp);
+            
+            int32_t iDelta = 0;
+            if (lElapsed < lPeriod) {
+                iDelta = nTo - nFrom;
+
+                float fDegree = ((float)lElapsed / (float)lPeriod) * 6.2831852f;
+                
+                iDelta = (int32_t)((1.0f-arm_cos_f32(fDegree)) * (float)iDelta);
+                iDelta >>= 1;
+                
+                //if (NULL != pnStroke) {
+                    (*pnStroke) = nFrom + iDelta;
+                //}
+            } else {
+                /* timeout */
+                //if (NULL != pnStroke) {
+                    (*pnStroke) = nFrom;
+                //}
+                *plTimestamp = 0;
+                
+                return true;
+            }
+        }
+    }
+    
+    return false;
+}
+
+
+/*!
+ * \brief calculate the stroke of a cosine slider (0~pi) based on time
+ *
+ * \param[in] nFrom the start of the slider
+ * \param[in] nTo the end of the slider
+ * \param[in] lPeriod a given period in which the slider should finish the whole
+ *            stroke
+ * \param[out] pnStroke the address of an int32_t stroke variable
+ * \param[in] plTimestamp the address of a timestamp variable, if you pass NULL
+ *            the code that call this funtion will not be reentrant.
+ * \retval true the slider has finished the whole stroke
+ * \retval false the slider hasn't reach the target end
+ */
+ARM_NONNULL(4,5)
+bool __arm_2d_helper_time_half_cos_slider(  int32_t nFrom, 
+                                            int32_t nTo, 
+                                            int64_t lPeriod,
+                                            int32_t *pnStroke,
+                                            int64_t *plTimestamp)
+{
+    
+    int64_t lTimestamp = arm_2d_helper_get_system_timestamp();
+    assert(NULL != plTimestamp);
+    assert(NULL != pnStroke);
+
+    if (nFrom == nTo) {
+        return true;
+    } else {
+        if (0 == *plTimestamp) {
+            *plTimestamp = lTimestamp;
+        } else {
+            /* code for update this.Runtime.iOffset */
+            int64_t lElapsed = (lTimestamp - *plTimestamp);
+            
+            int32_t iDelta = 0;
+            if (lElapsed < lPeriod) {
+                iDelta = nTo - nFrom;
+
+                float fDegree = ((float)lElapsed / (float)lPeriod) * 3.1415926f;
+                iDelta = (int32_t)((float)(1.0f-arm_cos_f32(fDegree)) * (float)iDelta);
+                iDelta >>= 1;
+                
+                //if (NULL != pnStroke) {
+                    (*pnStroke) = nFrom + iDelta;
+                //}
+            } else {
+                /* timeout */
+                //if (NULL != pnStroke) {
+                    (*pnStroke) = nTo;
+                //}
+                *plTimestamp = 0;
+                
+                return true;
+            }
+        }
+    }
+    
+    return false;
+}
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
