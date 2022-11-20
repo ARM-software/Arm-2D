@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        13. Oct 2022
- * $Revision:    V.1.3.7
+ * $Date:        20. Nov 2022
+ * $Revision:    V.1.3.8
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -618,12 +618,9 @@ ARM_PT_BEGIN(this.Adapter.chPT)
     this.Adapter.bIsNewFrame = true;
     __arm_2d_helper_perf_counter_start(&this.Statistics.lTimestamp); 
     do {
-        this.Statistics.nRenderingCycle += __arm_2d_helper_perf_counter_stop(&this.Statistics.lTimestamp); 
-
         /* begin of the drawing iteration, 
          * try to request the tile of frame buffer
          */
-        
         do {
         
             /*! \note In deep embedded applications, a LCD usually is connected 
@@ -668,6 +665,10 @@ ARM_PT_BEGIN(this.Adapter.chPT)
                 goto label_pfb_task_rt_cpl;
             }
         } while(NULL == this.Adapter.ptFrameBuffer);
+
+        /* LCD Latency includes the time of waiting for a PFB block */
+        this.Statistics.nRenderingCycle 
+            += __arm_2d_helper_perf_counter_stop(&this.Statistics.lTimestamp); 
 
     ARM_PT_ENTRY()
         
