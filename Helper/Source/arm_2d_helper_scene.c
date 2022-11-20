@@ -492,14 +492,14 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
             __pfb_draw_scene_mode_default_background(pTarget, ptTile, bIsNewFrame);
         } else {
             if (!bIgnoreBG) {
-                ARM_2D_INVOKE( ptScene->fnOnBGStart, ptScene);
-                ARM_2D_INVOKE( ptScene->fnBackground, ptScene, ptTile, bIsNewFrame);
-                ARM_2D_INVOKE( ptScene->fnOnBGComplete, ptScene);
+                ARM_2D_INVOKE_RT_VOID( ptScene->fnOnBGStart, ptScene);
+                ARM_2D_INVOKE(ptScene->fnBackground, ptScene, ptTile, bIsNewFrame);
+                ARM_2D_INVOKE_RT_VOID( ptScene->fnOnBGComplete, ptScene);
             }
             if (!bIgnoreScene) {
-                ARM_2D_INVOKE( ptScene->fnOnFrameStart, ptScene);
+                ARM_2D_INVOKE_RT_VOID( ptScene->fnOnFrameStart, ptScene);
                 ARM_2D_INVOKE( ptScene->fnScene, ptScene, ptTile, bIsNewFrame);
-                ARM_2D_INVOKE( ptScene->fnOnFrameCPL, ptScene);
+                ARM_2D_INVOKE_RT_VOID( ptScene->fnOnFrameCPL, ptScene);
             }
         }
 
@@ -531,14 +531,14 @@ void __draw_erase_scene(arm_2d_scene_player_t *ptThis,
     }
 
     if (!bIgnoreBG) {
-        ARM_2D_INVOKE( ptScene->fnOnBGStart, ptScene);
+        ARM_2D_INVOKE_RT_VOID( ptScene->fnOnBGStart, ptScene);
         ARM_2D_INVOKE( ptScene->fnBackground, ptScene, ptTile, bIsNewFrame);
-        ARM_2D_INVOKE( ptScene->fnOnBGComplete, ptScene);
+        ARM_2D_INVOKE_RT_VOID( ptScene->fnOnBGComplete, ptScene);
     }
     if (!bIgnoreScene) {
-        ARM_2D_INVOKE( ptScene->fnOnFrameStart, ptScene);
+        ARM_2D_INVOKE_RT_VOID( ptScene->fnOnFrameStart, ptScene);
         ARM_2D_INVOKE( ptScene->fnScene, ptScene, ptTile, bIsNewFrame);
-        ARM_2D_INVOKE( ptScene->fnOnFrameCPL, ptScene);
+        ARM_2D_INVOKE_RT_VOID( ptScene->fnOnFrameCPL, ptScene);
     }
     arm_2d_op_wait_async(NULL);
 }
@@ -1083,7 +1083,7 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
                  * as background 
                  */
                 if (NULL != ptScene->ptDirtyRegion && NULL != ptScene->fnScene) {
-                    ARM_2D_INVOKE(ptScene->fnOnBGStart, ptScene);
+                    ARM_2D_INVOKE_RT_VOID(ptScene->fnOnBGStart, ptScene);
             
                     ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(   
                         &this.use_as__arm_2d_helper_pfb_t,
@@ -1095,7 +1095,7 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
                 }
                 break;
             } else {
-                ARM_2D_INVOKE(ptScene->fnOnBGStart, ptScene);
+                ARM_2D_INVOKE_RT_VOID(ptScene->fnOnBGStart, ptScene);
             
                 ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(   
                     &this.use_as__arm_2d_helper_pfb_t,
@@ -1116,7 +1116,7 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
                 return tResult;
             }
             
-            ARM_2D_INVOKE(ptScene->fnOnBGComplete, ptScene);
+            ARM_2D_INVOKE_RT_VOID(ptScene->fnOnBGComplete, ptScene);
             
             this.Runtime.chState = DRAW_SCENE_PREPARE;
             // fall-through
@@ -1135,7 +1135,7 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             // fall-through
             
         case DRAW_SCENE_START:
-            ARM_2D_INVOKE(ptScene->fnOnFrameStart, ptScene);
+            ARM_2D_INVOKE_RT_VOID(ptScene->fnOnFrameStart, ptScene);
             this.Runtime.chState = DRAW_SCENE;
             // fall-through
             
@@ -1153,7 +1153,7 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             // fall-through
             
         case POST_SCENE_CHECK:
-            ARM_2D_INVOKE(ptScene->fnOnFrameCPL, ptScene);
+            ARM_2D_INVOKE_RT_VOID(ptScene->fnOnFrameCPL, ptScene);
 
             if (this.Runtime.bNextSceneReq) {
                 /* update switching mode */

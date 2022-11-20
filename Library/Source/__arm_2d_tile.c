@@ -236,7 +236,7 @@ const arm_2d_tile_t *__arm_2d_tile_get_1st_derived_child_or_root(
         if (ptTile->tInfo.bDerivedResource) {
             if (NULL != ppFirstDerivedChild) {
                 if (NULL == *ppFirstDerivedChild) {
-                    *ppFirstDerivedChild = ptTile;
+                    *ppFirstDerivedChild = (arm_2d_tile_t *)ptTile;
                 }
             }
             

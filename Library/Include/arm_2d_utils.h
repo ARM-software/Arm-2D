@@ -21,8 +21,8 @@
  * Title:        arm_2d_utils.h
  * Description:  Public header file for Arm-2D Library
  *
- * $Date:        04. Oct 2022
- * $Revision:    V.1.2.2
+ * $Date:        20. Oct 2022
+ * $Revision:    V.1.2.3
  *
  * -------------------------------------------------------------------- */
 
@@ -295,6 +295,18 @@ extern "C" {
  */
 #   define ARM_2D_INVOKE(__FUNC_PTR, ...)                                       \
             ((NULL == (__FUNC_PTR)) ? 0 : ((*(__FUNC_PTR))(__VA_ARGS__)))
+
+#endif
+
+#ifndef ARM_2D_INVOKE_RT_VOID
+/*!
+ * \brief A macro to safely call a function pointer that has no return value
+ * 
+ * \param[in] __FUNC_PTR the target function pointer
+ * \param[in] ... an optional parameter list
+ */
+#   define ARM_2D_INVOKE_RT_VOID(__FUNC_PTR, ...)                               \
+            if (NULL != (__FUNC_PTR)) (*(__FUNC_PTR))(__VA_ARGS__)
 
 #endif
 

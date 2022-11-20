@@ -21,7 +21,7 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        11. Nov 2022
+ * $Date:        20. Nov 2022
  * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
@@ -57,10 +57,13 @@
 #   pragma clang diagnostic ignored "-Wmissing-prototypes"
 #   pragma clang diagnostic ignored "-Wpedantic"
 #   pragma clang diagnostic ignored "-Wcovered-switch-default"
+#   pragma clang diagnostic ignored "-Wswitch-enum"
 #elif defined(__IS_COMPILER_GCC__)
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #   pragma GCC diagnostic ignored "-Wunused-value"
+#elif __IS_COMPILER_IAR__
+#   pragma diag_suppress=Pa089,Pe188,Pe174
 #endif
 
 /*============================ MACROS ========================================*/
@@ -248,7 +251,7 @@ ARM_PT_BEGIN(this.Runtime.chState)
                         iOffset = (    this.Runtime.tileList.tRegion.tSize.iHeight
                                     -   ptItem->tSize.iHeight) >> 1;
                         break;
-                };
+                }
                 this.Runtime.tWorkingArea.tRegion.tLocation.iY += iOffset;
             } else {
                 /* vertical list */
@@ -265,7 +268,7 @@ ARM_PT_BEGIN(this.Runtime.chState)
                         iOffset = (    this.Runtime.tileList.tRegion.tSize.iWidth
                                     -   ptItem->tSize.iWidth) >> 1;
                         break;
-                };
+                }
                 this.Runtime.tWorkingArea.tRegion.tLocation.iX += iOffset;
             }
         } while(0);
