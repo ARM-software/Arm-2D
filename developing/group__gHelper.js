@@ -140,7 +140,9 @@ var group__gHelper =
     [ "__arm_2d_align_bottom_right3", "group__gHelper.html#ga5a0a74379d45633b1a8b84e8e455cd60", null ],
     [ "arm_2d_align_bottom_right", "group__gHelper.html#ga443bb80caebb268326e6fc2c6c5391eb", null ],
     [ "arm_2d_helper_is_time_out", "group__gHelper.html#gae4ab75c458c5e2ba0355ba76dff03735", null ],
-    [ "arm_2d_helper_time_liner_slider", "group__gHelper.html#ga58cd35c9ad89c164f264503596517c21", null ],
+    [ "arm_2d_helper_time_liner_slider", "group__gHelper.html#gab9da2ee4cd3a208e7ff4ece9ac8086f0", null ],
+    [ "arm_2d_helper_time_cos_slider", "group__gHelper.html#ga17fa7eac55aed544dde1a778c2212906", null ],
+    [ "arm_2d_helper_time_half_cos_slider", "group__gHelper.html#ga807958c36a0f078fb7494df5ef005344", null ],
     [ "arm_2d_helper_draw_handler_t", "group__gHelper.html#ga895cc320ceab0ca0bd10b999787b2d6c", null ],
     [ "arm_2d_helper_render_handler_t", "group__gHelper.html#ga03c2991d31bd58c8a1d5303fb9460f39", null ],
     [ "arm_2d_scene_player_switch_mode_t", "group__gHelper.html#gab79c6ab3540af636c218dc40fa065ac3", [
@@ -198,6 +200,8 @@ var group__gHelper =
     [ "arm_2d_helper_convert_ms_to_ticks", "group__gHelper.html#ga22a1338673baaec12c475e371d7593be", null ],
     [ "arm_2d_helper_get_reference_clock_frequency", "group__gHelper.html#gace60efc807106e1526fcc9f673f19b12", null ],
     [ "arm_2d_helper_get_system_timestamp", "group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185", null ],
-    [ "__arm_2d_helper_is_time_out", "group__gHelper.html#ga7e3c8c8f8298d8ffaae2c8dc8500578f", null ],
-    [ "__arm_2d_helper_time_liner_slider", "group__gHelper.html#gab27d1fbf0e04685918ccfe53e00d1ddb", null ]
+    [ "__arm_2d_helper_is_time_out", "group__gHelper.html#ga23bfad9d8e31302b44dd096a57f9571d", null ],
+    [ "__arm_2d_helper_time_liner_slider", "group__gHelper.html#gad57c7db3d70edf15701baab069e7e410", null ],
+    [ "__arm_2d_helper_time_half_cos_slider", "group__gHelper.html#ga9ade39134ac3f6e485b629f4c3a03ce7", null ],
+    [ "__arm_2d_helper_time_cos_slider", "group__gHelper.html#ga4fbc06754e17e9fa510c18ece6eb1221", null ]
 ];

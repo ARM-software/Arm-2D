@@ -354,6 +354,9 @@ Macros</h2></td></tr>
 <tr class="memitem:ga65d234ce6028b539a276e06ac62aa2bc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga65d234ce6028b539a276e06ac62aa2bc">ARM_2D_INVOKE</a>(__FUNC_PTR, ...)&#160;&#160;&#160;            ((NULL == (__FUNC_PTR)) ? 0 : ((*(__FUNC_PTR))(__VA_ARGS__)))</td></tr>
 <tr class="memdesc:ga65d234ce6028b539a276e06ac62aa2bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">A macro to safely invode a function pointer.  <a href="group__gKernel.html#ga65d234ce6028b539a276e06ac62aa2bc">More...</a><br /></td></tr>
 <tr class="separator:ga65d234ce6028b539a276e06ac62aa2bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafce3c94735066b1dc407b5233c6809ce"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gafce3c94735066b1dc407b5233c6809ce">ARM_2D_INVOKE_RT_VOID</a>(__FUNC_PTR, ...)&#160;&#160;&#160;            if (NULL != (__FUNC_PTR)) (*(__FUNC_PTR))(__VA_ARGS__)</td></tr>
+<tr class="memdesc:gafce3c94735066b1dc407b5233c6809ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">A macro to safely call a function pointer that has no return value.  <a href="group__gKernel.html#gafce3c94735066b1dc407b5233c6809ce">More...</a><br /></td></tr>
+<tr class="separator:gafce3c94735066b1dc407b5233c6809ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga231c5e93dfebab0cd794f41a500de60b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga231c5e93dfebab0cd794f41a500de60b">__ARM_CONNECT2</a>(__A,  __B)&#160;&#160;&#160;__A##__B</td></tr>
 <tr class="separator:ga231c5e93dfebab0cd794f41a500de60b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab8ba27816dfb41e9db5f6f85e7faebe7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gab8ba27816dfb41e9db5f6f85e7faebe7">__ARM_CONNECT2_ALT</a>(__A,  __B)&#160;&#160;&#160;__A##__B</td></tr>
@@ -4011,6 +4014,43 @@ target side mask </td></tr>
 </div><div class="memdoc">
 
 <p>A macro to safely invode a function pointer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">__FUNC_PTR</td><td>the target function pointer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">...</td><td>an optional parameter list </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gafce3c94735066b1dc407b5233c6809ce" name="gafce3c94735066b1dc407b5233c6809ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafce3c94735066b1dc407b5233c6809ce">&#9670;&#160;</a></span>ARM_2D_INVOKE_RT_VOID</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_2D_INVOKE_RT_VOID</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__FUNC_PTR, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;            if (NULL != (__FUNC_PTR)) (*(__FUNC_PTR))(__VA_ARGS__)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>A macro to safely call a function pointer that has no return value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">__FUNC_PTR</td><td>the target function pointer </td></tr>

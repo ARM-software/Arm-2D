@@ -157,9 +157,9 @@ var NAVTREEINDEX =
 [
 "deploy.html",
 "group__gAlpha.html#ga9c827e92a33e5eaf1b95930cae3268ad",
-"group__gHelper.html#structarm__2d__scene__player__t_8____unnamed119_____8Switch",
-"group__gKernel.html#gaf53e5d3339794160c3b742536cc1783d",
-"intro.html#autotoc_md53"
+"group__gHelper.html#structarm__2d__scene__player__t",
+"group__gKernel.html#gaf019de20bddf451404fcda5170a09fb4",
+"intro.html#autotoc_md48"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
