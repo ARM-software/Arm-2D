@@ -82,8 +82,11 @@
 
 
 /*============================ GLOBAL VARIABLES ==============================*/
+extern 
+const arm_2d_tile_t c_tileListCoverMask;
 
-extern const arm_2d_tile_t c_tileListCoverMask;
+extern
+const arm_2d_tile_t c_tileWhiteDotMask;
 /*============================ PROTOTYPES ====================================*/
 
 
@@ -219,6 +222,23 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
                             this.iProgress,         /* progress 0~1000 */
                             255 - 32,               /* opacity */
                             bIsNewFrame);
+    }
+    
+    arm_2d_align_top_right( ptTile->tRegion, 
+                            c_tileWhiteDotMask.tRegion.tSize.iWidth + 10,
+                            c_tileWhiteDotMask.tRegion.tSize.iHeight) {
+        
+        if (bIsNewFrame) {
+            int32_t iResult;
+            arm_2d_helper_time_cos_slider(0, 255, 2000, &iResult);
+            this.chOpacity = (uint8_t)iResult;
+        }
+        
+        arm_2d_fill_colour_with_mask_and_opacity(ptTile,
+                                                 &__top_right_region,
+                                                 &c_tileWhiteDotMask,
+                                                 (__arm_2d_color_t){GLCD_COLOR_RED},
+                                                 this.chOpacity);
     }
 
     /* draw text at the top-left corner */

@@ -82,9 +82,11 @@ ARM_PRIVATE(
     /* place your private member here, following two are examples */
     int64_t lTimestamp[4];
     bool bUserAllocated;
+    uint8_t chOpacity;
     int16_t iProgress;
     number_list_t tNumberList[3];
     progress_wheel_t tWheel;
+    
 )
     /* place your public member here */
     

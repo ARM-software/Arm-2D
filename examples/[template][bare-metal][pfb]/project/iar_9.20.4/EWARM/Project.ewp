@@ -221,6 +221,11 @@
                     <state>USE_HAL_DRIVER</state>
                     <state>STM32F756xx</state>
                     <state>USE_STM32746G_DISCOVERY</state>
+                    <state>__DISP0_CFG_SCEEN_WIDTH__=480</state>
+                    <state>__DISP0_CFG_SCEEN_HEIGHT__=272</state>
+                    <state>__DISP0_CFG_PFB_BLOCK_WIDTH__=120</state>
+                    <state>__DISP0_CFG_PFB_BLOCK_HEIGHT__=120</state>
+                    <state>__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -351,11 +356,15 @@
                     <state>$PROJ_DIR$/../Utilities/CPU</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Helper\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Library\Include</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Library\Include\template</state>
                     <state>$PROJ_DIR$\..\..\..\..\common\platform\stm32f746g-discovery</state>
                     <state>$PROJ_DIR$\..\..\..\..\common\platform</state>
                     <state>$PROJ_DIR$\..\..\..</state>
                     <state>$PROJ_DIR$\..\..\..\..\common\platform\lib</state>
                     <state>$PROJ_DIR$\..\..\mdk\RTE\_STM32F746G-Discovery</state>
+                    <state>$PROJ_DIR$\..\..\mdk\RTE\Acceleration</state>
+                    <state>$PROJ_DIR$\..\..\..\..\common\controls</state>
+                    <state>$PROJ_DIR$\..\..\..\..\common\asset</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -1073,92 +1082,41 @@
     </configuration>
     <group>
         <name>Application</name>
-        <group>
-            <name>Asset</name>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\common\asset\arrow.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\common\asset\background.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\common\asset\circle_mask.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\common\asset\clockface.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\common\asset\cmsis_logo.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\common\asset\gear_01.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\common\asset\gear_02.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\common\asset\helium.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\common\asset\pointer_sec.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\common\asset\small_icon_sun.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\common\asset\software.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\common\asset\SpinWheel.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\common\asset\star.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\common\asset\star32.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\common\asset\watch_panel.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\common\asset\whilte_dot.c.c</name>
-            </file>
-        </group>
-        <group>
-            <name>Controls</name>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\common\controls\busy_wheel.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\common\controls\busy_wheel.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\common\controls\controls.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\common\controls\controls.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\common\controls\shape_round_corner_box.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\common\controls\shape_round_corner_box.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\common\controls\spinning_wheel.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\common\controls\spinning_wheel.h</name>
-            </file>
-        </group>
         <file>
             <name>$PROJ_DIR$\..\..\..\app_cfg.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\example_gui.c</name>
+            <name>$PROJ_DIR$\..\..\mdk\RTE\Acceleration\arm_2d_cfg.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\example_gui.h</name>
+            <name>$PROJ_DIR$\..\..\mdk\RTE\Acceleration\arm_2d_disp_adapter_0.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\mdk\RTE\Acceleration\arm_2d_disp_adapter_0.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\mdk\RTE\Acceleration\arm_2d_scene_0.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\mdk\RTE\Acceleration\arm_2d_scene_0.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\mdk\RTE\Acceleration\arm_2d_scene_1.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\mdk\RTE\Acceleration\arm_2d_scene_1.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\mdk\RTE\Acceleration\arm_2d_scene_2.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\mdk\RTE\Acceleration\arm_2d_scene_2.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\mdk\RTE\Acceleration\arm_2d_scene_3.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\mdk\RTE\Acceleration\arm_2d_scene_3.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\..\main.c</name>
@@ -1167,15 +1125,165 @@
     <group>
         <name>Arm-2D</name>
         <group>
+            <name>common</name>
+            <group>
+                <name>Asset</name>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\asset\arrow.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\asset\blue_slashes.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\asset\circle_mask.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\asset\clockface.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\asset\cmsis_logo.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\asset\DigitsFont.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\asset\gear_01.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\asset\gear_02.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\asset\green28_28.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\asset\GreenCircle.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\asset\helium.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\asset\ListCover.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\asset\pointer_sec.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\asset\QuaterArc.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\asset\small_icon_sun.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\asset\software.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\asset\SpinWheel.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\asset\star.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\asset\wave.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\asset\white_dot.c</name>
+                </file>
+            </group>
+            <group>
+                <name>controls</name>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\controls\__common.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\controls\arm_extra_controls.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\controls\arm_extra_lcd_printf.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\controls\busy_wheel.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\controls\busy_wheel.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\controls\controls.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\controls\GLCD_Fonts.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\controls\lcd_printf.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\controls\list_view.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\controls\list_view.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\controls\number_list.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\controls\number_list.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\controls\progress_bar_drill.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\controls\progress_bar_drill.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\controls\progress_bar_flowing.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\controls\progress_bar_flowing.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\controls\progress_bar_simple.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\controls\progress_bar_simple.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\controls\progress_wheel.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\controls\progress_wheel.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\controls\shape_round_corner_box.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\controls\shape_round_corner_box.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\controls\spinning_wheel_transform.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\common\controls\spinning_wheel_transform.h</name>
+                </file>
+            </group>
+        </group>
+        <group>
             <name>Helper</name>
             <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\Helper\Source\arm_2d_helper.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\Helper\Include\arm_2d_helper.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\Helper\Source\arm_2d_helper_list.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\Helper\Source\arm_2d_helper_pfb.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\Helper\Include\arm_2d_helper_pfb.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\Helper\Source\arm_2d_helper_scene.c</name>
             </file>
         </group>
         <group>
@@ -1246,12 +1354,6 @@
         <name>Platform</name>
         <file>
             <name>$PROJ_DIR$\..\..\..\..\common\platform\app_platform.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\..\common\platform\GLCD_Fonts.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\..\common\platform\lcd_printf.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\..\..\common\platform\lib\perf_counter.c</name>

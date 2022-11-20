@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2019-2022 Arm Limited. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,29 +17,9 @@
 #ifndef __CMSIS_DRIVER_CONFIG_H__
 #define __CMSIS_DRIVER_CONFIG_H__
 
-#include "system_core_init.h"
+#include "system_SSE300MPS3.h"
 #include "device_cfg.h"
 #include "device_definition.h"
 #include "platform_base_address.h"
-
-#define UART0_CMSDK_DEV     UART0_CMSDK_DEV_NS
-#define UART1_CMSDK_DEV     UART1_CMSDK_DEV_NS
-
-#define MPC_ISRAM0_DEV      MPC_ISRAM0_DEV_S
-#define MPC_ISRAM1_DEV      MPC_ISRAM1_DEV_S
-#define MPC_SRAM_DEV        MPC_SRAM_DEV_S
-#define MPC_QSPI_DEV        MPC_QSPI_DEV_S
-
-#define PPC_SSE300_MAIN0_DEV            PPC_SSE300_MAIN0_DEV_S
-#define PPC_SSE300_MAIN_EXP0_DEV        PPC_SSE300_MAIN_EXP0_DEV_S
-#define PPC_SSE300_MAIN_EXP1_DEV        PPC_SSE300_MAIN_EXP1_DEV_S
-#define PPC_SSE300_MAIN_EXP2_DEV        PPC_SSE300_MAIN_EXP2_DEV_S
-#define PPC_SSE300_MAIN_EXP3_DEV        PPC_SSE300_MAIN_EXP3_DEV_S
-#define PPC_SSE300_PERIPH0_DEV          PPC_SSE300_PERIPH0_DEV_S
-#define PPC_SSE300_PERIPH1_DEV          PPC_SSE300_PERIPH1_DEV_S
-#define PPC_SSE300_PERIPH_EXP0_DEV      PPC_SSE300_PERIPH_EXP0_DEV_S
-#define PPC_SSE300_PERIPH_EXP1_DEV      PPC_SSE300_PERIPH_EXP1_DEV_S
-#define PPC_SSE300_PERIPH_EXP2_DEV      PPC_SSE300_PERIPH_EXP2_DEV_S
-#define PPC_SSE300_PERIPH_EXP3_DEV      PPC_SSE300_PERIPH_EXP3_DEV_S
 
 #endif  /* __CMSIS_DRIVER_CONFIG_H__ */

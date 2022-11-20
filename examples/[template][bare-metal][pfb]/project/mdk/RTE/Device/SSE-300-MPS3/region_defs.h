@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2020 Arm Limited
+ * Copyright (c) 2016-2022 Arm Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,13 +37,8 @@
 #define S_DATA_SIZE      ( TOTAL_S_RAM_SIZE )
 #define S_DATA_LIMIT     ( S_DATA_START + S_DATA_SIZE )
 
-/* Non-Secure regions */
-#define NS_CODE_START    ( NS_ROM_ALIAS )
-#define NS_CODE_SIZE     ( TOTAL_NS_ROM_SIZE )
-#define NS_CODE_LIMIT    ( NS_CODE_START + NS_CODE_SIZE )
-
-#define NS_DATA_START    ( NS_RAM_ALIAS )
-#define NS_DATA_SIZE     ( TOTAL_NS_RAM_SIZE )
-#define NS_DATA_LIMIT    ( NS_DATA_START + NS_DATA_SIZE )
+#define S_DDR4_START     ( S_DDR4_ALIAS )
+#define S_DDR4_SIZE      ( TOTAL_S_DDR4_SIZE )
+#define S_DDR4_LIMIT     ( S_DDR4_START + S_DDR4_SIZE )
 
 #endif /* __REGION_DEFS_H__ */

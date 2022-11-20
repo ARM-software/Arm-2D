@@ -816,6 +816,78 @@
         <Group>
           <GroupName>::Device</GroupName>
         </Group>
+        <Group>
+          <GroupName>::Native Driver</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>0</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <uGnu>2</uGnu>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <ClangAsOpt>0</ClangAsOpt>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
+        </Group>
       </Groups>
     </Target>
     <Target>
@@ -1635,6 +1707,78 @@
               <RVCTOtherData>0</RVCTOtherData>
               <ModuleSelection>0</ModuleSelection>
               <IncludeInBuild>1</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <uGnu>2</uGnu>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <ClangAsOpt>0</ClangAsOpt>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
+        </Group>
+        <Group>
+          <GroupName>::Native Driver</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>0</IncludeInBuild>
               <AlwaysBuild>2</AlwaysBuild>
               <GenerateAssemblyFile>2</GenerateAssemblyFile>
               <AssembleAssemblyFile>2</AssembleAssemblyFile>
@@ -2577,6 +2721,78 @@
             </GroupArmAds>
           </GroupOption>
         </Group>
+        <Group>
+          <GroupName>::Native Driver</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>0</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <uGnu>2</uGnu>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <ClangAsOpt>0</ClangAsOpt>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
+        </Group>
       </Groups>
     </Target>
     <Target>
@@ -3388,6 +3604,78 @@
         </Group>
         <Group>
           <GroupName>::Device</GroupName>
+        </Group>
+        <Group>
+          <GroupName>::Native Driver</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>0</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <uGnu>2</uGnu>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <ClangAsOpt>0</ClangAsOpt>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
         </Group>
       </Groups>
     </Target>
@@ -4208,6 +4496,78 @@
               <RVCTOtherData>0</RVCTOtherData>
               <ModuleSelection>0</ModuleSelection>
               <IncludeInBuild>1</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <uGnu>2</uGnu>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <ClangAsOpt>0</ClangAsOpt>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
+        </Group>
+        <Group>
+          <GroupName>::Native Driver</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>0</IncludeInBuild>
               <AlwaysBuild>2</AlwaysBuild>
               <GenerateAssemblyFile>2</GenerateAssemblyFile>
               <AssembleAssemblyFile>2</AssembleAssemblyFile>
@@ -5151,6 +5511,78 @@
             </GroupArmAds>
           </GroupOption>
         </Group>
+        <Group>
+          <GroupName>::Native Driver</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>0</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <uGnu>2</uGnu>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <ClangAsOpt>0</ClangAsOpt>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
+        </Group>
       </Groups>
     </Target>
     <Target>
@@ -6032,6 +6464,78 @@
             </GroupArmAds>
           </GroupOption>
         </Group>
+        <Group>
+          <GroupName>::Native Driver</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>0</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <uGnu>2</uGnu>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <ClangAsOpt>0</ClangAsOpt>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
+        </Group>
       </Groups>
     </Target>
     <Target>
@@ -6844,6 +7348,78 @@
             </GroupArmAds>
           </GroupOption>
         </Group>
+        <Group>
+          <GroupName>::Native Driver</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>0</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <uGnu>2</uGnu>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <ClangAsOpt>0</ClangAsOpt>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
+        </Group>
       </Groups>
     </Target>
     <Target>
@@ -7177,7 +7753,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-Omax -Wno-padded</MiscControls>
+              <MiscControls>-Wno-padded -Omax</MiscControls>
               <Define>LCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__USE_AN547__</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\lib;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3</IncludePath>
@@ -7211,7 +7787,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile>.\MPS3_CM55_DTCM.sct</ScatterFile>
+            <ScatterFile>.\RTE\Device\SSE-300-MPS3\fvp_sse300_mps3_s.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc>--entry=Reset_Handler
@@ -7724,6 +8300,9 @@
               </Aads>
             </GroupArmAds>
           </GroupOption>
+        </Group>
+        <Group>
+          <GroupName>::Native Driver</GroupName>
         </Group>
       </Groups>
     </Target>
@@ -8475,6 +9054,78 @@
               <RVCTOtherData>0</RVCTOtherData>
               <ModuleSelection>0</ModuleSelection>
               <IncludeInBuild>1</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <uGnu>2</uGnu>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <ClangAsOpt>0</ClangAsOpt>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
+        </Group>
+        <Group>
+          <GroupName>::Native Driver</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>0</IncludeInBuild>
               <AlwaysBuild>2</AlwaysBuild>
               <GenerateAssemblyFile>2</GenerateAssemblyFile>
               <AssembleAssemblyFile>2</AssembleAssemblyFile>
@@ -9418,6 +10069,78 @@
             </GroupArmAds>
           </GroupOption>
         </Group>
+        <Group>
+          <GroupName>::Native Driver</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>0</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <uGnu>2</uGnu>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <ClangAsOpt>0</ClangAsOpt>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
+        </Group>
       </Groups>
     </Target>
   </Targets>
@@ -9449,22 +10172,6 @@
       </api>
     </apis>
     <components>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Benchmark:WatchPanel" Cvendor="ARM" Cversion="1.3.6" condition="Arm-2D-Benchmark-WatchPanel">
-        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
-        <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
-          <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
-          <targetInfo name="FastModel"/>
-          <targetInfo name="STM32F746G-Discovery"/>
-          <targetInfo name="STM32F746G-Discovery-AC5"/>
-          <targetInfo name="V2M-MPS2-CM0+"/>
-          <targetInfo name="V2M-MPS2-CM33"/>
-          <targetInfo name="V2M-MPS2-CM4"/>
-          <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
-          <targetInfo name="V2M-MPS3-CM85"/>
-        </targetInfos>
-      </component>
       <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cvendor="ARM" Cversion="1.2.12" condition="Arm-2D-EXTRA">
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
@@ -9513,7 +10220,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="1.4.13" condition="Arm-2D-CORE">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="1.4.16" condition="Arm-2D-CORE">
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9545,7 +10252,7 @@
           <targetInfo instances="4" name="V2M-MPS3-CM85" versionMatchMode=""/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Alpha-Blending" Cvendor="ARM" Cversion="1.1.0-preview" condition="Arm-2D-CORE">
+      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Alpha-Blending" Cvendor="ARM" Cversion="1.1.0-preview2" condition="Arm-2D-CORE">
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9561,7 +10268,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.0-preview" condition="CMSIS-DSP">
+      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.0-preview2" condition="CMSIS-DSP">
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9577,7 +10284,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Transform" Cvendor="ARM" Cversion="1.1.0-preview" condition="Arm-2D-CORE">
+      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Transform" Cvendor="ARM" Cversion="1.1.0-preview2" condition="Arm-2D-CORE">
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9680,44 +10387,129 @@
           </targetInfo>
         </targetInfos>
       </component>
-      <component Cclass="Device" Cgroup="Startup" Cvendor="ARM" Cversion="1.3.0" condition="ARMCM33 CMSIS">
-        <package name="CMSIS" schemaVersion="1.7.7" url="http://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
+      <component Cclass="Device" Cgroup="Definition" Cvendor="ARM" Cversion="1.2.0" condition="SSE-300-MPS3 Device">
+        <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="ARM" version="1.3.0"/>
         <targetInfos>
-          <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="1.1.0" condition="ARMCM55 CMSIS">
-        <package name="CMSIS" schemaVersion="1.7.7" url="http://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
-        <targetInfos>
-          <targetInfo name="V2M-MPS3-CM55"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="1.0.0" condition="ARMCM85 CMSIS">
-        <package name="CMSIS" schemaVersion="1.7.7" url="http://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
-        <targetInfos>
-          <targetInfo name="V2M-MPS3-CM85"/>
+          <targetInfo name="AN547-Cortex-M55_r0">
+            <c>
+              <MiscControls>-w</MiscControls>
+            </c>
+          </targetInfo>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="Startup" Cvariant="Baremetal" Cvendor="ARM" Cversion="1.2.0" condition="SSE-300-MPS3 Device">
         <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="ARM" version="1.3.0"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-Cortex-M55_r0">
+            <c>
+              <MiscControls>-w</MiscControls>
+            </c>
+          </targetInfo>
+          <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33">
+            <c>
+              <MiscControls>-w</MiscControls>
+            </c>
+          </targetInfo>
+          <targetInfo name="V2M-MPS3-CM55">
+            <c>
+              <MiscControls>-w</MiscControls>
+            </c>
+          </targetInfo>
+          <targetInfo name="V2M-MPS3-CM85">
+            <c>
+              <MiscControls>-w</MiscControls>
+            </c>
+          </targetInfo>
+        </targetInfos>
+      </component>
+      <component Cclass="Native Driver" Cgroup="SysCounter" Cvendor="ARM" Cversion="1.1.0" condition="SSE-300-MPS3 Device">
+        <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="ARM" version="1.3.0"/>
+        <targetInfos>
+          <targetInfo name="AN547-Cortex-M55_r0">
+            <c>
+              <MiscControls>-w</MiscControls>
+            </c>
+          </targetInfo>
+        </targetInfos>
+      </component>
+      <component Cclass="Native Driver" Cgroup="SysTimer" Cvendor="ARM" Cversion="1.1.0" condition="SSE-300-MPS3 Device">
+        <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="ARM" version="1.3.0"/>
+        <targetInfos>
+          <targetInfo name="AN547-Cortex-M55_r0">
+            <c>
+              <MiscControls>-w</MiscControls>
+            </c>
+          </targetInfo>
+        </targetInfos>
+      </component>
+      <component Cclass="Native Driver" Cgroup="Timeout" Cvendor="ARM" Cversion="1.0.0" condition="SSE-300-MPS3 Systimer Syscounter">
+        <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="ARM" version="1.3.0"/>
+        <targetInfos>
+          <targetInfo name="AN547-Cortex-M55_r0">
+            <c>
+              <MiscControls>-w</MiscControls>
+            </c>
+          </targetInfo>
         </targetInfos>
       </component>
       <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="Event Recorder" Cvariant="DAP" Cvendor="Keil" Cversion="1.5.1" condition="Cortex-M Device">
         <package name="ARM_Compiler" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="Keil" version="1.7.2"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
-          <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
-          <targetInfo name="FastModel"/>
-          <targetInfo name="STM32F746G-Discovery"/>
-          <targetInfo name="STM32F746G-Discovery-AC5"/>
-          <targetInfo name="V2M-MPS2-CM0+"/>
-          <targetInfo name="V2M-MPS2-CM33"/>
-          <targetInfo name="V2M-MPS2-CM4"/>
-          <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
-          <targetInfo name="V2M-MPS3-CM85"/>
+          <targetInfo name="AN547-Cortex-M55_r0">
+            <c>
+              <MiscControls>-w</MiscControls>
+            </c>
+          </targetInfo>
+          <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33">
+            <c>
+              <MiscControls>-w</MiscControls>
+            </c>
+          </targetInfo>
+          <targetInfo name="FastModel">
+            <c>
+              <MiscControls>-w</MiscControls>
+            </c>
+          </targetInfo>
+          <targetInfo name="STM32F746G-Discovery">
+            <c>
+              <MiscControls>-w</MiscControls>
+            </c>
+          </targetInfo>
+          <targetInfo name="STM32F746G-Discovery-AC5">
+            <c>
+              <MiscControls>-w</MiscControls>
+            </c>
+          </targetInfo>
+          <targetInfo name="V2M-MPS2-CM0+">
+            <c>
+              <MiscControls>-w</MiscControls>
+            </c>
+          </targetInfo>
+          <targetInfo name="V2M-MPS2-CM33">
+            <c>
+              <MiscControls>-w</MiscControls>
+            </c>
+          </targetInfo>
+          <targetInfo name="V2M-MPS2-CM4">
+            <c>
+              <MiscControls>-w</MiscControls>
+            </c>
+          </targetInfo>
+          <targetInfo name="V2M-MPS2-CM7">
+            <c>
+              <MiscControls>-w</MiscControls>
+            </c>
+          </targetInfo>
+          <targetInfo name="V2M-MPS3-CM55">
+            <c>
+              <MiscControls>-w</MiscControls>
+            </c>
+          </targetInfo>
+          <targetInfo name="V2M-MPS3-CM85">
+            <c>
+              <MiscControls>-w</MiscControls>
+            </c>
+          </targetInfo>
         </targetInfos>
       </component>
       <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="I/O" Csub="STDOUT" Cvariant="EVR" Cvendor="Keil" Cversion="1.2.0" condition="ARMCC Cortex-M with EVR">
@@ -9902,7 +10694,7 @@
     <files>
       <file attr="config" category="other" name="tools\README.md" version="1.2.1">
         <instance index="0">RTE\Acceleration\README.md</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.0-preview" condition="CMSIS-DSP"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.0-preview2" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9920,7 +10712,7 @@
       </file>
       <file attr="config" category="sourceC" name="Library\Source\arm_2d.c" version="1.0.2">
         <instance index="0">RTE\Acceleration\arm_2d.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.0-preview" condition="CMSIS-DSP"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.0-preview2" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9938,7 +10730,7 @@
       </file>
       <file attr="config" category="preIncludeGlobal" name="Library\Include\template\arm_2d_cfg.h" version="1.1.1">
         <instance index="0">RTE\Acceleration\arm_2d_cfg.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.0-preview" condition="CMSIS-DSP"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.0-preview2" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -10148,7 +10940,7 @@
       </file>
       <file attr="config" category="utility" name="tools\img2c.py" version="1.2.1">
         <instance index="0">RTE\Acceleration\img2c.py</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.0-preview" condition="CMSIS-DSP"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.0-preview2" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -10482,7 +11274,7 @@
         <package name="V2M-MPS3_SSE_200_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="ARM" version="1.0.0"/>
         <targetInfos/>
       </file>
-      <file attr="config" category="header" name="CMSIS_Driver\Config\RTE_Device.h" version="1.0.0">
+      <file attr="config" category="header" name="CMSIS_Driver\Config\RTE_Device.h" version="1.1.0">
         <instance index="0">RTE\Device\SSE-300-MPS3\RTE_Device.h</instance>
         <component Cclass="Device" Cgroup="Startup" Cvariant="Baremetal" Cvendor="ARM" Cversion="1.2.0" condition="SSE-300-MPS3 Device"/>
         <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="ARM" version="1.3.0"/>
@@ -10498,7 +11290,7 @@
           <targetInfo name="AN547-Cortex-M55_r0"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="Device\Config\Baremetal\device_cfg.h" version="1.1.1">
+      <file attr="config" category="header" name="Device\Config\Baremetal\device_cfg.h" version="1.1.3">
         <instance index="0">RTE\Device\SSE-300-MPS3\device_cfg.h</instance>
         <component Cclass="Device" Cgroup="Startup" Cvariant="Baremetal" Cvendor="ARM" Cversion="1.2.0" condition="SSE-300-MPS3 Device"/>
         <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="ARM" version="1.3.0"/>
@@ -10515,10 +11307,12 @@
         </targetInfos>
       </file>
       <file attr="config" category="header" name="Board\Platform\platform_base_address.h" version="1.1.2">
-        <instance index="0" removed="1">RTE\Device\SSE-300-MPS3\platform_base_address.h</instance>
+        <instance index="0">RTE\Device\SSE-300-MPS3\platform_base_address.h</instance>
         <component Cclass="Device" Cgroup="Definition" Cvendor="ARM" Cversion="1.2.0" condition="SSE-300-MPS3 Device"/>
         <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="ARM" version="1.3.0"/>
-        <targetInfos/>
+        <targetInfos>
+          <targetInfo name="AN547-Cortex-M55_r0"/>
+        </targetInfos>
       </file>
       <file attr="config" category="header" name="Device\Include\region_defs.h" version="1.0.0">
         <instance index="0">RTE\Device\SSE-300-MPS3\region_defs.h</instance>
@@ -10544,7 +11338,7 @@
           <targetInfo name="AN547-Cortex-M55_r0"/>
         </targetInfos>
       </file>
-      <file attr="config" category="source" name="Device\Source\system_SSE300MPS3.c" version="1.0.0">
+      <file attr="config" category="source" name="Device\Source\system_SSE300MPS3.c" version="1.1.1">
         <instance index="0">RTE\Device\SSE-300-MPS3\system_SSE300MPS3.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvariant="Baremetal" Cvendor="ARM" Cversion="1.2.0" condition="SSE-300-MPS3 Device"/>
         <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="ARM" version="1.3.0"/>

@@ -20,14 +20,8 @@
  * This file is derivative of CMSIS V5.6.0 startup_ARMv81MML.c
  * Git SHA: b5f0603d6a584d1724d952fd8b0737458b90d62b
  */
-#if defined(__clang__)
-#   pragma clang diagnostic ignored "-Wmissing-noreturn"
-#   pragma clang diagnostic ignored "-Wnewline-eof"
-#endif
 
-#include "cmsis.h"
-
-
+#include "SSE300MPS3.h"
 
 /*----------------------------------------------------------------------------
   Exception / Interrupt Handler Function Prototype
@@ -51,7 +45,7 @@ void Reset_Handler  (void) __NO_RETURN;
   Exception / Interrupt Handler
  *----------------------------------------------------------------------------*/
 #define DEFAULT_IRQ_HANDLER(handler_name)  \
-void __WEAK handler_name(void); \
+void __WEAK __NO_RETURN handler_name(void); \
 void handler_name(void) { \
     while(1); \
 }

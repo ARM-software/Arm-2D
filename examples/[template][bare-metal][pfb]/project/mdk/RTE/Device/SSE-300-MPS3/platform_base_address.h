@@ -16,8 +16,8 @@
 
 /**
  * \file platform_base_address.h
- * \brief This file defines all the peripheral base addresses for MPS3 SSE-300 +
- *        Ethos-U55 AN547 platform.
+ * \brief This file defines all the peripheral base addresses for AN552 MPS3 SSE-300 +
+ *        Ethos-U55 platform.
  */
 
 #ifndef __PLATFORM_BASE_ADDRESS_H__
@@ -32,7 +32,7 @@
 #define DTCM2_BASE_NS                    0x20040000 /* Data TCM block 2 Non-Secure base address */
 #define DTCM3_BASE_NS                    0x20060000 /* Data TCM block 3 Non-Secure base address */
 #define ISRAM0_BASE_NS                   0x21000000 /* Internal SRAM Area Non-Secure base address */
-#define ISRAM1_BASE_NS                   0x21200000 /* Internal SRAM Area Non-Secure base address */
+#define ISRAM1_BASE_NS                   0x21100000 /* Internal SRAM Area Non-Secure base address */
 #define QSPI_SRAM_BASE_NS                0x28000000 /* QSPI SRAM Non-Secure base address */
 /* Non-Secure Subsystem peripheral region */
 #define CPU0_PWRCTRL_BASE_NS             0x40012000 /* CPU 0 Power Control Block Non-Secure base address */
@@ -43,14 +43,14 @@
 #define GPIO1_CMSDK_BASE_NS              0x41101000 /* GPIO 1 Non-Secure base address */
 #define GPIO2_CMSDK_BASE_NS              0x41102000 /* GPIO 2 Non-Secure base address */
 #define GPIO3_CMSDK_BASE_NS              0x41103000 /* GPIO 3 Non-Secure base address */
-#define AHB_USER_0_BASE_NS               0x41104000 /* AHB USER 0 Non-Secure base address */
-#define AHB_USER_1_BASE_NS               0x41105000 /* AHB USER 1 Non-Secure base address */
-#define AHB_USER_2_BASE_NS               0x41106000 /* AHB USER 2 Non-Secure base address */
-#define AHB_USER_3_BASE_NS               0x41107000 /* AHB USER 3 Non-Secure base address */
-#define DMA_0_BASE_NS                    0x41200000 /* DMA 0 Non-Secure base address */
-#define DMA_1_BASE_NS                    0x41201000 /* DMA 1 Non-Secure base address */
-#define DMA_2_BASE_NS                    0x41202000 /* DMA 2 Non-Secure base address */
-#define DMA_3_BASE_NS                    0x41203000 /* DMA 3 Non-Secure base address */
+#define FMC_CMSDK_GPIO_0_BASE_NS         0x41104000 /* FMC CMSDK GPIO 0 Non-Secure base address */
+#define FMC_CMSDK_GPIO_1_BASE_NS         0x41105000 /* FMC CMSDK GPIO 1 Non-Secure base address */
+#define FMC_CMSDK_GPIO_2_BASE_NS         0x41106000 /* FMC CMSDK GPIO 2 Non-Secure base address */
+#define FMC_CMSDK_GPIO_3_BASE_NS         0x41107000 /* FMC CMSDK GPIO 3 Non-Secure base address */
+#define EXTERNAL_MANAGER_0_BASE_NS       0x41200000 /* External manager 0 (Unused) Non-Secure base address */
+#define EXTERNAL_MANAGER_1_BASE_NS       0x41201000 /* External manager 1 (Unused) Non-Secure base address */
+#define EXTERNAL_MANAGER_2_BASE_NS       0x41202000 /* External manager 2 (Unused) Non-Secure base address */
+#define EXTERNAL_MANAGER_3_BASE_NS       0x41203000 /* External manager 3 (Unused) Non-Secure base address */
 #define ETHERNET_BASE_NS                 0x41400000 /* Ethernet Non-Secure base address */
 #define USB_BASE_NS                      0x41500000 /* USB Non-Secure base address */
 #define USER_APB0_BASE_NS                0x41700000 /* User APB 0 Non-Secure base address */
@@ -71,7 +71,8 @@
 #define SYSCNTR_READ_BASE_NS             0x48101000 /* System Counter Read Secure base address */
 /* Non-Secure MSTEXPPIHL Peripheral region */
 #define ETHOS_U55_APB_BASE_NS            0x48102000 /* Ethos-U55 APB Non-Secure base address */
-#define U55_TIMING_ADAPTER_BASE_NS       0x48103000 /* Ethos-U55 Timing Adapter registers Non-Secure base address */
+#define U55_TIMING_ADAPTER_0_BASE_NS     0x48103000 /* Ethos-U55 Timing Adapter 0 APB registers Non-Secure base address */
+#define U55_TIMING_ADAPTER_1_BASE_NS     0x48103200 /* Ethos-U55 Timing Adapter 1 APB registers Non-Secure base address */
 #define FPGA_SBCon_I2C_TOUCH_BASE_NS     0x49200000 /* FPGA - SBCon I2C (Touch) Non-Secure base address */
 #define FPGA_SBCon_I2C_AUDIO_BASE_NS     0x49201000 /* FPGA - SBCon I2C (Audio Conf) Non-Secure base address */
 #define FPGA_SPI_ADC_BASE_NS             0x49202000 /* FPGA - PL022 (SPI ADC) Non-Secure base address */
@@ -81,6 +82,10 @@
 #define SBCon_I2C_SHIELD1_BASE_NS        0x49206000 /* SBCon (I2C – Shield1) Non-Secure base address */
 #define USER_APB_BASE_NS                 0x49207000 /* USER APB Non-Secure base address */
 #define FPGA_DDR4_EEPROM_BASE_NS         0x49208000 /* FPGA - SBCon I2C (DDR4 EEPROM) Non-Secure base address */
+#define FMC_USER_APB0                    0x4920C000 /* FMC User APB0 */
+#define FMC_USER_APB1                    0x4920D000 /* FMC User APB1 */
+#define FMC_USER_APB2                    0x4920E000 /* FMC User APB2 */
+#define FMC_USER_APB3                    0x4920F000 /* FMC User APB3 */
 #define FPGA_SCC_BASE_NS                 0x49300000 /* FPGA - SCC registers Non-Secure base address */
 #define FPGA_I2S_BASE_NS                 0x49301000 /* FPGA - I2S (Audio) Non-Secure base address */
 #define FPGA_IO_BASE_NS                  0x49302000 /* FPGA - IO (System Ctrl + I/O) Non-Secure base address */
@@ -105,7 +110,7 @@
 #define DTCM2_BASE_S                     0x30040000 /* Data TCM block 2 Secure base address */
 #define DTCM3_BASE_S                     0x30060000 /* Data TCM block 3 Secure base address */
 #define ISRAM0_BASE_S                    0x31000000 /* Internal SRAM Area Secure base address */
-#define ISRAM1_BASE_S                    0x31200000 /* Internal SRAM Area Secure base address */
+#define ISRAM1_BASE_S                    0x31100000 /* Internal SRAM Area Secure base address */
 #define QSPI_SRAM_BASE_S                 0x38000000 /* QSPI SRAM Secure base address */
 /* Secure Subsystem peripheral region */
 #define CPU0_SECCTRL_BASE_S              0x50011000 /* CPU 0 Local Security Control Block Secure base address */
@@ -119,14 +124,14 @@
 #define GPIO1_CMSDK_BASE_S               0x51101000 /* GPIO 1 Secure base address */
 #define GPIO2_CMSDK_BASE_S               0x51102000 /* GPIO 2 Secure base address */
 #define GPIO3_CMSDK_BASE_S               0x51103000 /* GPIO 3 Secure base address */
-#define AHB_USER_0_BASE_S                0x51104000 /* AHB USER 0 Secure base address */
-#define AHB_USER_1_BASE_S                0x51105000 /* AHB USER 1 Secure base address */
-#define AHB_USER_2_BASE_S                0x51106000 /* AHB USER 2 Secure base address */
-#define AHB_USER_3_BASE_S                0x51107000 /* AHB USER 3 Secure base address */
-#define DMA_0_BASE_S                     0x51200000 /* DMA 0 Secure base address */
-#define DMA_1_BASE_S                     0x51201000 /* DMA 1 Secure base address */
-#define DMA_2_BASE_S                     0x51202000 /* DMA 2 Secure base address */
-#define DMA_3_BASE_S                     0x51203000 /* DMA 3 Secure base address */
+#define FMC_CMSDK_GPIO_0_BASE_S          0x51104000 /* FMC CMSDK GPIO 0 Secure base address */
+#define FMC_CMSDK_GPIO_1_BASE_S          0x51105000 /* FMC CMSDK GPIO 1 Secure base address */
+#define FMC_CMSDK_GPIO_2_BASE_S          0x51106000 /* FMC CMSDK GPIO 2 Secure base address */
+#define FMC_CMSDK_GPIO_3_BASE_S          0x51107000 /* FMC CMSDK GPIO 3 Secure base address */
+#define EXTERNAL_MANAGER0_BASE_S         0x51200000 /* External Manager 0 (Unused) Secure base address */
+#define EXTERNAL_MANAGER1_BASE_S         0x51201000 /* External Manager 1 (Unused) Secure base address */
+#define EXTERNAL_MANAGER2_BASE_S         0x51202000 /* External Manager 2 (Unused) Secure base address */
+#define EXTERNAL_MANAGER3_BASE_S         0x51203000 /* External Manager 3 (Unused) Secure base address */
 #define ETHERNET_BASE_S                  0x51400000 /* Ethernet Secure base address */
 #define USB_BASE_S                       0x51500000 /* USB Secure base address */
 #define USER_APB0_BASE_S                 0x51700000 /* User APB 0 Secure base address */
@@ -157,7 +162,8 @@
 #define SYSCNTR_READ_BASE_S              0x58101000 /* System Counter Read Secure base address */
 /* Secure MSTEXPPIHL Peripheral region */
 #define ETHOS_U55_APB_BASE_S             0x58102000 /* Ethos-U55 APB Secure base address */
-#define U55_TIMING_ADAPTER_BASE_S        0x58103000 /* Ethos-U55 Timing Adapter registers Secure base address */
+#define U55_TIMING_ADAPTER_0_BASE_S      0x58103000 /* Ethos-U55 Timing Adapter 0 APB registers Secure base address */
+#define U55_TIMING_ADAPTER_1_BASE_S      0x58103200 /* Ethos-U55 Timing Adapter 1 APB registers Secure base address */
 #define FPGA_SBCon_I2C_TOUCH_BASE_S      0x59200000 /* FPGA - SBCon I2C (Touch) Secure base address */
 #define FPGA_SBCon_I2C_AUDIO_BASE_S      0x59201000 /* FPGA - SBCon I2C (Audio Conf) Secure base address */
 #define FPGA_SPI_ADC_BASE_S              0x59202000 /* FPGA - PL022 (SPI ADC) Secure base address */
@@ -167,6 +173,10 @@
 #define SBCon_I2C_SHIELD1_BASE_S         0x59206000 /* SBCon (I2C – Shield1) Secure base address */
 #define USER_APB_BASE_S                  0x59207000 /* USER APB Secure base address */
 #define FPGA_DDR4_EEPROM_BASE_S          0x59208000 /* FPGA - SBCon I2C (DDR4 EEPROM) Secure base address */
+#define FMC_USER_APB_0_BASE_S            0x5920C000 /* FMC User APB0 registers Secure base address */
+#define FMC_USER_APB_1_BASE_S            0x5920D000 /* FMC User APB1 registers Secure base address */
+#define FMC_USER_APB_2_BASE_S            0x5920E000 /* FMC User APB2 registers Secure base address */
+#define FMC_USER_APB_3_BASE_S            0x5920F000 /* FMC User APB3 registers Secure base address */
 #define FPGA_SCC_BASE_S                  0x59300000 /* FPGA - SCC registers Secure base address */
 #define FPGA_I2S_BASE_S                  0x59301000 /* FPGA - I2S (Audio) Secure base address */
 #define FPGA_IO_BASE_S                   0x59302000 /* FPGA - IO (System Ctrl + I/O) Secure base address */
@@ -192,9 +202,9 @@
 #define ITCM_SIZE       (0x00080000) /* 512 kB */
 #define DTCM_BLK_SIZE   (0x00020000) /* 128 kB */
 #define DTCM_BLK_NUM    (0x4)        /* Number of DTCM blocks */
-#define SRAM_SIZE       (0x00200000) /* 2 MB */
-#define ISRAM0_SIZE     (0x00200000) /* 2 MB */
-#define ISRAM1_SIZE     (0x00200000) /* 2 MB */
+#define SRAM_SIZE       (0x00100000) /* 1 MB */
+#define ISRAM0_SIZE     (0x00100000) /* 1 MB */
+#define ISRAM1_SIZE     (0x00100000) /* 1 MB */
 #define QSPI_SRAM_SIZE  (0x00800000) /* 8 MB */
 #define DDR4_BLK_SIZE   (0x10000000) /* 256 MB */
 #define DDR4_BLK_NUM    (0x8)        /* Number of DDR4 blocks */
