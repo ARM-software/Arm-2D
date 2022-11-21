@@ -27,7 +27,7 @@
 #include "arm_2d.h"
 #include "RTE_Components.h"
 
-#if __IS_COMPILER_IAR__
+#if defined(__IS_COMPILER_IAR__) && __IS_COMPILER_IAR__
 #   undef RTE_Compiler_IO_STDOUT_EVR
 #endif
 
