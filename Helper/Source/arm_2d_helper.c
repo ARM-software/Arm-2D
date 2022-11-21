@@ -193,10 +193,11 @@ bool __arm_2d_helper_time_liner_slider( int32_t nFrom,
 }
 
 
-ARM_NONNULL(4,5)
+ARM_NONNULL(5,6)
 bool __arm_2d_helper_time_cos_slider(   int32_t nFrom, 
                                         int32_t nTo, 
                                         int64_t lPeriod,
+                                        float fPhase,
                                         int32_t *pnStroke,
                                         int64_t *plTimestamp)
 {
@@ -219,7 +220,7 @@ bool __arm_2d_helper_time_cos_slider(   int32_t nFrom,
 
                 float fDegree = ((float)lElapsed / (float)lPeriod) * 6.2831852f;
                 
-                iDelta = (int32_t)((1.0f-arm_cos_f32(fDegree)) * (float)iDelta);
+                iDelta = (int32_t)((1.0f-arm_cos_f32(fDegree + fPhase)) * (float)iDelta);
                 iDelta >>= 1;
                 
                 //if (NULL != pnStroke) {

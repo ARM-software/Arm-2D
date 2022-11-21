@@ -749,6 +749,7 @@ extern "C" {
  * \param[in] __to the end of the slider
  * \param[in] __ms a given period (ms) in which the slider should finish the 
  *            whole stroke
+ * \param[in] __phase the phase offset
  * \param[out] __stroke_ptr the address of an int32_t stroke variable
  * \param[in] ... an optional address of a timestamp variable, if you omit it,
  *             NULL will be passed, and the code that call this funtion will not
@@ -759,12 +760,14 @@ extern "C" {
 #define arm_2d_helper_time_cos_slider( __from,                                  \
                                        __to,                                    \
                                        __ms,                                    \
+                                       __phase,                                 \
                                        __stroke_ptr,                            \
                                        ...)                                     \
            ({static int64_t arm_2d_safe_name(s_lTimestamp);                     \
            __arm_2d_helper_time_cos_slider((__from),                            \
                                             (__to),                             \
            arm_2d_helper_convert_ms_to_ticks(__ms),                             \
+                                            (__phase),                          \
                                             (__stroke_ptr),                     \
            (&arm_2d_safe_name(s_lTimestamp),##__VA_ARGS__));})
 
@@ -914,17 +917,19 @@ bool __arm_2d_helper_time_half_cos_slider(  int32_t nFrom,
  * \param[in] nTo the end of the slider
  * \param[in] lPeriod a given period in which the slider should finish the whole
  *            stroke
+ * \param[in] lPhase the phase offset
  * \param[out] pnStroke the address of an int32_t stroke variable
  * \param[in] plTimestamp the address of a timestamp variable, if you pass NULL
  *            the code that call this funtion will not be reentrant.
  * \retval true the slider has finished the whole stroke
  * \retval false the slider hasn't reach the target end
  */
-ARM_NONNULL(4,5)
+ARM_NONNULL(5,6)
 extern
 bool __arm_2d_helper_time_cos_slider(   int32_t nFrom, 
                                         int32_t nTo, 
                                         int64_t lPeriod,
+                                        float fPhase,
                                         int32_t *pnStroke,
                                         int64_t *plTimestamp);
 

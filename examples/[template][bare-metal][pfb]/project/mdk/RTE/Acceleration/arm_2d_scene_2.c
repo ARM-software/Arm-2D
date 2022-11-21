@@ -190,7 +190,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
     ARM_2D_UNUSED(bIsNewFrame);
     
     /*-----------------------draw the foreground begin-----------------------*/
-    
+
     /* following code is just a demo, you can remove them */
     
     arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
@@ -230,7 +230,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
         
         if (bIsNewFrame) {
             int32_t iResult;
-            arm_2d_helper_time_cos_slider(0, 255, 2000, &iResult);
+            arm_2d_helper_time_cos_slider(0, 255, 2000, 0, &iResult);
             this.chOpacity = (uint8_t)iResult;
         }
         
@@ -240,6 +240,27 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
                                                  (__arm_2d_color_t){GLCD_COLOR_RED},
                                                  this.chOpacity);
     }
+    
+//    arm_2d_align_centre(ptTile->tRegion, 100, 100) {
+//        static arm_2d_location_t s_tOffset = {0,0};
+//        if (bIsNewFrame) {
+//            static int64_t s_lTimestamp[2] = {0};
+//            int32_t iXOffset, iYOffset;
+//            arm_2d_helper_time_cos_slider(0, 100, 2000, 0, &iXOffset, &s_lTimestamp[0]);
+//            arm_2d_helper_time_cos_slider(0, 100, 2000, ARM_2D_ANGLE(90), &iYOffset, &s_lTimestamp[1]);
+//            s_tOffset.iX = iXOffset;
+//            s_tOffset.iY = iYOffset;
+//        }
+//        
+//        __centre_region.tLocation.iX += 100 - s_tOffset.iX;
+//        __centre_region.tLocation.iY += s_tOffset.iY;
+//        arm_2d_fill_colour_with_mask(ptTile,
+//                                     &__centre_region,
+//                                     &c_tileWhiteDotMask,
+//                                     (__arm_2d_color_t){GLCD_COLOR_RED});
+//    
+//    }
+
 
     /* draw text at the top-left corner */
     arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
