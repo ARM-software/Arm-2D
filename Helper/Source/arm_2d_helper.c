@@ -228,8 +228,13 @@ bool __arm_2d_helper_time_cos_slider(   int32_t nFrom,
                 //}
             } else {
                 /* timeout */
+                iDelta = nTo - nFrom;
+                
+                float fDegree = 6.2831852f;
+                iDelta = (int32_t)((1.0f-arm_cos_f32(fDegree + fPhase)) * (float)iDelta);
+                iDelta >>= 1;
                 //if (NULL != pnStroke) {
-                    (*pnStroke) = nFrom;
+                    (*pnStroke) = nFrom + iDelta;
                 //}
                 *plTimestamp = 0;
                 
@@ -289,8 +294,14 @@ bool __arm_2d_helper_time_half_cos_slider(  int32_t nFrom,
                 //}
             } else {
                 /* timeout */
+                iDelta = nTo - nFrom;
+
+                float fDegree = 3.1415926f;
+                iDelta = (int32_t)((float)(1.0f-arm_cos_f32(fDegree)) * (float)iDelta);
+                iDelta >>= 1;
+                
                 //if (NULL != pnStroke) {
-                    (*pnStroke) = nTo;
+                    (*pnStroke) = nFrom + iDelta;
                 //}
                 *plTimestamp = 0;
                 
