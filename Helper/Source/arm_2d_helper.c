@@ -161,10 +161,12 @@ bool __arm_2d_helper_time_liner_slider( int32_t nFrom,
     int64_t lTimestamp = arm_2d_helper_get_system_timestamp();
 
     if (nFrom == nTo) {
+        *pnStroke = nTo;
         return true;
     } else {
         if (0 == *plTimestamp) {
             *plTimestamp = lTimestamp;
+            (*pnStroke) = nFrom;
         } else {
             /* code for update this.Runtime.iOffset */
             int64_t lElapsed = (lTimestamp - *plTimestamp);
@@ -182,7 +184,7 @@ bool __arm_2d_helper_time_liner_slider( int32_t nFrom,
                 //if (NULL != pnStroke) {
                     (*pnStroke) = nTo;
                 //}
-                *plTimestamp = 0;
+                *plTimestamp = lTimestamp;
                 
                 return true;
             }
@@ -206,20 +208,21 @@ bool __arm_2d_helper_time_cos_slider(   int32_t nFrom,
     assert(NULL != pnStroke);
 
     if (nFrom == nTo) {
+        *pnStroke = nTo;
         return true;
     } else {
         if (0 == *plTimestamp) {
             *plTimestamp = lTimestamp;
-        } else {
+        }  
+        do {
             /* code for update this.Runtime.iOffset */
             int64_t lElapsed = (lTimestamp - *plTimestamp);
             
             int32_t iDelta = 0;
             if (lElapsed < lPeriod) {
                 iDelta = nTo - nFrom;
-
-                float fDegree = ((float)lElapsed / (float)lPeriod) * 6.2831852f;
                 
+                float fDegree = (float)(((float)lElapsed / (float)lPeriod) * 6.2831852f);
                 iDelta = (int32_t)((1.0f-arm_cos_f32(fDegree + fPhase)) * (float)iDelta);
                 iDelta >>= 1;
                 
@@ -236,11 +239,11 @@ bool __arm_2d_helper_time_cos_slider(   int32_t nFrom,
                 //if (NULL != pnStroke) {
                     (*pnStroke) = nFrom + iDelta;
                 //}
-                *plTimestamp = 0;
+                *plTimestamp = lTimestamp;
                 
                 return true;
             }
-        }
+        } while(0);
     }
     
     return false;
@@ -273,10 +276,12 @@ bool __arm_2d_helper_time_half_cos_slider(  int32_t nFrom,
     assert(NULL != pnStroke);
 
     if (nFrom == nTo) {
+        *pnStroke = nTo;
         return true;
     } else {
         if (0 == *plTimestamp) {
             *plTimestamp = lTimestamp;
+            (*pnStroke) = nFrom;
         } else {
             /* code for update this.Runtime.iOffset */
             int64_t lElapsed = (lTimestamp - *plTimestamp);
@@ -285,7 +290,7 @@ bool __arm_2d_helper_time_half_cos_slider(  int32_t nFrom,
             if (lElapsed < lPeriod) {
                 iDelta = nTo - nFrom;
 
-                float fDegree = ((float)lElapsed / (float)lPeriod) * 3.1415926f;
+                float fDegree = (float)(((float)lElapsed / (float)lPeriod) * 3.1415926f);
                 iDelta = (int32_t)((float)(1.0f-arm_cos_f32(fDegree)) * (float)iDelta);
                 iDelta >>= 1;
                 
@@ -294,16 +299,10 @@ bool __arm_2d_helper_time_half_cos_slider(  int32_t nFrom,
                 //}
             } else {
                 /* timeout */
-                iDelta = nTo - nFrom;
-
-                float fDegree = 3.1415926f;
-                iDelta = (int32_t)((float)(1.0f-arm_cos_f32(fDegree)) * (float)iDelta);
-                iDelta >>= 1;
-                
                 //if (NULL != pnStroke) {
-                    (*pnStroke) = nFrom + iDelta;
+                    (*pnStroke) = nTo;
                 //}
-                *plTimestamp = 0;
+                *plTimestamp = lTimestamp;
                 
                 return true;
             }
