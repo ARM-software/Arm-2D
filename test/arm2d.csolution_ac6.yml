@@ -1,0 +1,76 @@
+solution:
+  compiler: AC6
+  misc:
+    - C:
+      - -std=gnu11 
+      - -Ofast
+      - -ffast-math
+      - -fshort-enums 
+      - -fshort-wchar
+    - CPP:
+      - -std=c++11
+      - -Ofast
+      - -ffast-math
+      - -fno-rtti
+    - ASM:
+      - -masm=auto
+    - Link:
+      - --info=summarysizes
+      - --info=sizes
+      - --info=totals
+      - --info=unused
+      - --info=veneers
+
+  packs:
+    - pack: ARM::CMSIS-DSP@1.14.1
+    - pack: ARM::CMSIS@5.9.0
+    - pack: ARM::V2M_MPS3_SSE_300_BSP@1.3.0
+    - pack: ARM::V2M_MPS3_SSE_310_BSP@1.0.0
+    - pack: Keil::ARM_Compiler@1.7.2
+    - pack: ARM::Arm-2D@1.1.0-preview2-dev191  
+    - pack: GorgonMeducer::perf_counter@1.9.10
+
+  target-types:
+    - type: VHT-Corstone-310
+      device: ARM::SSE-310-MPS3
+      misc:
+        - C:
+          - -D__FVP_PY
+          - -DITERATION_CNT=3
+          - -D__ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
+          - -D__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
+          - -D__ARM_2D_CFG_BENCHMARK_TINY_MODE__
+        - CPP:
+          - -D__FVP_PY
+        - Link:
+          -  --predefine="-D__FVP_PY" --entry=Reset_Handler
+
+    - type: MPS3-Corstone-300
+      device: ARM::SSE-300-MPS3
+
+    - type: VHT-Corstone-300
+      device: ARM::SSE-300-MPS3
+      misc:
+        - C:
+          - -D__FVP_PY
+          - -DITERATION_CNT=3
+          - -D__ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
+          - -D__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
+          - -D__ARM_2D_CFG_BENCHMARK_TINY_MODE__          
+       
+        - CPP:
+          - -D__FVP_PY
+            
+        - Link:
+          -  --predefine="-D__FVP_PY" --entry=Reset_Handler
+
+  build-types:
+    - type: Release
+      optimize: max
+      debug: off
+
+  projects:
+    - project: ./arm2d_generic.cproject.yml
+    - project: ./arm2d_smartwatch.cproject.yml
+
+

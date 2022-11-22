@@ -1,0 +1,48 @@
+project:
+  groups:
+    - group: App
+      files:
+        - file: main.c
+      misc:
+      - C:
+        - -DBENCH=WATCHPANEL
+  add-path:
+    - .
+
+  components:
+    - component: ARM::Acceleration:Arm-2D:Core
+    - component: ARM::Acceleration:Arm-2D:Alpha-Blending
+    - component: ARM::Acceleration:Arm-2D:Transform
+    - component: ARM::Acceleration:Arm-2D Helper:PFB
+    - component: ARM::Acceleration:Arm-2D Extras:Benchmark:WatchPanel
+    - component: ARM::Acceleration:Arm-2D Extras:Controls
+    - component: ARM::Acceleration:Arm-2D Extras:LCD ASCII Printf
+
+    - component: perf_counter:Core
+
+    - component: ARM::CMSIS:CORE
+    - component: ARM::CMSIS:DSP&Source@1.14.1
+
+      misc:
+      - C:
+        - -DARM_DSP_CONFIG_TABLES
+        - -DARM_FAST_ALLOW_TABLES
+        - -DARM_FFT_ALLOW_TABLES
+        - -DARM_ALL_FAST_TABLES
+        - -DARM_MATH_LOOPUNROLL
+        - -DDISABLEFLOAT16
+
+    - component: Keil::Compiler&ARM Compiler:Event Recorder&Semihosting@1.5.1
+      for-type:
+        - +VHT-Corstone-300
+        - +VHT-Corstone-310
+    - component: Keil::Compiler&ARM Compiler:Event Recorder&DAP@1.5.1
+      for-type:
+        - +MPS3-Corstone-300
+
+  layers:
+    - layer: boot.clayer.yml
+    - layer: printf_mps3.clayer.yml
+      for-type:
+        - +MPS3-Corstone-300
+
