@@ -45,6 +45,7 @@
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wpedantic"
 #   pragma GCC diagnostic ignored "-Wstrict-aliasing"
+#   pragma GCC diagnostic ignored "-Wnonnull-compare"
 #endif
 
 #ifdef  __ARM_2D_HAS_USER_HEADER__

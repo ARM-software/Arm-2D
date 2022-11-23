@@ -42,6 +42,9 @@
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #elif __IS_COMPILER_IAR__
 #   pragma diag_suppress=Pa089,Pe188,Pe174
+#elif __IS_COMPILER_GCC__
+#   pragma GCC diagnostic push
+#   pragma GCC diagnostic ignored "-Wunused-value"
 #endif
 
 /*============================ MACROS ========================================*/
@@ -173,4 +176,6 @@ void busy_wheel2_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
+#elif __IS_COMPILER_GCC__
+#   pragma GCC diagnostic pop
 #endif

@@ -1,418 +1,571 @@
-;*******************************************************************************
-;* File Name          : startup_stm32f746xx.s
-;* Author             : MCD Application Team
-;* Description        : STM32F746xx devices vector table for MDK-ARM toolchain. 
-;*                      This module performs:
-;*                      - Set the initial SP
-;*                      - Set the initial PC == Reset_Handler
-;*                      - Set the vector table entries with the exceptions ISR address
-;*                      - Branches to __main in the C library (which eventually
-;*                        calls main()).
-;*                      After Reset the CortexM7 processor is in Thread mode,
-;*                      priority is Privileged, and the Stack is set to Main.
-;********************************************************************************
-;* @attention
-;*
-;* Copyright (c) 2016 STMicroelectronics.
-;* All rights reserved.
-;*
-;* This software is licensed under terms that can be found in the LICENSE file
-;* in the root directory of this software component.
-;* If no LICENSE file comes with this software, it is provided AS-IS.
-;
-;*******************************************************************************
+/**
+  ******************************************************************************
+  * @file      startup_stm32f746xx.s
+  * @author    MCD Application Team
+  * @brief     STM32F746xx Devices vector table for GCC based toolchain. 
+  *            This module performs:
+  *                - Set the initial SP
+  *                - Set the initial PC == Reset_Handler,
+  *                - Set the vector table entries with the exceptions ISR address
+  *                - Branches to main in the C library (which eventually
+  *                  calls main()).
+  *            After Reset the Cortex-M7 processor is in Thread mode,
+  *            priority is Privileged, and the Stack is set to Main.
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2016 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+    
+  .syntax unified
+  .cpu cortex-m7
+  .fpu softvfp
+  .thumb
 
-                PRESERVE8
-                THUMB
+.global  g_pfnVectors
+.global  Default_Handler
 
+/* start address for the initialization values of the .data section. 
+defined in linker script */
+.word  _sidata
+/* start address for the .data section. defined in linker script */  
+.word  _sdata
+/* end address for the .data section. defined in linker script */
+.word  _edata
+/* start address for the .bss section. defined in linker script */
+.word  _sbss
+/* end address for the .bss section. defined in linker script */
+.word  _ebss
+/* stack used for SystemInit_ExtMemCtl; always internal RAM used */
 
-; Vector Table Mapped to Address 0 at Reset
-                AREA    RESET, DATA, READONLY
-                EXPORT  __Vectors
-                EXPORT  __Vectors_End
-                EXPORT  __Vectors_Size
-                IMPORT  |Image$$ARM_LIB_STACK$$ZI$$Limit|
+/**
+ * @brief  This is the code that gets called when the processor first
+ *          starts execution following a reset event. Only the absolutely
+ *          necessary set is performed, after which the application
+ *          supplied main() routine is called. 
+ * @param  None
+ * @retval : None
+*/
 
-__Vectors       DCD     |Image$$ARM_LIB_STACK$$ZI$$Limit|
-                DCD     Reset_Handler              ; Reset Handler
-                DCD     NMI_Handler                ; NMI Handler
-                DCD     HardFault_Handler          ; Hard Fault Handler
-                DCD     MemManage_Handler          ; MPU Fault Handler
-                DCD     BusFault_Handler           ; Bus Fault Handler
-                DCD     UsageFault_Handler         ; Usage Fault Handler
-                DCD     0                          ; Reserved
-                DCD     0                          ; Reserved
-                DCD     0                          ; Reserved
-                DCD     0                          ; Reserved
-                DCD     SVC_Handler                ; SVCall Handler
-                DCD     DebugMon_Handler           ; Debug Monitor Handler
-                DCD     0                          ; Reserved
-                DCD     PendSV_Handler             ; PendSV Handler
-                DCD     SysTick_Handler            ; SysTick Handler
+    .section  .text.Reset_Handler
+  .weak  Reset_Handler
+  .type  Reset_Handler, %function
+Reset_Handler:  
+  ldr   sp, =_estack      /* set stack pointer */
 
-                ; External Interrupts
-                DCD     WWDG_IRQHandler                   ; Window WatchDog                                        
-                DCD     PVD_IRQHandler                    ; PVD through EXTI Line detection                        
-                DCD     TAMP_STAMP_IRQHandler             ; Tamper and TimeStamps through the EXTI line            
-                DCD     RTC_WKUP_IRQHandler               ; RTC Wakeup through the EXTI line                       
-                DCD     FLASH_IRQHandler                  ; FLASH                                           
-                DCD     RCC_IRQHandler                    ; RCC                                             
-                DCD     EXTI0_IRQHandler                  ; EXTI Line0                                             
-                DCD     EXTI1_IRQHandler                  ; EXTI Line1                                             
-                DCD     EXTI2_IRQHandler                  ; EXTI Line2                                             
-                DCD     EXTI3_IRQHandler                  ; EXTI Line3                                             
-                DCD     EXTI4_IRQHandler                  ; EXTI Line4                                             
-                DCD     DMA1_Stream0_IRQHandler           ; DMA1 Stream 0                                   
-                DCD     DMA1_Stream1_IRQHandler           ; DMA1 Stream 1                                   
-                DCD     DMA1_Stream2_IRQHandler           ; DMA1 Stream 2                                   
-                DCD     DMA1_Stream3_IRQHandler           ; DMA1 Stream 3                                   
-                DCD     DMA1_Stream4_IRQHandler           ; DMA1 Stream 4                                   
-                DCD     DMA1_Stream5_IRQHandler           ; DMA1 Stream 5                                   
-                DCD     DMA1_Stream6_IRQHandler           ; DMA1 Stream 6                                   
-                DCD     ADC_IRQHandler                    ; ADC1, ADC2 and ADC3s                            
-                DCD     CAN1_TX_IRQHandler                ; CAN1 TX                                                
-                DCD     CAN1_RX0_IRQHandler               ; CAN1 RX0                                               
-                DCD     CAN1_RX1_IRQHandler               ; CAN1 RX1                                               
-                DCD     CAN1_SCE_IRQHandler               ; CAN1 SCE                                               
-                DCD     EXTI9_5_IRQHandler                ; External Line[9:5]s                                    
-                DCD     TIM1_BRK_TIM9_IRQHandler          ; TIM1 Break and TIM9                   
-                DCD     TIM1_UP_TIM10_IRQHandler          ; TIM1 Update and TIM10                 
-                DCD     TIM1_TRG_COM_TIM11_IRQHandler     ; TIM1 Trigger and Commutation and TIM11
-                DCD     TIM1_CC_IRQHandler                ; TIM1 Capture Compare                                   
-                DCD     TIM2_IRQHandler                   ; TIM2                                            
-                DCD     TIM3_IRQHandler                   ; TIM3                                            
-                DCD     TIM4_IRQHandler                   ; TIM4                                            
-                DCD     I2C1_EV_IRQHandler                ; I2C1 Event                                             
-                DCD     I2C1_ER_IRQHandler                ; I2C1 Error                                             
-                DCD     I2C2_EV_IRQHandler                ; I2C2 Event                                             
-                DCD     I2C2_ER_IRQHandler                ; I2C2 Error                                               
-                DCD     SPI1_IRQHandler                   ; SPI1                                            
-                DCD     SPI2_IRQHandler                   ; SPI2                                            
-                DCD     USART1_IRQHandler                 ; USART1                                          
-                DCD     USART2_IRQHandler                 ; USART2                                          
-                DCD     USART3_IRQHandler                 ; USART3                                          
-                DCD     EXTI15_10_IRQHandler              ; External Line[15:10]s                                  
-                DCD     RTC_Alarm_IRQHandler              ; RTC Alarm (A and B) through EXTI Line                  
-                DCD     OTG_FS_WKUP_IRQHandler            ; USB OTG FS Wakeup through EXTI line                        
-                DCD     TIM8_BRK_TIM12_IRQHandler         ; TIM8 Break and TIM12                  
-                DCD     TIM8_UP_TIM13_IRQHandler          ; TIM8 Update and TIM13                 
-                DCD     TIM8_TRG_COM_TIM14_IRQHandler     ; TIM8 Trigger and Commutation and TIM14
-                DCD     TIM8_CC_IRQHandler                ; TIM8 Capture Compare                                   
-                DCD     DMA1_Stream7_IRQHandler           ; DMA1 Stream7                                           
-                DCD     FMC_IRQHandler                    ; FMC                                             
-                DCD     SDMMC1_IRQHandler                  ; SDMMC1                                            
-                DCD     TIM5_IRQHandler                   ; TIM5                                            
-                DCD     SPI3_IRQHandler                   ; SPI3                                            
-                DCD     UART4_IRQHandler                  ; UART4                                           
-                DCD     UART5_IRQHandler                  ; UART5                                           
-                DCD     TIM6_DAC_IRQHandler               ; TIM6 and DAC1&2 underrun errors                   
-                DCD     TIM7_IRQHandler                   ; TIM7                   
-                DCD     DMA2_Stream0_IRQHandler           ; DMA2 Stream 0                                   
-                DCD     DMA2_Stream1_IRQHandler           ; DMA2 Stream 1                                   
-                DCD     DMA2_Stream2_IRQHandler           ; DMA2 Stream 2                                   
-                DCD     DMA2_Stream3_IRQHandler           ; DMA2 Stream 3                                   
-                DCD     DMA2_Stream4_IRQHandler           ; DMA2 Stream 4                                   
-                DCD     ETH_IRQHandler                    ; Ethernet                                        
-                DCD     ETH_WKUP_IRQHandler               ; Ethernet Wakeup through EXTI line                      
-                DCD     CAN2_TX_IRQHandler                ; CAN2 TX                                                
-                DCD     CAN2_RX0_IRQHandler               ; CAN2 RX0                                               
-                DCD     CAN2_RX1_IRQHandler               ; CAN2 RX1                                               
-                DCD     CAN2_SCE_IRQHandler               ; CAN2 SCE                                               
-                DCD     OTG_FS_IRQHandler                 ; USB OTG FS                                      
-                DCD     DMA2_Stream5_IRQHandler           ; DMA2 Stream 5                                   
-                DCD     DMA2_Stream6_IRQHandler           ; DMA2 Stream 6                                   
-                DCD     DMA2_Stream7_IRQHandler           ; DMA2 Stream 7                                   
-                DCD     USART6_IRQHandler                 ; USART6                                           
-                DCD     I2C3_EV_IRQHandler                ; I2C3 event                                             
-                DCD     I2C3_ER_IRQHandler                ; I2C3 error                                             
-                DCD     OTG_HS_EP1_OUT_IRQHandler         ; USB OTG HS End Point 1 Out                      
-                DCD     OTG_HS_EP1_IN_IRQHandler          ; USB OTG HS End Point 1 In                       
-                DCD     OTG_HS_WKUP_IRQHandler            ; USB OTG HS Wakeup through EXTI                         
-                DCD     OTG_HS_IRQHandler                 ; USB OTG HS                                      
-                DCD     DCMI_IRQHandler                   ; DCMI                                            
-                DCD     0                                 ; Reserved                                     
-                DCD     RNG_IRQHandler                    ; Rng
-                DCD     FPU_IRQHandler                    ; FPU
-                DCD     UART7_IRQHandler                  ; UART7
-                DCD     UART8_IRQHandler                  ; UART8
-                DCD     SPI4_IRQHandler                   ; SPI4
-                DCD     SPI5_IRQHandler                   ; SPI5
-                DCD     SPI6_IRQHandler                   ; SPI6
-                DCD     SAI1_IRQHandler                   ; SAI1
-                DCD     LTDC_IRQHandler                   ; LTDC
-                DCD     LTDC_ER_IRQHandler                ; LTDC error
-                DCD     DMA2D_IRQHandler                  ; DMA2D
-                DCD     SAI2_IRQHandler                   ; SAI2
-                DCD     QUADSPI_IRQHandler                ; QUADSPI
-                DCD     LPTIM1_IRQHandler                 ; LPTIM1
-                DCD     CEC_IRQHandler                    ; HDMI_CEC
-                DCD     I2C4_EV_IRQHandler                ; I2C4 Event                                             
-                DCD     I2C4_ER_IRQHandler                ; I2C4 Error 
-                DCD     SPDIF_RX_IRQHandler               ; SPDIF_RX
-__Vectors_End
+/* Copy the data segment initializers from flash to SRAM */  
+  ldr r0, =_sdata
+  ldr r1, =_edata
+  ldr r2, =_sidata
+  movs r3, #0
+  b LoopCopyDataInit
 
-__Vectors_Size  EQU  __Vectors_End - __Vectors
+CopyDataInit:
+  ldr r4, [r2, r3]
+  str r4, [r0, r3]
+  adds r3, r3, #4
 
-                AREA    |.text|, CODE, READONLY
+LoopCopyDataInit:
+  adds r4, r0, r3
+  cmp r4, r1
+  bcc CopyDataInit
+  
+/* Zero fill the bss segment. */
+  ldr r2, =_sbss
+  ldr r4, =_ebss
+  movs r3, #0
+  b LoopFillZerobss
 
-; Reset handler
-Reset_Handler    PROC
-                 EXPORT  Reset_Handler             [WEAK]
-        IMPORT  SystemInit
-        IMPORT  __main
+FillZerobss:
+  str  r3, [r2]
+  adds r2, r2, #4
 
-                 LDR     R0, =SystemInit
-                 BLX     R0
-                 LDR     R0, =__main
-                 BX      R0
-                 ENDP
+LoopFillZerobss:
+  cmp r2, r4
+  bcc FillZerobss
 
-; Dummy Exception Handlers (infinite loops which can be modified)
+/* Call the clock system initialization function.*/
+  bl  SystemInit   
+/* Call static constructors */
+    bl __libc_init_array
+/* Call the application's entry point.*/
+  bl  main
+  bx  lr    
+.size  Reset_Handler, .-Reset_Handler
 
-NMI_Handler     PROC
-                EXPORT  NMI_Handler                [WEAK]
-                B       .
-                ENDP
-HardFault_Handler\
-                PROC
-                EXPORT  HardFault_Handler          [WEAK]
-                B       .
-                ENDP
-MemManage_Handler\
-                PROC
-                EXPORT  MemManage_Handler          [WEAK]
-                B       .
-                ENDP
-BusFault_Handler\
-                PROC
-                EXPORT  BusFault_Handler           [WEAK]
-                B       .
-                ENDP
-UsageFault_Handler\
-                PROC
-                EXPORT  UsageFault_Handler         [WEAK]
-                B       .
-                ENDP
-SVC_Handler     PROC
-                EXPORT  SVC_Handler                [WEAK]
-                B       .
-                ENDP
-DebugMon_Handler\
-                PROC
-                EXPORT  DebugMon_Handler           [WEAK]
-                B       .
-                ENDP
-PendSV_Handler  PROC
-                EXPORT  PendSV_Handler             [WEAK]
-                B       .
-                ENDP
-SysTick_Handler PROC
-                EXPORT  SysTick_Handler            [WEAK]
-                B       .
-                ENDP
+/**
+ * @brief  This is the code that gets called when the processor receives an 
+ *         unexpected interrupt.  This simply enters an infinite loop, preserving
+ *         the system state for examination by a debugger.
+ * @param  None     
+ * @retval None       
+*/
+    .section  .text.Default_Handler,"ax",%progbits
+Default_Handler:
+Infinite_Loop:
+  b  Infinite_Loop
+  .size  Default_Handler, .-Default_Handler
+/******************************************************************************
+*
+* The minimal vector table for a Cortex M7. Note that the proper constructs
+* must be placed on this to ensure that it ends up at physical address
+* 0x0000.0000.
+* 
+*******************************************************************************/
+   .section  .isr_vector,"a",%progbits
+  .type  g_pfnVectors, %object
+  .size  g_pfnVectors, .-g_pfnVectors
+   
+   
+g_pfnVectors:
+  .word  _estack
+  .word  Reset_Handler
 
-Default_Handler PROC
+  .word  NMI_Handler
+  .word  HardFault_Handler
+  .word  MemManage_Handler
+  .word  BusFault_Handler
+  .word  UsageFault_Handler
+  .word  0
+  .word  0
+  .word  0
+  .word  0
+  .word  SVC_Handler
+  .word  DebugMon_Handler
+  .word  0
+  .word  PendSV_Handler
+  .word  SysTick_Handler
+  
+  /* External Interrupts */
+  .word     WWDG_IRQHandler                   /* Window WatchDog              */                                        
+  .word     PVD_IRQHandler                    /* PVD through EXTI Line detection */                        
+  .word     TAMP_STAMP_IRQHandler             /* Tamper and TimeStamps through the EXTI line */            
+  .word     RTC_WKUP_IRQHandler               /* RTC Wakeup through the EXTI line */                      
+  .word     FLASH_IRQHandler                  /* FLASH                        */                                          
+  .word     RCC_IRQHandler                    /* RCC                          */                                            
+  .word     EXTI0_IRQHandler                  /* EXTI Line0                   */                        
+  .word     EXTI1_IRQHandler                  /* EXTI Line1                   */                          
+  .word     EXTI2_IRQHandler                  /* EXTI Line2                   */                          
+  .word     EXTI3_IRQHandler                  /* EXTI Line3                   */                          
+  .word     EXTI4_IRQHandler                  /* EXTI Line4                   */                          
+  .word     DMA1_Stream0_IRQHandler           /* DMA1 Stream 0                */                  
+  .word     DMA1_Stream1_IRQHandler           /* DMA1 Stream 1                */                   
+  .word     DMA1_Stream2_IRQHandler           /* DMA1 Stream 2                */                   
+  .word     DMA1_Stream3_IRQHandler           /* DMA1 Stream 3                */                   
+  .word     DMA1_Stream4_IRQHandler           /* DMA1 Stream 4                */                   
+  .word     DMA1_Stream5_IRQHandler           /* DMA1 Stream 5                */                   
+  .word     DMA1_Stream6_IRQHandler           /* DMA1 Stream 6                */                   
+  .word     ADC_IRQHandler                    /* ADC1, ADC2 and ADC3s         */                   
+  .word     CAN1_TX_IRQHandler                /* CAN1 TX                      */                         
+  .word     CAN1_RX0_IRQHandler               /* CAN1 RX0                     */                          
+  .word     CAN1_RX1_IRQHandler               /* CAN1 RX1                     */                          
+  .word     CAN1_SCE_IRQHandler               /* CAN1 SCE                     */                          
+  .word     EXTI9_5_IRQHandler                /* External Line[9:5]s          */                          
+  .word     TIM1_BRK_TIM9_IRQHandler          /* TIM1 Break and TIM9          */         
+  .word     TIM1_UP_TIM10_IRQHandler          /* TIM1 Update and TIM10        */         
+  .word     TIM1_TRG_COM_TIM11_IRQHandler     /* TIM1 Trigger and Commutation and TIM11 */
+  .word     TIM1_CC_IRQHandler                /* TIM1 Capture Compare         */                          
+  .word     TIM2_IRQHandler                   /* TIM2                         */                   
+  .word     TIM3_IRQHandler                   /* TIM3                         */                   
+  .word     TIM4_IRQHandler                   /* TIM4                         */                   
+  .word     I2C1_EV_IRQHandler                /* I2C1 Event                   */                          
+  .word     I2C1_ER_IRQHandler                /* I2C1 Error                   */                          
+  .word     I2C2_EV_IRQHandler                /* I2C2 Event                   */                          
+  .word     I2C2_ER_IRQHandler                /* I2C2 Error                   */                            
+  .word     SPI1_IRQHandler                   /* SPI1                         */                   
+  .word     SPI2_IRQHandler                   /* SPI2                         */                   
+  .word     USART1_IRQHandler                 /* USART1                       */                   
+  .word     USART2_IRQHandler                 /* USART2                       */                   
+  .word     USART3_IRQHandler                 /* USART3                       */                   
+  .word     EXTI15_10_IRQHandler              /* External Line[15:10]s        */                          
+  .word     RTC_Alarm_IRQHandler              /* RTC Alarm (A and B) through EXTI Line */                 
+  .word     OTG_FS_WKUP_IRQHandler            /* USB OTG FS Wakeup through EXTI line */                       
+  .word     TIM8_BRK_TIM12_IRQHandler         /* TIM8 Break and TIM12         */         
+  .word     TIM8_UP_TIM13_IRQHandler          /* TIM8 Update and TIM13        */         
+  .word     TIM8_TRG_COM_TIM14_IRQHandler     /* TIM8 Trigger and Commutation and TIM14 */
+  .word     TIM8_CC_IRQHandler                /* TIM8 Capture Compare         */                          
+  .word     DMA1_Stream7_IRQHandler           /* DMA1 Stream7                 */                          
+  .word     FMC_IRQHandler                    /* FMC                          */                   
+  .word     SDMMC1_IRQHandler                 /* SDMMC1                       */                   
+  .word     TIM5_IRQHandler                   /* TIM5                         */                   
+  .word     SPI3_IRQHandler                   /* SPI3                         */                   
+  .word     UART4_IRQHandler                  /* UART4                        */                   
+  .word     UART5_IRQHandler                  /* UART5                        */                   
+  .word     TIM6_DAC_IRQHandler               /* TIM6 and DAC1&2 underrun errors */                   
+  .word     TIM7_IRQHandler                   /* TIM7                         */
+  .word     DMA2_Stream0_IRQHandler           /* DMA2 Stream 0                */                   
+  .word     DMA2_Stream1_IRQHandler           /* DMA2 Stream 1                */                   
+  .word     DMA2_Stream2_IRQHandler           /* DMA2 Stream 2                */                   
+  .word     DMA2_Stream3_IRQHandler           /* DMA2 Stream 3                */                   
+  .word     DMA2_Stream4_IRQHandler           /* DMA2 Stream 4                */                   
+  .word     ETH_IRQHandler                    /* Ethernet                     */                   
+  .word     ETH_WKUP_IRQHandler               /* Ethernet Wakeup through EXTI line */                     
+  .word     CAN2_TX_IRQHandler                /* CAN2 TX                      */                          
+  .word     CAN2_RX0_IRQHandler               /* CAN2 RX0                     */                          
+  .word     CAN2_RX1_IRQHandler               /* CAN2 RX1                     */                          
+  .word     CAN2_SCE_IRQHandler               /* CAN2 SCE                     */                          
+  .word     OTG_FS_IRQHandler                 /* USB OTG FS                   */                   
+  .word     DMA2_Stream5_IRQHandler           /* DMA2 Stream 5                */                   
+  .word     DMA2_Stream6_IRQHandler           /* DMA2 Stream 6                */                   
+  .word     DMA2_Stream7_IRQHandler           /* DMA2 Stream 7                */                   
+  .word     USART6_IRQHandler                 /* USART6                       */                    
+  .word     I2C3_EV_IRQHandler                /* I2C3 event                   */                          
+  .word     I2C3_ER_IRQHandler                /* I2C3 error                   */                          
+  .word     OTG_HS_EP1_OUT_IRQHandler         /* USB OTG HS End Point 1 Out   */                   
+  .word     OTG_HS_EP1_IN_IRQHandler          /* USB OTG HS End Point 1 In    */                   
+  .word     OTG_HS_WKUP_IRQHandler            /* USB OTG HS Wakeup through EXTI */                         
+  .word     OTG_HS_IRQHandler                 /* USB OTG HS                   */                   
+  .word     DCMI_IRQHandler                   /* DCMI                         */                   
+  .word     0                                 /* Reserved                     */                   
+  .word     RNG_IRQHandler                    /* Rng                          */
+  .word     FPU_IRQHandler                    /* FPU                          */
+  .word     UART7_IRQHandler                  /* UART7                        */      
+  .word     UART8_IRQHandler                  /* UART8                        */
+  .word     SPI4_IRQHandler                   /* SPI4                         */
+  .word     SPI5_IRQHandler                   /* SPI5                           */
+  .word     SPI6_IRQHandler                   /* SPI6                         */
+  .word     SAI1_IRQHandler                   /* SAI1                          */
+  .word     LTDC_IRQHandler                   /* LTDC                          */
+  .word     LTDC_ER_IRQHandler                /* LTDC error                      */
+  .word     DMA2D_IRQHandler                  /* DMA2D                          */
+  .word     SAI2_IRQHandler                   /* SAI2                         */
+  .word     QUADSPI_IRQHandler                /* QUADSPI                      */
+  .word     LPTIM1_IRQHandler                 /* LPTIM1                       */
+  .word     CEC_IRQHandler                    /* HDMI_CEC                     */
+  .word     I2C4_EV_IRQHandler                /* I2C4 Event                   */
+  .word     I2C4_ER_IRQHandler                /* I2C4 Error                   */
+  .word     SPDIF_RX_IRQHandler               /* SPDIF_RX                     */  
+  
+/*******************************************************************************
+*
+* Provide weak aliases for each Exception handler to the Default_Handler. 
+* As they are weak aliases, any function with the same name will override 
+* this definition.
+* 
+*******************************************************************************/
+   .weak      NMI_Handler
+   .thumb_set NMI_Handler,Default_Handler
+  
+   .weak      HardFault_Handler
+   .thumb_set HardFault_Handler,Default_Handler
+  
+   .weak      MemManage_Handler
+   .thumb_set MemManage_Handler,Default_Handler
+  
+   .weak      BusFault_Handler
+   .thumb_set BusFault_Handler,Default_Handler
 
-                EXPORT  WWDG_IRQHandler                   [WEAK]                                        
-                EXPORT  PVD_IRQHandler                    [WEAK]                      
-                EXPORT  TAMP_STAMP_IRQHandler             [WEAK]         
-                EXPORT  RTC_WKUP_IRQHandler               [WEAK]                     
-                EXPORT  FLASH_IRQHandler                  [WEAK]                                         
-                EXPORT  RCC_IRQHandler                    [WEAK]                                            
-                EXPORT  EXTI0_IRQHandler                  [WEAK]                                            
-                EXPORT  EXTI1_IRQHandler                  [WEAK]                                             
-                EXPORT  EXTI2_IRQHandler                  [WEAK]                                            
-                EXPORT  EXTI3_IRQHandler                  [WEAK]                                           
-                EXPORT  EXTI4_IRQHandler                  [WEAK]                                            
-                EXPORT  DMA1_Stream0_IRQHandler           [WEAK]                                
-                EXPORT  DMA1_Stream1_IRQHandler           [WEAK]                                   
-                EXPORT  DMA1_Stream2_IRQHandler           [WEAK]                                   
-                EXPORT  DMA1_Stream3_IRQHandler           [WEAK]                                   
-                EXPORT  DMA1_Stream4_IRQHandler           [WEAK]                                   
-                EXPORT  DMA1_Stream5_IRQHandler           [WEAK]                                   
-                EXPORT  DMA1_Stream6_IRQHandler           [WEAK]                                   
-                EXPORT  ADC_IRQHandler                    [WEAK]                         
-                EXPORT  CAN1_TX_IRQHandler                [WEAK]                                                
-                EXPORT  CAN1_RX0_IRQHandler               [WEAK]                                               
-                EXPORT  CAN1_RX1_IRQHandler               [WEAK]                                                
-                EXPORT  CAN1_SCE_IRQHandler               [WEAK]                                                
-                EXPORT  EXTI9_5_IRQHandler                [WEAK]                                    
-                EXPORT  TIM1_BRK_TIM9_IRQHandler          [WEAK]                  
-                EXPORT  TIM1_UP_TIM10_IRQHandler          [WEAK]                
-                EXPORT  TIM1_TRG_COM_TIM11_IRQHandler     [WEAK] 
-                EXPORT  TIM1_CC_IRQHandler                [WEAK]                                   
-                EXPORT  TIM2_IRQHandler                   [WEAK]                                            
-                EXPORT  TIM3_IRQHandler                   [WEAK]                                            
-                EXPORT  TIM4_IRQHandler                   [WEAK]                                            
-                EXPORT  I2C1_EV_IRQHandler                [WEAK]                                             
-                EXPORT  I2C1_ER_IRQHandler                [WEAK]                                             
-                EXPORT  I2C2_EV_IRQHandler                [WEAK]                                            
-                EXPORT  I2C2_ER_IRQHandler                [WEAK]                                               
-                EXPORT  SPI1_IRQHandler                   [WEAK]                                           
-                EXPORT  SPI2_IRQHandler                   [WEAK]                                            
-                EXPORT  USART1_IRQHandler                 [WEAK]                                          
-                EXPORT  USART2_IRQHandler                 [WEAK]                                          
-                EXPORT  USART3_IRQHandler                 [WEAK]                                         
-                EXPORT  EXTI15_10_IRQHandler              [WEAK]                                  
-                EXPORT  RTC_Alarm_IRQHandler              [WEAK]                  
-                EXPORT  OTG_FS_WKUP_IRQHandler            [WEAK]                        
-                EXPORT  TIM8_BRK_TIM12_IRQHandler         [WEAK]                 
-                EXPORT  TIM8_UP_TIM13_IRQHandler          [WEAK]                 
-                EXPORT  TIM8_TRG_COM_TIM14_IRQHandler     [WEAK] 
-                EXPORT  TIM8_CC_IRQHandler                [WEAK]                                   
-                EXPORT  DMA1_Stream7_IRQHandler           [WEAK]                                          
-                EXPORT  FMC_IRQHandler                    [WEAK]                                             
-                EXPORT  SDMMC1_IRQHandler                 [WEAK]                                             
-                EXPORT  TIM5_IRQHandler                   [WEAK]                                             
-                EXPORT  SPI3_IRQHandler                   [WEAK]                                             
-                EXPORT  UART4_IRQHandler                  [WEAK]                                            
-                EXPORT  UART5_IRQHandler                  [WEAK]                                            
-                EXPORT  TIM6_DAC_IRQHandler               [WEAK]                   
-                EXPORT  TIM7_IRQHandler                   [WEAK]                    
-                EXPORT  DMA2_Stream0_IRQHandler           [WEAK]                                  
-                EXPORT  DMA2_Stream1_IRQHandler           [WEAK]                                   
-                EXPORT  DMA2_Stream2_IRQHandler           [WEAK]                                    
-                EXPORT  DMA2_Stream3_IRQHandler           [WEAK]                                    
-                EXPORT  DMA2_Stream4_IRQHandler           [WEAK]                                 
-                EXPORT  ETH_IRQHandler                    [WEAK]                                         
-                EXPORT  ETH_WKUP_IRQHandler               [WEAK]                     
-                EXPORT  CAN2_TX_IRQHandler                [WEAK]                                               
-                EXPORT  CAN2_RX0_IRQHandler               [WEAK]                                               
-                EXPORT  CAN2_RX1_IRQHandler               [WEAK]                                               
-                EXPORT  CAN2_SCE_IRQHandler               [WEAK]                                               
-                EXPORT  OTG_FS_IRQHandler                 [WEAK]                                       
-                EXPORT  DMA2_Stream5_IRQHandler           [WEAK]                                   
-                EXPORT  DMA2_Stream6_IRQHandler           [WEAK]                                   
-                EXPORT  DMA2_Stream7_IRQHandler           [WEAK]                                   
-                EXPORT  USART6_IRQHandler                 [WEAK]                                           
-                EXPORT  I2C3_EV_IRQHandler                [WEAK]                                              
-                EXPORT  I2C3_ER_IRQHandler                [WEAK]                                              
-                EXPORT  OTG_HS_EP1_OUT_IRQHandler         [WEAK]                      
-                EXPORT  OTG_HS_EP1_IN_IRQHandler          [WEAK]                      
-                EXPORT  OTG_HS_WKUP_IRQHandler            [WEAK]                        
-                EXPORT  OTG_HS_IRQHandler                 [WEAK]                                      
-                EXPORT  DCMI_IRQHandler                   [WEAK]                                             
-                EXPORT  RNG_IRQHandler                    [WEAK]
-                EXPORT  FPU_IRQHandler                    [WEAK]
-                EXPORT  UART7_IRQHandler                  [WEAK]
-                EXPORT  UART8_IRQHandler                  [WEAK]
-                EXPORT  SPI4_IRQHandler                   [WEAK]
-                EXPORT  SPI5_IRQHandler                   [WEAK]
-                EXPORT  SPI6_IRQHandler                   [WEAK]
-                EXPORT  SAI1_IRQHandler                   [WEAK]
-                EXPORT  LTDC_IRQHandler                   [WEAK]
-                EXPORT  LTDC_ER_IRQHandler                [WEAK]
-                EXPORT  DMA2D_IRQHandler                  [WEAK]
-                EXPORT  SAI2_IRQHandler                   [WEAK]   
-                EXPORT  QUADSPI_IRQHandler                [WEAK]
-                EXPORT  LPTIM1_IRQHandler                 [WEAK]
-                EXPORT  CEC_IRQHandler                    [WEAK]   
-                EXPORT  I2C4_EV_IRQHandler                [WEAK]
-                EXPORT  I2C4_ER_IRQHandler                [WEAK] 
-                EXPORT  SPDIF_RX_IRQHandler               [WEAK]
-                
-WWDG_IRQHandler                                                       
-PVD_IRQHandler                                      
-TAMP_STAMP_IRQHandler                  
-RTC_WKUP_IRQHandler                                
-FLASH_IRQHandler                                                       
-RCC_IRQHandler                                                            
-EXTI0_IRQHandler                                                          
-EXTI1_IRQHandler                                                           
-EXTI2_IRQHandler                                                          
-EXTI3_IRQHandler                                                         
-EXTI4_IRQHandler                                                          
-DMA1_Stream0_IRQHandler                                       
-DMA1_Stream1_IRQHandler                                          
-DMA1_Stream2_IRQHandler                                          
-DMA1_Stream3_IRQHandler                                          
-DMA1_Stream4_IRQHandler                                          
-DMA1_Stream5_IRQHandler                                          
-DMA1_Stream6_IRQHandler                                          
-ADC_IRQHandler                                         
-CAN1_TX_IRQHandler                                                            
-CAN1_RX0_IRQHandler                                                          
-CAN1_RX1_IRQHandler                                                           
-CAN1_SCE_IRQHandler                                                           
-EXTI9_5_IRQHandler                                                
-TIM1_BRK_TIM9_IRQHandler                        
-TIM1_UP_TIM10_IRQHandler                      
-TIM1_TRG_COM_TIM11_IRQHandler  
-TIM1_CC_IRQHandler                                               
-TIM2_IRQHandler                                                           
-TIM3_IRQHandler                                                           
-TIM4_IRQHandler                                                           
-I2C1_EV_IRQHandler                                                         
-I2C1_ER_IRQHandler                                                         
-I2C2_EV_IRQHandler                                                        
-I2C2_ER_IRQHandler                                                           
-SPI1_IRQHandler                                                          
-SPI2_IRQHandler                                                           
-USART1_IRQHandler                                                       
-USART2_IRQHandler                                                       
-USART3_IRQHandler                                                      
-EXTI15_10_IRQHandler                                            
-RTC_Alarm_IRQHandler                            
-OTG_FS_WKUP_IRQHandler                                
-TIM8_BRK_TIM12_IRQHandler                      
-TIM8_UP_TIM13_IRQHandler                       
-TIM8_TRG_COM_TIM14_IRQHandler  
-TIM8_CC_IRQHandler                                               
-DMA1_Stream7_IRQHandler                                                 
-FMC_IRQHandler                                                            
-SDMMC1_IRQHandler                                                            
-TIM5_IRQHandler                                                            
-SPI3_IRQHandler                                                            
-UART4_IRQHandler                                                          
-UART5_IRQHandler                                                          
-TIM6_DAC_IRQHandler                            
-TIM7_IRQHandler                              
-DMA2_Stream0_IRQHandler                                         
-DMA2_Stream1_IRQHandler                                          
-DMA2_Stream2_IRQHandler                                           
-DMA2_Stream3_IRQHandler                                           
-DMA2_Stream4_IRQHandler                                        
-ETH_IRQHandler                                                         
-ETH_WKUP_IRQHandler                                
-CAN2_TX_IRQHandler                                                           
-CAN2_RX0_IRQHandler                                                          
-CAN2_RX1_IRQHandler                                                          
-CAN2_SCE_IRQHandler                                                          
-OTG_FS_IRQHandler                                                    
-DMA2_Stream5_IRQHandler                                          
-DMA2_Stream6_IRQHandler                                          
-DMA2_Stream7_IRQHandler                                          
-USART6_IRQHandler                                                        
-I2C3_EV_IRQHandler                                                          
-I2C3_ER_IRQHandler                                                          
-OTG_HS_EP1_OUT_IRQHandler                           
-OTG_HS_EP1_IN_IRQHandler                            
-OTG_HS_WKUP_IRQHandler                                
-OTG_HS_IRQHandler                                                   
-DCMI_IRQHandler                                                            
-RNG_IRQHandler
-FPU_IRQHandler  
-UART7_IRQHandler                  
-UART8_IRQHandler                  
-SPI4_IRQHandler                   
-SPI5_IRQHandler                   
-SPI6_IRQHandler                   
-SAI1_IRQHandler                   
-LTDC_IRQHandler                   
-LTDC_ER_IRQHandler                 
-DMA2D_IRQHandler   
-SAI2_IRQHandler        
-QUADSPI_IRQHandler
-LPTIM1_IRQHandler
-CEC_IRQHandler
-I2C4_EV_IRQHandler
-I2C4_ER_IRQHandler
-SPDIF_RX_IRQHandler
-                B       .
+   .weak      UsageFault_Handler
+   .thumb_set UsageFault_Handler,Default_Handler
 
-                ENDP
+   .weak      SVC_Handler
+   .thumb_set SVC_Handler,Default_Handler
 
-                ALIGN
+   .weak      DebugMon_Handler
+   .thumb_set DebugMon_Handler,Default_Handler
 
-                 END
+   .weak      PendSV_Handler
+   .thumb_set PendSV_Handler,Default_Handler
 
+   .weak      SysTick_Handler
+   .thumb_set SysTick_Handler,Default_Handler              
+  
+   .weak      WWDG_IRQHandler                   
+   .thumb_set WWDG_IRQHandler,Default_Handler      
+                  
+   .weak      PVD_IRQHandler      
+   .thumb_set PVD_IRQHandler,Default_Handler
+               
+   .weak      TAMP_STAMP_IRQHandler            
+   .thumb_set TAMP_STAMP_IRQHandler,Default_Handler
+            
+   .weak      RTC_WKUP_IRQHandler                  
+   .thumb_set RTC_WKUP_IRQHandler,Default_Handler
+            
+   .weak      FLASH_IRQHandler         
+   .thumb_set FLASH_IRQHandler,Default_Handler
+                  
+   .weak      RCC_IRQHandler      
+   .thumb_set RCC_IRQHandler,Default_Handler
+                  
+   .weak      EXTI0_IRQHandler         
+   .thumb_set EXTI0_IRQHandler,Default_Handler
+                  
+   .weak      EXTI1_IRQHandler         
+   .thumb_set EXTI1_IRQHandler,Default_Handler
+                     
+   .weak      EXTI2_IRQHandler         
+   .thumb_set EXTI2_IRQHandler,Default_Handler 
+                 
+   .weak      EXTI3_IRQHandler         
+   .thumb_set EXTI3_IRQHandler,Default_Handler
+                        
+   .weak      EXTI4_IRQHandler         
+   .thumb_set EXTI4_IRQHandler,Default_Handler
+                  
+   .weak      DMA1_Stream0_IRQHandler               
+   .thumb_set DMA1_Stream0_IRQHandler,Default_Handler
+         
+   .weak      DMA1_Stream1_IRQHandler               
+   .thumb_set DMA1_Stream1_IRQHandler,Default_Handler
+                  
+   .weak      DMA1_Stream2_IRQHandler               
+   .thumb_set DMA1_Stream2_IRQHandler,Default_Handler
+                  
+   .weak      DMA1_Stream3_IRQHandler               
+   .thumb_set DMA1_Stream3_IRQHandler,Default_Handler 
+                 
+   .weak      DMA1_Stream4_IRQHandler              
+   .thumb_set DMA1_Stream4_IRQHandler,Default_Handler
+                  
+   .weak      DMA1_Stream5_IRQHandler               
+   .thumb_set DMA1_Stream5_IRQHandler,Default_Handler
+                  
+   .weak      DMA1_Stream6_IRQHandler               
+   .thumb_set DMA1_Stream6_IRQHandler,Default_Handler
+                  
+   .weak      ADC_IRQHandler      
+   .thumb_set ADC_IRQHandler,Default_Handler
+               
+   .weak      CAN1_TX_IRQHandler   
+   .thumb_set CAN1_TX_IRQHandler,Default_Handler
+            
+   .weak      CAN1_RX0_IRQHandler                  
+   .thumb_set CAN1_RX0_IRQHandler,Default_Handler
+                           
+   .weak      CAN1_RX1_IRQHandler                  
+   .thumb_set CAN1_RX1_IRQHandler,Default_Handler
+            
+   .weak      CAN1_SCE_IRQHandler                  
+   .thumb_set CAN1_SCE_IRQHandler,Default_Handler
+            
+   .weak      EXTI9_5_IRQHandler   
+   .thumb_set EXTI9_5_IRQHandler,Default_Handler
+            
+   .weak      TIM1_BRK_TIM9_IRQHandler            
+   .thumb_set TIM1_BRK_TIM9_IRQHandler,Default_Handler
+            
+   .weak      TIM1_UP_TIM10_IRQHandler            
+   .thumb_set TIM1_UP_TIM10_IRQHandler,Default_Handler
+
+   .weak      TIM1_TRG_COM_TIM11_IRQHandler      
+   .thumb_set TIM1_TRG_COM_TIM11_IRQHandler,Default_Handler
+      
+   .weak      TIM1_CC_IRQHandler   
+   .thumb_set TIM1_CC_IRQHandler,Default_Handler
+                  
+   .weak      TIM2_IRQHandler            
+   .thumb_set TIM2_IRQHandler,Default_Handler
+                  
+   .weak      TIM3_IRQHandler            
+   .thumb_set TIM3_IRQHandler,Default_Handler
+                  
+   .weak      TIM4_IRQHandler            
+   .thumb_set TIM4_IRQHandler,Default_Handler
+                  
+   .weak      I2C1_EV_IRQHandler   
+   .thumb_set I2C1_EV_IRQHandler,Default_Handler
+                     
+   .weak      I2C1_ER_IRQHandler   
+   .thumb_set I2C1_ER_IRQHandler,Default_Handler
+                     
+   .weak      I2C2_EV_IRQHandler   
+   .thumb_set I2C2_EV_IRQHandler,Default_Handler
+                  
+   .weak      I2C2_ER_IRQHandler   
+   .thumb_set I2C2_ER_IRQHandler,Default_Handler
+                           
+   .weak      SPI1_IRQHandler            
+   .thumb_set SPI1_IRQHandler,Default_Handler
+                        
+   .weak      SPI2_IRQHandler            
+   .thumb_set SPI2_IRQHandler,Default_Handler
+                  
+   .weak      USART1_IRQHandler      
+   .thumb_set USART1_IRQHandler,Default_Handler
+                     
+   .weak      USART2_IRQHandler      
+   .thumb_set USART2_IRQHandler,Default_Handler
+                     
+   .weak      USART3_IRQHandler      
+   .thumb_set USART3_IRQHandler,Default_Handler
+                  
+   .weak      EXTI15_10_IRQHandler               
+   .thumb_set EXTI15_10_IRQHandler,Default_Handler
+               
+   .weak      RTC_Alarm_IRQHandler               
+   .thumb_set RTC_Alarm_IRQHandler,Default_Handler
+            
+   .weak      OTG_FS_WKUP_IRQHandler         
+   .thumb_set OTG_FS_WKUP_IRQHandler,Default_Handler
+            
+   .weak      TIM8_BRK_TIM12_IRQHandler         
+   .thumb_set TIM8_BRK_TIM12_IRQHandler,Default_Handler
+         
+   .weak      TIM8_UP_TIM13_IRQHandler            
+   .thumb_set TIM8_UP_TIM13_IRQHandler,Default_Handler
+         
+   .weak      TIM8_TRG_COM_TIM14_IRQHandler      
+   .thumb_set TIM8_TRG_COM_TIM14_IRQHandler,Default_Handler
+      
+   .weak      TIM8_CC_IRQHandler   
+   .thumb_set TIM8_CC_IRQHandler,Default_Handler
+                  
+   .weak      DMA1_Stream7_IRQHandler               
+   .thumb_set DMA1_Stream7_IRQHandler,Default_Handler
+                     
+   .weak      FMC_IRQHandler            
+   .thumb_set FMC_IRQHandler,Default_Handler
+                     
+   .weak      SDMMC1_IRQHandler            
+   .thumb_set SDMMC1_IRQHandler,Default_Handler
+                     
+   .weak      TIM5_IRQHandler            
+   .thumb_set TIM5_IRQHandler,Default_Handler
+                     
+   .weak      SPI3_IRQHandler            
+   .thumb_set SPI3_IRQHandler,Default_Handler
+                     
+   .weak      UART4_IRQHandler         
+   .thumb_set UART4_IRQHandler,Default_Handler
+                  
+   .weak      UART5_IRQHandler         
+   .thumb_set UART5_IRQHandler,Default_Handler
+                  
+   .weak      TIM6_DAC_IRQHandler                  
+   .thumb_set TIM6_DAC_IRQHandler,Default_Handler
+               
+   .weak      TIM7_IRQHandler            
+   .thumb_set TIM7_IRQHandler,Default_Handler
+         
+   .weak      DMA2_Stream0_IRQHandler               
+   .thumb_set DMA2_Stream0_IRQHandler,Default_Handler
+               
+   .weak      DMA2_Stream1_IRQHandler               
+   .thumb_set DMA2_Stream1_IRQHandler,Default_Handler
+                  
+   .weak      DMA2_Stream2_IRQHandler               
+   .thumb_set DMA2_Stream2_IRQHandler,Default_Handler
+            
+   .weak      DMA2_Stream3_IRQHandler               
+   .thumb_set DMA2_Stream3_IRQHandler,Default_Handler
+            
+   .weak      DMA2_Stream4_IRQHandler               
+   .thumb_set DMA2_Stream4_IRQHandler,Default_Handler
+
+   .weak      ETH_IRQHandler   
+   .thumb_set ETH_IRQHandler,Default_Handler
+   
+   .weak      ETH_WKUP_IRQHandler   
+   .thumb_set ETH_WKUP_IRQHandler,Default_Handler
+
+   .weak      CAN2_TX_IRQHandler   
+   .thumb_set CAN2_TX_IRQHandler,Default_Handler   
+                           
+   .weak      CAN2_RX0_IRQHandler                  
+   .thumb_set CAN2_RX0_IRQHandler,Default_Handler
+                           
+   .weak      CAN2_RX1_IRQHandler                  
+   .thumb_set CAN2_RX1_IRQHandler,Default_Handler
+                           
+   .weak      CAN2_SCE_IRQHandler                  
+   .thumb_set CAN2_SCE_IRQHandler,Default_Handler
+                           
+   .weak      OTG_FS_IRQHandler      
+   .thumb_set OTG_FS_IRQHandler,Default_Handler
+                     
+   .weak      DMA2_Stream5_IRQHandler               
+   .thumb_set DMA2_Stream5_IRQHandler,Default_Handler
+                  
+   .weak      DMA2_Stream6_IRQHandler               
+   .thumb_set DMA2_Stream6_IRQHandler,Default_Handler
+                  
+   .weak      DMA2_Stream7_IRQHandler               
+   .thumb_set DMA2_Stream7_IRQHandler,Default_Handler
+                  
+   .weak      USART6_IRQHandler      
+   .thumb_set USART6_IRQHandler,Default_Handler
+                        
+   .weak      I2C3_EV_IRQHandler   
+   .thumb_set I2C3_EV_IRQHandler,Default_Handler
+                        
+   .weak      I2C3_ER_IRQHandler   
+   .thumb_set I2C3_ER_IRQHandler,Default_Handler
+                        
+   .weak      OTG_HS_EP1_OUT_IRQHandler         
+   .thumb_set OTG_HS_EP1_OUT_IRQHandler,Default_Handler
+               
+   .weak      OTG_HS_EP1_IN_IRQHandler            
+   .thumb_set OTG_HS_EP1_IN_IRQHandler,Default_Handler
+               
+   .weak      OTG_HS_WKUP_IRQHandler         
+   .thumb_set OTG_HS_WKUP_IRQHandler,Default_Handler
+            
+   .weak      OTG_HS_IRQHandler      
+   .thumb_set OTG_HS_IRQHandler,Default_Handler
+                  
+   .weak      DCMI_IRQHandler            
+   .thumb_set DCMI_IRQHandler,Default_Handler
+
+   .weak      RNG_IRQHandler            
+   .thumb_set RNG_IRQHandler,Default_Handler   
+
+   .weak      FPU_IRQHandler                  
+   .thumb_set FPU_IRQHandler,Default_Handler
+
+   .weak      UART7_IRQHandler                  
+   .thumb_set UART7_IRQHandler,Default_Handler
+
+   .weak      UART8_IRQHandler                  
+   .thumb_set UART8_IRQHandler,Default_Handler   
+
+   .weak      SPI4_IRQHandler            
+   .thumb_set SPI4_IRQHandler,Default_Handler
+   
+   .weak      SPI5_IRQHandler            
+   .thumb_set SPI5_IRQHandler,Default_Handler
+
+   .weak      SPI6_IRQHandler            
+   .thumb_set SPI6_IRQHandler,Default_Handler   
+
+   .weak      SAI1_IRQHandler            
+   .thumb_set SAI1_IRQHandler,Default_Handler
+   
+   .weak      LTDC_IRQHandler            
+   .thumb_set LTDC_IRQHandler,Default_Handler
+
+   .weak      LTDC_ER_IRQHandler            
+   .thumb_set LTDC_ER_IRQHandler,Default_Handler
+
+   .weak      DMA2D_IRQHandler            
+   .thumb_set DMA2D_IRQHandler,Default_Handler   
+
+   .weak      SAI2_IRQHandler            
+   .thumb_set SAI2_IRQHandler,Default_Handler
+   
+   .weak      QUADSPI_IRQHandler            
+   .thumb_set QUADSPI_IRQHandler,Default_Handler
+ 
+   .weak      LPTIM1_IRQHandler            
+   .thumb_set LPTIM1_IRQHandler,Default_Handler
+
+   .weak      CEC_IRQHandler            
+   .thumb_set CEC_IRQHandler,Default_Handler
+   
+   .weak      I2C4_EV_IRQHandler            
+   .thumb_set I2C4_EV_IRQHandler,Default_Handler 
+ 
+   .weak      I2C4_ER_IRQHandler            
+   .thumb_set I2C4_ER_IRQHandler,Default_Handler
+   
+   .weak      SPDIF_RX_IRQHandler            
+   .thumb_set SPDIF_RX_IRQHandler,Default_Handler 
+    
+ 

@@ -51,6 +51,7 @@
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wformat="
 #   pragma GCC diagnostic ignored "-Wpedantic"
+#   pragma GCC diagnostic ignored "-Wlto-type-mismatch"
 #endif
 
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
@@ -83,7 +84,7 @@
 
 /*============================ GLOBAL VARIABLES ==============================*/
 
-extern const uint8_t c_bmpHelium;
+extern const uint8_t c_bmpHelium[];
 extern const arm_2d_tile_t c_tileHelium;
 extern const arm_2d_tile_t c_tileDigitsFontA4Mask;
 extern const uint8_t c_bmpDigitsFontA4Alpha[];
