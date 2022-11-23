@@ -1464,6 +1464,12 @@
         <file>
             <name>$PROJ_DIR$\..\..\..\main.c</name>
         </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\virtual_resource_demo.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\virtual_resource_demo.h</name>
+        </file>
     </group>
     <group>
         <name>Arm-2D</name>
@@ -1772,9 +1778,6 @@
         </group>
         <group>
             <name>User</name>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\platform\stm32f746g-discovery\GLCD_746G_Discovery.c</name>
-            </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\common\platform\stm32f746g-discovery\startup_ARMCM7.c</name>
             </file>

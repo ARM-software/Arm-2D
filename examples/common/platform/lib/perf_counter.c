@@ -26,6 +26,8 @@
 
 #if defined(__IS_COMPILER_GCC__)
 #   pragma GCC diagnostic ignored "-Wattributes"
+#elif __IS_COMPILER_IAR__
+#   pragma diag_suppress=Pa089,Pe188,Pe177,Pe174,Pe082
 #endif
 
 

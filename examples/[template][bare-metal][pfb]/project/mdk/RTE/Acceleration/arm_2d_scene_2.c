@@ -49,6 +49,8 @@
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
 #   pragma clang diagnostic ignored "-Wgnu-variable-sized-type-not-at-end"
 #elif __IS_COMPILER_ARM_COMPILER_5__
+#elif __IS_COMPILER_IAR__
+#   pragma diag_suppress=Pa089,Pe188,Pe177,Pe174
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wformat="
@@ -267,7 +269,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
     arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
     arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
     arm_lcd_text_location(0,0);
-    arm_lcd_puts("scene 2");
+    //arm_lcd_puts("scene 2");
+    arm_lcd_printf("scene 2");
 
     /*-----------------------draw the foreground end  -----------------------*/
     arm_2d_op_wait_async(NULL);

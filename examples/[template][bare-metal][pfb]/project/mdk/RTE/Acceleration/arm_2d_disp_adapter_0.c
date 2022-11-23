@@ -54,13 +54,6 @@
 #endif
 
 /*============================ MACROS ========================================*/
-#ifndef __STR
-#   define __STR(__A)      #__A
-#endif
-
-#ifndef STR
-#   define STR(__A)         __STR(__A)
-#endif
 
 #ifndef __DISP0_CFG_ITERATION_CNT__
 #   define __DISP0_CFG_ITERATION_CNT__     30

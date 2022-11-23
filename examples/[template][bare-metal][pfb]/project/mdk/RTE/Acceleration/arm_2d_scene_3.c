@@ -52,6 +52,8 @@
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wformat="
 #   pragma GCC diagnostic ignored "-Wpedantic"
+#elif __IS_COMPILER_IAR__
+#   pragma diag_suppress=Pa089,Pe188,Pe177,Pe174
 #endif
 
 /*============================ MACROS ========================================*/
@@ -440,7 +442,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene3_handler)
     arm_lcd_text_set_draw_region(NULL);
     arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
     arm_lcd_text_location(0,0);
-    arm_lcd_puts("Scene 3");
+    //arm_lcd_puts("Scene 3");
+    arm_lcd_printf("scene 3");
 
     /*-----------------------draw the foreground end  -----------------------*/
     arm_2d_op_wait_async(NULL);

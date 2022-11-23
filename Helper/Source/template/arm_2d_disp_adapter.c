@@ -47,6 +47,8 @@
 #   pragma clang diagnostic ignored "-Wdouble-promotion"
 #   pragma clang diagnostic ignored "-Wembedded-directive"
 #elif __IS_COMPILER_ARM_COMPILER_5__
+#elif __IS_COMPILER_IAR__
+#   pragma diag_suppress=Pa089,Pe188,Pe177,Pe174
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wformat="
@@ -54,13 +56,6 @@
 #endif
 
 /*============================ MACROS ========================================*/
-#ifndef __STR
-#   define __STR(__A)      #__A
-#endif
-
-#ifndef STR
-#   define STR(__A)         __STR(__A)
-#endif
 
 #ifndef __DISP%Instance%_CFG_ITERATION_CNT__
 #   define __DISP%Instance%_CFG_ITERATION_CNT__     30

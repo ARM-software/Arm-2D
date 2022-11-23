@@ -224,7 +224,7 @@
                     <state>__DISP0_CFG_SCEEN_WIDTH__=480</state>
                     <state>__DISP0_CFG_SCEEN_HEIGHT__=272</state>
                     <state>__DISP0_CFG_PFB_BLOCK_WIDTH__=120</state>
-                    <state>__DISP0_CFG_PFB_BLOCK_HEIGHT__=120</state>
+                    <state>__DISP0_CFG_PFB_BLOCK_HEIGHT__=24</state>
                     <state>__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1</state>
                 </option>
                 <option>
@@ -1121,6 +1121,12 @@
         <file>
             <name>$PROJ_DIR$\..\..\..\main.c</name>
         </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\virtual_resource_demo.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\virtual_resource_demo.h</name>
+        </file>
     </group>
     <group>
         <name>Arm-2D</name>
@@ -1429,12 +1435,6 @@
         </group>
         <group>
             <name>User</name>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\platform\stm32f746g-discovery\GLCD_746G_Discovery.c</name>
-                <excluded>
-                    <configuration>STM32746G_DISCOVERY</configuration>
-                </excluded>
-            </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\common\platform\stm32f746g-discovery\startup_ARMCM7.c</name>
             </file>

@@ -63,7 +63,7 @@
 #   pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #   pragma GCC diagnostic ignored "-Wunused-value"
 #elif __IS_COMPILER_IAR__
-#   pragma diag_suppress=Pa089,Pe188,Pe174
+#   pragma diag_suppress=Pa089,Pe188,Pe174,Pe546
 #endif
 
 /*============================ MACROS ========================================*/
