@@ -21,6 +21,11 @@
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
+
+#ifdef   __cplusplus
+extern "C" {
+#endif
+
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
@@ -32,5 +37,9 @@ void progress_bar_simple_init(void);
 
 extern
 void progress_bar_simple_show(const arm_2d_tile_t *ptTarget, int_fast16_t iProgress);
+
+#ifdef   __cplusplus
+}
+#endif
 
 #endif

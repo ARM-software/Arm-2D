@@ -25,8 +25,6 @@
 #include "arm_extra_lcd_printf.h"
 #include "./__common.h"
 
-
-
 #ifdef   __cplusplus
 extern "C" {
 #endif

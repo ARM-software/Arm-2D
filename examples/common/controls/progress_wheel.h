@@ -22,6 +22,17 @@
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
 #include "__common.h"
+
+
+#ifdef   __cplusplus
+extern "C" {
+#endif
+
+#if defined(__clang__)
+#   pragma clang diagnostic push
+#   pragma clang diagnostic ignored "-Wpadded"
+#endif
+
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
@@ -51,5 +62,15 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                             int16_t iProgress,
                             uint8_t chOpacity,
                             bool bIsNewFrame);
+
+#if defined(__clang__)
+#   pragma clang diagnostic pop
+#endif
+
+#ifdef   __cplusplus
+}
+#endif
+
+
 
 #endif

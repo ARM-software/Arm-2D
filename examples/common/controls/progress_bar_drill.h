@@ -21,6 +21,11 @@
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
+
+#ifdef   __cplusplus
+extern "C" {
+#endif
+
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
@@ -34,5 +39,9 @@ extern
 void progress_bar_drill_show(   const arm_2d_tile_t *ptTarget, 
                                 int_fast16_t iProgress,
                                 bool bIsNewFrame);
+
+#ifdef   __cplusplus
+}
+#endif
 
 #endif

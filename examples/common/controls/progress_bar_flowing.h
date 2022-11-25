@@ -23,6 +23,10 @@
 #include "arm_2d.h"
 #include "__common.h"
 
+#ifdef   __cplusplus
+extern "C" {
+#endif
+
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
@@ -97,5 +101,9 @@ void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget,
                                     COLOUR_INT tBarColour,
                                     COLOUR_INT tPitchColour,
                                     COLOUR_INT tBoarderColour);
+
+#ifdef   __cplusplus
+}
+#endif
 
 #endif

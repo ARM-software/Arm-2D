@@ -26,6 +26,19 @@
 #include "arm_2d_helper_scene.h"
 #include "__common.h"
 
+#ifdef   __cplusplus
+extern "C" {
+#endif
+
+#if defined(__clang__)
+#   pragma clang diagnostic push
+#   pragma clang diagnostic ignored "-Wunknown-warning-option"
+#   pragma clang diagnostic ignored "-Wreserved-identifier"
+#   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
+#   pragma clang diagnostic ignored "-Wpadded"
+#   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
+#endif
+
 /*============================ INCLUDES ======================================*/
 /*============================ MACROS ========================================*/
 
@@ -251,6 +264,14 @@ void disp_adapter%Instance%_insert_async_flushing_complete_event_handler(void);
 
 
 
+#endif
+
+#if defined(__clang__)
+#   pragma clang diagnostic pop
+#endif
+
+#ifdef   __cplusplus
+}
 #endif
 
 #endif

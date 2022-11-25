@@ -38,6 +38,10 @@
 #   include "./arm_extra_lcd_printf.h"
 #endif
 
+#ifdef   __cplusplus
+extern "C" {
+#endif
+
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
@@ -53,5 +57,9 @@ void arm_2d_draw_box(const arm_2d_tile_t *ptTarget,
                      int16_t iBorderWidth, 
                      COLOUR_INT tColour,
                      uint8_t chOpacity);
+
+#ifdef   __cplusplus
+}
+#endif
 
 #endif

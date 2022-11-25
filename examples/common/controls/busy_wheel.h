@@ -21,6 +21,10 @@
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
+
+#ifdef   __cplusplus
+extern "C" {
+#endif
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
@@ -35,5 +39,9 @@ void busy_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame);
 
 extern 
 void busy_wheel2_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame);
+
+#ifdef   __cplusplus
+}
+#endif
 
 #endif

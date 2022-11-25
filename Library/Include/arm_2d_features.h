@@ -43,6 +43,7 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wunknown-warning-option"
 #   pragma clang diagnostic ignored "-Wreserved-identifier"
 #   pragma clang diagnostic ignored "-Wmicrosoft-anon-tag"
+#   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #endif
 
 /*!

@@ -45,8 +45,6 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wpadded"
 #endif
 
-
-
 /*============================ MACROS ========================================*/
 
 /* OOC header, please DO NOT modify  */

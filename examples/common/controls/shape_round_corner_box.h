@@ -21,6 +21,11 @@
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
+
+#ifdef   __cplusplus
+extern "C" {
+#endif
+
 /*============================ MACROS ========================================*/
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 #   define COLOUR_INT               uint8_t
@@ -45,5 +50,9 @@ void draw_round_corner_box( const arm_2d_tile_t *ptTarget,
                             COLOUR_INT tColour,
                             uint8_t chAlpha,
                             bool bIsNewFrame);
+
+#ifdef   __cplusplus
+}
+#endif
 
 #endif
