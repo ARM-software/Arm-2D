@@ -194,22 +194,33 @@ IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
                     255 - 32);
         arm_2d_op_wait_async(NULL);
         arm_lcd_text_set_colour(GLCD_COLOR_GREEN, GLCD_COLOR_WHITE);
-        arm_lcd_text_location( (__DISP0_CFG_SCEEN_HEIGHT__ + 7) / 8 - 2, 0);
+        arm_lcd_text_location((__DISP0_CFG_SCEEN_HEIGHT__ + 7) / 8 - 2,
+                              0);
+
         if (BENCHMARK.wAverage) {
             arm_lcd_printf(
-                "FPS: %3d:%dms   ",
+                "FPS:%3d:%dms ",
                 arm_2d_helper_get_reference_clock_frequency() / BENCHMARK.wAverage,
                 (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wAverage));
         }
+
+#if __DISP0_CFG_SCEEN_WIDTH__ >= 240
         arm_lcd_printf( 
-            "LCD Latency: %2dms", 
+            "LCD-Latency:%2dms", 
             (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wLCDLatency) );
+#else
+        arm_lcd_printf( 
+            "LCD:%2dms",
+            (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wLCDLatency) );
+#endif
     }
+
+#if __DISP0_CFG_SCEEN_WIDTH__ >= 320 
 
     /* draw verion info on the bottom right corner */
     arm_lcd_text_set_colour(GLCD_COLOR_LIGHT_GREY, GLCD_COLOR_WHITE);
     arm_lcd_text_location( (__DISP0_CFG_SCEEN_HEIGHT__ + 7) / 8 - 2, 
-                            (__DISP0_CFG_SCEEN_WIDTH__ / 6) - 24);
+                            (__DISP0_CFG_SCEEN_WIDTH__ / 6) - 22);
     arm_lcd_printf("arm-2d v" 
                     ARM_TO_STRING(ARM_2D_VERSION_MAJOR)
                     "."
@@ -219,6 +230,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
                     "-"
                     ARM_2D_VERSION_STR
                     );
+#endif
+
+
+
+
 
     arm_2d_op_wait_async(NULL);
 
