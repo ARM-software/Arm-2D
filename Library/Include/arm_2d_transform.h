@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_transform.h"
  * Description:  Public header file to contain the APIs for transform
  *
- * $Date:        14 Oct 2022
- * $Revision:    V.1.0.2
+ * $Date:        25 Nov 2022
+ * $Revision:    V.1.0.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1474,7 +1474,7 @@ extern "C" {
                                         __MSK_COLOUR,                           \
                                         __RATIO,...)                            \
         ({assert(NULL != (__CB_ADDR)); if (bIsNewFrame) {                       \
-            arm_2dp_rgb888_fill_colour_with_mask_opacity_and_transform_prepare( \
+            arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_prepare(\
                                         (__CB_ADDR),                            \
                                         (__MASK_ADDR),                          \
                                         (__CENTRE),                             \
@@ -1500,7 +1500,7 @@ extern "C" {
                                         __MSK_COLOUR,                           \
                                         __RATIO,...)                            \
         ({assert(NULL != (__CB_ADDR)); if (bIsNewFrame) {                       \
-            arm_2dp_rgb888_fill_colour_with_mask_opacity_and_transform_prepare( \
+            arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_prepare(\
                                         (__CB_ADDR),                            \
                                         (__MASK_ADDR),                          \
                                         (__CENTRE),                             \
