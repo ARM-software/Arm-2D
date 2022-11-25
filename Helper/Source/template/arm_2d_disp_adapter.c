@@ -441,6 +441,11 @@ arm_fsm_rt_t disp_adapter%Instance%_task(void)
 __WEAK
 void * __disp_adapter%Instance%_aligned_malloc(size_t nSize, size_t nAlign)
 {
+    ARM_2D_UNUSED(nAlign);
+
+    /* ensure nAlign is 2^n */
+    assert((((~nAlign) + 1) & nAlign) == nAlign);
+
     void * pMem = malloc(nSize);
     assert( 0 == ((uintptr_t)pMem & (nAlign - 1)));
     return pMem;

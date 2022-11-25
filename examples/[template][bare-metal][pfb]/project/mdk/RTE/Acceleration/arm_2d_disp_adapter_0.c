@@ -47,6 +47,8 @@
 #   pragma clang diagnostic ignored "-Wdouble-promotion"
 #   pragma clang diagnostic ignored "-Wembedded-directive"
 #elif __IS_COMPILER_ARM_COMPILER_5__
+#elif __IS_COMPILER_IAR__
+#   pragma diag_suppress=Pa089,Pe188,Pe177,Pe174
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wformat="
@@ -439,6 +441,11 @@ arm_fsm_rt_t disp_adapter0_task(void)
 __WEAK
 void * __disp_adapter0_aligned_malloc(size_t nSize, size_t nAlign)
 {
+    ARM_2D_UNUSED(nAlign);
+
+    /* ensure nAlign is 2^n */
+    assert((((~nAlign) + 1) & nAlign) == nAlign);
+
     void * pMem = malloc(nSize);
     assert( 0 == ((uintptr_t)pMem & (nAlign - 1)));
     return pMem;

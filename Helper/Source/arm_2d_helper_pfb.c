@@ -108,7 +108,7 @@ void __arm_2d_helper_pfb_free(arm_2d_helper_pfb_t *ptThis, arm_2d_pfb_t *ptPFB)
 
 ARM_NONNULL(1,2)
 arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis, 
-                            arm_2d_helper_pfb_cfg_t *ptCFG)
+                                    arm_2d_helper_pfb_cfg_t *ptCFG)
 {
     assert(NULL != ptThis);
     assert(NULL != ptCFG);
@@ -181,6 +181,8 @@ arm_2d_region_t arm_2d_helper_pfb_get_display_area(arm_2d_helper_pfb_t *ptThis)
 __WEAK 
 void arm_2d_helper_swap_rgb16(uint16_t *phwBuffer, uint32_t wCount)
 {
+    assert(NULL != phwBuffer);
+
     if (0 == wCount) {
         return ;
     }
