@@ -9,14 +9,14 @@ var group__Drawing =
     [ "arm_2d_op_drw_patn_t", "group__Drawing.html#structarm__2d__op__drw__patn__t", [
       [ "arm_2d_op_core_t", "group__Drawing.html#a2abd5995ab6396a44e136d16cd330a21", null ],
       [ "wMode", "group__Drawing.html#a18975ab3ce177381cc0c77216342636f", null ],
-      [ "Foreground", "group__Drawing.html#afb95bf7406ae27e7664cc22da12eb9cc", null ],
-      [ "Background", "group__Drawing.html#a4bcc042a792d07868209320fa94933b6", null ]
+      [ "Foreground", "group__Drawing.html#a86f2a564b2acf6e043bc467683d31729", null ],
+      [ "Background", "group__Drawing.html#a2fdf8de32cadcc946932177feac7e4e2", null ]
     ] ],
     [ "arm_2d_op_fill_cl_t.Target", "group__Drawing.html#structarm__2d__op__fill__cl__t_8Target", [
       [ "ptTile", "group__Drawing.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
       [ "ptRegion", "group__Drawing.html#a0cb326a2a86a2a0e46a3b1226fb97c65", null ]
     ] ],
-    [ "arm_2d_op_fill_cl_t.__unnamed88__", "group__Drawing.html#unionarm__2d__op__fill__cl__t_8____unnamed88____", [
+    [ "arm_2d_op_fill_cl_t.__unnamed92__", "group__Drawing.html#unionarm__2d__op__fill__cl__t_8____unnamed92____", [
       [ "chColour", "group__Drawing.html#a4853c21ae19c1b2bc936685425c225b5", null ],
       [ "hwColour", "group__Drawing.html#a3a90debdbc76b907ebc5d82ee18e56aa", null ],
       [ "wColour", "group__Drawing.html#a9f162c8dd605b531b0443f4f8d74453d", null ]
@@ -25,7 +25,7 @@ var group__Drawing =
       [ "ptTile", "group__Drawing.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
       [ "ptRegion", "group__Drawing.html#a0cb326a2a86a2a0e46a3b1226fb97c65", null ]
     ] ],
-    [ "arm_2d_op_drw_pt_t.__unnamed91__", "group__Drawing.html#unionarm__2d__op__drw__pt__t_8____unnamed91____", [
+    [ "arm_2d_op_drw_pt_t.__unnamed95__", "group__Drawing.html#unionarm__2d__op__drw__pt__t_8____unnamed95____", [
       [ "chColour", "group__Drawing.html#a4853c21ae19c1b2bc936685425c225b5", null ],
       [ "hwColour", "group__Drawing.html#a3a90debdbc76b907ebc5d82ee18e56aa", null ],
       [ "wColour", "group__Drawing.html#a9f162c8dd605b531b0443f4f8d74453d", null ]
@@ -46,10 +46,10 @@ var group__Drawing =
       [ "chColour", "group__Drawing.html#a4853c21ae19c1b2bc936685425c225b5", null ],
       [ "hwColour", "group__Drawing.html#a3a90debdbc76b907ebc5d82ee18e56aa", null ],
       [ "wColour", "group__Drawing.html#a9f162c8dd605b531b0443f4f8d74453d", null ],
-      [ "ARM_2D_DRW_PATN_MODE_COPY", "group__Drawing.html#ggab39a415800ebd0d977c477376649649ba1a5ec5b581f0a218e5ba33599ef8395c", null ],
-      [ "ARM_2D_DRW_PATN_MODE_WITH_BG_COLOR", "group__Drawing.html#ggab39a415800ebd0d977c477376649649bafbc83eda27e68b4c93bdb737e59d2a4c", null ],
-      [ "ARM_2D_DRW_PATN_MODE_NO_FG_COLOR", "group__Drawing.html#ggab39a415800ebd0d977c477376649649bacfce0a962b3bfa98e3780e06325a24b3", null ],
-      [ "ARM_2D_DRW_PATH_MODE_COMP_FG_COLOUR", "group__Drawing.html#ggab39a415800ebd0d977c477376649649bab92dac0b00677c84a767d2ea0dcad999", null ]
+      [ "ARM_2D_DRW_PATN_MODE_COPY", "group__Drawing.html#ggaad393aa3e173d7f081ab4bbc6ba5027da1a5ec5b581f0a218e5ba33599ef8395c", null ],
+      [ "ARM_2D_DRW_PATN_MODE_WITH_BG_COLOR", "group__Drawing.html#ggaad393aa3e173d7f081ab4bbc6ba5027dafbc83eda27e68b4c93bdb737e59d2a4c", null ],
+      [ "ARM_2D_DRW_PATN_MODE_NO_FG_COLOR", "group__Drawing.html#ggaad393aa3e173d7f081ab4bbc6ba5027dacfce0a962b3bfa98e3780e06325a24b3", null ],
+      [ "ARM_2D_DRW_PATH_MODE_COMP_FG_COLOUR", "group__Drawing.html#ggaad393aa3e173d7f081ab4bbc6ba5027dab92dac0b00677c84a767d2ea0dcad999", null ]
     ] ],
     [ "arm_2d_c8bit_draw_point_fast", "group__Drawing.html#gaabdacfa61648728a7e7583cb6ab2c92f", null ],
     [ "arm_2d_rgb16_draw_point_fast", "group__Drawing.html#ga6e5784ce72824d6e0d54de0732b8037d", null ],

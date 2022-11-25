@@ -6,7 +6,7 @@ var searchData=
   ['impl_5fheap_5ffb_3',['impl_heap_fb',['../group__gHelper.html#gab96c869dd347721f96e7c0f36775f8c1',1,'arm_2d_helper.h']]],
   ['implement_4',['implement',['../group__gKernel.html#ga295397fe5671506e3687a730d4dfdb8a',1,'arm_2d_utils.h']]],
   ['implement_5fex_5',['implement_ex',['../group__gKernel.html#gabc7a8afaf410f95e3922d2fd904a016c',1,'arm_2d_utils.h']]],
-  ['info_6',['Info',['../group__gKernel.html#afeb5df3f822f7a00695ae7445e1b1105',1,'__arm_2d_op_info_t']]],
+  ['info_6',['Info',['../group__gKernel.html#aeb317542dc8cadcfe47639a16dbb3b5c',1,'__arm_2d_op_info_t']]],
   ['inherit_7',['inherit',['../group__gKernel.html#ga4b362915d65708c32e2b83db54425d7a',1,'arm_2d_utils.h']]],
   ['inherit_5fex_8',['inherit_ex',['../group__gKernel.html#ga22f94c7e7b097ac219c0e1d1b8129807',1,'arm_2d_utils.h']]],
   ['init_5farm_5f2d_5fhelper_5fpfb_9',['init_arm_2d_helper_pfb',['../group__gHelper.html#ga377f8339912a8b31e11f45f6af81a1de',1,'arm_2d_helper_pfb.h']]],
