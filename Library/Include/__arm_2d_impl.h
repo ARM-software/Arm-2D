@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        07. Nov 2022
- * $Revision:    V.1.3.9
+ * $Date:        25. Nov 2022
+ * $Revision:    V.1.3.10
  *
  * Target Processor:  Cortex-M cores
  *
@@ -546,6 +546,11 @@ const arm_2d_tile_t *__arm_2d_tile_get_root(const arm_2d_tile_t *ptTile,
                                             arm_2d_region_t *ptValidRegion,
                                             arm_2d_location_t *ptOffset,
                                             arm_2d_tile_t **ppFirstDerivedChild);
+
+extern
+void *__arm_2d_allocate_scratch_memory( uint32_t wSize, 
+                                        uint_fast8_t nAlign,
+                                        arm_2d_mem_type_t tType);
 
 /*----------------------------------------------------------------------------*
  * Default Software Implementations                                           *

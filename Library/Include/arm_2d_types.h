@@ -21,8 +21,8 @@
  * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        14. Oct 2022
- * $Revision:    V.1.0.11
+ * $Date:        25. Nov 2022
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -531,6 +531,42 @@ struct arm_2d_tile_t {
         intptr_t            nAddress;                                           //!< a pointer in integer
     };
 };
+
+/*!
+ * \brief the enumeration type for describing memory types
+ * 
+ */
+typedef enum {
+    ARM_2D_MEM_TYPE_UNSPECIFIED,                                                //!< normal memory, we don't know its characterisics
+    ARM_2D_MEM_TYPE_SLOW,                                                       //!< for slow memories, such as SDRAM, DDRAM, external memory etc
+    ARM_2D_MEM_TYPE_FAST,                                                       //!< for fast memories, such as TCM, SRAM etc.
+} arm_2d_mem_type_t;
+
+typedef union __arm_2d_mem_info_t {
+    struct {
+        uint32_t u24SizeInByte      : 24;                                       //!< the memory size in Byte
+        uint32_t u2ItemSize         : 3;                                        //!< the size of the data item
+        uint32_t u2Align            : 3;                                        //!< the alignment
+        uint32_t u2Type             : 2;                                        //!< The memory type define in enum arm_2d_mem_type_t
+    };
+    uint32_t Value;                                                             //!< Memory Information
+}__arm_2d_mem_info_t;
+
+
+/*!
+ * \brief a type for scratch memory blocks
+ * 
+ */
+typedef struct __arm_2d_mem_t __arm_2d_mem_t;
+struct __arm_2d_mem_t {
+    union {
+        __arm_2d_mem_t *ptNext;                                                 //!< a list pointer
+        uint32_t        wSignature;                                             //!< a signature for validation
+    };
+    __arm_2d_mem_info_t tInfo;                                                  //!< memory info
+    uint8_t pBuffer[];                                                          //!< a constant pointer points to the buffer following this header
+};
+
 
 /*!
  * \brief a type for virtual resource
