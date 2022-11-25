@@ -70,8 +70,8 @@
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
-#   define c_bmpHelium              c_bmpHeliumCCCA8888
-#   define c_tileHelium             c_tileHeliumCCCA8888
+#   define c_bmpHelium              c_bmpHeliumCCCN888
+#   define c_tileHelium             c_tileHeliumCCCN888
 #else
 #   error Unsupported colour depth!
 #endif
