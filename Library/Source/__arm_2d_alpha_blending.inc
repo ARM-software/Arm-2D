@@ -199,7 +199,7 @@ void __ARM_2D_FUNC(colour_filling_a2_mask)(
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
-            uint16_t hwTempAlpha = c_chA2MaskTable[(*pchMask & chBitMask) >> nOffset];
+            uint16_t hwTempAlpha = ((*pchMask & chBitMask) >> nOffset) * 85;
 
             uint16_t hwAlpha = 256 - hwTempAlpha;
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -262,7 +262,7 @@ void __ARM_2D_FUNC(colour_filling_a4_mask)(
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
-            uint16_t hwTempAlpha = c_chA4MaskTable[(*pchMask & chBitMask) >> nOffset];
+            uint16_t hwTempAlpha = ((*pchMask & chBitMask) >> nOffset) * 17;
 
             uint16_t hwAlpha = 256 - hwTempAlpha;
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -367,8 +367,7 @@ void __ARM_2D_FUNC(colour_filling_a2_mask_opacity)(
         __API_INT_TYPE * __RESTRICT pTarget = pTargetBase;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwTempAlpha = c_chA2MaskTable[(*pchMask & chBitMask) >> nOffset];
-
+            uint16_t hwTempAlpha = ((*pchMask & chBitMask) >> nOffset) * 85;
             uint16_t hwAlpha = 256 - (hwTempAlpha * hwOpacity >> 8);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -435,8 +434,7 @@ void __ARM_2D_FUNC(colour_filling_a4_mask_opacity)(
         __API_INT_TYPE * __RESTRICT pTarget = pTargetBase;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwTempAlpha = c_chA4MaskTable[(*pchMask & chBitMask) >> nOffset];
-
+            uint16_t hwTempAlpha = ((*pchMask & chBitMask) >> nOffset) * 17;
             uint16_t hwAlpha = 256 - (hwTempAlpha * hwOpacity >> 8);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)

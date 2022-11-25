@@ -21,8 +21,8 @@
  * Title:        arm-2d.c
  * Description:  APIs for various alpha related operations
  *
- * $Date:        07. Oct 2022
- * $Revision:    V.1.5.0
+ * $Date:        25. Nov 2022
+ * $Revision:    V.1.5.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -69,12 +69,12 @@ extern "C" {
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
-static
-const uint8_t c_chA2MaskTable[4]  = {0, 85, 170, 255};
+//static
+//const uint8_t c_chA2MaskTable[4]  = {0, 85, 170, 255};
 
-static
-const uint8_t c_chA4MaskTable[16] = {0, 17, 34,  51, 68, 85, 102, 119,
-                                     136, 153, 170, 187, 204, 221, 238, 255};
+//static
+//const uint8_t c_chA4MaskTable[16] = {0, 17, 34,  51, 68, 85, 102, 119,
+//                                     136, 153, 170, 187, 204, 221, 238, 255};
 
 /*============================ IMPLEMENTATION ================================*/
 
