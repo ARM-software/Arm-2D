@@ -1950,7 +1950,7 @@ static  uint32_t __draw_pattern_src_bitmask_rgb32[16] = {
                                                                                                \
             vecTarget = vmulq_x(vecTarget, vecAlpha, tailPred);                                \
             vecTarget = vmlaq_m(vecTarget, vecTransp, (uint16_t) Colour, tailPred);            \
-            vecTarget = vecTarget >> 8;                                                        \
+            vecTarget = vshrq_x(vecTarget, 8, tailPred);                                                        \
                                                                                                \
             vstrbq_p_u16(pTarget8, vecTarget, tailPred);                                       \
                                                                                                \
@@ -1991,7 +1991,7 @@ static  uint32_t __draw_pattern_src_bitmask_rgb32[16] = {
             uint16x8_t      vecTransp = TRGT_LOAD(pAlpha, STRIDE);                             \
             vecTransp = SCAL_OPACITY(vecTransp, OPACITY);                                      \
                                                                                                \
-            ALPHA_255_COMP_VEC16(vecTransp, COMPVAL);                                                \
+            ALPHA_255_COMP_VEC16(vecTransp, COMPVAL);                                          \
                                                                                                \
             uint16x8_t      vecAlpha = vsubq_u16(v256, vecTransp);                             \
             uint16x8_t      vecR, vecG, vecB;                                                  \
@@ -2110,6 +2110,170 @@ static  uint32_t __draw_pattern_src_bitmask_rgb32[16] = {
 #define CCCN888_SCAL_OPACITY(transp, opac, pred)        (uint16x8_t) vmulhq_x((uint8x16_t) transp, opac, pred)
 
 
+/* 2 and 4-bit alpha expansions helper tables */
+static uint8_t A2_expand_offs[4*3]= {
+    0, 0, 0, 0,
+    1, 1, 1, 1,
+    2, 2, 2, 2
+    };
+
+static uint8_t A2_masks[4*3]= {
+    0x03, 0x0c, 0x30, 0xc0,
+    0x03, 0x0c, 0x30, 0xc0,
+    0x03, 0x0c, 0x30, 0xc0
+    };
+
+static int8_t A2_masks_shifts[4*3]= {
+    0x00, 0x02, 0x04, 0x06,
+    0x00, 0x02, 0x04, 0x06,
+    0x00, 0x02, 0x04, 0x06,
+    };
+
+
+static uint8_t A4_expand_offs[4*3]= {
+    0, 0, 1, 1,
+    2, 2, 3, 3,
+    4, 4, 5, 5
+    };
+
+static uint8_t A4_masks[4*3]= {
+    0x0f, 0xf0, 0x0f, 0xf0,
+    0x0f, 0xf0, 0x0f, 0xf0,
+    0x0f, 0xf0, 0x0f, 0xf0
+    };
+
+static int8_t A4_masks_shifts[4*3]= {
+    0x00, 0x04, 0x00, 0x04,
+    0x00, 0x04, 0x00, 0x04,
+    0x00, 0x04, 0x00, 0x04,
+    };
+
+
+/* 2-bit alpha expansion in a 8x16-bit vector */
+/* ((gather_load(alpha, curA2Off) & curA2Masks) >> curA2MasksShift) * 85 */
+#define C8BIT_TRGT_LOAD_A2(base, stride, pred)  \
+    vmulq_x_n_u16( \
+        vshlq_x_u16( \
+            vandq_x(vldrbq_gather_offset_z_u16(base, curA2Offs, pred), curA2Masks, pred),\
+            curA2MasksShift, pred), \
+        85, pred)
+
+#define RGB565_TRGT_LOAD_A2(base, stride)  \
+    vmulq_n_u16( \
+        vshlq_u16( \
+            vandq(vldrbq_gather_offset_u16(base, curA2Offs), curA2Masks),\
+            curA2MasksShift), \
+        85)
+
+#define CCCN888_TRGT_LOAD_A2(base, stride, pred)  C8BIT_TRGT_LOAD_A2(base, stride, pred)
+
+
+/* 4-bit alpha expansion in a 8x16-bit vector */
+/* ((gather_load(alpha, curA4Off) & curA4Masks) >> curA4MasksShift) * 17 */
+#define C8BIT_TRGT_LOAD_A4(base, stride, pred)  \
+    vmulq_x_n_u16( \
+        vshlq_x_u16( \
+            vandq_x(vldrbq_gather_offset_z_u16(base, curA4Offs, pred), curA4Masks, pred),\
+            curA4MasksShift, pred), \
+        17, pred)
+
+/* 4-bit alpha expansion in a 8x16-bit vector */
+/* ((gather_load(alpha, curA4Off) & curA4Masks) >> curA4MasksShift) * 17 */
+#define RGB565_TRGT_LOAD_A4(base, stride)  \
+    vmulq_n_u16( \
+        vshlq_u16( \
+            vandq(vldrbq_gather_offset_u16(base, curA4Offs), curA4Masks),\
+            curA4MasksShift), \
+        17)
+
+#define CCCN888_TRGT_LOAD_A4(base, stride, pred)  C8BIT_TRGT_LOAD_A4(base, stride, pred)
+
+
+__OVERRIDE_WEAK
+void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_a2_mask)(
+                            uint8_t *__restrict pTargetBase,
+                            int16_t iTargetStride,
+                            uint8_t *__restrict pchAlpha,
+                            int16_t iAlphaStride,
+                            int32_t nAlphaOffset,
+                            arm_2d_size_t *__restrict ptCopySize,
+                            uint8_t Colour)
+{
+    int_fast16_t    iHeight = ptCopySize->iHeight;
+    int_fast16_t    iWidth = ptCopySize->iWidth;
+
+    nAlphaOffset &= 0x03;
+    iAlphaStride = (iAlphaStride + 3) & ~0x03;
+    iAlphaStride >>= 2;
+
+    uint16x8_t      v256 = vdupq_n_u16(256);
+
+    /* 2-bit alpha relative byte location offsets */
+    uint16x8_t      curA2Offs = vldrbq_u16(A2_expand_offs + nAlphaOffset);
+    /* 2-bit alpha byte masks */
+    uint16x8_t      curA2Masks = vldrbq_u16(A2_masks + nAlphaOffset);
+    /* 2-bit alpha byte shift, negated to be used with vector-based vector left shift */
+    int16x8_t       curA2MasksShift =
+        vnegq_s16(vldrbq_s16(A2_masks_shifts + nAlphaOffset));
+
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+        const uint8_t  *pAlpha = pchAlpha;
+        uint8_t        *pTarget8 = pTargetBase;
+
+
+        C8BIT_COLOUR_FILLING_MASK_INNER_MVE(C8BIT_TRGT_LOAD_A2, _,
+                                            /* advance alpha ptr by a quarter of byte */
+                                            C8BIT_SCAL_OPACITY_NONE, _, 1 / 4, 255);
+
+        pchAlpha += (iAlphaStride);
+        pTargetBase += (iTargetStride);
+    }
+}
+
+__OVERRIDE_WEAK
+void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_a4_mask)(
+                            uint8_t *__restrict pTargetBase,
+                            int16_t iTargetStride,
+                            uint8_t *__restrict pchAlpha,
+                            int16_t iAlphaStride,
+                            int32_t nAlphaOffset,
+                            arm_2d_size_t *__restrict ptCopySize,
+                            uint8_t Colour)
+{
+    int_fast16_t    iHeight = ptCopySize->iHeight;
+    int_fast16_t    iWidth = ptCopySize->iWidth;
+
+    nAlphaOffset &= 0x01;
+    iAlphaStride = (iAlphaStride + 1) & ~0x01;
+    iAlphaStride >>= 1;
+    uint16x8_t      v256 = vdupq_n_u16(256);
+
+    /* 4-bit alpha relative byte location offsets */
+    uint16x8_t      curA4Offs = vldrbq_u16(A4_expand_offs + nAlphaOffset);
+    /* 4-bit alpha byte masks */
+    uint16x8_t      curA4Masks = vldrbq_u16(A4_masks + nAlphaOffset);
+    /* 4-bit alpha byte shift, negated to be used with vector-based vector left shift */
+    int16x8_t       curA4MasksShift =
+        vnegq_s16(vldrbq_s16(A4_masks_shifts + nAlphaOffset));
+
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+        const uint8_t  *pAlpha = pchAlpha;
+        uint8_t        *pTarget8 = pTargetBase;
+
+
+        C8BIT_COLOUR_FILLING_MASK_INNER_MVE(C8BIT_TRGT_LOAD_A4, _,
+                                            /* advance alpha ptr by a half a byte */
+                                            C8BIT_SCAL_OPACITY_NONE, _, 1 / 2, 255);
+
+        pchAlpha += (iAlphaStride);
+        pTargetBase += (iTargetStride);
+    }
+}
+
 
 __OVERRIDE_WEAK
 void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask)(uint8_t * __RESTRICT pTarget,
@@ -2165,6 +2329,175 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask)(uint8_t * __RESTRIC
             ,[alph255] "r" (255)
 #endif
             :"q0", "q1", "q2", "q3", "memory");
+#endif
+        pchAlpha += (iAlphaStride);
+        pTarget += (iTargetStride);
+    }
+}
+
+__OVERRIDE_WEAK
+void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_a2_mask_opacity)(uint8_t * __RESTRICT pTarget,
+                                                               int16_t iTargetStride,
+                                                               uint8_t * __RESTRICT pchAlpha,
+                                                               int16_t iAlphaStride,
+                                                               int32_t nAlphaOffset,
+                                                               arm_2d_size_t *
+                                                               __RESTRICT ptCopySize,
+                                                               uint8_t Colour,
+                                                               uint_fast16_t hwOpacity)
+{
+    int_fast16_t    iHeight = ptCopySize->iHeight;
+    int_fast16_t    iWidth = ptCopySize->iWidth;
+
+    nAlphaOffset &= 0x03;
+    iAlphaStride = (iAlphaStride + 3) & ~0x03;
+    iAlphaStride >>= 2;
+
+    uint16x8_t      v256 = vdupq_n_u16(256);
+
+    /* 2-bit alpha relative byte location offsets */
+    uint16x8_t      curA2Offs = vldrbq_u16(A2_expand_offs + nAlphaOffset);
+    /* 2-bit alpha byte masks */
+    uint16x8_t      curA2Masks = vldrbq_u16(A2_masks + nAlphaOffset);
+    /* 2-bit alpha byte shift, negated to be used with vector-based vector left shift */
+    int16x8_t       curA2MasksShift =
+        vnegq_s16(vldrbq_s16(A2_masks_shifts + nAlphaOffset));
+
+    uint8x16_t      vOpacity = vdupq_n_u8(hwOpacity);
+
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+        const uint8_t * pAlpha = pchAlpha;
+        uint8_t *       pTarget8 = pTarget;
+
+#if 1//def USE_MVE_INTRINSICS
+        C8BIT_COLOUR_FILLING_MASK_INNER_MVE(C8BIT_TRGT_LOAD_A2, _,
+                                        /* advance alpha ptr by a quarter of byte */
+                                        C8BIT_SCAL_OPACITY, vOpacity, 1 / 4, 254);
+#else
+        register unsigned blkCnt __asm("lr");
+        blkCnt = iWidth;
+
+    __asm volatile(
+        "vecAlphaCompl            .req q2                        \n"
+
+        ".p2align 2                                              \n"
+        "   vldrb.u16               q0, [%[pTarget]]             \n"
+        "   vldrb.u16               q1, [%[pAlpha]], #8          \n"
+        "   vmulh.u8                q1, q1, %[vOpacity]          \n"
+        "   wlstp.16                lr, %[loopCnt], 1f           \n"
+        "2:                                                      \n"
+
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+        /* if vOpacity == 254, boost to 256 */
+        "   vpt.i16                 eq, q1, %[opa254]            \n"
+        "   vmovt.i16               q1, #256                     \n"
+#endif
+
+        "   vsub.i16                vecAlphaCompl, %[vec256], q1 \n"
+        "   vmul.u16                q3, q0, vecAlphaCompl        \n"
+        "   vldrb.u16               q0, [%[pTarget], #8]         \n"
+        "   vmla.u16                q3, q1, %[Colour]            \n"
+        "   vldrb.u16               q1, [%[pAlpha]], #8          \n"
+        "   vmulh.u8                q1, q1, %[vOpacity]          \n"
+        "   vshr.u16                q3, q3, #8                   \n"
+        "   vstrb.u16               q3, [%[pTarget]], #8         \n"
+        "   letp                    lr, 2b                       \n"
+        "1:                                                      \n"
+
+        " .unreq vecAlphaCompl                                   \n"
+        : [pTarget] "+l"(pTarget8),  [pAlpha] "+l" (pAlpha), [loopCnt] "+r"(blkCnt)
+        :[vec256] "t"   (v256),[Colour] "r"(Colour),[vOpacity] "t"(vOpacity)
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+         ,[opa254] "r" (254)
+#endif
+        :"q0", "q1", "q2", "q3", "memory");
+
+#endif
+        pchAlpha += (iAlphaStride);
+        pTarget += (iTargetStride);
+    }
+}
+
+
+__OVERRIDE_WEAK
+void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_a4_mask_opacity)(uint8_t * __RESTRICT pTarget,
+                                                               int16_t iTargetStride,
+                                                               uint8_t * __RESTRICT pchAlpha,
+                                                               int16_t iAlphaStride,
+                                                               int32_t nAlphaOffset,
+                                                               arm_2d_size_t *
+                                                               __RESTRICT ptCopySize,
+                                                               uint8_t Colour,
+                                                               uint_fast16_t hwOpacity)
+{
+    int_fast16_t    iHeight = ptCopySize->iHeight;
+    int_fast16_t    iWidth = ptCopySize->iWidth;
+
+    nAlphaOffset &= 0x01;
+    iAlphaStride = (iAlphaStride + 1) & ~0x01;
+    iAlphaStride >>= 1;
+
+    uint16x8_t      v256 = vdupq_n_u16(256);
+
+    /* 2-bit alpha relative byte location offsets */
+    uint16x8_t      curA4Offs = vldrbq_u16(A4_expand_offs + nAlphaOffset);
+    /* 2-bit alpha byte masks */
+    uint16x8_t      curA4Masks = vldrbq_u16(A4_masks + nAlphaOffset);
+    /* 2-bit alpha byte shift, negated to be used with vector-based vector left shift */
+    int16x8_t       curA4MasksShift =
+        vnegq_s16(vldrbq_s16(A4_masks_shifts + nAlphaOffset));
+
+    uint8x16_t      vOpacity = vdupq_n_u8(hwOpacity);
+
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+        const uint8_t * pAlpha = pchAlpha;
+        uint8_t *       pTarget8 = pTarget;
+
+#if 1//def USE_MVE_INTRINSICS
+        C8BIT_COLOUR_FILLING_MASK_INNER_MVE(C8BIT_TRGT_LOAD_A4, _,
+                                        /* advance alpha ptr by a quarter of byte */
+                                        C8BIT_SCAL_OPACITY, vOpacity, 1 / 2, 254);
+#else
+        register unsigned blkCnt __asm("lr");
+        blkCnt = iWidth;
+
+    __asm volatile(
+        "vecAlphaCompl            .req q2                        \n"
+
+        ".p2align 2                                              \n"
+        "   vldrb.u16               q0, [%[pTarget]]             \n"
+        "   vldrb.u16               q1, [%[pAlpha]], #8          \n"
+        "   vmulh.u8                q1, q1, %[vOpacity]          \n"
+        "   wlstp.16                lr, %[loopCnt], 1f           \n"
+        "2:                                                      \n"
+
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+        /* if vOpacity == 254, boost to 256 */
+        "   vpt.i16                 eq, q1, %[opa254]            \n"
+        "   vmovt.i16               q1, #256                     \n"
+#endif
+
+        "   vsub.i16                vecAlphaCompl, %[vec256], q1 \n"
+        "   vmul.u16                q3, q0, vecAlphaCompl        \n"
+        "   vldrb.u16               q0, [%[pTarget], #8]         \n"
+        "   vmla.u16                q3, q1, %[Colour]            \n"
+        "   vldrb.u16               q1, [%[pAlpha]], #8          \n"
+        "   vmulh.u8                q1, q1, %[vOpacity]          \n"
+        "   vshr.u16                q3, q3, #8                   \n"
+        "   vstrb.u16               q3, [%[pTarget]], #8         \n"
+        "   letp                    lr, 2b                       \n"
+        "1:                                                      \n"
+
+        " .unreq vecAlphaCompl                                   \n"
+        : [pTarget] "+l"(pTarget8),  [pAlpha] "+l" (pAlpha), [loopCnt] "+r"(blkCnt)
+        :[vec256] "t"   (v256),[Colour] "r"(Colour),[vOpacity] "t"(vOpacity)
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+         ,[opa254] "r" (254)
+#endif
+        :"q0", "q1", "q2", "q3", "memory");
+
 #endif
         pchAlpha += (iAlphaStride);
         pTarget += (iTargetStride);
@@ -2378,6 +2711,324 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_mask_opacity)(uin
 
 
 __OVERRIDE_WEAK
+void __MVE_WRAPPER(__arm_2d_impl_rgb565_colour_filling_a2_mask)(uint16_t * __RESTRICT pTarget,
+                                                 int16_t iTargetStride,
+                                                 uint8_t * __RESTRICT pchAlpha,
+                                                 int16_t iAlphaStride,
+                                                 int32_t nAlphaOffset,
+                                                 arm_2d_size_t *
+                                                 __RESTRICT ptCopySize,
+                                                 uint16_t Colour)
+{
+    int_fast16_t    iHeight = ptCopySize->iHeight;
+    int_fast16_t    iWidth = ptCopySize->iWidth;
+    __arm_2d_color_fast_rgb_t tSrcPix;
+    nAlphaOffset &= 0x03;
+    iAlphaStride = (iAlphaStride + 3) & ~0x03;
+    iAlphaStride >>= 2;
+
+    /* 2-bit alpha relative byte location offsets */
+    uint16x8_t      curA2Offs = vldrbq_u16(A2_expand_offs + nAlphaOffset);
+    /* 2-bit alpha byte masks */
+    uint16x8_t      curA2Masks = vldrbq_u16(A2_masks + nAlphaOffset);
+    /* 2-bit alpha byte shift, negated to be used with vector-based vector left shift */
+    int16x8_t       curA2MasksShift =
+        vnegq_s16(vldrbq_s16(A2_masks_shifts + nAlphaOffset));
+
+    __arm_2d_rgb565_unpack(*(&Colour), &tSrcPix);
+
+#if 1 //def USE_MVE_INTRINSICS
+    RGB565_COLOUR_FILLING_MASK_MVE( RGB565_TRGT_LOAD_A2, _,
+                                    RGB565_SCAL_OPACITY_NONE, _, pchAlpha, 1/4, 255);
+#else
+    /* RGB565 pack/unpack Masks */
+    /* use memory rather than vmov to optimize Helium operations interleaving */
+    uint16x8_t scratch[5];
+
+    // Unpacking Mask Red
+    vst1q((uint16_t*)&scratch[0], vdupq_n_u16(0x1f));
+    // Unpacking Mask Green
+    vst1q((uint16_t*)&scratch[1], vdupq_n_u16(0x3f));
+    // packing Mask Green
+    vst1q((uint16_t*)&scratch[2], vdupq_n_u16(0xfc));
+    // packing Mask Blue
+    vst1q((uint16_t*)&scratch[3], vdupq_n_u16(0xf8));
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+        const uint8_t  *pAlpha = pchAlpha;
+        uint16_t       *pCurTarget = pTarget;
+        register unsigned blkCnt __asm("lr");
+        blkCnt = iWidth;
+
+       __asm volatile  (
+            ".p2align 2                                            \n"
+            /* load scheduling */
+            "   vldrh.u16               q0, [%[pTarget]]           \n"
+            "   vmov.i16                q7, #0x0100                \n"
+            "   vldrb.u16               q1, [%[pAlpha]], #8        \n"
+
+            "   wlstp.16                lr, %[loopCnt], 1f         \n"
+            "2:                                                    \n"
+
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            /* if alpha == 255, boost to 256 */
+            "   vpt.i16                 eq, q1, %[alph255]         \n"
+            "   vmovt.i16               q1, #256                   \n"
+#endif
+
+            // vecAlpha
+            "   vsub.i16                q2, q7, q1                 \n"
+
+            /*  RGB565 unpack          */
+
+            /* vecAlpha * 4 for G channel upscale */
+            "   vmul.i16                q2, q2, %[four]            \n"
+            /* G channel extract */
+            "   vshr.u16                q5, q0, #5                 \n"
+
+            /* load Unpacking Mask for R channel */
+            "   vldrh.u16               q7, [%[scratch], #(0*16)]  \n"
+            "   vand                    q4, q0, q7                 \n"
+
+            /* load Unpacking Mask for G channel */
+            "   vldrh.u16               q7, [%[scratch], #(1*16)]  \n"
+            "   vand                    q5, q5, q7                 \n"
+            /*  scale G vector with alpha vector */
+            "   vmul.u16                q5, q5, q2                 \n"
+
+            /* B channel */
+            "   vshr.u16                q6, q0, #11                \n"
+
+            /*  blend G vector with input G color*/
+            "   vmla.s16                q5, q1, %[G]               \n"
+
+            /* vecAlpha * 8 for R & B  upscale */
+            "   vshl.i16                q2, q2, #1                 \n"
+
+            /*  scale R vector with alpha vec */
+            "   vmul.u16                q4, q4, q2                 \n"
+
+            "   vshr.u16                q5, q5, #8                 \n"
+
+            /*  blend R vector with input R color*/
+            "   vmla.s16                q4, q1, %[B]               \n"
+
+            /* load packing Mask for G channel */
+            "   vldrh.u16               q7, [%[scratch], #(2*16)]  \n"
+
+            /*  scale B vector with alpha vector */
+            "   vmul.u16                q6, q6, q2                 \n"
+            "   vand                    q5, q5, q7                 \n"
+
+            /*  blend B vector with input B color*/
+            "   vmla.s16                q6, q1, %[R]               \n"
+
+            /* load packing Mask for B channel */
+            "   vldrh.u16               q7, [%[scratch], #(3*16)]  \n"
+
+            "   vshr.u16                q6, q6, #8                 \n"
+
+           /* RGB 565 pack */
+
+            /* (G & 0x00fc), 8) */
+            "   vmul.i16                q5, q5, %[eight]           \n"
+
+            /* (B & 0x00f8) */
+            "   vand                    q6, q6, q7                 \n"
+
+            /* load next alpha vector */
+            "   vldrb.u16               q1, [%[pAlpha]], #8        \n"
+            "   vmov.i16                q7, #0x0100                \n"
+
+            /* pack G & B */
+            "   vmla.s16                q5, q6, %[twofiftysix]     \n"
+            /* combined (R >> 8) >> 3 */
+            "   vshr.u16                q4, q4, #11                \n"
+
+            /* load next target */
+            "   vldrh.u16               q0, [%[pTarget], #16]      \n"
+
+            /*  pack R */
+            "   vorr                    q4, q4, q5                 \n"
+            "   vstrh.16                q4, [%[pTarget]], #16      \n"
+            "   letp                    lr, 2b                     \n"
+            "1:                                                    \n"
+            :[pTarget]"+l"(pCurTarget),[pAlpha] "+l"(pAlpha),[loopCnt] "+r"(blkCnt)
+            :[Colour] "r"(Colour), [eight] "r" (8), [four] "r" (4),
+            [R] "r" (tSrcPix.R), [G] "r" (tSrcPix.G), [B] "r" (tSrcPix.B),
+            [twofiftysix] "r" (256), [scratch] "r" (scratch)
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            ,[alph255] "r" (255)
+#endif
+            :"q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "memory");
+
+        pchAlpha += (iAlphaStride);
+        pTarget += (iTargetStride);
+    }
+#endif
+}
+
+
+__OVERRIDE_WEAK
+void __MVE_WRAPPER(__arm_2d_impl_rgb565_colour_filling_a4_mask)(uint16_t * __RESTRICT pTarget,
+                                                 int16_t iTargetStride,
+                                                 uint8_t * __RESTRICT pchAlpha,
+                                                 int16_t iAlphaStride,
+                                                 int32_t nAlphaOffset,
+                                                 arm_2d_size_t *
+                                                 __RESTRICT ptCopySize,
+                                                 uint16_t Colour)
+{
+    int_fast16_t    iHeight = ptCopySize->iHeight;
+    int_fast16_t    iWidth = ptCopySize->iWidth;
+    __arm_2d_color_fast_rgb_t tSrcPix;
+    nAlphaOffset &= 0x01;
+    iAlphaStride = (iAlphaStride + 1) & ~0x01;
+    iAlphaStride >>= 1;
+
+    /* 4-bit alpha relative byte location offsets */
+    uint16x8_t      curA4Offs = vldrbq_u16(A4_expand_offs + nAlphaOffset);
+    /* 4-bit alpha byte masks */
+    uint16x8_t      curA4Masks = vldrbq_u16(A4_masks + nAlphaOffset);
+    /* 4-bit alpha byte shift, negated to be used with vector-based vector left shift */
+    int16x8_t       curA4MasksShift =
+        vnegq_s16(vldrbq_s16(A4_masks_shifts + nAlphaOffset));
+
+    __arm_2d_rgb565_unpack(*(&Colour), &tSrcPix);
+
+#if 1//def USE_MVE_INTRINSICS
+    RGB565_COLOUR_FILLING_MASK_MVE( RGB565_TRGT_LOAD_A4, _,
+                                    RGB565_SCAL_OPACITY_NONE, _, pchAlpha, 1/2, 255);
+#else
+    /* RGB565 pack/unpack Masks */
+    /* use memory rather than vmov to optimize Helium operations interleaving */
+    uint16x8_t scratch[5];
+
+    // Unpacking Mask Red
+    vst1q((uint16_t*)&scratch[0], vdupq_n_u16(0x1f));
+    // Unpacking Mask Green
+    vst1q((uint16_t*)&scratch[1], vdupq_n_u16(0x3f));
+    // packing Mask Green
+    vst1q((uint16_t*)&scratch[2], vdupq_n_u16(0xfc));
+    // packing Mask Blue
+    vst1q((uint16_t*)&scratch[3], vdupq_n_u16(0xf8));
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+        const uint8_t  *pAlpha = pchAlpha;
+        uint16_t       *pCurTarget = pTarget;
+        register unsigned blkCnt __asm("lr");
+        blkCnt = iWidth;
+
+       __asm volatile  (
+            ".p2align 2                                            \n"
+            /* load scheduling */
+            "   vldrh.u16               q0, [%[pTarget]]           \n"
+            "   vmov.i16                q7, #0x0100                \n"
+            "   vldrb.u16               q1, [%[pAlpha]], #8        \n"
+
+            "   wlstp.16                lr, %[loopCnt], 1f         \n"
+            "2:                                                    \n"
+
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            /* if alpha == 255, boost to 256 */
+            "   vpt.i16                 eq, q1, %[alph255]         \n"
+            "   vmovt.i16               q1, #256                   \n"
+#endif
+
+            // vecAlpha
+            "   vsub.i16                q2, q7, q1                 \n"
+
+            /*  RGB565 unpack          */
+
+            /* vecAlpha * 4 for G channel upscale */
+            "   vmul.i16                q2, q2, %[four]            \n"
+            /* G channel extract */
+            "   vshr.u16                q5, q0, #5                 \n"
+
+            /* load Unpacking Mask for R channel */
+            "   vldrh.u16               q7, [%[scratch], #(0*16)]  \n"
+            "   vand                    q4, q0, q7                 \n"
+
+            /* load Unpacking Mask for G channel */
+            "   vldrh.u16               q7, [%[scratch], #(1*16)]  \n"
+            "   vand                    q5, q5, q7                 \n"
+            /*  scale G vector with alpha vector */
+            "   vmul.u16                q5, q5, q2                 \n"
+
+            /* B channel */
+            "   vshr.u16                q6, q0, #11                \n"
+
+            /*  blend G vector with input G color*/
+            "   vmla.s16                q5, q1, %[G]               \n"
+
+            /* vecAlpha * 8 for R & B  upscale */
+            "   vshl.i16                q2, q2, #1                 \n"
+
+            /*  scale R vector with alpha vec */
+            "   vmul.u16                q4, q4, q2                 \n"
+
+            "   vshr.u16                q5, q5, #8                 \n"
+
+            /*  blend R vector with input R color*/
+            "   vmla.s16                q4, q1, %[B]               \n"
+
+            /* load packing Mask for G channel */
+            "   vldrh.u16               q7, [%[scratch], #(2*16)]  \n"
+
+            /*  scale B vector with alpha vector */
+            "   vmul.u16                q6, q6, q2                 \n"
+            "   vand                    q5, q5, q7                 \n"
+
+            /*  blend B vector with input B color*/
+            "   vmla.s16                q6, q1, %[R]               \n"
+
+            /* load packing Mask for B channel */
+            "   vldrh.u16               q7, [%[scratch], #(3*16)]  \n"
+
+            "   vshr.u16                q6, q6, #8                 \n"
+
+           /* RGB 565 pack */
+
+            /* (G & 0x00fc), 8) */
+            "   vmul.i16                q5, q5, %[eight]           \n"
+
+            /* (B & 0x00f8) */
+            "   vand                    q6, q6, q7                 \n"
+
+            /* load next alpha vector */
+            "   vldrb.u16               q1, [%[pAlpha]], #8        \n"
+            "   vmov.i16                q7, #0x0100                \n"
+
+            /* pack G & B */
+            "   vmla.s16                q5, q6, %[twofiftysix]     \n"
+            /* combined (R >> 8) >> 3 */
+            "   vshr.u16                q4, q4, #11                \n"
+
+            /* load next target */
+            "   vldrh.u16               q0, [%[pTarget], #16]      \n"
+
+            /*  pack R */
+            "   vorr                    q4, q4, q5                 \n"
+            "   vstrh.16                q4, [%[pTarget]], #16      \n"
+            "   letp                    lr, 2b                     \n"
+            "1:                                                    \n"
+            :[pTarget]"+l"(pCurTarget),[pAlpha] "+l"(pAlpha),[loopCnt] "+r"(blkCnt)
+            :[Colour] "r"(Colour), [eight] "r" (8), [four] "r" (4),
+            [R] "r" (tSrcPix.R), [G] "r" (tSrcPix.G), [B] "r" (tSrcPix.B),
+            [twofiftysix] "r" (256), [scratch] "r" (scratch)
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            ,[alph255] "r" (255)
+#endif
+            :"q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "memory");
+
+        pchAlpha += (iAlphaStride);
+        pTarget += (iTargetStride);
+    }
+#endif
+}
+
+
+__OVERRIDE_WEAK
 void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask)(uint16_t * __RESTRICT pTarget,
                                                     int16_t iTargetStride,
                                                     uint8_t * __RESTRICT pchAlpha,
@@ -2522,6 +3173,341 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask)(uint16_t * __RESTR
 #endif
 }
 
+__OVERRIDE_WEAK
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_a2_mask_opacity)(uint16_t * __RESTRICT pTarget,
+                                                    int16_t iTargetStride,
+                                                    uint8_t * __RESTRICT pchAlpha,
+                                                    int16_t iAlphaStride,
+                                                    int32_t nAlphaOffset,
+                                                    arm_2d_size_t * __RESTRICT ptCopySize,
+                                                    uint16_t Colour,
+                                                    uint_fast16_t hwOpacity)
+{
+    int_fast16_t    iHeight = ptCopySize->iHeight;
+    int_fast16_t    iWidth = ptCopySize->iWidth;
+    uint8x16_t      vOpacity = vdupq_n_u8(hwOpacity);
+    __arm_2d_color_fast_rgb_t tSrcPix;
+    nAlphaOffset &= 0x03;
+    iAlphaStride = (iAlphaStride + 3) & ~0x03;
+    iAlphaStride >>= 2;
+
+    /* 2-bit alpha relative byte location offsets */
+    uint16x8_t      curA2Offs = vldrbq_u16(A2_expand_offs + nAlphaOffset);
+    /* 2-bit alpha byte masks */
+    uint16x8_t      curA2Masks = vldrbq_u16(A2_masks + nAlphaOffset);
+    /* 2-bit alpha byte shift, negated to be used with vector-based vector left shift */
+    int16x8_t       curA2MasksShift =
+        vnegq_s16(vldrbq_s16(A2_masks_shifts + nAlphaOffset));
+
+
+    __arm_2d_rgb565_unpack(*(&Colour), &tSrcPix);
+
+#if 1//def USE_MVE_INTRINSICS
+    RGB565_COLOUR_FILLING_MASK_MVE( RGB565_TRGT_LOAD_A2, _,
+                                    RGB565_SCAL_OPACITY, vOpacity, pchAlpha, 1/4, 254);
+#else
+    /* RGB565 pack/unpack Masks + opacity */
+    /* use memory rather than vmov to optimize Helium operations interleaving */
+    uint16x8_t scratch[6];
+
+    // Unpacking Mask Red
+    vst1q((uint16_t*)&scratch[0], vdupq_n_u16(0x1f));
+    // Unpacking Mask Green
+    vst1q((uint16_t*)&scratch[1], vdupq_n_u16(0x3f));
+    // packing Mask Green
+    vst1q((uint16_t*)&scratch[2], vdupq_n_u16(0xfc));
+    // packing Mask Blue
+    vst1q((uint16_t*)&scratch[3], vdupq_n_u16(0xf8));
+    // opacity
+    vst1q((uint16_t*)&scratch[4], (uint16x8_t)vOpacity);
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+        const uint8_t  *pAlpha = pchAlpha;
+        uint16_t       *pCurTarget = pTarget;
+        register unsigned blkCnt __asm("lr");
+        blkCnt = iWidth;
+
+       __asm volatile  (
+            ".p2align 2                                            \n"
+            /* load scheduling */
+            "   vldrh.u16               q0, [%[pTarget]]           \n"
+            "   vmov.i16                q7, #0x0100                \n"
+            "   vldrb.u16               q1, [%[pAlpha]], #8        \n"
+            /* opacity vector */
+            "   vldrh.u16               q6, [%[scratch], #(4*16)]  \n"
+            "   vmulh.u8                q1, q1, q6                 \n"
+
+            "   wlstp.16                lr, %[loopCnt], 1f         \n"
+            "2:                                                    \n"
+
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            /* if vOpacity == 254, boost to 256 */
+            "   vpt.i16                 eq, q1, %[opa254]          \n"
+            "   vmovt.i16               q1, #256                   \n"
+#endif
+            // vecAlpha
+            "   vsub.i16                q2, q7, q1                 \n"
+
+            /*  RGB565 unpack          */
+
+            /* vecAlpha * 4 for G channel upscale */
+            "   vmul.i16                q2, q2, %[four]            \n"
+            /* G channel extract */
+            "   vshr.u16                q5, q0, #5                 \n"
+
+            /* load Unpacking Mask for R channel */
+            "   vldrh.u16               q7, [%[scratch], #(0*16)]  \n"
+            "   vand                    q4, q0, q7                 \n"
+
+            /* load Unpacking Mask for G channel */
+            "   vldrh.u16               q7, [%[scratch], #(1*16)]  \n"
+            "   vand                    q5, q5, q7                 \n"
+            /*  scale G vector with alpha vector */
+            "   vmul.u16                q5, q5, q2                 \n"
+
+            /* B channel */
+            "   vshr.u16                q6, q0, #11                \n"
+
+            /*  blend G vector with input G color*/
+            "   vmla.s16                q5, q1, %[G]               \n"
+
+            /* vecAlpha * 8 for R & B  upscale */
+            "   vshl.i16                q2, q2, #1                 \n"
+
+            /*  scale R vector with alpha vec */
+            "   vmul.u16                q4, q4, q2                 \n"
+
+            "   vshr.u16                q5, q5, #8                 \n"
+
+            /*  blend R vector with input R color*/
+            "   vmla.s16                q4, q1, %[B]               \n"
+
+            /* load packing Mask for G channel */
+            "   vldrh.u16               q7, [%[scratch], #(2*16)]  \n"
+
+            /*  scale B vector with alpha vector */
+            "   vmul.u16                q6, q6, q2                 \n"
+            "   vand                    q5, q5, q7                 \n"
+
+            /*  blend B vector with input B color*/
+            "   vmla.s16                q6, q1, %[R]               \n"
+
+            /* load packing Mask for B channel */
+            "   vldrh.u16               q7, [%[scratch], #(3*16)]  \n"
+
+            "   vshr.u16                q6, q6, #8                 \n"
+
+           /* RGB 565 pack */
+
+            /* (G & 0x00fc), 8) */
+            "   vmul.i16                q5, q5, %[eight]           \n"
+
+            /* (B & 0x00f8) */
+            "   vand                    q6, q6, q7                 \n"
+
+            /* load next alpha vector */
+            "   vldrb.u16               q1, [%[pAlpha]], #8        \n"
+            "   vmov.i16                q7, #0x0100                \n"
+
+            /* pack G & B */
+            "   vmla.s16                q5, q6, %[twofiftysix]     \n"
+            /* reload opacity and scale alpha */
+            "   vldrh.u16               q6, [%[scratch], #(4*16)]  \n"
+            "   vmulh.u8                q1, q1, q6                 \n"
+
+            /* combined (R >> 8) >> 3 */
+            "   vshr.u16                q4, q4, #11                \n"
+
+            /* load next target */
+            "   vldrh.u16               q0, [%[pTarget], #16]      \n"
+
+            /*  pack R */
+            "   vorr                    q4, q4, q5                 \n"
+            "   vstrh.16                q4, [%[pTarget]], #16      \n"
+            "   letp                    lr, 2b                     \n"
+            "1:                                                    \n"
+            :[pTarget]"+r"(pCurTarget),[pAlpha] "+l"(pAlpha),[loopCnt] "+r"(blkCnt)
+            :[Colour] "r"(Colour), [eight] "r" (8), [four] "r" (4),
+            [R] "r" (tSrcPix.R), [G] "r" (tSrcPix.G), [B] "r" (tSrcPix.B),
+            [twofiftysix] "r" (256), [scratch] "r" (scratch)
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+             ,[opa254] "r" (254)
+#endif
+            :"q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "memory");
+
+        pchAlpha += (iAlphaStride);
+        pTarget += (iTargetStride);
+    }
+#endif
+}
+
+__OVERRIDE_WEAK
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_a4_mask_opacity)(uint16_t * __RESTRICT pTarget,
+                                                    int16_t iTargetStride,
+                                                    uint8_t * __RESTRICT pchAlpha,
+                                                    int16_t iAlphaStride,
+                                                    int32_t nAlphaOffset,
+                                                    arm_2d_size_t * __RESTRICT ptCopySize,
+                                                    uint16_t Colour,
+                                                    uint_fast16_t hwOpacity)
+{
+    int_fast16_t    iHeight = ptCopySize->iHeight;
+    int_fast16_t    iWidth = ptCopySize->iWidth;
+    uint8x16_t      vOpacity = vdupq_n_u8(hwOpacity);
+    __arm_2d_color_fast_rgb_t tSrcPix;
+    nAlphaOffset &= 0x01;
+    iAlphaStride = (iAlphaStride + 1) & ~0x01;
+    iAlphaStride >>= 1;
+
+    /* 4-bit alpha relative byte location offsets */
+    uint16x8_t      curA4Offs = vldrbq_u16(A4_expand_offs + nAlphaOffset);
+    /* 4-bit alpha byte masks */
+    uint16x8_t      curA4Masks = vldrbq_u16(A4_masks + nAlphaOffset);
+    /* 4-bit alpha byte shift, negated to be used with vector-based vector left shift */
+    int16x8_t       curA4MasksShift =
+        vnegq_s16(vldrbq_s16(A4_masks_shifts + nAlphaOffset));
+
+
+    __arm_2d_rgb565_unpack(*(&Colour), &tSrcPix);
+
+#if 1//def USE_MVE_INTRINSICS
+    RGB565_COLOUR_FILLING_MASK_MVE( RGB565_TRGT_LOAD_A4, _,
+                                    RGB565_SCAL_OPACITY, vOpacity, pchAlpha, 1/2, 254);
+#else
+    /* RGB565 pack/unpack Masks + opacity */
+    /* use memory rather than vmov to optimize Helium operations interleaving */
+    uint16x8_t scratch[6];
+
+    // Unpacking Mask Red
+    vst1q((uint16_t*)&scratch[0], vdupq_n_u16(0x1f));
+    // Unpacking Mask Green
+    vst1q((uint16_t*)&scratch[1], vdupq_n_u16(0x3f));
+    // packing Mask Green
+    vst1q((uint16_t*)&scratch[2], vdupq_n_u16(0xfc));
+    // packing Mask Blue
+    vst1q((uint16_t*)&scratch[3], vdupq_n_u16(0xf8));
+    // opacity
+    vst1q((uint16_t*)&scratch[4], (uint16x8_t)vOpacity);
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+        const uint8_t  *pAlpha = pchAlpha;
+        uint16_t       *pCurTarget = pTarget;
+        register unsigned blkCnt __asm("lr");
+        blkCnt = iWidth;
+
+       __asm volatile  (
+            ".p2align 2                                            \n"
+            /* load scheduling */
+            "   vldrh.u16               q0, [%[pTarget]]           \n"
+            "   vmov.i16                q7, #0x0100                \n"
+            "   vldrb.u16               q1, [%[pAlpha]], #8        \n"
+            /* opacity vector */
+            "   vldrh.u16               q6, [%[scratch], #(4*16)]  \n"
+            "   vmulh.u8                q1, q1, q6                 \n"
+
+            "   wlstp.16                lr, %[loopCnt], 1f         \n"
+            "2:                                                    \n"
+
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            /* if vOpacity == 254, boost to 256 */
+            "   vpt.i16                 eq, q1, %[opa254]          \n"
+            "   vmovt.i16               q1, #256                   \n"
+#endif
+            // vecAlpha
+            "   vsub.i16                q2, q7, q1                 \n"
+
+            /*  RGB565 unpack          */
+
+            /* vecAlpha * 4 for G channel upscale */
+            "   vmul.i16                q2, q2, %[four]            \n"
+            /* G channel extract */
+            "   vshr.u16                q5, q0, #5                 \n"
+
+            /* load Unpacking Mask for R channel */
+            "   vldrh.u16               q7, [%[scratch], #(0*16)]  \n"
+            "   vand                    q4, q0, q7                 \n"
+
+            /* load Unpacking Mask for G channel */
+            "   vldrh.u16               q7, [%[scratch], #(1*16)]  \n"
+            "   vand                    q5, q5, q7                 \n"
+            /*  scale G vector with alpha vector */
+            "   vmul.u16                q5, q5, q2                 \n"
+
+            /* B channel */
+            "   vshr.u16                q6, q0, #11                \n"
+
+            /*  blend G vector with input G color*/
+            "   vmla.s16                q5, q1, %[G]               \n"
+
+            /* vecAlpha * 8 for R & B  upscale */
+            "   vshl.i16                q2, q2, #1                 \n"
+
+            /*  scale R vector with alpha vec */
+            "   vmul.u16                q4, q4, q2                 \n"
+
+            "   vshr.u16                q5, q5, #8                 \n"
+
+            /*  blend R vector with input R color*/
+            "   vmla.s16                q4, q1, %[B]               \n"
+
+            /* load packing Mask for G channel */
+            "   vldrh.u16               q7, [%[scratch], #(2*16)]  \n"
+
+            /*  scale B vector with alpha vector */
+            "   vmul.u16                q6, q6, q2                 \n"
+            "   vand                    q5, q5, q7                 \n"
+
+            /*  blend B vector with input B color*/
+            "   vmla.s16                q6, q1, %[R]               \n"
+
+            /* load packing Mask for B channel */
+            "   vldrh.u16               q7, [%[scratch], #(3*16)]  \n"
+
+            "   vshr.u16                q6, q6, #8                 \n"
+
+           /* RGB 565 pack */
+
+            /* (G & 0x00fc), 8) */
+            "   vmul.i16                q5, q5, %[eight]           \n"
+
+            /* (B & 0x00f8) */
+            "   vand                    q6, q6, q7                 \n"
+
+            /* load next alpha vector */
+            "   vldrb.u16               q1, [%[pAlpha]], #8        \n"
+            "   vmov.i16                q7, #0x0100                \n"
+
+            /* pack G & B */
+            "   vmla.s16                q5, q6, %[twofiftysix]     \n"
+            /* reload opacity and scale alpha */
+            "   vldrh.u16               q6, [%[scratch], #(4*16)]  \n"
+            "   vmulh.u8                q1, q1, q6                 \n"
+
+            /* combined (R >> 8) >> 3 */
+            "   vshr.u16                q4, q4, #11                \n"
+
+            /* load next target */
+            "   vldrh.u16               q0, [%[pTarget], #16]      \n"
+
+            /*  pack R */
+            "   vorr                    q4, q4, q5                 \n"
+            "   vstrh.16                q4, [%[pTarget]], #16      \n"
+            "   letp                    lr, 2b                     \n"
+            "1:                                                    \n"
+            :[pTarget]"+r"(pCurTarget),[pAlpha] "+l"(pAlpha),[loopCnt] "+r"(blkCnt)
+            :[Colour] "r"(Colour), [eight] "r" (8), [four] "r" (4),
+            [R] "r" (tSrcPix.R), [G] "r" (tSrcPix.G), [B] "r" (tSrcPix.B),
+            [twofiftysix] "r" (256), [scratch] "r" (scratch)
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+             ,[opa254] "r" (254)
+#endif
+            :"q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "memory");
+
+        pchAlpha += (iAlphaStride);
+        pTarget += (iTargetStride);
+    }
+#endif
+}
 
 
 __OVERRIDE_WEAK
@@ -2986,6 +3972,248 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_mask_opacity)(ui
 #endif
 }
 
+__OVERRIDE_WEAK
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a2_mask)(uint32_t * __RESTRICT pTarget,
+                                                     int16_t iTargetStride,
+                                                     uint8_t * __RESTRICT pchAlpha,
+                                                     int16_t iAlphaStride,
+                                                     int32_t nAlphaOffset,
+                                                     arm_2d_size_t * __RESTRICT ptCopySize,
+                                                     uint32_t Colour)
+{
+    int_fast16_t    iHeight = ptCopySize->iHeight;
+    int_fast16_t    iWidth = ptCopySize->iWidth;
+    uint16x8_t      v256 = vdupq_n_u16(256);
+    uint16x8_t      vStride4Offs = vidupq_n_u16(0, 4);
+    uint16_t        c0, c1, c2;
+
+    nAlphaOffset &= 0x03;
+    iAlphaStride = (iAlphaStride + 3) & ~0x03;
+    iAlphaStride >>= 2;
+
+
+    /* 2-bit alpha relative byte location offsets */
+    uint16x8_t      curA2Offs = vldrbq_u16(A2_expand_offs + nAlphaOffset);
+    /* 2-bit alpha byte masks */
+    uint16x8_t      curA2Masks = vldrbq_u16(A2_masks + nAlphaOffset);
+    /* 2-bit alpha byte shift, negated to be used with vector-based vector left shift */
+    int16x8_t       curA2MasksShift =
+        vnegq_s16(vldrbq_s16(A2_masks_shifts + nAlphaOffset));
+
+    c0 = Colour & 0xff;
+    c1 = (Colour >> 8) & 0xff;
+    c2 = (Colour >> 16) & 0xff;
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+        const uint8_t * pAlpha = pchAlpha;
+        uint8_t *       pTargetCh0 = (uint8_t*)pTarget;
+        uint8_t *       pTargetCh1 = pTargetCh0 + 1;
+        uint8_t *       pTargetCh2 = pTargetCh0 + 2;
+
+#if 1//def USE_MVE_INTRINSICS
+
+        CCCN888_COLOUR_FILLING_MASK_INNER_MVE(CCCN888_TRGT_LOAD_A2, _,
+                                        CCCN888_SCAL_OPACITY_NONE, _, 1/4, 255);
+#else
+
+        register unsigned blkCnt __asm("lr");
+        blkCnt = iWidth;
+
+    __asm volatile(
+            "vecAlphaCompl            .req q2                             \n"
+
+            ".p2align 2                                                   \n"
+            /* expand chan0 */
+            "   vldrb.u16               q0, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
+
+            "   wlstp.16                lr, %[loopCnt], 1f                \n"
+            "2:                                                           \n"
+
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            /* if alpha == 255, boost to 256 */
+            "   vpt.i16                 eq, q1, %[alph255]                \n"
+            "   vmovt.i16               q1, #256                          \n"
+#endif
+
+            "   vsub.i16                vecAlphaCompl, %[vec256], q1      \n"
+            /*  scale ch0 vector with alpha vector */
+            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
+
+            /* expand chan1 */
+            "   vldrb.u16               q0, [%[pTargetCh1], %[str4Offs]]  \n"
+            /*  blend ch0 vector with input ch0 color*/
+            "   vmla.s16                q3, q1, %[c0]                     \n"
+            "   vshr.u16                q3, q3, #8                        \n"
+
+            "   vstrb.u16               q3, [%[pTargetCh0], %[str4Offs]]  \n"
+
+            /*  scale ch1 vector with alpha vector */
+            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
+
+            /* expand chan2 */
+            "   vldrb.u16               q0, [%[pTargetCh2], %[str4Offs]]  \n"
+            /*  blend ch1 vector with input ch1 color*/
+            "   vmla.s16                q3, q1, %[c1]                     \n"
+            "   vshr.u16                q3, q3, #8                        \n"
+            "   vstrb.u16               q3, [%[pTargetCh1], %[str4Offs]]  \n"
+
+            "   adds                    %[pTargetCh0], #32                \n"
+            "   adds                    %[pTargetCh1], #32                \n"
+
+            /*  scale ch2 vector with alpha vector */
+            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
+            "   vldrb.u16               q0, [%[pTargetCh0], %[str4Offs]]  \n"
+
+            /*  blend ch2 vector with input ch2 color*/
+            "   vmla.s16                q3, q1, %[c2]                     \n"
+            "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
+
+            "   vshr.u16                q3, q3, #8                        \n"
+            "   vstrb.u16               q3, [%[pTargetCh2], %[str4Offs]]  \n"
+
+            "   add.w                   %[pTargetCh2], %[pTargetCh2], #32 \n"
+
+            "   letp                    lr, 2b                            \n"
+            "1:                                                           \n"
+
+            " .unreq vecAlphaCompl                                        \n"
+
+            :[pTargetCh0] "+r"(pTargetCh0),  [pTargetCh1] "+r"(pTargetCh1),
+             [pTargetCh2] "+r"(pTargetCh2), [pAlpha] "+l" (pAlpha), [loopCnt] "+r"(blkCnt)
+            :[vec256] "t" (v256),[str4Offs] "t" (vStride4Offs),
+             [c0] "r"(c0), [c1] "r"(c1), [c2] "r"(c2)
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            ,[alph255] "r" (255)
+#endif
+            :"q0", "q1", "q2", "q3", "memory", "cc");
+
+#endif
+        pchAlpha += (iAlphaStride);
+        pTarget += (iTargetStride);
+    }
+}
+
+__OVERRIDE_WEAK
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a4_mask)(uint32_t * __RESTRICT pTarget,
+                                                     int16_t iTargetStride,
+                                                     uint8_t * __RESTRICT pchAlpha,
+                                                     int16_t iAlphaStride,
+                                                     int32_t nAlphaOffset,
+                                                     arm_2d_size_t * __RESTRICT ptCopySize,
+                                                     uint32_t Colour)
+{
+    int_fast16_t    iHeight = ptCopySize->iHeight;
+    int_fast16_t    iWidth = ptCopySize->iWidth;
+    uint16x8_t      v256 = vdupq_n_u16(256);
+    uint16x8_t      vStride4Offs = vidupq_n_u16(0, 4);
+    uint16_t        c0, c1, c2;
+
+    nAlphaOffset &= 0x01;
+    iAlphaStride = (iAlphaStride + 1) & ~0x01;
+    iAlphaStride >>= 1;
+
+    /* 4-bit alpha relative byte location offsets */
+    uint16x8_t      curA4Offs = vldrbq_u16(A4_expand_offs + nAlphaOffset);
+    /* 4-bit alpha byte masks */
+    uint16x8_t      curA4Masks = vldrbq_u16(A4_masks + nAlphaOffset);
+    /* 4-bit alpha byte shift, negated to be used with vector-based vector left shift */
+    int16x8_t       curA4MasksShift =
+        vnegq_s16(vldrbq_s16(A4_masks_shifts + nAlphaOffset));
+
+    c0 = Colour & 0xff;
+    c1 = (Colour >> 8) & 0xff;
+    c2 = (Colour >> 16) & 0xff;
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+        const uint8_t * pAlpha = pchAlpha;
+        uint8_t *       pTargetCh0 = (uint8_t*)pTarget;
+        uint8_t *       pTargetCh1 = pTargetCh0 + 1;
+        uint8_t *       pTargetCh2 = pTargetCh0 + 2;
+
+#if 1//def USE_MVE_INTRINSICS
+
+        CCCN888_COLOUR_FILLING_MASK_INNER_MVE(CCCN888_TRGT_LOAD_A4, _,
+                                        CCCN888_SCAL_OPACITY_NONE, _, 1/2, 255);
+#else
+
+        register unsigned blkCnt __asm("lr");
+        blkCnt = iWidth;
+
+    __asm volatile(
+            "vecAlphaCompl            .req q2                             \n"
+
+            ".p2align 2                                                   \n"
+            /* expand chan0 */
+            "   vldrb.u16               q0, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
+
+            "   wlstp.16                lr, %[loopCnt], 1f                \n"
+            "2:                                                           \n"
+
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            /* if alpha == 255, boost to 256 */
+            "   vpt.i16                 eq, q1, %[alph255]                \n"
+            "   vmovt.i16               q1, #256                          \n"
+#endif
+
+            "   vsub.i16                vecAlphaCompl, %[vec256], q1      \n"
+            /*  scale ch0 vector with alpha vector */
+            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
+
+            /* expand chan1 */
+            "   vldrb.u16               q0, [%[pTargetCh1], %[str4Offs]]  \n"
+            /*  blend ch0 vector with input ch0 color*/
+            "   vmla.s16                q3, q1, %[c0]                     \n"
+            "   vshr.u16                q3, q3, #8                        \n"
+
+            "   vstrb.u16               q3, [%[pTargetCh0], %[str4Offs]]  \n"
+
+            /*  scale ch1 vector with alpha vector */
+            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
+
+            /* expand chan2 */
+            "   vldrb.u16               q0, [%[pTargetCh2], %[str4Offs]]  \n"
+            /*  blend ch1 vector with input ch1 color*/
+            "   vmla.s16                q3, q1, %[c1]                     \n"
+            "   vshr.u16                q3, q3, #8                        \n"
+            "   vstrb.u16               q3, [%[pTargetCh1], %[str4Offs]]  \n"
+
+            "   adds                    %[pTargetCh0], #32                \n"
+            "   adds                    %[pTargetCh1], #32                \n"
+
+            /*  scale ch2 vector with alpha vector */
+            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
+            "   vldrb.u16               q0, [%[pTargetCh0], %[str4Offs]]  \n"
+
+            /*  blend ch2 vector with input ch2 color*/
+            "   vmla.s16                q3, q1, %[c2]                     \n"
+            "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
+
+            "   vshr.u16                q3, q3, #8                        \n"
+            "   vstrb.u16               q3, [%[pTargetCh2], %[str4Offs]]  \n"
+
+            "   add.w                   %[pTargetCh2], %[pTargetCh2], #32 \n"
+
+            "   letp                    lr, 2b                            \n"
+            "1:                                                           \n"
+
+            " .unreq vecAlphaCompl                                        \n"
+
+            :[pTargetCh0] "+r"(pTargetCh0),  [pTargetCh1] "+r"(pTargetCh1),
+             [pTargetCh2] "+r"(pTargetCh2), [pAlpha] "+l" (pAlpha), [loopCnt] "+r"(blkCnt)
+            :[vec256] "t" (v256),[str4Offs] "t" (vStride4Offs),
+             [c0] "r"(c0), [c1] "r"(c1), [c2] "r"(c2)
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            ,[alph255] "r" (255)
+#endif
+            :"q0", "q1", "q2", "q3", "memory", "cc");
+
+#endif
+        pchAlpha += (iAlphaStride);
+        pTarget += (iTargetStride);
+    }
+}
 
 
 __OVERRIDE_WEAK
@@ -3096,6 +4324,254 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask)(uint32_t * __REST
     }
 }
 
+__OVERRIDE_WEAK
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a2_mask_opacity)(uint32_t * __RESTRICT pTarget,
+                                                             int16_t iTargetStride,
+                                                             uint8_t * __RESTRICT pchAlpha,
+                                                             int16_t iAlphaStride,
+                                                             int32_t nAlphaOffset,
+                                                             arm_2d_size_t * __RESTRICT ptCopySize,
+                                                             uint32_t Colour,
+                                                             uint_fast16_t hwOpacity)
+{
+    int_fast16_t    iHeight = ptCopySize->iHeight;
+    int_fast16_t    iWidth = ptCopySize->iWidth;
+    uint16x8_t      v256 = vdupq_n_u16(256);
+    uint16x8_t      vStride4Offs = vidupq_n_u16(0, 4);
+    uint8x16_t      vOpacity = vdupq_n_u8(hwOpacity);
+    uint16_t        c0, c1, c2;
+
+    nAlphaOffset &= 0x03;
+    iAlphaStride = (iAlphaStride + 3) & ~0x03;
+    iAlphaStride >>= 2;
+
+
+    /* 2-bit alpha relative byte location offsets */
+    uint16x8_t      curA2Offs = vldrbq_u16(A2_expand_offs + nAlphaOffset);
+    /* 2-bit alpha byte masks */
+    uint16x8_t      curA2Masks = vldrbq_u16(A2_masks + nAlphaOffset);
+    /* 2-bit alpha byte shift, negated to be used with vector-based vector left shift */
+    int16x8_t       curA2MasksShift =
+        vnegq_s16(vldrbq_s16(A2_masks_shifts + nAlphaOffset));
+
+    c0 = Colour & 0xff;
+    c1 = (Colour >> 8) & 0xff;
+    c2 = (Colour >> 16) & 0xff;
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+        const uint8_t * pAlpha = pchAlpha;
+        uint8_t *       pTargetCh0 = (uint8_t*)pTarget;
+        uint8_t *       pTargetCh1 = pTargetCh0 + 1;
+        uint8_t *       pTargetCh2 = pTargetCh0 + 2;
+
+#if 1 //def USE_MVE_INTRINSICS
+
+        CCCN888_COLOUR_FILLING_MASK_INNER_MVE(CCCN888_TRGT_LOAD_A2, _,
+                                        CCCN888_SCAL_OPACITY, vOpacity, 1/4, 254);
+#else
+
+        register unsigned blkCnt __asm("lr");
+        blkCnt = iWidth;
+
+    __asm volatile(
+            "vecAlphaCompl            .req q2                             \n"
+
+            ".p2align 2                                                   \n"
+            /* expand chan0 */
+            "   vldrb.u16               q0, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
+            "   vmulh.u8                q1, q1, %[vOpacity]               \n"
+
+            "   wlstp.16                lr, %[loopCnt], 1f                \n"
+            "2:                                                           \n"
+
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            /* if vOpacity == 254, boost to 256 */
+            "   vpt.i16                 eq, q1, %[opa254]                 \n"
+            "   vmovt.i16               q1, #256                          \n"
+#endif
+
+            "   vsub.i16                vecAlphaCompl, %[vec256], q1      \n"
+            /*  scale ch0 vector with alpha vector */
+            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
+
+            /* expand chan1 */
+            "   vldrb.u16               q0, [%[pTargetCh1], %[str4Offs]]  \n"
+            /*  blend ch0 vector with input ch0 color*/
+            "   vmla.s16                q3, q1, %[c0]                     \n"
+            "   vshr.u16                q3, q3, #8                        \n"
+
+            "   vstrb.u16               q3, [%[pTargetCh0], %[str4Offs]]  \n"
+
+            /*  scale ch1 vector with alpha vector */
+            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
+
+            /* expand chan2 */
+            "   vldrb.u16               q0, [%[pTargetCh2], %[str4Offs]]  \n"
+            /*  blend ch1 vector with input ch1 color*/
+            "   vmla.s16                q3, q1, %[c1]                     \n"
+            "   vshr.u16                q3, q3, #8                        \n"
+            "   vstrb.u16               q3, [%[pTargetCh1], %[str4Offs]]  \n"
+
+            "   adds                    %[pTargetCh0], #32                \n"
+            "   adds                    %[pTargetCh1], #32                \n"
+
+            /*  scale ch2 vector with alpha vector */
+            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
+            "   vldrb.u16               q0, [%[pTargetCh0], %[str4Offs]]  \n"
+
+            /*  blend ch2 vector with input ch2 color*/
+            "   vmla.s16                q3, q1, %[c2]                     \n"
+            "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
+            "   vmulh.u8                q1, q1, %[vOpacity]               \n"
+
+            "   vshr.u16                q3, q3, #8                        \n"
+            "   vstrb.u16               q3, [%[pTargetCh2], %[str4Offs]]  \n"
+
+            "   add.w                   %[pTargetCh2], %[pTargetCh2], #32 \n"
+
+            "   letp                    lr, 2b                            \n"
+            "1:                                                           \n"
+
+            :[pTargetCh0] "+r"(pTargetCh0),  [pTargetCh1] "+r"(pTargetCh1),
+             [pTargetCh2] "+r"(pTargetCh2), [pAlpha] "+l" (pAlpha), [loopCnt] "+r"(blkCnt)
+            :[vec256] "t" (v256),[str4Offs] "t" (vStride4Offs),
+             [vOpacity] "t"(vOpacity),
+             [c0] "r"(c0), [c1] "r"(c1), [c2] "r"(c2)
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+             ,[opa254] "r" (254)
+#endif
+            :"q0", "q1", "q2", "q3", "memory", "cc");
+
+#endif
+        pchAlpha += (iAlphaStride);
+        pTarget += (iTargetStride);
+    }
+}
+
+__OVERRIDE_WEAK
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a4_mask_opacity)(uint32_t * __RESTRICT pTarget,
+                                                             int16_t iTargetStride,
+                                                             uint8_t * __RESTRICT pchAlpha,
+                                                             int16_t iAlphaStride,
+                                                             int32_t nAlphaOffset,
+                                                             arm_2d_size_t * __RESTRICT ptCopySize,
+                                                             uint32_t Colour,
+                                                             uint_fast16_t hwOpacity)
+{
+    int_fast16_t    iHeight = ptCopySize->iHeight;
+    int_fast16_t    iWidth = ptCopySize->iWidth;
+    uint16x8_t      v256 = vdupq_n_u16(256);
+    uint16x8_t      vStride4Offs = vidupq_n_u16(0, 4);
+    uint8x16_t      vOpacity = vdupq_n_u8(hwOpacity);
+    uint16_t        c0, c1, c2;
+
+    nAlphaOffset &= 0x01;
+    iAlphaStride = (iAlphaStride + 1) & ~0x01;
+    iAlphaStride >>= 1;
+
+    /* 4-bit alpha relative byte location offsets */
+    uint16x8_t      curA4Offs = vldrbq_u16(A4_expand_offs + nAlphaOffset);
+    /* 4-bit alpha byte masks */
+    uint16x8_t      curA4Masks = vldrbq_u16(A4_masks + nAlphaOffset);
+    /* 4-bit alpha byte shift, negated to be used with vector-based vector left shift */
+    int16x8_t       curA4MasksShift =
+        vnegq_s16(vldrbq_s16(A4_masks_shifts + nAlphaOffset));
+
+    c0 = Colour & 0xff;
+    c1 = (Colour >> 8) & 0xff;
+    c2 = (Colour >> 16) & 0xff;
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+        const uint8_t * pAlpha = pchAlpha;
+        uint8_t *       pTargetCh0 = (uint8_t*)pTarget;
+        uint8_t *       pTargetCh1 = pTargetCh0 + 1;
+        uint8_t *       pTargetCh2 = pTargetCh0 + 2;
+
+#if 1 //def USE_MVE_INTRINSICS
+
+        CCCN888_COLOUR_FILLING_MASK_INNER_MVE(CCCN888_TRGT_LOAD_A4, _,
+                                        CCCN888_SCAL_OPACITY, vOpacity, 1/2, 254);
+#else
+
+        register unsigned blkCnt __asm("lr");
+        blkCnt = iWidth;
+
+    __asm volatile(
+            "vecAlphaCompl            .req q2                             \n"
+
+            ".p2align 2                                                   \n"
+            /* expand chan0 */
+            "   vldrb.u16               q0, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
+            "   vmulh.u8                q1, q1, %[vOpacity]               \n"
+
+            "   wlstp.16                lr, %[loopCnt], 1f                \n"
+            "2:                                                           \n"
+
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            /* if vOpacity == 254, boost to 256 */
+            "   vpt.i16                 eq, q1, %[opa254]                 \n"
+            "   vmovt.i16               q1, #256                          \n"
+#endif
+
+            "   vsub.i16                vecAlphaCompl, %[vec256], q1      \n"
+            /*  scale ch0 vector with alpha vector */
+            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
+
+            /* expand chan1 */
+            "   vldrb.u16               q0, [%[pTargetCh1], %[str4Offs]]  \n"
+            /*  blend ch0 vector with input ch0 color*/
+            "   vmla.s16                q3, q1, %[c0]                     \n"
+            "   vshr.u16                q3, q3, #8                        \n"
+
+            "   vstrb.u16               q3, [%[pTargetCh0], %[str4Offs]]  \n"
+
+            /*  scale ch1 vector with alpha vector */
+            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
+
+            /* expand chan2 */
+            "   vldrb.u16               q0, [%[pTargetCh2], %[str4Offs]]  \n"
+            /*  blend ch1 vector with input ch1 color*/
+            "   vmla.s16                q3, q1, %[c1]                     \n"
+            "   vshr.u16                q3, q3, #8                        \n"
+            "   vstrb.u16               q3, [%[pTargetCh1], %[str4Offs]]  \n"
+
+            "   adds                    %[pTargetCh0], #32                \n"
+            "   adds                    %[pTargetCh1], #32                \n"
+
+            /*  scale ch2 vector with alpha vector */
+            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
+            "   vldrb.u16               q0, [%[pTargetCh0], %[str4Offs]]  \n"
+
+            /*  blend ch2 vector with input ch2 color*/
+            "   vmla.s16                q3, q1, %[c2]                     \n"
+            "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
+            "   vmulh.u8                q1, q1, %[vOpacity]               \n"
+
+            "   vshr.u16                q3, q3, #8                        \n"
+            "   vstrb.u16               q3, [%[pTargetCh2], %[str4Offs]]  \n"
+
+            "   add.w                   %[pTargetCh2], %[pTargetCh2], #32 \n"
+
+            "   letp                    lr, 2b                            \n"
+            "1:                                                           \n"
+
+            :[pTargetCh0] "+r"(pTargetCh0),  [pTargetCh1] "+r"(pTargetCh1),
+             [pTargetCh2] "+r"(pTargetCh2), [pAlpha] "+l" (pAlpha), [loopCnt] "+r"(blkCnt)
+            :[vec256] "t" (v256),[str4Offs] "t" (vStride4Offs),
+             [vOpacity] "t"(vOpacity),
+             [c0] "r"(c0), [c1] "r"(c1), [c2] "r"(c2)
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+             ,[opa254] "r" (254)
+#endif
+            :"q0", "q1", "q2", "q3", "memory", "cc");
+
+#endif
+        pchAlpha += (iAlphaStride);
+        pTarget += (iTargetStride);
+    }
+}
 
 
 __OVERRIDE_WEAK

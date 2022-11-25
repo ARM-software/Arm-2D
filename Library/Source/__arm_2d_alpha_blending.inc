@@ -42,7 +42,7 @@
 #undef ___ARM_2D_FUNC
 #undef __ARM_2D_FUNC
 #define ____ARM_2D_FUNC(__NAME, __COLOUR)  __arm_2d_impl_##__COLOUR##_##__NAME
-#define ___ARM_2D_FUNC(__NAME, __COLOUR)   ____ARM_2D_FUNC(__NAME, __COLOUR) 
+#define ___ARM_2D_FUNC(__NAME, __COLOUR)   ____ARM_2D_FUNC(__NAME, __COLOUR)
 #define __ARM_2D_FUNC(__NAME)   ___ARM_2D_FUNC(__NAME, __API_COLOUR)
 
 #ifndef __PATCH_ALPHA_BLENDING
@@ -99,15 +99,15 @@ void __ARM_2D_FUNC(alpha_blending_colour_keying)(
 {
     int_fast16_t    iHeight = ptCopySize->iHeight;
     int_fast16_t    iWidth = ptCopySize->iWidth;
-    
+
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
     hwRatio += (hwRatio == 255);
 #endif
 
     uint16_t        hwRatioCompl = 256 - hwRatio;
-    
+
     for (int_fast16_t y = 0; y < iHeight; y++) {
-    
+
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
             if (*pSourceBase != Colour) {
@@ -149,13 +149,13 @@ void __ARM_2D_FUNC(colour_filling_with_opacity)(
 #endif
 
     uint16_t hwRatioCompl = 256 - hwRatio;
-    
+
     for (int_fast16_t y = 0; y < iHeight; y++) {
-        
+
         for (int_fast16_t x = 0; x < iWidth; x++){
             __API_PIXEL_BLENDING( &Colour,  pTargetBase++, hwRatioCompl);
         }
-        
+
         pTargetBase += iTargetStride - iWidth;
     }
 }
@@ -172,7 +172,7 @@ void __ARM_2D_FUNC(colour_filling_with_opacity)(
 
 #ifndef __PATCH_COLOUR_FILLING_A2_MASK
 __WEAK
-void __ARM_2D_FUNC(colour_filling_a2_mask)(   
+void __ARM_2D_FUNC(colour_filling_a2_mask)(
                             __API_INT_TYPE *__RESTRICT pTargetBase,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -186,27 +186,27 @@ void __ARM_2D_FUNC(colour_filling_a2_mask)(
     nAlphaOffset *= 2;
     iAlphaStride = (iAlphaStride + 3) & ~0x03;
     iAlphaStride >>= 2;
-    
+
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
-    
+
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *__RESTRICT pchMask = pchAlpha;
         int32_t nOffset = nAlphaOffset;
         uint8_t chBitMask = 0x03 << nOffset;
         __API_INT_TYPE * __RESTRICT pTarget = pTargetBase;
-        
+
         for (int_fast16_t x = 0; x < iWidth; x++) {
-        
+
             uint16_t hwTempAlpha = c_chA2MaskTable[(*pchMask & chBitMask) >> nOffset];
-        
+
             uint16_t hwAlpha = 256 - hwTempAlpha;
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
-            __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
-            
+           __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
+
             chBitMask <<= 2;
             nOffset += 2;
             if (!chBitMask) {
@@ -222,7 +222,7 @@ void __ARM_2D_FUNC(colour_filling_a2_mask)(
 }
 #else
 extern
-void __ARM_2D_FUNC(colour_filling_a2_mask)(   
+void __ARM_2D_FUNC(colour_filling_a2_mask)(
                             __API_INT_TYPE *__RESTRICT pTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -235,7 +235,7 @@ void __ARM_2D_FUNC(colour_filling_a2_mask)(
 
 #ifndef __PATCH_COLOUR_FILLING_A4_MASK
 __WEAK
-void __ARM_2D_FUNC(colour_filling_a4_mask)(   
+void __ARM_2D_FUNC(colour_filling_a4_mask)(
                             __API_INT_TYPE *__RESTRICT pTargetBase,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -249,28 +249,28 @@ void __ARM_2D_FUNC(colour_filling_a4_mask)(
     nAlphaOffset *= 4;
     iAlphaStride = (iAlphaStride + 1) & ~0x01;
     iAlphaStride >>= 1;
-    
+
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
-    
+
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *__RESTRICT pchMask = pchAlpha;
         int32_t nOffset = nAlphaOffset;
         uint8_t chBitMask = 0x0F << nOffset;
         __API_INT_TYPE * __RESTRICT pTarget = pTargetBase;
-        
+
         for (int_fast16_t x = 0; x < iWidth; x++) {
-        
+
             uint16_t hwTempAlpha = c_chA4MaskTable[(*pchMask & chBitMask) >> nOffset];
-        
+
             uint16_t hwAlpha = 256 - hwTempAlpha;
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
             __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
-            
-            
+
+
             chBitMask <<= 4;
             nOffset += 4;
             if (!chBitMask) {
@@ -286,7 +286,7 @@ void __ARM_2D_FUNC(colour_filling_a4_mask)(
 }
 #else
 extern
-void __ARM_2D_FUNC(colour_filling_a4_mask)(   
+void __ARM_2D_FUNC(colour_filling_a4_mask)(
                             __API_INT_TYPE *__RESTRICT pTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -300,7 +300,7 @@ void __ARM_2D_FUNC(colour_filling_a4_mask)(
 
 #ifndef __PATCH_COLOUR_FILLING_ALPHA_MASK
 __WEAK
-void __ARM_2D_FUNC(colour_filling_mask)(   
+void __ARM_2D_FUNC(colour_filling_mask)(
                             __API_INT_TYPE *__RESTRICT pTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -310,7 +310,7 @@ void __ARM_2D_FUNC(colour_filling_mask)(
 {
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
-    
+
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
@@ -327,7 +327,7 @@ void __ARM_2D_FUNC(colour_filling_mask)(
 }
 #else
 extern
-void __ARM_2D_FUNC(colour_filling_mask)(   
+void __ARM_2D_FUNC(colour_filling_mask)(
                             __API_INT_TYPE *__RESTRICT pTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -339,7 +339,7 @@ void __ARM_2D_FUNC(colour_filling_mask)(
 
 #ifndef __PATCH_COLOUR_FILLING_A2_MASK_OPACITY
 __WEAK
-void __ARM_2D_FUNC(colour_filling_a2_mask_opacity)(   
+void __ARM_2D_FUNC(colour_filling_a2_mask_opacity)(
                             __API_INT_TYPE *__RESTRICT pTargetBase,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -358,7 +358,7 @@ void __ARM_2D_FUNC(colour_filling_a2_mask_opacity)(
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
 
-    
+
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *__RESTRICT pchMask = pchAlpha;
@@ -368,15 +368,15 @@ void __ARM_2D_FUNC(colour_filling_a2_mask_opacity)(
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwTempAlpha = c_chA2MaskTable[(*pchMask & chBitMask) >> nOffset];
-            
+
             uint16_t hwAlpha = 256 - (hwTempAlpha * hwOpacity >> 8);
-            
+
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 2) * 2;
 #endif
 
             __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
-            
+
             chBitMask <<= 2;
             nOffset += 2;
             if (!chBitMask) {
@@ -392,7 +392,7 @@ void __ARM_2D_FUNC(colour_filling_a2_mask_opacity)(
 }
 #else
 extern
-void __ARM_2D_FUNC(colour_filling_a2_mask_opacity)(   
+void __ARM_2D_FUNC(colour_filling_a2_mask_opacity)(
                             __API_INT_TYPE *__RESTRICT pTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -407,7 +407,7 @@ void __ARM_2D_FUNC(colour_filling_a2_mask_opacity)(
 
 #ifndef __PATCH_COLOUR_FILLING_A4_MASK_OPACITY
 __WEAK
-void __ARM_2D_FUNC(colour_filling_a4_mask_opacity)(   
+void __ARM_2D_FUNC(colour_filling_a4_mask_opacity)(
                             __API_INT_TYPE *__RESTRICT pTargetBase,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -426,7 +426,7 @@ void __ARM_2D_FUNC(colour_filling_a4_mask_opacity)(
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
 
-    
+
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *__RESTRICT pchMask = pchAlpha;
@@ -436,15 +436,15 @@ void __ARM_2D_FUNC(colour_filling_a4_mask_opacity)(
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwTempAlpha = c_chA4MaskTable[(*pchMask & chBitMask) >> nOffset];
-            
+
             uint16_t hwAlpha = 256 - (hwTempAlpha * hwOpacity >> 8);
-            
+
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 2) * 2;
 #endif
 
             __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
-            
+
             chBitMask <<= 4;
             nOffset += 4;
             if (!chBitMask) {
@@ -460,7 +460,7 @@ void __ARM_2D_FUNC(colour_filling_a4_mask_opacity)(
 }
 #else
 extern
-void __ARM_2D_FUNC(colour_filling_a4_mask_opacity)(   
+void __ARM_2D_FUNC(colour_filling_a4_mask_opacity)(
                             __API_INT_TYPE *__RESTRICT pTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -474,7 +474,7 @@ void __ARM_2D_FUNC(colour_filling_a4_mask_opacity)(
 
 #ifndef __PATCH_COLOUR_FILLING_ALPHA_MASK_OPACITY
 __WEAK
-void __ARM_2D_FUNC(colour_filling_mask_opacity)(   
+void __ARM_2D_FUNC(colour_filling_mask_opacity)(
                             __API_INT_TYPE *__RESTRICT pTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -486,12 +486,12 @@ void __ARM_2D_FUNC(colour_filling_mask_opacity)(
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
 
-    
+
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - ((*pchAlpha++) * hwOpacity >> 8);
-            
+
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 2) * 2;
 #endif
@@ -505,7 +505,7 @@ void __ARM_2D_FUNC(colour_filling_mask_opacity)(
 }
 #else
 extern
-void __ARM_2D_FUNC(colour_filling_mask_opacity)(   
+void __ARM_2D_FUNC(colour_filling_mask_opacity)(
                             __API_INT_TYPE *__RESTRICT pTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -519,7 +519,7 @@ void __ARM_2D_FUNC(colour_filling_mask_opacity)(
 
 #ifndef __PATCH_COLOUR_FILLING_CHANNEL_MASK
 __WEAK
-void __ARM_2D_FUNC(colour_filling_channel_mask)(   
+void __ARM_2D_FUNC(colour_filling_channel_mask)(
                             __API_INT_TYPE *__RESTRICT pTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -529,7 +529,7 @@ void __ARM_2D_FUNC(colour_filling_channel_mask)(
 {
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
-    
+
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
@@ -538,7 +538,7 @@ void __ARM_2D_FUNC(colour_filling_channel_mask)(
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
-            
+
             __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
         }
 
@@ -548,7 +548,7 @@ void __ARM_2D_FUNC(colour_filling_channel_mask)(
 }
 #else
 extern
-void __ARM_2D_FUNC(colour_filling_channel_mask)(   
+void __ARM_2D_FUNC(colour_filling_channel_mask)(
                             __API_INT_TYPE *__RESTRICT pTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -560,7 +560,7 @@ void __ARM_2D_FUNC(colour_filling_channel_mask)(
 
 #ifndef __PATCH_COLOUR_FILLING_CHANNEL_MASK_OPACITY
 __WEAK
-void __ARM_2D_FUNC(colour_filling_channel_mask_opacity)(   
+void __ARM_2D_FUNC(colour_filling_channel_mask_opacity)(
                             __API_INT_TYPE *__RESTRICT pTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -571,7 +571,7 @@ void __ARM_2D_FUNC(colour_filling_channel_mask_opacity)(
 {
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
-    
+
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
@@ -590,7 +590,7 @@ void __ARM_2D_FUNC(colour_filling_channel_mask_opacity)(
 }
 #else
 extern
-void __ARM_2D_FUNC(colour_filling_channel_mask_opacity)(   
+void __ARM_2D_FUNC(colour_filling_channel_mask_opacity)(
                             __API_INT_TYPE *__RESTRICT pTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,

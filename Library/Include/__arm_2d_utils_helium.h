@@ -85,11 +85,11 @@ __STATIC_FORCEINLINE
 void __arm_2d_rgb565_unpack_single_vec(uint16x8_t in,
                                             uint16x8_t * R, uint16x8_t * G, uint16x8_t * B)
 {
-    uint16x8_t      vecMaskR = vdupq_n_u16(0x001f);
+    uint16x8_t      vecMaskB = vdupq_n_u16(0x001f);
     uint16x8_t      vecMaskG = vdupq_n_u16(0x003f);
 
-    *R = (in & vecMaskR) * 8;
-    *B = ((in >> 11)) * 8;
+    *B = (in & vecMaskB) * 8;
+    *R = ((in >> 11)) * 8;
     *G = ((in >> 5) & vecMaskG) * 4;
 }
 
@@ -97,13 +97,13 @@ void __arm_2d_rgb565_unpack_single_vec(uint16x8_t in,
 __STATIC_FORCEINLINE
 uint16x8_t __arm_2d_rgb565_pack_single_vec(uint16x8_t R, uint16x8_t G, uint16x8_t B)
 {
-    uint16x8_t      vecMaskBpck = vdupq_n_u16(0x00f8);
+    uint16x8_t      vecMaskRpck = vdupq_n_u16(0x00f8);
     uint16x8_t      vecMaskGpck = vdupq_n_u16(0x00fc);
 
-    uint16x8_t      vOut = vorrq(vshrq(R, 3),
+    uint16x8_t      vOut = vorrq(vshrq(B, 3),
                                  vmulq(vandq(G, vecMaskGpck), 8));
 
-    vOut = vorrq(vOut, vmulq(vandq(B, vecMaskBpck), 256));
+    vOut = vorrq(vOut, vmulq(vandq(R, vecMaskRpck), 256));
 
     return vOut;
 }
