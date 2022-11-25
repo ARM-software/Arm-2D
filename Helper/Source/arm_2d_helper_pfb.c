@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        20. Nov 2022
- * $Revision:    V.1.3.8
+ * $Date:        25. Nov 2022
+ * $Revision:    V.1.3.9
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -373,9 +373,15 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
     if (this.Adapter.bFirstIteration) {
         this.Adapter.ptDirtyRegion = ptDirtyRegions;
         
-        /* reset flag */
-        this.Adapter.bNoAdditionalDirtyRegionList = false;
-        
+        if (NULL == ptDirtyRegions) {
+            /* since we draw the whole frame, no need to take the additional 
+             * dirty region list into consideration 
+             */
+            this.Adapter.bNoAdditionalDirtyRegionList = true;
+        } else {
+            /* reset flag */
+            this.Adapter.bNoAdditionalDirtyRegionList = false;
+        }
         //this.Adapter.bFirstIteration = false;
         this.Adapter.bIsRegionChanged = true;
     }
