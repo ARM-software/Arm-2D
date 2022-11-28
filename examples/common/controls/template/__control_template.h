@@ -55,8 +55,9 @@ extern
 void control_template_init(void);
 
 extern
+ARM_NONNULL(1)
 void control_template_show( const arm_2d_tile_t *ptTile, 
-                            const arm_2d_tile_t *ptRegion, 
+                            const arm_2d_region_t *ptRegion, 
                             bool bIsNewFrame);
 
 #if defined(__clang__)

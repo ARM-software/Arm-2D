@@ -67,11 +67,18 @@ void control_template_init(void)
 
 }
 
-
-void control_template_show(const arm_2d_tile_t *ptTile, 
-                    const arm_2d_tile_t *ptRegion, 
-                    bool bIsNewFrame)
+ARM_NONNULL(1)
+void control_template_show( const arm_2d_tile_t *ptTile, 
+                            const arm_2d_region_t *ptRegion, 
+                            bool bIsNewFrame)
 {
+    assert(NULL != ptTile);
+    arm_2d_region_t tDrawRegion = {0};
+    
+    if (NULL == ptRegion) {
+        tDrawRegion.tSize = ptTile->tRegion.tSize;
+        ptRegion = (const arm_2d_tile_t *)&tDrawRegion;
+    }
 
 
 }
