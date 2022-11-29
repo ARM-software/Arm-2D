@@ -116,7 +116,7 @@ int main (void)
 {
     arm_irq_safe {
         arm_2d_init();
-    }         
+    }
 
     printf("\r\nArm-2D Bare-metal Template\r\n");
  
@@ -129,8 +129,9 @@ int main (void)
     virtual_resource_demo_init();
 #endif
     arm_2d_scene3_init(&DISP0_ADAPTER);
+    arm_2d_scene4_init(&DISP0_ADAPTER);
     arm_2d_scene2_init(&DISP0_ADAPTER);
-    
+
     
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
                                             ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);

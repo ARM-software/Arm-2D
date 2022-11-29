@@ -33,6 +33,7 @@
 #include "./number_list.h"
 #include "./progress_wheel.h"
 #include "./list_view.h"
+#include "./battery_gasgauge.h"
 
 #if defined(__RTE_ACCELERATION_ARM_2D_EXTRA_LCD_PRINTF__)
 #   include "./arm_extra_lcd_printf.h"
