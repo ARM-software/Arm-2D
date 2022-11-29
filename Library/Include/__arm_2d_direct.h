@@ -3202,7 +3202,7 @@ void __arm_2d_impl_cccn888_transform_with_opacity(
                                            __arm_2d_param_copy_orig_t * ptParam,
                                            __arm_2d_transform_info_t * ptInfo,
                                            uint_fast16_t hwRatio);
-                       
+
 void __arm_2d_impl_cccn888_transform_with_src_mask(
                                         __arm_2d_param_copy_orig_msk_t * ptParam,
                                         __arm_2d_transform_info_t * ptInfo);
@@ -9409,7 +9409,7 @@ void __arm_2d_impl_rgb565_transform_with_opacity(
                                         __arm_2d_param_copy_orig_t * ptParam,
                                         __arm_2d_transform_info_t * ptInfo,
                                         uint_fast16_t hwRatio);
-                      
+
 void __arm_2d_impl_rgb565_transform_with_src_mask(
                                         __arm_2d_param_copy_orig_msk_t * ptParam,
                                         __arm_2d_transform_info_t * ptInfo);
@@ -9426,6 +9426,18 @@ void __arm_2d_impl_rgb565_transform_with_src_chn_mask(
 void __arm_2d_impl_rgb565_transform_with_src_chn_mask_and_opacity(
                                         __arm_2d_param_copy_orig_msk_t * ptParam,
                                         __arm_2d_transform_info_t * ptInfo,
+                                        uint_fast16_t hwRatio);
+void __arm_2d_impl_gray8_colour_filling_mask_opacity_transform(
+                                        __arm_2d_param_copy_orig_t *ptParam,
+                                        __arm_2d_transform_info_t *ptInfo,
+                                        uint_fast16_t hwRatio);
+void __arm_2d_impl_rgb565_colour_filling_mask_opacity_transform(
+                                        __arm_2d_param_copy_orig_t *ptParam,
+                                        __arm_2d_transform_info_t *ptInfo,
+                                        uint_fast16_t hwRatio);
+void __arm_2d_impl_cccn888_colour_filling_mask_opacity_transform(
+                                        __arm_2d_param_copy_orig_t *ptParam,
+                                        __arm_2d_transform_info_t *ptInfo,
                                         uint_fast16_t hwRatio);
 
 #if defined(__clang__)

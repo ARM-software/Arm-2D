@@ -190,6 +190,31 @@ uint16x8_t __arm_2d_rgb565_blending_opacity_single_vec(
     return __arm_2d_rgb565_pack_single_vec(vecR, vecG, vecB);
 }
 
+/* Mix RGB565 vector with a scalar */
+uint16x8_t __arm_2d_rgb565_blending_single_vec_with_scal(
+                                            uint16x8_t      vec,
+                                            __arm_2d_color_fast_rgb_t     * scal,
+                                            uint16x8_t      vecHwOpacity)
+{
+    uint16x8_t      vecAlpha = vsubq(vdupq_n_u16(256), vecHwOpacity);
+    uint16x8_t      vecR, vecG, vecB;
+
+    /* unpack vector */
+    __arm_2d_rgb565_unpack_single_vec(vec, &vecR, &vecG, &vecB);
+
+    /* merge */
+    vecR = vecR * vecHwOpacity + scal->R * vecAlpha;
+    vecR = vecR >> 8;
+
+    vecG = vecG * vecHwOpacity + scal->G * vecAlpha;
+    vecG = vecG >> 8;
+
+    vecB = vecB * vecHwOpacity + scal->B * vecAlpha;
+    vecB = vecB >> 8;
+
+    /* pack */
+    return __arm_2d_rgb565_pack_single_vec(vecR, vecG, vecB);
+}
 #endif
 
 
