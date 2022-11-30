@@ -199,6 +199,14 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
 
     arm_2d_align_centre(ptTile->tRegion, 150, 80) {
 
+        __centre_region.tSize.iWidth = 60;
+        progress_wheel_show(&this.tWheel,
+                            ptTile, 
+                            &__centre_region,       
+                            this.iProgress,         /* progress 0~1000 */
+                            255 - 32,               /* opacity */
+                            bIsNewFrame);
+
         __centre_region.tLocation.iX += 60;
         __centre_region.tSize.iWidth = 30;
         while(arm_fsm_rt_cpl != number_list_show(   &this.tNumberList[2], 
@@ -216,14 +224,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
                                                     &__centre_region, 
                                                     bIsNewFrame));
         
-        __centre_region.tLocation.iX -= 150;
-        __centre_region.tSize.iWidth = 60;
-        progress_wheel_show(&this.tWheel,
-                            ptTile, 
-                            &__centre_region,       
-                            this.iProgress,         /* progress 0~1000 */
-                            255 - 32,               /* opacity */
-                            bIsNewFrame);
+
     }
     
     arm_2d_align_top_right( ptTile->tRegion, 
@@ -315,14 +316,71 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
     } else {
         memset(ptScene, 0, sizeof(user_scene_2_t));
     }
+
+    /*! define dirty regions */
+    IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
+
+        /* a dirty region to be specified at runtime*/
+        ADD_REGION_TO_LIST(s_tDirtyRegions,
+            .tSize = {
+                150, 80,
+            },
+        ),
+
+        ADD_REGION_TO_LIST(s_tDirtyRegions,
+            0
+        ),
+
+        /* add the last region:
+         * it is the top left corner for text display 
+         */
+        ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
+            .tLocation = {
+                .iX = 0,
+                .iY = 0,
+            },
+            .tSize = {
+                .iWidth = 60,
+                .iHeight = 8,
+            },
+        ),
+    END_IMPL_ARM_2D_REGION_LIST()
     
+    /* get the screen region */
+    arm_2d_region_t tScreen
+        = arm_2d_helper_pfb_get_display_area(
+            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
+    
+    /* initialise dirty region 0 at runtime
+     * this demo shows that we create a region in the centre of a screen(320*240)
+     * for a image stored in the tile c_tileCMSISLogoMask
+     */
+    s_tDirtyRegions[0].tRegion.tLocation = (arm_2d_location_t){
+        .iX = ((tScreen.tSize.iWidth - 150) >> 1),
+        .iY = ((tScreen.tSize.iHeight - 80) >> 1),
+    };
+    
+    arm_2d_align_top_right( tScreen, 
+                            c_tileWhiteDotMask.tRegion.tSize.iWidth + 10,
+                            c_tileWhiteDotMask.tRegion.tSize.iHeight) {
+        s_tDirtyRegions[1].tRegion = __top_right_region;
+    }
+//    s_tDirtyRegions[1].tRegion = (arm_2d_region_t){
+//        .tLocation = {
+//            .iX = tScreen.tSize.iWidth - c_tileWhiteDotMask.tRegion.tSize.iWidth - 10,
+//            .iY = 0,
+//        },
+//        .tSize = c_tileWhiteDotMask.tRegion.tSize,
+//    };
+    
+
     *ptScene = (user_scene_2_t){
         .use_as__arm_2d_scene_t = {
         /* Please uncommon the callbacks if you need them
          */
         //.fnBackground   = &__pfb_draw_scene2_background_handler,
         .fnScene        = &__pfb_draw_scene2_handler,
-        //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
+        .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
         
 
         //.fnOnBGStart    = &__on_scene2_background_start,

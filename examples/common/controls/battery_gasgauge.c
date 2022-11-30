@@ -36,6 +36,7 @@
 #   pragma clang diagnostic ignored "-Wcast-align"
 #   pragma clang diagnostic ignored "-Wmissing-field-initializers"
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
+#   pragma clang diagnostic ignored "-Wgnu-statement-expression-from-macro-expansion"
 #   pragma clang diagnostic ignored "-Wmissing-braces"
 #   pragma clang diagnostic ignored "-Wunused-const-variable"
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
@@ -166,7 +167,7 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
                     if (BATTERY_STATUS_CHARGING == this.tStatus) {
                         chOpacity = __BOARDER_OPA_MAX;
                     } else {
-                        chOpacity = MIN(255, this.hwGasGauge -  hwLevel);
+                        chOpacity = (uint8_t)MIN(255, this.hwGasGauge -  hwLevel);
                     }
                     if (bDrawTheTopBar) {
                         bDrawTheTopBar = false;
@@ -206,7 +207,7 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
                 hwLevel -= 200;
 
                 if (this.hwGasGauge > hwLevel) {
-                    chOpacity = MIN(255, this.hwGasGauge -  hwLevel);
+                    chOpacity = (uint8_t)MIN(255, this.hwGasGauge -  hwLevel);
                 }
                 
                 if (this.bBoarderFlashing) {

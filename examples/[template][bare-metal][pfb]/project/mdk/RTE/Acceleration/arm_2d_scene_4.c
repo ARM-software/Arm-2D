@@ -241,44 +241,44 @@ user_scene_4_t *__arm_2d_scene4_init(   arm_2d_scene_player_t *ptDispAdapter,
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
 
-//    /*! define dirty regions */
-//    IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
+    /*! define dirty regions */
+    IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
 
-//        /* a dirty region to be specified at runtime*/
-//        ADD_REGION_TO_LIST(s_tDirtyRegions,
-//            0  /* initialize at runtime later */
-//        ),
-//        
-//        /* add the last region:
-//         * it is the top left corner for text display 
-//         */
-//        ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
-//            .tLocation = {
-//                .iX = 0,
-//                .iY = 0,
-//            },
-//            .tSize = {
-//                .iWidth = __GLCD_CFG_SCEEN_WIDTH__,
-//                .iHeight = 8,
-//            },
-//        ),
-
-//    END_IMPL_ARM_2D_REGION_LIST()
-//    
-//    /* get the screen region */
-//    arm_2d_region_t tScreen
-//        = arm_2d_helper_pfb_get_display_area(
-//            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
-//    
-//    /* initialise dirty region 0 at runtime
-//     * this demo shows that we create a region in the centre of a screen(320*240)
-//     * for a image stored in the tile c_tileCMSISLogoMask
-//     */
-//    s_tDirtyRegions[0].tRegion.tLocation = (arm_2d_location_t){
-//        .iX = ((tScreen.tSize.iWidth - c_tileCMSISLogoMask.tRegion.tSize.iWidth) >> 1),
-//        .iY = ((tScreen.tSize.iHeight - c_tileCMSISLogoMask.tRegion.tSize.iHeight) >> 1),
-//    };
-//    s_tDirtyRegions[0].tRegion.tSize = c_tileCMSISLogoMask.tRegion.tSize;
+        /* a dirty region to be specified at runtime*/
+        ADD_REGION_TO_LIST(s_tDirtyRegions,
+            .tSize = {
+                100, 130,
+            },
+        ),
+        
+        /* add the last region:
+         * it is the top left corner for text display 
+         */
+        ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
+            .tLocation = {
+                .iX = 0,
+                .iY = 0,
+            },
+            .tSize = {
+                .iWidth = 60,
+                .iHeight = 8,
+            },
+        ),
+    END_IMPL_ARM_2D_REGION_LIST()
+    
+    /* get the screen region */
+    arm_2d_region_t tScreen
+        = arm_2d_helper_pfb_get_display_area(
+            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
+    
+    /* initialise dirty region 0 at runtime
+     * this demo shows that we create a region in the centre of a screen(320*240)
+     * for a image stored in the tile c_tileCMSISLogoMask
+     */
+    s_tDirtyRegions[0].tRegion.tLocation = (arm_2d_location_t){
+        .iX = ((tScreen.tSize.iWidth - 100) >> 1),
+        .iY = ((tScreen.tSize.iHeight - 130) >> 1),
+    };
     
     if (NULL == ptThis) {
         ptThis = (user_scene_4_t *)malloc(sizeof(user_scene_4_t));
@@ -297,7 +297,7 @@ user_scene_4_t *__arm_2d_scene4_init(   arm_2d_scene_player_t *ptDispAdapter,
          */
         //.fnBackground   = &__pfb_draw_scene4_background_handler,
         .fnScene        = &__pfb_draw_scene4_handler,
-        //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
+        .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
         
 
         //.fnOnBGStart    = &__on_scene4_background_start,
