@@ -88,13 +88,16 @@ extern "C" {
 
 // <h>Extra Components
 // =======================
-// 
+//
+#ifndef __GLCD_CFG_COLOUR_DEPTH__
 // <o __GLCD_CFG_COLOUR_DEPTH__> Select the screen colour depth
 //     <8=>     8 Bits
 //     <16=>    16Bits
 //     <32=>    32Bits
 // <i> The colour depth of your LCD
-#define __GLCD_CFG_COLOUR_DEPTH__                           16
+// <i> Default: 16
+#   define __GLCD_CFG_COLOUR_DEPTH__                        16
+#endif
 
 // <o>Width of the screen <8-32767>
 // <i> The width of your screen
