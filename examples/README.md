@@ -15,15 +15,15 @@ It is an **ALL-IN-ONE** example that demonstrates almost all the features provid
 - **Choose the widely used algorithms in embedded GUI as the body of the benchmark**
   - Alpha-blending
   - Colour-Keying
-  - Image Copy
-  - Texture Paving
+  - Blit
+  - Tiling
   - Rotation
   - Mirroring
   - Masking
 - **Simulate a typical application scenario with sufficient complexity**
-  - Background with Texture paving (switching different mirroring modes every 4 second)
+  - Background with Texture Tiling (switching mirroring modes every 4 second)
   - Foreground picture 
-  - Two constructed layers for alpha-blending and texture paving
+  - Two constructed layers for alpha-blending and tiling with colour keying
   - Moving icons
   - Spinning busy wheel
 - **Choose a typical low-cost LCD resolution 320*240 in RGB565**
@@ -34,7 +34,7 @@ It is an **ALL-IN-ONE** example that demonstrates almost all the features provid
 
 **Figure 1-1 A snapshot of benchmark running on Cortex-M4 FVP platform**
 
-![](../documentation/pictures/benchmark)
+![](../documentation/pictures/benchmark.png) 
 
 
 
@@ -54,17 +54,18 @@ It is an **ALL-IN-ONE** example that demonstrates almost all the features provid
 
 **PROJECT:    watch_panel**
 
-It is an example of rotation APIs. It consists of five layers:
+It is an example of transform APIs. It consists of seven layers:
 
-1. A floating background layer (Using Tile Copy)
-2. A clock_panel layer (Using Alpha Blending With Colour Keying)
-3. A small gold gear (Rotation)
-4. A big black gear (Rotation with Opacity)
-5. A red pointer (Rotation)
-6. A golden star (Rotation, scaling with Opacity)
+1. Background: Filling Black colour
+2. Magnifying Glass Perspective (Copy with a mask on target side)
+3. A clock_panel layer (Copy with colour keying and opacity)
+4. A small gold gear (Rotation with colour keying)
+5. A big gray gear (Rotation with colour keying and opacity)
+6. A red pointer (Rotation with a source mask and a specified pivot)
+7. A Fading star (Rotation and scaling with a source mask and opacity)
 
 This demo also shows how a fancy looking clock could be rendered with just less than 10K RAM (or even less by using a smaller PFB size). 
 
 **Figure 1-3  A snapshot of watch-panel running on Cortex-M4 FVP platform**
 
-![](../documentation/pictures/watch-panel)
+![watch-panel](../documentation/pictures/watch-panel.png)  

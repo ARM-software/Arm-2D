@@ -175,9 +175,9 @@ There is no public 2D image processing benchmark available for microcontrollers.
   - Mirroring
   - Masking
 - **Simulate a typical application scenario with sufficient complexity**
-  - Background with Texture paving (switching different mirroring modes every 4 second)
+  - Background with Texture Tiling (switching mirroring modes every 4 second)
   - Foreground picture 
-  - Two constructed layers for alpha-blending and texture paving
+  - Two constructed layers for alpha-blending and tiling with colour keying
   - Moving icons
   - Spinning busy wheel
 - **Choose a typical low-cost LCD resolution 320*240 in RGB565**
@@ -188,7 +188,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
 
 **Figure 1-4 A snapshot of benchmark running on Cortex-M4 FVP platform**
 
-![Alpha-blending](./documentation/pictures/benchmark)  
+![Benchmark](./documentation/pictures/benchmark.png) 
 
 
 
