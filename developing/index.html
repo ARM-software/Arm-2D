@@ -300,9 +300,9 @@ The Hierarchy of a Typical Embedded GUI System</div></div>
 </ul>
 </li>
 <li><b>Simulate a typical application scenario with sufficient complexity</b><ul>
-<li>Background with Texture paving (switching different mirroring modes every 4 second)</li>
+<li>Background with Texture Tiling (switching mirroring modes every 4 second)</li>
 <li>Foreground picture</li>
-<li>Two constructed layers for alpha-blending and texture paving</li>
+<li>Two constructed layers for alpha-blending and tiling with colour keying</li>
 <li>Moving icons</li>
 <li>Spinning busy wheel</li>
 </ul>
@@ -312,9 +312,11 @@ The Hierarchy of a Typical Embedded GUI System</div></div>
 <li><b>Record the cycle count used for blending one frame and run 1000 iterations (frames).</b></li>
 </ul>
 <p ><b>Figure 1-4 A snapshot of benchmark running on Cortex-M4 FVP platform</b></p>
-<p ><img src="benchmark" alt="" class="inline" title="Alpha-blending"/>     <br  />
-</p>
-<ul>
+<div class="image">
+<img src="benchmark.png" alt=""/>
+<div class="caption">
+Benchmark</div></div>
+    <ul>
 <li><b>Use the average cycle count in 1000 iterations as benchmark score.</b><ul>
 <li>Based on that, for typical embedded application requirement, we derive a more meaningful metrics called the <b>Minimal Frequency Required for 30 FPS (MHz)</b> as shown in <b>Figure 1-5</b>.</li>
 </ul>
