@@ -16,7 +16,7 @@ For the Library Users, **Public Header Files** provide all the information requi
 
 ## 2 Public Header Files
 
-In the `Library/Include` folder, all header files (*.h) **without** double-underscore-prefix, i.e. "__", are considered as **PUBLIC HEADER FILES**. They are listed in the **Table 2-1**.
+In the `Library/Include` folder, all header files (*.h) **without** double-underscore-prefix, i.e. `__`, are considered as **PUBLIC HEADER FILES**. They are listed in the **Table 2-1**.
 
 **Table 2-1 Summary of Public Header Files**
 
