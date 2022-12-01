@@ -57,7 +57,7 @@ const static arm_2d_tile_t c_tPictureCMSISLogo = {
 In fact, with the help of some macro templates, we can use Tile to implement framebuffers with a given size:
 
 ```c
-#define __declare_tile(__NAME)                                      \
+#define __declare_tile(__NAME)                                                  \
             extern const arm_2d_tile_t __NAME;
 #define declare_tile(__NAME)            __declare_tile(__NAME)
 
