@@ -15,51 +15,54 @@
 
 ## Features
 
-#### In this version ( ver1.1.0)
+#### In this version (ver1.1.0)
 
-The Arm-2D library provides **Low-Level 2D Image Processing Services** that are mainly used in **Deep Embedded Display system**. The supported features include but not limited to:
+The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly used in **Deep Embedded Display system**. The supported features include but not limited to:
 
-- **Support Accelerating LVGL** (**v8.3.0** or newer)
+- **Supports Accelerating LVGL** (**v8.3.0** or newer)
 - **CMSIS-Pack is available.**
-- **Alpha-Blending** / **Alpha-Masking**
+- **Alpha-Blending** / **Masks**
   - With or without Colour-Keying
-  - Filling-Colour with an Alpha-Mask
-    - For drawing icons/texts with anti-alias in a specified colour
-    - Supports an optional ***Opacity*** ratio can be applied.
+  - Filling-Colour with an mask
+    - For drawing anti-alias icons/texts in a specified colour
+    - Supports an optional ***Opacity***.
+    - Supports A2, A4 and A8 masks
 - **Image Copy (Tiling)**
-  - With or without Colour-Keying (a.k.a colour masking)
+  - With or without Colour-Keying
   - Supports four mirroring modes: No-mirroring, X-mirroring, Y-mirroring and XY-mirroring
-  - Supports **alpha masks** on the source side and/or the target side 
+  - Supports **masks** on the source side and/or the target side 
 - **Supported Colour formats**
-  - **Gray8 (8-bit Grayscale)**, **RGB565** and **RGB888**
-  - Generic **8bit colour**, **RGB16** and **RGB32**
-  - Converting colour formats among **GRAY8**, **RGB565** and **RGB888** for any given tiles
-  - A2, A4 and A8 masks
-- **Region/Window Clipping**
+  - **GRAY8 (8-bit Grayscale)**, **RGB565** and **RGB888**
+  - Generic **C8BIT (8bit colour)**, **RGB16** and **RGB32**
+  - Converting colour formats among **GRAY8**, **RGB565** and **RGB888**
+- **Region Clipping**
 - **Generic Partial Frame-buffer (PFB)**
-  - Transparent for upper layer software/GUI services
+  - Transparent for software/GUI services on upper layers
   - Easy to Use
-  - No limitation on target screen resolution
-  - No limitation on PFB size and shape (it could be a line or a rectangular with any size)
-  - Supports the **Dirty Regions** when performing the low level refreshing
+  - No limitation on screen resolution **(See note)**
+  - No limitation on PFB size and shape (it could be a line or a rectangular with any size)  **(See note)**
+  - Supports **Dirty Regions** for refreshing specified areas only
   - Supports swapping high and low bytes for RGB16 pixels
   - Introduce a **Scene Player** with various scene switching modes (Fade-In-Fade-Out, Slide, Erase etc.)
-  - Support Various Buffer Modes with a built-in framebuffer pool. 
+  - Support various Buffer Modes with a built-in framebuffer pool. 
     - Single Buffer/Double-Buffers/Three-Buffers
     - Direct Mode
     - Enhanced Asynchronous Flushing Support (i.e. DMA + ISR)
+
+**NOTE**: As long as the size is smaller than 32767 * 32767. 
+
 - **Transform** (i.e. rotation and scaling)
-  - Supports Colour-keying by default
+  - Supports Colour-keying
   - Supports an optional **Opacity** ratio
-  - Supports the Anti-Alias feature. 
-    - You can enable it by defining macro  `__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__` to `1` at **compile-time**.
-  - Support source masks
+  - Supports Anti-Alias. 
+    - You can enable it by defining the macro  `__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__` to `1` at **compile-time**.
+  - Supports source masks
 - **An Unified and User-Friendly Programmers' Model**
-  - APIs can be used in **Synchronous** manner (  **Classic and Blocking** ) and/or **Asynchronous** manner ( **Event-Driven** )
-  - Supports both **bare-metal** and **RTOS** environment
+  - APIs can be used in **Synchronous** manner (  **Classic Blocking-code** ) and/or **Asynchronous** manner ( **Event-Driven** )
+  - Supports both **bare-metal** and **RTOS** environments
   - Ultra small memory footprint
 - **Support Virtual Resource**
-  - Support loading resources from external memories which is not mapped to 4G memory space
+  - Supports loading resources in on-demand manner from external memories that are not mapped into the 4G memory space.
 
 
 
@@ -68,7 +71,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** that are 
 
 - Image Filters, e.g. Generic Anti-aliasing algorithms
 - Stretch and Perspective Transform
-- DMAC-350 Support
+- Supports DMAC-350
 
 
 
@@ -133,9 +136,9 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 
 **The library is designed with ACI (Arm Custom Instructions) in mind.** Accelerations implemented with user-defined instructions can be integrated into the library easily without modifying the existing Arm-2D library or upper-layer software. 
 
-**The library is designed with 2D image accelerators in mind and following the feature agnostic principle.**  The Support for accelerators can be added easily without modifying the existing Arm-2D library or upper-layer software. 
+**The library is designed with 2D image accelerators in mind and following the feature-agnostic principle.**  The Support for accelerators can be added easily without modifying the existing Arm-2D library or upper-layer software. 
 
-**The library is designed with resource constraints in mind.** **For Cortex-M processors with 4K~32K SRAM that cannot afford a full-frame-buffer**, Arm-2D introduces a feature called **Generic Partial Frame-buffer** enabling those existing MCUs to run GUI applications by practicing time-space exchange schemes while still enjoying a decent frame rate. 
+**The library is designed with resource constraints in mind.** **For Cortex-M processors with 4K~32K SRAM that cannot afford a complete-framebuffer**, Arm-2D introduces a feature called **Generic Partial Framebuffer** enabling those existing MCUs to run GUI applications in a decent frame rate. 
 
 
 
@@ -153,12 +156,12 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 
 #### 1.5.1 Summary
 
-| Projects                           | Description                                                  | Folder                                      | Note                      |
-| ---------------------------------- | ------------------------------------------------------------ | ------------------------------------------- | ------------------------- |
-| benchmark                          | It is an **ALL-IN-ONE** example that demonstrates almost all features provided by Arm-2D. By setting different PFB sizes, you can evaluate the 2D image processing capability for the target system. | examples/benchmark                          | Can be used as benchmark. |
-| watch_panel                        | It is a dedicated example of a smart-watch-like panel. A pointer and two gears rotate at different angular velocities on a translucent watch panel with a dynamic background. | examples/watch_panel                        | Can be used as benchmark  |
-| \[template\]\[bare-metal\]\[pfb\]  | It is a project template for the bare-metal environment.     | examples/\[template\]\[bare-metal\]\[pfb\]  | Project Template          |
-| \[template\]\[cmsis-rtos2\]\[pfb\] | It is a project template for the RTOS environment, which use CMSIS-RTO2 as an example to show how Arm-2D can work with an RTOS. | examples/\[template\]\[cmsis-rtos2\]\[pfb\] | Project Template          |
+| Projects                           | Description                                                  | Folder                                      | Note                   |
+| ---------------------------------- | ------------------------------------------------------------ | ------------------------------------------- | ---------------------- |
+| benchmark                          | It is an **ALL-IN-ONE** example that demonstrates almost all features provided by Arm-2D. By setting different PFB sizes, you can evaluate the 2D image processing capability for the target system. | examples/benchmark                          | **Used as benchmark.** |
+| watch_panel                        | It is a dedicated example of a smart-watch-like panel. A pointer and two gears rotate at different angular velocities on a translucent watch panel with a dynamic background. | examples/watch_panel                        | **Used as benchmark**  |
+| \[template\]\[bare-metal\]\[pfb\]  | It is a project template for the bare-metal environment.     | examples/\[template\]\[bare-metal\]\[pfb\]  | Project Template       |
+| \[template\]\[cmsis-rtos2\]\[pfb\] | It is a project template for the RTOS environment, which use CMSIS-RTO2 as an example to show how Arm-2D can work with an RTOS. | examples/\[template\]\[cmsis-rtos2\]\[pfb\] | Project Template       |
 
 
 
@@ -353,7 +356,7 @@ def_low_lv_io(__ARM_2D_IO_FILL_RGB32, __arm_2d_rgb32_sw_tile_fill);
 - The generic Anti-aliasing algorithms haven't been introduced, but anti-alias in transform (i.e. rotation and scaling) is supported.
 - The library currently only provides default software algorithms and a **[Helium](https://developer.arm.com/architectures/instruction-sets/simd-isas/helium) based acceleration library**. 
   - Although planned and implemented, the [ACI (Arm Custom Instruction)](https://developer.arm.com/architectures/instruction-sets/custom-instructions) acceleration solutions are not open-source for now. Please contact local Arm FAE for details. 
-- The provided example projects only run on [MPS2](https://developer.arm.com/tools-and-software/development-boards/fpga-prototyping-boards/mps2), [MPS3](https://developer.arm.com/tools-and-software/development-boards/fpga-prototyping-boards/mps3), [FVP](https://developer.arm.com/tools-and-software/open-source-software/arm-platforms-software/cortex-m-platforms-software) and some 3rd party development platforms, e.g. **STM32F746G-Discovery** and **Raspberry Pi Pico**. 
+- The provided example projects only run on [MPS2](https://developer.arm.com/tools-and-software/development-boards/fpga-prototyping-boards/mps2), [MPS3](https://developer.arm.com/tools-and-software/development-boards/fpga-prototyping-boards/mps3), [FVP](https://developer.arm.com/tools-and-software/open-source-software/arm-platforms-software/cortex-m-platforms-software) and some 3rd party development platforms, e.g. **STM32F746G-Discovery**. 
   - Feel free to try the library on your own devices. The library depends on no specific peripheral. 
 - Most of the example projects are created in MDK.
 
@@ -384,4 +387,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-07 Oct 2022
+01 Dec 2022
