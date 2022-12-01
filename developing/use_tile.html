@@ -164,7 +164,7 @@ $(document).ready(function(){initNavTree('use_tile.html',''); initResizable(); }
 <div class="line">    .pwBuffer = (uint32_t *)c_bmpCMSISLogo,</div>
 <div class="line">};</div>
 </div><!-- fragment --><p >In fact, with the help of some macro templates, we can use Tile to implement framebuffers with a given size:</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define __declare_tile(__NAME)                                      \</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#define __declare_tile(__NAME)                                                  \</span></div>
 <div class="line"><span class="preprocessor">            extern const arm_2d_tile_t __NAME;</span></div>
 <div class="line"><span class="preprocessor">#define declare_tile(__NAME)            __declare_tile(__NAME)</span></div>
 <div class="line"> </div>
