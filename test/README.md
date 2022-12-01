@@ -13,7 +13,9 @@ Details about the 2 demos:
   - Two constructed layers for alpha-blending and texture paving
   - Moving icons
   - Spinning busy wheel
-  - ![Generic](https://github.com/ARM-software/Arm-2D/raw/main/documentation/pictures/benchmark)
+
+
+![Generic](../documentation/pictures/benchmark.png) 
 
 - **watch_panel**
   - A floating background layer (Using Tile Copy)
@@ -22,7 +24,8 @@ Details about the 2 demos:
   - A big black gear (Rotation with Opacity)
   - A red pointer (Rotation)
   - A golden star (Rotation, scaling with Opacity)
-  - ![Watchpanel](https://github.com/ARM-software/Arm-2D/raw/main/documentation/pictures/watch-panel)
+
+![Watchpanel](../documentation/pictures/watch-panel.png) 
 
 
 
