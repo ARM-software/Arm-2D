@@ -128,12 +128,12 @@ $(document).ready(function(){initNavTree('use_tile.html',''); initResizable(); }
 <li><b>Fill</b> a target tile with a specified source tile</li>
 </ul>
 </li>
-<li>Tile Copy with transparency colour, i.e. <b>colour masking</b><ul>
+<li>Tile Copy with transparency colour, i.e. <b>colour keying</b><ul>
 <li>Copy a source tile to a target tile with a given region inside the target tile, and during this process, once a specified colour is read from the source tile, the foreground pixel will be ignored. This is very useful to render non-rectangular visual elements.</li>
 </ul>
 </li>
 <li>Implement Partial Framebuffer support<ul>
-<li>By drawing the same content several times, it is possible to flush a complete frame to a big screen (with arbitrary resolution) using just a fraction of the frame buffer. This time-space exchanging scheme is called Partial Frame Buffer (PFB). <b>While using PFB in the low level, the GUI built upon Arm-2d APIs can generally act as a full-frame buffer is used</b>.</li>
+<li>By drawing the same content several times, it is possible to flush a complete frame to a big screen (with arbitrary resolution) using just a fraction of the frame buffer. This time-space exchanging scheme is called Partial Frame Buffer (PFB). <b>While using PFB in the low level, the GUI built upon Arm-2d APIs can generally act as if a complete framebuffer is used</b>.</li>
 </ul>
 </li>
 </ul>
@@ -163,29 +163,32 @@ $(document).ready(function(){initNavTree('use_tile.html',''); initResizable(); }
 <div class="line">    },</div>
 <div class="line">    .pwBuffer = (uint32_t *)c_bmpCMSISLogo,</div>
 <div class="line">};</div>
-</div><!-- fragment --><p >In fact, with the help of some macros, we can use Tile to implement the concept of the so-called visual layer:</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define __declare_tile(__NAME)                                      \</span></div>
+</div><!-- fragment --><p >In fact, with the help of some macro templates, we can use Tile to implement framebuffers with a given size:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#define __declare_tile(__NAME)                                                  \</span></div>
 <div class="line"><span class="preprocessor">            extern const arm_2d_tile_t __NAME;</span></div>
 <div class="line"><span class="preprocessor">#define declare_tile(__NAME)            __declare_tile(__NAME)</span></div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#define __implement_tile(__NAME, __WIDTH, __HEIGHT, __TYPE)         \</span></div>
-<div class="line"><span class="preprocessor">            ARM_NOINIT static __TYPE                                \</span></div>
-<div class="line"><span class="preprocessor">                __NAME##Buffer[(__WIDTH) * (__HEIGHT)];             \</span></div>
-<div class="line"><span class="preprocessor">            const arm_2d_tile_t __NAME = {                          \</span></div>
-<div class="line"><span class="preprocessor">                .tRegion = {                                        \</span></div>
-<div class="line"><span class="preprocessor">                    .tSize = {(__WIDTH), (__HEIGHT)},               \</span></div>
-<div class="line"><span class="preprocessor">                },                                                  \</span></div>
-<div class="line"><span class="preprocessor">                .tInfo.bIsRoot = true,                              \</span></div>
-<div class="line"><span class="preprocessor">                .pchBuffer = (uint8_t *)__NAME##Buffer,             \</span></div>
+<div class="line"><span class="preprocessor">#define dcl_fb(__name)                  declare_tile(__name)</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#define __impl_fb(__name, __width, __height, __type, ...)                       \</span></div>
+<div class="line"><span class="preprocessor">            ARM_NOINIT static __type                                            \</span></div>
+<div class="line"><span class="preprocessor">                __name##Buffer[(__width) * (__height)];                         \</span></div>
+<div class="line"><span class="preprocessor">            const arm_2d_tile_t __name = {                                      \</span></div>
+<div class="line"><span class="preprocessor">                .tRegion = {                                                    \</span></div>
+<div class="line"><span class="preprocessor">                    .tSize = {(__width), (__height)},                           \</span></div>
+<div class="line"><span class="preprocessor">                },                                                              \</span></div>
+<div class="line"><span class="preprocessor">                .tInfo.bIsRoot = true,                                          \</span></div>
+<div class="line"><span class="preprocessor">                .pchBuffer = (uint8_t *)__name##Buffer,                         \</span></div>
+<div class="line"><span class="preprocessor">                __VA_ARGS__                                                     \</span></div>
 <div class="line"><span class="preprocessor">            }</span></div>
 <div class="line">            </div>
-<div class="line"><span class="preprocessor">#define implement_tile(__NAME, __WIDTH, __HEIGHT, __TYPE)           \</span></div>
-<div class="line"><span class="preprocessor">            __implement_tile(__NAME, __WIDTH, __HEIGHT, __TYPE)</span></div>
-</div><!-- fragment --><p >For example, we can create two visual layers with size <b>100*100</b> and <em><b>200*50</b></em> respectively and using colour <em><b><a class="el" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a></b></em> for pixels:</p>
-<div class="fragment"><div class="line"><a class="code hl_define" href="group__gHelper.html#ga2611a9ef273b4e05f926c42273f8cbaa" title="declare a tile">declare_tile</a>(c_tLayerA)</div>
+<div class="line"><span class="preprocessor">#define impl_fb(__name, __width, __height, __type, ...)                         \</span></div>
+<div class="line"><span class="preprocessor">            __impl_fb(__name, __width, __height, __type, ##__VA_ARGS__)</span></div>
+</div><!-- fragment --><p >For example, we can create two framebuffers with size <b>100*100</b> and <em><b>200*50</b></em> respectively and using colour <em><b><a class="el" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a></b></em> for pixels:</p>
+<div class="fragment"><div class="line"><a class="code hl_define" href="group__gHelper.html#ga35c72d3f4f9efaa986bf68ce01300782" title="declare a framebuffer">dcl_fb</a>(c_tLayerA)</div>
 <div class="line">implement_tile(c_tLayerA, 100, 100, <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a>);</div>
 <div class="line"> </div>
-<div class="line"><a class="code hl_define" href="group__gHelper.html#ga2611a9ef273b4e05f926c42273f8cbaa" title="declare a tile">declare_tile</a>(c_tLayerB)</div>
+<div class="line"><a class="code hl_define" href="group__gHelper.html#ga35c72d3f4f9efaa986bf68ce01300782" title="declare a framebuffer">dcl_fb</a>(c_tLayerB)</div>
 <div class="line">implement_tile(c_tLayerB, 200, 50, <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a>);</div>
 </div><!-- fragment --><p >These layers are stored in RAM, which are used as sources and targets for 2D operations.</p>
 <p >Note that in the aforementioned macro template, we use <em><b>ARM_NOINIT</b></em> to decorate the display buffer, its definition is shown below:</p>
@@ -227,8 +230,8 @@ $(document).ready(function(){initNavTree('use_tile.html',''); initResizable(); }
 <p ><b>All operations in Arm-2D support region clipping by default</b>, which means users don't have to handle window/panel clipping manually. In rare cases where users have to intersect regions and/or tiles, Arm-2D provides dedicated APIs to facilitate such operations.</p>
 <p >For more details, please refer to <b>section 4.1</b>.</p>
 <h3><a class="anchor" id="autotoc_md69"></a>
-2.1.2 Texture Paving</h3>
-<p >Paving Texture on a target display buffer is one of the most commonly used 2D operations. Arm-2D supports this with tile copy APIs, in which a copy mode can be specified, and <b>Arm_2D_CP_MODE_FILL</b> is used to enable the texture paving feature.</p>
+2.1.2 Texture Tiling</h3>
+<p >Tiling on a target display buffer is one of the most commonly used 2D operations. Arm-2D supports this with tile copy APIs, in which a copy mode can be specified, and <b>Arm_2D_CP_MODE_FILL</b> is used to enable the texture tiling feature.</p>
 <p >For more details, please refer to <b>section 4.2</b>.</p>
 <h2><a class="anchor" id="autotoc_md70"></a>
 2.2 Advanced Usage</h2>
@@ -465,7 +468,7 @@ This usually means that the function is working/implemented in <em><b>synchronou
 <td class="markdownTableBodyNone"><b>Return Value</b>   </td><td class="markdownTableBodyNone"><em><b>arm_fsm_rt_asyn</b></em>(3)   </td><td class="markdownTableBodyNone">Operation request has been received; no error found so far. If you have registered your own <em><b>2D-Operation-Complete-Handler</b></em> (<em><b><a class="el" href="group__gKernel.html#structarm__2d__evt__t" title="a type for generic event handling">arm_2d_evt_t</a></b></em>), you don't have to poll this function anymore; the operation result will be passed to you via the event handler; otherwise, you can poll this function until another value is returned. This usually means that the function is working/implemented in <b>asynchronous mode</b>. For more, please refer to <a class="el" href="intro.html#md_introduction">introduction.md</a>.   </td></tr>
 </table>
 <p >The behaviour of function <b>arm_2d_rgb32_tile_copy</b> is illustrated in <b>Figure 4.4</b>. This function copies a source tile to a specified region inside the target tile or fills the specified region with a given source tile. Several combinations of modes are supported, e.g. copy with X mirroring and/or Y mirroring.</p>
-<p ><b>NOTE</b>: This function treats all 32-bit colour formats equally and <b>NO</b> alpha channel is used, even for RGB8888 or RGBA8888.</p>
+<p ><b>NOTE</b>: This function treats all 32-bit colour formats equally and <b>NO</b> alpha channel is used, e.g. RGBA8888.</p>
 <h2><a class="anchor" id="autotoc_md83"></a>
 4.3 Colour Keying</h2>
 <p >Colour-keying is a commonly used scheme to implement non-rectangular UI elements, such as round-corner windows/gadgets, floating logos/strings etc. Colour-keying is relatively simple when compared with the (Alpha) Masking scheme provided in the Alpha-blending operation category, which usually requires an 8-bit masking tile that can cover the source tile completely, and each pixel inside the masking tile is used as the alpha channel during an operation. A dedicated masking tile, of course, takes more memory space than a simple key colour. As long as the desired visual area of the source tile contains no pixel in a given key colour, it is much cheaper and quicker to use Colour-Keying rather than (Alpha) Masking.</p>

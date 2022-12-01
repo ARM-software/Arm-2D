@@ -226,7 +226,8 @@ The Hierarchy of a Typical Embedded GUI System</div></div>
 Summary of Operation Categories.</div></div>
     <h2><a class="anchor" id="autotoc_md42"></a>
 1.6 Folder Structures</h2>
-<p ><b>Table 1-2 The Folder Structure of Arm-2d Root</b> </p><table class="markdownTable">
+<p ><b>Table 1-2 The Folder Structure of Arm-2d Root</b></p>
+<table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadLeft">Folder and File   </th><th class="markdownTableHeadNone">Type   </th><th class="markdownTableHeadNone">Description    </th></tr>
 <tr class="markdownTableRowOdd">
@@ -317,27 +318,26 @@ A Typical Example of Absolute Regions and Relative Regions</div></div>
 <div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a>;</div>
 <div class="line"><span class="keyword">struct </span><a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> {</div>
 <div class="line">    <a class="code hl_define" href="group__gKernel.html#gabc7a8afaf410f95e3922d2fd904a016c" title="inherit a given class and give it an alias name">implement_ex</a>(<span class="keyword">struct</span> {</div>
-<div class="line">        uint8_t    bIsRoot              : 1;</div>
-<div class="line">        uint8_t    bHasEnforcedColour   : 1;</div>
-<div class="line">        uint8_t    bDerivedResource     : 1;</div>
-<div class="line">        uint8_t                         : 5;</div>
+<div class="line">        uint8_t    bIsRoot              : 1;          <span class="comment">//!&lt; is this tile a root tile</span></div>
+<div class="line">        uint8_t    bHasEnforcedColour   : 1;          <span class="comment">//!&lt; does this tile contains enforced colour info</span></div>
+<div class="line">        uint8_t    bDerivedResource     : 1;          <span class="comment">//!&lt; indicate whether this is a derived resources (when bIsRoot == 0)</span></div>
+<div class="line">        uint8_t    bVirtualResource     : 1;          <span class="comment">//!&lt; indicate whether the resource should be loaded on-demand</span></div>
+<div class="line">        uint8_t                         : 4;</div>
 <div class="line">        uint8_t                         : 8;</div>
 <div class="line">        uint8_t                         : 8;</div>
-<div class="line">        <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__info__t" title="a type used as colour descriptor">arm_2d_color_info_t</a>    tColourInfo;</div>
+<div class="line">        <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__info__t" title="a type used as colour descriptor">arm_2d_color_info_t</a>    tColourInfo;           <span class="comment">//!&lt; enforced colour</span></div>
 <div class="line">    }, tInfo);</div>
-<div class="line"> </div>
-<div class="line">    <a class="code hl_define" href="group__gKernel.html#gabc7a8afaf410f95e3922d2fd904a016c" title="inherit a given class and give it an alias name">implement_ex</a>(<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a>, tRegion);</div>
-<div class="line"> </div>
-<div class="line">    <span class="keyword">union </span>{<span class="comment"></span></div>
-<div class="line"><span class="comment">        /*! when bIsRoot is true, phwBuffer is available,</span></div>
-<div class="line"><span class="comment">         *! otherwise ptParent is available</span></div>
+<div class="line">    <a class="code hl_define" href="group__gKernel.html#gabc7a8afaf410f95e3922d2fd904a016c" title="inherit a given class and give it an alias name">implement_ex</a>(<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a>, tRegion);           <span class="comment">//!&lt; the region of the tile</span></div>
+<div class="line">    <span class="keyword">union </span>{</div>
+<div class="line">        <span class="comment">/* when bIsRoot is true, phwBuffer is available,</span></div>
+<div class="line"><span class="comment">         * otherwise ptParent is available</span></div>
 <div class="line"><span class="comment">         */</span></div>
-<div class="line">        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a>       *ptParent;</div>
-<div class="line">        uint8_t             *pchBuffer;</div>
-<div class="line">        uint16_t            *phwBuffer;</div>
-<div class="line">        uint32_t            *pwBuffer;</div>
+<div class="line">        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a>       *ptParent;                <span class="comment">//!&lt; a pointer points to the parent tile</span></div>
+<div class="line">        uint8_t             *pchBuffer;               <span class="comment">//!&lt; a pointer points to a buffer in a 8bit colour type</span></div>
+<div class="line">        uint16_t            *phwBuffer;               <span class="comment">//!&lt; a pointer points to a buffer in a 16bit colour type</span></div>
+<div class="line">        uint32_t            *pwBuffer;                <span class="comment">//!&lt; a pointer points to a buffer in a 32bit colour type</span></div>
 <div class="line">        </div>
-<div class="line">        intptr_t            nAddress;</div>
+<div class="line">        intptr_t            nAddress;                 <span class="comment">//!&lt; a pointer in integer</span></div>
 <div class="line">    };</div>
 <div class="line">};</div>
 </div><!-- fragment --><p >**Table 2-1 The Functionality of Each Members In *arm_2d_tile_t***</p>
@@ -351,19 +351,20 @@ A Typical Example of Absolute Regions and Relative Regions</div></div>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><em><b>bDerivedResource</b></em>   </td><td class="markdownTableBodyNone">Feature Info   </td><td class="markdownTableBodyNone">bit-field   </td><td class="markdownTableBodyNone">This bit indicates whether a child tile is used as a resource.   </td><td class="markdownTableBodyNone">When creating a resource from a existing tile, you must set this bit to "1". <b>It is only valid when bIsRoot is "0"</b>.    </td></tr>
 <tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>bVirtualResource</b></em>   </td><td class="markdownTableBodyNone">Feature Info   </td><td class="markdownTableBodyNone">bit-field   </td><td class="markdownTableBodyNone">This bit indicates whether the resource should be loaded on-demand   </td><td class="markdownTableBodyNone"><b>It is only set this bit when bIsRoot is "1" and the data type is <a class="el" href="group__gKernel.html#structarm__2d__vres__t" title="a type for virtual resource">arm_2d_vres_t</a></b>.    </td></tr>
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><em><b>tColourInfo</b></em>   </td><td class="markdownTableBodyNone">Feature Info   </td><td class="markdownTableBodyNone"><em><b><a class="el" href="group__gKernel.html#unionarm__2d__color__info__t" title="a type used as colour descriptor">arm_2d_color_info_t</a></b></em>   </td><td class="markdownTableBodyNone">When <em><b>bHasEnforcedColour</b></em> is set, tColourInfo should contain a valid descriptor about the colour used in the target Tile.   </td><td class="markdownTableBodyNone">See <b>section 2.4</b> for details.    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><em><b>tRegion</b></em>   </td><td class="markdownTableBodyNone">Region   </td><td class="markdownTableBodyNone"><em><b><a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a></b></em>   </td><td class="markdownTableBodyNone">Depends on the type of a given tile, <em><b>tRegion</b></em> has a different meaning.   </td><td class="markdownTableBodyNone">See <b>section 2.3.1</b> and <b>2.3.2</b> for details.    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><em><b>ptParent</b></em>   </td><td class="markdownTableBodyNone">Pointers   </td><td class="markdownTableBodyNone"><em><b><a class="el" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *</b></em>   </td><td class="markdownTableBodyNone">When <em><b>bIsRoot</b></em> is "***0***", this pointer is used to point the parent tile.   </td><td class="markdownTableBodyNone">See <b>section 2.3.1</b> for details.    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><em><b>phwBuffer</b></em>   </td><td class="markdownTableBodyNone">Pointers   </td><td class="markdownTableBodyNone"><em><b>uint16_t *</b></em>   </td><td class="markdownTableBodyNone">When <em><b>bIsRoot</b></em> is "***1***", this pointer is used to point to a display buffer that contains 16-bit pixels.   </td><td class="markdownTableBodyNone">See <b>section 2.3.1</b> for details.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><em><b>pwBuffer</b></em>   </td><td class="markdownTableBodyNone">Pointers   </td><td class="markdownTableBodyNone"><em><b>uint32_t *</b></em>   </td><td class="markdownTableBodyNone">When <em><b>bIsRoot</b></em> is "***1***", this pointer is used to point to a display buffer that contains 32-bit pixels.   </td><td class="markdownTableBodyNone">See <b>section 2.3.1</b> for details.    </td></tr>
+<td class="markdownTableBodyNone"><em><b>phwBuffer</b></em>   </td><td class="markdownTableBodyNone">Pointers   </td><td class="markdownTableBodyNone"><em><b>uint16_t *</b></em>   </td><td class="markdownTableBodyNone">When <em><b>bIsRoot</b></em> is "***1***", this pointer is used to point to a display buffer that contains 16-bit pixels.   </td><td class="markdownTableBodyNone">See <b>section 2.3.1</b> for details.    </td></tr>
 <tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>pwBuffer</b></em>   </td><td class="markdownTableBodyNone">Pointers   </td><td class="markdownTableBodyNone"><em><b>uint32_t *</b></em>   </td><td class="markdownTableBodyNone">When <em><b>bIsRoot</b></em> is "***1***", this pointer is used to point to a display buffer that contains 32-bit pixels.   </td><td class="markdownTableBodyNone">See <b>section 2.3.1</b> for details.    </td></tr>
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><em><b>pchBuffer</b></em>   </td><td class="markdownTableBodyNone">Pointers   </td><td class="markdownTableBodyNone"><em><b>uint8_t *</b></em>   </td><td class="markdownTableBodyNone">When <em><b>bIsRoot</b></em> is "***1***", this pointer is used to point to a display buffer that contains pixels that have less or equals to 8bits.   </td><td class="markdownTableBodyNone">See <b>section 2.3.1</b> for details.   </td></tr>
 </table>
-<p >[]:</p>
 <h3><a class="anchor" id="autotoc_md51"></a>
 2.3.1 Root Tile</h3>
 <p >A Root tile is a kind of tiles that directly contain the display buffer, and its feature bit <code>bIsRoot</code> is set, according to the pixel types used in the display buffer to which corresponding pointers should be used. For more details, please refer to <b>Table 2-1</b>.</p>
@@ -387,29 +388,32 @@ A Typical Example of Absolute Regions and Relative Regions</div></div>
 <div class="line">    },</div>
 <div class="line">    .pwBuffer = (uint32_t *)c_bmpCMSISLogo,</div>
 <div class="line">};</div>
-</div><!-- fragment --><p >In fact, with the help of some macros, we can use Tile to implement the concept of the so-called visual layer:</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define __declare_tile(__NAME)                                      \</span></div>
+</div><!-- fragment --><p >In fact, with the help of some macro templates, we can use Tile to implement framebuffers with a given size:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#define __declare_tile(__NAME)                                                  \</span></div>
 <div class="line"><span class="preprocessor">            extern const arm_2d_tile_t __NAME;</span></div>
 <div class="line"><span class="preprocessor">#define declare_tile(__NAME)            __declare_tile(__NAME)</span></div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#define __implement_tile(__NAME, __WIDTH, __HEIGHT, __TYPE)         \</span></div>
-<div class="line"><span class="preprocessor">            ARM_NOINIT static __TYPE                                \</span></div>
-<div class="line"><span class="preprocessor">                __NAME##Buffer[(__WIDTH) * (__HEIGHT)];             \</span></div>
-<div class="line"><span class="preprocessor">            const arm_2d_tile_t __NAME = {                          \</span></div>
-<div class="line"><span class="preprocessor">                .tRegion = {                                        \</span></div>
-<div class="line"><span class="preprocessor">                    .tSize = {(__WIDTH), (__HEIGHT)},               \</span></div>
-<div class="line"><span class="preprocessor">                },                                                  \</span></div>
-<div class="line"><span class="preprocessor">                .tInfo.bIsRoot = true,                              \</span></div>
-<div class="line"><span class="preprocessor">                .pchBuffer = (uint8_t *)__NAME##Buffer,             \</span></div>
+<div class="line"><span class="preprocessor">#define dcl_fb(__name)                  declare_tile(__name)</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#define __impl_fb(__name, __width, __height, __type, ...)                       \</span></div>
+<div class="line"><span class="preprocessor">            ARM_NOINIT static __type                                            \</span></div>
+<div class="line"><span class="preprocessor">                __name##Buffer[(__width) * (__height)];                         \</span></div>
+<div class="line"><span class="preprocessor">            const arm_2d_tile_t __name = {                                      \</span></div>
+<div class="line"><span class="preprocessor">                .tRegion = {                                                    \</span></div>
+<div class="line"><span class="preprocessor">                    .tSize = {(__width), (__height)},                           \</span></div>
+<div class="line"><span class="preprocessor">                },                                                              \</span></div>
+<div class="line"><span class="preprocessor">                .tInfo.bIsRoot = true,                                          \</span></div>
+<div class="line"><span class="preprocessor">                .pchBuffer = (uint8_t *)__name##Buffer,                         \</span></div>
+<div class="line"><span class="preprocessor">                __VA_ARGS__                                                     \</span></div>
 <div class="line"><span class="preprocessor">            }</span></div>
 <div class="line">            </div>
-<div class="line"><span class="preprocessor">#define implement_tile(__NAME, __WIDTH, __HEIGHT, __TYPE)           \</span></div>
-<div class="line"><span class="preprocessor">            __implement_tile(__NAME, __WIDTH, __HEIGHT, __TYPE)</span></div>
-</div><!-- fragment --><p >For example, we can create two visual layers with size <b>100*100</b> and <em><b>200*50</b></em> respectively and using colour <code><a class="el" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a></code> for pixels:</p>
-<div class="fragment"><div class="line"><a class="code hl_define" href="group__gHelper.html#ga2611a9ef273b4e05f926c42273f8cbaa" title="declare a tile">declare_tile</a>(c_tLayerA)</div>
+<div class="line"><span class="preprocessor">#define impl_fb(__name, __width, __height, __type, ...)                         \</span></div>
+<div class="line"><span class="preprocessor">            __impl_fb(__name, __width, __height, __type, ##__VA_ARGS__)</span></div>
+</div><!-- fragment --><p >For example, we can create two framebuffers with size <b>100*100</b> and <em><b>200*50</b></em> respectively and using colour <code><a class="el" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a></code> for pixels:</p>
+<div class="fragment"><div class="line"><a class="code hl_define" href="group__gHelper.html#ga35c72d3f4f9efaa986bf68ce01300782" title="declare a framebuffer">dcl_fb</a>(c_tLayerA)</div>
 <div class="line">implement_tile(c_tLayerA, 100, 100, <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a>);</div>
 <div class="line"> </div>
-<div class="line"><a class="code hl_define" href="group__gHelper.html#ga2611a9ef273b4e05f926c42273f8cbaa" title="declare a tile">declare_tile</a>(c_tLayerB)</div>
+<div class="line"><a class="code hl_define" href="group__gHelper.html#ga35c72d3f4f9efaa986bf68ce01300782" title="declare a framebuffer">dcl_fb</a>(c_tLayerB)</div>
 <div class="line">implement_tile(c_tLayerB, 200, 50, <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a>);</div>
 </div><!-- fragment --><p >These layers are stored in RAM, which are used as sources and targets for 2D operations.</p>
 <p >Note that in the aforementioned macro template, we use <code>ARM_NOINIT</code> to decorate the display buffer, its definition is shown below:</p>
@@ -480,24 +484,19 @@ How Partial Frame Buffer Works</div></div>
 <div class="line">    <a class="code hl_enumvalue" href="group__gKernel.html#gga06fc87d81c62e9abb8790b6e5713c55ba96378d24be8aabb704be24a9c06fad2b" title="256 colours">ARM_2D_COLOUR_SZ_8BIT</a> = 3,            <span class="comment">//!&lt; 256 colours</span></div>
 <div class="line">    <a class="code hl_enumvalue" href="group__gKernel.html#gga06fc87d81c62e9abb8790b6e5713c55baa581a9deb872893773fe7c5f615f1771" title="16bits">ARM_2D_COLOUR_SZ_16BIT</a> = 4,           <span class="comment">//!&lt; 16bits</span></div>
 <div class="line">    <a class="code hl_enumvalue" href="group__gKernel.html#gga06fc87d81c62e9abb8790b6e5713c55bab73d9139521893b7600e21c84c091614" title="true colour">ARM_2D_COLOUR_SZ_32BIT</a> = 5,           <span class="comment">//!&lt; true colour</span></div>
-<div class="line"> </div>
-<div class="line">    ARM_2D_COLOUR_SZ_1BIT_msk =   <a class="code hl_enumvalue" href="group__gKernel.html#gga06fc87d81c62e9abb8790b6e5713c55bab09ded11990cfc6a1f0fc7560453a04c" title="1 bit:black and white">ARM_2D_COLOUR_SZ_1BIT</a> &lt;&lt; 1,</div>
-<div class="line">    ARM_2D_COLOUR_SZ_2BIT_msk =   <a class="code hl_enumvalue" href="group__gKernel.html#gga06fc87d81c62e9abb8790b6e5713c55baff422fcf70493703facea1473d9c3fc1" title="4 colours or 4 gray-levels">ARM_2D_COLOUR_SZ_2BIT</a> &lt;&lt; 1,</div>
-<div class="line">    ARM_2D_COLOUR_SZ_4BIT_msk =   <a class="code hl_enumvalue" href="group__gKernel.html#gga06fc87d81c62e9abb8790b6e5713c55bac063df9d23d0a8dd6234003636dacf9e" title="16 colours or 16 gray-levels">ARM_2D_COLOUR_SZ_4BIT</a> &lt;&lt; 1,</div>
-<div class="line">    ARM_2D_COLOUR_SZ_8BIT_msk =   <a class="code hl_enumvalue" href="group__gKernel.html#gga06fc87d81c62e9abb8790b6e5713c55ba96378d24be8aabb704be24a9c06fad2b" title="256 colours">ARM_2D_COLOUR_SZ_8BIT</a> &lt;&lt; 1,</div>
-<div class="line">    ARM_2D_COLOUR_SZ_16BIT_msk =  <a class="code hl_enumvalue" href="group__gKernel.html#gga06fc87d81c62e9abb8790b6e5713c55baa581a9deb872893773fe7c5f615f1771" title="16bits">ARM_2D_COLOUR_SZ_16BIT</a>&lt;&lt; 1,</div>
-<div class="line">    ARM_2D_COLOUR_SZ_32BIT_msk =  <a class="code hl_enumvalue" href="group__gKernel.html#gga06fc87d81c62e9abb8790b6e5713c55bab73d9139521893b7600e21c84c091614" title="true colour">ARM_2D_COLOUR_SZ_32BIT</a>&lt;&lt; 1,</div>
-<div class="line">    ARM_2D_COLOUR_SZ_msk      =   (0x07 &lt;&lt; 1),</div>
-<div class="line"> </div>
+<div class="line">    ARM_2D_COLOUR_SZ_1BIT_msk   =   <a class="code hl_enumvalue" href="group__gKernel.html#gga06fc87d81c62e9abb8790b6e5713c55bab09ded11990cfc6a1f0fc7560453a04c" title="1 bit:black and white">ARM_2D_COLOUR_SZ_1BIT</a> &lt;&lt; 1,</div>
+<div class="line">    ARM_2D_COLOUR_SZ_2BIT_msk   =   <a class="code hl_enumvalue" href="group__gKernel.html#gga06fc87d81c62e9abb8790b6e5713c55baff422fcf70493703facea1473d9c3fc1" title="4 colours or 4 gray-levels">ARM_2D_COLOUR_SZ_2BIT</a> &lt;&lt; 1,</div>
+<div class="line">    ARM_2D_COLOUR_SZ_4BIT_msk   =   <a class="code hl_enumvalue" href="group__gKernel.html#gga06fc87d81c62e9abb8790b6e5713c55bac063df9d23d0a8dd6234003636dacf9e" title="16 colours or 16 gray-levels">ARM_2D_COLOUR_SZ_4BIT</a> &lt;&lt; 1,</div>
+<div class="line">    ARM_2D_COLOUR_SZ_8BIT_msk   =   <a class="code hl_enumvalue" href="group__gKernel.html#gga06fc87d81c62e9abb8790b6e5713c55ba96378d24be8aabb704be24a9c06fad2b" title="256 colours">ARM_2D_COLOUR_SZ_8BIT</a> &lt;&lt; 1,</div>
+<div class="line">    ARM_2D_COLOUR_SZ_16BIT_msk  =   <a class="code hl_enumvalue" href="group__gKernel.html#gga06fc87d81c62e9abb8790b6e5713c55baa581a9deb872893773fe7c5f615f1771" title="16bits">ARM_2D_COLOUR_SZ_16BIT</a>&lt;&lt; 1,</div>
+<div class="line">    ARM_2D_COLOUR_SZ_32BIT_msk  =   <a class="code hl_enumvalue" href="group__gKernel.html#gga06fc87d81c62e9abb8790b6e5713c55bab73d9139521893b7600e21c84c091614" title="true colour">ARM_2D_COLOUR_SZ_32BIT</a>&lt;&lt; 1,</div>
+<div class="line">    ARM_2D_COLOUR_SZ_msk        =   (0x07 &lt;&lt; 1),</div>
 <div class="line">    ARM_2D_COLOUR_LITTLE_ENDIAN       = 0,</div>
 <div class="line">    ARM_2D_COLOUR_BIG_ENDIAN          = 1,</div>
-<div class="line"> </div>
 <div class="line">    ARM_2D_COLOUR_LITTLE_ENDIAN_msk   = ARM_2D_COLOUR_LITTLE_ENDIAN &lt;&lt; 4,</div>
 <div class="line">    ARM_2D_COLOUR_BIG_ENDIAN_msk      = ARM_2D_COLOUR_BIG_ENDIAN    &lt;&lt; 4,</div>
-<div class="line"> </div>
 <div class="line">    ARM_2D_COLOUR_NO_ALPHA = 0,</div>
 <div class="line">    ARM_2D_COLOUR_HAS_ALPHA = 1,</div>
-<div class="line"> </div>
 <div class="line">    ARM_2D_COLOUR_NO_ALPHA_msk        = ARM_2D_COLOUR_NO_ALPHA      &lt;&lt; 0,</div>
 <div class="line">    ARM_2D_COLOUR_HAS_ALPHA_msk       = ARM_2D_COLOUR_HAS_ALPHA     &lt;&lt; 0,</div>
 <div class="line">    </div>
@@ -510,11 +509,16 @@ How Partial Frame Buffer Works</div></div>
 <div class="line"><span class="comment"> * </span></div>
 <div class="line"><span class="comment"> */</span></div>
 <div class="line"><span class="keyword">enum</span> {</div>
+<div class="line">    ARM_2D_COLOUR_MONOCHROME  =   ARM_2D_COLOUR_SZ_1BIT_msk,</div>
 <div class="line">    ARM_2D_COLOUR_BIN         =   ARM_2D_COLOUR_SZ_1BIT_msk,</div>
 <div class="line">    ARM_2D_COLOUR_1BIT        =   ARM_2D_COLOUR_SZ_1BIT_msk,</div>
 <div class="line">    </div>
+<div class="line">    ARM_2D_COLOUR_MASK_A2     =   <a class="code hl_define" href="group__gKernel.html#ga2979dec2f537a0d6a78b665eced2b3c0" title="bitmask for 2bit colour formats">ARM_2D_M_COLOUR_SZ_2BIT_msk</a>,</div>
+<div class="line">    ARM_2D_COLOUR_MASK_A4     =   <a class="code hl_define" href="group__gKernel.html#ga47c48da11616accd1ae2d81871861fd4" title="bitmask for 4bit colour formats">ARM_2D_M_COLOUR_SZ_4BIT_msk</a>,</div>
+<div class="line">    </div>
 <div class="line">    ARM_2D_COLOUR_8BIT        =   ARM_2D_COLOUR_SZ_8BIT_msk,</div>
 <div class="line">    ARM_2D_COLOUR_GRAY8       =   ARM_2D_COLOUR_SZ_8BIT_msk,</div>
+<div class="line">    ARM_2D_COLOUR_MASK_A8     =   ARM_2D_COLOUR_SZ_8BIT_msk,</div>
 <div class="line">    </div>
 <div class="line">    ARM_2D_COLOUR_16BIT       =   ARM_2D_COLOUR_SZ_16BIT_msk,</div>
 <div class="line">    ARM_2D_COLOUR_RGB16       =   ARM_2D_COLOUR_SZ_16BIT_msk,</div>
@@ -527,14 +531,11 @@ How Partial Frame Buffer Works</div></div>
 <div class="line"> </div>
 <div class="line">    ARM_2D_COLOUR_32BIT       =   ARM_2D_COLOUR_SZ_32BIT_msk        ,</div>
 <div class="line">    ARM_2D_COLOUR_RGB32       =   ARM_2D_COLOUR_SZ_32BIT_msk        ,</div>
-<div class="line"> </div>
 <div class="line">    ARM_2D_COLOUR_CCCN888     =   ARM_2D_COLOUR_RGB32               ,</div>
 <div class="line">    ARM_2D_COLOUR_CCCA8888    =   ARM_2D_COLOUR_SZ_32BIT_msk        |</div>
 <div class="line">                                  ARM_2D_COLOUR_HAS_ALPHA_msk       ,</div>
-<div class="line"> </div>
 <div class="line">    ARM_2D_COLOUR_RGB888      =   ARM_2D_COLOUR_CCCN888             ,</div>
 <div class="line">    ARM_2D_COLOUR_BGRA8888    =   ARM_2D_COLOUR_CCCA8888            ,</div>
-<div class="line"> </div>
 <div class="line"><span class="comment">/* not supported yet</span></div>
 <div class="line"><span class="comment">    ARM_2D_COLOUR_NCCC888     =   ARM_2D_COLOUR_RGB32               |</span></div>
 <div class="line"><span class="comment">                                  ARM_2D_COLOUR_BIG_ENDIAN_msk      ,</span></div>
@@ -546,7 +547,6 @@ How Partial Frame Buffer Works</div></div>
 <div class="line">                                  ARM_2D_COLOUR_HAS_ALPHA_msk       |</div>
 <div class="line">                                  ARM_2D_COLOUR_VARIANT_msk   ,</div>
 <div class="line">};</div>
-<div class="line"> </div>
 <div class="line"><span class="comment"></span> </div>
 <div class="line"><span class="comment">/*!</span></div>
 <div class="line"><span class="comment"> * \brief a type used as colour descriptor</span></div>
@@ -577,7 +577,11 @@ How Partial Frame Buffer Works</div></div>
 <td class="markdownTableBodyNone"><em><b>chScheme</b></em>   </td><td class="markdownTableBodyNone">uint8_t   </td><td class="markdownTableBodyNone">An 8bit representation of the bit fields aforementioned. It is very efficient in comparison. Enumerations starting with " ***ARM\_2D\_COLOUR\_*** " represent the colour formats currently supported in the Arm-2D library. For example, <em><b>ARM_2D_COLOUR_RGB565</b></em>.   </td><td class="markdownTableBodyNone"></td></tr>
 </table>
 <p >In addition to the colour format descriptor, the current version of the Arm-2D library also defines data structures for the supported colour formats:</p>
-<div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">union </span><a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a> {</div>
+<div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">union </span><a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__gray8__t" title="the colour type for gray8 (8bit gray scale)">arm_2d_color_gray8_t</a> {</div>
+<div class="line">    uint8_t tValue;</div>
+<div class="line">} <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__gray8__t" title="the colour type for gray8 (8bit gray scale)">arm_2d_color_gray8_t</a>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">typedef</span> <span class="keyword">union </span><a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a> {</div>
 <div class="line">    uint16_t tValue;</div>
 <div class="line">    <span class="keyword">struct </span>{</div>
 <div class="line">        uint16_t u5B : 5;</div>
@@ -605,7 +609,40 @@ How Partial Frame Buffer Works</div></div>
 <div class="line">        uint32_t     : 8;</div>
 <div class="line">    };</div>
 <div class="line">} <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb888__t" title="the colour type for rgb888 (compliant with ccca888 and bgra8888)">arm_2d_color_rgb888_t</a>;</div>
-</div><!-- fragment --><p >As shown above, <b>arm-2d describes colour format in little-end manner</b>, for example, <b>BGRA8888</b> means the blue-channel is the 1st byte and the Alpha channel is the 3rd byte. The colour format CCCA8888 means the Alpha channel is the 3rd byte and there are three colour channels whose name and order we don't care. The colour format CCCN888 means the 8 MSB are unused (reserved for alpha) and the lower 3 bytes are used to store colour channels.</p>
+<div class="line"> </div>
+<div class="line"><span class="keyword">typedef</span> <span class="keyword">union </span><a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__ccca8888__t" title="the colour type for any 32bit colour formats which has an alpha channel on its 3rd byte.">arm_2d_color_ccca8888_t</a> {</div>
+<div class="line">    uint32_t tValue;</div>
+<div class="line">    <span class="keyword">struct </span>{</div>
+<div class="line">        uint8_t u8C[3];</div>
+<div class="line">        uint8_t u8A;</div>
+<div class="line">    };</div>
+<div class="line">} <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__ccca8888__t" title="the colour type for any 32bit colour formats which has an alpha channel on its 3rd byte.">arm_2d_color_ccca8888_t</a>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">typedef</span> <span class="keyword">union </span><a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__accc8888__t" title="the colour type for any 32bit colour formats which has an alpha channel on its first byte.">arm_2d_color_accc8888_t</a> {</div>
+<div class="line">    uint32_t tValue;</div>
+<div class="line">    <span class="keyword">struct </span>{</div>
+<div class="line">        uint8_t u8A;</div>
+<div class="line">        uint8_t u8C[3];</div>
+<div class="line">    };</div>
+<div class="line">} <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__accc8888__t" title="the colour type for any 32bit colour formats which has an alpha channel on its first byte.">arm_2d_color_accc8888_t</a>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">typedef</span> <span class="keyword">union </span><a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__cccn888__t" title="the colour type for any 32bit colour formats which has an unused-alpha channel on its 3rd byte.">arm_2d_color_cccn888_t</a> {</div>
+<div class="line">    uint32_t tValue;</div>
+<div class="line">    <span class="keyword">struct </span>{</div>
+<div class="line">        uint8_t u8C[3];</div>
+<div class="line">        uint8_t         : 8;</div>
+<div class="line">    };</div>
+<div class="line">} <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__cccn888__t" title="the colour type for any 32bit colour formats which has an unused-alpha channel on its 3rd byte.">arm_2d_color_cccn888_t</a>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">typedef</span> <span class="keyword">union </span><a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__nccc888__t" title="the colour type for any 32bit colour formats which has an unused-alpha channel on its first byte.">arm_2d_color_nccc888_t</a> {</div>
+<div class="line">    uint32_t tValue;</div>
+<div class="line">    <span class="keyword">struct </span>{</div>
+<div class="line">        uint8_t         : 8;</div>
+<div class="line">        uint8_t u8C[3];</div>
+<div class="line">    };</div>
+<div class="line">} <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__nccc888__t" title="the colour type for any 32bit colour formats which has an unused-alpha channel on its first byte.">arm_2d_color_nccc888_t</a>;</div>
+</div><!-- fragment --><p >As shown above, <b>arm-2d describes colour format in little-end manner</b>, for example, <b>BGRA8888</b> means the blue-channel is the 1st byte and the Alpha channel is the 3rd byte. The colour format <b>CCCA8888</b> means the Alpha channel is the 3rd byte and there are three colour channels whose name and order we don't care. The colour format <b>CCCN888</b> means the 8 MSB are unused (reserved for alpha) and the lower 3 bytes are used to store colour channels.</p>
+<p >However, Some well know colour formats do not follow the naming rule aforementioned in arm-2d, for example RGB565 (It's R, G, B channels are listed in big-ending manner.). We don't want to confuse people.</p>
 <h2><a class="anchor" id="autotoc_md55"></a>
 2.4 API Usage Modes</h2>
 <p >Arm-2D APIs can be used in both Synchronous mode and Asynchronous mode. In fact, The Arm-2D library is designed for working asynchronously, and wrappers are added to support synchronous mode.</p>
@@ -617,7 +654,7 @@ How Partial Frame Buffer Works</div></div>
 <p >The Asynchronous mode is good for the event-driven design paradigm, and it is suitable for most of the RTOS based applications and applications that are written in protoThread and/or FSM in the bare-metal system.</p>
 <p >The examples and documents for Asynchronous mode will be added soon.</p>
 <h1><a class="anchor" id="autotoc_md58"></a>
-3 API Summary</h1>
+3 API Summary for commonly used APIs</h1>
 <h2><a class="anchor" id="autotoc_md59"></a>
 3.1 Tile Operations</h2>
 <table class="markdownTable">
@@ -698,11 +735,59 @@ How Partial Frame Buffer Works</div></div>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><em><b>arm_2dp_rgb32_tile_fill_with_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">fill the target tile with a given source tile in xy-mirroring. Both tiles should be 32bit per pixel.   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><em><b>arm_2dp_c8bit_tile_copy_with_colour_keying</b></em>   </td><td class="markdownTableBodyNone">Copy a given tile into a target tile with the Colour-Keying scheme. Both tiles should use 8bits for each pixel.   </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone"><em><b>arm_2dp_c8bit_tile_copy_with_colour_keying</b></em>   </td><td class="markdownTableBodyNone">Copy or fill a given tile into a target tile with Colour-Keying in a given mode. Both tiles should use 8bits for each pixel.   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb16_tile_copy_with_colour_keying</b></em>   </td><td class="markdownTableBodyNone">Copy a given tile into a target tile with the Colour-Keying scheme. Both tiles should use 16bits for each pixel.   </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb16_tile_copy_with_colour_keying</b></em>   </td><td class="markdownTableBodyNone">Copy or fill a given tile into a target tile with Colour-Keying in a given mode. Both tiles should use 16bits for each pixel.   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb32_tile_copy_with_colour_keying</b></em>   </td><td class="markdownTableBodyNone">Copy a given tile into a target tile with the Colour-Keying scheme. Both tiles should use 32bits for each pixel. No alpha channel is used in this function.   </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb32_tile_copy_with_colour_keying</b></em>   </td><td class="markdownTableBodyNone">Copy or fill a given tile into a target tile with Colour-Keying in a given mode. Both tiles should use 32bits for each pixel. No alpha channel is used in this function.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_c8bit_tile_copy_with_colour_keying_only</b></em>   </td><td class="markdownTableBodyNone">Copy a given tile into a target tile with Colour-Keying. Both tiles should use 8bits for each pixel.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb16_tile_copy_with_colour_keying_only</b></em>   </td><td class="markdownTableBodyNone">Copy a given tile into a target tile with Colour-Keying. Both tiles should use 16bits for each pixel.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb32_tile_copy_with_colour_keying_only</b></em>   </td><td class="markdownTableBodyNone">Copy a given tile into a target tile with Colour-Keying. Both tiles should use 32bits for each pixel. No alpha channel is used in this function.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_c8bit_tile_copy_with_colour_keying_and_x_mirror</b></em>   </td><td class="markdownTableBodyNone">Copy a given tile into a target tile with Colour-Keying and x-mirroring. Both tiles should use 8bits for each pixel.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb16_tile_copy_with_colour_keying_and_x_mirror</b></em>   </td><td class="markdownTableBodyNone">Copy a given tile into a target tile with Colour-Keying and x-mirroring. Both tiles should use 16bits for each pixel.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb32_tile_copy_with_colour_keying_and_x_mirror</b></em>   </td><td class="markdownTableBodyNone">Copy a given tile into a target tile with Colour-Keying and x-mirroring. Both tiles should use 32bits for each pixel. No alpha channel is used in this function.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_c8bit_tile_copy_with_colour_keying_and_y_mirror</b></em>   </td><td class="markdownTableBodyNone">Copy a given tile into a target tile with Colour-Keying and y-mirroring. Both tiles should use 8bits for each pixel.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb16_tile_copy_with_colour_keying_and_y_mirror</b></em>   </td><td class="markdownTableBodyNone">Copy a given tile into a target tile with Colour-Keying and y-mirroring. Both tiles should use 16bits for each pixel.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb32_tile_copy_with_colour_keying_and_y_mirror</b></em>   </td><td class="markdownTableBodyNone">Copy a given tile into a target tile with Colour-Keying and y-mirroring. Both tiles should use 32bits for each pixel. No alpha channel is used in this function.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_c8bit_tile_copy_with_colour_keying_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">Copy a given tile into a target tile with Colour-Keying and xy-mirroring. Both tiles should use 8bits for each pixel.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb16_tile_copy_with_colour_keying_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">Copy a given tile into a target tile with Colour-Keying and xy-mirroring. Both tiles should use 16bits for each pixel.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb32_tile_copy_with_colour_keying_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">Copy a given tile into a target tile with Colour-Keying and xy-mirroring. Both tiles should use 32bits for each pixel. No alpha channel is used in this function.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_c8bit_tile_fill_with_colour_keying_only</b></em>   </td><td class="markdownTableBodyNone">Fill a given tile into a target tile with Colour-Keying. Both tiles should use 8bits for each pixel.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb16_tile_fill_with_colour_keying_only</b></em>   </td><td class="markdownTableBodyNone">Fill a given tile into a target tile with Colour-Keying. Both tiles should use 16bits for each pixel.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb32_tile_fill_with_colour_keying_only</b></em>   </td><td class="markdownTableBodyNone">Fill a given tile into a target tile with Colour-Keying. Both tiles should use 32bits for each pixel. No alpha channel is used in this function.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_c8bit_tile_fill_with_colour_keying_and_x_mirror</b></em>   </td><td class="markdownTableBodyNone">Fill a given tile into a target tile with Colour-Keying and x-mirroring. Both tiles should use 8bits for each pixel.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb16_tile_fill_with_colour_keying_and_x_mirror</b></em>   </td><td class="markdownTableBodyNone">Fill a given tile into a target tile with Colour-Keying and x-mirroring. Both tiles should use 16bits for each pixel.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb32_tile_fill_with_colour_keying_and_x_mirror</b></em>   </td><td class="markdownTableBodyNone">Fill a given tile into a target tile with Colour-Keying and x-mirroring. Both tiles should use 32bits for each pixel. No alpha channel is used in this function.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_c8bit_tile_fill_with_colour_keying_and_y_mirror</b></em>   </td><td class="markdownTableBodyNone">Fill a given tile into a target tile with Colour-Keying and y-mirroring. Both tiles should use 8bits for each pixel.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb16_tile_fill_with_colour_keying_and_y_mirror</b></em>   </td><td class="markdownTableBodyNone">Fill a given tile into a target tile with Colour-Keying and y-mirroring. Both tiles should use 16bits for each pixel.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb32_tile_fill_with_colour_keying_and_y_mirror</b></em>   </td><td class="markdownTableBodyNone">Fill a given tile into a target tile with Colour-Keying and y-mirroring. Both tiles should use 32bits for each pixel. No alpha channel is used in this function.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_c8bit_tile_fill_with_colour_keying_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">Fill a given tile into a target tile with Colour-Keying and xy-mirroring. Both tiles should use 8bits for each pixel.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb16_tile_fill_with_colour_keying_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">Fill a given tile into a target tile with Colour-Keying and xy-mirroring. Both tiles should use 16bits for each pixel.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb32_tile_fill_with_colour_keying_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">Fill a given tile into a target tile with Colour-Keying and xy-mirroring. Both tiles should use 32bits for each pixel. No alpha channel is used in this function.   </td><td class="markdownTableBodyNone"></td></tr>
 </table>
 <h2><a class="anchor" id="autotoc_md60"></a>
 3.2 Colour Space Conversion</h2>
@@ -710,27 +795,41 @@ How Partial Frame Buffer Works</div></div>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Function Name   </th><th class="markdownTableHeadNone">Description   </th><th class="markdownTableHeadNone">NOTE    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><em><b>arm_2d_convert_colour_to_rbg888</b></em>   </td><td class="markdownTableBodyNone">Convert a tile with any other colour format into a new tile with <em><b>RGB888</b></em>.   </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone"><em><b>arm_2d_convert_colour_to_rbg888</b></em>   </td><td class="markdownTableBodyNone">Convert a tile in any other colour formats to a new tile in <em><b>RGB888</b></em>.   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><em><b>arm_2d_convert_colour_to_rgb565</b></em>   </td><td class="markdownTableBodyNone">Convert a tile with any other colour format into a new tile with <em><b>RGB565</b></em>.   </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone"><em><b>arm_2d_convert_colour_to_rgb565</b></em>   </td><td class="markdownTableBodyNone">Convert a tile in any other colour formats to a new tile in <em><b>RGB565</b></em>.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2d_convert_colour_to_gray8</b></em>   </td><td class="markdownTableBodyNone">Convert a tile in any other colour formats to a new tile in <em><b>GRAY8</b></em>.   </td><td class="markdownTableBodyNone"></td></tr>
 </table>
 <h2><a class="anchor" id="autotoc_md61"></a>
-3.3 Alpha Blending</h2>
+3.3 Alpha Blending and Masks related</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Function Name   </th><th class="markdownTableHeadNone">Description   </th><th class="markdownTableHeadNone">NOTE    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_alpha_blending</b></em>   </td><td class="markdownTableBodyNone">Blend a source tile to a target tile with a given transparency ratio. Both tiles should use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_alpha_blending</b></em>   </td><td class="markdownTableBodyNone">Blend a source tile to a target tile with a given transparency ratio. Both tiles should use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"><b>Deprecated</b>    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_alpha_blending</b></em>   </td><td class="markdownTableBodyNone">Blend a source tile to a target tile with a given transparency ratio. Both tiles should use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_copy_with_opacity</b></em>   </td><td class="markdownTableBodyNone">See above   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_alpha_blending</b></em>   </td><td class="markdownTableBodyNone">Blend a source tile to a target tile with a given transparency ratio. Both tiles should use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_alpha_blending</b></em>   </td><td class="markdownTableBodyNone">Blend a source tile to a target tile with a given transparency ratio. Both tiles should use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"><b>Deprecated</b>    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_alpha_blending_with_colour_keying</b></em>   </td><td class="markdownTableBodyNone">Blend a source tile to a target tile with a given transparency ratio and the Colour-Keying scheme. Both tiles should use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_copy_with_opacity</b></em>   </td><td class="markdownTableBodyNone">See above   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><em><b>arm_2dp_rbg565_alpha_blending_with_colour_keying</b></em>   </td><td class="markdownTableBodyNone">Blend a source tile to a target tile with a given transparency ratio and the Colour-Keying scheme. Both tiles should use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_alpha_blending</b></em>   </td><td class="markdownTableBodyNone">Blend a source tile to a target tile with a given transparency ratio. Both tiles should use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"><b>Deprecated</b>    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_alpha_blending_with_colour_keying</b></em>   </td><td class="markdownTableBodyNone">Blend a source tile to a target tile with a given transparency ratio and the Colour-Keying scheme. Both tiles should use <em><b>RGB888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_copy_with_opacity</b></em>   </td><td class="markdownTableBodyNone">See above   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_alpha_blending_with_colour_keying</b></em>   </td><td class="markdownTableBodyNone">Blend a source tile to a target tile with a given transparency ratio and the Colour-Keying scheme. Both tiles should use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"><b>Deprecated</b>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_copy_with_colour_keying_and_opacity</b></em>   </td><td class="markdownTableBodyNone">See above   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rbg565_alpha_blending_with_colour_keying</b></em>   </td><td class="markdownTableBodyNone">Blend a source tile to a target tile with a given transparency ratio and the Colour-Keying scheme. Both tiles should use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"><b>Deprecated</b>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_copy_with_colour_keying_and_opacity</b></em>   </td><td class="markdownTableBodyNone">See above   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_alpha_blending_with_colour_keying</b></em>   </td><td class="markdownTableBodyNone">Blend a source tile to a target tile with a given transparency ratio and the Colour-Keying scheme. Both tiles should use <em><b>RGB888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"><b>Deprecated</b>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_copy_with_colour_keying_and_opacity</b></em>   </td><td class="markdownTableBodyNone">See above   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_fill_colour_with_opacity</b></em>   </td><td class="markdownTableBodyNone">Fill a given region in the target tile with a specified <em><b>GRAY8</b></em> colour and opacity.   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
@@ -738,23 +837,107 @@ How Partial Frame Buffer Works</div></div>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_fill_colour_with_opacity</b></em>   </td><td class="markdownTableBodyNone">Fill a given region in the target tile with a specified <em><b>CCCN888</b></em> colour and opacity.   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_fill_colour_with_mask</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>GRAY8</b></em> colour and a mask on target side   </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_fill_colour_with_mask</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>GRAY8</b></em> colour and a A8 mask   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_fill_colour_with_mask</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>RGB565</b></em> colour and a mask on target side   </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_fill_colour_with_mask</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>RGB565</b></em> colour and a A8 mask   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_fill_colour_with_mask</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>CCCN888</b></em> colour and a mask on target side   </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_fill_colour_with_mask</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>CCCN888</b></em> colour and a A8 mask   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_fill_colour_with_mask_and_opacity</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>GRAY8</b></em> colour, a mask on target side and an opacity   </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_fill_colour_with_a8_mask</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>GRAY8</b></em> colour and a A8 mask   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_fill_colour_with_mask_and_opacity</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>RGB565</b></em> colour, a mask on target side and an opacity   </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_fill_colour_with_a8_mask</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>RGB565</b></em> colour and a A8 mask   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_fill_colour_with_mask_and_opacity</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>CCCN888</b></em> colour, a mask on target side and an opacity   </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_fill_colour_with_a8_mask</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>CCCN888</b></em> colour and a A8 mask   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_fill_colour_with_a2_mask</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>GRAY8</b></em> colour and an A2 mask   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_fill_colour_with_a2_mask</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>RGB565</b></em> colour and an A2 mask   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_fill_colour_with_a2_mask</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>CCCN888</b></em> colour and an A2 mask   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_fill_colour_with_a4_mask</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>GRAY8</b></em> colour and an A4 mask   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_fill_colour_with_a4_mask</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>RGB565</b></em> colour and an A4 mask   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_fill_colour_with_a4_mask</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>CCCN888</b></em> colour and an A4 mask   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_fill_colour_with_mask_and_opacity</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>GRAY8</b></em> colour, a A8 mask and an opacity   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_fill_colour_with_mask_and_opacity</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>RGB565</b></em> colour, a A8 mask and an opacity   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_fill_colour_with_mask_and_opacity</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>CCCN888</b></em> colour, a A8 mask and an opacity   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_fill_colour_with_a8_mask_and_opacity</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>GRAY8</b></em> colour, a A8 mask and an opacity   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_fill_colour_with_a8_mask_and_opacity</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>RGB565</b></em> colour, a A8 mask and an opacity   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_fill_colour_with_a8_mask_and_opacity</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>CCCN888</b></em> colour, a A8 mask and an opacity   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_fill_colour_with_a2_mask_and_opacity</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>GRAY8</b></em> colour, a A2 mask and an opacity   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_fill_colour_with_a2_mask_and_opacity</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>RGB565</b></em> colour, a A2 mask and an opacity   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_fill_colour_with_a2_mask_and_opacity</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>CCCN888</b></em> colour, a A2 mask and an opacity   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_fill_colour_with_a4_mask_and_opacity</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>GRAY8</b></em> colour, a A4 mask and an opacity   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_fill_colour_with_a4_mask_and_opacity</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>RGB565</b></em> colour, a A4 mask and an opacity   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_fill_colour_with_a4_mask_and_opacity</b></em>   </td><td class="markdownTableBodyNone">fill a target tile with a given <em><b>CCCN888</b></em> colour, a A4 mask and an opacity   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_copy_with_masks</b></em>   </td><td class="markdownTableBodyNone">copy or fill a source tile to a target tile with masks in a given mode. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_copy_with_masks</b></em>   </td><td class="markdownTableBodyNone">copy or fill a source tile to a target tile with masks in a given mode. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><em><b>arm_2dp_CCCN888_tile_copy_with_masks</b></em>   </td><td class="markdownTableBodyNone">copy or fill a source tile to a target tile with masks in a given mode. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_copy_with_masks</b></em>   </td><td class="markdownTableBodyNone">copy or fill a source tile to a target tile with masks in a given mode. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_copy_with_masks_only</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with masks. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_copy_with_masks_only</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with masks. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_copy_with_masks_only</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with masks. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_copy_with_masks_and_x_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with masks and x-mirroring. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_copy_with_masks_and_x_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with masks and x-mirroring. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_copy_with_masks_and_x_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with masks and x-mirroring. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_copy_with_masks_and_y_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with masks and y-mirroring. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_copy_with_masks_and_y_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with masks and y-mirroring. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_copy_with_masks_and_y_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with masks and y-mirroring. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_copy_with_masks_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with masks and xy-mirroring. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_copy_with_masks_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with masks and xy-mirroring. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_copy_with_masks_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with masks and xy-mirroring. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_copy_with_masks_only</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with masks. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_copy_with_masks_only</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with masks. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_copy_with_masks_only</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with masks. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_fill_with_masks_and_x_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with masks and x-mirroring. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_fill_with_masks_and_x_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with masks and x-mirroring. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_fill_with_masks_and_x_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with masks and x-mirroring. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_fill_with_masks_and_y_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with masks and y-mirroring. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_fill_with_masks_and_y_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with masks and y-mirroring. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_fill_with_masks_and_y_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with masks and y-mirroring. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_fill_with_masks_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with masks and xy-mirroring. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_fill_with_masks_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with masks and xy-mirroring. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_fill_with_masks_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with masks and xy-mirroring. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_copy_with_des_mask</b></em>   </td><td class="markdownTableBodyNone">copy or fill a source tile to a target tile with a mask on the target side in a given mode. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
@@ -762,11 +945,107 @@ How Partial Frame Buffer Works</div></div>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_copy_with_des_mask</b></em>   </td><td class="markdownTableBodyNone">copy or fill a source tile to a target tile with a mask on the target side in a given mode. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_copy_with_des_mask_only</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with a mask on the target side. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_copy_with_des_mask_only</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with a mask on the target side. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_copy_with_des_mask_only</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with a mask on the target side. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_copy_with_des_mask_and_x_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with a mask on the target side and x-mirroring. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_copy_with_des_mask_and_x_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with a mask on the target side and x-mirroring. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_copy_with_des_mask_and_x_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with a mask on the target side and x-mirroring. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_copy_with_des_mask_and_y_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with a mask on the target side and y-mirroring. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_copy_with_des_mask_and_y_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with a mask on the target side and y-mirroring. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_copy_with_des_mask_and_y_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with a mask on the target side and y-mirroring. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_copy_with_des_mask_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with a mask on the target side and xy-mirroring. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_copy_with_des_mask_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with a mask on the target side and xy-mirroring. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_copy_with_des_mask_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with a mask on the target side and xy-mirroring. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_fill_with_des_mask_only</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the target side. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_fill_with_des_mask_only</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the target side. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_fill_with_des_mask_only</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the target side. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_fill_with_des_mask_and_x_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the target side and x-mirroring. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_fill_with_des_mask_and_x_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the target side and x-mirroring. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_fill_with_des_mask_and_x_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the target side and x-mirroring. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_fill_with_des_mask_and_y_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the target side and y-mirroring. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_fill_with_des_mask_and_y_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the target side and y-mirroring. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_fill_with_des_mask_and_y_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the target side and y-mirroring. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_fill_with_des_mask_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the target side and xy-mirroring. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_fill_with_des_mask_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the target side and xy-mirroring. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_fill_with_des_mask_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the target side and xy-mirroring. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_copy_with_src_mask</b></em>   </td><td class="markdownTableBodyNone">copy or fill a source tile to a target tile with a mask on the source side in a given mode. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_copy_with_src_mask</b></em>   </td><td class="markdownTableBodyNone">copy or fill a source tile to a target tile with a mask on the source side in a given mode. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_copy_with_src_mask</b></em>   </td><td class="markdownTableBodyNone">copy or fill a source tile to a target tile with a mask on the source side in a given mode. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_copy_with_src_mask_only</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with a mask on the source side. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_copy_with_src_mask_only</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with a mask on the source side. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_copy_with_src_mask_only</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with a mask on the source side. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_copy_with_src_mask_and_x_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with a mask on the source side and x-mirroring. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_copy_with_src_mask_and_x_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with a mask on the source side and x-mirroring. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_copy_with_src_mask_and_x_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with a mask on the source side and x-mirroring. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_copy_with_src_mask_and_y_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with a mask on the source side and y-mirroring. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_copy_with_src_mask_and_y_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with a mask on the source side and y-mirroring. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_copy_with_src_mask_and_y_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with a mask on the source side and y-mirroring. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_copy_with_src_mask_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with a mask on the source side and xy-mirroring. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_copy_with_src_mask_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with a mask on the source side and xy-mirroring. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_copy_with_src_mask_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">copy a source tile to a target tile with a mask on the source side and xy-mirroring. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_fill_with_src_mask_only</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the source side. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_fill_with_src_mask_only</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the source side. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_fill_with_src_mask_only</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the source side. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_fill_with_src_mask_and_x_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the source side and x-mirroring. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_fill_with_src_mask_and_x_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the source side and x-mirroring. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_fill_with_src_mask_and_x_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the source side and x-mirroring. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_fill_with_src_mask_and_y_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the source side and y-mirroring. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_fill_with_src_mask_and_y_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the source side and y-mirroring. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_fill_with_src_mask_and_y_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the source side and y-mirroring. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_tile_fill_with_src_mask_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the source side and xy-mirroring. Both tiles use <em><b>GRAY8</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_tile_fill_with_src_mask_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the source side and xy-mirroring. Both tiles use <em><b>RGB565</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_fill_with_src_mask_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the source side and xy-mirroring. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
 </table>
 <h2><a class="anchor" id="autotoc_md62"></a>
 3.4 Transform (Rotation/Scaling)</h2>
@@ -798,6 +1077,12 @@ How Partial Frame Buffer Works</div></div>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_transform_with_src_mask_and_opacity_prepare</b></em>   </td><td class="markdownTableBodyNone">prepare for a transform with source mask and opacity in <em><b>CCCN888</b></em>   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_prepare</b></em>   </td><td class="markdownTableBodyNone">prepare for a <em><b>GRAY8</b></em> colour-filling with a mask, a given opacity and transform   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_prepare</b></em>   </td><td class="markdownTableBodyNone">prepare for a <em><b>RGB565</b></em> colour-filling with a mask, a given opacity and transform   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_prepare</b></em>   </td><td class="markdownTableBodyNone">prepare for a <em><b>CCCN888</b></em> colour-filling with a mask, a given opacity and transform   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><em><b>arm_2dp_tile_transform</b></em>   </td><td class="markdownTableBodyNone">start a transform operation   </td><td class="markdownTableBodyNone"></td></tr>
 </table>
 <h2><a class="anchor" id="autotoc_md63"></a>

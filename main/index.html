@@ -125,43 +125,43 @@ Branch Summary</h1>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Features</h1>
 <h3><a class="anchor" id="autotoc_md2"></a>
-In this version ( ver1.1.0-preview2-dev)</h3>
-<p >The Arm-2D library provides <b>Low-Level 2D Image Processing Services</b> that are mainly used in <b>Deep Embedded Display system</b>. The supported features include but not limited to:</p>
+In this version (ver1.1.0)</h3>
+<p >The Arm-2D library provides <b>Low-Level 2D Image Processing Services</b> mainly used in <b>Deep Embedded Display system</b>. The supported features include but not limited to:</p>
 <ul>
-<li><b>Support Accelerating LVGL</b> (<b>v8.3.0</b> or newer)</li>
+<li><b>Supports Accelerating LVGL</b> (<b>v8.3.0</b> or newer)</li>
 <li><b>CMSIS-Pack is available.</b></li>
-<li><b>Alpha-Blending</b> / <b>Alpha-Masking</b><ul>
+<li><b>Alpha-Blending</b> / <b>Masks</b><ul>
 <li>With or without Colour-Keying</li>
-<li>Filling-Colour with an Alpha-Mask<ul>
-<li>For drawing icons/texts with anti-alias in a specified colour</li>
-<li>Supports an optional <em><b>Opacity</b></em> ratio can be applied.</li>
+<li>Filling-Colour with an mask<ul>
+<li>For drawing anti-alias icons/texts in a specified colour</li>
+<li>Supports an optional <em><b>Opacity</b></em>.</li>
+<li>Supports A2, A4 and A8 masks</li>
 </ul>
 </li>
 </ul>
 </li>
 <li><b>Image Copy (Tiling)</b><ul>
-<li>With or without Colour-Keying (a.k.a colour masking)</li>
+<li>With or without Colour-Keying</li>
 <li>Supports four mirroring modes: No-mirroring, X-mirroring, Y-mirroring and XY-mirroring</li>
-<li>Supports <b>alpha masks</b> on the source side and/or the target side</li>
+<li>Supports <b>masks</b> on the source side and/or the target side</li>
 </ul>
 </li>
 <li><b>Supported Colour formats</b><ul>
-<li><b>Gray8 (8-bit Grayscale)</b>, <b>RGB565</b> and <b>RGB888</b></li>
-<li>Generic <b>8bit colour</b>, <b>RGB16</b> and <b>RGB32</b></li>
-<li>Converting colour formats among <b>GRAY8</b>, <b>RGB565</b> and <b>RGB888</b> for any given tiles</li>
-<li>A2, A4 and A8 masks</li>
+<li><b>GRAY8 (8-bit Grayscale)</b>, <b>RGB565</b> and <b>RGB888</b></li>
+<li>Generic <b>C8BIT (8bit colour)</b>, <b>RGB16</b> and <b>RGB32</b></li>
+<li>Converting colour formats among <b>GRAY8</b>, <b>RGB565</b> and <b>RGB888</b></li>
 </ul>
 </li>
-<li><b>Region/Window Clipping</b></li>
+<li><b>Region Clipping</b></li>
 <li><b>Generic Partial Frame-buffer (PFB)</b><ul>
-<li>Transparent for upper layer software/GUI services</li>
+<li>Transparent for software/GUI services on upper layers</li>
 <li>Easy to Use</li>
-<li>No limitation on target screen resolution</li>
-<li>No limitation on PFB size and shape (it could be a line or a rectangular with any size)</li>
-<li>Supports the <b>Dirty Regions</b> when performing the low level refreshing</li>
+<li>No limitation on screen resolution **(See note)**</li>
+<li>No limitation on PFB size and shape (it could be a line or a rectangular with any size) **(See note)**</li>
+<li>Supports <b>Dirty Regions</b> for refreshing specified areas only</li>
 <li>Supports swapping high and low bytes for RGB16 pixels</li>
 <li>Introduce a <b>Scene Player</b> with various scene switching modes (Fade-In-Fade-Out, Slide, Erase etc.)</li>
-<li>Support Various Buffer Modes with a built-in framebuffer pool.<ul>
+<li>Support various Buffer Modes with a built-in framebuffer pool.<ul>
 <li>Single Buffer/Double-Buffers/Three-Buffers</li>
 <li>Direct Mode</li>
 <li>Enhanced Asynchronous Flushing Support (i.e. DMA + ISR)</li>
@@ -169,24 +169,27 @@ In this version ( ver1.1.0-preview2-dev)</h3>
 </li>
 </ul>
 </li>
+</ul>
+<p ><b>NOTE</b>: As long as the size is smaller than 32767 * 32767.</p>
+<ul>
 <li><b>Transform</b> (i.e. rotation and scaling)<ul>
-<li>Supports Colour-keying by default</li>
+<li>Supports Colour-keying</li>
 <li>Supports an optional <b>Opacity</b> ratio</li>
-<li>Supports the Anti-Alias feature.<ul>
-<li>You can enable it by defining macro <code>__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__</code> to <code>1</code> at <b>compile-time</b>.</li>
+<li>Supports Anti-Alias.<ul>
+<li>You can enable it by defining the macro <code>__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__</code> to <code>1</code> at <b>compile-time</b>.</li>
 </ul>
 </li>
-<li>Support source masks</li>
+<li>Supports source masks</li>
 </ul>
 </li>
 <li><b>An Unified and User-Friendly Programmers' Model</b><ul>
-<li>APIs can be used in <b>Synchronous</b> manner ( <b>Classic and Blocking</b> ) and/or <b>Asynchronous</b> manner ( <b>Event-Driven</b> )</li>
-<li>Supports both <b>bare-metal</b> and <b>RTOS</b> environment</li>
+<li>APIs can be used in <b>Synchronous</b> manner ( <b>Classic Blocking-code</b> ) and/or <b>Asynchronous</b> manner ( <b>Event-Driven</b> )</li>
+<li>Supports both <b>bare-metal</b> and <b>RTOS</b> environments</li>
 <li>Ultra small memory footprint</li>
 </ul>
 </li>
 <li><b>Support Virtual Resource</b><ul>
-<li>Support loading resources from external memories which is not mapped to 4G memory space</li>
+<li>Supports loading resources in on-demand manner from external memories that are not mapped into the 4G memory space.</li>
 </ul>
 </li>
 </ul>
@@ -195,7 +198,7 @@ New Features Planned in the Future</h2>
 <ul>
 <li>Image Filters, e.g. Generic Anti-aliasing algorithms</li>
 <li>Stretch and Perspective Transform</li>
-<li>DMAC-350 Support</li>
+<li>Supports DMAC-350</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md4"></a>
 Documentation</h1>
@@ -254,8 +257,8 @@ The Hierarchy of a Typical Embedded GUI System</div></div>
 <li>Armv8.1-M processors: Cortex-M55/M85</li>
 </ul>
 <p ><b>The library is designed with ACI (Arm Custom Instructions) in mind.</b> Accelerations implemented with user-defined instructions can be integrated into the library easily without modifying the existing Arm-2D library or upper-layer software.</p>
-<p ><b>The library is designed with 2D image accelerators in mind and following the feature agnostic principle.</b> The Support for accelerators can be added easily without modifying the existing Arm-2D library or upper-layer software.</p>
-<p ><b>The library is designed with resource constraints in mind.</b> <b>For Cortex-M processors with 4K~32K SRAM that cannot afford a full-frame-buffer</b>, Arm-2D introduces a feature called <b>Generic Partial Frame-buffer</b> enabling those existing MCUs to run GUI applications by practicing time-space exchange schemes while still enjoying a decent frame rate.</p>
+<p ><b>The library is designed with 2D image accelerators in mind and following the feature-agnostic principle.</b> The Support for accelerators can be added easily without modifying the existing Arm-2D library or upper-layer software.</p>
+<p ><b>The library is designed with resource constraints in mind.</b> <b>For Cortex-M processors with 4K~32K SRAM that cannot afford a complete-framebuffer</b>, Arm-2D introduces a feature called <b>Generic Partial Framebuffer</b> enabling those existing MCUs to run GUI applications in a decent frame rate.</p>
 <h2><a class="anchor" id="autotoc_md9"></a>
 1.4 Dependency</h2>
 <ul>
@@ -277,9 +280,9 @@ The Hierarchy of a Typical Embedded GUI System</div></div>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Projects   </th><th class="markdownTableHeadNone">Description   </th><th class="markdownTableHeadNone">Folder   </th><th class="markdownTableHeadNone">Note    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">benchmark   </td><td class="markdownTableBodyNone">It is an <b>ALL-IN-ONE</b> example that demonstrates almost all features provided by Arm-2D. By setting different PFB sizes, you can evaluate the 2D image processing capability for the target system.   </td><td class="markdownTableBodyNone">examples/benchmark   </td><td class="markdownTableBodyNone">Can be used as benchmark.    </td></tr>
+<td class="markdownTableBodyNone">benchmark   </td><td class="markdownTableBodyNone">It is an <b>ALL-IN-ONE</b> example that demonstrates almost all features provided by Arm-2D. By setting different PFB sizes, you can evaluate the 2D image processing capability for the target system.   </td><td class="markdownTableBodyNone">examples/benchmark   </td><td class="markdownTableBodyNone"><b>Used as benchmark.</b>    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">watch_panel   </td><td class="markdownTableBodyNone">It is a dedicated example of a smart-watch-like panel. A pointer and two gears rotate at different angular velocities on a translucent watch panel with a dynamic background.   </td><td class="markdownTableBodyNone">examples/watch_panel   </td><td class="markdownTableBodyNone">Can be used as benchmark    </td></tr>
+<td class="markdownTableBodyNone">watch_panel   </td><td class="markdownTableBodyNone">It is a dedicated example of a smart-watch-like panel. A pointer and two gears rotate at different angular velocities on a translucent watch panel with a dynamic background.   </td><td class="markdownTableBodyNone">examples/watch_panel   </td><td class="markdownTableBodyNone"><b>Used as benchmark</b>    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">[template][bare-metal][pfb]   </td><td class="markdownTableBodyNone">It is a project template for the bare-metal environment.   </td><td class="markdownTableBodyNone">examples/[template][bare-metal][pfb]   </td><td class="markdownTableBodyNone">Project Template    </td></tr>
 <tr class="markdownTableRowEven">
@@ -300,9 +303,9 @@ The Hierarchy of a Typical Embedded GUI System</div></div>
 </ul>
 </li>
 <li><b>Simulate a typical application scenario with sufficient complexity</b><ul>
-<li>Background with Texture paving (switching different mirroring modes every 4 second)</li>
+<li>Background with Texture Tiling (switching mirroring modes every 4 second)</li>
 <li>Foreground picture</li>
-<li>Two constructed layers for alpha-blending and texture paving</li>
+<li>Two constructed layers for alpha-blending and tiling with colour keying</li>
 <li>Moving icons</li>
 <li>Spinning busy wheel</li>
 </ul>
@@ -312,9 +315,11 @@ The Hierarchy of a Typical Embedded GUI System</div></div>
 <li><b>Record the cycle count used for blending one frame and run 1000 iterations (frames).</b></li>
 </ul>
 <p ><b>Figure 1-4 A snapshot of benchmark running on Cortex-M4 FVP platform</b></p>
-<p ><img src="benchmark" alt="" class="inline" title="Alpha-blending"/>     <br  />
-</p>
-<ul>
+<div class="image">
+<img src="benchmark.png" alt=""/>
+<div class="caption">
+Benchmark</div></div>
+    <ul>
 <li><b>Use the average cycle count in 1000 iterations as benchmark score.</b><ul>
 <li>Based on that, for typical embedded application requirement, we derive a more meaningful metrics called the <b>Minimal Frequency Required for 30 FPS (MHz)</b> as shown in <b>Figure 1-5</b>.</li>
 </ul>
@@ -488,7 +493,7 @@ The Hierarchy of a Typical Embedded GUI System</div></div>
 <li>Although planned and implemented, the <a href="https://developer.arm.com/architectures/instruction-sets/custom-instructions">ACI (Arm Custom Instruction)</a> acceleration solutions are not open-source for now. Please contact local Arm FAE for details.</li>
 </ul>
 </li>
-<li>The provided example projects only run on <a href="https://developer.arm.com/tools-and-software/development-boards/fpga-prototyping-boards/mps2">MPS2</a>, <a href="https://developer.arm.com/tools-and-software/development-boards/fpga-prototyping-boards/mps3">MPS3</a>, <a href="https://developer.arm.com/tools-and-software/open-source-software/arm-platforms-software/cortex-m-platforms-software">FVP</a> and some 3rd party development platforms, e.g. <b>STM32F746G-Discovery</b> and <b>Raspberry Pi Pico</b>.<ul>
+<li>The provided example projects only run on <a href="https://developer.arm.com/tools-and-software/development-boards/fpga-prototyping-boards/mps2">MPS2</a>, <a href="https://developer.arm.com/tools-and-software/development-boards/fpga-prototyping-boards/mps3">MPS3</a>, <a href="https://developer.arm.com/tools-and-software/open-source-software/arm-platforms-software/cortex-m-platforms-software">FVP</a> and some 3rd party development platforms, e.g. <b>STM32F746G-Discovery</b>.<ul>
 <li>Feel free to try the library on your own devices. The library depends on no specific peripheral.</li>
 </ul>
 </li>
@@ -513,7 +518,7 @@ The Hierarchy of a Typical Embedded GUI System</div></div>
 </ul>
 <p >Thank you for your time.</p>
 <p ><em><b>Arm-2D Development Team.</b></em></p>
-<p >07 Oct 2022 </p>
+<p >01 Dec 2022 </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->

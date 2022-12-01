@@ -102,10 +102,10 @@ var NAVTREE =
           [ "2.4.2 Asynchronous Mode", "intro.html#autotoc_md57", null ]
         ] ]
       ] ],
-      [ "3 API Summary", "intro.html#autotoc_md58", [
+      [ "3 API Summary for commonly used APIs", "intro.html#autotoc_md58", [
         [ "3.1 Tile Operations", "intro.html#autotoc_md59", null ],
         [ "3.2 Colour Space Conversion", "intro.html#autotoc_md60", null ],
-        [ "3.3 Alpha Blending", "intro.html#autotoc_md61", null ],
+        [ "3.3 Alpha Blending and Masks related", "intro.html#autotoc_md61", null ],
         [ "3.4 Transform (Rotation/Scaling)", "intro.html#autotoc_md62", null ],
         [ "3.5 Drawing", "intro.html#autotoc_md63", null ],
         [ "3.6 Filters", "intro.html#autotoc_md64", null ]
@@ -116,7 +116,7 @@ var NAVTREE =
       [ "2 Key Scenarios, Patterns and Use Cases", "use_tile.html#autotoc_md66", [
         [ "2.1 Normal Usage", "use_tile.html#autotoc_md67", [
           [ "2.1.1 Window/Panel Clipping", "use_tile.html#autotoc_md68", null ],
-          [ "2.1.2 Texture Paving", "use_tile.html#autotoc_md69", null ]
+          [ "2.1.2 Texture Tiling", "use_tile.html#autotoc_md69", null ]
         ] ],
         [ "2.2 Advanced Usage", "use_tile.html#autotoc_md70", [
           [ "2.2.1 Partial Frame Buffer (PFB)", "use_tile.html#autotoc_md71", null ]
