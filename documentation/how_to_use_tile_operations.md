@@ -14,10 +14,10 @@ The Tile Operation is the most fundamental API category of the Arm-2d. It consis
 - Tile Copy
   - **Copy** a source tile to a target tile with specified region within the target tile
   - **Fill** a target tile with a specified source tile
-- Tile Copy with transparency colour, i.e. **colour masking**
+- Tile Copy with transparency colour, i.e. **colour keying**
   - Copy a source tile to a target tile with a given region inside the target tile, and during this process, once a specified colour is read from the source tile, the foreground pixel will be ignored. This is very useful to render non-rectangular visual elements. 
 - Implement Partial Framebuffer support
-  - By drawing the same content several times, it is possible to flush a complete frame to a big screen (with arbitrary resolution)  using just a fraction of the frame buffer. This time-space exchanging scheme is called Partial Frame Buffer (PFB). **While using PFB in the low level, the GUI built upon Arm-2d APIs can generally act as a full-frame buffer is used**.
+  - By drawing the same content several times, it is possible to flush a complete frame to a big screen (with arbitrary resolution)  using just a fraction of the frame buffer. This time-space exchanging scheme is called Partial Frame Buffer (PFB). **While using PFB in the low level, the GUI built upon Arm-2d APIs can generally act as if a complete framebuffer is used**.
 
 All related definitions are listed in the interface header file ***Arm_2d_tile.h*** and the default C implementation and Helium implementation can be found in ***Arm_2d_tile.c***. 
 
@@ -54,35 +54,38 @@ const static arm_2d_tile_t c_tPictureCMSISLogo = {
 };
 ```
 
-In fact, with the help of some macros, we can use Tile to implement the concept of the so-called visual layer:
+In fact, with the help of some macro templates, we can use Tile to implement framebuffers with a given size:
 
 ```c
 #define __declare_tile(__NAME)                                      \
             extern const arm_2d_tile_t __NAME;
 #define declare_tile(__NAME)            __declare_tile(__NAME)
 
-#define __implement_tile(__NAME, __WIDTH, __HEIGHT, __TYPE)         \
-            ARM_NOINIT static __TYPE                                \
-                __NAME##Buffer[(__WIDTH) * (__HEIGHT)];             \
-            const arm_2d_tile_t __NAME = {                          \
-                .tRegion = {                                        \
-                    .tSize = {(__WIDTH), (__HEIGHT)},               \
-                },                                                  \
-                .tInfo.bIsRoot = true,                              \
-                .pchBuffer = (uint8_t *)__NAME##Buffer,             \
+#define dcl_fb(__name)                  declare_tile(__name)
+
+#define __impl_fb(__name, __width, __height, __type, ...)                       \
+            ARM_NOINIT static __type                                            \
+                __name##Buffer[(__width) * (__height)];                         \
+            const arm_2d_tile_t __name = {                                      \
+                .tRegion = {                                                    \
+                    .tSize = {(__width), (__height)},                           \
+                },                                                              \
+                .tInfo.bIsRoot = true,                                          \
+                .pchBuffer = (uint8_t *)__name##Buffer,                         \
+                __VA_ARGS__                                                     \
             }
             
-#define implement_tile(__NAME, __WIDTH, __HEIGHT, __TYPE)           \
-            __implement_tile(__NAME, __WIDTH, __HEIGHT, __TYPE)
+#define impl_fb(__name, __width, __height, __type, ...)                         \
+            __impl_fb(__name, __width, __height, __type, ##__VA_ARGS__)
 ```
 
-For example, we can create two visual layers with size **100\*100** and ***200\*50*** respectively and using colour ***arm_2d_color_rgb565_t*** for pixels:
+For example, we can create two framebuffers with size **100\*100** and ***200\*50*** respectively and using colour ***arm_2d_color_rgb565_t*** for pixels:
 
 ```c
-declare_tile(c_tLayerA)
+dcl_fb(c_tLayerA)
 implement_tile(c_tLayerA, 100, 100, arm_2d_color_rgb565_t);
 
-declare_tile(c_tLayerB)
+dcl_fb(c_tLayerB)
 implement_tile(c_tLayerB, 200, 50, arm_2d_color_rgb565_t);
 ```
 
@@ -140,9 +143,9 @@ For more details, please refer to **[section 4.1](#41-basic)**.
 
 
 
-#### 2.1.2 Texture Paving
+#### 2.1.2 Texture Tiling
 
-Paving Texture on a target display buffer is one of the most commonly used 2D operations. Arm-2D supports this with tile copy APIs, in which a copy mode can be specified, and **Arm_2D_CP_MODE_FILL** is used to enable the texture paving feature. 
+Tiling on a target display buffer is one of the most commonly used 2D operations. Arm-2D supports this with tile copy APIs, in which a copy mode can be specified, and **Arm_2D_CP_MODE_FILL** is used to enable the texture tiling feature. 
 
 For more details, please refer to **[section 4.2](#42-copy-fill-and-xy-mirroring)**. 
 
@@ -156,7 +159,7 @@ The so-called Partial Frame Buffer is a special use of the Tile Child scheme. It
 
 **Figure 2-4 How Partial Frame Buffer Works**
 
-![Partial Frame Buffer](./pictures/Introduction2_3b.png)
+![Partial Frame Buffer](./pictures/Introduction2_3b.png) 
 
 More details are shown in a dedicated example project located in "***examples/partial_frame_buffer***" directory.
 
@@ -339,7 +342,7 @@ The behaviour of function **arm_2d_rgb16_tile_copy** is illustrated in **Figure 
 
 The behaviour of function **arm_2d_rgb32_tile_copy** is illustrated in **Figure 4.4**. This function copies a source tile to a specified region inside the target tile or fills the specified region with a given source tile. Several combinations of modes are supported, e.g. copy with X mirroring and/or Y mirroring.
 
-**NOTE**: This function treats all 32-bit colour formats equally and **NO** alpha channel is used, even for RGB8888 or RGBA8888. 
+**NOTE**: This function treats all 32-bit colour formats equally and **NO** alpha channel is used, e.g. RGBA8888. 
 
 
 

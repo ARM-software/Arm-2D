@@ -128,6 +128,7 @@ Arm-2D has provided standard ways to add support for 2D image processing algorit
 ### 1.6 Folder Structures
 
 **Table 1-2 The Folder Structure of Arm-2d Root** 
+
 | Folder and File                  | Type    | Description                                                  |
 | :------------------------------- | ------- | ------------------------------------------------------------ |
 | **Library**                      | Folder  | This folder contains the source files and header files of the library. |
@@ -158,7 +159,7 @@ typedef struct arm_2d_region_t {
 
 **Figure 2-1 Region with Location and Size ** 
 
-![Region with Location and Size](./pictures/Introduction2_1a.png)
+![Region with Location and Size](./pictures/Introduction2_1a.png) 
 
 #### 2.1.1 Location
 
@@ -175,7 +176,7 @@ Different from the general Cartesian coordinate system, in graphics, the Y-axis 
 
 **Figure 2-2 When Location has a negative coordinates.** 
 
-![When Location has a negative coordinates](./pictures/Introduction2_1b.png)
+![When Location has a negative coordinates](./pictures/Introduction2_1b.png) 
 
 As shown in **Figure 2-2**, when the ***x*** and ***y*** coordinates of a Region are both negative, it actually has a considerable area outside (upper left corner) of its parent Region. When we try to find the intersection of the current Region and its parent Region, we will find that only part of the region is valid.
 
@@ -206,7 +207,7 @@ The coordinates of the elements inside a container are described as **coordinate
 
 **Figure 2-3 A Typical Example of Absolute Locations and Relative Locations**
 
-![A Typical Example of Absolute Locations and Relative Locations](./pictures/Introduction2_2a.png)
+![A Typical Example of Absolute Locations and Relative Locations](./pictures/Introduction2_2a.png) 
 
 #### 2.2.2 Absolute Region and Relative Region
 
@@ -214,7 +215,7 @@ If a Region has absolute Location, it is an **Absolute Region**; similarly, if a
 
 **Figure 2-4 A Typical Example of Absolute Regions and Relative Regions**
 
-![A Typical Example of Absolute Regions and Relative Regions](./pictures/Introduction2_2b.png)
+![A Typical Example of Absolute Regions and Relative Regions](./pictures/Introduction2_2b.png) 
 
 When we use these relative and absolute information to perform visual area calculations, it is easy to exclude those areas that are actually invisible to the user from various graphic operations, thereby improving the overall 2D processing performance (as shown in **Figure 2-4** ).
 
@@ -234,27 +235,26 @@ The C definition of a the Tile data structure is shown below:
 typedef struct arm_2d_tile_t arm_2d_tile_t;
 struct arm_2d_tile_t {
     implement_ex(struct {
-        uint8_t    bIsRoot              : 1;
-        uint8_t    bHasEnforcedColour   : 1;
-        uint8_t    bDerivedResource     : 1;
-        uint8_t                         : 5;
+        uint8_t    bIsRoot              : 1;          //!< is this tile a root tile
+        uint8_t    bHasEnforcedColour   : 1;          //!< does this tile contains enforced colour info
+        uint8_t    bDerivedResource     : 1;          //!< indicate whether this is a derived resources (when bIsRoot == 0)
+        uint8_t    bVirtualResource     : 1;          //!< indicate whether the resource should be loaded on-demand
+        uint8_t                         : 4;
         uint8_t                         : 8;
         uint8_t                         : 8;
-        arm_2d_color_info_t    tColourInfo;
+        arm_2d_color_info_t    tColourInfo;           //!< enforced colour
     }, tInfo);
-
-    implement_ex(arm_2d_region_t, tRegion);
-
+    implement_ex(arm_2d_region_t, tRegion);           //!< the region of the tile
     union {
-        /*! when bIsRoot is true, phwBuffer is available,
-         *! otherwise ptParent is available
+        /* when bIsRoot is true, phwBuffer is available,
+         * otherwise ptParent is available
          */
-        arm_2d_tile_t       *ptParent;
-        uint8_t             *pchBuffer;
-        uint16_t            *phwBuffer;
-        uint32_t            *pwBuffer;
+        arm_2d_tile_t       *ptParent;                //!< a pointer points to the parent tile
+        uint8_t             *pchBuffer;               //!< a pointer points to a buffer in a 8bit colour type
+        uint16_t            *phwBuffer;               //!< a pointer points to a buffer in a 16bit colour type
+        uint32_t            *pwBuffer;                //!< a pointer points to a buffer in a 32bit colour type
         
-        intptr_t            nAddress;
+        intptr_t            nAddress;                 //!< a pointer in integer
     };
 };
 ```
@@ -268,14 +268,13 @@ struct arm_2d_tile_t {
 | ***bIsRoot***            | Feature Info | bit-field                 | This bit indicates that whether a tile is a root tile or not. If it is "***1***", the target tile is a root tile that contains a pointer pointing to a display buffer. If it is "***0***", the target tile is a child tile that contains a pointer pointing to a parent tile which **NOT** necessarily to be a root tile. | See **[section 2.3.1](#231-root-tile)** and **[2.3.2](#232-child-tile)** for details. |
 | ***bHasEnforcedColour*** | Feature Info | bit-field                 | This bit indicates that whether a tile explicitly contains a descriptor for pixel colour. When this bit is set, ***tColourInfo*** is valid; otherwise, it is seen as containing no valid information.  If a Tile is used as the source tile of any Colour Conversion Operations, this bit has to be set and ***tColourInfo*** should contain a valid description. | For most of the Arm-2d operations, when this bit is zero, arm-2d API will use its own implicit understanding about the tile colour.  For example, ***arm_2d_rgb16_tile_copy()*** has describe its implicit colour, i.e. ***RGB16*** in function name, hence even ***bHasEnforcedColour*** is set and ***tColourInfo*** contains valid information, the operation still considers both the source and target tiles using ***RGB16***. |
 | ***bDerivedResource***   | Feature Info | bit-field                 | This bit indicates whether a child tile is used as a resource. | When creating a resource from a existing tile, you must set this bit to "1".  **It is only valid when bIsRoot is "0"**. |
+| ***bVirtualResource***   | Feature Info | bit-field                 | This bit indicates whether the resource should be loaded on-demand | **It is only set this bit when bIsRoot is "1" and the data type is arm_2d_vres_t**. |
 | ***tColourInfo***        | Feature Info | ***arm_2d_color_info_t*** | When ***bHasEnforcedColour*** is set, tColourInfo should contain a valid descriptor about the colour used in the target Tile. | See **[section 2.4](#24-colour)** for details.               |
 | ***tRegion***            | Region       | ***arm_2d_region_t***     | Depends on the type of a given tile, ***tRegion*** has a different meaning. | See **[section 2.3.1](#231-root-tile)** and **[2.3.2](#232-child-tile)** for details. |
 | ***ptParent***           | Pointers     | ***arm_2d_tile_t \****    | When ***bIsRoot*** is "***0***", this pointer is used to point the parent tile. | See **[section 2.3.1](#231-root-tile)** for details.         |
 | ***phwBuffer***          | Pointers     | ***uint16_t \****         | When ***bIsRoot*** is "***1***", this pointer is used to point to a display buffer that contains 16-bit pixels. | See **[section 2.3.1](#231-root-tile)** for details.         |
 | ***pwBuffer***           | Pointers     | ***uint32_t \****         | When ***bIsRoot*** is "***1***", this pointer is used to point to a display buffer that contains 32-bit pixels. | See **[section 2.3.1](#231-root-tile)** for details.         |
 | ***pchBuffer***          | Pointers     | ***uint8_t \****          | When ***bIsRoot*** is "***1***", this pointer is used to point to a display buffer that contains pixels that have less or equals to 8bits. | See **[section 2.3.1](#231-root-tile)** for details.         |
-
-[]: 
 
 
 
@@ -308,35 +307,38 @@ const static arm_2d_tile_t c_tPictureCMSISLogo = {
 };
 ```
 
-In fact, with the help of some macros, we can use Tile to implement the concept of the so-called visual layer:
+In fact, with the help of some macro templates, we can use Tile to implement framebuffers with a given size:
 
 ```c
-#define __declare_tile(__NAME)                                      \
+#define __declare_tile(__NAME)                                                  \
             extern const arm_2d_tile_t __NAME;
 #define declare_tile(__NAME)            __declare_tile(__NAME)
 
-#define __implement_tile(__NAME, __WIDTH, __HEIGHT, __TYPE)         \
-            ARM_NOINIT static __TYPE                                \
-                __NAME##Buffer[(__WIDTH) * (__HEIGHT)];             \
-            const arm_2d_tile_t __NAME = {                          \
-                .tRegion = {                                        \
-                    .tSize = {(__WIDTH), (__HEIGHT)},               \
-                },                                                  \
-                .tInfo.bIsRoot = true,                              \
-                .pchBuffer = (uint8_t *)__NAME##Buffer,             \
+#define dcl_fb(__name)                  declare_tile(__name)
+
+#define __impl_fb(__name, __width, __height, __type, ...)                       \
+            ARM_NOINIT static __type                                            \
+                __name##Buffer[(__width) * (__height)];                         \
+            const arm_2d_tile_t __name = {                                      \
+                .tRegion = {                                                    \
+                    .tSize = {(__width), (__height)},                           \
+                },                                                              \
+                .tInfo.bIsRoot = true,                                          \
+                .pchBuffer = (uint8_t *)__name##Buffer,                         \
+                __VA_ARGS__                                                     \
             }
             
-#define implement_tile(__NAME, __WIDTH, __HEIGHT, __TYPE)           \
-            __implement_tile(__NAME, __WIDTH, __HEIGHT, __TYPE)
+#define impl_fb(__name, __width, __height, __type, ...)                         \
+            __impl_fb(__name, __width, __height, __type, ##__VA_ARGS__)
 ```
 
-For example, we can create two visual layers with size **100\*100** and ***200\*50*** respectively and using colour `arm_2d_color_rgb565_t` for pixels:
+For example, we can create two framebuffers with size **100\*100** and ***200\*50*** respectively and using colour `arm_2d_color_rgb565_t` for pixels:
 
 ```c
-declare_tile(c_tLayerA)
+dcl_fb(c_tLayerA)
 implement_tile(c_tLayerA, 100, 100, arm_2d_color_rgb565_t);
 
-declare_tile(c_tLayerB)
+dcl_fb(c_tLayerB)
 implement_tile(c_tLayerB, 200, 50, arm_2d_color_rgb565_t);
 ```
 
@@ -397,7 +399,7 @@ The Location information of the child tile is used to indicate its location in t
 
 **Figure 2-3 A Chain of Child Tiles and Their Root Tile**
 
-![A Chain of Child Tiles and Their Root Tile](./pictures/Introduction2_3a.png)
+![A Chain of Child Tiles and Their Root Tile](./pictures/Introduction2_3a.png) 
 
 The introduction of Child Tiles can greatly simplify the storing and representing of GUI resources. Smart designers can even put many image elements in the same picture and retrieve them by creating Child Tiles with different sizes from different locations. In practice, A multi-level Child Tile suffers almost no performance loss in 2D operations.
 
@@ -409,7 +411,7 @@ The so-called Partial Frame Buffer is a special use of the Tile Child scheme. It
 
 **Figure 2-4 How Partial Frame Buffer Works**
 
-![How Partial Frame Buffer Works](./pictures/Introduction2_3b.png)
+![How Partial Frame Buffer Works](./pictures/Introduction2_3b.png) 
 
 More details are shown in a dedicated example project located in `examples/benchmark` directory.
 
@@ -430,24 +432,19 @@ enum {
     ARM_2D_COLOUR_SZ_8BIT = 3,            //!< 256 colours
     ARM_2D_COLOUR_SZ_16BIT = 4,           //!< 16bits
     ARM_2D_COLOUR_SZ_32BIT = 5,           //!< true colour
-
-    ARM_2D_COLOUR_SZ_1BIT_msk =   ARM_2D_COLOUR_SZ_1BIT << 1,
-    ARM_2D_COLOUR_SZ_2BIT_msk =   ARM_2D_COLOUR_SZ_2BIT << 1,
-    ARM_2D_COLOUR_SZ_4BIT_msk =   ARM_2D_COLOUR_SZ_4BIT << 1,
-    ARM_2D_COLOUR_SZ_8BIT_msk =   ARM_2D_COLOUR_SZ_8BIT << 1,
-    ARM_2D_COLOUR_SZ_16BIT_msk =  ARM_2D_COLOUR_SZ_16BIT<< 1,
-    ARM_2D_COLOUR_SZ_32BIT_msk =  ARM_2D_COLOUR_SZ_32BIT<< 1,
-    ARM_2D_COLOUR_SZ_msk      =   (0x07 << 1),
-
+    ARM_2D_COLOUR_SZ_1BIT_msk   =   ARM_2D_COLOUR_SZ_1BIT << 1,
+    ARM_2D_COLOUR_SZ_2BIT_msk   =   ARM_2D_COLOUR_SZ_2BIT << 1,
+    ARM_2D_COLOUR_SZ_4BIT_msk   =   ARM_2D_COLOUR_SZ_4BIT << 1,
+    ARM_2D_COLOUR_SZ_8BIT_msk   =   ARM_2D_COLOUR_SZ_8BIT << 1,
+    ARM_2D_COLOUR_SZ_16BIT_msk  =   ARM_2D_COLOUR_SZ_16BIT<< 1,
+    ARM_2D_COLOUR_SZ_32BIT_msk  =   ARM_2D_COLOUR_SZ_32BIT<< 1,
+    ARM_2D_COLOUR_SZ_msk        =   (0x07 << 1),
     ARM_2D_COLOUR_LITTLE_ENDIAN       = 0,
     ARM_2D_COLOUR_BIG_ENDIAN          = 1,
-
     ARM_2D_COLOUR_LITTLE_ENDIAN_msk   = ARM_2D_COLOUR_LITTLE_ENDIAN << 4,
     ARM_2D_COLOUR_BIG_ENDIAN_msk      = ARM_2D_COLOUR_BIG_ENDIAN    << 4,
-
     ARM_2D_COLOUR_NO_ALPHA = 0,
     ARM_2D_COLOUR_HAS_ALPHA = 1,
-
     ARM_2D_COLOUR_NO_ALPHA_msk        = ARM_2D_COLOUR_NO_ALPHA      << 0,
     ARM_2D_COLOUR_HAS_ALPHA_msk       = ARM_2D_COLOUR_HAS_ALPHA     << 0,
     
@@ -460,11 +457,16 @@ enum {
  * 
  */
 enum {
+    ARM_2D_COLOUR_MONOCHROME  =   ARM_2D_COLOUR_SZ_1BIT_msk,
     ARM_2D_COLOUR_BIN         =   ARM_2D_COLOUR_SZ_1BIT_msk,
     ARM_2D_COLOUR_1BIT        =   ARM_2D_COLOUR_SZ_1BIT_msk,
     
+    ARM_2D_COLOUR_MASK_A2     =   ARM_2D_M_COLOUR_SZ_2BIT_msk,
+    ARM_2D_COLOUR_MASK_A4     =   ARM_2D_M_COLOUR_SZ_4BIT_msk,
+    
     ARM_2D_COLOUR_8BIT        =   ARM_2D_COLOUR_SZ_8BIT_msk,
     ARM_2D_COLOUR_GRAY8       =   ARM_2D_COLOUR_SZ_8BIT_msk,
+    ARM_2D_COLOUR_MASK_A8     =   ARM_2D_COLOUR_SZ_8BIT_msk,
     
     ARM_2D_COLOUR_16BIT       =   ARM_2D_COLOUR_SZ_16BIT_msk,
     ARM_2D_COLOUR_RGB16       =   ARM_2D_COLOUR_SZ_16BIT_msk,
@@ -477,14 +479,11 @@ enum {
  
     ARM_2D_COLOUR_32BIT       =   ARM_2D_COLOUR_SZ_32BIT_msk        ,
     ARM_2D_COLOUR_RGB32       =   ARM_2D_COLOUR_SZ_32BIT_msk        ,
-
     ARM_2D_COLOUR_CCCN888     =   ARM_2D_COLOUR_RGB32               ,
     ARM_2D_COLOUR_CCCA8888    =   ARM_2D_COLOUR_SZ_32BIT_msk        |
                                   ARM_2D_COLOUR_HAS_ALPHA_msk       ,
-
     ARM_2D_COLOUR_RGB888      =   ARM_2D_COLOUR_CCCN888             ,
     ARM_2D_COLOUR_BGRA8888    =   ARM_2D_COLOUR_CCCA8888            ,
-
 /* not supported yet
     ARM_2D_COLOUR_NCCC888     =   ARM_2D_COLOUR_RGB32               |
                                   ARM_2D_COLOUR_BIG_ENDIAN_msk      ,
@@ -496,7 +495,6 @@ enum {
                                   ARM_2D_COLOUR_HAS_ALPHA_msk       |
                                   ARM_2D_COLOUR_VARIANT_msk   ,
 };
-
 
 /*!
  * \brief a type used as colour descriptor
@@ -528,6 +526,10 @@ typedef union {
 In addition to the colour format descriptor, the current version of the Arm-2D library also defines data structures for the supported colour formats:
 
 ```c
+typedef union arm_2d_color_gray8_t {
+    uint8_t tValue;
+} arm_2d_color_gray8_t;
+
 typedef union arm_2d_color_rgb565_t {
     uint16_t tValue;
     struct {
@@ -556,9 +558,43 @@ typedef union arm_2d_color_rgb888_t {
         uint32_t     : 8;
     };
 } arm_2d_color_rgb888_t;
+
+typedef union arm_2d_color_ccca8888_t {
+    uint32_t tValue;
+    struct {
+        uint8_t u8C[3];
+        uint8_t u8A;
+    };
+} arm_2d_color_ccca8888_t;
+
+typedef union arm_2d_color_accc8888_t {
+    uint32_t tValue;
+    struct {
+        uint8_t u8A;
+        uint8_t u8C[3];
+    };
+} arm_2d_color_accc8888_t;
+
+typedef union arm_2d_color_cccn888_t {
+    uint32_t tValue;
+    struct {
+        uint8_t u8C[3];
+        uint8_t         : 8;
+    };
+} arm_2d_color_cccn888_t;
+
+typedef union arm_2d_color_nccc888_t {
+    uint32_t tValue;
+    struct {
+        uint8_t         : 8;
+        uint8_t u8C[3];
+    };
+} arm_2d_color_nccc888_t;
 ```
 
-As shown above, **arm-2d describes colour format in little-end manner**, for example, **BGRA8888** means the blue-channel is the 1st byte and the Alpha channel is the 3rd byte. The colour format CCCA8888 means the Alpha channel is the 3rd byte and there are three colour channels whose name and order we don't care. The colour format CCCN888 means the 8 MSB are unused (reserved for alpha) and the lower 3 bytes are used to store colour channels. 
+As shown above, **arm-2d describes colour format in little-end manner**, for example, **BGRA8888** means the blue-channel is the 1st byte and the Alpha channel is the 3rd byte. The colour format **CCCA8888** means the Alpha channel is the 3rd byte and there are three colour channels whose name and order we don't care. The colour format **CCCN888** means the 8 MSB are unused (reserved for alpha) and the lower 3 bytes are used to store colour channels. 
+
+However, Some well know colour formats do not follow the naming rule aforementioned in arm-2d, for example RGB565 (It's R, G, B channels are listed in big-ending manner.). We don't want to confuse people. 
 
 
 
@@ -576,52 +612,76 @@ The Asynchronous mode is good for the event-driven design paradigm, and it is su
 
 The examples and documents for Asynchronous mode will be added soon.
 
-## 3 API Summary
+## 3 API Summary for commonly used APIs
 
 ### 3.1 Tile Operations
 
-| Function Name                                    | Description                                                  | NOTE |
-| ------------------------------------------------ | ------------------------------------------------------------ | ---- |
-| ***arm_2d_is_root_tile***                        | A function used to check whether a given tile is a root tile or not. |      |
-| ***arm_2d_region_intersect***                    | A function used to perform region intersection.              |      |
-| ***arm_2d_is_point_inside_region***              | A function used to check whether a point is inside a given region or not. |      |
-| ***arm_2d_tile_get_root***                       | For a given tile, return its root tile and the valid region inside that root tile. |      |
-| ***arm_2d_tile_generate_child***                 | Generate a Child Tile for a given Tile with a target region inside the given tile. |      |
-| ***arm_2d_tile_width_compare***                  | compare the widths of two tiles                              |      |
-| ***arm_2d_tile_height_compare***                 | compare the heights of two tiles                             |      |
-| ***arm_2d_tile_shape_compare***                  | compare the shape (both widths and heights) of two tiles     |      |
-| ***arm_2d_get_absolute_location***               | calcualte the absolute location in the root tile for a given tile |      |
-| ***arm_2d_tile_region_diff***                    | calculate the region differences between two tiles           |      |
-| ***arm_2dp_c8bit_tile_copy***                    | Copy or Fill a given tile into a target tile. Both tiles should use 8bits for each pixel. |      |
-| ***arm_2dp_rgb16_tile_copy***                    | Copy or Fill a given tile into a target tile. Both tiles should use 16bits for each pixel. |      |
-| ***arm_2dp_rgb32_tile_copy***                    | Copy or Fill a given tile into a target tile. Both tiles should use 32bits for each pixel. |      |
-| ***arm_2dp_c8bit_tile_copy_only***               | copy a source tile to a given target tile. Both tiles should be 8bit per pixel. |      |
-| ***arm_2dp_rgb16_tile_copy_only***               | copy a source tile to a given target tile. Both tiles should be 16bit per pixel. |      |
-| ***arm_2dp_rgb32_tile_copy_only***               | copy a source tile to a given target tile. Both tiles should be 32bit per pixel. |      |
-| ***arm_2dp_c8bit_tile_copy_with_x_mirror***      | copy a source tile to a given target tile with x-mirroring. Both tiles should be 8bit per pixel. |      |
-| ***arm_2dp_rgb16_tile_copy_with_x_mirror***      | copy a source tile to a given target tile with x-mirroring. Both tiles should be 16bit per pixel. |      |
-| ***arm_2dp_rgb32_tile_copy_with_x_mirror***      | copy a source tile to a given target tile with x-mirroring. Both tiles should be 32bit per pixel. |      |
-| ***arm_2dp_c8bit_tile_copy_with_y_mirror***      | copy a source tile to a given target tile with y-mirroring. Both tiles should be 8bit per pixel. |      |
-| ***arm_2dp_rgb16_tile_copy_with_y_mirror***      | copy a source tile to a given target tile with y-mirroring. Both tiles should be 16bit per pixel. |      |
-| ***arm_2dp_rgb32_tile_copy_with_y_mirror***      | copy a source tile to a given target tile with y-mirroring. Both tiles should be 32bit per pixel. |      |
-| ***arm_2dp_c8bit_tile_copy_with_xy_mirror***     | copy a source tile to a given target tile with xy-mirroring. Both tiles should be 8bit per pixel. |      |
-| ***arm_2dp_rgb16_tile_copy_with_xy_mirror***     | copy a source tile to a given target tile with xy-mirroring. Both tiles should be 16bit per pixel. |      |
-| ***arm_2dp_rgb32_tile_copy_with_xy_mirror***     | copy a source tile to a given target tile with xy-mirroring. Both tiles should be 32bit per pixel. |      |
-| ***arm_2dp_c8bit_tile_fill_only***               | fill the target tile with a given source tile. Both tiles should be 8bit per pixel. |      |
-| ***arm_2dp_rgb16_tile_fill_only***               | fill the target tile with a given source tile. Both tiles should be 16bit per pixel. |      |
-| ***arm_2dp_rgb32_tile_fill_only***               | fill the target tile with a given source tile. Both tiles should be 32bit per pixel. |      |
-| ***arm_2dp_c8bit_tile_fill_with_x_mirror***      | fill the target tile with a given source tile in x-mirroring. Both tiles should be 8bit per pixel. |      |
-| ***arm_2dp_rgb16_tile_fill_with_x_mirror***      | fill the target tile with a given source tile in x-mirroring. Both tiles should be 16bit per pixel. |      |
-| ***arm_2dp_rgb32_tile_fill_with_x_mirror***      | fill the target tile with a given source tile in x-mirroring. Both tiles should be 32bit per pixel. |      |
-| ***arm_2dp_c8bit_tile_fill_with_y_mirror***      | fill the target tile with a given source tile in y-mirroring. Both tiles should be 8bit per pixel. |      |
-| ***arm_2dp_rgb16_tile_fill_with_y_mirror***      | fill the target tile with a given source tile in y-mirroring. Both tiles should be 16bit per pixel. |      |
-| ***arm_2dp_rgb32_tile_fill_with_y_mirror***      | fill the target tile with a given source tile in y-mirroring. Both tiles should be 32bit per pixel. |      |
-| ***arm_2dp_c8bit_tile_fill_with_xy_mirror***     | fill the target tile with a given source tile in xy-mirroring. Both tiles should be 8bit per pixel. |      |
-| ***arm_2dp_rgb16_tile_fill_with_xy_mirror***     | fill the target tile with a given source tile in  xy-mirroring. Both tiles should be 16bit per pixel. |      |
-| ***arm_2dp_rgb32_tile_fill_with_xy_mirror***     | fill the target tile with a given source tile in xy-mirroring. Both tiles should be 32bit per pixel. |      |
-| ***arm_2dp_c8bit_tile_copy_with_colour_keying*** | Copy a given tile into a target tile with the Colour-Keying scheme. Both tiles should use 8bits for each pixel. |      |
-| ***arm_2dp_rgb16_tile_copy_with_colour_keying*** | Copy a given tile into a target tile with the Colour-Keying scheme. Both tiles should use 16bits for each pixel. |      |
-| ***arm_2dp_rgb32_tile_copy_with_colour_keying*** | Copy a given tile into a target tile with the Colour-Keying scheme. Both tiles should use 32bits for each pixel. No alpha channel is used in this function. |      |
+| Function Name                                                | Description                                                  | NOTE |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ---- |
+| ***arm_2d_is_root_tile***                                    | A function used to check whether a given tile is a root tile or not. |      |
+| ***arm_2d_region_intersect***                                | A function used to perform region intersection.              |      |
+| ***arm_2d_is_point_inside_region***                          | A function used to check whether a point is inside a given region or not. |      |
+| ***arm_2d_tile_get_root***                                   | For a given tile, return its root tile and the valid region inside that root tile. |      |
+| ***arm_2d_tile_generate_child***                             | Generate a Child Tile for a given Tile with a target region inside the given tile. |      |
+| ***arm_2d_tile_width_compare***                              | compare the widths of two tiles                              |      |
+| ***arm_2d_tile_height_compare***                             | compare the heights of two tiles                             |      |
+| ***arm_2d_tile_shape_compare***                              | compare the shape (both widths and heights) of two tiles     |      |
+| ***arm_2d_get_absolute_location***                           | calcualte the absolute location in the root tile for a given tile |      |
+| ***arm_2d_tile_region_diff***                                | calculate the region differences between two tiles           |      |
+| ***arm_2dp_c8bit_tile_copy***                                | Copy or Fill a given tile into a target tile. Both tiles should use 8bits for each pixel. |      |
+| ***arm_2dp_rgb16_tile_copy***                                | Copy or Fill a given tile into a target tile. Both tiles should use 16bits for each pixel. |      |
+| ***arm_2dp_rgb32_tile_copy***                                | Copy or Fill a given tile into a target tile. Both tiles should use 32bits for each pixel. |      |
+| ***arm_2dp_c8bit_tile_copy_only***                           | copy a source tile to a given target tile. Both tiles should be 8bit per pixel. |      |
+| ***arm_2dp_rgb16_tile_copy_only***                           | copy a source tile to a given target tile. Both tiles should be 16bit per pixel. |      |
+| ***arm_2dp_rgb32_tile_copy_only***                           | copy a source tile to a given target tile. Both tiles should be 32bit per pixel. |      |
+| ***arm_2dp_c8bit_tile_copy_with_x_mirror***                  | copy a source tile to a given target tile with x-mirroring. Both tiles should be 8bit per pixel. |      |
+| ***arm_2dp_rgb16_tile_copy_with_x_mirror***                  | copy a source tile to a given target tile with x-mirroring. Both tiles should be 16bit per pixel. |      |
+| ***arm_2dp_rgb32_tile_copy_with_x_mirror***                  | copy a source tile to a given target tile with x-mirroring. Both tiles should be 32bit per pixel. |      |
+| ***arm_2dp_c8bit_tile_copy_with_y_mirror***                  | copy a source tile to a given target tile with y-mirroring. Both tiles should be 8bit per pixel. |      |
+| ***arm_2dp_rgb16_tile_copy_with_y_mirror***                  | copy a source tile to a given target tile with y-mirroring. Both tiles should be 16bit per pixel. |      |
+| ***arm_2dp_rgb32_tile_copy_with_y_mirror***                  | copy a source tile to a given target tile with y-mirroring. Both tiles should be 32bit per pixel. |      |
+| ***arm_2dp_c8bit_tile_copy_with_xy_mirror***                 | copy a source tile to a given target tile with xy-mirroring. Both tiles should be 8bit per pixel. |      |
+| ***arm_2dp_rgb16_tile_copy_with_xy_mirror***                 | copy a source tile to a given target tile with xy-mirroring. Both tiles should be 16bit per pixel. |      |
+| ***arm_2dp_rgb32_tile_copy_with_xy_mirror***                 | copy a source tile to a given target tile with xy-mirroring. Both tiles should be 32bit per pixel. |      |
+| ***arm_2dp_c8bit_tile_fill_only***                           | fill the target tile with a given source tile. Both tiles should be 8bit per pixel. |      |
+| ***arm_2dp_rgb16_tile_fill_only***                           | fill the target tile with a given source tile. Both tiles should be 16bit per pixel. |      |
+| ***arm_2dp_rgb32_tile_fill_only***                           | fill the target tile with a given source tile. Both tiles should be 32bit per pixel. |      |
+| ***arm_2dp_c8bit_tile_fill_with_x_mirror***                  | fill the target tile with a given source tile in x-mirroring. Both tiles should be 8bit per pixel. |      |
+| ***arm_2dp_rgb16_tile_fill_with_x_mirror***                  | fill the target tile with a given source tile in x-mirroring. Both tiles should be 16bit per pixel. |      |
+| ***arm_2dp_rgb32_tile_fill_with_x_mirror***                  | fill the target tile with a given source tile in x-mirroring. Both tiles should be 32bit per pixel. |      |
+| ***arm_2dp_c8bit_tile_fill_with_y_mirror***                  | fill the target tile with a given source tile in y-mirroring. Both tiles should be 8bit per pixel. |      |
+| ***arm_2dp_rgb16_tile_fill_with_y_mirror***                  | fill the target tile with a given source tile in y-mirroring. Both tiles should be 16bit per pixel. |      |
+| ***arm_2dp_rgb32_tile_fill_with_y_mirror***                  | fill the target tile with a given source tile in y-mirroring. Both tiles should be 32bit per pixel. |      |
+| ***arm_2dp_c8bit_tile_fill_with_xy_mirror***                 | fill the target tile with a given source tile in xy-mirroring. Both tiles should be 8bit per pixel. |      |
+| ***arm_2dp_rgb16_tile_fill_with_xy_mirror***                 | fill the target tile with a given source tile in  xy-mirroring. Both tiles should be 16bit per pixel. |      |
+| ***arm_2dp_rgb32_tile_fill_with_xy_mirror***                 | fill the target tile with a given source tile in xy-mirroring. Both tiles should be 32bit per pixel. |      |
+| ***arm_2dp_c8bit_tile_copy_with_colour_keying***             | Copy or fill a given tile into a target tile with Colour-Keying in a given mode. Both tiles should use 8bits for each pixel. |      |
+| ***arm_2dp_rgb16_tile_copy_with_colour_keying***             | Copy or fill a given tile into a target tile with Colour-Keying in a given mode. Both tiles should use 16bits for each pixel. |      |
+| ***arm_2dp_rgb32_tile_copy_with_colour_keying***             | Copy or fill a given tile into a target tile with Colour-Keying in a given mode. Both tiles should use 32bits for each pixel. No alpha channel is used in this function. |      |
+| ***arm_2dp_c8bit_tile_copy_with_colour_keying_only***        | Copy a given tile into a target tile with Colour-Keying. Both tiles should use 8bits for each pixel. |      |
+| ***arm_2dp_rgb16_tile_copy_with_colour_keying_only***        | Copy a given tile into a target tile with Colour-Keying. Both tiles should use 16bits for each pixel. |      |
+| ***arm_2dp_rgb32_tile_copy_with_colour_keying_only***        | Copy a given tile into a target tile with Colour-Keying. Both tiles should use 32bits for each pixel. No alpha channel is used in this function. |      |
+| ***arm_2dp_c8bit_tile_copy_with_colour_keying_and_x_mirror*** | Copy a given tile into a target tile with Colour-Keying and x-mirroring. Both tiles should use 8bits for each pixel. |      |
+| ***arm_2dp_rgb16_tile_copy_with_colour_keying_and_x_mirror*** | Copy a given tile into a target tile with Colour-Keying and x-mirroring. Both tiles should use 16bits for each pixel. |      |
+| ***arm_2dp_rgb32_tile_copy_with_colour_keying_and_x_mirror*** | Copy a given tile into a target tile with Colour-Keying and x-mirroring. Both tiles should use 32bits for each pixel. No alpha channel is used in this function. |      |
+| ***arm_2dp_c8bit_tile_copy_with_colour_keying_and_y_mirror*** | Copy a given tile into a target tile with Colour-Keying and y-mirroring. Both tiles should use 8bits for each pixel. |      |
+| ***arm_2dp_rgb16_tile_copy_with_colour_keying_and_y_mirror*** | Copy a given tile into a target tile with Colour-Keying and y-mirroring. Both tiles should use 16bits for each pixel. |      |
+| ***arm_2dp_rgb32_tile_copy_with_colour_keying_and_y_mirror*** | Copy a given tile into a target tile with Colour-Keying and y-mirroring. Both tiles should use 32bits for each pixel. No alpha channel is used in this function. |      |
+| ***arm_2dp_c8bit_tile_copy_with_colour_keying_and_xy_mirror*** | Copy a given tile into a target tile with Colour-Keying and xy-mirroring. Both tiles should use 8bits for each pixel. |      |
+| ***arm_2dp_rgb16_tile_copy_with_colour_keying_and_xy_mirror*** | Copy a given tile into a target tile with Colour-Keying and xy-mirroring. Both tiles should use 16bits for each pixel. |      |
+| ***arm_2dp_rgb32_tile_copy_with_colour_keying_and_xy_mirror*** | Copy a given tile into a target tile with Colour-Keying and xy-mirroring. Both tiles should use 32bits for each pixel. No alpha channel is used in this function. |      |
+| ***arm_2dp_c8bit_tile_fill_with_colour_keying_only***        | Fill a given tile into a target tile with Colour-Keying. Both tiles should use 8bits for each pixel. |      |
+| ***arm_2dp_rgb16_tile_fill_with_colour_keying_only***        | Fill a given tile into a target tile with Colour-Keying. Both tiles should use 16bits for each pixel. |      |
+| ***arm_2dp_rgb32_tile_fill_with_colour_keying_only***        | Fill a given tile into a target tile with Colour-Keying. Both tiles should use 32bits for each pixel. No alpha channel is used in this function. |      |
+| ***arm_2dp_c8bit_tile_fill_with_colour_keying_and_x_mirror*** | Fill a given tile into a target tile with Colour-Keying and x-mirroring. Both tiles should use 8bits for each pixel. |      |
+| ***arm_2dp_rgb16_tile_fill_with_colour_keying_and_x_mirror*** | Fill a given tile into a target tile with Colour-Keying and x-mirroring. Both tiles should use 16bits for each pixel. |      |
+| ***arm_2dp_rgb32_tile_fill_with_colour_keying_and_x_mirror*** | Fill a given tile into a target tile with Colour-Keying and x-mirroring. Both tiles should use 32bits for each pixel. No alpha channel is used in this function. |      |
+| ***arm_2dp_c8bit_tile_fill_with_colour_keying_and_y_mirror*** | Fill a given tile into a target tile with Colour-Keying and y-mirroring. Both tiles should use 8bits for each pixel. |      |
+| ***arm_2dp_rgb16_tile_fill_with_colour_keying_and_y_mirror*** | Fill a given tile into a target tile with Colour-Keying and y-mirroring. Both tiles should use 16bits for each pixel. |      |
+| ***arm_2dp_rgb32_tile_fill_with_colour_keying_and_y_mirror*** | Fill a given tile into a target tile with Colour-Keying and y-mirroring. Both tiles should use 32bits for each pixel. No alpha channel is used in this function. |      |
+| ***arm_2dp_c8bit_tile_fill_with_colour_keying_and_xy_mirror*** | Fill a given tile into a target tile with Colour-Keying and xy-mirroring. Both tiles should use 8bits for each pixel. |      |
+| ***arm_2dp_rgb16_tile_fill_with_colour_keying_and_xy_mirror*** | Fill a given tile into a target tile with Colour-Keying and xy-mirroring. Both tiles should use 16bits for each pixel. |      |
+| ***arm_2dp_rgb32_tile_fill_with_colour_keying_and_xy_mirror*** | Fill a given tile into a target tile with Colour-Keying and xy-mirroring. Both tiles should use 32bits for each pixel. No alpha channel is used in this function. |      |
 
 
 
@@ -629,39 +689,136 @@ The examples and documents for Asynchronous mode will be added soon.
 
 | Function Name                         | Description                                                  | NOTE |
 | ------------------------------------- | ------------------------------------------------------------ | ---- |
-| ***arm_2d_convert_colour_to_rbg888*** | Convert a tile with any other colour format into a new tile with ***RGB888***. |      |
-| ***arm_2d_convert_colour_to_rgb565*** | Convert a tile with any other colour format into a new tile with ***RGB565***. |      |
+| ***arm_2d_convert_colour_to_rbg888*** | Convert a tile in any other colour formats to a new tile in ***RGB888***. |      |
+| ***arm_2d_convert_colour_to_rgb565*** | Convert a tile in any other colour formats to a new tile in ***RGB565***. |      |
+| ***arm_2d_convert_colour_to_gray8***  | Convert a tile in any other colour formats to a new tile in ***GRAY8***. |      |
 
 
 
-### 3.3 Alpha Blending 
+### 3.3 Alpha Blending and Masks related 
 
-| Function Name                                           | Description                                                  | NOTE |
-| ------------------------------------------------------- | ------------------------------------------------------------ | ---- |
-| ***arm_2dp_gray8_alpha_blending***                      | Blend a source tile to a target tile with a given transparency ratio. Both tiles should use ***GRAY8*** as their colour format. |      |
-| ***arm_2dp_rgb565_alpha_blending***                     | Blend a source tile to a target tile with a given transparency ratio. Both tiles should use ***RGB565*** as their colour format. |      |
-| ***arm_2dp_cccn888_alpha_blending***                    | Blend a source tile to a target tile with a given transparency ratio. Both tiles should use ***CCCN888*** as their colour format. |      |
-| ***arm_2dp_gray8_alpha_blending_with_colour_keying***   | Blend a source tile to a target tile with a given transparency ratio and the Colour-Keying scheme. Both tiles should use ***GRAY8*** as their colour format. |      |
-| ***arm_2dp_rbg565_alpha_blending_with_colour_keying***  | Blend a source tile to a target tile with a given transparency ratio and the Colour-Keying scheme. Both tiles should use ***RGB565*** as their colour format. |      |
-| ***arm_2dp_cccn888_alpha_blending_with_colour_keying*** | Blend a source tile to a target tile with a given transparency ratio and the Colour-Keying scheme. Both tiles should use ***RGB888*** as their colour format. |      |
-| ***arm_2dp_gray8_fill_colour_with_opacity***            | Fill a given region in the target tile with a specified ***GRAY8*** colour and opacity. |      |
-| ***arm_2dp_rgb565_fill_colour_with_opacity***           | Fill a given region in the target tile with a specified ***RGB565*** colour and opacity. |      |
-| ***arm_2dp_cccn888_fill_colour_with_opacity***          | Fill a given region in the target tile with a specified ***CCCN888*** colour and opacity. |      |
-| ***arm_2dp_gray8_fill_colour_with_mask***               | fill a target tile with a given ***GRAY8*** colour and a mask on target side |      |
-| ***arm_2dp_rgb565_fill_colour_with_mask***              | fill a target tile with a given ***RGB565*** colour and a mask on target side |      |
-| ***arm_2dp_cccn888_fill_colour_with_mask***             | fill a target tile with a given ***CCCN888*** colour and a mask on target side |      |
-| ***arm_2dp_gray8_fill_colour_with_mask_and_opacity***   | fill a target tile with a given ***GRAY8*** colour, a mask on target side and an opacity |      |
-| ***arm_2dp_rgb565_fill_colour_with_mask_and_opacity***  | fill a target tile with a given ***RGB565*** colour, a mask on target side and an opacity |      |
-| ***arm_2dp_cccn888_fill_colour_with_mask_and_opacity*** | fill a target tile with a given ***CCCN888*** colour, a mask on target side and an opacity |      |
-| ***arm_2dp_gray8_tile_copy_with_masks***                | copy or fill a source tile to a target tile with masks in a given mode. Both tiles use ***GRAY8*** as their colour format. |      |
-| ***arm_2dp_rgb565_tile_copy_with_masks***               | copy or fill a source tile to a target tile with masks in a given mode. Both tiles use ***RGB565*** as their colour format. |      |
-| ***arm_2dp_CCCN888_tile_copy_with_masks***              | copy or fill a source tile to a target tile with masks in a given mode. Both tiles use ***CCCN888*** as their colour format. |      |
-| ***arm_2dp_gray8_tile_copy_with_des_mask***             | copy or fill a source tile to a target tile with a mask on the target  side in a given mode. Both tiles use ***GRAY8*** as their colour format. |      |
-| ***arm_2dp_rgb565_tile_copy_with_des_mask***            | copy or fill a source tile to a target tile with a mask on the target side in a given mode. Both tiles use ***RGB565*** as their colour format. |      |
-| ***arm_2dp_cccn888_tile_copy_with_des_mask***           | copy or fill a source tile to a target tile with a mask on the target side in a given mode. Both tiles use ***CCCN888*** as their colour format. |      |
-| ***arm_2dp_gray8_tile_copy_with_src_mask***             | copy or fill a source tile to a target tile with a mask on the source side in a given mode. Both tiles use ***GRAY8*** as their colour format. |      |
-| ***arm_2dp_rgb565_tile_copy_with_src_mask***            | copy or fill a source tile to a target tile with a mask on the source side in a given mode. Both tiles use ***RGB565*** as their colour format. |      |
-| ***arm_2dp_cccn888_tile_copy_with_src_mask***           | copy or fill a source tile to a target tile with a mask on the source side in a given mode. Both tiles use ***CCCN888*** as their colour format. |      |
+| Function Name                                                | Description                                                  | NOTE           |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | -------------- |
+| ***arm_2dp_gray8_alpha_blending***                           | Blend a source tile to a target tile with a given transparency ratio. Both tiles should use ***GRAY8*** as their colour format. | **Deprecated** |
+| ***arm_2dp_gray8_tile_copy_with_opacity***                   | See above                                                    |                |
+| ***arm_2dp_rgb565_alpha_blending***                          | Blend a source tile to a target tile with a given transparency ratio. Both tiles should use ***RGB565*** as their colour format. | **Deprecated** |
+| ***arm_2dp_rgb565_tile_copy_with_opacity***                  | See above                                                    |                |
+| ***arm_2dp_cccn888_alpha_blending***                         | Blend a source tile to a target tile with a given transparency ratio. Both tiles should use ***CCCN888*** as their colour format. | **Deprecated** |
+| ***arm_2dp_cccn888_tile_copy_with_opacity***                 | See above                                                    |                |
+| ***arm_2dp_gray8_alpha_blending_with_colour_keying***        | Blend a source tile to a target tile with a given transparency ratio and the Colour-Keying scheme. Both tiles should use ***GRAY8*** as their colour format. | **Deprecated** |
+| ***arm_2dp_gray8_tile_copy_with_colour_keying_and_opacity*** | See above                                                    |                |
+| ***arm_2dp_rbg565_alpha_blending_with_colour_keying***       | Blend a source tile to a target tile with a given transparency ratio and the Colour-Keying scheme. Both tiles should use ***RGB565*** as their colour format. | **Deprecated** |
+| ***arm_2dp_rgb565_tile_copy_with_colour_keying_and_opacity*** | See above                                                    |                |
+| ***arm_2dp_cccn888_alpha_blending_with_colour_keying***      | Blend a source tile to a target tile with a given transparency ratio and the Colour-Keying scheme. Both tiles should use ***RGB888*** as their colour format. | **Deprecated** |
+| ***arm_2dp_cccn888_tile_copy_with_colour_keying_and_opacity*** | See above                                                    |                |
+| ***arm_2dp_gray8_fill_colour_with_opacity***                 | Fill a given region in the target tile with a specified ***GRAY8*** colour and opacity. |                |
+| ***arm_2dp_rgb565_fill_colour_with_opacity***                | Fill a given region in the target tile with a specified ***RGB565*** colour and opacity. |                |
+| ***arm_2dp_cccn888_fill_colour_with_opacity***               | Fill a given region in the target tile with a specified ***CCCN888*** colour and opacity. |                |
+| ***arm_2dp_gray8_fill_colour_with_mask***                    | fill a target tile with a given ***GRAY8*** colour and a A8 mask |                |
+| ***arm_2dp_rgb565_fill_colour_with_mask***                   | fill a target tile with a given ***RGB565*** colour and a A8 mask |                |
+| ***arm_2dp_cccn888_fill_colour_with_mask***                  | fill a target tile with a given ***CCCN888*** colour and a A8 mask |                |
+| ***arm_2dp_gray8_fill_colour_with_a8_mask***                 | fill a target tile with a given ***GRAY8*** colour and a A8 mask |                |
+| ***arm_2dp_rgb565_fill_colour_with_a8_mask***                | fill a target tile with a given ***RGB565*** colour and a A8 mask |                |
+| ***arm_2dp_cccn888_fill_colour_with_a8_mask***               | fill a target tile with a given ***CCCN888*** colour and a A8 mask |                |
+| ***arm_2dp_gray8_fill_colour_with_a2_mask***                 | fill a target tile with a given ***GRAY8*** colour and an A2 mask |                |
+| ***arm_2dp_rgb565_fill_colour_with_a2_mask***                | fill a target tile with a given ***RGB565*** colour and an A2 mask |                |
+| ***arm_2dp_cccn888_fill_colour_with_a2_mask***               | fill a target tile with a given ***CCCN888*** colour and an A2 mask |                |
+| ***arm_2dp_gray8_fill_colour_with_a4_mask***                 | fill a target tile with a given ***GRAY8*** colour and an A4 mask |                |
+| ***arm_2dp_rgb565_fill_colour_with_a4_mask***                | fill a target tile with a given ***RGB565*** colour and an A4 mask |                |
+| ***arm_2dp_cccn888_fill_colour_with_a4_mask***               | fill a target tile with a given ***CCCN888*** colour and an A4 mask |                |
+| ***arm_2dp_gray8_fill_colour_with_mask_and_opacity***        | fill a target tile with a given ***GRAY8*** colour, a A8 mask and an opacity |                |
+| ***arm_2dp_rgb565_fill_colour_with_mask_and_opacity***       | fill a target tile with a given ***RGB565*** colour, a A8 mask and an opacity |                |
+| ***arm_2dp_cccn888_fill_colour_with_mask_and_opacity***      | fill a target tile with a given ***CCCN888*** colour, a A8 mask and an opacity |                |
+| ***arm_2dp_gray8_fill_colour_with_a8_mask_and_opacity***     | fill a target tile with a given ***GRAY8*** colour, a A8 mask and an opacity |                |
+| ***arm_2dp_rgb565_fill_colour_with_a8_mask_and_opacity***    | fill a target tile with a given ***RGB565*** colour, a A8 mask and an opacity |                |
+| ***arm_2dp_cccn888_fill_colour_with_a8_mask_and_opacity***   | fill a target tile with a given ***CCCN888*** colour, a A8 mask and an opacity |                |
+| ***arm_2dp_gray8_fill_colour_with_a2_mask_and_opacity***     | fill a target tile with a given ***GRAY8*** colour, a A2 mask and an opacity |                |
+| ***arm_2dp_rgb565_fill_colour_with_a2_mask_and_opacity***    | fill a target tile with a given ***RGB565*** colour, a A2 mask and an opacity |                |
+| ***arm_2dp_cccn888_fill_colour_with_a2_mask_and_opacity***   | fill a target tile with a given ***CCCN888*** colour, a A2 mask and an opacity |                |
+| ***arm_2dp_gray8_fill_colour_with_a4_mask_and_opacity***     | fill a target tile with a given ***GRAY8*** colour, a A4 mask and an opacity |                |
+| ***arm_2dp_rgb565_fill_colour_with_a4_mask_and_opacity***    | fill a target tile with a given ***RGB565*** colour, a A4 mask and an opacity |                |
+| ***arm_2dp_cccn888_fill_colour_with_a4_mask_and_opacity***   | fill a target tile with a given ***CCCN888*** colour, a A4 mask and an opacity |                |
+| ***arm_2dp_gray8_tile_copy_with_masks***                     | copy or fill a source tile to a target tile with masks in a given mode. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_copy_with_masks***                    | copy or fill a source tile to a target tile with masks in a given mode. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_copy_with_masks***                   | copy or fill a source tile to a target tile with masks in a given mode. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_copy_with_masks_only***                | copy a source tile to a target tile with masks. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_copy_with_masks_only***               | copy a source tile to a target tile with masks. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_copy_with_masks_only***              | copy a source tile to a target tile with masks. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_copy_with_masks_and_x_mirror***        | copy a source tile to a target tile with masks and x-mirroring. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_copy_with_masks_and_x_mirror***       | copy a source tile to a target tile with masks and x-mirroring. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_copy_with_masks_and_x_mirror***      | copy a source tile to a target tile with masks and x-mirroring. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_copy_with_masks_and_y_mirror***        | copy a source tile to a target tile with masks and y-mirroring. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_copy_with_masks_and_y_mirror***       | copy a source tile to a target tile with masks and y-mirroring. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_copy_with_masks_and_y_mirror***      | copy a source tile to a target tile with masks and y-mirroring. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_copy_with_masks_and_xy_mirror***       | copy a source tile to a target tile with masks and xy-mirroring. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_copy_with_masks_and_xy_mirror***      | copy a source tile to a target tile with masks and xy-mirroring. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_copy_with_masks_and_xy_mirror***     | copy a source tile to a target tile with masks and xy-mirroring. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_copy_with_masks_only***                | copy a source tile to a target tile with masks. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_copy_with_masks_only***               | copy a source tile to a target tile with masks. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_copy_with_masks_only***              | copy a source tile to a target tile with masks. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_fill_with_masks_and_x_mirror***        | fill a source tile to a target tile with masks and x-mirroring. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_fill_with_masks_and_x_mirror***       | fill a source tile to a target tile with masks and x-mirroring. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_fill_with_masks_and_x_mirror***      | fill a source tile to a target tile with masks and x-mirroring. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_fill_with_masks_and_y_mirror***        | fill a source tile to a target tile with masks and y-mirroring. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_fill_with_masks_and_y_mirror***       | fill a source tile to a target tile with masks and y-mirroring. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_fill_with_masks_and_y_mirror***      | fill a source tile to a target tile with masks and y-mirroring. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_fill_with_masks_and_xy_mirror***       | fill a source tile to a target tile with masks and xy-mirroring. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_fill_with_masks_and_xy_mirror***      | fill a source tile to a target tile with masks and xy-mirroring. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_fill_with_masks_and_xy_mirror***     | fill a source tile to a target tile with masks and xy-mirroring. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_copy_with_des_mask***                  | copy or fill a source tile to a target tile with a mask on the target  side in a given mode. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_copy_with_des_mask***                 | copy or fill a source tile to a target tile with a mask on the target side in a given mode. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_copy_with_des_mask***                | copy or fill a source tile to a target tile with a mask on the target side in a given mode. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_copy_with_des_mask_only***             | copy a source tile to a target tile with a mask on the target side. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_copy_with_des_mask_only***            | copy a source tile to a target tile with a mask on the target side. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_copy_with_des_mask_only***           | copy a source tile to a target tile with a mask on the target side. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_copy_with_des_mask_and_x_mirror***     | copy a source tile to a target tile with a mask on the target side and x-mirroring. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_copy_with_des_mask_and_x_mirror***    | copy a source tile to a target tile with a mask on the target side and x-mirroring. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_copy_with_des_mask_and_x_mirror***   | copy a source tile to a target tile with a mask on the target side and x-mirroring. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_copy_with_des_mask_and_y_mirror***     | copy a source tile to a target tile with a mask on the target side and y-mirroring. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_copy_with_des_mask_and_y_mirror***    | copy a source tile to a target tile with a mask on the target side and y-mirroring. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_copy_with_des_mask_and_y_mirror***   | copy a source tile to a target tile with a mask on the target side and y-mirroring. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_copy_with_des_mask_and_xy_mirror***    | copy a source tile to a target tile with a mask on the target side and xy-mirroring. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_copy_with_des_mask_and_xy_mirror***   | copy a source tile to a target tile with a mask on the target side and xy-mirroring. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_copy_with_des_mask_and_xy_mirror***  | copy a source tile to a target tile with a mask on the target side and xy-mirroring. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_fill_with_des_mask_only***             | fill a source tile to a target tile with a mask on the target side. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_fill_with_des_mask_only***            | fill a source tile to a target tile with a mask on the target side. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_fill_with_des_mask_only***           | fill a source tile to a target tile with a mask on the target side. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_fill_with_des_mask_and_x_mirror***     | fill a source tile to a target tile with a mask on the target side and x-mirroring. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_fill_with_des_mask_and_x_mirror***    | fill a source tile to a target tile with a mask on the target side and x-mirroring. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_fill_with_des_mask_and_x_mirror***   | fill a source tile to a target tile with a mask on the target side and x-mirroring. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_fill_with_des_mask_and_y_mirror***     | fill a source tile to a target tile with a mask on the target side and y-mirroring. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_fill_with_des_mask_and_y_mirror***    | fill a source tile to a target tile with a mask on the target side and y-mirroring. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_fill_with_des_mask_and_y_mirror***   | fill a source tile to a target tile with a mask on the target side and y-mirroring. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_fill_with_des_mask_and_xy_mirror***    | fill a source tile to a target tile with a mask on the target side and xy-mirroring. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_fill_with_des_mask_and_xy_mirror***   | fill a source tile to a target tile with a mask on the target side and xy-mirroring. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_fill_with_des_mask_and_xy_mirror***  | fill a source tile to a target tile with a mask on the target side and xy-mirroring. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_copy_with_src_mask***                  | copy or fill a source tile to a target tile with a mask on the source side in a given mode. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_copy_with_src_mask***                 | copy or fill a source tile to a target tile with a mask on the source side in a given mode. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_copy_with_src_mask***                | copy or fill a source tile to a target tile with a mask on the source side in a given mode. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_copy_with_src_mask_only***             | copy a source tile to a target tile with a mask on the source side. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_copy_with_src_mask_only***            | copy a source tile to a target tile with a mask on the source side. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_copy_with_src_mask_only***           | copy a source tile to a target tile with a mask on the source side. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_copy_with_src_mask_and_x_mirror***     | copy a source tile to a target tile with a mask on the source side and x-mirroring. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_copy_with_src_mask_and_x_mirror***    | copy a source tile to a target tile with a mask on the source side and x-mirroring. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_copy_with_src_mask_and_x_mirror***   | copy a source tile to a target tile with a mask on the source side and x-mirroring. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_copy_with_src_mask_and_y_mirror***     | copy a source tile to a target tile with a mask on the source side and y-mirroring. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_copy_with_src_mask_and_y_mirror***    | copy a source tile to a target tile with a mask on the source side and y-mirroring. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_copy_with_src_mask_and_y_mirror***   | copy a source tile to a target tile with a mask on the source side and y-mirroring. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_copy_with_src_mask_and_xy_mirror***    | copy a source tile to a target tile with a mask on the source side and xy-mirroring. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_copy_with_src_mask_and_xy_mirror***   | copy a source tile to a target tile with a mask on the source side and xy-mirroring. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_copy_with_src_mask_and_xy_mirror***  | copy a source tile to a target tile with a mask on the source side and xy-mirroring. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_fill_with_src_mask_only***             | fill a source tile to a target tile with a mask on the source side. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_fill_with_src_mask_only***            | fill a source tile to a target tile with a mask on the source side. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_fill_with_src_mask_only***           | fill a source tile to a target tile with a mask on the source side. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_fill_with_src_mask_and_x_mirror***     | fill a source tile to a target tile with a mask on the source side and x-mirroring. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_fill_with_src_mask_and_x_mirror***    | fill a source tile to a target tile with a mask on the source side and x-mirroring. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_fill_with_src_mask_and_x_mirror***   | fill a source tile to a target tile with a mask on the source side and x-mirroring. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_fill_with_src_mask_and_y_mirror***     | fill a source tile to a target tile with a mask on the source side and y-mirroring. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_fill_with_src_mask_and_y_mirror***    | fill a source tile to a target tile with a mask on the source side and y-mirroring. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_fill_with_src_mask_and_y_mirror***   | fill a source tile to a target tile with a mask on the source side and y-mirroring. Both tiles use ***CCCN888*** as their colour format. |                |
+| ***arm_2dp_gray8_tile_fill_with_src_mask_and_xy_mirror***    | fill a source tile to a target tile with a mask on the source side and xy-mirroring. Both tiles use ***GRAY8*** as their colour format. |                |
+| ***arm_2dp_rgb565_tile_fill_with_src_mask_and_xy_mirror***   | fill a source tile to a target tile with a mask on the source side and xy-mirroring. Both tiles use ***RGB565*** as their colour format. |                |
+| ***arm_2dp_cccn888_tile_fill_with_src_mask_and_xy_mirror***  | fill a source tile to a target tile with a mask on the source side and xy-mirroring. Both tiles use ***CCCN888*** as their colour format. |                |
 
 
 
@@ -681,6 +838,9 @@ The examples and documents for Asynchronous mode will be added soon.
 | ***arm_2dp_gray8_tile_transform_with_src_mask_and_opacity_prepare*** | prepare for a transform with source mask and opacity in ***GRAY8*** |      |
 | ***arm_2dp_rgb565_tile_transform_with_src_mask_and_opacity_prepare*** | prepare for a transform with source mask and opacity in ***RGB565*** |      |
 | ***arm_2dp_cccn888_tile_transform_with_src_mask_and_opacity_prepare*** | prepare for a transform with source mask and opacity in ***CCCN888*** |      |
+| ***arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_prepare*** | prepare for a ***GRAY8*** colour-filling with a mask, a given opacity and transform |      |
+| ***arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_prepare*** | prepare for a ***RGB565*** colour-filling with a mask, a given opacity and transform |      |
+| ***arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_prepare*** | prepare for a ***CCCN888*** colour-filling with a mask, a given opacity and transform |      |
 | ***arm_2dp_tile_transform***                                 | start a transform operation                                  |      |
 
 
