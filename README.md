@@ -15,7 +15,7 @@
 
 ## Features
 
-#### In this version (ver1.1.0)
+#### In this version (ver1.1.1-dev)
 
 The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly used in **Deep Embedded Display system**. The supported features include but not limited to:
 
