@@ -87,7 +87,7 @@ void battery_gasgauge_nixie_tube_init(battery_nixie_tube_t *ptThis)
     memset(ptThis, 0, sizeof(battery_nixie_tube_t));
 }
 
-ARM_NONNULL(1,2)
+ARM_NONNULL(1)
 void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
                                         const arm_2d_tile_t *ptTile,
                                         const arm_2d_region_t *ptRegion,
@@ -96,25 +96,31 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
                                         bool bIsNewFrame)
 {
     arm_2d_region_t tDrawRegion = {0};
+    arm_2d_tile_t tDrawTile;
     hwGasgauge = MIN(1000, hwGasgauge);
-    
-    
+
     if (bIsNewFrame){
         this.hwGasGauge = hwGasgauge;
         this.tStatus = tStatus;
     }
-    
+
+    if (NULL == ptTile) {
+        ptTile = arm_2d_get_default_frame_buffer();
+        if (NULL == ptTile) {
+            return ;
+        }
+    }
+
     if (NULL == ptRegion) {
         tDrawRegion.tSize = ptTile->tRegion.tSize;
         ptRegion = (const arm_2d_region_t *)&tDrawRegion;
     }
 
-    arm_2d_tile_t tDrawTile;
-    
-    if (NULL == arm_2d_tile_generate_child(ptTile, ptRegion, &tDrawTile, false)) {
+    ptTile = arm_2d_tile_generate_child(ptTile, ptRegion, &tDrawTile, false);
+    if (NULL == ptTile) {
         return ;
     }
-
+    
     if (bIsNewFrame) {
         if (BATTERY_STATUS_CHARGING == this.tStatus) {
             this.chBoarderOpacity = __BOARDER_OPA_MAX;
@@ -145,7 +151,7 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
     arm_2d_align_centre( *ptRegion, c_tileBatteryBoarder1Mask.tRegion.tSize) {
 
         arm_2d_fill_colour_with_mask_and_opacity(   
-                                        &tDrawTile,
+                                        ptTile,
                                         &__centre_region,
                                         &c_tileBatteryBoarder1Mask,
                                         (__arm_2d_color_t){GLCD_COLOR_NIXIE_TUBE},
@@ -182,7 +188,7 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
                 }
                 
                 arm_2d_fill_colour_with_mask_and_opacity(
-                                        &tDrawTile,
+                                        ptTile,
                                         &__centre_region,
                                         &c_tileBatteryGasGaugeGradeBoarderMask,
                                         (__arm_2d_color_t){GLCD_COLOR_NIXIE_TUBE},
@@ -214,11 +220,10 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
                     chOpacity = MIN(this.chBoarderOpacity, chOpacity);
                 }
 
-                
                 __centre_region.tLocation.iY += 4;
                 
                 arm_2d_fill_colour_with_mask_and_opacity(
-                                        &tDrawTile,
+                                        ptTile,
                                         &__centre_region,
                                         &c_tileBatteryGasGaugeBlockMask,
                                         (__arm_2d_color_t){GLCD_COLOR_NIXIE_TUBE},
@@ -226,7 +231,7 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
                 
                 arm_2d_op_wait_async(NULL);
                 __centre_region.tLocation.iY += 12;
-                
+
             }
         }
     } while(0);

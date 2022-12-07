@@ -81,7 +81,7 @@ void battery_gasgauge_nixie_tube_init(battery_nixie_tube_t *ptThis);
 
 
 extern
-ARM_NONNULL(1,2)
+ARM_NONNULL(1)
 void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
                                         const arm_2d_tile_t *ptTile, 
                                         const arm_2d_region_t *ptRegion,
