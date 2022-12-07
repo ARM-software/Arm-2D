@@ -67,19 +67,31 @@ void control_template_init(void)
 
 }
 
-ARM_NONNULL(1)
 void control_template_show( const arm_2d_tile_t *ptTile, 
                             const arm_2d_region_t *ptRegion, 
                             bool bIsNewFrame)
 {
-    assert(NULL != ptTile);
+    arm_2d_tile_t tDrawTile;
     arm_2d_region_t tDrawRegion = {0};
-    
-    if (NULL == ptRegion) {
-        tDrawRegion.tSize = ptTile->tRegion.tSize;
-        ptRegion = (const arm_2d_tile_t *)&tDrawRegion;
+
+    if (NULL == ptTile) {
+        ptTile = arm_2d_get_default_frame_buffer();
+        if (NULL == ptTile) {
+            return ;
+        }
     }
 
+    if (NULL == ptRegion) {
+        tDrawRegion.tSize = ptTile->tRegion.tSize;
+        ptRegion = (const arm_2d_region_t *)&tDrawRegion;
+    }
+
+    ptTile = arm_2d_tile_generate_child(ptTile, ptRegion, &tDrawTile, false);
+    if (NULL == ptTile) {
+        return ;
+    }
+
+    
 
 }
 
