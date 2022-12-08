@@ -3077,17 +3077,14 @@ cycles used in LCD flushing </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __top_left_region = {                                  \</div>
-<div class="line">            .tSize = (__size),                                                  \</div>
-<div class="line">            .tLocation = {                                                      \</div>
-<div class="line">                .iX = 0,                                                        \</div>
-<div class="line">                .iY = 0,                                                        \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">        },                                                                      \</div>
-<div class="line">        *<a class="code hl_define" href="group__gKernel.html#gaa612e8299f2fa71ff5829e61c4735fd1" title="connect three symbol names as one">ARM_CONNECT3</a>(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
-<div class="line">         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \</div>
-<div class="line">         arm_2d_op_wait_async(NULL)                                             \</div>
-<div class="line">        )</div>
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(                                                          \</div>
+<div class="line">                <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __top_left_region,                              \</div>
+<div class="line">                {                                                               \</div>
+<div class="line">                    __top_left_region.tSize.iWidth = (__size).iWidth;           \</div>
+<div class="line">                    __top_left_region.tSize.iHeight = (__size).iHeight;         \</div>
+<div class="line">                    __top_left_region.tLocation = (__region).tLocation;         \</div>
+<div class="line">                },                                                              \</div>
+<div class="line">                { __top_left_region = __top_left_region;})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3124,20 +3121,14 @@ cycles used in LCD flushing </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __top_left_region = {                                  \</div>
-<div class="line">            .tSize = {                                                          \</div>
-<div class="line">                .iWidth = (__width),                                            \</div>
-<div class="line">                .iHeight = (__height),                                          \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">            .tLocation = {                                                      \</div>
-<div class="line">                .iX = 0,                                                        \</div>
-<div class="line">                .iY = 0,                                                        \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">        },                                                                      \</div>
-<div class="line">        *<a class="code hl_define" href="group__gKernel.html#gaa612e8299f2fa71ff5829e61c4735fd1" title="connect three symbol names as one">ARM_CONNECT3</a>(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
-<div class="line">         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \</div>
-<div class="line">         arm_2d_op_wait_async(NULL)                                             \</div>
-<div class="line">        )</div>
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(                                                          \</div>
+<div class="line">                    <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __top_left_region,                          \</div>
+<div class="line">                    {                                                           \</div>
+<div class="line">                        __top_left_region.tSize.iWidth = (__width);             \</div>
+<div class="line">                        __top_left_region.tSize.iHeight = (__height);           \</div>
+<div class="line">                        __top_left_region.tLocation = (__region).tLocation;     \</div>
+<div class="line">                    },                                                          \</div>
+<div class="line">                    { __top_left_region = __top_left_region;})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3199,17 +3190,16 @@ prototype 2: __arm_2d_align_top_left(__region, __width, __height) { code body th
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __top_centre_region = {                                \</div>
-<div class="line">            .tSize = (__size),                                                  \</div>
-<div class="line">            .tLocation = {                                                      \</div>
-<div class="line">                .iX = ((__region).tSize.iWidth - (__size).iWidth)  &gt;&gt; 1,        \</div>
-<div class="line">                .iY = 0,                                                        \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">        },                                                                      \</div>
-<div class="line">        *<a class="code hl_define" href="group__gKernel.html#gaa612e8299f2fa71ff5829e61c4735fd1" title="connect three symbol names as one">ARM_CONNECT3</a>(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
-<div class="line">         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \</div>
-<div class="line">         arm_2d_op_wait_async(NULL)                                             \</div>
-<div class="line">        )</div>
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(                                                          \</div>
+<div class="line">                <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __top_centre_region,                            \</div>
+<div class="line">                {                                                               \</div>
+<div class="line">                    __top_centre_region.tSize.iWidth = (__size).iWidth;         \</div>
+<div class="line">                    __top_centre_region.tSize.iHeight = (__size).iHeight;       \</div>
+<div class="line">                    __top_centre_region.tLocation = (__region).tLocation;       \</div>
+<div class="line">                    __top_centre_region.tLocation.iX                            \</div>
+<div class="line">                        += ((__region).tSize.iWidth - (__size).iWidth) &gt;&gt; 1;    \</div>
+<div class="line">                },                                                              \</div>
+<div class="line">                { __top_centre_region = __top_centre_region;})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3246,20 +3236,16 @@ prototype 2: __arm_2d_align_top_left(__region, __width, __height) { code body th
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __top_centre_region = {                                \</div>
-<div class="line">            .tSize = {                                                          \</div>
-<div class="line">                .iWidth = (__width),                                            \</div>
-<div class="line">                .iHeight = (__height),                                          \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">            .tLocation = {                                                      \</div>
-<div class="line">                .iX = ((__region).tSize.iWidth - (__width))  &gt;&gt; 1,              \</div>
-<div class="line">                .iY = 0,                                                        \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">        },                                                                      \</div>
-<div class="line">        *<a class="code hl_define" href="group__gKernel.html#gaa612e8299f2fa71ff5829e61c4735fd1" title="connect three symbol names as one">ARM_CONNECT3</a>(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
-<div class="line">         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \</div>
-<div class="line">         arm_2d_op_wait_async(NULL)                                             \</div>
-<div class="line">        )</div>
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(                                                          \</div>
+<div class="line">                    <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __top_centre_region,                        \</div>
+<div class="line">                    {                                                           \</div>
+<div class="line">                        __top_centre_region.tSize.iWidth = (__width);           \</div>
+<div class="line">                        __top_centre_region.tSize.iHeight = (__height);         \</div>
+<div class="line">                        __top_centre_region.tLocation = (__region).tLocation;   \</div>
+<div class="line">                        __top_centre_region.tLocation.iX                        \</div>
+<div class="line">                            += ((__region).tSize.iWidth - (__width)) &gt;&gt; 1;      \</div>
+<div class="line">                    },                                                          \</div>
+<div class="line">                    { __top_centre_region = __top_centre_region;})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3321,17 +3307,16 @@ prototype 2: <a class="el" href="group__gHelper.html#ga6ff04e3f5aa5307482855901f
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __top_right_region = {                                 \</div>
-<div class="line">            .tSize = (__size),                                                  \</div>
-<div class="line">            .tLocation = {                                                      \</div>
-<div class="line">                .iX = ((__region).tSize.iWidth - (__size).iWidth),              \</div>
-<div class="line">                .iY = 0,                                                        \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">        },                                                                      \</div>
-<div class="line">        *<a class="code hl_define" href="group__gKernel.html#gaa612e8299f2fa71ff5829e61c4735fd1" title="connect three symbol names as one">ARM_CONNECT3</a>(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
-<div class="line">         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \</div>
-<div class="line">         arm_2d_op_wait_async(NULL)                                             \</div>
-<div class="line">        )</div>
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(                                                          \</div>
+<div class="line">                <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __top_right_region,                             \</div>
+<div class="line">                {                                                               \</div>
+<div class="line">                    __top_right_region.tSize.iWidth = (__size).iWidth;          \</div>
+<div class="line">                    __top_right_region.tSize.iHeight = (__size).iHeight;        \</div>
+<div class="line">                    __top_right_region.tLocation = (__region).tLocation;        \</div>
+<div class="line">                    __top_right_region.tLocation.iX                             \</div>
+<div class="line">                        += ((__region).tSize.iWidth - (__size).iWidth);         \</div>
+<div class="line">                },                                                              \</div>
+<div class="line">                { __top_right_region = __top_right_region;})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3368,20 +3353,16 @@ prototype 2: <a class="el" href="group__gHelper.html#ga6ff04e3f5aa5307482855901f
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __top_right_region = {                                 \</div>
-<div class="line">            .tSize = {                                                          \</div>
-<div class="line">                .iWidth = (__width),                                            \</div>
-<div class="line">                .iHeight = (__height),                                          \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">            .tLocation = {                                                      \</div>
-<div class="line">                .iX = ((__region).tSize.iWidth - (__width)),                    \</div>
-<div class="line">                .iY = 0,                                                        \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">        },                                                                      \</div>
-<div class="line">        *<a class="code hl_define" href="group__gKernel.html#gaa612e8299f2fa71ff5829e61c4735fd1" title="connect three symbol names as one">ARM_CONNECT3</a>(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
-<div class="line">         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \</div>
-<div class="line">         arm_2d_op_wait_async(NULL)                                             \</div>
-<div class="line">        )</div>
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(                                                          \</div>
+<div class="line">                    <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __top_right_region,                         \</div>
+<div class="line">                    {                                                           \</div>
+<div class="line">                        __top_right_region.tSize.iWidth = (__width);            \</div>
+<div class="line">                        __top_right_region.tSize.iHeight = (__height);          \</div>
+<div class="line">                        __top_right_region.tLocation = (__region).tLocation;    \</div>
+<div class="line">                        __top_right_region.tLocation.iX                         \</div>
+<div class="line">                            += ((__region).tSize.iWidth - (__width));           \</div>
+<div class="line">                    },                                                          \</div>
+<div class="line">                    { __top_right_region = __top_right_region;})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3443,17 +3424,16 @@ prototype 2: __arm_2d_align_top_right(__region, __width, __height) { code body t
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __mid_left_region = {                                  \</div>
-<div class="line">            .tSize = (__size),                                                  \</div>
-<div class="line">            .tLocation = {                                                      \</div>
-<div class="line">                .iX = 0,                                                        \</div>
-<div class="line">                .iY = ((__region).tSize.iHeight - (__size).iHeight)&gt;&gt; 1,        \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">        },                                                                      \</div>
-<div class="line">        *<a class="code hl_define" href="group__gKernel.html#gaa612e8299f2fa71ff5829e61c4735fd1" title="connect three symbol names as one">ARM_CONNECT3</a>(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
-<div class="line">         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \</div>
-<div class="line">         arm_2d_op_wait_async(NULL)                                             \</div>
-<div class="line">        )</div>
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(                                                          \</div>
+<div class="line">                <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __mid_left_region,                              \</div>
+<div class="line">                {                                                               \</div>
+<div class="line">                    __mid_left_region.tSize.iWidth = (__size).iWidth;           \</div>
+<div class="line">                    __mid_left_region.tSize.iHeight = (__size).iHeight;         \</div>
+<div class="line">                    __mid_left_region.tLocation = (__region).tLocation;         \</div>
+<div class="line">                    __mid_left_region.tLocation.iY                              \</div>
+<div class="line">                        += ((__region).tSize.iHeight - (__size).iHeight) &gt;&gt; 1;  \</div>
+<div class="line">                },                                                              \</div>
+<div class="line">                { __mid_left_region = __mid_left_region;})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3490,20 +3470,16 @@ prototype 2: __arm_2d_align_top_right(__region, __width, __height) { code body t
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __mid_left_region = {                                  \</div>
-<div class="line">            .tSize = {                                                          \</div>
-<div class="line">                .iWidth = (__width),                                            \</div>
-<div class="line">                .iHeight = (__height),                                          \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">            .tLocation = {                                                      \</div>
-<div class="line">                .iX = 0,                                                        \</div>
-<div class="line">                .iY = ((__region).tSize.iHeight - (__height))&gt;&gt; 1,              \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">        },                                                                      \</div>
-<div class="line">        *<a class="code hl_define" href="group__gKernel.html#gaa612e8299f2fa71ff5829e61c4735fd1" title="connect three symbol names as one">ARM_CONNECT3</a>(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
-<div class="line">         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \</div>
-<div class="line">         arm_2d_op_wait_async(NULL)                                             \</div>
-<div class="line">        )</div>
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(                                                          \</div>
+<div class="line">                    <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __mid_left_region,                          \</div>
+<div class="line">                    {                                                           \</div>
+<div class="line">                        __mid_left_region.tSize.iWidth = (__width);             \</div>
+<div class="line">                        __mid_left_region.tSize.iHeight = (__height);           \</div>
+<div class="line">                        __mid_left_region.tLocation = (__region).tLocation;     \</div>
+<div class="line">                        __mid_left_region.tLocation.iY                          \</div>
+<div class="line">                            += ((__region).tSize.iHeight - (__height)) &gt;&gt; 1;    \</div>
+<div class="line">                    },                                                          \</div>
+<div class="line">                    { __mid_left_region = __mid_left_region;})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3685,17 +3661,18 @@ prototype 2: <a class="el" href="group__gHelper.html#gaaad43aef0ad2472379061137f
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __mid_right_region = {                                 \</div>
-<div class="line">            .tSize = (__size),                                                  \</div>
-<div class="line">            .tLocation = {                                                      \</div>
-<div class="line">                .iX = ((__region).tSize.iWidth - (__size).iWidth),              \</div>
-<div class="line">                .iY = ((__region).tSize.iHeight - (__size).iHeight)&gt;&gt; 1,        \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">        },                                                                      \</div>
-<div class="line">        *<a class="code hl_define" href="group__gKernel.html#gaa612e8299f2fa71ff5829e61c4735fd1" title="connect three symbol names as one">ARM_CONNECT3</a>(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
-<div class="line">         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \</div>
-<div class="line">         arm_2d_op_wait_async(NULL)                                             \</div>
-<div class="line">        )</div>
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(                                                          \</div>
+<div class="line">                <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __mid_right_region,                             \</div>
+<div class="line">                {                                                               \</div>
+<div class="line">                    __mid_right_region.tSize.iWidth = (__size).iWidth;          \</div>
+<div class="line">                    __mid_right_region.tSize.iHeight = (__size).iHeight;        \</div>
+<div class="line">                    __mid_right_region.tLocation = (__region).tLocation;        \</div>
+<div class="line">                    __mid_right_region.tLocation.iX                             \</div>
+<div class="line">                        += ((__region).tSize.iWidth - (__size).iWidth);         \</div>
+<div class="line">                    __mid_right_region.tLocation.iY                             \</div>
+<div class="line">                        += ((__region).tSize.iHeight - (__size).iHeight) &gt;&gt; 1;  \</div>
+<div class="line">                },                                                              \</div>
+<div class="line">                { __mid_right_region = __mid_right_region;})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3732,20 +3709,18 @@ prototype 2: <a class="el" href="group__gHelper.html#gaaad43aef0ad2472379061137f
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __mid_right_region = {                                 \</div>
-<div class="line">            .tSize = {                                                          \</div>
-<div class="line">                .iWidth = (__width),                                            \</div>
-<div class="line">                .iHeight = (__height),                                          \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">            .tLocation = {                                                      \</div>
-<div class="line">                .iX = ((__region).tSize.iWidth - (__width)),                    \</div>
-<div class="line">                .iY = ((__region).tSize.iHeight - (__height))&gt;&gt; 1,              \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">        },                                                                      \</div>
-<div class="line">        *<a class="code hl_define" href="group__gKernel.html#gaa612e8299f2fa71ff5829e61c4735fd1" title="connect three symbol names as one">ARM_CONNECT3</a>(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
-<div class="line">         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \</div>
-<div class="line">         arm_2d_op_wait_async(NULL)                                             \</div>
-<div class="line">        )</div>
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(                                                          \</div>
+<div class="line">                <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __mid_right_region,                             \</div>
+<div class="line">                {                                                               \</div>
+<div class="line">                    __mid_right_region.tSize.iWidth = (__width);                \</div>
+<div class="line">                    __mid_right_region.tSize.iHeight = (__height);              \</div>
+<div class="line">                    __mid_right_region.tLocation = (__region).tLocation;        \</div>
+<div class="line">                    __mid_right_region.tLocation.iX                             \</div>
+<div class="line">                        += ((__region).tSize.iWidth - (__width));               \</div>
+<div class="line">                    __mid_right_region.tLocation.iY                             \</div>
+<div class="line">                        += ((__region).tSize.iHeight - (__height)) &gt;&gt; 1;        \</div>
+<div class="line">                },                                                              \</div>
+<div class="line">                { __mid_right_region = __mid_right_region;})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3807,17 +3782,16 @@ prototype 2: <a class="el" href="group__gHelper.html#gac74b67cd638f553e4c8770567
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __bottom_left_region = {                               \</div>
-<div class="line">            .tSize = (__size),                                                  \</div>
-<div class="line">            .tLocation = {                                                      \</div>
-<div class="line">                .iX = 0,                                                        \</div>
-<div class="line">                .iY = ((__region).tSize.iHeight - (__size).iHeight),            \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">        },                                                                      \</div>
-<div class="line">        *<a class="code hl_define" href="group__gKernel.html#gaa612e8299f2fa71ff5829e61c4735fd1" title="connect three symbol names as one">ARM_CONNECT3</a>(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
-<div class="line">         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \</div>
-<div class="line">         arm_2d_op_wait_async(NULL)                                             \</div>
-<div class="line">        )</div>
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(                                                          \</div>
+<div class="line">                <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __bottom_left_region,                           \</div>
+<div class="line">                {                                                               \</div>
+<div class="line">                    __bottom_left_region.tSize.iWidth = (__size).iWidth;        \</div>
+<div class="line">                    __bottom_left_region.tSize.iHeight = (__size).iHeight;      \</div>
+<div class="line">                    __bottom_left_region.tLocation = (__region).tLocation;      \</div>
+<div class="line">                    __bottom_left_region.tLocation.iY                           \</div>
+<div class="line">                        += ((__region).tSize.iHeight - (__size).iHeight);       \</div>
+<div class="line">                },                                                              \</div>
+<div class="line">                { __bottom_left_region = __bottom_left_region;})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3854,20 +3828,16 @@ prototype 2: <a class="el" href="group__gHelper.html#gac74b67cd638f553e4c8770567
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __bottom_left_region = {                               \</div>
-<div class="line">            .tSize = {                                                          \</div>
-<div class="line">                .iWidth = (__width),                                            \</div>
-<div class="line">                .iHeight = (__height),                                          \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">            .tLocation = {                                                      \</div>
-<div class="line">                .iX = 0,                                                        \</div>
-<div class="line">                .iY = ((__region).tSize.iHeight - (__height)),                  \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">        },                                                                      \</div>
-<div class="line">        *<a class="code hl_define" href="group__gKernel.html#gaa612e8299f2fa71ff5829e61c4735fd1" title="connect three symbol names as one">ARM_CONNECT3</a>(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
-<div class="line">         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \</div>
-<div class="line">         arm_2d_op_wait_async(NULL)                                             \</div>
-<div class="line">        )</div>
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(                                                          \</div>
+<div class="line">                <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __bottom_left_region,                           \</div>
+<div class="line">                {                                                               \</div>
+<div class="line">                    __bottom_left_region.tSize.iWidth = (__width);              \</div>
+<div class="line">                    __bottom_left_region.tSize.iHeight = (__height);            \</div>
+<div class="line">                    __bottom_left_region.tLocation = (__region).tLocation;      \</div>
+<div class="line">                    __bottom_left_region.tLocation.iY                           \</div>
+<div class="line">                        += ((__region).tSize.iHeight - (__height));             \</div>
+<div class="line">                },                                                              \</div>
+<div class="line">                { __bottom_left_region = __bottom_left_region;})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3929,17 +3899,18 @@ prototype 2: __arm_2d_align_bottom_left(__region, __width, __height) { code body
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __bottom_centre_region = {                             \</div>
-<div class="line">            .tSize = (__size),                                                  \</div>
-<div class="line">            .tLocation = {                                                      \</div>
-<div class="line">                .iX = ((__region).tSize.iWidth - (__size).iWidth)  &gt;&gt; 1,        \</div>
-<div class="line">                .iY = ((__region).tSize.iHeight - (__size).iHeight),            \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">        },                                                                      \</div>
-<div class="line">        *<a class="code hl_define" href="group__gKernel.html#gaa612e8299f2fa71ff5829e61c4735fd1" title="connect three symbol names as one">ARM_CONNECT3</a>(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
-<div class="line">         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \</div>
-<div class="line">         arm_2d_op_wait_async(NULL)                                             \</div>
-<div class="line">        )</div>
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(                                                          \</div>
+<div class="line">                <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __bottom_centre_region,                         \</div>
+<div class="line">                {                                                               \</div>
+<div class="line">                    __bottom_centre_region.tSize.iWidth = (__size).iWidth;      \</div>
+<div class="line">                    __bottom_centre_region.tSize.iHeight = (__size).iHeight;    \</div>
+<div class="line">                    __bottom_centre_region.tLocation = (__region).tLocation;    \</div>
+<div class="line">                    __bottom_centre_region.tLocation.iX                         \</div>
+<div class="line">                        += ((__region).tSize.iWidth - (__size).iWidth)  &gt;&gt; 1;   \</div>
+<div class="line">                    __bottom_centre_region.tLocation.iY                         \</div>
+<div class="line">                        += ((__region).tSize.iHeight - (__size).iHeight);       \</div>
+<div class="line">                },                                                              \</div>
+<div class="line">                { __bottom_centre_region = __bottom_centre_region;})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3976,20 +3947,18 @@ prototype 2: __arm_2d_align_bottom_left(__region, __width, __height) { code body
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __bottom_centre_region = {                             \</div>
-<div class="line">            .tSize = {                                                          \</div>
-<div class="line">                .iWidth = (__width),                                            \</div>
-<div class="line">                .iHeight = (__height),                                          \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">            .tLocation = {                                                      \</div>
-<div class="line">                .iX = ((__region).tSize.iWidth - (__width))  &gt;&gt; 1,              \</div>
-<div class="line">                .iY = ((__region).tSize.iHeight - (__height)),                  \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">        },                                                                      \</div>
-<div class="line">        *<a class="code hl_define" href="group__gKernel.html#gaa612e8299f2fa71ff5829e61c4735fd1" title="connect three symbol names as one">ARM_CONNECT3</a>(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
-<div class="line">         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \</div>
-<div class="line">         arm_2d_op_wait_async(NULL)                                             \</div>
-<div class="line">        )</div>
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(                                                          \</div>
+<div class="line">                <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __bottom_centre_region,                         \</div>
+<div class="line">                {                                                               \</div>
+<div class="line">                    __bottom_centre_region.tSize.iWidth = (__width);            \</div>
+<div class="line">                    __bottom_centre_region.tSize.iHeight = (__height);          \</div>
+<div class="line">                    __bottom_centre_region.tLocation = (__region).tLocation;    \</div>
+<div class="line">                    __bottom_centre_region.tLocation.iX                         \</div>
+<div class="line">                        += ((__region).tSize.iWidth - (__width))  &gt;&gt; 1;         \</div>
+<div class="line">                    __bottom_centre_region.tLocation.iY                         \</div>
+<div class="line">                        += ((__region).tSize.iHeight - (__height));             \</div>
+<div class="line">                },                                                              \</div>
+<div class="line">                { __bottom_centre_region = __bottom_centre_region;})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -4051,17 +4020,18 @@ prototype 2: <a class="el" href="group__gHelper.html#ga1c2730c58003263b17a1214d7
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __bottom_right_region = {                              \</div>
-<div class="line">            .tSize = (__size),                                                  \</div>
-<div class="line">            .tLocation = {                                                      \</div>
-<div class="line">                .iX = ((__region).tSize.iWidth - (__size).iWidth),              \</div>
-<div class="line">                .iY = ((__region).tSize.iHeight - (__size).iHeight),            \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">        },                                                                      \</div>
-<div class="line">        *<a class="code hl_define" href="group__gKernel.html#gaa612e8299f2fa71ff5829e61c4735fd1" title="connect three symbol names as one">ARM_CONNECT3</a>(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
-<div class="line">         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \</div>
-<div class="line">         arm_2d_op_wait_async(NULL)                                             \</div>
-<div class="line">        )</div>
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(                                                          \</div>
+<div class="line">                <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __bottom_right_region,                          \</div>
+<div class="line">                {                                                               \</div>
+<div class="line">                    __bottom_right_region.tSize.iWidth = (__size).iWidth;       \</div>
+<div class="line">                    __bottom_right_region.tSize.iHeight = (__size).iHeight;     \</div>
+<div class="line">                    __bottom_right_region.tLocation = (__region).tLocation;     \</div>
+<div class="line">                    __bottom_right_region.tLocation.iX                          \</div>
+<div class="line">                        += ((__region).tSize.iWidth - (__size).iWidth);         \</div>
+<div class="line">                    __bottom_right_region.tLocation.iY                          \</div>
+<div class="line">                        += ((__region).tSize.iHeight - (__size).iHeight);       \</div>
+<div class="line">                },                                                              \</div>
+<div class="line">                { __bottom_right_region = __bottom_right_region;})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -4098,20 +4068,18 @@ prototype 2: <a class="el" href="group__gHelper.html#ga1c2730c58003263b17a1214d7
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __bottom_right_region = {                              \</div>
-<div class="line">            .tSize = {                                                          \</div>
-<div class="line">                .iWidth = (__width),                                            \</div>
-<div class="line">                .iHeight = (__height),                                          \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">            .tLocation = {                                                      \</div>
-<div class="line">                .iX = ((__region).tSize.iWidth - (__width)),                    \</div>
-<div class="line">                .iY = ((__region).tSize.iHeight - (__height)),                  \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">        },                                                                      \</div>
-<div class="line">        *<a class="code hl_define" href="group__gKernel.html#gaa612e8299f2fa71ff5829e61c4735fd1" title="connect three symbol names as one">ARM_CONNECT3</a>(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
-<div class="line">         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \</div>
-<div class="line">         arm_2d_op_wait_async(NULL)                                             \</div>
-<div class="line">        )</div>
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(                                                          \</div>
+<div class="line">                <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __bottom_right_region,                          \</div>
+<div class="line">                {                                                               \</div>
+<div class="line">                    __bottom_right_region.tSize.iWidth = (__width);             \</div>
+<div class="line">                    __bottom_right_region.tSize.iHeight = (__height);           \</div>
+<div class="line">                    __bottom_right_region.tLocation = (__region).tLocation;     \</div>
+<div class="line">                    __bottom_right_region.tLocation.iX                          \</div>
+<div class="line">                        += ((__region).tSize.iWidth - (__width));               \</div>
+<div class="line">                    __bottom_right_region.tLocation.iY                          \</div>
+<div class="line">                        += ((__region).tSize.iHeight - (__height));             \</div>
+<div class="line">                },                                                              \</div>
+<div class="line">                { __bottom_right_region = __bottom_right_region;})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
