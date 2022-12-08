@@ -46,7 +46,7 @@
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wunused-function"
-#   pragma clang diagnostic ignored "-Wmissing-declarations"  
+#   pragma clang diagnostic ignored "-Wmissing-declarations"
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #elif __IS_COMPILER_IAR__
 #   pragma diag_suppress=Pa089,Pe188,Pe177,Pe174
@@ -167,13 +167,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene4_handler)
     user_scene_4_t *ptThis = (user_scene_4_t *)pTarget;
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
+
     
     /*-----------------------draw the foreground begin-----------------------*/
     
     /* following code is just a demo, you can remove them */
     
     arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
-
 
     if (bIsNewFrame) {
         int32_t iResult;
@@ -189,33 +189,41 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene4_handler)
         this.hwGasgauge = (uint16_t)iResult;
     }
 
-    arm_2d_align_centre( ptTile->tRegion, 100, 130) {
+    arm_2d_canvas(ptTile, __canvas) {
 
-        battery_gasgauge_nixie_tube_show(   &this.tBatteryNixieTube, 
-                                            ptTile, 
-                                            &__centre_region, 
-                                            this.hwGasgauge,
-                                            this.tStatus,
-                                            bIsNewFrame);
-        
-        arm_2d_op_wait_async(NULL);
-        
-        arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_font_t.tCharSize;
-        tTextSize.iWidth *= 2;
-        
-        arm_2d_align_bottom_centre(__centre_region, tTextSize) {
-        
-            __bottom_centre_region.tLocation.iX += __centre_region.tLocation.iX;
-            __bottom_centre_region.tLocation.iY += __centre_region.tLocation.iY;
-            
-            arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
-            arm_lcd_text_set_draw_region(&__bottom_centre_region);
-            arm_lcd_text_set_colour(GLCD_COLOR_NIXIE_TUBE, GLCD_COLOR_BLACK);
-            arm_lcd_text_location(0,0);
-            arm_lcd_printf("%02d", this.hwGasgauge / 10);
-            
-            arm_2d_op_wait_async(NULL);
+        arm_2d_align_centre( __canvas, 120, 130) {
+
+            arm_2d_layout(__centre_region) {
+
+                __item_line_horizontal(64, 130) {
+                    battery_gasgauge_nixie_tube_show(   &this.tBatteryNixieTube, 
+                                                        ptTile, 
+                                                        &__item_region, 
+                                                        this.hwGasgauge,
+                                                        this.tStatus,
+                                                        bIsNewFrame);
+                    
+                    arm_2d_op_wait_async(NULL);
+                    
+                    arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_font_t.tCharSize;
+                    tTextSize.iWidth *= 2;
+                    
+                    arm_2d_align_bottom_centre(__item_region, tTextSize) {
+                    
+                        __bottom_centre_region.tLocation.iX += __item_region.tLocation.iX;
+                        __bottom_centre_region.tLocation.iY += __item_region.tLocation.iY;
+                        
+                        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+                        arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
+                        arm_lcd_text_set_draw_region(&__bottom_centre_region);
+                        arm_lcd_text_set_colour(GLCD_COLOR_NIXIE_TUBE, GLCD_COLOR_BLACK);
+                        arm_lcd_text_location(0,0);
+                        arm_lcd_printf("%02d", this.hwGasgauge / 10);
+                        
+                        arm_2d_op_wait_async(NULL);
+                    }
+              }
+            }
         }
     }
 
@@ -247,7 +255,7 @@ user_scene_4_t *__arm_2d_scene4_init(   arm_2d_scene_player_t *ptDispAdapter,
         /* a dirty region to be specified at runtime*/
         ADD_REGION_TO_LIST(s_tDirtyRegions,
             .tSize = {
-                100, 130,
+                120, 130,
             },
         ),
         
@@ -275,10 +283,13 @@ user_scene_4_t *__arm_2d_scene4_init(   arm_2d_scene_player_t *ptDispAdapter,
      * this demo shows that we create a region in the centre of a screen(320*240)
      * for a image stored in the tile c_tileCMSISLogoMask
      */
-    s_tDirtyRegions[0].tRegion.tLocation = (arm_2d_location_t){
-        .iX = ((tScreen.tSize.iWidth - 100) >> 1),
-        .iY = ((tScreen.tSize.iHeight - 130) >> 1),
-    };
+    arm_2d_align_centre(tScreen, s_tDirtyRegions[0].tRegion.tSize) {
+        s_tDirtyRegions[0].tRegion = __centre_region;
+    }
+//    s_tDirtyRegions[0].tRegion.tLocation = (arm_2d_location_t){
+//        .iX = ((tScreen.tSize.iWidth - s_tDirtyRegions[0].tRegion.tSize.iWidth) >> 1),
+//        .iY = ((tScreen.tSize.iHeight - 130) >> 1),
+//    };
     
     if (NULL == ptThis) {
         ptThis = (user_scene_4_t *)malloc(sizeof(user_scene_4_t));
@@ -310,6 +321,7 @@ user_scene_4_t *__arm_2d_scene4_init(   arm_2d_scene_player_t *ptDispAdapter,
     };
 
     battery_gasgauge_nixie_tube_init(&this.tBatteryNixieTube);
+    battery_gasgauge_liquid_init(&this.tBatteryLiquid);
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
                                         &this.use_as__arm_2d_scene_t, 

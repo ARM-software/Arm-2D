@@ -150,12 +150,13 @@ arm_fsm_rt_t __arm_2d_number_list_draw_list_core_item(
     
     arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
     
-    /* print numbers */
-    __printf(ptThis,
-             &ptTile->tRegion,
-             this.tNumListCFG.pchFormatString,
-             this.tNumListCFG.nStart + ptItem->hwID * this.tNumListCFG.iDelta);
-    
+    arm_2d_canvas(ptTile, __top_container) {
+        /* print numbers */
+        __printf(ptThis,
+                 &__top_container,
+                 this.tNumListCFG.pchFormatString,
+                 this.tNumListCFG.nStart + ptItem->hwID * this.tNumListCFG.iDelta);
+    }
     arm_lcd_text_set_target_framebuffer(NULL);
     
     return arm_fsm_rt_cpl;

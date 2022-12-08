@@ -73,10 +73,21 @@ ARM_PRIVATE(
 )
 } battery_nixie_tube_t;
 
+typedef struct battery_liquid_t {
+ARM_PRIVATE(
+    int64_t lTimeStamp;
+
+    uint16_t hwGasGauge;
+
+    battery_status_t tStatus;
+)
+} battery_liquid_t;
+
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
 extern
+ARM_NONNULL(1)
 void battery_gasgauge_nixie_tube_init(battery_nixie_tube_t *ptThis);
 
 
@@ -88,6 +99,21 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
                                         uint16_t hwGasgauge,
                                         battery_status_t tStatus,
                                         bool bIsNewFrame);
+
+extern
+ARM_NONNULL(1)
+void battery_gasgauge_liquid_init(battery_liquid_t *ptThis);
+
+
+extern
+ARM_NONNULL(1)
+void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
+                                    const arm_2d_tile_t *ptTile, 
+                                    const arm_2d_region_t *ptRegion,
+                                    uint16_t hwGasgauge,
+                                    battery_status_t tStatus,
+                                    bool bIsNewFrame);
+
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

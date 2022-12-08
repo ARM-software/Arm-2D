@@ -121,48 +121,50 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
 {
     ARM_2D_UNUSED(pTarget);
     ARM_2D_UNUSED(ptTile);
-    ARM_2D_UNUSED(bIsNewFrame);
+
+    arm_2d_canvas(ptTile, __top_container) {
     
-    
-    arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
-    
-    arm_2d_align_centre(ptTile->tRegion, 100, 100) {
-        draw_round_corner_box(  ptTile,
-                                &__centre_region,
-                                GLCD_COLOR_BLACK,
-                                64,
-                                bIsNewFrame);
+        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
+        
+        arm_2d_align_centre(__top_container, 100, 100) {
+            draw_round_corner_box(  ptTile,
+                                    &__centre_region,
+                                    GLCD_COLOR_BLACK,
+                                    64,
+                                    bIsNewFrame);
+        }
+
+        busy_wheel2_show(ptTile, bIsNewFrame);
     }
-    
-    busy_wheel2_show(ptTile, bIsNewFrame);
-    
+
     arm_2d_op_wait_async(NULL);
 
     return arm_fsm_rt_cpl;
 }
 
-static
-IMPL_PFB_ON_DRAW(__pfb_draw_background_handler)
-{
-    ARM_2D_UNUSED(pTarget);
-    ARM_2D_UNUSED(bIsNewFrame);
+//static
+//IMPL_PFB_ON_DRAW(__pfb_draw_background_handler)
+//{
+//    ARM_2D_UNUSED(pTarget);
+//    ARM_2D_UNUSED(ptTile);
 
-    arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
+//    arm_2d_canvas(ptTile, __top_container) {
+//    
+//        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
+//        
+//        arm_2d_align_centre(__top_container, 100, 100) {
+//            draw_round_corner_box(  ptTile,
+//                                    &__centre_region,
+//                                    GLCD_COLOR_BLACK,
+//                                    64,
+//                                    bIsNewFrame);
+//        }
+//    }
 
-    arm_2d_align_centre(ptTile->tRegion, 100, 100) {
-        draw_round_corner_box(  ptTile,
-                                &__centre_region,
-                                GLCD_COLOR_BLACK,
-                                64,
-                                bIsNewFrame);
-    }
-                            
-    
+//    arm_2d_op_wait_async(NULL);
 
-    arm_2d_op_wait_async(NULL);
-
-    return arm_fsm_rt_cpl;
-}
+//    return arm_fsm_rt_cpl;
+//}
 
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
@@ -427,7 +429,7 @@ void disp_adapter0_init(void)
         
         static arm_2d_scene_t s_tScenes[] = {
             [0] = {
-                .fnBackground   = &__pfb_draw_background_handler,
+                //.fnBackground   = &__pfb_draw_background_handler,
                 .fnScene        = &__pfb_draw_handler,
                 .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
                 .fnOnFrameStart = &__on_frame_start,

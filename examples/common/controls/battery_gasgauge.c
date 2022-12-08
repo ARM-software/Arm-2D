@@ -80,10 +80,10 @@ const arm_2d_tile_t c_tileBatteryGasGaugeBlockMask;
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
-
-extern
+ARM_NONNULL(1)
 void battery_gasgauge_nixie_tube_init(battery_nixie_tube_t *ptThis)
 {
+    assert(NULL != ptThis);
     memset(ptThis, 0, sizeof(battery_nixie_tube_t));
 }
 
@@ -147,94 +147,143 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
         }
     }
 
-    /* draw battery boarder */
-    arm_2d_align_centre( *ptRegion, c_tileBatteryBoarder1Mask.tRegion.tSize) {
+    arm_2d_canvas(ptTile, __canvas) {
+        /* draw battery boarder */
+        arm_2d_align_centre( __canvas, c_tileBatteryBoarder1Mask.tRegion.tSize) {
 
-        arm_2d_fill_colour_with_mask_and_opacity(   
-                                        ptTile,
-                                        &__centre_region,
-                                        &c_tileBatteryBoarder1Mask,
-                                        (__arm_2d_color_t){GLCD_COLOR_NIXIE_TUBE},
-                                        this.chBoarderOpacity);
-    }
+            arm_2d_fill_colour_with_mask_and_opacity(   
+                                            ptTile,
+                                            &__centre_region,
+                                            &c_tileBatteryBoarder1Mask,
+                                            (__arm_2d_color_t){GLCD_COLOR_NIXIE_TUBE},
+                                            this.chBoarderOpacity);
+        }
 
-    /* draw gas gauge grade*/
-    do {
-        arm_2d_size_t tInnerSize 
-            = c_tileBatteryGasGaugeGradeBoarderMask.tRegion.tSize;
-        tInnerSize.iHeight = 80;
-        uint16_t  hwLevel = 1000;
-        bool bDrawTheTopBar = true;
-        arm_2d_align_centre( *ptRegion, tInnerSize) {
-            for (int n = 0; n < 5; n++) {
-                uint8_t chOpacity = 0;
-                hwLevel -= 200;
-                if (this.hwGasGauge > hwLevel) {
-                    if (BATTERY_STATUS_CHARGING == this.tStatus) {
-                        chOpacity = __BOARDER_OPA_MAX;
-                    } else {
-                        chOpacity = (uint8_t)MIN(255, this.hwGasGauge -  hwLevel);
-                    }
-                    if (bDrawTheTopBar) {
-                        bDrawTheTopBar = false;
-                        if (this.bFlashingBar) {
-                            chOpacity = MIN(this.chBarOpacity, chOpacity);
+        /* draw gas gauge grade*/
+        do {
+            arm_2d_size_t tInnerSize 
+                = c_tileBatteryGasGaugeGradeBoarderMask.tRegion.tSize;
+            tInnerSize.iHeight = 80;
+            uint16_t  hwLevel = 1000;
+            bool bDrawTheTopBar = true;
+            arm_2d_align_centre( __canvas, tInnerSize) {
+                for (int n = 0; n < 5; n++) {
+                    uint8_t chOpacity = 0;
+                    hwLevel -= 200;
+                    if (this.hwGasGauge > hwLevel) {
+                        if (BATTERY_STATUS_CHARGING == this.tStatus) {
+                            chOpacity = __BOARDER_OPA_MAX;
+                        } else {
+                            chOpacity = (uint8_t)MIN(255, this.hwGasGauge -  hwLevel);
+                        }
+                        if (bDrawTheTopBar) {
+                            bDrawTheTopBar = false;
+                            if (this.bFlashingBar) {
+                                chOpacity = MIN(this.chBarOpacity, chOpacity);
+                            }
                         }
                     }
+                    
+                    if (this.bBoarderFlashing) {
+                        chOpacity = MIN(this.chBoarderOpacity, chOpacity);
+                    }
+                    
+                    arm_2d_fill_colour_with_mask_and_opacity(
+                                            ptTile,
+                                            &__centre_region,
+                                            &c_tileBatteryGasGaugeGradeBoarderMask,
+                                            (__arm_2d_color_t){GLCD_COLOR_NIXIE_TUBE},
+                                            chOpacity);
+                    
+                    arm_2d_op_wait_async(NULL);
+                    __centre_region.tLocation.iY += 16;
+                    
                 }
-                
-                if (this.bBoarderFlashing) {
-                    chOpacity = MIN(this.chBoarderOpacity, chOpacity);
-                }
-                
-                arm_2d_fill_colour_with_mask_and_opacity(
-                                        ptTile,
-                                        &__centre_region,
-                                        &c_tileBatteryGasGaugeGradeBoarderMask,
-                                        (__arm_2d_color_t){GLCD_COLOR_NIXIE_TUBE},
-                                        chOpacity);
-                
-                arm_2d_op_wait_async(NULL);
-                __centre_region.tLocation.iY += 16;
-                
             }
-        }
-    } while(0);
+        } while(0);
 
-    /* draw gas gauge block*/
-    do {
-        arm_2d_size_t tInnerSize 
-            = c_tileBatteryGasGaugeBlockMask.tRegion.tSize;
-        tInnerSize.iHeight = 80;
-        uint16_t  hwLevel = 1000;
-        arm_2d_align_centre( *ptRegion, tInnerSize) {
-            for (int n = 0; n < 5; n++) {
-                uint8_t chOpacity = 0;
-                hwLevel -= 200;
+        /* draw gas gauge block*/
+        do {
+            arm_2d_size_t tInnerSize 
+                = c_tileBatteryGasGaugeBlockMask.tRegion.tSize;
+            tInnerSize.iHeight = 80;
+            uint16_t  hwLevel = 1000;
+            arm_2d_align_centre( __canvas, tInnerSize) {
+                for (int n = 0; n < 5; n++) {
+                    uint8_t chOpacity = 0;
+                    hwLevel -= 200;
 
-                if (this.hwGasGauge > hwLevel) {
-                    chOpacity = (uint8_t)MIN(255, this.hwGasGauge -  hwLevel);
+                    if (this.hwGasGauge > hwLevel) {
+                        chOpacity = (uint8_t)MIN(255, this.hwGasGauge -  hwLevel);
+                    }
+                    
+                    if (this.bBoarderFlashing) {
+                        chOpacity = MIN(this.chBoarderOpacity, chOpacity);
+                    }
+
+                    __centre_region.tLocation.iY += 4;
+                    
+                    arm_2d_fill_colour_with_mask_and_opacity(
+                                            ptTile,
+                                            &__centre_region,
+                                            &c_tileBatteryGasGaugeBlockMask,
+                                            (__arm_2d_color_t){GLCD_COLOR_NIXIE_TUBE},
+                                            chOpacity);
+                    
+                    arm_2d_op_wait_async(NULL);
+                    __centre_region.tLocation.iY += 12;
+
                 }
-                
-                if (this.bBoarderFlashing) {
-                    chOpacity = MIN(this.chBoarderOpacity, chOpacity);
-                }
-
-                __centre_region.tLocation.iY += 4;
-                
-                arm_2d_fill_colour_with_mask_and_opacity(
-                                        ptTile,
-                                        &__centre_region,
-                                        &c_tileBatteryGasGaugeBlockMask,
-                                        (__arm_2d_color_t){GLCD_COLOR_NIXIE_TUBE},
-                                        chOpacity);
-                
-                arm_2d_op_wait_async(NULL);
-                __centre_region.tLocation.iY += 12;
-
             }
+        } while(0);
+    }
+}
+
+
+
+ARM_NONNULL(1)
+void battery_gasgauge_liquid_init(battery_liquid_t *ptThis)
+{
+    assert(NULL != ptThis);
+    memset(ptThis, 0, sizeof(battery_liquid_t));
+}
+
+ARM_NONNULL(1)
+void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
+                                    const arm_2d_tile_t *ptTile,
+                                    const arm_2d_region_t *ptRegion,
+                                    uint16_t hwGasgauge,
+                                    battery_status_t tStatus,
+                                    bool bIsNewFrame)
+{
+    arm_2d_region_t tDrawRegion = {0};
+    arm_2d_tile_t tDrawTile;
+    hwGasgauge = MIN(1000, hwGasgauge);
+
+    if (bIsNewFrame){
+        this.hwGasGauge = hwGasgauge;
+        this.tStatus = tStatus;
+    }
+
+    if (NULL == ptTile) {
+        ptTile = arm_2d_get_default_frame_buffer();
+        if (NULL == ptTile) {
+            return ;
         }
-    } while(0);
+    }
+
+    if (NULL == ptRegion) {
+        tDrawRegion.tSize = ptTile->tRegion.tSize;
+        ptRegion = (const arm_2d_region_t *)&tDrawRegion;
+    }
+
+    ptTile = arm_2d_tile_generate_child(ptTile, ptRegion, &tDrawTile, false);
+    if (NULL == ptTile) {
+        return ;
+    }
+
+    
+
 }
 
 #if defined(__clang__)

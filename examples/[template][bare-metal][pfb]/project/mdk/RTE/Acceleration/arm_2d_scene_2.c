@@ -197,82 +197,82 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
     
     arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
 
-    arm_2d_align_centre(ptTile->tRegion, 150, 80) {
+    arm_2d_canvas(ptTile, __canvas) {
+        arm_2d_align_centre(__canvas, 150, 80) {
 
-        __centre_region.tSize.iWidth = 60;
-        progress_wheel_show(&this.tWheel,
-                            ptTile, 
-                            &__centre_region,       
-                            this.iProgress,         /* progress 0~1000 */
-                            255 - 32,               /* opacity */
-                            bIsNewFrame);
+            __centre_region.tSize.iWidth = 60;
+            progress_wheel_show(&this.tWheel,
+                                ptTile, 
+                                &__centre_region,       
+                                this.iProgress,         /* progress 0~1000 */
+                                255 - 32,               /* opacity */
+                                bIsNewFrame);
 
-        __centre_region.tLocation.iX += 60;
-        __centre_region.tSize.iWidth = 30;
-        while(arm_fsm_rt_cpl != number_list_show(   &this.tNumberList[2], 
-                                                    ptTile, 
-                                                    &__centre_region, 
-                                                    bIsNewFrame));
-        __centre_region.tLocation.iX += 30;
-        while(arm_fsm_rt_cpl != number_list_show(   &this.tNumberList[1], 
-                                                    ptTile, 
-                                                    &__centre_region, 
-                                                    bIsNewFrame));
-        __centre_region.tLocation.iX += 30;
-        while(arm_fsm_rt_cpl != number_list_show(   &this.tNumberList[0], 
-                                                    ptTile, 
-                                                    &__centre_region, 
-                                                    bIsNewFrame));
-        
+            __centre_region.tLocation.iX += 60;
+            __centre_region.tSize.iWidth = 30;
+            while(arm_fsm_rt_cpl != number_list_show(   &this.tNumberList[2], 
+                                                        ptTile, 
+                                                        &__centre_region, 
+                                                        bIsNewFrame));
+            __centre_region.tLocation.iX += 30;
+            while(arm_fsm_rt_cpl != number_list_show(   &this.tNumberList[1], 
+                                                        ptTile, 
+                                                        &__centre_region, 
+                                                        bIsNewFrame));
+            __centre_region.tLocation.iX += 30;
+            while(arm_fsm_rt_cpl != number_list_show(   &this.tNumberList[0], 
+                                                        ptTile, 
+                                                        &__centre_region, 
+                                                        bIsNewFrame));
+            
 
-    }
-    
-    arm_2d_align_top_right( ptTile->tRegion, 
-                            c_tileWhiteDotMask.tRegion.tSize.iWidth + 10,
-                            c_tileWhiteDotMask.tRegion.tSize.iHeight) {
-        
-        if (bIsNewFrame) {
-            int32_t iResult;
-            arm_2d_helper_time_cos_slider(0, 255, 2000, 0, &iResult);
-            this.chOpacity = (uint8_t)iResult;
         }
         
-        arm_2d_fill_colour_with_mask_and_opacity(ptTile,
-                                                 &__top_right_region,
-                                                 &c_tileWhiteDotMask,
-                                                 (__arm_2d_color_t){GLCD_COLOR_RED},
-                                                 this.chOpacity);
+        arm_2d_align_top_right( __canvas, 
+                                c_tileWhiteDotMask.tRegion.tSize.iWidth + 10,
+                                c_tileWhiteDotMask.tRegion.tSize.iHeight) {
+            
+            if (bIsNewFrame) {
+                int32_t iResult;
+                arm_2d_helper_time_cos_slider(0, 255, 2000, 0, &iResult);
+                this.chOpacity = (uint8_t)iResult;
+            }
+            
+            arm_2d_fill_colour_with_mask_and_opacity(ptTile,
+                                                     &__top_right_region,
+                                                     &c_tileWhiteDotMask,
+                                                     (__arm_2d_color_t){GLCD_COLOR_RED},
+                                                     this.chOpacity);
+        }
+        
+    //    arm_2d_align_centre(__canvas, 100, 100) {
+    //        static arm_2d_location_t s_tOffset = {0,0};
+    //        if (bIsNewFrame) {
+    //            static int64_t s_lTimestamp[2] = {0};
+    //            int32_t iXOffset, iYOffset;
+    //            arm_2d_helper_time_cos_slider(0, 100, 2000, 0, &iXOffset, &s_lTimestamp[0]);
+    //            arm_2d_helper_time_cos_slider(0, 100, 2000, ARM_2D_ANGLE(90), &iYOffset, &s_lTimestamp[1]);
+    //            s_tOffset.iX = iXOffset;
+    //            s_tOffset.iY = iYOffset;
+    //        }
+    //        
+    //        __centre_region.tLocation.iX += 100 - s_tOffset.iX;
+    //        __centre_region.tLocation.iY += s_tOffset.iY;
+    //        arm_2d_fill_colour_with_mask(ptTile,
+    //                                     &__centre_region,
+    //                                     &c_tileWhiteDotMask,
+    //                                     (__arm_2d_color_t){GLCD_COLOR_RED});
+    //    
+    //    }
+
+
+        /* draw text at the top-left corner */
+        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+        arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
+        arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
+        arm_lcd_text_location(0,0);
+        arm_lcd_printf("scene 2");
     }
-    
-//    arm_2d_align_centre(ptTile->tRegion, 100, 100) {
-//        static arm_2d_location_t s_tOffset = {0,0};
-//        if (bIsNewFrame) {
-//            static int64_t s_lTimestamp[2] = {0};
-//            int32_t iXOffset, iYOffset;
-//            arm_2d_helper_time_cos_slider(0, 100, 2000, 0, &iXOffset, &s_lTimestamp[0]);
-//            arm_2d_helper_time_cos_slider(0, 100, 2000, ARM_2D_ANGLE(90), &iYOffset, &s_lTimestamp[1]);
-//            s_tOffset.iX = iXOffset;
-//            s_tOffset.iY = iYOffset;
-//        }
-//        
-//        __centre_region.tLocation.iX += 100 - s_tOffset.iX;
-//        __centre_region.tLocation.iY += s_tOffset.iY;
-//        arm_2d_fill_colour_with_mask(ptTile,
-//                                     &__centre_region,
-//                                     &c_tileWhiteDotMask,
-//                                     (__arm_2d_color_t){GLCD_COLOR_RED});
-//    
-//    }
-
-
-    /* draw text at the top-left corner */
-    arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-    arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
-    arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
-    arm_lcd_text_location(0,0);
-    //arm_lcd_puts("scene 2");
-    arm_lcd_printf("scene 2");
-
     /*-----------------------draw the foreground end  -----------------------*/
     arm_2d_op_wait_async(NULL);
 

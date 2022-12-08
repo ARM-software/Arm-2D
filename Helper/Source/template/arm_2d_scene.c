@@ -164,43 +164,45 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene%Instance%_handler)
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
     
+    arm_2d_canvas(ptTile, __top_container) {
     /*-----------------------draw the foreground begin-----------------------*/
-    
-    /* following code is just a demo, you can remove them */
-    
-    arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
+        
+        /* following code is just a demo, you can remove them */
+        
+        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
+        
+    #if 0
+        /* draw the cmsis logo in the centre of the screen */
+        arm_2d_align_centre(__top_container, c_tileCMSISLogo.tRegion.tSize) {
+            arm_2d_tile_copy_with_src_mask( &c_tileCMSISLogo,
+                                            &c_tileCMSISLogoMask,
+                                            ptTile,
+                                            &__centre_region,
+                                            ARM_2D_CP_MODE_COPY);
+        }
+    #else
+        /* draw the cmsis logo using mask in the centre of the screen */
+        arm_2d_align_centre(__top_container, c_tileCMSISLogo.tRegion.tSize) {
+            arm_2d_fill_colour_with_a4_mask_and_opacity(   
+                                                ptTile, 
+                                                &__centre_region, 
+                                                &c_tileCMSISLogoA4Mask, 
+                                                (__arm_2d_color_t){GLCD_COLOR_BLACK},
+                                                64);
+        }
+    #endif
 
-#if 0
-    /* draw the cmsis logo in the centre of the screen */
-    arm_2d_align_centre(ptTile->tRegion, c_tileCMSISLogo.tRegion.tSize) {
-        arm_2d_tile_copy_with_src_mask( &c_tileCMSISLogo,
-                                        &c_tileCMSISLogoMask,
-                                        ptTile,
-                                        &__centre_region,
-                                        ARM_2D_CP_MODE_COPY);
-    }
-#else
-    /* draw the cmsis logo using mask in the centre of the screen */
-    arm_2d_align_centre(ptTile->tRegion, c_tileCMSISLogo.tRegion.tSize) {
-        arm_2d_fill_colour_with_a4_mask_and_opacity(   
-                                            ptTile, 
-                                            &__centre_region, 
-                                            &c_tileCMSISLogoA4Mask, 
-                                            (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                                            64);
-    }
-#endif
+        /* draw text at the top-left corner */
 
-    /* draw text at the top-left corner */
-
-    arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-    arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
-    arm_lcd_text_set_draw_region(NULL);
-    arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
-    arm_lcd_text_location(0,0);
-    arm_lcd_puts("Scene %Instance%");
+        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+        arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
+        arm_lcd_text_set_draw_region(NULL);
+        arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
+        arm_lcd_text_location(0,0);
+        arm_lcd_puts("Scene %Instance%");
 
     /*-----------------------draw the foreground end  -----------------------*/
+    }
     arm_2d_op_wait_async(NULL);
 
     return arm_fsm_rt_cpl;

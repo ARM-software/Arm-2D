@@ -200,7 +200,7 @@ extern "C" {
 #define IMPL_PFB_ON_DRAW(__NAME)                                                \
             arm_fsm_rt_t __NAME(void *pTarget,                                  \
                                 const arm_2d_tile_t *ptTile,                    \
-                                bool bIsNewFrame)    
+                                bool bIsNewFrame)
 
 #define IMPL_PFB_ON_LOW_LV_RENDERING(__NAME)                                    \
             void __NAME(void *pTarget,                                          \

@@ -94,47 +94,48 @@ void spinning_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
     ARM_2D_UNUSED(bIsNewFrame);
     static float s_fAngle = 0.0f;
 
-    arm_2d_align_centre(ptTarget->tRegion, 100, 100) {
-        
-        draw_round_corner_box(  ptTarget, 
-                                &__centre_region,
-                                GLCD_COLOR_BLACK,
-                                64,
-                                bIsNewFrame);    
-        arm_2d_op_wait_async(NULL);
-    }
-
-    
-    //! spin mask
-    do {
-        static arm_2d_op_fill_cl_msk_opa_trans_t s_tMaskRotateCB = {0};
-    
-        if (bIsNewFrame) {
-            s_fAngle += ARM_2D_ANGLE(6.0f);
-            s_fAngle = fmodf(s_fAngle,ARM_2D_ANGLE(360));
-        }
-
-        arm_2d_location_t c_tCentre = {
-            .iX = c_tileSpinWheelMask.tRegion.tSize.iWidth >> 1,
-            .iY = c_tileSpinWheelMask.tRegion.tSize.iHeight >> 1,
-        };
-
-        arm_2d_align_centre(ptTarget->tRegion, c_tileSpinWheelMask.tRegion.tSize) {
-            arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                            &s_tMaskRotateCB,
-                                            &c_tileSpinWheelMask,
-                                            ptTarget,
-                                            &__centre_region,
-                                            c_tCentre,
-                                            s_fAngle,
-                                            1.0f,
-                                            GLCD_COLOR_WHITE,
-                                            254);
-
+    arm_2d_canvas(ptTarget, __top_container) {
+        arm_2d_align_centre(__top_container, 100, 100) {
+            
+            draw_round_corner_box(  ptTarget, 
+                                    &__centre_region,
+                                    GLCD_COLOR_BLACK,
+                                    64,
+                                    bIsNewFrame);    
             arm_2d_op_wait_async(NULL);
         }
-    } while(0);
 
+        
+        //! spin mask
+        do {
+            static arm_2d_op_fill_cl_msk_opa_trans_t s_tMaskRotateCB = {0};
+        
+            if (bIsNewFrame) {
+                s_fAngle += ARM_2D_ANGLE(6.0f);
+                s_fAngle = fmodf(s_fAngle,ARM_2D_ANGLE(360));
+            }
+
+            arm_2d_location_t c_tCentre = {
+                .iX = c_tileSpinWheelMask.tRegion.tSize.iWidth >> 1,
+                .iY = c_tileSpinWheelMask.tRegion.tSize.iHeight >> 1,
+            };
+
+            arm_2d_align_centre(__top_container, c_tileSpinWheelMask.tRegion.tSize) {
+                arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                                                &s_tMaskRotateCB,
+                                                &c_tileSpinWheelMask,
+                                                ptTarget,
+                                                &__centre_region,
+                                                c_tCentre,
+                                                s_fAngle,
+                                                1.0f,
+                                                GLCD_COLOR_WHITE,
+                                                254);
+
+                arm_2d_op_wait_async(NULL);
+            }
+        } while(0);
+    }
 }
 
 
@@ -148,161 +149,45 @@ void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget,
     static float s_fAngle = 0.0f;
 
 
+    arm_2d_canvas(ptTarget, __top_container) {
 
-#if 0
-
-    arm_2d_align_centre(ptTarget->tRegion, 61, 61) {
-
-        arm_2d_fill_colour_with_mask_and_opacity( ptTarget,
-                                                  &__centre_region,
-                                                  &c_tileQuaterArcMask,
-                                                  (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY},
-                                                  128);
-        static arm_2d_op_rotate_t s_tMaskRotateCB = {0};
-        
-        const arm_2d_location_t c_tCentre = {
-            .iX = 30,
-            .iY = 30,
-        };
-
-        //! spin mask
-        do {
-            
-            memset(s_tileSpinWheelMask.pchBuffer, 0, sizeof(s_tileSpinWheelMaskBuffer));
-            
-            arm_2d_gray8_tile_rotation(//&s_tMaskRotateBG,
-                                        &c_tileQuaterArcMask,
-                                        &s_tileSpinWheelMask,
-                                        NULL,
-                                        c_tCentre,
-                                        ARM_2D_ANGLE(90.0f),
-                                        0x00);
-
+        arm_2d_align_centre(__top_container, 55, 55) {
+            arm_2d_fill_colour_with_mask_and_opacity(  
+                                            ptTarget,
+                                            &__centre_region,
+                                            &c_tileGreenCircleMask,
+                                            (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY},
+                                            128);
             arm_2d_op_wait_async(NULL);
-            
-            arm_2d_fill_colour_with_mask_and_opacity( ptTarget,
-                                                      &__centre_region,
-                                                      &s_tileSpinWheelMask,
-                                                      (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY},
-                                                      128);
-            
-            arm_2d_op_wait_async(NULL);
-        } while (0);
-        
-        do {
-            
-            memset(s_tileSpinWheelMask.pchBuffer, 0, sizeof(s_tileSpinWheelMaskBuffer));
-            
-            arm_2d_gray8_tile_rotation(//&s_tMaskRotateBG,
-                                        &c_tileQuaterArcMask,
-                                        &s_tileSpinWheelMask,
-                                        NULL,
-                                        c_tCentre,
-                                        ARM_2D_ANGLE(180.0f),
-                                        0x00);
 
-            arm_2d_op_wait_async(NULL);
+            static arm_2d_op_fill_cl_msk_opa_trans_t s_tMaskRotateCB = {0};
             
-            arm_2d_fill_colour_with_mask_and_opacity( ptTarget,
-                                                      &__centre_region,
-                                                      &s_tileSpinWheelMask,
-                                                      (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY},
-                                                      128);
-            
-            arm_2d_op_wait_async(NULL);
-        } while (0);
+            const arm_2d_location_t c_tCentre = {
+                .iX = 0,
+                .iY = 0,
+            };
 
-        do {
             
-            memset(s_tileSpinWheelMask.pchBuffer, 0, sizeof(s_tileSpinWheelMaskBuffer));
-            
-            arm_2d_gray8_tile_rotation(//&s_tMaskRotateBG,
-                                        &c_tileQuaterArcMask,
-                                        &s_tileSpinWheelMask,
-                                        NULL,
-                                        c_tCentre,
-                                        ARM_2D_ANGLE(270.0f),
-                                        0x00);
-
-            arm_2d_op_wait_async(NULL);
-            
-            arm_2d_fill_colour_with_mask_and_opacity( ptTarget,
-                                                      &__centre_region,
-                                                      &s_tileSpinWheelMask,
-                                                      (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY},
-                                                      128);
-            
-            arm_2d_op_wait_async(NULL);
-        } while (0);
-
-        do {
-            
-            memset(s_tileSpinWheelMask.pchBuffer, 0, sizeof(s_tileSpinWheelMaskBuffer));
-
             if (bIsNewFrame) {
                 s_fAngle += ARM_2D_ANGLE(6.0f);
                 s_fAngle = fmodf(s_fAngle,ARM_2D_ANGLE(360));
             }
 
-            arm_2dp_gray8_tile_rotation(&s_tMaskRotateCB,
-                                        &c_tileQuaterArcMask,
-                                        &s_tileSpinWheelMask,
-                                        NULL,
-                                        c_tCentre,
-                                        s_fAngle,
-                                        0x00);
+            arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                                            &s_tMaskRotateCB,
+                                            &c_tileGreenCircleQuaterMask,
+                                            ptTarget,
+                                            &__centre_region,
+                                            c_tCentre,
+                                            s_fAngle,
+                                            1.0f,
+                                            Colour,
+                                            64
+                                        );
 
             arm_2d_op_wait_async(NULL);
-            
-            arm_2d_fill_colour_with_mask_and_opacity( ptTarget,
-                                                      &__centre_region,
-                                                      &s_tileSpinWheelMask,
-                                                      (__arm_2d_color_t){Colour},
-                                                      128);
-            
-            arm_2d_op_wait_async(NULL);
-        } while (0);
-    }
-#else
-    arm_2d_align_centre(ptTarget->tRegion, 55, 55) {
-        arm_2d_fill_colour_with_mask_and_opacity(  
-                                        ptTarget,
-                                        &__centre_region,
-                                        &c_tileGreenCircleMask,
-                                        (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY},
-                                        128);
-        arm_2d_op_wait_async(NULL);
-
-        static arm_2d_op_fill_cl_msk_opa_trans_t s_tMaskRotateCB = {0};
-        
-        const arm_2d_location_t c_tCentre = {
-            .iX = 0,
-            .iY = 0,
-        };
-
-        
-        if (bIsNewFrame) {
-            s_fAngle += ARM_2D_ANGLE(6.0f);
-            s_fAngle = fmodf(s_fAngle,ARM_2D_ANGLE(360));
         }
-
-        arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                        &s_tMaskRotateCB,
-                                        &c_tileGreenCircleQuaterMask,
-                                        ptTarget,
-                                        &__centre_region,
-                                        c_tCentre,
-                                        s_fAngle,
-                                        1.0f,
-                                        Colour,
-                                        64
-                                    );
-
-        arm_2d_op_wait_async(NULL);
-        
     }
-#endif
-
 }
 
 
