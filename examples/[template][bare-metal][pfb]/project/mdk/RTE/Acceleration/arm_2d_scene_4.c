@@ -209,10 +209,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene4_handler)
                     tTextSize.iWidth *= 2;
                     
                     arm_2d_align_bottom_centre(__item_region, tTextSize) {
-                    
-                        __bottom_centre_region.tLocation.iX += __item_region.tLocation.iX;
-                        __bottom_centre_region.tLocation.iY += __item_region.tLocation.iY;
-                        
+
                         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
                         arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
                         arm_lcd_text_set_draw_region(&__bottom_centre_region);

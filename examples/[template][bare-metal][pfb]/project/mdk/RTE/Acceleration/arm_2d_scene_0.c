@@ -248,11 +248,9 @@ user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter,
      * this demo shows that we create a region in the centre of a screen(320*240)
      * for a image stored in the tile c_tileCMSISLogoMask
      */
-    s_tDirtyRegions[0].tRegion.tLocation = (arm_2d_location_t){
-        .iX = ((tScreen.tSize.iWidth - c_tileCMSISLogoMask.tRegion.tSize.iWidth) >> 1),
-        .iY = ((tScreen.tSize.iHeight - c_tileCMSISLogoMask.tRegion.tSize.iHeight) >> 1),
-    };
-    s_tDirtyRegions[0].tRegion.tSize = c_tileCMSISLogoMask.tRegion.tSize;
+    arm_2d_align_centre(tScreen, c_tileCMSISLogoMask.tRegion.tSize) {
+        s_tDirtyRegions[0].tRegion = __centre_region;
+    }
     
     if (NULL == ptThis) {
         ptThis = (user_scene_0_t *)malloc(sizeof(user_scene_0_t));

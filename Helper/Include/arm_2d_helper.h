@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        7. Dec 2022
- * $Revision:    V.1.5.0
+ * $Date:        8. Dec 2022
+ * $Revision:    V.1.6.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -210,37 +210,28 @@ extern "C" {
  * 
  */
 #define __arm_2d_align_top_left2(__region, __size)                              \
-    for (arm_2d_region_t __top_left_region = {                                  \
-            .tSize = (__size),                                                  \
-            .tLocation = {                                                      \
-                .iX = 0,                                                        \
-                .iY = 0,                                                        \
-            },                                                                  \
-        },                                                                      \
-        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
-         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
-         arm_2d_op_wait_async(NULL)                                             \
-        )
+            arm_using(                                                          \
+                arm_2d_region_t __top_left_region,                              \
+                {                                                               \
+                    __top_left_region.tSize.iWidth = (__size).iWidth;           \
+                    __top_left_region.tSize.iHeight = (__size).iHeight;         \
+                    __top_left_region.tLocation = (__region).tLocation;         \
+                },                                                              \
+                { __top_left_region = __top_left_region;})
 
 /*!
  * \brief Please do NOT use this macro
  * 
  */
 #define __arm_2d_align_top_left3(__region, __width, __height)                   \
-    for (arm_2d_region_t __top_left_region = {                                  \
-            .tSize = {                                                          \
-                .iWidth = (__width),                                            \
-                .iHeight = (__height),                                          \
-            },                                                                  \
-            .tLocation = {                                                      \
-                .iX = 0,                                                        \
-                .iY = 0,                                                        \
-            },                                                                  \
-        },                                                                      \
-        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
-         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
-         arm_2d_op_wait_async(NULL)                                             \
-        )
+            arm_using(                                                          \
+                    arm_2d_region_t __top_left_region,                          \
+                    {                                                           \
+                        __top_left_region.tSize.iWidth = (__width);             \
+                        __top_left_region.tSize.iHeight = (__height);           \
+                        __top_left_region.tLocation = (__region).tLocation;     \
+                    },                                                          \
+                    { __top_left_region = __top_left_region;})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with use specified info for
@@ -268,37 +259,32 @@ extern "C" {
  * 
  */
 #define __arm_2d_align_top_centre2(__region, __size)                            \
-    for (arm_2d_region_t __top_centre_region = {                                \
-            .tSize = (__size),                                                  \
-            .tLocation = {                                                      \
-                .iX = ((__region).tSize.iWidth - (__size).iWidth)  >> 1,        \
-                .iY = 0,                                                        \
-            },                                                                  \
-        },                                                                      \
-        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
-         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
-         arm_2d_op_wait_async(NULL)                                             \
-        )
+            arm_using(                                                          \
+                arm_2d_region_t __top_centre_region,                            \
+                {                                                               \
+                    __top_centre_region.tSize.iWidth = (__size).iWidth;         \
+                    __top_centre_region.tSize.iHeight = (__size).iHeight;       \
+                    __top_centre_region.tLocation = (__region).tLocation;       \
+                    __top_centre_region.tLocation.iX                            \
+                        += ((__region).tSize.iWidth - (__size).iWidth) >> 1;    \
+                },                                                              \
+                { __top_centre_region = __top_centre_region;})
 
 /*!
  * \brief Please do NOT use this macro
  * 
  */
 #define __arm_2d_align_top_centre3(__region, __width, __height)                 \
-    for (arm_2d_region_t __top_centre_region = {                                \
-            .tSize = {                                                          \
-                .iWidth = (__width),                                            \
-                .iHeight = (__height),                                          \
-            },                                                                  \
-            .tLocation = {                                                      \
-                .iX = ((__region).tSize.iWidth - (__width))  >> 1,              \
-                .iY = 0,                                                        \
-            },                                                                  \
-        },                                                                      \
-        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
-         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
-         arm_2d_op_wait_async(NULL)                                             \
-        )
+            arm_using(                                                          \
+                    arm_2d_region_t __top_centre_region,                        \
+                    {                                                           \
+                        __top_centre_region.tSize.iWidth = (__width);           \
+                        __top_centre_region.tSize.iHeight = (__height);         \
+                        __top_centre_region.tLocation = (__region).tLocation;   \
+                        __top_centre_region.tLocation.iX                        \
+                            += ((__region).tSize.iWidth - (__width)) >> 1;      \
+                    },                                                          \
+                    { __top_centre_region = __top_centre_region;})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with use specified info for
@@ -326,38 +312,32 @@ extern "C" {
  * 
  */
 #define __arm_2d_align_top_right2(__region, __size)                             \
-    for (arm_2d_region_t __top_right_region = {                                 \
-            .tSize = (__size),                                                  \
-            .tLocation = {                                                      \
-                .iX = ((__region).tSize.iWidth - (__size).iWidth),              \
-                .iY = 0,                                                        \
-            },                                                                  \
-        },                                                                      \
-        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
-         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
-         arm_2d_op_wait_async(NULL)                                             \
-        )
-
+            arm_using(                                                          \
+                arm_2d_region_t __top_right_region,                             \
+                {                                                               \
+                    __top_right_region.tSize.iWidth = (__size).iWidth;          \
+                    __top_right_region.tSize.iHeight = (__size).iHeight;        \
+                    __top_right_region.tLocation = (__region).tLocation;        \
+                    __top_right_region.tLocation.iX                             \
+                        += ((__region).tSize.iWidth - (__size).iWidth);         \
+                },                                                              \
+                { __top_right_region = __top_right_region;})
 
 /*!
  * \brief Please do NOT use this macro
  * 
  */
 #define __arm_2d_align_top_right3(__region, __width, __height)                  \
-    for (arm_2d_region_t __top_right_region = {                                 \
-            .tSize = {                                                          \
-                .iWidth = (__width),                                            \
-                .iHeight = (__height),                                          \
-            },                                                                  \
-            .tLocation = {                                                      \
-                .iX = ((__region).tSize.iWidth - (__width)),                    \
-                .iY = 0,                                                        \
-            },                                                                  \
-        },                                                                      \
-        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
-         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
-         arm_2d_op_wait_async(NULL)                                             \
-        )
+            arm_using(                                                          \
+                    arm_2d_region_t __top_right_region,                         \
+                    {                                                           \
+                        __top_right_region.tSize.iWidth = (__width);            \
+                        __top_right_region.tSize.iHeight = (__height);          \
+                        __top_right_region.tLocation = (__region).tLocation;    \
+                        __top_right_region.tLocation.iX                         \
+                            += ((__region).tSize.iWidth - (__width));           \
+                    },                                                          \
+                    { __top_right_region = __top_right_region;})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with use specified info for
@@ -387,37 +367,32 @@ extern "C" {
  * 
  */
 #define __arm_2d_align_mid_left2(__region, __size)                              \
-    for (arm_2d_region_t __mid_left_region = {                                  \
-            .tSize = (__size),                                                  \
-            .tLocation = {                                                      \
-                .iX = 0,                                                        \
-                .iY = ((__region).tSize.iHeight - (__size).iHeight)>> 1,        \
-            },                                                                  \
-        },                                                                      \
-        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
-         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
-         arm_2d_op_wait_async(NULL)                                             \
-        )
+            arm_using(                                                          \
+                arm_2d_region_t __mid_left_region,                              \
+                {                                                               \
+                    __mid_left_region.tSize.iWidth = (__size).iWidth;           \
+                    __mid_left_region.tSize.iHeight = (__size).iHeight;         \
+                    __mid_left_region.tLocation = (__region).tLocation;         \
+                    __mid_left_region.tLocation.iY                              \
+                        += ((__region).tSize.iHeight - (__size).iHeight) >> 1;  \
+                },                                                              \
+                { __mid_left_region = __mid_left_region;})
 
 /*!
  * \brief Please do NOT use this macro
  * 
  */
 #define __arm_2d_align_mid_left3(__region, __width, __height)                   \
-    for (arm_2d_region_t __mid_left_region = {                                  \
-            .tSize = {                                                          \
-                .iWidth = (__width),                                            \
-                .iHeight = (__height),                                          \
-            },                                                                  \
-            .tLocation = {                                                      \
-                .iX = 0,                                                        \
-                .iY = ((__region).tSize.iHeight - (__height))>> 1,              \
-            },                                                                  \
-        },                                                                      \
-        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
-         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
-         arm_2d_op_wait_async(NULL)                                             \
-        )
+            arm_using(                                                          \
+                    arm_2d_region_t __mid_left_region,                          \
+                    {                                                           \
+                        __mid_left_region.tSize.iWidth = (__width);             \
+                        __mid_left_region.tSize.iHeight = (__height);           \
+                        __mid_left_region.tLocation = (__region).tLocation;     \
+                        __mid_left_region.tLocation.iY                          \
+                            += ((__region).tSize.iHeight - (__height)) >> 1;    \
+                    },                                                          \
+                    { __mid_left_region = __mid_left_region;})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with use specified info for
@@ -500,37 +475,36 @@ extern "C" {
  * 
  */
 #define __arm_2d_align_mid_right2(__region, __size)                             \
-    for (arm_2d_region_t __mid_right_region = {                                 \
-            .tSize = (__size),                                                  \
-            .tLocation = {                                                      \
-                .iX = ((__region).tSize.iWidth - (__size).iWidth),              \
-                .iY = ((__region).tSize.iHeight - (__size).iHeight)>> 1,        \
-            },                                                                  \
-        },                                                                      \
-        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
-         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
-         arm_2d_op_wait_async(NULL)                                             \
-        )
+            arm_using(                                                          \
+                arm_2d_region_t __mid_right_region,                             \
+                {                                                               \
+                    __mid_right_region.tSize.iWidth = (__size).iWidth;          \
+                    __mid_right_region.tSize.iHeight = (__size).iHeight;        \
+                    __mid_right_region.tLocation = (__region).tLocation;        \
+                    __mid_right_region.tLocation.iX                             \
+                        += ((__region).tSize.iWidth - (__size).iWidth);         \
+                    __mid_right_region.tLocation.iY                             \
+                        += ((__region).tSize.iHeight - (__size).iHeight) >> 1;  \
+                },                                                              \
+                { __mid_right_region = __mid_right_region;})
 
 /*!
  * \brief Please do NOT use this macro
  * 
  */
 #define __arm_2d_align_mid_right3(__region, __width, __height)                  \
-    for (arm_2d_region_t __mid_right_region = {                                 \
-            .tSize = {                                                          \
-                .iWidth = (__width),                                            \
-                .iHeight = (__height),                                          \
-            },                                                                  \
-            .tLocation = {                                                      \
-                .iX = ((__region).tSize.iWidth - (__width)),                    \
-                .iY = ((__region).tSize.iHeight - (__height))>> 1,              \
-            },                                                                  \
-        },                                                                      \
-        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
-         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
-         arm_2d_op_wait_async(NULL)                                             \
-        )
+            arm_using(                                                          \
+                arm_2d_region_t __mid_right_region,                             \
+                {                                                               \
+                    __mid_right_region.tSize.iWidth = (__width);                \
+                    __mid_right_region.tSize.iHeight = (__height);              \
+                    __mid_right_region.tLocation = (__region).tLocation;        \
+                    __mid_right_region.tLocation.iX                             \
+                        += ((__region).tSize.iWidth - (__width));               \
+                    __mid_right_region.tLocation.iY                             \
+                        += ((__region).tSize.iHeight - (__height)) >> 1;        \
+                },                                                              \
+                { __mid_right_region = __mid_right_region;})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with use specified info for
@@ -558,37 +532,32 @@ extern "C" {
  * 
  */
 #define __arm_2d_align_bottom_left2(__region, __size)                           \
-    for (arm_2d_region_t __bottom_left_region = {                               \
-            .tSize = (__size),                                                  \
-            .tLocation = {                                                      \
-                .iX = 0,                                                        \
-                .iY = ((__region).tSize.iHeight - (__size).iHeight),            \
-            },                                                                  \
-        },                                                                      \
-        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
-         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
-         arm_2d_op_wait_async(NULL)                                             \
-        )
+            arm_using(                                                          \
+                arm_2d_region_t __bottom_left_region,                           \
+                {                                                               \
+                    __bottom_left_region.tSize.iWidth = (__size).iWidth;        \
+                    __bottom_left_region.tSize.iHeight = (__size).iHeight;      \
+                    __bottom_left_region.tLocation = (__region).tLocation;      \
+                    __bottom_left_region.tLocation.iY                           \
+                        += ((__region).tSize.iHeight - (__size).iHeight);       \
+                },                                                              \
+                { __bottom_left_region = __bottom_left_region;})
 
 /*!
  * \brief Please do NOT use this macro
  * 
  */
 #define __arm_2d_align_bottom_left3(__region, __width, __height)                \
-    for (arm_2d_region_t __bottom_left_region = {                               \
-            .tSize = {                                                          \
-                .iWidth = (__width),                                            \
-                .iHeight = (__height),                                          \
-            },                                                                  \
-            .tLocation = {                                                      \
-                .iX = 0,                                                        \
-                .iY = ((__region).tSize.iHeight - (__height)),                  \
-            },                                                                  \
-        },                                                                      \
-        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
-         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
-         arm_2d_op_wait_async(NULL)                                             \
-        )
+            arm_using(                                                          \
+                arm_2d_region_t __bottom_left_region,                           \
+                {                                                               \
+                    __bottom_left_region.tSize.iWidth = (__width);              \
+                    __bottom_left_region.tSize.iHeight = (__height);            \
+                    __bottom_left_region.tLocation = (__region).tLocation;      \
+                    __bottom_left_region.tLocation.iY                           \
+                        += ((__region).tSize.iHeight - (__height));             \
+                },                                                              \
+                { __bottom_left_region = __bottom_left_region;})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with use specified info for
@@ -615,37 +584,36 @@ extern "C" {
  * 
  */
 #define __arm_2d_align_bottom_centre2(__region, __size)                         \
-    for (arm_2d_region_t __bottom_centre_region = {                             \
-            .tSize = (__size),                                                  \
-            .tLocation = {                                                      \
-                .iX = ((__region).tSize.iWidth - (__size).iWidth)  >> 1,        \
-                .iY = ((__region).tSize.iHeight - (__size).iHeight),            \
-            },                                                                  \
-        },                                                                      \
-        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
-         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
-         arm_2d_op_wait_async(NULL)                                             \
-        )
+            arm_using(                                                          \
+                arm_2d_region_t __bottom_centre_region,                         \
+                {                                                               \
+                    __bottom_centre_region.tSize.iWidth = (__size).iWidth;      \
+                    __bottom_centre_region.tSize.iHeight = (__size).iHeight;    \
+                    __bottom_centre_region.tLocation = (__region).tLocation;    \
+                    __bottom_centre_region.tLocation.iX                         \
+                        += ((__region).tSize.iWidth - (__size).iWidth)  >> 1;   \
+                    __bottom_centre_region.tLocation.iY                         \
+                        += ((__region).tSize.iHeight - (__size).iHeight);       \
+                },                                                              \
+                { __bottom_centre_region = __bottom_centre_region;})
 
 /*!
  * \brief Please do NOT use this macro
  * 
  */
 #define __arm_2d_align_bottom_centre3(__region, __width, __height)              \
-    for (arm_2d_region_t __bottom_centre_region = {                             \
-            .tSize = {                                                          \
-                .iWidth = (__width),                                            \
-                .iHeight = (__height),                                          \
-            },                                                                  \
-            .tLocation = {                                                      \
-                .iX = ((__region).tSize.iWidth - (__width))  >> 1,              \
-                .iY = ((__region).tSize.iHeight - (__height)),                  \
-            },                                                                  \
-        },                                                                      \
-        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
-         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
-         arm_2d_op_wait_async(NULL)                                             \
-        )
+            arm_using(                                                          \
+                arm_2d_region_t __bottom_centre_region,                         \
+                {                                                               \
+                    __bottom_centre_region.tSize.iWidth = (__width);            \
+                    __bottom_centre_region.tSize.iHeight = (__height);          \
+                    __bottom_centre_region.tLocation = (__region).tLocation;    \
+                    __bottom_centre_region.tLocation.iX                         \
+                        += ((__region).tSize.iWidth - (__width))  >> 1;         \
+                    __bottom_centre_region.tLocation.iY                         \
+                        += ((__region).tSize.iHeight - (__height));             \
+                },                                                              \
+                { __bottom_centre_region = __bottom_centre_region;})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with use specified info for
@@ -673,37 +641,36 @@ extern "C" {
  * 
  */
 #define __arm_2d_align_bottom_right2(__region, __size)                          \
-    for (arm_2d_region_t __bottom_right_region = {                              \
-            .tSize = (__size),                                                  \
-            .tLocation = {                                                      \
-                .iX = ((__region).tSize.iWidth - (__size).iWidth),              \
-                .iY = ((__region).tSize.iHeight - (__size).iHeight),            \
-            },                                                                  \
-        },                                                                      \
-        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
-         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
-         arm_2d_op_wait_async(NULL)                                             \
-        )
+            arm_using(                                                          \
+                arm_2d_region_t __bottom_right_region,                          \
+                {                                                               \
+                    __bottom_right_region.tSize.iWidth = (__size).iWidth;       \
+                    __bottom_right_region.tSize.iHeight = (__size).iHeight;     \
+                    __bottom_right_region.tLocation = (__region).tLocation;     \
+                    __bottom_right_region.tLocation.iX                          \
+                        += ((__region).tSize.iWidth - (__size).iWidth);         \
+                    __bottom_right_region.tLocation.iY                          \
+                        += ((__region).tSize.iHeight - (__size).iHeight);       \
+                },                                                              \
+                { __bottom_right_region = __bottom_right_region;})
 
 /*!
  * \brief Please do NOT use this macro
  * 
  */
 #define __arm_2d_align_bottom_right3(__region, __width, __height)               \
-    for (arm_2d_region_t __bottom_right_region = {                              \
-            .tSize = {                                                          \
-                .iWidth = (__width),                                            \
-                .iHeight = (__height),                                          \
-            },                                                                  \
-            .tLocation = {                                                      \
-                .iX = ((__region).tSize.iWidth - (__width)),                    \
-                .iY = ((__region).tSize.iHeight - (__height)),                  \
-            },                                                                  \
-        },                                                                      \
-        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
-         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
-         arm_2d_op_wait_async(NULL)                                             \
-        )
+            arm_using(                                                          \
+                arm_2d_region_t __bottom_right_region,                          \
+                {                                                               \
+                    __bottom_right_region.tSize.iWidth = (__width);             \
+                    __bottom_right_region.tSize.iHeight = (__height);           \
+                    __bottom_right_region.tLocation = (__region).tLocation;     \
+                    __bottom_right_region.tLocation.iX                          \
+                        += ((__region).tSize.iWidth - (__width));               \
+                    __bottom_right_region.tLocation.iY                          \
+                        += ((__region).tSize.iHeight - (__height));             \
+                },                                                              \
+                { __bottom_right_region = __bottom_right_region;})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with use specified info for

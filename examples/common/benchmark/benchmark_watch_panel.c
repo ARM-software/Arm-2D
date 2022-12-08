@@ -407,8 +407,7 @@ void example_gui_refresh(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
         arm_2d_align_centre(__top_container, 200, 200) {
         
             arm_2d_align_top_centre(__centre_region, c_tileCMSISLogoA4Mask.tRegion.tSize) {
-                __top_centre_region.tLocation.iX += __centre_region.tLocation.iX;
-                __top_centre_region.tLocation.iY += __centre_region.tLocation.iY + 20;
+                __top_centre_region.tLocation.iY += 20;
 
                 arm_2d_fill_colour_with_a4_mask_and_opacity(
                                             ptTile,
@@ -420,8 +419,7 @@ void example_gui_refresh(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
             }
             
             arm_2d_align_bottom_centre(__centre_region, 200, 24) {
-                __bottom_centre_region.tLocation.iX += __centre_region.tLocation.iX;
-                __bottom_centre_region.tLocation.iY += __centre_region.tLocation.iY - 40;
+                __bottom_centre_region.tLocation.iY -= 40;
                 
                 arm_2d_tile_t tPanel;
                 arm_2d_tile_generate_child( ptTile,
