@@ -180,26 +180,26 @@ extern "C" {
  * Helper Macros for Alignment                                                *
  *----------------------------------------------------------------------------*/
 
-#define arm_2d_canvas(__tile_ptr, __region_name)                             \
+#define arm_2d_canvas(__tile_ptr, __region_name)                                \
             arm_using(arm_2d_region_t __region_name = {0},                      \
-                        { __region_name.tSize = (__tile_ptr)->tRegion.tSize;},  \
-                        {__region_name = __region_name;})
+                        {__region_name.tSize = (__tile_ptr)->tRegion.tSize;},   \
+                        {arm_2d_op_wait_async(NULL);})
 
 #define arm_2d_layout(__region)                                                 \
-        arm_using(arm_2d_region_t __layout = (__region))
+        arm_using(arm_2d_region_t __layout = (__region),                        \
+                  arm_2d_op_wait_async(NULL))
 
 #define ____item_line_horizontal2(__width, __height)                            \
-    for (arm_2d_region_t __item_region = {                                      \
-            .tSize = {                                                          \
-                .iWidth = (__width),                                            \
-                .iHeight = (__height),                                          \
-            },                                                                  \
-            .tLocation = __layout.tLocation,                                    \
-        },                                                                      \
-        *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;                      \
-         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \
-         arm_2d_op_wait_async(NULL)                                             \
-        )
+    arm_using(  arm_2d_region_t __item_region,                                  \
+                {                                                               \
+                    __item_region.tSize.iWidth = (__width);                     \
+                    __item_region.tSize.iHeight = (__height);                   \
+                    __item_region.tLocation = __layout.tLocation;               \
+                },                                                              \
+                {                                                               \
+                    __layout.tLocation.iX += (__width);                         \
+                    arm_2d_op_wait_async(NULL);                                 \
+                })
 
 #define __item_line_horizontal(...)                                             \
             ARM_CONNECT2(   ____item_line_horizontal,                           \
@@ -217,7 +217,7 @@ extern "C" {
                     __top_left_region.tSize.iHeight = (__size).iHeight;         \
                     __top_left_region.tLocation = (__region).tLocation;         \
                 },                                                              \
-                { __top_left_region = __top_left_region;})
+                {arm_2d_op_wait_async(NULL);})
 
 /*!
  * \brief Please do NOT use this macro
@@ -231,7 +231,7 @@ extern "C" {
                         __top_left_region.tSize.iHeight = (__height);           \
                         __top_left_region.tLocation = (__region).tLocation;     \
                     },                                                          \
-                    { __top_left_region = __top_left_region;})
+                    {arm_2d_op_wait_async(NULL);})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with use specified info for
@@ -268,7 +268,7 @@ extern "C" {
                     __top_centre_region.tLocation.iX                            \
                         += ((__region).tSize.iWidth - (__size).iWidth) >> 1;    \
                 },                                                              \
-                { __top_centre_region = __top_centre_region;})
+                {arm_2d_op_wait_async(NULL);})
 
 /*!
  * \brief Please do NOT use this macro
@@ -284,7 +284,7 @@ extern "C" {
                         __top_centre_region.tLocation.iX                        \
                             += ((__region).tSize.iWidth - (__width)) >> 1;      \
                     },                                                          \
-                    { __top_centre_region = __top_centre_region;})
+                    {arm_2d_op_wait_async(NULL);})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with use specified info for
@@ -321,7 +321,7 @@ extern "C" {
                     __top_right_region.tLocation.iX                             \
                         += ((__region).tSize.iWidth - (__size).iWidth);         \
                 },                                                              \
-                { __top_right_region = __top_right_region;})
+                {arm_2d_op_wait_async(NULL);})
 
 /*!
  * \brief Please do NOT use this macro
@@ -337,7 +337,7 @@ extern "C" {
                         __top_right_region.tLocation.iX                         \
                             += ((__region).tSize.iWidth - (__width));           \
                     },                                                          \
-                    { __top_right_region = __top_right_region;})
+                    {arm_2d_op_wait_async(NULL);})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with use specified info for
@@ -376,7 +376,7 @@ extern "C" {
                     __mid_left_region.tLocation.iY                              \
                         += ((__region).tSize.iHeight - (__size).iHeight) >> 1;  \
                 },                                                              \
-                { __mid_left_region = __mid_left_region;})
+                {arm_2d_op_wait_async(NULL);})
 
 /*!
  * \brief Please do NOT use this macro
@@ -392,7 +392,7 @@ extern "C" {
                         __mid_left_region.tLocation.iY                          \
                             += ((__region).tSize.iHeight - (__height)) >> 1;    \
                     },                                                          \
-                    { __mid_left_region = __mid_left_region;})
+                    {arm_2d_op_wait_async(NULL);})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with use specified info for
@@ -430,7 +430,7 @@ extern "C" {
                     __centre_region.tLocation.iY                                \
                         += ((__region).tSize.iHeight - (__size).iHeight)>> 1;   \
                 },                                                              \
-                { __centre_region = __centre_region;})
+                {arm_2d_op_wait_async(NULL);})
 
 /*!
  * \brief Please do NOT use this macro
@@ -447,7 +447,7 @@ extern "C" {
                             __centre_region.tLocation.iY                        \
                                 += ((__region).tSize.iHeight - (__height))>> 1; \
                         },                                                      \
-                        { __centre_region = __centre_region;})
+                        {arm_2d_op_wait_async(NULL);})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with use specified info for
@@ -486,7 +486,7 @@ extern "C" {
                     __mid_right_region.tLocation.iY                             \
                         += ((__region).tSize.iHeight - (__size).iHeight) >> 1;  \
                 },                                                              \
-                { __mid_right_region = __mid_right_region;})
+                {arm_2d_op_wait_async(NULL);})
 
 /*!
  * \brief Please do NOT use this macro
@@ -504,7 +504,7 @@ extern "C" {
                     __mid_right_region.tLocation.iY                             \
                         += ((__region).tSize.iHeight - (__height)) >> 1;        \
                 },                                                              \
-                { __mid_right_region = __mid_right_region;})
+                {arm_2d_op_wait_async(NULL);})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with use specified info for
@@ -541,7 +541,7 @@ extern "C" {
                     __bottom_left_region.tLocation.iY                           \
                         += ((__region).tSize.iHeight - (__size).iHeight);       \
                 },                                                              \
-                { __bottom_left_region = __bottom_left_region;})
+                {arm_2d_op_wait_async(NULL);})
 
 /*!
  * \brief Please do NOT use this macro
@@ -557,7 +557,7 @@ extern "C" {
                     __bottom_left_region.tLocation.iY                           \
                         += ((__region).tSize.iHeight - (__height));             \
                 },                                                              \
-                { __bottom_left_region = __bottom_left_region;})
+                {arm_2d_op_wait_async(NULL);})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with use specified info for
@@ -595,7 +595,7 @@ extern "C" {
                     __bottom_centre_region.tLocation.iY                         \
                         += ((__region).tSize.iHeight - (__size).iHeight);       \
                 },                                                              \
-                { __bottom_centre_region = __bottom_centre_region;})
+                {arm_2d_op_wait_async(NULL);})
 
 /*!
  * \brief Please do NOT use this macro
@@ -613,7 +613,7 @@ extern "C" {
                     __bottom_centre_region.tLocation.iY                         \
                         += ((__region).tSize.iHeight - (__height));             \
                 },                                                              \
-                { __bottom_centre_region = __bottom_centre_region;})
+                {arm_2d_op_wait_async(NULL);})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with use specified info for
@@ -652,7 +652,7 @@ extern "C" {
                     __bottom_right_region.tLocation.iY                          \
                         += ((__region).tSize.iHeight - (__size).iHeight);       \
                 },                                                              \
-                { __bottom_right_region = __bottom_right_region;})
+                {arm_2d_op_wait_async(NULL);})
 
 /*!
  * \brief Please do NOT use this macro
@@ -670,7 +670,7 @@ extern "C" {
                     __bottom_right_region.tLocation.iY                          \
                         += ((__region).tSize.iHeight - (__height));             \
                 },                                                              \
-                { __bottom_right_region = __bottom_right_region;})
+                {arm_2d_op_wait_async(NULL);})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with use specified info for
