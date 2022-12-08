@@ -287,6 +287,15 @@ Macros</h2></td></tr>
 <tr class="memitem:ga4397e169debb8a49e989b0c344381ff1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga4397e169debb8a49e989b0c344381ff1">impl_child_tile</a>(__parent,  __x,  __y,  __width,  __height, ...)</td></tr>
 <tr class="memdesc:ga4397e169debb8a49e989b0c344381ff1"><td class="mdescLeft">&#160;</td><td class="mdescRight">implement a child tile for a given parent  <a href="group__gHelper.html#ga4397e169debb8a49e989b0c344381ff1">More...</a><br /></td></tr>
 <tr class="separator:ga4397e169debb8a49e989b0c344381ff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf95b1ff39a3afa8212b0fc225eb4f876"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaf95b1ff39a3afa8212b0fc225eb4f876">arm_2d_canvas</a>(__tile_ptr,  __region_name)</td></tr>
+<tr class="separator:gaf95b1ff39a3afa8212b0fc225eb4f876"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga953fa2f0772a7bc2c704219e52619c3b"><td class="memItemLeft" align="right" valign="top"><a id="ga953fa2f0772a7bc2c704219e52619c3b" name="ga953fa2f0772a7bc2c704219e52619c3b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>arm_2d_layout</b>(__region)&#160;&#160;&#160;        <a class="el" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891">arm_using</a>(<a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> __layout = (__region))</td></tr>
+<tr class="separator:ga953fa2f0772a7bc2c704219e52619c3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafbcbbda182c41591338ff9b7b9f2d6f4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gafbcbbda182c41591338ff9b7b9f2d6f4">____item_line_horizontal2</a>(__width,  __height)</td></tr>
+<tr class="separator:gafbcbbda182c41591338ff9b7b9f2d6f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga41f1e41315b8ff8cb9212fb8688bc082"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga41f1e41315b8ff8cb9212fb8688bc082">__item_line_horizontal</a>(...)</td></tr>
+<tr class="separator:ga41f1e41315b8ff8cb9212fb8688bc082"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2a838226f0f4290a65f80d5bfa0638d9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga2a838226f0f4290a65f80d5bfa0638d9">__arm_2d_align_top_left2</a>(__region,  __size)</td></tr>
 <tr class="memdesc:ga2a838226f0f4290a65f80d5bfa0638d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Please do NOT use this macro.  <a href="group__gHelper.html#ga2a838226f0f4290a65f80d5bfa0638d9">More...</a><br /></td></tr>
 <tr class="separator:ga2a838226f0f4290a65f80d5bfa0638d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -2953,6 +2962,96 @@ cycles used in LCD flushing </td></tr>
 
 </div>
 </div>
+<a id="gaf95b1ff39a3afa8212b0fc225eb4f876" name="gaf95b1ff39a3afa8212b0fc225eb4f876"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf95b1ff39a3afa8212b0fc225eb4f876">&#9670;&#160;</a></span>arm_2d_canvas</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define arm_2d_canvas</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__tile_ptr, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__region_name&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __region_name = {0},                      \</div>
+<div class="line">                        { __region_name.tSize = (__tile_ptr)-&gt;tRegion.tSize;},  \</div>
+<div class="line">                        {__region_name = __region_name;})</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="gafbcbbda182c41591338ff9b7b9f2d6f4" name="gafbcbbda182c41591338ff9b7b9f2d6f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafbcbbda182c41591338ff9b7b9f2d6f4">&#9670;&#160;</a></span>____item_line_horizontal2</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ____item_line_horizontal2</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__width, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__height&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __item_region = {                                      \</div>
+<div class="line">            .tSize = {                                                          \</div>
+<div class="line">                .iWidth = (__width),                                            \</div>
+<div class="line">                .iHeight = (__height),                                          \</div>
+<div class="line">            },                                                                  \</div>
+<div class="line">            .tLocation = __layout.tLocation,                                    \</div>
+<div class="line">        },                                                                      \</div>
+<div class="line">        *<a class="code hl_define" href="group__gKernel.html#gaa612e8299f2fa71ff5829e61c4735fd1" title="connect three symbol names as one">ARM_CONNECT3</a>(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
+<div class="line">         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \</div>
+<div class="line">         arm_2d_op_wait_async(NULL)                                             \</div>
+<div class="line">        )</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ga41f1e41315b8ff8cb9212fb8688bc082" name="ga41f1e41315b8ff8cb9212fb8688bc082"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga41f1e41315b8ff8cb9212fb8688bc082">&#9670;&#160;</a></span>__item_line_horizontal</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __item_line_horizontal</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gad6a67ffa29074439ce99988dac033e42" title="connect two symbol names as one">ARM_CONNECT2</a>(   ____item_line_horizontal,                           \</div>
+<div class="line">                            <a class="code hl_define" href="group__gKernel.html#gaca9883ddfc8f4f3382d9d0e4a93a5890" title="A macro to count the number of parameters.">__ARM_VA_NUM_ARGS</a>(__VA_ARGS__))(__VA_ARGS__)</div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="ga2a838226f0f4290a65f80d5bfa0638d9" name="ga2a838226f0f4290a65f80d5bfa0638d9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga2a838226f0f4290a65f80d5bfa0638d9">&#9670;&#160;</a></span>__arm_2d_align_top_left2</h2>
 
@@ -3466,17 +3565,18 @@ prototype 2: <a class="el" href="group__gHelper.html#ga913b5a63780551cef43dfd970
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __centre_region = {                                    \</div>
-<div class="line">            .tSize = (__size),                                                  \</div>
-<div class="line">            .tLocation = {                                                      \</div>
-<div class="line">                .iX = ((__region).tSize.iWidth - (__size).iWidth)  &gt;&gt; 1,        \</div>
-<div class="line">                .iY = ((__region).tSize.iHeight - (__size).iHeight)&gt;&gt; 1,        \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">        },                                                                      \</div>
-<div class="line">        *<a class="code hl_define" href="group__gKernel.html#gaa612e8299f2fa71ff5829e61c4735fd1" title="connect three symbol names as one">ARM_CONNECT3</a>(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
-<div class="line">         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \</div>
-<div class="line">         arm_2d_op_wait_async(NULL)                                             \</div>
-<div class="line">        )</div>
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(                                                          \</div>
+<div class="line">                <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __centre_region,                                \</div>
+<div class="line">                {                                                               \</div>
+<div class="line">                    __centre_region.tSize.iWidth = (__size).iWidth;             \</div>
+<div class="line">                    __centre_region.tSize.iHeight = (__size).iHeight;           \</div>
+<div class="line">                    __centre_region.tLocation = (__region).tLocation;           \</div>
+<div class="line">                    __centre_region.tLocation.iX                                \</div>
+<div class="line">                        += ((__region).tSize.iWidth - (__size).iWidth)  &gt;&gt; 1;   \</div>
+<div class="line">                    __centre_region.tLocation.iY                                \</div>
+<div class="line">                        += ((__region).tSize.iHeight - (__size).iHeight)&gt;&gt; 1;   \</div>
+<div class="line">                },                                                              \</div>
+<div class="line">                { __centre_region = __centre_region;})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3513,20 +3613,17 @@ prototype 2: <a class="el" href="group__gHelper.html#ga913b5a63780551cef43dfd970
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __centre_region = {                                    \</div>
-<div class="line">            .tSize = {                                                          \</div>
-<div class="line">                .iWidth = (__width),                                            \</div>
-<div class="line">                .iHeight = (__height),                                          \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">            .tLocation = {                                                      \</div>
-<div class="line">                .iX = ((__region).tSize.iWidth - (__width))  &gt;&gt; 1,              \</div>
-<div class="line">                .iY = ((__region).tSize.iHeight - (__height))&gt;&gt; 1,              \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">        },                                                                      \</div>
-<div class="line">        *<a class="code hl_define" href="group__gKernel.html#gaa612e8299f2fa71ff5829e61c4735fd1" title="connect three symbol names as one">ARM_CONNECT3</a>(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
-<div class="line">         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \</div>
-<div class="line">         arm_2d_op_wait_async(NULL)                                             \</div>
-<div class="line">        )</div>
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(  <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __centre_region,                        \</div>
+<div class="line">                        {                                                       \</div>
+<div class="line">                            __centre_region.tSize.iWidth = (__width);           \</div>
+<div class="line">                            __centre_region.tSize.iHeight = (__height);         \</div>
+<div class="line">                            __centre_region.tLocation = (__region).tLocation;   \</div>
+<div class="line">                            __centre_region.tLocation.iX                        \</div>
+<div class="line">                                += ((__region).tSize.iWidth - (__width))  &gt;&gt; 1; \</div>
+<div class="line">                            __centre_region.tLocation.iY                        \</div>
+<div class="line">                                += ((__region).tSize.iHeight - (__height))&gt;&gt; 1; \</div>
+<div class="line">                        },                                                      \</div>
+<div class="line">                        { __centre_region = __centre_region;})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
