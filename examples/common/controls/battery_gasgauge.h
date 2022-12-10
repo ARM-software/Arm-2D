@@ -75,14 +75,16 @@ ARM_PRIVATE(
 
 typedef struct battery_liquid_t {
 ARM_PRIVATE(
-    int64_t lTimeStamp;
+    int64_t lTimeStamp[2];
 
     uint16_t hwGasGauge;
     uint8_t chBoarderOpacity;
     uint8_t chBarOpacity;
+    int16_t iWaveOffset[2];
     
     uint8_t bBoarderFlashing    : 1;
     uint8_t bFlashingBar        : 1;
+
 
     battery_status_t tStatus;
 )

@@ -81,6 +81,12 @@ const arm_2d_tile_t c_tileBatteryGasGaugeBlockMask;
 
 extern
 const arm_2d_tile_t c_tileSinWaveMask;
+
+extern 
+const arm_2d_tile_t c_tileGlassReflectionWMask;
+
+extern
+const arm_2d_tile_t c_tileGlassReflectionNMask;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
@@ -251,6 +257,9 @@ void battery_gasgauge_liquid_init(battery_liquid_t *ptThis)
 {
     assert(NULL != ptThis);
     memset(ptThis, 0, sizeof(battery_liquid_t));
+    
+    this.iWaveOffset[0] = -c_tileSinWaveMask.tRegion.tSize.iWidth;
+    this.iWaveOffset[1] = -(c_tileSinWaveMask.tRegion.tSize.iWidth >> 1);
 }
 
 ARM_NONNULL(1)
@@ -268,6 +277,20 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
     if (bIsNewFrame){
         this.hwGasGauge = hwGasgauge;
         this.tStatus = tStatus;
+
+        if (arm_2d_helper_is_time_out(10, &this.lTimeStamp[1])) {
+            if (this.iWaveOffset[0] == 0) {
+                this.iWaveOffset[0] = -c_tileSinWaveMask.tRegion.tSize.iWidth + 1;
+            } else {
+                this.iWaveOffset[0]++;
+            }
+            
+            if (this.iWaveOffset[1] == -c_tileSinWaveMask.tRegion.tSize.iWidth) {
+                this.iWaveOffset[1] = -1;
+            } else {
+                this.iWaveOffset[1]--;
+            }
+        }
     }
 
     if (NULL == ptTile) {
@@ -313,7 +336,12 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
             this.bBoarderFlashing = false;
             
             int32_t iResult;
-            arm_2d_helper_time_cos_slider(0, __LIQUID_BOARDER_OPA_MAX, 2000, 0, &iResult, &this.lTimeStamp);
+            arm_2d_helper_time_cos_slider(  0,
+                                            __LIQUID_BOARDER_OPA_MAX,
+                                            2000,
+                                            0,
+                                            &iResult,
+                                            &this.lTimeStamp[0]);
             this.chBarOpacity = (uint8_t)iResult;
             this.bFlashingBar = true;
         } else {
@@ -322,11 +350,16 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
             /* smaller than 10% */
             if (this.hwGasGauge < 100) { 
                 int32_t iResult;
-                arm_2d_helper_time_cos_slider(__LIQUID_BOARDER_OPA_MAX, 0, 2000, 0, &iResult, &this.lTimeStamp);
+                arm_2d_helper_time_cos_slider(  __LIQUID_BOARDER_OPA_MAX,
+                                                0,
+                                                2000,
+                                                0,
+                                                &iResult,
+                                                &this.lTimeStamp[0]);
                 this.chBoarderOpacity = (uint8_t)iResult;
                 this.bBoarderFlashing = true;
             } else {
-                this.lTimeStamp = 0;
+                this.lTimeStamp[0] = 0;
                 this.chBoarderOpacity = __LIQUID_BOARDER_OPA_MAX;
                 this.bBoarderFlashing = false;
             }
@@ -352,26 +385,100 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
                              .chBottom = 10
                              ) {
 
-//                arm_2d_region_t tWaveRegion = __inner_container_canvas;
-//                tWaveRegion.tLocation = 
-//                arm_2d_fill_colour_with_mask_and_opacity(
-//                        &__inner_container,
-//                        
-//                    );
-
-
-
                 /* calculate the water level */
                 __inner_container_canvas.tLocation.iY 
                     += __inner_container_canvas.tSize.iHeight 
                     -  __inner_container_canvas.tSize.iHeight 
                     *  this.hwGasGauge / 1000;
 
+                /* draw background wave */
+                do {
+                    arm_2d_region_t tWaveRegion = __inner_container_canvas;
+                    tWaveRegion.tLocation.iY 
+                        = __inner_container_canvas.tLocation.iY
+                        - c_tileSinWaveMask.tRegion.tSize.iHeight;
+                    tWaveRegion.tLocation.iX = this.iWaveOffset[1];
+                    tWaveRegion.tSize = c_tileSinWaveMask.tRegion.tSize;
+                    
+                    arm_2d_fill_colour_with_mask_and_opacity(
+                            &__inner_container,
+                            &tWaveRegion,
+                            &c_tileSinWaveMask,
+                            (__arm_2d_color_t) {tColour},
+                            96
+                        );
+                    
+                    tWaveRegion.tLocation.iX 
+                        += c_tileSinWaveMask.tRegion.tSize.iWidth;
+
+                    arm_2d_fill_colour_with_mask_and_opacity(
+                            &__inner_container,
+                            &tWaveRegion,
+                            &c_tileSinWaveMask,
+                            (__arm_2d_color_t) {tColour},
+                            96
+                        );
+                } while(0);
+
+                /* draw foreground wave */
+                do {
+                    arm_2d_region_t tWaveRegion = __inner_container_canvas;
+                    tWaveRegion.tLocation.iY 
+                        = __inner_container_canvas.tLocation.iY
+                        - c_tileSinWaveMask.tRegion.tSize.iHeight;
+                    tWaveRegion.tLocation.iX = this.iWaveOffset[0];
+                    tWaveRegion.tSize = c_tileSinWaveMask.tRegion.tSize;
+                    
+                    arm_2d_fill_colour_with_mask_and_opacity(
+                            &__inner_container,
+                            &tWaveRegion,
+                            &c_tileSinWaveMask,
+                            (__arm_2d_color_t) {tColour},
+                            255
+                        );
+                    
+                    tWaveRegion.tLocation.iX 
+                        += c_tileSinWaveMask.tRegion.tSize.iWidth;
+
+                    arm_2d_fill_colour_with_mask_and_opacity(
+                            &__inner_container,
+                            &tWaveRegion,
+                            &c_tileSinWaveMask,
+                            (__arm_2d_color_t) {tColour},
+                            255
+                        );
+                } while(0);
+
                 arm_2d_fill_colour_with_opacity(
                                 &__inner_container, 
                                 &__inner_container_canvas,
                                 (__arm_2d_color_t) {tColour},
-                                128);
+                                255);
+            }
+
+            arm_2d_container(ptTile, __glass_face, __centre_region,
+                            8, 8, 12, 8
+                            ) {
+            
+                arm_2d_region_t tGlassReflexRegion = __glass_face_canvas;
+                
+                arm_2d_fill_colour_with_mask_and_opacity(
+                    &__glass_face,
+                    &tGlassReflexRegion,
+                    &c_tileGlassReflectionNMask,
+                    (__arm_2d_color_t){GLCD_COLOR_WHITE},
+                    128 );
+                
+                tGlassReflexRegion.tLocation.iX 
+                    = __glass_face_canvas.tSize.iWidth
+                    - c_tileGlassReflectionWMask.tRegion.tSize.iWidth;
+                
+                arm_2d_fill_colour_with_mask_and_opacity(
+                    &__glass_face,
+                    &tGlassReflexRegion,
+                    &c_tileGlassReflectionWMask,
+                    (__arm_2d_color_t){GLCD_COLOR_WHITE},
+                    128 + 32 );
             }
         }
     }
