@@ -321,7 +321,16 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
     
     switch (this.tStatus) {
         case BATTERY_STATUS_CHARGING:
-            tColour = GLCD_COLOR_NIXIE_TUBE;
+            if (this.hwGasGauge > 800) {
+                tColour = arm_2d_pixel_brga8888_to_rgb565(
+                            __arm_2d_helper_colour_slider(
+                                GLCD_COLOR_NIXIE_TUBE_RGB32, 
+                                __RGB32(0, 0xFF, 0),
+                                200,
+                                this.hwGasGauge - 800));
+            } else {
+                tColour = GLCD_COLOR_NIXIE_TUBE;
+            }
             break;
         case BATTERY_STATUS_IDLE:
             tColour = GLCD_COLOR_LIGHT_GREY;
