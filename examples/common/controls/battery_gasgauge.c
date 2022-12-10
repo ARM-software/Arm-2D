@@ -87,6 +87,10 @@ const arm_2d_tile_t c_tileGlassReflectionWMask;
 
 extern
 const arm_2d_tile_t c_tileGlassReflectionNMask;
+
+extern
+const arm_2d_tile_t c_tileLightingA4Mask;
+
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
@@ -145,7 +149,8 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
             this.bFlashingBar = false;
 
             /* smaller than 10% */
-            if (this.hwGasGauge < 100) { 
+            if (this.hwGasGauge < 100 
+            &&  this.tStatus == BATTERY_STATUS_DISCHARGING) {
                 int32_t iResult;
                 arm_2d_helper_time_cos_slider(__NIXIE_BOARDER_OPA_MAX, 0, 2000, 0, &iResult, &this.lTimeStamp);
                 this.chBoarderOpacity = (uint8_t)iResult;
@@ -168,6 +173,7 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
                                             &c_tileBatteryBoarder1Mask,
                                             (__arm_2d_color_t){GLCD_COLOR_NIXIE_TUBE},
                                             this.chBoarderOpacity);
+            arm_2d_op_wait_async(NULL);
         }
 
         /* draw gas gauge grade*/
@@ -337,18 +343,16 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
             
             int32_t iResult;
             arm_2d_helper_time_cos_slider(  0,
-                                            __LIQUID_BOARDER_OPA_MAX,
+                                            255 - 64,
                                             2000,
                                             0,
                                             &iResult,
                                             &this.lTimeStamp[0]);
-            this.chBarOpacity = (uint8_t)iResult;
-            this.bFlashingBar = true;
+            this.chChargingMarkOpacity = (uint8_t)iResult;
         } else {
-            this.bFlashingBar = false;
-
             /* smaller than 10% */
-            if (this.hwGasGauge < 100) { 
+            if (this.hwGasGauge < 100 
+            &&  this.tStatus == BATTERY_STATUS_DISCHARGING) { 
                 int32_t iResult;
                 arm_2d_helper_time_cos_slider(  __LIQUID_BOARDER_OPA_MAX,
                                                 0,
@@ -385,17 +389,18 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
                              .chBottom = 10
                              ) {
 
+                arm_2d_region_t tWaterLevelRegion = __inner_container_canvas;
                 /* calculate the water level */
-                __inner_container_canvas.tLocation.iY 
-                    += __inner_container_canvas.tSize.iHeight 
-                    -  __inner_container_canvas.tSize.iHeight 
+                tWaterLevelRegion.tLocation.iY 
+                    += tWaterLevelRegion.tSize.iHeight 
+                    -  tWaterLevelRegion.tSize.iHeight 
                     *  this.hwGasGauge / 1000;
 
                 /* draw background wave */
                 do {
-                    arm_2d_region_t tWaveRegion = __inner_container_canvas;
+                    arm_2d_region_t tWaveRegion = tWaterLevelRegion;
                     tWaveRegion.tLocation.iY 
-                        = __inner_container_canvas.tLocation.iY
+                        = tWaterLevelRegion.tLocation.iY
                         - c_tileSinWaveMask.tRegion.tSize.iHeight;
                     tWaveRegion.tLocation.iX = this.iWaveOffset[1];
                     tWaveRegion.tSize = c_tileSinWaveMask.tRegion.tSize;
@@ -407,6 +412,7 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
                             (__arm_2d_color_t) {tColour},
                             96
                         );
+                    arm_2d_op_wait_async(NULL);
                     
                     tWaveRegion.tLocation.iX 
                         += c_tileSinWaveMask.tRegion.tSize.iWidth;
@@ -418,13 +424,14 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
                             (__arm_2d_color_t) {tColour},
                             96
                         );
+                    arm_2d_op_wait_async(NULL);
                 } while(0);
 
                 /* draw foreground wave */
                 do {
-                    arm_2d_region_t tWaveRegion = __inner_container_canvas;
+                    arm_2d_region_t tWaveRegion = tWaterLevelRegion;
                     tWaveRegion.tLocation.iY 
-                        = __inner_container_canvas.tLocation.iY
+                        = tWaterLevelRegion.tLocation.iY
                         - c_tileSinWaveMask.tRegion.tSize.iHeight;
                     tWaveRegion.tLocation.iX = this.iWaveOffset[0];
                     tWaveRegion.tSize = c_tileSinWaveMask.tRegion.tSize;
@@ -436,6 +443,7 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
                             (__arm_2d_color_t) {tColour},
                             255
                         );
+                    arm_2d_op_wait_async(NULL);
                     
                     tWaveRegion.tLocation.iX 
                         += c_tileSinWaveMask.tRegion.tSize.iWidth;
@@ -447,38 +455,58 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
                             (__arm_2d_color_t) {tColour},
                             255
                         );
+                    arm_2d_op_wait_async(NULL);
                 } while(0);
 
                 arm_2d_fill_colour_with_opacity(
                                 &__inner_container, 
-                                &__inner_container_canvas,
+                                &tWaterLevelRegion,
                                 (__arm_2d_color_t) {tColour},
                                 255);
+                arm_2d_op_wait_async(NULL);
+             
+                if (BATTERY_STATUS_CHARGING == this.tStatus) {
+                    arm_2d_align_centre(__inner_container_canvas, 
+                                        c_tileLightingA4Mask.tRegion.tSize) {
+                        arm_2d_fill_colour_with_a4_mask_and_opacity(
+                            &__inner_container,
+                            &__centre_region,
+                            &c_tileLightingA4Mask,
+                            (__arm_2d_color_t){GLCD_COLOR_YELLOW},
+                            this.chChargingMarkOpacity);
+                        arm_2d_op_wait_async(NULL);
+                    }
+                }
             }
 
             arm_2d_container(ptTile, __glass_face, __centre_region,
                             8, 8, 12, 8
                             ) {
-            
-                arm_2d_region_t tGlassReflexRegion = __glass_face_canvas;
+
+                /* draw the glass reflection (narrow) on the left side */
+                arm_2d_align_mid_left( __glass_face_canvas, 
+                                       c_tileGlassReflectionNMask.tRegion.tSize) {
+                    arm_2d_fill_colour_with_mask_and_opacity(
+                        &__glass_face,
+                        &__mid_left_region,
+                        &c_tileGlassReflectionNMask,
+                        (__arm_2d_color_t){GLCD_COLOR_WHITE},
+                        128 );
+                    arm_2d_op_wait_async(NULL);
+                }
                 
-                arm_2d_fill_colour_with_mask_and_opacity(
-                    &__glass_face,
-                    &tGlassReflexRegion,
-                    &c_tileGlassReflectionNMask,
-                    (__arm_2d_color_t){GLCD_COLOR_WHITE},
-                    128 );
-                
-                tGlassReflexRegion.tLocation.iX 
-                    = __glass_face_canvas.tSize.iWidth
-                    - c_tileGlassReflectionWMask.tRegion.tSize.iWidth;
-                
-                arm_2d_fill_colour_with_mask_and_opacity(
-                    &__glass_face,
-                    &tGlassReflexRegion,
-                    &c_tileGlassReflectionWMask,
-                    (__arm_2d_color_t){GLCD_COLOR_WHITE},
-                    128 + 32 );
+                /* draw the glass reflection (wide) on the right side */
+                arm_2d_align_mid_right( __glass_face_canvas, 
+                                        c_tileGlassReflectionWMask.tRegion.tSize) {
+                    arm_2d_fill_colour_with_mask_and_opacity(
+                        &__glass_face,
+                        &__mid_right_region,
+                        &c_tileGlassReflectionWMask,
+                        (__arm_2d_color_t){GLCD_COLOR_WHITE},
+                        128 + 32);
+
+                    arm_2d_op_wait_async(NULL);
+                }
             }
         }
     }

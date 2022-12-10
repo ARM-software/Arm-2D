@@ -79,11 +79,10 @@ ARM_PRIVATE(
 
     uint16_t hwGasGauge;
     uint8_t chBoarderOpacity;
-    uint8_t chBarOpacity;
+    uint8_t chChargingMarkOpacity;
     int16_t iWaveOffset[2];
     
-    uint8_t bBoarderFlashing    : 1;
-    uint8_t bFlashingBar        : 1;
+    uint8_t bBoarderFlashing;
 
 
     battery_status_t tStatus;
