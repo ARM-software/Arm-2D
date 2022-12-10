@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        11. Nov 2022
- * $Revision:    V.1.1.0
+ * $Date:        10. Dec 2022
+ * $Revision:    V.1.1.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -32,7 +32,7 @@
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
-#include "arm_2d_helper_pfb.h"
+#include "__arm_2d_helper_common.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -108,31 +108,6 @@ typedef arm_fsm_rt_t arm_2d_draw_list_item_handler_t(
                                       arm_2d_list_item_param_t *ptParam);
 
 /*! 
- * \brief alignment 
- */
-enum {
-    ARM_2D_ALIGN_LEFT               = _BV(0),                                   /*!< align to left */
-    ARM_2D_ALIGN_RIGHT              = _BV(1),                                   /*!< align to right */
-    ARM_2D_ALIGN_TOP                = _BV(2),                                   /*!< align to top */
-    ARM_2D_ALIGN_BOTTOM             = _BV(3),                                   /*!< align to bottom */
-    
-    ARM_2D_ALIGN_CENTRE             = 0,                                        /*!< align to centre */
-    ARM_2D_ALIGN_CENTRE_ALIAS       = ARM_2D_ALIGN_LEFT                         /*!< align to centre */
-                                    | ARM_2D_ALIGN_RIGHT
-                                    | ARM_2D_ALIGN_TOP
-                                    | ARM_2D_ALIGN_BOTTOM,
-
-    ARM_2D_ALIGN_TOP_LEFT           = ARM_2D_ALIGN_TOP                          /*!< align to top left corner */
-                                    | ARM_2D_ALIGN_LEFT,
-    ARM_2D_ALIGN_TOP_RIGHT          = ARM_2D_ALIGN_TOP                          /*!< align to top right corner */
-                                    | ARM_2D_ALIGN_RIGHT,
-    ARM_2D_ALIGN_BOTTOM_LEFT        = ARM_2D_ALIGN_BOTTOM                       /*!< align to bottom left corner */
-                                    | ARM_2D_ALIGN_LEFT,
-    ARM_2D_ALIGN_BOTTOM_RIGHT       = ARM_2D_ALIGN_BOTTOM                       /*!< align to bottom right corner */
-                                    | ARM_2D_ALIGN_RIGHT,
-};
-
-/*! 
  * \brief the list core item class
  */
 struct arm_2d_list_item_t {
@@ -161,12 +136,7 @@ ARM_PROTECTED(
         int8_t chNext;                                                          /*!< padding between this item and the next one */
     } Padding;
 
-    struct {
-        uint8_t chLeft;                                                         /*!< left margin */
-        uint8_t chRight;                                                        /*!< right margin */
-        uint8_t chTop;                                                          /*!< top margin */
-        uint8_t chBottom;                                                       /*!< bottom margin */
-    } Margin;
+    arm_2d_margin_t Margin;
     arm_2d_size_t                                   tSize;                      /*!< the size of the item */
 
     uintptr_t                                       pTarget;                    /*!< user specified object */

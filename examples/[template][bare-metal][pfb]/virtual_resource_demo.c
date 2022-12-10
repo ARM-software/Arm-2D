@@ -184,9 +184,6 @@ static void __on_scene0_frame_complete(arm_2d_scene_t *ptScene)
 //}
 
 
-
-
-
 static
 IMPL_FONT_DRAW_CHAR(__digit_font_a4_draw_char)
 {
