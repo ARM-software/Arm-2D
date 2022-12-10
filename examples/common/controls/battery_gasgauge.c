@@ -282,7 +282,18 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
         return ;
     }
 
-    
+    arm_2d_canvas(ptTile, __canvas) {
+        /* draw battery boarder */
+        arm_2d_align_centre( __canvas, c_tileBatteryBoarder1Mask.tRegion.tSize) {
+
+            arm_2d_fill_colour_with_mask_and_opacity(   
+                                            ptTile,
+                                            &__centre_region,
+                                            &c_tileBatteryBoarder1Mask,
+                                            (__arm_2d_color_t){GLCD_COLOR_WHITE},
+                                            128);
+        }
+    }
 
 }
 

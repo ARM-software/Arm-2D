@@ -191,7 +191,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene4_handler)
 
     arm_2d_canvas(ptTile, __canvas) {
 
-        arm_2d_align_centre( __canvas, 120, 130) {
+        arm_2d_align_centre( __canvas, 128, 130) {
 
             arm_2d_layout(__centre_region) {
 
@@ -219,7 +219,36 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene4_handler)
                         
                         arm_2d_op_wait_async(NULL);
                     }
-              }
+                }
+                
+                __item_line_horizontal(64, 130) {
+                    battery_gasgauge_liquid_show(   &this.tBatteryLiquid, 
+                                                    ptTile, 
+                                                    &__item_region, 
+                                                    this.hwGasgauge,
+                                                    this.tStatus,
+                                                    bIsNewFrame);
+                    
+                    arm_2d_op_wait_async(NULL);
+                    
+                    arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_font_t.tCharSize;
+                    tTextSize.iWidth *= 2;
+                    
+                    arm_2d_align_bottom_centre(__item_region, tTextSize) {
+
+                        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+                        arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
+                        arm_lcd_text_set_draw_region(&__bottom_centre_region);
+                        arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
+                        arm_lcd_text_location(0,0);
+                        arm_lcd_text_set_opacity(128);
+                        arm_lcd_printf("%02d", this.hwGasgauge / 10);
+                        arm_lcd_text_set_opacity(255);
+
+                        arm_2d_op_wait_async(NULL);
+                    }
+                }
+                
             }
         }
     }
@@ -252,7 +281,7 @@ user_scene_4_t *__arm_2d_scene4_init(   arm_2d_scene_player_t *ptDispAdapter,
         /* a dirty region to be specified at runtime*/
         ADD_REGION_TO_LIST(s_tDirtyRegions,
             .tSize = {
-                120, 130,
+                128, 130,
             },
         ),
         
