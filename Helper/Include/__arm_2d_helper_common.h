@@ -23,7 +23,7 @@
  *               arm-2d helper services
  *
  * $Date:        10. Dec 2022
- * $Revision:    V.1.0.0
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -471,16 +471,39 @@ extern "C" {
  *          arm_2d_align_mid_left(__region, __size) {
  *              code body that can use __mid_left_region
  *          }
- * 
+ *
  * \note prototype 2:
  *          arm_2d_align_mid_left(__region, __width, __height) {
  *              code body that can use __mid_left_region
  *          }
- *          
+ *
  */
 #define arm_2d_align_mid_left(...)                                              \
             ARM_CONNECT2(   __arm_2d_align_mid_left,                            \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+
+/*!
+ * \brief generate a temporary arm_2d_region_t object with use specified info for
+*         left alignment. 
+ * \param ... parameter list 
+ * 
+ * \note prototype 1:
+ *          arm_2d_align_left(__region, __size) {
+ *              code body that can use __left_region
+ *          }
+ *
+ * \note prototype 2:
+ *          arm_2d_align_left(__region, __width, __height) {
+ *              code body that can use __left_region
+ *          }
+ *
+ */
+#define arm_2d_align_left(...)      arm_2d_align_mid_left(__VA_ARGS__)
+
+/*!
+ * \brief the alias of __mid_left_region
+ */
+#define __left_region               __mid_left_region
 
 /*!
  * \brief Please do NOT use this macro
@@ -594,6 +617,29 @@ extern "C" {
             ARM_CONNECT2(   __arm_2d_align_mid_right,                           \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
+
+/*!
+ * \brief generate a temporary arm_2d_region_t object with use specified info for
+*         right alignment. 
+ * \param ... parameter list 
+ * 
+ * \note prototype 1:
+ *          arm_2d_align_right(__region, __size) {
+ *              code body that can use __right_region
+ *          }
+ *
+ * \note prototype 2:
+ *          arm_2d_align_right(__region, __width, __height) {
+ *              code body that can use __right_region
+ *          }
+ *
+ */
+#define arm_2d_align_right(...)      arm_2d_align_mid_right(__VA_ARGS__)
+
+/*!
+ * \brief the alias of __mid_right_region
+ */
+#define __right_region               __mid_right_region
 
 /*!
  * \brief Please do NOT use this macro

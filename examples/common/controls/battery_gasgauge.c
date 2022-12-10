@@ -484,23 +484,24 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
                             ) {
 
                 /* draw the glass reflection (narrow) on the left side */
-                arm_2d_align_mid_left( __glass_face_canvas, 
-                                       c_tileGlassReflectionNMask.tRegion.tSize) {
+                arm_2d_align_left(  __glass_face_canvas, 
+                                    c_tileGlassReflectionNMask.tRegion.tSize) {
                     arm_2d_fill_colour_with_mask_and_opacity(
                         &__glass_face,
-                        &__mid_left_region,
+                        &__left_region,
                         &c_tileGlassReflectionNMask,
                         (__arm_2d_color_t){GLCD_COLOR_WHITE},
                         128 );
+
                     arm_2d_op_wait_async(NULL);
                 }
                 
                 /* draw the glass reflection (wide) on the right side */
-                arm_2d_align_mid_right( __glass_face_canvas, 
-                                        c_tileGlassReflectionWMask.tRegion.tSize) {
+                arm_2d_align_right( __glass_face_canvas, 
+                                    c_tileGlassReflectionWMask.tRegion.tSize) {
                     arm_2d_fill_colour_with_mask_and_opacity(
                         &__glass_face,
-                        &__mid_right_region,
+                        &__right_region,
                         &c_tileGlassReflectionWMask,
                         (__arm_2d_color_t){GLCD_COLOR_WHITE},
                         128 + 32);
