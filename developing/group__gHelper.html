@@ -289,8 +289,7 @@ Macros</h2></td></tr>
 <tr class="separator:ga4397e169debb8a49e989b0c344381ff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf95b1ff39a3afa8212b0fc225eb4f876"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaf95b1ff39a3afa8212b0fc225eb4f876">arm_2d_canvas</a>(__tile_ptr,  __region_name)</td></tr>
 <tr class="separator:gaf95b1ff39a3afa8212b0fc225eb4f876"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga953fa2f0772a7bc2c704219e52619c3b"><td class="memItemLeft" align="right" valign="top"><a id="ga953fa2f0772a7bc2c704219e52619c3b" name="ga953fa2f0772a7bc2c704219e52619c3b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>arm_2d_layout</b>(__region)&#160;&#160;&#160;        <a class="el" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891">arm_using</a>(<a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> __layout = (__region))</td></tr>
+<tr class="memitem:ga953fa2f0772a7bc2c704219e52619c3b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga953fa2f0772a7bc2c704219e52619c3b">arm_2d_layout</a>(__region)</td></tr>
 <tr class="separator:ga953fa2f0772a7bc2c704219e52619c3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafbcbbda182c41591338ff9b7b9f2d6f4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gafbcbbda182c41591338ff9b7b9f2d6f4">____item_line_horizontal2</a>(__width,  __height)</td></tr>
 <tr class="separator:gafbcbbda182c41591338ff9b7b9f2d6f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -2988,8 +2987,28 @@ cycles used in LCD flushing </td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __region_name = {0},                      \</div>
-<div class="line">                        { __region_name.tSize = (__tile_ptr)-&gt;tRegion.tSize;},  \</div>
-<div class="line">                        {__region_name = __region_name;})</div>
+<div class="line">                        {__region_name.tSize = (__tile_ptr)-&gt;tRegion.tSize;},   \</div>
+<div class="line">                        {<a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);})</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ga953fa2f0772a7bc2c704219e52619c3b" name="ga953fa2f0772a7bc2c704219e52619c3b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga953fa2f0772a7bc2c704219e52619c3b">&#9670;&#160;</a></span>arm_2d_layout</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define arm_2d_layout</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__region</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">        <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __layout = (__region),                        \</div>
+<div class="line">                  <a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL))</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -3018,17 +3037,16 @@ cycles used in LCD flushing </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __item_region = {                                      \</div>
-<div class="line">            .tSize = {                                                          \</div>
-<div class="line">                .iWidth = (__width),                                            \</div>
-<div class="line">                .iHeight = (__height),                                          \</div>
-<div class="line">            },                                                                  \</div>
-<div class="line">            .tLocation = __layout.tLocation,                                    \</div>
-<div class="line">        },                                                                      \</div>
-<div class="line">        *<a class="code hl_define" href="group__gKernel.html#gaa612e8299f2fa71ff5829e61c4735fd1" title="connect three symbol names as one">ARM_CONNECT3</a>(__ARM_USING_, __LINE__,_ptr) = NULL;                      \</div>
-<div class="line">         ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL;                   \</div>
-<div class="line">         arm_2d_op_wait_async(NULL)                                             \</div>
-<div class="line">        )</div>
+<b>Value:</b><div class="fragment"><div class="line">    <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(  <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> __item_region,                                  \</div>
+<div class="line">                {                                                               \</div>
+<div class="line">                    __item_region.tSize.iWidth = (__width);                     \</div>
+<div class="line">                    __item_region.tSize.iHeight = (__height);                   \</div>
+<div class="line">                    __item_region.tLocation = __layout.tLocation;               \</div>
+<div class="line">                },                                                              \</div>
+<div class="line">                {                                                               \</div>
+<div class="line">                    __layout.tLocation.iX += (__width);                         \</div>
+<div class="line">                    arm_2d_op_wait_async(NULL);                                 \</div>
+<div class="line">                })</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -3084,7 +3102,7 @@ cycles used in LCD flushing </td></tr>
 <div class="line">                    __top_left_region.tSize.iHeight = (__size).iHeight;         \</div>
 <div class="line">                    __top_left_region.tLocation = (__region).tLocation;         \</div>
 <div class="line">                },                                                              \</div>
-<div class="line">                { __top_left_region = __top_left_region;})</div>
+<div class="line">                {<a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3128,7 +3146,7 @@ cycles used in LCD flushing </td></tr>
 <div class="line">                        __top_left_region.tSize.iHeight = (__height);           \</div>
 <div class="line">                        __top_left_region.tLocation = (__region).tLocation;     \</div>
 <div class="line">                    },                                                          \</div>
-<div class="line">                    { __top_left_region = __top_left_region;})</div>
+<div class="line">                    {<a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3199,7 +3217,7 @@ prototype 2: __arm_2d_align_top_left(__region, __width, __height) { code body th
 <div class="line">                    __top_centre_region.tLocation.iX                            \</div>
 <div class="line">                        += ((__region).tSize.iWidth - (__size).iWidth) &gt;&gt; 1;    \</div>
 <div class="line">                },                                                              \</div>
-<div class="line">                { __top_centre_region = __top_centre_region;})</div>
+<div class="line">                {<a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3245,7 +3263,7 @@ prototype 2: __arm_2d_align_top_left(__region, __width, __height) { code body th
 <div class="line">                        __top_centre_region.tLocation.iX                        \</div>
 <div class="line">                            += ((__region).tSize.iWidth - (__width)) &gt;&gt; 1;      \</div>
 <div class="line">                    },                                                          \</div>
-<div class="line">                    { __top_centre_region = __top_centre_region;})</div>
+<div class="line">                    {<a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3316,7 +3334,7 @@ prototype 2: <a class="el" href="group__gHelper.html#ga6ff04e3f5aa5307482855901f
 <div class="line">                    __top_right_region.tLocation.iX                             \</div>
 <div class="line">                        += ((__region).tSize.iWidth - (__size).iWidth);         \</div>
 <div class="line">                },                                                              \</div>
-<div class="line">                { __top_right_region = __top_right_region;})</div>
+<div class="line">                {<a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3362,7 +3380,7 @@ prototype 2: <a class="el" href="group__gHelper.html#ga6ff04e3f5aa5307482855901f
 <div class="line">                        __top_right_region.tLocation.iX                         \</div>
 <div class="line">                            += ((__region).tSize.iWidth - (__width));           \</div>
 <div class="line">                    },                                                          \</div>
-<div class="line">                    { __top_right_region = __top_right_region;})</div>
+<div class="line">                    {<a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3433,7 +3451,7 @@ prototype 2: __arm_2d_align_top_right(__region, __width, __height) { code body t
 <div class="line">                    __mid_left_region.tLocation.iY                              \</div>
 <div class="line">                        += ((__region).tSize.iHeight - (__size).iHeight) &gt;&gt; 1;  \</div>
 <div class="line">                },                                                              \</div>
-<div class="line">                { __mid_left_region = __mid_left_region;})</div>
+<div class="line">                {<a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3479,7 +3497,7 @@ prototype 2: __arm_2d_align_top_right(__region, __width, __height) { code body t
 <div class="line">                        __mid_left_region.tLocation.iY                          \</div>
 <div class="line">                            += ((__region).tSize.iHeight - (__height)) &gt;&gt; 1;    \</div>
 <div class="line">                    },                                                          \</div>
-<div class="line">                    { __mid_left_region = __mid_left_region;})</div>
+<div class="line">                    {<a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3552,7 +3570,7 @@ prototype 2: <a class="el" href="group__gHelper.html#ga913b5a63780551cef43dfd970
 <div class="line">                    __centre_region.tLocation.iY                                \</div>
 <div class="line">                        += ((__region).tSize.iHeight - (__size).iHeight)&gt;&gt; 1;   \</div>
 <div class="line">                },                                                              \</div>
-<div class="line">                { __centre_region = __centre_region;})</div>
+<div class="line">                {<a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3599,7 +3617,7 @@ prototype 2: <a class="el" href="group__gHelper.html#ga913b5a63780551cef43dfd970
 <div class="line">                            __centre_region.tLocation.iY                        \</div>
 <div class="line">                                += ((__region).tSize.iHeight - (__height))&gt;&gt; 1; \</div>
 <div class="line">                        },                                                      \</div>
-<div class="line">                        { __centre_region = __centre_region;})</div>
+<div class="line">                        {<a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3672,7 +3690,7 @@ prototype 2: <a class="el" href="group__gHelper.html#gaaad43aef0ad2472379061137f
 <div class="line">                    __mid_right_region.tLocation.iY                             \</div>
 <div class="line">                        += ((__region).tSize.iHeight - (__size).iHeight) &gt;&gt; 1;  \</div>
 <div class="line">                },                                                              \</div>
-<div class="line">                { __mid_right_region = __mid_right_region;})</div>
+<div class="line">                {<a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3720,7 +3738,7 @@ prototype 2: <a class="el" href="group__gHelper.html#gaaad43aef0ad2472379061137f
 <div class="line">                    __mid_right_region.tLocation.iY                             \</div>
 <div class="line">                        += ((__region).tSize.iHeight - (__height)) &gt;&gt; 1;        \</div>
 <div class="line">                },                                                              \</div>
-<div class="line">                { __mid_right_region = __mid_right_region;})</div>
+<div class="line">                {<a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3791,7 +3809,7 @@ prototype 2: <a class="el" href="group__gHelper.html#gac74b67cd638f553e4c8770567
 <div class="line">                    __bottom_left_region.tLocation.iY                           \</div>
 <div class="line">                        += ((__region).tSize.iHeight - (__size).iHeight);       \</div>
 <div class="line">                },                                                              \</div>
-<div class="line">                { __bottom_left_region = __bottom_left_region;})</div>
+<div class="line">                {<a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3837,7 +3855,7 @@ prototype 2: <a class="el" href="group__gHelper.html#gac74b67cd638f553e4c8770567
 <div class="line">                    __bottom_left_region.tLocation.iY                           \</div>
 <div class="line">                        += ((__region).tSize.iHeight - (__height));             \</div>
 <div class="line">                },                                                              \</div>
-<div class="line">                { __bottom_left_region = __bottom_left_region;})</div>
+<div class="line">                {<a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3910,7 +3928,7 @@ prototype 2: __arm_2d_align_bottom_left(__region, __width, __height) { code body
 <div class="line">                    __bottom_centre_region.tLocation.iY                         \</div>
 <div class="line">                        += ((__region).tSize.iHeight - (__size).iHeight);       \</div>
 <div class="line">                },                                                              \</div>
-<div class="line">                { __bottom_centre_region = __bottom_centre_region;})</div>
+<div class="line">                {<a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -3958,7 +3976,7 @@ prototype 2: __arm_2d_align_bottom_left(__region, __width, __height) { code body
 <div class="line">                    __bottom_centre_region.tLocation.iY                         \</div>
 <div class="line">                        += ((__region).tSize.iHeight - (__height));             \</div>
 <div class="line">                },                                                              \</div>
-<div class="line">                { __bottom_centre_region = __bottom_centre_region;})</div>
+<div class="line">                {<a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -4031,7 +4049,7 @@ prototype 2: <a class="el" href="group__gHelper.html#ga1c2730c58003263b17a1214d7
 <div class="line">                    __bottom_right_region.tLocation.iY                          \</div>
 <div class="line">                        += ((__region).tSize.iHeight - (__size).iHeight);       \</div>
 <div class="line">                },                                                              \</div>
-<div class="line">                { __bottom_right_region = __bottom_right_region;})</div>
+<div class="line">                {<a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
@@ -4079,7 +4097,7 @@ prototype 2: <a class="el" href="group__gHelper.html#ga1c2730c58003263b17a1214d7
 <div class="line">                    __bottom_right_region.tLocation.iY                          \</div>
 <div class="line">                        += ((__region).tSize.iHeight - (__height));             \</div>
 <div class="line">                },                                                              \</div>
-<div class="line">                { __bottom_right_region = __bottom_right_region;})</div>
+<div class="line">                {<a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);})</div>
 </div><!-- fragment -->
 <p>Please do NOT use this macro. </p>
 
