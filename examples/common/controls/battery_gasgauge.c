@@ -58,7 +58,9 @@
 #endif
 
 
-#define __BOARDER_OPA_MAX       (255 - 64)
+#define __NIXIE_BOARDER_OPA_MAX         (255 - 64)
+
+#define __LIQUID_BOARDER_OPA_MAX        (128)
 
 #undef this
 #define this    (*ptThis)
@@ -76,6 +78,9 @@ const arm_2d_tile_t c_tileBatteryGasGaugeGradeBoarderMask;
 
 extern
 const arm_2d_tile_t c_tileBatteryGasGaugeBlockMask;
+
+extern
+const arm_2d_tile_t c_tileSinWaveMask;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
@@ -123,11 +128,11 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
     
     if (bIsNewFrame) {
         if (BATTERY_STATUS_CHARGING == this.tStatus) {
-            this.chBoarderOpacity = __BOARDER_OPA_MAX;
+            this.chBoarderOpacity = __NIXIE_BOARDER_OPA_MAX;
             this.bBoarderFlashing = false;
             
             int32_t iResult;
-            arm_2d_helper_time_cos_slider(0, __BOARDER_OPA_MAX, 2000, 0, &iResult, &this.lTimeStamp);
+            arm_2d_helper_time_cos_slider(0, __NIXIE_BOARDER_OPA_MAX, 2000, 0, &iResult, &this.lTimeStamp);
             this.chBarOpacity = (uint8_t)iResult;
             this.bFlashingBar = true;
         } else {
@@ -136,12 +141,12 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
             /* smaller than 10% */
             if (this.hwGasGauge < 100) { 
                 int32_t iResult;
-                arm_2d_helper_time_cos_slider(__BOARDER_OPA_MAX, 0, 2000, 0, &iResult, &this.lTimeStamp);
+                arm_2d_helper_time_cos_slider(__NIXIE_BOARDER_OPA_MAX, 0, 2000, 0, &iResult, &this.lTimeStamp);
                 this.chBoarderOpacity = (uint8_t)iResult;
                 this.bBoarderFlashing = true;
             } else {
                 this.lTimeStamp = 0;
-                this.chBoarderOpacity = __BOARDER_OPA_MAX;
+                this.chBoarderOpacity = __NIXIE_BOARDER_OPA_MAX;
                 this.bBoarderFlashing = false;
             }
         }
@@ -172,7 +177,7 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
                     hwLevel -= 200;
                     if (this.hwGasGauge > hwLevel) {
                         if (BATTERY_STATUS_CHARGING == this.tStatus) {
-                            chOpacity = __BOARDER_OPA_MAX;
+                            chOpacity = __NIXIE_BOARDER_OPA_MAX;
                         } else {
                             chOpacity = (uint8_t)MIN(255, this.hwGasGauge -  hwLevel);
                         }
@@ -282,6 +287,52 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
         return ;
     }
 
+    /* calculate the colour */
+    COLOUR_INT tColour;
+    
+    switch (this.tStatus) {
+        case BATTERY_STATUS_CHARGING:
+            tColour = GLCD_COLOR_NIXIE_TUBE;
+            break;
+        case BATTERY_STATUS_IDLE:
+            tColour = GLCD_COLOR_LIGHT_GREY;
+            break;
+        case BATTERY_STATUS_DISCHARGING:
+            tColour = arm_2d_pixel_brga8888_to_rgb565(
+                            __arm_2d_helper_colour_slider(
+                                __RGB32(0xFF, 0, 0), 
+                                __RGB32(0, 0xFF, 0),
+                                1000,
+                                this.hwGasGauge));
+        break;
+    }
+
+    if (bIsNewFrame) {
+        if (BATTERY_STATUS_CHARGING == this.tStatus) {
+            this.chBoarderOpacity = __LIQUID_BOARDER_OPA_MAX;
+            this.bBoarderFlashing = false;
+            
+            int32_t iResult;
+            arm_2d_helper_time_cos_slider(0, __LIQUID_BOARDER_OPA_MAX, 2000, 0, &iResult, &this.lTimeStamp);
+            this.chBarOpacity = (uint8_t)iResult;
+            this.bFlashingBar = true;
+        } else {
+            this.bFlashingBar = false;
+
+            /* smaller than 10% */
+            if (this.hwGasGauge < 100) { 
+                int32_t iResult;
+                arm_2d_helper_time_cos_slider(__LIQUID_BOARDER_OPA_MAX, 0, 2000, 0, &iResult, &this.lTimeStamp);
+                this.chBoarderOpacity = (uint8_t)iResult;
+                this.bBoarderFlashing = true;
+            } else {
+                this.lTimeStamp = 0;
+                this.chBoarderOpacity = __LIQUID_BOARDER_OPA_MAX;
+                this.bBoarderFlashing = false;
+            }
+        }
+    }
+
     arm_2d_canvas(ptTile, __canvas) {
         /* draw battery boarder */
         arm_2d_align_centre( __canvas, c_tileBatteryBoarder1Mask.tRegion.tSize) {
@@ -291,7 +342,37 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
                                             &__centre_region,
                                             &c_tileBatteryBoarder1Mask,
                                             (__arm_2d_color_t){GLCD_COLOR_WHITE},
-                                            128);
+                                            this.chBoarderOpacity);
+
+            arm_2d_container(ptTile, __inner_container, __centre_region,
+                             //8,9,16,10
+                             .chLeft = 9,
+                             .chRight = 9,
+                             .chTop = 16,
+                             .chBottom = 10
+                             ) {
+
+//                arm_2d_region_t tWaveRegion = __inner_container_canvas;
+//                tWaveRegion.tLocation = 
+//                arm_2d_fill_colour_with_mask_and_opacity(
+//                        &__inner_container,
+//                        
+//                    );
+
+
+
+                /* calculate the water level */
+                __inner_container_canvas.tLocation.iY 
+                    += __inner_container_canvas.tSize.iHeight 
+                    -  __inner_container_canvas.tSize.iHeight 
+                    *  this.hwGasGauge / 1000;
+
+                arm_2d_fill_colour_with_opacity(
+                                &__inner_container, 
+                                &__inner_container_canvas,
+                                (__arm_2d_color_t) {tColour},
+                                128);
+            }
         }
     }
 

@@ -278,8 +278,19 @@ bool __arm_2d_helper_time_cos_slider(   int32_t nFrom,
                                         int32_t *pnStroke,
                                         int64_t *plTimestamp);
 
-
-
+/*!
+ * \brier colour intrapolation
+ * \param[in] wFrom a 32bit colour (4 8bit colour channels) on the start
+ * \param[in] wTo a 32bit colour (4 8bit colour channels) on the end
+ * \param[in] nDistance the reference full distance between two end points
+ * \param[in] nOffset the offset from the start
+ * \return uint32_t 32bit colour
+ */
+extern
+uint32_t __arm_2d_helper_colour_slider( uint32_t wFrom, 
+                                        uint32_t wTo,
+                                        int32_t nDistance,
+                                        int32_t nOffset);
 
 /*! @} */
 

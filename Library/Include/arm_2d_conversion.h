@@ -72,6 +72,11 @@ extern "C" {
                                                 (__SRC_ADDR),                   \
                                                 (__DES_ADDR))
 
+#define arm_2d_pixel_brga8888_to_rgb565(__COLOUR)                               \
+            ({__arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tChannels);            \
+            __arm_2d_brga8888_unpack((__COLOUR), &ARM_2D_SAFE_NAME(tChannels)); \
+            __arm_2d_rgb565_pack(&ARM_2D_SAFE_NAME(tChannels));})
+
 /*============================ TYPES =========================================*/
 
 typedef arm_2d_op_src_t arm_2d_op_cl_convt_t;
@@ -116,6 +121,26 @@ __STATIC_INLINE void __arm_2d_rgb565_unpack(uint16_t hwColor,
     
     ptRGB->A = 0xFF;
 }
+
+/*!
+ * \brief unpack a 32bit colour into a given __arm_2d_color_fast_rgb_t object
+ * \param[in] wColour the target brga888 colour
+ * \param[out] ptRGB a __arm_2d_color_fast_rgb_t object
+ */
+ARM_NONNULL(2)
+__STATIC_INLINE void __arm_2d_brga8888_unpack(uint32_t wColor,
+                                              __arm_2d_color_fast_rgb_t * ptRGB)
+{
+    assert(NULL != ptRGB);
+
+    uint8_t *pchChannel = (uint8_t *)&wColor;
+
+    ptRGB->B = (uint16_t) pchChannel[0];
+    ptRGB->G = (uint16_t) pchChannel[1];
+    ptRGB->R = (uint16_t) pchChannel[2];
+    ptRGB->A = (uint16_t) pchChannel[3];
+}
+
 
 /*!
  * \brief generate a rgb565 colour from a __arm_2d_color_fast_rgb_t object 

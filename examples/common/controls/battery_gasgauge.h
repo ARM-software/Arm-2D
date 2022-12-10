@@ -78,6 +78,11 @@ ARM_PRIVATE(
     int64_t lTimeStamp;
 
     uint16_t hwGasGauge;
+    uint8_t chBoarderOpacity;
+    uint8_t chBarOpacity;
+    
+    uint8_t bBoarderFlashing    : 1;
+    uint8_t bFlashingBar        : 1;
 
     battery_status_t tStatus;
 )

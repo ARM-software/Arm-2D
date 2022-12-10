@@ -442,6 +442,11 @@
 
 /*---------------------- Graphic LCD color definitions -----------------------*/
 
+#define __RGB32(__R, __G, __B)     ((((uint32_t)(__R) & 0xFF) << 16)        |   \
+                                    (((uint32_t)(__G) & 0xFF) << 8)         |   \
+                                    (((uint32_t)(__B) & 0xFF) << 0)         |   \
+                                    (uint32_t)0xFF << 24)
+
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 #   define __RGB(__R, __G, __B)    ((((__R) + (__G) + (__B)) / 3) & 0xFF)
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
@@ -449,10 +454,7 @@
                                     (((uint16_t)(__G) & 0xFF) >> 2 << 5)    |   \
                                     (((uint16_t)(__B) & 0xFF) >> 3 << 0)    )
 #else /* __GLCD_CFG_COLOUR_DEPTH__ == 32 */
-#   define __RGB(__R, __G, __B)    ((((uint32_t)(__R) & 0xFF) << 16)        |   \
-                                    (((uint32_t)(__G) & 0xFF) << 8)         |   \
-                                    (((uint32_t)(__B) & 0xFF) << 0)         |   \
-                                    (uint32_t)0xFF << 24)
+#   define __RGB(__R, __G, __B)    __RGB32(__R, __G, __B)
 #endif
 
 /* GLCD RGB color definitions                            */
