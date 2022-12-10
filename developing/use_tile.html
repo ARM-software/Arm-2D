@@ -185,10 +185,10 @@ $(document).ready(function(){initNavTree('use_tile.html',''); initResizable(); }
 <div class="line"><span class="preprocessor">#define impl_fb(__name, __width, __height, __type, ...)                         \</span></div>
 <div class="line"><span class="preprocessor">            __impl_fb(__name, __width, __height, __type, ##__VA_ARGS__)</span></div>
 </div><!-- fragment --><p >For example, we can create two framebuffers with size <b>100*100</b> and <em><b>200*50</b></em> respectively and using colour <em><b><a class="el" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a></b></em> for pixels:</p>
-<div class="fragment"><div class="line"><a class="code hl_define" href="group__gHelper.html#ga35c72d3f4f9efaa986bf68ce01300782" title="declare a framebuffer">dcl_fb</a>(c_tLayerA)</div>
+<div class="fragment"><div class="line">dcl_fb(c_tLayerA)</div>
 <div class="line">implement_tile(c_tLayerA, 100, 100, <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a>);</div>
 <div class="line"> </div>
-<div class="line"><a class="code hl_define" href="group__gHelper.html#ga35c72d3f4f9efaa986bf68ce01300782" title="declare a framebuffer">dcl_fb</a>(c_tLayerB)</div>
+<div class="line">dcl_fb(c_tLayerB)</div>
 <div class="line">implement_tile(c_tLayerB, 200, 50, <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a>);</div>
 </div><!-- fragment --><p >These layers are stored in RAM, which are used as sources and targets for 2D operations.</p>
 <p >Note that in the aforementioned macro template, we use <em><b>ARM_NOINIT</b></em> to decorate the display buffer, its definition is shown below:</p>
