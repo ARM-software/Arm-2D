@@ -48,14 +48,35 @@ extern "C" {
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
+
+
+/*!
+ * \brief a user class for user defined control
+ */
+typedef struct user_control_template_t user_control_template_t;
+
+struct user_control_template_t {
+
+ARM_PRIVATE(
+    /* place your private member here, following two are examples */
+    int64_t lTimestamp[1];
+    uint8_t chOpacity;
+)
+    /* place your public member here */
+    
+};
+
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
 extern
-void control_template_init(void);
+ARM_NONNULL(1)
+void control_template_init( user_control_template_t *ptThis);
 
 extern
-void control_template_show( const arm_2d_tile_t *ptTile, 
+ARM_NONNULL(1)
+void control_template_show( user_control_template_t *ptThis,
+                            const arm_2d_tile_t *ptTile, 
                             const arm_2d_region_t *ptRegion, 
                             bool bIsNewFrame);
 

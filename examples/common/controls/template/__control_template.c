@@ -22,6 +22,7 @@
 #include "arm_2d.h"
 #include "arm_2d_helper.h"
 #include <assert.h>
+#include <string.h>
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -54,6 +55,9 @@
 #   error Unsupported colour depth!
 #endif
 
+#undef this
+#define this    (*ptThis)
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -61,23 +65,50 @@
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
-
-void control_template_init(void)
+ARM_NONNULL(1)
+void control_template_init(user_control_template_t *ptThis)
 {
+    assert(NULL!= ptThis);
+    memset(ptThis, 0, sizeof(user_control_template_t));
 
 }
 
-void control_template_show( const arm_2d_tile_t *ptTile, 
+ARM_NONNULL(1)
+void control_template_show( user_control_template_t *ptThis,
+                            const arm_2d_tile_t *ptTile, 
                             const arm_2d_region_t *ptRegion, 
                             bool bIsNewFrame)
 {
+    assert(NULL!= ptThis);
+
+    if (bIsNewFrame) {
+        int32_t iResult;
+
+        /* generate a cosine wave for opacity */
+        arm_2d_helper_time_cos_slider(0, 255, 2000, 0, &iResult, &this.lTimestamp[0]);
+        this.chOpacity = (uint8_t)iResult;
+    }
+
     arm_2d_container(ptTile, __control, ptRegion) {
         /* put your drawing code inside here
          *    - &__control is the target tile (please do not use ptTile anymore)
          *    - __control_canvas is the canvas
          */
 
-        
+        /* example code: flash a 50x50 red box in the centre */
+        arm_2d_align_centre(__control_canvas, 50, 50) {
+
+            arm_2d_fill_colour_with_opacity(
+                &__control,
+                &__centre_region,
+                (__arm_2d_color_t) {GLCD_COLOR_RED},
+                this.chOpacity
+            );
+
+            /* make sure the operation is complete */
+            arm_2d_op_wait_async(NULL);
+        }
+
         
     }
 
