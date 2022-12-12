@@ -71,28 +71,17 @@ void control_template_show( const arm_2d_tile_t *ptTile,
                             const arm_2d_region_t *ptRegion, 
                             bool bIsNewFrame)
 {
-    arm_2d_tile_t tDrawTile;
-    arm_2d_region_t tDrawRegion = {0};
+    arm_2d_container(ptTile, __control, ptRegion) {
+        /* put your drawing code inside here
+         *    - &__control is the target tile (please do not use ptTile anymore)
+         *    - __control_canvas is the canvas
+         */
 
-    if (NULL == ptTile) {
-        ptTile = arm_2d_get_default_frame_buffer();
-        if (NULL == ptTile) {
-            return ;
-        }
+        
+        
     }
 
-    if (NULL == ptRegion) {
-        tDrawRegion.tSize = ptTile->tRegion.tSize;
-        ptRegion = (const arm_2d_region_t *)&tDrawRegion;
-    }
-
-    ptTile = arm_2d_tile_generate_child(ptTile, ptRegion, &tDrawTile, false);
-    if (NULL == ptTile) {
-        return ;
-    }
-
-    
-
+    arm_2d_op_wait_async(NULL);
 }
 
 #if defined(__clang__)

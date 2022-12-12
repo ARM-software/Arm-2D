@@ -110,8 +110,6 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
                                         battery_status_t tStatus,
                                         bool bIsNewFrame)
 {
-    arm_2d_region_t tDrawRegion = {0};
-    arm_2d_tile_t tDrawTile;
     hwGasgauge = MIN(1000, hwGasgauge);
 
     if (bIsNewFrame){
@@ -119,23 +117,6 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
         this.tStatus = tStatus;
     }
 
-    if (NULL == ptTile) {
-        ptTile = arm_2d_get_default_frame_buffer();
-        if (NULL == ptTile) {
-            return ;
-        }
-    }
-
-    if (NULL == ptRegion) {
-        tDrawRegion.tSize = ptTile->tRegion.tSize;
-        ptRegion = (const arm_2d_region_t *)&tDrawRegion;
-    }
-
-    ptTile = arm_2d_tile_generate_child(ptTile, ptRegion, &tDrawTile, false);
-    if (NULL == ptTile) {
-        return ;
-    }
-    
     if (bIsNewFrame) {
         if (BATTERY_STATUS_CHARGING == this.tStatus) {
             this.chBoarderOpacity = __NIXIE_BOARDER_OPA_MAX;
@@ -163,12 +144,14 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
         }
     }
 
-    arm_2d_canvas(ptTile, __canvas) {
+    arm_2d_container(ptTile, __battery, ptRegion) {
+
         /* draw battery boarder */
-        arm_2d_align_centre( __canvas, c_tileBatteryBoarder1Mask.tRegion.tSize) {
+        arm_2d_align_centre(__battery_canvas,
+                            c_tileBatteryBoarder1Mask.tRegion.tSize) {
 
             arm_2d_fill_colour_with_mask_and_opacity(   
-                                            ptTile,
+                                            &__battery,
                                             &__centre_region,
                                             &c_tileBatteryBoarder1Mask,
                                             (__arm_2d_color_t){GLCD_COLOR_NIXIE_TUBE},
@@ -183,7 +166,7 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
             tInnerSize.iHeight = 80;
             uint16_t  hwLevel = 1000;
             bool bDrawTheTopBar = true;
-            arm_2d_align_centre( __canvas, tInnerSize) {
+            arm_2d_align_centre( __battery_canvas, tInnerSize) {
                 for (int n = 0; n < 5; n++) {
                     uint8_t chOpacity = 0;
                     hwLevel -= 200;
@@ -206,7 +189,7 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
                     }
                     
                     arm_2d_fill_colour_with_mask_and_opacity(
-                                            ptTile,
+                                            &__battery,
                                             &__centre_region,
                                             &c_tileBatteryGasGaugeGradeBoarderMask,
                                             (__arm_2d_color_t){GLCD_COLOR_NIXIE_TUBE},
@@ -225,7 +208,7 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
                 = c_tileBatteryGasGaugeBlockMask.tRegion.tSize;
             tInnerSize.iHeight = 80;
             uint16_t  hwLevel = 1000;
-            arm_2d_align_centre( __canvas, tInnerSize) {
+            arm_2d_align_centre( __battery_canvas, tInnerSize) {
                 for (int n = 0; n < 5; n++) {
                     uint8_t chOpacity = 0;
                     hwLevel -= 200;
@@ -241,7 +224,7 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
                     __centre_region.tLocation.iY += 4;
                     
                     arm_2d_fill_colour_with_mask_and_opacity(
-                                            ptTile,
+                                            &__battery,
                                             &__centre_region,
                                             &c_tileBatteryGasGaugeBlockMask,
                                             (__arm_2d_color_t){GLCD_COLOR_NIXIE_TUBE},
@@ -276,8 +259,6 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
                                     battery_status_t tStatus,
                                     bool bIsNewFrame)
 {
-    arm_2d_region_t tDrawRegion = {0};
-    arm_2d_tile_t tDrawTile;
     hwGasgauge = MIN(1000, hwGasgauge);
 
     if (bIsNewFrame){
@@ -299,26 +280,10 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
         }
     }
 
-    if (NULL == ptTile) {
-        ptTile = arm_2d_get_default_frame_buffer();
-        if (NULL == ptTile) {
-            return ;
-        }
-    }
-
-    if (NULL == ptRegion) {
-        tDrawRegion.tSize = ptTile->tRegion.tSize;
-        ptRegion = (const arm_2d_region_t *)&tDrawRegion;
-    }
-
-    ptTile = arm_2d_tile_generate_child(ptTile, ptRegion, &tDrawTile, false);
-    if (NULL == ptTile) {
-        return ;
-    }
-
+    
     /* calculate the colour */
     COLOUR_INT tColour;
-    
+
     switch (this.tStatus) {
         case BATTERY_STATUS_CHARGING:
             if (this.hwGasGauge > 800) {
@@ -378,19 +343,20 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
             }
         }
     }
-
-    arm_2d_canvas(ptTile, __canvas) {
+    
+    arm_2d_container(ptTile, __battery, ptRegion) {
         /* draw battery boarder */
-        arm_2d_align_centre( __canvas, c_tileBatteryBoarder1Mask.tRegion.tSize) {
+        arm_2d_align_centre(__battery_canvas,
+                            c_tileBatteryBoarder1Mask.tRegion.tSize) {
 
             arm_2d_fill_colour_with_mask_and_opacity(   
-                                            ptTile,
+                                            &__battery,
                                             &__centre_region,
                                             &c_tileBatteryBoarder1Mask,
                                             (__arm_2d_color_t){GLCD_COLOR_WHITE},
                                             this.chBoarderOpacity);
 
-            arm_2d_container(ptTile, __inner_container, __centre_region,
+            arm_2d_container(&__battery, __inner_container, &__centre_region,
                              //8,9,16,10
                              .chLeft = 9,
                              .chRight = 9,
@@ -488,7 +454,7 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
                 }
             }
 
-            arm_2d_container(ptTile, __glass_face, __centre_region,
+            arm_2d_container(&__battery, __glass_face, &__centre_region,
                             8, 8, 12, 8
                             ) {
 
