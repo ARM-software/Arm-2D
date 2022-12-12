@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        10. Dec 2022
- * $Revision:    V.1.0.1
+ * $Date:        12. Dec 2022
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -45,6 +45,7 @@ extern "C" {
 #   pragma clang diagnostic push
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #   pragma clang diagnostic ignored "-Wunused-function"
+#   pragma clang diagnostic ignored "-Wgcc-compat"
 #endif
 
 
@@ -181,9 +182,9 @@ extern "C" {
  * \brief Please do NOT use this macro directly
  * 
  */
-#define __arm_2d_container(   __tile_ptr,                                       \
+#define __arm_2d_container( __tile_ptr,                                         \
                             __container_name,                                   \
-                            __region,                                           \
+                            __region_ptr,                                       \
                             ...)                                                \
             for (arm_2d_margin_t ARM_2D_SAFE_NAME(tMargin),                     \
                 *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;              \
@@ -200,7 +201,23 @@ extern "C" {
                 arm_2d_tile_t __container_name = {0},                           \
                 {                                                               \
                     arm_2d_region_t                                             \
-                        ARM_2D_SAFE_NAME(ContainerRegion) = (__region);         \
+                        ARM_2D_SAFE_NAME(ContainerRegion) = {0};                \
+                    arm_2d_tile_t *ARM_2D_SAFE_NAME(ptTile)                     \
+                        = (arm_2d_tile_t *)(__tile_ptr);                        \
+                                                                                \
+                    if (NULL == ARM_2D_SAFE_NAME(ptTile)) {                     \
+                        ARM_2D_SAFE_NAME(ptTile)                                \
+                            = arm_2d_get_default_frame_buffer();                \
+                        if (NULL == ARM_2D_SAFE_NAME(ptTile)) {                 \
+                            continue;                                           \
+                        }                                                       \
+                    }                                                           \
+                    if (NULL == (__region_ptr)) {                               \
+                        ARM_2D_SAFE_NAME(ContainerRegion).tSize                 \
+                            = ARM_2D_SAFE_NAME(ptTile)->tRegion.tSize;          \
+                    } else {                                                    \
+                        ARM_2D_SAFE_NAME(ContainerRegion) = *(__region_ptr);    \
+                    }                                                           \
                     ARM_2D_SAFE_NAME(ContainerRegion).tLocation.iX              \
                         += ARM_2D_SAFE_NAME(tMargin).chLeft;                    \
                     ARM_2D_SAFE_NAME(ContainerRegion).tLocation.iY              \
@@ -212,7 +229,7 @@ extern "C" {
                         -= ARM_2D_SAFE_NAME(tMargin).chTop                      \
                         + ARM_2D_SAFE_NAME(tMargin).chBottom;                   \
                     arm_2d_tile_generate_child(                                 \
-                                            (__tile_ptr),                       \
+                                            ARM_2D_SAFE_NAME(ptTile),           \
                                             &ARM_2D_SAFE_NAME(ContainerRegion), \
                                             &(__container_name),                \
                                             false);                             \
@@ -235,18 +252,18 @@ extern "C" {
  *            __container_name. 
  *            For example, if the container name is called __inner_container, 
  *            then a canvas called __inner_container_canvas will be generated
- * \param[in] __region the reference region in the parent tile
+ * \param[in] __region_ptr the reference region in the parent tile
  * \param[in] ... an optional inner margin. You can specify the left, right, top
  *                and the bottom margin in order. You can also use .chLeft, 
  *                .chRight, .chTop and .chBottom to set the specified margin. 
  */
 #define arm_2d_container(   __tile_ptr,                                         \
                             __container_name,                                   \
-                            __region,                                           \
+                            __region_ptr,                                       \
                             ...)                                                \
             __arm_2d_container( (__tile_ptr),                                   \
                                 __container_name,                               \
-                                (__region),##__VA_ARGS__)
+                                (__region_ptr),##__VA_ARGS__)
 
 #define arm_2d_canvas(__tile_ptr, __region_name)                                \
             arm_using(arm_2d_region_t __region_name = {0},                      \
@@ -257,6 +274,26 @@ extern "C" {
         arm_using(arm_2d_region_t __layout = (__region),                        \
                   arm_2d_op_wait_async(NULL))
 
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define ____item_line_horizontal1(__size)                                       \
+    arm_using(  arm_2d_region_t __item_region,                                  \
+                {                                                               \
+                    __item_region.tSize.iWidth = (__size).iWidth;               \
+                    __item_region.tSize.iHeight = (__size).iHeight;             \
+                    __item_region.tLocation = __layout.tLocation;               \
+                },                                                              \
+                {                                                               \
+                    __layout.tLocation.iX += (__size).iWidth;                   \
+                    arm_2d_op_wait_async(NULL);                                 \
+                })
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
 #define ____item_line_horizontal2(__width, __height)                            \
     arm_using(  arm_2d_region_t __item_region,                                  \
                 {                                                               \
@@ -269,9 +306,79 @@ extern "C" {
                     arm_2d_op_wait_async(NULL);                                 \
                 })
 
+/*!
+ * \brief generate a arm_2d_region (i.e. __item_region) to place a specific 
+ *        rectangular area horizontally.
+ * \param ... parameter list 
+ * 
+ * \note prototype 1:
+ *          __item_line_horizontal(__size) {
+ *              code body that can use __item_region
+ *          }
+ * 
+ * \note prototype 2:
+ *          __item_line_horizontal(__width, __height) {
+ *              code body that can use __item_region
+ *          }
+ *          
+ */
 #define __item_line_horizontal(...)                                             \
             ARM_CONNECT2(   ____item_line_horizontal,                           \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define ____item_line_vertical1(__size)                                         \
+    arm_using(  arm_2d_region_t __item_region,                                  \
+                {                                                               \
+                    __item_region.tSize.iWidth = (__size).iWidth;               \
+                    __item_region.tSize.iHeight = (__size).iHeight;             \
+                    __item_region.tLocation = __layout.tLocation;               \
+                },                                                              \
+                {                                                               \
+                    __layout.tLocation.iY += (__size).iHeight;                  \
+                    arm_2d_op_wait_async(NULL);                                 \
+                })
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define ____item_line_vertical2(__width, __height)                              \
+    arm_using(  arm_2d_region_t __item_region,                                  \
+                {                                                               \
+                    __item_region.tSize.iWidth = (__width);                     \
+                    __item_region.tSize.iHeight = (__height);                   \
+                    __item_region.tLocation = __layout.tLocation;               \
+                },                                                              \
+                {                                                               \
+                    __layout.tLocation.iY += (__height);                        \
+                    arm_2d_op_wait_async(NULL);                                 \
+                })
+
+/*!
+ * \brief generate a arm_2d_region (i.e. __item_region) to place a specific 
+ *        rectangular area vertically.
+ * \param ... parameter list 
+ * 
+ * \note prototype 1:
+ *          __item_line_vertical(__size) {
+ *              code body that can use __item_region
+ *          }
+ * 
+ * \note prototype 2:
+ *          __item_line_vertical(__width, __height) {
+ *              code body that can use __item_region
+ *          }
+ *          
+ */
+#define __item_line_vertical(...)                                               \
+            ARM_CONNECT2(   ____item_line_vertical,                             \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+
 
 /*!
  * \brief Please do NOT use this macro

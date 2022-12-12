@@ -200,32 +200,41 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
     arm_2d_canvas(ptTile, __canvas) {
         arm_2d_align_centre(__canvas, 150, 80) {
 
-            __centre_region.tSize.iWidth = 60;
-            progress_wheel_show(&this.tWheel,
-                                ptTile, 
-                                &__centre_region,       
-                                this.iProgress,         /* progress 0~1000 */
-                                255 - 32,               /* opacity */
-                                bIsNewFrame);
+            arm_2d_layout(__centre_region) {
 
-            __centre_region.tLocation.iX += 60;
-            __centre_region.tSize.iWidth = 30;
-            while(arm_fsm_rt_cpl != number_list_show(   &this.tNumberList[2], 
-                                                        ptTile, 
-                                                        &__centre_region, 
-                                                        bIsNewFrame));
-            __centre_region.tLocation.iX += 30;
-            while(arm_fsm_rt_cpl != number_list_show(   &this.tNumberList[1], 
-                                                        ptTile, 
-                                                        &__centre_region, 
-                                                        bIsNewFrame));
-            __centre_region.tLocation.iX += 30;
-            while(arm_fsm_rt_cpl != number_list_show(   &this.tNumberList[0], 
-                                                        ptTile, 
-                                                        &__centre_region, 
-                                                        bIsNewFrame));
-            
+                __item_line_horizontal(60,80) {
+                    progress_wheel_show(&this.tWheel,
+                                        ptTile, 
+                                        &__item_region,       
+                                        this.iProgress,         /* progress 0~1000 */
+                                        255 - 32,               /* opacity */
+                                        bIsNewFrame);
+                }
 
+                __item_line_horizontal(30, 80) {
+                    while(arm_fsm_rt_cpl != number_list_show(   
+                                                    &this.tNumberList[2], 
+                                                    ptTile, 
+                                                    &__item_region, 
+                                                    bIsNewFrame));
+                }
+
+                __item_line_horizontal(30, 80) {
+                    while(arm_fsm_rt_cpl != number_list_show(   
+                                                    &this.tNumberList[1], 
+                                                    ptTile, 
+                                                    &__item_region, 
+                                                    bIsNewFrame));
+                }
+
+                __item_line_horizontal(30, 80) {
+                    while(arm_fsm_rt_cpl != number_list_show(   
+                                                    &this.tNumberList[0], 
+                                                    ptTile, 
+                                                    &__item_region, 
+                                                    bIsNewFrame));
+                }
+            }
         }
         
         arm_2d_align_top_right( __canvas, 
