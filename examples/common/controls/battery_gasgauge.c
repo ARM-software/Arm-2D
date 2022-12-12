@@ -47,11 +47,15 @@
 
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
+#define arm_2d_pixel_from_brga8888  arm_2d_pixel_brga8888_to_gray8
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
+#define arm_2d_pixel_from_brga8888  arm_2d_pixel_brga8888_to_rgb565
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
+
+#define arm_2d_pixel_from_brga8888
 
 #else
 #   error Unsupported colour depth!
@@ -287,12 +291,12 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
     switch (this.tStatus) {
         case BATTERY_STATUS_CHARGING:
             if (this.hwGasGauge > 800) {
-                tColour = arm_2d_pixel_brga8888_to_rgb565(
-                            __arm_2d_helper_colour_slider(
-                                GLCD_COLOR_NIXIE_TUBE_RGB32, 
-                                __RGB32(0, 0xFF, 0),
-                                200,
-                                this.hwGasGauge - 800));
+                tColour = arm_2d_pixel_from_brga8888(
+                                            __arm_2d_helper_colour_slider(
+                                                GLCD_COLOR_NIXIE_TUBE_RGB32, 
+                                                __RGB32(0, 0xFF, 0),
+                                                200,
+                                                this.hwGasGauge - 800));
             } else {
                 tColour = GLCD_COLOR_NIXIE_TUBE;
             }
@@ -301,12 +305,12 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
             tColour = GLCD_COLOR_LIGHT_GREY;
             break;
         case BATTERY_STATUS_DISCHARGING:
-            tColour = arm_2d_pixel_brga8888_to_rgb565(
-                            __arm_2d_helper_colour_slider(
-                                __RGB32(0xFF, 0, 0), 
-                                __RGB32(0, 0xFF, 0),
-                                1000,
-                                this.hwGasGauge));
+            tColour = arm_2d_pixel_from_brga8888( 
+                                            __arm_2d_helper_colour_slider(
+                                                __RGB32(0xFF, 0, 0), 
+                                                __RGB32(0, 0xFF, 0),
+                                                1000,
+                                                this.hwGasGauge));
         break;
     }
 
