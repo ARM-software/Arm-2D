@@ -19,7 +19,7 @@ project:
     - component: ARM::Acceleration:Arm-2D Extras:Controls
     - component: ARM::Acceleration:Arm-2D Extras:LCD ASCII Printf
 
-    - component: perf_counter:Core
+    - component: perf_counter:Core&Source
 
     - component: ARM::CMSIS:CORE
     - component: ARM::CMSIS:DSP&Source@1.14.1

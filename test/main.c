@@ -24,6 +24,7 @@ void arm_2d_run_benchmark(void);
 /* for perf_counter */
 void SysTick_Handler(void)
 {
+    user_code_insert_to_systick_handler();
 }
 
 
