@@ -106,7 +106,7 @@ extern "C" {
 // <q>Disable the navigation layer
 // <i> Remove the navigation layer for this display adapter. NOTE: Disable the navigation layer will also remove the real-time FPS display.
 #ifndef __DISP0_CFG_DISABLE_NAVIGATION_LAYER__
-#   define __DISP0_CFG_DISABLE_NAVIGATION_LAYER__  1
+#   define __DISP0_CFG_DISABLE_NAVIGATION_LAYER__  0
 #endif
 
 // <q>Enable the virtual resource helper service
