@@ -17,6 +17,7 @@ var group__gHelper =
       [ "fnOnBGComplete", "group__gHelper.html#a9f48896229bd93381db449d8a09c8303", null ],
       [ "fnOnFrameStart", "group__gHelper.html#a9bb39993e5091bd87bd047df8bc35512", null ],
       [ "fnOnFrameCPL", "group__gHelper.html#afa4eefd559eb1d11d3e871aa7b35cff1", null ],
+      [ "fnBeforeSwitchOut", "group__gHelper.html#a971eef026e3cd95397424c681451880d", null ],
       [ "fnDepose", "group__gHelper.html#a6e8ca4e93825c26bd94310188d54f462", null ]
     ] ],
     [ "arm_2d_scene_player_t", "group__gHelper.html#structarm__2d__scene__player__t", [

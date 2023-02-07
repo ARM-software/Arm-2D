@@ -574,6 +574,9 @@ switching algorithm </td></tr>
 <tr class="memitem:afa4eefd559eb1d11d3e871aa7b35cff1"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#afa4eefd559eb1d11d3e871aa7b35cff1">fnOnFrameCPL</a> )(<a class="el" href="group__gHelper.html#structarm__2d__scene__t">arm_2d_scene_t</a> *ptThis)</td></tr>
 <tr class="memdesc:afa4eefd559eb1d11d3e871aa7b35cff1"><td class="mdescLeft">&#160;</td><td class="mdescRight">on-frame-complete event handler  <a href="group__gHelper.html#afa4eefd559eb1d11d3e871aa7b35cff1">More...</a><br /></td></tr>
 <tr class="separator:afa4eefd559eb1d11d3e871aa7b35cff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a971eef026e3cd95397424c681451880d"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#a971eef026e3cd95397424c681451880d">fnBeforeSwitchOut</a> )(<a class="el" href="group__gHelper.html#structarm__2d__scene__t">arm_2d_scene_t</a> *ptThis)</td></tr>
+<tr class="memdesc:a971eef026e3cd95397424c681451880d"><td class="mdescLeft">&#160;</td><td class="mdescRight">before-scene-switch-out event handler  <a href="group__gHelper.html#a971eef026e3cd95397424c681451880d">More...</a><br /></td></tr>
+<tr class="separator:a971eef026e3cd95397424c681451880d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e8ca4e93825c26bd94310188d54f462"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#a6e8ca4e93825c26bd94310188d54f462">fnDepose</a> )(<a class="el" href="group__gHelper.html#structarm__2d__scene__t">arm_2d_scene_t</a> *ptThis)</td></tr>
 <tr class="memdesc:a6e8ca4e93825c26bd94310188d54f462"><td class="mdescLeft">&#160;</td><td class="mdescRight">on-scene-depose event handler  <a href="group__gHelper.html#a6e8ca4e93825c26bd94310188d54f462">More...</a><br /></td></tr>
 <tr class="separator:a6e8ca4e93825c26bd94310188d54f462"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -730,6 +733,23 @@ struct {</td></tr>
 </div><div class="memdoc">
 
 <p>on-frame-complete event handler </p>
+
+</div>
+</div>
+<a id="a971eef026e3cd95397424c681451880d" name="a971eef026e3cd95397424c681451880d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a971eef026e3cd95397424c681451880d">&#9670;&#160;</a></span>fnBeforeSwitchOut</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* arm_2d_scene_t::fnBeforeSwitchOut) (<a class="el" href="group__gHelper.html#structarm__2d__scene__t">arm_2d_scene_t</a> *ptThis)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>before-scene-switch-out event handler </p>
+<dl class="section note"><dt>Note</dt><dd>We can use this event to initialize/generate the new(next) scene </dd></dl>
 
 </div>
 </div>
