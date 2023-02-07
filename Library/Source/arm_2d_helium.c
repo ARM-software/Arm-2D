@@ -21,8 +21,8 @@
  * Title:        arm-2d_helium.c
  * Description:  Acceleration extensions using Helium.
  *
- * $Date:        03. Aug 2022
- * $Revision:    V.0.13.6
+ * $Date:        07. Feb 2023
+ * $Revision:    V.0.13.7
  *
  * Target Processor:  Cortex-M cores with Helium
  *
@@ -500,7 +500,7 @@ __OVERRIDE_WEAK
  *----------------------------------------------------------------------------*/
 
 __OVERRIDE_WEAK
-void __MVE_WRAPPER( __arm_2d_impl_gray8_alpha_blending)(uint8_t * __RESTRICT pSourceBase,
+void __MVE_WRAPPER( __arm_2d_impl_gray8_tile_copy_opacity)(uint8_t * __RESTRICT pSourceBase,
                                         int16_t iSourceStride,
                                         uint8_t * __RESTRICT pTargetBase,
                                         int16_t iTargetStride,
@@ -582,7 +582,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_alpha_blending)(uint8_t * __RESTRICT pSo
 }
 
 __OVERRIDE_WEAK
-void __MVE_WRAPPER( __arm_2d_impl_gray8_alpha_blending_colour_keying)(uint8_t * __RESTRICT pSourceBase,
+void __MVE_WRAPPER( __arm_2d_impl_gray8_tile_copy_colour_keying_opacity)(uint8_t * __RESTRICT pSourceBase,
                                                       int16_t iSourceStride,
                                                       uint8_t * __RESTRICT pTargetBase,
                                                       int16_t iTargetStride,
@@ -758,7 +758,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_opacity)(uint8_t * _
 
 
 __OVERRIDE_WEAK
-void __MVE_WRAPPER( __arm_2d_impl_rgb565_alpha_blending)(   uint16_t *phwSourceBase,
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_tile_copy_opacity)(   uint16_t *phwSourceBase,
                                             int16_t iSourceStride,
                                             uint16_t *phwTargetBase,
                                             int16_t iTargetStride,
@@ -1111,7 +1111,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_opacity)(
 
 
 __OVERRIDE_WEAK
-void __MVE_WRAPPER( __arm_2d_impl_rgb565_alpha_blending_colour_keying)(
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity)(
                                                 uint16_t * __RESTRICT phwSource,
                                                 int16_t         iSourceStride,
                                                 uint16_t * __RESTRICT phwTarget,
@@ -1326,7 +1326,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_alpha_blending_colour_keying)(
 
 
 __OVERRIDE_WEAK
-void __MVE_WRAPPER( __arm_2d_impl_cccn888_alpha_blending)(   uint32_t *pwSourceBase,
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_tile_copy_opacity)(   uint32_t *pwSourceBase,
                                             int16_t iSourceStride,
                                             uint32_t *pwTargetBase,
                                             int16_t iTargetStride,
@@ -1492,7 +1492,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_opacity)(
 }
 
 __OVERRIDE_WEAK
-void __MVE_WRAPPER( __arm_2d_impl_cccn888_alpha_blending_colour_keying)(uint32_t * __RESTRICT pSourceBase,
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_tile_copy_colour_keying_opacity)(uint32_t * __RESTRICT pSourceBase,
                                                        int16_t iSourceStride,
                                                        uint32_t * __RESTRICT pTargetBase,
                                                        int16_t iTargetStride,
@@ -1601,7 +1601,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_alpha_blending_colour_keying)(uint32_t
 
 
 __OVERRIDE_WEAK
-void __MVE_WRAPPER( __arm_2d_impl_rgb565_alpha_blending_direct)(const uint16_t *phwSource,
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_tile_copy_with_opacity_direct)(const uint16_t *phwSource,
                                                 const uint16_t *phwBackground,
                                                 uint16_t *phwDestination,
                                                 uint32_t wPixelCount,
@@ -1745,7 +1745,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_alpha_blending_direct)(const uint16_t *
 }
 
 __OVERRIDE_WEAK
-void __MVE_WRAPPER( __arm_2d_impl_cccn888_alpha_blending_direct)(const uint32_t *pwSource,
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_tile_copy_with_opacity_direct)(const uint32_t *pwSource,
                                                 const uint32_t *pwBackground,
                                                 uint32_t *pwDestination,
                                                 uint32_t wPixelCount,

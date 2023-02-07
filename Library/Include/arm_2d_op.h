@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        07. Nov 2022
- * $Revision:    V.1.5.3
+ * $Date:        07. Feb 2023
+ * $Revision:    V.1.6.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -278,31 +278,31 @@ extern
 const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_AND_OPACITY_CCCN888;
     
 extern
-const __arm_2d_op_info_t ARM_2D_OP_ALPHA_BLENDING_GRAY8;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_OPACITY_GRAY8;
     
 extern
-const __arm_2d_op_info_t ARM_2D_OP_ALPHA_BLENDING_RGB565;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_OPACITY_RGB565;
     
 extern
-const __arm_2d_op_info_t ARM_2D_OP_ALPHA_BLENDING_RGB888;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_OPACITY_RGB888;
     
 extern
-const __arm_2d_op_info_t ARM_2D_OP_ALPHA_BLENDING_WITH_COLOUR_KEYING_GRAY8;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_AND_OPACITY_GRAY8;
     
 extern
-const __arm_2d_op_info_t ARM_2D_OP_ALPHA_BLENDING_WITH_COLOUR_KEYING_RGB565;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_AND_OPACITY_RGB565;
     
 extern
-const __arm_2d_op_info_t ARM_2D_OP_ALPHA_BLENDING_WITH_COLOUR_KEYING_RGB888;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_AND_OPACITY_RGB888;
     
 extern
-const __arm_2d_op_info_t ARM_2D_OP_ALPHA_COLOUR_FILL_GRAY8;
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_OPACITY_GRAY8;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_ALPHA_COLOUR_FILL_RGB565;
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_OPACITY_RGB565;
     
 extern
-const __arm_2d_op_info_t ARM_2D_OP_ALPHA_COLOUR_FILL_RGB888;
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_OPACITY_RGB888;
     
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_GRAY8;

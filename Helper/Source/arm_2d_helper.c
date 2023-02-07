@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        20. Oct 2022
- * $Revision:    V.1.4.0
+ * $Date:        07. Feb 2023
+ * $Revision:    V.1.4.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -268,7 +268,6 @@ uint32_t __arm_2d_helper_colour_slider( uint32_t wFrom,
     uint8_t *pchChannelFrom = (uint8_t *)&wFrom;
     uint8_t *pchChannelTo = (uint8_t *)&wTo;
     uint8_t *pchResult = (uint8_t *)&wResult;
-    int n = 4;
     
     for (int n = 0; n < 4; n++ ) {
         int_fast16_t iFrom = pchChannelFrom[n];

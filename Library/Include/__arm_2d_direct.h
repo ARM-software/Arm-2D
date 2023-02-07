@@ -21,8 +21,8 @@
  * Title:        __arm_2d_direct.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        12. Sept 2022
- * $Revision:    V.1.1.0
+ * $Date:        07. Feb 2023
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -771,21 +771,21 @@ void __arm_2d_impl_cccn888_1h_des_msk_fill_y_mirror(uint32_t *
                             __restrict
                             ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_alpha_blending(uint32_t * __restrict pSourceBase,
+void __arm_2d_impl_cccn888_tile_copy_opacity(uint32_t * __restrict pSourceBase,
                       int16_t iSourceStride,
                       uint32_t * __restrict pTargetBase,
                       int16_t iTargetStride,
                       arm_2d_size_t * __restrict ptCopySize,
                       uint_fast16_t chRatio);
 
-void __arm_2d_impl_cccn888_alpha_blending(uint32_t * pwSourceBase,
+void __arm_2d_impl_cccn888_tile_copy_opacity(uint32_t * pwSourceBase,
                       int16_t iSourceStride,
                       uint32_t * pwTargetBase,
                       int16_t iTargetStride,
                       arm_2d_size_t * ptCopySize,
                       uint_fast16_t chRatio);
 
-void __arm_2d_impl_cccn888_alpha_blending_colour_keying(uint32_t *
+void __arm_2d_impl_cccn888_tile_copy_colour_keying_opacity(uint32_t *
                             __restrict pSourceBase,
                             int16_t iSourceStride,
                             uint32_t *
@@ -3366,14 +3366,14 @@ void __arm_2d_impl_gray8_1h_des_msk_fill_y_mirror(uint8_t *
                                                   arm_2d_size_t *
                                                   __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_alpha_blending(uint8_t * __restrict pSourceBase,
+void __arm_2d_impl_gray8_tile_copy_opacity(uint8_t * __restrict pSourceBase,
                                         int16_t iSourceStride,
                                         uint8_t * __restrict pTargetBase,
                                         int16_t iTargetStride,
                                         arm_2d_size_t * __restrict ptCopySize,
                                         uint_fast16_t hwRatio);
 
-void __arm_2d_impl_gray8_alpha_blending_colour_keying(uint8_t *
+void __arm_2d_impl_gray8_tile_copy_colour_keying_opacity(uint8_t *
                                                       __restrict pSourceBase,
                                                       int16_t iSourceStride,
                                                       uint8_t *
@@ -7013,21 +7013,21 @@ void __arm_2d_impl_rgb565_1h_des_msk_fill_y_mirror(uint16_t *
                                                    arm_2d_size_t *
                                                    __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_alpha_blending(uint16_t * __restrict phwSourceBase,
+void __arm_2d_impl_rgb565_tile_copy_opacity(uint16_t * __restrict phwSourceBase,
                                          int16_t iSourceStride,
                                          uint16_t * __restrict phwTargetBase,
                                          int16_t iTargetStride,
                                          arm_2d_size_t * __restrict ptCopySize,
                                          uint_fast16_t hwRatio);
 
-void __arm_2d_impl_rgb565_alpha_blending(uint16_t * phwSourceBase,
+void __arm_2d_impl_rgb565_tile_copy_opacity(uint16_t * phwSourceBase,
                                          int16_t iSourceStride,
                                          uint16_t * phwTargetBase,
                                          int16_t iTargetStride,
                                          arm_2d_size_t * ptCopySize,
                                          uint_fast16_t hwRatio);
 
-void __arm_2d_impl_rgb565_alpha_blending_colour_keying(uint16_t *
+void __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity(uint16_t *
                                                        __restrict pSourceBase,
                                                        int16_t iSourceStride,
                                                        uint16_t *

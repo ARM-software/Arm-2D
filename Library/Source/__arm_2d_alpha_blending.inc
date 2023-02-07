@@ -22,8 +22,8 @@
  * Title:        __arm_2d_alpha_blending.inc
  * Description:  c code template for drawing pattern
  *
- * $Date:        08. Sept 2021
- * $Revision:    V.1.1.0
+ * $Date:        07. Feb 2023
+ * $Revision:    V.1.1.1
  *
  * -------------------------------------------------------------------- */
 
@@ -47,7 +47,7 @@
 
 #ifndef __PATCH_ALPHA_BLENDING
 __WEAK
-void __ARM_2D_FUNC(alpha_blending) (__API_INT_TYPE *__RESTRICT pSourceBase,
+void __ARM_2D_FUNC(tile_copy_opacity) (__API_INT_TYPE *__RESTRICT pSourceBase,
                                     int16_t iSourceStride,
                                     __API_INT_TYPE *__RESTRICT pTargetBase,
                                     int16_t iTargetStride,
@@ -76,7 +76,7 @@ void __ARM_2D_FUNC(alpha_blending) (__API_INT_TYPE *__RESTRICT pSourceBase,
 }
 #else
 extern
-void __ARM_2D_FUNC(alpha_blending) (__API_INT_TYPE *__RESTRICT pSourceBase,
+void __ARM_2D_FUNC(tile_copy_opacity) (__API_INT_TYPE *__RESTRICT pSourceBase,
                                     int16_t iSourceStride,
                                     __API_INT_TYPE *__RESTRICT pTargetBase,
                                     int16_t iTargetStride,
@@ -88,7 +88,7 @@ void __ARM_2D_FUNC(alpha_blending) (__API_INT_TYPE *__RESTRICT pSourceBase,
 
 #ifndef __PATCH_ALPHA_BLENDING_COLOUR_MASKING
 __WEAK
-void __ARM_2D_FUNC(alpha_blending_colour_keying)(
+void __ARM_2D_FUNC(tile_copy_colour_keying_opacity)(
                                                 __API_INT_TYPE * __RESTRICT pSourceBase,
                                                 int16_t         iSourceStride,
                                                 __API_INT_TYPE * __RESTRICT pTargetBase,
@@ -122,7 +122,7 @@ void __ARM_2D_FUNC(alpha_blending_colour_keying)(
 }
 #else
 extern
-void __ARM_2D_FUNC(alpha_blending_colour_keying)(
+void __ARM_2D_FUNC(tile_copy_colour_keying_opacity)(
                                                 __API_INT_TYPE * __RESTRICT pSourceBase,
                                                 int16_t         iSourceStride,
                                                 __API_INT_TYPE * __RESTRICT pTargetBase,

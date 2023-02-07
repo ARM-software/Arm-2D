@@ -21,8 +21,8 @@
  * Title:        arm-2d_utils_helium.h
  * Description:  Provides helium utility routines
  *
- * $Date:        20. May 2022
- * $Revision:    V 0.0.2
+ * $Date:        07. Feb 2023
+ * $Revision:    V 0.0.3
  *
  * Target Processor:  Cortex-M cores with Helium
  *
@@ -294,7 +294,7 @@ uint32x4_t __arm_2d_cccn888_blending_opacity_single_vec(
 }
 
 __STATIC_FORCEINLINE
-uint16x8_t __rgb888_alpha_blending_direct_single_vec(
+uint16x8_t __rgb888_tile_copy_with_opacity_direct_single_vec(
                                         uint16x8_t      wSource1,  /* widened input bytes */
                                         uint16x8_t      wSource2,  /* widened input bytes */
                                         uint_fast16_t   hwRatio)

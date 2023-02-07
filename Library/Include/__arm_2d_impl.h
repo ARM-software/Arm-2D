@@ -21,7 +21,7 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        25. Nov 2022
+ * $Date:        07. Feb 2023
  * $Revision:    V.1.3.10
  *
  * Target Processor:  Cortex-M cores
@@ -256,6 +256,10 @@ enum {
     __ARM_2D_OP_IDX_FILL_WITH_COLOUR_KEYING_AND_Y_MIRROR,
     __ARM_2D_OP_IDX_FILL_WITH_COLOUR_KEYING_AND_XY_MIRROR,
 
+
+    __ARM_2D_OP_IDX_COPY_WITH_OPACITY,
+    __ARM_2D_OP_IDX_COPY_WITH_COLOUR_KEYING_AND_OPACITY,
+
     __ARM_2D_OP_IDX_COPY_WITH_MASKS,
     __ARM_2D_OP_IDX_COPY_WITH_MASKS_ONLY,
     __ARM_2D_OP_IDX_COPY_WITH_MASKS_AND_X_MIRROR,
@@ -287,8 +291,8 @@ enum {
     __ARM_2D_OP_IDX_FILL_WITH_TARGET_MASK_AND_XY_MIRROR,
 
     __ARM_2D_OP_IDX_FILL_COLOUR,
-    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_COLOUR_KEYING,
-    
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_OPACITY,
+
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A2_MASK,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A4_MASK,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A8_MASK,
@@ -302,12 +306,8 @@ enum {
     
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_TRANFORM,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_OPACITY_AND_TRANFORM,
-    
-    __ARM_2D_OP_IDX_ALPHA_BLENDING,
-    __ARM_2D_OP_IDX_ALPHA_BLENDING_WITH_COLOUR_KEYING,
-    __ARM_2D_OP_IDX_ALPHA_FILL_COLOUR,
-    __ARM_2D_OP_IDX_ALPHA_FILL_COLOUR_WITH_COLOUR_KEYING,
-    
+
+
     __ARM_2D_OP_IDX_DRAW_POINT,
     __ARM_2D_OP_IDX_DRAW_PATTERN,
     
@@ -1243,25 +1243,25 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_opacity_and_transform(
                                         __arm_2d_sub_task_t *ptTask);
 
 extern
-arm_fsm_rt_t __arm_2d_gray8_sw_alpha_blending(__arm_2d_sub_task_t *ptTask);
+arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_opacity(__arm_2d_sub_task_t *ptTask);
 
 extern
-arm_fsm_rt_t __arm_2d_rgb565_sw_alpha_blending(__arm_2d_sub_task_t *ptTask);
+arm_fsm_rt_t __arm_2d_rgb565_sw_tile_copy_with_opacity(__arm_2d_sub_task_t *ptTask);
 
 extern
-arm_fsm_rt_t __arm_2d_cccn888_sw_alpha_blending(__arm_2d_sub_task_t *ptTask);
+arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_opacity(__arm_2d_sub_task_t *ptTask);
  
 
 extern
-arm_fsm_rt_t __arm_2d_gray8_sw_alpha_blending_with_colour_keying(
+arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_colour_keying_and_opacity(
                                         __arm_2d_sub_task_t *ptTask);
                                         
 extern
-arm_fsm_rt_t __arm_2d_rgb565_sw_alpha_blending_with_colour_keying(
+arm_fsm_rt_t __arm_2d_rgb565_sw_tile_copy_with_colour_keying_and_opacity(
                                         __arm_2d_sub_task_t *ptTask);
                                         
 extern
-arm_fsm_rt_t __arm_2d_cccn888_sw_alpha_blending_with_colour_keying(
+arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_colour_keying_and_opacity(
                                         __arm_2d_sub_task_t *ptTask);
 
 extern 
