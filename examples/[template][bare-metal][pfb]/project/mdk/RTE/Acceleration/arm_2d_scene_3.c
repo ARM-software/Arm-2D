@@ -216,16 +216,17 @@ arm_fsm_rt_t __list_view_item_0_draw_item(
     arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_font_t.tCharSize;
     tTextSize.iWidth *= 1;
 
-    arm_2d_align_centre(ptTile->tRegion, tTextSize) {
-        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-        arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
-        arm_lcd_text_set_draw_region(&__centre_region);
-        arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
-        arm_lcd_text_set_opacity(chOpacity);
-        arm_lcd_puts("0");
-        arm_lcd_text_set_opacity(255);
+    arm_2d_canvas(ptTile, __canvas) {
+        arm_2d_align_centre(__canvas, tTextSize) {
+            arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
+            arm_lcd_text_set_draw_region(&__centre_region);
+            arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
+            arm_lcd_text_set_opacity(chOpacity);
+            arm_lcd_puts("0");
+            arm_lcd_text_set_opacity(255);
+        }
     }
-
     
     return arm_fsm_rt_cpl;
 }
@@ -259,14 +260,16 @@ arm_fsm_rt_t __list_view_item_1_draw_item(
     arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_font_t.tCharSize;
     tTextSize.iWidth *= 1;
 
-    arm_2d_align_centre(ptTile->tRegion, tTextSize) {
-        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-        arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
-        arm_lcd_text_set_draw_region(&__centre_region);
-        arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
-        arm_lcd_text_set_opacity(chOpacity);
-        arm_lcd_puts("1");
-        arm_lcd_text_set_opacity(255);
+    arm_2d_canvas(ptTile, __canvas) {
+        arm_2d_align_centre(__canvas, tTextSize) {
+            arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
+            arm_lcd_text_set_draw_region(&__centre_region);
+            arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
+            arm_lcd_text_set_opacity(chOpacity);
+            arm_lcd_puts("1");
+            arm_lcd_text_set_opacity(255);
+        }
     }
     
     return arm_fsm_rt_cpl;
@@ -292,14 +295,16 @@ arm_fsm_rt_t __list_view_item_2_draw_item(
     arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_font_t.tCharSize;
     tTextSize.iWidth *= 1;
 
-    arm_2d_align_centre(ptTile->tRegion, tTextSize) {
-        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-        arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
-        arm_lcd_text_set_draw_region(&__centre_region);
-        arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
-        arm_lcd_text_set_opacity(chOpacity);
-        arm_lcd_puts("2");
-        arm_lcd_text_set_opacity(255);
+    arm_2d_canvas(ptTile, __canvas) {
+        arm_2d_align_centre(__canvas, tTextSize) {
+            arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
+            arm_lcd_text_set_draw_region(&__centre_region);
+            arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
+            arm_lcd_text_set_opacity(chOpacity);
+            arm_lcd_puts("2");
+            arm_lcd_text_set_opacity(255);
+        }
     }
 
 
@@ -326,14 +331,16 @@ arm_fsm_rt_t __list_view_item_3_draw_item(
     arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_font_t.tCharSize;
     tTextSize.iWidth *= 1;
 
-    arm_2d_align_centre(ptTile->tRegion, tTextSize) {
-        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-        arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
-        arm_lcd_text_set_draw_region(&__centre_region);
-        arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
-        arm_lcd_text_set_opacity(chOpacity);
-        arm_lcd_puts("3");
-        arm_lcd_text_set_opacity(255);
+    arm_2d_canvas(ptTile, __canvas) {
+        arm_2d_align_centre(__canvas, tTextSize) {
+            arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
+            arm_lcd_text_set_draw_region(&__centre_region);
+            arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
+            arm_lcd_text_set_opacity(chOpacity);
+            arm_lcd_puts("3");
+            arm_lcd_text_set_opacity(255);
+        }
     }
     
     return arm_fsm_rt_cpl;

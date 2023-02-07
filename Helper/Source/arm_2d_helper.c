@@ -249,6 +249,41 @@ bool __arm_2d_helper_time_cos_slider(   int32_t nFrom,
     return false;
 }
 
+uint32_t __arm_2d_helper_colour_slider( uint32_t wFrom, 
+                                        uint32_t wTo,
+                                        int32_t nDistance,
+                                        int32_t nOffset)
+{
+    assert(nDistance > 0);
+
+    if (nOffset >= nDistance) {
+        return wTo;
+    }
+    if (nOffset <= 0) {
+        return wFrom;
+    }
+
+    uint32_t wResult = 0;
+    
+    uint8_t *pchChannelFrom = (uint8_t *)&wFrom;
+    uint8_t *pchChannelTo = (uint8_t *)&wTo;
+    uint8_t *pchResult = (uint8_t *)&wResult;
+    int n = 4;
+    
+    for (int n = 0; n < 4; n++ ) {
+        int_fast16_t iFrom = pchChannelFrom[n];
+        int_fast16_t iTo = pchChannelTo[n];
+        
+        int_fast16_t iDelta = iTo - iFrom;
+        
+        int32_t nResult = iDelta * nOffset / nDistance;
+        
+        pchResult[n] = (uint8_t)(nResult + iFrom);
+    }
+    
+    return wResult;
+}
+
 
 /*!
  * \brief calculate the stroke of a cosine slider (0~pi) based on time

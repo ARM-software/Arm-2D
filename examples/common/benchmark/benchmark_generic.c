@@ -356,25 +356,26 @@ void show_icon_with_background(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
     assert(NULL != ptTarget);
     ARM_2D_UNUSED(bIsNewFrame);
 
+    arm_2d_canvas(ptTarget, __canvas) {
+        arm_2d_align_centre(__canvas, 100, 100) {
+            
+            draw_round_corner_box(  ptTarget, 
+                                    &__centre_region,
+                                    GLCD_COLOR_BLACK,
+                                    32,
+                                    bIsNewFrame);    
+            arm_2d_op_wait_async(NULL);
+        }
 
-    arm_2d_align_centre(ptTarget->tRegion, 100, 100) {
-        
-        draw_round_corner_box(  ptTarget, 
-                                &__centre_region,
-                                GLCD_COLOR_BLACK,
-                                32,
-                                bIsNewFrame);    
-        arm_2d_op_wait_async(NULL);
-    }
 
-
-    arm_2d_align_centre(ptTarget->tRegion, c_tileSoftwareMask.tRegion.tSize) {
-        arm_2d_fill_colour_with_mask(
-                                ptTarget, 
-                                &__centre_region, 
-                                &c_tileSoftwareMask, 
-                                (__arm_2d_color_t){GLCD_COLOR_DARK_GREY});
-        arm_2d_op_wait_async(NULL);
+        arm_2d_align_centre(__canvas, c_tileSoftwareMask.tRegion.tSize) {
+            arm_2d_fill_colour_with_mask(
+                                    ptTarget, 
+                                    &__centre_region, 
+                                    &c_tileSoftwareMask, 
+                                    (__arm_2d_color_t){GLCD_COLOR_DARK_GREY});
+            arm_2d_op_wait_async(NULL);
+        }
     }
 }
 
@@ -383,25 +384,27 @@ void show_icon_without_background(const arm_2d_tile_t *ptTarget, bool bIsNewFram
     assert(NULL != ptTarget);
     ARM_2D_UNUSED(bIsNewFrame);
 
-    arm_2d_align_centre(ptTarget->tRegion, c_tileSoftwareMask.tRegion.tSize) {
+    arm_2d_canvas(ptTarget, __canvas) {
+        arm_2d_align_centre(__canvas, c_tileSoftwareMask.tRegion.tSize) {
+            
+            arm_2d_fill_colour_with_a2_mask_and_opacity(   
+                                    ptTarget, 
+                                    &__centre_region, 
+                                    &c_tileSoftwareA2Mask, 
+                                    (__arm_2d_color_t){GLCD_COLOR_DARK_GREY},
+                                    128);
         
-        arm_2d_fill_colour_with_a2_mask_and_opacity(   
-                                ptTarget, 
-                                &__centre_region, 
-                                &c_tileSoftwareA2Mask, 
-                                (__arm_2d_color_t){GLCD_COLOR_DARK_GREY},
-                                128);
-    
-        arm_2d_op_wait_async(NULL);
+            arm_2d_op_wait_async(NULL);
+            
+            __centre_region.tLocation.iX -= 2;
+            __centre_region.tLocation.iY -= 2;
         
-        __centre_region.tLocation.iX -= 2;
-        __centre_region.tLocation.iY -= 2;
-    
-        arm_2d_fill_colour_with_a4_mask(   ptTarget, 
-                                        &__centre_region, 
-                                        &c_tileSoftwareA4Mask, 
-                                        (__arm_2d_color_t){GLCD_COLOR_WHITE});
-        arm_2d_op_wait_async(NULL);
+            arm_2d_fill_colour_with_a4_mask(   ptTarget, 
+                                            &__centre_region, 
+                                            &c_tileSoftwareA4Mask, 
+                                            (__arm_2d_color_t){GLCD_COLOR_WHITE});
+            arm_2d_op_wait_async(NULL);
+        }
     }
 }
 
@@ -552,6 +555,9 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
                                     &tRightHalfScreen, 
                                     &tTempPanel, 
                                     false);
+
+        arm_2d_canvas(&tTempPanel, __canvas) {
+
 #if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
         //!< set background colour
         arm_2d_fill_colour( &tTempPanel,
@@ -572,7 +578,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
          *!       Use '__centre_region' when required as the target region in
          *!       2D operations inside the {...} .
          */
-        arm_2d_align_centre(tTempPanel.tRegion, c_tileCMSISLogoMask.tRegion.tSize) {
+        arm_2d_align_centre(__canvas, c_tileCMSISLogoMask.tRegion.tSize) {
 
 #if 0
 
@@ -633,7 +639,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
             arm_2d_op_wait_async(NULL);
         }
 #else
-        arm_2d_align_centre(tTempPanel.tRegion, 
+        arm_2d_align_centre(__canvas, 
                             c_tileCMSISLogoMask.tRegion.tSize.iWidth,
                             c_tileCMSISLogoMask.tRegion.tSize.iHeight + 20
                             ) {
@@ -662,7 +668,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
             } while(0);
         }
 #endif
-
+        }
     } while(0);
     
     arm_2d_fill_colour( s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].ptTile, 
@@ -797,21 +803,24 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
                                 },
                                 &tTempPanel,
                                 false)) {
-                                
+
+
 #if __ARM_2D_CFG_BENCHMARK_TINY_MODE__
-        arm_2d_align_centre(tTempPanel.tRegion, 100, 100) {
-            
-            draw_round_corner_box(  &tTempPanel, 
-                                    &__centre_region,
-                                    GLCD_COLOR_BLACK,
-                                    64,
-                                    bIsNewFrame);    
-            arm_2d_op_wait_async(NULL);
+        arm_2d_canvas(&tTempPanel, __canvas) {
+            arm_2d_align_centre(__canvas, 100, 100) {
+                
+                draw_round_corner_box(  &tTempPanel, 
+                                        &__centre_region,
+                                        GLCD_COLOR_BLACK,
+                                        64,
+                                        bIsNewFrame);    
+                arm_2d_op_wait_async(NULL);
+            }
         }
 #endif
 
-        //! show busy wheel
-        busy_wheel2_show(&tTempPanel, bIsNewFrame);
+            //! show busy wheel
+            busy_wheel2_show(&tTempPanel, bIsNewFrame);
         
         arm_2d_op_wait_async(NULL);
     }
@@ -832,22 +841,22 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
                                 },
                                 &tTempPanel,
                                 false)) {
-
-//        arm_2d_align_centre(tTempPanel.tRegion, 100, 100) {
-//            
-//            draw_round_corner_box(  &tTempPanel, 
-//                                    &__centre_region,
-//                                    GLCD_COLOR_BLACK,
-//                                    128,
-//                                    bIsNewFrame);    
-//            arm_2d_op_wait_async(NULL);
-//        }
-        //! show busy wheel
-        spinning_wheel2_show(   &tTempPanel, 
-                                //__RGB(0x92, 0xD0, 0x50), 
-                                GLCD_COLOR_WHITE,
-                                bIsNewFrame);
-
+    //  arm_2d_canvas(&tTempPanel, __canvas) {
+    //        arm_2d_align_centre(__canvas, 100, 100) {
+    //            
+    //            draw_round_corner_box(  &tTempPanel, 
+    //                                    &__centre_region,
+    //                                    GLCD_COLOR_BLACK,
+    //                                    128,
+    //                                    bIsNewFrame);    
+    //            arm_2d_op_wait_async(NULL);
+    //        }
+            //! show busy wheel
+            spinning_wheel2_show(   &tTempPanel, 
+                                    //__RGB(0x92, 0xD0, 0x50), 
+                                    GLCD_COLOR_WHITE,
+                                    bIsNewFrame);
+    //  }
         arm_2d_op_wait_async(NULL);
     }
 #endif

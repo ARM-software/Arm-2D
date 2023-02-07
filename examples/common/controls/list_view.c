@@ -69,7 +69,7 @@
 
 
 static 
-IMPL_PFB_ON_DRAW(__arm_2d_list_view_draw_background)
+IMPL_ON_DRAW_EVT(__arm_2d_list_view_draw_background)
 {
     ARM_2D_UNUSED(bIsNewFrame);
     

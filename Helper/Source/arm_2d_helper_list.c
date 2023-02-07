@@ -154,14 +154,16 @@ ARM_PT_BEGIN(this.Runtime.chState)
             goto label_end_of_list_core_task;
         }
 
-        arm_2d_align_centre(this.Runtime.tileTarget.tRegion, this.tCFG.tListSize) {
-            /* get target tile */
-            if (NULL == arm_2d_tile_generate_child(&this.Runtime.tileTarget, 
-                                                   &__centre_region,
-                                                   &this.Runtime.tileList, 
-                                                   false)) {
-                /* nothing to draw: use the unified exist point */
-                goto label_end_of_list_core_task;
+        arm_2d_canvas(&(this.Runtime.tileTarget), __top_container) {
+            arm_2d_align_centre(__top_container, this.tCFG.tListSize) {
+                /* get target tile */
+                if (NULL == arm_2d_tile_generate_child(&this.Runtime.tileTarget, 
+                                                       &__centre_region,
+                                                       &this.Runtime.tileList, 
+                                                       false)) {
+                    /* nothing to draw: use the unified exist point */
+                    goto label_end_of_list_core_task;
+                }
             }
         }
         

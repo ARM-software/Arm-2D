@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        01. Dec 2022
- * $Revision:    V.1.0.8
+ * $Date:        12. Dec 2022
+ * $Revision:    V.1.0.12
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -50,6 +50,13 @@ extern "C" {
 #   pragma clang diagnostic push
 #   pragma clang diagnostic ignored "-Wunknown-warning-option"
 #   pragma clang diagnostic ignored "-Wreserved-identifier"
+#   pragma clang diagnostic ignored "-Wgnu-variable-sized-type-not-at-end"
+#   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
+#   pragma clang diagnostic ignored "-Wgnu-statement-expression"
+#   pragma clang diagnostic ignored "-Wextra-semi-stmt"
+#   pragma clang diagnostic ignored "-Wcompound-token-split-by-macro"
+#   pragma clang diagnostic ignored "-Winitializer-overrides"
+#   pragma clang diagnostic ignored "-Wgcc-compat"
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)
 #   pragma diag_suppress 1296,174
 #endif
@@ -64,8 +71,8 @@ extern "C" {
 /*  arm-2d version */
 #define ARM_2D_VERSION_MAJOR        1                                           //!< Major version
 #define ARM_2D_VERSION_MINOR        1                                           //!< Minor version
-#define ARM_2D_VERSION_PATCH        0                                           //!< Patch number
-#define ARM_2D_VERSION_STR          "release"                                   //!< tag
+#define ARM_2D_VERSION_PATCH        1                                           //!< Patch number
+#define ARM_2D_VERSION_STR          "dev"                                   //!< tag
 
 /*!
  * \brief arm-2d version number in decimal

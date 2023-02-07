@@ -184,9 +184,6 @@ static void __on_scene0_frame_complete(arm_2d_scene_t *ptScene)
 //}
 
 
-
-
-
 static
 IMPL_FONT_DRAW_CHAR(__digit_font_a4_draw_char)
 {
@@ -318,58 +315,59 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
     /* background colour */
     arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
     
-    /* draw images to the screen center using virtual resource */
-    arm_2d_align_centre(ptTile->tRegion, s_tBigImage.tTile.tRegion.tSize) {
-    
-        /* draw with a virtual resource */
-        arm_2d_tile_copy(   &s_tBigImage.tTile,     /* source tile */
-                            ptTile,                 /* target frame buffer */
-                            &__centre_region, 
-                            ARM_2D_CP_MODE_COPY);
+    arm_2d_canvas(ptTile, __canvas) {
+        /* draw images to the screen center using virtual resource */
+        arm_2d_align_centre(__canvas, s_tBigImage.tTile.tRegion.tSize) {
+        
+            /* draw with a virtual resource */
+            arm_2d_tile_copy(   &s_tBigImage.tTile,     /* source tile */
+                                ptTile,                 /* target frame buffer */
+                                &__centre_region, 
+                                ARM_2D_CP_MODE_COPY);
 
-        arm_2d_op_wait_async(NULL);
+            arm_2d_op_wait_async(NULL);
 
-        /* draw a child tile of the virtual resource */
-        arm_2d_tile_copy(   &c_tChildImage,         /* source tile */
-                            ptTile,                 /* target frame buffer */
-                            &__centre_region, 
-                            ARM_2D_CP_MODE_XY_MIRROR);
-    }
-    
-    arm_2d_size_t tCharSize = ARM_2D_FONT_VRES_A4_DIGITS_ONLY
-                                .use_as__arm_2d_user_font_t
-                                    .use_as__arm_2d_font_t.tCharSize;
+            /* draw a child tile of the virtual resource */
+            arm_2d_tile_copy(   &c_tChildImage,         /* source tile */
+                                ptTile,                 /* target frame buffer */
+                                &__centre_region, 
+                                ARM_2D_CP_MODE_XY_MIRROR);
+        }
+        
+        arm_2d_size_t tCharSize = ARM_2D_FONT_VRES_A4_DIGITS_ONLY
+                                    .use_as__arm_2d_user_font_t
+                                        .use_as__arm_2d_font_t.tCharSize;
 
-    /* draw a white bar */
-    arm_2d_align_centre(ptTile->tRegion, 
-                        ptTile->tRegion.tSize.iWidth, 
-                        tCharSize.iHeight * 3 ) {
-        arm_2d_fill_colour_with_opacity(ptTile, 
-                                        &__centre_region,
-                                        (__arm_2d_color_t){GLCD_COLOR_WHITE}, 
-                                        255 - 32);
-    }
+        /* draw a white bar */
+        arm_2d_align_centre(__canvas, 
+                            ptTile->tRegion.tSize.iWidth, 
+                            tCharSize.iHeight * 3 ) {
+            arm_2d_fill_colour_with_opacity(ptTile, 
+                                            &__centre_region,
+                                            (__arm_2d_color_t){GLCD_COLOR_WHITE}, 
+                                            255 - 32);
+        }
 
-    /* draw A4 fonts that stored as a virtual resource */
-    arm_2d_align_centre(ptTile->tRegion, 
-                        tCharSize.iWidth * 8, 
-                        tCharSize.iHeight * 2 ) {
+        /* draw A4 fonts that stored as a virtual resource */
+        arm_2d_align_centre(__canvas, 
+                            tCharSize.iWidth * 8, 
+                            tCharSize.iHeight * 2 ) {
 
+            arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_VRES_A4_DIGITS_ONLY);
+            arm_lcd_text_set_draw_region(&__centre_region);
+            arm_lcd_text_set_colour(GLCD_COLOR_DARK_GREY, GLCD_COLOR_WHITE);
+            arm_lcd_puts("0123456789ABCDEF");
+        }
+
+        /* display info */
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-        arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_VRES_A4_DIGITS_ONLY);
-        arm_lcd_text_set_draw_region(&__centre_region);
-        arm_lcd_text_set_colour(GLCD_COLOR_DARK_GREY, GLCD_COLOR_WHITE);
-        arm_lcd_puts("0123456789ABCDEF");
+        arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
+        arm_lcd_text_set_draw_region(NULL);
+        arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
+        arm_lcd_text_location(0,0);
+        arm_lcd_puts("Virtual Resource Demo");
     }
-
-    /* display info */
-    arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-    arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
-    arm_lcd_text_set_draw_region(NULL);
-    arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
-    arm_lcd_text_location(0,0);
-    arm_lcd_puts("Virtual Resource Demo");
-
     arm_2d_op_wait_async(NULL);
 
     return arm_fsm_rt_cpl;

@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        13. Oct 2022
- * $Revision:    V.1.3.6
+ * $Date:        10. Dec 2022
+ * $Revision:    V.1.3.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -32,6 +32,8 @@
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
+
+#include "./__arm_2d_helper_common.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -196,11 +198,10 @@ extern "C" {
             
 #define ADD_LAST_REGION_TO_LIST(__NAME, ...)                                    \
             __ADD_LAST_REGION_TO_LIST(__NAME, ##__VA_ARGS__) 
-            
-#define IMPL_PFB_ON_DRAW(__NAME)                                                \
-            arm_fsm_rt_t __NAME(void *pTarget,                                  \
-                                const arm_2d_tile_t *ptTile,                    \
-                                bool bIsNewFrame)    
+
+
+#define IMPL_PFB_ON_DRAW(__NAME)   IMPL_ON_DRAW_EVT(__NAME)
+
 
 #define IMPL_PFB_ON_LOW_LV_RENDERING(__NAME)                                    \
             void __NAME(void *pTarget,                                          \
@@ -348,19 +349,6 @@ typedef struct arm_2d_region_list_item_t {
 }arm_2d_region_list_item_t;
 
 /*!
- * \brief the On-Drawing event handler for application layer
- * 
- * \param[in] pTarget a user attached target address 
- * \param[in] ptTile a tile for the virtual screen
- * \param[in] bIsNewFrame a flag indicate the starting of a new frame
- * \return arm_fsm_rt_t the status of the FSM.  
- */
-typedef arm_fsm_rt_t arm_2d_helper_draw_handler_t( 
-                                          void *pTarget,
-                                          const arm_2d_tile_t *ptTile,
-                                          bool bIsNewFrame);
-
-/*!
  * \brief the On Low Level Rendering event handler for the low level (LCD Driver)
  * 
  * \param[in] pTarget a user attached target address 
@@ -380,13 +368,7 @@ typedef struct arm_2d_helper_render_evt_t {
     void *pTarget;                                          //!< user attached target
 } arm_2d_helper_render_evt_t;
 
-/*!
- * \brief on drawing event 
- */
-typedef struct arm_2d_helper_draw_evt_t {
-    arm_2d_helper_draw_handler_t *fnHandler;                //!< event handler function
-    void *pTarget;                                          //!< user attached target
-} arm_2d_helper_draw_evt_t;
+
 
 /*!
  * \brief the enumeration for events

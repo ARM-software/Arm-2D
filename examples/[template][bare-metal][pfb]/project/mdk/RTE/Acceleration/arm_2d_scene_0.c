@@ -99,7 +99,7 @@ static void __on_scene0_depose(arm_2d_scene_t *ptScene)
     /* reset timestamp */
     this.lTimestamp = 0;
 
-    if (this.bUserAllocated) {
+    if (!this.bUserAllocated) {
         free(ptScene);
     }
 }
@@ -141,6 +141,13 @@ static void __on_scene0_frame_complete(arm_2d_scene_t *ptScene)
     }
 }
 
+static void __before_scene0_switching_out(arm_2d_scene_t *ptScene)
+{
+    user_scene_0_t *ptThis = (user_scene_0_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+}
+
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene0_background_handler)
 {
@@ -164,44 +171,45 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
     
+    arm_2d_canvas(ptTile, __top_container) {
     /*-----------------------draw the foreground begin-----------------------*/
-    
-    /* following code is just a demo, you can remove them */
-    
-    arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
+        
+        /* following code is just a demo, you can remove them */
+        
+        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
+        
+    #if 0
+        /* draw the cmsis logo in the centre of the screen */
+        arm_2d_align_centre(__top_container, c_tileCMSISLogo.tRegion.tSize) {
+            arm_2d_tile_copy_with_src_mask( &c_tileCMSISLogo,
+                                            &c_tileCMSISLogoMask,
+                                            ptTile,
+                                            &__centre_region,
+                                            ARM_2D_CP_MODE_COPY);
+        }
+    #else
+        /* draw the cmsis logo using mask in the centre of the screen */
+        arm_2d_align_centre(__top_container, c_tileCMSISLogo.tRegion.tSize) {
+            arm_2d_fill_colour_with_a4_mask_and_opacity(   
+                                                ptTile, 
+                                                &__centre_region, 
+                                                &c_tileCMSISLogoA4Mask, 
+                                                (__arm_2d_color_t){GLCD_COLOR_BLACK},
+                                                64);
+        }
+    #endif
 
-#if 0
-    /* draw the cmsis logo in the centre of the screen */
-    arm_2d_align_centre(ptTile->tRegion, c_tileCMSISLogo.tRegion.tSize) {
-        arm_2d_tile_copy_with_src_mask( &c_tileCMSISLogo,
-                                        &c_tileCMSISLogoMask,
-                                        ptTile,
-                                        &__centre_region,
-                                        ARM_2D_CP_MODE_COPY);
-    }
-#else
-    /* draw the cmsis logo using mask in the centre of the screen */
-    arm_2d_align_centre(ptTile->tRegion, c_tileCMSISLogo.tRegion.tSize) {
-        arm_2d_fill_colour_with_a4_mask_and_opacity(   
-                                            ptTile, 
-                                            &__centre_region, 
-                                            &c_tileCMSISLogoA4Mask, 
-                                            (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                                            64);
-    }
-#endif
+        /* draw text at the top-left corner */
 
-    /* draw text at the top-left corner */
-
-    arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-    arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
-    arm_lcd_text_set_draw_region(NULL);
-    arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
-    arm_lcd_text_location(0,0);
-    //arm_lcd_puts("Scene 0");
-    arm_lcd_printf("scene 0");
+        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+        arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
+        arm_lcd_text_set_draw_region(NULL);
+        arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
+        arm_lcd_text_location(0,0);
+        arm_lcd_puts("Scene 0");
 
     /*-----------------------draw the foreground end  -----------------------*/
+    }
     arm_2d_op_wait_async(NULL);
 
     return arm_fsm_rt_cpl;
@@ -247,11 +255,9 @@ user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter,
      * this demo shows that we create a region in the centre of a screen(320*240)
      * for a image stored in the tile c_tileCMSISLogoMask
      */
-    s_tDirtyRegions[0].tRegion.tLocation = (arm_2d_location_t){
-        .iX = ((tScreen.tSize.iWidth - c_tileCMSISLogoMask.tRegion.tSize.iWidth) >> 1),
-        .iY = ((tScreen.tSize.iHeight - c_tileCMSISLogoMask.tRegion.tSize.iHeight) >> 1),
-    };
-    s_tDirtyRegions[0].tRegion.tSize = c_tileCMSISLogoMask.tRegion.tSize;
+    arm_2d_align_centre(tScreen, c_tileCMSISLogoMask.tRegion.tSize) {
+        s_tDirtyRegions[0].tRegion = __centre_region;
+    }
     
     if (NULL == ptThis) {
         ptThis = (user_scene_0_t *)malloc(sizeof(user_scene_0_t));
@@ -259,25 +265,26 @@ user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter,
         if (NULL == ptThis) {
             return NULL;
         }
-        bUserAllocated = true;
     } else {
+        bUserAllocated = true;
         memset(ptThis, 0, sizeof(user_scene_0_t));
     }
     
     *ptThis = (user_scene_0_t){
         .use_as__arm_2d_scene_t = {
-        /* Please uncommon the callbacks if you need them
-         */
-        //.fnBackground   = &__pfb_draw_scene0_background_handler,
-        .fnScene        = &__pfb_draw_scene0_handler,
-        .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
-        
+            /* Please uncommon the callbacks if you need them
+             */
+            //.fnBackground   = &__pfb_draw_scene0_background_handler,
+            .fnScene        = &__pfb_draw_scene0_handler,
+            .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
+            
 
-        //.fnOnBGStart    = &__on_scene0_background_start,
-        //.fnOnBGComplete = &__on_scene0_background_complete,
-        //.fnOnFrameStart = &__on_scene0_frame_start,
-        .fnOnFrameCPL   = &__on_scene0_frame_complete,
-        .fnDepose       = &__on_scene0_depose,
+            //.fnOnBGStart    = &__on_scene0_background_start,
+            //.fnOnBGComplete = &__on_scene0_background_complete,
+            //.fnOnFrameStart = &__on_scene0_frame_start,
+            //.fnBeforeSwitchOut = &__before_scene0_switching_out,
+            .fnOnFrameCPL   = &__on_scene0_frame_complete,
+            .fnDepose       = &__on_scene0_depose,
         },
         .bUserAllocated = bUserAllocated,
     };

@@ -130,7 +130,11 @@ int main (void)
 #endif
     arm_2d_scene3_init(&DISP0_ADAPTER);
     arm_2d_scene4_init(&DISP0_ADAPTER);
-    arm_2d_scene2_init(&DISP0_ADAPTER);
+    
+    /*
+     * the scene2 is initalized by scene4 in the BeforeSwitching event handler
+     arm_2d_scene2_init(&DISP0_ADAPTER);
+     */
 
     
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,

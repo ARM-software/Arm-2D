@@ -84,7 +84,8 @@ ARM_PRIVATE(
     int64_t lTimestamp[2];
     bool bUserAllocated;
     uint16_t hwGasgauge;
-    battery_nixie_tube_t tBatteryNixieTube;
+    battery_nixie_tube_t    tBatteryNixieTube;
+    battery_liquid_t        tBatteryLiquid;
     battery_status_t tStatus;
 )
     /* place your public member here */

@@ -241,9 +241,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_background_handler)
     arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
 
 #if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
-    arm_2d_tile_copy_only(  &c_tileBackground,
-                            ptTile,
-                            NULL);
+    arm_2d_canvas(ptTile, __canvas) {
+        arm_2d_align_centre(__canvas, c_tileBackground.tRegion.tSize) {
+            arm_2d_tile_copy_only(  &c_tileBackground,
+                                    ptTile,
+                                    &__centre_region);
+        }
+    }
 #endif
 
     arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
