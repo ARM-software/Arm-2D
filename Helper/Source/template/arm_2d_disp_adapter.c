@@ -166,6 +166,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
 //    return arm_fsm_rt_cpl;
 //}
 
+#if !__DISP%Instance%_CFG_DISABLE_NAVIGATION_LAYER__
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
 {
@@ -234,14 +235,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
                     );
 #endif
 
-
-
-
-
     arm_2d_op_wait_async(NULL);
 
     return arm_fsm_rt_cpl;
 }
+#endif
 
 #if __DISP%Instance%_CFG_ENABLE_ASYNC_FLUSHING__
 
@@ -385,6 +383,7 @@ void disp_adapter%Instance%_init(void)
 
     arm_extra_controls_init();
 
+#if !__DISP%Instance%_CFG_DISABLE_NAVIGATION_LAYER__
     do {
         /*! define dirty regions for the navigation layer */
         IMPL_ARM_2D_REGION_LIST(s_tNavDirtyRegionList, const static)
@@ -408,7 +407,8 @@ void disp_adapter%Instance%_init(void)
                         NULL,
                         (arm_2d_region_list_item_t *)s_tNavDirtyRegionList);
     } while(0);
-    
+#endif
+
     if (!__DISP%Instance%_CFG_DISABLE_DEFAULT_SCENE__) {
         /*! define dirty regions */
         IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, const static)
