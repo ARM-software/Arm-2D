@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['get_5ftile_5fbuffer_5fpixel_5fcount_0',['get_tile_buffer_pixel_count',['../group__gHelper.html#gaf6b4af69376f84cf355461cbf39a41b1',1,'arm_2d_helper.h']]],
-  ['get_5ftile_5fbuffer_5fsize_1',['get_tile_buffer_size',['../group__gHelper.html#ga877d218a5ff0bf84b177ebc505ccb027',1,'arm_2d_helper.h']]]
+  ['has_5fdedicated_5fthread_5ffor_5f2d_5ftask_0',['HAS_DEDICATED_THREAD_FOR_2D_TASK',['../group__gKernel.html#a43ace7cfacc269488ec92483ab3beaca',1,'arm_2d_runtime_feature_t']]],
+  ['header_20files_20summary_1',['Header Files Summary',['../headers.html',1,'']]],
+  ['how_20to_20deploy_20the_20arm_2d2d_20library_2',['How to Deploy the Arm-2D Library',['../deploy.html',1,'']]],
+  ['how_20to_20use_20tile_20operations_3',['How to Use Tile Operations',['../use_tile.html',1,'']]],
+  ['hwsetting_4',['hwSetting',['../group__gHelper.html#a045e8d2fef0751cbb821f47c9e26b978',1,'__arm_2d_helper_scene_switch_t']]]
 ];
