@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        10. Oct 2022
- * $Revision:    V.1.3.10
+ * $Date:        07. Feb 2023
+ * $Revision:    V.1.3.11
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -187,6 +187,11 @@ struct arm_2d_scene_t {
     void (*fnOnBGComplete)(arm_2d_scene_t *ptThis);                             //!< on-complete-drawing-background event handler
     void (*fnOnFrameStart)(arm_2d_scene_t *ptThis);                             //!< on-frame-start event handler
     void (*fnOnFrameCPL)(arm_2d_scene_t *ptThis);                               //!< on-frame-complete event handler
+
+    /*!
+     * \note We can use this event to initialize/generate the new(next) scene
+     */
+    void (*fnBeforeSwitchOut)(arm_2d_scene_t *ptThis);                          //!< before-scene-switch-out event handler
 
     /*!
      * \note We use fnDepose to free the resources

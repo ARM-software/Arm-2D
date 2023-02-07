@@ -23,7 +23,7 @@
 #ifdef __RTE_ACCELERATION_ARM_2D_SCENE4__
 
 #define __USER_SCENE4_IMPLEMENT__
-#include "arm_2d_scene_4.h"
+#include "arm_2d_scenes.h"
 
 #include "arm_2d_helper.h"
 #include "arm_extra_controls.h"
@@ -132,6 +132,14 @@ static void __on_scene4_frame_start(arm_2d_scene_t *ptScene)
     user_scene_4_t *ptThis = (user_scene_4_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+}
+
+static void __before_scene4_switching_out(arm_2d_scene_t *ptScene)
+{
+    user_scene_4_t *ptThis = (user_scene_4_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+    
+    arm_2d_scene2_init(&DISP0_ADAPTER);
 }
 
 static void __on_scene4_frame_complete(arm_2d_scene_t *ptScene)
@@ -340,6 +348,7 @@ user_scene_4_t *__arm_2d_scene4_init(   arm_2d_scene_player_t *ptDispAdapter,
         //.fnOnBGStart    = &__on_scene4_background_start,
         //.fnOnBGComplete = &__on_scene4_background_complete,
         //.fnOnFrameStart = &__on_scene4_frame_start,
+        .fnBeforeSwitchOut = &__before_scene4_switching_out,
         .fnOnFrameCPL   = &__on_scene4_frame_complete,
         .fnDepose       = &__on_scene4_depose,
         },

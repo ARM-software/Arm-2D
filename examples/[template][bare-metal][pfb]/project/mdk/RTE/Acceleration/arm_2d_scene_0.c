@@ -141,6 +141,13 @@ static void __on_scene0_frame_complete(arm_2d_scene_t *ptScene)
     }
 }
 
+static void __before_scene0_switching_out(arm_2d_scene_t *ptScene)
+{
+    user_scene_0_t *ptThis = (user_scene_0_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+}
+
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene0_background_handler)
 {
@@ -265,18 +272,19 @@ user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter,
     
     *ptThis = (user_scene_0_t){
         .use_as__arm_2d_scene_t = {
-        /* Please uncommon the callbacks if you need them
-         */
-        //.fnBackground   = &__pfb_draw_scene0_background_handler,
-        .fnScene        = &__pfb_draw_scene0_handler,
-        .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
-        
+            /* Please uncommon the callbacks if you need them
+             */
+            //.fnBackground   = &__pfb_draw_scene0_background_handler,
+            .fnScene        = &__pfb_draw_scene0_handler,
+            .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
+            
 
-        //.fnOnBGStart    = &__on_scene0_background_start,
-        //.fnOnBGComplete = &__on_scene0_background_complete,
-        //.fnOnFrameStart = &__on_scene0_frame_start,
-        .fnOnFrameCPL   = &__on_scene0_frame_complete,
-        .fnDepose       = &__on_scene0_depose,
+            //.fnOnBGStart    = &__on_scene0_background_start,
+            //.fnOnBGComplete = &__on_scene0_background_complete,
+            //.fnOnFrameStart = &__on_scene0_frame_start,
+            //.fnBeforeSwitchOut = &__before_scene0_switching_out,
+            .fnOnFrameCPL   = &__on_scene0_frame_complete,
+            .fnDepose       = &__on_scene0_depose,
         },
         .bUserAllocated = bUserAllocated,
     };
