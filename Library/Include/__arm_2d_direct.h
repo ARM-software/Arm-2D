@@ -22,7 +22,7 @@
  * Description:  header files for internal users or professional developers
  *
  * $Date:        07. Feb 2023
- * $Revision:    V.1.2.0
+ * $Revision:    V.1.2.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -55,6 +55,25 @@ extern "C" {
 #endif
 
 /*============================ MACROS ========================================*/
+
+#define __arm_2d_impl_gray8_alpha_blending                                      \
+            __arm_2d_impl_gray8_tile_copy_opacity
+
+#define __arm_2d_impl_rgb565_alpha_blending                                     \
+            __arm_2d_impl_rgb565_tile_copy_opacity
+
+#define __arm_2d_impl_cccn888_alpha_blending                                    \
+            __arm_2d_impl_cccn888_tile_copy_opacity
+
+#define __arm_2d_impl_gray8_alpha_blending_colour_keying                        \
+            __arm_2d_impl_gray8_tile_copy_colour_keying_opacity
+
+#define __arm_2d_impl_rgb565_alpha_blending_colour_keying                       \
+            __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity
+
+#define __arm_2d_impl_cccn888_alpha_blending_colour_keying                      \
+            __arm_2d_impl_cccn888_tile_copy_colour_keying_opacity
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
