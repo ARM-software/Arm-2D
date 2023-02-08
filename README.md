@@ -15,7 +15,7 @@
 
 ## Features
 
-#### In this version (ver1.1.1-dev)
+#### In this version (ver1.1.1)
 
 The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly used in **Deep Embedded Display system**. The supported features include but not limited to:
 
@@ -49,7 +49,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
     - Direct Mode
     - Enhanced Asynchronous Flushing Support (i.e. DMA + ISR)
 
-**NOTE**: As long as the size is smaller than 32767 * 32767. 
+​        **NOTE**: As long as the size is smaller than 32767 * 32767. 
 
 - **Transform** (i.e. rotation and scaling)
   - Supports Colour-keying
@@ -57,13 +57,35 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
   - Supports Anti-Alias. 
     - You can enable it by defining the macro  `__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__` to `1` at **compile-time**.
   - Supports source masks
+
 - **An Unified and User-Friendly Programmers' Model**
   - APIs can be used in **Synchronous** manner (  **Classic Blocking-code** ) and/or **Asynchronous** manner ( **Event-Driven** )
   - Supports both **bare-metal** and **RTOS** environments
   - Ultra small memory footprint
-- **Support Virtual Resource**
-  - Supports loading resources in on-demand manner from external memories that are not mapped into the 4G memory space.
 
+- **Helper Services for Ease-of-Use**
+
+  - **Timer Services**
+
+    - Timeout: `arm_2d_helper_is_time_out`
+    - Time based functions: 
+      - Liner: `arm_2d_helper_time_liner_slider`
+      - Cosine: `arm_2d_helper_time_cos_slider`
+      - S-curve: `arm_2d_helper_time_half_cos_slider`
+
+  - **Virtual Resource**
+
+    - Supports loading resources in on-demand manner from external memories that are not mapped into the 4G memory space.
+
+  - **Layout Assistant**
+
+    - Docking Alignments, e.g. `arm_2d_align_centre`, `arm_2d_align_bottom_right` etc.
+
+    - Line Stream Layout, e.g. `__item_line_horizontal` and `__item_line_vertial`
+
+    - Stream Layout (with wrapping), e.g. `__item_horizontal` and `__item_verital`
+
+      
 
 
 
@@ -424,4 +446,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-06 Dec 2022
+08 Feb 2023
