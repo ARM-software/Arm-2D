@@ -125,7 +125,7 @@ Branch Summary</h1>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Features</h1>
 <h3><a class="anchor" id="autotoc_md2"></a>
-In this version (ver1.1.1-dev)</h3>
+In this version (ver1.1.1)</h3>
 <p >The Arm-2D library provides <b>Low-Level 2D Image Processing Services</b> mainly used in <b>Deep Embedded Display system</b>. The supported features include but not limited to:</p>
 <ul>
 <li><b>Supports Accelerating LVGL</b> (<b>v8.3.0</b> or newer)</li>
@@ -170,7 +170,7 @@ In this version (ver1.1.1-dev)</h3>
 </ul>
 </li>
 </ul>
-<p ><b>NOTE</b>: As long as the size is smaller than 32767 * 32767.</p>
+<p >​ <b>NOTE</b>: As long as the size is smaller than 32767 * 32767.</p>
 <ul>
 <li><b>Transform</b> (i.e. rotation and scaling)<ul>
 <li>Supports Colour-keying</li>
@@ -188,8 +188,27 @@ In this version (ver1.1.1-dev)</h3>
 <li>Ultra small memory footprint</li>
 </ul>
 </li>
-<li><b>Support Virtual Resource</b><ul>
+<li><b>Helper Services for Ease-of-Use</b><ul>
+<li><b>Timer Services</b><ul>
+<li>Timeout: <code>arm_2d_helper_is_time_out</code></li>
+<li>Time based functions:<ul>
+<li>Liner: <code>arm_2d_helper_time_liner_slider</code></li>
+<li>Cosine: <code>arm_2d_helper_time_cos_slider</code></li>
+<li>S-curve: <code>arm_2d_helper_time_half_cos_slider</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><b>Virtual Resource</b><ul>
 <li>Supports loading resources in on-demand manner from external memories that are not mapped into the 4G memory space.</li>
+</ul>
+</li>
+<li><b>Layout Assistant</b><ul>
+<li>Docking Alignments, e.g. <code>arm_2d_align_centre</code>, <code>arm_2d_align_bottom_right</code> etc.</li>
+<li>Line Stream Layout, e.g. <code>__item_line_horizontal</code> and <code>__item_line_vertial</code></li>
+<li>Stream Layout (with wrapping), e.g. <code>__item_horizontal</code> and <code>__item_verital</code></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -538,7 +557,7 @@ Benchmark</div></div>
 </ul>
 <p >Thank you for your time.</p>
 <p ><em><b>Arm-2D Development Team.</b></em></p>
-<p >06 Dec 2022 </p>
+<p >08 Feb 2023 </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->
