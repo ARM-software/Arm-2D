@@ -1,7 +1,8 @@
-# README
+# How to build Arm-2D Application Demos with CMSIS build tools
 
-How to build Arm-2D Application Demos with CMSIS build tools
-(https://github.com/ARM-software/Arm-2D)
+
+
+## Overview
 
 Details about the 2 demos:
 (https://github.com/ARM-software/Arm-2D/tree/main/examples)
@@ -93,7 +94,7 @@ The perf_counter pack has to be downloaded from GitHub and installed separately.
 cpackget add -f required_packs.txt
 ```
 
-As mentioned above, perf_counter won't be found since it's hosted on GitHub.
+As mentioned above, **perf_counter won't be found since it's hosted on GitHub**.
 Download perf_counter pack 1.9.10 from GitHub and install it:
 
 ```
@@ -156,7 +157,7 @@ To be completed...
 
 ## Customizations:
 
-- Applications are currently running **3** iterations, but this can be customized in the arm2d.csolution_ac6.yml file
+- Applications are currently running **3** iterations, but this can be customized in the **arm2d.csolution_ac6.yml** file
 
   This generates respectively approx **2.7M** and **4M** instructions for the smartwatch and generic applications.
 
@@ -173,11 +174,12 @@ To be completed...
 ```
 
 
+
 ## Files
 
-* arm2d.csolution_ac6.yml
+* **arm2d.csolution_ac6.yml**
   * Solution files describing all the solutions and the common settings
-* arm2d_smartwtach.cproject.yml and arm2d_generic.cproject.yml
+* **arm2d_smartwtach.cproject.yml** and **arm2d_generic.cproject.yml**
   * The project describing the source files, components and layers
-* boot.clayer.yml
+* **boot.clayer.yml**
   * Boot code for SC300, SC310 or normal M4, M7 etc ...
