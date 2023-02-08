@@ -184,6 +184,35 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_background_handler)
     return arm_fsm_rt_cpl;
 }
 
+static void draw_buttom(const arm_2d_tile_t *ptTile, 
+                        arm_2d_region_t *ptRegion,
+                        const char *pchString,
+                        COLOUR_INT tColour,
+                        uint8_t chOpacity,
+                        bool bIsNewFrame)
+{
+    
+
+    arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_font_t.tCharSize;
+    tTextSize.iWidth *= strlen(pchString);
+
+    arm_2d_container(ptTile, __button, ptRegion) {
+    
+        draw_round_corner_box(&__button, NULL, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
+        
+        arm_2d_align_centre(__button_canvas, tTextSize) {
+
+            arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)&__button);
+            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
+            arm_lcd_text_set_draw_region(&__centre_region);
+            arm_lcd_text_set_colour(tColour, GLCD_COLOR_BLACK);
+            arm_lcd_text_set_opacity(chOpacity);
+            arm_lcd_printf("%s", pchString);
+            arm_lcd_text_set_opacity(255);
+        }
+    }
+}
+
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
 {
@@ -198,7 +227,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
     arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
 
     arm_2d_canvas(ptTile, __canvas) {
-        arm_2d_align_centre(__canvas, 150, 80) {
+        arm_2d_align_centre(__canvas, 240, 128) {
 
             arm_2d_layout(__centre_region) {
 
@@ -211,7 +240,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
                                         bIsNewFrame);
                 }
 
-                __item_line_horizontal(30, 80) {
+                __item_line_horizontal(28, 80) {
                     while(arm_fsm_rt_cpl != number_list_show(   
                                                     &this.tNumberList[2], 
                                                     ptTile, 
@@ -219,7 +248,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
                                                     bIsNewFrame));
                 }
 
-                __item_line_horizontal(30, 80) {
+                __item_line_horizontal(28, 80) {
                     while(arm_fsm_rt_cpl != number_list_show(   
                                                     &this.tNumberList[1], 
                                                     ptTile, 
@@ -227,12 +256,57 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
                                                     bIsNewFrame));
                 }
 
-                __item_line_horizontal(30, 80) {
+                __item_line_horizontal(28, 80) {
                     while(arm_fsm_rt_cpl != number_list_show(   
                                                     &this.tNumberList[0], 
                                                     ptTile, 
                                                     &__item_region, 
                                                     bIsNewFrame));
+                }
+                
+                __item_line_horizontal(96, 128) {
+                
+                    /*
+                     * draw digits panel
+                     *
+                     *  [1][2][3]
+                     *  [4][5][6]
+                     *  [7][8][9]
+                     *     [0]
+                     */
+                
+                    arm_2d_layout(__item_region) {
+                        __item_horizontal(28,28,2,2,2,2) {
+                            draw_buttom(ptTile, &__item_region, "1", GLCD_COLOR_WHITE, 128, bIsNewFrame);
+                        }
+                        __item_horizontal(28,28,2,2,2,2) {
+                            draw_buttom(ptTile, &__item_region, "2", GLCD_COLOR_WHITE, 128, bIsNewFrame);
+                        }
+                        __item_horizontal(28,28,2,2,2,2) {
+                            draw_buttom(ptTile, &__item_region, "3", GLCD_COLOR_WHITE, 128, bIsNewFrame);
+                        }
+                        __item_horizontal(28,28,2,2,2,2) {
+                            draw_buttom(ptTile, &__item_region, "4", GLCD_COLOR_WHITE, 128, bIsNewFrame);
+                        }
+                        __item_horizontal(28,28,2,2,2,2) {
+                            draw_buttom(ptTile, &__item_region, "5", GLCD_COLOR_WHITE, 128, bIsNewFrame);
+                        }
+                        __item_horizontal(28,28,2,2,2,2) {
+                            draw_buttom(ptTile, &__item_region, "6", GLCD_COLOR_WHITE, 128, bIsNewFrame);
+                        }
+                        __item_horizontal(28,28,2,2,2,2) {
+                            draw_buttom(ptTile, &__item_region, "7", GLCD_COLOR_WHITE, 128, bIsNewFrame);
+                        }
+                        __item_horizontal(28,28,2,2,2,2) {
+                            draw_buttom(ptTile, &__item_region, "8", GLCD_COLOR_WHITE, 128, bIsNewFrame);
+                        }
+                        __item_horizontal(28,28,2,2,2,2) {
+                            draw_buttom(ptTile, &__item_region, "9", GLCD_COLOR_WHITE, 128, bIsNewFrame);
+                        }
+                        __item_horizontal(28,28,34,34,2,2) {
+                            draw_buttom(ptTile, &__item_region, "0", GLCD_COLOR_WHITE, 128, bIsNewFrame);
+                        }
+                    }
                 }
             }
         }
@@ -277,6 +351,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
 
         /* draw text at the top-left corner */
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+        arm_lcd_text_set_draw_region(NULL);
         arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
         arm_lcd_text_location(0,0);
@@ -332,7 +407,7 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
         /* a dirty region to be specified at runtime*/
         ADD_REGION_TO_LIST(s_tDirtyRegions,
             .tSize = {
-                150, 80,
+                240, 128,
             },
         ),
 
@@ -365,8 +440,8 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
      * for a image stored in the tile c_tileCMSISLogoMask
      */
     s_tDirtyRegions[0].tRegion.tLocation = (arm_2d_location_t){
-        .iX = ((tScreen.tSize.iWidth - 150) >> 1),
-        .iY = ((tScreen.tSize.iHeight - 80) >> 1),
+        .iX = ((tScreen.tSize.iWidth - 240) >> 1),
+        .iY = ((tScreen.tSize.iHeight - 128) >> 1),
     };
     
     arm_2d_align_top_right( tScreen, 

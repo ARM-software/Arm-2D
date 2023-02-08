@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        12. Dec 2022
- * $Revision:    V.1.0.2
+ * $Date:        08. Feb 2023
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -271,40 +271,71 @@ extern "C" {
                         {arm_2d_op_wait_async(NULL);})
 
 #define arm_2d_layout(__region)                                                 \
-        arm_using(arm_2d_region_t __layout = (__region),                        \
-                  arm_2d_op_wait_async(NULL))
+        arm_using(  arm_2d_region_t __arm_2d_layout = {                         \
+                        .tLocation = (__region).tLocation                       \
+                    },                                                          \
+                    __arm_2d_layout_area = (__region),                          \
+                    {                                                           \
+                          ARM_2D_UNUSED(__arm_2d_layout_area);                  \
+                    },                                                          \
+                    {                                                           \
+                        arm_2d_op_wait_async(NULL);                             \
+                    }                                                           \
+                )
 
 /*!
  * \brief Please do NOT use this macro
  * 
  */
 #define ____item_line_horizontal1(__size)                                       \
-    arm_using(  arm_2d_region_t __item_region,                                  \
-                {                                                               \
-                    __item_region.tSize.iWidth = (__size).iWidth;               \
-                    __item_region.tSize.iHeight = (__size).iHeight;             \
-                    __item_region.tLocation = __layout.tLocation;               \
-                },                                                              \
-                {                                                               \
-                    __layout.tLocation.iX += (__size).iWidth;                   \
-                    arm_2d_op_wait_async(NULL);                                 \
-                })
+            ____item_line_horizontal5(__size,0, 0, 0, 0)
 
 /*!
  * \brief Please do NOT use this macro
  * 
  */
 #define ____item_line_horizontal2(__width, __height)                            \
+            ____item_line_horizontal6(__width, __height,0, 0, 0, 0)
+
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define ____item_line_horizontal5(__size, __left, __right, __top, __bottom)     \
+            ____item_line_horizontal6(  (__size).iWidth, (__size).iHeight,      \
+                                        (__left), (__right), (__top), (__bottom))
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define ____item_line_horizontal6(  __width, __height,                          \
+                                    __left, __right, __top, __bottom)           \
     arm_using(  arm_2d_region_t __item_region,                                  \
                 {                                                               \
                     __item_region.tSize.iWidth = (__width);                     \
                     __item_region.tSize.iHeight = (__height);                   \
-                    __item_region.tLocation = __layout.tLocation;               \
+                    __item_region.tLocation = __arm_2d_layout.tLocation;        \
+                    __item_region.tLocation.iX += (__left);                     \
+                    __item_region.tLocation.iY += (__top);                      \
                 },                                                              \
                 {                                                               \
-                    __layout.tLocation.iX += (__width);                         \
+                    __arm_2d_layout.tLocation.iX +=                             \
+                        (__width) + (__left) + (__right);                       \
+                    int16_t ARM_2D_SAFE_NAME(iHeight)                           \
+                        = (__height) + (__top) + (__bottom);                    \
+                    __arm_2d_layout.tSize.iHeight = MAX(                        \
+                                                __arm_2d_layout.tSize.iHeight,  \
+                                                ARM_2D_SAFE_NAME(iHeight));     \
+                    int16_t ARM_2D_SAFE_NAME(iWidth)                            \
+                        = (__width) + (__left) + (__right);                     \
+                    __arm_2d_layout.tSize.iWidth = MAX(                         \
+                                                __arm_2d_layout.tSize.iWidth,   \
+                                                ARM_2D_SAFE_NAME(iWidth));      \
                     arm_2d_op_wait_async(NULL);                                 \
                 })
+
 
 /*!
  * \brief generate a arm_2d_region (i.e. __item_region) to place a specific 
@@ -320,7 +351,17 @@ extern "C" {
  *          __item_line_horizontal(__width, __height) {
  *              code body that can use __item_region
  *          }
- *          
+ *
+ * \note prototype 3:
+ *          __item_line_horizontal(__size, __left, __right, __top, __bottom) {
+ *              code body that can use __item_region
+ *          }
+ *
+ * \note prototype 4:
+ *          __item_line_horizontal(__width, __height, 
+                                 __left, __right, __top, __bottom) {
+ *              code body that can use __item_region
+ *          }
  */
 #define __item_line_horizontal(...)                                             \
             ARM_CONNECT2(   ____item_line_horizontal,                           \
@@ -332,30 +373,51 @@ extern "C" {
  * 
  */
 #define ____item_line_vertical1(__size)                                         \
-    arm_using(  arm_2d_region_t __item_region,                                  \
-                {                                                               \
-                    __item_region.tSize.iWidth = (__size).iWidth;               \
-                    __item_region.tSize.iHeight = (__size).iHeight;             \
-                    __item_region.tLocation = __layout.tLocation;               \
-                },                                                              \
-                {                                                               \
-                    __layout.tLocation.iY += (__size).iHeight;                  \
-                    arm_2d_op_wait_async(NULL);                                 \
-                })
+            ____item_line_vertical5(__size, 0, 0, 0, 0)
 
 /*!
  * \brief Please do NOT use this macro
  * 
  */
 #define ____item_line_vertical2(__width, __height)                              \
+            ____item_line_vertical6(__width, __height, 0, 0, 0, 0)
+
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define ____item_line_vertical5(__size, __left, __right, __top, __bottom)       \
+            ____item_line_vertical6((__size).iWidth, (__size).iHeight,          \
+                                    (__left), (__right), (__top), (__bottom))
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define ____item_line_vertical6(__width, __height,                              \
+                                __left, __right, __top, __bottom)               \
     arm_using(  arm_2d_region_t __item_region,                                  \
                 {                                                               \
                     __item_region.tSize.iWidth = (__width);                     \
                     __item_region.tSize.iHeight = (__height);                   \
-                    __item_region.tLocation = __layout.tLocation;               \
+                    __item_region.tLocation = __arm_2d_layout.tLocation;        \
+                    __item_region.tLocation.iX += (__left);                     \
+                    __item_region.tLocation.iY += (__top);                      \
                 },                                                              \
                 {                                                               \
-                    __layout.tLocation.iY += (__height);                        \
+                    __arm_2d_layout.tLocation.iY +=                             \
+                        (__height) + (__top) + (__bottom);                      \
+                    int16_t ARM_2D_SAFE_NAME(iHeight)                           \
+                        = (__height) + (__top) + (__bottom);                    \
+                    __arm_2d_layout.tSize.iHeight = MAX(                        \
+                                                __arm_2d_layout.tSize.iHeight,  \
+                                                ARM_2D_SAFE_NAME(iHeight));     \
+                    int16_t ARM_2D_SAFE_NAME(iWidth)                            \
+                        = (__width) + (__left) + (__right);                     \
+                    __arm_2d_layout.tSize.iWidth = MAX(                         \
+                                                __arm_2d_layout.tSize.iWidth,   \
+                                                ARM_2D_SAFE_NAME(iWidth));      \
                     arm_2d_op_wait_async(NULL);                                 \
                 })
 
@@ -368,17 +430,254 @@ extern "C" {
  *          __item_line_vertical(__size) {
  *              code body that can use __item_region
  *          }
- * 
+ *
  * \note prototype 2:
  *          __item_line_vertical(__width, __height) {
  *              code body that can use __item_region
  *          }
- *          
+ *
+ * \note prototype 3:
+ *          __item_line_vertical(__size, __left, __right, __top, __bottom) {
+ *              code body that can use __item_region
+ *          }
+ *
+ * \note prototype 4:
+ *          __item_line_vertical(__width, __height, 
+                                 __left, __right, __top, __bottom) {
+ *              code body that can use __item_region
+ *          }
  */
 #define __item_line_vertical(...)                                               \
             ARM_CONNECT2(   ____item_line_vertical,                             \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define ____item_horizontal1(__size, __height)                                  \
+            ____item_horizontal5(__size, 0, 0, 0, 0)
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define ____item_horizontal2(__width, __height)                                 \
+            ____item_horizontal6(  __width, __height, 0, 0, 0, 0)
+
+
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define ____item_horizontal5( __size, __left, __right, __top, __bottom)         \
+            ____item_horizontal6(   (__size).iWidth, (__size).iHeight,          \
+                                    (__left), (__right), (__top), (__bottom))
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define ____item_horizontal6(  __width, __height,                               \
+                                __left, __right, __top, __bottom)               \
+    arm_using(  arm_2d_region_t __item_region,                                  \
+                {                                                               \
+                    int16_t iTempX = __arm_2d_layout.tLocation.iX               \
+                                   + (__left) + (__width);                      \
+                    /* is end of the line */                                    \
+                    if (    iTempX                                              \
+                       >=   (   __arm_2d_layout_area.tLocation.iX               \
+                            +   __arm_2d_layout_area.tSize.iWidth)) {           \
+                        /* move to the next line */                             \
+                        __arm_2d_layout.tLocation.iY +=                         \
+                            __arm_2d_layout.tSize.iHeight;                      \
+                        /* reset the max line height */                         \
+                        __arm_2d_layout.tSize.iHeight = 0;                      \
+                        /* start from the left */                               \
+                        __arm_2d_layout.tLocation.iX                            \
+                            = __arm_2d_layout_area.tLocation.iX;                \
+                    }                                                           \
+                    __item_region.tSize.iWidth = (__width);                     \
+                    __item_region.tSize.iHeight = (__height);                   \
+                    __item_region.tLocation = __arm_2d_layout.tLocation;        \
+                    __item_region.tLocation.iX += (__left);                     \
+                    __item_region.tLocation.iY += (__top);                      \
+                },                                                              \
+                {                                                               \
+                    __arm_2d_layout.tLocation.iX +=                             \
+                        (__width) + (__left) + (__right);                       \
+                    int16_t ARM_2D_SAFE_NAME(iHeight)                           \
+                        = (__height) + (__top) + (__bottom);                    \
+                    __arm_2d_layout.tSize.iHeight = MAX(                        \
+                                                __arm_2d_layout.tSize.iHeight,  \
+                                                ARM_2D_SAFE_NAME(iHeight));     \
+                    int16_t ARM_2D_SAFE_NAME(iWidth)                            \
+                        = (__width) + (__left) + (__right);                     \
+                    __arm_2d_layout.tSize.iWidth = MAX(                         \
+                                                __arm_2d_layout.tSize.iWidth,   \
+                                                ARM_2D_SAFE_NAME(iWidth));      \
+                    /* is end of the line */                                    \
+                    if (    __arm_2d_layout.tLocation.iX                        \
+                       >=   (   __arm_2d_layout_area.tLocation.iX               \
+                            +   __arm_2d_layout_area.tSize.iWidth)) {           \
+                        /* move to the next line */                             \
+                        __arm_2d_layout.tLocation.iY +=                         \
+                            __arm_2d_layout.tSize.iHeight;                      \
+                        /* reset the max line height */                         \
+                        __arm_2d_layout.tSize.iHeight = 0;                      \
+                        /* start from the left */                               \
+                        __arm_2d_layout.tLocation.iX                            \
+                            = __arm_2d_layout_area.tLocation.iX;                \
+                    }                                                           \
+                    arm_2d_op_wait_async(NULL);                                 \
+                })
+
+
+/*!
+ * \brief generate a arm_2d_region (i.e. __item_region) to place a specific 
+ *        rectangular area horizontally and wrap around when hit the boarder.
+ * \param ... parameter list 
+ * 
+ * \note prototype 1:
+ *          __item_horizontal(__size) {
+ *              code body that can use __item_region
+ *          }
+ *
+ * \note prototype 2:
+ *          __item_horizontal(__width, __height) {
+ *              code body that can use __item_region
+ *          }
+ *
+ * \note prototype 3:
+ *          __item_horizontal(__size, __left, __right, __top, __bottom) {
+ *              code body that can use __item_region
+ *          }
+ *
+ * \note prototype 4:
+ *          __item_horizontal(__width, __height, 
+                                 __left, __right, __top, __bottom) {
+ *              code body that can use __item_region
+ *          }
+ */
+#define __item_horizontal(...)                                                  \
+            ARM_CONNECT2(   ____item_horizontal,                                \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+
+
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define ____item_vertical1(__size, __height)                                    \
+            ____item_vertical5(__size, 0, 0, 0, 0)
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define ____item_vertical2(__width, __height)                                   \
+            ____item_vertical6(  __width, __height, 0, 0, 0, 0)
+
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define ____item_vertical5( __size, __left, __right, __top, __bottom)           \
+            ____item_vertical6((__size).iWidth, (__size).iHeight,               \
+                               (__left), (__right), (__top), (__bottom))
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define ____item_vertical6( __width, __height,                                  \
+                            __left, __right, __top, __bottom)                   \
+    arm_using(  arm_2d_region_t __item_region,                                  \
+                {                                                               \
+                    int16_t iTempY = __arm_2d_layout.tLocation.iY               \
+                                   + (__top) + (__bottom);                      \
+                    /* is end of the column */                                  \
+                    if (    iTempY                                              \
+                       >=   (   __arm_2d_layout_area.tLocation.iY               \
+                            +   __arm_2d_layout_area.tSize.iHeight)) {          \
+                        /* move to the next column */                           \
+                        __arm_2d_layout.tLocation.iX +=                         \
+                            __arm_2d_layout.tSize.iWidth;                       \
+                        /* reset the max line width */                          \
+                        __arm_2d_layout.tSize.iWidth = 0;                       \
+                        /* start from the top */                                \
+                        __arm_2d_layout.tLocation.iY                            \
+                            = __arm_2d_layout_area.tLocation.iY;                \
+                    }                                                           \
+                    __item_region.tSize.iWidth = (__width);                     \
+                    __item_region.tSize.iHeight = (__height);                   \
+                    __item_region.tLocation = __arm_2d_layout.tLocation;        \
+                    __item_region.tLocation.iX += (__left);                     \
+                    __item_region.tLocation.iY += (__top);                      \
+                },                                                              \
+                {                                                               \
+                    __arm_2d_layout.tLocation.iY +=                             \
+                        (__height) + (__top) + (__bottom);                      \
+                    int16_t ARM_2D_SAFE_NAME(iHeight)                           \
+                        = (__height) + (__top) + (__bottom);                    \
+                    __arm_2d_layout.tSize.iHeight = MAX(                        \
+                                                __arm_2d_layout.tSize.iHeight,  \
+                                                ARM_2D_SAFE_NAME(iHeight));     \
+                    int16_t ARM_2D_SAFE_NAME(iWidth)                            \
+                        = (__width) + (__left) + (__right);                     \
+                    __arm_2d_layout.tSize.iWidth = MAX(                         \
+                                                __arm_2d_layout.tSize.iWidth,   \
+                                                ARM_2D_SAFE_NAME(iWidth));      \
+                    /* is end of the column */                                  \
+                    if (    __arm_2d_layout.tLocation.iY                        \
+                       >=   (   __arm_2d_layout_area.tLocation.iY               \
+                            +   __arm_2d_layout_area.tSize.iHeight)) {          \
+                        /* move to the next column */                           \
+                        __arm_2d_layout.tLocation.iX +=                         \
+                            __arm_2d_layout.tSize.iWidth;                       \
+                        /* reset the max line width */                          \
+                        __arm_2d_layout.tSize.iWidth = 0;                       \
+                        /* start from the top */                                \
+                        __arm_2d_layout.tLocation.iY                            \
+                            = __arm_2d_layout_area.tLocation.iY;                \
+                    }                                                           \
+                    arm_2d_op_wait_async(NULL);                                 \
+                })
+
+
+/*!
+ * \brief generate a arm_2d_region (i.e. __item_region) to place a specific 
+ *        rectangular area vertically and wrap around when hit the boarder.
+ * \param ... parameter list 
+ * 
+ * \note prototype 1:
+ *          __item_vertical(__size) {
+ *              code body that can use __item_region
+ *          }
+ *
+ * \note prototype 2:
+ *          __item_vertical(__width, __height) {
+ *              code body that can use __item_region
+ *          }
+ *
+ * \note prototype 3:
+ *          __item_vertical(__size, __left, __right, __top, __bottom) {
+ *              code body that can use __item_region
+ *          }
+ *
+ * \note prototype 4:
+ *          __item_vertical(__width, __height, 
+                                 __left, __right, __top, __bottom) {
+ *              code body that can use __item_region
+ *          }
+ */
+#define __item_vertical(...)                                                    \
+            ARM_CONNECT2(   ____item_vertical,                                  \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
 /*!
  * \brief Please do NOT use this macro
