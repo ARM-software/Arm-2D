@@ -23,7 +23,7 @@
  *               interface header files 
  *
  * $Date:        08. Feb 2023
- * $Revision:    V.1.0.13
+ * $Revision:    V.1.0.14
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -71,8 +71,8 @@ extern "C" {
 /*  arm-2d version */
 #define ARM_2D_VERSION_MAJOR        1                                           //!< Major version
 #define ARM_2D_VERSION_MINOR        1                                           //!< Minor version
-#define ARM_2D_VERSION_PATCH        1                                           //!< Patch number
-#define ARM_2D_VERSION_STR          ""                                          //!< tag
+#define ARM_2D_VERSION_PATCH        2                                           //!< Patch number
+#define ARM_2D_VERSION_STR          "dev"                                       //!< tag
 
 /*!
  * \brief arm-2d version number in decimal
