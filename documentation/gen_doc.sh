@@ -13,8 +13,8 @@ set -o pipefail
 
 DIRNAME=$(dirname $(realpath $0))
 DOXYGEN=$(which doxygen)
-REQ_DXY_VERSION="1.9.2"
-REQUIRED_GEN_PACK_LIB="0.5.1"
+REQ_DXY_VERSION="1.9.5"
+REQUIRED_GEN_PACK_LIB="0.7.0"
 
 ############ gen-pack library ###########
 
@@ -22,7 +22,8 @@ function install_lib() {
   local URL="https://github.com/Open-CMSIS-Pack/gen-pack/archive/refs/tags/v$1.tar.gz"
   echo "Downloading gen_pack lib to '$2'"
   mkdir -p "$2"
-  curl -L "${URL}" -s | tar -xzf - --strip-components 1 -C "$2" || exit 1
+  curl -L "${URL}" -s | tar -xzf - --strip-components 1 -C "$2" || \
+   (echo "ERROR: Unable to download gen_pack library!"; exit 1)
 }
 
 function load_lib() {
@@ -50,20 +51,9 @@ function load_lib() {
 load_lib
 find_git
 find_ghcli
+find_doxygen "${REQ_DXY_VERSION}"
 
 #########################################
-
-if [[ ! -f "${DOXYGEN}" ]]; then
-  echo "Doxygen not found!" >&2
-  echo "Did you miss to add it to PATH?"
-  exit 1
-else
-  version=$("${DOXYGEN}" --version | sed -E 's/.*([0-9]+\.[0-9]+\.[0-9]+).*/\1/')
-  echo "DOXYGEN is ${DOXYGEN} at version ${version}"
-  if [[ "${version}" != "${REQ_DXY_VERSION}" ]]; then
-    echo " >> Version is different from ${REQ_DXY_VERSION} !" >&2
-  fi
-fi
 
 if [ -z "$VERSION" ]; then
   VERSION_FULL=$(git_describe "v")
@@ -82,8 +72,8 @@ sed -e "s/{projectNumber}/${VERSION}/" "${DIRNAME}/arm2d.dxy.in" \
 
 # git_changelog -f html > history.txt
 
-echo "${DOXYGEN} arm2d.dxy"
-"${DOXYGEN}" arm2d.dxy
+echo "${UTILITY_DOXYGEN} arm2d.dxy"
+"${UTILITY_DOXYGEN}" arm2d.dxy
 popd > /dev/null
 
 if [[ $2 != 0 ]]; then
