@@ -81,13 +81,12 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
 
     - Docking Alignments, e.g. `arm_2d_align_centre`, `arm_2d_align_bottom_right` etc.
 
-    - Line Stream Layout, e.g. `__item_line_horizontal` and `__item_line_vertial`
+    - Line Stream Layout, e.g. `__item_line_horizontal` and `__item_line_vertical`
 
-    - Stream Layout (with wrapping), e.g. `__item_horizontal` and `__item_verital`
+    - Stream Layout (with wrapping), e.g. `__item_horizontal` and `__item_vertical`
 
       
-
-
+      
 
 ### New Features Planned in the Future
 
