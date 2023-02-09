@@ -2,7 +2,7 @@
 
 
 
-## Overview
+## 1 Overview
 
 Details about the 2 demos:
 (https://github.com/ARM-software/Arm-2D/tree/main/examples)
@@ -32,11 +32,15 @@ Details about the 2 demos:
 
 
 
-## Install CMSIS Build tools
+## 2 Install CMSIS Build tools 
 
 see : https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/installation.md
 
 For now, please use version **1.1.0**
+
+
+
+### 2.1 For Linux
 
 
 ```
@@ -65,17 +69,23 @@ set(EXT)
 ############ DO NOT EDIT BELOW ###########
 ```
 
-
-### Initialize the new pack repository
+Initialize the new pack repository
 
 ```
 cpackget init https://www.keil.com/pack/index.pidx
 ```
 
 
-## Build the project
 
-### Generate list of needed packs
+### 2.2 For Windows
+
+To be completed...
+
+
+
+## 3 Build the project
+
+### 3.1 Generate list of needed packs
 
 From this `Arm-2D_Demos` folder, type the command:
 
@@ -83,12 +93,12 @@ From this `Arm-2D_Demos` folder, type the command:
 csolution list packs -s arm2d.csolution_ac6.yml -m > required_packs.txt
 ```
 
-Remove the *GorgonMeducer::perf_counter@1.9.10* packs from this list.
+Remove the `GorgonMeducer::perf_counter@1.9.10` packs from this list.
 
 The perf_counter pack has to be downloaded from GitHub and installed separately.
 
 
-### Install the packs
+### 3.2 Install the packs
 
 ```
 cpackget add -f required_packs.txt
@@ -102,7 +112,7 @@ cpackget add https://github.com/GorgonMeducer/perf_counter/raw/main/cmsis-pack/G
 ```
 
 
-### Convert csolution
+### 3.3 Convert csolution
 
 ```
 csolution convert -s arm2d.csolution_ac6.yml
@@ -115,8 +125,7 @@ It will generate several project files:
 
 Expected output:
 
-```
-
+```shell
 arm2d_generic.Release+MPS3-Corstone-300.cprj - info csolution: file generated successfully
 arm2d_generic.Release+VHT-Corstone-300.cprj - info csolution: file generated successfully
 arm2d_generic.Release+VHT-Corstone-310.cprj - info csolution: file generated successfully
@@ -126,7 +135,7 @@ arm2d_smartwatch.Release+VHT-Corstone-300.cprj - info csolution: file generated 
 arm2d_smartwatch.Release+VHT-Corstone-310.cprj - info csolution: file generated successfully
 ```
 
-### Build the cprj file
+### 3.4 Build the cprj file
 
 To build the projects:
 
@@ -141,7 +150,7 @@ To be completed
 
 
 
-## Run the applications
+## 4 Run the applications
 
 To be completed...
 
@@ -154,7 +163,7 @@ To be completed...
 
 
 
-## Customizations:
+## 5 Customizations:
 
 - Applications are currently running **3** iterations, but this can be customized in the **arm2d.csolution_ac6.yml** file
 
@@ -174,7 +183,9 @@ To be completed...
 
 
 
-## Files
+## 6 Appendix
+
+### 6.1 Files
 
 * **arm2d.csolution_ac6.yml**
   * Solution files describing all the solutions and the common settings
