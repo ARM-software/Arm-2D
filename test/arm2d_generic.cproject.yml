@@ -3,10 +3,9 @@ project:
     - group: App
       files:
         - file: main.c
+      define:
+        - BENCH=GENERIC_BLENDING
 
-      misc:
-      - C:
-        - -DBENCH=GENERIC_BLENDING
   add-path:
     - .
 
@@ -23,15 +22,13 @@ project:
 
     - component: ARM::CMSIS:CORE
     - component: ARM::CMSIS:DSP&Source@1.14.1
-
-      misc:
-      - C:
-        - -DARM_DSP_CONFIG_TABLES
-        - -DARM_FAST_ALLOW_TABLES
-        - -DARM_FFT_ALLOW_TABLES
-        - -DARM_ALL_FAST_TABLES
-        - -DARM_MATH_LOOPUNROLL
-        - -DDISABLEFLOAT16
+      define:
+        - ARM_DSP_CONFIG_TABLES
+        - ARM_FAST_ALLOW_TABLES
+        - ARM_FFT_ALLOW_TABLES
+        - ARM_ALL_FAST_TABLES
+        - ARM_MATH_LOOPUNROLL
+        - DISABLEFLOAT16
 
     - component: Keil::Compiler&ARM Compiler:Event Recorder&Semihosting@1.5.1
       for-type:
