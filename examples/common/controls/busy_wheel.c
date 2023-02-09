@@ -93,8 +93,8 @@ void busy_wheel_init(void)
     int16_t iYOffset = c_tileWhiteDot.tRegion.tSize.iHeight>> 2;
     
     for (uint_fast8_t n = 0; n < 8; n++) {
-        s_tDotsLocation[n].iY = (int16_t)(sinf(__PI * (float)n / 4.0f) * __RADIUS) + iXOffset;
-        s_tDotsLocation[n].iX = (int16_t)(cosf(__PI * (float)n / 4.0f) * __RADIUS) + iYOffset;
+        s_tDotsLocation[n].iY = (int16_t)(arm_sin_f32(__PI * (float)n / 4.0f) * __RADIUS) + iXOffset;
+        s_tDotsLocation[n].iX = (int16_t)(arm_cos_f32(__PI * (float)n / 4.0f) * __RADIUS) + iYOffset;
         s_tAlphaTable[n] = (uint8_t)((float)n * 255.0f / 8.0f);
     }
 }
