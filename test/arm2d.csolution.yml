@@ -1,11 +1,12 @@
 solution:
   packs:
+    - pack: ARM::Arm-2D
+      path: ../
     - pack: ARM::CMSIS-DSP@1.14.1
     - pack: ARM::CMSIS@5.9.0
     - pack: ARM::V2M_MPS3_SSE_300_BSP@1.3.0
     - pack: ARM::V2M_MPS3_SSE_310_BSP@1.1.0
     - pack: Keil::ARM_Compiler@1.7.2
-    - pack: ARM::Arm-2D@1.1.0
     - pack: GorgonMeducer::perf_counter@1.9.10
 
   target-types:
