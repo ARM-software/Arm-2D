@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/schemas/projmgr/1.4.0/tools/projmgr/schemas/cdefault.schema.json
+
+default:
+  compiler: GCC
+  misc:
+    - C-CPP:
+        - -ffunction-sections
+        - -mfp16-format=ieee
+        - -fdata-sections
+        - -ffast-math
+      C:
+        - -std=gnu11
+      CPP:
+        - -flax-vector-conversions
+        - -Wno-unused-parameter
+      Link:
+        - --specs=nano.specs
+        - --specs=rdimon.specs
+        - --entry=Reset_Handler
+        - -Wl,--gc-sections

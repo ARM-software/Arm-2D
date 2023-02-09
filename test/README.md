@@ -15,7 +15,7 @@ Details about the 2 demos:
   - Spinning busy wheel
 
 
-![Generic](../documentation/pictures/benchmark.png) 
+![Generic](../documentation/pictures/benchmark.png)
 
 - **watch_panel**
   - A floating background layer (Using Tile Copy)
@@ -25,7 +25,7 @@ Details about the 2 demos:
   - A red pointer (Rotation)
   - A golden star (Rotation, scaling with Opacity)
 
-![Watchpanel](../documentation/pictures/watch-panel.png) 
+![Watchpanel](../documentation/pictures/watch-panel.png)
 
 
 
@@ -45,7 +45,7 @@ wget https://github.com/Open-CMSIS-Pack/cmsis-toolbox/releases/download/1.1.0/cm
 Decompress it in your workspace and setup environment variables as described in the link above
 
 ```
-tar -zxvf cmsis-toolbox-linux64.tar.gz 
+tar -zxvf cmsis-toolbox-linux64.tar.gz
 PATH=$PATH:<your_cmsis_tool_path>/cmsis-toolbox-linux64/bin/
 export CMSIS_COMPILER_ROOT=<your_cmsis_tool_path>/cmsis-toolbox-linux64/etc/
 export CMSIS_PACK_ROOT=<your_cmsis_pack_storage_path>cmsis-pack
@@ -82,7 +82,7 @@ From this `Arm-2D_Demos` folder, type the command:
 csolution list packs -s arm2d.csolution_ac6.yml -m > required_packs.txt
 ```
 
-Remove the *GorgonMeducer::perf_counter@1.9.10* packs from this list. 
+Remove the *GorgonMeducer::perf_counter@1.9.10* packs from this list.
 
 The perf_counter pack has to be downloaded from GitHub and installed separately.
 
@@ -97,8 +97,7 @@ As mentioned above, perf_counter won't be found since it's hosted on GitHub.
 Download perf_counter pack 1.9.10 from GitHub and install it:
 
 ```
-wget https://github.com/GorgonMeducer/perf_counter/raw/main/cmsis-pack/GorgonMeducer.perf_counter.1.9.10.pack
-cpackget add GorgonMeducer.perf_counter.1.9.10.pack 
+cpackget add https://github.com/GorgonMeducer/perf_counter/raw/main/cmsis-pack/GorgonMeducer.perf_counter.1.9.10.pack
 ```
 
 
