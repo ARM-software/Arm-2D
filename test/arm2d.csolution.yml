@@ -1,0 +1,76 @@
+solution:
+  packs:
+    - pack: ARM::Arm-2D
+      path: ../
+    - pack: ARM::CMSIS-DSP@1.14.1
+    - pack: ARM::CMSIS@5.9.0
+    - pack: ARM::V2M_MPS3_SSE_300_BSP@1.3.0
+    - pack: ARM::V2M_MPS3_SSE_310_BSP@1.1.0
+    - pack: Keil::ARM_Compiler@1.7.2
+    - pack: GorgonMeducer::perf_counter@1.9.10
+
+  target-types:
+    - type: VHT-Corstone-310
+      device: ARM::SSE-310-MPS3
+      define:
+        - __FVP_PY
+        - ITERATION_CNT=3
+        - __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
+        - __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
+        - __ARM_2D_CFG_BENCHMARK_TINY_MODE__
+
+    - type: VHT-Corstone-300
+      device: ARM::SSE-300-MPS3
+      define:
+        - __FVP_PY
+        - ITERATION_CNT=3
+        - __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
+        - __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
+        - __ARM_2D_CFG_BENCHMARK_TINY_MODE__
+
+    - type: VHT_M55
+      device: ARMCM55
+      define:
+        - CORTEXM
+        - ITERATION_CNT=3
+        - __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
+        - __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
+        - __ARM_2D_CFG_BENCHMARK_TINY_MODE__
+
+    - type: VHT_M33
+      device: ARMCM33_DSP_FP
+      define:
+        - CORTEXM
+        - ITERATION_CNT=3
+        - __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
+        - __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
+        - __ARM_2D_CFG_BENCHMARK_TINY_MODE__
+
+    - type: VHT_M7
+      device: ARMCM7_DP
+      define:
+        - CORTEXM
+        - ITERATION_CNT=100
+        - __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
+        - __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
+        - __ARM_2D_CFG_BENCHMARK_TINY_MODE__
+
+  build-types:
+    - type: Debug
+      optimize: none
+      debug: on
+
+    - type: Release
+      optimize: speed
+      debug: off
+
+  projects:
+    - project: ./arm2d_generic.cproject.yml
+    - project: ./arm2d_smartwatch.cproject.yml
+
+  output-dirs:
+    cprjdir: ./$Project$.$BuildType$+$TargetType$-$Compiler$
+    intdir: ./$Project$.$BuildType$+$TargetType$-$Compiler$/intdir
+    outdir: ./$Project$.$BuildType$+$TargetType$-$Compiler$/outdir
+
+
