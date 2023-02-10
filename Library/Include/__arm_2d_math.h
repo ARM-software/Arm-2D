@@ -119,7 +119,7 @@ extern "C" {
 #ifdef __IS_COMPILER_GCC__
 /* To be removed. Issue with csolution GCC builds and use of the math library */
 #define ARM_2D_FMODF(a, b)  ((a) - (b) * (int)((a) / (b)))
-#define ARM_2D_LROUNDF(a)   (int)((a) + 0.5f)
+#define ARM_2D_LROUNDF(a)   (float)((int)((a) + 0.5f))
 #else
 #define ARM_2D_FMODF(a, b)  fmodf((a), (b))
 #define ARM_2D_LROUNDF(a)   lroundf((a))
