@@ -1,0 +1,55 @@
+name: Run test on Arm Virtual Hardware
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, developing ]
+  pull_request:
+    branches: [ main, developing ]
+
+# Enable the next lines if you are using IAM User and you added them in the repo's secret.
+#env:
+  # AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  # AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+jobs:
+  ci_test:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install AVH Client for Python
+      run: |
+        pip install git+https://github.com/ARM-software/avhclient.git@v0.1
+
+    - uses: ammaraskar/gcc-problem-matcher@master
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: ${{ env.AWS_ASSUME_ROLE }}
+        aws-region: ${{ env.AWS_DEFAULT_REGION }}
+
+    - name: Run tests
+      id: avh
+      run: |
+        avhclient -b aws execute --specfile test/avh.yml
+
+    - name: Archive results
+      uses: actions/upload-artifact@v3
+      with:
+        name: results
+        path: |
+          test/arm2d-*.zip
+        retention-days: 1
+        if-no-files-found: error
+      if: always()

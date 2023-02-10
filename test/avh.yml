@@ -6,9 +6,6 @@ backend:
     instance-type: t2.micro
 upload:
   - ARM.Arm-2D.pdsc
-  - LICENSE
-  - README.md
-  - documentation/**/*
   - examples/**/*
   - Helper/**/*
   - Library/**/*
@@ -23,8 +20,29 @@ upload:
   - test/printf_mps3.clayer.yml
   - test/stdout_USART.c
 steps:
+  - run: |
+      wget https://github.com/Open-CMSIS-Pack/cmsis-toolbox/releases/download/1.4.0/cmsis-toolbox.sh
+      chmod +x cmsis-toolbox.sh
+      sudo ./cmsis-toolbox.sh <<EOI
+      $(realpath $(dirname $(which csolution))/..)
+      $CMSIS_PACK_ROOT
+      $(dirname $(which armclang 2>/dev/null))
+      $(dirname $(which armcc 2>/dev/null))
+      $(dirname $(which arm-none-eabi-gcc 2>/dev/null))
+      EOI
+      echo "cpackget : $(which cpackget)"
+      echo "csolution: $(which csolution)"
+      echo "cbuild   : $(which cbuild)"
   - run: pip install -U python-matrix-runner
-  - run: ./test/build.py -c AC6 -c GCC -o Release build run
+  - run: |
+      cpackget update-index
+      cpackget add -F -a https://github.com/GorgonMeducer/perf_counter/raw/main/cmsis-pack/GorgonMeducer.perf_counter.1.9.11.pack
+      csolution list packs -s test/arm2d.csolution.yml -m > required_packs.txt
+      test -s required_packs.txt && cpackget add -a -f required_packs.txt || echo "Nothing to install"
+  - run: |
+      echo "Running tests..."
+      pushd test
+      python build.py -c AC6 -c GCC -o Release build run
+      popd
 download:
-  - test/RTE/_arm2d**/*
-  - test/arm2d_**/*
+  - test/arm2d*.zip

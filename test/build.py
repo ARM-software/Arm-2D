@@ -105,7 +105,7 @@ def build(config, results):
     if not all(r.success for r in results):
         return
 
-    file = f"blinky-{config_suffix(config)}.zip"
+    file = f"{project_dir(config)}-{datetime.now().strftime('%Y%m%d%H%M%S')}.zip"
     logging.info(f"Archiving build output to {file}...")
     with ZipFile(file, "w") as archive:
         for content in iglob(f"{project_dir(config)}/**/*", recursive=True):
@@ -116,7 +116,7 @@ def build(config, results):
 @matrix_action
 def extract(config):
     """Extract the latest build archive."""
-    archives = sorted(glob(f"EventStatistic-{config_suffix(config, timestamp=False)}-*.zip"), reverse=True)
+    archives = sorted(glob(f"{project_dir(config)}-*.zip"), reverse=True)
     yield unzip(archives[0])
 
 
