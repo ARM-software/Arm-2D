@@ -21,13 +21,14 @@ void arm_2d_run_benchmark(void);
 #include "perf_counter.h"
 #include "stdbool.h"
 
-#if __IS_COMPILER_GCC__ || __IS_COMPILER_IAR__
+
 /* for perf_counter */
 void SysTick_Handler(void)
 {
+#if __IS_COMPILER_GCC__ || __IS_COMPILER_IAR__
     user_code_insert_to_systick_handler();
-}
 #endif
+}
 
 #if defined (USECACHE) && USECACHE==1
 #ifdef SSE300
