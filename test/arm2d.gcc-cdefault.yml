@@ -10,6 +10,7 @@ default:
         - -ffast-math
         - -flax-vector-conversions
         - -Wno-unused-parameter
+        - -fms-extensions
       C:
         - -std=gnu11
       Link:
