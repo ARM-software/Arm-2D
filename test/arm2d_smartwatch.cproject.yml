@@ -18,10 +18,10 @@ project:
     - component: ARM::Acceleration:Arm-2D Extras:Controls
     - component: ARM::Acceleration:Arm-2D Extras:LCD ASCII Printf
 
-    - component: perf_counter:Core&Source@1.9.11
+    - component: perf_counter:Core&Source
 
     - component: ARM::CMSIS:CORE
-    - component: ARM::CMSIS:DSP&Source@1.14.1
+    - component: ARM::CMSIS:DSP&Source
       define:
         - ARM_DSP_CONFIG_TABLES
         - ARM_FAST_ALLOW_TABLES
@@ -30,11 +30,11 @@ project:
         - ARM_MATH_LOOPUNROLL
         - DISABLEFLOAT16
 
-    - component: Keil::Compiler&ARM Compiler:Event Recorder&Semihosting@1.5.1
+    - component: Keil::Compiler&ARM Compiler:Event Recorder&Semihosting
       for-type:
         - +VHT-Corstone-300
         - +VHT-Corstone-310
-    - component: Keil::Compiler&ARM Compiler:Event Recorder&DAP@1.5.1
+    - component: Keil::Compiler&ARM Compiler:Event Recorder&DAP
       for-type:
         - +MPS3-Corstone-300
 
