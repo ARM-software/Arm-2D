@@ -112,7 +112,7 @@ void spinning_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
         
             if (bIsNewFrame) {
                 s_fAngle += ARM_2D_ANGLE(6.0f);
-                s_fAngle = fmodf(s_fAngle,ARM_2D_ANGLE(360));
+                s_fAngle = ARM_2D_FMODF(s_fAngle,ARM_2D_ANGLE(360));
             }
 
             arm_2d_location_t c_tCentre = {
@@ -170,7 +170,7 @@ void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget,
             
             if (bIsNewFrame) {
                 s_fAngle += ARM_2D_ANGLE(6.0f);
-                s_fAngle = fmodf(s_fAngle,ARM_2D_ANGLE(360));
+                s_fAngle = ARM_2D_FMODF(s_fAngle,ARM_2D_ANGLE(360));
             }
 
             arm_2dp_fill_colour_with_mask_opacity_and_transform(

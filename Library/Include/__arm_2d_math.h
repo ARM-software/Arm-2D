@@ -116,6 +116,15 @@ extern "C" {
 
 #define ARM_2D_ANGLE(__ANGLE)  ((float)((float)(__ANGLE) * 3.1415926f / 180.0f))
 
+#ifdef __IS_COMPILER_GCC__
+/* To be removed. Issue with csolution GCC builds and use of the math library */
+#define ARM_2D_FMODF(a, b)  ((a) - (b) * (int)((a) / (b)))
+#define ARM_2D_LROUNDF(a)   (int)((a) + 0.5f)
+#else
+#define ARM_2D_FMODF(a, b)  fmodf((a), (b))
+#define ARM_2D_LROUNDF(a)   lroundf((a))
+#endif
+
 #if __ARM_2D_HAS_DSP__
 
 #undef __QDADD

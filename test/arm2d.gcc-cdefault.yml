@@ -18,3 +18,5 @@ default:
         - --specs=rdimon.specs
         - --entry=Reset_Handler
         - -Wl,--gc-sections
+        # there is an current issue with ordering
+        # -lm should come after objects

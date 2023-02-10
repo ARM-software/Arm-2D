@@ -314,7 +314,7 @@ void __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
         invHeightFx = 0x7fffffff / (iHeight - 1);
     }
 
-    int32_t             AngleFx = lroundf(fAngle * ONE_BY_2PI_Q31);
+    int32_t             AngleFx = ARM_2D_LROUNDF(fAngle * ONE_BY_2PI_Q31);
     int32_t             ScaleFx = (int32_t)((float)fScale * (float)TO_Q16(1));
     q31_t               cosAngleFx = MULTFX(arm_cos_q31(AngleFx), ScaleFx);
     q31_t               sinAngleFx = MULTFX(arm_sin_q31(AngleFx), ScaleFx);
@@ -553,7 +553,7 @@ static arm_2d_err_t __arm_2d_transform_preprocess_source(
     }
 
     //! angle validation
-    ptTransform->fAngle = fmodf(ptTransform->fAngle, ARM_2D_ANGLE(360));
+    ptTransform->fAngle = ARM_2D_FMODF(ptTransform->fAngle, ARM_2D_ANGLE(360));
     if (0.0f == ptTransform->fScale) {
         ptTransform->fScale = 1.0f;
     }

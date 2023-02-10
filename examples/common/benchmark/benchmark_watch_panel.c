@@ -451,11 +451,11 @@ void example_gui_refresh(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
             if (ptItem->bUpdateAnglePerSec) {
                 if (bUpdatePerSec) {
                     ptItem->fAngle += ARM_2D_ANGLE(ptItem->fAngleSpeed);
-                    ptItem->fAngle = fmodf(ptItem->fAngle,ARM_2D_ANGLE(360));
+                    ptItem->fAngle = ARM_2D_FMODF(ptItem->fAngle,ARM_2D_ANGLE(360));
                 }
             } else if (bIsNewFrame) {
                 ptItem->fAngle += ARM_2D_ANGLE(ptItem->fAngleSpeed);
-                ptItem->fAngle = fmodf(ptItem->fAngle,ARM_2D_ANGLE(360));
+                ptItem->fAngle = ARM_2D_FMODF(ptItem->fAngle,ARM_2D_ANGLE(360));
             }
 
             if (NULL != ptItem->ptMask) {
@@ -532,7 +532,7 @@ void example_gui_refresh(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
             if (bIsNewFrame) {
                 
                 s_fAngle +=ARM_2D_ANGLE(10.0f);
-                s_fAngle = fmodf(s_fAngle,ARM_2D_ANGLE(360));
+                s_fAngle = ARM_2D_FMODF(s_fAngle,ARM_2D_ANGLE(360));
                 s_fScale += 0.05f;
                 
                 
