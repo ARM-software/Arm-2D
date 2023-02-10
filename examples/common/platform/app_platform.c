@@ -108,7 +108,7 @@ void SysTick_Handler(void)
     
     bsp_1ms_event_handler();
     
-#if __IS_COMPILER_GCC__ || __IS_COMPILER_LLVM__
+#if __IS_COMPILER_GCC__ || __IS_COMPILER_LLVM__ || __IS_COMPILER_IAR__
     user_code_insert_to_systick_handler();
 #endif
 }
