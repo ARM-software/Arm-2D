@@ -1,0 +1,30 @@
+name: "Arm2D AVH Benchmark Test"
+workdir: ../
+backend:
+  aws:
+    ami-version: ~=1.2
+    instance-type: t2.micro
+upload:
+  - ARM.Arm-2D.pdsc
+  - LICENSE
+  - README.md
+  - documentation/**/*
+  - examples/**/*
+  - Helper/**/*
+  - Library/**/*
+  - tools/**/*
+  - test/RTE/**/*
+  - -:test/RTE/_arm2d**/*
+  - test/arm2d*.yml
+  - test/boot.clayer.yml
+  - test/build.py
+  - test/main.c
+  - test/model_config*.txt
+  - test/printf_mps3.clayer.yml
+  - test/stdout_USART.c
+steps:
+  - run: pip install -U python-matrix-runner
+  - run: ./test/build.py -c AC6 -c GCC -o Release build run
+download:
+  - test/RTE/_arm2d**/*
+  - test/arm2d_**/*
