@@ -8,11 +8,10 @@ default:
         - -mfp16-format=ieee
         - -fdata-sections
         - -ffast-math
-      C:
-        - -std=gnu11
-      CPP:
         - -flax-vector-conversions
         - -Wno-unused-parameter
+      C:
+        - -std=gnu11
       Link:
         - --specs=nano.specs
         - --specs=rdimon.specs
