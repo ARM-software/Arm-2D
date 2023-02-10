@@ -3,15 +3,6 @@
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/ARM-software/Arm-2D?include_prereleases) ![GitHub](https://img.shields.io/github/license/ARM-software/Arm-2D)
 
 
-## Branch Summary
-
-
-| Branch           | Description                                                  | Note                                      |
-| ---------------- | ------------------------------------------------------------ | ----------------------------------------- |
-| ***main***       | The main branch of the repository. It contains the Arm-2D library, examples, templates and a helper library. |                                           |
-| ***developing*** | The development branch of the ***master/main*** branch.      | It will be merged into ***main*** branch. |
-
-
 
 ## Features
 
