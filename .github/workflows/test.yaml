@@ -7,10 +7,15 @@ on:
   pull_request:
     branches: [ main, developing ]
 
-# Enable the next lines if you are using IAM User and you added them in the repo's secret.
-#env:
+env:
+  # Enable the next two lines if you are using IAM User and you added them in the repo's secret.
   # AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   # AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_DEFAULT_REGION: ${{ vars.AWS_DEFAULT_REGION }}
+  AWS_S3_BUCKET_NAME: ${{ vars.AWS_S3_BUCKET_NAME }}
+  AWS_IAM_PROFILE: ${{ vars.AWS_IAM_PROFILE }}
+  AWS_SECURITY_GROUP_ID: ${{ vars.AWS_SECURITY_GROUP_ID }}
+  AWS_SUBNET_ID: ${{ vars.AWS_SUBNET_ID }}
 
 jobs:
   ci_test:
@@ -34,10 +39,10 @@ jobs:
     - uses: ammaraskar/gcc-problem-matcher@master
 
     - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v1-node16
       with:
-        role-to-assume: ${{ env.AWS_ASSUME_ROLE }}
-        aws-region: ${{ env.AWS_DEFAULT_REGION }}
+        role-to-assume: ${{ vars.AWS_ASSUME_ROLE }}
+        aws-region: ${{ vars.AWS_DEFAULT_REGION }}
 
     - name: Run tests
       id: avh
@@ -49,7 +54,7 @@ jobs:
       with:
         name: results
         path: |
-          test/arm2d-*.zip
+          test/arm2d_*.zip
         retention-days: 1
         if-no-files-found: error
       if: always()
