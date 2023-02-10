@@ -287,7 +287,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
     
     - Override the target low level IO defined with `def_low_lv_io()` macro that originally defined in `arm_2d_op_table.c` to add your own version of algorithms and hardware accelerations. For example, if you want to add alpha-blending support for RGB565 using your 2D hardware accelerator, you should do the following steps:
     
-      1. In one of your own C source code, override the definition of `__ARM_2D_IO_TILE_COPY_WITH_OPACITY_RGB565`
+      1. In one of your own C source code, override the definition of `__ARM_2D_IO_COPY_WITH_OPACITY_RGB565`
     
          ```c
          //! PLEASE add following three lines in your hardware adapter source code
@@ -298,7 +298,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
          ...
          
          __OVERRIDE_WEAK
-         def_low_lv_io(__ARM_2D_IO_TILE_COPY_WITH_OPACITY_RGB565, 
+         def_low_lv_io(__ARM_2D_IO_COPY_WITH_OPACITY_RGB565, 
                          __arm_2d_rgb565_sw_tile_copy_with_opacity,
                          __arm_2d_rgb565_my_hw_tile_copy_with_opacity);
          ```
