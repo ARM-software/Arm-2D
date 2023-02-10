@@ -21,8 +21,8 @@
  * Title:        arm-2d.c
  * Description:  APIs for various alpha related operations
  *
- * $Date:        07. Feb 2023
- * $Revision:    V.1.6.0
+ * $Date:        10. Feb 2023
+ * $Revision:    V.1.6.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -2740,13 +2740,13 @@ def_low_lv_io(__ARM_2D_IO_FILL_COLOUR_ALPHA_MASK_AND_OPACITY_CCCN888,
                 __arm_2d_cccn888_sw_colour_filling_with_mask_and_opacity);
 
 __WEAK
-def_low_lv_io(__ARM_2D_IO_ALPHA_BLENDING_GRAY8,
+def_low_lv_io(__ARM_2D_IO_COPY_WITH_OPACITY_GRAY8,
                 __arm_2d_gray8_sw_tile_copy_with_opacity);
 __WEAK
-def_low_lv_io(__ARM_2D_IO_ALPHA_BLENDING_RGB565, 
+def_low_lv_io(__ARM_2D_IO_COPY_WITH_OPACITY_RGB565, 
                 __arm_2d_rgb565_sw_tile_copy_with_opacity);
 __WEAK
-def_low_lv_io(__ARM_2D_IO_ALPHA_BLENDING_RGB888, 
+def_low_lv_io(__ARM_2D_IO_COPY_WITH_OPACITY_RGB888, 
                 __arm_2d_cccn888_sw_tile_copy_with_opacity);
 
 __WEAK
@@ -3427,7 +3427,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_OPACITY_GRAY8 = {
         .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_OPACITY,
         
         .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_ALPHA_BLENDING_GRAY8),
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_OPACITY_GRAY8),
             .ptFillLike = NULL, 
         },
     },
@@ -3445,7 +3445,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_OPACITY_RGB565 = {
         .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_OPACITY,
         
         .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_ALPHA_BLENDING_RGB565),
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_OPACITY_RGB565),
             .ptFillLike = NULL, 
         },
     },
@@ -3463,7 +3463,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_OPACITY_RGB888 = {
         .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_OPACITY,
         
         .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_ALPHA_BLENDING_RGB888),
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_OPACITY_RGB888),
             .ptFillLike = NULL,
         },
     },

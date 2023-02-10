@@ -287,7 +287,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
     
     - Override the target low level IO defined with `def_low_lv_io()` macro that originally defined in `arm_2d_op_table.c` to add your own version of algorithms and hardware accelerations. For example, if you want to add alpha-blending support for RGB565 using your 2D hardware accelerator, you should do the following steps:
     
-      1. In one of your own C source code, override the definition of `__ARM_2D_IO_ALPHA_BLENDING_RGB565`
+      1. In one of your own C source code, override the definition of `__ARM_2D_IO_TILE_COPY_WITH_OPACITY_RGB565`
     
          ```c
          //! PLEASE add following three lines in your hardware adapter source code
@@ -298,14 +298,14 @@ There is no public 2D image processing benchmark available for microcontrollers.
          ...
          
          __OVERRIDE_WEAK
-         def_low_lv_io(__ARM_2D_IO_ALPHA_BLENDING_RGB565, 
-                         __arm_2d_rgb565_sw_alpha_blending,
-                         __arm_2d_rgb565_my_hw_alpha_blending);
+         def_low_lv_io(__ARM_2D_IO_TILE_COPY_WITH_OPACITY_RGB565, 
+                         __arm_2d_rgb565_sw_tile_copy_with_opacity,
+                         __arm_2d_rgb565_my_hw_tile_copy_with_opacity);
          ```
     
-      2. Copy the function body of `__arm_2d_rgb565_sw_alpha_blending()` to your source code as a template of the ***hardware adaptor*** and rename it as `__arm_2d_rgb565_my_hw_alpha_blending()`
+      2. Copy the function body of `__arm_2d_rgb565_sw_tile_copy_with_opacity()` to your source code as a template of the ***hardware adaptor*** and rename it as `__arm_2d_rgb565_my_hw_tile_copy_with_opacity()`
     
-      3. Modify ***\_\_arm_2d_rgb565_my_hw_alpha_blending()*** to use your own hardware accelerator. 
+      3. Modify ***\_\_arm_2d_rgb565_my_hw_tile_copy_with_opacity*** to use your own hardware accelerator. 
     
       4. Based on the arguments passed to the function and the capability of your 2D accelerator, you can:
     
@@ -332,14 +332,20 @@ typedef struct __arm_2d_low_level_io_t {
  * Low Level IO Interfaces                                                    *
  *----------------------------------------------------------------------------*/
 __WEAK
+def_low_lv_io(__ARM_2D_IO_COPY_C8BIT, __arm_2d_c8bit_sw_tile_copy);
+__WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_RGB16, __arm_2d_rgb16_sw_tile_copy);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_RGB32, __arm_2d_rgb32_sw_tile_copy);
 
+...
+
 __WEAK
-def_low_lv_io(__ARM_2D_IO_FILL_RGB16, __arm_2d_rgb16_sw_tile_fill);
+def_low_lv_io(__ARM_2D_IO_FILL_ONLY_C8BIT, __arm_2d_c8bit_sw_tile_fill_only);
 __WEAK
-def_low_lv_io(__ARM_2D_IO_FILL_RGB32, __arm_2d_rgb32_sw_tile_fill);
+def_low_lv_io(__ARM_2D_IO_FILL_ONLY_RGB16, __arm_2d_rgb16_sw_tile_fill_only);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_FILL_ONLY_RGB32, __arm_2d_rgb32_sw_tile_fill_only);
 
 ...
 ``````
