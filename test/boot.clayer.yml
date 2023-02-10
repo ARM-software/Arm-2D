@@ -34,3 +34,21 @@ layer:
         - +VHT-Corstone-300
         - +VHT-Corstone-310
         - +MPS3-Corstone-300
+    - component: ARM::MCU Driver HAL:DMA350
+      for-type:
+        - +VHT-Corstone-310
+    - component: ARM::Native Driver:DMA350
+      for-type:
+        - +VHT-Corstone-310
+    - component: DMA350
+      for-type:
+        - +VHT-Corstone-310
+    - component: ARM::Native Driver:DMA350 Remap
+      for-type:
+        - +VHT-Corstone-310
+    - component: ARM::Native Driver:DMA350 Remap:SSE-310
+      for-type:
+        - +VHT-Corstone-310
+    - component: DMA350 Remap
+      for-type:
+        - +VHT-Corstone-310
