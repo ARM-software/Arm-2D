@@ -57,6 +57,9 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wcompound-token-split-by-macro"
 #   pragma clang diagnostic ignored "-Winitializer-overrides"
 #   pragma clang diagnostic ignored "-Wgcc-compat"
+#elif __IS_COMPILER_GCC__
+#   pragma GCC diagnostic ignored "-Wpedantic"
+#   pragma GCC diagnostic ignored "-Wmissing-braces"
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)
 #   pragma diag_suppress 1296,174
 #endif
