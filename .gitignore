@@ -54,3 +54,5 @@ examples/watch_panel/RTE/Device/CMSDK_CM7_DP/ac6_arm.sct
 examples/watch_panel/RTE/Device/CMSDK_CM0plus/gcc_arm.ld
 test/arm2d.cbuild-idx.yml
 test/arm2d.cdefault.yml
+test/arm2d_*.*+*-*/**/*
+test/*.zip
