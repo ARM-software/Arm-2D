@@ -113,18 +113,8 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="contents">
 <div class="textblock"><p ><a class="anchor" id="mainpage"></a> <img src="https://img.shields.io/github/v/release/ARM-software/Arm-2D?include_prereleases" alt="GitHub release (latest by date including pre-releases)" class="inline"/> <img src="https://img.shields.io/github/license/ARM-software/Arm-2D" alt="GitHub" class="inline"/></p>
 <h1><a class="anchor" id="autotoc_md0"></a>
-Branch Summary</h1>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Branch   </th><th class="markdownTableHeadNone">Description   </th><th class="markdownTableHeadNone">Note    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><em><b>main</b></em>   </td><td class="markdownTableBodyNone">The main branch of the repository. It contains the Arm-2D library, examples, templates and a helper library.   </td><td class="markdownTableBodyNone"></td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><em><b>developing</b></em>   </td><td class="markdownTableBodyNone">The development branch of the <em><b>master/main</b></em> branch.   </td><td class="markdownTableBodyNone">It will be merged into <em><b>main</b></em> branch.   </td></tr>
-</table>
-<h1><a class="anchor" id="autotoc_md1"></a>
 Features</h1>
-<h3><a class="anchor" id="autotoc_md2"></a>
+<h3><a class="anchor" id="autotoc_md1"></a>
 In this version (ver1.1.2-dev)</h3>
 <p >The Arm-2D library provides <b>Low-Level 2D Image Processing Services</b> mainly used in <b>Deep Embedded Display system</b>. The supported features include but not limited to:</p>
 <ul>
@@ -212,14 +202,14 @@ In this version (ver1.1.2-dev)</h3>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md3"></a>
+<h2><a class="anchor" id="autotoc_md2"></a>
 New Features Planned in the Future</h2>
 <ul>
 <li>Image Filters, e.g. Generic Anti-aliasing algorithms</li>
 <li>Stretch and Perspective Transform</li>
 <li>Supports DMAC-350</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md4"></a>
+<h1><a class="anchor" id="autotoc_md3"></a>
 Documentation</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -242,16 +232,16 @@ Documentation</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>how_to_use_drawing_operations.md</b>   </td><td class="markdownTableBodyNone">A detailed document elaborates the APIs that provide basic point-drawing and colour-filling services in the arm-2d library.   </td><td class="markdownTableBodyNone">documentation   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md5"></a>
+<h1><a class="anchor" id="autotoc_md4"></a>
 1 Introduction</h1>
-<h2><a class="anchor" id="autotoc_md6"></a>
+<h2><a class="anchor" id="autotoc_md5"></a>
 1.1 The Background</h2>
 <p >With more and more smart IoT edge devices introduced to our daily lives, people who are used to the smart-phone-like graphic user interfaces (GUIs) want to have the similar modernized user experience even when using microcontroller-based products. This trend has been long observed and understood by Arm's eco-partners.</p>
 <p >As a result, many silicon vendors introduce dedicated hardware accelerators into their microcontroller products to help 2D image processing. Meanwhile, GUI service providers also update their product lines to target microcontroller based GUI applications. Many open-source embedded GUI stacks are hot on GitHub, e.g. <a href="https://lvgl.io/">LVGL</a>.</p>
 <p >In fact, using GUI with microcontrollers isn't new at all. Still, until the recent rise of IoT and AI, people find that the simple and monotonous GUI is really unbearable. The pursuit of user experience similar to that of a smartphone has become a basic requirement for products.</p>
 <p >On the other hand, seemingly complicated GUIs are often implemented with simple 2D image-copy and -tiling. Even the translucent effect is not unaffordable for microcontrollers that often run under tens or hundreds of MHz.</p>
 <p >Technologies used for 2D graphics have been matured as early as the era of 8-bit Gaming Console. Since 8-bit 6502 can achieve fancy graphics effects, why can't the most advanced Cortex-M processor of the day?</p>
-<h2><a class="anchor" id="autotoc_md7"></a>
+<h2><a class="anchor" id="autotoc_md6"></a>
 1.2 The Problems in current solutions</h2>
 <p >As shown in <b>Figure 1-2</b>, Linux based systems have a complete ecosystem that provides GPU drivers and GUI software services. In contrast, resource-constrained embedded systems do not have such luxury. To enhance the MCU ecosystem, Arm-2D is introduced.</p>
 <p ><b>Figure 1-2 Ecosystem Comparison between Rich Embedded and Constraint Embedded System in GUI</b></p>
@@ -266,7 +256,7 @@ Ecosystem Comparison</div></div>
 <img src="TopReadme_1_2b.png" alt=""/>
 <div class="caption">
 The Hierarchy of a Typical Embedded GUI System</div></div>
-    <h2><a class="anchor" id="autotoc_md8"></a>
+    <h2><a class="anchor" id="autotoc_md7"></a>
 1.3 The Platform</h2>
 <p ><b>The library is targeting ALL Cortex-M processors with/without various hardware 2D image accelerators:</b></p>
 <ul>
@@ -278,7 +268,7 @@ The Hierarchy of a Typical Embedded GUI System</div></div>
 <p ><b>The library is designed with ACI (Arm Custom Instructions) in mind.</b> Accelerations implemented with user-defined instructions can be integrated into the library easily without modifying the existing Arm-2D library or upper-layer software.</p>
 <p ><b>The library is designed with 2D image accelerators in mind and following the feature-agnostic principle.</b> The Support for accelerators can be added easily without modifying the existing Arm-2D library or upper-layer software.</p>
 <p ><b>The library is designed with resource constraints in mind.</b> <b>For Cortex-M processors with 4K~32K SRAM that cannot afford a complete-framebuffer</b>, Arm-2D introduces a feature called <b>Generic Partial Framebuffer</b> enabling those existing MCUs to run GUI applications in a decent frame rate.</p>
-<h2><a class="anchor" id="autotoc_md9"></a>
+<h2><a class="anchor" id="autotoc_md8"></a>
 1.4 Dependency</h2>
 <ul>
 <li>The library depends on <b>CMSIS 5.7.0 and above</b> (If you want to use Arm-2D with Cortex-M55, CMSIS 5.8.0 is required).</li>
@@ -291,9 +281,9 @@ The Hierarchy of a Typical Embedded GUI System</div></div>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md10"></a>
+<h2><a class="anchor" id="autotoc_md9"></a>
 1.5 Examples, Benchmark and Templates</h2>
-<h3><a class="anchor" id="autotoc_md11"></a>
+<h3><a class="anchor" id="autotoc_md10"></a>
 1.5.1 Summary</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -307,7 +297,7 @@ The Hierarchy of a Typical Embedded GUI System</div></div>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">[template][cmsis-rtos2][pfb]   </td><td class="markdownTableBodyNone">It is a project template for the RTOS environment, which use CMSIS-RTO2 as an example to show how Arm-2D can work with an RTOS.   </td><td class="markdownTableBodyNone">examples/[template][cmsis-rtos2][pfb]   </td><td class="markdownTableBodyNone">Project Template   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md12"></a>
+<h3><a class="anchor" id="autotoc_md11"></a>
 1.5.2 Benchmark</h3>
 <p >There is no public 2D image processing benchmark available for microcontrollers. To facilitate the library development and optimization, we overcome this problem with following methods:</p>
 <ul>
@@ -348,7 +338,7 @@ Benchmark</div></div>
 <div class="image">
 <img src="TopReadme_1_6_2_b.png" alt=""/>
 </div>
-    <h1><a class="anchor" id="autotoc_md13"></a>
+    <h1><a class="anchor" id="autotoc_md12"></a>
 2 Folder Hierarchy</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -370,9 +360,9 @@ Benchmark</div></div>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyLeft">tools   </td><td class="markdownTableBodyNone">Folder   </td><td class="markdownTableBodyNone">This folder contains some useful utilities for using the library. For example, img2c.py is a python script that convert a specified picture into the tile data structure.   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md14"></a>
+<h1><a class="anchor" id="autotoc_md13"></a>
 3 Tips For Exploring the Library</h1>
-<h2><a class="anchor" id="autotoc_md15"></a>
+<h2><a class="anchor" id="autotoc_md14"></a>
 3.1 "I am a library user, I only care about how to use the library"</h2>
 <ul>
 <li>For library users, <b>ALL</b> useful information, i.e. type definitions, macros, prototypes of functions etc., are stored in header files which have <b>NO</b> double under-scope as their prefixes. We call those header files the <b>PUBLIC HEADER FILES</b>.</li>
@@ -393,7 +383,7 @@ Benchmark</div></div>
 </ol>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md16"></a>
+<h2><a class="anchor" id="autotoc_md15"></a>
 3.2 "I am interested in the implementation"</h2>
 <ul>
 <li>We apologise that at the current stage (it's the early stage, as you can see), there is no sufficient guidance or documents about:<ul>
@@ -483,9 +473,9 @@ Benchmark</div></div>
 <div class="line">def_low_lv_io(__ARM_2D_IO_FILL_RGB32, __arm_2d_rgb32_sw_tile_fill);</div>
 <div class="line"> </div>
 <div class="line">...</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md17"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md16"></a>
 4 Limitations</h1>
-<h2><a class="anchor" id="autotoc_md18"></a>
+<h2><a class="anchor" id="autotoc_md17"></a>
 4.1 The Generic Limitations</h2>
 <ul>
 <li>The library focus on Cortex-M processors.</li>
@@ -503,7 +493,7 @@ Benchmark</div></div>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md19"></a>
+<h2><a class="anchor" id="autotoc_md18"></a>
 4.2 The Temporary Limitations</h2>
 <ul>
 <li>The GCC support of Cortex-M55 (helium acceleration) is broken (waiting for tool-chain update).</li>
@@ -518,10 +508,10 @@ Benchmark</div></div>
 </li>
 <li>Most of the example projects are created in MDK.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md20"></a>
+<h1><a class="anchor" id="autotoc_md19"></a>
 5 Contributions and Pull Requests</h1>
 <p >Contributions are accepted under Apache 2.0. Only submit contributions where you have authored all of the code.</p>
-<h2><a class="anchor" id="autotoc_md21"></a>
+<h2><a class="anchor" id="autotoc_md20"></a>
 5.1 Issues and Labels</h2>
 <p >Please feel free to raise an <a href="https://github.com/ARM-software/Arm-2D/issues">issue on GitHub</a> to report misbehavior (i.e. bugs) or start discussions about enhancements. This is your best way to interact directly with the maintenance team and the community. We encourage you to append implementation suggestions as this helps to decrease the workload of the very limited maintenance team.</p>
 <p >We will be monitoring and responding to issues as best we can. Please attempt to avoid filing duplicates of open or closed items when possible. In the spirit of openness we will be tagging issues with the following:</p>
@@ -538,7 +528,7 @@ Benchmark</div></div>
 <li><b>duplicate</b> - This issue is already addressed elsewhere, see comment with provided references.</li>
 <li><b>Important Information</b> - We provide essential information regarding planned or resolved major enhancements.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md22"></a>
+<h1><a class="anchor" id="autotoc_md21"></a>
 6 Feedback</h1>
 <p >As mentioned before, this project aims to explore and demonstrate the possibilities of delivering modern GUI using low-cost and resource constraint micro-controllers. We expect that arm-2d could inspire more similar initiatives and engineering practices. Hence, your feedback and thoughts are precious to us.</p>
 <p >If you can spend some time and try the library, please feel free to leave your thoughts. It would be nice to cover the following perspectives:</p>
