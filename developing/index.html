@@ -417,7 +417,7 @@ Benchmark</div></div>
 </li>
 <li>Supports for hardware accelerators (both from Arm and 3rd-parties) should be added in the same manner in the future.<ul>
 <li><p class="startli">Override the target low level IO defined with <code>def_low_lv_io()</code> macro that originally defined in <code>arm_2d_op_table.c</code> to add your own version of algorithms and hardware accelerations. For example, if you want to add alpha-blending support for RGB565 using your 2D hardware accelerator, you should do the following steps:</p><ol type="1">
-<li><p class="startli">In one of your own C source code, override the definition of <code>__ARM_2D_IO_TILE_COPY_WITH_OPACITY_RGB565</code></p>
+<li><p class="startli">In one of your own C source code, override the definition of <code>__ARM_2D_IO_COPY_WITH_OPACITY_RGB565</code></p>
 <div class="fragment"><div class="line"><span class="comment">//! PLEASE add following three lines in your hardware adapter source code</span></div>
 <div class="line"><span class="preprocessor">#define __ARM_2D_IMPL__</span></div>
 <div class="line"><span class="preprocessor">#include &quot;arm_2d.h&quot;</span></div>
@@ -426,7 +426,7 @@ Benchmark</div></div>
 <div class="line">...</div>
 <div class="line"> </div>
 <div class="line">__OVERRIDE_WEAK</div>
-<div class="line">def_low_lv_io(__ARM_2D_IO_TILE_COPY_WITH_OPACITY_RGB565, </div>
+<div class="line">def_low_lv_io(__ARM_2D_IO_COPY_WITH_OPACITY_RGB565, </div>
 <div class="line">                __arm_2d_rgb565_sw_tile_copy_with_opacity,</div>
 <div class="line">                __arm_2d_rgb565_my_hw_tile_copy_with_opacity);</div>
 </div><!-- fragment --></li>
