@@ -8,7 +8,6 @@ default:
         - -mfp16-format=ieee
         - -fdata-sections
         - -ffast-math
-        - -flax-vector-conversions
         - -Wno-unused-parameter
         - -fms-extensions
       C:
