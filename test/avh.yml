@@ -40,9 +40,29 @@ steps:
       csolution list packs -s test/arm2d.csolution.yml -m > required_packs.txt
       test -s required_packs.txt && cpackget add -a -f required_packs.txt || echo "Nothing to install"
   - run: |
-      echo "Running tests..."
+      echo "Running tests 1/5..."
       pushd test
-      python build.py -c AC6 -c GCC -o Release build run
+      python build.py -c AC6 -c GCC -o Release --slice 1/5 build run
+      popd
+  - run: |
+      echo "Running tests 2/5..."
+      pushd test
+      python build.py -c AC6 -c GCC -o Release --slice 2/5 build run
+      popd
+  - run: |
+      echo "Running tests 3/5..."
+      pushd test
+      python build.py -c AC6 -c GCC -o Release --slice 3/5 build run
+      popd
+  - run: |
+      echo "Running tests 4/5..."
+      pushd test
+      python build.py -c AC6 -c GCC -o Release --slice 4/5 build run
+      popd
+  - run: |
+      echo "Running tests 5/5..."
+      pushd test
+      python build.py -c AC6 -c GCC -o Release --slice 5/5 build run
       popd
 download:
   - test/arm2d*.zip
