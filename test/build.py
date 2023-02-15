@@ -11,7 +11,7 @@ from shutil import copy
 
 from zipfile import ZipFile
 
-from matrix_runner import main, matrix_axis, matrix_action, matrix_command
+from matrix_runner import main, matrix_axis, matrix_action, matrix_command, matrix_filter
 
 
 @matrix_axis("project", "p", "Project(s) to be considered.")
@@ -153,6 +153,12 @@ def model_exec(config):
     cmdline += MODEL_EXECUTABLE[config.device][1]
     cmdline += ["-a", f"{project_outdir(config)}/{project_name(config)}.{config.compiler.image_ext}"]
     return cmdline
+
+
+@matrix_filter
+def filter_gcc_sse300(config):
+    return config.compiler == CompilerAxis.GCC and \
+         config.device == DeviceAxis.SSE300
 
 
 if __name__ == "__main__":
