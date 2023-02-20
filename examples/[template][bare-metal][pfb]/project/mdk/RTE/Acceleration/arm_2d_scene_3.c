@@ -216,7 +216,7 @@ arm_fsm_rt_t __list_view_item_0_draw_item(
 
     draw_round_corner_box(ptTile, NULL, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
 
-    arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_font_t.tCharSize;
+    arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_user_font_t.use_as__arm_2d_font_t.tCharSize;
     tTextSize.iWidth *= 1;
 
     arm_2d_canvas(ptTile, __canvas) {
@@ -260,7 +260,7 @@ arm_fsm_rt_t __list_view_item_1_draw_item(
                         chOpacity, 
                         bIsNewFrame);
 
-    arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_font_t.tCharSize;
+    arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_user_font_t.use_as__arm_2d_font_t.tCharSize;
     tTextSize.iWidth *= 1;
 
     arm_2d_canvas(ptTile, __canvas) {
@@ -295,7 +295,7 @@ arm_fsm_rt_t __list_view_item_2_draw_item(
 
     draw_round_corner_box(ptTile, NULL, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
 
-    arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_font_t.tCharSize;
+    arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_user_font_t.use_as__arm_2d_font_t.tCharSize;
     tTextSize.iWidth *= 1;
 
     arm_2d_canvas(ptTile, __canvas) {
@@ -331,7 +331,7 @@ arm_fsm_rt_t __list_view_item_3_draw_item(
 
     draw_round_corner_box(ptTile, NULL, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
 
-    arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_font_t.tCharSize;
+    arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_user_font_t.use_as__arm_2d_font_t.tCharSize;
     tTextSize.iWidth *= 1;
 
     arm_2d_canvas(ptTile, __canvas) {

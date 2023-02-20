@@ -196,7 +196,7 @@ static void draw_buttom(const arm_2d_tile_t *ptTile,
 {
     
 
-    arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_font_t.tCharSize;
+    arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_user_font_t.use_as__arm_2d_font_t.tCharSize;
     tTextSize.iWidth *= strlen(pchString);
 
     arm_2d_container(ptTile, __button, ptRegion) {
