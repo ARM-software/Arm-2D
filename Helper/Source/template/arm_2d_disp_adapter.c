@@ -364,8 +364,10 @@ static void __user_scene_player_init(void)
                 .fnHandler = &__on_each_frame_complete,
             },
         },
-        //.FrameBuffer.bSwapRGB16 = true,
-
+#if __DISP%Instance%_CFG_SWAP_RGB16_HIGH_AND_LOW_BYTES__
+        .FrameBuffer.bSwapRGB16 = true,
+#endif
+        .FrameBuffer.u3PixelWidthAlign = __DISP%Instance%_CFG_PFB_PIXEL_ALIGN__,
 #if     __DISP%Instance%_CFG_VIRTUAL_RESOURCE_HELPER__                          \
     &&  !__DISP%Instance%_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
         .FrameBuffer.u4PoolReserve = 3,                                         // reserve 3 PFB blocks for the virtual resource service

@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        10. Dec 2022
- * $Revision:    V.1.3.7
+ * $Date:        13. March 2023
+ * $Revision:    V.1.3.8
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -424,7 +424,8 @@ typedef struct arm_2d_helper_pfb_cfg_t {
         uint16_t       bDoNOTUpdateDefaultFrameBuffer   : 1;    //!< A flag to disable automatically default-framebuffer-registration
         uint16_t       bDisableDynamicFPBSize           : 1;    //!< A flag to disable resize of the PFB block
         uint16_t       bSwapRGB16                       : 1;    //!< A flag to enable swapping high and low bytes of an RGB16 pixel
-        uint16_t                                        : 9;
+        uint16_t                                        : 6;
+        uint16_t       u3PixelWidthAlign                : 3;    //!< Pixel alignment in Width for dirty region (2^n)
         uint16_t       u4PoolReserve                    : 4;    //!< reserve specific number of PFB for other helper services
 
     } FrameBuffer;                                              //!< frame buffer context

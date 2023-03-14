@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        25. Nov 2022
- * $Revision:    V.1.3.9
+ * $Date:        13. March 2023
+ * $Revision:    V.1.3.8
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -122,6 +122,32 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
         return ARM_2D_ERR_MISSING_PARAM;
     }
     
+    /* make sure the width of the pfb fulfill the pixel-width-alignment 
+     * requirement 
+     */
+    if (this.tCFG.FrameBuffer.u3PixelWidthAlign) {
+        int_fast8_t chPixelWidthAlignMask 
+            = (1 << this.tCFG.FrameBuffer.u3PixelWidthAlign) - 1;
+        int_fast16_t iWidth 
+            = this.tCFG.FrameBuffer.tFrameSize.iWidth & ~chPixelWidthAlignMask;
+        uint32_t wTotalPixelCount = this.tCFG.FrameBuffer.tFrameSize.iWidth
+                                  * this.tCFG.FrameBuffer.tFrameSize.iHeight;
+
+        if (0 == iWidth) {
+            int_fast16_t iWidthAlign = (chPixelWidthAlignMask + 1);
+            if (wTotalPixelCount < iWidthAlign) {
+                return ARM_2D_ERR_INSUFFICIENT_RESOURCE;
+            }
+            this.tCFG.FrameBuffer.tFrameSize.iWidth = iWidthAlign;
+        } else {
+            this.tCFG.FrameBuffer.tFrameSize.iWidth = iWidth;
+        }
+        
+        this.tCFG.FrameBuffer.tFrameSize.iHeight 
+            = wTotalPixelCount 
+            / this.tCFG.FrameBuffer.tFrameSize.iWidth;
+    }
+
     // perform validation
     do {
         int_fast16_t n = this.tCFG.FrameBuffer.hwPFBNum;
@@ -406,6 +432,25 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                 }
             } else {
                 this.Adapter.tTargetRegion = this.tCFG.tDisplayArea;
+            }
+
+            /* update this.Adapter.tTargetRegion to fulfill the pixel width 
+             * alignment request 
+             */
+            if (this.tCFG.FrameBuffer.u3PixelWidthAlign) {
+                uint_fast8_t chPixelWidthAlignMask 
+                    = (1 << this.tCFG.FrameBuffer.u3PixelWidthAlign)-1;
+                
+                int_fast16_t iX = this.Adapter.tTargetRegion.tLocation.iX;
+                this.Adapter.tTargetRegion.tLocation.iX 
+                    &= ~chPixelWidthAlignMask;
+                
+                this.Adapter.tTargetRegion.tSize.iWidth 
+                    += iX - this.Adapter.tTargetRegion.tLocation.iX;
+                this.Adapter.tTargetRegion.tSize.iWidth 
+                    = ( this.Adapter.tTargetRegion.tSize.iWidth 
+                      + chPixelWidthAlignMask) 
+                    & ~chPixelWidthAlignMask;
             }
 
         #if __ARM_ARCH == 6 || __TARGET_ARCH_THUMB == 3
