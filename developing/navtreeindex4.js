@@ -1,5 +1,6 @@
 var NAVTREEINDEX4 =
 {
+"pages.html":[],
 "use_tile.html":[3],
 "use_tile.html#autotoc_md66":[3,0],
 "use_tile.html#autotoc_md67":[3,1],
