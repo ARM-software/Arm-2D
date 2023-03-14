@@ -50,77 +50,97 @@ extern "C" {
 //     <32=>    32Bits
 // <i> The colour depth of your screen
 #ifndef __DISP0_CFG_COLOUR_DEPTH__
-#   define __DISP0_CFG_COLOUR_DEPTH__              16
+#   define __DISP0_CFG_COLOUR_DEPTH__                              16
 #endif
 
 // <o>Width of the screen <8-32767>
 // <i> The width of your screen
 // <i> Default: 320
 #ifndef __DISP0_CFG_SCEEN_WIDTH__
-#   define __DISP0_CFG_SCEEN_WIDTH__               320
+#   define __DISP0_CFG_SCEEN_WIDTH__                               320
 #endif
 
 // <o>Height of the screen <8-32767>
 // <i> The height of your screen
 // <i> Default: 240
 #ifndef __DISP0_CFG_SCEEN_HEIGHT__
-#   define __DISP0_CFG_SCEEN_HEIGHT__              240
+#   define __DISP0_CFG_SCEEN_HEIGHT__                              240
 #endif
 
 // <o>Width of the PFB block
 // <i> The width of your PFB block size used in disp0
 #ifndef __DISP0_CFG_PFB_BLOCK_WIDTH__
-#   define __DISP0_CFG_PFB_BLOCK_WIDTH__           320
+#   define __DISP0_CFG_PFB_BLOCK_WIDTH__                           320
 #endif
 
 // <o>Height of the PFB block
 // <i> The height of your PFB block size used in disp0
 #ifndef __DISP0_CFG_PFB_BLOCK_HEIGHT__
-#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__          240
+#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          240
+#endif
+
+// <o>PFB drawing Alignment
+//     <0=>     1 pixel
+//     <1=>     2 pixel
+//     <2=>     4 pixel
+//     <3=>     8 pixel
+//     <4=>    16 pixel
+//     <5=>    32 pixel
+//     <6=>    64 pixel
+//     <7=>   128 pixel
+// <i> Make sure the x and width of the PFB is always aligned to 2^n pixels
+#ifndef __DISP0_CFG_PFB_PIXEL_ALIGN__
+#   define __DISP0_CFG_PFB_PIXEL_ALIGN__                           0
 #endif
 
 // <o>PFB Block Count <1-65535>
 // <i> The number of blocks in the PFB pool.
 #ifndef __DISP0_CFG_PFB_HEAP_SIZE__
-#   define __DISP0_CFG_PFB_HEAP_SIZE__             1
+#   define __DISP0_CFG_PFB_HEAP_SIZE__                             1
 #endif
 
 // <o>Number of iterations <0-2000>
 // <i> run number of iterations before calculate the FPS.
 #ifndef __DISP0_CFG_ITERATION_CNT__
-#   define __DISP0_CFG_ITERATION_CNT__             30
+#   define __DISP0_CFG_ITERATION_CNT__                             30
+#endif
+
+// <q> Swap the high and low bytes
+// <i> Swap the high and low bytes of the 16bit-pixels
+#ifndef __DISP0_CFG_SWAP_RGB16_HIGH_AND_LOW_BYTES__
+#   define __DISP0_CFG_SWAP_RGB16_HIGH_AND_LOW_BYTES__             0
 #endif
 
 // <q>Enable the helper service for Asynchronous Flushing
 // <i> Please select this option when using asynchronous flushing, e.g. DMA + ISR 
 #ifndef __DISP0_CFG_ENABLE_ASYNC_FLUSHING__
-#   define __DISP0_CFG_ENABLE_ASYNC_FLUSHING__     0
+#   define __DISP0_CFG_ENABLE_ASYNC_FLUSHING__                     0
 #endif
 
 // <q>Disable the default scene
 // <i> Remove the default scene for this display adapter. We highly recommend you to disable the default scene when creating real applications.
 #ifndef __DISP0_CFG_DISABLE_DEFAULT_SCENE__
-#   define __DISP0_CFG_DISABLE_DEFAULT_SCENE__     0
+#   define __DISP0_CFG_DISABLE_DEFAULT_SCENE__                     0
 #endif
 
 // <q>Disable the navigation layer
 // <i> Remove the navigation layer for this display adapter. NOTE: Disable the navigation layer will also remove the real-time FPS display.
 #ifndef __DISP0_CFG_DISABLE_NAVIGATION_LAYER__
-#   define __DISP0_CFG_DISABLE_NAVIGATION_LAYER__  0
+#   define __DISP0_CFG_DISABLE_NAVIGATION_LAYER__                  0
 #endif
 
 // <q>Enable the virtual resource helper service
 // <i> Introduce a helper service for loading virtual resources.
 // <i> This feature is disabled by default.
 #ifndef __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
-#   define __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__   1
+#   define __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                   1
 #endif
 
 // <q>Use heap to allocate buffer in the virtual resource helper service
 // <i> Use malloc and free in the virtual resource helper service. When disabled, a static buffer in the size of current display adapter PFB will be used. 
 // <i> This feature is disabled by default.
 #ifndef __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
-#   define __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__   0
+#   define __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__      0
 #endif
 // <<< end of configuration section >>>
 

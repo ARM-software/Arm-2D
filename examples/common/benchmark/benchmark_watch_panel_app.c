@@ -172,12 +172,20 @@ static void on_frame_complete(arm_2d_scene_t *ptScene)
         BENCHMARK.wIterations--;
 
         if (0 == BENCHMARK.wIterations) {
-            BENCHMARK.wAverage =
+            static bool s_bShowResult = false;
+            
+            if (!s_bShowResult) {
+                s_bShowResult = true;
+                BENCHMARK.wAverage =
                 (uint32_t)(BENCHMARK.dwTotal / (uint64_t)ITERATION_CNT);
-            BENCHMARK.fFPS30Freq = (float)
-                ((      (double)(BENCHMARK.wAverage * 30) 
-                    /   (double)arm_2d_helper_get_reference_clock_frequency()) 
-                 * ((float)SystemCoreClock / 1000000.0f));
+                BENCHMARK.fFPS30Freq = (float)
+                    ((      (double)(BENCHMARK.wAverage * 30) 
+                        /   (double)arm_2d_helper_get_reference_clock_frequency()) 
+                     * ((float)SystemCoreClock / 1000000.0f));
+                
+                ptScene->fnBackground = NULL;
+                arm_2d_scene_player_update_scene_background(ptScene->ptPlayer);
+            }
         }
     }
 }
@@ -186,12 +194,11 @@ __OVERRIDE_WEAK
 void example_gui_on_refresh_evt_handler(const arm_2d_tile_t *ptFrameBuffer)
 {
     ARM_2D_UNUSED(ptFrameBuffer);
-
+    
     //! print performance info
 
     if (0 == BENCHMARK.wIterations) {
-
-    arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
+        arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
 
 #if !defined(__USE_FVP__)
         arm_lcd_text_location( __GLCD_CFG_SCEEN_HEIGHT__ / 8 - 7, 0);
@@ -214,7 +221,6 @@ void example_gui_on_refresh_evt_handler(const arm_2d_tile_t *ptFrameBuffer)
             "LCD Latency: %2dms", 
             (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wLCDLatency) );
 #endif
-
     }
 }
 
@@ -384,6 +390,7 @@ void arm_2d_scene_player_init(void)
             },
         },
         //.FrameBuffer.bSwapRGB16 = true,
+        .FrameBuffer.u3PixelWidthAlign = 3,
     ) < 0) {
         //! error detected
         assert(false);
@@ -401,13 +408,29 @@ void arm_2d_run_benchmark(void)
     example_gui_init();
 
     arm_2d_scene_player_init();
-    
+
+    /*! define dirty regions */
+    IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
+
+        ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
+            .tLocation = {
+                .iX = (__GLCD_CFG_SCEEN_WIDTH__ - 243) >> 1,
+                .iY = (__GLCD_CFG_SCEEN_HEIGHT__ - 243) >> 1,
+            },
+            .tSize = {
+                .iWidth = 240,
+                .iHeight = 240,
+            },
+        ),
+
+    END_IMPL_ARM_2D_REGION_LIST()
+
     do {
         static arm_2d_scene_t s_tBenchmarkScene[] = {
             [0] = {
                 .fnBackground   = &__pfb_draw_background_handler,
                 .fnScene        = &__pfb_draw_handler,
-                .ptDirtyRegion  = NULL, //s_tDirtyRegions,
+                .ptDirtyRegion  = s_tDirtyRegions,
                 .fnOnFrameStart = &on_example_gui_do_event,
                 .fnOnFrameCPL   = &on_frame_complete,
                 .fnDepose       = NULL,
