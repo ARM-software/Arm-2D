@@ -26,9 +26,9 @@ var NAVTREE =
 [
   [ "Arm-2D", "index.html", [
     [ "README", "index.html", [
-      [ "Branch Summary", "index.html#autotoc_md0", null ],
-      [ "Features", "index.html#autotoc_md1", [
-        [ "New Features Planned in the Future", "index.html#autotoc_md3", null ]
+      [ "Features", "index.html#autotoc_md0", [
+        [ "New Features Planned in the Future", "index.html#autotoc_md2", null ],
+        [ "Key Messages for You", "index.html#autotoc_md3", null ]
       ] ],
       [ "Documentation", "index.html#autotoc_md4", null ],
       [ "1 Introduction", "index.html#autotoc_md5", [
@@ -161,8 +161,8 @@ var NAVTREEINDEX =
 "deploy.html",
 "group__gAlpha.html#ga97b9ac2e554e4857fb631858acd07207",
 "group__gKernel.html#a39295faf4a194862db89fae27f4b4860",
-"group__gKernel.html#gga27a24a896295488772e6d847c790fd1ca89517072bb819b8b1c13d31d60afe1de",
-"pages.html"
+"group__gKernel.html#gga27a24a896295488772e6d847c790fd1ca857ecb1544c60a6edbae6a1601064976",
+"modules.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
