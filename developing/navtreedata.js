@@ -27,9 +27,9 @@ var NAVTREE =
   [ "Arm-2D", "index.html", [
     [ "README", "index.html", [
       [ "Features", "index.html#autotoc_md0", [
-        [ "New Features Planned in the Future", "index.html#autotoc_md2", null ],
-        [ "Key Messages for You", "index.html#autotoc_md3", null ]
+        [ "New Features Planned in the Future", "index.html#autotoc_md2", null ]
       ] ],
+      [ "Key Messages for You", "index.html#autotoc_md3", null ],
       [ "Documentation", "index.html#autotoc_md4", null ],
       [ "1 Introduction", "index.html#autotoc_md5", [
         [ "1.1 The Background", "index.html#autotoc_md6", null ],
