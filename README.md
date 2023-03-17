@@ -89,14 +89,11 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
 
 
 
-
-
-### Key Messages for You
+## Key Messages for You
 
 - **Arm-2D always keeps light-weight**
-
     - Arm-2D keeps an Ultra-low memory footprint for both ROM and RAM
-
+    
     - Arm-2D uses the commonly available Linker feature to remove unused functions and data whenever possible.
       - Only used functions cost your precious memory.
     
@@ -459,6 +456,8 @@ If you can spend some time and try the library, please feel free to leave your t
 
 Thank you for your time.
 
+
+
 ***Arm-2D Development Team.***
 
-10 Feb 2023
+17 March 2023
