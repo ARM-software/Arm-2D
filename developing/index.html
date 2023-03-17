@@ -218,15 +218,25 @@ Key Messages for You</h2>
 <ul>
 <li><b>Arm-2D always keeps light-weight</b><ul>
 <li>Arm-2D keeps an Ultra-low memory footprint for both ROM and RAM</li>
-<li>Arm-2D uses the commonly available Linker feature to remove unused functions and data whenever possible.</li>
+<li>Arm-2D uses the commonly available Linker feature to remove unused functions and data whenever possible.<ul>
 <li>Only used functions cost your precious memory.</li>
 <li>Please use feature-specific APIs whenever possible. For example, if you want to copy an rgb565 picture to a target tile with a source mask without any mirroring, please call <code>arm_2dp_rgb565_copy_with_src_mask_only()</code> rather than the generic one, i.e. <code>arm_2dp_rgb565_copy_with_src_mask()</code> which takes a mirroring mode as a parameter and keeps all low-level implementations of all possible mirroring modes.</li>
 </ul>
 </li>
+</ul>
+</li>
 <li><b>Arm-2D always keeps a flat and straightforward framework, i.e. API Wrappers, Frontend and Backend.</b><ul>
 <li>API wrappers take user input and generate task descriptors for the following stages.</li>
-<li>Frontend is responsible for the commonly used and necessary services, for example, region calculation, region clipping, pre-mirroring etc. So the Backend will receive simple, validated and detailed tasks which are friendly for hardware accelerators. <b>The Frontend is small.</b></li>
-<li>The Backend is the place of Low-level implementations for specific 2D processing algorithms. <b>Those algorithms are usually unusable if you take them out of arm-2d</b> because the data are sanitized in the Frontend, and tasks are simplified in the Frontend also. <b>The linker will remove unused low-level implementations.</b></li>
+<li>Frontend is responsible for the commonly used and necessary services,<ul>
+<li>for example, region calculation, region clipping, pre-mirroring etc. So the Backend will receive simple, validated and detailed tasks which are friendly for hardware accelerators.</li>
+<li><b>The Frontend is small.</b></li>
+</ul>
+</li>
+<li>The Backend is the place of Low-level implementations for specific 2D processing algorithms.<ul>
+<li><b>Those algorithms are usually unusable if you take them out of arm-2d</b> because the data are validated in the Frontend, and tasks are simplified in the Frontend also.</li>
+<li><b>The linker will remove unused low-level implementations.</b></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><b>Arm-2D always keeps backward compatiblity</b><ul>
