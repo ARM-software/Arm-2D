@@ -140,8 +140,6 @@ static void __before_scene4_switching_out(arm_2d_scene_t *ptScene)
 {
     user_scene_4_t *ptThis = (user_scene_4_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-    
-    arm_2d_scene2_init(&DISP0_ADAPTER);
 }
 
 static void __on_scene4_frame_complete(arm_2d_scene_t *ptScene)

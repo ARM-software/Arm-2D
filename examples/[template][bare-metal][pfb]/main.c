@@ -109,6 +109,68 @@ void Disp0_DrawBitmap(  int16_t x,
 #endif
 }
 
+
+
+void scene0_loader(void) 
+{
+    arm_2d_scene0_init(&DISP0_ADAPTER);
+}
+
+void scene1_loader(void) 
+{
+    arm_2d_scene1_init(&DISP0_ADAPTER);
+}
+
+void virtual_resource_demo_loader(void)
+{
+    virtual_resource_demo_init();
+}
+
+void scene2_loader(void) 
+{
+    arm_2d_scene2_init(&DISP0_ADAPTER);
+}
+
+void scene3_loader(void) 
+{
+    arm_2d_scene3_init(&DISP0_ADAPTER);
+}
+
+void scene4_loader(void) 
+{
+    arm_2d_scene4_init(&DISP0_ADAPTER);
+}
+
+typedef void scene_loader_t(void);
+
+
+static scene_loader_t * const c_SceneLoaders[] = {
+    scene0_loader,
+    scene1_loader,
+#if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
+    virtual_resource_demo_loader,
+#endif
+    scene3_loader,
+    scene4_loader,
+    scene2_loader,
+};
+
+
+/* load scene one by one */
+void before_scene_switching_handler(void *pTarget,
+                                    arm_2d_scene_player_t *ptPlayer,
+                                    arm_2d_scene_t *ptScene)
+{
+    static uint_fast8_t s_chIndex = 0;
+
+    if (s_chIndex >= dimof(c_SceneLoaders)) {
+        s_chIndex = 0;
+    }
+    
+    /* call loader */
+    c_SceneLoaders[s_chIndex]();
+    s_chIndex++;
+}
 /*----------------------------------------------------------------------------
   Main function
  *----------------------------------------------------------------------------*/
@@ -121,15 +183,19 @@ int main (void)
     printf("\r\nArm-2D Bare-metal Template\r\n");
  
     disp_adapter0_init();
+    
+    arm_2d_scene_player_register_before_switching_event_handler(
+            &DISP0_ADAPTER,
+            before_scene_switching_handler);
 
-    arm_2d_scene0_init(&DISP0_ADAPTER);
-    arm_2d_scene1_init(&DISP0_ADAPTER);
+//    arm_2d_scene0_init(&DISP0_ADAPTER);
+//    arm_2d_scene1_init(&DISP0_ADAPTER);
 
-#if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
-    virtual_resource_demo_init();
-#endif
-    arm_2d_scene3_init(&DISP0_ADAPTER);
-    arm_2d_scene4_init(&DISP0_ADAPTER);
+//#if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
+//    virtual_resource_demo_init();
+//#endif
+//    arm_2d_scene3_init(&DISP0_ADAPTER);
+//    arm_2d_scene4_init(&DISP0_ADAPTER);
     
     /*
      * the scene2 is initalized by scene4 in the BeforeSwitching event handler

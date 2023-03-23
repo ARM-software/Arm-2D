@@ -304,6 +304,9 @@ extern
 void disp_adapter0_insert_async_flushing_complete_event_handler(void);
 
 
+
+
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif
