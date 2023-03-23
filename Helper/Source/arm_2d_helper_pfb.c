@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        22. March 2023
- * $Revision:    V.1.3.9
+ * $Date:        23. March 2023
+ * $Revision:    V.1.3.10
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -122,14 +122,17 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
         return ARM_2D_ERR_MISSING_PARAM;
     }
     
+    this.Adapter.wPFBPixelCount 
+        = this.tCFG.FrameBuffer.tFrameSize.iWidth
+        * this.tCFG.FrameBuffer.tFrameSize.iHeight;
+		
     /* make sure the width of the pfb fulfill the pixel-width-alignment 
      * requirement 
      */
     do {
         int_fast8_t chPixelWidthAlignMask 
                 = (1 << this.tCFG.FrameBuffer.u3PixelWidthAlign) - 1;
-        uint32_t wTotalPixelCount = this.tCFG.FrameBuffer.tFrameSize.iWidth
-                                      * this.tCFG.FrameBuffer.tFrameSize.iHeight;
+        uint32_t wTotalPixelCount = this.Adapter.wPFBPixelCount;
         int_fast8_t chPixelHeightAlignMask 
                 = (1 << this.tCFG.FrameBuffer.u3PixelHeightAlign) - 1;
 
@@ -550,9 +553,7 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                     = this.Adapter.tTargetRegion.tSize.iWidth
                     * this.Adapter.tTargetRegion.tSize.iHeight;
                 
-                uint32_t wPFBPixelCount
-                    = this.tCFG.FrameBuffer.tFrameSize.iWidth
-                    * this.tCFG.FrameBuffer.tFrameSize.iHeight;
+                uint32_t wPFBPixelCount = this.Adapter.wPFBPixelCount;
                         
                 if (    (wTargetPixelCount <= wPFBPixelCount)
                    ||   (   this.Adapter.tTargetRegion.tSize.iWidth 
@@ -561,11 +562,29 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                     
                     this.Adapter.tFrameSize.iWidth 
                         = this.Adapter.tTargetRegion.tSize.iWidth;
-                        
-                    this.Adapter.tFrameSize.iHeight = (int16_t)(
-                            wPFBPixelCount 
+                    
+                    int16_t iHeight = (int16_t)
+                        (   wPFBPixelCount 
                         /   (uint32_t)this.Adapter.tTargetRegion.tSize.iWidth);
                 
+                    if (this.tCFG.FrameBuffer.u3PixelHeightAlign) {
+                        uint_fast8_t chPixelHeightAlignMask 
+                            = (1 << this.tCFG.FrameBuffer.u3PixelHeightAlign)-1;
+
+                        
+                        iHeight &= ~chPixelHeightAlignMask;
+
+                        if (0 == iHeight) {
+                            // reset adapter frame size
+                            this.Adapter.tFrameSize = this.tCFG.FrameBuffer.tFrameSize;
+                        } else {
+                            this.Adapter.tFrameSize.iHeight = iHeight;
+                        } 
+
+                    } else {
+                        this.Adapter.tFrameSize.iHeight = iHeight;
+                    }
+										
                 } else {
                     // reset adapter frame size
                     this.Adapter.tFrameSize = this.tCFG.FrameBuffer.tFrameSize;

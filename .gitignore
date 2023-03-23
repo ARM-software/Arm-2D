@@ -57,3 +57,4 @@ test/arm2d.cdefault.yml
 test/arm2d_*.*+*-*/**/*
 test/*.zip
 *.bak
+*.gabwan01
