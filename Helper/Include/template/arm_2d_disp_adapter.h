@@ -265,6 +265,7 @@ void __disp_adapter%Instance%_vres_read_memory( intptr_t pObj,
                                                 uintptr_t pAddress,
                                                 size_t nSizeInByte);
 
+#endif
 
 /*!
  * \brief It is an user implemented function that request an LCD flushing in 
@@ -304,7 +305,7 @@ void disp_adapter%Instance%_insert_async_flushing_complete_event_handler(void);
 
 
 
-#endif
+
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
