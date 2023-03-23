@@ -79,7 +79,7 @@ extern "C" {
 #   define __DISP%Instance%_CFG_PFB_BLOCK_HEIGHT__                          240
 #endif
 
-// <o>PFB drawing Alignment
+// <o>Width Alignment of generated PFBs
 //     <0=>     1 pixel
 //     <1=>     2 pixel
 //     <2=>     4 pixel
@@ -89,8 +89,22 @@ extern "C" {
 //     <6=>    64 pixel
 //     <7=>   128 pixel
 // <i> Make sure the x and width of the PFB is always aligned to 2^n pixels
-#ifndef __DISP%Instance%_CFG_PFB_PIXEL_ALIGN__
-#   define __DISP%Instance%_CFG_PFB_PIXEL_ALIGN__                           0
+#ifndef __DISP%Instance%_CFG_PFB_PIXEL_ALIGN_WIDTH__
+#   define __DISP%Instance%_CFG_PFB_PIXEL_ALIGN_WIDTH__                     0
+#endif
+
+// <o>Height Alignment of generated PFBs
+//     <0=>     1 pixel
+//     <1=>     2 pixel
+//     <2=>     4 pixel
+//     <3=>     8 pixel
+//     <4=>    16 pixel
+//     <5=>    32 pixel
+//     <6=>    64 pixel
+//     <7=>   128 pixel
+// <i> Make sure the y and height of the PFB is always aligned to 2^n pixels
+#ifndef __DISP%Instance%_CFG_PFB_PIXEL_ALIGN_HEIGHT__
+#   define __DISP%Instance%_CFG_PFB_PIXEL_ALIGN_HEIGHT__                    0
 #endif
 
 // <o>PFB Block Count <1-65535>

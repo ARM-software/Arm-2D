@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        13. March 2023
- * $Revision:    V.1.3.8
+ * $Date:        22. March 2023
+ * $Revision:    V.1.3.9
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -125,28 +125,92 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
     /* make sure the width of the pfb fulfill the pixel-width-alignment 
      * requirement 
      */
-    if (this.tCFG.FrameBuffer.u3PixelWidthAlign) {
+    do {
         int_fast8_t chPixelWidthAlignMask 
-            = (1 << this.tCFG.FrameBuffer.u3PixelWidthAlign) - 1;
-        int_fast16_t iWidth 
-            = this.tCFG.FrameBuffer.tFrameSize.iWidth & ~chPixelWidthAlignMask;
+                = (1 << this.tCFG.FrameBuffer.u3PixelWidthAlign) - 1;
         uint32_t wTotalPixelCount = this.tCFG.FrameBuffer.tFrameSize.iWidth
-                                  * this.tCFG.FrameBuffer.tFrameSize.iHeight;
+                                      * this.tCFG.FrameBuffer.tFrameSize.iHeight;
+        int_fast8_t chPixelHeightAlignMask 
+                = (1 << this.tCFG.FrameBuffer.u3PixelHeightAlign) - 1;
 
-        if (0 == iWidth) {
-            int_fast16_t iWidthAlign = (chPixelWidthAlignMask + 1);
-            if (wTotalPixelCount < iWidthAlign) {
+        if ((0 == chPixelWidthAlignMask) && (0 == chPixelHeightAlignMask)) {
+            break;
+        }
+
+        /* Align both Width and Height */
+        if (chPixelWidthAlignMask && chPixelHeightAlignMask) {
+
+            int_fast16_t iWidth 
+                = this.tCFG.FrameBuffer.tFrameSize.iWidth & ~chPixelWidthAlignMask;
+            int_fast16_t iHeight 
+                = this.tCFG.FrameBuffer.tFrameSize.iHeight & ~chPixelHeightAlignMask;
+
+            if (0 == iWidth) {
+                int_fast16_t iWidthAlign = (chPixelWidthAlignMask + 1);
+                if (wTotalPixelCount < iWidthAlign) {
+                    return ARM_2D_ERR_INSUFFICIENT_RESOURCE;
+                }
+                iWidth = iWidthAlign;
+            }
+
+            if (0 == iHeight) {
+                int_fast16_t iHeightAlign = (chPixelHeightAlignMask + 1);
+                if (wTotalPixelCount < iHeightAlign) {
+                    return ARM_2D_ERR_INSUFFICIENT_RESOURCE;
+                }
+                iHeight = iHeightAlign;
+            }
+
+            if (iWidth * iHeight > wTotalPixelCount) {
                 return ARM_2D_ERR_INSUFFICIENT_RESOURCE;
             }
-            this.tCFG.FrameBuffer.tFrameSize.iWidth = iWidthAlign;
-        } else {
+
+            /* update frame size */
             this.tCFG.FrameBuffer.tFrameSize.iWidth = iWidth;
+            this.tCFG.FrameBuffer.tFrameSize.iHeight = iHeight;
+
+        /* Align Width Only */
+        } else if (chPixelWidthAlignMask) {
+
+            int_fast16_t iWidth 
+                = this.tCFG.FrameBuffer.tFrameSize.iWidth & ~chPixelWidthAlignMask;
+            
+
+            if (0 == iWidth) {
+                int_fast16_t iWidthAlign = (chPixelWidthAlignMask + 1);
+                if (wTotalPixelCount < iWidthAlign) {
+                    return ARM_2D_ERR_INSUFFICIENT_RESOURCE;
+                }
+                iWidth = iWidthAlign;
+            }
+
+            /* update frame size */
+            this.tCFG.FrameBuffer.tFrameSize.iWidth = iWidth;
+            this.tCFG.FrameBuffer.tFrameSize.iHeight 
+                = wTotalPixelCount 
+                / this.tCFG.FrameBuffer.tFrameSize.iWidth;
+
+        /* Align Height Only */
+        } else if (chPixelHeightAlignMask) {
+            
+            int_fast16_t iHeight 
+                = this.tCFG.FrameBuffer.tFrameSize.iHeight & ~chPixelHeightAlignMask;
+
+            if (0 == iHeight) {
+                int_fast16_t iHeightAlign = (chPixelHeightAlignMask + 1);
+                if (wTotalPixelCount < iHeightAlign) {
+                    return ARM_2D_ERR_INSUFFICIENT_RESOURCE;
+                }
+                iHeight = iHeightAlign;
+            }
+
+            /* update frame size */
+            this.tCFG.FrameBuffer.tFrameSize.iHeight = iHeight;
+            this.tCFG.FrameBuffer.tFrameSize.iWidth 
+                = wTotalPixelCount 
+                / this.tCFG.FrameBuffer.tFrameSize.iHeight;
         }
-        
-        this.tCFG.FrameBuffer.tFrameSize.iHeight 
-            = wTotalPixelCount 
-            / this.tCFG.FrameBuffer.tFrameSize.iWidth;
-    }
+    } while(0);
 
     // perform validation
     do {
@@ -316,7 +380,8 @@ void __arm_2d_helper_low_level_rendering(arm_2d_helper_pfb_t *ptThis)
 }
 
 
-__STATIC_INLINE bool __when_dirty_region_list_is_empty(arm_2d_helper_pfb_t *ptThis)
+__STATIC_INLINE 
+bool __when_dirty_region_list_is_empty(arm_2d_helper_pfb_t *ptThis)
 {
     /* check whether has already been switched to the navigation dirty 
      * region list 
@@ -434,7 +499,7 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                 this.Adapter.tTargetRegion = this.tCFG.tDisplayArea;
             }
 
-            /* update this.Adapter.tTargetRegion to fulfill the pixel width 
+            /* update this.Adapter.tTargetRegion to fulfill the pixel width
              * alignment request 
              */
             if (this.tCFG.FrameBuffer.u3PixelWidthAlign) {
@@ -451,6 +516,25 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                     = ( this.Adapter.tTargetRegion.tSize.iWidth 
                       + chPixelWidthAlignMask) 
                     & ~chPixelWidthAlignMask;
+            }
+
+            /* update this.Adapter.tTargetRegion to fulfill the pixel height
+             * alignment request 
+             */
+            if (this.tCFG.FrameBuffer.u3PixelHeightAlign) {
+                uint_fast8_t chPixelHeightAlignMask 
+                    = (1 << this.tCFG.FrameBuffer.u3PixelHeightAlign)-1;
+                
+                int_fast16_t iY = this.Adapter.tTargetRegion.tLocation.iY;
+                this.Adapter.tTargetRegion.tLocation.iY 
+                    &= ~chPixelHeightAlignMask;
+                
+                this.Adapter.tTargetRegion.tSize.iHeight 
+                    += iY - this.Adapter.tTargetRegion.tLocation.iY;
+                this.Adapter.tTargetRegion.tSize.iHeight
+                    = ( this.Adapter.tTargetRegion.tSize.iHeight 
+                      + chPixelHeightAlignMask) 
+                    & ~chPixelHeightAlignMask;
             }
 
         #if __ARM_ARCH == 6 || __TARGET_ARCH_THUMB == 3

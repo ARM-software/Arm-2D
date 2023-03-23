@@ -389,8 +389,11 @@ void arm_2d_scene_player_init(void)
                 .fnHandler = &__pfb_render_handler,
             },
         },
-        //.FrameBuffer.bSwapRGB16 = true,
-        .FrameBuffer.u3PixelWidthAlign = 3,
+#if __ARM_2D_CFG_BENCHMARK_SWAP_RGB16_HIGH_AND_LOW_BYTES__
+        .FrameBuffer.bSwapRGB16 = true,
+#endif
+        .FrameBuffer.u3PixelWidthAlign = __BENCHMARK_PFB_PIXEL_ALIGN_WIDTH__,
+        .FrameBuffer.u3PixelHeightAlign = __BENCHMARK_PFB_PIXEL_ALIGN_HEIGHT__,
     ) < 0) {
         //! error detected
         assert(false);
