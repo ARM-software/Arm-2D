@@ -1086,7 +1086,28 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
     
     switch (this.Runtime.chState) {
         case START:
+
             if (NULL == ptScene) {
+                bool bNextSceneReq = false;
+                
+                arm_irq_safe {
+                    bNextSceneReq = this.Runtime.bNextSceneReq;
+                    this.Runtime.bNextSceneReq = false;
+                }
+
+                if (bNextSceneReq) {
+                    /* invoke evtBeforeSwitching */
+                    ARM_2D_INVOKE_RT_VOID(
+                        this.Events.evtBeforeSwitching.fnHandler, 
+                        ARM_2D_PARAM(
+                            this.Events.evtBeforeSwitching.pTarget,
+                            ptThis, 
+                            ptScene
+                        ));
+                    /* try again */
+                    break;
+                }
+
                 //! no scene available
                 return arm_fsm_rt_cpl;
             }
