@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        07. Feb 2023
- * $Revision:    V.1.3.11
+ * $Date:        23. March 2023
+ * $Revision:    V.1.3.12
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -289,7 +289,7 @@ void arm_2d_scene_player_set_switching_period(  arm_2d_scene_player_t *ptThis,
     this.Switch.hwPeriod = MAX(hwMS, __ARM_2D_CFG_HELPER_SWITCH_MIN_PERIOD__);
 }
 
-ARM_NONNULL(1,2)
+ARM_NONNULL(1)
 arm_2d_err_t __arm_2d_scene_player_register_on_draw_navigation_event_handler(
                                     arm_2d_scene_player_t *ptThis,
                                     arm_2d_helper_draw_handler_t *fnHandler,
@@ -309,6 +309,22 @@ arm_2d_err_t __arm_2d_scene_player_register_on_draw_navigation_event_handler(
                                     &ptThis->use_as__arm_2d_helper_pfb_t, 
                                     ARM_2D_PFB_DEPEND_ON_NAVIGATION,
                                     &tDependency);
+}
+
+
+arm_2d_err_t __arm_2d_scene_player_register_before_switching_event_handler(
+                    arm_2d_scene_player_t *ptThis,
+                    arm_2d_scene_before_scene_switching_handler_t *fnHandler,
+                    void *pTarget
+                )
+{
+    assert(NULL != ptThis);
+    assert(NULL != fnHandler);
+    
+    this.Events.evtBeforeSwitching.fnHandler = fnHandler;
+    this.Events.evtBeforeSwitching.pTarget = pTarget;
+    
+    return ARM_2D_ERR_NONE;
 }
 
 
@@ -1159,6 +1175,14 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             if (this.Runtime.bNextSceneReq) {
                 /* call the before-scene-switch-out event handler if present */
                 ARM_2D_INVOKE_RT_VOID(ptScene->fnBeforeSwitchOut, ptScene);
+                
+                /* invoke evtBeforeSwitching */
+                ARM_2D_INVOKE_RT_VOID(  this.Events.evtBeforeSwitching.fnHandler, 
+                    ARM_2D_PARAM(
+                        this.Events.evtBeforeSwitching.pTarget,
+                        ptThis, 
+                        ptScene
+                    ));
                 
                 /* update switching mode */
                 this.Switch.tConfig.Feature.chMode = this.Switch.ptMode->chEffects;

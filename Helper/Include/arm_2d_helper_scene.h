@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        07. Feb 2023
- * $Revision:    V.1.3.11
+ * $Date:        23. March 2023
+ * $Revision:    V.1.3.12
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -73,12 +73,12 @@ extern "C" {
  * \return arm_2d_err_t the operation result
  */
 #define arm_2d_scene_player_register_on_draw_navigation_event_handler(          \
-                                                        __DISP_ADAPTER_PTR,     \
+                                                        __SCENE_PLAYER_PTR,     \
                                                         __DRAW_HANDLER,         \
                                                         __USER_TARGET_PTR,      \
                                                         ...)                    \
             __arm_2d_scene_player_register_on_draw_navigation_event_handler(    \
-                                                        (__DISP_ADAPTER_PTR),   \
+                                                        (__SCENE_PLAYER_PTR),   \
                                                         (__DRAW_HANDLER),       \
                                                         (__USER_TARGET_PTR),    \
                                                         (NULL,##__VA_ARGS__))
@@ -90,12 +90,31 @@ extern "C" {
  * \param[in] __SWITCH_MODE a switching mode object
  * \param[in] ... an optional configurations for the switching
  */
-#define arm_2d_scene_player_set_switching_mode(__DISP_ADAPTER_PTR,              \
+#define arm_2d_scene_player_set_switching_mode(__SCENE_PLAYER_PTR,              \
                                                __SWITCH_MODE,                   \
                                                ...)                             \
-            __arm_2d_scene_player_set_switching_mode((__DISP_ADAPTER_PTR),      \
+            __arm_2d_scene_player_set_switching_mode((__SCENE_PLAYER_PTR),      \
                                                      &(__SWITCH_MODE),          \
                                                      (0,##__VA_ARGS__))
+
+/*!
+ * \brief register / update the evtBeforeSwitching event handler. You can use 
+ *        this event to prepare next scenes.
+ *
+ * \param[in] ptThis the target scene player
+ * \param[in] fnHandler the event handler
+ * \param[in] ... optional, the address of an user specified object.
+ * \return arm_2d_err_t the operation result
+ */
+#define arm_2d_scene_player_register_before_switching_event_handler(            \
+                                                            __SCENE_PLAYER_PTR, \
+                                                            __HANDLER,          \
+                                                            ...)                \
+            __arm_2d_scene_player_register_before_switching_event_handler(      \
+                                                        (__SCENE_PLAYER_PTR),   \
+                                                        (__HANDLER),            \
+                                                        (NULL,##__VA_ARGS__))
+
 
 /*============================ TYPES =========================================*/
 
@@ -203,6 +222,27 @@ struct arm_2d_scene_t {
     };
 };
 
+
+/*!
+ * \brief the scene player event handler
+ * 
+ * \param[in] pTarget a user attached target address 
+ * \param[in] ptPlayer the scene player 
+ * \param[in] ptScene the old scene that is to be switched out
+ */
+typedef void arm_2d_scene_before_scene_switching_handler_t(
+                                            void *pTarget,
+                                            arm_2d_scene_player_t *ptPlayer,
+                                            arm_2d_scene_t *ptScene);
+
+/*!
+ * \brief on low level render event 
+ */
+typedef struct arm_2d_scene_before_scene_switching_evt_t {
+    arm_2d_scene_before_scene_switching_handler_t *fnHandler;                   //!< event handler function
+    void *pTarget;                                                              //!< user attached target
+} arm_2d_scene_before_scene_switching_evt_t;
+
 /*!
  * \brief a class to manage scenes
  * 
@@ -249,6 +289,13 @@ struct arm_2d_scene_player_t {
             uint16_t hwPeriod;                                                  //!< the switching should finish in specified millisecond
             int64_t lTimeStamp;
         }Switch;
+        
+        struct {
+            /*!
+             * \note We can use this event to initialize/generate the new(next) scene
+             */
+            arm_2d_scene_before_scene_switching_evt_t  evtBeforeSwitching;      //!< before-scene-switch-out event handler
+        } Events;
     )
 };
 
@@ -383,12 +430,30 @@ void arm_2d_scene_player_set_switching_period(  arm_2d_scene_player_t *ptThis,
  *       of the content in the navigation layer, you won't see the content. 
  * \return arm_2d_err_t the operation result
  */
-ARM_NONNULL(1,2)
+extern
+ARM_NONNULL(1)
 arm_2d_err_t __arm_2d_scene_player_register_on_draw_navigation_event_handler(
                                     arm_2d_scene_player_t *ptThis,
                                     arm_2d_helper_draw_handler_t *fnHandler,
                                     void *pTarget,
                                     arm_2d_region_list_item_t *ptDirtyRegions);
+
+/*!
+ * \brief register / update the evtBeforeSwitching event handler. You can use 
+ *        this event to prepare next scenes.
+ *
+ * \param[in] ptThis the target scene player
+ * \param[in] fnHandler the event handler
+ * \param[in] pTarget the address of an user specified object.
+ * \return arm_2d_err_t the operation result
+ */
+extern
+ARM_NONNULL(1)
+arm_2d_err_t __arm_2d_scene_player_register_before_switching_event_handler(
+                    arm_2d_scene_player_t *ptThis,
+                    arm_2d_scene_before_scene_switching_handler_t *fnHandler,
+                    void *pTarget
+                );
 
 /*!
  * \brief the scene player task function

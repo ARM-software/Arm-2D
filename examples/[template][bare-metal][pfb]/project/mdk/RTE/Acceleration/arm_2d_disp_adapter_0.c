@@ -367,7 +367,8 @@ static void __user_scene_player_init(void)
 #if __DISP0_CFG_SWAP_RGB16_HIGH_AND_LOW_BYTES__
         .FrameBuffer.bSwapRGB16 = true,
 #endif
-        .FrameBuffer.u3PixelWidthAlign = __DISP0_CFG_PFB_PIXEL_ALIGN__,
+        .FrameBuffer.u3PixelWidthAlign = __DISP0_CFG_PFB_PIXEL_ALIGN_WIDTH__,
+        .FrameBuffer.u3PixelHeightAlign = __DISP0_CFG_PFB_PIXEL_ALIGN_HEIGHT__,
 #if     __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                          \
     &&  !__DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
         .FrameBuffer.u4PoolReserve = 3,                                         // reserve 3 PFB blocks for the virtual resource service
