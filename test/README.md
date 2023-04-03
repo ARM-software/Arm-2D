@@ -77,9 +77,6 @@ From this `Arm-2D_Demos` folder, type the command:
 ./test $ csolution list packs -s arm2d.csolution.yml -m > required_packs.txt
 ```
 
-Remove the `GorgonMeducer::perf_counter@1.9.11` packs from this list.
-
-The perf_counter pack has to be downloaded from GitHub and installed separately.
 
 ### 3.2 Install the packs
 
@@ -87,10 +84,6 @@ The perf_counter pack has to be downloaded from GitHub and installed separately.
 ./test $ cpackget add -f required_packs.txt
 ```
 
-
-```bash
-./test $ cpackget add https://github.com/GorgonMeducer/perf_counter/raw/main/cmsis-pack/GorgonMeducer.perf_counter.1.9.11.pack
-```
 
 ### 3.3 Convert csolution
 
