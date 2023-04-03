@@ -87,8 +87,6 @@ The perf_counter pack has to be downloaded from GitHub and installed separately.
 ./test $ cpackget add -f required_packs.txt
 ```
 
-As mentioned above, **perf_counter won't be found since it's hosted on GitHub**.
-Download **perf_counter pack 1.9.11** from GitHub and install it:
 
 ```bash
 ./test $ cpackget add https://github.com/GorgonMeducer/perf_counter/raw/main/cmsis-pack/GorgonMeducer.perf_counter.1.9.11.pack
