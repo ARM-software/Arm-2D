@@ -48,6 +48,7 @@
 #   pragma clang diagnostic ignored "-Wunused-function"
 #   pragma clang diagnostic ignored "-Wmissing-declarations"  
 #elif __IS_COMPILER_ARM_COMPILER_5__
+#   pragma diag_suppress 64,177
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wformat="

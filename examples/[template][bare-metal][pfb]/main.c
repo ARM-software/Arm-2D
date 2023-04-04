@@ -36,6 +36,7 @@
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #   pragma clang diagnostic ignored "-Wmissing-prototypes"
 #   pragma clang diagnostic ignored "-Wunused-variable"
+#   pragma clang diagnostic ignored "-Wunused-parameter"
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #elif __IS_COMPILER_GCC__

@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        08. Feb 2023
- * $Revision:    V.1.0.14
+ * $Date:        04. April 2023
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -57,6 +57,9 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wcompound-token-split-by-macro"
 #   pragma clang diagnostic ignored "-Winitializer-overrides"
 #   pragma clang diagnostic ignored "-Wgcc-compat"
+#   pragma clang diagnostic ignored "-Wgnu-empty-initializer"
+#   pragma clang diagnostic ignored "-Wshadow"
+#   pragma clang diagnostic ignored "-Wconditional-uninitialized"
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic ignored "-Wpedantic"
 #   pragma GCC diagnostic ignored "-Wmissing-braces"

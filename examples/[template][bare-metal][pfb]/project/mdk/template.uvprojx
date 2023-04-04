@@ -10,7 +10,7 @@
       <TargetName>DO_NOT_USE_V2M-MPS3-CM33</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
+      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -340,7 +340,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0,EXTERANL_DELAY_MS_DECLARE="extern void delay_ms(uint32_t);"</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\lib;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -424,16 +424,6 @@
               <FileName>platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\platform\platform.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\common\platform\lib\perf_counter.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\..\..\common\platform\lib\perf_counter.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -956,6 +946,9 @@
               </Aads>
             </GroupArmAds>
           </GroupOption>
+        </Group>
+        <Group>
+          <GroupName>::Utilities</GroupName>
         </Group>
       </Groups>
     </Target>
@@ -1293,7 +1286,7 @@
               <MiscControls></MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\lib;..\..\..\common\platform\mps2</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1306,7 +1299,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <ClangAsOpt>4</ClangAsOpt>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -1377,16 +1370,6 @@
               <FileName>platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\platform\platform.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\common\platform\lib\perf_counter.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\..\..\common\platform\lib\perf_counter.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -1909,6 +1892,9 @@
               </Aads>
             </GroupArmAds>
           </GroupOption>
+        </Group>
+        <Group>
+          <GroupName>::Utilities</GroupName>
         </Group>
       </Groups>
     </Target>
@@ -2246,7 +2232,7 @@
               <MiscControls></MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0,ITERATION_CNT=10</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\lib;..\..\..\common\platform\mps2</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2259,7 +2245,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <ClangAsOpt>4</ClangAsOpt>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -2329,16 +2315,6 @@
               <FileName>platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\platform\platform.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\common\platform\lib\perf_counter.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\..\..\common\platform\lib\perf_counter.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -2861,6 +2837,9 @@
               </Aads>
             </GroupArmAds>
           </GroupOption>
+        </Group>
+        <Group>
+          <GroupName>::Utilities</GroupName>
         </Group>
       </Groups>
     </Target>
@@ -3198,7 +3177,7 @@
               <MiscControls></MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\lib;;..\..\..\common\platform\mps2</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;;..\..\..\common\platform\mps2</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3211,7 +3190,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <ClangAsOpt>4</ClangAsOpt>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -3282,16 +3261,6 @@
               <FileName>platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\platform\platform.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\common\platform\lib\perf_counter.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\..\..\common\platform\lib\perf_counter.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -3745,6 +3714,9 @@
               </Aads>
             </GroupArmAds>
           </GroupOption>
+        </Group>
+        <Group>
+          <GroupName>::Utilities</GroupName>
         </Group>
       </Groups>
     </Target>
@@ -4082,7 +4054,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>LCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\lib;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4166,16 +4138,6 @@
               <FileName>platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\platform\platform.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\common\platform\lib\perf_counter.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\..\..\common\platform\lib\perf_counter.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -4698,6 +4660,9 @@
               </Aads>
             </GroupArmAds>
           </GroupOption>
+        </Group>
+        <Group>
+          <GroupName>::Utilities</GroupName>
         </Group>
       </Groups>
     </Target>
@@ -5035,7 +5000,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\lib;..\..\..\common\platform\mps2</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5048,7 +5013,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <ClangAsOpt>4</ClangAsOpt>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -5119,16 +5084,6 @@
               <FileName>platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\platform\platform.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\common\platform\lib\perf_counter.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\..\..\common\platform\lib\perf_counter.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -5651,6 +5606,9 @@
               </Aads>
             </GroupArmAds>
           </GroupOption>
+        </Group>
+        <Group>
+          <GroupName>::Utilities</GroupName>
         </Group>
       </Groups>
     </Target>
@@ -5988,7 +5946,7 @@
               <MiscControls>-Omax -Wno-nonportable-include-path</MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\lib;..\..\..\common\platform\mps2</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6001,7 +5959,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <ClangAsOpt>4</ClangAsOpt>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -6072,16 +6030,6 @@
               <FileName>platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\platform\platform.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\common\platform\lib\perf_counter.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\..\..\common\platform\lib\perf_counter.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -6604,6 +6552,9 @@
               </Aads>
             </GroupArmAds>
           </GroupOption>
+        </Group>
+        <Group>
+          <GroupName>::Utilities</GroupName>
         </Group>
       </Groups>
     </Target>
@@ -6941,7 +6892,7 @@
               <MiscControls>-Wno-nonportable-include-path -Omax</MiscControls>
               <Define>__GLCD_CFG_SCEEN_WIDTH__=480,__GLCD_CFG_SCEEN_HEIGHT__=276,__DISP0_CFG_SCEEN_WIDTH__=480,__DISP0_CFG_SCEEN_HEIGHT__=272,__DISP0_CFG_PFB_BLOCK_WIDTH__=480,__DISP0_CFG_PFB_BLOCK_HEIGHT__=27</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\..\common\platform\stm32f746g-discovery;..\..\;..\..\..\common\platform\lib</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\..\common\platform\stm32f746g-discovery;..\..\</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7025,16 +6976,6 @@
               <FileName>platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\platform\platform.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\common\platform\lib\perf_counter.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\..\..\common\platform\lib\perf_counter.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -7489,13 +7430,16 @@
             </GroupArmAds>
           </GroupOption>
         </Group>
+        <Group>
+          <GroupName>::Utilities</GroupName>
+        </Group>
       </Groups>
     </Target>
     <Target>
       <TargetName>AN547-Cortex-M55_r0</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
+      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -7825,7 +7769,7 @@
               <MiscControls>-Wno-padded -Omax</MiscControls>
               <Define>LCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__USE_AN547__</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\lib;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7909,16 +7853,6 @@
               <FileName>platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\platform\platform.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\common\platform\lib\perf_counter.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\..\..\common\platform\lib\perf_counter.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -8372,6 +8306,9 @@
         </Group>
         <Group>
           <GroupName>::Native Driver</GroupName>
+        </Group>
+        <Group>
+          <GroupName>::Utilities</GroupName>
         </Group>
       </Groups>
     </Target>
@@ -8709,7 +8646,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\..\common\platform\stm32f746g-discovery;..\..\;..\..\..\common\platform\lib</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\..\common\platform\stm32f746g-discovery;..\..\</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -8793,16 +8730,6 @@
               <FileName>platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\platform\platform.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\common\platform\lib\perf_counter.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\..\..\common\platform\lib\perf_counter.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -9256,6 +9183,9 @@
               </Aads>
             </GroupArmAds>
           </GroupOption>
+        </Group>
+        <Group>
+          <GroupName>::Utilities</GroupName>
         </Group>
       </Groups>
     </Target>
@@ -9593,7 +9523,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>LCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\lib;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -9677,16 +9607,6 @@
               <FileName>platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\platform\platform.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\common\platform\lib\perf_counter.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\..\..\common\platform\lib\perf_counter.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -10210,6 +10130,9 @@
             </GroupArmAds>
           </GroupOption>
         </Group>
+        <Group>
+          <GroupName>::Utilities</GroupName>
+        </Group>
       </Groups>
     </Target>
   </Targets>
@@ -10289,7 +10212,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="1.5.3" condition="Arm-2D-CORE">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="1.5.5" condition="Arm-2D-CORE">
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -10514,6 +10437,22 @@
               <MiscControls>-w</MiscControls>
             </c>
           </targetInfo>
+        </targetInfos>
+      </component>
+      <component Cclass="Utilities" Cgroup="perf_counter" Csub="Core" Cvariant="Source" Cvendor="GorgonMeducer" Cversion="2.1.0" condition="CMSIS-CORE">
+        <package name="perf_counter" schemaVersion="1.4" url="https://raw.githubusercontent.com/GorgonMeducer/perf_counter/CMSIS-Pack/cmsis-pack/" vendor="GorgonMeducer" version="2.1.0"/>
+        <targetInfos>
+          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
       <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="Event Recorder" Cvariant="DAP" Cvendor="Keil" Cversion="1.5.1" condition="Cortex-M Device">

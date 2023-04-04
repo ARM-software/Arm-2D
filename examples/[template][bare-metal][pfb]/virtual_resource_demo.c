@@ -45,6 +45,7 @@
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
 #   pragma clang diagnostic ignored "-Wmissing-variable-declarations"
 #elif __IS_COMPILER_ARM_COMPILER_5__
+#   pragma diag_suppress 191
 #elif __IS_COMPILER_IAR__
 #   pragma diag_suppress=Pa089,Pe188,Pe177,Pe174,Pe191
 #elif __IS_COMPILER_GCC__
