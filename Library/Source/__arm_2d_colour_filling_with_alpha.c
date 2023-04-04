@@ -1584,13 +1584,13 @@ def_low_lv_io(__ARM_2D_IO_FILL_COLOUR_A4_MASK_RGB888,
                 __arm_2d_cccn888_sw_colour_filling_with_a4_mask);
 
 __WEAK
-def_low_lv_io(__ARM_2D_IO_FILL_COLOUR_ALPHA_MASK_GRAY8, 
+def_low_lv_io(__ARM_2D_IO_FILL_COLOUR_MASK_GRAY8, 
                 __arm_2d_gray8_sw_colour_filling_with_mask);
 __WEAK
-def_low_lv_io(__ARM_2D_IO_FILL_COLOUR_ALPHA_MASK_RGB565, 
+def_low_lv_io(__ARM_2D_IO_FILL_COLOUR_MASK_RGB565, 
                 __arm_2d_rgb565_sw_colour_filling_with_mask);
 __WEAK
-def_low_lv_io(__ARM_2D_IO_FILL_COLOUR_ALPHA_MASK_RGB888, 
+def_low_lv_io(__ARM_2D_IO_FILL_COLOUR_MASK_CCCN888, 
                 __arm_2d_cccn888_sw_colour_filling_with_mask);
 
 __WEAK
@@ -1614,13 +1614,13 @@ def_low_lv_io(__ARM_2D_IO_FILL_COLOUR_A4_MASK_AND_OPACITY_CCCN888,
                 __arm_2d_cccn888_sw_colour_filling_with_a4_mask_and_opacity);
 
 __WEAK
-def_low_lv_io(__ARM_2D_IO_FILL_COLOUR_ALPHA_MASK_AND_OPACITY_GRAY8, 
+def_low_lv_io(__ARM_2D_IO_FILL_COLOUR_MASK_AND_OPACITY_GRAY8, 
                 __arm_2d_gray8_sw_colour_filling_with_mask_and_opacity);
 __WEAK
-def_low_lv_io(__ARM_2D_IO_FILL_COLOUR_ALPHA_MASK_AND_OPACITY_RGB565, 
+def_low_lv_io(__ARM_2D_IO_FILL_COLOUR_MASK_AND_OPACITY_RGB565, 
                 __arm_2d_rgb565_sw_colour_filling_with_mask_and_opacity);
 __WEAK
-def_low_lv_io(__ARM_2D_IO_FILL_COLOUR_ALPHA_MASK_AND_OPACITY_CCCN888, 
+def_low_lv_io(__ARM_2D_IO_FILL_COLOUR_MASK_AND_OPACITY_CCCN888, 
                 __arm_2d_cccn888_sw_colour_filling_with_mask_and_opacity);
 
 
@@ -1751,7 +1751,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_GRAY8 = {
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK,
         
         .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_ALPHA_MASK_GRAY8),
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_MASK_GRAY8),
             .ptFillLike = NULL, 
         },
     },
@@ -1770,7 +1770,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_RGB565 = {
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK,
         
         .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_ALPHA_MASK_RGB565),
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_MASK_RGB565),
             .ptFillLike = NULL, 
         },
     },
@@ -1789,11 +1789,69 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_CCCN888 = {
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK,
         
         .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_ALPHA_MASK_RGB888),
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_MASK_CCCN888),
             .ptFillLike = NULL, 
         },
     },
-};  
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_AND_REPEAT_GRAY8 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_GRAY8,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bAllowEnforcedColour   = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_REPEAT,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_MASK_GRAY8),
+            //.ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_MASK_AND_REPEAT_GRAY8),, 
+        },
+    },
+};
+
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_AND_REPEAT_RGB565= {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_RGB565,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bAllowEnforcedColour   = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_REPEAT,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_MASK_RGB565),
+            //.ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_MASK_AND_REPEAT_RGB565),
+        },
+    },
+};
+    
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_AND_REPEAT_CCCN888= {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_CCCN888,
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bAllowEnforcedColour   = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_REPEAT,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_MASK_CCCN888),
+            //.ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_MASK_AND_REPEAT_CCCN888),
+        },
+    },
+};
 
 const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_A2_MASK_AND_OPACITY_GRAY8 = {
     .Info = {
@@ -1922,7 +1980,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_AND_OPACITY_GRAY8 = {
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_OPACITY,
         
         .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_ALPHA_MASK_AND_OPACITY_GRAY8),
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_MASK_AND_OPACITY_GRAY8),
             .ptFillLike = NULL, 
         },
     },
@@ -1941,7 +1999,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_AND_OPACITY_RGB565 = {
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_OPACITY,
         
         .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_ALPHA_MASK_AND_OPACITY_RGB565),
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_MASK_AND_OPACITY_RGB565),
             .ptFillLike = NULL, 
         },
     },
@@ -1960,7 +2018,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_AND_OPACITY_CCCN888 = {
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_OPACITY,
         
         .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_ALPHA_MASK_AND_OPACITY_CCCN888),
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_MASK_AND_OPACITY_CCCN888),
             .ptFillLike = NULL, 
         },
     },
