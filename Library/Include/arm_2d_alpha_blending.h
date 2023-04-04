@@ -18,11 +18,11 @@
 
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
- * Title:        #include "arm_2d.h"
+ * Title:        arm_2d_alpha_blending.h
  * Description:  Public header file to contain the alpha related APIs
  *
- * $Date:        07. Feb 2023
- * $Revision:    V.1.4.0
+ * $Date:        04. April 2023
+ * $Revision:    V.1.6.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
