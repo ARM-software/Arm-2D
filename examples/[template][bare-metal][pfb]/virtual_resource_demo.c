@@ -123,10 +123,10 @@ static arm_2d_vres_t s_vresA4Font =
 /*----------------------------------------------------------------------------*
  * Virtual Resource Helper User Implemented Interfaces                        *
  *----------------------------------------------------------------------------*/
-void __disp_adapter0_vres_read_memory(intptr_t pObj, 
-                                    void *pBuffer,
-                                    uintptr_t pAddress,
-                                    size_t nSizeInByte)
+void __disp_adapter0_vres_read_memory(  intptr_t pObj, 
+                                        void *pBuffer,
+                                        uintptr_t pAddress,
+                                        size_t nSizeInByte)
 {
     ARM_2D_UNUSED(pObj);
     /* it is just a demo, in real application, you can place a function to 
@@ -135,8 +135,8 @@ void __disp_adapter0_vres_read_memory(intptr_t pObj,
     memcpy(pBuffer, (void * const)pAddress, nSizeInByte);
 }
 
-uintptr_t __disp_adapter0_vres_get_asset_address(uintptr_t pObj,
-                                               arm_2d_vres_t *ptVRES)
+uintptr_t __disp_adapter0_vres_get_asset_address(   uintptr_t pObj,
+                                                    arm_2d_vres_t *ptVRES)
 {
     ARM_2D_UNUSED(ptVRES);
     
