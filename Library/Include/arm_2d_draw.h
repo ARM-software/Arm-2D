@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the APIs for colour space
  *               conversions
  *
- * $Date:        13. Oct 2022
- * $Revision:    V.1.0.4
+ * $Date:        04. April 2023
+ * $Revision:    V.1.0.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */

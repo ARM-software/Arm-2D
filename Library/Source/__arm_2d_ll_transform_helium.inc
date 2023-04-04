@@ -828,7 +828,7 @@ void __ARM_2D_FUNC(colour_filling_mask_opacity_transform)(   __arm_2d_param_copy
 #define get_pixel_colour_mask                   get_pixel_colour_src_mask
 #define transform_with_mask                     transform_with_src_mask
 
-#include "__arm_2d_meta_trans_with_masks_helium.inc"
+#include "__arm_2d_ll_meta_trans_with_masks_helium.inc"
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 #   define __API_MTWM_COLOUR                        __API_COLOUR
@@ -840,7 +840,7 @@ void __ARM_2D_FUNC(colour_filling_mask_opacity_transform)(   __arm_2d_param_copy
 #   define get_pixel_colour_mask                    get_pixel_colour_src_chn_mask
 #   define transform_with_mask                      transform_with_src_chn_mask
 
-#   include "__arm_2d_meta_trans_with_masks_helium.inc"
+#   include "__arm_2d_ll_meta_trans_with_masks_helium.inc"
 #endif
 
 #define __API_MTWM_COLOUR                       __API_COLOUR
@@ -853,7 +853,7 @@ void __ARM_2D_FUNC(colour_filling_mask_opacity_transform)(   __arm_2d_param_copy
 #define get_pixel_colour_mask                   get_pixel_colour_src_mask_opa
 #define transform_with_mask                     transform_with_src_mask_and_opacity
 
-#include "__arm_2d_meta_trans_with_masks_helium.inc"
+#include "__arm_2d_ll_meta_trans_with_masks_helium.inc"
 
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -868,7 +868,7 @@ void __ARM_2D_FUNC(colour_filling_mask_opacity_transform)(   __arm_2d_param_copy
 #   define get_pixel_colour_mask                    get_pixel_colour_src_chn_mask_opa
 #   define transform_with_mask                      transform_with_src_chn_mask_and_opacity
 
-#   include "__arm_2d_meta_trans_with_masks_helium.inc"
+#   include "__arm_2d_ll_meta_trans_with_masks_helium.inc"
 #endif
 
 #undef ____ARM_2D_FUNC

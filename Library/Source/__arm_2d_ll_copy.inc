@@ -1263,7 +1263,7 @@ __WEAK void __ARM_2D_FUNC(fill_colour_keying_xy_mirror)(
 #define __API_MCAF_INT_TYPE_BIT_NUM         __API_INT_TYPE_BIT_NUM
 
 
-#include "__arm_2d_meta_copy_and_fill.inc"
+#include "__arm_2d_ll_meta_copy_and_fill.inc"
 
 
 __WEAK
@@ -1283,7 +1283,7 @@ void __ARM_2D_FUNC(copy)(   __API_INT_TYPE *__RESTRICT pSource,
 
 
 /*----------------------------------------------------------------------------*
- * Copy and Fill with Colour Masking                                          *
+ * Copy and Fill with Colour Keying                                           *
  *----------------------------------------------------------------------------*/
 
 #define __API_MCAF_COLOUR                   __API_COLOUR
@@ -1295,7 +1295,7 @@ void __ARM_2D_FUNC(copy)(   __API_INT_TYPE *__RESTRICT pSource,
 #define __API_MCAF_EXTRA_EXPRESSION         Colour
 #define __API_MCAF_EXTRA_PAVE_EXPRESSION    (in != Colour)
 
-#include "__arm_2d_meta_copy_and_fill.inc"
+#include "__arm_2d_ll_meta_copy_and_fill.inc"
 
 __WEAK
 void __ARM_2D_FUNC(cl_key_copy)(   

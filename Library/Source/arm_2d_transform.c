@@ -21,8 +21,8 @@
  * Title:        arm-2d_transform.c
  * Description:  APIs for tile transform
  *
- * $Date:        16 Oct 2022
- * $Revision:    V.1.0.3
+ * $Date:        04 April 2023
+ * $Revision:    V.1.0.4
  *
  * Target Processor:  Cortex-M cores
  *
@@ -117,7 +117,7 @@ extern "C" {
 #define __API_PIXEL_BLENDING        __ARM_2D_PIXEL_BLENDING_OPA_GRAY8
 #define __API_PIXEL_AVERAGE         __ARM_2D_PIXEL_AVERAGE_GRAY8
 #define __API_PIXEL_AVERAGE_RESULT  __API_PIXEL_AVERAGE_RESULT_GRAY8
-#include "__arm_2d_transform.inc"
+#include "__arm_2d_ll_transform.inc"
 
 #define __API_COLOUR                rgb565
 #define __API_INT_TYPE              uint16_t
@@ -125,7 +125,7 @@ extern "C" {
 #define __API_PIXEL_BLENDING        __ARM_2D_PIXEL_BLENDING_OPA_RGB565
 #define __API_PIXEL_AVERAGE         __ARM_2D_PIXEL_AVERAGE_RGB565
 #define __API_PIXEL_AVERAGE_RESULT  __API_PIXEL_AVERAGE_RESULT_RGB565
-#include "__arm_2d_transform.inc"
+#include "__arm_2d_ll_transform.inc"
 
 #define __API_COLOUR                cccn888
 #define __API_INT_TYPE              uint32_t
@@ -134,7 +134,7 @@ extern "C" {
 #define __API_PIXEL_AVERAGE         __ARM_2D_PIXEL_AVERAGE_CCCN888
 #define __API_PIXEL_AVERAGE_RESULT  __API_PIXEL_AVERAGE_RESULT_CCCN888
 
-#include "__arm_2d_transform.inc"
+#include "__arm_2d_ll_transform.inc"
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/

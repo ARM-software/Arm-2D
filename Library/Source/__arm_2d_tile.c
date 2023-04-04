@@ -21,8 +21,8 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        27. Oct 2022
- * $Revision:    V.1.4.0
+ * $Date:        04. April 2023
+ * $Revision:    V.1.4.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -81,21 +81,21 @@ extern "C" {
 #define __API_INT_TYPE              uint8_t
 #define __API_INT_TYPE_BIT_NUM      8
 
-#include "__arm_2d_copy.inc"
+#include "__arm_2d_ll_copy.inc"
 
 
 #define __API_COLOUR                rgb16
 #define __API_INT_TYPE              uint16_t
 #define __API_INT_TYPE_BIT_NUM      16
 
-#include "__arm_2d_copy.inc"
+#include "__arm_2d_ll_copy.inc"
 
 
 #define __API_COLOUR                rgb32
 #define __API_INT_TYPE              uint32_t
 #define __API_INT_TYPE_BIT_NUM      32
 
-#include "__arm_2d_copy.inc"
+#include "__arm_2d_ll_copy.inc"
 
 /*----------------------------------------------------------------------------*
  * Tile Operations                                                            *

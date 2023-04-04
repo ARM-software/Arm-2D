@@ -21,8 +21,8 @@
  * Title:        arm-2d_draw.c
  * Description:  APIs for basic drawing
  *
- * $Date:        13. Oct 2022
- * $Revision:    V.1.0.4
+ * $Date:        04. April 2023
+ * $Revision:    V.1.0.5
  *
  * Target Processor:  Cortex-M cores
  *
@@ -82,33 +82,33 @@ extern "C" {
 #define __API_COLOUR        c8bit
 #define __API_INT_TYPE      uint8_t
 
-#include "__arm_2d_fill_colour.inc"
+#include "__arm_2d_ll_fill_colour.inc"
 
 #define __API_COLOUR        rgb16
 #define __API_INT_TYPE      uint16_t
 
-#include "__arm_2d_fill_colour.inc"
+#include "__arm_2d_ll_fill_colour.inc"
 
 
 #define __API_COLOUR        rgb32
 #define __API_INT_TYPE      uint32_t
 
-#include "__arm_2d_fill_colour.inc"
+#include "__arm_2d_ll_fill_colour.inc"
 
 
 /*! adding support with c code template */
 #define __API_COLOUR        c8bit
 #define __API_INT_TYPE      uint8_t
-#include "__arm_2d_draw_pattern.inc"
+#include "__arm_2d_ll_draw_pattern.inc"
 
 #define __API_COLOUR        rgb16
 #define __API_INT_TYPE      uint16_t
-#include "__arm_2d_draw_pattern.inc"
+#include "__arm_2d_ll_draw_pattern.inc"
 
 
 #define __API_COLOUR        rgb32
 #define __API_INT_TYPE      uint32_t
-#include "__arm_2d_draw_pattern.inc"
+#include "__arm_2d_ll_draw_pattern.inc"
 
 
 /*----------------------------------------------------------------------------*

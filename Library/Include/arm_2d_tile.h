@@ -21,8 +21,8 @@
  * Title:        arm_2d_tile.h
  * Description:  Public header file to contain the basic tile operations
  *
- * $Date:        27. Oct 2022
- * $Revision:    V.1.1.0
+ * $Date:        04. April 2023
+ * $Revision:    V.1.4.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */

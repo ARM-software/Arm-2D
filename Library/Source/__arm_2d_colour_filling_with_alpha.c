@@ -101,14 +101,14 @@ extern "C" {
 #define __API_INT_TYPE      uint8_t
 #define __API_PIXEL_BLENDING            __ARM_2D_PIXEL_BLENDING_GRAY8
             
-#include "__arm_2d_colour_filling_with_alpha.inc"
+#include "__arm_2d_ll_colour_filling_with_alpha.inc"
 
 
 #define __API_COLOUR        rgb565
 #define __API_INT_TYPE      uint16_t
 #define __API_PIXEL_BLENDING            __ARM_2D_PIXEL_BLENDING_RGB565
 
-#include "__arm_2d_colour_filling_with_alpha.inc"
+#include "__arm_2d_ll_colour_filling_with_alpha.inc"
 
 
 /*! adding support with c code template */
@@ -116,7 +116,7 @@ extern "C" {
 #define __API_INT_TYPE      uint32_t
 #define __API_PIXEL_BLENDING            __ARM_2D_PIXEL_BLENDING_CCCN888
 
-#include "__arm_2d_colour_filling_with_alpha.inc"
+#include "__arm_2d_ll_colour_filling_with_alpha.inc"
 
 
 /*----------------------------------------------------------------------------*

@@ -804,7 +804,7 @@ void __ARM_2D_FUNC(transform_with_opacity)(__arm_2d_param_copy_orig_t *ptParam,
 #   define get_pixel_colour_mask                   get_pixel_colour
 #   define transform_with_mask                     transform
 
-#   include "__arm_2d_meta_trans_with_masks.inc"
+#   include "__arm_2d_ll_meta_trans_with_masks.inc"
 
 #   define __API_MTWM_COLOUR                       __API_COLOUR
 #   define __API_MTWM_INT_TYPE                     __API_INT_TYPE
@@ -818,7 +818,7 @@ void __ARM_2D_FUNC(transform_with_opacity)(__arm_2d_param_copy_orig_t *ptParam,
 #   define get_pixel_colour_mask                   get_pixel_colour_with_opacity
 #   define transform_with_mask                     transform_with_opacity
 
-#   include "__arm_2d_meta_trans_with_masks.inc"
+#   include "__arm_2d_ll_meta_trans_with_masks.inc"
 #endif
 
 #define __API_MTWM_COLOUR                       __API_COLOUR
@@ -833,7 +833,7 @@ void __ARM_2D_FUNC(transform_with_opacity)(__arm_2d_param_copy_orig_t *ptParam,
 #define get_pixel_colour_mask                   get_pixel_colour_src_mask
 #define transform_with_mask                     transform_with_src_mask
 
-#include "__arm_2d_meta_trans_with_masks.inc"
+#include "__arm_2d_ll_meta_trans_with_masks.inc"
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 #   define __API_MTWM_COLOUR                        __API_COLOUR
@@ -848,7 +848,7 @@ void __ARM_2D_FUNC(transform_with_opacity)(__arm_2d_param_copy_orig_t *ptParam,
 #   define get_pixel_colour_mask                    get_pixel_colour_src_chn_mask
 #   define transform_with_mask                      transform_with_src_chn_mask
 
-#   include "__arm_2d_meta_trans_with_masks.inc"
+#   include "__arm_2d_ll_meta_trans_with_masks.inc"
 #endif
 
 #define __API_MTWM_COLOUR                       __API_COLOUR
@@ -864,7 +864,7 @@ void __ARM_2D_FUNC(transform_with_opacity)(__arm_2d_param_copy_orig_t *ptParam,
 #define get_pixel_colour_mask                   get_pixel_colour_src_mask_opa
 #define transform_with_mask                     transform_with_src_mask_and_opacity
 
-#include "__arm_2d_meta_trans_with_masks.inc"
+#include "__arm_2d_ll_meta_trans_with_masks.inc"
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 #   define __API_MTWM_COLOUR                        __API_COLOUR
@@ -880,7 +880,7 @@ void __ARM_2D_FUNC(transform_with_opacity)(__arm_2d_param_copy_orig_t *ptParam,
 #   define get_pixel_colour_mask                    get_pixel_colour_src_chn_mask_opa
 #   define transform_with_mask                      transform_with_src_chn_mask_and_opacity
 
-#   include "__arm_2d_meta_trans_with_masks.inc"
+#   include "__arm_2d_ll_meta_trans_with_masks.inc"
 #endif
 
 

@@ -21,8 +21,8 @@
  * Title:        arm-2d_helium.c
  * Description:  Acceleration extensions using Helium.
  *
- * $Date:        07. Feb 2023
- * $Revision:    V.0.13.7
+ * $Date:        04. April 2023
+ * $Revision:    V.0.13.8
  *
  * Target Processor:  Cortex-M cores with Helium
  *
@@ -94,20 +94,20 @@ void __arm_2d_helium_init(void)
 #define __API_INT_TYPE              uint8_t
 #define __API_INT_TYPE_BIT_NUM      8
 
-#include "__arm_2d_copy_helium.inc"
+#include "__arm_2d_ll_copy_helium.inc"
 
 #define __API_COLOUR                rgb16
 #define __API_INT_TYPE              uint16_t
 #define __API_INT_TYPE_BIT_NUM      16
 
-#include "__arm_2d_copy_helium.inc"
+#include "__arm_2d_ll_copy_helium.inc"
 
 
 #define __API_COLOUR                rgb32
 #define __API_INT_TYPE              uint32_t
 #define __API_INT_TYPE_BIT_NUM      32
 
-#include "__arm_2d_copy_helium.inc"
+#include "__arm_2d_ll_copy_helium.inc"
 
 
 #define __ARM_2D_COMPILATION_UNIT
@@ -1887,33 +1887,33 @@ static  uint32_t __draw_pattern_src_bitmask_rgb32[16] = {
 /*! adding support with c code template */
 #define __API_COLOUR        c8bit
 #define __API_ELT_SZ        8
-#include "__arm_2d_draw_pattern_helium.inc"
+#include "__arm_2d_ll_draw_pattern_helium.inc"
 
 
 #define __API_COLOUR        rgb16
 #define __API_ELT_SZ        16
-#include "__arm_2d_draw_pattern_helium.inc"
+#include "__arm_2d_ll_draw_pattern_helium.inc"
 
 
 #define __API_COLOUR        rgb32
 #define __API_ELT_SZ        32
-#include "__arm_2d_draw_pattern_helium.inc"
+#include "__arm_2d_ll_draw_pattern_helium.inc"
 
 
 
 #define __API_COLOUR        c8bit
 #define __API_ELT_SZ        8
-#include "__arm_2d_fill_colour_helium.inc"
+#include "__arm_2d_ll_fill_colour_helium.inc"
 
 
 #define __API_COLOUR        rgb16
 #define __API_ELT_SZ        16
-#include "__arm_2d_fill_colour_helium.inc"
+#include "__arm_2d_ll_fill_colour_helium.inc"
 
 
 #define __API_COLOUR        rgb32
 #define __API_ELT_SZ        32
-#include "__arm_2d_fill_colour_helium.inc"
+#include "__arm_2d_ll_fill_colour_helium.inc"
 
 
 /**
@@ -4914,50 +4914,50 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel_mask_opacity)(u
 
 #define __API_CAFWM_COLOUR                      gray8
 
-#include "__arm_2d_alpha_mask_helium.inc"
+#include "__arm_2d_ll_alpha_mask_helium.inc"
 
 #define __API_CAFWM_CFG_1_HORIZONTAL_LINE       1
 #define __API_CAFWM_COLOUR                      gray8
 
-#include "__arm_2d_alpha_mask_helium.inc"
+#include "__arm_2d_ll_alpha_mask_helium.inc"
 
 #define __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT   1
 #define __API_CAFWM_COLOUR                      gray8
 
-#include "__arm_2d_alpha_mask_helium.inc"
+#include "__arm_2d_ll_alpha_mask_helium.inc"
 
 
 
 #define __API_CAFWM_COLOUR                      rgb565
 
-#include "__arm_2d_alpha_mask_helium.inc"
+#include "__arm_2d_ll_alpha_mask_helium.inc"
 
 #define __API_CAFWM_CFG_1_HORIZONTAL_LINE       1
 #define __API_CAFWM_COLOUR                      rgb565
 
-#include "__arm_2d_alpha_mask_helium.inc"
+#include "__arm_2d_ll_alpha_mask_helium.inc"
 
 #define __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT   1
 #define __API_CAFWM_COLOUR                      rgb565
 
-#include "__arm_2d_alpha_mask_helium.inc"
+#include "__arm_2d_ll_alpha_mask_helium.inc"
 
 
 
 
 #define __API_CAFWM_COLOUR                      cccn888
 
-#include "__arm_2d_alpha_mask_helium.inc"
+#include "__arm_2d_ll_alpha_mask_helium.inc"
 
 #define __API_CAFWM_CFG_1_HORIZONTAL_LINE       1
 #define __API_CAFWM_COLOUR                      cccn888
 
-#include "__arm_2d_alpha_mask_helium.inc"
+#include "__arm_2d_ll_alpha_mask_helium.inc"
 
 #define __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT   1
 #define __API_CAFWM_COLOUR                      cccn888
 
-#include "__arm_2d_alpha_mask_helium.inc"
+#include "__arm_2d_ll_alpha_mask_helium.inc"
 
 
 

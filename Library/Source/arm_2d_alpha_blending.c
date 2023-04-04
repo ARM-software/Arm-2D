@@ -99,7 +99,7 @@ extern "C" {
 #define __API_INT_TYPE      uint8_t
 #define __API_PIXEL_BLENDING            __ARM_2D_PIXEL_BLENDING_GRAY8
             
-#include "__arm_2d_alpha_blending.inc"
+#include "__arm_2d_ll_alpha_blending.inc"
 
 
 #define __API_COLOUR        rgb565
@@ -107,7 +107,7 @@ extern "C" {
 #define __API_PIXEL_BLENDING            __ARM_2D_PIXEL_BLENDING_RGB565
 #define __PATCH_ALPHA_BLENDING
 
-#include "__arm_2d_alpha_blending.inc"
+#include "__arm_2d_ll_alpha_blending.inc"
 
 
 /*! adding support with c code template */
@@ -115,7 +115,7 @@ extern "C" {
 #define __API_INT_TYPE      uint32_t
 #define __API_PIXEL_BLENDING            __ARM_2D_PIXEL_BLENDING_CCCN888
 
-#include "__arm_2d_alpha_blending.inc"
+#include "__arm_2d_ll_alpha_blending.inc"
 
 
 #define __API_CAFWM_COLOUR                      gray8
@@ -123,7 +123,7 @@ extern "C" {
 #define __API_CAFWM_INT_TYPE_BIT_NUM            8
 #define __API_CAFWM_PIXEL_BLENDING              __ARM_2D_PIXEL_BLENDING_GRAY8
 
-#include "__arm_2d_alpha_mask.inc"
+#include "__arm_2d_ll_alpha_mask.inc"
 
 #define __API_CAFWM_CFG_1_HORIZONTAL_LINE       1
 #define __API_CAFWM_COLOUR                      gray8
@@ -131,7 +131,7 @@ extern "C" {
 #define __API_CAFWM_INT_TYPE_BIT_NUM            8
 #define __API_CAFWM_PIXEL_BLENDING              __ARM_2D_PIXEL_BLENDING_GRAY8
 
-#include "__arm_2d_alpha_mask.inc"
+#include "__arm_2d_ll_alpha_mask.inc"
 
 #define __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT   1
 #define __API_CAFWM_COLOUR                      gray8
@@ -139,7 +139,7 @@ extern "C" {
 #define __API_CAFWM_INT_TYPE_BIT_NUM            8
 #define __API_CAFWM_PIXEL_BLENDING              __ARM_2D_PIXEL_BLENDING_GRAY8
 
-#include "__arm_2d_alpha_mask.inc"
+#include "__arm_2d_ll_alpha_mask.inc"
 
 
 
@@ -148,7 +148,7 @@ extern "C" {
 #define __API_CAFWM_INT_TYPE_BIT_NUM            16
 #define __API_CAFWM_PIXEL_BLENDING              __ARM_2D_PIXEL_BLENDING_RGB565
 
-#include "__arm_2d_alpha_mask.inc"
+#include "__arm_2d_ll_alpha_mask.inc"
 
 #define __API_CAFWM_CFG_1_HORIZONTAL_LINE       1
 #define __API_CAFWM_COLOUR                      rgb565
@@ -156,7 +156,7 @@ extern "C" {
 #define __API_CAFWM_INT_TYPE_BIT_NUM            16
 #define __API_CAFWM_PIXEL_BLENDING              __ARM_2D_PIXEL_BLENDING_RGB565
 
-#include "__arm_2d_alpha_mask.inc"
+#include "__arm_2d_ll_alpha_mask.inc"
 
 #define __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT   1
 #define __API_CAFWM_COLOUR                      rgb565
@@ -164,7 +164,7 @@ extern "C" {
 #define __API_CAFWM_INT_TYPE_BIT_NUM            16
 #define __API_CAFWM_PIXEL_BLENDING              __ARM_2D_PIXEL_BLENDING_RGB565
 
-#include "__arm_2d_alpha_mask.inc"
+#include "__arm_2d_ll_alpha_mask.inc"
 
 
 #define __API_CAFWM_COLOUR                      cccn888
@@ -172,7 +172,7 @@ extern "C" {
 #define __API_CAFWM_INT_TYPE_BIT_NUM            32
 #define __API_CAFWM_PIXEL_BLENDING              __ARM_2D_PIXEL_BLENDING_CCCN888
     
-#include "__arm_2d_alpha_mask.inc"  
+#include "__arm_2d_ll_alpha_mask.inc"  
     
 #define __API_CAFWM_CFG_1_HORIZONTAL_LINE       1
 #define __API_CAFWM_COLOUR                      cccn888
@@ -180,7 +180,7 @@ extern "C" {
 #define __API_CAFWM_INT_TYPE_BIT_NUM            32
 #define __API_CAFWM_PIXEL_BLENDING              __ARM_2D_PIXEL_BLENDING_CCCN888
 
-#include "__arm_2d_alpha_mask.inc"
+#include "__arm_2d_ll_alpha_mask.inc"
 
 #define __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT   1
 #define __API_CAFWM_COLOUR                      cccn888
@@ -188,7 +188,7 @@ extern "C" {
 #define __API_CAFWM_INT_TYPE_BIT_NUM            32
 #define __API_CAFWM_PIXEL_BLENDING              __ARM_2D_PIXEL_BLENDING_CCCN888
 
-#include "__arm_2d_alpha_mask.inc"
+#include "__arm_2d_ll_alpha_mask.inc"
 
 
 #define __API_ABW_COLOUR                        gray8

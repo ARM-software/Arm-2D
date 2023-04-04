@@ -21,8 +21,8 @@
  * Title:        arm-2d_transform_helium.c
  * Description:  Acceleration extensions using Helium.
  *
- * $Date:        12. July 2022
- * $Revision:    V.0.1.5
+ * $Date:        04. April 2023
+ * $Revision:    V.0.1.6
  *
  * Target Processor:  Cortex-M cores with Helium
  *
@@ -1766,19 +1766,19 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_get_pixel_colour_with_alpha)(ARM_2D_PO
 #define __API_COLOUR_NAME           gray8
 
 
-#include "__arm_2d_transform_helium.inc"
+#include "__arm_2d_ll_transform_helium.inc"
 
 #define __API_INT_TYPE_BIT_NUM      16
 #define __API_COLOUR                ARM_2D_M_COLOUR_RGB565
 #define __API_COLOUR_NAME           rgb565
 
-#include "__arm_2d_transform_helium.inc"
+#include "__arm_2d_ll_transform_helium.inc"
 
 #define __API_INT_TYPE_BIT_NUM      32
 #define __API_COLOUR                ARM_2D_M_COLOUR_CCCN888
 #define __API_COLOUR_NAME           cccn888
 
-#include "__arm_2d_transform_helium.inc"
+#include "__arm_2d_ll_transform_helium.inc"
 
 
 #ifdef   __cplusplus
