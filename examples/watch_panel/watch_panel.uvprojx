@@ -340,7 +340,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0,EXTERANL_DELAY_MS_DECLARE="extern void delay_ms(uint32_t);",__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1,__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\common\platform;..\common\platform\lib;..\common\platform\mps3;..\common\platform\mps3\v2m_mps3;..\common\controls;..\..\Library\Include;.;..\..\Helper\Include;..\..\Library\Include\template;..\common\benchmark</IncludePath>
+              <IncludePath>..\common\platform;..\common\platform\mps3;..\common\platform\mps3\v2m_mps3;..\common\controls;..\..\Library\Include;.;..\..\Helper\Include;..\..\Library\Include\template;..\common\benchmark</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -353,7 +353,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <ClangAsOpt>4</ClangAsOpt>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -429,16 +429,6 @@
               <FileName>platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\platform\platform.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\platform\lib\perf_counter.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\common\platform\lib\perf_counter.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -706,26 +696,6 @@
               <FilePath>..\..\Library\Include\arm_2d_utils.h</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_alpha_blending.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_alpha_blending.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_copy.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_copy.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_draw_pattern.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_draw_pattern.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_fill_colour.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_fill_colour.inc</FilePath>
-            </File>
-            <File>
               <FileName>__arm_2d_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_core.c</FilePath>
@@ -734,16 +704,6 @@
               <FileName>__arm_2d_tile.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_tile.c</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_transform.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_transform.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_transform_helium.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_transform_helium.inc</FilePath>
             </File>
             <File>
               <FileName>arm_2d_transform.c</FileName>
@@ -764,11 +724,6 @@
               <FileName>__arm_2d_direct.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Library\Include\__arm_2d_direct.h</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_meta_trans_with_masks.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_trans_with_masks.inc</FilePath>
             </File>
             <File>
               <FileName>__arm_2d_transform_helium.c</FileName>
@@ -1275,13 +1230,16 @@
             </GroupArmAds>
           </GroupOption>
         </Group>
+        <Group>
+          <GroupName>::Utilities</GroupName>
+        </Group>
       </Groups>
     </Target>
     <Target>
       <TargetName>V2M-MPS2-CM4</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
+      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -1611,7 +1569,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>NDEBUG,GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1,__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\common\platform;..\common\platform\lib;..\..\Library\Include;.;..\..\Helper\Include;..\..\Library\Include\template;..\common\controls;..\common\platform\mps2;..\common\benchmark</IncludePath>
+              <IncludePath>..\common\platform;..\..\Library\Include;.;..\..\Helper\Include;..\..\Library\Include\template;..\common\controls;..\common\platform\mps2;..\common\benchmark</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1624,7 +1582,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <ClangAsOpt>4</ClangAsOpt>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -1700,16 +1658,6 @@
               <FileName>platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\platform\platform.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\platform\lib\perf_counter.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\common\platform\lib\perf_counter.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -1977,26 +1925,6 @@
               <FilePath>..\..\Library\Include\arm_2d_utils.h</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_alpha_blending.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_alpha_blending.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_copy.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_copy.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_draw_pattern.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_draw_pattern.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_fill_colour.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_fill_colour.inc</FilePath>
-            </File>
-            <File>
               <FileName>__arm_2d_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_core.c</FilePath>
@@ -2005,16 +1933,6 @@
               <FileName>__arm_2d_tile.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_tile.c</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_transform.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_transform.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_transform_helium.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_transform_helium.inc</FilePath>
             </File>
             <File>
               <FileName>arm_2d_transform.c</FileName>
@@ -2035,11 +1953,6 @@
               <FileName>__arm_2d_direct.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Library\Include\__arm_2d_direct.h</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_meta_trans_with_masks.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_trans_with_masks.inc</FilePath>
             </File>
             <File>
               <FileName>__arm_2d_transform_helium.c</FileName>
@@ -2615,13 +2528,16 @@
             </GroupArmAds>
           </GroupOption>
         </Group>
+        <Group>
+          <GroupName>::Utilities</GroupName>
+        </Group>
       </Groups>
     </Target>
     <Target>
       <TargetName>FastModel</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
+      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -2951,7 +2867,7 @@
               <MiscControls></MiscControls>
               <Define>__USE_FVP__,NDEBUG,GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1,__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\common\platform;..\common\platform\lib;..\..\Library\Include;.;..\..\Helper\Include;..\..\Library\Include\template;..\common\controls;..\common\platform\mps2;..\common\benchmark</IncludePath>
+              <IncludePath>..\common\platform;..\..\Library\Include;.;..\..\Helper\Include;..\..\Library\Include\template;..\common\controls;..\common\platform\mps2;..\common\benchmark</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2964,7 +2880,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <ClangAsOpt>4</ClangAsOpt>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -3039,16 +2955,6 @@
               <FileName>platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\platform\platform.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\platform\lib\perf_counter.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\common\platform\lib\perf_counter.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -3316,26 +3222,6 @@
               <FilePath>..\..\Library\Include\arm_2d_utils.h</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_alpha_blending.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_alpha_blending.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_copy.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_copy.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_draw_pattern.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_draw_pattern.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_fill_colour.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_fill_colour.inc</FilePath>
-            </File>
-            <File>
               <FileName>__arm_2d_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_core.c</FilePath>
@@ -3344,16 +3230,6 @@
               <FileName>__arm_2d_tile.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_tile.c</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_transform.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_transform.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_transform_helium.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_transform_helium.inc</FilePath>
             </File>
             <File>
               <FileName>arm_2d_transform.c</FileName>
@@ -3374,11 +3250,6 @@
               <FileName>__arm_2d_direct.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Library\Include\__arm_2d_direct.h</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_meta_trans_with_masks.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_trans_with_masks.inc</FilePath>
             </File>
             <File>
               <FileName>__arm_2d_transform_helium.c</FileName>
@@ -3885,13 +3756,16 @@
             </GroupArmAds>
           </GroupOption>
         </Group>
+        <Group>
+          <GroupName>::Utilities</GroupName>
+        </Group>
       </Groups>
     </Target>
     <Target>
       <TargetName>V2M-MPS2-CM33</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
+      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -4221,7 +4095,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>NDEBUG,GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1,__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\common\platform;..\common\platform\lib;..\..\Library\Include;.;..\..\Helper\Include;..\common\platform\mps2;..\..\Library\Include\template;;..\common\controls;..\common\benchmark</IncludePath>
+              <IncludePath>..\common\platform;..\..\Library\Include;.;..\..\Helper\Include;..\common\platform\mps2;..\..\Library\Include\template;;..\common\controls;..\common\benchmark</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4234,7 +4108,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <ClangAsOpt>4</ClangAsOpt>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -4310,16 +4184,6 @@
               <FileName>platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\platform\platform.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\platform\lib\perf_counter.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\common\platform\lib\perf_counter.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -4587,26 +4451,6 @@
               <FilePath>..\..\Library\Include\arm_2d_utils.h</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_alpha_blending.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_alpha_blending.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_copy.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_copy.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_draw_pattern.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_draw_pattern.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_fill_colour.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_fill_colour.inc</FilePath>
-            </File>
-            <File>
               <FileName>__arm_2d_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_core.c</FilePath>
@@ -4615,16 +4459,6 @@
               <FileName>__arm_2d_tile.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_tile.c</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_transform.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_transform.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_transform_helium.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_transform_helium.inc</FilePath>
             </File>
             <File>
               <FileName>arm_2d_transform.c</FileName>
@@ -4645,11 +4479,6 @@
               <FileName>__arm_2d_direct.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Library\Include\__arm_2d_direct.h</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_meta_trans_with_masks.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_trans_with_masks.inc</FilePath>
             </File>
             <File>
               <FileName>__arm_2d_transform_helium.c</FileName>
@@ -5156,13 +4985,16 @@
             </GroupArmAds>
           </GroupOption>
         </Group>
+        <Group>
+          <GroupName>::Utilities</GroupName>
+        </Group>
       </Groups>
     </Target>
     <Target>
       <TargetName>V2M-MPS3-CM55</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
+      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -5492,7 +5324,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>NDEBUG,LCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1,__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\common\platform;..\common\platform\lib;..\..\Library\Include;.;..\..\Helper\Include;..\common\platform\mps3;..\common\platform\mps3\v2m_mps3;..\..\Library\Include\template;;..\common\controls;..\common\benchmark</IncludePath>
+              <IncludePath>..\common\platform;..\..\Library\Include;.;..\..\Helper\Include;..\common\platform\mps3;..\common\platform\mps3\v2m_mps3;..\..\Library\Include\template;;..\common\controls;..\common\benchmark</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5581,16 +5413,6 @@
               <FileName>platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\platform\platform.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\platform\lib\perf_counter.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\common\platform\lib\perf_counter.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -5858,26 +5680,6 @@
               <FilePath>..\..\Library\Include\arm_2d_utils.h</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_alpha_blending.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_alpha_blending.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_copy.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_copy.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_draw_pattern.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_draw_pattern.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_fill_colour.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_fill_colour.inc</FilePath>
-            </File>
-            <File>
               <FileName>__arm_2d_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_core.c</FilePath>
@@ -5886,16 +5688,6 @@
               <FileName>__arm_2d_tile.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_tile.c</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_transform.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_transform.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_transform_helium.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_transform_helium.inc</FilePath>
             </File>
             <File>
               <FileName>arm_2d_transform.c</FileName>
@@ -5916,11 +5708,6 @@
               <FileName>__arm_2d_direct.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Library\Include\__arm_2d_direct.h</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_meta_trans_with_masks.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_trans_with_masks.inc</FilePath>
             </File>
             <File>
               <FileName>__arm_2d_transform_helium.c</FileName>
@@ -6496,13 +6283,16 @@
             </GroupArmAds>
           </GroupOption>
         </Group>
+        <Group>
+          <GroupName>::Utilities</GroupName>
+        </Group>
       </Groups>
     </Target>
     <Target>
       <TargetName>V2M-MPS2-CM0+</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
+      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -6832,7 +6622,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>NDEBUG,GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1,__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\common\platform;..\common\platform\lib;..\common\platform\mps2;..\common\controls;..\..\Library\Include;.;..\..\Helper\Include;..\..\Library\Include\template;..\common\benchmark</IncludePath>
+              <IncludePath>..\common\platform;..\common\platform\mps2;..\common\controls;..\..\Library\Include;.;..\..\Helper\Include;..\..\Library\Include\template;..\common\benchmark</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6845,7 +6635,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <ClangAsOpt>4</ClangAsOpt>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -6921,16 +6711,6 @@
               <FileName>platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\platform\platform.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\platform\lib\perf_counter.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\common\platform\lib\perf_counter.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -7198,26 +6978,6 @@
               <FilePath>..\..\Library\Include\arm_2d_utils.h</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_alpha_blending.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_alpha_blending.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_copy.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_copy.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_draw_pattern.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_draw_pattern.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_fill_colour.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_fill_colour.inc</FilePath>
-            </File>
-            <File>
               <FileName>__arm_2d_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_core.c</FilePath>
@@ -7226,16 +6986,6 @@
               <FileName>__arm_2d_tile.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_tile.c</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_transform.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_transform.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_transform_helium.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_transform_helium.inc</FilePath>
             </File>
             <File>
               <FileName>arm_2d_transform.c</FileName>
@@ -7256,11 +7006,6 @@
               <FileName>__arm_2d_direct.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Library\Include\__arm_2d_direct.h</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_meta_trans_with_masks.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_trans_with_masks.inc</FilePath>
             </File>
             <File>
               <FileName>__arm_2d_transform_helium.c</FileName>
@@ -7767,13 +7512,16 @@
             </GroupArmAds>
           </GroupOption>
         </Group>
+        <Group>
+          <GroupName>::Utilities</GroupName>
+        </Group>
       </Groups>
     </Target>
     <Target>
       <TargetName>V2M-MPS2-CM7</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
+      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -8103,7 +7851,7 @@
               <MiscControls>-Omax -Wno-nonportable-include-path</MiscControls>
               <Define>NDEBUG,GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1,__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\common\platform;..\common\platform\lib;..\common\platform\mps2;..\common\controls;..\..\Library\Include;.;..\..\Helper\Include;..\..\Library\Include\template;..\common\benchmark</IncludePath>
+              <IncludePath>..\common\platform;..\common\platform\mps2;..\common\controls;..\..\Library\Include;.;..\..\Helper\Include;..\..\Library\Include\template;..\common\benchmark</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -8116,7 +7864,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <ClangAsOpt>4</ClangAsOpt>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -8192,16 +7940,6 @@
               <FileName>platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\platform\platform.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\platform\lib\perf_counter.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\common\platform\lib\perf_counter.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -8469,26 +8207,6 @@
               <FilePath>..\..\Library\Include\arm_2d_utils.h</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_alpha_blending.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_alpha_blending.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_copy.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_copy.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_draw_pattern.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_draw_pattern.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_fill_colour.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_fill_colour.inc</FilePath>
-            </File>
-            <File>
               <FileName>__arm_2d_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_core.c</FilePath>
@@ -8497,16 +8215,6 @@
               <FileName>__arm_2d_tile.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_tile.c</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_transform.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_transform.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_transform_helium.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_transform_helium.inc</FilePath>
             </File>
             <File>
               <FileName>arm_2d_transform.c</FileName>
@@ -8527,11 +8235,6 @@
               <FileName>__arm_2d_direct.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Library\Include\__arm_2d_direct.h</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_meta_trans_with_masks.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_trans_with_masks.inc</FilePath>
             </File>
             <File>
               <FileName>__arm_2d_transform_helium.c</FileName>
@@ -9037,6 +8740,9 @@
               </Aads>
             </GroupArmAds>
           </GroupOption>
+        </Group>
+        <Group>
+          <GroupName>::Utilities</GroupName>
         </Group>
       </Groups>
     </Target>
@@ -9374,7 +9080,7 @@
               <MiscControls> -Wno-nonportable-include-path -Omax</MiscControls>
               <Define>__GLCD_CFG_SCEEN_WIDTH__=480,__GLCD_CFG_SCEEN_HEIGHT__=272,BENCHMARK_PFB_BLOCK_WIDTH=125,BENCHMARK_PFB_BLOCK_HEIGHT=120,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1,__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\common\platform;..\common\platform\lib;..\common\platform\stm32f746g-discovery;..\..\Library\Include;.;..\..\Helper\Include;..\..\Library\Include\template;..\common\controls;..\common\benchmark</IncludePath>
+              <IncludePath>..\common\platform;..\common\platform\stm32f746g-discovery;..\..\Library\Include;.;..\..\Helper\Include;..\..\Library\Include\template;..\common\controls;..\common\benchmark</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -9387,7 +9093,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <ClangAsOpt>4</ClangAsOpt>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -9463,16 +9169,6 @@
               <FileName>platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\platform\platform.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\platform\lib\perf_counter.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\common\platform\lib\perf_counter.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -9740,26 +9436,6 @@
               <FilePath>..\..\Library\Include\arm_2d_utils.h</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_alpha_blending.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_alpha_blending.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_copy.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_copy.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_draw_pattern.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_draw_pattern.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_fill_colour.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_fill_colour.inc</FilePath>
-            </File>
-            <File>
               <FileName>__arm_2d_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_core.c</FilePath>
@@ -9768,16 +9444,6 @@
               <FileName>__arm_2d_tile.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_tile.c</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_transform.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_transform.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_transform_helium.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_transform_helium.inc</FilePath>
             </File>
             <File>
               <FileName>arm_2d_transform.c</FileName>
@@ -9798,11 +9464,6 @@
               <FileName>__arm_2d_direct.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Library\Include\__arm_2d_direct.h</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_meta_trans_with_masks.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_trans_with_masks.inc</FilePath>
             </File>
             <File>
               <FileName>__arm_2d_transform_helium.c</FileName>
@@ -10341,6 +10002,9 @@
               </Aads>
             </GroupArmAds>
           </GroupOption>
+        </Group>
+        <Group>
+          <GroupName>::Utilities</GroupName>
         </Group>
       </Groups>
     </Target>
@@ -10678,7 +10342,7 @@
               <MiscControls>-Wno-padded -fdata-sections -Omax</MiscControls>
               <Define>__USE_FVP__,NDEBUG,LCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__USE_AN547__,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1,__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\common\platform;..\common\platform\lib;..\..\Library\Include;.;..\..\Helper\Include;..\common\platform\mps3;..\common\platform\mps3\v2m_mps3;..\..\Library\Include\template;..\common\controls;..\common\benchmark</IncludePath>
+              <IncludePath>..\common\platform;..\..\Library\Include;.;..\..\Helper\Include;..\common\platform\mps3;..\common\platform\mps3\v2m_mps3;..\..\Library\Include\template;..\common\controls;..\common\benchmark</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -10767,16 +10431,6 @@
               <FileName>platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\platform\platform.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\platform\lib\perf_counter.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\common\platform\lib\perf_counter.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -11113,26 +10767,6 @@
               <FilePath>..\..\Library\Include\arm_2d_utils.h</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_alpha_blending.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_alpha_blending.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_copy.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_copy.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_draw_pattern.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_draw_pattern.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_fill_colour.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_fill_colour.inc</FilePath>
-            </File>
-            <File>
               <FileName>__arm_2d_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_core.c</FilePath>
@@ -11141,16 +10775,6 @@
               <FileName>__arm_2d_tile.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_tile.c</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_transform.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_transform.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_transform_helium.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_transform_helium.inc</FilePath>
             </File>
             <File>
               <FileName>arm_2d_transform.c</FileName>
@@ -11171,11 +10795,6 @@
               <FileName>__arm_2d_direct.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Library\Include\__arm_2d_direct.h</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_meta_trans_with_masks.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_trans_with_masks.inc</FilePath>
             </File>
             <File>
               <FileName>__arm_2d_transform_helium.c</FileName>
@@ -11681,6 +11300,9 @@
         </Group>
         <Group>
           <GroupName>::Native Driver</GroupName>
+        </Group>
+        <Group>
+          <GroupName>::Utilities</GroupName>
         </Group>
       </Groups>
     </Target>
@@ -12018,7 +11640,7 @@
               <MiscControls></MiscControls>
               <Define>NDEBUG__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1,__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\common\platform;..\common\platform\lib;..\..\Library\Include;.;..\..\Helper\Include;..\common\platform\stm32f746g-discovery;..\..\Library\Include\template;..\common\controls;..\common\benchmark</IncludePath>
+              <IncludePath>..\common\platform;..\..\Library\Include;.;..\..\Helper\Include;..\common\platform\stm32f746g-discovery;..\..\Library\Include\template;..\common\controls;..\common\benchmark</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -12107,16 +11729,6 @@
               <FileName>platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\platform\platform.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\platform\lib\perf_counter.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\common\platform\lib\perf_counter.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -12384,26 +11996,6 @@
               <FilePath>..\..\Library\Include\arm_2d_utils.h</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_alpha_blending.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_alpha_blending.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_copy.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_copy.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_draw_pattern.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_draw_pattern.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_fill_colour.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_fill_colour.inc</FilePath>
-            </File>
-            <File>
               <FileName>__arm_2d_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_core.c</FilePath>
@@ -12412,16 +12004,6 @@
               <FileName>__arm_2d_tile.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_tile.c</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_transform.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_transform.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_transform_helium.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_transform_helium.inc</FilePath>
             </File>
             <File>
               <FileName>arm_2d_transform.c</FileName>
@@ -12442,11 +12024,6 @@
               <FileName>__arm_2d_direct.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Library\Include\__arm_2d_direct.h</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_meta_trans_with_masks.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_trans_with_masks.inc</FilePath>
             </File>
             <File>
               <FileName>__arm_2d_transform_helium.c</FileName>
@@ -12695,6 +12272,57 @@
               <FileName>arm_2d_disp_adapter.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\template\arm_2d_disp_adapter.c</FilePath>
+              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>2</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>0</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <uC99>2</uC99>
+                    <uGnu>2</uGnu>
+                    <useXO>2</useXO>
+                    <v6Lang>0</v6Lang>
+                    <v6LangP>0</v6LangP>
+                    <vShortEn>2</vShortEn>
+                    <vShortWch>2</vShortWch>
+                    <v6Lto>2</v6Lto>
+                    <v6WtE>2</v6WtE>
+                    <v6Rtti>2</v6Rtti>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
             </File>
             <File>
               <FileName>arm_2d_disp_adapter.h</FileName>
@@ -12710,6 +12338,57 @@
               <FileName>arm_2d_scene.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Helper\Source\template\arm_2d_scene.c</FilePath>
+              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>2</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>0</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <uC99>2</uC99>
+                    <uGnu>2</uGnu>
+                    <useXO>2</useXO>
+                    <v6Lang>0</v6Lang>
+                    <v6LangP>0</v6LangP>
+                    <vShortEn>2</vShortEn>
+                    <vShortWch>2</vShortWch>
+                    <v6Lto>2</v6Lto>
+                    <v6WtE>2</v6WtE>
+                    <v6Rtti>2</v6Rtti>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
             </File>
             <File>
               <FileName>arm_2d_helper_list.h</FileName>
@@ -12883,6 +12562,9 @@
               </Aads>
             </GroupArmAds>
           </GroupOption>
+        </Group>
+        <Group>
+          <GroupName>::Utilities</GroupName>
         </Group>
       </Groups>
     </Target>
@@ -13220,7 +12902,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>NDEBUG,LCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__=1,__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__=1,__RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER__</Define>
               <Undefine></Undefine>
-              <IncludePath>..\common\platform;..\common\platform\lib;..\..\Library\Include;.;..\..\Helper\Include;..\common\platform\mps3;..\common\platform\mps3\v2m_mps3;..\..\Library\Include\template;..\common\controls;..\common\benchmark</IncludePath>
+              <IncludePath>..\common\platform;..\..\Library\Include;.;..\..\Helper\Include;..\common\platform\mps3;..\common\platform\mps3\v2m_mps3;..\..\Library\Include\template;..\common\controls;..\common\benchmark</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -13309,16 +12991,6 @@
               <FileName>platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\platform\platform.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\common\platform\lib\perf_counter.h</FilePath>
-            </File>
-            <File>
-              <FileName>perf_counter.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\common\platform\lib\perf_counter.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -13586,26 +13258,6 @@
               <FilePath>..\..\Library\Include\arm_2d_utils.h</FilePath>
             </File>
             <File>
-              <FileName>__arm_2d_alpha_blending.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_alpha_blending.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_copy.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_copy.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_draw_pattern.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_draw_pattern.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_fill_colour.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_fill_colour.inc</FilePath>
-            </File>
-            <File>
               <FileName>__arm_2d_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_core.c</FilePath>
@@ -13614,16 +13266,6 @@
               <FileName>__arm_2d_tile.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Library\Source\__arm_2d_tile.c</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_transform.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_transform.inc</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_transform_helium.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_transform_helium.inc</FilePath>
             </File>
             <File>
               <FileName>arm_2d_transform.c</FileName>
@@ -13644,11 +13286,6 @@
               <FileName>__arm_2d_direct.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Library\Include\__arm_2d_direct.h</FilePath>
-            </File>
-            <File>
-              <FileName>__arm_2d_meta_trans_with_masks.inc</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Library\Source\__arm_2d_meta_trans_with_masks.inc</FilePath>
             </File>
             <File>
               <FileName>__arm_2d_transform_helium.c</FileName>
@@ -14275,6 +13912,9 @@
             </GroupArmAds>
           </GroupOption>
         </Group>
+        <Group>
+          <GroupName>::Utilities</GroupName>
+        </Group>
       </Groups>
     </Target>
   </Targets>
@@ -14456,6 +14096,22 @@
           <targetInfo name="AN547-Cortex-M55_r0"/>
         </targetInfos>
       </component>
+      <component Cclass="Utilities" Cgroup="perf_counter" Csub="Core" Cvariant="Source" Cvendor="GorgonMeducer" Cversion="2.1.0" condition="CMSIS-CORE">
+        <package name="perf_counter" schemaVersion="1.4" url="https://raw.githubusercontent.com/GorgonMeducer/perf_counter/CMSIS-Pack/cmsis-pack/" vendor="GorgonMeducer" version="2.1.0"/>
+        <targetInfos>
+          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
       <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="Event Recorder" Cvariant="DAP" Cvendor="Keil" Cversion="1.5.1" condition="Cortex-M Device">
         <package name="ARM_Compiler" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="Keil" version="1.7.2"/>
         <targetInfos>
@@ -14501,7 +14157,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
         </targetInfos>
       </component>
-      <component Capiversion="2.1.0" Cclass="CMSIS Driver" Cgroup="USART" Cvendor="Keil" Cversion="1.0.3" condition="CMSDK CMSIS">
+      <component Capiversion="2.1.0" Cclass="CMSIS Driver" Cgroup="USART" Cvendor="Keil" Cversion="1.0.3" condition="CMSDK CMSIS" isTargetSpecific="1">
         <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
         <targetInfos>
           <targetInfo name="FastModel">
@@ -14526,7 +14182,7 @@
           </targetInfo>
         </targetInfos>
       </component>
-      <component Capiversion="2.1.0" Cclass="CMSIS Driver" Cgroup="USART" Cvendor="Keil" Cversion="1.0.0" condition="IOTKit CMSIS">
+      <component Capiversion="2.1.0" Cclass="CMSIS Driver" Cgroup="USART" Cvendor="Keil" Cversion="1.0.0" condition="IOTKit CMSIS" isTargetSpecific="1">
         <package name="V2M-MPS2_IOTKit_BSP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.4.2"/>
         <targetInfos>
           <targetInfo name="V2M-MPS2-CM33">
@@ -14536,7 +14192,7 @@
           </targetInfo>
         </targetInfos>
       </component>
-      <component Capiversion="2.1.0" Cclass="CMSIS Driver" Cgroup="USART" Cvendor="Keil" Cversion="1.19.0" condition="STM32F7 CMSIS_Driver USART">
+      <component Capiversion="2.1.0" Cclass="CMSIS Driver" Cgroup="USART" Cvendor="Keil" Cversion="1.19.0" condition="STM32F7 CMSIS_Driver USART" isTargetSpecific="1">
         <package name="STM32F7xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.15.0"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery">
@@ -14546,7 +14202,7 @@
           </targetInfo>
           <targetInfo name="STM32F746G-Discovery-AC5">
             <c>
-              <MiscControls>-w</MiscControls>
+              <MiscControls>-W</MiscControls>
             </c>
           </targetInfo>
         </targetInfos>
