@@ -47,7 +47,7 @@ extern "C" {
 // <i> Note that enabling this feature suffers a non-negligible performance drop.
 // <i> This feature is disabled by default.
 #ifndef __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
-#   define __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__                      0
+#   define __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__                      1
 #endif
 
 // <q>Enable support for accessing individual colour channels
@@ -75,64 +75,137 @@ extern "C" {
 // <i> This option is used to remove calibration in angle computations to gain a better performance, small error might be noticible for angles like 90, 180, 270 etc.
 //#define __ARM_2D_CFG_UNSAFE_NO_SATURATION_IN_FIXED_POINT__ 
 // </c>
+
+
+// <q> Optimize the scaler version of transform operations for pointer-like resources
+// <i> This feature is enabled by default. There is no guarantee that the performance will increase or decrease. It is all depends your applications. In most of the case, enabling it helps.
+// <i> This feature has no meaning when the anti-alias transform is disabled or the helium acceleration is available.
+#ifndef __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__
+#   define __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__     1
+#endif
 // </h>
 
 
 // <h>Extra Components
 // =======================
-// 
+//
+#ifndef __GLCD_CFG_COLOUR_DEPTH__
 // <o __GLCD_CFG_COLOUR_DEPTH__> Select the screen colour depth
 //     <8=>     8 Bits
 //     <16=>    16Bits
 //     <32=>    32Bits
 // <i> The colour depth of your LCD
-#define __GLCD_CFG_COLOUR_DEPTH__               16
+// <i> Default: 16
+#   define __GLCD_CFG_COLOUR_DEPTH__                                    16
+#endif
 
 // <o>Width of the screen <8-32767>
 // <i> The width of your screen
 // <i> Default: 320
 #ifndef __GLCD_CFG_SCEEN_WIDTH__
-#   define __GLCD_CFG_SCEEN_WIDTH__             320
+#   define __GLCD_CFG_SCEEN_WIDTH__                                     320
 #endif
 
 // <o>Height of the screen <8-32767>
 // <i> The height of your screen
 // <i> Default: 240
 #ifndef __GLCD_CFG_SCEEN_HEIGHT__
-#   define __GLCD_CFG_SCEEN_HEIGHT__            240
+#   define __GLCD_CFG_SCEEN_HEIGHT__                                    240
 #endif
 
 // <o> The size of the LCD printf text buffer <16-65535>
 // <i> The text buffer size for the lcd printf service. It determins how many character you can use in one printf string.
 #ifndef __LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__
-#   define __LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__  64
+#   define __LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__                          64
 #endif
 
 // <h>Benchmark
-// <o>Width of the PFB block
+// <o>Width of the PFB block <8-32767>
 // <i> The width of your PFB block size used in arm-2d benchmark
 #ifndef BENCHMARK_PFB_BLOCK_WIDTH
-#   define BENCHMARK_PFB_BLOCK_WIDTH            320
+#   define BENCHMARK_PFB_BLOCK_WIDTH                                    320
 #endif
 
-// <o>Height of the PFB block
+// <o>Height of the PFB block <8-32767>
 // <i> The height of your PFB block size used in arm-2d benchmark
 #ifndef BENCHMARK_PFB_BLOCK_HEIGHT
-#   define BENCHMARK_PFB_BLOCK_HEIGHT           240
+#   define BENCHMARK_PFB_BLOCK_HEIGHT                                   240
+#endif
+
+// <o>PFB Block Count <1-65535>
+// <i> The number of blocks in the PFB pool.
+#ifndef BENCHMARK_PFB_HEAP_SIZE
+#   define BENCHMARK_PFB_HEAP_SIZE                                      1
+#endif
+
+// <o>Width Alignment of generated PFBs
+//     <0=>     1 pixel
+//     <1=>     2 pixel
+//     <2=>     4 pixel
+//     <3=>     8 pixel
+//     <4=>    16 pixel
+//     <5=>    32 pixel
+//     <6=>    64 pixel
+//     <7=>   128 pixel
+// <i> Make sure the x and width of the PFB is always aligned to 2^n pixels
+#ifndef __BENCHMARK_PFB_PIXEL_ALIGN_WIDTH__
+#   define __BENCHMARK_PFB_PIXEL_ALIGN_WIDTH__                          0
+#endif
+
+// <o>Height Alignment of generated PFBs
+//     <0=>     1 pixel
+//     <1=>     2 pixel
+//     <2=>     4 pixel
+//     <3=>     8 pixel
+//     <4=>    16 pixel
+//     <5=>    32 pixel
+//     <6=>    64 pixel
+//     <7=>   128 pixel
+// <i> Make sure the y and height of the PFB is always aligned to 2^n pixels
+#ifndef __BENCHMARK_PFB_PIXEL_ALIGN_HEIGHT__
+#   define __BENCHMARK_PFB_PIXEL_ALIGN_HEIGHT__                         0
+#endif
+
+// <q> Swap the high and low bytes
+// <i> Swap the high and low bytes of the 16bit-pixels
+#ifndef __ARM_2D_CFG_BENCHMARK_SWAP_RGB16_HIGH_AND_LOW_BYTES__
+#   define __ARM_2D_CFG_BENCHMARK_SWAP_RGB16_HIGH_AND_LOW_BYTES__       0
+#endif
+
+// <q>Enable the helper service for Asynchronous Flushing
+// <i> Please select this option when using asynchronous flushing, e.g. DMA + ISR 
+#ifndef __ARM_2D_CFG_BENCHMARK_ENABLE_ASYNC_FLUSHING__
+#   define __ARM_2D_CFG_BENCHMARK_ENABLE_ASYNC_FLUSHING__               0
 #endif
 
 // <o>Number of iterations <1-2000>
-// <i> run number of iterations used in arm-2d benchmark before calculate the result.
+// <i> run number of iterations in arm-2d benchmark before calculating the result.
 #ifndef ITERATION_CNT
-#   define ITERATION_CNT                        1000
+#   define ITERATION_CNT                                                1000
 #endif
 
 // <q>Use Tiny mode to run benchmark
 // <i> Enable this mode to reduce the benchmark memory footprint (removing background picture etc.)
 // <i> This feature is disabled by default.
 #ifndef __ARM_2D_CFG_BENCHMARK_TINY_MODE__
-#   define __ARM_2D_CFG_BENCHMARK_TINY_MODE__   0
+#   define __ARM_2D_CFG_BENCHMARK_TINY_MODE__               0
 #endif
+
+// <q> Enable Stopwatch mode in the Benchmark:Watch-panel
+// <i> Only update the second-hand (i.e. red pointer) every second in the watch-panel demo
+// <i> This feature is disabled by default.
+#ifndef __ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__
+#   define __ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__        0
+#endif
+
+
+// <q> Exit benchmark when finished
+// <i> Exit the arm_2d_run_benchmark() after running specified iterations
+// <i> This feature is disabled by default.
+#ifndef __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
+#   define __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__        0
+#endif
+
 //</h>
 // </h>
 

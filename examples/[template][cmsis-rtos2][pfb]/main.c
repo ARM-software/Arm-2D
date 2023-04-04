@@ -165,13 +165,13 @@ ARM_NOINIT
 static task_cycle_info_agent_t s_tArm2DTaskInfoAgent;
 
 __OVERRIDE_WEAK 
-void arm_2d_helper_perf_counter_start(void)
+void __arm_2d_helper_perf_counter_start(int64_t *plTimestamp)
 {
     start_task_cycle_counter(&s_tArm2DTaskInfo);
 }
 
 __OVERRIDE_WEAK 
-int32_t arm_2d_helper_perf_counter_stop(void)
+int32_t __arm_2d_helper_perf_counter_stop(int64_t *plTimestamp)
 {
     return stop_task_cycle_counter(&s_tArm2DTaskInfo);
 }

@@ -21,8 +21,8 @@
  * Title:        arm-2d.c
  * Description:  Tables for pixel pipeline OPs
  *
- * $Date:        11. Aug 2022
- * $Revision:    V.1.0.2
+ * $Date:        25. Nov 2022
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -34,7 +34,7 @@
 
 #include "arm_2d.h"
 #include "__arm_2d_impl.h"
-
+#include <stdlib.h>
 
 #define __ARM_2D_COMPILATION_UNIT
 #include "../Source/__arm_2d_core.c"
@@ -147,6 +147,23 @@ void arm_2d_init(void)
     __arm_2d_helium_init();                                             
     __arm_2d_cde_init();                                                
     __arm_2d_acc_init();                                                
+}
+
+__WEAK
+void *__arm_2d_allocate_scratch_memory( uint32_t wSize, 
+                                        uint_fast8_t nAlign,
+                                        arm_2d_mem_type_t tType)
+{
+    ARM_2D_UNUSED(nAlign);
+    ARM_2D_UNUSED(tType);
+
+    /* ensure nAlign is 2^n */
+    assert((((~nAlign) + 1) & nAlign) == nAlign);
+
+    void *pBuff = malloc(wSize);
+    assert(0 == ((uintptr_t)pBuff & (nAlign - 1)));
+    
+    return pBuff;
 }
 
 #ifdef   __cplusplus

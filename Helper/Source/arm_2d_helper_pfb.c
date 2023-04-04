@@ -127,7 +127,7 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
     this.Adapter.wPFBPixelCount 
         = this.tCFG.FrameBuffer.tFrameSize.iWidth
         * this.tCFG.FrameBuffer.tFrameSize.iHeight;
-		
+
     /* make sure the width of the pfb fulfill the pixel-width-alignment 
      * requirement 
      */
@@ -586,7 +586,7 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                     } else {
                         this.Adapter.tFrameSize.iHeight = iHeight;
                     }
-										
+
                 } else {
                     // reset adapter frame size
                     this.Adapter.tFrameSize = this.tCFG.FrameBuffer.tFrameSize;

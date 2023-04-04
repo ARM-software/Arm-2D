@@ -280,30 +280,32 @@ void example_gui_on_refresh_evt_handler(const arm_2d_tile_t *ptFrameBuffer)
 }
 
 
-void example_gui_refresh(const arm_2d_tile_t *ptFrameBuffer, bool bIsNewFrame)
+void example_gui_refresh(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
 {
-    arm_2d_fill_colour(ptFrameBuffer, NULL, GLCD_COLOR_NAVY);
+    arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_NAVY);
 
-    arm_2d_align_centre(ptFrameBuffer->tRegion, s_tBigImage.tTile.tRegion.tSize) {
-        arm_2d_tile_copy(   &s_tBigImage.tTile,     /* source tile */
-                            ptFrameBuffer,          /* target frame buffer */
-                            &__centre_region, 
-                            ARM_2D_CP_MODE_COPY);
+    arm_2d_canvas(ptTile, __canvas) {
+        arm_2d_align_centre(__canvas, s_tBigImage.tTile.tRegion.tSize) {
+            arm_2d_tile_copy(   &s_tBigImage.tTile,     /* source tile */
+                                ptTile,          /* target frame buffer */
+                                &__centre_region, 
+                                ARM_2D_CP_MODE_COPY);
+
+            arm_2d_op_wait_async(NULL);
+
+            arm_2d_tile_copy(   &c_tChildImage,         /* source tile */
+                                ptTile,          /* target frame buffer */
+                                &__centre_region, 
+                                ARM_2D_CP_MODE_XY_MIRROR);
+        }
 
         arm_2d_op_wait_async(NULL);
 
-        arm_2d_tile_copy(   &c_tChildImage,         /* source tile */
-                            ptFrameBuffer,          /* target frame buffer */
-                            &__centre_region, 
-                            ARM_2D_CP_MODE_XY_MIRROR);
+        busy_wheel2_show(ptTile, bIsNewFrame);
+        //spinning_wheel_show(ptFrameBuffer, bIsNewFrame);
     }
-
-    arm_2d_op_wait_async(NULL);
-
-    busy_wheel2_show(ptFrameBuffer, bIsNewFrame);
-    //spinning_wheel_show(ptFrameBuffer, bIsNewFrame);
-
-    example_gui_on_refresh_evt_handler(ptFrameBuffer);
+    
+    example_gui_on_refresh_evt_handler(ptTile);
     
     arm_2d_op_wait_async(NULL);
 }
