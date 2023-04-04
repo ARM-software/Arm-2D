@@ -65,26 +65,26 @@ void bsp_1ms_event_handler(void)
 {}
 
 
-/// Setup timer hardware.
-/// \return       status (1=Success, 0=Failure)
-uint32_t EventRecorderTimerSetup (void)
-{
-    return 1;
-}
+///// Setup timer hardware.
+///// \return       status (1=Success, 0=Failure)
+//uint32_t EventRecorderTimerSetup (void)
+//{
+//    return 1;
+//}
 
-/// Get timer frequency.
-/// \return       timer frequency in Hz
-uint32_t EventRecorderTimerGetFreq (void)
-{
-    return SystemCoreClock;
-}
+///// Get timer frequency.
+///// \return       timer frequency in Hz
+//uint32_t EventRecorderTimerGetFreq (void)
+//{
+//    return SystemCoreClock;
+//}
 
-/// Get timer count.
-/// \return       timer count (32-bit)
-uint32_t EventRecorderTimerGetCount (void)
-{
-    return get_system_ticks();
-}
+///// Get timer count.
+///// \return       timer count (32-bit)
+//uint32_t EventRecorderTimerGetCount (void)
+//{
+//    return get_system_ticks();
+//}
 
 #ifdef RTE_CMSIS_RTOS2_RTX5
 void ARM_WRAP(osRtxTick_Handler)(void)

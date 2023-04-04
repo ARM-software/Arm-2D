@@ -58,6 +58,8 @@
 #   pragma clang diagnostic ignored "-Wpedantic"
 #   pragma clang diagnostic ignored "-Wcovered-switch-default"
 #   pragma clang diagnostic ignored "-Wswitch-enum"
+#elif __IS_COMPILER_ARM_COMPILER_5__
+#   pragma diag_suppress 188,546
 #elif defined(__IS_COMPILER_GCC__)
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wstrict-aliasing"
