@@ -16,6 +16,17 @@
  * limitations under the License.
  */
 
+/* ----------------------------------------------------------------------
+ * Project:      Arm-2D Library
+ * Title:        #include "arm_2d_scenes.h"
+ * Description:  Public header file to include all header files of user defined scenes 
+ *
+ * $Date:        05. April 2023
+ * $Revision:    V.1.1.0
+ *
+ * Target Processor:  Cortex-M cores
+ * -------------------------------------------------------------------- */
+
 #ifndef __ARM_2D_SCENES_H__
 #define __ARM_2D_SCENES_H__
 
@@ -23,84 +34,124 @@
 
 #include "RTE_Components.h"
 
-#if defined(RTE_Acceleration_Arm_2D_Scene0)
+#if defined(RTE_Acceleration_Arm_2D_Scene0) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE0__)
     #include "arm_2d_scene_0.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Scene1)
+#if defined(RTE_Acceleration_Arm_2D_Scene1) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE1__)
     #include "arm_2d_scene_1.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Scene2)
+#if defined(RTE_Acceleration_Arm_2D_Scene2) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE2__)
     #include "arm_2d_scene_2.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Scene3)
+#if defined(RTE_Acceleration_Arm_2D_Scene3) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE3__)
     #include "arm_2d_scene_3.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Scene4)
+#if defined(RTE_Acceleration_Arm_2D_Scene4) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE4__)
     #include "arm_2d_scene_4.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Scene5)
+#if defined(RTE_Acceleration_Arm_2D_Scene5) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE5__)
     #include "arm_2d_scene_5.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Scene6)
+#if defined(RTE_Acceleration_Arm_2D_Scene6) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE6__)
     #include "arm_2d_scene_6.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Scene7)
+#if defined(RTE_Acceleration_Arm_2D_Scene7) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE7__)
     #include "arm_2d_scene_7.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Scene8)
+#if defined(RTE_Acceleration_Arm_2D_Scene8) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE8__)
     #include "arm_2d_scene_8.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Scene9)
+#if defined(RTE_Acceleration_Arm_2D_Scene9) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE9__)
     #include "arm_2d_scene_9.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Scene10)
+#if defined(RTE_Acceleration_Arm_2D_Scene10) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE10__)
     #include "arm_2d_scene_10.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Scene11)
+#if defined(RTE_Acceleration_Arm_2D_Scene11) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE11__)
     #include "arm_2d_scene_11.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Scene12)
+#if defined(RTE_Acceleration_Arm_2D_Scene12) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE12__)
     #include "arm_2d_scene_12.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Scene13)
+#if defined(RTE_Acceleration_Arm_2D_Scene13) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE13__)
     #include "arm_2d_scene_13.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Scene14)
+#if defined(RTE_Acceleration_Arm_2D_Scene14) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE14__)
     #include "arm_2d_scene_14.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Scene15)
+#if defined(RTE_Acceleration_Arm_2D_Scene15) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE15__)
     #include "arm_2d_scene_15.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Scene16)
+#if defined(RTE_Acceleration_Arm_2D_Scene16) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE16__)
     #include "arm_2d_scene_16.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Scene17)
+#if defined(RTE_Acceleration_Arm_2D_Scene17) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE17__)
     #include "arm_2d_scene_17.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Scene18)
+#if defined(RTE_Acceleration_Arm_2D_Scene18) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE28__)
     #include "arm_2d_scene_18.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Scene19)
+#if defined(RTE_Acceleration_Arm_2D_Scene19) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE19__)
     #include "arm_2d_scene_19.h"
+#endif
+
+#if defined(RTE_Acceleration_Arm_2D_Scene20) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE20__)
+    #include "arm_2d_scene_20.h"
+#endif
+
+#if defined(RTE_Acceleration_Arm_2D_Scene21) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE21__)
+    #include "arm_2d_scene_21.h"
+#endif
+
+#if defined(RTE_Acceleration_Arm_2D_Scene22) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE22__)
+    #include "arm_2d_scene_22.h"
+#endif
+
+#if defined(RTE_Acceleration_Arm_2D_Scene23) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE23__)
+    #include "arm_2d_scene_23.h"
+#endif
+
+#if defined(RTE_Acceleration_Arm_2D_Scene24) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE24__)
+    #include "arm_2d_scene_24.h"
+#endif
+
+#if defined(RTE_Acceleration_Arm_2D_Scene25) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE25__)
+    #include "arm_2d_scene_25.h"
+#endif
+
+#if defined(RTE_Acceleration_Arm_2D_Scene26) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE26__)
+    #include "arm_2d_scene_26.h"
+#endif
+
+#if defined(RTE_Acceleration_Arm_2D_Scene27) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE27__)
+    #include "arm_2d_scene_27.h"
+#endif
+
+#if defined(RTE_Acceleration_Arm_2D_Scene28) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE28__)
+    #include "arm_2d_scene_28.h"
+#endif
+
+#if defined(RTE_Acceleration_Arm_2D_Scene29) || defined(__RTE_ACCELERTATION_ARM_2D_SCENE29__)
+    #include "arm_2d_scene_29.h"
 #endif
 
 #if defined(RTE_Acceleration_Arm_2D_Scene30)

@@ -18,11 +18,11 @@
 
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
- * Title:        #include "arm_2d_dis_adapters.h"
+ * Title:        #include "arm_2d_disp_adapters.h"
  * Description:  Public header file to include all display adapter header files
  *
- * $Date:        12. Aug 2022
- * $Revision:    V.1.0.0
+ * $Date:        05. April 2023
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -32,35 +32,35 @@
 
 /*============================ INCLUDES ======================================*/
 
-#ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter0
+#if defined(RTE_Acceleration_Arm_2D_Helper_Disp_Adapter0) || defined(__RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER0__)
 #   include "arm_2d_disp_adapter_0.h"
 #endif
 
-#ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter1
+#if defined(RTE_Acceleration_Arm_2D_Helper_Disp_Adapter1) || defined(__RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER1__)
 #   include "arm_2d_disp_adapter_1.h"
 #endif
 
-#ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter2
+#if defined(RTE_Acceleration_Arm_2D_Helper_Disp_Adapter2) || defined(__RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER2__)
 #   include "arm_2d_disp_adapter_2.h"
 #endif
 
-#ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter3
+#if defined(RTE_Acceleration_Arm_2D_Helper_Disp_Adapter3) || defined(__RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER3__)
 #   include "arm_2d_disp_adapter_3.h"
 #endif
 
-#ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter4
+#if defined(RTE_Acceleration_Arm_2D_Helper_Disp_Adapter4) || defined(__RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER4__)
 #   include "arm_2d_disp_adapter_4.h"
 #endif
 
-#ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter5
+#if defined(RTE_Acceleration_Arm_2D_Helper_Disp_Adapter5) || defined(__RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER5__)
 #   include "arm_2d_disp_adapter_5.h"
 #endif
 
-#ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter6
+#if defined(RTE_Acceleration_Arm_2D_Helper_Disp_Adapter6) || defined(__RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER6__)
 #   include "arm_2d_disp_adapter_6.h"
 #endif
 
-#ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter7
+#if defined(RTE_Acceleration_Arm_2D_Helper_Disp_Adapter7) || defined(__RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER7__)
 #   include "arm_2d_disp_adapter_7.h"
 #endif
 

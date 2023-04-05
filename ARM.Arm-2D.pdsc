@@ -192,6 +192,7 @@
           <RTE_Components_h>
 
 #define RTE_Acceleration_Arm_2D
+#define __RTE_ACCELERATION_ARM_2D__     /* this macro is deprecated, please use the macro above in your code */
           </RTE_Components_h>
           
           <Pre_Include_Global_h>
@@ -240,25 +241,27 @@
           </RTE_Components_h>
         </component>
         
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cversion="1.5.7" condition="Arm-2D-Helper" maxInstances="8">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cversion="1.5.8" condition="Arm-2D-Helper" maxInstances="8">
           <description>The Display Adapter.</description>
           <files>
-            <file category="sourceC"     name="Helper/Source/template/arm_2d_disp_adapter.c" attr="config" version="1.5.7" />
-            <file category="header"      name="Helper/Include/template/arm_2d_disp_adapter.h" attr="config" version="1.5.7" />
+            <file category="sourceC"     name="Helper/Source/template/arm_2d_disp_adapter.c" attr="config" version="1.5.8" />
+            <file category="header"      name="Helper/Include/template/arm_2d_disp_adapter.h" attr="config" version="1.5.8" />
           </files>
           <RTE_Components_h>
     #define RTE_Acceleration_Arm_2D_Helper_Disp_Adapter%Instance%
+    #define __RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER%Instance%__  /* this macro is deprecated, please use the macro above in your code */
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cversion="1.1.6" condition="Arm-2D-Helper" maxInstances="1000">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cversion="1.1.7" condition="Arm-2D-Helper" maxInstances="1000">
           <description>A template for scene</description>
           <files>
-            <file category="sourceC"     name="Helper/Source/template/arm_2d_scene.c" attr="config" version="1.1.6" />
-            <file category="header"      name="Helper/Include/template/arm_2d_scene.h" attr="config" version="1.1.6" />
+            <file category="sourceC"     name="Helper/Source/template/arm_2d_scene.c" attr="config" version="1.1.7" />
+            <file category="header"      name="Helper/Include/template/arm_2d_scene.h" attr="config" version="1.1.7" />
           </files>
           <RTE_Components_h>
     #define RTE_Acceleration_Arm_2D_Scene%Instance%
+    #define __RTE_ACCELERATION_ARM_2D_SCENE%Instance%__    /* this macro is deprecated, please use the macro above in your code */
           </RTE_Components_h>
         </component>
 
