@@ -21,6 +21,7 @@
 #include "./__common.h"
 #include "arm_2d.h"
 #include "arm_2d_helper.h"
+#include "user_control_template.h"
 #include <assert.h>
 #include <string.h>
 
