@@ -119,6 +119,14 @@ extern "C" {
 #   define __DISP%Instance%_CFG_ITERATION_CNT__                             30
 #endif
 
+// <o>FPS Calculation Mode
+//     <0=>     Render-Only FPS
+//     <1=>     Real FPS
+// <i> Decide the meaning of the real time FPS display
+#ifndef __DISP%Instance%_CFG_FPS_CACULATION_MODE__
+#   define __DISP%Instance%_CFG_FPS_CACULATION_MODE__                       0
+#endif
+
 // <q> Swap the high and low bytes
 // <i> Swap the high and low bytes of the 16bit-pixels
 #ifndef __DISP%Instance%_CFG_SWAP_RGB16_HIGH_AND_LOW_BYTES__

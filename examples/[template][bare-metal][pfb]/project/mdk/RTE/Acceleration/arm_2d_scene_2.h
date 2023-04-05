@@ -86,7 +86,6 @@ ARM_PRIVATE(
     int16_t iProgress;
     number_list_t tNumberList[3];
     progress_wheel_t tWheel;
-    
 )
     /* place your public member here */
     

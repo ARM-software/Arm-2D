@@ -306,16 +306,28 @@ static bool __on_each_frame_complete(void *ptTarget)
 {
     ARM_2D_UNUSED(ptTarget);
     
-    int32_t nTotalCyclCount = DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nTotalCycle;
+#if __DISP%Instance%_CFG_FPS_CACULATION_MODE__ == ARM_2D_FPS_MODE_REAL
+    static int64_t s_lLastTimeStamp = 0;
+    int64_t lTimeStamp = arm_2d_helper_get_system_timestamp();
+    int32_t nElapsed = 0;
+    if (0 != s_lLastTimeStamp) {
+        nElapsed = (int32_t)(arm_2d_helper_get_system_timestamp() - s_lLastTimeStamp);
+    }
+    s_lLastTimeStamp = lTimeStamp;
+    
+#else /* __DISP%Instance%_CFG_FPS_CACULATION_MODE__ == ARM_2D_FPS_MODE_RENDER_ONLY */
+    int32_t nElapsed = DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nTotalCycle;
+#endif
+
     int32_t nTotalLCDCycCount = DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nRenderingCycle;
     BENCHMARK.wLCDLatency = nTotalLCDCycCount;
 
     /* calculate real-time FPS */
     if (__DISP%Instance%_CFG_ITERATION_CNT__) {
         if (BENCHMARK.wIterations) {
-            BENCHMARK.wMin = MIN((uint32_t)nTotalCyclCount, BENCHMARK.wMin);
-            BENCHMARK.wMax = MAX(nTotalCyclCount, (int32_t)BENCHMARK.wMax);
-            BENCHMARK.dwTotal += nTotalCyclCount;
+            BENCHMARK.wMin = MIN((uint32_t)nElapsed, BENCHMARK.wMin);
+            BENCHMARK.wMax = MAX(nElapsed, (int32_t)BENCHMARK.wMax);
+            BENCHMARK.dwTotal += nElapsed;
             BENCHMARK.wIterations--;
 
             if (0 == BENCHMARK.wIterations) {

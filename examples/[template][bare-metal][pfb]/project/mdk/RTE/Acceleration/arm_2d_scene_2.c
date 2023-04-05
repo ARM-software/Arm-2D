@@ -111,7 +111,7 @@ static void __on_scene2_depose(arm_2d_scene_t *ptScene)
         *ptItem = 0;
     }
 
-    if (this.bUserAllocated) {
+    if (!this.bUserAllocated) {
         free(ptScene);
     }
 }
@@ -391,7 +391,7 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
                                         user_scene_2_t *ptScene)
 {
 
-    bool bUserAllocated = false;
+    bool bUserAllocated = true;
     assert(NULL != ptDispAdapter);
 
     if (NULL == ptScene) {
@@ -400,7 +400,7 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
         if (NULL == ptScene) {
             return NULL;
         }
-        bUserAllocated = true;
+        bUserAllocated = false;
     } else {
         memset(ptScene, 0, sizeof(user_scene_2_t));
     }

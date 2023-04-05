@@ -363,7 +363,7 @@ static void __on_scene3_depose(arm_2d_scene_t *ptScene)
         *ptItem = 0;
     }
 
-    if (this.bUserAllocated) {
+    if (!this.bUserAllocated) {
         free(ptScene);
     }
 }
@@ -475,9 +475,9 @@ user_scene_3_t *__arm_2d_scene3_init(   arm_2d_scene_player_t *ptDispAdapter,
         if (NULL == ptThis) {
             return NULL;
         }
-        bUserAllocated = true;
     } else {
         memset(ptThis, 0, sizeof(user_scene_3_t));
+        bUserAllocated = true;
     }
 
     /*! define dirty regions */
