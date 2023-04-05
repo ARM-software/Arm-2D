@@ -32,35 +32,35 @@
 
 /*============================ INCLUDES ======================================*/
 
-#ifdef __RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER0__
+#ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter0
 #   include "arm_2d_disp_adapter_0.h"
 #endif
 
-#ifdef __RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER1__
+#ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter1
 #   include "arm_2d_disp_adapter_1.h"
 #endif
 
-#ifdef __RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER2__
+#ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter2
 #   include "arm_2d_disp_adapter_2.h"
 #endif
 
-#ifdef __RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER3__
+#ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter3
 #   include "arm_2d_disp_adapter_3.h"
 #endif
 
-#ifdef __RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER4__
+#ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter4
 #   include "arm_2d_disp_adapter_4.h"
 #endif
 
-#ifdef __RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER5__
+#ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter5
 #   include "arm_2d_disp_adapter_5.h"
 #endif
 
-#ifdef __RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER6__
+#ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter6
 #   include "arm_2d_disp_adapter_6.h"
 #endif
 
-#ifdef __RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER7__
+#ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter7
 #   include "arm_2d_disp_adapter_7.h"
 #endif
 

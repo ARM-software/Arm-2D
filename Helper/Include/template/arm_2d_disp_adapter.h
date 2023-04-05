@@ -21,7 +21,7 @@
 
 #include "arm_2d.h"
 
-#ifdef __RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER%Instance%__
+#ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter%Instance%
 
 #include "arm_2d_helper_scene.h"
 #include "__common.h"

@@ -191,11 +191,11 @@
           
           <RTE_Components_h>
 
-#define __RTE_ACCELERATION_ARM_2D__
+#define RTE_Acceleration_Arm_2D
           </RTE_Components_h>
           
           <Pre_Include_Global_h>
-#define __ARM_2D_SKIP_CFG_HEADER__
+#define ___ARM_2D_CFG_HEADER___
           </Pre_Include_Global_h>
           
         </component>
@@ -208,7 +208,7 @@
           </files>
           <RTE_Components_h>
 
-#define __RTE_ACCELERATION_ARM_2D_ALPHA_BLENDING__
+    #define RTE_Acceleration_Arm_2D_Alpha_Blending
           </RTE_Components_h>
         </component>
         
@@ -220,7 +220,7 @@
           </files>
           <RTE_Components_h>
 
-#define __RTE_ACCELERATION_ARM_2D_TRANSFORM__
+    #define RTE_Acceleration_Arm_2D_Transform
           </RTE_Components_h>
         </component>
         
@@ -236,7 +236,7 @@
             <file category="doc"         name="documentation/html/group__gHelper.html"/>
           </files>
           <RTE_Components_h>
-#define __RTE_ACCELERATION_ARM_2D_HELPER_PFB__
+    #define RTE_Acceleration_Arm_2D_Helper_PFB
           </RTE_Components_h>
         </component>
         
@@ -247,7 +247,7 @@
             <file category="header"      name="Helper/Include/template/arm_2d_disp_adapter.h" attr="config" version="1.5.7" />
           </files>
           <RTE_Components_h>
-#define __RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER%Instance%__
+    #define RTE_Acceleration_Arm_2D_Helper_Disp_Adapter%Instance%
           </RTE_Components_h>
         </component>
 
@@ -258,7 +258,7 @@
             <file category="header"      name="Helper/Include/template/arm_2d_scene.h" attr="config" version="1.1.6" />
           </files>
           <RTE_Components_h>
-#define __RTE_ACCELERATION_ARM_2D_SCENE%Instance%__
+    #define RTE_Acceleration_Arm_2D_Scene%Instance%
           </RTE_Components_h>
         </component>
 
@@ -271,7 +271,7 @@
           </files>
           <RTE_Components_h>
 
-#define __RTE_ACCELERATION_ARM_2D_EXTRA_LCD_PRINTF__
+    #define RTE_Acceleration_Arm_2D_Extra_LCD_printf__
           </RTE_Components_h>
         </component>
 
@@ -309,7 +309,7 @@
           </files>
           <RTE_Components_h>
 
-#define __RTE_ACCELERATION_ARM_2D_EXTRA_CONTROLS__
+    #define RTE_Acceleration_Arm_2D_Extra_Controls
           </RTE_Components_h>
         </component>
         
@@ -326,7 +326,7 @@
           </files>
           <RTE_Components_h>
 
-#define __RTE_ACCELERATION_ARM_2D_EXTRA_BENCHMARK_GENERIC__
+    #define RTE_Acceleration_Arm_2D_Extra_Benchmark_Generic
           </RTE_Components_h>
         </component>
 
@@ -346,7 +346,7 @@
           </files>
           <RTE_Components_h>
 
-#define __RTE_ACCELERATION_ARM_2D_EXTRA_BENCHMARK_WATCH_PANEL__
+    #define RTE_Acceleration_Arm_2D_Extra_Benchmark_Watch_Panel
           </RTE_Components_h>
         </component>
 
