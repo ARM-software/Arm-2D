@@ -13,7 +13,7 @@ set -o pipefail
 
 DIRNAME=$(dirname $(realpath $0))
 DOXYGEN=$(which doxygen)
-REQ_DXY_VERSION="1.9.5"
+REQ_DXY_VERSION="1.9.2"
 REQUIRED_GEN_PACK_LIB="0.7.0"
 
 ############ gen-pack library ###########
