@@ -357,6 +357,7 @@ var group__gKernel =
     [ "__ARM_2D_HAS_CDE__", "group__gKernel.html#ga0ec19d4c98606a830a90ac39aac41a5e", null ],
     [ "__ARM_2D_HAS_HW_ACC__", "group__gKernel.html#gafc15611a43cb4dafc518b4948ab380f8", null ],
     [ "__ARM_2D_HAS_ASYNC__", "group__gKernel.html#ga44b4f0ecafd8d5fb7de9f104d9321998", null ],
+    [ "__ARM_2D_CFG_DEFAULT_SUB_TASK_POOL_SIZE__", "group__gKernel.html#ga849a39b45e7a5a22160515dda935ce09", null ],
     [ "__ARM_2D_HAS_FPU__", "group__gKernel.html#ga3ec54af19d1a150ab2ab66505aeae43b", null ],
     [ "__ARM_2D_HAS_DSP__", "group__gKernel.html#ga2334c7acedcecf63d047be0a80d0290b", null ],
     [ "__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__", "group__gKernel.html#ga24fb614359d977d784afbc821992f1c8", null ],
