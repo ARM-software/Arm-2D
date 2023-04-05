@@ -21,7 +21,7 @@
 
 #include "arm_2d.h"
 
-#ifdef __RTE_ACCELERATION_ARM_2D_HELPER_DISP_ADAPTER0__
+#ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter0
 
 #include <stdio.h>
 #include <stdlib.h>

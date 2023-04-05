@@ -20,7 +20,7 @@
 
 #include "arm_2d.h"
 
-#ifdef __RTE_ACCELERATION_ARM_2D_SCENE1__
+#ifdef RTE_Acceleration_Arm_2D_Scene1
 
 #define __USER_SCENE1_IMPLEMENT__
 #include "arm_2d_scene_1.h"
