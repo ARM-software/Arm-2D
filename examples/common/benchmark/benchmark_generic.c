@@ -539,6 +539,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
     #endif
     } while(0);
 #endif
+    arm_2d_op_wait_async(NULL);
 
     //! handle the right half of the screen
     do {
@@ -569,7 +570,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
                             NULL,
                             GLCD_COLOR_DARK_GREY);
 #endif
-
+        arm_2d_op_wait_async(NULL);
 
 #if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
         /*! \note arm_2d_align_centre generate a region '__centre_region' based
@@ -674,9 +675,8 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
     arm_2d_fill_colour( s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].ptTile, 
                         NULL, 
                         GLCD_COLOR_GREEN);
-                                
-                                
-    
+
+
     //!< fill a given tile with the sun icon (with colour-keying)
     switch(s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode) {
         case ARM_2D_CP_MODE_FILL:
@@ -708,6 +708,8 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
                 GLCD_COLOR_WHITE);
                 break;
     }
+    
+    arm_2d_op_wait_async(NULL);
     
     arm_foreach(arm_2d_layer_t, ptLayers, hwCount, ptLayer) {
         arm_2d_region_t tRegion = ptLayer->tRegion;
@@ -776,6 +778,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptFrameBuffer,
                                         &tRegion);
             }
         }
+        arm_2d_op_wait_async(NULL);
     }
     
     arm_2d_fill_colour_with_opacity(   

@@ -21,8 +21,8 @@
  * Title:        arm-2d.c
  * Description:  Tables for pixel pipeline OPs
  *
- * $Date:        25. Nov 2022
- * $Revision:    V.1.1.0
+ * $Date:        06. April 2023
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  *

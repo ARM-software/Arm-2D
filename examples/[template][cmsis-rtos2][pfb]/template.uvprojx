@@ -6646,7 +6646,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-Wno-nonportable-include-path -Omax</MiscControls>
-              <Define>__GLCD_CFG_SCEEN_WIDTH__=480,__GLCD_CFG_SCEEN_HEIGHT__=272,__DISP0_CFG_SCEEN_WIDTH__=480,__DISP0_CFG_SCEEN_HEIGHT__=272,__DISP0_CFG_PFB_BLOCK_WIDTH__=480,__DISP0_CFG_PFB_BLOCK_HEIGHT__=24</Define>
+              <Define>BENCHMARK_PFB_BLOCK_WIDTH=480,BENCHMARK_PFB_BLOCK_HEIGHT=120,__GLCD_CFG_SCEEN_WIDTH__=480,__GLCD_CFG_SCEEN_HEIGHT__=272,__DISP0_CFG_SCEEN_WIDTH__=480,__DISP0_CFG_SCEEN_HEIGHT__=272,__DISP0_CFG_PFB_BLOCK_WIDTH__=480,__DISP0_CFG_PFB_BLOCK_HEIGHT__=24</Define>
               <Undefine></Undefine>
               <IncludePath>..\common\platform;..\common\platform\stm32f746g-discovery;.</IncludePath>
             </VariousControls>
