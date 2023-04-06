@@ -930,6 +930,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf435aa9cb213d9c2d39fb34ef02641ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gaf435aa9cb213d9c2d39fb34ef02641ed">arm_2d_set_user_param</a> (<a class="el" href="group__gKernel.html#structarm__2d__op__core__t">arm_2d_op_core_t</a> *ptOP, uintptr_t pUserParam)</td></tr>
 <tr class="memdesc:gaf435aa9cb213d9c2d39fb34ef02641ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">attach a user param (which could be a pointer) to specified OP  <a href="group__gKernel.html#gaf435aa9cb213d9c2d39fb34ef02641ed">More...</a><br /></td></tr>
 <tr class="separator:gaf435aa9cb213d9c2d39fb34ef02641ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae2c21530b97278106f4acad69e93faa1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gae2c21530b97278106f4acad69e93faa1">arm_2d_op_attach_semaphore</a> (<a class="el" href="group__gKernel.html#structarm__2d__op__core__t">arm_2d_op_core_t</a> *ptOP, uintptr_t pSemaphore)</td></tr>
+<tr class="memdesc:gae2c21530b97278106f4acad69e93faa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">attach a semaphore (which could be a pointer) to specified OP  <a href="group__gKernel.html#gae2c21530b97278106f4acad69e93faa1">More...</a><br /></td></tr>
+<tr class="separator:gae2c21530b97278106f4acad69e93faa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga129e2a7110847b0fd22eeb6351205989"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989">arm_2d_op_wait_async</a> (<a class="el" href="group__gKernel.html#structarm__2d__op__core__t">arm_2d_op_core_t</a> *ptOP)</td></tr>
 <tr class="memdesc:ga129e2a7110847b0fd22eeb6351205989"><td class="mdescLeft">&#160;</td><td class="mdescRight">wait asynchronous operation complete  <a href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989">More...</a><br /></td></tr>
 <tr class="separator:ga129e2a7110847b0fd22eeb6351205989"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1779,7 +1782,7 @@ the host integer </td></tr>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
-&lt; a pointer for a single list <p >&lt; the pointer for the corresponding 2D operation description &lt; acceleration Methods reserved &lt; operation result operation status &lt; operation-complete event </p>
+&lt; a pointer for a single list <p >&lt; the pointer for the corresponding 2D operation description &lt; acceleration Methods reserved &lt; operation result operation status &lt; operation-complete event &lt; point to semaphore </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a id="a53139207f131b80b614a747c78b75b2c" name="a53139207f131b80b614a747c78b75b2c"></a>uintptr_t</td>
@@ -3063,7 +3066,7 @@ the whole operation complete </td></tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p >&lt; a pointer for a single list </p>
-<p >&lt; the pointer for the corresponding 2D operation description &lt; acceleration Methods reserved &lt; operation result operation status &lt; operation-complete event </p>
+<p >&lt; the pointer for the corresponding 2D operation description &lt; acceleration Methods reserved &lt; operation result operation status &lt; operation-complete event &lt; point to semaphore </p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
@@ -7898,6 +7901,44 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="gae2c21530b97278106f4acad69e93faa1" name="gae2c21530b97278106f4acad69e93faa1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae2c21530b97278106f4acad69e93faa1">&#9670;&nbsp;</a></span>arm_2d_op_attach_semaphore()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_op_attach_semaphore </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gKernel.html#structarm__2d__op__core__t">arm_2d_op_core_t</a> *&#160;</td>
+          <td class="paramname"><em>ptOP</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uintptr_t&#160;</td>
+          <td class="paramname"><em>pSemaphore</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>attach a semaphore (which could be a pointer) to specified OP </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ptOP</td><td>the address of the target OP (NULL means using the default OP) </td></tr>
+    <tr><td class="paramname">pSemaphore</td><td>a pointer points to a RTOS semaphore </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>this API only available when <b>ARM_2D_HAS_ASYNC</b> is 1 </dd></dl>
 
 </div>
 </div>
