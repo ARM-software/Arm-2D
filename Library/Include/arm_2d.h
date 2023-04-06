@@ -158,13 +158,31 @@ arm_2d_tile_t *arm_2d_get_default_frame_buffer(void);
 
 /*! 
  * \brief attach a user param (which could be a pointer) to specified OP
- *
  * \param ptOP the address of the target OP (NULL means using the default OP)
- * 
  * \param pUserParam a user parameter (it can be used as a pointer)
  */
 extern
 void arm_2d_set_user_param(arm_2d_op_core_t *ptOP, uintptr_t pUserParam);
+
+
+/*!
+ * \brief initialize an given opcode
+ * \param ptOP the address of the target OP
+ * \param tSize the size of the opcode object
+ * \return arm_2d_op_core_t * the address of the OP
+ */
+extern
+arm_2d_op_core_t *arm_2d_op_init(arm_2d_op_core_t *ptOP, size_t tSize);
+
+
+/*!
+ * \brief depose an given opcode
+ * \param ptOP the address of the target OP
+ * \param tSize the size of the opcode object
+ * \return arm_2d_op_core_t * the address of the OP
+ */
+extern
+arm_2d_op_core_t *arm_2d_op_depose(arm_2d_op_core_t *ptOP, size_t tSize);
 
 /*! 
  * \brief attach a semaphore (which could be a pointer) to specified OP
@@ -174,6 +192,15 @@ void arm_2d_set_user_param(arm_2d_op_core_t *ptOP, uintptr_t pUserParam);
  */
 extern
 void arm_2d_op_attach_semaphore(arm_2d_op_core_t *ptOP, uintptr_t pSemaphore);
+
+/*! 
+ * \brief get the attached semaphore (which could be a pointer) from specified OP
+ * \param ptOP the address of the target OP (NULL means using the default OP)
+ * \return uintptr_t the semaphore
+ * \note this API only available when __ARM_2D_HAS_ASYNC__ is 1
+ */
+extern
+uintptr_t arm_2d_op_get_semaphore(arm_2d_op_core_t *ptOP);
 
 /*! 
  * \brief wait asynchronous operation complete

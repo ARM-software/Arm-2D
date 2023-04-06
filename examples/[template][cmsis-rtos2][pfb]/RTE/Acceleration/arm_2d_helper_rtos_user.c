@@ -17,10 +17,12 @@
  */
 
 /*============================ INCLUDES ======================================*/
-#include <stdio.h>
-#include "platform.h"
+
+
 #include "arm_2d_helper.h"
 #include "arm_2d_disp_adapters.h"
+#include "cmsis_os2.h"
+
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -49,6 +51,18 @@
 #endif
 
 /*============================ MACROS ========================================*/
+
+//-------- <<< Use Configuration Wizard in Context Menu >>> -----------------
+
+// <o>Target FPS <8-32767>
+// <i> Try to lock framerate to a specified value
+// <i> Default: 30
+#ifndef LCD_TARGET_FPS
+#   define LCD_TARGET_FPS       30
+#endif
+
+// <<< end of configuration section >>>
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -57,32 +71,83 @@
 
 /*============================ IMPLEMENTATION ================================*/
 
-int32_t Disp0_DrawBitmap(int16_t x, 
-                        int16_t y, 
-                        int16_t width, 
-                        int16_t height, 
-                        const uint8_t *bitmap)
+__OVERRIDE_WEAK
+arm_2d_runtime_feature_t ARM_2D_RUNTIME_FEATURE = {
+    .TREAT_OUT_OF_RANGE_AS_COMPLETE         = 1,
+    .HAS_DEDICATED_THREAD_FOR_2D_TASK       = __ARM_2D_HAS_ASYNC__,
+};
+
+
+/*----------------------------------------------------------------------------*
+ * RTOS Port                                                                  *
+ *----------------------------------------------------------------------------*/
+
+uintptr_t arm_2d_port_new_semaphore(void)
 {
-    return GLCD_DrawBitmap(x,y,width, height, bitmap);
+    /* put your code here to generate a new semaphore */
+    return (uintptr_t)NULL;
 }
 
 
-
-/*----------------------------------------------------------------------------
-  Main function
- *----------------------------------------------------------------------------*/
-int main (void) 
+bool arm_2d_port_wait_for_semaphore(uintptr_t pSemaphore)
 {
-    /* Initialize CMSIS-RTOS2 */
-    osKernelInitialize ();
+    /* put your code here to wait for a given semaphore */
+    return true;
+}
 
-    arm_2d_helper_rtos_init();
+void arm_2d_port_set_semaphoret(uintptr_t pSemaphore)
+{
+    /* put your code here to set a given semaphore */
+}
 
-    /* Start thread execution */
-    osKernelStart();
 
-    while (1) {
+/*----------------------------------------------------------------------------*
+ * Application main thread                                                    *
+ *----------------------------------------------------------------------------*/
+ 
+ __NO_RETURN
+void app_2d_main_thread (void *argument) 
+{
+
+    ARM_2D_UNUSED(argument);
+
+    while(1) {
+        //! retrieve the number of system ticks
+        //uint32_t wTick = osKernelGetTickCount();        
+        while(arm_fsm_rt_cpl != disp_adapter0_task());
+        
+        //! lock frame rate
+        //osDelayUntil(wTick + (1000 / LCD_TARGET_FPS));
     }
+}
+
+__NO_RETURN
+void arm_2d_backend_thread(void *argument)
+{
+
+    ARM_2D_UNUSED(argument);
+
+    arm_2d_helper_backend_task();
+    
+    //osThreadExit();
+    while(1) __NOP();
+}
+
+
+void arm_2d_helper_rtos_init(void)
+{
+
+    arm_irq_safe {
+        arm_2d_init();
+    } 
+
+    disp_adapter0_init();
+
+    /* put your code here to Create arm-2d main thread */
+    //osThreadNew(app_2d_main_thread, NULL, NULL);
+    
+    /* put your code here to Create arm-2d backend thread */
+    //osThreadNew(arm_2d_backend_thread, NULL, NULL);
 }
 
 #if defined(__clang__)

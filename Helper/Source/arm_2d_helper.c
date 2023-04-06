@@ -80,7 +80,6 @@ static struct {
 
 #if __ARM_2D_HAS_ASYNC__
     struct {
-        arm_2d_task_t tTaskCB;
         uintptr_t semResourceAvailable;
         uintptr_t semTaskAvailable;
     }Async;
@@ -380,11 +379,23 @@ bool __arm_2d_helper_time_half_cos_slider(  int32_t nFrom,
  * RTOS Port                                                                  *
  *----------------------------------------------------------------------------*/
 
+__WEAK
+void arm_2d_helper_rtos_init(void)
+{
+
+}
+
 #if __ARM_2D_HAS_ASYNC__
 __WEAK
 uintptr_t arm_2d_port_new_semaphore(void)
 {
     return (uintptr_t)NULL;
+}
+
+__WEAK
+void arm_2d_port_free_semaphore(uintptr_t pSemaphore)
+{
+
 }
 
 
@@ -428,16 +439,50 @@ __OVERRIDE_WEAK
 void arm_2d_notif_aync_sub_task_cpl(uintptr_t pUserParam)
 {
     ARM_2D_UNUSED(pUserParam);
-    assert (NULL != s_tHelper.Async.semResourceAvailable) ;
     arm_2d_port_set_semaphoret(s_tHelper.Async.semResourceAvailable);
+}
+
+__OVERRIDE_WEAK
+arm_2d_op_core_t *arm_2d_op_init(arm_2d_op_core_t *ptOP, size_t tSize)
+{
+    do {
+        if (NULL == ptOP) {
+            break;
+        }
+        
+        memset(ptOP, 0, MAX(tSize, sizeof(arm_2d_op_core_t)));
+        arm_2d_op_attach_semaphore(ptOP, arm_2d_port_new_semaphore());
+    
+    } while(0);
+
+    return ptOP;
+}
+
+__OVERRIDE_WEAK
+arm_2d_op_core_t *arm_2d_op_depose(arm_2d_op_core_t *ptOP, size_t tSize)
+{
+    do {
+        if (NULL == ptOP) {
+            break;
+        }
+        
+        memset(ptOP, 0, MAX(tSize, sizeof(arm_2d_op_core_t)));
+        
+        arm_2d_port_free_semaphore(arm_2d_op_get_semaphore(ptOP));
+        
+        arm_2d_op_attach_semaphore(ptOP, NULL);
+    
+    } while(0);
+
+    return ptOP;
 }
 
 void arm_2d_helper_backend_task(void)
 {
     arm_fsm_rt_t tTaskResult;
-
+    arm_2d_task_t tTaskCB = {0};
     do {
-        tTaskResult = arm_2d_task(&s_tHelper.Async.tTaskCB);
+        tTaskResult = arm_2d_task(&tTaskCB);
 
         if (tTaskResult < 0) {
             //! a serious error is detected

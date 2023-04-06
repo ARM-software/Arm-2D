@@ -84,8 +84,11 @@ extern "C" {
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 
-extern
-arm_2d_runtime_feature_t ARM_2D_RUNTIME_FEATURE;
+__WEAK
+arm_2d_runtime_feature_t ARM_2D_RUNTIME_FEATURE = {
+    .TREAT_OUT_OF_RANGE_AS_COMPLETE         = 1,
+    .HAS_DEDICATED_THREAD_FOR_2D_TASK       = 0,
+};
 
 
 const arm_2d_version_t ARM_2D_VERSION = {
@@ -1989,7 +1992,22 @@ void arm_2d_op_attach_semaphore(arm_2d_op_core_t *ptOP, uintptr_t pSemaphore)
 #endif
 }
 
-
+/*! 
+ * \brief get the attached semaphore (which could be a pointer) from specified OP
+ * \param ptOP the address of the target OP (NULL means using the default OP)
+ * \return uintptr_t the semaphore
+ * \note this API only available when __ARM_2D_HAS_ASYNC__ is 1
+ */
+uintptr_t arm_2d_op_get_semaphore(arm_2d_op_core_t *ptOP)
+{
+    ARM_2D_IMPL(arm_2d_op_core_t, ptOP);
+    
+#if __ARM_2D_HAS_ASYNC__
+    return this.pSemaphore;
+#else
+    return (uintptr_t)NULL;
+#endif
+}
 
 /*! 
    \brief get the status of a specified OP, 

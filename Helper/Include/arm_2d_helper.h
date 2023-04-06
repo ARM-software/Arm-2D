@@ -22,7 +22,7 @@
  * Description:  Public header file for the all helper services
  *
  * $Date:        06. April 2023
- * $Revision:    V.1.6.0
+ * $Revision:    V.1.6.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -164,6 +164,12 @@ extern "C" {
  */
 extern
 void arm_2d_helper_init(void);
+
+/*!
+ * \brief initialize rtos helper service
+ */
+extern
+void arm_2d_helper_rtos_init(void);
 
 /*!
  * \brief backend task for asynchronose mode

@@ -128,12 +128,6 @@ void __arm_2d_init(void);
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
-__WEAK
-arm_2d_runtime_feature_t ARM_2D_RUNTIME_FEATURE = {
-    .TREAT_OUT_OF_RANGE_AS_COMPLETE         = 1,
-    .HAS_DEDICATED_THREAD_FOR_2D_TASK       = __ARM_2D_HAS_ASYNC__,
-};
-
 /*! 
  * \brief initialise arm-2d
  */
@@ -170,6 +164,24 @@ void *__arm_2d_allocate_scratch_memory( uint32_t wSize,
     assert(0 == ((uintptr_t)pBuff & (nAlign - 1)));
     
     return pBuff;
+}
+
+
+__WEAK
+arm_2d_op_core_t *arm_2d_op_init(arm_2d_op_core_t *ptOP, size_t tSize)
+{
+    if (NULL != ptOP) {
+        memset(ptOP, 0, MAX(tSize, sizeof(arm_2d_op_core_t)));
+    }
+    
+    return ptOP;
+}
+
+__WEAK
+arm_2d_op_core_t *arm_2d_op_depose(arm_2d_op_core_t *ptOP, size_t tSize)
+{
+    ARM_2D_UNUSED(tSize);
+    return ptOP;
 }
 
 #ifdef   __cplusplus

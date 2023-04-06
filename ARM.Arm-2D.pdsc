@@ -94,6 +94,23 @@
             <require Cclass="Acceleration" Cgroup="Arm-2D" Csub="Transform"/>
         </condition>
         
+        <condition id="Arm-2D-PFB">
+            <description>Require Arm-2D Core Service</description>
+            <require condition="Arm-2D-CORE"/>
+            <require Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB"/>
+        </condition>
+        
+        <condition id="CMSIS-RTOS2">
+            <description>Require CMSIS-RTOS2</description>
+            <require Cclass="CMSIS" Cgroup="RTOS2"/>
+        </condition>
+        
+        <condition id="PFB CMSIS-RTOS2">
+            <description>Require CMSIS-RTOS2</description>
+            <require condition="CMSIS-RTOS2"/>
+            <require condition="Arm-2D-PFB"/>
+        </condition>
+        
         <!--
         <condition id="Arm-2D-DSP">
             <description>Require Arm-2D Core Service</description>
@@ -226,7 +243,7 @@
         </component>
         
         
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="1.6.2" condition="Arm-2D-CORE">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="1.6.0" condition="Arm-2D-CORE">
           <description>Helper services for LCD adaptor(s), e.g. Generic Partial Framebuffer, Scene Player etc.</description>
           <files>
             <file category="include"     name="Helper/Include/" />
@@ -235,12 +252,34 @@
             <file category="sourceC"     name="Helper/Source/arm_2d_helper_scene.c" />
             <file category="sourceC"     name="Helper/Source/arm_2d_helper_list.c" />
             <file category="doc"         name="documentation/html/group__gHelper.html"/>
+            
+            <file category="sourceC"     name="Helper/Source/template/arm_2d_helper_rtos_user.c"  attr="template"  select="User RTOS Support Template"   version="1.0.0" />
           </files>
           <RTE_Components_h>
     #define RTE_Acceleration_Arm_2D_Helper_PFB
           </RTE_Components_h>
         </component>
-        
+
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="RTOS Helper" Cvariant="CMSIS-RTOS2" Cversion="1.0.0" condition="PFB CMSIS-RTOS2">
+          <description>A helper service enables the asynchronose mode on CMSIS-RTOS2.</description>
+          <files>
+            <file category="sourceC"     name="Helper/Source/template/arm_2d_helper_rtos_cmsis_rtos2.c" attr="config" version="1.0.0" />
+          </files>
+          <RTE_Components_h>
+    #define RTE_Acceleration_Arm_2D_Helper_RTOS_CMSIS_RTOS2
+          </RTE_Components_h>
+        </component>
+
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="RTOS Helper" Cvariant="User Custom" Cversion="1.0.0" condition="Arm-2D-PFB">
+          <description>A template for user to custom a RTOS wrapper</description>
+          <files>
+            <file category="sourceC"     name="Helper/Source/template/arm_2d_helper_rtos_user.c" attr="config" version="1.0.0" />
+          </files>
+          <RTE_Components_h>
+    #define RTE_Acceleration_Arm_2D_Helper_RTOS_USER
+          </RTE_Components_h>
+        </component>
+
         <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cversion="1.5.9" condition="Arm-2D-Helper" maxInstances="8">
           <description>The Display Adapter.</description>
           <files>

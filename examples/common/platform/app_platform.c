@@ -99,6 +99,7 @@ void ARM_WRAP(osRtxTick_Handler)(void)
     extern void ARM_REAL(osRtxTick_Handler)(void);
     ARM_REAL(osRtxTick_Handler)();
 }
+#elif defined(RTE_CMSIS_RTOS2_FreeRTOS)
 
 #else
 __attribute__((used))

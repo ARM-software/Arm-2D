@@ -593,6 +593,12 @@
           <targetInfo name="STM32F746G-Discovery-GCC"/>
         </targetInfos>
       </file>
+      <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_helper_rtos_cmsis_rtos2.c" version="1.0.0">
+        <instance index="0" removed="1">RTE\Acceleration\arm_2d_helper_rtos_cmsis_rtos2.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="1.6.0" condition="Arm-2D-CORE"/>
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+        <targetInfos/>
+      </file>
       <file attr="config" category="utility" name="tools\img2c.py" version="1.2.1">
         <instance index="0">RTE\Acceleration\img2c.py</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.2-dev" condition="CMSIS-DSP"/>
