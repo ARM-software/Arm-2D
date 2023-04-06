@@ -21,8 +21,8 @@
  * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        25. Nov 2022
- * $Revision:    V.1.1.0
+ * $Date:        06. April 2023
+ * $Revision:    V.1.1.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -796,8 +796,12 @@ ARM_PRIVATE(
     volatile arm_2d_op_status_t Status;                 //!< operation status
 
     arm_2d_op_evt_t             evt2DOpCpl;             //!< operation-complete event
-    
+
+#if __ARM_2D_HAS_ASYNC__
+    uintptr_t                   pSemaphore;             //!< point to semaphore
+#endif
 )
+
     uintptr_t                   pUserParam;             //!< user attached object
 };
 

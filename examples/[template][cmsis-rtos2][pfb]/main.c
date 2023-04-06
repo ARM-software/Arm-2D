@@ -21,6 +21,7 @@
 #include "platform.h"
 #include "arm_2d_helper.h"
 #include "example_gui.h"
+#include "arm_2d_disp_adapters.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -60,104 +61,10 @@
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
-
-__OVERRIDE_WEAK
-arm_2d_runtime_feature_t ARM_2D_RUNTIME_FEATURE = {
-    .TREAT_OUT_OF_RANGE_AS_COMPLETE         = 1,
-    .HAS_DEDICATED_THREAD_FOR_2D_TASK       = 1,
-};
-
 /*============================ PROTOTYPES ====================================*/
-__attribute__((nothrow)) 
-extern int64_t clock(void);
-
 /*============================ LOCAL VARIABLES ===============================*/
 
-static char s_chPerformanceInfo[MAX(((GLCD_WIDTH/6)+1), 54)] = {0};
-
-osEventFlagsId_t s_evt2DTaskAvailable = NULL;
-osEventFlagsId_t s_evt2DResourceAvailable = NULL;
-
-static ARM_NOINIT arm_2d_helper_pfb_t s_tExamplePFB;
-
 /*============================ IMPLEMENTATION ================================*/
-void display_task(void) 
-{  
-    /*! define dirty regions */
-    IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static const)
-        
-        /* a region for the busy wheel */
-        ADD_REGION_TO_LIST(s_tDirtyRegions,
-            .tLocation = {(APP_SCREEN_WIDTH - 100) / 2,
-                          (APP_SCREEN_HEIGHT - 100) / 2},
-            .tSize = {
-                .iWidth = 100,
-                .iHeight = 100,  
-            },
-        ),
-        
-        /* a region for the status bar on the bottom of the screen */
-        ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
-            .tLocation = {0,APP_SCREEN_HEIGHT - 8*2},
-            .tSize = {
-                .iWidth = APP_SCREEN_WIDTH,
-                .iHeight = 8*2,  
-            },
-        ),
-
-    END_IMPL_ARM_2D_REGION_LIST()
-            
-
-/*! define the partial-flushing area */
-
-    example_gui_do_events();
-
-    //! call partial framebuffer helper service
-    while(arm_fsm_rt_cpl != arm_2d_helper_pfb_task( 
-                                &s_tExamplePFB, NULL));
-                                //(arm_2d_region_list_item_t *)s_tDirtyRegions));
-    
-    //! update performance info
-    do {
-        
-        int32_t nTotalCyclCount = s_tExamplePFB.Statistics.nTotalCycle;
-        int32_t nTotalLCDCycCount = s_tExamplePFB.Statistics.nRenderingCycle;
-        int64_t lTemp = clock();
-        static int64_t s_lLast = 0;
-        int32_t nElapsed = lTemp - s_lLast;
-        s_lLast = lTemp;
-
-        snprintf(s_chPerformanceInfo, 
-                 sizeof(s_chPerformanceInfo),
-                "UPS %d\tCPU Usage %2.1f%% (LCD Latency %2dms)", 
-                (int32_t)SystemCoreClock / nElapsed, 
-                (float)nTotalCyclCount / (float)nElapsed * 100.0f,
-                nTotalLCDCycCount / ((int32_t)SystemCoreClock / 1000));
-
-    } while(0);
-
-}        
-
-__OVERRIDE_WEAK 
-void example_gui_on_refresh_evt_handler(const arm_2d_tile_t *ptFrameBuffer)
-{
-    ARM_2D_UNUSED(ptFrameBuffer);
-    
-#if !defined(__USE_FVP__)
-    //! print performance info
-    arm_lcd_text_location( GLCD_HEIGHT / 8 - 2, 0);
-    
-    arm_lcd_printf( "Screeen: " STR(APP_SCREEN_WIDTH) "*"
-                STR(APP_SCREEN_HEIGHT) 
-                " PFB: " STR(PFB_BLOCK_WIDTH) "*"
-                STR(PFB_BLOCK_HEIGHT)
-                " System Freq: %dMHz\r\n",
-                (int32_t)SystemCoreClock / 1000000);
-                
-    //lcd_text_location( 0, 0);
-    arm_lcd_puts(s_chPerformanceInfo);
-#endif
-}
 
 ARM_NOINIT
 static task_cycle_info_t s_tArm2DTaskInfo;
@@ -177,44 +84,13 @@ int32_t __arm_2d_helper_perf_counter_stop(int64_t *plTimestamp)
 }
 
 
-static 
-IMPL_PFB_ON_DRAW(__pfb_draw_handler)
+int32_t Disp0_DrawBitmap(int16_t x, 
+                        int16_t y, 
+                        int16_t width, 
+                        int16_t height, 
+                        const uint8_t *bitmap)
 {
-    ARM_2D_UNUSED(pTarget);
-    
-    example_gui_refresh(ptTile, bIsNewFrame);
-        
-    arm_2d_op_wait_async(NULL);
-    return arm_fsm_rt_cpl;
-}
-
-static 
-IMPL_PFB_ON_DRAW(__pfb_draw_background_handler)
-{
-    ARM_2D_UNUSED(pTarget);
-    ARM_2D_UNUSED(bIsNewFrame);
-
-    arm_2d_rgb16_fill_colour(ptTile, NULL, GLCD_COLOR_NAVY);
-    arm_2d_op_wait_async(NULL);
-    return arm_fsm_rt_cpl;
-}
-
-static 
-IMPL_PFB_ON_LOW_LV_RENDERING(__pfb_render_handler)
-{
-    const arm_2d_tile_t *ptTile = &(ptPFB->tTile);
-
-    ARM_2D_UNUSED(pTarget);
-    ARM_2D_UNUSED(bIsNewFrame);
-
-    GLCD_DrawBitmap(ptTile->tRegion.tLocation.iX,
-                    ptTile->tRegion.tLocation.iY,
-                    ptTile->tRegion.tSize.iWidth,
-                    ptTile->tRegion.tSize.iHeight,
-                    ptTile->pchBuffer);
-                    
-    arm_2d_helper_pfb_report_rendering_complete(&s_tExamplePFB, 
-                                                (arm_2d_pfb_t *)ptPFB);
+    return GLCD_DrawBitmap(x,y,width, height, bitmap);
 }
 
 
@@ -222,46 +98,28 @@ IMPL_PFB_ON_LOW_LV_RENDERING(__pfb_render_handler)
  * RTOS Port                                                                  *
  *----------------------------------------------------------------------------*/
 
-static volatile bool s_bWaitForOPCPL = false;
-
-__OVERRIDE_WEAK
-void arm_2d_notif_aync_op_cpl(uintptr_t pUserParam)
+uintptr_t arm_2d_port_new_semaphore(void)
 {
-    osEventFlagsId_t evtFlag = (osEventFlagsId_t)pUserParam;
-    assert (NULL != evtFlag) ;
-    osEventFlagsSet(evtFlag, 0x01); 
+    return (uintptr_t)osEventFlagsNew(NULL);
 }
 
-__OVERRIDE_WEAK
-bool arm_2d_port_wait_for_async(uintptr_t pUserParam)
+
+bool arm_2d_port_wait_for_semaphore(uintptr_t pSemaphore)
 {
-    osEventFlagsId_t evtFlag = (osEventFlagsId_t)pUserParam;
+    osEventFlagsId_t evtFlag = (osEventFlagsId_t)pSemaphore;
     assert (NULL != evtFlag) ;
 
     osEventFlagsWait(evtFlag, 0x01, osFlagsWaitAny, osWaitForever );
     return true;
 }
 
-
-__OVERRIDE_WEAK
-void arm_2d_notif_new_op_arrive(uintptr_t pUserParam)
+void arm_2d_port_set_semaphoret(uintptr_t pSemaphore)
 {
-    ARM_2D_UNUSED(pUserParam);
-    
-    assert (NULL != s_evt2DTaskAvailable) ;
-    
-    osEventFlagsSet(s_evt2DTaskAvailable, 0x01); 
+    osEventFlagsId_t evtFlag = (osEventFlagsId_t)pSemaphore;
+    assert (NULL != evtFlag) ;
+    osEventFlagsSet(evtFlag, 0x01); 
 }
 
-
-__OVERRIDE_WEAK 
-void arm_2d_notif_aync_sub_task_cpl(uintptr_t pUserParam)
-{
-    ARM_2D_UNUSED(pUserParam);
-    assert (NULL != s_evt2DResourceAvailable) ;
-    
-    osEventFlagsSet(s_evt2DResourceAvailable, 0x01); 
-}
 
 /*----------------------------------------------------------------------------*
  * Application main thread                                                    *
@@ -273,18 +131,10 @@ void app_main (void *argument)
     init_task_cycle_counter();
     register_task_cycle_agent(&s_tArm2DTaskInfo, &s_tArm2DTaskInfoAgent);
 
-    ARM_2D_UNUSED(argument);
-    //! draw background first
-    while(arm_fsm_rt_cpl != arm_2d_helper_pfb_task(&s_tExamplePFB,NULL));
-    
-    //! update draw function
-    ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(   &s_tExamplePFB, 
-                                                &__pfb_draw_handler);
-
     while(1) {
         //! retrieve the number of system ticks
         uint32_t wTick = osKernelGetTickCount();        
-        display_task();
+        while(arm_fsm_rt_cpl != disp_adapter0_task());
         
         //! lock frame rate
         osDelayUntil(wTick + (1000 / APP_TARGET_FPS));
@@ -301,39 +151,7 @@ void arm_2d_thread(void *argument)
 
     ARM_2D_UNUSED(argument);
 
-    arm_fsm_rt_t tTaskResult;
-    arm_2d_task_t tTaskCB = {0};
-    
-    
-    do {
-        tTaskResult = arm_2d_task(&tTaskCB);
-
-        if (tTaskResult < 0) {
-            //! a serious error is detected
-            assert(false);
-            break;
-        }/* else if (arm_fsm_rt_wait_for_obj == tTaskResult) {
-            //! user low level drivers want to sync-up with this thread
-        } */
-        else if (arm_fsm_rt_wait_for_res == tTaskResult) {
-            /* wait for on-going OP releasing resources */
-            assert (NULL != s_evt2DResourceAvailable) ;
-            /* block current thread */
-            osEventFlagsWait(   s_evt2DResourceAvailable, 
-                                0x01, 
-                                osFlagsWaitAny, 
-                                osWaitForever );
-        } else if (arm_fsm_rt_cpl == tTaskResult) {
-            assert (NULL != s_evt2DTaskAvailable) ;
-            
-            /* block current thread */
-            osEventFlagsWait(   s_evt2DTaskAvailable, 
-                                0x01, 
-                                osFlagsWaitAny, 
-                                osWaitForever );
-        }
-        
-    } while(true);
+    arm_2d_helper_backend_task();
     
     osThreadExit();
 }
@@ -344,56 +162,21 @@ void arm_2d_thread(void *argument)
  *----------------------------------------------------------------------------*/
 int main (void) 
 {
-    arm_irq_safe {
-        arm_2d_init();
-        /* put your code here */
-        example_gui_init();
-    }     
-    
-    printf("\r\nArm-2D RTOS2 Template\r\n");
-
-    //! initialise FPB helper
-    if (ARM_2D_HELPER_PFB_INIT( 
-        &s_tExamplePFB,                 //!< FPB Helper object
-        APP_SCREEN_WIDTH,               //!< screen width
-        APP_SCREEN_HEIGHT,              //!< screen height
-        uint16_t,                       //!< colour date type
-        PFB_BLOCK_WIDTH,                //!< PFB block width
-        PFB_BLOCK_HEIGHT,               //!< PFB block height
-        1,                              //!< number of PFB in the PFB pool
-        {
-            .evtOnLowLevelRendering = {
-                //! callback for low level rendering 
-                .fnHandler = &__pfb_render_handler,                         
-            },
-            .evtOnDrawing = {
-                //! callback for drawing GUI 
-                .fnHandler = &__pfb_draw_background_handler, 
-            },
-        }
-    ) < 0) {
-        //! error detected
-        assert(false);
-    }
-    
-    init_task_cycle_info(&s_tArm2DTaskInfo);
-    
     /* Initialize CMSIS-RTOS2 */
     osKernelInitialize ();
+
+    init_task_cycle_info(&s_tArm2DTaskInfo);
+
+    arm_irq_safe {
+        arm_2d_init();
+    } 
+
+    disp_adapter0_init();
 
     /* Create application main thread */
     osThreadNew(app_main, NULL, NULL);
     
     osThreadNew(arm_2d_thread, NULL, NULL);
-    
-    s_evt2DTaskAvailable = osEventFlagsNew(NULL);
-    s_evt2DResourceAvailable = osEventFlagsNew(NULL);
-    
-    assert(NULL != s_evt2DTaskAvailable );
-
-    /*! \note create a event flag and attach it to the default OP */
-
-    arm_2d_set_user_param(NULL, (uintptr_t)(osEventFlagsNew(NULL)));
 
     /* Start thread execution */
     osKernelStart();

@@ -128,6 +128,12 @@ void __arm_2d_init(void);
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
+__WEAK
+arm_2d_runtime_feature_t ARM_2D_RUNTIME_FEATURE = {
+    .TREAT_OUT_OF_RANGE_AS_COMPLETE         = 1,
+    .HAS_DEDICATED_THREAD_FOR_2D_TASK       = __ARM_2D_HAS_ASYNC__,
+};
+
 /*! 
  * \brief initialise arm-2d
  */

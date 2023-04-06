@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        07. Feb 2023
- * $Revision:    V.1.4.1
+ * $Date:        06. April 2023
+ * $Revision:    V.1.5.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -73,26 +73,55 @@
 /*============================ TYPES =========================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ GLOBAL VARIABLES ==============================*/
-static uint32_t s_wMSUnit = 1;
-static bool s_bInitialized = false;
+
+static struct {
+    bool bInitialized;
+    uint32_t wMSUnit;
+
+#if __ARM_2D_HAS_ASYNC__
+    struct {
+        arm_2d_task_t tTaskCB;
+        uintptr_t semResourceAvailable;
+        uintptr_t semTaskAvailable;
+    }Async;
+#endif
+} s_tHelper = {
+    .wMSUnit = 1,
+};
+
 /*============================ PROTOTYPES ====================================*/
+
+extern
+uintptr_t arm_2d_port_new_semaphore(void);
+
 /*============================ IMPLEMENTATION ================================*/
 
 void arm_2d_helper_init(void)
 {
-    arm_irq_safe {
-        do {
-            if (s_bInitialized) {
-                break;
-            }
-            s_bInitialized = true;
 
-            s_wMSUnit = arm_2d_helper_get_reference_clock_frequency() / 1000ul;
-            if (s_wMSUnit == 0) {
-                s_wMSUnit = 1;
-            }
-        } while(0);
+    bool bInitialized = true;
+    arm_irq_safe {
+        bInitialized = s_tHelper.bInitialized;
+        s_tHelper.bInitialized = true;
     }
+    
+    if (bInitialized) {
+        return ;
+    }
+
+    s_tHelper.wMSUnit = arm_2d_helper_get_reference_clock_frequency() / 1000ul;
+    if (s_tHelper.wMSUnit == 0) {
+        s_tHelper.wMSUnit = 1;
+    }
+#if __ARM_2D_HAS_ASYNC__
+    /*! \note create a event flag and attach it to the default OP */
+    arm_2d_op_attach_semaphore(NULL, arm_2d_port_new_semaphore());
+    
+    s_tHelper.Async.semResourceAvailable = arm_2d_port_new_semaphore();
+    s_tHelper.Async.semTaskAvailable = arm_2d_port_new_semaphore();
+#endif
+
+
 }
 
 
@@ -115,12 +144,12 @@ uint32_t arm_2d_helper_get_reference_clock_frequency(void)
 
 int64_t arm_2d_helper_convert_ticks_to_ms(int64_t lTick)
 {
-    return lTick / (int64_t)s_wMSUnit;
+    return lTick / (int64_t)s_tHelper.wMSUnit;
 }
 
 int64_t arm_2d_helper_convert_ms_to_ticks(uint32_t wMS)
 {
-    int64_t lResult = (int64_t)s_wMSUnit * (int64_t)wMS;
+    int64_t lResult = (int64_t)s_tHelper.wMSUnit * (int64_t)wMS;
     return lResult ? lResult : 1;
 }
 
@@ -345,6 +374,95 @@ bool __arm_2d_helper_time_half_cos_slider(  int32_t nFrom,
     
     return false;
 }
+
+
+/*----------------------------------------------------------------------------*
+ * RTOS Port                                                                  *
+ *----------------------------------------------------------------------------*/
+
+#if __ARM_2D_HAS_ASYNC__
+__WEAK
+uintptr_t arm_2d_port_new_semaphore(void)
+{
+    return (uintptr_t)NULL;
+}
+
+
+__WEAK
+bool arm_2d_port_wait_for_semaphore(uintptr_t pSemaphore)
+{
+    ARM_2D_UNUSED(pSemaphore);
+    return true;
+}
+
+__WEAK
+void arm_2d_port_set_semaphoret(uintptr_t pSemaphore)
+{
+    ARM_2D_UNUSED(pSemaphore);
+}
+
+__OVERRIDE_WEAK
+void arm_2d_notif_aync_op_cpl(uintptr_t pUserParam, uintptr_t pSemaphore)
+{
+    ARM_2D_UNUSED(pUserParam);
+    arm_2d_port_set_semaphoret(pSemaphore);
+}
+
+__OVERRIDE_WEAK
+bool arm_2d_port_wait_for_async(uintptr_t pUserParam, uintptr_t pSemaphore)
+{
+    ARM_2D_UNUSED(pUserParam);
+    return arm_2d_port_wait_for_semaphore(pSemaphore);
+}
+
+
+__OVERRIDE_WEAK
+void arm_2d_notif_new_op_arrive(uintptr_t pUserParam)
+{
+    ARM_2D_UNUSED(pUserParam);
+    arm_2d_port_set_semaphoret(s_tHelper.Async.semTaskAvailable);
+}
+
+
+__OVERRIDE_WEAK 
+void arm_2d_notif_aync_sub_task_cpl(uintptr_t pUserParam)
+{
+    ARM_2D_UNUSED(pUserParam);
+    assert (NULL != s_tHelper.Async.semResourceAvailable) ;
+    arm_2d_port_set_semaphoret(s_tHelper.Async.semResourceAvailable);
+}
+
+void arm_2d_helper_backend_task(void)
+{
+    arm_fsm_rt_t tTaskResult;
+
+    do {
+        tTaskResult = arm_2d_task(&s_tHelper.Async.tTaskCB);
+
+        if (tTaskResult < 0) {
+            //! a serious error is detected
+            assert(false);
+            break;
+        }/* else if (arm_fsm_rt_wait_for_obj == tTaskResult) {
+            //! user low level drivers want to sync-up with this thread
+        } */
+        else if (arm_fsm_rt_wait_for_res == tTaskResult) {
+            /* wait for on-going OP releasing resources */
+            /* block current thread */
+            while(!arm_2d_port_wait_for_semaphore(s_tHelper.Async.semResourceAvailable));
+
+        } else if (arm_fsm_rt_cpl == tTaskResult) {
+            /* block current thread */
+            while(!arm_2d_port_wait_for_semaphore(s_tHelper.Async.semTaskAvailable));
+        }
+
+    } while(true);
+}
+#else
+void arm_2d_helper_backend_task(void)
+{
+}
+#endif
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

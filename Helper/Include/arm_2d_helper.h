@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        10. Dec 2022
- * $Revision:    V.1.6.1
+ * $Date:        06. April 2023
+ * $Revision:    V.1.6.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -164,6 +164,12 @@ extern "C" {
  */
 extern
 void arm_2d_helper_init(void);
+
+/*!
+ * \brief backend task for asynchronose mode
+ */
+extern
+void arm_2d_helper_backend_task(void);
 
 /*! 
  * \brief convert ticks of a reference timer to millisecond 

@@ -472,8 +472,8 @@ ARM_PRIVATE(
             arm_2d_pfb_t           *ptTail;
         }FlushFIFO;
         arm_2d_tile_t               *ptFrameBuffer;
-    } Adapter;                                                  
-)   
+    } Adapter;
+)
 
     struct {
         int64_t lTimestamp;                                     //!< PLEASE DO NOT USE

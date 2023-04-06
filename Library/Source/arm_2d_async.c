@@ -21,8 +21,8 @@
  * Title:        arm-2d_async.c
  * Description:  Pixel pipeline extensions for support hardware acceleration.
  *
- * $Date:        14. Nov 2022
- * $Revision:    V.1.0.3
+ * $Date:        05. April 2023
+ * $Revision:    V.1.0.4
  *
  * Target Processor:  Cortex-M cores
  *
@@ -294,7 +294,7 @@ arm_fsm_rt_t __arm_2d_call_default_io(  __arm_2d_sub_task_t *ptTask,
 
 
 __WEAK 
-void arm_2d_notif_aync_op_cpl(uintptr_t pUserParam)
+void arm_2d_notif_aync_op_cpl(uintptr_t pUserParam, uintptr_t pSemaphore)
 {
 }
 
@@ -342,7 +342,7 @@ static void __arm_2d_notify_op_cpl(arm_2d_op_core_t *ptOP, arm_fsm_rt_t tResult)
             //! only clear busy flag after bOpCpl is set properly.
             ptOP->Status.bIsBusy = false;
             
-            arm_2d_notif_aync_op_cpl(ptOP->pUserParam);
+            arm_2d_notif_aync_op_cpl(ptOP->pUserParam, ptOP->pSemaphore);
         }
     }
 }
@@ -951,7 +951,7 @@ arm_2d_err_t __arm_2d_async_init(   __arm_2d_sub_task_t *ptSubTasks,
 
 
 __WEAK
-bool arm_2d_port_wait_for_async(uintptr_t pUserParam)
+bool arm_2d_port_wait_for_async(uintptr_t pUserParam, uintptr_t pSemahpore)
 {
     return false;
 }
@@ -977,7 +977,7 @@ bool arm_2d_op_wait_async(arm_2d_op_core_t *ptOP)
             break;
         }
         
-        if (!arm_2d_port_wait_for_async(this.pUserParam)) {
+        if (!arm_2d_port_wait_for_async(this.pUserParam, this.pSemaphore)) {
             break;
         }
     } while(bIsBusy);
@@ -1012,7 +1012,7 @@ bool __arm_2d_op_acquire(arm_2d_op_core_t *ptOP)
             break;
         }
 
-        if (!arm_2d_port_wait_for_async(this.pUserParam)) {
+        if (!arm_2d_port_wait_for_async(this.pUserParam, this.pSemaphore)) {
             break;
         }
 

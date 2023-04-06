@@ -167,6 +167,15 @@ extern
 void arm_2d_set_user_param(arm_2d_op_core_t *ptOP, uintptr_t pUserParam);
 
 /*! 
+ * \brief attach a semaphore (which could be a pointer) to specified OP
+ * \param ptOP the address of the target OP (NULL means using the default OP)
+ * \param pSemaphore a pointer points to a RTOS semaphore
+ * \note this API only available when __ARM_2D_HAS_ASYNC__ is 1
+ */
+extern
+void arm_2d_op_attach_semaphore(arm_2d_op_core_t *ptOP, uintptr_t pSemaphore);
+
+/*! 
  * \brief wait asynchronous operation complete
  * \param[in] ptOP the address of the target OP (NULL means using the default OP)
  * \retval true sync up with operation

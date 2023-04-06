@@ -21,8 +21,8 @@
  * Title:        __arm-2d_core.c
  * Description:  Basic Tile operations
  *
- * $Date:        14. Nov 2022
- * $Revision:    V.1.6.2
+ * $Date:        05. April 2023
+ * $Revision:    V.1.6.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -84,11 +84,8 @@ extern "C" {
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 
-__WEAK
-arm_2d_runtime_feature_t ARM_2D_RUNTIME_FEATURE = {
-    .TREAT_OUT_OF_RANGE_AS_COMPLETE         = 1,
-    .HAS_DEDICATED_THREAD_FOR_2D_TASK       = 0,
-};
+extern
+arm_2d_runtime_feature_t ARM_2D_RUNTIME_FEATURE;
 
 
 const arm_2d_version_t ARM_2D_VERSION = {
@@ -1976,6 +1973,23 @@ void arm_2d_set_user_param(arm_2d_op_core_t *ptOP, uintptr_t pUserParam)
     
     this.pUserParam = pUserParam;
 }
+
+/*! 
+ * \brief attach a semaphore (which could be a pointer) to specified OP
+ * \param ptOP the address of the target OP (NULL means using the default OP)
+ * \param pSemaphore a pointer points to a RTOS semaphore
+ * \note this API only available when __ARM_2D_HAS_ASYNC__ is 1
+ */
+void arm_2d_op_attach_semaphore(arm_2d_op_core_t *ptOP, uintptr_t pSemaphore)
+{
+    ARM_2D_IMPL(arm_2d_op_core_t, ptOP);
+
+#if __ARM_2D_HAS_ASYNC__
+    this.pSemaphore = pSemaphore;
+#endif
+}
+
+
 
 /*! 
    \brief get the status of a specified OP, 
