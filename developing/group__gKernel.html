@@ -930,9 +930,18 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf435aa9cb213d9c2d39fb34ef02641ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gaf435aa9cb213d9c2d39fb34ef02641ed">arm_2d_set_user_param</a> (<a class="el" href="group__gKernel.html#structarm__2d__op__core__t">arm_2d_op_core_t</a> *ptOP, uintptr_t pUserParam)</td></tr>
 <tr class="memdesc:gaf435aa9cb213d9c2d39fb34ef02641ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">attach a user param (which could be a pointer) to specified OP  <a href="group__gKernel.html#gaf435aa9cb213d9c2d39fb34ef02641ed">More...</a><br /></td></tr>
 <tr class="separator:gaf435aa9cb213d9c2d39fb34ef02641ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4e1ff77c86825c56620a27f2fa5cb094"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__op__core__t">arm_2d_op_core_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga4e1ff77c86825c56620a27f2fa5cb094">arm_2d_op_init</a> (<a class="el" href="group__gKernel.html#structarm__2d__op__core__t">arm_2d_op_core_t</a> *ptOP, size_t tSize)</td></tr>
+<tr class="memdesc:ga4e1ff77c86825c56620a27f2fa5cb094"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize an given opcode  <a href="group__gKernel.html#ga4e1ff77c86825c56620a27f2fa5cb094">More...</a><br /></td></tr>
+<tr class="separator:ga4e1ff77c86825c56620a27f2fa5cb094"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3dffe6cbb5bfa0172baa05602585984d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__op__core__t">arm_2d_op_core_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga3dffe6cbb5bfa0172baa05602585984d">arm_2d_op_depose</a> (<a class="el" href="group__gKernel.html#structarm__2d__op__core__t">arm_2d_op_core_t</a> *ptOP, size_t tSize)</td></tr>
+<tr class="memdesc:ga3dffe6cbb5bfa0172baa05602585984d"><td class="mdescLeft">&#160;</td><td class="mdescRight">depose an given opcode  <a href="group__gKernel.html#ga3dffe6cbb5bfa0172baa05602585984d">More...</a><br /></td></tr>
+<tr class="separator:ga3dffe6cbb5bfa0172baa05602585984d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae2c21530b97278106f4acad69e93faa1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gae2c21530b97278106f4acad69e93faa1">arm_2d_op_attach_semaphore</a> (<a class="el" href="group__gKernel.html#structarm__2d__op__core__t">arm_2d_op_core_t</a> *ptOP, uintptr_t pSemaphore)</td></tr>
 <tr class="memdesc:gae2c21530b97278106f4acad69e93faa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">attach a semaphore (which could be a pointer) to specified OP  <a href="group__gKernel.html#gae2c21530b97278106f4acad69e93faa1">More...</a><br /></td></tr>
 <tr class="separator:gae2c21530b97278106f4acad69e93faa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga951996894b3b7ee87550b78df00dd92d"><td class="memItemLeft" align="right" valign="top">uintptr_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga951996894b3b7ee87550b78df00dd92d">arm_2d_op_get_semaphore</a> (<a class="el" href="group__gKernel.html#structarm__2d__op__core__t">arm_2d_op_core_t</a> *ptOP)</td></tr>
+<tr class="memdesc:ga951996894b3b7ee87550b78df00dd92d"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the attached semaphore (which could be a pointer) from specified OP  <a href="group__gKernel.html#ga951996894b3b7ee87550b78df00dd92d">More...</a><br /></td></tr>
+<tr class="separator:ga951996894b3b7ee87550b78df00dd92d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga129e2a7110847b0fd22eeb6351205989"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989">arm_2d_op_wait_async</a> (<a class="el" href="group__gKernel.html#structarm__2d__op__core__t">arm_2d_op_core_t</a> *ptOP)</td></tr>
 <tr class="memdesc:ga129e2a7110847b0fd22eeb6351205989"><td class="mdescLeft">&#160;</td><td class="mdescRight">wait asynchronous operation complete  <a href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989">More...</a><br /></td></tr>
 <tr class="separator:ga129e2a7110847b0fd22eeb6351205989"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -7896,11 +7905,87 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
 <p>attach a user param (which could be a pointer) to specified OP </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ptOP</td><td>the address of the target OP (NULL means using the default OP)</td></tr>
+    <tr><td class="paramname">ptOP</td><td>the address of the target OP (NULL means using the default OP) </td></tr>
     <tr><td class="paramname">pUserParam</td><td>a user parameter (it can be used as a pointer) </td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ga4e1ff77c86825c56620a27f2fa5cb094" name="ga4e1ff77c86825c56620a27f2fa5cb094"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4e1ff77c86825c56620a27f2fa5cb094">&#9670;&nbsp;</a></span>arm_2d_op_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gKernel.html#structarm__2d__op__core__t">arm_2d_op_core_t</a> * arm_2d_op_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gKernel.html#structarm__2d__op__core__t">arm_2d_op_core_t</a> *&#160;</td>
+          <td class="paramname"><em>ptOP</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>tSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>initialize an given opcode </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ptOP</td><td>the address of the target OP </td></tr>
+    <tr><td class="paramname">tSize</td><td>the size of the opcode object </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__gKernel.html#structarm__2d__op__core__t" title="the abstract class of 2D operations">arm_2d_op_core_t</a> * the address of the OP </dd></dl>
+
+</div>
+</div>
+<a id="ga3dffe6cbb5bfa0172baa05602585984d" name="ga3dffe6cbb5bfa0172baa05602585984d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3dffe6cbb5bfa0172baa05602585984d">&#9670;&nbsp;</a></span>arm_2d_op_depose()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gKernel.html#structarm__2d__op__core__t">arm_2d_op_core_t</a> * arm_2d_op_depose </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gKernel.html#structarm__2d__op__core__t">arm_2d_op_core_t</a> *&#160;</td>
+          <td class="paramname"><em>ptOP</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>tSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>depose an given opcode </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ptOP</td><td>the address of the target OP </td></tr>
+    <tr><td class="paramname">tSize</td><td>the size of the opcode object </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__gKernel.html#structarm__2d__op__core__t" title="the abstract class of 2D operations">arm_2d_op_core_t</a> * the address of the OP </dd></dl>
 
 </div>
 </div>
@@ -7938,6 +8023,34 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>this API only available when <b>ARM_2D_HAS_ASYNC</b> is 1 </dd></dl>
+
+</div>
+</div>
+<a id="ga951996894b3b7ee87550b78df00dd92d" name="ga951996894b3b7ee87550b78df00dd92d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga951996894b3b7ee87550b78df00dd92d">&#9670;&nbsp;</a></span>arm_2d_op_get_semaphore()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uintptr_t arm_2d_op_get_semaphore </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gKernel.html#structarm__2d__op__core__t">arm_2d_op_core_t</a> *&#160;</td>
+          <td class="paramname"><em>ptOP</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get the attached semaphore (which could be a pointer) from specified OP </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ptOP</td><td>the address of the target OP (NULL means using the default OP) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>uintptr_t the semaphore </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>this API only available when <b>ARM_2D_HAS_ASYNC</b> is 1 </dd></dl>
 
 </div>
