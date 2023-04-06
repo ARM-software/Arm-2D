@@ -22,7 +22,7 @@
  * Description:  The source code for arm-2d helper utilities
  *
  * $Date:        06. April 2023
- * $Revision:    V.1.5.0
+ * $Revision:    V.1.5.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -93,6 +93,9 @@ static struct {
 extern
 uintptr_t arm_2d_port_new_semaphore(void);
 
+extern
+void arm_2d_helper_rtos_init(void);
+
 /*============================ IMPLEMENTATION ================================*/
 
 void arm_2d_helper_init(void)
@@ -118,9 +121,9 @@ void arm_2d_helper_init(void)
     
     s_tHelper.Async.semResourceAvailable = arm_2d_port_new_semaphore();
     s_tHelper.Async.semTaskAvailable = arm_2d_port_new_semaphore();
+    
+    arm_2d_helper_rtos_init();
 #endif
-
-
 }
 
 

@@ -23,10 +23,6 @@
 #include "arm_2d_disp_adapters.h"
 #include "cmsis_os2.h"
 
-#if defined(__PERF_COUNTER__)
-#   include "perf_counter.h"
-#endif
-
 #if defined(__clang__)
 #   pragma clang diagnostic push
 #   pragma clang diagnostic ignored "-Wunknown-warning-option"
@@ -55,24 +51,6 @@
 
 /*============================ MACROS ========================================*/
 
-//-------- <<< Use Configuration Wizard in Context Menu >>> -----------------
-
-// <o>Target FPS <8-32767>
-// <i> Try to lock framerate to a specified value
-// <i> Default: 30
-#ifndef LCD_TARGET_FPS
-#   define LCD_TARGET_FPS       30
-#endif
-
-// <o>Arm-2D APP Stack Size <1024-32767>
-// <i> Specify the arm-2d application thread stack size
-// <i> Default: 2048
-#ifndef APP_STACK_SIZE
-#   define APP_STACK_SIZE       2048
-#endif
-
-// <<< end of configuration section >>>
-
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -88,25 +66,6 @@ arm_2d_runtime_feature_t ARM_2D_RUNTIME_FEATURE = {
 };
 
 
-
-#if defined(__PERF_CNT_USE_RTOS__)
-ARM_NOINIT
-static task_cycle_info_t s_tArm2DTaskInfo;
-ARM_NOINIT
-static task_cycle_info_agent_t s_tArm2DTaskInfoAgent;
-
-__OVERRIDE_WEAK 
-void __arm_2d_helper_perf_counter_start(int64_t *plTimestamp)
-{
-    start_task_cycle_counter(&s_tArm2DTaskInfo);
-}
-
-__OVERRIDE_WEAK 
-int32_t __arm_2d_helper_perf_counter_stop(int64_t *plTimestamp)
-{
-    return stop_task_cycle_counter(&s_tArm2DTaskInfo);
-}
-#endif
 
 /*----------------------------------------------------------------------------*
  * RTOS Port                                                                  *
@@ -149,34 +108,10 @@ void arm_2d_port_set_semaphoret(uintptr_t pSemaphore)
  * Application main thread                                                    *
  *----------------------------------------------------------------------------*/
  
- __NO_RETURN
-void app_2d_main_thread (void *argument) 
-{
-#if defined(__PERF_CNT_USE_RTOS__)
-    init_task_cycle_counter();
-    register_task_cycle_agent(&s_tArm2DTaskInfo, &s_tArm2DTaskInfoAgent);
-#endif
-
-    while(1) {
-        //! retrieve the number of system ticks
-        uint32_t wTick = osKernelGetTickCount();        
-        while(arm_fsm_rt_cpl != disp_adapter0_task());
-        
-        //! lock frame rate
-        osDelayUntil(wTick + (1000 / LCD_TARGET_FPS));
-    }
-
-    //osThreadExit();
-}
 
 __NO_RETURN
 void arm_2d_backend_thread(void *argument)
 {
-#if defined(__PERF_CNT_USE_RTOS__)
-    init_task_cycle_counter();
-    register_task_cycle_agent(&s_tArm2DTaskInfo, &s_tArm2DTaskInfoAgent);
-#endif
-
     ARM_2D_UNUSED(argument);
 
     arm_2d_helper_backend_task();
@@ -187,28 +122,14 @@ void arm_2d_backend_thread(void *argument)
 
 void arm_2d_helper_rtos_init(void)
 {
-#if defined(__PERF_CNT_USE_RTOS__)
-    init_task_cycle_info(&s_tArm2DTaskInfo);
-#endif
-
-    arm_irq_safe {
-        arm_2d_init();
-    } 
-
-    disp_adapter0_init();
-
-
-    static uint64_t thread1_stk_1[APP_STACK_SIZE / sizeof(uint64_t)];
+    static uint64_t s_dwThreadStack[2048 / sizeof(uint64_t)];
      
-    const osThreadAttr_t thread1_attr = {
-      .stack_mem  = &thread1_stk_1[0],
-      .stack_size = sizeof(thread1_stk_1)
+    const osThreadAttr_t c_tThreadAttribute = {
+      .stack_mem  = &s_dwThreadStack[0],
+      .stack_size = sizeof(s_dwThreadStack)
     };
 
-    /* Create application main thread */
-    osThreadNew(app_2d_main_thread, NULL, &thread1_attr);
-    
-    osThreadNew(arm_2d_backend_thread, NULL, NULL);
+    osThreadNew(arm_2d_backend_thread, NULL, &c_tThreadAttribute);
 }
 
 #if defined(__clang__)

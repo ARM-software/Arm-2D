@@ -63,6 +63,10 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                             uint8_t chOpacity,
                             bool bIsNewFrame);
 
+extern
+ARM_NONNULL(1)
+void progress_wheel_depose(progress_wheel_t *ptThis);
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif

@@ -89,6 +89,18 @@ void progress_wheel_init(   progress_wheel_t *ptThis,
     this.tColour = tColour;
     this.fScale = (float)(  (float)iDiameter 
                          /  ((float)c_tileQuaterArcMask.tRegion.tSize.iWidth *2.0f));
+
+    arm_foreach(arm_2d_op_fill_cl_msk_opa_trans_t, this.tOP, ptItem) {
+        arm_2d_op_init(&ptItem->use_as__arm_2d_op_core_t, sizeof(arm_2d_op_fill_cl_msk_opa_trans_t));
+    }
+}
+
+ARM_NONNULL(1)
+void progress_wheel_depose(progress_wheel_t *ptThis)
+{
+    arm_foreach(arm_2d_op_fill_cl_msk_opa_trans_t, this.tOP, ptItem) {
+        arm_2d_op_depose(&ptItem->use_as__arm_2d_op_core_t, sizeof(arm_2d_op_fill_cl_msk_opa_trans_t));
+    }
 }
 
 ARM_NONNULL(1,2)

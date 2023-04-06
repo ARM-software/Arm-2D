@@ -21,6 +21,7 @@
 #include "platform.h"
 #include "arm_2d_helper.h"
 #include "arm_2d_disp_adapters.h"
+#include "arm_2d_benchmark.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -49,6 +50,25 @@
 #endif
 
 /*============================ MACROS ========================================*/
+
+//-------- <<< Use Configuration Wizard in Context Menu >>> -----------------
+
+// <o>Target FPS <8-32767>
+// <i> Try to lock framerate to a specified value
+// <i> Default: 30
+#ifndef LCD_TARGET_FPS
+#   define LCD_TARGET_FPS       30
+#endif
+
+// <o>Arm-2D APP Stack Size <1024-32767>
+// <i> Specify the arm-2d application thread stack size
+// <i> Default: 2048
+#ifndef APP_STACK_SIZE
+#   define APP_STACK_SIZE       2048
+#endif
+
+// <<< end of configuration section >>>
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -66,7 +86,23 @@ int32_t Disp0_DrawBitmap(int16_t x,
     return GLCD_DrawBitmap(x,y,width, height, bitmap);
 }
 
+ __NO_RETURN
+void app_2d_main_thread (void *argument) 
+{
 
+    arm_2d_run_benchmark();
+
+    while(1) {
+        //! retrieve the number of system ticks
+        uint32_t wTick = osKernelGetTickCount();        
+        while(arm_fsm_rt_cpl != disp_adapter0_task());
+        
+        //! lock frame rate
+        osDelayUntil(wTick + (1000 / LCD_TARGET_FPS));
+    }
+
+    //osThreadExit();
+}
 
 /*----------------------------------------------------------------------------
   Main function
@@ -76,7 +112,21 @@ int main (void)
     /* Initialize CMSIS-RTOS2 */
     osKernelInitialize ();
 
-    arm_2d_helper_rtos_init();
+    arm_irq_safe {
+        arm_2d_init();
+    } 
+
+    //disp_adapter0_init();
+
+    static uint64_t thread1_stk_1[APP_STACK_SIZE / sizeof(uint64_t)];
+     
+    const osThreadAttr_t thread1_attr = {
+      .stack_mem  = &thread1_stk_1[0],
+      .stack_size = sizeof(thread1_stk_1)
+    };
+
+    /* Create application main thread */
+    osThreadNew(app_2d_main_thread, NULL, &thread1_attr);
 
     /* Start thread execution */
     osKernelStart();

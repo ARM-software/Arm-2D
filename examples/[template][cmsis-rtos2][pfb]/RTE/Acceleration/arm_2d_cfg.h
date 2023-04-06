@@ -181,7 +181,7 @@ extern "C" {
 // <o>Number of iterations <1-2000>
 // <i> run number of iterations in arm-2d benchmark before calculating the result.
 #ifndef ITERATION_CNT
-#   define ITERATION_CNT                                                1000
+#   define ITERATION_CNT                                                100
 #endif
 
 // <q>Use Tiny mode to run benchmark

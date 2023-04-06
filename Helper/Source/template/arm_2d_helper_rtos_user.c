@@ -51,25 +51,6 @@
 #endif
 
 /*============================ MACROS ========================================*/
-
-//-------- <<< Use Configuration Wizard in Context Menu >>> -----------------
-
-// <o>Target FPS <8-32767>
-// <i> Try to lock framerate to a specified value
-// <i> Default: 30
-#ifndef LCD_TARGET_FPS
-#   define LCD_TARGET_FPS       30
-#endif
-
-// <o>Arm-2D APP Stack Size <1024-32767>
-// <i> Specify the arm-2d application thread stack size
-// <i> Default: 2048
-#ifndef APP_STACK_SIZE
-#   define APP_STACK_SIZE       2048
-#endif
-
-// <<< end of configuration section >>>
-
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -118,22 +99,7 @@ void arm_2d_port_set_semaphoret(uintptr_t pSemaphore)
 /*----------------------------------------------------------------------------*
  * Application main thread                                                    *
  *----------------------------------------------------------------------------*/
- 
- __NO_RETURN
-void app_2d_main_thread (void *argument) 
-{
 
-    ARM_2D_UNUSED(argument);
-
-    while(1) {
-        //! retrieve the number of system ticks
-        //uint32_t wTick = osKernelGetTickCount();        
-        while(arm_fsm_rt_cpl != disp_adapter0_task());
-        
-        //! lock frame rate
-        //osDelayUntil(wTick + (1000 / LCD_TARGET_FPS));
-    }
-}
 
 __NO_RETURN
 void arm_2d_backend_thread(void *argument)
@@ -150,25 +116,16 @@ void arm_2d_backend_thread(void *argument)
 
 void arm_2d_helper_rtos_init(void)
 {
-
-    arm_irq_safe {
-        arm_2d_init();
-    } 
-
-    disp_adapter0_init();
-
-    /* put your code here to Create arm-2d main thread 
-    static uint64_t thread1_stk_1[APP_STACK_SIZE / sizeof(uint64_t)];
+    /*
+    static uint64_t s_dwThreadStack[2048 / sizeof(uint64_t)];
      
-    const osThreadAttr_t thread1_attr = {
-      .stack_mem  = &thread1_stk_1[0],
-      .stack_size = sizeof(thread1_stk_1)
+    const osThreadAttr_t c_tThreadAttribute = {
+      .stack_mem  = &s_dwThreadStack[0],
+      .stack_size = sizeof(s_dwThreadStack)
     };
-    osThreadNew(app_2d_main_thread, NULL, &thread1_attr);
+
+    osThreadNew(arm_2d_backend_thread, NULL, &c_tThreadAttribute);
     */
-    
-    /* put your code here to Create arm-2d backend thread */
-    //osThreadNew(arm_2d_backend_thread, NULL, NULL);
 }
 
 #if defined(__clang__)
