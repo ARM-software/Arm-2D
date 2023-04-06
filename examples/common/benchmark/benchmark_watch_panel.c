@@ -264,6 +264,8 @@ demo_gears_t s_tGears[] = {
 };
 
 
+static arm_2d_op_trans_msk_opa_t s_tStarOP;
+
 /*============================ IMPLEMENTATION ================================*/
 
 static volatile uint32_t s_wSystemTimeInMs = 0;
@@ -295,6 +297,13 @@ void example_gui_init(void)
         _->tRegion = tRegion;
     }
 #endif
+
+    arm_foreach(demo_gears_t, s_tGears, ptItem) {
+        arm_2d_op_init(&ptItem->tOP.use_as__arm_2d_op_core_t,
+                        sizeof(ptItem->tOP.use_as__arm_2d_op_core_t));
+    }
+    arm_2d_op_init(&s_tStarOP.use_as__arm_2d_op_core_t,
+                    sizeof(s_tStarOP));
 }
 
 #if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
@@ -550,21 +559,8 @@ void example_gui_refresh(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
                 .iX = c_tileStar.tRegion.tSize.iWidth >> 1,
                 .iY = c_tileStar.tRegion.tSize.iHeight >> 1,
             };
-        #if 0
-            static arm_2d_op_trans_opa_t s_tStarOP;
-            arm_2dp_tile_transform_with_opacity(
-                &s_tStarOP,         //!< control block
-                &c_tileStar,        //!< source tile
-                ptTile,             //!< target tile
-                NULL,               //!< target region
-                tCentre,            //!< pivot on source
-                s_fAngle,           //!< rotation angle 
-                s_fScale,           //!< zoom scale 
-                GLCD_COLOR_BLACK,   //!< chromekeying colour
-                s_chOpacity         //!< opacity
-            );               
-         #else
-            static arm_2d_op_trans_msk_opa_t s_tStarOP;
+
+            
             const arm_2d_tile_t *ptSrcMask = 
             #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__ && !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
                 &c_tileStarMask2; //!< 8in32 channel mask
@@ -582,10 +578,16 @@ void example_gui_refresh(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
                 s_fAngle,           //!< rotation angle 
                 s_fScale           //!< zoom scale 
                 ,s_chOpacity         //!< opacity
-            );               
-         #endif
+            );
+
         } while(0); 
     }
+    
+    arm_foreach(demo_gears_t, s_tGears, ptItem) {
+        arm_2d_op_wait_async(&ptItem->tOP.use_as__arm_2d_op_core_t);
+    }
+    arm_2d_op_wait_async(&s_tStarOP.use_as__arm_2d_op_core_t);
+    
     example_gui_on_refresh_evt_handler(ptTile);
 
 }
