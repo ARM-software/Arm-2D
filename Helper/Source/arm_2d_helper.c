@@ -215,7 +215,7 @@ bool __arm_2d_helper_time_liner_slider( int32_t nFrom,
                 //if (NULL != pnStroke) {
                     (*pnStroke) = nTo;
                 //}
-                *plTimestamp = lTimestamp;
+                //*plTimestamp = lTimestamp;
                 
                 return true;
             }
@@ -367,7 +367,7 @@ bool __arm_2d_helper_time_half_cos_slider(  int32_t nFrom,
                 //if (NULL != pnStroke) {
                     (*pnStroke) = nTo;
                 //}
-                *plTimestamp = lTimestamp;
+                //*plTimestamp = lTimestamp;
                 
                 return true;
             }
