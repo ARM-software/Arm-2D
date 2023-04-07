@@ -367,7 +367,7 @@
             <file category="sourceC"     name="examples/common/asset/cmsis_logo.c" />
           </files>
           <RTE_Components_h>
-
+#define RTE_Acceleration_Arm_2D_Extra_Benchmark
     #define RTE_Acceleration_Arm_2D_Extra_Benchmark_Generic
           </RTE_Components_h>
         </component>
@@ -387,7 +387,7 @@
             <file category="sourceC"     name="examples/common/asset/star.c" />
           </files>
           <RTE_Components_h>
-
+#define RTE_Acceleration_Arm_2D_Extra_Benchmark
     #define RTE_Acceleration_Arm_2D_Extra_Benchmark_Watch_Panel
           </RTE_Components_h>
         </component>

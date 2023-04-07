@@ -81,12 +81,14 @@ const arm_2d_tile_t c_tileGreenCircleQuaterMask =
 
 /*============================ IMPLEMENTATION ================================*/
 
-static arm_2d_op_fill_cl_msk_opa_trans_t s_tMaskRotateCB = {0};
+static arm_2d_op_fill_cl_msk_opa_trans_t s_tMaskRotateCB[2];
 
 void spinning_wheel_init(void)
 {
-    arm_2d_op_init( &s_tMaskRotateCB.use_as__arm_2d_op_core_t, 
-                    sizeof(arm_2d_op_fill_cl_msk_opa_trans_t));
+    arm_foreach(arm_2d_op_fill_cl_msk_opa_trans_t, s_tMaskRotateCB, ptItem) {
+        arm_2d_op_init( &ptItem->use_as__arm_2d_op_core_t, 
+                        sizeof(arm_2d_op_fill_cl_msk_opa_trans_t));
+    }
 }
 
 void spinning_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
@@ -110,7 +112,7 @@ void spinning_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
         
         //! spin mask
         do {
-            static arm_2d_op_fill_cl_msk_opa_trans_t s_tMaskRotateCB = {0};
+            //static arm_2d_op_fill_cl_msk_opa_trans_t s_tMaskRotateCB = {0};
         
             if (bIsNewFrame) {
                 s_fAngle += ARM_2D_ANGLE(6.0f);
@@ -124,7 +126,7 @@ void spinning_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
 
             arm_2d_align_centre(__top_container, c_tileSpinWheelMask.tRegion.tSize) {
                 arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                                &s_tMaskRotateCB,
+                                                &s_tMaskRotateCB[0],
                                                 &c_tileSpinWheelMask,
                                                 ptTarget,
                                                 &__centre_region,
@@ -134,7 +136,7 @@ void spinning_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
                                                 GLCD_COLOR_WHITE,
                                                 254);
 
-                arm_2d_op_wait_async(&s_tMaskRotateCB.use_as__arm_2d_op_core_t);
+                arm_2d_op_wait_async(&s_tMaskRotateCB[0].use_as__arm_2d_op_core_t);
             }
         } while(0);
     }
@@ -162,8 +164,6 @@ void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget,
                                             128);
             arm_2d_op_wait_async(NULL);
 
-            
-            
             const arm_2d_location_t c_tCentre = {
                 .iX = 0,
                 .iY = 0,
@@ -176,7 +176,7 @@ void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget,
             }
 
             arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                            &s_tMaskRotateCB,
+                                            &s_tMaskRotateCB[1],
                                             &c_tileGreenCircleQuaterMask,
                                             ptTarget,
                                             &__centre_region,
@@ -187,7 +187,7 @@ void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget,
                                             64
                                         );
 
-            arm_2d_op_wait_async(&s_tMaskRotateCB.use_as__arm_2d_op_core_t);
+            arm_2d_op_wait_async(&s_tMaskRotateCB[1].use_as__arm_2d_op_core_t);
         }
     }
 }

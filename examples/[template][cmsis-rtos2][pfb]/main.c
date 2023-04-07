@@ -21,7 +21,10 @@
 #include "platform.h"
 #include "arm_2d_helper.h"
 #include "arm_2d_disp_adapters.h"
-#include "arm_2d_benchmark.h"
+
+#if defined(RTE_Acceleration_Arm_2D_Extra_Benchmark)
+#   include "arm_2d_benchmark.h"
+#endif
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -90,7 +93,9 @@ int32_t Disp0_DrawBitmap(int16_t x,
 void app_2d_main_thread (void *argument) 
 {
 
+#if     defined(RTE_Acceleration_Arm_2D_Extra_Benchmark)
     arm_2d_run_benchmark();
+#endif
 
     while(1) {
         //! retrieve the number of system ticks
