@@ -147,13 +147,13 @@ td.cmtab1 {
 
 table.cmtable {
 	border-collapse:collapse;
-        margin-top: 4px;
-        margin-bottom: 4px;
+	text-align: justify;
 }
 
 table.cmtable td, table.cmtable th {
 	border: 1px solid var(--arm_dark_gray);
 	padding: 3px 7px 2px;
+    vertical-align: text-top;
 }
 
 table.cmtable th {
@@ -277,7 +277,6 @@ p {
 	margin-block-start: 1em;
 	margin-block-end: 0.5em;
 }
-
 p.startli, p.startdd, p.starttd {
 	margin-top: 2px;
 }
