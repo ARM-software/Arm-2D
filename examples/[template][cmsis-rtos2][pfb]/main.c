@@ -23,6 +23,8 @@
 #include "arm_2d_disp_adapters.h"
 #include "arm_2d_scenes.h"
 
+#include "arm_2d_scene_meter.h"
+
 #if defined(RTE_Acceleration_Arm_2D_Extra_Benchmark)
 #   include "arm_2d_benchmark.h"
 #endif
@@ -79,6 +81,11 @@
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
+void scene_meter_loader(void) 
+{
+    arm_2d_scene_meter_init(&DISP0_ADAPTER);
+}
+
 void scene0_loader(void) 
 {
     arm_2d_scene0_init(&DISP0_ADAPTER);
@@ -108,8 +115,9 @@ typedef void scene_loader_t(void);
 
 
 static scene_loader_t * const c_SceneLoaders[] = {
-    scene0_loader,
-    scene1_loader,
+    //scene0_loader,
+    //scene1_loader,
+    scene_meter_loader,
     scene3_loader,
     scene4_loader,
     scene2_loader,
