@@ -93,7 +93,7 @@ int32_t Disp0_DrawBitmap(int16_t x,
 void app_2d_main_thread (void *argument) 
 {
 
-#if     defined(RTE_Acceleration_Arm_2D_Extra_Benchmark)
+#if defined(RTE_Acceleration_Arm_2D_Extra_Benchmark)
     arm_2d_run_benchmark();
 #endif
 
@@ -121,7 +121,9 @@ int main (void)
         arm_2d_init();
     } 
 
-    //disp_adapter0_init();
+#if !defined(RTE_Acceleration_Arm_2D_Extra_Benchmark)
+    disp_adapter0_init();
+#endif
 
     static uint64_t thread1_stk_1[APP_STACK_SIZE / sizeof(uint64_t)];
      
