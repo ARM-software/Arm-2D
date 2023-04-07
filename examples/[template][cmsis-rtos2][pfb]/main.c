@@ -21,6 +21,7 @@
 #include "platform.h"
 #include "arm_2d_helper.h"
 #include "arm_2d_disp_adapters.h"
+#include "arm_2d_scenes.h"
 
 #if defined(RTE_Acceleration_Arm_2D_Extra_Benchmark)
 #   include "arm_2d_benchmark.h"
@@ -78,7 +79,63 @@
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
+void scene0_loader(void) 
+{
+    arm_2d_scene0_init(&DISP0_ADAPTER);
+}
+
+void scene1_loader(void) 
+{
+    arm_2d_scene1_init(&DISP0_ADAPTER);
+}
+
+void scene2_loader(void) 
+{
+    arm_2d_scene2_init(&DISP0_ADAPTER);
+}
+
+void scene3_loader(void) 
+{
+    arm_2d_scene3_init(&DISP0_ADAPTER);
+}
+
+void scene4_loader(void) 
+{
+    arm_2d_scene4_init(&DISP0_ADAPTER);
+}
+
+typedef void scene_loader_t(void);
+
+
+static scene_loader_t * const c_SceneLoaders[] = {
+    scene0_loader,
+    scene1_loader,
+    scene3_loader,
+    scene4_loader,
+    scene2_loader,
+};
+
+
+
 /*============================ IMPLEMENTATION ================================*/
+
+/* load scene one by one */
+void before_scene_switching_handler(void *pTarget,
+                                    arm_2d_scene_player_t *ptPlayer,
+                                    arm_2d_scene_t *ptScene)
+{
+    static uint_fast8_t s_chIndex = 0;
+
+    if (s_chIndex >= dimof(c_SceneLoaders)) {
+        s_chIndex = 0;
+    }
+    
+    /* call loader */
+    c_SceneLoaders[s_chIndex]();
+    s_chIndex++;
+}
+
+
 
 int32_t Disp0_DrawBitmap(int16_t x, 
                         int16_t y, 
@@ -123,6 +180,16 @@ int main (void)
 
 #if !defined(RTE_Acceleration_Arm_2D_Extra_Benchmark)
     disp_adapter0_init();
+    
+    arm_2d_scene_player_register_before_switching_event_handler(
+            &DISP0_ADAPTER,
+            before_scene_switching_handler);
+    
+    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
+                                            ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);
+    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 3000);
+    
+    arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
 #endif
 
     static uint64_t thread1_stk_1[APP_STACK_SIZE / sizeof(uint64_t)];

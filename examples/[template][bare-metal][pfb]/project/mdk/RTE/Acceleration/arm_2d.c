@@ -21,8 +21,8 @@
  * Title:        arm-2d.c
  * Description:  Tables for pixel pipeline OPs
  *
- * $Date:        25. Nov 2022
- * $Revision:    V.1.1.0
+ * $Date:        06. April 2023
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -164,6 +164,24 @@ void *__arm_2d_allocate_scratch_memory( uint32_t wSize,
     assert(0 == ((uintptr_t)pBuff & (nAlign - 1)));
     
     return pBuff;
+}
+
+
+__WEAK
+arm_2d_op_core_t *arm_2d_op_init(arm_2d_op_core_t *ptOP, size_t tSize)
+{
+    if (NULL != ptOP) {
+        memset(ptOP, 0, MAX(tSize, sizeof(arm_2d_op_core_t)));
+    }
+    
+    return ptOP;
+}
+
+__WEAK
+arm_2d_op_core_t *arm_2d_op_depose(arm_2d_op_core_t *ptOP, size_t tSize)
+{
+    ARM_2D_UNUSED(tSize);
+    return ptOP;
 }
 
 #ifdef   __cplusplus

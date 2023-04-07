@@ -16,14 +16,14 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D_SCENE1_H__
-#define __ARM_2D_SCENE1_H__
+#ifndef __ARM_2D_SCENE0_H__
+#define __ARM_2D_SCENE0_H__
 
 /*============================ INCLUDES ======================================*/
 
 #include "arm_2d.h"
 
-#ifdef RTE_Acceleration_Arm_2D_Scene1
+#ifdef __RTE_ACCELERATION_ARM_2D_SCENE0__
 
 #include "arm_2d_helper_scene.h"
 
@@ -46,13 +46,11 @@ extern "C" {
 #   pragma GCC diagnostic ignored "-Wpadded"
 #endif
 
-
-
 /*============================ MACROS ========================================*/
 
 /* OOC header, please DO NOT modify  */
-#ifdef __USER_SCENE1_IMPLEMENT__
-#   undef __USER_SCENE1_IMPLEMENT__
+#ifdef __USER_SCENE0_IMPLEMENT__
+#   undef __USER_SCENE0_IMPLEMENT__
 #   define __ARM_2D_IMPL__
 #endif
 #include "arm_2d_utils.h"
@@ -60,32 +58,31 @@ extern "C" {
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
- * \brief initalize scene1 and add it to a user specified scene player
+ * \brief initalize scene0 and add it to a user specified scene player
  * \param[in] __DISP_ADAPTER_PTR the target display adatper (i.e. scene player)
  * \param[in] ... this is an optional parameter. When it is NULL, a new 
- *            user_scene_1_t will be allocated from HEAP and freed on
+ *            user_scene_0_t will be allocated from HEAP and freed on
  *            the deposing event. When it is non-NULL, the life-cycle is managed
  *            by user.
- * \return user_scene_1_t* the user_scene_1_t instance
+ * \return user_scene_0_t* the user_scene_0_t instance
  */
-#define arm_2d_scene1_init(__DISP_ADAPTER_PTR, ...)                    \
-            __arm_2d_scene1_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
+#define arm_2d_scene0_init(__DISP_ADAPTER_PTR, ...)                    \
+            __arm_2d_scene0_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
 /*!
- * \brief a user class for scene 1
+ * \brief a user class for scene 0
  */
-typedef struct user_scene_1_t user_scene_1_t;
+typedef struct user_scene_0_t user_scene_0_t;
 
-struct user_scene_1_t {
+struct user_scene_0_t {
     implement(arm_2d_scene_t);                                                  //! derived from class: arm_2d_scene_t
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[2];
-    
+    int64_t lTimestamp;
     bool bUserAllocated;
-    uint16_t hwProgress;
+
 )
     /* place your public member here */
     
@@ -96,8 +93,8 @@ ARM_PRIVATE(
 
 ARM_NONNULL(1)
 extern
-user_scene_1_t *__arm_2d_scene1_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_1_t *ptScene);
+user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_0_t *ptScene);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

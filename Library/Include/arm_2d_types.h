@@ -52,6 +52,7 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
 #   pragma clang diagnostic ignored "-Wpadded"
 #   pragma clang diagnostic ignored "-Wc11-extensions"
+#   pragma clang diagnostic ignored "-Wembedded-directive"
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #   pragma diag_suppress 64
 #elif __IS_COMPILER_GCC__

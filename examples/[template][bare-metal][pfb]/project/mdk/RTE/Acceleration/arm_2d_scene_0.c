@@ -20,7 +20,7 @@
 
 #include "arm_2d.h"
 
-#ifdef __RTE_ACCELERATION_ARM_2D_SCENE0__
+#ifdef RTE_Acceleration_Arm_2D_Scene0
 
 #define __USER_SCENE0_IMPLEMENT__
 #include "arm_2d_scene_0.h"
@@ -48,7 +48,6 @@
 #   pragma clang diagnostic ignored "-Wunused-function"
 #   pragma clang diagnostic ignored "-Wmissing-declarations"  
 #elif __IS_COMPILER_ARM_COMPILER_5__
-#   pragma diag_suppress 64,177
 #elif __IS_COMPILER_IAR__
 #   pragma diag_suppress=Pa089,Pe188,Pe177,Pe174
 #elif __IS_COMPILER_GCC__

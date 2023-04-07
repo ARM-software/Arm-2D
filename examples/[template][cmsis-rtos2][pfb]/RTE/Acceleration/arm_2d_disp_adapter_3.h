@@ -16,12 +16,12 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D_DISP_ADAPTER0_H__
-#define __ARM_2D_DISP_ADAPTER0_H__
+#ifndef __ARM_2D_DISP_ADAPTER3_H__
+#define __ARM_2D_DISP_ADAPTER3_H__
 
 #include "arm_2d.h"
 
-#ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter0
+#ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter3
 
 #include "arm_2d_helper_scene.h"
 #include "__common.h"
@@ -49,34 +49,34 @@ extern "C" {
 //     <16=>    16Bits
 //     <32=>    32Bits
 // <i> The colour depth of your screen
-#ifndef __DISP0_CFG_COLOUR_DEPTH__
-#   define __DISP0_CFG_COLOUR_DEPTH__                              16
+#ifndef __DISP3_CFG_COLOUR_DEPTH__
+#   define __DISP3_CFG_COLOUR_DEPTH__                              16
 #endif
 
 // <o>Width of the screen <8-32767>
 // <i> The width of your screen
 // <i> Default: 320
-#ifndef __DISP0_CFG_SCEEN_WIDTH__
-#   define __DISP0_CFG_SCEEN_WIDTH__                               320
+#ifndef __DISP3_CFG_SCEEN_WIDTH__
+#   define __DISP3_CFG_SCEEN_WIDTH__                               320
 #endif
 
 // <o>Height of the screen <8-32767>
 // <i> The height of your screen
 // <i> Default: 240
-#ifndef __DISP0_CFG_SCEEN_HEIGHT__
-#   define __DISP0_CFG_SCEEN_HEIGHT__                              240
+#ifndef __DISP3_CFG_SCEEN_HEIGHT__
+#   define __DISP3_CFG_SCEEN_HEIGHT__                              240
 #endif
 
 // <o>Width of the PFB block
-// <i> The width of your PFB block size used in disp0
-#ifndef __DISP0_CFG_PFB_BLOCK_WIDTH__
-#   define __DISP0_CFG_PFB_BLOCK_WIDTH__                           320
+// <i> The width of your PFB block size used in disp3
+#ifndef __DISP3_CFG_PFB_BLOCK_WIDTH__
+#   define __DISP3_CFG_PFB_BLOCK_WIDTH__                           320
 #endif
 
 // <o>Height of the PFB block
-// <i> The height of your PFB block size used in disp0
-#ifndef __DISP0_CFG_PFB_BLOCK_HEIGHT__
-#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          24
+// <i> The height of your PFB block size used in disp3
+#ifndef __DISP3_CFG_PFB_BLOCK_HEIGHT__
+#   define __DISP3_CFG_PFB_BLOCK_HEIGHT__                          240
 #endif
 
 // <o>Width Alignment of generated PFBs
@@ -89,8 +89,8 @@ extern "C" {
 //     <6=>    64 pixel
 //     <7=>   128 pixel
 // <i> Make sure the x and width of the PFB is always aligned to 2^n pixels
-#ifndef __DISP0_CFG_PFB_PIXEL_ALIGN_WIDTH__
-#   define __DISP0_CFG_PFB_PIXEL_ALIGN_WIDTH__                     0
+#ifndef __DISP3_CFG_PFB_PIXEL_ALIGN_WIDTH__
+#   define __DISP3_CFG_PFB_PIXEL_ALIGN_WIDTH__                     0
 #endif
 
 // <o>Height Alignment of generated PFBs
@@ -103,74 +103,74 @@ extern "C" {
 //     <6=>    64 pixel
 //     <7=>   128 pixel
 // <i> Make sure the y and height of the PFB is always aligned to 2^n pixels
-#ifndef __DISP0_CFG_PFB_PIXEL_ALIGN_HEIGHT__
-#   define __DISP0_CFG_PFB_PIXEL_ALIGN_HEIGHT__                    0
+#ifndef __DISP3_CFG_PFB_PIXEL_ALIGN_HEIGHT__
+#   define __DISP3_CFG_PFB_PIXEL_ALIGN_HEIGHT__                    0
 #endif
 
 // <o>PFB Block Count <1-65535>
 // <i> The number of blocks in the PFB pool.
-#ifndef __DISP0_CFG_PFB_HEAP_SIZE__
-#   define __DISP0_CFG_PFB_HEAP_SIZE__                             1
+#ifndef __DISP3_CFG_PFB_HEAP_SIZE__
+#   define __DISP3_CFG_PFB_HEAP_SIZE__                             1
 #endif
 
 // <o>Number of iterations <0-2000>
 // <i> run number of iterations before calculate the FPS.
-#ifndef __DISP0_CFG_ITERATION_CNT__
-#   define __DISP0_CFG_ITERATION_CNT__                             30
+#ifndef __DISP3_CFG_ITERATION_CNT__
+#   define __DISP3_CFG_ITERATION_CNT__                             30
 #endif
 
 // <o>FPS Calculation Mode
 //     <0=>     Render-Only FPS
 //     <1=>     Real FPS
 // <i> Decide the meaning of the real time FPS display
-#ifndef __DISP0_CFG_FPS_CACULATION_MODE__
-#   define __DISP0_CFG_FPS_CACULATION_MODE__                       1
+#ifndef __DISP3_CFG_FPS_CACULATION_MODE__
+#   define __DISP3_CFG_FPS_CACULATION_MODE__                       0
 #endif
 
 // <q> Swap the high and low bytes
 // <i> Swap the high and low bytes of the 16bit-pixels
-#ifndef __DISP0_CFG_SWAP_RGB16_HIGH_AND_LOW_BYTES__
-#   define __DISP0_CFG_SWAP_RGB16_HIGH_AND_LOW_BYTES__             0
+#ifndef __DISP3_CFG_SWAP_RGB16_HIGH_AND_LOW_BYTES__
+#   define __DISP3_CFG_SWAP_RGB16_HIGH_AND_LOW_BYTES__             0
 #endif
 
 // <q>Enable the helper service for Asynchronous Flushing
 // <i> Please select this option when using asynchronous flushing, e.g. DMA + ISR 
-#ifndef __DISP0_CFG_ENABLE_ASYNC_FLUSHING__
-#   define __DISP0_CFG_ENABLE_ASYNC_FLUSHING__                     0
+#ifndef __DISP3_CFG_ENABLE_ASYNC_FLUSHING__
+#   define __DISP3_CFG_ENABLE_ASYNC_FLUSHING__                     0
 #endif
 
 // <q>Disable the default scene
 // <i> Remove the default scene for this display adapter. We highly recommend you to disable the default scene when creating real applications.
-#ifndef __DISP0_CFG_DISABLE_DEFAULT_SCENE__
-#   define __DISP0_CFG_DISABLE_DEFAULT_SCENE__                     0
+#ifndef __DISP3_CFG_DISABLE_DEFAULT_SCENE__
+#   define __DISP3_CFG_DISABLE_DEFAULT_SCENE__                     0
 #endif
 
 // <q>Disable the navigation layer
 // <i> Remove the navigation layer for this display adapter. NOTE: Disable the navigation layer will also remove the real-time FPS display.
-#ifndef __DISP0_CFG_DISABLE_NAVIGATION_LAYER__
-#   define __DISP0_CFG_DISABLE_NAVIGATION_LAYER__                  0
+#ifndef __DISP3_CFG_DISABLE_NAVIGATION_LAYER__
+#   define __DISP3_CFG_DISABLE_NAVIGATION_LAYER__                  0
 #endif
 
 // <q>Enable the virtual resource helper service
 // <i> Introduce a helper service for loading virtual resources.
 // <i> This feature is disabled by default.
-#ifndef __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
-#   define __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                   1
+#ifndef __DISP3_CFG_VIRTUAL_RESOURCE_HELPER__
+#   define __DISP3_CFG_VIRTUAL_RESOURCE_HELPER__                   0
 #endif
 
 // <q>Use heap to allocate buffer in the virtual resource helper service
 // <i> Use malloc and free in the virtual resource helper service. When disabled, a static buffer in the size of current display adapter PFB will be used. 
 // <i> This feature is disabled by default.
-#ifndef __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
-#   define __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__      0
+#ifndef __DISP3_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
+#   define __DISP3_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__      0
 #endif
 // <<< end of configuration section >>>
 
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
-#if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
-#define disp_adapter0_impl_vres(__COLOUR_FORMAT, __WIDTH, __HEIGHT,...)\
+#if __DISP3_CFG_VIRTUAL_RESOURCE_HELPER__
+#define disp_adapter3_impl_vres(__COLOUR_FORMAT, __WIDTH, __HEIGHT,...)\
 {                                                                               \
     .tTile = {                                                                  \
         .tRegion = {                                                            \
@@ -188,8 +188,8 @@ extern "C" {
             },                                                                  \
         },                                                                      \
     },                                                                          \
-    .Load       = &__disp_adapter0_vres_asset_loader,                  \
-    .Depose     = &__disp_adapter0_vres_buffer_deposer,                \
+    .Load       = &__disp_adapter3_vres_asset_loader,                  \
+    .Depose     = &__disp_adapter3_vres_buffer_deposer,                \
     __VA_ARGS__                                                                 \
 }
 #endif
@@ -198,18 +198,18 @@ extern "C" {
 /*============================ GLOBAL VARIABLES ==============================*/
 ARM_NOINIT
 extern
-arm_2d_scene_player_t DISP0_ADAPTER;
+arm_2d_scene_player_t DISP3_ADAPTER;
 
 /*============================ PROTOTYPES ====================================*/
 
 extern
-void disp_adapter0_init(void);
+void disp_adapter3_init(void);
 
 extern
-arm_fsm_rt_t disp_adapter0_task(void);
+arm_fsm_rt_t disp_adapter3_task(void);
 
 
-#if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
+#if __DISP3_CFG_VIRTUAL_RESOURCE_HELPER__
 /*!
  *  \brief a method to load a specific part of an image
  *  \note It is NOT an API for users to call, plese leave it alone
@@ -219,7 +219,7 @@ arm_fsm_rt_t disp_adapter0_task(void);
  *  \param[in] ptRegion the target region of the image
  *  \return intptr_t the address of a resource buffer which holds the content
  */
-intptr_t __disp_adapter0_vres_asset_loader   (
+intptr_t __disp_adapter3_vres_asset_loader   (
                                                 uintptr_t pTarget, 
                                                 arm_2d_vres_t *ptVRES, 
                                                 arm_2d_region_t *ptRegion);
@@ -232,7 +232,7 @@ intptr_t __disp_adapter0_vres_asset_loader   (
  *  \param[in] ptVRES a reference of this virtual resource
  *  \param[in] pBuffer the target buffer
  */
-void __disp_adapter0_vres_buffer_deposer (  uintptr_t pTarget, 
+void __disp_adapter3_vres_buffer_deposer (  uintptr_t pTarget, 
                                                 arm_2d_vres_t *ptVRES, 
                                                 intptr_t pBuffer );
 
@@ -240,7 +240,7 @@ void __disp_adapter0_vres_buffer_deposer (  uintptr_t pTarget,
  * \brief A user implemented function to return the address for specific asset
  *        stored in external memory, e.g. SPI Flash
  * \note You MUST provide an implementation when 
- *       __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__ is enabled(1)
+ *       __DISP3_CFG_VIRTUAL_RESOURCE_HELPER__ is enabled(1)
  *
  * \param[in] pObj an pointer of user defined object, it is used for OOC
  * \note You can ignore pObj if you don't care/don't use OOC 
@@ -249,7 +249,7 @@ void __disp_adapter0_vres_buffer_deposer (  uintptr_t pTarget,
  * \return uintptr_t the address of the target asset in external memory
  */
 extern
-uintptr_t __disp_adapter0_vres_get_asset_address(
+uintptr_t __disp_adapter3_vres_get_asset_address(
                                                         uintptr_t pObj,
                                                         arm_2d_vres_t *ptVRES);
 
@@ -258,7 +258,7 @@ uintptr_t __disp_adapter0_vres_get_asset_address(
  *        (e.g. SPI Flash) to a local buffer with specified address and size.
  *
  * \note You MUST provide an implementation when 
- *       __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__ is enabled(1)
+ *       __DISP3_CFG_VIRTUAL_RESOURCE_HELPER__ is enabled(1)
  *
  * \param[in] pObj an pointer of user defined object, it is used for OOC
  * \note You can ignore pObj if you don't care/don't use OOC 
@@ -268,7 +268,7 @@ uintptr_t __disp_adapter0_vres_get_asset_address(
  * \param[in] nSizeInByte number of bytes to read
  */
 extern
-void __disp_adapter0_vres_read_memory( intptr_t pObj, 
+void __disp_adapter3_vres_read_memory( intptr_t pObj, 
                                                 void *pBuffer,
                                                 uintptr_t pAddress,
                                                 size_t nSizeInByte);
@@ -279,7 +279,7 @@ void __disp_adapter0_vres_read_memory( intptr_t pObj,
  * \brief It is an user implemented function that request an LCD flushing in 
  *        asynchronous manner. 
  * \note User MUST implement this function when 
- *       __DISP0_CFG_ENABLE_ASYNC_FLUSHING__ is set to '1'
+ *       __DISP3_CFG_ENABLE_ASYNC_FLUSHING__ is set to '1'
  *
  * \param[in] pTarget an user specified object address
  * \param[in] bIsNewFrame whether this flushing request is the first iteration 
@@ -290,7 +290,7 @@ void __disp_adapter0_vres_read_memory( intptr_t pObj,
  * \param[in] iHeight the height of a flushing window
  * \param[in] pBuffer the frame buffer address
  */
-extern void __disp_adapter0_request_async_flushing( 
+extern void __disp_adapter3_request_async_flushing( 
                                                     void *pTarget,
                                                     bool bIsNewFrame,
                                                     int16_t iX, 
@@ -302,14 +302,14 @@ extern void __disp_adapter0_request_async_flushing(
 
 /*!
  * \brief the handler for the asynchronous flushing complete event.
- * \note When __DISP0_CFG_ENABLE_ASYNC_FLUSHING__ is set to '1', user 
+ * \note When __DISP3_CFG_ENABLE_ASYNC_FLUSHING__ is set to '1', user 
  *       MUST call this function to notify the PFB helper that the previous
  *       asynchronous flushing is complete. 
  * \note When people using DMA+ISR to offload CPU, this fucntion is called in 
  *       the DMA transfer complete ISR.
  */
 extern
-void disp_adapter0_insert_async_flushing_complete_event_handler(void);
+void disp_adapter3_insert_async_flushing_complete_event_handler(void);
 
 
 

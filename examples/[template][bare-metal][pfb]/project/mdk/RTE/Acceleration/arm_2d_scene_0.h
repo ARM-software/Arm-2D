@@ -23,7 +23,7 @@
 
 #include "arm_2d.h"
 
-#ifdef __RTE_ACCELERATION_ARM_2D_SCENE0__
+#ifdef RTE_Acceleration_Arm_2D_Scene0
 
 #include "arm_2d_helper_scene.h"
 
@@ -38,7 +38,6 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
 #   pragma clang diagnostic ignored "-Wpadded"
 #elif __IS_COMPILER_ARM_COMPILER_5__
-#   pragma diag_suppress 64,177
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wformat="
