@@ -75,10 +75,15 @@ void control_template_init( user_control_template_t *ptThis);
 
 extern
 ARM_NONNULL(1)
+void control_template_depose( user_control_template_t *ptThis);
+
+extern
+ARM_NONNULL(1)
 void control_template_show( user_control_template_t *ptThis,
                             const arm_2d_tile_t *ptTile, 
                             const arm_2d_region_t *ptRegion, 
                             bool bIsNewFrame);
+
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
