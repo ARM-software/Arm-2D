@@ -116,6 +116,8 @@ void progress_bar_drill_show(   const arm_2d_tile_t *ptTarget,
     //! draw a white box
     arm_2d_fill_colour(ptTarget, &tBarRegion, __RGB(0xa5, 0xc6, 0xef));
     
+    arm_2d_op_wait_async(NULL);
+    
     //! pave inter texture
     tBarRegion.tSize.iHeight-=2;
     tBarRegion.tSize.iWidth-=2;
@@ -142,6 +144,8 @@ void progress_bar_drill_show(   const arm_2d_tile_t *ptTarget,
         arm_2d_tile_fill_only( &c_tileBlueSlash, 
                             &tileInnerSlot, 
                             &tInnerRegion);
+
+        arm_2d_op_wait_async(NULL);
         //! update offset
         if (bIsNewFrame) {
             if (arm_2d_helper_is_time_out(s_wUnit, &s_lLastTime)) {
@@ -167,6 +171,7 @@ void progress_bar_drill_show(   const arm_2d_tile_t *ptTarget,
         
         //! draw the inner stripe
         arm_2d_fill_colour(ptTarget, &tBarRegion, GLCD_COLOR_YELLOW);
+        arm_2d_op_wait_async(NULL);
     }
     
 }
