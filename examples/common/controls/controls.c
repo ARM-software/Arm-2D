@@ -77,6 +77,8 @@ void arm_2d_draw_box(const arm_2d_tile_t *ptTarget,
                                     (__arm_2d_color_t){tColour},
                                     chOpacity);
     
+    arm_2d_op_wait_async(NULL);
+    
     tDrawRegion.tLocation.iY += ptRegion->tSize.iHeight - iBorderWidth;
     
     /* draw the bottom horizontal line */
@@ -84,6 +86,8 @@ void arm_2d_draw_box(const arm_2d_tile_t *ptTarget,
                                     &tDrawRegion,
                                     (__arm_2d_color_t){tColour},
                                     chOpacity);
+    
+    arm_2d_op_wait_async(NULL);
     
     tDrawRegion = *ptRegion;
     
@@ -97,12 +101,16 @@ void arm_2d_draw_box(const arm_2d_tile_t *ptTarget,
                                     (__arm_2d_color_t){tColour},
                                     chOpacity);
     
+    arm_2d_op_wait_async(NULL);
+    
     /* draw right vertical line */
     tDrawRegion.tLocation.iX += ptRegion->tSize.iWidth - iBorderWidth;
     arm_2d_fill_colour_with_opacity(ptTarget,
                                     &tDrawRegion,
                                     (__arm_2d_color_t){tColour},
                                     chOpacity);
+    
+    arm_2d_op_wait_async(NULL);
 }
 
 

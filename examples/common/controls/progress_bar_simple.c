@@ -125,6 +125,7 @@ void progress_bar_simple_show(const arm_2d_tile_t *ptTarget, int_fast16_t iProgr
     // draw a white box
     arm_2d_draw_box(ptTarget, &tBarRegion, 1, GLCD_COLOR_WHITE, 255 - 64);
     
+    arm_2d_op_wait_async(NULL);
     // draw semispheres
     do {
         arm_2d_region_t tSemisphere = {
@@ -142,6 +143,8 @@ void progress_bar_simple_show(const arm_2d_tile_t *ptTarget, int_fast16_t iProgr
                                         (__arm_2d_color_t) {GLCD_COLOR_WHITE},
                                         255 - 64);
 
+        arm_2d_op_wait_async(NULL);
+
         tSemisphere.tLocation.iX = tBarRegion.tLocation.iX + tBarRegion.tSize.iWidth;
 
 
@@ -151,6 +154,7 @@ void progress_bar_simple_show(const arm_2d_tile_t *ptTarget, int_fast16_t iProgr
                                         &c_tileSemisphereRight,
                                         (__arm_2d_color_t) {GLCD_COLOR_WHITE},
                                         255 - 64);
+        arm_2d_op_wait_async(NULL);
     } while(0);
     
     // draw inner bar
@@ -164,7 +168,7 @@ void progress_bar_simple_show(const arm_2d_tile_t *ptTarget, int_fast16_t iProgr
                                     (__arm_2d_color_t) {GLCD_COLOR_BLACK},
                                     64);
     
-    
+    arm_2d_op_wait_async(NULL);
     // calculate the width of the inner stripe 
     tBarRegion.tSize.iWidth = tBarRegion.tSize.iWidth * (int16_t)iProgress / 1000;
     
@@ -173,7 +177,7 @@ void progress_bar_simple_show(const arm_2d_tile_t *ptTarget, int_fast16_t iProgr
                                 &tBarRegion, 
                                 (__arm_2d_color_t) {GLCD_COLOR_WHITE},
                                 255 - 64);
-    
+    arm_2d_op_wait_async(NULL);
 }
 
 #if defined(__clang__)
