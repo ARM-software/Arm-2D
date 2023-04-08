@@ -19,6 +19,7 @@
 /*============================ INCLUDES ======================================*/
 #include "./arm_extra_controls.h"
 #include "./__common.h"
+#include "arm_2d_helper.h"
 #include "arm_2d.h"
 
 #include <assert.h>
@@ -123,7 +124,7 @@ void progress_bar_simple_show(const arm_2d_tile_t *ptTarget, int_fast16_t iProgr
     };
     
     // draw a white box
-    arm_2d_draw_box(ptTarget, &tBarRegion, 1, GLCD_COLOR_WHITE, 255 - 64);
+    arm_2d_helper_draw_box(ptTarget, &tBarRegion, 1, GLCD_COLOR_WHITE, 255 - 64);
     
     arm_2d_op_wait_async(NULL);
     // draw semispheres

@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        23. March 2023
- * $Revision:    V.1.3.10
+ * $Date:        08. April 2023
+ * $Revision:    V.1.4.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -836,6 +836,7 @@ ARM_PT_BEGIN(this.Adapter.chPT)
                                         this.tCFG.Dependency.evtOnDrawing.pTarget,
                                         this.Adapter.ptFrameBuffer,
                                         this.Adapter.bIsNewFrame);
+
         // just in case some one forgot to do this...
         arm_2d_op_wait_async(NULL);
 
@@ -856,6 +857,21 @@ ARM_PT_BEGIN(this.Adapter.chPT)
                 this.Statistics.nTotalCycle += __arm_2d_helper_perf_counter_stop(&this.Statistics.lTimestamp);
             }
         }
+
+        /* draw dirty regions */
+        if (this.tCFG.FrameBuffer.bDebugDirtyRegions) {
+            arm_2d_region_list_item_t *ptRegionListItem = ptDirtyRegions;
+            
+            while(NULL != ptRegionListItem) {
+                arm_2d_helper_draw_box( this.Adapter.ptFrameBuffer, 
+                                        &ptRegionListItem->tRegion, 
+                                        1,  
+                                        GLCD_COLOR_GREEN, 128);
+                ptRegionListItem = ptRegionListItem->ptNext;
+            }
+            arm_2d_op_wait_async(NULL);
+        }
+        
 
         if (arm_fsm_rt_on_going == tResult) {
     ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_on_going)

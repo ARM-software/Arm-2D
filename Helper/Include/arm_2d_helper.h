@@ -51,6 +51,12 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wunused-function"
 #endif
 
+/*!
+ * \addtogroup Deprecated
+ * @{
+ */
+#define arm_2d_draw_box              arm_2d_helper_draw_box
+/*! @} */
 
 /*!
  * \addtogroup gHelper 7 Helper Services
@@ -153,6 +159,8 @@ extern "C" {
            arm_2d_helper_convert_ms_to_ticks(__ms),                             \
                                             (__stroke_ptr),                     \
            (&arm_2d_safe_name(s_lTimestamp),##__VA_ARGS__));})
+
+
 
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -297,6 +305,22 @@ uint32_t __arm_2d_helper_colour_slider( uint32_t wFrom,
                                         uint32_t wTo,
                                         int32_t nDistance,
                                         int32_t nOffset);
+
+/*!
+ * \brier draw a box with specified colour, border width and opacity
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region
+ * \param[in] iBorderWidth the border width
+ * \param[in] tColour the target colour
+ * \param[in] chOpacity the opacity
+ */
+extern
+void arm_2d_helper_draw_box( const arm_2d_tile_t *ptTarget,
+                             const arm_2d_region_t *ptRegion,
+                             int16_t iBorderWidth, 
+                             COLOUR_INT tColour,
+                             uint8_t chOpacity);
+
 
 /*! @} */
 

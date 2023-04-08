@@ -76,7 +76,7 @@ extern "C" {
 // <o>Height of the PFB block
 // <i> The height of your PFB block size used in disp0
 #ifndef __DISP0_CFG_PFB_BLOCK_HEIGHT__
-#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          240
+#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          24
 #endif
 
 // <o>Width Alignment of generated PFBs
@@ -125,6 +125,12 @@ extern "C" {
 // <i> Decide the meaning of the real time FPS display
 #ifndef __DISP0_CFG_FPS_CACULATION_MODE__
 #   define __DISP0_CFG_FPS_CACULATION_MODE__                       1
+#endif
+
+// <q> Enable Dirty Region Debug Mode
+// <i> Draw dirty regions on the screen for debug.
+#ifndef __DISP0_CFG_DEBUG_DIRTY_REGIONS__
+#   define __DISP0_CFG_DEBUG_DIRTY_REGIONS__                       1
 #endif
 
 // <q> Swap the high and low bytes

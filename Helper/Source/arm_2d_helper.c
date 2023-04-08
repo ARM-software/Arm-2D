@@ -378,6 +378,64 @@ bool __arm_2d_helper_time_half_cos_slider(  int32_t nFrom,
 }
 
 
+void arm_2d_helper_draw_box( const arm_2d_tile_t *ptTarget,
+                             const arm_2d_region_t *ptRegion,
+                             int16_t iBorderWidth, 
+                             COLOUR_INT tColour,
+                             uint8_t chOpacity)
+{
+    assert( NULL != ptTarget );
+    if (NULL == ptRegion) {
+        ptRegion = &(ptTarget->tRegion);
+    }
+    
+    arm_2d_region_t tDrawRegion = *ptRegion;
+    
+    tDrawRegion.tSize.iHeight = iBorderWidth;
+    
+    /* draw the top horizontal line */
+    arm_2d_fill_colour_with_opacity(ptTarget,
+                                    &tDrawRegion,
+                                    (__arm_2d_color_t){tColour},
+                                    chOpacity);
+    
+    arm_2d_op_wait_async(NULL);
+    
+    tDrawRegion.tLocation.iY += ptRegion->tSize.iHeight - iBorderWidth;
+    
+    /* draw the bottom horizontal line */
+    arm_2d_fill_colour_with_opacity(ptTarget,
+                                    &tDrawRegion,
+                                    (__arm_2d_color_t){tColour},
+                                    chOpacity);
+    
+    arm_2d_op_wait_async(NULL);
+    
+    tDrawRegion = *ptRegion;
+    
+    /* draw left vertical line */
+    tDrawRegion.tSize.iWidth = iBorderWidth;
+    tDrawRegion.tLocation.iY += iBorderWidth;
+    tDrawRegion.tSize.iHeight -= iBorderWidth * 2;
+
+    arm_2d_fill_colour_with_opacity(ptTarget,
+                                    &tDrawRegion,
+                                    (__arm_2d_color_t){tColour},
+                                    chOpacity);
+    
+    arm_2d_op_wait_async(NULL);
+    
+    /* draw right vertical line */
+    tDrawRegion.tLocation.iX += ptRegion->tSize.iWidth - iBorderWidth;
+    arm_2d_fill_colour_with_opacity(ptTarget,
+                                    &tDrawRegion,
+                                    (__arm_2d_color_t){tColour},
+                                    chOpacity);
+    
+    arm_2d_op_wait_async(NULL);
+}
+
+
 /*----------------------------------------------------------------------------*
  * RTOS Port                                                                  *
  *----------------------------------------------------------------------------*/

@@ -52,13 +52,6 @@ extern "C" {
 extern
 void arm_extra_controls_init(void);
 
-extern
-void arm_2d_draw_box(const arm_2d_tile_t *ptTarget,
-                     const arm_2d_region_t *ptRegion,
-                     int16_t iBorderWidth, 
-                     COLOUR_INT tColour,
-                     uint8_t chOpacity);
-
 #ifdef   __cplusplus
 }
 #endif
