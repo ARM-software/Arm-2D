@@ -862,7 +862,7 @@
       <TargetName>V2M-MPS2-CM4</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6180000::V6.18::.\ArmCompilerforEmbedded6.18</pCCUsed>
+      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -901,7 +901,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\Out\</OutputDirectory>
-          <OutputName>template</OutputName>
+          <OutputName>image</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -1166,7 +1166,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>5</Optim>
+            <Optim>0</Optim>
             <oTime>1</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -1185,14 +1185,14 @@
             <v6LangP>3</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
-            <v6Lto>0</v6Lto>
+            <v6Lto>1</v6Lto>
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls></MiscControls>
+              <MiscControls>-Omax</MiscControls>
               <Define>__PERF_CNT_USE_RTOS__,GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\common\platform;.;..\common\platform\lib</IncludePath>
+              <IncludePath>..\common\platform;.;..\common\platform\lib;..\common\platform\mps2</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1205,7 +1205,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <ClangAsOpt>4</ClangAsOpt>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -10058,7 +10058,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="1.6.4" condition="Arm-2D-CORE">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="1.6.5" condition="Arm-2D-CORE">
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -11130,7 +11130,7 @@
           <targetInfo name="V2M-MPS2-CM4"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="Device\CMSDK_CM4\Source\system_CMSDK_CM4.c" version="1.0.0">
+      <file attr="config" category="sourceC" name="Device\CMSDK_CM4\Source\system_CMSDK_CM4.c" version="1.1.0">
         <instance index="0">RTE\Device\CMSDK_CM4_FP\system_CMSDK_CM4.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM4 CMSIS"/>
         <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
