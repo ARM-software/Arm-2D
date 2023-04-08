@@ -110,7 +110,7 @@ extern "C" {
 // <o>PFB Block Count <1-65535>
 // <i> The number of blocks in the PFB pool.
 #ifndef __DISP%Instance%_CFG_PFB_HEAP_SIZE__
-#   define __DISP%Instance%_CFG_PFB_HEAP_SIZE__                             0
+#   define __DISP%Instance%_CFG_PFB_HEAP_SIZE__                             1
 #endif
 
 // <o>Number of iterations <0-2000>
@@ -130,7 +130,7 @@ extern "C" {
 // <q> Enable Dirty Region Debug Mode
 // <i> Draw dirty regions on the screen for debug.
 #ifndef __DISP%Instance%_CFG_DEBUG_DIRTY_REGIONS__
-#   define __DISP%Instance%_CFG_DEBUG_DIRTY_REGIONS__                       1
+#   define __DISP%Instance%_CFG_DEBUG_DIRTY_REGIONS__                       0
 #endif
 
 // <q> Swap the high and low bytes
