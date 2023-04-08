@@ -59,6 +59,16 @@
 
 /*============================ MACROS ========================================*/
 
+/*
+ * note: If you want to change the background picture, you can simply update 
+ *       the macro c_tileMeterPanel to your own tile of the background picture.
+ * 
+ *       If you want to change the pointer picture, please define a macro called
+ *       c_tilePointerMask and let it map the tile of your pointer mask.
+ *       Don't forget to update the pivot on the pointer mask in c_tPointerCenter
+ *       initialization.
+ */
+
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
 #   define c_tileMeterPanel         c_tileMeterPanelGRAY8
@@ -73,6 +83,8 @@
 #else
 #   error Unsupported colour depth!
 #endif
+
+//#define c_tilePointerMask           <your pointer tile mask name>
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 #undef this
@@ -142,11 +154,12 @@ static void __on_scene_meter_frame_start(arm_2d_scene_t *ptScene)
     user_scene_meter_t *ptThis = (user_scene_meter_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    /* update degree and numbers */
+    /*-----------------------    IMPORTANT MESSAGE    -----------------------*
+     * It is better to update the 3 digits and pointer angle here            *
+     *-----------------------------------------------------------------------*/
     
     int32_t iResult;
-    
-    /* Let the pointer swing back and forth between -120� and 100� */
+    /* example: let the pointer swing back and forth between -120 degree and 100 degree */
     arm_2d_helper_time_cos_slider(-1200, 1000, 3000, 0, &iResult, &this.lTimestamp[1]);
     this.fDegree = ARM_2D_ANGLE((float)iResult / 10.0f);
     
@@ -161,9 +174,9 @@ static void __on_scene_meter_frame_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     /* switch to next scene after 5s */
-    if (arm_2d_helper_is_time_out(5000, &this.lTimestamp[0])) {
-        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
-    }
+    //if (arm_2d_helper_is_time_out(5000, &this.lTimestamp[0])) {
+    //    arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+    //}
 }
 
 static void __before_scene_meter_switching_out(arm_2d_scene_t *ptScene)
@@ -209,7 +222,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
         /* draw the cmsis logo using mask in the centre of the screen */
         arm_2d_align_centre(__canvas, c_tileMeterPanel.tRegion.tSize) {
 
-            arm_2d_tile_copy_only(  &c_tileMeterPanelRGB565,
+            arm_2d_tile_copy_only(  &c_tileMeterPanel,
                                     ptTile,
                                     &__centre_region);
 
@@ -312,6 +325,12 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
             0  /* initialize at runtime later */
         ),
         
+        /*-----------------------    IMPORTANT MESSAGE    -----------------------*
+         * the following two place holders are reserved for pointer, please keep *
+         * them as the 2nd and 3rd items in the dirty region list.               *
+         * You can add new dirty region after the 3rd position.                  *
+         *-----------------------------------------------------------------------*/
+
         /* the dirty region for pointer */
         ADD_REGION_TO_LIST(s_tDirtyRegions,
             0  /* initialize at runtime later */
@@ -322,8 +341,12 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
             0  /* initialize at runtime later */
         ),
 
+
+        /* you can add your new dirty region here */
+
+
         /* add the last region:
-         * it is the top left corner for text display 
+         * it is the top left corner for text display
          */
         ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
             .tLocation = {
@@ -354,11 +377,14 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
                                                 .use_as__arm_2d_font_t
                                                     .tCharSize;
         tTextSize.iWidth *=3;     /* 3 digits */
-        tTextSize.iHeight += 16;
+        tTextSize.iHeight += 16;  /* reserve space for "km/h" */
 
+        /* calculate the region for text display */
         arm_2d_align_centre(tScreen, tTextSize) {
             s_tDirtyRegions[0].tRegion = __centre_region;
-            s_tDirtyRegions[0].tRegion.tSize.iHeight -= 16;
+
+            /* we don't want to refresh "km/h" as there is no change at all */
+            s_tDirtyRegions[0].tRegion.tSize.iHeight -= 16; 
         }
 
     } while(0);
