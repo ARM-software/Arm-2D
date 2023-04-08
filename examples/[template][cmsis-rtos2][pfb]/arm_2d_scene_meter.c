@@ -146,7 +146,7 @@ static void __on_scene_meter_frame_start(arm_2d_scene_t *ptScene)
     
     int32_t iResult;
     
-    /* Let the pointer swing back and forth between -120° and 100° */
+    /* Let the pointer swing back and forth between -120ï¿½ and 100ï¿½ */
     arm_2d_helper_time_cos_slider(-1200, 1000, 3000, 0, &iResult, &this.lTimestamp[1]);
     this.fDegree = ARM_2D_ANGLE((float)iResult / 10.0f);
     
@@ -159,11 +159,11 @@ static void __on_scene_meter_frame_complete(arm_2d_scene_t *ptScene)
 {
     user_scene_meter_t *ptThis = (user_scene_meter_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-    
-    /* switch to next scene after 3s */
-//    if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[0])) {
-//        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
-//    }
+
+    /* switch to next scene after 5s */
+    if (arm_2d_helper_is_time_out(5000, &this.lTimestamp[0])) {
+        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+    }
 }
 
 static void __before_scene_meter_switching_out(arm_2d_scene_t *ptScene)
@@ -204,6 +204,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
         arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
         
 
+        
+
         /* draw the cmsis logo using mask in the centre of the screen */
         arm_2d_align_centre(__canvas, c_tileMeterPanel.tRegion.tSize) {
 
@@ -218,43 +220,54 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
                                 &this.tPointerOP,
                                 &c_tilePointerMask,
                                 ptTile,
-                                &__centre_region,
+                                NULL, //&__centre_region,
                                 c_tPointerCenter,
                                 this.fDegree,
                                 1.0f,
                                 GLCD_COLOR_RED,
                                 255);
-        
+
+            if (bIsNewFrame) {
+                /* keep the old region */
+                this.use_as__arm_2d_scene_t.ptDirtyRegion[2].tRegion 
+                    = this.use_as__arm_2d_scene_t.ptDirtyRegion[1].tRegion;
+                
+                /* update the new region */
+                this.use_as__arm_2d_scene_t.ptDirtyRegion[1].tRegion 
+                    = *this.tPointerOP.Target.ptRegion;
+            }
+
             arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tPointerOP);
         }
         
+        
+        
         /* draw 3 digits numbers */
         do {
-            arm_2d_size_t tNumberSize = ARM_2D_FONT_A4_DIGITS_ONLY
+            arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY
                                             .use_as__arm_2d_user_font_t
                                                 .use_as__arm_2d_font_t
                                                     .tCharSize;
-            tNumberSize.iWidth *=3;     /* 3 digits */
-            tNumberSize.iHeight += 16;  /* for "km/h */
-            
-            
-            
-            arm_2d_align_centre(__canvas,  tNumberSize) {
+            tTextSize.iWidth *=3;     /* 3 digits */
+            tTextSize.iHeight += 16;  /* for "km/h */
+
+
+            arm_2d_align_centre(__canvas,  tTextSize) {
                 
                 arm_2d_layout(__centre_region) {
                 
-                /* print speed */
-                __item_line_vertical(tNumberSize.iWidth, tNumberSize.iHeight - 16) {
-                    arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
-                    arm_lcd_text_set_draw_region(&__item_region);
-                    arm_lcd_text_set_colour( GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
-                    arm_lcd_text_set_opacity(255 - 64);
-                    arm_lcd_printf("%03d", (int)this.iNumber);
-                    arm_lcd_text_set_opacity(255);
+                    /* print speed */
+                    __item_line_vertical(tTextSize.iWidth, tTextSize.iHeight - 16) {
+                        arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
+                        arm_lcd_text_set_draw_region(&__item_region);
+                        arm_lcd_text_set_colour( GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
+                        arm_lcd_text_set_opacity(255 - 64);
+                        arm_lcd_printf("%03d", (int)this.iNumber);
+                        arm_lcd_text_set_opacity(255);
                     }
-                
-                /* print "km/h" */
-                __item_line_vertical(tNumberSize.iWidth,16) {
+                    
+                    /* print "km/h" */
+                    __item_line_vertical(tTextSize.iWidth,16) {
                         arm_2d_align_centre(__item_region, 4*6, 8) {
                             arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_6x8);
                             arm_lcd_text_set_draw_region(&__centre_region);
@@ -262,7 +275,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
                             arm_lcd_printf("km/h");
                         }
                     }
-
                 }
             }
             
@@ -279,6 +291,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
 
     /*-----------------------draw the foreground end  -----------------------*/
     }
+    
     arm_2d_op_wait_async(NULL);
 
     return arm_fsm_rt_cpl;
@@ -294,11 +307,21 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
     /*! define dirty regions */
     IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
 
-        /* a dirty region to be specified at runtime*/
+        /* the dirty region for text display*/
         ADD_REGION_TO_LIST(s_tDirtyRegions,
             0  /* initialize at runtime later */
         ),
         
+        /* the dirty region for pointer */
+        ADD_REGION_TO_LIST(s_tDirtyRegions,
+            0  /* initialize at runtime later */
+        ),
+
+        /* the dirty region for erase the previous position of the pointer */
+        ADD_REGION_TO_LIST(s_tDirtyRegions,
+            0  /* initialize at runtime later */
+        ),
+
         /* add the last region:
          * it is the top left corner for text display 
          */
@@ -320,13 +343,25 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
         = arm_2d_helper_pfb_get_display_area(
             &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
     
-    /* initialise dirty region 0 at runtime
-     * this demo shows that we create a region in the centre of a screen(320*240)
-     * for a image stored in the tile c_tileCMSISLogoMask
+    /* initialise dirty region for pointer
      */
-    arm_2d_align_centre(tScreen, c_tileMeterPanel.tRegion.tSize) {
-        s_tDirtyRegions[0].tRegion = __centre_region;
-    }
+
+    
+    /* dirty region for digits */
+    do {
+        arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY
+                                            .use_as__arm_2d_user_font_t
+                                                .use_as__arm_2d_font_t
+                                                    .tCharSize;
+        tTextSize.iWidth *=3;     /* 3 digits */
+        tTextSize.iHeight += 16;
+
+        arm_2d_align_centre(tScreen, tTextSize) {
+            s_tDirtyRegions[0].tRegion = __centre_region;
+            s_tDirtyRegions[0].tRegion.tSize.iHeight -= 16;
+        }
+
+    } while(0);
     
     if (NULL == ptThis) {
         ptThis = (user_scene_meter_t *)malloc(sizeof(user_scene_meter_t));
