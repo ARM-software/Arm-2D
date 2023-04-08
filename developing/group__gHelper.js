@@ -86,6 +86,7 @@ var group__gHelper =
       [ "bDoNOTUpdateDefaultFrameBuffer", "group__gHelper.html#a506e5cc591a5b598b60a4bbac83b5415", null ],
       [ "bDisableDynamicFPBSize", "group__gHelper.html#a3491f099ff99db25de694b559954bd68", null ],
       [ "bSwapRGB16", "group__gHelper.html#a545d827276ad405ea34db579f2ef9e2c", null ],
+      [ "bDebugDirtyRegions", "group__gHelper.html#ad94e55fd91058d326dc2cf338ac34258", null ],
       [ "u3PixelWidthAlign", "group__gHelper.html#a66627248877a7be4a40fe181d326b7ea", null ],
       [ "u3PixelHeightAlign", "group__gHelper.html#a46b5090428aa1c20834ca4f50c9fd1ba", null ],
       [ "u4PoolReserve", "group__gHelper.html#a430f59062291820e08b2cf816d7ef490", null ]
@@ -174,5 +175,6 @@ var group__gHelper =
     [ "__arm_2d_helper_time_liner_slider", "group__gHelper.html#gad57c7db3d70edf15701baab069e7e410", null ],
     [ "__arm_2d_helper_time_half_cos_slider", "group__gHelper.html#ga9ade39134ac3f6e485b629f4c3a03ce7", null ],
     [ "__arm_2d_helper_time_cos_slider", "group__gHelper.html#gaf4a791e531e1703b57da899fda365d10", null ],
-    [ "__arm_2d_helper_colour_slider", "group__gHelper.html#gaf0581f6d478d0a665cd4ae477e6be6db", null ]
+    [ "__arm_2d_helper_colour_slider", "group__gHelper.html#gaf0581f6d478d0a665cd4ae477e6be6db", null ],
+    [ "arm_2d_helper_draw_box", "group__gHelper.html#gacd0e2f64404ceef7412a3715c0bc47fd", null ]
 ];
