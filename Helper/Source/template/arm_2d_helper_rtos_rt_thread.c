@@ -74,6 +74,8 @@ uintptr_t arm_2d_port_new_semaphore(void)
 {
     rt_sem_t pSemaphore = RT_NULL;
     pSemaphore = rt_sem_create("dsem", 0, RT_IPC_FLAG_PRIO);    
+    assert(NULL != pSemaphore);
+
     return (uintptr_t)pSemaphore;
 }
 
@@ -127,7 +129,7 @@ void arm_2d_backend_thread(void *argument)
 void arm_2d_helper_rtos_init(void)
 {
     
-    static uint64_t s_dwThreadStack[2048];
+    static uint64_t s_dwThreadStack[2048 / sizeof(uint64_t)];
     static struct rt_thread s_BackendThread;     
 
     rt_thread_init(&s_BackendThread,
