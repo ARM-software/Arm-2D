@@ -22,7 +22,7 @@
  * Description:  Public header file for the PFB helper service 
  *
  * $Date:        09. April 2023
- * $Revision:    V.1.4.1
+ * $Revision:    V.1.5.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -486,6 +486,35 @@ ARM_PRIVATE(
 
 };
 
+/*!
+ * \brief the Transform helper control block
+ * 
+ */
+typedef struct {
+
+    float fAngle;
+    float fScale;
+
+ARM_PRIVATE(
+    arm_2d_region_list_item_t tDirtyRegions[2];
+    arm_2d_op_t *ptTransformOP;
+
+
+    struct {
+        float fValue;
+        float fStep;
+    } Angle;
+
+    struct {
+        float fValue;
+        float fStep;
+    } Scale;
+
+    bool bNeedUpdate;
+)
+
+} arm_2d_helper_transform_t;
+
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ PROTOTYPES ====================================*/
@@ -594,6 +623,57 @@ arm_2d_pfb_t *__arm_2d_helper_pfb_new(arm_2d_helper_pfb_t *ptThis);
 extern
 ARM_NONNULL(1)
 void __arm_2d_helper_pfb_free(arm_2d_helper_pfb_t *ptThis, arm_2d_pfb_t *ptPFB);
+
+/*!
+ * \brief initialize a given transform helper
+ * \param[in] ptThis the target helper
+ * \param[in] ptTransformOP the target transform OP, NULL is not accepted.
+ * \param[in] fAngleStep the minimal acceptable angle change. 
+ * \param[in] fScaleStep the minimal acceptable scale ratio change.
+ * \param[in] ppDirtyRegionList the address of the dirty region list
+ */
+extern
+ARM_NONNULL(1,2,5)
+void arm_2d_helper_transform_init(arm_2d_helper_transform_t *ptThis,
+                                  arm_2d_op_t *ptTransformOP,
+                                  float fAngleStep,
+                                  float fScaleStep,
+                                  arm_2d_region_list_item_t **ppDirtyRegionList);
+
+/*!
+ * \brief the on-frame-begin event handler for a given transform helper
+ * \param[in] ptThis the target helper
+ * \note Usually this event handler should be insert the frame start event 
+ *       handler of a target scene.
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_transform_on_frame_begin(arm_2d_helper_transform_t *ptThis);
+
+/*!
+ * \brief update a given transform helper with new values
+ * \param[in] ptThis the target helper
+ * \param[in] fAngle the new angle value
+ * \param[in] fScale the new scale ratio
+ * \note The new value is only accepted when the change between the old value 
+ *       and the new value is larger than the minimal acceptable mount.
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_transform_update_value(  arm_2d_helper_transform_t *ptThis,
+                                            float fAngle,
+                                            float fScale);
+
+/*!
+ * \brief update the dirty region after a transform operation
+ * \param[in] ptThis the target helper
+ * \param[in] bIsNewFrame whether this is a new frame
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_transform_update_dirty_regions(
+                                    arm_2d_helper_transform_t *ptThis,
+                                    bool bIsNewFrame);
 
 /*! @} */
 

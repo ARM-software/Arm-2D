@@ -79,12 +79,13 @@ ARM_PRIVATE(
     /* place your private member here, following two are examples */
     int64_t lTimestamp[2];
 
-    float fDegree;
     int16_t iNumber;
     bool bUserAllocated;
     
-    arm_2d_op_fill_cl_msk_opa_trans_t tPointerOP;
-
+    struct {
+        arm_2d_op_fill_cl_msk_opa_trans_t tOP;
+        arm_2d_helper_transform_t tHelper;
+    } Pointer;
 )
     /* place your public member here */
     

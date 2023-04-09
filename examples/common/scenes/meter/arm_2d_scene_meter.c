@@ -122,8 +122,8 @@ static void __on_scene_meter_depose(arm_2d_scene_t *ptScene)
     }
 
     /* depose op */
-    arm_2d_op_depose(   &this.tPointerOP.use_as__arm_2d_op_core_t, 
-                        sizeof(this.tPointerOP));
+    arm_2d_op_depose(   &this.Pointer.tOP.use_as__arm_2d_op_core_t, 
+                        sizeof(&this.Pointer.tOP));
 
     if (!this.bUserAllocated) {
         free(ptScene);
@@ -161,11 +161,16 @@ static void __on_scene_meter_frame_start(arm_2d_scene_t *ptScene)
     int32_t iResult;
     /* example: let the pointer swing back and forth between -120 degree and 100 degree */
     arm_2d_helper_time_cos_slider(-1200, 1000, 3000, 0, &iResult, &this.lTimestamp[1]);
-    this.fDegree = ARM_2D_ANGLE((float)iResult / 10.0f);
+    float fAngle = ARM_2D_ANGLE((float)iResult / 10.0f);
     
     /* 0 ~ 200 km / h */
     this.iNumber = (200 * (iResult + 1200) / 2400); 
 
+    /* update helper with new values*/
+    arm_2d_helper_transform_update_value(&this.Pointer.tHelper, fAngle,1.0f);
+
+    /* call helper's on-frame-begin event handler */
+    arm_2d_helper_transform_on_frame_begin(&this.Pointer.tHelper);
 }
 
 static void __on_scene_meter_frame_complete(arm_2d_scene_t *ptScene)
@@ -215,9 +220,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
         /* following code is just a demo, you can remove them */
         
         arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
-        
 
-        
 
         /* draw the cmsis logo using mask in the centre of the screen */
         arm_2d_align_centre(__canvas, c_tileMeterPanel.tRegion.tSize) {
@@ -230,27 +233,20 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
             
             /* draw pointer */
             arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                &this.tPointerOP,
+                                &this.Pointer.tOP,
                                 &c_tilePointerMask,
                                 ptTile,
                                 NULL, //&__centre_region,
                                 c_tPointerCenter,
-                                this.fDegree,
-                                1.0f,
+                                this.Pointer.tHelper.fAngle,
+                                this.Pointer.tHelper.fScale,
                                 GLCD_COLOR_RED,
                                 255);
 
-            if (bIsNewFrame) {
-                /* keep the old region */
-                this.use_as__arm_2d_scene_t.ptDirtyRegion[2].tRegion 
-                    = this.use_as__arm_2d_scene_t.ptDirtyRegion[1].tRegion;
-                
-                /* update the new region */
-                this.use_as__arm_2d_scene_t.ptDirtyRegion[1].tRegion 
-                    = *this.tPointerOP.Target.ptRegion;
-            }
+            arm_2d_helper_transform_update_dirty_regions(&this.Pointer.tHelper,
+                                                         bIsNewFrame);
 
-            arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tPointerOP);
+            arm_2d_op_wait_async((arm_2d_op_core_t *)&this.Pointer.tOP);
         }
         
         
@@ -324,26 +320,6 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
         ADD_REGION_TO_LIST(s_tDirtyRegions,
             0  /* initialize at runtime later */
         ),
-        
-        /*-----------------------    IMPORTANT MESSAGE    -----------------------*
-         * the following two place holders are reserved for pointer, please keep *
-         * them as the 2nd and 3rd items in the dirty region list.               *
-         * You can add new dirty region after the 3rd position.                  *
-         *-----------------------------------------------------------------------*/
-
-        /* the dirty region for pointer */
-        ADD_REGION_TO_LIST(s_tDirtyRegions,
-            0  /* initialize at runtime later */
-        ),
-
-        /* the dirty region for erase the previous position of the pointer */
-        ADD_REGION_TO_LIST(s_tDirtyRegions,
-            0  /* initialize at runtime later */
-        ),
-
-
-        /* you can add your new dirty region here */
-
 
         /* add the last region:
          * it is the top left corner for text display
@@ -420,8 +396,16 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
     };
     
     /* initialize op */
-    arm_2d_op_init(&this.tPointerOP.use_as__arm_2d_op_core_t, 
-                    sizeof(this.tPointerOP));
+    arm_2d_op_init(&this.Pointer.tOP.use_as__arm_2d_op_core_t, 
+                    sizeof(this.Pointer.tOP));
+
+    /* initialize transform helper */
+    arm_2d_helper_transform_init(&this.Pointer.tHelper,
+                                 (arm_2d_op_t *)&this.Pointer.tOP,
+                                 0.01f,
+                                 0.1f,
+                                 &this.use_as__arm_2d_scene_t.ptDirtyRegion);
+    
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
                                         &this.use_as__arm_2d_scene_t, 

@@ -22,7 +22,7 @@
  * Description:  the pfb helper service source code
  *
  * $Date:        09. April 2023
- * $Revision:    V.1.4.1
+ * $Revision:    V.1.5.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -76,6 +76,10 @@
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ PROTOTYPES ====================================*/
 /*============================ IMPLEMENTATION ================================*/
+
+/*----------------------------------------------------------------------------*
+ * PFB Helper                                                                 *
+ *----------------------------------------------------------------------------*/
 
 ARM_NONNULL(1)
 arm_2d_pfb_t *__arm_2d_helper_pfb_new(arm_2d_helper_pfb_t *ptThis)
@@ -903,4 +907,114 @@ ARM_PT_END()
     return arm_fsm_rt_cpl;
 }
 
+
+/*----------------------------------------------------------------------------*
+ * Transform Helper                                                           *
+ *----------------------------------------------------------------------------*/
+
+
+ARM_NONNULL(1,2,5)
+void arm_2d_helper_transform_init(arm_2d_helper_transform_t *ptThis,
+                                  arm_2d_op_t *ptTransformOP,
+                                  float fAngleStep,
+                                  float fScaleStep,
+                                  arm_2d_region_list_item_t **ppDirtyRegionList)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptTransformOP);
+    assert(NULL != ppDirtyRegionList);
+    
+    memset(ptThis, 0, sizeof(arm_2d_helper_transform_t));
+    
+    this.ptTransformOP = ptTransformOP;
+    this.Angle.fStep = fAngleStep;
+    this.Scale.fStep = fScaleStep;
+    this.Scale.fValue = 1.0f;
+    this.fScale = 1.0f;
+
+    this.bNeedUpdate = true;
+    
+    this.tDirtyRegions[0].bIgnore = true;
+    this.tDirtyRegions[0].ptNext = &this.tDirtyRegions[1];
+    this.tDirtyRegions[1].bIgnore = true;
+
+    /* append dirty regions to the dirty region list */
+    while(NULL != (*ppDirtyRegionList)) {
+        ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
+    }
+    
+    (*ppDirtyRegionList) = &this.tDirtyRegions[0];
+
+}
+
+ARM_NONNULL(1)
+void arm_2d_helper_transform_update_dirty_regions(
+                                    arm_2d_helper_transform_t *ptThis,
+                                    bool bIsNewFrame)
+{
+    assert(NULL != ptThis);
+    
+    if (!bIsNewFrame) {
+        return ;
+    }
+    
+    if (this.bNeedUpdate) {
+        this.bNeedUpdate = false;
+        /* keep the old region */
+        this.tDirtyRegions[1].tRegion = this.tDirtyRegions[0].tRegion;
+        
+        /* update the new region */
+        this.tDirtyRegions[0].tRegion = *(this.ptTransformOP->Target.ptRegion);
+            
+        this.tDirtyRegions[0].bIgnore = false;
+        this.tDirtyRegions[1].bIgnore = false;
+    }
+}
+
+ARM_NONNULL(1)
+void arm_2d_helper_transform_on_frame_begin(arm_2d_helper_transform_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    /* make it thread safe */
+    arm_irq_safe {
+        if (!this.bNeedUpdate) {
+            this.tDirtyRegions[0].bIgnore = true;
+            this.tDirtyRegions[1].bIgnore = true;
+        } else {
+            this.fAngle = this.Angle.fValue;
+            this.fScale = this.Scale.fValue;
+        }
+    }
+}
+
+ARM_NONNULL(1)
+void arm_2d_helper_transform_update_value(  arm_2d_helper_transform_t *ptThis,
+                                            float fAngle,
+                                            float fScale)
+{
+    assert(NULL != ptThis);
+    
+    float fDelta = 0.0f;
+
+    arm_irq_safe {
+        float fDelta = this.Angle.fValue - fAngle;
+        fDelta = ABS(fDelta);
+
+        if (fDelta >= this.Angle.fStep) {
+            this.Angle.fValue = fAngle;
+            this.bNeedUpdate = true;
+        }
+    }
+
+    arm_irq_safe {
+        fDelta = this.Scale.fValue - fScale;
+        fDelta = ABS(fDelta);
+
+        if (fDelta >= this.Scale.fStep) {
+            this.Scale.fValue = fAngle;
+            this.bNeedUpdate = true;
+        }
+    }
+}
 
