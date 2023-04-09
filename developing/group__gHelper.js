@@ -35,7 +35,8 @@ var group__gHelper =
     ] ],
     [ "arm_2d_region_list_item_t", "group__gHelper.html#structarm__2d__region__list__item__t", [
       [ "ptNext", "group__gHelper.html#aaeee77d805398d4495a984869fcbde9e", null ],
-      [ "tRegion", "group__gHelper.html#aa17e31540f22ea3e9af8a23332b655e1", null ]
+      [ "tRegion", "group__gHelper.html#aa17e31540f22ea3e9af8a23332b655e1", null ],
+      [ "bIgnore", "group__gHelper.html#a27449c76ae7f7c3cf1f57bfc7ee914f5", null ]
     ] ],
     [ "arm_2d_helper_render_evt_t", "group__gHelper.html#structarm__2d__helper__render__evt__t", [
       [ "fnHandler", "group__gHelper.html#a328824317c21ed14e7913c38833f98c5", null ],
