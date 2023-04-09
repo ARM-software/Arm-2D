@@ -559,7 +559,7 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                         
                 if (    (wTargetPixelCount <= wPFBPixelCount)
                    ||   (   this.Adapter.tTargetRegion.tSize.iWidth 
-                        <   this.tCFG.FrameBuffer.tFrameSize.iWidth)) {
+                        <   wPFBPixelCount)) {
                     // redefine the shape of PFB
                     
                     this.Adapter.tFrameSize.iWidth 
