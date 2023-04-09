@@ -350,6 +350,7 @@ typedef struct arm_2d_pfb_t {
 typedef struct arm_2d_region_list_item_t {
     struct arm_2d_region_list_item_t *ptNext;   //!< the next node
     arm_2d_region_t tRegion;                    //!< the region
+    bool bIgnore;                               //!< ignore this region
 }arm_2d_region_list_item_t;
 
 /*!

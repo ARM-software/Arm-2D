@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        08. April 2023
- * $Revision:    V.1.4.0
+ * $Date:        09. April 2023
+ * $Revision:    V.1.4.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -489,9 +489,11 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
 
             if (NULL != this.Adapter.ptDirtyRegion) { 
                 // calculate the valid region
-                if (!arm_2d_region_intersect(   &this.tCFG.tDisplayArea, 
-                                                &(this.Adapter.ptDirtyRegion->tRegion), 
-                                                &this.Adapter.tTargetRegion)) {
+                if (    (this.Adapter.ptDirtyRegion->bIgnore)
+                    ||  (!arm_2d_region_intersect(
+                                &this.tCFG.tDisplayArea, 
+                                &(this.Adapter.ptDirtyRegion->tRegion), 
+                                &this.Adapter.tTargetRegion))) {
                                                 
                     if (__arm_2d_helper_pfb_get_next_dirty_region(ptThis)) {
                         // try next region
@@ -888,9 +890,10 @@ ARM_PT_BEGIN(this.Adapter.chPT)
         __arm_2d_helper_perf_counter_start(&this.Statistics.lTimestamp); 
     } while(__arm_2d_helper_pfb_drawing_iteration_end(ptThis));
     
-    this.Statistics.nRenderingCycle += __arm_2d_helper_perf_counter_stop(&this.Statistics.lTimestamp);
-    
-label_pfb_task_rt_cpl:
+label_pfb_task_rt_cpl:    
+    this.Statistics.nRenderingCycle 
+        += __arm_2d_helper_perf_counter_stop(&this.Statistics.lTimestamp);
+
 ARM_PT_END()
 
     /* invoke the On Each Frame Complete Event */
