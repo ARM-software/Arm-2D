@@ -503,9 +503,17 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                         // try next region
                         continue;
                     }
+
+                    /* free pfb */
+                    arm_irq_safe {
+                        __arm_2d_helper_pfb_free(ptThis, this.Adapter.ptCurrent);
+                        this.Adapter.ptCurrent = NULL;
+                    }
+
                     // out of lcd 
                     return (arm_2d_tile_t *)-1;
                 }
+
             } else {
                 this.Adapter.tTargetRegion = this.tCFG.tDisplayArea;
             }

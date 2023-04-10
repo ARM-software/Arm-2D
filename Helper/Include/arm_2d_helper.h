@@ -99,7 +99,7 @@ extern "C" {
                                          __stroke_ptr,                          \
                                          ...)                                   \
            ({static int64_t arm_2d_safe_name(s_lTimestamp);                     \
-           __arm_2d_helper_time_line_slider((__from),                           \
+           __arm_2d_helper_time_liner_slider((__from),                          \
                                             (__to),                             \
            arm_2d_helper_convert_ms_to_ticks(__ms),                             \
                                             (__stroke_ptr),                     \
