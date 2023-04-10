@@ -396,7 +396,7 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
     
     // initialize second pointer
     do {
-        s_tPointerSecCenter.iX = (c_tilePointerSecMask.tRegion.tSize.iWidth >> 1) + 1;
+        s_tPointerSecCenter.iX = (c_tilePointerSecMask.tRegion.tSize.iWidth >> 1);
         s_tPointerSecCenter.iY = 100;  /* radius */
         
         /* initialize op */
@@ -412,7 +412,7 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
 
     // initialize minutes pointer
     do {
-        s_tPointerMinCenter.iX = (c_tilePointerMask.tRegion.tSize.iWidth >> 1) + 1;
+        s_tPointerMinCenter.iX = (c_tilePointerMask.tRegion.tSize.iWidth >> 1);
         s_tPointerMinCenter.iY = 70;  /* radius */
         
         /* initialize op */
@@ -428,7 +428,7 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
 
     // initialize hour pointer
     do {
-        s_tPointerHourCenter.iX = (c_tilePointerMask.tRegion.tSize.iWidth >> 1) + 1;
+        s_tPointerHourCenter.iX = (c_tilePointerMask.tRegion.tSize.iWidth >> 1);
         s_tPointerHourCenter.iY = 67;  /* radius */
         
         /* initialize op */

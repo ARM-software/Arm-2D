@@ -99,10 +99,7 @@ const arm_2d_tile_t c_tileMeterPanel;
 extern
 const arm_2d_tile_t c_tilePointerMask;
 
-static const arm_2d_location_t c_tPointerCenter = {
-        .iX = 3,
-        .iY = 100,
-    };
+static arm_2d_location_t s_tPointerCenter;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -177,10 +174,10 @@ static void __on_scene_meter_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_meter_t *ptThis = (user_scene_meter_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    /* switch to next scene after 5s */
-    //if (arm_2d_helper_is_time_out(5000, &this.lTimestamp[0])) {
-    //    arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
-    //}
+    /* switch to next scene after 10s */
+//    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
+//        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+//    }
 }
 
 static void __before_scene_meter_switching_out(arm_2d_scene_t *ptScene)
@@ -236,7 +233,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
                                 &c_tilePointerMask,
                                 ptTile,
                                 NULL, //&__centre_region,
-                                c_tPointerCenter,
+                                s_tPointerCenter,
                                 this.Pointer.tHelper.fAngle,
                                 this.Pointer.tHelper.fScale,
                                 GLCD_COLOR_RED,
@@ -404,6 +401,9 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
                                  0.1f,
                                  &this.use_as__arm_2d_scene_t.ptDirtyRegion);
     
+
+    s_tPointerCenter.iX = c_tilePointerMask.tRegion.tSize.iWidth >> 1;
+    s_tPointerCenter.iY = 100; /* radius */
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
                                         &this.use_as__arm_2d_scene_t, 
