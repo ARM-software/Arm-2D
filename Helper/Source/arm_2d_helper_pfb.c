@@ -877,10 +877,13 @@ ARM_PT_BEGIN(this.Adapter.chPT)
             arm_2d_region_list_item_t *ptRegionListItem = ptDirtyRegions;
             
             while(NULL != ptRegionListItem) {
-                arm_2d_helper_draw_box( this.Adapter.ptFrameBuffer, 
-                                        &ptRegionListItem->tRegion, 
-                                        1,  
-                                        GLCD_COLOR_GREEN, 128);
+                if (!ptRegionListItem->bIgnore) {
+                    arm_2d_helper_draw_box( this.Adapter.ptFrameBuffer, 
+                                            &ptRegionListItem->tRegion, 
+                                            1,  
+                                            GLCD_COLOR_GREEN, 128);
+                }
+                
                 ptRegionListItem = ptRegionListItem->ptNext;
             }
             arm_2d_op_wait_async(NULL);

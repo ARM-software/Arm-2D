@@ -122,8 +122,7 @@ static void __on_scene_meter_depose(arm_2d_scene_t *ptScene)
     }
 
     /* depose op */
-    arm_2d_op_depose(   &this.Pointer.tOP.use_as__arm_2d_op_core_t, 
-                        sizeof(&this.Pointer.tOP));
+    ARM_2D_OP_DEPOSE(this.Pointer.tOP);
 
     if (!this.bUserAllocated) {
         free(ptScene);
@@ -396,8 +395,7 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
     };
     
     /* initialize op */
-    arm_2d_op_init(&this.Pointer.tOP.use_as__arm_2d_op_core_t, 
-                    sizeof(this.Pointer.tOP));
+    ARM_2D_OP_INIT(this.Pointer.tOP);
 
     /* initialize transform helper */
     arm_2d_helper_transform_init(&this.Pointer.tHelper,

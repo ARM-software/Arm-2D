@@ -86,8 +86,7 @@ static arm_2d_op_fill_cl_msk_opa_trans_t s_tMaskRotateCB[2];
 void spinning_wheel_init(void)
 {
     arm_foreach(arm_2d_op_fill_cl_msk_opa_trans_t, s_tMaskRotateCB, ptItem) {
-        arm_2d_op_init( &ptItem->use_as__arm_2d_op_core_t, 
-                        sizeof(arm_2d_op_fill_cl_msk_opa_trans_t));
+        ARM_2D_OP_INIT(*ptItem);
     }
 }
 
