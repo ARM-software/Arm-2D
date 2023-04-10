@@ -403,9 +403,10 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
             return NULL;
         }
         bUserAllocated = false;
-    } else {
-        memset(ptScene, 0, sizeof(user_scene_2_t));
     }
+
+    memset(ptScene, 0, sizeof(user_scene_2_t));
+
 
     /*! define dirty regions */
     IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)

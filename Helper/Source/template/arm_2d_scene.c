@@ -272,9 +272,9 @@ user_scene_%Instance%_t *__arm_2d_scene%Instance%_init(   arm_2d_scene_player_t 
         }
     } else {
         bUserAllocated = true;
-        memset(ptThis, 0, sizeof(user_scene_%Instance%_t));
     }
-    
+    memset(ptThis, 0, sizeof(user_scene_%Instance%_t));
+
     *ptThis = (user_scene_%Instance%_t){
         .use_as__arm_2d_scene_t = {
             /* Please uncommon the callbacks if you need them
@@ -286,7 +286,7 @@ user_scene_%Instance%_t *__arm_2d_scene%Instance%_init(   arm_2d_scene_player_t 
 
             //.fnOnBGStart    = &__on_scene%Instance%_background_start,
             //.fnOnBGComplete = &__on_scene%Instance%_background_complete,
-            //.fnOnFrameStart = &__on_scene%Instance%_frame_start,
+            .fnOnFrameStart = &__on_scene%Instance%_frame_start,
             //.fnBeforeSwitchOut = &__before_scene%Instance%_switching_out,
             .fnOnFrameCPL   = &__on_scene%Instance%_frame_complete,
             .fnDepose       = &__on_scene%Instance%_depose,

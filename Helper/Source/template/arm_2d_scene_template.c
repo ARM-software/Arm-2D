@@ -97,8 +97,9 @@ static void __on_scene_<name>_depose(arm_2d_scene_t *ptScene)
     
     ptScene->ptPlayer = NULL;
     
-    /* reset timestamp */
-    this.lTimestamp = 0;
+    arm_foreach(int64_t,this.lTimestamp, ptItem) {
+        *ptItem = 0;
+    }
 
     if (!this.bUserAllocated) {
         free(ptScene);
@@ -268,9 +269,10 @@ user_scene_<name>_t *__arm_2d_scene_<name>_init(   arm_2d_scene_player_t *ptDisp
         }
     } else {
         bUserAllocated = true;
-        memset(ptThis, 0, sizeof(user_scene_<name>_t));
     }
-    
+
+    memset(ptThis, 0, sizeof(user_scene_<name>_t));
+
     *ptThis = (user_scene_<name>_t){
         .use_as__arm_2d_scene_t = {
             /* Please uncommon the callbacks if you need them
@@ -282,7 +284,7 @@ user_scene_<name>_t *__arm_2d_scene_<name>_init(   arm_2d_scene_player_t *ptDisp
 
             //.fnOnBGStart    = &__on_scene_<name>_background_start,
             //.fnOnBGComplete = &__on_scene_<name>_background_complete,
-            //.fnOnFrameStart = &__on_scene_<name>_frame_start,
+            .fnOnFrameStart = &__on_scene_<name>_frame_start,
             //.fnBeforeSwitchOut = &__before_scene_<name>_switching_out,
             .fnOnFrameCPL   = &__on_scene_<name>_frame_complete,
             .fnDepose       = &__on_scene_<name>_depose,
