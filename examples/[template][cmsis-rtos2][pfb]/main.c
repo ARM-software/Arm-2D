@@ -24,6 +24,7 @@
 #include "arm_2d_scenes.h"
 
 #include "arm_2d_scene_meter.h"
+#include "arm_2d_scene_watch.h"
 
 #if defined(RTE_Acceleration_Arm_2D_Extra_Benchmark)
 #   include "arm_2d_benchmark.h"
@@ -70,7 +71,7 @@
 // <i> Specify the arm-2d application thread stack size
 // <i> Default: 2048
 #ifndef APP_STACK_SIZE
-#   define APP_STACK_SIZE       2048
+#   define APP_STACK_SIZE       (3 * 1024ul)
 #endif
 
 // <<< end of configuration section >>>
@@ -85,6 +86,12 @@ void scene_meter_loader(void)
 {
     arm_2d_scene_meter_init(&DISP0_ADAPTER);
 }
+
+void scene_watch_loader(void) 
+{
+    arm_2d_scene_watch_init(&DISP0_ADAPTER);
+}
+
 
 void scene0_loader(void) 
 {
