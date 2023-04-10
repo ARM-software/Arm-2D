@@ -80,7 +80,7 @@ struct user_scene_2_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[4];
+    int64_t lTimestamp[5];
     bool bUserAllocated;
     uint8_t chOpacity;
     int16_t iProgress;
