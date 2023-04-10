@@ -35,7 +35,8 @@ var group__gHelper =
     ] ],
     [ "arm_2d_region_list_item_t", "group__gHelper.html#structarm__2d__region__list__item__t", [
       [ "ptNext", "group__gHelper.html#aaeee77d805398d4495a984869fcbde9e", null ],
-      [ "tRegion", "group__gHelper.html#aa17e31540f22ea3e9af8a23332b655e1", null ]
+      [ "tRegion", "group__gHelper.html#aa17e31540f22ea3e9af8a23332b655e1", null ],
+      [ "bIgnore", "group__gHelper.html#a27449c76ae7f7c3cf1f57bfc7ee914f5", null ]
     ] ],
     [ "arm_2d_helper_render_evt_t", "group__gHelper.html#structarm__2d__helper__render__evt__t", [
       [ "fnHandler", "group__gHelper.html#a328824317c21ed14e7913c38833f98c5", null ],
@@ -56,6 +57,7 @@ var group__gHelper =
     [ "arm_2d_helper_pfb_t", "group__gHelper.html#structarm__2d__helper__pfb__t", [
       [ "Statistics", "group__gHelper.html#ab3b8a4706acd6331477a2a42763b7de5", null ]
     ] ],
+    [ "arm_2d_helper_transform_t", "group__gHelper.html#structarm__2d__helper__transform__t", null ],
     [ "__arm_2d_helper_scene_switch_t.Feature", "group__gHelper.html#struct____arm__2d__helper__scene__switch__t_8Feature", [
       [ "chMode", "group__gHelper.html#a32e1ccd08315dddf03bcc84d8e25eb46", null ],
       [ "bIgnoreOldSceneBG", "group__gHelper.html#a293bd1e526f3a9b72e8a9c323c835373", null ],
@@ -86,6 +88,7 @@ var group__gHelper =
       [ "bDoNOTUpdateDefaultFrameBuffer", "group__gHelper.html#a506e5cc591a5b598b60a4bbac83b5415", null ],
       [ "bDisableDynamicFPBSize", "group__gHelper.html#a3491f099ff99db25de694b559954bd68", null ],
       [ "bSwapRGB16", "group__gHelper.html#a545d827276ad405ea34db579f2ef9e2c", null ],
+      [ "bDebugDirtyRegions", "group__gHelper.html#ad94e55fd91058d326dc2cf338ac34258", null ],
       [ "u3PixelWidthAlign", "group__gHelper.html#a66627248877a7be4a40fe181d326b7ea", null ],
       [ "u3PixelHeightAlign", "group__gHelper.html#a46b5090428aa1c20834ca4f50c9fd1ba", null ],
       [ "u4PoolReserve", "group__gHelper.html#a430f59062291820e08b2cf816d7ef490", null ]
@@ -99,6 +102,9 @@ var group__gHelper =
       [ "nTotalCycle", "group__gHelper.html#aad0c95f31d24233a32300ac6e851506f", null ],
       [ "nRenderingCycle", "group__gHelper.html#a5ae6646bd6957664dcc13172aa268290", null ]
     ] ],
+    [ "arm_2d_helper_transform_t.__unnamed144__", "group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed144____", null ],
+    [ "arm_2d_helper_transform_t.__unnamed144__.Angle", "group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed144_____8Angle", null ],
+    [ "arm_2d_helper_transform_t.__unnamed144__.Scale", "group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed144_____8Scale", null ],
     [ "arm_2d_scene_player_register_on_draw_navigation_event_handler", "group__gHelper.html#ga90130f1c831d7fb20db39f20a488a3e1", null ],
     [ "arm_2d_scene_player_set_switching_mode", "group__gHelper.html#ga6b9ef0f3e0f80430fc036f6d3c67c135", null ],
     [ "arm_2d_scene_player_register_before_switching_event_handler", "group__gHelper.html#ga0c896791f09bdcbb1115746844ddba2b", null ],
@@ -164,6 +170,10 @@ var group__gHelper =
     [ "arm_2d_helper_swap_rgb16", "group__gHelper.html#gaf07a91ddd548e926e5737db7800c16a9", null ],
     [ "__arm_2d_helper_pfb_new", "group__gHelper.html#gaa7855ac916c44e531c4c8a9c5ec0e69e", null ],
     [ "__arm_2d_helper_pfb_free", "group__gHelper.html#ga484b485061778cdf3a2cb4373374c581", null ],
+    [ "arm_2d_helper_transform_init", "group__gHelper.html#ga076b6793e3c2fc6f1ef064ca700f667e", null ],
+    [ "arm_2d_helper_transform_on_frame_begin", "group__gHelper.html#ga646d1178b70b862d77d33f8a84173f0e", null ],
+    [ "arm_2d_helper_transform_update_value", "group__gHelper.html#ga95877df905d15cebfc4abb41b9ecdc6a", null ],
+    [ "arm_2d_helper_transform_update_dirty_regions", "group__gHelper.html#gae1474a55957d3c0e9cced49f2501e835", null ],
     [ "arm_2d_helper_init", "group__gHelper.html#ga9ab5e975303c28c98f1ae62babb8286d", null ],
     [ "arm_2d_helper_backend_task", "group__gHelper.html#ga5161926583cc8da4c4b369b177845e42", null ],
     [ "arm_2d_helper_convert_ticks_to_ms", "group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf", null ],
@@ -174,5 +184,6 @@ var group__gHelper =
     [ "__arm_2d_helper_time_liner_slider", "group__gHelper.html#gad57c7db3d70edf15701baab069e7e410", null ],
     [ "__arm_2d_helper_time_half_cos_slider", "group__gHelper.html#ga9ade39134ac3f6e485b629f4c3a03ce7", null ],
     [ "__arm_2d_helper_time_cos_slider", "group__gHelper.html#gaf4a791e531e1703b57da899fda365d10", null ],
-    [ "__arm_2d_helper_colour_slider", "group__gHelper.html#gaf0581f6d478d0a665cd4ae477e6be6db", null ]
+    [ "__arm_2d_helper_colour_slider", "group__gHelper.html#gaf0581f6d478d0a665cd4ae477e6be6db", null ],
+    [ "arm_2d_helper_draw_box", "group__gHelper.html#gacd0e2f64404ceef7412a3715c0bc47fd", null ]
 ];
