@@ -362,6 +362,8 @@ static void __on_scene3_depose(arm_2d_scene_t *ptScene)
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
+    
+    progress_wheel_depose(&this.tWheel);
 
     if (!this.bUserAllocated) {
         free(ptScene);

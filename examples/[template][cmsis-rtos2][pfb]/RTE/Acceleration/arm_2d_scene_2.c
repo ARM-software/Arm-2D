@@ -111,6 +111,8 @@ static void __on_scene2_depose(arm_2d_scene_t *ptScene)
         *ptItem = 0;
     }
 
+    progress_wheel_depose(&this.tWheel);
+
     if (!this.bUserAllocated) {
         free(ptScene);
     }
