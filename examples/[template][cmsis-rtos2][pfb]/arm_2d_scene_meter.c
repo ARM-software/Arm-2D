@@ -177,10 +177,10 @@ static void __on_scene_meter_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_meter_t *ptThis = (user_scene_meter_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    /* switch to next scene after 5s */
-    //if (arm_2d_helper_is_time_out(5000, &this.lTimestamp[0])) {
-    //    arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
-    //}
+    /* switch to next scene after 10s */
+    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
+        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+    }
 }
 
 static void __before_scene_meter_switching_out(arm_2d_scene_t *ptScene)

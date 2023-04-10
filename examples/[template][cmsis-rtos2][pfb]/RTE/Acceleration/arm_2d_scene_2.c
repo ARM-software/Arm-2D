@@ -166,10 +166,10 @@ static void __on_scene2_frame_complete(arm_2d_scene_t *ptScene)
         }
     }
     
-//    /* switch to next scene after 20s */
-//    if (arm_2d_helper_is_time_out(20000, &this.lTimestamp[4])) {
-//        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
-//    }
+    /* switch to next scene after 20s */
+    if (arm_2d_helper_is_time_out(20000, &this.lTimestamp[4])) {
+        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+    }
 }
 
 static
