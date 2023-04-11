@@ -48,9 +48,30 @@ extern
 void draw_round_corner_box( const arm_2d_tile_t *ptTarget, 
                             const arm_2d_region_t *ptRegion,
                             COLOUR_INT tColour,
-                            uint8_t chAlpha,
+                            uint8_t chOpacity,
                             bool bIsNewFrame);
 
+
+typedef struct {
+    uint8_t chLeft;
+    uint8_t chTop;
+    uint8_t chRight;
+    uint8_t chBottom;
+} arm_2d_border_opacity_t;
+
+typedef struct {
+    uint8_t chTopLeft;
+    uint8_t chTopRight;
+    uint8_t chBottomLeft;
+    uint8_t chBottomRight;
+} arm_2d_corner_opacity_t;
+
+extern
+void draw_round_corner_border(  const arm_2d_tile_t *ptTarget,
+                                const arm_2d_region_t *ptRegion,
+                                COLOUR_INT tColour,
+                                arm_2d_border_opacity_t Opacity,
+                                arm_2d_corner_opacity_t CornerOpacity);
 #ifdef   __cplusplus
 }
 #endif
