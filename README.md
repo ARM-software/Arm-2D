@@ -6,7 +6,7 @@
 
 ## Features
 
-#### In this version (ver1.1.2-dev)
+#### In this version (ver1.1.2)
 
 The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly used in **Deep Embedded Display system**. The supported features include but not limited to:
 
@@ -14,9 +14,8 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
 - **CMSIS-Pack is available.**
 - **Alpha-Blending** / **Masks**
   - With or without Colour-Keying
-  - Filling-Colour with an mask
+  - Filling-Colour with an mask and an optional opacity
     - For drawing anti-alias icons/texts in a specified colour
-    - Supports an optional ***Opacity***.
     - Supports A2, A4 and A8 masks
 - **Image Copy (Tiling)**
   - With or without Colour-Keying
@@ -26,9 +25,8 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
   - **GRAY8 (8-bit Grayscale)**, **RGB565** and **RGB888**
   - Generic **C8BIT (8bit colour)**, **RGB16** and **RGB32**
   - Converting colour formats among **GRAY8**, **RGB565** and **RGB888**
-  - Ready for **monochrome LCD** (1bit colour formats) and **e-ink displays** (2bits and 4bits colour formats)
-    - Using **Gray8** as internal processing format and converting to target colour format inside Display Adapter, e.g. `Disp0_DrawBitmap`
-- **Region Clipping**
+  - Ready for **monochrome LCD** (the 1bit colour) and **e-ink displays** (the 2bits and 4bits colour formats)
+    - Using **Gray8** as the internal processing format and converting to target colour format inside Display Adapter, e.g. `Disp0_DrawBitmap`
 - **Generic Partial Frame-buffer (PFB)**
   - Transparent for software/GUI services on upper layers
   - Easy to Use
@@ -36,10 +34,12 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
   - No limitation on PFB size and shape (it could be a line or a rectangular with any size)  **(See note)**
   - Supports **Dirty Regions** for refreshing specified areas only
   - Supports swapping high and low bytes for RGB16 pixels
+  - **[new]** Provide a debug mode for dirty regions
+  - **[new]** Support PFB alignment for both width and height. 
   - Introduce a **Scene Player** with various scene switching modes (Fade-In-Fade-Out, Slide, Erase etc.)
   - Support various Buffer Modes with a built-in framebuffer pool. 
     - Single Buffer/Double-Buffers/Three-Buffers
-    - Direct Mode
+    - Ready for Direct Mode
     - Enhanced Asynchronous Flushing Support (i.e. DMA + ISR)
 
 ​        **NOTE**: As long as the size is smaller than 32767 * 32767. 
@@ -68,7 +68,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
 
   - **Virtual Resource**
 
-    - Supports loading resources in on-demand manner from external memories that are not mapped into the 4G memory space.
+    - Supports loading resources on-demand from external memories that are not mapped into the Cortex-M memory space.
 
   - **Layout Assistant**
 
@@ -78,8 +78,21 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
 
     - Stream Layout (with wrapping), e.g. `__item_horizontal` and `__item_vertical`
 
-      
-      
+  - **[new]** RTOS Helper Services for CMSIS-RTOS2 and RT-Thread
+  
+  - Templates
+  
+    - Provide templates for user controls and scenes. 
+    - **[new]** Scene templates for Meter and Watch
+    - **[new]** Provide a template for adding new RTOS support.
+  
+  - Other Helper services
+  
+    - **[new]** A dedicated helper service for transform operations
+      - Provide dynamic dirty region tracking
+      - Double-buffered Angle and Scale updating
+  
+    
 
 ### New Features Planned in the Future
 
@@ -154,7 +167,7 @@ As shown in **Figure 1-2**, Linux based systems have a complete ecosystem that p
 
 **Figure 1-2 Ecosystem Comparison between Rich Embedded and Constraint Embedded System in GUI**
 
-![ Ecosystem Comparison](./documentation/pictures/TopReadme_1_2a.png)
+![ Ecosystem Comparison](./documentation/pictures/TopReadme_1_2a.png) 
 
 When we look at the traditionally embedded  GUI architecture(as shown in **Figure 1-3** ), there are four layers: 1) the application and designer layer, 2) the GUI software service layer, 3) the rendering layer, and 3) the hardware driver layer. 
 
@@ -162,7 +175,7 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 
 **Figure 1-3 The Hierarchy of a Typical Embedded GUI System.**
 
-![The Hierarchy of a Typical Embedded GUI System](./documentation/pictures/TopReadme_1_2b.png)
+![The Hierarchy of a Typical Embedded GUI System](./documentation/pictures/TopReadme_1_2b.png) 
 
 
 ### 1.3 The Platform
@@ -187,7 +200,7 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 - The library depends on **CMSIS 5.7.0 and above** (If you want to use Arm-2D with Cortex-M55, CMSIS 5.8.0 is required). 
 - The library is developed with the **C11** standard and depends on some **widely adopted GCC extensions**.
   - See **section 3.2** for details.
-- The library supports **Arm Compiler 5**, **Arm Compiler 6**, **GCC**, **LLVM** and **IAR**
+- The library supports **Arm Compiler 6**, **GCC**, **LLVM** and **IAR**
   - See **section 5** for details. 
 
 
@@ -201,7 +214,7 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 | benchmark                          | It is an **ALL-IN-ONE** example that demonstrates almost all features provided by Arm-2D. By setting different PFB sizes, you can evaluate the 2D image processing capability for the target system. | examples/benchmark                          | **Used as benchmark.** |
 | watch_panel                        | It is a dedicated example of a smart-watch-like panel. A pointer and two gears rotate at different angular velocities on a translucent watch panel with a dynamic background. | examples/watch_panel                        | **Used as benchmark**  |
 | \[template\]\[bare-metal\]\[pfb\]  | It is a project template for the bare-metal environment.     | examples/\[template\]\[bare-metal\]\[pfb\]  | Project Template       |
-| \[template\]\[cmsis-rtos2\]\[pfb\] | It is a project template for the RTOS environment, which use CMSIS-RTO2 as an example to show how Arm-2D can work with an RTOS. | examples/\[template\]\[cmsis-rtos2\]\[pfb\] | Project Template       |
+| \[template\]\[cmsis-rtos2\]\[pfb\] | It is a project template for the RTOS environment, which use CMSIS-RTOS2 as an example to show how Arm-2D can work with an RTOS. | examples/\[template\]\[cmsis-rtos2\]\[pfb\] | Project Template       |
 
 
 
@@ -214,7 +227,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
   - Colour-Keying
   - Blit
   - Tiling
-  - Rotation
+  - Transform
   - Mirroring
   - Masking
 - **Simulate a typical application scenario with sufficient complexity**
@@ -460,4 +473,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-17 March 2023
+11 April 2023
