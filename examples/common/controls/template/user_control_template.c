@@ -17,6 +17,8 @@
  */
 
 /*============================ INCLUDES ======================================*/
+#define __CONTROL_TEMPLATE_IMPLEMENT__
+
 #include "./arm_extra_controls.h"
 #include "./__common.h"
 #include "arm_2d.h"
@@ -77,7 +79,7 @@ void control_template_init(user_control_template_t *ptThis)
 ARM_NONNULL(1)
 void control_template_depose( user_control_template_t *ptThis)
 {
-    assert(NULL != pThis);
+    assert(NULL != ptThis);
     
 }
 

@@ -375,6 +375,7 @@
             <file category="sourceC"     name="examples/common/asset/small_icon_sun.c" />
             <file category="sourceC"     name="examples/common/asset/software.c" />
             <file category="sourceC"     name="examples/common/asset/circle_mask.c" />
+            <file category="sourceC"     name="examples/common/asset/circle_small.c" />
           </files>
           <RTE_Components_h>
 
