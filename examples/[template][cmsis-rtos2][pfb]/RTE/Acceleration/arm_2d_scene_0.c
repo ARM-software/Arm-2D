@@ -48,7 +48,6 @@
 #   pragma clang diagnostic ignored "-Wunused-function"
 #   pragma clang diagnostic ignored "-Wmissing-declarations"  
 #elif __IS_COMPILER_ARM_COMPILER_5__
-#   pragma diag_suppress 64,177
 #elif __IS_COMPILER_IAR__
 #   pragma diag_suppress=Pa089,Pe188,Pe177,Pe174
 #elif __IS_COMPILER_GCC__
@@ -101,7 +100,9 @@ static void __on_scene0_depose(arm_2d_scene_t *ptScene)
     ptScene->ptPlayer = NULL;
     
     /* reset timestamp */
-    this.lTimestamp = 0;
+    arm_foreach(int64_t,this.lTimestamp, ptItem) {
+        *ptItem = 0;
+    }
 
     if (!this.bUserAllocated) {
         free(ptScene);
@@ -140,7 +141,7 @@ static void __on_scene0_frame_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
     
     /* switch to next scene after 3s */
-    if (arm_2d_helper_is_time_out(3000, &this.lTimestamp)) {
+    if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 }
@@ -175,16 +176,36 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
     
-    arm_2d_canvas(ptTile, __top_container) {
+    arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the foreground begin-----------------------*/
         
         /* following code is just a demo, you can remove them */
         
         arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
-        
+
+        arm_2d_align_centre(__top_canvas, 200, 100 ) {
+            draw_round_corner_box(  ptTile, 
+                                    &__centre_region, 
+                                    GLCD_COLOR_WHITE, 
+                                    255,
+                                    bIsNewFrame);
+            
+            arm_2d_op_wait_async(NULL);
+            
+            draw_round_corner_border(   ptTile, 
+                                        &__centre_region, 
+                                        GLCD_COLOR_BLACK, 
+                                        (arm_2d_border_opacity_t)
+                                            {32, 32, 255-64, 255-64},
+                                        (arm_2d_corner_opacity_t)
+                                            {0, 128, 128, 128});
+                                    
+        }
+
+
     #if 0
         /* draw the cmsis logo in the centre of the screen */
-        arm_2d_align_centre(__top_container, c_tileCMSISLogo.tRegion.tSize) {
+        arm_2d_align_centre(__top_canvas, c_tileCMSISLogo.tRegion.tSize) {
             arm_2d_tile_copy_with_src_mask( &c_tileCMSISLogo,
                                             &c_tileCMSISLogoMask,
                                             ptTile,
@@ -193,13 +214,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
         }
     #else
         /* draw the cmsis logo using mask in the centre of the screen */
-        arm_2d_align_centre(__top_container, c_tileCMSISLogo.tRegion.tSize) {
+        arm_2d_align_centre(__top_canvas, c_tileCMSISLogo.tRegion.tSize) {
             arm_2d_fill_colour_with_a4_mask_and_opacity(   
                                                 ptTile, 
                                                 &__centre_region, 
                                                 &c_tileCMSISLogoA4Mask, 
                                                 (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                                                64);
+                                                128);
         }
     #endif
 
@@ -271,9 +292,9 @@ user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter,
         }
     } else {
         bUserAllocated = true;
-        memset(ptThis, 0, sizeof(user_scene_0_t));
     }
-    
+    memset(ptThis, 0, sizeof(user_scene_0_t));
+
     *ptThis = (user_scene_0_t){
         .use_as__arm_2d_scene_t = {
             /* Please uncommon the callbacks if you need them
@@ -285,7 +306,7 @@ user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter,
 
             //.fnOnBGStart    = &__on_scene0_background_start,
             //.fnOnBGComplete = &__on_scene0_background_complete,
-            //.fnOnFrameStart = &__on_scene0_frame_start,
+            .fnOnFrameStart = &__on_scene0_frame_start,
             //.fnBeforeSwitchOut = &__before_scene0_switching_out,
             .fnOnFrameCPL   = &__on_scene0_frame_complete,
             .fnDepose       = &__on_scene0_depose,
