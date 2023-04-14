@@ -246,7 +246,142 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <li>Please pass the <b><a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b> to the macro helper as the size of the target area but <b>NOT</b> the <b>address of the <a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b>.</li>
 </ol>
 <p >Based on the syntax above, the code corresponding to <b>Figure 2-1</b> is as follows:</p>
-<div class="fragment"></div><!-- fragment --><h1><a class="anchor" id="autotoc_md78"></a>
+<div class="fragment"><div class="line"><span class="keyword">static</span></div>
+<div class="line">IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)</div>
+<div class="line">{</div>
+<div class="line">    user_scene_0_t *ptThis = (user_scene_0_t *)pTarget;</div>
+<div class="line">    <a class="code hl_define" href="group__gKernel.html#ga206ba077ba0d890fd0be935fc5d15dda" title="a macro to mark unused variables and let the compiler happy">ARM_2D_UNUSED</a>(ptTile);</div>
+<div class="line">    <a class="code hl_define" href="group__gKernel.html#ga206ba077ba0d890fd0be935fc5d15dda" title="a macro to mark unused variables and let the compiler happy">ARM_2D_UNUSED</a>(bIsNewFrame);</div>
+<div class="line">    </div>
+<div class="line">    arm_2d_canvas(ptTile, __top_canvas) {</div>
+<div class="line">    <span class="comment">/*-----------------------draw the foreground begin-----------------------*/</span></div>
+<div class="line">        </div>
+<div class="line">        <span class="comment">/* following code is just a demo, you can remove them */</span></div>
+<div class="line">        </div>
+<div class="line">        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">        </div>
+<div class="line">        arm_2d_align_top_left(__top_canvas, 60, 60 ) {</div>
+<div class="line">            </div>
+<div class="line">            draw_round_corner_border(   ptTile, </div>
+<div class="line">                                        &amp;__top_left_region, </div>
+<div class="line">                                        GLCD_COLOR_BLACK, </div>
+<div class="line">                                        (arm_2d_border_opacity_t)</div>
+<div class="line">                                            {32, 32, 255-64, 255-64},</div>
+<div class="line">                                        (arm_2d_corner_opacity_t)</div>
+<div class="line">                                            {0, 128, 128, 128});</div>
+<div class="line">                                    </div>
+<div class="line">        }</div>
+<div class="line">        arm_2d_align_top_centre(__top_canvas, 60, 60 ) {</div>
+<div class="line">            </div>
+<div class="line">            draw_round_corner_border(   ptTile, </div>
+<div class="line">                                        &amp;__top_centre_region, </div>
+<div class="line">                                        GLCD_COLOR_BLACK, </div>
+<div class="line">                                        (arm_2d_border_opacity_t)</div>
+<div class="line">                                            {32, 32, 255-64, 255-64},</div>
+<div class="line">                                        (arm_2d_corner_opacity_t)</div>
+<div class="line">                                            {0, 128, 128, 128});</div>
+<div class="line">                                    </div>
+<div class="line">        }</div>
+<div class="line">        arm_2d_align_top_right(__top_canvas, 60, 60 ) {</div>
+<div class="line">            </div>
+<div class="line">            draw_round_corner_border(   ptTile, </div>
+<div class="line">                                        &amp;__top_right_region, </div>
+<div class="line">                                        GLCD_COLOR_BLACK, </div>
+<div class="line">                                        (arm_2d_border_opacity_t)</div>
+<div class="line">                                            {32, 32, 255-64, 255-64},</div>
+<div class="line">                                        (arm_2d_corner_opacity_t)</div>
+<div class="line">                                            {0, 128, 128, 128});</div>
+<div class="line">                                    </div>
+<div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">        arm_2d_align_bottom_left(__top_canvas, 60, 60 ) {</div>
+<div class="line">            </div>
+<div class="line">            draw_round_corner_border(   ptTile, </div>
+<div class="line">                                        &amp;__bottom_left_region, </div>
+<div class="line">                                        GLCD_COLOR_BLACK, </div>
+<div class="line">                                        (arm_2d_border_opacity_t)</div>
+<div class="line">                                            {32, 32, 255-64, 255-64},</div>
+<div class="line">                                        (arm_2d_corner_opacity_t)</div>
+<div class="line">                                            {0, 128, 128, 128});</div>
+<div class="line">                                    </div>
+<div class="line">        }</div>
+<div class="line">        </div>
+<div class="line">        arm_2d_align_mid_left(__top_canvas, 60, 60 ) {</div>
+<div class="line">            </div>
+<div class="line">            draw_round_corner_border(   ptTile, </div>
+<div class="line">                                        &amp;__mid_left_region, </div>
+<div class="line">                                        GLCD_COLOR_BLACK, </div>
+<div class="line">                                        (arm_2d_border_opacity_t)</div>
+<div class="line">                                            {32, 32, 255-64, 255-64},</div>
+<div class="line">                                        (arm_2d_corner_opacity_t)</div>
+<div class="line">                                            {0, 128, 128, 128});</div>
+<div class="line">                                    </div>
+<div class="line">        }</div>
+<div class="line">        arm_2d_align_centre(__top_canvas, 60, 60 ) {</div>
+<div class="line">            </div>
+<div class="line">            draw_round_corner_border(   ptTile, </div>
+<div class="line">                                        &amp;__centre_region, </div>
+<div class="line">                                        GLCD_COLOR_BLACK, </div>
+<div class="line">                                        (arm_2d_border_opacity_t)</div>
+<div class="line">                                            {32, 32, 255-64, 255-64},</div>
+<div class="line">                                        (arm_2d_corner_opacity_t)</div>
+<div class="line">                                            {0, 128, 128, 128});</div>
+<div class="line">                                    </div>
+<div class="line">        }</div>
+<div class="line">        arm_2d_align_mid_right(__top_canvas, 60, 60 ) {</div>
+<div class="line">            </div>
+<div class="line">            draw_round_corner_border(   ptTile, </div>
+<div class="line">                                        &amp;__mid_right_region, </div>
+<div class="line">                                        GLCD_COLOR_BLACK, </div>
+<div class="line">                                        (arm_2d_border_opacity_t)</div>
+<div class="line">                                            {32, 32, 255-64, 255-64},</div>
+<div class="line">                                        (arm_2d_corner_opacity_t)</div>
+<div class="line">                                            {0, 128, 128, 128});</div>
+<div class="line">                                    </div>
+<div class="line">        }</div>
+<div class="line">        </div>
+<div class="line">        </div>
+<div class="line">        arm_2d_align_bottom_centre(__top_canvas, 60, 60 ) {</div>
+<div class="line">            </div>
+<div class="line">            draw_round_corner_border(   ptTile, </div>
+<div class="line">                                        &amp;__bottom_centre_region, </div>
+<div class="line">                                        GLCD_COLOR_BLACK, </div>
+<div class="line">                                        (arm_2d_border_opacity_t)</div>
+<div class="line">                                            {32, 32, 255-64, 255-64},</div>
+<div class="line">                                        (arm_2d_corner_opacity_t)</div>
+<div class="line">                                            {0, 128, 128, 128});</div>
+<div class="line">                                    </div>
+<div class="line">        }</div>
+<div class="line">        arm_2d_align_bottom_right(__top_canvas, 60, 60 ) {</div>
+<div class="line">            </div>
+<div class="line">            draw_round_corner_border(   ptTile, </div>
+<div class="line">                                        &amp;__bottom_right_region, </div>
+<div class="line">                                        GLCD_COLOR_BLACK, </div>
+<div class="line">                                        (arm_2d_border_opacity_t)</div>
+<div class="line">                                            {32, 32, 255-64, 255-64},</div>
+<div class="line">                                        (arm_2d_corner_opacity_t)</div>
+<div class="line">                                            {0, 128, 128, 128});</div>
+<div class="line">                                    </div>
+<div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">        <span class="comment">/* draw text at the top-left corner */</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">//        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);</span></div>
+<div class="line"><span class="comment">//        arm_lcd_text_set_font(&amp;ARM_2D_FONT_6x8.use_as__arm_2d_font_t);</span></div>
+<div class="line"><span class="comment">//        arm_lcd_text_set_draw_region(NULL);</span></div>
+<div class="line"><span class="comment">//        arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);</span></div>
+<div class="line"><span class="comment">//        arm_lcd_text_location(0,0);</span></div>
+<div class="line"><span class="comment">//        arm_lcd_puts(&quot;Scene 0&quot;);</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">/*-----------------------draw the foreground end  -----------------------*/</span></div>
+<div class="line">    }</div>
+<div class="line">    <a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcacf7b5f9e66c44d332ea46d05860d78d1" title="fsm complete">arm_fsm_rt_cpl</a>;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md78"></a>
 3 Layout</h1>
 <h2><a class="anchor" id="autotoc_md79"></a>
 3.1 Line Stream Layout</h2>
