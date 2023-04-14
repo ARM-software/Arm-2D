@@ -874,6 +874,7 @@ WARN_LOGFILE           =
 INPUT                  = ../README.md \
                          ./how_to_deploy_the_arm_2d_library.md \
                          ./introduction.md \
+                         ./how_to_use_layout_assistant.md \
                          ./how_to_use_tile_operations.md \
                          ../Library/Include/README.md \
                          ../Library/Include/arm_2d_utils.h \
