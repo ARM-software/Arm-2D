@@ -217,6 +217,141 @@ Here the macro helper `arm_2d_align_<alignment>` takes two arguments, i.e. the *
 Based on the syntax above, the code corresponding to **Figure 2-1** is as follows:
 
 ```c
+static
+IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
+{
+    user_scene_0_t *ptThis = (user_scene_0_t *)pTarget;
+    ARM_2D_UNUSED(ptTile);
+    ARM_2D_UNUSED(bIsNewFrame);
+    
+    arm_2d_canvas(ptTile, __top_canvas) {
+    /*-----------------------draw the foreground begin-----------------------*/
+        
+        /* following code is just a demo, you can remove them */
+        
+        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
+
+
+        
+        arm_2d_align_top_left(__top_canvas, 60, 60 ) {
+            
+            draw_round_corner_border(   ptTile, 
+                                        &__top_left_region, 
+                                        GLCD_COLOR_BLACK, 
+                                        (arm_2d_border_opacity_t)
+                                            {32, 32, 255-64, 255-64},
+                                        (arm_2d_corner_opacity_t)
+                                            {0, 128, 128, 128});
+                                    
+        }
+        arm_2d_align_top_centre(__top_canvas, 60, 60 ) {
+            
+            draw_round_corner_border(   ptTile, 
+                                        &__top_centre_region, 
+                                        GLCD_COLOR_BLACK, 
+                                        (arm_2d_border_opacity_t)
+                                            {32, 32, 255-64, 255-64},
+                                        (arm_2d_corner_opacity_t)
+                                            {0, 128, 128, 128});
+                                    
+        }
+        arm_2d_align_top_right(__top_canvas, 60, 60 ) {
+            
+            draw_round_corner_border(   ptTile, 
+                                        &__top_right_region, 
+                                        GLCD_COLOR_BLACK, 
+                                        (arm_2d_border_opacity_t)
+                                            {32, 32, 255-64, 255-64},
+                                        (arm_2d_corner_opacity_t)
+                                            {0, 128, 128, 128});
+                                    
+        }
+
+        arm_2d_align_bottom_left(__top_canvas, 60, 60 ) {
+            
+            draw_round_corner_border(   ptTile, 
+                                        &__bottom_left_region, 
+                                        GLCD_COLOR_BLACK, 
+                                        (arm_2d_border_opacity_t)
+                                            {32, 32, 255-64, 255-64},
+                                        (arm_2d_corner_opacity_t)
+                                            {0, 128, 128, 128});
+                                    
+        }
+        
+        arm_2d_align_mid_left(__top_canvas, 60, 60 ) {
+            
+            draw_round_corner_border(   ptTile, 
+                                        &__mid_left_region, 
+                                        GLCD_COLOR_BLACK, 
+                                        (arm_2d_border_opacity_t)
+                                            {32, 32, 255-64, 255-64},
+                                        (arm_2d_corner_opacity_t)
+                                            {0, 128, 128, 128});
+                                    
+        }
+        arm_2d_align_centre(__top_canvas, 60, 60 ) {
+            
+            draw_round_corner_border(   ptTile, 
+                                        &__centre_region, 
+                                        GLCD_COLOR_BLACK, 
+                                        (arm_2d_border_opacity_t)
+                                            {32, 32, 255-64, 255-64},
+                                        (arm_2d_corner_opacity_t)
+                                            {0, 128, 128, 128});
+                                    
+        }
+        arm_2d_align_mid_right(__top_canvas, 60, 60 ) {
+            
+            draw_round_corner_border(   ptTile, 
+                                        &__mid_right_region, 
+                                        GLCD_COLOR_BLACK, 
+                                        (arm_2d_border_opacity_t)
+                                            {32, 32, 255-64, 255-64},
+                                        (arm_2d_corner_opacity_t)
+                                            {0, 128, 128, 128});
+                                    
+        }
+        
+        
+        arm_2d_align_bottom_centre(__top_canvas, 60, 60 ) {
+            
+            draw_round_corner_border(   ptTile, 
+                                        &__bottom_centre_region, 
+                                        GLCD_COLOR_BLACK, 
+                                        (arm_2d_border_opacity_t)
+                                            {32, 32, 255-64, 255-64},
+                                        (arm_2d_corner_opacity_t)
+                                            {0, 128, 128, 128});
+                                    
+        }
+        arm_2d_align_bottom_right(__top_canvas, 60, 60 ) {
+            
+            draw_round_corner_border(   ptTile, 
+                                        &__bottom_right_region, 
+                                        GLCD_COLOR_BLACK, 
+                                        (arm_2d_border_opacity_t)
+                                            {32, 32, 255-64, 255-64},
+                                        (arm_2d_corner_opacity_t)
+                                            {0, 128, 128, 128});
+                                    
+        }
+
+        /* draw text at the top-left corner */
+
+//        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+//        arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
+//        arm_lcd_text_set_draw_region(NULL);
+//        arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
+//        arm_lcd_text_location(0,0);
+//        arm_lcd_puts("Scene 0");
+
+    /*-----------------------draw the foreground end  -----------------------*/
+    }
+    arm_2d_op_wait_async(NULL);
+
+    return arm_fsm_rt_cpl;
+}
 ```
 
 
