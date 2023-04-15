@@ -194,7 +194,7 @@ arm_2d_align_<alignment>(<the target region: arm_2d_region_t>, <the width of the
 
 Here the macro helper `arm_2d_align_<alignment>` takes three arguments, i.e. the **target region object**, the **width** and **height** of the target area. 
 
-**NOTE**: Please pass the **arm_2d_region_t object** to the macro helper as the target region but **NOT** the **address of the arm_2d_region_t object**.
+**NOTE**: Please pass the **arm_2d_region_t object** to the macro helper as the target region but **NOT** the **address of an arm_2d_region_t object**.
 
 **Syntax 2:**
 
@@ -209,8 +209,8 @@ Here the macro helper `arm_2d_align_<alignment>` takes two arguments, i.e. the *
 
 **NOTE**: 
 
-1. Please pass the **arm_2d_region_t object** to the macro helper as the target region but **NOT** the **address of the arm_2d_region_t object**. 
-2. Please pass the **arm_2d_size_t object** to the macro helper as the size of the target area but **NOT** the **address of the arm_2d_size_t object**. 
+1. Please pass an **arm_2d_region_t object** to the macro helper as the target region but **NOT** the **address of an arm_2d_region_t object**. 
+2. Please pass an **arm_2d_size_t object** to the macro helper as the size of the target area but **NOT** the **address of an arm_2d_size_t object**. 
 
 
 
@@ -340,11 +340,564 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
 
 ## 3 Layout
 
+When designing a graphical interface, in addition to the **alignment** described above, we usually want to arrage a stream of graphic elements to a specified area in sequence under certain rules. This process is often referred to as **layout**. Commonly used layout rules are:
+
+- **Line Stream Layout** (in vertical manner or horizontal manner)
+- **Steam Layout with wrapping**  (in vertical-first manner or horizontal-first manner)
+
+
+
+When doing layout, users only need to enumerate graphic elements, specify their sizes, and optionally specify the space (a.ka. **Padding**) among elements. During this process, the user does not need to manually calculate the coordinates of each element, which is very convenient.
+
+
+
 ### 3.1 Line Stream Layout
 
-### 3.2 Stream Layout
+The Line Stream Layout is a common layout method, which places elements in a specified area one by one. 
+
+**Note**: If any elements exceed the given area, the Line Stream Layout will not wrap when placing elements. 
+
+#### 3.1.1 Horizontal Line Stream
+
+Horizontal placement is one of the common ways of Line Stream Layout. Its syntax is as follows:
+
+```c
+arm_2d_layout(<the target region: arm_2d_region_t>) {
+    /* Syntax 1 */
+    __item_line_horizontal(<width>, <height>) {
+        /* you can use __item_region in the scope defined by the curly braces */
+        ...
+    }
+    
+    /* Syntax 2 */
+    __item_line_horizontal(<size of the element: arm_2d_size_t>) {
+        /* you can use __item_region in the scope defined by the curly braces */
+        ...
+    }
+    /* more of the __item_line_horizontal segments */
+    ...
+    
+}
+```
+
+Here, `arm_2d_layout()` takes an `arm_2d_region_t` object as the target region and `__item_line_horizontal()` must be used inside the `arm_2d_layout()` structure. You can list as many `__item_line_horizontal()` segments as you want. `__item_line_horizontal()` takes two mandatory parameters, i.e. **width** and **height** or one `arm_2d_size_t` object as the size of the element.
+
+**NOTE**: 
+
+1. Please pass an **arm_2d_region_t object** to the macro helper `arm_2d_layout()` as the target region but **NOT** the **address of an arm_2d_region_t object**. 
+2. When using the **Syntax 2**, please pass an **arm_2d_size_t object** to the macro helper `__item_line_horizontal()` as the size of the target element but **NOT** the **address of an arm_2d_size_t object**. 
 
 
+
+**Figure 3-1** shows an simple example of the Line Stream Layout, which places four buttons in a line wihout and padding. In the source code, we mark the target area in red, so you can see that the 4th button is actually out of the region. 
+
+**Figure 3-1 A Horizontal Line Stream Layout Example**
+
+![](../documentation/pictures/HowToUseLayoutAssistant3_1_1.png) 
+
+The example code is shown below:
+
+```c
+static void draw_buttom(const arm_2d_tile_t *ptTile, 
+                        arm_2d_region_t *ptRegion,
+                        const char *pchString,
+                        COLOUR_INT tColour,
+                        uint8_t chOpacity)
+{
+    
+
+    arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY
+                                .use_as__arm_2d_user_font_t
+                                    .use_as__arm_2d_font_t
+                                        .tCharSize;
+    tTextSize.iWidth *= strlen(pchString);
+
+    arm_2d_container(ptTile, __button, ptRegion) {
+        
+        draw_round_corner_border(   &__button, 
+                                    &__button_canvas, 
+                                    GLCD_COLOR_BLACK, 
+                                    (arm_2d_border_opacity_t)
+                                        {32, 32, 32, 32},
+                                    (arm_2d_corner_opacity_t)
+                                        {32, 32, 32, 32});
+        
+        arm_2d_align_centre(__button_canvas, tTextSize) {
+
+            arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)&__button);
+            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
+            arm_lcd_text_set_draw_region(&__centre_region);
+            arm_lcd_text_set_colour(tColour, GLCD_COLOR_WHITE);
+            arm_lcd_text_set_opacity(chOpacity);
+            arm_lcd_printf("%s", pchString);
+            arm_lcd_text_set_opacity(255);
+        }
+    }
+}
+
+static
+IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
+{
+    
+    arm_2d_canvas(ptTile, __top_canvas) {
+        
+        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
+
+        arm_2d_align_centre(__top_canvas, 100, 100 ) {
+
+
+            arm_2d_helper_draw_box( ptTile, 
+                                    &__centre_region, 
+                                    1,
+                                    GLCD_COLOR_RED, 
+                                    128);
+                
+            arm_2d_op_wait_async(NULL);
+            
+            arm_2d_layout(__centre_region) {
+                __item_line_horizontal(28,28) {
+                    draw_buttom(ptTile, &__item_region, "1", GLCD_COLOR_BLUE, 64);
+                }
+                __item_line_horizontal(28,28) {
+                    draw_buttom(ptTile, &__item_region, "2", GLCD_COLOR_BLUE, 64);
+                }
+                __item_line_horizontal(28,28) {
+                    draw_buttom(ptTile, &__item_region, "3", GLCD_COLOR_BLUE, 64);
+                }
+                __item_line_horizontal(28,28) {
+                    draw_buttom(ptTile, &__item_region, "4", GLCD_COLOR_BLUE, 64);
+                }
+            }
+        }
+    }
+
+    arm_2d_op_wait_async(NULL);
+
+    return arm_fsm_rt_cpl;
+}
+```
+
+
+
+If we want to clip the part out of the target area, as shown in **Figure 3-2**, we should use `arm_2d_container()`.
+
+**Figure 3-2 Using Container for Region Clipping**
+
+![](../documentation/pictures/HowToUseLayoutAssistant3_1_2.png) 
+
+The corresponding code is as follows:
+
+```c
+static
+IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
+{
+    
+    arm_2d_canvas(ptTile, __top_canvas) {
+        
+        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
+
+        arm_2d_align_centre(__top_canvas, 100, 100 ) {
+
+
+            arm_2d_helper_draw_box( ptTile, 
+                                    &__centre_region, 
+                                    1,
+                                    GLCD_COLOR_RED, 
+                                    128);
+                
+            arm_2d_op_wait_async(NULL);
+            
+            arm_2d_container(ptTile, __panel, &__centre_region) {
+            
+                arm_2d_layout(__panel_canvas) {
+                    __item_line_horizontal(28,28) {
+                        draw_buttom(&__panel, &__item_region, "1", GLCD_COLOR_BLUE, 64);
+                    }
+                    __item_line_horizontal(28,28) {
+                        draw_buttom(&__panel, &__item_region, "2", GLCD_COLOR_BLUE, 64);
+                    }
+                    __item_line_horizontal(28,28) {
+                        draw_buttom(&__panel, &__item_region, "3", GLCD_COLOR_BLUE, 64);
+                    }
+                    __item_line_horizontal(28,28) {
+                        draw_buttom(&__panel, &__item_region, "4", GLCD_COLOR_BLUE, 64);
+                    }
+                }
+            }
+        }
+    }
+
+    arm_2d_op_wait_async(NULL);
+
+    return arm_fsm_rt_cpl;
+}
+```
+
+
+
+In addition to the size information, `__item_line_horizontal()` can optionally accept 4 additional padding parameters for the left, right, top and bottom. The syntax is shown below:
+
+```c
+arm_2d_layout(<the target region: arm_2d_region_t>) {
+    /* Syntax 1 */
+    __item_line_horizontal(<width>, <height> [, <left>, <right>, <top>, <bottom>]) {
+        /* you can use __item_region in the scope defined by the curly braces */
+        ...
+    }
+    
+    /* Syntax 2 */
+    __item_line_horizontal(<size of the element: arm_2d_size_t> [, <left>, <right>, <top>, <bottom>]) {
+        /* you can use __item_region in the scope defined by the curly braces */
+        ...
+    }
+    /* more of the __item_line_horizontal segments */
+    ...
+    
+}
+```
+
+
+
+**Figure 3-3** shows the visual effects of four elements with different padding using the Horizontal Line Stream Layout.
+
+**Figure 3-3 Different Paddings among Items**
+
+![](../documentation/pictures/HowToUseLayoutAssistant3_1_3.png) 
+
+The corresonponding code is as follows:
+
+```c
+static
+IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
+{
+    
+    arm_2d_canvas(ptTile, __top_canvas) {
+        
+        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
+
+        arm_2d_align_centre(__top_canvas, 200, 50 ) {
+
+            arm_2d_helper_draw_box( ptTile, 
+                                    &__centre_region, 
+                                    1,
+                                    GLCD_COLOR_RED, 
+                                    128);
+                
+            arm_2d_op_wait_async(NULL);
+            
+            arm_2d_container(ptTile, __panel, &__centre_region) {
+            
+                arm_2d_layout(__panel_canvas) {
+                    __item_line_horizontal(28,28) {
+                        draw_buttom(&__panel, &__item_region, "1", GLCD_COLOR_BLUE, 64);
+                    }
+                    __item_line_horizontal(28,28, 2, 2, 10, 10) {
+                        draw_buttom(&__panel, &__item_region, "2", GLCD_COLOR_BLUE, 64);
+                    }
+                    __item_line_horizontal(28,28, 10, 10, 20, 20 ) {
+                        draw_buttom(&__panel, &__item_region, "3", GLCD_COLOR_BLUE, 64);
+                    }
+                    __item_line_horizontal(28,28) {
+                        draw_buttom(&__panel, &__item_region, "4", GLCD_COLOR_BLUE, 64);
+                    }
+                }
+            }
+        }
+    }
+
+    arm_2d_op_wait_async(NULL);
+
+    return arm_fsm_rt_cpl;
+}
+```
+
+
+
+#### 3.1.2 Vertical Line Stream
+
+The Vertical Line Stream Layout is similar to the Horizontal Line Stream Layout described above. The only difference is the layout direction. The syntax is shown below:
+
+```c
+arm_2d_layout(<the target region: arm_2d_region_t>) {
+    /* Syntax 1 */
+    __item_line_vertical(<width>, <height> [, <left>, <right>, <top>, <bottom>]) {
+        /* you can use __item_region in the scope defined by the curly braces */
+        ...
+    }
+    
+    /* Syntax 2 */
+    __item_line_vertical(<size of the element: arm_2d_size_t> [, <left>, <right>, <top>, <bottom>]) {
+        /* you can use __item_region in the scope defined by the curly braces */
+        ...
+    }
+    /* more of the __item_line_vertical segments */
+    ...
+    
+}
+```
+
+**NOTE**: 
+
+1. Please pass an **arm_2d_region_t object** to the macro helper `arm_2d_layout()` as the target region but **NOT** the **address of an arm_2d_region_t object**. 
+2. When using the **Syntax 2**, please pass an **arm_2d_size_t object** to the macro helper `__item_line_vertical()` as the size of the target element but **NOT** the **address of an arm_2d_size_t object**. 
+
+
+
+**Figure 3-4** shows the visual effects of four elements with the same padding using the Vertical Line Stream Layout.
+
+**Figure 3-4 A Vertical Line Stream Layout Example with Padding**
+
+![](../documentation/pictures/HowToUseLayoutAssistant3_1_4.png) 
+
+The example code is shown below:
+
+```c
+static
+IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
+{
+    
+    arm_2d_canvas(ptTile, __top_canvas) {
+        
+        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
+
+        arm_2d_align_centre(__top_canvas, 120, 120 ) {
+
+
+            arm_2d_helper_draw_box( ptTile, 
+                                    &__centre_region, 
+                                    1,
+                                    GLCD_COLOR_RED, 
+                                    128);
+                
+            arm_2d_op_wait_async(NULL);
+            
+            
+            arm_2d_layout(__centre_region) {
+                __item_line_vertical(28, 28, 2, 2, 2, 2) {
+                    draw_buttom(ptTile, &__item_region, "1", GLCD_COLOR_BLUE, 64);
+                }
+                __item_line_vertical(28, 28, 2, 2, 2, 2) {
+                    draw_buttom(ptTile, &__item_region, "2", GLCD_COLOR_BLUE, 64);
+                }
+                __item_line_vertical(28, 28, 2, 2, 2, 2 ) {
+                    draw_buttom(ptTile, &__item_region, "3", GLCD_COLOR_BLUE, 64);
+                }
+                __item_line_vertical(28, 28, 2, 2, 2, 2) {
+                    draw_buttom(ptTile, &__item_region, "4", GLCD_COLOR_BLUE, 64);
+                }
+            }
+        }
+    }
+
+    arm_2d_op_wait_async(NULL);
+
+    return arm_fsm_rt_cpl;
+}
+```
+
+
+
+### 3.2 Stream Layout with Wrapping
+
+Similar to the Line Stream Layout, the **Stream Layout** is a commonly used layout method, which places elements in a line and wraps before hitting the bundary of the target area. 
+
+#### 3.2.1 Horizontal Stream
+
+Horizontal placement is one of the common ways of the Stream Layout. Its syntax is as follows:
+
+```c
+arm_2d_layout(<the target region: arm_2d_region_t>) {
+    /* Syntax 1 */
+    __item_horizontal(<width>, <height> [, <left>, <right>, <top>, <bottom>]) {
+        /* you can use __item_region in the scope defined by the curly braces */
+        ...
+    }
+    
+    /* Syntax 2 */
+    __item_horizontal(<size of the element: arm_2d_size_t> [, <left>, <right>, <top>, <bottom>]) {
+        /* you can use __item_region in the scope defined by the curly braces */
+        ...
+    }
+    /* more of the __item_horizontal segments */
+    ...
+    
+}
+```
+
+**NOTE**: 
+
+1. Please pass an **arm_2d_region_t object** to the macro helper `arm_2d_layout()` as the target region but **NOT** the **address of an arm_2d_region_t object**. 
+2. When using the **Syntax 2**, please pass an **arm_2d_size_t object** to the macro helper `__item_horizontal()` as the size of the target element but **NOT** the **address of an arm_2d_size_t object**. 
+
+
+
+**Figure 3-5** shows a digits panel implemented with the Horizontal Stream Layout. Padding (2,2,2,2) is added to each element.
+
+**Figure 3-5 A Horizontal Stream Layout Example: Digits Panel**
+
+![](../documentation/pictures/HowToUseLayoutAssistant3_2_1.png) 
+
+The corresponding source code is as follows:
+
+```c
+static
+IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
+{
+    
+    arm_2d_canvas(ptTile, __top_canvas) {
+        
+        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
+
+        arm_2d_align_centre(__top_canvas, 96, 128 ) {
+
+
+            arm_2d_helper_draw_box( ptTile, 
+                                    &__centre_region, 
+                                    1,
+                                    GLCD_COLOR_RED, 
+                                    128);
+                
+            arm_2d_op_wait_async(NULL);
+            
+            arm_2d_layout(__centre_region) {
+                __item_horizontal(28,28,2,2,2,2) {
+                    draw_buttom(ptTile, &__item_region, "1", GLCD_COLOR_BLUE, 64);
+                }
+                __item_horizontal(28,28,2,2,2,2) {
+                    draw_buttom(ptTile, &__item_region, "2", GLCD_COLOR_BLUE, 64);
+                }
+                __item_horizontal(28,28,2,2,2,2) {
+                    draw_buttom(ptTile, &__item_region, "3", GLCD_COLOR_BLUE, 64);
+                }
+                __item_horizontal(28,28,2,2,2,2) {
+                    draw_buttom(ptTile, &__item_region, "4", GLCD_COLOR_BLUE, 64);
+                }
+                __item_horizontal(28,28,2,2,2,2) {
+                    draw_buttom(ptTile, &__item_region, "5", GLCD_COLOR_BLUE, 64);
+                }
+                __item_horizontal(28,28,2,2,2,2) {
+                    draw_buttom(ptTile, &__item_region, "6", GLCD_COLOR_BLUE, 64);
+                }
+                __item_horizontal(28,28,2,2,2,2) {
+                    draw_buttom(ptTile, &__item_region, "7", GLCD_COLOR_BLUE, 64);
+                }
+                __item_horizontal(28,28,2,2,2,2) {
+                    draw_buttom(ptTile, &__item_region, "8", GLCD_COLOR_BLUE, 64);
+                }
+                __item_horizontal(28,28,2,2,2,2) {
+                    draw_buttom(ptTile, &__item_region, "9", GLCD_COLOR_BLUE, 64);
+                }
+                __item_horizontal(28,28,34,34,2,2) {
+                    draw_buttom(ptTile, &__item_region, "0", GLCD_COLOR_BLUE, 64);
+                }
+            }
+        }
+    }
+
+    arm_2d_op_wait_async(NULL);
+
+    return arm_fsm_rt_cpl;
+}
+```
+
+
+
+#### 3.2.2 Vertical Stream
+
+The **Vertical Stream Layout** is similar to the **Horizontal Stream Layout** described above. The only difference is the layout direction. The syntax is shown below:
+
+```c
+arm_2d_layout(<the target region: arm_2d_region_t>) {
+    /* Syntax 1 */
+    __item_vertical(<width>, <height> [, <left>, <right>, <top>, <bottom>]) {
+        /* you can use __item_region in the scope defined by the curly braces */
+        ...
+    }
+    
+    /* Syntax 2 */
+    __item_vertical(<size of the element: arm_2d_size_t> [, <left>, <right>, <top>, <bottom>]) {
+        /* you can use __item_region in the scope defined by the curly braces */
+        ...
+    }
+    /* more of the __item_vertical segments */
+    ...
+    
+}
+```
+
+**NOTE**: 
+
+1. Please pass an **arm_2d_region_t object** to the macro helper `arm_2d_layout()` as the target region but **NOT** the **address of an arm_2d_region_t object**. 
+2. When using the **Syntax 2**, please pass an **arm_2d_size_t object** to the macro helper `__item_vertical()` as the size of the target element but **NOT** the **address of an arm_2d_size_t object**. 
+
+**Figure 3-6** shows a digits panel similar to the one shown in **Figure 3-5**. It is implemented with the Vertical Stream Layout and paddings are added.
+
+**Figure 3-6 A Vertical Stream Layout Example: Digits Panel**
+
+![](../documentation/pictures/HowToUseLayoutAssistant3_2_2.png) 
+
+The example code is shown below:
+
+```c
+static
+IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
+{
+    
+    arm_2d_canvas(ptTile, __top_canvas) {
+        
+        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
+
+        arm_2d_align_centre(__top_canvas, 128, 96 ) {
+
+
+            arm_2d_helper_draw_box( ptTile, 
+                                    &__centre_region, 
+                                    1,
+                                    GLCD_COLOR_RED, 
+                                    128);
+                
+            arm_2d_op_wait_async(NULL);
+            
+            arm_2d_layout(__centre_region) {
+                __item_vertical(28,28,2,2,2,2) {
+                    draw_buttom(ptTile, &__item_region, "1", GLCD_COLOR_BLUE, 64);
+                }
+                __item_vertical(28,28,2,2,2,2) {
+                    draw_buttom(ptTile, &__item_region, "2", GLCD_COLOR_BLUE, 64);
+                }
+                __item_vertical(28,28,2,2,2,2) {
+                    draw_buttom(ptTile, &__item_region, "3", GLCD_COLOR_BLUE, 64);
+                }
+                __item_vertical(28,28,2,2,2,2) {
+                    draw_buttom(ptTile, &__item_region, "4", GLCD_COLOR_BLUE, 64);
+                }
+                __item_vertical(28,28,2,2,2,2) {
+                    draw_buttom(ptTile, &__item_region, "5", GLCD_COLOR_BLUE, 64);
+                }
+                __item_vertical(28,28,2,2,2,2) {
+                    draw_buttom(ptTile, &__item_region, "6", GLCD_COLOR_BLUE, 64);
+                }
+                __item_vertical(28,28,2,2,2,2) {
+                    draw_buttom(ptTile, &__item_region, "7", GLCD_COLOR_BLUE, 64);
+                }
+                __item_vertical(28,28,2,2,2,2) {
+                    draw_buttom(ptTile, &__item_region, "8", GLCD_COLOR_BLUE, 64);
+                }
+                __item_vertical(28,28,2,2,2,2) {
+                    draw_buttom(ptTile, &__item_region, "9", GLCD_COLOR_BLUE, 64);
+                }
+                __item_vertical(28,28,2,2,34,34) {
+                    draw_buttom(ptTile, &__item_region, "0", GLCD_COLOR_BLUE, 64);
+                }
+            }
+        }
+    }
+
+    arm_2d_op_wait_async(NULL);
+
+    return arm_fsm_rt_cpl;
+}
+```
 
 
 
