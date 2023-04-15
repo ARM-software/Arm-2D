@@ -111,16 +111,15 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <h1><a class="anchor" id="autotoc_md0"></a>
 Features</h1>
 <h3><a class="anchor" id="autotoc_md1"></a>
-In this version (ver1.1.2-dev)</h3>
+In this version (ver1.1.2)</h3>
 <p >The Arm-2D library provides <b>Low-Level 2D Image Processing Services</b> mainly used in <b>Deep Embedded Display system</b>. The supported features include but not limited to:</p>
 <ul>
 <li><b>Supports Accelerating LVGL</b> (<b>v8.3.0</b> or newer)</li>
 <li><b>CMSIS-Pack is available.</b></li>
 <li><b>Alpha-Blending</b> / <b>Masks</b><ul>
 <li>With or without Colour-Keying</li>
-<li>Filling-Colour with an mask<ul>
+<li>Filling-Colour with an mask and an optional opacity<ul>
 <li>For drawing anti-alias icons/texts in a specified colour</li>
-<li>Supports an optional <em><b>Opacity</b></em>.</li>
 <li>Supports A2, A4 and A8 masks</li>
 </ul>
 </li>
@@ -136,13 +135,12 @@ In this version (ver1.1.2-dev)</h3>
 <li><b>GRAY8 (8-bit Grayscale)</b>, <b>RGB565</b> and <b>RGB888</b></li>
 <li>Generic <b>C8BIT (8bit colour)</b>, <b>RGB16</b> and <b>RGB32</b></li>
 <li>Converting colour formats among <b>GRAY8</b>, <b>RGB565</b> and <b>RGB888</b></li>
-<li>Ready for <b>monochrome LCD</b> (1bit colour formats) and <b>e-ink displays</b> (2bits and 4bits colour formats)<ul>
-<li>Using <b>Gray8</b> as internal processing format and converting to target colour format inside Display Adapter, e.g. <code>Disp0_DrawBitmap</code></li>
+<li>Ready for <b>monochrome LCD</b> (the 1bit colour) and <b>e-ink displays</b> (the 2bits and 4bits colour formats)<ul>
+<li>Using <b>Gray8</b> as the internal processing format and converting to target colour format inside Display Adapter, e.g. <code>Disp0_DrawBitmap</code></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><b>Region Clipping</b></li>
 <li><b>Generic Partial Frame-buffer (PFB)</b><ul>
 <li>Transparent for software/GUI services on upper layers</li>
 <li>Easy to Use</li>
@@ -150,10 +148,12 @@ In this version (ver1.1.2-dev)</h3>
 <li>No limitation on PFB size and shape (it could be a line or a rectangular with any size) **(See note)**</li>
 <li>Supports <b>Dirty Regions</b> for refreshing specified areas only</li>
 <li>Supports swapping high and low bytes for RGB16 pixels</li>
+<li><b>[new]</b> Provide a debug mode for dirty regions</li>
+<li><b>[new]</b> Support PFB alignment for both width and height.</li>
 <li>Introduce a <b>Scene Player</b> with various scene switching modes (Fade-In-Fade-Out, Slide, Erase etc.)</li>
 <li>Support various Buffer Modes with a built-in framebuffer pool.<ul>
 <li>Single Buffer/Double-Buffers/Three-Buffers</li>
-<li>Direct Mode</li>
+<li>Ready for Direct Mode</li>
 <li>Enhanced Asynchronous Flushing Support (i.e. DMA + ISR)</li>
 </ul>
 </li>
@@ -190,13 +190,28 @@ In this version (ver1.1.2-dev)</h3>
 </ul>
 </li>
 <li><b>Virtual Resource</b><ul>
-<li>Supports loading resources in on-demand manner from external memories that are not mapped into the 4G memory space.</li>
+<li>Supports loading resources on-demand from external memories that are not mapped into the Cortex-M memory space.</li>
 </ul>
 </li>
 <li><b>Layout Assistant</b><ul>
 <li>Docking Alignments, e.g. <code>arm_2d_align_centre</code>, <code>arm_2d_align_bottom_right</code> etc.</li>
 <li>Line Stream Layout, e.g. <code>__item_line_horizontal</code> and <code>__item_line_vertical</code></li>
 <li>Stream Layout (with wrapping), e.g. <code>__item_horizontal</code> and <code>__item_vertical</code></li>
+</ul>
+</li>
+<li><b>[new]</b> RTOS Helper Services for CMSIS-RTOS2 and RT-Thread</li>
+<li>Templates<ul>
+<li>Provide templates for user controls and scenes.</li>
+<li><b>[new]</b> Scene templates for Meter and Watch</li>
+<li><b>[new]</b> Provide a template for adding new RTOS support.</li>
+</ul>
+</li>
+<li>Other Helper services<ul>
+<li><b>[new]</b> A dedicated helper service for transform operations<ul>
+<li>Provide dynamic dirty region tracking</li>
+<li>Double-buffered Angle and Scale updating</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -256,12 +271,14 @@ Documentation</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b><a class="el" href="intro.html#md_introduction">introduction.md</a></b>   </td><td class="markdownTableBodyNone">A relatively detailed introduction for the library, including basic concepts, programmers' mode etc.   </td><td class="markdownTableBodyNone">documentation    </td></tr>
 <tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>[new]</b> <b>how_to_use_layout_assistant.md</b>   </td><td class="markdownTableBodyNone">A detailed document introduce the layout assistant helper service.   </td><td class="markdownTableBodyNone">Documentation    </td></tr>
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b><a class="el" href="use_tile.html#md_how_to_use_tile_operations">how_to_use_tile_operations.md</a></b>   </td><td class="markdownTableBodyNone">A detailed document elaborates the APIs dedicated to basic tile operations in the arm-2d library.   </td><td class="markdownTableBodyNone">documentation    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>how_to_use_alpha_blending_operations.md</b>   </td><td class="markdownTableBodyNone">A detailed document elaborates the APIs dedicated to alpha-blending services provided by the arm-2d library.   </td><td class="markdownTableBodyNone">documentation    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>how_to_use_conversion_operations.md</b>   </td><td class="markdownTableBodyNone">A detailed document elaborates the APIs dedicated to colour space conversion services provided by the arm-2d library.   </td><td class="markdownTableBodyNone">documentation    </td></tr>
+<td class="markdownTableBodyNone"><b>how_to_use_alpha_blending_operations.md</b>   </td><td class="markdownTableBodyNone">A detailed document elaborates the APIs dedicated to alpha-blending services provided by the arm-2d library.   </td><td class="markdownTableBodyNone">documentation    </td></tr>
 <tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>how_to_use_conversion_operations.md</b>   </td><td class="markdownTableBodyNone">A detailed document elaborates the APIs dedicated to colour space conversion services provided by the arm-2d library.   </td><td class="markdownTableBodyNone">documentation    </td></tr>
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>how_to_use_drawing_operations.md</b>   </td><td class="markdownTableBodyNone">A detailed document elaborates the APIs that provide basic point-drawing and colour-filling services in the arm-2d library.   </td><td class="markdownTableBodyNone">documentation   </td></tr>
 </table>
 <h1><a class="anchor" id="autotoc_md5"></a>
@@ -302,7 +319,7 @@ Documentation</h1>
 <li>See <b>section 3.2</b> for details.</li>
 </ul>
 </li>
-<li>The library supports <b>Arm Compiler 5</b>, <b>Arm Compiler 6</b>, <b>GCC</b>, <b>LLVM</b> and <b>IAR</b><ul>
+<li>The library supports <b>Arm Compiler 6</b>, <b>GCC</b>, <b>LLVM</b> and <b>IAR</b><ul>
 <li>See <b>section 5</b> for details.</li>
 </ul>
 </li>
@@ -321,7 +338,7 @@ Documentation</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">[template][bare-metal][pfb]   </td><td class="markdownTableBodyNone">It is a project template for the bare-metal environment.   </td><td class="markdownTableBodyNone">examples/[template][bare-metal][pfb]   </td><td class="markdownTableBodyNone">Project Template    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">[template][cmsis-rtos2][pfb]   </td><td class="markdownTableBodyNone">It is a project template for the RTOS environment, which use CMSIS-RTO2 as an example to show how Arm-2D can work with an RTOS.   </td><td class="markdownTableBodyNone">examples/[template][cmsis-rtos2][pfb]   </td><td class="markdownTableBodyNone">Project Template   </td></tr>
+<td class="markdownTableBodyNone">[template][cmsis-rtos2][pfb]   </td><td class="markdownTableBodyNone">It is a project template for the RTOS environment, which use CMSIS-RTOS2 as an example to show how Arm-2D can work with an RTOS.   </td><td class="markdownTableBodyNone">examples/[template][cmsis-rtos2][pfb]   </td><td class="markdownTableBodyNone">Project Template   </td></tr>
 </table>
 <h3><a class="anchor" id="autotoc_md12"></a>
 1.5.2 Benchmark</h3>
@@ -332,7 +349,7 @@ Documentation</h1>
 <li>Colour-Keying</li>
 <li>Blit</li>
 <li>Tiling</li>
-<li>Rotation</li>
+<li>Transform</li>
 <li>Mirroring</li>
 <li>Masking</li>
 </ul>
@@ -585,7 +602,7 @@ Documentation</h1>
 </ul>
 <p >Thank you for your time.</p>
 <p ><em><b>Arm-2D Development Team.</b></em></p>
-<p >17 March 2023 </p>
+<p >11 April 2023 </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->
