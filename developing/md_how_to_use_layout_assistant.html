@@ -233,7 +233,7 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <div class="line">    ...</div>
 <div class="line">}</div>
 </div><!-- fragment --><p >Here the macro helper <code>arm_2d_align_&lt;alignment&gt;</code> takes three arguments, i.e. the <b>target region object</b>, the <b>width</b> and <b>height</b> of the target area.</p>
-<p ><b>NOTE</b>: Please pass the <b><a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b> to the macro helper as the target region but <b>NOT</b> the <b>address of the <a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b>.</p>
+<p ><b>NOTE</b>: Please pass the <b><a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b> to the macro helper as the target region but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b>.</p>
 <p ><b>Syntax 2:</b></p>
 <div class="fragment"><div class="line">arm_2d_align_&lt;alignment&gt;(&lt;the target region: <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a>&gt;, &lt;the size of the target area: <a class="code hl_struct" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a>&gt;) {</div>
 <div class="line">    <span class="comment">/* You can use a region called __&lt;alignment&gt;_region in the scope defined by the curly braces*/</span></div>
@@ -242,8 +242,8 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 </div><!-- fragment --><p >Here the macro helper <code>arm_2d_align_&lt;alignment&gt;</code> takes two arguments, i.e. the <b>target region object</b> and the <b>size of the target area</b>.</p>
 <p ><b>NOTE</b>:</p>
 <ol type="1">
-<li>Please pass the <b><a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b> to the macro helper as the target region but <b>NOT</b> the <b>address of the <a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b>.</li>
-<li>Please pass the <b><a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b> to the macro helper as the size of the target area but <b>NOT</b> the <b>address of the <a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b>.</li>
+<li>Please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b> to the macro helper as the target region but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b>.</li>
+<li>Please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b> to the macro helper as the size of the target area but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b>.</li>
 </ol>
 <p >Based on the syntax above, the code corresponding to <b>Figure 2-1</b> is as follows:</p>
 <div class="fragment"><div class="line"><span class="keyword">static</span></div>
@@ -365,11 +365,477 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <div class="line">}</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md78"></a>
 3 Layout</h1>
+<p >When designing a graphical interface, in addition to the <b>alignment</b> described above, we usually want to arrage a stream of graphic elements to a specified area in sequence under certain rules. This process is often referred to as <b>layout</b>. Commonly used layout rules are:</p>
+<ul>
+<li><b>Line Stream Layout</b> (in vertical manner or horizontal manner)</li>
+<li><b>Steam Layout with wrapping</b> (in vertical-first manner or horizontal-first manner)</li>
+</ul>
+<p >When doing layout, users only need to enumerate graphic elements, specify their sizes, and optionally specify the space (a.ka. <b>Padding</b>) among elements. During this process, the user does not need to manually calculate the coordinates of each element, which is very convenient.</p>
 <h2><a class="anchor" id="autotoc_md79"></a>
 3.1 Line Stream Layout</h2>
-<h2><a class="anchor" id="autotoc_md80"></a>
-3.2 Stream Layout</h2>
-</div></div><!-- contents -->
+<p >The Line Stream Layout is a common layout method, which places elements in a specified area one by one.</p>
+<p ><b>Note</b>: If any elements exceed the given area, the Line Stream Layout will not wrap when placing elements.</p>
+<h3><a class="anchor" id="autotoc_md80"></a>
+3.1.1 Horizontal Line Stream</h3>
+<p >Horizontal placement is one of the common ways of Line Stream Layout. Its syntax is as follows:</p>
+<div class="fragment"><div class="line">arm_2d_layout(&lt;the target region: <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a>&gt;) {</div>
+<div class="line">    <span class="comment">/* Syntax 1 */</span></div>
+<div class="line">    __item_line_horizontal(&lt;width&gt;, &lt;height&gt;) {</div>
+<div class="line">        <span class="comment">/* you can use __item_region in the scope defined by the curly braces */</span></div>
+<div class="line">        ...</div>
+<div class="line">    }</div>
+<div class="line">    </div>
+<div class="line">    <span class="comment">/* Syntax 2 */</span></div>
+<div class="line">    __item_line_horizontal(&lt;size of the element: <a class="code hl_struct" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a>&gt;) {</div>
+<div class="line">        <span class="comment">/* you can use __item_region in the scope defined by the curly braces */</span></div>
+<div class="line">        ...</div>
+<div class="line">    }</div>
+<div class="line">    <span class="comment">/* more of the __item_line_horizontal segments */</span></div>
+<div class="line">    ...</div>
+<div class="line">    </div>
+<div class="line">}</div>
+</div><!-- fragment --><p >Here, <code>arm_2d_layout()</code> takes an <code><a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a></code> object as the target region and <code>__item_line_horizontal()</code> must be used inside the <code>arm_2d_layout()</code> structure. You can list as many <code>__item_line_horizontal()</code> segments as you want. <code>__item_line_horizontal()</code> takes two mandatory parameters, i.e. <b>width</b> and <b>height</b> or one <code><a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a></code> object as the size of the element.</p>
+<p ><b>NOTE</b>:</p>
+<ol type="1">
+<li>Please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b> to the macro helper <code>arm_2d_layout()</code> as the target region but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b>.</li>
+<li>When using the <b>Syntax 2</b>, please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b> to the macro helper <code>__item_line_horizontal()</code> as the size of the target element but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b>.</li>
+</ol>
+<p ><b>Figure 3-1</b> shows an simple example of the Line Stream Layout, which places four buttons in a line wihout and padding. In the source code, we mark the target area in red, so you can see that the 4th button is actually out of the region.</p>
+<p ><b>Figure 3-1 A Horizontal Line Stream Layout Example</b></p>
+<p ><img src="../documentation/pictures/HowToUseLayoutAssistant3_1_1.png" alt="" class="inline"/></p>
+<p >The example code is shown below:</p>
+<div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> draw_buttom(<span class="keyword">const</span> <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTile, </div>
+<div class="line">                        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
+<div class="line">                        <span class="keyword">const</span> <span class="keywordtype">char</span> *pchString,</div>
+<div class="line">                        COLOUR_INT tColour,</div>
+<div class="line">                        uint8_t chOpacity)</div>
+<div class="line">{</div>
+<div class="line">    </div>
+<div class="line"> </div>
+<div class="line">    <a class="code hl_struct" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY</div>
+<div class="line">                                .use_as__arm_2d_user_font_t</div>
+<div class="line">                                    .use_as__arm_2d_font_t</div>
+<div class="line">                                        .tCharSize;</div>
+<div class="line">    tTextSize.<a class="code hl_variable" href="group__gKernel.html#a1aeaa9f863c682c26e8070d575667842" title="width of an rectangular area">iWidth</a> *= strlen(pchString);</div>
+<div class="line"> </div>
+<div class="line">    arm_2d_container(ptTile, __button, ptRegion) {</div>
+<div class="line">        </div>
+<div class="line">        draw_round_corner_border(   &amp;__button, </div>
+<div class="line">                                    &amp;__button_canvas, </div>
+<div class="line">                                    GLCD_COLOR_BLACK, </div>
+<div class="line">                                    (arm_2d_border_opacity_t)</div>
+<div class="line">                                        {32, 32, 32, 32},</div>
+<div class="line">                                    (arm_2d_corner_opacity_t)</div>
+<div class="line">                                        {32, 32, 32, 32});</div>
+<div class="line">        </div>
+<div class="line">        arm_2d_align_centre(__button_canvas, tTextSize) {</div>
+<div class="line"> </div>
+<div class="line">            arm_lcd_text_set_target_framebuffer((<a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *)&amp;__button);</div>
+<div class="line">            arm_lcd_text_set_font((arm_2d_font_t *)&amp;ARM_2D_FONT_A4_DIGITS_ONLY);</div>
+<div class="line">            arm_lcd_text_set_draw_region(&amp;__centre_region);</div>
+<div class="line">            arm_lcd_text_set_colour(tColour, GLCD_COLOR_WHITE);</div>
+<div class="line">            arm_lcd_text_set_opacity(chOpacity);</div>
+<div class="line">            arm_lcd_printf(<span class="stringliteral">&quot;%s&quot;</span>, pchString);</div>
+<div class="line">            arm_lcd_text_set_opacity(255);</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">static</span></div>
+<div class="line">IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)</div>
+<div class="line">{</div>
+<div class="line">    </div>
+<div class="line">    arm_2d_canvas(ptTile, __top_canvas) {</div>
+<div class="line">        </div>
+<div class="line">        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);</div>
+<div class="line"> </div>
+<div class="line">        arm_2d_align_centre(__top_canvas, 100, 100 ) {</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">            <a class="code hl_function" href="group__gHelper.html#gacd0e2f64404ceef7412a3715c0bc47fd">arm_2d_helper_draw_box</a>( ptTile, </div>
+<div class="line">                                    &amp;__centre_region, </div>
+<div class="line">                                    1,</div>
+<div class="line">                                    GLCD_COLOR_RED, </div>
+<div class="line">                                    128);</div>
+<div class="line">                </div>
+<div class="line">            <a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);</div>
+<div class="line">            </div>
+<div class="line">            arm_2d_layout(__centre_region) {</div>
+<div class="line">                __item_line_horizontal(28,28) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;1&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">                __item_line_horizontal(28,28) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;2&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">                __item_line_horizontal(28,28) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;3&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">                __item_line_horizontal(28,28) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;4&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">            }</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcacf7b5f9e66c44d332ea46d05860d78d1" title="fsm complete">arm_fsm_rt_cpl</a>;</div>
+<div class="line">}</div>
+</div><!-- fragment --><p >If we want to clip the part out of the target area, as shown in <b>Figure 3-2</b>, we should use <code>arm_2d_container()</code>.</p>
+<p ><b>Figure 3-2 Using Container for Region Clipping</b></p>
+<p ><img src="../documentation/pictures/HowToUseLayoutAssistant3_1_2.png" alt="" class="inline"/></p>
+<p >The corresponding code is as follows:</p>
+<div class="fragment"><div class="line"><span class="keyword">static</span></div>
+<div class="line">IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)</div>
+<div class="line">{</div>
+<div class="line">    </div>
+<div class="line">    arm_2d_canvas(ptTile, __top_canvas) {</div>
+<div class="line">        </div>
+<div class="line">        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);</div>
+<div class="line"> </div>
+<div class="line">        arm_2d_align_centre(__top_canvas, 100, 100 ) {</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">            <a class="code hl_function" href="group__gHelper.html#gacd0e2f64404ceef7412a3715c0bc47fd">arm_2d_helper_draw_box</a>( ptTile, </div>
+<div class="line">                                    &amp;__centre_region, </div>
+<div class="line">                                    1,</div>
+<div class="line">                                    GLCD_COLOR_RED, </div>
+<div class="line">                                    128);</div>
+<div class="line">                </div>
+<div class="line">            <a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);</div>
+<div class="line">            </div>
+<div class="line">            arm_2d_container(ptTile, __panel, &amp;__centre_region) {</div>
+<div class="line">            </div>
+<div class="line">                arm_2d_layout(__panel_canvas) {</div>
+<div class="line">                    __item_line_horizontal(28,28) {</div>
+<div class="line">                        draw_buttom(&amp;__panel, &amp;__item_region, <span class="stringliteral">&quot;1&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                    }</div>
+<div class="line">                    __item_line_horizontal(28,28) {</div>
+<div class="line">                        draw_buttom(&amp;__panel, &amp;__item_region, <span class="stringliteral">&quot;2&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                    }</div>
+<div class="line">                    __item_line_horizontal(28,28) {</div>
+<div class="line">                        draw_buttom(&amp;__panel, &amp;__item_region, <span class="stringliteral">&quot;3&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                    }</div>
+<div class="line">                    __item_line_horizontal(28,28) {</div>
+<div class="line">                        draw_buttom(&amp;__panel, &amp;__item_region, <span class="stringliteral">&quot;4&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                    }</div>
+<div class="line">                }</div>
+<div class="line">            }</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcacf7b5f9e66c44d332ea46d05860d78d1" title="fsm complete">arm_fsm_rt_cpl</a>;</div>
+<div class="line">}</div>
+</div><!-- fragment --><p >In addition to the size information, <code>__item_line_horizontal()</code> can optionally accept 4 additional padding parameters for the left, right, top and bottom. The syntax is shown below:</p>
+<div class="fragment"><div class="line">arm_2d_layout(&lt;the target region: <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a>&gt;) {</div>
+<div class="line">    <span class="comment">/* Syntax 1 */</span></div>
+<div class="line">    __item_line_horizontal(&lt;width&gt;, &lt;height&gt; [, &lt;left&gt;, &lt;right&gt;, &lt;top&gt;, &lt;bottom&gt;]) {</div>
+<div class="line">        <span class="comment">/* you can use __item_region in the scope defined by the curly braces */</span></div>
+<div class="line">        ...</div>
+<div class="line">    }</div>
+<div class="line">    </div>
+<div class="line">    <span class="comment">/* Syntax 2 */</span></div>
+<div class="line">    __item_line_horizontal(&lt;size of the element: <a class="code hl_struct" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a>&gt; [, &lt;left&gt;, &lt;right&gt;, &lt;top&gt;, &lt;bottom&gt;]) {</div>
+<div class="line">        <span class="comment">/* you can use __item_region in the scope defined by the curly braces */</span></div>
+<div class="line">        ...</div>
+<div class="line">    }</div>
+<div class="line">    <span class="comment">/* more of the __item_line_horizontal segments */</span></div>
+<div class="line">    ...</div>
+<div class="line">    </div>
+<div class="line">}</div>
+</div><!-- fragment --><p ><b>Figure 3-3</b> shows the visual effects of four elements with different padding using the Horizontal Line Stream Layout.</p>
+<p ><b>Figure 3-3 Different Paddings among Items</b></p>
+<p ><img src="../documentation/pictures/HowToUseLayoutAssistant3_1_3.png" alt="" class="inline"/></p>
+<p >The corresonponding code is as follows:</p>
+<div class="fragment"><div class="line"><span class="keyword">static</span></div>
+<div class="line">IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)</div>
+<div class="line">{</div>
+<div class="line">    </div>
+<div class="line">    arm_2d_canvas(ptTile, __top_canvas) {</div>
+<div class="line">        </div>
+<div class="line">        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);</div>
+<div class="line"> </div>
+<div class="line">        arm_2d_align_centre(__top_canvas, 200, 50 ) {</div>
+<div class="line"> </div>
+<div class="line">            <a class="code hl_function" href="group__gHelper.html#gacd0e2f64404ceef7412a3715c0bc47fd">arm_2d_helper_draw_box</a>( ptTile, </div>
+<div class="line">                                    &amp;__centre_region, </div>
+<div class="line">                                    1,</div>
+<div class="line">                                    GLCD_COLOR_RED, </div>
+<div class="line">                                    128);</div>
+<div class="line">                </div>
+<div class="line">            <a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);</div>
+<div class="line">            </div>
+<div class="line">            arm_2d_container(ptTile, __panel, &amp;__centre_region) {</div>
+<div class="line">            </div>
+<div class="line">                arm_2d_layout(__panel_canvas) {</div>
+<div class="line">                    __item_line_horizontal(28,28) {</div>
+<div class="line">                        draw_buttom(&amp;__panel, &amp;__item_region, <span class="stringliteral">&quot;1&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                    }</div>
+<div class="line">                    __item_line_horizontal(28,28, 2, 2, 10, 10) {</div>
+<div class="line">                        draw_buttom(&amp;__panel, &amp;__item_region, <span class="stringliteral">&quot;2&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                    }</div>
+<div class="line">                    __item_line_horizontal(28,28, 10, 10, 20, 20 ) {</div>
+<div class="line">                        draw_buttom(&amp;__panel, &amp;__item_region, <span class="stringliteral">&quot;3&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                    }</div>
+<div class="line">                    __item_line_horizontal(28,28) {</div>
+<div class="line">                        draw_buttom(&amp;__panel, &amp;__item_region, <span class="stringliteral">&quot;4&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                    }</div>
+<div class="line">                }</div>
+<div class="line">            }</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcacf7b5f9e66c44d332ea46d05860d78d1" title="fsm complete">arm_fsm_rt_cpl</a>;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md81"></a>
+3.1.2 Vertical Line Stream</h3>
+<p >The Vertical Line Stream Layout is similar to the Horizontal Line Stream Layout described above. The only difference is the layout direction. The syntax is shown below:</p>
+<div class="fragment"><div class="line">arm_2d_layout(&lt;the target region: <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a>&gt;) {</div>
+<div class="line">    <span class="comment">/* Syntax 1 */</span></div>
+<div class="line">    __item_line_vertical(&lt;width&gt;, &lt;height&gt; [, &lt;left&gt;, &lt;right&gt;, &lt;top&gt;, &lt;bottom&gt;]) {</div>
+<div class="line">        <span class="comment">/* you can use __item_region in the scope defined by the curly braces */</span></div>
+<div class="line">        ...</div>
+<div class="line">    }</div>
+<div class="line">    </div>
+<div class="line">    <span class="comment">/* Syntax 2 */</span></div>
+<div class="line">    __item_line_vertical(&lt;size of the element: <a class="code hl_struct" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a>&gt; [, &lt;left&gt;, &lt;right&gt;, &lt;top&gt;, &lt;bottom&gt;]) {</div>
+<div class="line">        <span class="comment">/* you can use __item_region in the scope defined by the curly braces */</span></div>
+<div class="line">        ...</div>
+<div class="line">    }</div>
+<div class="line">    <span class="comment">/* more of the __item_line_vertical segments */</span></div>
+<div class="line">    ...</div>
+<div class="line">    </div>
+<div class="line">}</div>
+</div><!-- fragment --><p ><b>NOTE</b>:</p>
+<ol type="1">
+<li>Please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b> to the macro helper <code>arm_2d_layout()</code> as the target region but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b>.</li>
+<li>When using the <b>Syntax 2</b>, please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b> to the macro helper <code>__item_line_vertical()</code> as the size of the target element but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b>.</li>
+</ol>
+<p ><b>Figure 3-4</b> shows the visual effects of four elements with the same padding using the Vertical Line Stream Layout.</p>
+<p ><b>Figure 3-4 A Vertical Line Stream Layout Example with Padding</b></p>
+<p ><img src="../documentation/pictures/HowToUseLayoutAssistant3_1_4.png" alt="" class="inline"/></p>
+<p >The example code is shown below:</p>
+<div class="fragment"><div class="line"><span class="keyword">static</span></div>
+<div class="line">IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)</div>
+<div class="line">{</div>
+<div class="line">    </div>
+<div class="line">    arm_2d_canvas(ptTile, __top_canvas) {</div>
+<div class="line">        </div>
+<div class="line">        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);</div>
+<div class="line"> </div>
+<div class="line">        arm_2d_align_centre(__top_canvas, 120, 120 ) {</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">            <a class="code hl_function" href="group__gHelper.html#gacd0e2f64404ceef7412a3715c0bc47fd">arm_2d_helper_draw_box</a>( ptTile, </div>
+<div class="line">                                    &amp;__centre_region, </div>
+<div class="line">                                    1,</div>
+<div class="line">                                    GLCD_COLOR_RED, </div>
+<div class="line">                                    128);</div>
+<div class="line">                </div>
+<div class="line">            <a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);</div>
+<div class="line">            </div>
+<div class="line">            </div>
+<div class="line">            arm_2d_layout(__centre_region) {</div>
+<div class="line">                __item_line_vertical(28, 28, 2, 2, 2, 2) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;1&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">                __item_line_vertical(28, 28, 2, 2, 2, 2) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;2&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">                __item_line_vertical(28, 28, 2, 2, 2, 2 ) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;3&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">                __item_line_vertical(28, 28, 2, 2, 2, 2) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;4&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">            }</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcacf7b5f9e66c44d332ea46d05860d78d1" title="fsm complete">arm_fsm_rt_cpl</a>;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md82"></a>
+3.2 Stream Layout with Wrapping</h2>
+<p >Similar to the Line Stream Layout, the <b>Stream Layout</b> is a commonly used layout method, which places elements in a line and wraps before hitting the bundary of the target area.</p>
+<h3><a class="anchor" id="autotoc_md83"></a>
+3.2.1 Horizontal Stream</h3>
+<p >Horizontal placement is one of the common ways of the Stream Layout. Its syntax is as follows:</p>
+<div class="fragment"><div class="line">arm_2d_layout(&lt;the target region: <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a>&gt;) {</div>
+<div class="line">    <span class="comment">/* Syntax 1 */</span></div>
+<div class="line">    __item_horizontal(&lt;width&gt;, &lt;height&gt; [, &lt;left&gt;, &lt;right&gt;, &lt;top&gt;, &lt;bottom&gt;]) {</div>
+<div class="line">        <span class="comment">/* you can use __item_region in the scope defined by the curly braces */</span></div>
+<div class="line">        ...</div>
+<div class="line">    }</div>
+<div class="line">    </div>
+<div class="line">    <span class="comment">/* Syntax 2 */</span></div>
+<div class="line">    __item_horizontal(&lt;size of the element: <a class="code hl_struct" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a>&gt; [, &lt;left&gt;, &lt;right&gt;, &lt;top&gt;, &lt;bottom&gt;]) {</div>
+<div class="line">        <span class="comment">/* you can use __item_region in the scope defined by the curly braces */</span></div>
+<div class="line">        ...</div>
+<div class="line">    }</div>
+<div class="line">    <span class="comment">/* more of the __item_horizontal segments */</span></div>
+<div class="line">    ...</div>
+<div class="line">    </div>
+<div class="line">}</div>
+</div><!-- fragment --><p ><b>NOTE</b>:</p>
+<ol type="1">
+<li>Please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b> to the macro helper <code>arm_2d_layout()</code> as the target region but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b>.</li>
+<li>When using the <b>Syntax 2</b>, please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b> to the macro helper <code>__item_horizontal()</code> as the size of the target element but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b>.</li>
+</ol>
+<p ><b>Figure 3-5</b> shows a digits panel implemented with the Horizontal Stream Layout. Padding (2,2,2,2) is added to each element.</p>
+<p ><b>Figure 3-5 A Horizontal Stream Layout Example: Digits Panel</b></p>
+<p ><img src="../documentation/pictures/HowToUseLayoutAssistant3_2_1.png" alt="" class="inline"/></p>
+<p >The corresponding source code is as follows:</p>
+<div class="fragment"><div class="line"><span class="keyword">static</span></div>
+<div class="line">IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)</div>
+<div class="line">{</div>
+<div class="line">    </div>
+<div class="line">    arm_2d_canvas(ptTile, __top_canvas) {</div>
+<div class="line">        </div>
+<div class="line">        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);</div>
+<div class="line"> </div>
+<div class="line">        arm_2d_align_centre(__top_canvas, 96, 128 ) {</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">            <a class="code hl_function" href="group__gHelper.html#gacd0e2f64404ceef7412a3715c0bc47fd">arm_2d_helper_draw_box</a>( ptTile, </div>
+<div class="line">                                    &amp;__centre_region, </div>
+<div class="line">                                    1,</div>
+<div class="line">                                    GLCD_COLOR_RED, </div>
+<div class="line">                                    128);</div>
+<div class="line">                </div>
+<div class="line">            <a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);</div>
+<div class="line">            </div>
+<div class="line">            arm_2d_layout(__centre_region) {</div>
+<div class="line">                __item_horizontal(28,28,2,2,2,2) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;1&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">                __item_horizontal(28,28,2,2,2,2) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;2&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">                __item_horizontal(28,28,2,2,2,2) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;3&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">                __item_horizontal(28,28,2,2,2,2) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;4&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">                __item_horizontal(28,28,2,2,2,2) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;5&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">                __item_horizontal(28,28,2,2,2,2) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;6&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">                __item_horizontal(28,28,2,2,2,2) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;7&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">                __item_horizontal(28,28,2,2,2,2) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;8&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">                __item_horizontal(28,28,2,2,2,2) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;9&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">                __item_horizontal(28,28,34,34,2,2) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;0&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">            }</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcacf7b5f9e66c44d332ea46d05860d78d1" title="fsm complete">arm_fsm_rt_cpl</a>;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md84"></a>
+3.2.2 Vertical Stream</h3>
+<p >The <b>Vertical Stream Layout</b> is similar to the <b>Horizontal Stream Layout</b> described above. The only difference is the layout direction. The syntax is shown below:</p>
+<div class="fragment"><div class="line">arm_2d_layout(&lt;the target region: <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a>&gt;) {</div>
+<div class="line">    <span class="comment">/* Syntax 1 */</span></div>
+<div class="line">    __item_vertical(&lt;width&gt;, &lt;height&gt; [, &lt;left&gt;, &lt;right&gt;, &lt;top&gt;, &lt;bottom&gt;]) {</div>
+<div class="line">        <span class="comment">/* you can use __item_region in the scope defined by the curly braces */</span></div>
+<div class="line">        ...</div>
+<div class="line">    }</div>
+<div class="line">    </div>
+<div class="line">    <span class="comment">/* Syntax 2 */</span></div>
+<div class="line">    __item_vertical(&lt;size of the element: <a class="code hl_struct" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a>&gt; [, &lt;left&gt;, &lt;right&gt;, &lt;top&gt;, &lt;bottom&gt;]) {</div>
+<div class="line">        <span class="comment">/* you can use __item_region in the scope defined by the curly braces */</span></div>
+<div class="line">        ...</div>
+<div class="line">    }</div>
+<div class="line">    <span class="comment">/* more of the __item_vertical segments */</span></div>
+<div class="line">    ...</div>
+<div class="line">    </div>
+<div class="line">}</div>
+</div><!-- fragment --><p ><b>NOTE</b>:</p>
+<ol type="1">
+<li>Please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b> to the macro helper <code>arm_2d_layout()</code> as the target region but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b>.</li>
+<li>When using the <b>Syntax 2</b>, please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b> to the macro helper <code>__item_vertical()</code> as the size of the target element but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b>.</li>
+</ol>
+<p ><b>Figure 3-6</b> shows a digits panel similar to the one shown in <b>Figure 3-5</b>. It is implemented with the Vertical Stream Layout and paddings are added.</p>
+<p ><b>Figure 3-6 A Vertical Stream Layout Example: Digits Panel</b></p>
+<p ><img src="../documentation/pictures/HowToUseLayoutAssistant3_2_2.png" alt="" class="inline"/></p>
+<p >The example code is shown below:</p>
+<div class="fragment"><div class="line"><span class="keyword">static</span></div>
+<div class="line">IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)</div>
+<div class="line">{</div>
+<div class="line">    </div>
+<div class="line">    arm_2d_canvas(ptTile, __top_canvas) {</div>
+<div class="line">        </div>
+<div class="line">        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);</div>
+<div class="line"> </div>
+<div class="line">        arm_2d_align_centre(__top_canvas, 128, 96 ) {</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">            <a class="code hl_function" href="group__gHelper.html#gacd0e2f64404ceef7412a3715c0bc47fd">arm_2d_helper_draw_box</a>( ptTile, </div>
+<div class="line">                                    &amp;__centre_region, </div>
+<div class="line">                                    1,</div>
+<div class="line">                                    GLCD_COLOR_RED, </div>
+<div class="line">                                    128);</div>
+<div class="line">                </div>
+<div class="line">            <a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);</div>
+<div class="line">            </div>
+<div class="line">            arm_2d_layout(__centre_region) {</div>
+<div class="line">                __item_vertical(28,28,2,2,2,2) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;1&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">                __item_vertical(28,28,2,2,2,2) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;2&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">                __item_vertical(28,28,2,2,2,2) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;3&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">                __item_vertical(28,28,2,2,2,2) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;4&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">                __item_vertical(28,28,2,2,2,2) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;5&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">                __item_vertical(28,28,2,2,2,2) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;6&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">                __item_vertical(28,28,2,2,2,2) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;7&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">                __item_vertical(28,28,2,2,2,2) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;8&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">                __item_vertical(28,28,2,2,2,2) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;9&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">                __item_vertical(28,28,2,2,34,34) {</div>
+<div class="line">                    draw_buttom(ptTile, &amp;__item_region, <span class="stringliteral">&quot;0&quot;</span>, GLCD_COLOR_BLUE, 64);</div>
+<div class="line">                }</div>
+<div class="line">            }</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcacf7b5f9e66c44d332ea46d05860d78d1" title="fsm complete">arm_fsm_rt_cpl</a>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->
