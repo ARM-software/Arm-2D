@@ -183,7 +183,7 @@
   -->
 
     <components>
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cversion="1.1.2-dev" condition="CMSIS-DSP">
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cversion="1.1.2" condition="CMSIS-DSP">
           <description>A 2D image processing library for Cortex-M processors</description>
           <files>
             <file category="include"     name="Library/Include/" />
@@ -218,7 +218,7 @@
           
         </component>
         
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Alpha-Blending" Cversion="1.1.2-dev" condition="Arm-2D-CORE">
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Alpha-Blending" Cversion="1.1.2" condition="Arm-2D-CORE">
           <description>Alpha-blending related APIs for Arm-2D</description>
           <files>
             <file category="sourceC"     name="Library/Source/arm_2d_alpha_blending.c" />
@@ -230,7 +230,7 @@
           </RTE_Components_h>
         </component>
         
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Transform" Cversion="1.1.2-dev" condition="Arm-2D-CORE">
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Transform" Cversion="1.1.2" condition="Arm-2D-CORE">
           <description>Transform (rotation and zooming)</description>
           <files>
             <file category="sourceC"     name="Library/Source/arm_2d_transform.c"           condition="CMSIS-DSP"/>
