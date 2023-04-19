@@ -6,7 +6,7 @@
 
 ## Features
 
-#### In this version (ver1.1.2)
+#### In this version (ver1.1.3-dev)
 
 The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly used in **Deep Embedded Display system**. The supported features include but not limited to:
 
@@ -122,7 +122,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
       - **Those algorithms are usually unusable if you take them out of arm-2d** because the data are validated in the Frontend, and tasks are simplified in the Frontend also. 
       - **The linker will remove unused low-level implementations.** 
 
-- **Arm-2D always keeps backward compatibility**
+- **Arm-2D always keeps backward compatiblity**
   - Older APIs will still be usable in newer versions (even if they are marked as deprecated)
   - Arm-2D available for ALL Cortex-M processors
 
@@ -280,14 +280,14 @@ There is no public 2D image processing benchmark available for microcontrollers.
 
 ### 3.1 "I am a library user, I only care about how to use the library"
 
-- For library users, **ALL** useful information, i.e. type definitions, macros, prototypes of functions etc., are stored in header files which have **NO** double underscores as their prefixes. We call those header files the **PUBLIC HEADER FILES**. 
+- For library users, **ALL** useful information, i.e. type definitions, macros, prototypes of functions etc., are stored in header files which have **NO** double under-scope as their prefixes. We call those header files the **PUBLIC HEADER FILES**. 
 - Please **ONLY** use APIs, macros and types that are defined in the public header files. 
 
 **Figure 3-1 Private and Public Files** 
 
 ![](./documentation/pictures/TopReadme_3_1.png) 
 
-- Any symbol, e.g. file name, function name, macro name, type name etc., having a double underscores as the prefix is considered as **PRIVATE** to the library. You should save your time from touching them. 
+- Any symbol, e.g. file name, function name, macro name, type name etc., having a double under-scope as the prefix is considered as **PRIVATE** to the library. You should save your time from touching them. 
 
 - The library is designed with the philosophy that Users are free to use anything in public header files and should not touch anything marked implicitly or explicitly as private. 
 
