@@ -1,4 +1,4 @@
-#! armclang -E --target=arm-arm-none-eabi -mcpu=cortex-m33 -xc
+#! armclang -E --target=arm-arm-none-eabi -mcpu=cortex-m85 -xc
 ; command above MUST be in first line (no comment above!)
 
 /*
@@ -11,17 +11,8 @@
 ;   <o1> Flash Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ; </h>
  *----------------------------------------------------------------------------*/
-#define __ROM_BASE     0x10000000
-#define __ROM_SIZE     0x00080000
-
-/*--------------------- Flash Configuration ----------------------------------
-; <h> Flash Configuration
-;   <o0> Flash1 Base Address <0x0-0xFFFFFFFF:8>
-;   <o1> Flash1 Size (in Bytes) <0x0-0xFFFFFFFF:8>
-; </h>
- *----------------------------------------------------------------------------*/
-#define __ROM1_BASE    0x11000000
-#define __ROM1_SIZE    0x00100000
+#define __ROM_BASE     0x01000000
+#define __ROM_SIZE     0x00200000
 
 /*--------------------- Embedded RAM Configuration ---------------------------
 ; <h> RAM Configuration
@@ -29,8 +20,8 @@
 ;   <o1> RAM Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ; </h>
  *----------------------------------------------------------------------------*/
-#define __RAM_BASE     0x30000000
-#define __RAM_SIZE     0x00080000
+#define __RAM_BASE     0x21000000
+#define __RAM_SIZE     0x00200000
 
 #define __HEAP_BASE     +0
 
@@ -50,6 +41,7 @@ LR_ROM __ROM_BASE __ROM_SIZE  {                                                 
         *.o (RESET, +First)
         * (InRoot$$Sections)
         ;   *(Veneer$$CMSE)                                                     ; uncomment for secure applications
+        * (+RO)
         ;   * (+XO)
     }
 
@@ -67,14 +59,8 @@ LR_ROM __ROM_BASE __ROM_SIZE  {                                                 
 
     ARM_LIB_HEAP  __HEAP_BASE ALIGN 8 EMPTY __HEAP_SIZE  {                      ; Reserve empty region for heap
     }
-  
+
     PERIPHERAL_UART0 0x41303000 UNINIT {
         *(:gdef:UART0)
-    }
-}
-
-LR_ROM1 __ROM1_BASE __ROM1_SIZE {
-    ER_ROM1 __ROM1_BASE __ROM1_SIZE {
-        * (+RO)
     }
 }
