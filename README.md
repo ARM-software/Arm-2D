@@ -2,6 +2,40 @@
 
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/ARM-software/Arm-2D?include_prereleases) ![GitHub](https://img.shields.io/github/license/ARM-software/Arm-2D)
 
+## Overview
+
+
+
+
+
+
+
+## Key Messages for You
+
+- **Arm-2D always keeps light-weight**
+  - Arm-2D keeps an Ultra-low memory footprint for both ROM and RAM
+
+  - Arm-2D uses the commonly available Linker feature to remove unused functions and data whenever possible.
+    - Only used functions cost your precious memory.
+
+    - Please use feature-specific APIs whenever possible. For example, if you want to copy an rgb565 picture to a target tile with a source mask without any mirroring, please call `arm_2dp_rgb565_copy_with_src_mask_only() ` rather than the generic one, i.e. `arm_2dp_rgb565_copy_with_src_mask()` which takes a mirroring mode as a parameter and keeps all low-level implementations of all possible mirroring modes. 
+
+- **Arm-2D always keeps a flat and straightforward framework, i.e. API Wrappers, Frontend and Backend.**
+
+  - API wrappers take user input and generate task descriptors for the following stages.
+  - Frontend is responsible for the commonly used and necessary services, 
+    - for example, region calculation, region clipping, pre-mirroring etc. So the Backend will receive simple, validated and detailed tasks which are friendly for hardware accelerators. 
+    - **The Frontend is small.** 
+  - The Backend is the place of Low-level implementations for specific 2D processing algorithms. 
+    - **Those algorithms are usually unusable if you take them out of arm-2d** because the data are validated in the Frontend, and tasks are simplified in the Frontend also. 
+    - **The linker will remove unused low-level implementations.** 
+
+- **Arm-2D always keeps backward compatiblity**
+  - Older APIs will still be usable in newer versions (even if they are marked as deprecated)
+  - Arm-2D available for ALL Cortex-M processors
+
+
+
 
 
 ## Features
@@ -10,7 +44,6 @@
 
 The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly used in **Deep Embedded Display system**. The supported features include but not limited to:
 
-- **Supports Accelerating LVGL** (**v8.3.0** or newer)
 - **CMSIS-Pack is available.**
 - **Alpha-Blending** / **Masks**
   - With or without Colour-Keying
@@ -79,70 +112,30 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
     - Stream Layout (with wrapping), e.g. `__item_horizontal` and `__item_vertical`
 
   - **[new]** RTOS Helper Services for CMSIS-RTOS2 and RT-Thread
-  
+
   - Templates
-  
+
     - Provide templates for user controls and scenes. 
     - **[new]** Scene templates for Meter and Watch
     - **[new]** Provide a template for adding new RTOS support.
-  
+
   - Other Helper services
-  
+
     - **[new]** A dedicated helper service for transform operations
       - Provide dynamic dirty region tracking
       - Double-buffered Angle and Scale updating
+
+- **Ready and Welcome 3rd party adoption**
+
+  - Successful story: accelerating LVGL as soft-GPU when Helium is ready
+
   
-    
 
 ### New Features Planned in the Future
 
 - Image Filters, e.g. Generic Anti-aliasing algorithms
 - Stretch and Perspective Transform
 - Supports DMAC-350
-
-
-
-## Key Messages for You
-
-- **Arm-2D always keeps light-weight**
-    - Arm-2D keeps an Ultra-low memory footprint for both ROM and RAM
-    
-    - Arm-2D uses the commonly available Linker feature to remove unused functions and data whenever possible.
-      - Only used functions cost your precious memory.
-    
-      - Please use feature-specific APIs whenever possible. For example, if you want to copy an rgb565 picture to a target tile with a source mask without any mirroring, please call `arm_2dp_rgb565_copy_with_src_mask_only() ` rather than the generic one, i.e. `arm_2dp_rgb565_copy_with_src_mask()` which takes a mirroring mode as a parameter and keeps all low-level implementations of all possible mirroring modes. 
-    
-- **Arm-2D always keeps a flat and straightforward framework, i.e. API Wrappers, Frontend and Backend.**
-
-    - API wrappers take user input and generate task descriptors for the following stages.
-    - Frontend is responsible for the commonly used and necessary services, 
-      - for example, region calculation, region clipping, pre-mirroring etc. So the Backend will receive simple, validated and detailed tasks which are friendly for hardware accelerators. 
-      - **The Frontend is small.** 
-    - The Backend is the place of Low-level implementations for specific 2D processing algorithms. 
-      - **Those algorithms are usually unusable if you take them out of arm-2d** because the data are validated in the Frontend, and tasks are simplified in the Frontend also. 
-      - **The linker will remove unused low-level implementations.** 
-
-- **Arm-2D always keeps backward compatiblity**
-  - Older APIs will still be usable in newer versions (even if they are marked as deprecated)
-  - Arm-2D available for ALL Cortex-M processors
-
-
-
-## Documentation
-
-| Name                                                         | Description                                                  | Location                                                     |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| API Manual                                                   | An API manual generated by Doxygen                           | * ![GitHub release](https://img.shields.io/github/v/release/ARM-software/Arm-2D) : [Documentation for latest official release](https://arm-software.github.io/Arm-2D/latest) <br/>* [Documentation for latest development release](https://arm-software.github.io/Arm-2D/main) |
-| **README.md**                                                | It is the document that you are reading. It provides basic information and guidance for the arm-2d library. | (root)                                                       |
-| **[how_to_deploy_the_arm_2d_library.md](./documentation/how_to_deploy_the_arm_2d_library.md)** | A step by step guide that helps you to deploy the library to your existing or new projects. | documentation                                                |
-| **[introduction.md](./documentation/introduction.md)**       | A relatively detailed introduction for the library, including basic concepts, programmers' mode etc. | documentation                                                |
-| **[new]** **[how_to_use_layout_assistant.md](/documentation/how_to_use_layout_assistant.md)** | A detailed document introduce the layout assistant helper service. | Documentation                                                |
-| **[how_to_use_tile_operations.md](./documentation/how_to_use_tile_operations.md)** | A detailed document elaborates the APIs dedicated to basic tile operations in the arm-2d library. | documentation                                                |
-| **how_to_use_alpha_blending_operations.md**                  | A detailed document elaborates the APIs dedicated to alpha-blending services provided by the arm-2d library. | documentation                                                |
-| **how_to_use_conversion_operations.md**                      | A detailed document elaborates the APIs dedicated to colour space conversion services provided by the arm-2d library. | documentation                                                |
-| **how_to_use_drawing_operations.md**                         | A detailed document elaborates the APIs that provide basic point-drawing and colour-filling services in the arm-2d library. | documentation                                                |
-
-
 
 
 
@@ -179,7 +172,9 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 ![The Hierarchy of a Typical Embedded GUI System](./documentation/pictures/TopReadme_1_2b.png) 
 
 
-### 1.3 The Platform
+## 2 The Platform and Dependency
+
+### 2.1 Processors and Hardware
 
 **The library is targeting ALL Cortex-M processors with/without various hardware 2D image accelerators:**
 
@@ -196,7 +191,7 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 
 
 
-### 1.4 Dependency
+### 2.2 Dependency
 
 - The library depends on **CMSIS 5.7.0 and above** (If you want to use Arm-2D with Cortex-M55, CMSIS 5.8.0 is required). 
 - The library is developed with the **C11** standard and depends on some **widely adopted GCC extensions**.
@@ -206,9 +201,9 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 
 
 
-### 1.5 Examples, Benchmark and Templates
+## 3 Examples, Benchmark and Templates
 
-#### 1.5.1 Summary
+### 3.1 Summary
 
 | Projects                           | Description                                                  | Folder                                      | Note                   |
 | ---------------------------------- | ------------------------------------------------------------ | ------------------------------------------- | ---------------------- |
@@ -219,7 +214,7 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 
 
 
-#### 1.5.2 Benchmark
+### 3.2 Benchmark
 
 There is no public 2D image processing benchmark available for microcontrollers. To facilitate the library development and optimization,  we overcome this problem with following methods:
 
@@ -261,139 +256,6 @@ There is no public 2D image processing benchmark available for microcontrollers.
 
 
 
-## 2 Folder Hierarchy
-
-| Folder and File                  | Type    | Description                                                  |
-| :------------------------------- | ------- | ------------------------------------------------------------ |
-| **Library**                      | Folder  | This folder contains the source files and header files of the library. |
-| **Helper**                       | Folder  | This folder contains the source files and header files of helper functions / services. |
-| documentation                    | Folder  | This folder contains all the documents.                      |
-| examples                         | Folder  | This folder contains all the example code / projects.        |
-| README                           | .md     | The README.md you are currently reading.                     |
-| how_to_deploy_the_arm_2d_library | .md     | A step by step guidance helping you to deploy the Arm-2D library to your projects. |
-| LICENSE                          | License | The Apache 2.0 License                                       |
-| tools                            | Folder  | This folder contains some useful utilities for using the library. For example, img2c.py is a python script that convert a specified picture into the tile data structure. |
-
-
-
-## 3 Tips For Exploring the Library
-
-### 3.1 "I am a library user, I only care about how to use the library"
-
-- For library users, **ALL** useful information, i.e. type definitions, macros, prototypes of functions etc., are stored in header files which have **NO** double under-scope as their prefixes. We call those header files the **PUBLIC HEADER FILES**. 
-- Please **ONLY** use APIs, macros and types that are defined in the public header files. 
-
-**Figure 3-1 Private and Public Files** 
-
-![](./documentation/pictures/TopReadme_3_1.png) 
-
-- Any symbol, e.g. file name, function name, macro name, type name etc., having a double under-scope as the prefix is considered as **PRIVATE** to the library. You should save your time from touching them. 
-
-- The library is designed with the philosophy that Users are free to use anything in public header files and should not touch anything marked implicitly or explicitly as private. 
-
-- Despite which processor you use, during the compilation, all C source files are safe to be added to the compilation (and we highly recommend you to do this for simplicity reason). For example, when you use Cortex-M4, which doesn't support Helium extension (introduced by Armv8.1-M architecture and first implemented by the Cortex-M55 processor), it is OK to include `arm_2d_helium.c` in the compilation process, as the C source files are constructed with environment detection in pre-processing phase. 
-
-- In your application, including `arm_2d.h` is sufficient to get all the services and APIs ready for you. 
-
-- Make sure that the library is initialised by calling `arm_2d_init()` before using any of the services. 
-
-  **NOTE**: 
-
-  1. Feature configuration macros are checked by `arm_2d_feature.h`. For the current stage of the library, please **DO NOT** override those feature configuration macros.
-  
-  
-
-### 3.2 "I am interested in the implementation"
-
-- We apologise that at the current stage (it's the early stage, as you can see), there is no sufficient guidance or documents about:
-  - How the library is implemented
-  - How to contribute
-  - How to add new features
-  - What's the design principles behind the code
-  - What's the structure of the design in details
-- Some design considerations:
-  - The library supports **Arm Compiler 5/6**, **GCC**, **LLVM** and **IAR**.
-  - The library supports **ALL** Cortex-M processors. There should be no problem for working with existing Cortex-M processors, i.e. **Cortex-M0/M0+/M1/M3/M4/M7/M23/M33/Star-MC1/M35P/M55/M85**. If you find any issue, please feel free to let us know. 
-  - The library is designed with some **OOPC** (Object-Oriented Programming with ANSI-C) methodologies. And the bottom line is that any methods and tricks adopted in this library should come with no or very little cost. 
-- This library is compliant with **C11** standard and uses some **widely accepted GCC extensions**:
-  - [Macros with a Variable Number of Arguments](https://gcc.gnu.org/onlinedocs/gcc/Variadic-Macros.html#Variadic-Macros) 
-  - [ ***\_\_alignof\_\_()*** ](https://gcc.gnu.org/onlinedocs/gcc/Alignment.html#Alignment) 
-  - [Unnamed Structure and Union Fields](https://gcc.gnu.org/onlinedocs/gcc/Unnamed-Fields.html)
-  - [Statements and Declarations in Expressions](https://gcc.gnu.org/onlinedocs/gcc/Statement-Exprs.html#Statement-Exprs)
-- Some of the definitions are written with the support of the **Microsoft Extensions** in mind \( `-fms-extensions` \), but **the library never depends on it**. This means that if programmers enable the support of the Microsoft Extensions in their project, they can benefit from it. 
-- This library follows ***"Using Extensions to replace Modifications"*** principle
-  - Keywords `__WEAK` and `__OVERRIDE_WEAK` are introduced for default functions and extensions; it is similar to the concept of "virtual functions" and "override functions" in C#. 
-    - `arm_2d_async.c` is used to override some infrastructure functions in `arm_2d.c` to support asynchronous mode in the programmers' mode.  
-    - ***arm_2d_helium.c*** is used to override some default software algorithm implementations across the library. 
-  - Supports for hardware accelerators (both from Arm and 3rd-parties) should be added in the same manner in the future. 
-    
-    - Override the target low level IO defined with `def_low_lv_io()` macro that originally defined in `arm_2d_op_table.c` to add your own version of algorithms and hardware accelerations. For example, if you want to add alpha-blending support for RGB565 using your 2D hardware accelerator, you should do the following steps:
-    
-      1. In one of your own C source code, override the definition of `__ARM_2D_IO_COPY_WITH_OPACITY_RGB565`
-    
-         ```c
-         //! PLEASE add following three lines in your hardware adapter source code
-         #define __ARM_2D_IMPL__
-         #include "arm_2d.h"
-         #include "__arm_2d_impl.h"
-         
-         ...
-         
-         __OVERRIDE_WEAK
-         def_low_lv_io(__ARM_2D_IO_COPY_WITH_OPACITY_RGB565, 
-                         __arm_2d_rgb565_sw_tile_copy_with_opacity,
-                         __arm_2d_rgb565_my_hw_tile_copy_with_opacity);
-         ```
-    
-      2. Copy the function body of `__arm_2d_rgb565_sw_tile_copy_with_opacity()` to your source code as a template of the ***hardware adaptor*** and rename it as `__arm_2d_rgb565_my_hw_tile_copy_with_opacity()`
-    
-      3. Modify ***\_\_arm_2d_rgb565_my_hw_tile_copy_with_opacity*** to use your own hardware accelerator. 
-    
-      4. Based on the arguments passed to the function and the capability of your 2D accelerator, you can:
-    
-         - return `ARM_2D_ERR_NOT_SUPPORT` if the hardware isn't capable to do what is requested.
-         - return `arm_fsm_rt_cpl` if the task is done immediately and no need to wait.
-         - return `arm_fsm_rt_async` if the task is done asynchronously and later report to arm-2d by calling function `__arm_2d_notify_sub_task_cpl()`. 
-    
-      ***NOTE***: The Arm-2D pipeline will keep issuing tasks to your ***hardware adaptor***, please quickly check whether the hardware is capable of doing the work or not, and then add the task (an `__arm_2d_sub_task_t` object) to a list in ***First-In-First-Out*** manner if your hardware adaptor decides to keep it. After that, your hardware accelerator can fetch tasks one by one.  
-
-``````c
-typedef struct __arm_2d_sub_task_t __arm_2d_sub_task_t;
-
-
-typedef arm_fsm_rt_t __arm_2d_io_func_t(__arm_2d_sub_task_t *ptTask);
-
-typedef struct __arm_2d_low_level_io_t {
-    __arm_2d_io_func_t *SW;
-    __arm_2d_io_func_t *HW;
-} __arm_2d_low_level_io_t;
-
-...
-
-/*----------------------------------------------------------------------------*
- * Low Level IO Interfaces                                                    *
- *----------------------------------------------------------------------------*/
-__WEAK
-def_low_lv_io(__ARM_2D_IO_COPY_C8BIT, __arm_2d_c8bit_sw_tile_copy);
-__WEAK
-def_low_lv_io(__ARM_2D_IO_COPY_RGB16, __arm_2d_rgb16_sw_tile_copy);
-__WEAK
-def_low_lv_io(__ARM_2D_IO_COPY_RGB32, __arm_2d_rgb32_sw_tile_copy);
-
-...
-
-__WEAK
-def_low_lv_io(__ARM_2D_IO_FILL_ONLY_C8BIT, __arm_2d_c8bit_sw_tile_fill_only);
-__WEAK
-def_low_lv_io(__ARM_2D_IO_FILL_ONLY_RGB16, __arm_2d_rgb16_sw_tile_fill_only);
-__WEAK
-def_low_lv_io(__ARM_2D_IO_FILL_ONLY_RGB32, __arm_2d_rgb32_sw_tile_fill_only);
-
-...
-``````
-
-
-
 ## 4 Limitations
 
 ### 4.1 The Generic Limitations
@@ -420,33 +282,42 @@ def_low_lv_io(__ARM_2D_IO_FILL_ONLY_RGB32, __arm_2d_rgb32_sw_tile_fill_only);
   - Feel free to try the library on your own devices. The library depends on no specific peripheral. 
 - Most of the example projects are created in MDK.
 
-## 5 Contributions and Pull Requests
 
-Contributions are accepted under Apache 2.0. Only submit contributions where you have authored all of the code.
 
-### 5.1 Issues and Labels
+## 5 Folder Hierarchy
 
-Please feel free to raise an [issue on GitHub](https://github.com/ARM-software/Arm-2D/issues) to report misbehavior (i.e. bugs) or start discussions about enhancements. This is your best way to interact directly with the maintenance team and the community. We encourage you to append implementation suggestions as this helps to decrease the workload of the very limited maintenance team.
-
-We will be monitoring and responding to issues as best we can. Please attempt to avoid filing duplicates of open or closed items when possible. In the spirit of openness we will be tagging issues with the following:
-
-| Label                     | Description                                                  |      |
-| ------------------------- | ------------------------------------------------------------ | ---- |
-| **bug**                   | We consider this issue to be a bug that will be investigated. |      |
-| **wontfix**               | We appreciate this issue but decided not to change the current behavior. |      |
-| **enhancement**           | Denotes something that will be implemented soon.             |      |
-| **future**                | Denotes something not yet schedule for implementation.       |      |
-| **out-of-scope**          | We consider this issue loosely related to Arm-2D. It might by implemented outside of Arm-2D. Let us know about your work. |      |
-| **question**              | We have further questions to this issue. Please review and provide feedback. |      |
-| **documentation**         | This issue is a documentation flaw that will be improved in future. |      |
-| **review**                | This issue is under review. Please be patient.               |      |
-| **DONE**                  | We consider this issue as resolved - please review and close it. In case of no further activity this issues will be closed after a week. |      |
-| **duplicate**             | This issue is already addressed elsewhere, see comment with provided references. |      |
-| **Important Information** | We provide essential information regarding planned or resolved major enhancements. |      |
+| Folder and File | Type    | Description                                                  |
+| :-------------- | ------- | ------------------------------------------------------------ |
+| **Library**     | Folder  | This folder contains the source files and header files of the library. |
+| **Helper**      | Folder  | This folder contains the source files and header files of helper functions / services. |
+| documentation   | Folder  | This folder contains all the documents.                      |
+| examples        | Folder  | This folder contains all the examples, controls and templates etc. |
+| README          | .md     | The README.md you are currently reading.                     |
+| LICENSE         | License | The Apache 2.0 License                                       |
+| tools           | Folder  | This folder contains useful utilities for using the library. For example, img2c.py is a python script that converts specified pictures into the arm2-d tile data structures. |
 
 
 
-## 6 Feedback
+## 6 Documentation
+
+| Name                                                         | Description                                                  | Location                                                     |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| API Manual                                                   | An API manual generated by Doxygen                           | * ![GitHub release](https://img.shields.io/github/v/release/ARM-software/Arm-2D) : [Documentation for latest official release](https://arm-software.github.io/Arm-2D/latest) <br/>* [Documentation for latest development release](https://arm-software.github.io/Arm-2D/main) |
+| **README.md**                                                | It is the document that you are reading. It provides basic information and guidance for the arm-2d library. | (root)                                                       |
+| [**getting_started_as_an_application_designer.md**](./documentation/getting started as an application designer.md) | A guidance for GUI application designers.                    | documentation                                                |
+| [**getting_started_as_an_professional_user**](./documentation/getting started as an professional user.md) | A guidance for professional users.                           | documentation                                                |
+| **[how_to_deploy_the_arm_2d_library.md](./documentation/how_to_deploy_the_arm_2d_library.md)** | A step by step guide that helps you to deploy the library to your existing or new projects. | documentation                                                |
+| **[introduction.md](./documentation/introduction.md)**       | A relatively detailed introduction for the library, including basic concepts, programmers' mode etc. | documentation                                                |
+| **[how_to_use_layout_assistant.md](/documentation/how_to_use_layout_assistant.md)** | A detailed document introduce the layout assistant helper service. | Documentation                                                |
+| **[how_to_use_tile_operations.md](./documentation/how_to_use_tile_operations.md)** | A detailed document elaborates the APIs dedicated to basic tile operations in the arm-2d library. | documentation                                                |
+| **how_to_use_alpha_blending_operations.md**                  | A detailed document elaborates the APIs dedicated to alpha-blending services provided by the arm-2d library. | documentation                                                |
+| **how_to_use_conversion_operations.md**                      | A detailed document elaborates the APIs dedicated to colour space conversion services provided by the arm-2d library. | documentation                                                |
+| **how_to_use_drawing_operations.md**                         | A detailed document elaborates the APIs that provide basic point-drawing and colour-filling services in the arm-2d library. | documentation                                                |
+| **[how_to_contribute](./documentation/contribution.md)**     | A guidance for contribution.                                 | documentation                                                |
+
+
+
+## 7 Feedback
 
 As mentioned before, this project aims to explore and demonstrate the possibilities of delivering modern GUI using low-cost and resource constraint micro-controllers. We expect that arm-2d could inspire more similar initiatives and engineering practices. Hence, your feedback and thoughts are precious to us. 
 
@@ -474,4 +345,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-11 April 2023
+27 April 2023

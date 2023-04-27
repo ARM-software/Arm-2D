@@ -872,11 +872,14 @@ WARN_LOGFILE           =
 # Note: If this tag is empty the current directory is searched.
 
 INPUT                  = ../README.md \
+                         ./getting started as an application designer.md \
+                         ./getting started as an professional user.md \
                          ./how_to_deploy_the_arm_2d_library.md \
                          ./introduction.md \
                          ./how_to_use_layout_assistant.md \
                          ./how_to_use_tile_operations.md \
                          ../Library/Include/README.md \
+                         ./contribution.md \
                          ../Library/Include/arm_2d_utils.h \
                          ../Library/Include/arm_2d_types.h \
                          ../Library/Include/arm_2d_transform.h \

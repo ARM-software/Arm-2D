@@ -49,7 +49,7 @@ While differentiation in hardware brings benefits to end-users, it also inevitab
 
 In an ideal condition, chip manufacturers only need to implement arm-2d compliant drivers for their hardware accelerators, and this is sufficient to get support from the mainstream GUI stacks. 
 
-#### 1.2.3 Embedded Software Developers
+#### 1.2.3 Embedded Application Designers
 
 Most embedded software developers use devices with constrained resources. A typical system has less than 64KB FLASH and 4~32K SRAM. As a reference, a standard low-cost serial LCD (320*240 resolution and 65K colour) requires 150KB RAM for the display buffer, which is unaffordable. 
 

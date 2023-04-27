@@ -4,7 +4,7 @@ This document describes how to deploy the **Arm-2D** library to your existing MD
 
 
 
-## 1 How to Get the Arm-2D
+## 1 How to get the Arm-2D
 
 There are three methods to get Arm-2D:
 
@@ -32,73 +32,9 @@ There are three methods to get Arm-2D:
 
 ## 2 How to Deploy Arm-2D
 
-### 2.1 Generic Method (Using MDK as an example)
-
-1. Copy the `Arm-2D` folder to your target project directory.
-
-2. Open the MDK project, add a group in the project viewer and give it a name, for example, `Arm-2D`.
-
-3. Add **ALL** the C source code in the `Library/Source` directory to the Arm-2d group of the project.
-
-4. For ease of use, please add **ALL** header files in the `Library/Include` directory that **have no double-underscores-prefix in their name** to the Arm-2d group of the project.
-
-   **Figure 2-1 A typical project view with Arm-2D Group**
-
-   ![](./pictures/HowToDeploy2_1.png) 
 
 
-5. Add a search path to MDK project configuration for the Arm-2D header files as shown in **Figure 2-2**:
-
-   **Figure 2-2 Add search path to the project configuration for Arm-2D header files**
-
-   ![Check the CMSIS support](./pictures/HowToDeploy2_2.png) 
-
-6. Enable **C11** and **GNU extension** support in C/C++(AC6) configurations:
-
-   **Figure 2-3 Enable "gnu11" in Arm Compiler 6** 
-
-   ![image-20210323171224685](./pictures/HowToDeploy2_3.png) 
-
-7. Arm-2D relies on **CMSIS 5.7.0** and above (If you want to use Arm-2D with Cortex-M55, you need **CMSIS 5.8.0**). Please check the **RTE configuration** and ensure proper CMSIS support has been added to the project (as shown in **Figure 2-4** the **CORE** and **DSP** are required).
-
-   **Figure 2-4 Check the CMSIS support in the RTE configuration window**
-
-   ![Check the CMSIS support](./pictures/HowToDeploy2_4.png) 
-
-
-8. Copy the header file `arm_2d_cfg.h` in `Library\Include\template` to you application folder and set the include search path for this header file. You can find arm-2d configurations in this header file. 
-
-
-9. Include the header file `arm_2d.h` in your source code where you want to use the library:
-
-```c
-   #include "arm_2d.h"
-```
-
-10. Initialize Arm-2D by calling function `arm_2d_init()` :
-
-```c
-static void system_init(void)
-{
-    ...
-    arm_2d_init();
-    ...
-}
-```
-
-
-
-**Figure 2-5 A Typical Configuration for A MDK project**
-
-![](./pictures/HowToDeploy2_5.png) 
-
-**NOTE:**
-
-1. The option "Short enums/wchar" is **NOT** required by Arm-2D. This option is enabled by default if you create a new MDK project using Arm Compiler 6.
-
-
-
-### 2.2 Deploy Using CMSIS-Pack
+### 2.1 Deploy Using CMSIS-Pack in MDK
 
 1. Open the Run-Time Environment configuration dialog using menu "Project->Manage->Run-Time Environment" as shown in **Figure 2-6**.
 
