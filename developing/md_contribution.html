@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Arm-2D: Usage and Description</title>
+<title>Arm-2D: How to Contribute</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -85,7 +85,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('pages.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('md_contribution.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -103,21 +103,45 @@ $(document).ready(function(){initNavTree('pages.html',''); initResizable(); });
 </iframe>
 </div>
 
-<div class="header">
-  <div class="headertitle"><div class="title">Usage and Description</div></div>
+<div><div class="header">
+  <div class="headertitle"><div class="title">How to Contribute </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock">Here is a list of all related documentation pages:</div><div class="directory">
-<table class="directory">
-<tr id="row_0_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="deploy.html" target="_self">How to Deploy the Arm-2D Library</a></td><td class="desc"></td></tr>
-<tr id="row_1_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="intro.html" target="_self">Introduction for Arm-2D</a></td><td class="desc"></td></tr>
-<tr id="row_2_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_how_to_use_layout_assistant.html" target="_self">How to Use Layout Assistant</a></td><td class="desc"></td></tr>
-<tr id="row_3_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="use_tile.html" target="_self">How to Use Tile Operations</a></td><td class="desc"></td></tr>
-<tr id="row_4_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="headers.html" target="_self">Header Files Summary</a></td><td class="desc"></td></tr>
-<tr id="row_5_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_contribution.html" target="_self">How to Contribute</a></td><td class="desc"></td></tr>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md109"></a>
+1 Contributions and Pull Requests</h1>
+<p >Contributions are accepted under Apache 2.0. Only submit contributions where you have authored all of the code.</p>
+<h2><a class="anchor" id="autotoc_md110"></a>
+1.1 Issues and Labels</h2>
+<p >Please feel free to raise an <a href="https://github.com/ARM-software/Arm-2D/issues">issue on GitHub</a> to report misbehavior (i.e. bugs) or start discussions about enhancements. This is your best way to interact directly with the maintenance team and the community. We encourage you to append implementation suggestions as this helps to decrease the workload of the very limited maintenance team.</p>
+<p >We will be monitoring and responding to issues as best we can. Please attempt to avoid filing duplicates of open or closed items when possible. In the spirit of openness we will be tagging issues with the following:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Label   </th><th class="markdownTableHeadNone">Description   </th><th class="markdownTableHeadNone"></th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>bug</b>   </td><td class="markdownTableBodyNone">We consider this issue to be a bug that will be investigated.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>wontfix</b>   </td><td class="markdownTableBodyNone">We appreciate this issue but decided not to change the current behavior.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>enhancement</b>   </td><td class="markdownTableBodyNone">Denotes something that will be implemented soon.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>future</b>   </td><td class="markdownTableBodyNone">Denotes something not yet schedule for implementation.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>out-of-scope</b>   </td><td class="markdownTableBodyNone">We consider this issue loosely related to Arm-2D. It might by implemented outside of Arm-2D. Let us know about your work.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>question</b>   </td><td class="markdownTableBodyNone">We have further questions to this issue. Please review and provide feedback.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>documentation</b>   </td><td class="markdownTableBodyNone">This issue is a documentation flaw that will be improved in future.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>review</b>   </td><td class="markdownTableBodyNone">This issue is under review. Please be patient.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>DONE</b>   </td><td class="markdownTableBodyNone">We consider this issue as resolved - please review and close it. In case of no further activity this issues will be closed after a week.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>duplicate</b>   </td><td class="markdownTableBodyNone">This issue is already addressed elsewhere, see comment with provided references.   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Important Information</b>   </td><td class="markdownTableBodyNone">We provide essential information regarding planned or resolved major enhancements.   </td><td class="markdownTableBodyNone"></td></tr>
 </table>
-</div><!-- directory -->
-</div><!-- contents -->
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

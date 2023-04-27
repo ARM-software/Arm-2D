@@ -108,8 +108,8 @@ $(document).ready(function(){initNavTree('deploy.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p ><a class="anchor" id="md_how_to_deploy_the_arm_2d_library"></a> This document describes how to deploy the <b>Arm-2D</b> library to your existing MDK projects. If you are not familiar with <b>Arm-2D</b>, please start from the <b>README</b> first.</p>
-<h1><a class="anchor" id="autotoc_md23"></a>
-1 How to Get the Arm-2D</h1>
+<h1><a class="anchor" id="autotoc_md20"></a>
+1 How to get the Arm-2D</h1>
 <p >There are three methods to get Arm-2D:</p>
 <ul>
 <li><p class="startli">Cloning Arm-2D repository on Github using the following command line:</p>
@@ -123,59 +123,10 @@ $(document).ready(function(){initNavTree('deploy.html',''); initResizable(); });
 <p ><img src="HowToDeploy1_1.png" alt="" class="inline"/></p>
 <p ><b>Figure 1-2 Install Arm-2D in Pack Installer</b></p>
 <p ><img src="HowToDeploy1_2.png" alt="" class="inline"/></p>
-<h1><a class="anchor" id="autotoc_md24"></a>
+<h1><a class="anchor" id="autotoc_md21"></a>
 2 How to Deploy Arm-2D</h1>
-<h2><a class="anchor" id="autotoc_md25"></a>
-2.1 Generic Method (Using MDK as an example)</h2>
-<ol type="1">
-<li>Copy the <code>Arm-2D</code> folder to your target project directory.</li>
-<li>Open the MDK project, add a group in the project viewer and give it a name, for example, <code>Arm-2D</code>.</li>
-<li>Add <b>ALL</b> the C source code in the <code>Library/Source</code> directory to the Arm-2d group of the project.</li>
-<li><p class="startli">For ease of use, please add <b>ALL</b> header files in the <code>Library/Include</code> directory that <b>have no double-underscores-prefix in their name</b> to the Arm-2d group of the project.</p>
-<p class="startli"><b>Figure 2-1 A typical project view with Arm-2D Group</b></p>
-</li>
-</ol>
-<p ><img src="HowToDeploy2_1.png" alt="" class="inline"/></p>
-<ol type="1">
-<li><p class="startli">Add a search path to MDK project configuration for the Arm-2D header files as shown in <b>Figure 2-2</b>:</p>
-<p class="startli"><b>Figure 2-2 Add search path to the project configuration for Arm-2D header files</b></p>
-</li>
-</ol>
-<p ><img src="HowToDeploy2_2.png" alt="" class="inline" title="Check the CMSIS support"/></p>
-<ol type="1">
-<li><p class="startli">Enable <b>C11</b> and <b>GNU extension</b> support in C/C++(AC6) configurations:</p>
-<p class="startli"><b>Figure 2-3 Enable "gnu11" in Arm Compiler 6</b></p>
-</li>
-</ol>
-<p ><img src="HowToDeploy2_3.png" alt="" class="inline" title="image-20210323171224685"/></p>
-<ol type="1">
-<li><p class="startli">Arm-2D relies on <b>CMSIS 5.7.0</b> and above (If you want to use Arm-2D with Cortex-M55, you need <b>CMSIS 5.8.0</b>). Please check the <b>RTE configuration</b> and ensure proper CMSIS support has been added to the project (as shown in <b>Figure 2-4</b> the <b>CORE</b> and <b>DSP</b> are required).</p>
-<p class="startli"><b>Figure 2-4 Check the CMSIS support in the RTE configuration window</b></p>
-</li>
-</ol>
-<p ><img src="HowToDeploy2_4.png" alt="" class="inline" title="Check the CMSIS support"/></p>
-<ol type="1">
-<li>Copy the header file <code>arm_2d_cfg.h</code> in <code>Library\Include\template</code> to you application folder and set the include search path for this header file. You can find arm-2d configurations in this header file.</li>
-<li>Include the header file <code><a class="el" href="arm__2d_8h_source.html">arm_2d.h</a></code> in your source code where you want to use the library:</li>
-</ol>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;arm_2d.h&quot;</span></div>
-</div><!-- fragment --><ol type="1">
-<li>Initialize Arm-2D by calling function <code><a class="el" href="group__gKernel.html#gae417897e7d7186b294c0ff3468102276" title="initialise arm-2d">arm_2d_init()</a></code> :</li>
-</ol>
-<div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> system_init(<span class="keywordtype">void</span>)</div>
-<div class="line">{</div>
-<div class="line">    ...</div>
-<div class="line">    <a class="code hl_function" href="group__gKernel.html#gae417897e7d7186b294c0ff3468102276" title="initialise arm-2d">arm_2d_init</a>();</div>
-<div class="line">    ...</div>
-<div class="line">}</div>
-</div><!-- fragment --><p ><b>Figure 2-5 A Typical Configuration for A MDK project</b></p>
-<p ><img src="HowToDeploy2_5.png" alt="" class="inline"/></p>
-<p ><b>NOTE:</b></p>
-<ol type="1">
-<li>The option "Short enums/wchar" is <b>NOT</b> required by Arm-2D. This option is enabled by default if you create a new MDK project using Arm Compiler 6.</li>
-</ol>
-<h2><a class="anchor" id="autotoc_md26"></a>
-2.2 Deploy Using CMSIS-Pack</h2>
+<h2><a class="anchor" id="autotoc_md22"></a>
+2.1 Deploy Using CMSIS-Pack in MDK</h2>
 <ol type="1">
 <li><p class="startli">Open the Run-Time Environment configuration dialog using menu "Project-&gt;Manage-&gt;Run-Time Environment" as shown in <b>Figure 2-6</b>.</p>
 <p class="startli"><b>Figure 2-6 Open Run-Time Environment Dialog</b> <img src="HowToDeploy2_6.png" alt="" class="inline"/></p>
@@ -213,9 +164,9 @@ $(document).ready(function(){initNavTree('deploy.html',''); initResizable(); });
 <p >Open the <b>Configuration Wizard</b> and check options available for Arm-2D</p>
 <p ><b>Figure 2-9 Configuration Wizard for Arm-2D</b></p>
 <p ><img src="HowToDeploy2_9.png" alt="" class="inline"/></p>
-<h1><a class="anchor" id="autotoc_md27"></a>
+<h1><a class="anchor" id="autotoc_md23"></a>
 3 Helper Services and Extras</h1>
-<h1><a class="anchor" id="autotoc_md28"></a>
+<h1><a class="anchor" id="autotoc_md24"></a>
 4 Example Projects</h1>
 <p ><b>Table 3-1 Summary</b></p>
 <table class="markdownTable">

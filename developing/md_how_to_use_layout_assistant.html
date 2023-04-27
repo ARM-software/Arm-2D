@@ -109,10 +109,10 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <div class="contents">
 <div class="textblock"><p >When we use arm-2d for 2D image processing, almost all APIs need to specify the target Region. Especially for those users who need to use Arm-2D for simple UI design, how to place graphic elements and how to deal with the layout of the screen is essentially a problem of Region calculation. In order to free users from manual Region calculations, Arm-2D refers to the popular GUI layout methodology and provides a series of simple and easy-to-use Helpers in the form of macro templates, called Layout Assistant.</p>
 <p >This article will introduce the use of Arm-2D Layout Assistant in detail through examples.</p>
-<h1><a class="anchor" id="autotoc_md68"></a>
+<h1><a class="anchor" id="autotoc_md64"></a>
 1 Basic Concepts</h1>
 <p >We assume that you are getting into Arm-2D for the first time, so in order for you to understand the following content, we need to introduce some basic concepts first, such as Region, canvas, container and so on.</p>
-<h2><a class="anchor" id="autotoc_md69"></a>
+<h2><a class="anchor" id="autotoc_md65"></a>
 1.1 Region</h2>
 <p >Region is a rectangular area described by the Location (the coordinates of the upper left corner) and the Size information.</p>
 <div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> {</div>
@@ -121,7 +121,7 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <div class="line">} <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a>;</div>
 </div><!-- fragment --><p >**Figure 1-1 Region with Location and Size **</p>
 <p ><img src="../documentation/pictures/Introduction2_1a.png" alt="Region with Location and Size" class="inline"/></p>
-<h3><a class="anchor" id="autotoc_md70"></a>
+<h3><a class="anchor" id="autotoc_md66"></a>
 1.1.1 Location</h3>
 <p >The coordinate of the Region is defined by the vertices at the upper left corner of the bit rectangle. Its data structure is as follows:</p>
 <div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="group__gKernel.html#structarm__2d__location__t" title="a type for coordinates (integer)">arm_2d_location_t</a> {</div>
@@ -132,7 +132,7 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <p ><b>Figure 1-2 When Location has a negative coordinates.</b></p>
 <p ><img src="../documentation/pictures/Introduction2_1b.png" alt="When Location has a negative coordinates" class="inline"/></p>
 <p >As shown in <b>Figure 1-2</b>, when the <em><b>x</b></em> and <em><b>y</b></em> coordinates of a Region are both negative, it actually has a considerable area outside (upper left corner) of its parent Region. When we try to find the intersection of the current Region and its parent Region, we will find that only part of the region is valid.</p>
-<h3><a class="anchor" id="autotoc_md71"></a>
+<h3><a class="anchor" id="autotoc_md67"></a>
 1.1.2 Size</h3>
 <p >The size information of the Region is described by the Height and Width together. The data structure is defined as follows:</p>
 <div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> {</div>
@@ -140,23 +140,23 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <div class="line">    int16_t <a class="code hl_variable" href="group__gKernel.html#a44f7520235d22c8906b2c192442a0c31" title="height of an rectangular area">iHeight</a>;</div>
 <div class="line">} <a class="code hl_struct" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a>;</div>
 </div><!-- fragment --><p >Although a signed type <em><b>int16_t</b></em> is used to describe the width and height, negative numbers are meaningless and should be avoided.</p>
-<h2><a class="anchor" id="autotoc_md72"></a>
+<h2><a class="anchor" id="autotoc_md68"></a>
 1.2 Boxing Model</h2>
 <p >The so-called Boxing Model describes the affiliation between Regions, which is often used to describe the relationship between containers and visual elements.</p>
 <p >In a GUI stack, the Boxing Model usually talks about more complex stuff, such as the border's width, the margin inside a container border, the padding of / distance between the elements inside a container etc. Arm-2D does <em><b>NOT</b></em> cares about these details but only describes the simple relationship between a container and the elements inside.</p>
-<h3><a class="anchor" id="autotoc_md73"></a>
+<h3><a class="anchor" id="autotoc_md69"></a>
 1.2.1 Absolute Location and Relative Location</h3>
 <p >In Arm-2d, we consider panels or windows as containers, and the Locations of the panels and the windows are their coordinates in the display buffer. <b>We call this kind of location information that directly describes the coordinates in a display buffer as an Absolute Location</b>. In <b>Figure 1-3</b>, the panel (top container) coordinates are absolute coordinates.</p>
 <p >The coordinates of the elements inside a container are described as <b>coordinates relative to the upper left corner of the parent container</b>. We call this kind of Locations the <b>Relative Locations</b>. In addition to that, since the container is only a special element, container nesting becomes possible. In <b>Figure 1-3</b>, the two innermost Regions have Relative Locations.</p>
 <p ><b>Figure 1-3 A Typical Example of Absolute Locations and Relative Locations</b></p>
 <p ><img src="../documentation/pictures/Introduction2_2a.png" alt="A Typical Example of Absolute Locations and Relative Locations" class="inline"/></p>
-<h3><a class="anchor" id="autotoc_md74"></a>
+<h3><a class="anchor" id="autotoc_md70"></a>
 1.2.2 Absolute Region and Relative Region</h3>
 <p >If a Region has absolute Location, it is an <b>Absolute Region</b>; similarly, if a Region has relative Location, it is a <b>Relative Region</b>.</p>
 <p ><b>Figure 1-4 A Typical Example of Absolute Regions and Relative Regions</b></p>
 <p ><img src="../documentation/pictures/Introduction2_2b.png" alt="A Typical Example of Absolute Regions and Relative Regions" class="inline"/></p>
 <p >When we use these relative and absolute information to perform visual area calculations, it is easy to exclude those areas that are actually invisible to the user from various graphic operations, thereby improving the overall 2D processing performance (as shown in <b>Figure 1-4</b> ).</p>
-<h2><a class="anchor" id="autotoc_md75"></a>
+<h2><a class="anchor" id="autotoc_md71"></a>
 1.2 Canvas</h2>
 <p >The essence of the canvas is Region. To draw on a Tile, we need to use <code>arm_2d_canvas()</code> to create a canvas first. The syntax is as follows:</p>
 <div class="fragment"><div class="line">arm_2d_canvas(&lt;The address of the target tile&gt;, &lt;the canvas name&gt;) {</div>
@@ -178,7 +178,7 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <div class="line">    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcacf7b5f9e66c44d332ea46d05860d78d1" title="fsm complete">arm_fsm_rt_cpl</a>;</div>
 <div class="line">}</div>
 </div><!-- fragment --><p >This is a typical scene drawing function, where <code>ptTile</code> points to the target Tile representing the screen. In order to draw on the screen, we need to create a canvas for it, namely <code>__top_canvas</code> in the example.</p>
-<h2><a class="anchor" id="autotoc_md76"></a>
+<h2><a class="anchor" id="autotoc_md72"></a>
 1.3 Container</h2>
 <p >Region is just a descriptive information. How to interpret the meaning of Region depends entirely on which API we use. Similarly, when we use the canvas for layout, it often happens that the actual graphic elements exceed the scope of the canvas. At this point, whether to clip the excess part depends on the specific situation. But if we clearly want the part beyond the canvas to be clipped, then we need to introduce the concept of Container.</p>
 <p >The essence of the container is a Child-Tile, and any content that exceeds the rectangular area of the child tile will be clipped. Via the macro <code>arm_2d_container()</code> we can easily create a container. The syntax is as follows:</p>
@@ -209,7 +209,7 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <div class="line">    <a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);</div>
 <div class="line">}</div>
 </div><!-- fragment --><p >The above example comes from the control template. In general GUI design, the part beyond the rectangular area of the control needs to be clipped, that's why we create a container for a user control.</p>
-<h1><a class="anchor" id="autotoc_md77"></a>
+<h1><a class="anchor" id="autotoc_md73"></a>
 2 Alignment</h1>
 <p >In UI design, alignment is the most basic layout method. There are 9 alignments as shown in <b>Figure 2-1</b>:</p>
 <p ><b>Figure 2-1 The 9 alignments</b></p>
@@ -363,7 +363,7 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcacf7b5f9e66c44d332ea46d05860d78d1" title="fsm complete">arm_fsm_rt_cpl</a>;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md78"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md74"></a>
 3 Layout</h1>
 <p >When designing a graphical interface, in addition to the <b>alignment</b> described above, we usually want to arrage a stream of graphic elements to a specified area in sequence under certain rules. This process is often referred to as <b>layout</b>. Commonly used layout rules are:</p>
 <ul>
@@ -371,11 +371,11 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <li><b>Steam Layout with wrapping</b> (in vertical-first manner or horizontal-first manner)</li>
 </ul>
 <p >When doing layout, users only need to enumerate graphic elements, specify their sizes, and optionally specify the space (a.ka. <b>Padding</b>) among elements. During this process, the user does not need to manually calculate the coordinates of each element, which is very convenient.</p>
-<h2><a class="anchor" id="autotoc_md79"></a>
+<h2><a class="anchor" id="autotoc_md75"></a>
 3.1 Line Stream Layout</h2>
 <p >The Line Stream Layout is a common layout method, which places elements in a specified area one by one.</p>
 <p ><b>Note</b>: If any elements exceed the given area, the Line Stream Layout will not wrap when placing elements.</p>
-<h3><a class="anchor" id="autotoc_md80"></a>
+<h3><a class="anchor" id="autotoc_md76"></a>
 3.1.1 Horizontal Line Stream</h3>
 <p >Horizontal placement is one of the common ways of Line Stream Layout. Its syntax is as follows:</p>
 <div class="fragment"><div class="line">arm_2d_layout(&lt;the target region: <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a>&gt;) {</div>
@@ -591,7 +591,7 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcacf7b5f9e66c44d332ea46d05860d78d1" title="fsm complete">arm_fsm_rt_cpl</a>;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md81"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md77"></a>
 3.1.2 Vertical Line Stream</h3>
 <p >The Vertical Line Stream Layout is similar to the Horizontal Line Stream Layout described above. The only difference is the layout direction. The syntax is shown below:</p>
 <div class="fragment"><div class="line">arm_2d_layout(&lt;the target region: <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a>&gt;) {</div>
@@ -660,10 +660,10 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcacf7b5f9e66c44d332ea46d05860d78d1" title="fsm complete">arm_fsm_rt_cpl</a>;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md82"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md78"></a>
 3.2 Stream Layout with Wrapping</h2>
 <p >Similar to the Line Stream Layout, the <b>Stream Layout</b> is a commonly used layout method, which places elements in a line and wraps before hitting the bundary of the target area.</p>
-<h3><a class="anchor" id="autotoc_md83"></a>
+<h3><a class="anchor" id="autotoc_md79"></a>
 3.2.1 Horizontal Stream</h3>
 <p >Horizontal placement is one of the common ways of the Stream Layout. Its syntax is as follows:</p>
 <div class="fragment"><div class="line">arm_2d_layout(&lt;the target region: <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a>&gt;) {</div>
@@ -749,7 +749,7 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcacf7b5f9e66c44d332ea46d05860d78d1" title="fsm complete">arm_fsm_rt_cpl</a>;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md84"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md80"></a>
 3.2.2 Vertical Stream</h3>
 <p >The <b>Vertical Stream Layout</b> is similar to the <b>Horizontal Stream Layout</b> described above. The only difference is the layout direction. The syntax is shown below:</p>
 <div class="fragment"><div class="line">arm_2d_layout(&lt;the target region: <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a>&gt;) {</div>
