@@ -36,7 +36,7 @@
 #include "stm32746g_discovery_sdram.h"
 #include "GLCD_Config.h"
 #include "Board_GLCD.h"
-#include "../controls/__common.h"
+#include "arm_2d_helper.h"
 #include <string.h>
 
 #ifndef SDRAM_BASE_ADDR

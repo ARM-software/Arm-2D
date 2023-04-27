@@ -21,6 +21,7 @@
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
+#include "arm_2d_helper.h"
 #include "__common.h"
 
 #ifdef   __cplusplus

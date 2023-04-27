@@ -651,6 +651,11 @@
               <FileType>1</FileType>
               <FilePath>..\common\asset\DigitsFont.c</FilePath>
             </File>
+            <File>
+              <FileName>circle_small.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\circle_small.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1416,6 +1421,11 @@
               <FileName>DigitsFont.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\DigitsFont.c</FilePath>
+            </File>
+            <File>
+              <FileName>circle_small.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\asset\circle_small.c</FilePath>
             </File>
           </Files>
         </Group>
