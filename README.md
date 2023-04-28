@@ -1,4 +1,4 @@
-# README {#mainpage}
+# README {#mainpage} <!-- omit from toc -->
 
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/ARM-software/Arm-2D?include_prereleases) ![GitHub](https://img.shields.io/github/license/ARM-software/Arm-2D)
 
@@ -27,6 +27,30 @@
 - **Arm-2D always keeps backward compatibility**
   - Older APIs will still be usable in newer versions (even if they are marked as deprecated)
   - Arm-2D available for ALL Cortex-M processors
+
+## Table of Content
+- [Overview](#overview)
+- [Key Messages for You](#key-messages-for-you)
+- [Table of Content](#table-of-content)
+- [Features](#features)
+  - [In this version (ver1.1.3-dev)](#in-this-version-ver113-dev)
+  - [New Features Planned in the Future](#new-features-planned-in-the-future)
+- [1 Introduction](#1-introduction)
+  - [1.1 The Background](#11-the-background)
+  - [1.2 The Problems in current solutions](#12-the-problems-in-current-solutions)
+- [2 The Platform and Dependency](#2-the-platform-and-dependency)
+  - [2.1 Processors and Hardware](#21-processors-and-hardware)
+  - [2.2 Dependency](#22-dependency)
+- [3 Examples, Benchmark and Templates](#3-examples-benchmark-and-templates)
+  - [3.1 Summary](#31-summary)
+  - [3.2 Benchmark](#32-benchmark)
+- [4 Limitations](#4-limitations)
+  - [4.1 The Generic Limitations](#41-the-generic-limitations)
+  - [4.2 The Temporary Limitations](#42-the-temporary-limitations)
+- [5 Folder Hierarchy](#5-folder-hierarchy)
+- [6 Documentation](#6-documentation)
+- [7 Feedback](#7-feedback)
+
 
 ## Features
 
