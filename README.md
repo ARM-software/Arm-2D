@@ -60,7 +60,27 @@
   - Older APIs will still be usable in newer versions (even if they are marked as deprecated)
   - Arm-2D available for ALL Cortex-M processors
 
+
+
+## Where to Get Started
+
+Potential users of Arm-2D may have different backgrounds and purposes. Whether you are an application engineer for developing drivers from a silicon vendor, a system engineer of a GUI stack, or an application developer, based on the purpose of using Arm-2D, there are two ways to get started:
+
+- [Getting Started as an Application Designer](./documentation/getting started as an application designer.md)
+	
+	In some resource-constrained systems, the Flash (ROM) and SRAM are limited (e.g. 64K Flash, 12K SRAM), or the memory space left for GUI applications is limited, so such systems cannot afford the cost of a decent GUI stack.
+	
+	Meanwhile, such a low-cost system usually won't have a complex graphical user interface, hence application developers can directly use the arm-2d APIs to draw the panels and scenes.
+	
+- [Getting Started as an Professional User](./documentation/getting started as an professional user.md)
+
+    Application engineers from silicon vendors often need to write drivers for proprietary hardware accelerators. System engineers from GUI software providers may wish to use the APIs provided by Arm-2D to accelerate low-level operations. Engineers focused on embedded video processing may try using the Arm-2D APIs to process the frame buffer just captured from the camera. People from the open-source community may find something interesting to contribute.
+    All developers mentioned above are seen as professional users.
+
+    
+
 ## Table of Content
+
 - [Overview](#overview)
 - [Key Messages for You](#key-messages-for-you)
 - [Table of Content](#table-of-content)
