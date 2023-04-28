@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Arm-2D: Usage and Description</title>
+<title>Arm-2D: Getting Started as an Application Designer</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -85,7 +85,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('pages.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('md_getting_started_as_an_application_designer.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -103,24 +103,33 @@ $(document).ready(function(){initNavTree('pages.html',''); initResizable(); });
 </iframe>
 </div>
 
-<div class="header">
-  <div class="headertitle"><div class="title">Usage and Description</div></div>
+<div><div class="header">
+  <div class="headertitle"><div class="title">Getting Started as an Application Designer </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock">Here is a list of all related documentation pages:</div><div class="directory">
-<table class="directory">
-<tr id="row_0_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md__home_runner_work_Arm_2D_Arm_2D_README.html" target="_self">README {#mainpage} &lt;!-- omit from toc --&gt;</a></td><td class="desc"></td></tr>
-<tr id="row_1_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_getting_started_as_an_application_designer.html" target="_self">Getting Started as an Application Designer</a></td><td class="desc"></td></tr>
-<tr id="row_2_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_getting_started_as_a_professional_user.html" target="_self">Getting Started as an Professional User</a></td><td class="desc"></td></tr>
-<tr id="row_3_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="deploy.html" target="_self">How to Deploy the Arm-2D Library</a></td><td class="desc"></td></tr>
-<tr id="row_4_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="intro.html" target="_self">Introduction for Arm-2D</a></td><td class="desc"></td></tr>
-<tr id="row_5_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_how_to_use_layout_assistant.html" target="_self">How to Use Layout Assistant</a></td><td class="desc"></td></tr>
-<tr id="row_6_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="use_tile.html" target="_self">How to Use Tile Operations</a></td><td class="desc"></td></tr>
-<tr id="row_7_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="headers.html" target="_self">Header Files Summary</a></td><td class="desc"></td></tr>
-<tr id="row_8_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_contribution.html" target="_self">How to Contribute</a></td><td class="desc"></td></tr>
-</table>
-</div><!-- directory -->
-</div><!-- contents -->
+<div class="textblock"><h1><a class="anchor" id="autotoc_md24"></a>
+Tips For Exploring the Library</h1>
+<h2><a class="anchor" id="autotoc_md25"></a>
+"I am a library user, I only care about how to use the library"</h2>
+<ul>
+<li>For library users, <b>ALL</b> useful information, i.e. type definitions, macros, prototypes of functions etc., are stored in header files which have <b>NO</b> double under-scope as their prefixes. We call those header files the <b>PUBLIC HEADER FILES</b>.</li>
+<li>Please <b>ONLY</b> use APIs, macros and types that are defined in the public header files.</li>
+</ul>
+<p ><b>Figure 1-1 Private and Public Files</b></p>
+<p ><img src="E:/git/Arm-2D/documentation/pictures/TopReadme_3_1.png" alt="" class="inline"/></p>
+<ul>
+<li>Any symbol, e.g. file name, function name, macro name, type name etc., having a double under-scope as the prefix is considered as <b>PRIVATE</b> to the library. You should save your time from touching them.</li>
+<li>The library is designed with the philosophy that Users are free to use anything in public header files and should not touch anything marked implicitly or explicitly as private.</li>
+<li>Despite which processor you use, during the compilation, all C source files are safe to be added to the compilation (and we highly recommend you to do this for simplicity reason). For example, when you use Cortex-M4, which doesn't support Helium extension (introduced by Armv8.1-M architecture and first implemented by the Cortex-M55 processor), it is OK to include <code>arm_2d_helium.c</code> in the compilation process, as the C source files are constructed with environment detection in pre-processing phase.</li>
+<li>In your application, including <code><a class="el" href="arm__2d_8h_source.html">arm_2d.h</a></code> is sufficient to get all the services and APIs ready for you.</li>
+<li><p class="startli">Make sure that the library is initialised by calling <code><a class="el" href="group__gKernel.html#gae417897e7d7186b294c0ff3468102276" title="initialise arm-2d">arm_2d_init()</a></code> before using any of the services.</p>
+<p class="startli"><b>NOTE</b>:</p><ol type="1">
+<li>Feature configuration macros are checked by <code>arm_2d_feature.h</code>. For the current stage of the library, please <b>DO NOT</b> override those feature configuration macros. </li>
+</ol>
+</li>
+</ul>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

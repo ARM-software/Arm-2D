@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['header_20files_20summary_0',['Header Files Summary',['../headers.html',1,'']]],
-  ['how_20to_20contribute_1',['How to Contribute',['../md_contribution.html',1,'']]],
-  ['how_20to_20deploy_20the_20arm_2d2d_20library_2',['How to Deploy the Arm-2D Library',['../deploy.html',1,'']]],
-  ['how_20to_20use_20layout_20assistant_3',['How to Use Layout Assistant',['../md_how_to_use_layout_assistant.html',1,'']]],
-  ['how_20to_20use_20tile_20operations_4',['How to Use Tile Operations',['../use_tile.html',1,'']]]
+  ['getting_20started_20as_20an_20application_20designer_0',['Getting Started as an Application Designer',['../md_getting_started_as_an_application_designer.html',1,'']]],
+  ['getting_20started_20as_20an_20professional_20user_1',['Getting Started as an Professional User',['../md_getting_started_as_a_professional_user.html',1,'']]]
 ];
