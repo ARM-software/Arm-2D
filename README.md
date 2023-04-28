@@ -7,12 +7,13 @@
 ## Key Messages for You
 
 - **Arm-2D always keeps light-weight**
-  - Arm-2D keeps an Ultra-low memory footprint for both ROM and RAM
+  - Arm-2D keeps an ultra-low memory footprint for both ROM and RAM
 
-  - Arm-2D uses the commonly available Linker feature to remove unused functions and data whenever possible.
-    - Only used functions cost your precious memory.
+  - Arm-2D uses the commonly available linker features to remove unused functions and data whenever possible.
+    - Only functions that are actually used will take up memory
 
-    - Please use feature-specific APIs whenever possible. For example, if you want to copy an rgb565 picture to a target tile with a source mask without any mirroring, please call `arm_2dp_rgb565_copy_with_src_mask_only()` rather than the generic one, i.e. `arm_2dp_rgb565_copy_with_src_mask()` which takes a mirroring mode as a parameter and keeps all low-level implementations of all possible mirroring modes.
+    - Please use feature-specific APIs whenever possible. 
+      - For example, if you want to copy an rgb565 picture to a target tile with a source mask without any mirroring, please call `arm_2dp_rgb565_copy_with_src_mask_only()` rather than the generic one, i.e. `arm_2dp_rgb565_copy_with_src_mask()` which takes a mirroring mode as a parameter and keeps all low-level implementations of all possible mirroring modes.
 
 - **Arm-2D always keeps a flat and straightforward framework, i.e. API Wrappers, Frontend and Backend.**
 
