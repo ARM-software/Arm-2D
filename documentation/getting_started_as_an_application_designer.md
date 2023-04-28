@@ -1,8 +1,8 @@
 # Getting Started as an Application Designer
 
-Arm-2D is not a GUI. It lacks many key elements required to be called a GUI, such as a control tree, a message processing mechanism, a complete set of controls, support for interactive input devices, or a designer.
+Arm-2D is not a GUI. It lacks many key elements required to be called a GUI, such as the element tree, the message processing, a complete set of controls, the support for interactive input devices, or a GUI designer.
 
-If possible, I hope that everyone would not be forced to use Arm-2D to develop GUI applications directly. However, under the pressure of cost, there are always some embedded products that need to develop GUI applications in a resource-constrained environment. Meanwhile, although some of the devices have relatively richer resources, the application software is often too big to leave sufficient memory for using a decent GUI stack.
+If possible, I hope that no one would not be forced to use Arm-2D to develop GUI applications directly. However, under the pressure of cost, there are always some embedded products that need to develop GUI applications in a resource-constrained environment. Meanwhile, although some of the devices have relatively richer resources, the application software is often too big to leave sufficient memory for using a decent GUI stack.
 
 If your graphics application is relatively simple, consists of panels (for displaying parameters and user settings), and the human-machine interactions are relatively simple (through the keyboard, or without complicated touch gestures), then using Arm-2D APIs directly to design GUI applications might be a simple and effective option. 
 
@@ -11,11 +11,6 @@ GUI applications designed with Arm-2D is not only looking good but also have an 
 If you happen to meet the conditions aforementioned, **don't panic**, we will try our best to provide you with a simple and efficient user experience. 
 
 Focusing on application development, following the steps introduced in this article, I believe you can quickly master the way of using Arm-2D for application development.
-
-
-
-
-
 
 
 ## Tips For Exploring the Library
