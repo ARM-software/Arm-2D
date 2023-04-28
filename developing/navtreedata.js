@@ -29,6 +29,7 @@ var NAVTREE =
       [ "Overview", "index.html#autotoc_md0", null ],
       [ "Key Messages for You", "index.html#autotoc_md1", null ],
       [ "Features", "index.html#autotoc_md2", [
+        [ "In this version (ver1.1.3-dev)", "index.html#autotoc_md3", null ],
         [ "New Features Planned in the Future", "index.html#autotoc_md4", null ]
       ] ],
       [ "1 Introduction", "index.html#autotoc_md5", [
@@ -187,7 +188,7 @@ var NAVTREEINDEX =
 "group__gAlpha.html#ga9c827e92a33e5eaf1b95930cae3268ad",
 "group__gKernel.html#a0cb326a2a86a2a0e46a3b1226fb97c65",
 "group__gKernel.html#gaf435aa9cb213d9c2d39fb34ef02641ed",
-"intro.html#autotoc_md42"
+"intro.html#autotoc_md41"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
