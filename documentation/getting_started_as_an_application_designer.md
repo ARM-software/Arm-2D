@@ -1,5 +1,19 @@
 # Getting Started as an Application Designer
 
+Arm-2D is not a GUI. It lacks many key elements required to be called a GUI, such as a control tree, a message processing mechanism, a complete set of controls, support for interactive input devices, or a designer.
+
+If possible, I hope that everyone would not be forced to use Arm-2D to develop GUI applications directly. However, under the pressure of cost, there are always some embedded products that need to develop GUI applications in a resource-constrained environment. Meanwhile, although some of the devices have relatively richer resources, the application software is often too big to leave sufficient memory for using a decent GUI stack.
+
+If your graphics application is relatively simple, consists of panels (for displaying parameters and user settings), and the human-machine interactions are relatively simple (through the keyboard, or without complicated touch gestures), then using Arm-2D APIs directly to design GUI applications might be a simple and effective option. 
+
+GUI applications designed with Arm-2D is not only looking good but also have an impressively low memory footprint. This is an application subdivision field that cannot be covered by the current mainstream embedded GUI.
+
+If you happen to meet the conditions aforementioned, **don't panic**, we will try our best to provide you with a simple and efficient user experience. 
+
+Focusing on application development, following the steps introduced in this article, I believe you can quickly master the way of using Arm-2D for application development.
+
+
+
 
 
 
@@ -10,10 +24,6 @@
 
 - For library users, **ALL** useful information, i.e. type definitions, macros, prototypes of functions etc., are stored in header files which have **NO** double under-scope as their prefixes. We call those header files the **PUBLIC HEADER FILES**. 
 - Please **ONLY** use APIs, macros and types that are defined in the public header files. 
-
-**Figure 1-1 Private and Public Files** 
-
-![](E:/git/Arm-2D/documentation/pictures/TopReadme_3_1.png) 
 
 - Any symbol, e.g. file name, function name, macro name, type name etc., having a double under-scope as the prefix is considered as **PRIVATE** to the library. You should save your time from touching them. 
 
