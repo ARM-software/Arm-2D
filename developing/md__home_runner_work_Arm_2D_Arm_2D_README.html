@@ -110,6 +110,48 @@ $(document).ready(function(){initNavTree('md__home_runner_work_Arm_2D_Arm_2D_REA
 <div class="textblock"><p ><img src="https://img.shields.io/github/v/release/ARM-software/Arm-2D?include_prereleases" alt="GitHub release (latest by date including pre-releases)" class="inline"/> <img src="https://img.shields.io/github/license/ARM-software/Arm-2D" alt="GitHub" class="inline"/></p>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Overview</h1>
+<p ><b>Arm-2D is an open-source project for 2.5D image processing on Cortex-M processors.</b></p>
+<ul>
+<li>Initial target: IoT endpoint devices, white goods, hand-held devices and wearables, especially for devices with <b>resource-constrained</b> and <b>low power</b> requirements.</li>
+<li>Initial focus: Graphical User Interface</li>
+</ul>
+<p ><b>Arm-2D consists of:</b></p>
+<ul>
+<li>Generic software <b>pixel pipeline</b> infrastructure for graphic processing<ul>
+<li>A set of rules for adding new algorithms and colour formats</li>
+<li>A default software implementation and <b>SIMD acceleration</b> when <a href="https://developer.arm.com/architectures/instruction-sets/simd-isas/helium">Helium technology</a> is available.</li>
+<li>Supports adding <b>3rd party hardware accelerators</b> at low-level in a "feature-agnostic" manner.</li>
+</ul>
+</li>
+<li>A <b>CMSIS-Pack</b> for ease of use</li>
+<li>Examples and Documents</li>
+</ul>
+<p ><img src="ReadmeOverview.png" alt="" class="inline" title="PositionInEcosystem"/></p>
+<p ><b>Position in Ecosystem:</b></p>
+<ul>
+<li><b>Focus on low-level</b> and works as <b>an hardware abstraction layer</b> for 2.5D image processing</li>
+<li><b>Arm-2D is NOT a GUI.</b><ul>
+<li>No content creation, complex shape drawing or Scalable Vector Graphics (SVG) support</li>
+</ul>
+</li>
+<li><b>Provide conveniences for Arm eco-partners to create value through differentiation</b><ul>
+<li>Provide the default implementation for commonly used 2.5D operations and <b>enable 3rd-parties to accelerate application specific algorithms</b></li>
+</ul>
+</li>
+</ul>
+<p ><b>Current Focus and Objectives:</b></p>
+<ul>
+<li><b>Help industry partners with technology adoption</b><ul>
+<li>Guidance for integration of Arm-2D into graphic stacks</li>
+</ul>
+</li>
+<li><b>Optimization for ultra-small memory footprint</b><ul>
+<li>Enable existing Cortex-M processors to use modernized GUI with no or few cost increases.</li>
+<li>Helping customers to cost-down</li>
+</ul>
+</li>
+<li><b>Adopt algorithms for video input processing</b></li>
+</ul>
 <h1><a class="anchor" id="autotoc_md2"></a>
 Key Messages for You</h1>
 <ul>
