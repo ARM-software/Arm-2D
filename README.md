@@ -4,6 +4,39 @@
 
 ## Overview
 
+**Arm-2D is an open-source project for 2.5D image processing on Cortex-M processors.**
+
+- Initial target: IoT endpoint devices, white goods, hand-held devices and wearables, especially for devices with **resource-constrained** and **low power** requirements.
+- Initial focus: Graphical User Interface
+
+**Arm-2D consists of:**
+
+- Generic software **pixel pipeline** infrastructure for graphic processing
+  - A set of rules for adding new algorithms and colour formats
+  - A default software implementation and **SIMD acceleration** when [Helium technology](https://developer.arm.com/architectures/instruction-sets/simd-isas/helium) is available.
+  - Supports adding **3rd party hardware accelerators** at low-level in a "feature-agnostic" manner.
+- A **CMSIS-Pack** for ease of use
+- Examples and Documents
+
+![PositionInEcosystem](./documentation/pictures/ReadmeOverview.png)
+
+**Position in Ecosystem:**
+
+- **Focus on low-level** and works as **an hardware abstraction layer** for 2.5D image processing
+- **Arm-2D is NOT a GUI.**
+  - No content creation, complex shape drawing or Scalable Vector Graphics (SVG) support
+- **Provide conveniences for Arm eco-partners to create value through differentiation**
+  - Provide the default implementation for commonly used 2.5D operations and **enable 3rd-parties to accelerate application specific algorithms**
+
+**Current Focus and Objectives:**
+
+- **Help industry partners with technology adoption**
+  - Guidance for integration of Arm-2D into graphic stacks
+- **Optimization for ultra-small memory footprint**
+  - Enable existing Cortex-M processors to use modernized GUI with no or few cost increases.
+  - Helping customers to cost-down
+- **Adopt algorithms for video input processing**
+
 ## Key Messages for You
 
 - **Arm-2D always keeps light-weight**
@@ -14,7 +47,6 @@
 
     - Please use feature-specific APIs whenever possible. 
       - For example, if you want to copy an rgb565 picture to a target tile with a source mask without any mirroring, please call `arm_2dp_rgb565_copy_with_src_mask_only()` rather than the generic one, i.e. `arm_2dp_rgb565_copy_with_src_mask()` which takes a mirroring mode as a parameter and keeps all low-level implementations of all possible mirroring modes.
-
 - **Arm-2D always keeps a flat and straightforward framework, i.e. API Wrappers, Frontend and Backend.**
 
   - API wrappers take user input and generate task descriptors for the following stages.
@@ -24,7 +56,6 @@
   - The Backend is the place of Low-level implementations for specific 2D processing algorithms.
     - **Those algorithms are usually unusable if you take them out of arm-2d** because the data are validated in the Frontend, and tasks are simplified in the Frontend also.
     - **The linker will remove unused low-level implementations.**
-
 - **Arm-2D always keeps backward compatibility**
   - Older APIs will still be usable in newer versions (even if they are marked as deprecated)
   - Arm-2D available for ALL Cortex-M processors
