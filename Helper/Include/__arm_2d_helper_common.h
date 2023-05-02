@@ -183,13 +183,22 @@ extern "C" {
                 arm_2d_gray8_tile_copy_with_des_mask
 #   define arm_2d_tile_copy_with_src_mask                                       \
                 arm_2d_gray8_tile_copy_with_src_mask
+#   define arm_2dp_tile_transform_only                                          \
+                arm_2dp_gray8_tile_transform_only
+#   define arm_2dp_tile_transform_with_colour_keying                            \
+                arm_2dp_gray8_tile_transform_with_colour_keying
 #   define arm_2dp_tile_transform_with_opacity                                  \
                 arm_2dp_gray8_tile_transform_with_opacity
 #   define arm_2dp_tile_transform_with_src_mask_and_opacity                     \
                 arm_2dp_gray8_tile_transform_with_src_mask_and_opacity
-#   define arm_2dp_tile_rotation                arm_2dp_gray8_tile_rotation
+#   define arm_2dp_tile_rotation            arm_2dp_gray8_tile_rotation
+#   define arm_2dp_tile_rotation_with_colour_keying                             \
+                arm_2dp_gray8_tile_rotation_with_colour_keying
+#   define arm_2dp_tile_rotation_only       arm_2dp_gray8_tile_rotation_only
 #   define arm_2dp_tile_rotation_with_alpha                                     \
                 arm_2dp_gray8_tile_rotation_with_alpha
+#   define arm_2dp_tile_rotation_with_opacity                                   \
+                arm_2dp_gray8_tile_rotation_with_opacity
 #   define arm_2dp_tile_rotation_with_src_mask_and_opacity                      \
                 arm_2dp_gray8_tile_rotation_with_src_mask_and_opacity
 #   define arm_2dp_tile_rotation_with_src_mask                                  \
@@ -319,13 +328,22 @@ extern "C" {
                 arm_2d_rgb565_tile_copy_with_des_mask
 #   define arm_2d_tile_copy_with_src_mask                                       \
                 arm_2d_rgb565_tile_copy_with_src_mask
+#   define arm_2dp_tile_transform_only                                          \
+                arm_2dp_rgb565_tile_transform_only
+#   define arm_2dp_tile_transform_with_colour_keying                            \
+                arm_2dp_rgb565_tile_transform_with_colour_keying
 #   define arm_2dp_tile_transform_with_opacity                                  \
                 arm_2dp_rgb565_tile_transform_with_opacity
 #   define arm_2dp_tile_transform_with_src_mask_and_opacity                     \
                 arm_2dp_rgb565_tile_transform_with_src_mask_and_opacity
-#   define arm_2dp_tile_rotation                arm_2dp_rgb565_tile_rotation
+#   define arm_2dp_tile_rotation            arm_2dp_rgb565_tile_rotation
+#   define arm_2dp_tile_rotation_with_colour_keying                             \
+                arm_2dp_rgb565_tile_rotation_with_colour_keying
+#   define arm_2dp_tile_rotation_only       arm_2dp_rgb565_tile_rotation_only
 #   define arm_2dp_tile_rotation_with_alpha                                     \
                 arm_2dp_rgb565_tile_rotation_with_alpha
+#   define arm_2dp_tile_rotation_with_opacity                                   \
+                arm_2dp_rgb565_tile_rotation_with_opacity
 #   define arm_2dp_tile_rotation_with_src_mask_and_opacity                      \
                 arm_2dp_rgb565_tile_rotation_with_src_mask_and_opacity
 #   define arm_2dp_tile_rotation_with_src_mask                                  \
@@ -455,13 +473,22 @@ extern "C" {
                 arm_2d_cccn888_tile_copy_with_des_mask
 #   define arm_2d_tile_copy_with_src_mask                                       \
                 arm_2d_cccn888_tile_copy_with_src_mask
+#   define arm_2dp_tile_transform_only                                          \
+                arm_2dp_cccn888_tile_transform_only
+#   define arm_2dp_tile_transform_with_colour_keying                            \
+                arm_2dp_cccn888_tile_transform_with_colour_keying
 #   define arm_2dp_tile_transform_with_opacity                                  \
                 arm_2dp_cccn888_tile_transform_with_opacity
 #   define arm_2dp_tile_transform_with_src_mask_and_opacity                     \
                 arm_2dp_cccn888_tile_transform_with_src_mask_and_opacity
-#   define arm_2dp_tile_rotation                arm_2dp_cccn888_tile_rotation
+#   define arm_2dp_tile_rotation            arm_2dp_cccn888_tile_rotation
+#   define arm_2dp_tile_rotation_with_colour_keying                             \
+                arm_2dp_cccn888_tile_rotation_with_colour_keying
+#   define arm_2dp_tile_rotation_only       arm_2dp_cccn888_tile_rotation_only
 #   define arm_2dp_tile_rotation_with_alpha                                     \
                 arm_2dp_cccn888_tile_rotation_with_alpha
+#   define arm_2dp_tile_rotation_with_opacity                                   \
+                arm_2dp_cccn888_tile_rotation_with_opacity
 #   define arm_2dp_tile_rotation_with_src_mask_and_opacity                      \
                 arm_2dp_cccn888_tile_rotation_with_src_mask_and_opacity
 #   define arm_2dp_tile_rotation_with_src_mask                                  \

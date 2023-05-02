@@ -494,7 +494,8 @@ void example_gui_refresh(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
                 }
             } else if (255 == ptItem->chOpacity) {
             
-                arm_2dp_tile_rotation(  (arm_2d_op_trans_t *)&(_->tOP),
+                arm_2dp_tile_rotation_with_colour_keying(  
+                                        (arm_2d_op_trans_t *)&(_->tOP),
                                         ptItem->ptTile,                             //!< source tile
                                         ptTile,                                     //!< target tile
                                         ptItem->ptRegion,                           //!< target region
@@ -503,7 +504,7 @@ void example_gui_refresh(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
                                         GLCD_COLOR_BLACK,                           //!< masking colour
                                         ptItem->ptTargetCentre);
             } else {
-                arm_2dp_tile_rotation_with_alpha(   (arm_2d_op_trans_opa_t *)&(ptItem->tOP),
+                arm_2dp_tile_rotation_with_opacity( (arm_2d_op_trans_opa_t *)&(ptItem->tOP),
                                                     ptItem->ptTile,                 //!< source tile
                                                     ptTile,                         //!< target tile
                                                     ptItem->ptRegion,               //!< target region
