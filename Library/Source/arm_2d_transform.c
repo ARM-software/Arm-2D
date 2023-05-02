@@ -2003,7 +2003,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_GRAY8 = {
             .bHasOrigin             = true,
             .bHasTarget             = true,
         },
-        .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM,
+        .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM_WITH_COLOUR_KEYING,
         .chInClassOffset    = offsetof(arm_2d_op_trans_t, tTransform),
 
         .LowLevelIO = {
@@ -2023,7 +2023,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_RGB565 = {
             .bHasOrigin             = true,
             .bHasTarget             = true,
         },
-        .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM,
+        .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM_WITH_COLOUR_KEYING,
         .chInClassOffset    = offsetof(arm_2d_op_trans_t, tTransform),
 
         .LowLevelIO = {
@@ -2044,7 +2044,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_CCCN888 = {
             .bHasOrigin             = true,
             .bHasTarget             = true,
         },
-        .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM,
+        .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM_WITH_COLOUR_KEYING,
         .chInClassOffset    = offsetof(arm_2d_op_trans_t, tTransform),
 
         .LowLevelIO = {
@@ -2125,7 +2125,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_WITH_OPACITY_GRAY8 = {
             .bHasOrigin             = true,
             .bHasTarget             = true,
         },
-        .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM_WITH_OPACITY,
+        .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM_WITH_COLOUR_KEYING_AND_OPACITY,
         .chInClassOffset    = offsetof(arm_2d_op_trans_opa_t, tTransform),
 
         .LowLevelIO = {
@@ -2146,7 +2146,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_WITH_OPACITY_RGB565 = {
             .bHasOrigin             = true,
             .bHasTarget             = true,
         },
-        .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM_WITH_OPACITY,
+        .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM_WITH_COLOUR_KEYING_AND_OPACITY,
         .chInClassOffset    = offsetof(arm_2d_op_trans_opa_t, tTransform),
 
         .LowLevelIO = {
@@ -2167,7 +2167,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_WITH_OPACITY_CCCN888 = {
             .bHasOrigin             = true,
             .bHasTarget             = true,
         },
-        .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM_WITH_OPACITY,
+        .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM_WITH_COLOUR_KEYING_AND_OPACITY,
         .chInClassOffset    = offsetof(arm_2d_op_trans_opa_t, tTransform),
 
         .LowLevelIO = {

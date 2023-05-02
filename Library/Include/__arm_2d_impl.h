@@ -316,13 +316,14 @@ enum {
     
     __ARM_2D_OP_IDX_COLOUR_FORMAT_CONVERSION,
     
-    __ARM_2D_OP_IDX_TRANSFORM,
     __ARM_2D_OP_IDX_TRANSFORM_ONLY,
+    __ARM_2D_OP_IDX_TRANSFORM_WITH_COLOUR_KEYING,
+    __ARM_2D_OP_IDX_TRANSFORM_WITH_COLOUR_KEYING_AND_OPACITY,
+
     //__ARM_2D_OP_IDX_TRANSFORM_WITH_MASKS,                                     //!< todo in v1.xx
     __ARM_2D_OP_IDX_TRANSFORM_WITH_SOURCE_MASK,                                 
     //__ARM_2D_OP_IDX_TRANSFORM_WITH_TARGET_MASK,                               //!< todo in v1.xx
-    
-    __ARM_2D_OP_IDX_TRANSFORM_WITH_OPACITY,
+
     //__ARM_2D_OP_IDX_TRANSFORM_WITH_MASKS_AND_OPACITY,                         //!< todo in v1.xx
     __ARM_2D_OP_IDX_TRANSFORM_WITH_SOURCE_MASK_AND_OPACITY,
     //__ARM_2D_OP_IDX_TRANSFORM_WITH_TARGET_MASK_AND_OPACITY,                   //!< todo in v1.xx
