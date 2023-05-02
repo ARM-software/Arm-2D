@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        07. Feb 2023
- * $Revision:    V.1.6.0
+ * $Date:        02. May 2023
+ * $Revision:    V.1.6.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -600,6 +600,15 @@ const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_RGB565;
     
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_ONLY_GRAY8;
+    
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_ONLY_RGB565;
+    
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_ONLY_CCCN888;
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_WITH_OPACITY_GRAY8;

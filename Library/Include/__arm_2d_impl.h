@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        07. Feb 2023
- * $Revision:    V.1.3.10
+ * $Date:        02. May 2023
+ * $Revision:    V.1.3.11
  *
  * Target Processor:  Cortex-M cores
  *
@@ -317,6 +317,7 @@ enum {
     __ARM_2D_OP_IDX_COLOUR_FORMAT_CONVERSION,
     
     __ARM_2D_OP_IDX_TRANSFORM,
+    __ARM_2D_OP_IDX_TRANSFORM_ONLY,
     //__ARM_2D_OP_IDX_TRANSFORM_WITH_MASKS,                                     //!< todo in v1.xx
     __ARM_2D_OP_IDX_TRANSFORM_WITH_SOURCE_MASK,                                 
     //__ARM_2D_OP_IDX_TRANSFORM_WITH_TARGET_MASK,                               //!< todo in v1.xx
@@ -1288,25 +1289,34 @@ extern
 arm_fsm_rt_t __arm_2d_sw_convert_colour_to_rgb888(__arm_2d_sub_task_t *ptTask);
 
 extern
-arm_fsm_rt_t __arm_2d_gray8_sw_transform(__arm_2d_sub_task_t *ptTask);
+arm_fsm_rt_t __arm_2d_gray8_sw_transform_with_colour_keying(__arm_2d_sub_task_t *ptTask);
 
 extern
-arm_fsm_rt_t __arm_2d_rgb565_sw_transform(__arm_2d_sub_task_t *ptTask);
+arm_fsm_rt_t __arm_2d_rgb565_sw_transform_with_colour_keying(__arm_2d_sub_task_t *ptTask);
 
 extern
-arm_fsm_rt_t __arm_2d_cccn888_sw_transform(__arm_2d_sub_task_t *ptTask);
+arm_fsm_rt_t __arm_2d_cccn888_sw_transform_with_colour_keying(__arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_transform_only(__arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_transform_only(__arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_transform_only(__arm_2d_sub_task_t *ptTask);
 
 extern
 arm_fsm_rt_t 
-__arm_2d_gray8_sw_transform_with_alpha(__arm_2d_sub_task_t *ptTask);
+__arm_2d_gray8_sw_transform_with_opacity(__arm_2d_sub_task_t *ptTask);
 
 extern
 arm_fsm_rt_t 
-__arm_2d_rgb565_sw_transform_with_alpha(__arm_2d_sub_task_t *ptTask);
+__arm_2d_rgb565_sw_transform_with_opacity(__arm_2d_sub_task_t *ptTask);
 
 extern
 arm_fsm_rt_t 
-__arm_2d_cccn888_sw_transform_with_alpha(__arm_2d_sub_task_t *ptTask);
+__arm_2d_cccn888_sw_transform_with_opacity(__arm_2d_sub_task_t *ptTask);
 
 extern
 arm_fsm_rt_t 
