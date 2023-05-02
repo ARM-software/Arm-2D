@@ -972,8 +972,6 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_transform_only(__arm_2d_sub_task_t *ptTask)
     return arm_fsm_rt_cpl;
 }
 
-
-
 ARM_NONNULL(2)
 arm_2d_err_t arm_2dp_gray8_tile_transform_with_colour_keying_and_opacity_prepare(
                                         arm_2d_op_trans_opa_t *ptOP,
@@ -1074,7 +1072,7 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_with_colour_keying_and_opacity_prepa
                                                 &this.tTransform);
 }
 
-arm_fsm_rt_t __arm_2d_gray8_sw_transform_with_opacity(__arm_2d_sub_task_t *ptTask)
+arm_fsm_rt_t __arm_2d_gray8_sw_transform_with_colour_keying_and_opacity(__arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_trans_opa_t, ptTask->ptOP);
     assert(ARM_2D_COLOUR_GRAY8 == OP_CORE.ptOp->Info.Colour.chScheme);
@@ -1094,7 +1092,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_transform_with_opacity(__arm_2d_sub_task_t *ptTas
     return arm_fsm_rt_cpl;
 }
 
-arm_fsm_rt_t __arm_2d_rgb565_sw_transform_with_opacity(__arm_2d_sub_task_t *ptTask)
+arm_fsm_rt_t __arm_2d_rgb565_sw_transform_with_colour_keying_and_opacity(__arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_trans_opa_t, ptTask->ptOP);
     assert(ARM_2D_COLOUR_RGB565 == OP_CORE.ptOp->Info.Colour.chScheme);
@@ -1114,7 +1112,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_transform_with_opacity(__arm_2d_sub_task_t *ptTa
     return arm_fsm_rt_cpl;
 }
 
-arm_fsm_rt_t __arm_2d_cccn888_sw_transform_with_opacity(__arm_2d_sub_task_t *ptTask)
+arm_fsm_rt_t __arm_2d_cccn888_sw_transform_with_colour_keying_and_opacity(__arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_trans_opa_t, ptTask->ptOP);
     assert(ARM_2D_COLOUR_SZ_32BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
@@ -1132,6 +1130,165 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_transform_with_opacity(__arm_2d_sub_task_t *ptT
     }
     return arm_fsm_rt_cpl;
 }
+
+
+
+
+
+
+ARM_NONNULL(2)
+arm_2d_err_t arm_2dp_gray8_tile_transform_only_with_opacity_prepare(
+                                        arm_2d_op_trans_opa_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_location_t tCentre,
+                                        float fAngle,
+                                        float fScale,
+                                        uint_fast8_t chOpacity)
+{
+    assert(NULL != ptSource);
+
+    ARM_2D_IMPL(arm_2d_op_trans_opa_t, ptOP);
+
+    if (!arm_2d_op_wait_async((arm_2d_op_core_t *)ptThis)) {
+        return ARM_2D_ERR_BUSY;
+    }
+
+    OP_CORE.ptOp = &ARM_2D_OP_TRANSFORM_ONLY_WITH_OPACITY_GRAY8;
+
+    this.Source.ptTile = &this.Origin.tDummySource;
+    this.Origin.ptTile = ptSource;
+    this.wMode = 0;
+    this.tTransform.fAngle = fAngle;
+    this.tTransform.fScale = fScale;
+    this.tTransform.tCenter = tCentre;
+    this.chOpacity = chOpacity;
+
+    return __arm_2d_transform_preprocess_source((arm_2d_op_trans_t *)ptThis,
+                                                &this.tTransform);
+}
+
+
+ARM_NONNULL(2)
+arm_2d_err_t arm_2dp_rgb565_tile_transform_only_with_opacity_prepare(
+                                        arm_2d_op_trans_opa_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_location_t tCentre,
+                                        float fAngle,
+                                        float fScale,
+                                        uint_fast8_t chOpacity)
+{
+    assert(NULL != ptSource);
+
+    ARM_2D_IMPL(arm_2d_op_trans_opa_t, ptOP);
+
+    if (!arm_2d_op_wait_async((arm_2d_op_core_t *)ptThis)) {
+        return ARM_2D_ERR_BUSY;
+    }
+
+    OP_CORE.ptOp = &ARM_2D_OP_TRANSFORM_ONLY_WITH_OPACITY_RGB565;
+
+    this.Source.ptTile = &this.Origin.tDummySource;
+    this.Origin.ptTile = ptSource;
+    this.wMode = 0;
+    this.tTransform.fAngle = fAngle;
+    this.tTransform.fScale = fScale;
+    this.tTransform.tCenter = tCentre;
+    this.chOpacity = chOpacity;
+
+    return __arm_2d_transform_preprocess_source((arm_2d_op_trans_t *)ptThis,
+                                                &this.tTransform);
+}
+
+ARM_NONNULL(2)
+arm_2d_err_t arm_2dp_cccn888_tile_transform_only_with_opacity_prepare(
+                                        arm_2d_op_trans_opa_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_location_t tCentre,
+                                        float fAngle,
+                                        float fScale,
+                                        uint_fast8_t chOpacity)
+{
+    assert(NULL != ptSource);
+
+    ARM_2D_IMPL(arm_2d_op_trans_opa_t, ptOP);
+
+    if (!arm_2d_op_wait_async((arm_2d_op_core_t *)ptThis)) {
+        return ARM_2D_ERR_BUSY;
+    }
+
+    OP_CORE.ptOp = &ARM_2D_OP_TRANSFORM_ONLY_WITH_OPACITY_CCCN888;
+
+    this.Source.ptTile = &this.Origin.tDummySource;
+    this.Origin.ptTile = ptSource;
+    this.wMode = 0;
+    this.tTransform.fAngle = fAngle;
+    this.tTransform.fScale = fScale;
+    this.tTransform.tCenter = tCentre;
+    this.chOpacity = chOpacity;
+
+    return __arm_2d_transform_preprocess_source((arm_2d_op_trans_t *)ptThis,
+                                                &this.tTransform);
+}
+
+arm_fsm_rt_t __arm_2d_gray8_sw_transform_only_with_opacity(__arm_2d_sub_task_t *ptTask)
+{
+    ARM_2D_IMPL(arm_2d_op_trans_opa_t, ptTask->ptOP);
+    assert(ARM_2D_COLOUR_GRAY8 == OP_CORE.ptOp->Info.Colour.chScheme);
+
+    ARM_TYPE_CONVERT(ptTask->Param.tCopyOrig.tOrigin.pBuffer, intptr_t) -= 
+          ptTask->Param.tCopyOrig.tOrigin.nOffset;
+
+    if (255 == this.chOpacity) {
+        __arm_2d_impl_gray8_transform_only(  &(ptTask->Param.tCopyOrig),
+                                        &this.tTransform);
+    } else {
+        __arm_2d_impl_gray8_transform_only_opacity(  &(ptTask->Param.tCopyOrig),
+                                            &this.tTransform,
+                                            this.chOpacity);
+    }
+
+    return arm_fsm_rt_cpl;
+}
+
+arm_fsm_rt_t __arm_2d_rgb565_sw_transform_only_with_opacity(__arm_2d_sub_task_t *ptTask)
+{
+    ARM_2D_IMPL(arm_2d_op_trans_opa_t, ptTask->ptOP);
+    assert(ARM_2D_COLOUR_RGB565 == OP_CORE.ptOp->Info.Colour.chScheme);
+
+    ARM_TYPE_CONVERT(ptTask->Param.tCopyOrig.tOrigin.pBuffer, intptr_t) -= 
+          ptTask->Param.tCopyOrig.tOrigin.nOffset * 2;
+
+    if (255 == this.chOpacity) {
+        __arm_2d_impl_rgb565_transform_only( &(ptTask->Param.tCopyOrig),
+                                        &this.tTransform);
+    } else {
+        __arm_2d_impl_rgb565_transform_only_opacity(   &(ptTask->Param.tCopyOrig),
+                                                &this.tTransform,
+                                                this.chOpacity);
+    }
+
+    return arm_fsm_rt_cpl;
+}
+
+arm_fsm_rt_t __arm_2d_cccn888_sw_transform_only_with_opacity(__arm_2d_sub_task_t *ptTask)
+{
+    ARM_2D_IMPL(arm_2d_op_trans_opa_t, ptTask->ptOP);
+    assert(ARM_2D_COLOUR_SZ_32BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
+
+    ARM_TYPE_CONVERT(ptTask->Param.tCopyOrig.tOrigin.pBuffer, intptr_t) -= 
+          ptTask->Param.tCopyOrig.tOrigin.nOffset * 4;
+
+    if (255 == this.chOpacity) {
+        __arm_2d_impl_cccn888_transform_only(&(ptTask->Param.tCopyOrig),
+                                        &this.tTransform);
+    } else {
+        __arm_2d_impl_cccn888_transform_only_opacity(  &(ptTask->Param.tCopyOrig),
+                                                &this.tTransform,
+                                                this.chOpacity);
+    }
+    return arm_fsm_rt_cpl;
+}
+
 
 ARM_NONNULL(2)
 arm_fsm_rt_t arm_2dp_tile_transform(arm_2d_op_trans_t *ptOP,
@@ -1946,15 +2103,27 @@ def_low_lv_io(__ARM_2D_IO_TRANSFORM_ONLY_CCCN888,
 
 __WEAK
 def_low_lv_io(__ARM_2D_IO_TRANSFORM_WITH_COLOUR_KEYING_AND_OPACITY_GRAY8,
-                __arm_2d_gray8_sw_transform_with_opacity);
+                __arm_2d_gray8_sw_transform_with_colour_keying_and_opacity);
 
 __WEAK
 def_low_lv_io(__ARM_2D_IO_TRANSFORM_WITH_COLOUR_KEYING_AND_OPACITY_RGB565,
-                __arm_2d_rgb565_sw_transform_with_opacity);
+                __arm_2d_rgb565_sw_transform_with_colour_keying_and_opacity);
 
 __WEAK
 def_low_lv_io(__ARM_2D_IO_TRANSFORM_WITH_COLOUR_KEYING_AND_OPACITY_CCCN888,
-                __arm_2d_cccn888_sw_transform_with_opacity);
+                __arm_2d_cccn888_sw_transform_with_colour_keying_and_opacity);
+
+__WEAK
+def_low_lv_io(__ARM_2D_IO_TRANSFORM_ONLY_WITH_OPACITY_GRAY8,
+                __arm_2d_gray8_sw_transform_only_with_opacity);
+
+__WEAK
+def_low_lv_io(__ARM_2D_IO_TRANSFORM_ONLY_WITH_OPACITY_RGB565,
+                __arm_2d_rgb565_sw_transform_only_with_opacity);
+
+__WEAK
+def_low_lv_io(__ARM_2D_IO_TRANSFORM_ONLY_WITH_OPACITY_CCCN888,
+                __arm_2d_cccn888_sw_transform_only_with_opacity);
 
 __WEAK
 def_low_lv_io(__ARM_2D_IO_TRANSFORM_WITH_SRC_MSK_GRAY8,
@@ -2172,6 +2341,68 @@ const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_WITH_COLOUR_KEYING_AND_OPACITY_CCCN
 
         .LowLevelIO = {
             .ptCopyOrigLike = ref_low_lv_io(__ARM_2D_IO_TRANSFORM_WITH_COLOUR_KEYING_AND_OPACITY_CCCN888),
+            .ptFillOrigLike = NULL,
+        },
+    },
+};
+
+const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_ONLY_WITH_OPACITY_GRAY8 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_GRAY8,
+        },
+        .Param = {
+            .bHasSource             = true,
+            .bHasOrigin             = true,
+            .bHasTarget             = true,
+        },
+        .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM_ONLY_WITH_OPACITY,
+        .chInClassOffset    = offsetof(arm_2d_op_trans_opa_t, tTransform),
+
+        .LowLevelIO = {
+            .ptCopyOrigLike = ref_low_lv_io(__ARM_2D_IO_TRANSFORM_ONLY_WITH_OPACITY_GRAY8),
+            .ptFillOrigLike = NULL,
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_ONLY_WITH_OPACITY_RGB565 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_RGB565,
+        },
+        .Param = {
+            .bHasSource             = true,
+            .bHasOrigin             = true,
+            .bHasTarget             = true,
+        },
+        .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM_ONLY_WITH_OPACITY,
+        .chInClassOffset    = offsetof(arm_2d_op_trans_opa_t, tTransform),
+
+        .LowLevelIO = {
+            .ptCopyOrigLike = ref_low_lv_io(__ARM_2D_IO_TRANSFORM_ONLY_WITH_OPACITY_RGB565),
+            .ptFillOrigLike = NULL,
+        },
+    },
+};
+
+
+const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_ONLY_WITH_OPACITY_CCCN888 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_CCCN888,
+        },
+        .Param = {
+            .bHasSource             = true,
+            .bHasOrigin             = true,
+            .bHasTarget             = true,
+        },
+        .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM_ONLY_WITH_OPACITY,
+        .chInClassOffset    = offsetof(arm_2d_op_trans_opa_t, tTransform),
+
+        .LowLevelIO = {
+            .ptCopyOrigLike = ref_low_lv_io(__ARM_2D_IO_TRANSFORM_ONLY_WITH_OPACITY_CCCN888),
             .ptFillOrigLike = NULL,
         },
     },

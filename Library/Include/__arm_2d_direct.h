@@ -3225,6 +3225,11 @@ void __arm_2d_impl_cccn888_transform_with_opacity(
                                            __arm_2d_transform_info_t * ptInfo,
                                            uint_fast16_t hwRatio);
 
+void __arm_2d_impl_cccn888_transform_only_opacity(
+                                           __arm_2d_param_copy_orig_t * ptParam,
+                                           __arm_2d_transform_info_t * ptInfo,
+                                           uint_fast16_t hwRatio);
+
 void __arm_2d_impl_cccn888_transform_with_src_mask(
                                         __arm_2d_param_copy_orig_msk_t * ptParam,
                                         __arm_2d_transform_info_t * ptInfo);
@@ -5696,6 +5701,11 @@ void __arm_2d_impl_gray8_transform( __arm_2d_param_copy_orig_t * ptParam,
 
 void __arm_2d_impl_gray8_transform_only(__arm_2d_param_copy_orig_t * ptParam,
                                         __arm_2d_transform_info_t * ptInfo);
+
+void __arm_2d_impl_gray8_transform_only_opacity(
+                                         __arm_2d_param_copy_orig_t * ptParam,
+                                         __arm_2d_transform_info_t * ptInfo,
+                                         uint_fast16_t hwRatio);
 
 void __arm_2d_impl_gray8_transform_with_opacity(
                                          __arm_2d_param_copy_orig_t * ptParam,
@@ -9432,6 +9442,11 @@ void __arm_2d_impl_rgb565_transform(__arm_2d_param_copy_orig_t * ptParam,
 
 void __arm_2d_impl_rgb565_transform_only(__arm_2d_param_copy_orig_t * ptParam,
                                          __arm_2d_transform_info_t * ptInfo);
+
+void __arm_2d_impl_rgb565_transform_only_opacity(
+                                        __arm_2d_param_copy_orig_t * ptParam,
+                                        __arm_2d_transform_info_t * ptInfo,
+                                        uint_fast16_t hwRatio);
 
 void __arm_2d_impl_rgb565_transform_with_opacity(
                                         __arm_2d_param_copy_orig_t * ptParam,

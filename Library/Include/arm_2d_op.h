@@ -620,6 +620,15 @@ extern
 const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_WITH_COLOUR_KEYING_AND_OPACITY_CCCN888;
 
 extern
+const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_ONLY_WITH_OPACITY_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_ONLY_WITH_OPACITY_RGB565;
+    
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_ONLY_WITH_OPACITY_CCCN888;
+
+extern
 const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_WITH_SRC_MSK_GRAY8;
     
 extern

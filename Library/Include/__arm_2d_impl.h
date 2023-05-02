@@ -1322,15 +1322,27 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_transform_only(__arm_2d_sub_task_t *ptTask);
 
 extern
 arm_fsm_rt_t 
-__arm_2d_gray8_sw_transform_with_opacity(__arm_2d_sub_task_t *ptTask);
+__arm_2d_gray8_sw_transform_with_colour_keying_and_opacity(__arm_2d_sub_task_t *ptTask);
 
 extern
 arm_fsm_rt_t 
-__arm_2d_rgb565_sw_transform_with_opacity(__arm_2d_sub_task_t *ptTask);
+__arm_2d_rgb565_sw_transform_with_colour_keying_and_opacity(__arm_2d_sub_task_t *ptTask);
 
 extern
 arm_fsm_rt_t 
-__arm_2d_cccn888_sw_transform_with_opacity(__arm_2d_sub_task_t *ptTask);
+__arm_2d_cccn888_sw_transform_with_colour_keying_and_opacity(__arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_gray8_sw_transform_only_with_opacity(__arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_rgb565_sw_transform_only_with_opacity(__arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_cccn888_sw_transform_only_with_opacity(__arm_2d_sub_task_t *ptTask);
 
 extern
 arm_fsm_rt_t 

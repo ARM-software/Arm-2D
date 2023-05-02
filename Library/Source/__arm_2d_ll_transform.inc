@@ -836,7 +836,7 @@ void __ARM_2D_FUNC(transform_only)( __arm_2d_param_copy_orig_t *ptParam,
                                     __arm_2d_transform_info_t *ptInfo);
 
 extern
-void __ARM_2D_FUNC(transform_only_with_opacity)(
+void __ARM_2D_FUNC(transform_only_opacity)(
                                     __arm_2d_param_copy_orig_t *ptParam,
                                     __arm_2d_transform_info_t *ptInfo,
                                     uint_fast16_t hwRatio);
@@ -1330,7 +1330,7 @@ void __ARM_2D_FUNC(transform_only_get_pixel_colour_with_alpha)(
 
 #if !__ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__
 __WEAK
-void __ARM_2D_FUNC(transform_only_with_opacity)(
+void __ARM_2D_FUNC(transform_only_opacity)(
                                             __arm_2d_param_copy_orig_t *ptParam,
                                             __arm_2d_transform_info_t *ptInfo,
                                             uint_fast16_t hwRatio)
@@ -1435,7 +1435,7 @@ void __ARM_2D_FUNC(transform_only_with_opacity)(
 #else /* __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__ */
 
 __WEAK
-void __ARM_2D_FUNC(transform_only_with_opacity)(
+void __ARM_2D_FUNC(transform_only_opacity)(
                                             __arm_2d_param_copy_orig_t *ptParam,
                                             __arm_2d_transform_info_t *ptInfo,
                                             uint_fast16_t hwRatio)
