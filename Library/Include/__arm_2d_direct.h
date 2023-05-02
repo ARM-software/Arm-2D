@@ -21,8 +21,8 @@
  * Title:        __arm_2d_direct.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        07. Feb 2023
- * $Revision:    V.1.2.1
+ * $Date:        02. May 2023
+ * $Revision:    V.1.2.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -3217,6 +3217,9 @@ void __arm_2d_impl_cccn888_to_rgb565(uint32_t * __restrict pwSourceBase,
 void __arm_2d_impl_cccn888_transform(__arm_2d_param_copy_orig_t * ptParam,
                                      __arm_2d_transform_info_t * ptInfo);
 
+void __arm_2d_impl_cccn888_transform_only(__arm_2d_param_copy_orig_t * ptParam,
+                                          __arm_2d_transform_info_t * ptInfo);
+
 void __arm_2d_impl_cccn888_transform_with_opacity(
                                            __arm_2d_param_copy_orig_t * ptParam,
                                            __arm_2d_transform_info_t * ptInfo,
@@ -5690,6 +5693,9 @@ void __arm_2d_impl_gray8_src_msk_fill_y_mirror(uint8_t *
 
 void __arm_2d_impl_gray8_transform( __arm_2d_param_copy_orig_t * ptParam,
                                     __arm_2d_transform_info_t * ptInfo);
+
+void __arm_2d_impl_gray8_transform_only(__arm_2d_param_copy_orig_t * ptParam,
+                                        __arm_2d_transform_info_t * ptInfo);
 
 void __arm_2d_impl_gray8_transform_with_opacity(
                                          __arm_2d_param_copy_orig_t * ptParam,
@@ -9423,6 +9429,9 @@ void __arm_2d_impl_rgb565_to_cccn888(uint16_t * __restrict phwSourceBase,
 
 void __arm_2d_impl_rgb565_transform(__arm_2d_param_copy_orig_t * ptParam,
                                     __arm_2d_transform_info_t * ptInfo);
+
+void __arm_2d_impl_rgb565_transform_only(__arm_2d_param_copy_orig_t * ptParam,
+                                         __arm_2d_transform_info_t * ptInfo);
 
 void __arm_2d_impl_rgb565_transform_with_opacity(
                                         __arm_2d_param_copy_orig_t * ptParam,

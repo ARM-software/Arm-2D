@@ -807,8 +807,8 @@ arm_fsm_rt_t __arm_2d_gray8_sw_transform_with_colour_keying(__arm_2d_sub_task_t 
     ARM_2D_IMPL(arm_2d_op_trans_t, ptTask->ptOP);
     assert(ARM_2D_COLOUR_8BIT == OP_CORE.ptOp->Info.Colour.chScheme);
 
-    ARM_TYPE_CONVERT(ptTask->Param.tCopyOrig.tOrigin.pBuffer, intptr_t) -= 
-          ptTask->Param.tCopyOrig.tOrigin.nOffset;
+    ARM_TYPE_CONVERT(ptTask->Param.tCopyOrig.tOrigin.pBuffer, intptr_t)
+        -= ptTask->Param.tCopyOrig.tOrigin.nOffset;
 
     __arm_2d_impl_gray8_transform(  &(ptTask->Param.tCopyOrig),
                                     &this.tTransform);
@@ -938,7 +938,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_transform_only(__arm_2d_sub_task_t *ptTask)
     ARM_TYPE_CONVERT(ptTask->Param.tCopyOrig.tOrigin.pBuffer, intptr_t) -= 
           ptTask->Param.tCopyOrig.tOrigin.nOffset;
 
-    __arm_2d_impl_gray8_transform(  &(ptTask->Param.tCopyOrig),
+    __arm_2d_impl_gray8_transform_only(  &(ptTask->Param.tCopyOrig),
                                     &this.tTransform);
 
     return arm_fsm_rt_cpl;
@@ -952,7 +952,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_transform_only(__arm_2d_sub_task_t *ptTask)
     ARM_TYPE_CONVERT(ptTask->Param.tCopyOrig.tOrigin.pBuffer, intptr_t) -= 
           ptTask->Param.tCopyOrig.tOrigin.nOffset * 2;
 
-    __arm_2d_impl_rgb565_transform( &(ptTask->Param.tCopyOrig),
+    __arm_2d_impl_rgb565_transform_only( &(ptTask->Param.tCopyOrig),
                                     &this.tTransform);
 
     return arm_fsm_rt_cpl;
@@ -966,7 +966,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_transform_only(__arm_2d_sub_task_t *ptTask)
     ARM_TYPE_CONVERT(ptTask->Param.tCopyOrig.tOrigin.pBuffer, intptr_t) -= 
           ptTask->Param.tCopyOrig.tOrigin.nOffset * 4;
 
-    __arm_2d_impl_cccn888_transform(&(ptTask->Param.tCopyOrig),
+    __arm_2d_impl_cccn888_transform_only(&(ptTask->Param.tCopyOrig),
                                     &this.tTransform);
 
     return arm_fsm_rt_cpl;
