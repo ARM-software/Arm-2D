@@ -296,14 +296,16 @@ enum {
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A2_MASK,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A4_MASK,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A8_MASK,
-    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A8_MASK,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK 
+        = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A8_MASK,
     
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_REPEAT,
     
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A2_MASK_AND_OPACITY,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A4_MASK_AND_OPACITY,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A8_MASK_AND_OPACITY,
-    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_OPACITY = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A8_MASK_AND_OPACITY,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_OPACITY 
+        = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A8_MASK_AND_OPACITY,
     
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_OPACITY_AND_REPEAT,
     
@@ -317,6 +319,18 @@ enum {
     __ARM_2D_OP_IDX_COLOUR_FORMAT_CONVERSION,
     
     __ARM_2D_OP_IDX_TRANSFORM_ONLY,
+    __ARM_2D_OP_IDX_TRANSFORM_ONLY_WITH_OPACITY,
+    
+    /* note: we delibrately avoid using the following defintion to avoid 
+     *       confusion between transform-with-colour-keying-and-opacity (in the 
+     *       older version, it is called transform-with-opacity) and 
+     *       transform-only-with-opacity (it should be called 
+     *       transform-with-opacity if we don't care about the backward
+     *       compatibility in the later version).
+    __ARM_2D_OP_IDX_TRANSFORM_WITH_OPACITY 
+        = __ARM_2D_OP_IDX_TRANSFORM_ONLY_WITH_OPACITY,
+    */
+    
     __ARM_2D_OP_IDX_TRANSFORM_WITH_COLOUR_KEYING,
     __ARM_2D_OP_IDX_TRANSFORM_WITH_COLOUR_KEYING_AND_OPACITY,
 
