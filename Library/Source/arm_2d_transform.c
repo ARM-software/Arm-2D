@@ -975,7 +975,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_transform_only(__arm_2d_sub_task_t *ptTask)
 
 
 ARM_NONNULL(2)
-arm_2d_err_t arm_2dp_gray8_tile_transform_with_opacity_prepare(
+arm_2d_err_t arm_2dp_gray8_tile_transform_with_colour_keying_and_opacity_prepare(
                                         arm_2d_op_trans_opa_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
                                         const arm_2d_location_t tCentre,
@@ -1009,7 +1009,7 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_with_opacity_prepare(
 
 
 ARM_NONNULL(2)
-arm_2d_err_t arm_2dp_rgb565_tile_transform_with_opacity_prepare(
+arm_2d_err_t arm_2dp_rgb565_tile_transform_with_colour_keying_and_opacity_prepare(
                                         arm_2d_op_trans_opa_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
                                         const arm_2d_location_t tCentre,
@@ -1042,7 +1042,7 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_with_opacity_prepare(
 }
 
 ARM_NONNULL(2)
-arm_2d_err_t arm_2dp_cccn888_tile_transform_with_opacity_prepare(
+arm_2d_err_t arm_2dp_cccn888_tile_transform_with_colour_keying_and_opacity_prepare(
                                         arm_2d_op_trans_opa_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
                                         const arm_2d_location_t tCentre,
