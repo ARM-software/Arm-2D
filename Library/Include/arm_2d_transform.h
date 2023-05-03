@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_transform.h"
  * Description:  Public header file to contain the APIs for transform
  *
- * $Date:        02 May 2023
- * $Revision:    V.1.0.5
+ * $Date:        03 May 2023
+ * $Revision:    V.1.0.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -60,6 +60,15 @@ extern "C" {
  *  \addtogroup Deprecated
  *  @{
  */
+
+#define arm_2dp_gray8_tile_transform_with_opacity_prepare                       \
+            arm_2dp_gray8_tile_transform_with_colour_keying_and_opacity_prepare
+
+#define arm_2dp_rgb565_tile_transform_with_opacity_prepare                      \
+            arm_2dp_rgb565_tile_transform_with_colour_keying_and_opacity_prepare
+
+#define arm_2dp_cccn888_tile_transform_with_opacity_prepare                     \
+            arm_2dp_cccn888_tile_transform_with_colour_keying_and_opacity_prepare
 
 #define arm_2dp_gray8_tile_transform_prepare                                    \
             arm_2dp_gray8_tile_transform_with_colour_keying_prepare
