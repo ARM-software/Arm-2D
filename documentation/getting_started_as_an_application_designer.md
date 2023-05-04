@@ -1,19 +1,50 @@
-# Getting Started as an Application Designer
+# Getting Started as an Application Designer <!-- omit from toc -->
 
-Arm-2D is not a GUI. It lacks many key elements required to be called a GUI, such as the element tree, the message processing, a complete set of controls, the support for interactive input devices, or a GUI designer.
+## 1 Before We Start
 
-If possible, I hope that no one would not be forced to use Arm-2D to develop GUI applications directly. However, under the pressure of cost, there are always some embedded products that need to develop GUI applications in a resource-constrained environment. Meanwhile, although some of the devices have relatively richer resources, the application software is often too big to leave sufficient memory for using a decent GUI stack.
+**Arm-2D is not a GUI.** It lacks many key elements to be called GUI, such as the element tree, the message processing, a rich set of controls, the support for interactive input devices, and a GUI designer.
 
-If your graphics application is relatively simple, consists of panels (for displaying parameters and user settings), and the human-machine interactions are relatively simple (through the keyboard, or without complicated touch gestures), then using Arm-2D APIs directly to design GUI applications might be a simple and effective option. 
+If possible, I hope that no one would have to use Arm-2D directly to create GUI applications. However, under the pressure of cost, there are always some embedded products developing GUI applications in resource-constrained environments (e.g. 64K Flash, 12K RAM etc.). Meanwhile, although some devices have relatively richer resources, the application software is often too big to reserve sufficient memory for a decent GUI stack. Supporting GUI application in resource constraint environments is a world "forgotten" by most of the mainstream embedded GUI stacks.
 
-GUI applications designed with Arm-2D is not only looking good but also have an impressively low memory footprint. This is an application subdivision field that cannot be covered by the current mainstream embedded GUI.
+If the graphics in your application is simple, i.e. consists of panels (for displaying parameters and user settings), and the human-machine interactions are implemented based on a keyboard (or a touch panel without complex touch gestures), then using Arm-2D APIs directly to design GUI applications might be an option.  In fact, if you can figure out a way to fulfill the missing parts aforementioned, the GUI application designed with Arm-2D is not only looking good but also has an impressively low memory footprint. 
 
-If you happen to meet the conditions aforementioned, **don't panic**, we will try our best to provide you with a simple and efficient user experience. 
-
-Focusing on application development, following the steps introduced in this article, I believe you can quickly master the way of using Arm-2D for application development.
+If you happen to meet the conditions above, **don't panic**, we will try our best to provide you with a simple and efficient user experience. **By focusing on the API usage and following the guidance** introduced in this article, **you can master the Arm-2D application design quickly**.
 
 
-## Tips For Exploring the Library
+- [1 Before We Start](#1-before-we-start)
+- [2 Step by Step Guidance](#2-step-by-step-guidance)
+  - [2.1 Familiar with the basic concepts](#21-familiar-with-the-basic-concepts)
+  - [2.2 Port Arm-2D to your local platform](#22-port-arm-2d-to-your-local-platform)
+  - [2.3 Play with Display Adapter, Scene Player and Scenes](#23-play-with-display-adapter-scene-player-and-scenes)
+  - [2.4 Try the basic Tile Operations and the Layout Assistant](#24-try-the-basic-tile-operations-and-the-layout-assistant)
+  - [2.5 Try existing example controls and scene templates](#25-try-existing-example-controls-and-scene-templates)
+  - [2.6 Write a simple GUI Application](#26-write-a-simple-gui-application)
+  - [2.7 Learn the basic method to optimize the performance and memory footprint](#27-learn-the-basic-method-to-optimize-the-performance-and-memory-footprint)
+  - [2.8 Tips for other advanced topics](#28-tips-for-other-advanced-topics)
+- [3 Tips For Exploring the Library](#3-tips-for-exploring-the-library)
+  - ["I am a library user, I only care about how to use the library"](#i-am-a-library-user-i-only-care-about-how-to-use-the-library)
+
+
+## 2 Step by Step Guidance
+
+### 2.1 Familiar with the basic concepts
+
+### 2.2 Port Arm-2D to your local platform
+
+### 2.3 Play with Display Adapter, Scene Player and Scenes
+
+### 2.4 Try the basic Tile Operations and the Layout Assistant
+
+### 2.5 Try existing example controls and scene templates
+
+### 2.6 Write a simple GUI Application
+
+### 2.7 Learn the basic method to optimize the performance and memory footprint
+
+### 2.8 Tips for other advanced topics
+
+
+## 3 Tips For Exploring the Library
 
 ### "I am a library user, I only care about how to use the library"
 
