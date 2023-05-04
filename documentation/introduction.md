@@ -144,7 +144,7 @@ Arm-2D has provided standard ways to add support for 2D image processing algorit
 
 ## 2 Basics
 
-Arm-2D defines some basic data structures for ease of use, providing a unified description method for various graphic resources and simplifying the parameters that need to be passed to 2D processing APIs. This chapter will introduce some basic concepts and corresponding data structures that you must know to work with the Arm-2D library. Arm-2D systematically introduces a Boxing Model to provide more sophisticated and easy to use 2D graphics operations.
+Arm-2D defines some basic data structures for ease of use, providing a unified description method for various graphic resources and simplifying the parameters that need to be passed to 2D processing APIs. This chapter will introduce some basic concepts and corresponding data structures that you must know to work with the Arm-2D library. Arm-2D systematically introduces a Bounding Box Model to provide more sophisticated and easy to use 2D graphics operations.
 
 ### 2.1 Region
 
@@ -172,7 +172,7 @@ typedef struct arm_2d_location_t {
 } arm_2d_location_t;
 ```
 
-Different from the general Cartesian coordinate system, in graphics, the Y-axis is usually mirrored in the opposite direction, which means that the lower the Y coordinate is, the larger the Y coordinate is. In the Boxing model that will be introduced later, we will understand that the **coordinates of a Region can be negative**, representing the position of the current Region relative to the starting point of its parent Region.
+Different from the general Cartesian coordinate system, in graphics, the Y-axis is usually mirrored in the opposite direction, which means that the lower the Y coordinate is, the larger the Y coordinate is. In the Bounding Box Model that will be introduced later, we will understand that the **coordinates of a Region can be negative**, representing the position of the current Region relative to the starting point of its parent Region.
 
 **Figure 2-2 When Location has a negative coordinates.** 
 
@@ -193,11 +193,11 @@ typedef struct arm_2d_size_t {
 
 Although a signed type ***int16_t*** is used to describe the width and height, negative numbers are meaningless and should be avoided.
 
-### 2.2 Boxing Model
+### 2.2 Bounding Box Model
 
-The so-called Boxing Model describes the affiliation between Regions, which is often used to describe the relationship between containers and visual elements. 
+The so-called Bounding Box Model describes the affiliation among Regions, which is often used to describe the relationship between containers and visual elements. 
 
-In a GUI stack, the Boxing Model usually talks about more complex stuff, such as the border's width, the margin inside a container border, the padding of / distance between the elements inside a container etc. Arm-2D does ***NOT*** cares about these details but only describes the simple relationship between a container and the elements inside.
+In a GUI stack, the Bounding Box Model usually talks about more complex stuff, such as the border's width, the margin inside a container border, the padding of / distance between the elements inside a container etc. Arm-2D does ***NOT*** cares about these details but only describes the simple relationship between a container and the elements inside.
 
 #### 2.2.1 Absolute Location and Relative Location
 
