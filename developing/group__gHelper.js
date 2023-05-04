@@ -194,5 +194,7 @@ var group__gHelper =
     [ "__arm_2d_helper_time_cos_slider", "group__gHelper.html#gaf4a791e531e1703b57da899fda365d10", null ],
     [ "__arm_2d_helper_colour_slider", "group__gHelper.html#gaf0581f6d478d0a665cd4ae477e6be6db", null ],
     [ "arm_2d_helper_draw_box", "group__gHelper.html#gacd0e2f64404ceef7412a3715c0bc47fd", null ],
-    [ "arm_2d_helper_file_next_frame", "group__gHelper.html#ga580f4c5dee012458e39406cd08922495", null ]
+    [ "arm_2d_helper_film_next_frame", "group__gHelper.html#ga8973bb94243b6b082f9e2888267bea04", null ],
+    [ "arm_2d_helper_film_reset", "group__gHelper.html#gaa3dd9a9991d2cf374924d7d3e57ff69b", null ],
+    [ "arm_2d_helper_film_set_frame", "group__gHelper.html#ga335d382332ef7ac57ecb84698fec8584", null ]
 ];

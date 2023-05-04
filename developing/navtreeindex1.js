@@ -146,6 +146,7 @@ var NAVTREEINDEX1 =
 "group__gHelper.html#ga141d41ffe2e75ff8cd17f9e9f553d0bc":[9,6,54],
 "group__gHelper.html#ga22a1338673baaec12c475e371d7593be":[9,6,76],
 "group__gHelper.html#ga23bfad9d8e31302b44dd096a57f9571d":[9,6,79],
+"group__gHelper.html#ga335d382332ef7ac57ecb84698fec8584":[9,6,87],
 "group__gHelper.html#ga36e4f860adbf479e6928621878e5b744":[9,6,55],
 "group__gHelper.html#ga377f8339912a8b31e11f45f6af81a1de":[9,6,39],
 "group__gHelper.html#ga3ebdd610af011bf6094c0f60721a2424":[9,6,47],
@@ -158,7 +159,6 @@ var NAVTREEINDEX1 =
 "group__gHelper.html#ga5161926583cc8da4c4b369b177845e42":[9,6,74],
 "group__gHelper.html#ga516674d7d321e4ecb058fd3b8ddbab70":[9,6,57],
 "group__gHelper.html#ga5725f716e87b58d67316d4536234181b":[9,6,51],
-"group__gHelper.html#ga580f4c5dee012458e39406cd08922495":[9,6,85],
 "group__gHelper.html#ga646d1178b70b862d77d33f8a84173f0e":[9,6,70],
 "group__gHelper.html#ga687e4765c7e7085b14e53845dcd5e5ae":[9,6,44],
 "group__gHelper.html#ga6b9ef0f3e0f80430fc036f6d3c67c135":[9,6,35],
@@ -167,11 +167,13 @@ var NAVTREEINDEX1 =
 "group__gHelper.html#ga807958c36a0f078fb7494df5ef005344":[9,6,45],
 "group__gHelper.html#ga8568abf593c04cf6df798e82cda60676":[9,6,63],
 "group__gHelper.html#ga8769bf582db2a83c923cb8be4887b8fb":[9,6,40],
+"group__gHelper.html#ga8973bb94243b6b082f9e2888267bea04":[9,6,85],
 "group__gHelper.html#ga90130f1c831d7fb20db39f20a488a3e1":[9,6,34],
 "group__gHelper.html#ga95877df905d15cebfc4abb41b9ecdc6a":[9,6,71],
 "group__gHelper.html#ga9ab5e975303c28c98f1ae62babb8286d":[9,6,73],
 "group__gHelper.html#ga9ade39134ac3f6e485b629f4c3a03ce7":[9,6,81],
 "group__gHelper.html#ga9d3b273bce58d135be740ba682ec11b7":[9,6,59],
+"group__gHelper.html#gaa3dd9a9991d2cf374924d7d3e57ff69b":[9,6,86],
 "group__gHelper.html#gaa7855ac916c44e531c4c8a9c5ec0e69e":[9,6,67],
 "group__gHelper.html#gaaa9f4d36caf6a8a5b456a9bd8122169b":[9,6,46],
 "group__gHelper.html#gab2cec999a9abbf7ec42bed4352a17b88":[9,6,62],
@@ -247,7 +249,5 @@ var NAVTREEINDEX1 =
 "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed123_____8SceneFIFO":[9,6,16],
 "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed123_____8Switch":[9,6,18],
 "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed123_____8Switch_8____unnamed129_____8Erase":[9,6,21],
-"group__gHelper.html#structarm__2d__scene__player__t_8____unnamed123_____8Switch_8____unnamed129_____8Fade":[9,6,20],
-"group__gHelper.html#structarm__2d__scene__player__t_8____unnamed123_____8Switch_8____unnamed129_____8Slide":[9,6,22],
-"group__gHelper.html#structarm__2d__scene__switch__mode__t":[9,6,1]
+"group__gHelper.html#structarm__2d__scene__player__t_8____unnamed123_____8Switch_8____unnamed129_____8Fade":[9,6,20]
 };
