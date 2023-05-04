@@ -105,7 +105,7 @@ var NAVTREE =
           [ "2.1.1 Location", "intro.html#autotoc_md61", null ],
           [ "2.1.2 Size", "intro.html#autotoc_md62", null ]
         ] ],
-        [ "2.2 Boxing Model", "intro.html#autotoc_md63", [
+        [ "2.2 Bounding Box Model", "intro.html#autotoc_md63", [
           [ "2.2.1 Absolute Location and Relative Location", "intro.html#autotoc_md64", null ],
           [ "2.2.2 Absolute Region and Relative Region", "intro.html#autotoc_md65", null ]
         ] ],

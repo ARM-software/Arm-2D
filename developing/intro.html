@@ -236,7 +236,7 @@ $(document).ready(function(){initNavTree('intro.html',''); initResizable(); });
 </table>
 <h1><a class="anchor" id="autotoc_md59"></a>
 2 Basics</h1>
-<p >Arm-2D defines some basic data structures for ease of use, providing a unified description method for various graphic resources and simplifying the parameters that need to be passed to 2D processing APIs. This chapter will introduce some basic concepts and corresponding data structures that you must know to work with the Arm-2D library. Arm-2D systematically introduces a Boxing Model to provide more sophisticated and easy to use 2D graphics operations.</p>
+<p >Arm-2D defines some basic data structures for ease of use, providing a unified description method for various graphic resources and simplifying the parameters that need to be passed to 2D processing APIs. This chapter will introduce some basic concepts and corresponding data structures that you must know to work with the Arm-2D library. Arm-2D systematically introduces a Bounding Box Model to provide more sophisticated and easy to use 2D graphics operations.</p>
 <h2><a class="anchor" id="autotoc_md60"></a>
 2.1 Region</h2>
 <p >Region is a rectangular area described by the Location (the coordinates of the upper left corner) and the Size information.</p>
@@ -253,7 +253,7 @@ $(document).ready(function(){initNavTree('intro.html',''); initResizable(); });
 <div class="line">    int16_t <a class="code hl_variable" href="group__gKernel.html#afcfe4e9ad6eb4f402d0001a14d888e5f" title="x in Cartesian coordinate system">iX</a>;</div>
 <div class="line">    int16_t <a class="code hl_variable" href="group__gKernel.html#ab6746d623416d076c3339cc9b44289b6" title="y in Cartesian coordinate system">iY</a>;</div>
 <div class="line">} <a class="code hl_struct" href="group__gKernel.html#structarm__2d__location__t" title="a type for coordinates (integer)">arm_2d_location_t</a>;</div>
-</div><!-- fragment --><p >Different from the general Cartesian coordinate system, in graphics, the Y-axis is usually mirrored in the opposite direction, which means that the lower the Y coordinate is, the larger the Y coordinate is. In the Boxing model that will be introduced later, we will understand that the <b>coordinates of a Region can be negative</b>, representing the position of the current Region relative to the starting point of its parent Region.</p>
+</div><!-- fragment --><p >Different from the general Cartesian coordinate system, in graphics, the Y-axis is usually mirrored in the opposite direction, which means that the lower the Y coordinate is, the larger the Y coordinate is. In the Bounding Box Model that will be introduced later, we will understand that the <b>coordinates of a Region can be negative</b>, representing the position of the current Region relative to the starting point of its parent Region.</p>
 <p ><b>Figure 2-2 When Location has a negative coordinates.</b></p>
 <p ><img src="Introduction2_1b.png" alt="" class="inline" title="When Location has a negative coordinates"/></p>
 <p >As shown in <b>Figure 2-2</b>, when the <em><b>x</b></em> and <em><b>y</b></em> coordinates of a Region are both negative, it actually has a considerable area outside (upper left corner) of its parent Region. When we try to find the intersection of the current Region and its parent Region, we will find that only part of the region is valid.</p>
@@ -266,9 +266,9 @@ $(document).ready(function(){initNavTree('intro.html',''); initResizable(); });
 <div class="line">} <a class="code hl_struct" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a>;</div>
 </div><!-- fragment --><p >Although a signed type <em><b>int16_t</b></em> is used to describe the width and height, negative numbers are meaningless and should be avoided.</p>
 <h2><a class="anchor" id="autotoc_md63"></a>
-2.2 Boxing Model</h2>
-<p >The so-called Boxing Model describes the affiliation between Regions, which is often used to describe the relationship between containers and visual elements.</p>
-<p >In a GUI stack, the Boxing Model usually talks about more complex stuff, such as the border's width, the margin inside a container border, the padding of / distance between the elements inside a container etc. Arm-2D does <em><b>NOT</b></em> cares about these details but only describes the simple relationship between a container and the elements inside.</p>
+2.2 Bounding Box Model</h2>
+<p >The so-called Bounding Box Model describes the affiliation among Regions, which is often used to describe the relationship between containers and visual elements.</p>
+<p >In a GUI stack, the Bounding Box Model usually talks about more complex stuff, such as the border's width, the margin inside a container border, the padding of / distance between the elements inside a container etc. Arm-2D does <em><b>NOT</b></em> cares about these details but only describes the simple relationship between a container and the elements inside.</p>
 <h3><a class="anchor" id="autotoc_md64"></a>
 2.2.1 Absolute Location and Relative Location</h3>
 <p >In Arm-2d, we consider panels or windows as containers, and the Locations of the panels and the windows are their coordinates in the display buffer. <b>We call this kind of location information that directly describes the coordinates in a display buffer as an Absolute Location</b>. In <b>Figure 2-3</b>, the panel (top container) coordinates are absolute coordinates.</p>
