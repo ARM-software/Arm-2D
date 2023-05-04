@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        06. April 2023
- * $Revision:    V.1.6.2
+ * $Date:        04. May 2023
+ * $Revision:    V.1.6.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -49,6 +49,7 @@ extern "C" {
 #   pragma clang diagnostic push
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #   pragma clang diagnostic ignored "-Wunused-function"
+#   pragma clang diagnostic ignored "-Wmissing-declarations"
 #endif
 
 /*!
@@ -161,8 +162,45 @@ extern "C" {
            (&arm_2d_safe_name(s_lTimestamp),##__VA_ARGS__));})
 
 
+/*!
+ * \brief initialize/implement a given film (arm_2d_helper_file_t) object 
+ *        at compile-time.
+ * \param[in] __sprites_tile the sprites tile
+ * \param[in] __width the width of each frame
+ * \param[in] __height the height of each frame
+ * \param[in] __column the number of frames per row in the sprite tile
+ * \param[in] __frame_count the total number of frames in the sprite tile
+ * \param[in] __period the period per-frame
+ * \note __period is used as a reference for applications. The helper service
+ *       doesn't use it at all.
+ */
+#define impl_film(  __sprites_tile,                                             \
+                    __width,                                                    \
+                    __height,                                                   \
+                    __column,                                                   \
+                    __frame_count,                                              \
+                    __period)                                                   \
+    {                                                                           \
+        .use_as__arm_2d_tile_t =                                                \
+            impl_child_tile((__sprites_tile), 0, 0, (__width), (__height)),     \
+        .hwColumn = (__column),                                                 \
+        .hwFrameNum = (__frame_count),                                          \
+        .hwPeriodPerFrame = (__period),                                         \
+    }
 
 /*============================ TYPES =========================================*/
+
+/*!
+ * \brief a helper class to represent a GIF-like resource
+ */
+typedef struct arm_2d_helper_film_t {
+    implement(arm_2d_tile_t);                                                   /*!< derived from arm_2d_tile_t */
+    uint16_t hwColumn;                                                          /*!< number of frames per row in a sprite tile */
+    uint16_t hwFrameNum;                                                        /*!< the total number of frames */
+    uint16_t hwPeriodPerFrame;                                                  /*!< the period per frame (optional, used as a reference) */
+    uint16_t hwFrameIndex;                                                      /*!< the frame index used at runtime */
+} arm_2d_helper_film_t;
+
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ PROTOTYPES ====================================*/
@@ -321,6 +359,12 @@ void arm_2d_helper_draw_box( const arm_2d_tile_t *ptTarget,
                              COLOUR_INT tColour,
                              uint8_t chOpacity);
 
+/*!
+ * \brier move to the next frame of a given film
+ * \param[in] ptThis the target film
+ */
+extern
+void arm_2d_helper_file_next_frame(arm_2d_helper_film_t *ptThis);
 
 /*! @} */
 
