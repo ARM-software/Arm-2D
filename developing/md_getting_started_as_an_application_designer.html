@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Arm-2D: Getting Started as an Application Designer</title>
+<title>Arm-2D: Getting Started as an Application Designer &lt;!-- omit from toc --&gt;</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -104,18 +104,54 @@ $(document).ready(function(){initNavTree('md_getting_started_as_an_application_d
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">Getting Started as an Application Designer </div></div>
+  <div class="headertitle"><div class="title">Getting Started as an Application Designer  </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p >Arm-2D is not a GUI. It lacks many key elements required to be called a GUI, such as the element tree, the message processing, a complete set of controls, the support for interactive input devices, or a GUI designer.</p>
-<p >If possible, I hope that no one would not be forced to use Arm-2D to develop GUI applications directly. However, under the pressure of cost, there are always some embedded products that need to develop GUI applications in a resource-constrained environment. Meanwhile, although some of the devices have relatively richer resources, the application software is often too big to leave sufficient memory for using a decent GUI stack.</p>
-<p >If your graphics application is relatively simple, consists of panels (for displaying parameters and user settings), and the human-machine interactions are relatively simple (through the keyboard, or without complicated touch gestures), then using Arm-2D APIs directly to design GUI applications might be a simple and effective option.</p>
-<p >GUI applications designed with Arm-2D is not only looking good but also have an impressively low memory footprint. This is an application subdivision field that cannot be covered by the current mainstream embedded GUI.</p>
-<p >If you happen to meet the conditions aforementioned, <b>don't panic</b>, we will try our best to provide you with a simple and efficient user experience.</p>
-<p >Focusing on application development, following the steps introduced in this article, I believe you can quickly master the way of using Arm-2D for application development.</p>
-<h1><a class="anchor" id="autotoc_md24"></a>
-Tips For Exploring the Library</h1>
-<h2><a class="anchor" id="autotoc_md25"></a>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md24"></a>
+1 Before We Start</h1>
+<p ><b>Arm-2D is not a GUI.</b> It lacks many key elements to be called GUI, such as the element tree, the message processing, a rich set of controls, the support for interactive input devices, and a GUI designer.</p>
+<p >If possible, I hope that no one would have to use Arm-2D directly to create GUI applications. However, under the pressure of cost, there are always some embedded products developing GUI applications in resource-constrained environments (e.g. 64K Flash, 12K RAM etc.). Meanwhile, although some devices have relatively richer resources, the application software is often too big to reserve sufficient memory for a decent GUI stack. Supporting GUI application in resource constraint environments is a world "forgotten" by most of the mainstream embedded GUI stacks.</p>
+<p >If the graphics in your application is simple, i.e. consists of panels (for displaying parameters and user settings), and the human-machine interactions are implemented based on a keyboard (or a touch panel without complex touch gestures), then using Arm-2D APIs directly to design GUI applications might be an option. In fact, if you can figure out a way to fulfill the missing parts aforementioned, the GUI application designed with Arm-2D is not only looking good but also has an impressively low memory footprint.</p>
+<p >If you happen to meet the conditions above, <b>don't panic</b>, we will try our best to provide you with a simple and efficient user experience. <b>By focusing on the API usage and following the guidance</b> introduced in this article, <b>you can master the Arm-2D application design quickly</b>.</p>
+<ul>
+<li><a href="#1-before-we-start">1 Before We Start</a></li>
+<li><a href="#2-step-by-step-guidance">2 Step by Step Guidance</a><ul>
+<li><a href="#21-familiar-with-the-basic-concepts">2.1 Familiar with the basic concepts</a></li>
+<li><a href="#22-port-arm-2d-to-your-local-platform">2.2 Port Arm-2D to your local platform</a></li>
+<li><a href="#23-play-with-display-adapter-scene-player-and-scenes">2.3 Play with Display Adapter, Scene Player and Scenes</a></li>
+<li><a href="#24-try-the-basic-tile-operations-and-the-layout-assistant">2.4 Try the basic Tile Operations and the Layout Assistant</a></li>
+<li><a href="#25-try-existing-example-controls-and-scene-templates">2.5 Try existing example controls and scene templates</a></li>
+<li><a href="#26-write-a-simple-gui-application">2.6 Write a simple GUI Application</a></li>
+<li><a href="#27-learn-the-basic-method-to-optimize-the-performance-and-memory-footprint">2.7 Learn the basic method to optimize the performance and memory footprint</a></li>
+<li><a href="#28-tips-for-other-advanced-topics">2.8 Tips for other advanced topics</a></li>
+</ul>
+</li>
+<li><a href="#3-tips-for-exploring-the-library">3 Tips For Exploring the Library</a><ul>
+<li><a href="#i-am-a-library-user-i-only-care-about-how-to-use-the-library">"I am a library user, I only care about how to use the library"</a></li>
+</ul>
+</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md25"></a>
+2 Step by Step Guidance</h1>
+<h2><a class="anchor" id="autotoc_md26"></a>
+2.1 Familiar with the basic concepts</h2>
+<h2><a class="anchor" id="autotoc_md27"></a>
+2.2 Port Arm-2D to your local platform</h2>
+<h2><a class="anchor" id="autotoc_md28"></a>
+2.3 Play with Display Adapter, Scene Player and Scenes</h2>
+<h2><a class="anchor" id="autotoc_md29"></a>
+2.4 Try the basic Tile Operations and the Layout Assistant</h2>
+<h2><a class="anchor" id="autotoc_md30"></a>
+2.5 Try existing example controls and scene templates</h2>
+<h2><a class="anchor" id="autotoc_md31"></a>
+2.6 Write a simple GUI Application</h2>
+<h2><a class="anchor" id="autotoc_md32"></a>
+2.7 Learn the basic method to optimize the performance and memory footprint</h2>
+<h2><a class="anchor" id="autotoc_md33"></a>
+2.8 Tips for other advanced topics</h2>
+<h1><a class="anchor" id="autotoc_md34"></a>
+3 Tips For Exploring the Library</h1>
+<h2><a class="anchor" id="autotoc_md35"></a>
 "I am a library user, I only care about how to use the library"</h2>
 <ul>
 <li>For library users, <b>ALL</b> useful information, i.e. type definitions, macros, prototypes of functions etc., are stored in header files which have <b>NO</b> double under-scope as their prefixes. We call those header files the <b>PUBLIC HEADER FILES</b>.</li>
