@@ -6,5 +6,9 @@ var searchData=
   ['how_20to_20deploy_20the_20arm_2d2d_20library_3',['How to Deploy the Arm-2D Library',['../deploy.html',1,'']]],
   ['how_20to_20use_20layout_20assistant_4',['How to Use Layout Assistant',['../md_how_to_use_layout_assistant.html',1,'']]],
   ['how_20to_20use_20tile_20operations_5',['How to Use Tile Operations',['../use_tile.html',1,'']]],
-  ['hwsetting_6',['hwSetting',['../group__gHelper.html#a045e8d2fef0751cbb821f47c9e26b978',1,'__arm_2d_helper_scene_switch_t']]]
+  ['hwcolumn_6',['hwColumn',['../group__gHelper.html#ad9581b76e350696b5460e8e79239ec37',1,'arm_2d_helper_film_t']]],
+  ['hwframeindex_7',['hwFrameIndex',['../group__gHelper.html#afcd507aa1aef13e25c183d920b598ffc',1,'arm_2d_helper_film_t']]],
+  ['hwframenum_8',['hwFrameNum',['../group__gHelper.html#ad39f930095be0f78da8c8728afbc82cd',1,'arm_2d_helper_film_t']]],
+  ['hwperiodperframe_9',['hwPeriodPerFrame',['../group__gHelper.html#ac7afe838e59ecfe4d41f0ac1420ac010',1,'arm_2d_helper_film_t']]],
+  ['hwsetting_10',['hwSetting',['../group__gHelper.html#a045e8d2fef0751cbb821f47c9e26b978',1,'__arm_2d_helper_scene_switch_t']]]
 ];

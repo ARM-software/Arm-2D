@@ -58,6 +58,13 @@ var group__gHelper =
       [ "Statistics", "group__gHelper.html#ab3b8a4706acd6331477a2a42763b7de5", null ]
     ] ],
     [ "arm_2d_helper_transform_t", "group__gHelper.html#structarm__2d__helper__transform__t", null ],
+    [ "arm_2d_helper_film_t", "group__gHelper.html#structarm__2d__helper__film__t", [
+      [ "implement", "group__gHelper.html#adc9eeca97d41a439c3f1800977a54a37", null ],
+      [ "hwColumn", "group__gHelper.html#ad9581b76e350696b5460e8e79239ec37", null ],
+      [ "hwFrameNum", "group__gHelper.html#ad39f930095be0f78da8c8728afbc82cd", null ],
+      [ "hwPeriodPerFrame", "group__gHelper.html#ac7afe838e59ecfe4d41f0ac1420ac010", null ],
+      [ "hwFrameIndex", "group__gHelper.html#afcd507aa1aef13e25c183d920b598ffc", null ]
+    ] ],
     [ "__arm_2d_helper_scene_switch_t.Feature", "group__gHelper.html#struct____arm__2d__helper__scene__switch__t_8Feature", [
       [ "chMode", "group__gHelper.html#a32e1ccd08315dddf03bcc84d8e25eb46", null ],
       [ "bIgnoreOldSceneBG", "group__gHelper.html#a293bd1e526f3a9b72e8a9c323c835373", null ],
@@ -117,6 +124,7 @@ var group__gHelper =
     [ "arm_2d_helper_time_liner_slider", "group__gHelper.html#gab9da2ee4cd3a208e7ff4ece9ac8086f0", null ],
     [ "arm_2d_helper_time_cos_slider", "group__gHelper.html#ga687e4765c7e7085b14e53845dcd5e5ae", null ],
     [ "arm_2d_helper_time_half_cos_slider", "group__gHelper.html#ga807958c36a0f078fb7494df5ef005344", null ],
+    [ "impl_film", "group__gHelper.html#gaaa9f4d36caf6a8a5b456a9bd8122169b", null ],
     [ "arm_2d_scene_before_scene_switching_handler_t", "group__gHelper.html#ga3ebdd610af011bf6094c0f60721a2424", null ],
     [ "arm_2d_helper_render_handler_t", "group__gHelper.html#ga03c2991d31bd58c8a1d5303fb9460f39", null ],
     [ "arm_2d_scene_player_switch_mode_t", "group__gHelper.html#gab79c6ab3540af636c218dc40fa065ac3", [
@@ -185,5 +193,6 @@ var group__gHelper =
     [ "__arm_2d_helper_time_half_cos_slider", "group__gHelper.html#ga9ade39134ac3f6e485b629f4c3a03ce7", null ],
     [ "__arm_2d_helper_time_cos_slider", "group__gHelper.html#gaf4a791e531e1703b57da899fda365d10", null ],
     [ "__arm_2d_helper_colour_slider", "group__gHelper.html#gaf0581f6d478d0a665cd4ae477e6be6db", null ],
-    [ "arm_2d_helper_draw_box", "group__gHelper.html#gacd0e2f64404ceef7412a3715c0bc47fd", null ]
+    [ "arm_2d_helper_draw_box", "group__gHelper.html#gacd0e2f64404ceef7412a3715c0bc47fd", null ],
+    [ "arm_2d_helper_file_next_frame", "group__gHelper.html#ga580f4c5dee012458e39406cd08922495", null ]
 ];
