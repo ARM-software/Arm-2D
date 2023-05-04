@@ -10,6 +10,7 @@ If the graphics in your application is simple, i.e. consists of panels (for disp
 
 If you happen to meet the conditions above, **don't panic**, we will try our best to provide you with a simple and efficient user experience. **By focusing on the API usage and following the guidance** introduced in this article, **you can master the Arm-2D application design quickly**.
 
+### Table of Content <!-- omit from toc -->
 
 - [1 Before We Start](#1-before-we-start)
 - [2 Step by Step Guidance](#2-step-by-step-guidance)
@@ -28,6 +29,8 @@ If you happen to meet the conditions above, **don't panic**, we will try our bes
 ## 2 Step by Step Guidance
 
 ### 2.1 Familiar with the basic concepts
+
+The first step of getting started is getting familiar with some basic concepts, among which ***Tile***, ***Region*** and corresponding ***Bounding Box model*** are the most fundamental ones, as almost all of the APIs take Tile(s) and Region(s) as input/output parameters. Please kindly reading [**README**](../README.md) and [**Introduction**](./introduction.md) to familiar those basic concepts. 
 
 ### 2.2 Port Arm-2D to your local platform
 
