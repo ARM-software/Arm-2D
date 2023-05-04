@@ -866,12 +866,18 @@ The examples and documents for Asynchronous mode will be added soon.
 
 | Function Name                                                | Description                                                  | NOTE |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ---- |
-| ***arm_2dp_gray8_tile_transform_prepare***                   | prepare for a transform in ***GRAY8***                       |      |
-| ***arm_2dp_rgb565_tile_transform_prepare***                  | prepare for a transform in ***RGB565***                      |      |
-| ***arm_2dp_cccn888_tile_transform_prepare***                 | prepare for a transform in ***CCCN888***                     |      |
-| ***arm_2dp_gray8_tile_transform_with_opacity_prepare***      | prepare for a transform with opacity in ***GRAY8***          |      |
-| ***arm_2dp_rgb565_tile_transform_with_opacity_prepare***     | prepare for a transform with opacity in ***RGB565***         |      |
-| ***arm_2dp_cccn888_tile_transform_with_opacity_prepare***    | prepare for a transform with opacity in ***CCCN888***        |      |
+| ***arm_2dp_gray8_tile_transform_with_colour_keying_prepare*** | prepare for a transform with colour-keying in ***GRAY8***    |      |
+| ***arm_2dp_rgb565_tile_transform_with_colour_keying_prepare*** | prepare for a transform with colour-keying in ***RGB565***   |      |
+| ***arm_2dp_cccn888_tile_transform_with_colour_keying_prepare*** | prepare for a transform with colour-keying in ***CCCN888***  |      |
+| ***arm_2dp_gray8_tile_transform_with_colour_keying_and_opacity_prepare*** | prepare for a transform with with colour-keying and opacity in ***GRAY8*** |      |
+| ***arm_2dp_rgb565_tile_transform_with_colour_keying_and_opacity_prepare*** | prepare for a transform with with colour-keying and opacity in ***RGB565*** |      |
+| ***arm_2dp_cccn888_tile_transform_with_colour_keying_and_opacity_prepare*** | prepare for a transform with with colour-keying and opacity in ***CCCN888*** |      |
+| ***arm_2dp_gray8_tile_transform_only_prepare***              | prepare for a transform only in ***GRAY8***                  |      |
+| ***arm_2dp_rgb565_tile_transform_only_prepare***             | prepare for a transform only in ***RGB565***                 |      |
+| ***arm_2dp_cccn888_tile_transform_only_prepare***            | prepare for a transform only in ***CCCN888***                |      |
+| ***arm_2dp_gray8_tile_transform_only_with_opacity_prepare*** | prepare for a transform only with opacity in ***GRAY8***     |      |
+| ***arm_2dp_rgb565_tile_transform_only_with_opacity_prepare*** | prepare for a transform only with opacity in ***RGB565***    |      |
+| ***arm_2dp_cccn888_tile_transform_only_with_opacity_prepare*** | prepare for a transform only with opacity in ***CCCN888***   |      |
 | ***arm_2dp_gray8_tile_transform_with_src_mask_prepare***     | prepare for a transform with source mask in ***GRAY8***      |      |
 | ***arm_2dp_rgb565_tile_transform_with_src_mask_prepare***    | prepare for a transform with source mask in ***RGB565***     |      |
 | ***arm_2dp_cccn888_tile_transform_with_src_mask_prepare***   | prepare for a transform with source mask in ***CCCN888***    |      |
@@ -906,4 +912,4 @@ The examples and documents for Asynchronous mode will be added soon.
 
 ### 3.6 Filters
 
-To be added in future versions.
+To be added in the future.
