@@ -1,7 +1,6 @@
-# Introduction for Arm-2D {#intro}
+# Introduction for Arm-2D {#intro} <!-- omit from toc -->
 
 This document explains the basic concepts of Arm-2D. It doesn't matter whether you have read the **README** in the root directory. The content is suitable for everyone. 
-
 
 
 ## 1 Overview
@@ -15,6 +14,47 @@ At the beginning of our adventure, you might have a lot of questions, such as
 - What about the development environment?
 
 You will find the answers in the following sections. 
+
+### Table of Contents <!-- omit from toc -->
+- [1 Overview](#1-overview)
+  - [1.1 What is Arm-2D](#11-what-is-arm-2d)
+  - [1.2 Target Audiences](#12-target-audiences)
+    - [1.2.1 GUI Service Provider](#121-gui-service-provider)
+    - [1.2.2 Silicon Vendor](#122-silicon-vendor)
+    - [1.2.3 Embedded Application Designers](#123-embedded-application-designers)
+  - [1.3 Arm-2D Libraries](#13-arm-2d-libraries)
+    - [1.3.1 Standard Software Implementation](#131-standard-software-implementation)
+    - [1.3.2 Helium Acceleration](#132-helium-acceleration)
+    - [1.3.4 Third-party Implementation](#134-third-party-implementation)
+    - [1.3.5 Arm Custom Instruction Support](#135-arm-custom-instruction-support)
+  - [1.4 Scope and Limitations](#14-scope-and-limitations)
+    - [1.4.1 Scope](#141-scope)
+    - [1.4.2 Limitations](#142-limitations)
+  - [1.5 Operation Categories](#15-operation-categories)
+  - [1.6 Folder Structures](#16-folder-structures)
+- [2 Basics](#2-basics)
+  - [2.1 Region](#21-region)
+    - [2.1.1 Location](#211-location)
+    - [2.1.2 Size](#212-size)
+  - [2.2 Bounding Box Model](#22-bounding-box-model)
+    - [2.2.1 Absolute Location and Relative Location](#221-absolute-location-and-relative-location)
+    - [2.2.2 Absolute Region and Relative Region](#222-absolute-region-and-relative-region)
+  - [2.3 Tile](#23-tile)
+    - [2.3.1 Root Tile](#231-root-tile)
+    - [2.3.2 Child Tile](#232-child-tile)
+    - [2.3.3 Partial Frame Buffer](#233-partial-frame-buffer)
+  - [2.4 Colour](#24-colour)
+  - [2.4 API Usage Modes](#24-api-usage-modes)
+    - [2.4.1 Synchronous Mode](#241-synchronous-mode)
+    - [2.4.2 Asynchronous Mode](#242-asynchronous-mode)
+- [3 API Summary for commonly used APIs](#3-api-summary-for-commonly-used-apis)
+  - [3.1 Tile Operations](#31-tile-operations)
+  - [3.2 Colour Space Conversion](#32-colour-space-conversion)
+  - [3.3 Alpha Blending and Masks related](#33-alpha-blending-and-masks-related)
+  - [3.4 Transform (Rotation/Scaling)](#34-transform-rotationscaling)
+  - [3.5 Drawing](#35-drawing)
+  - [3.6 Filters](#36-filters)
+
 
 ### 1.1 What is Arm-2D
 
