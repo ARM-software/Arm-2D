@@ -364,7 +364,26 @@ void arm_2d_helper_draw_box( const arm_2d_tile_t *ptTarget,
  * \param[in] ptThis the target film
  */
 extern
-void arm_2d_helper_file_next_frame(arm_2d_helper_film_t *ptThis);
+ARM_NONNULL(1)
+void arm_2d_helper_film_next_frame(arm_2d_helper_film_t *ptThis);
+
+/*!
+ * \brier reset the frame index to zero
+ * \param[in] ptThis the target film
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_film_reset(arm_2d_helper_film_t *ptThis);
+
+/*!
+ * \brier reset the frame index to a specified value and wrap around if the
+ *        index number is out of range.
+ * \param[in] ptThis the target film
+ * \param[in] nIndex the given index
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_film_set_frame(arm_2d_helper_film_t *ptThis, int32_t nIndex);
 
 /*! @} */
 

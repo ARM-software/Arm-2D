@@ -435,8 +435,8 @@ void arm_2d_helper_draw_box( const arm_2d_tile_t *ptTarget,
     arm_2d_op_wait_async(NULL);
 }
 
-
-void arm_2d_helper_file_next_frame(arm_2d_helper_film_t *ptThis)
+ARM_NONNULL(1)
+void arm_2d_helper_film_next_frame(arm_2d_helper_film_t *ptThis)
 {
     assert(NULL != ptThis);
     
@@ -453,6 +453,36 @@ void arm_2d_helper_file_next_frame(arm_2d_helper_film_t *ptThis)
         ptFrame->tRegion.tLocation.iX = 0;
         ptFrame->tRegion.tLocation.iY = 0;
     }
+}
+
+ARM_NONNULL(1)
+void arm_2d_helper_film_reset(arm_2d_helper_film_t *ptThis)
+{
+    assert(NULL != ptThis);
+    arm_2d_tile_t *ptFrame = &this.use_as__arm_2d_tile_t;
+
+    ptFrame->tRegion.tLocation.iX = 0;
+    ptFrame->tRegion.tLocation.iY = 0;
+    this.hwFrameIndex = 0;
+}
+
+
+ARM_NONNULL(1)
+void arm_2d_helper_film_set_frame(arm_2d_helper_film_t *ptThis, int32_t nIndex)
+{
+    assert(NULL != ptThis);
+    arm_2d_tile_t *ptFrame = &this.use_as__arm_2d_tile_t;
+
+    nIndex %= this.hwFrameNum;
+    if (nIndex < 0) {
+        nIndex += this.hwFrameNum;
+    }
+
+    this.hwFrameIndex = nIndex;
+    ptFrame->tRegion.tLocation.iX 
+        = (nIndex % this.hwColumn) * ptFrame->tRegion.tSize.iWidth;
+    ptFrame->tRegion.tLocation.iY 
+        = (nIndex / this.hwColumn) * ptFrame->tRegion.tSize.iHeight;
 }
 
 

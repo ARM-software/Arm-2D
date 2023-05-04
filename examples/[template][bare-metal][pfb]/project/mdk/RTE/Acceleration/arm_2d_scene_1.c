@@ -65,14 +65,18 @@
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoGRAY8
+#   define c_tileWIFISignal         c_tileWIFISignalGRAY8
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoRGB565
+#   define c_tileWIFISignal         c_tileWIFISignalRGB565
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoCCCA8888
+#   define c_tileWIFISignal         c_tileWIFISignalCCCA8888
+
 #else
 #   error Unsupported colour depth!
 #endif
@@ -86,6 +90,18 @@
 
 extern const arm_2d_tile_t c_tileCMSISLogo;
 extern const arm_2d_tile_t c_tileCMSISLogoMask;
+
+extern const arm_2d_tile_t c_tileWIFISignal;
+extern const arm_2d_tile_t c_tileWIFISignalMask;
+
+static arm_2d_helper_film_t s_tileWIFISignalFilm = 
+    impl_film(c_tileWIFISignal, 32, 32, 6, 36, 33);
+
+
+static arm_2d_helper_film_t s_tileWIFISignalFilmMask = 
+    impl_film(c_tileWIFISignalMask, 32, 32, 6, 36, 33);
+
+
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
@@ -126,12 +142,17 @@ static void __on_scene1_background_complete(arm_2d_scene_t *ptScene)
 
 }
 
-
 static void __on_scene1_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_1_t *ptThis = (user_scene_1_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    if (arm_2d_helper_is_time_out(  s_tileWIFISignalFilm.hwPeriodPerFrame, 
+                                    &this.lTimestamp[2])) {
+
+        arm_2d_helper_film_next_frame(&s_tileWIFISignalFilm);
+        arm_2d_helper_film_next_frame(&s_tileWIFISignalFilmMask);
+    }
 }
 
 static void __on_scene1_frame_complete(arm_2d_scene_t *ptScene)
@@ -140,7 +161,7 @@ static void __on_scene1_frame_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
     
     /* switch to next scene after 3s */
-    if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[0])) {
+    if (arm_2d_helper_is_time_out(6000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 }
@@ -164,6 +185,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene1_background_handler)
     return arm_fsm_rt_cpl;
 }
 
+
+
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene1_handler)
 {
@@ -172,26 +195,41 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene1_handler)
     ARM_2D_UNUSED(bIsNewFrame);
     
     /*-----------------------draw the foreground begin-----------------------*/
-    
+
     /* following code is just a demo, you can remove them */
-    
-    arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
+    arm_2d_canvas(ptTile, __canvas) {
+        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
 
-    if (bIsNewFrame) {
-        int32_t iResult;
-        arm_2d_helper_time_half_cos_slider(0, 1000, 3000, &iResult, &this.lTimestamp[1]);
-        this.hwProgress = (uint16_t)iResult;
+        if (bIsNewFrame) {
+            int32_t iResult;
+            arm_2d_helper_time_half_cos_slider(0, 1000, 6000, &iResult, &this.lTimestamp[1]);
+            this.hwProgress = (uint16_t)iResult;
+        }
+
+        progress_bar_drill_show(ptTile, this.hwProgress, bIsNewFrame);
+        
+
+        arm_2d_align_top_right( __canvas, 
+                                s_tileWIFISignalFilm
+                                    .use_as__arm_2d_tile_t
+                                        .tRegion
+                                            .tSize) {
+
+            arm_2d_tile_copy_with_src_mask_only(
+                                    (arm_2d_tile_t *)&s_tileWIFISignalFilm,
+                                    (arm_2d_tile_t *)&s_tileWIFISignalFilmMask,
+                                    ptTile,
+                                    &__top_right_region);
+
+        }
+
+        /* draw text at the top-left corner */
+        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+        arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
+        arm_lcd_text_location(0,0);
+        //arm_lcd_puts("Scene 1");
+        arm_lcd_printf("scene 1");
     }
-
-
-    progress_bar_drill_show(ptTile, this.hwProgress, bIsNewFrame);
-
-    /* draw text at the top-left corner */
-    arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-    arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
-    arm_lcd_text_location(0,0);
-    //arm_lcd_puts("Scene 1");
-    arm_lcd_printf("scene 1");
 
     /*-----------------------draw the foreground end  -----------------------*/
     arm_2d_op_wait_async(NULL);
@@ -222,8 +260,10 @@ user_scene_1_t *__arm_2d_scene1_init(   arm_2d_scene_player_t *ptDispAdapter,
                 .iHeight = 32,
             },
         ),
-        
-        /* add the last region:
+
+        ADD_REGION_TO_LIST(s_tDirtyRegions),
+
+       /* add the last region:
          * it is the top left corner for text display 
          */
         ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
@@ -250,7 +290,27 @@ user_scene_1_t *__arm_2d_scene1_init(   arm_2d_scene_player_t *ptDispAdapter,
     } else {
         memset(ptScene, 0, sizeof(user_scene_1_t));
     }
+
+    /* get the screen region */
+    arm_2d_region_t tScreen
+        = arm_2d_helper_pfb_get_display_area(
+            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
     
+    /* initialise dirty region 0 at runtime
+     * this demo shows that we create a region in the centre of a screen(320*240)
+     * for a image stored in the tile c_tileCMSISLogoMask
+     */
+    arm_2d_align_top_right( tScreen, 
+                            s_tileWIFISignalFilm
+                                .use_as__arm_2d_tile_t
+                                    .tRegion
+                                        .tSize) {
+        s_tDirtyRegions[1].tRegion = __top_right_region;
+    }
+
+    /* set to the last frame */
+    arm_2d_helper_film_set_frame(&s_tileWIFISignalFilm, -1);
+
     *ptScene = (user_scene_1_t){
         .use_as__arm_2d_scene_t = {
         /* Please uncommon the callbacks if you need them
@@ -262,7 +322,7 @@ user_scene_1_t *__arm_2d_scene1_init(   arm_2d_scene_player_t *ptDispAdapter,
 
         //.fnOnBGStart    = &__on_scene1_background_start,
         //.fnOnBGComplete = &__on_scene1_background_complete,
-        //.fnOnFrameStart = &__on_scene1_frame_start,
+        .fnOnFrameStart = &__on_scene1_frame_start,
         .fnOnFrameCPL   = &__on_scene1_frame_complete,
         .fnDepose       = &__on_scene1_depose,
         },

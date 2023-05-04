@@ -150,8 +150,8 @@ static void __on_scene1_frame_start(arm_2d_scene_t *ptScene)
     if (arm_2d_helper_is_time_out(  s_tileWIFISignalFilm.hwPeriodPerFrame, 
                                     &this.lTimestamp[2])) {
 
-        arm_2d_helper_file_next_frame(&s_tileWIFISignalFilm);
-        arm_2d_helper_file_next_frame(&s_tileWIFISignalFilmMask);
+        arm_2d_helper_film_next_frame(&s_tileWIFISignalFilm);
+        arm_2d_helper_film_next_frame(&s_tileWIFISignalFilmMask);
     }
 }
 
@@ -161,9 +161,9 @@ static void __on_scene1_frame_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
     
     /* switch to next scene after 3s */
-//    if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[0])) {
-//        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
-//    }
+    if (arm_2d_helper_is_time_out(6000, &this.lTimestamp[0])) {
+        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+    }
 }
 
 
@@ -202,7 +202,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene1_handler)
 
         if (bIsNewFrame) {
             int32_t iResult;
-            arm_2d_helper_time_half_cos_slider(0, 1000, 3000, &iResult, &this.lTimestamp[1]);
+            arm_2d_helper_time_half_cos_slider(0, 1000, 6000, &iResult, &this.lTimestamp[1]);
             this.hwProgress = (uint16_t)iResult;
         }
 
@@ -222,8 +222,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene1_handler)
                                     &__top_right_region);
 
         }
-        
-        
 
         /* draw text at the top-left corner */
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
@@ -309,6 +307,9 @@ user_scene_1_t *__arm_2d_scene1_init(   arm_2d_scene_player_t *ptDispAdapter,
                                         .tSize) {
         s_tDirtyRegions[1].tRegion = __top_right_region;
     }
+
+    /* set to the last frame */
+    arm_2d_helper_film_set_frame(&s_tileWIFISignalFilm, -1);
 
     *ptScene = (user_scene_1_t){
         .use_as__arm_2d_scene_t = {
