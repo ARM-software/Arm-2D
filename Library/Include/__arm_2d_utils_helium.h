@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2023 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm-2d_utils_helium.h
  * Description:  Provides helium utility routines
  *
- * $Date:        07. Feb 2023
- * $Revision:    V 0.0.3
+ * $Date:        5. May 2023
+ * $Revision:    V 0.0.4
  *
  * Target Processor:  Cortex-M cores with Helium
  *
@@ -191,6 +191,7 @@ uint16x8_t __arm_2d_rgb565_blending_opacity_single_vec(
 }
 
 /* Mix RGB565 vector with a scalar */
+__STATIC_FORCEINLINE
 uint16x8_t __arm_2d_rgb565_blending_single_vec_with_scal(
                                             uint16x8_t      vec,
                                             __arm_2d_color_fast_rgb_t     * scal,
