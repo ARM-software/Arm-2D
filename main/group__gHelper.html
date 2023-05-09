@@ -153,6 +153,9 @@ Data Structures</h2></td></tr>
 <tr class="memitem:structarm__2d__helper__transform__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__helper__transform__t">arm_2d_helper_transform_t</a></td></tr>
 <tr class="memdesc:structarm__2d__helper__transform__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">the Transform helper control block  <a href="group__gHelper.html#structarm__2d__helper__transform__t">More...</a><br /></td></tr>
 <tr class="separator:structarm__2d__helper__transform__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structarm__2d__helper__film__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__helper__film__t">arm_2d_helper_film_t</a></td></tr>
+<tr class="memdesc:structarm__2d__helper__film__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">a helper class to represent a GIF-like resource  <a href="group__gHelper.html#structarm__2d__helper__film__t">More...</a><br /></td></tr>
+<tr class="separator:structarm__2d__helper__film__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:struct____arm__2d__helper__scene__switch__t_8Feature"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#struct____arm__2d__helper__scene__switch__t_8Feature">__arm_2d_helper_scene_switch_t.Feature</a></td></tr>
 <tr class="separator:struct____arm__2d__helper__scene__switch__t_8Feature"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structarm__2d__scene__t_8____unnamed121____"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__scene__t_8____unnamed121____">arm_2d_scene_t.__unnamed121__</a></td></tr>
@@ -287,6 +290,9 @@ Macros</h2></td></tr>
 <tr class="memitem:ga807958c36a0f078fb7494df5ef005344"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga807958c36a0f078fb7494df5ef005344">arm_2d_helper_time_half_cos_slider</a>(__from,  __to,  __ms,  __stroke_ptr,  ...)</td></tr>
 <tr class="memdesc:ga807958c36a0f078fb7494df5ef005344"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the stroke of a cosine slider(0~pi) based on time  <a href="group__gHelper.html#ga807958c36a0f078fb7494df5ef005344">More...</a><br /></td></tr>
 <tr class="separator:ga807958c36a0f078fb7494df5ef005344"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaa9f4d36caf6a8a5b456a9bd8122169b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaaa9f4d36caf6a8a5b456a9bd8122169b">impl_film</a>( __sprites_tile,  __width,  __height,  __column,  __frame_count,  __period)</td></tr>
+<tr class="memdesc:gaaa9f4d36caf6a8a5b456a9bd8122169b"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize/implement a given film (arm_2d_helper_file_t) object at compile-time.  <a href="group__gHelper.html#gaaa9f4d36caf6a8a5b456a9bd8122169b">More...</a><br /></td></tr>
+<tr class="separator:gaaa9f4d36caf6a8a5b456a9bd8122169b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -473,6 +479,12 @@ Functions</h2></td></tr>
 <tr class="separator:gaf0581f6d478d0a665cd4ae477e6be6db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacd0e2f64404ceef7412a3715c0bc47fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gacd0e2f64404ceef7412a3715c0bc47fd">arm_2d_helper_draw_box</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, int16_t iBorderWidth, COLOUR_INT tColour, uint8_t chOpacity)</td></tr>
 <tr class="separator:gacd0e2f64404ceef7412a3715c0bc47fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8973bb94243b6b082f9e2888267bea04"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga8973bb94243b6b082f9e2888267bea04">arm_2d_helper_film_next_frame</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__film__t">arm_2d_helper_film_t</a> *ptThis)</td></tr>
+<tr class="separator:ga8973bb94243b6b082f9e2888267bea04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa3dd9a9991d2cf374924d7d3e57ff69b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaa3dd9a9991d2cf374924d7d3e57ff69b">arm_2d_helper_film_reset</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__film__t">arm_2d_helper_film_t</a> *ptThis)</td></tr>
+<tr class="separator:gaa3dd9a9991d2cf374924d7d3e57ff69b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga335d382332ef7ac57ecb84698fec8584"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga335d382332ef7ac57ecb84698fec8584">arm_2d_helper_film_set_frame</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__film__t">arm_2d_helper_film_t</a> *ptThis, int32_t nIndex)</td></tr>
+<tr class="separator:ga335d382332ef7ac57ecb84698fec8584"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -1139,6 +1151,116 @@ __unnamed__</td>
 <td class="fielddoc">
 </td></tr>
 </table>
+
+</div>
+</div>
+<a name="structarm__2d__helper__film__t" id="structarm__2d__helper__film__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structarm__2d__helper__film__t">&#9670;&nbsp;</a></span>arm_2d_helper_film_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct arm_2d_helper_film_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p >a helper class to represent a GIF-like resource </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Public Member Functions</h3></td></tr>
+<tr class="memitem:adc9eeca97d41a439c3f1800977a54a37"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#adc9eeca97d41a439c3f1800977a54a37">implement</a> (<a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a>)</td></tr>
+<tr class="separator:adc9eeca97d41a439c3f1800977a54a37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:ad9581b76e350696b5460e8e79239ec37"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ad9581b76e350696b5460e8e79239ec37">hwColumn</a></td></tr>
+<tr class="separator:ad9581b76e350696b5460e8e79239ec37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad39f930095be0f78da8c8728afbc82cd"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ad39f930095be0f78da8c8728afbc82cd">hwFrameNum</a></td></tr>
+<tr class="separator:ad39f930095be0f78da8c8728afbc82cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7afe838e59ecfe4d41f0ac1420ac010"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ac7afe838e59ecfe4d41f0ac1420ac010">hwPeriodPerFrame</a></td></tr>
+<tr class="separator:ac7afe838e59ecfe4d41f0ac1420ac010"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcd507aa1aef13e25c183d920b598ffc"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#afcd507aa1aef13e25c183d920b598ffc">hwFrameIndex</a></td></tr>
+<tr class="separator:afcd507aa1aef13e25c183d920b598ffc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Member Function Documentation</h4>
+<a id="adc9eeca97d41a439c3f1800977a54a37" name="adc9eeca97d41a439c3f1800977a54a37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc9eeca97d41a439c3f1800977a54a37">&#9670;&nbsp;</a></span>implement()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">arm_2d_helper_film_t::implement </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a>&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >derived from <a class="el" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> </p>
+
+</div>
+</div>
+<h4 class="groupheader">Field Documentation</h4>
+<a id="ad9581b76e350696b5460e8e79239ec37" name="ad9581b76e350696b5460e8e79239ec37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9581b76e350696b5460e8e79239ec37">&#9670;&nbsp;</a></span>hwColumn</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t arm_2d_helper_film_t::hwColumn</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >number of frames per row in a sprite tile </p>
+
+</div>
+</div>
+<a id="ad39f930095be0f78da8c8728afbc82cd" name="ad39f930095be0f78da8c8728afbc82cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad39f930095be0f78da8c8728afbc82cd">&#9670;&nbsp;</a></span>hwFrameNum</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t arm_2d_helper_film_t::hwFrameNum</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >the total number of frames </p>
+
+</div>
+</div>
+<a id="ac7afe838e59ecfe4d41f0ac1420ac010" name="ac7afe838e59ecfe4d41f0ac1420ac010"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7afe838e59ecfe4d41f0ac1420ac010">&#9670;&nbsp;</a></span>hwPeriodPerFrame</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t arm_2d_helper_film_t::hwPeriodPerFrame</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >the period per frame (optional, used as a reference) </p>
+
+</div>
+</div>
+<a id="afcd507aa1aef13e25c183d920b598ffc" name="afcd507aa1aef13e25c183d920b598ffc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afcd507aa1aef13e25c183d920b598ffc">&#9670;&nbsp;</a></span>hwFrameIndex</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t arm_2d_helper_film_t::hwFrameIndex</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >the frame index used at runtime </p>
+
+</div>
+</div>
 
 </div>
 </div>
@@ -2968,6 +3090,79 @@ fStep</td>
 
 </div>
 </div>
+<a id="gaaa9f4d36caf6a8a5b456a9bd8122169b" name="gaaa9f4d36caf6a8a5b456a9bd8122169b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaaa9f4d36caf6a8a5b456a9bd8122169b">&#9670;&nbsp;</a></span>impl_film</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define impl_film</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__sprites_tile, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__width, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__height, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__column, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__frame_count, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__period&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    {                                                                           \</div>
+<div class="line">        .use_as__arm_2d_tile_t =                                                \</div>
+<div class="line">            impl_child_tile((__sprites_tile), 0, 0, (__width), (__height)),     \</div>
+<div class="line">        .hwColumn = (__column),                                                 \</div>
+<div class="line">        .hwFrameNum = (__frame_count),                                          \</div>
+<div class="line">        .hwPeriodPerFrame = (__period),                                         \</div>
+<div class="line">    }</div>
+</div><!-- fragment -->
+<p>initialize/implement a given film (arm_2d_helper_file_t) object at compile-time. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">__sprites_tile</td><td>the sprites tile </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__width</td><td>the width of each frame </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__height</td><td>the height of each frame </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__column</td><td>the number of frames per row in the sprite tile </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__frame_count</td><td>the total number of frames in the sprite tile </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__period</td><td>the period per-frame </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>__period is used as a reference for applications. The helper service doesn't use it at all. </dd></dl>
+
+</div>
+</div>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="ga3ebdd610af011bf6094c0f60721a2424" name="ga3ebdd610af011bf6094c0f60721a2424"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga3ebdd610af011bf6094c0f60721a2424">&#9670;&nbsp;</a></span>arm_2d_scene_before_scene_switching_handler_t</h2>
@@ -4471,6 +4666,89 @@ For normal usage, please DO NOT use this function unless you know what you are d
     <tr><td class="paramdir">[in]</td><td class="paramname">iBorderWidth</td><td>the border width </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">tColour</td><td>the target colour </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">chOpacity</td><td>the opacity </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga8973bb94243b6b082f9e2888267bea04" name="ga8973bb94243b6b082f9e2888267bea04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8973bb94243b6b082f9e2888267bea04">&#9670;&nbsp;</a></span>arm_2d_helper_film_next_frame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_helper_film_next_frame </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__film__t">arm_2d_helper_film_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >\brier move to the next frame of a given film </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target film </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaa3dd9a9991d2cf374924d7d3e57ff69b" name="gaa3dd9a9991d2cf374924d7d3e57ff69b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa3dd9a9991d2cf374924d7d3e57ff69b">&#9670;&nbsp;</a></span>arm_2d_helper_film_reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_helper_film_reset </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__film__t">arm_2d_helper_film_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >\brier reset the frame index to zero </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target film </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga335d382332ef7ac57ecb84698fec8584" name="ga335d382332ef7ac57ecb84698fec8584"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga335d382332ef7ac57ecb84698fec8584">&#9670;&nbsp;</a></span>arm_2d_helper_film_set_frame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_helper_film_set_frame </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__film__t">arm_2d_helper_film_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>nIndex</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >\brier reset the frame index to a specified value and wrap around if the index number is out of range. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target film </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nIndex</td><td>the given index </td></tr>
   </table>
   </dd>
 </dl>
