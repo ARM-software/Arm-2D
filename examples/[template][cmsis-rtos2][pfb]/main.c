@@ -60,7 +60,7 @@
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> -----------------
 
-// <o>Target FPS <8-32767>
+// <o>Target FPS <1-120>
 // <i> Try to lock framerate to a specified value
 // <i> Default: 30
 #ifndef LCD_TARGET_FPS
