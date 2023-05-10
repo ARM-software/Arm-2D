@@ -52,9 +52,53 @@ Of course, if you want to skip this step and focus on learning how to use the Ar
 
 After having Arm-2D ready for your platform, it is good to experience the style of Arm-2D API via the article [how_to_use_tile_operations.md](./how_to_use_tile_operations.md). During this process, reading [how_to_use_layout_assistant.md](./how_to_use_layout_assistant.md) to learn the basic layout method will simplify your application development.
 
-When learning how to use Arm-2d APIs, you can, of course, use the default pictures coming with Arm-2d, i.e. the CMSIS-Logo as shown in **Figure 2-1** via corresponding `arm_2d_tile_t` objects: `c_tileCMSISLogoGRAY8`, `c_tileCMSISLogoRGB565` and `c_tileCMSISLogoCCCA8888` defined in `cmsis_logo.c`.
+At this stage, you may have a outstanding question: where should I use these APIs to practice drawing operations? Please open `arm_2d_disp_adapter_0.c`, and find the function `__pfb_draw_handler` as shown below - This is our playground.
 
-**Figure 2-1 The Default Picture resource: CMSIS logo**
+```c
+static
+IMPL_PFB_ON_DRAW(__pfb_draw_handler)
+{
+    ARM_2D_UNUSED(pTarget);
+    ARM_2D_UNUSED(ptTile);
+
+    arm_2d_canvas(ptTile, __top_container) {
+    
+        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
+        
+        arm_2d_align_centre(__top_container, 100, 100) {
+            draw_round_corner_box(  ptTile,
+                                    &__centre_region,
+                                    GLCD_COLOR_BLACK,
+                                    64,
+                                    bIsNewFrame);
+        }
+
+        busy_wheel2_show(ptTile, bIsNewFrame);
+    }
+
+    arm_2d_op_wait_async(NULL);
+
+    return arm_fsm_rt_cpl;
+}
+```
+
+As you can see, the existing code has:
+
+- Fill the background with the white colour
+- Draw a rounded corner box in black with a given opacity ratio in the centre of the screen
+- Draw a busy-wheel with an existing control. 
+
+
+
+**Figure 2-1 The Default Scene of an Display Adapter.**
+
+![DefaultScene](./pictures/DispAdapterDefaultScene.gif) 
+
+
+
+When learning how to use Arm-2d APIs, you can, of course, use the default pictures coming with Arm-2d, i.e. the CMSIS-Logo as shown in **Figure 2-2** via corresponding `arm_2d_tile_t` objects: `c_tileCMSISLogoGRAY8`, `c_tileCMSISLogoRGB565` and `c_tileCMSISLogoCCCA8888` defined in `cmsis_logo.c`.
+
+**Figure 2-2 The Default Picture resource: CMSIS logo**
 
 ![](../examples/common/asset/CMSIS_Logo_Final.png) 
 
@@ -68,11 +112,11 @@ When you complete the above steps, **congratulations, you have successfully star
 
 ### 2.4 Try existing example controls and scene templates
 
-Arm-2D provides some controls and code templates in the `examples/common` directory, which are good reference codes and can be used in the project directly. Generally speaking, when you add the component `Acceleration::Arm-2D Extras::Controls` in the RTE configuration (as shown in **Figure 2-1**), all control source codes and related resources will be added to the project. 
+Arm-2D provides some controls and code templates in the `examples/common` directory, which are good reference codes and can be used in the project directly. Generally speaking, when you add the component `Acceleration::Arm-2D Extras::Controls` in the RTE configuration (as shown in **Figure 2-3**), all control source codes and related resources will be added to the project. 
 
 **NOTE:** those unused controls or resources will be removed from the generated firmware image.
 
-**Figure 2-2 Selecting Controls in RTE**
+**Figure 2-3 Selecting Controls in RTE**
 
 ![Controls in RTE](./pictures/GettingStartedAsAppDesigner_RTE_Controls.png) 
 
