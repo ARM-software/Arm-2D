@@ -19,7 +19,7 @@ If you happen to meet the conditions above, **don't panic**, we will try our bes
   - [2.1 Familiar with the basic concepts](#21-familiar-with-the-basic-concepts)
   - [2.2 Port Arm-2D to your local platform](#22-port-arm-2d-to-your-local-platform)
   - [2.3 Try the basic Tile Operations and the Layout Assistant](#23-try-the-basic-tile-operations-and-the-layout-assistant)
-  - [2.4 Try existing example controls and scene templates](#24-try-existing-example-controls-and-scene-templates)
+  - [2.4 Try existing example controls](#24-try-existing-example-controls)
   - [2.5 Write a simple GUI Application](#25-write-a-simple-gui-application)
   - [2.6 Learn the basic method to optimize the performance and memory footprint](#26-learn-the-basic-method-to-optimize-the-performance-and-memory-footprint)
   - [2.7 Tips for other advanced topics](#27-tips-for-other-advanced-topics)
@@ -96,7 +96,9 @@ As you can see, the existing code has:
 
 
 
-When learning how to use Arm-2d APIs, you can, of course, use the default pictures coming with Arm-2d, i.e. the CMSIS-Logo as shown in **Figure 2-2** via corresponding `arm_2d_tile_t` objects: `c_tileCMSISLogoGRAY8`, `c_tileCMSISLogoRGB565` and `c_tileCMSISLogoCCCA8888` defined in `cmsis_logo.c`.
+You can replace the code inside `__pfb_draw_handler` with your own and check the result visually in the default scene coming with the display adapter. 
+
+During this process, you can, of course, use the default pictures coming with Arm-2d, i.e. the CMSIS-Logo as shown in **Figure 2-2** via corresponding `arm_2d_tile_t` objects: `c_tileCMSISLogoGRAY8`, `c_tileCMSISLogoRGB565` and `c_tileCMSISLogoCCCA8888` defined in `cmsis_logo.c`.
 
 **Figure 2-2 The Default Picture resource: CMSIS logo**
 
@@ -104,23 +106,21 @@ When learning how to use Arm-2d APIs, you can, of course, use the default pictur
 
 
 
-Sooner or later, you want to use your own pictures. Arm-2D provides a Python script helping you to convert images into `arm_2d_tile_t` objects written in C. For more, please read this [guide](../tools/README.md) for details. 
+But sooner or later, you would like to use your own pictures. Arm-2D provides a Python script helping you to convert images into `arm_2d_tile_t` objects written in C. For more, please read this [guide](../tools/README.md) for details. 
 
 When you complete the above steps, **congratulations, you have successfully started Arm-2d.**
 
 
 
-### 2.4 Try existing example controls and scene templates
+### 2.4 Try existing example controls
 
-Arm-2D provides some controls and code templates in the `examples/common` directory, which are good reference codes and can be used in the project directly. Generally speaking, when you add the component `Acceleration::Arm-2D Extras::Controls` in the RTE configuration (as shown in **Figure 2-3**), all control source codes and related resources will be added to the project. 
+Arm-2D provides some controls in the `examples/common` directory, which are good reference codes and can be used in the project directly. Generally speaking, when you add the component `Acceleration::Arm-2D Extras::Controls` in the RTE configuration (as shown in **Figure 2-3**), all control source codes and related resources will be added to the project. 
 
 **NOTE:** those unused controls or resources will be removed from the generated firmware image.
 
 **Figure 2-3 Selecting Controls in RTE**
 
 ![Controls in RTE](./pictures/GettingStartedAsAppDesigner_RTE_Controls.png) 
-
-
 
 
 
