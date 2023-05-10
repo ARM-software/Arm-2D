@@ -140,7 +140,7 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 <p >The first step of getting started is getting familiar with some basic concepts, among which <em><b>Tile</b></em>, <em><b>Region</b></em> and corresponding <em><b>Bounding Box model</b></em> are the most fundamental ones, as almost all of the APIs take Tile(s) and Region(s) as input/output parameters. Please kindly reading <a class="el" href="md__home_runner_work_Arm_2D_Arm_2D_README.html">**README**</a> and <a class="el" href="md_introduction.html">**Introduction**</a> to familiar those basic concepts.</p>
 <h2><a class="anchor" id="autotoc_md28"></a>
 2.2 Port Arm-2D to your local platform</h2>
-<p >After understanding the basic concepts of arm-2d, we recommend that you follow the steps described in <a class="el" href="deploy.html#md_how_to_deploy_the_arm_2d_library">how_to_deploy_the_arm_2d_library.md</a> to deploy arm-2d to your local hardware platform.</p>
+<p >After understanding the basic concepts of Arm-2d, we recommend that you follow the steps described in <a class="el" href="deploy.html#md_how_to_deploy_the_arm_2d_library">how_to_deploy_the_arm_2d_library.md</a> to deploy Arm-2d to your local hardware platform.</p>
 <p >Of course, if you want to skip this step and focus on learning how to use the Arm-2D API, you can start with the template projects in the <code>example</code> directory. These template projects provide portings of STM32 Discovery Board, Cortex-M FVP/VHT and MPS2/MPS3 development platforms for both bare metal and RTOS environment respectively. There are other 3rd party portings available on github, for example:</p>
 <ul>
 <li><a href="https://github.com/GorgonMeducer/Pico_Template">A porting for Raspberry Pi Pico (using MDK)</a></li>
@@ -148,8 +148,18 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 </ul>
 <h2><a class="anchor" id="autotoc_md29"></a>
 2.3 Try the basic Tile Operations and the Layout Assistant</h2>
+<p >After having Arm-2D ready for your platform, it is good to experience the style of Arm-2D API via the article <a class="el" href="use_tile.html#md_how_to_use_tile_operations">how_to_use_tile_operations.md</a>. During this process, reading <a class="el" href="md_how_to_use_layout_assistant.html">how_to_use_layout_assistant.md</a> to learn the basic layout method will simplify your application development.</p>
+<p >When learning how to use Arm-2d APIs, you can, of course, use the default pictures coming with Arm-2d, i.e. the CMSIS-Logo as shown in <b>Figure 2-1</b> via corresponding <code><a class="el" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a></code> objects: <code>c_tileCMSISLogoGRAY8</code>, <code>c_tileCMSISLogoRGB565</code> and <code>c_tileCMSISLogoCCCA8888</code> defined in <code>cmsis_logo.c</code>.</p>
+<p ><b>Figure 2-1 The Default Picture resource: CMSIS logo</b></p>
+<p ><img src="../examples/common/asset/CMSIS_Logo_Final.png" alt="" class="inline"/></p>
+<p >Sooner or later, you want to use your own pictures. Arm-2D provides a Python script helping you to convert images into <code><a class="el" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a></code> objects written in C. For more, please read this guide for details.</p>
+<p >When you complete the above steps, <b>congratulations, you have successfully started Arm-2d.</b></p>
 <h2><a class="anchor" id="autotoc_md30"></a>
 2.4 Try existing example controls and scene templates</h2>
+<p >Arm-2D provides some controls and code templates in the <code>examples/common</code> directory, which are good reference codes and can be used in the project directly. Generally speaking, when you add the component <code>Acceleration::Arm-2D Extras::Controls</code> in the RTE configuration (as shown in <b>Figure 2-1</b>), all control source codes and related resources will be added to the project.</p>
+<p ><b>NOTE:</b> those unused controls or resources will be removed from the generated firmware image.</p>
+<p ><b>Figure 2-2 Selecting Controls in RTE</b></p>
+<p ><img src="GettingStartedAsAppDesigner_RTE_Controls.png" alt="" class="inline" title="Controls in RTE"/></p>
 <h2><a class="anchor" id="autotoc_md31"></a>
 2.5 Write a simple GUI Application</h2>
 <h2><a class="anchor" id="autotoc_md32"></a>
