@@ -148,16 +148,50 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 <h2><a class="anchor" id="autotoc_md29"></a>
 2.3 Try the basic Tile Operations and the Layout Assistant</h2>
 <p >After having Arm-2D ready for your platform, it is good to experience the style of Arm-2D API via the article <a class="el" href="use_tile.html#md_how_to_use_tile_operations">how_to_use_tile_operations.md</a>. During this process, reading <a class="el" href="md_how_to_use_layout_assistant.html">how_to_use_layout_assistant.md</a> to learn the basic layout method will simplify your application development.</p>
-<p >When learning how to use Arm-2d APIs, you can, of course, use the default pictures coming with Arm-2d, i.e. the CMSIS-Logo as shown in <b>Figure 2-1</b> via corresponding <code><a class="el" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a></code> objects: <code>c_tileCMSISLogoGRAY8</code>, <code>c_tileCMSISLogoRGB565</code> and <code>c_tileCMSISLogoCCCA8888</code> defined in <code>cmsis_logo.c</code>.</p>
-<p ><b>Figure 2-1 The Default Picture resource: CMSIS logo</b></p>
+<p >At this stage, you may have a outstanding question: where should I use these APIs to practice drawing operations? Please open <code>arm_2d_disp_adapter_0.c</code>, and find the function <code>__pfb_draw_handler</code> as shown below - This is our playground.</p>
+<div class="fragment"><div class="line"><span class="keyword">static</span></div>
+<div class="line">IMPL_PFB_ON_DRAW(__pfb_draw_handler)</div>
+<div class="line">{</div>
+<div class="line">    <a class="code hl_define" href="group__gKernel.html#ga206ba077ba0d890fd0be935fc5d15dda" title="a macro to mark unused variables and let the compiler happy">ARM_2D_UNUSED</a>(pTarget);</div>
+<div class="line">    <a class="code hl_define" href="group__gKernel.html#ga206ba077ba0d890fd0be935fc5d15dda" title="a macro to mark unused variables and let the compiler happy">ARM_2D_UNUSED</a>(ptTile);</div>
+<div class="line"> </div>
+<div class="line">    arm_2d_canvas(ptTile, __top_container) {</div>
+<div class="line">    </div>
+<div class="line">        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);</div>
+<div class="line">        </div>
+<div class="line">        arm_2d_align_centre(__top_container, 100, 100) {</div>
+<div class="line">            draw_round_corner_box(  ptTile,</div>
+<div class="line">                                    &amp;__centre_region,</div>
+<div class="line">                                    GLCD_COLOR_BLACK,</div>
+<div class="line">                                    64,</div>
+<div class="line">                                    bIsNewFrame);</div>
+<div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">        busy_wheel2_show(ptTile, bIsNewFrame);</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <a class="code hl_function" href="group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989" title="wait asynchronous operation complete">arm_2d_op_wait_async</a>(NULL);</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcacf7b5f9e66c44d332ea46d05860d78d1" title="fsm complete">arm_fsm_rt_cpl</a>;</div>
+<div class="line">}</div>
+</div><!-- fragment --><p >As you can see, the existing code has:</p>
+<ul>
+<li>Fill the background with the white colour</li>
+<li>Draw a rounded corner box in black with a given opacity ratio in the centre of the screen</li>
+<li>Draw a busy-wheel with an existing control.</li>
+</ul>
+<p ><b>Figure 2-1 The Default Scene of an Display Adapter.</b></p>
+<p ><img src="DispAdapterDefaultScene.gif" alt="" class="inline" title="DefaultScene"/></p>
+<p >When learning how to use Arm-2d APIs, you can, of course, use the default pictures coming with Arm-2d, i.e. the CMSIS-Logo as shown in <b>Figure 2-2</b> via corresponding <code><a class="el" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a></code> objects: <code>c_tileCMSISLogoGRAY8</code>, <code>c_tileCMSISLogoRGB565</code> and <code>c_tileCMSISLogoCCCA8888</code> defined in <code>cmsis_logo.c</code>.</p>
+<p ><b>Figure 2-2 The Default Picture resource: CMSIS logo</b></p>
 <p ><img src="../examples/common/asset/CMSIS_Logo_Final.png" alt="" class="inline"/></p>
 <p >Sooner or later, you want to use your own pictures. Arm-2D provides a Python script helping you to convert images into <code><a class="el" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a></code> objects written in C. For more, please read this guide for details.</p>
 <p >When you complete the above steps, <b>congratulations, you have successfully started Arm-2d.</b></p>
 <h2><a class="anchor" id="autotoc_md30"></a>
 2.4 Try existing example controls and scene templates</h2>
-<p >Arm-2D provides some controls and code templates in the <code>examples/common</code> directory, which are good reference codes and can be used in the project directly. Generally speaking, when you add the component <code>Acceleration::Arm-2D Extras::Controls</code> in the RTE configuration (as shown in <b>Figure 2-1</b>), all control source codes and related resources will be added to the project.</p>
+<p >Arm-2D provides some controls and code templates in the <code>examples/common</code> directory, which are good reference codes and can be used in the project directly. Generally speaking, when you add the component <code>Acceleration::Arm-2D Extras::Controls</code> in the RTE configuration (as shown in <b>Figure 2-3</b>), all control source codes and related resources will be added to the project.</p>
 <p ><b>NOTE:</b> those unused controls or resources will be removed from the generated firmware image.</p>
-<p ><b>Figure 2-2 Selecting Controls in RTE</b></p>
+<p ><b>Figure 2-3 Selecting Controls in RTE</b></p>
 <p ><img src="GettingStartedAsAppDesigner_RTE_Controls.png" alt="" class="inline" title="Controls in RTE"/></p>
 <h2><a class="anchor" id="autotoc_md31"></a>
 2.5 Write a simple GUI Application</h2>
