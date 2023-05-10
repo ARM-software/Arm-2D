@@ -34,17 +34,24 @@ The first step of getting started is getting familiar with some basic concepts, 
 
 ### 2.2 Port Arm-2D to your local platform
 
-### 2.3 Play with Display Adapter, Scene Player and Scenes
+After understanding the basic concepts of arm-2d, we recommend that you follow the steps described in [how_to_deploy_the_arm_2d_library.md](./how_to_deploy_the_arm_2d_library.md) to deploy arm-2d to your local hardware platform. 
 
-### 2.4 Try the basic Tile Operations and the Layout Assistant
+Of course, if you want to skip this step and focus on learning how to use the Arm-2D API, you can start with the template projects in the `example` directory. These template projects provide portings of STM32 Discovery Board, Cortex-M FVP/VHT and MPS2/MPS3 development platforms for both bare metal and RTOS environment respectively. There are other 3rd party portings available on github, for example:
 
-### 2.5 Try existing example controls and scene templates
+- [A porting for Raspberry Pi Pico (using MDK)](https://github.com/GorgonMeducer/Pico_Template)
+- [A porting for LVGL + Arm-2D on Corstone-300-FVP](https://github.com/lvgl/lv_port_an547_cm55_sim)
 
-### 2.6 Write a simple GUI Application
 
-### 2.7 Learn the basic method to optimize the performance and memory footprint
 
-### 2.8 Tips for other advanced topics
+### 2.3 Try the basic Tile Operations and the Layout Assistant
+
+### 2.4 Try existing example controls and scene templates
+
+### 2.5 Write a simple GUI Application
+
+### 2.6 Learn the basic method to optimize the performance and memory footprint
+
+### 2.7 Tips for other advanced topics
 
 
 ## 3 Tips For Exploring the Library
