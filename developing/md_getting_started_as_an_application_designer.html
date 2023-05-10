@@ -203,8 +203,7 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 </li>
 </ul>
 <p ><img src="AddingScenesinRTE.png" alt="" class="inline" title="Adding Scenes in RTE"/></p>
-<p >All scenes added with this method are included in the header file <code>arm_2d_scenes.h</code>, which you can included in your c source code:</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;arm_2d_helper.h&quot;</span>          <span class="comment">/* arm_2d.h is also included in this header file */</span></div>
+<p >All scenes added with this method are included in the header file <code>arm_2d_scenes.h</code>, which you can included in your c source code: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &quot;arm_2d_helper.h&quot;</span>          <span class="comment">/* arm_2d.h is also included in this header file */</span></div>
 <div class="line"><span class="preprocessor">#include &quot;arm_2d_disp_adapters.h&quot;</span>   <span class="comment">/* include all display adapters */</span></div>
 <div class="line"><span class="preprocessor">#include &quot;arm_2d_scenes.h&quot;</span>          <span class="comment">/* include all scenes added in RTE */</span></div>
 </div><!-- fragment --><p >By calling the constructor <code>arm_2d_sceneN_init()</code>, the target scene is created, initialised and added to the Scene Player FIFO. For example:</p>
@@ -216,10 +215,10 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 <div class="line"> </div>
 <div class="line">    <span class="comment">/* create scene0 and add to the Display Adapter FIFO */</span></div>
 <div class="line">    arm_2d_scene0_init(&amp;DISP0_ADAPTER);</div>
-<div class="line">    </div>
+<div class="line"> </div>
 <div class="line">    <span class="comment">/* Switch to the next scene, i.e. scene0 in this case  */</span></div>
 <div class="line">    <a class="code hl_function" href="group__gHelper.html#gae6df5a7c480a7e3f44a926772ba78cb8" title="request switching to the next scene safely">arm_2d_scene_player_switch_to_next_scene</a>(&amp;DISP0_ADAPTER);</div>
-<div class="line">    </div>
+<div class="line"> </div>
 <div class="line">    <span class="keywordflow">while</span>(1) {</div>
 <div class="line">        disp_adapter0_task();</div>
 <div class="line">        ...</div>
