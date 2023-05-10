@@ -140,21 +140,25 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 <p >The first step of getting started is getting familiar with some basic concepts, among which <em><b>Tile</b></em>, <em><b>Region</b></em> and corresponding <em><b>Bounding Box model</b></em> are the most fundamental ones, as almost all of the APIs take Tile(s) and Region(s) as input/output parameters. Please kindly reading <a class="el" href="md__home_runner_work_Arm_2D_Arm_2D_README.html">**README**</a> and <a class="el" href="md_introduction.html">**Introduction**</a> to familiar those basic concepts.</p>
 <h2><a class="anchor" id="autotoc_md28"></a>
 2.2 Port Arm-2D to your local platform</h2>
+<p >After understanding the basic concepts of arm-2d, we recommend that you follow the steps described in <a class="el" href="deploy.html#md_how_to_deploy_the_arm_2d_library">how_to_deploy_the_arm_2d_library.md</a> to deploy arm-2d to your local hardware platform.</p>
+<p >Of course, if you want to skip this step and focus on learning how to use the Arm-2D API, you can start with the template projects in the <code>example</code> directory. These template projects provide portings of STM32 Discovery Board, Cortex-M FVP/VHT and MPS2/MPS3 development platforms for both bare metal and RTOS environment respectively. There are other 3rd party portings available on github, for example:</p>
+<ul>
+<li><a href="https://github.com/GorgonMeducer/Pico_Template">A porting for Raspberry Pi Pico (using MDK)</a></li>
+<li><a href="https://github.com/lvgl/lv_port_an547_cm55_sim">A porting for LVGL + Arm-2D on Corstone-300-FVP</a></li>
+</ul>
 <h2><a class="anchor" id="autotoc_md29"></a>
-2.3 Play with Display Adapter, Scene Player and Scenes</h2>
+2.3 Try the basic Tile Operations and the Layout Assistant</h2>
 <h2><a class="anchor" id="autotoc_md30"></a>
-2.4 Try the basic Tile Operations and the Layout Assistant</h2>
+2.4 Try existing example controls and scene templates</h2>
 <h2><a class="anchor" id="autotoc_md31"></a>
-2.5 Try existing example controls and scene templates</h2>
+2.5 Write a simple GUI Application</h2>
 <h2><a class="anchor" id="autotoc_md32"></a>
-2.6 Write a simple GUI Application</h2>
+2.6 Learn the basic method to optimize the performance and memory footprint</h2>
 <h2><a class="anchor" id="autotoc_md33"></a>
-2.7 Learn the basic method to optimize the performance and memory footprint</h2>
-<h2><a class="anchor" id="autotoc_md34"></a>
-2.8 Tips for other advanced topics</h2>
-<h1><a class="anchor" id="autotoc_md35"></a>
+2.7 Tips for other advanced topics</h2>
+<h1><a class="anchor" id="autotoc_md34"></a>
 3 Tips For Exploring the Library</h1>
-<h2><a class="anchor" id="autotoc_md36"></a>
+<h2><a class="anchor" id="autotoc_md35"></a>
 "I am a library user, I only care about how to use the library"</h2>
 <ul>
 <li>For library users, <b>ALL</b> useful information, i.e. type definitions, macros, prototypes of functions etc., are stored in header files which have <b>NO</b> double under-scope as their prefixes. We call those header files the <b>PUBLIC HEADER FILES</b>.</li>
