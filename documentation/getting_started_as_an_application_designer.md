@@ -10,6 +10,8 @@ If the graphics in your application is simple, i.e. consists of panels (for disp
 
 If you happen to meet the conditions above, **don't panic**, we will try our best to provide you with a simple and efficient user experience. **By focusing on the API usage and following the guidance** introduced in this article, **you can master the Arm-2D application design quickly**.
 
+
+
 ### Table of Content <!-- omit from toc -->
 
 - [1 Before We Start](#1-before-we-start)
@@ -26,15 +28,19 @@ If you happen to meet the conditions above, **don't panic**, we will try our bes
   - ["I am a library user, I only care about how to use the library"](#i-am-a-library-user-i-only-care-about-how-to-use-the-library)
 
 
+
+
 ## 2 Step by Step Guidance
 
 ### 2.1 Familiar with the basic concepts
 
 The first step of getting started is getting familiar with some basic concepts, among which ***Tile***, ***Region*** and corresponding ***Bounding Box model*** are the most fundamental ones, as almost all of the APIs take Tile(s) and Region(s) as input/output parameters. Please kindly reading [**README**](../README.md) and [**Introduction**](./introduction.md) to familiar those basic concepts. 
 
+
+
 ### 2.2 Port Arm-2D to your local platform
 
-After understanding the basic concepts of arm-2d, we recommend that you follow the steps described in [how_to_deploy_the_arm_2d_library.md](./how_to_deploy_the_arm_2d_library.md) to deploy arm-2d to your local hardware platform. 
+After understanding the basic concepts of Arm-2d, we recommend that you follow the steps described in [how_to_deploy_the_arm_2d_library.md](./how_to_deploy_the_arm_2d_library.md) to deploy Arm-2d to your local hardware platform. 
 
 Of course, if you want to skip this step and focus on learning how to use the Arm-2D API, you can start with the template projects in the `example` directory. These template projects provide portings of STM32 Discovery Board, Cortex-M FVP/VHT and MPS2/MPS3 development platforms for both bare metal and RTOS environment respectively. There are other 3rd party portings available on github, for example:
 
@@ -45,13 +51,47 @@ Of course, if you want to skip this step and focus on learning how to use the Ar
 
 ### 2.3 Try the basic Tile Operations and the Layout Assistant
 
+After having Arm-2D ready for your platform, it is good to experience the style of Arm-2D API via the article [how_to_use_tile_operations.md](./how_to_use_tile_operations.md). During this process, reading [how_to_use_layout_assistant.md](./how_to_use_layout_assistant.md) to learn the basic layout method will simplify your application development.
+
+When learning how to use Arm-2d APIs, you can, of course, use the default pictures coming with Arm-2d, i.e. the CMSIS-Logo as shown in **Figure 2-1** via corresponding `arm_2d_tile_t` objects: `c_tileCMSISLogoGRAY8`, `c_tileCMSISLogoRGB565` and `c_tileCMSISLogoCCCA8888` defined in `cmsis_logo.c`.
+
+**Figure 2-1 The Default Picture resource: CMSIS logo**
+
+![](../examples/common/asset/CMSIS_Logo_Final.png) 
+
+
+
+Sooner or later, you want to use your own pictures. Arm-2D provides a Python script helping you to convert images into `arm_2d_tile_t` objects written in C. For more, please read this [guide](../tools/README.md) for details. 
+
+When you complete the above steps, **congratulations, you have successfully started Arm-2d.**
+
+
+
 ### 2.4 Try existing example controls and scene templates
+
+Arm-2D provides some controls and code templates in the `examples/common` directory, which are good reference codes and can be used in the project directly. Generally speaking, when you add the component `Acceleration::Arm-2D Extras::Controls` in the RTE configuration (as shown in **Figure 2-1**), all control source codes and related resources will be added to the project. 
+
+**NOTE:** those unused controls or resources will be removed from the generated firmware image.
+
+**Figure 2-2 Selecting Controls in RTE**
+
+![Controls in RTE](./pictures/GettingStartedAsAppDesigner_RTE_Controls.png) 
+
+
+
+
 
 ### 2.5 Write a simple GUI Application
 
+
+
 ### 2.6 Learn the basic method to optimize the performance and memory footprint
 
+
+
 ### 2.7 Tips for other advanced topics
+
+
 
 
 ## 3 Tips For Exploring the Library
