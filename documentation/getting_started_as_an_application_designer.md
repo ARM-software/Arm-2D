@@ -203,9 +203,110 @@ For an actual application, you cannot write everything in the default scene hidd
 
 ### 2.6 Learn the basic method to optimize the performance and memory footprint
 
+The design consideration of optimizing performance and memory footprint deserves a dedicated document or maybe more. We can only cover some preliminary tips for optimisation:
+
+- **For the Arm Compiler 6**
+
+  - Avoid using Arm Compiler 5 whenever possible. 
+  - If the ROM is sufficient, try to use **-Omax + Link Time Optimisation**
+  - If the both the performance and the code memory footprint are important, try to use **-Os + Link Time Optimisation**
+  - If the code memory footprint is vital, try to use **-Oz + Link Time Optimisation**
+  - Do **NOT** use **-O0** unless you are debugging. 
+
+- **For RAM memory footprint**
+
+  - Set the FPB size **starting from the 1/10 full framebuffer**.
+  - For the same number of pixels, **prioritize the width over the height** when setting the PFB. For example, 320 * 8 is better than 80 * 32.
+  - Whenever possible, **the PFB height should be larger than or equal to 8.** 
+
+- **For performance (Frame-rate)**
+
+  - LCD Latency determines the upper-limit of the system frame-rate. Reduce it towards zero with all the methods available. 
+  - **Use Asynchornouse mode** (e.g. DMA+ISR) when it is possible.
+  - Using 1/10 framebuffer doesn't mean it is 10x slower than using a full framebuffer
+
+- **For API Usage**
+
+  - Please use the feature-specific version rather than the more generic version whenever possible for a given operation. This helps to reduce the memory footprint in general.
+
+    For example: for copying an rgb565 tile with a source mask and no-mirroring, please use the function `arm_2d_rgb565_tile_copy_with_src_mask_only()` instead of `arm_2d_rgb565_tile_copy_with_masks()`. 
+
 
 
 ### 2.7 Tips for other advanced topics
+
+#### 2.7.1 Benchmarks
+
+To evaluate the 2D performance for the target platform, Arm-2D provides two benchmarks, i.e. **Benchmark-Generic** and **Benchmark-Watchpanel**. You can deploy one of them by selecting the it in the RTE configuration as shown in **Figure 2-7**.
+
+**Figure 2-7 Selecting Benchmarks in RTE**
+
+![Controls in RTE](./pictures/GettingStartedAsAppDesigner_RTE_Controls.png) 
+
+The original benchmark cannot fit into the memory if your MCU has a small Flash. To solve this problem, Arm-2D introduces a Tiny mode for both benchmarks. You can enable it by either setting the macro `__ARM_2D_CFG_BENCHMARK_TINY_MODE__` to `1` in `arm_2d_cfg.h` or defining the macro in your project configuration. 
+
+**NOTE:** You can find ALL benchmark related configurations in `arm_2d_cfg.h`. 
+
+Running benchmark is simple:
+
+1. Include  `arm_2d_benchmark.h` 
+2. call function `arm_2d_run_benchmark()` after initializing Arm-2D
+
+```c
+#include "arm_2d_helper.h"
+#include "arm_2d_benchmark.h"
+
+
+int main (void)
+{
+    ...
+    arm_irq_safe {
+        arm_2d_init();
+    }
+
+    arm_2d_run_benchmark();
+    
+    while(1) {
+        __NOP();
+    }
+}
+```
+
+
+
+#### 2.7.2 Asynchronose Mode and RTOS support
+
+Arm-2D introduces an asynchronous mode for hardware accelerators and multi-core systems. To enable this feature, you can set the macro `__ARM_2D_HAS_ASYNC__` defined in `arm_2d_cfg.h` to `1`. If you don't have hardware accelerators, 2D capable DMA (for example, DMAC-350) or dedicated Cortex-M core(s) for 2D graphics, enabling the Asynchronous mode brings no benefits. 
+
+When it is good to enable the asynchronous mode, you have to have RTOS support to take advantage of it. You can enable the RTOS support in RTE as shown in **Figure 2-8**. If you cannot find the desired RTOS in the drop list, please select the User Custom and implement the interfaces listed in the source code `arm_2d_helper_rtos_user.c`.
+
+**Figure 2-8 Enable RTOS Support in RTE**
+
+![EnableRTOSSupportInRTE](./pictures/EnbleRTOSSupportInRTE.png) 
+
+You do **NOT** have to enable the RTOS support in the synchronous mode (`__ARM_2D_HAS_ASYNC__` is `0` ). Even so, you can still use a dedicated thread to run the Arm-2D display adapter task (e.g. `disp_adapter0_task()`) and lock the framerate to a desired value. For example:
+
+```c
+#ifndef LCD_TARGET_FPS
+#   define LCD_TARGET_FPS       30
+#endif
+
+__NO_RETURN
+void app_2d_main_thread (void *argument) 
+{
+
+    while(1) {
+        //! retrieve the number of system ticks
+        uint32_t wTick = osKernelGetTickCount();        
+        while(arm_fsm_rt_cpl != disp_adapter0_task());
+        
+        //! lock frame rate
+        osDelayUntil(wTick + (1000 / LCD_TARGET_FPS));
+    }
+
+    //osThreadExit();
+}
+```
 
 
 
