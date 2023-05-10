@@ -134,37 +134,36 @@ For an actual application, you cannot write everything in the default scene hidd
 
     ![Adding Scenes in RTE](./pictures/AddingScenesinRTE.png) 
 
-All scenes added with this method are included in the header file `arm_2d_scenes.h`, which you can included in your c source code:
+    All scenes added with this method are included in the header file `arm_2d_scenes.h`, which you can included in your c source code:
+    ```c
+    #include "arm_2d_helper.h"          /* arm_2d.h is also included in this header file */
+    #include "arm_2d_disp_adapters.h"   /* include all display adapters */
+    #include "arm_2d_scenes.h"          /* include all scenes added in RTE */
+    ```
 
-```c
-#include "arm_2d_helper.h"          /* arm_2d.h is also included in this header file */
-#include "arm_2d_disp_adapters.h"   /* include all display adapters */
-#include "arm_2d_scenes.h"          /* include all scenes added in RTE */
-```
+    By calling the constructor `arm_2d_sceneN_init()`, the target scene is created, initialised and added to the Scene Player FIFO. For example:
 
-By calling the constructor `arm_2d_sceneN_init()`, the target scene is created, initialised and added to the Scene Player FIFO. For example:
-
-```c
-int main(void)
-{
-    ...
-    arm_2d_init();
-    disp_adapter0_init();
-
-    /* create scene0 and add to the Display Adapter FIFO */
-    arm_2d_scene0_init(&DISP0_ADAPTER);
-    
-    /* Switch to the next scene, i.e. scene0 in this case  */
-    arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
-    
-    while(1) {
-        disp_adapter0_task();
+    ```c
+    int main(void)
+    {
         ...
+        arm_2d_init();
+        disp_adapter0_init();
+    
+        /* create scene0 and add to the Display Adapter FIFO */
+        arm_2d_scene0_init(&DISP0_ADAPTER);
+    
+        /* Switch to the next scene, i.e. scene0 in this case  */
+        arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
+    
+        while(1) {
+            disp_adapter0_task();
+            ...
+        }
     }
-}
-```
+    ```
 
-**NOTE**: if we haven't disabled the default scene in the `Display Adapter 0`, then after adding the scene0 to the FIFO by calling the `arm_2d_scene0_init`(), it is the next available scene in the FIFO, and you have to call `arm_2d_scene_player_switch_to_next_scene()` to show it on the screen. If we have disabled the default scene, then after calling the constructor, scene0 is the 1st available scene in the FIFO and is shown as the current scene on the screen. In this case, you don't have to call `arm_2d_scene_player_switch_to_next_scene()`. 
+    **NOTE**: if we haven't disabled the default scene in the `Display Adapter 0`, then after adding the scene0 to the FIFO by calling the `arm_2d_scene0_init`(), it is the next available scene in the FIFO, and you have to call `arm_2d_scene_player_switch_to_next_scene()` to show it on the screen. If we have disabled the default scene, then after calling the constructor, scene0 is the 1st available scene in the FIFO and is shown as the current scene on the screen. In this case, you don't have to call `arm_2d_scene_player_switch_to_next_scene()`. 
 
 
 
@@ -185,22 +184,20 @@ int main(void)
     
     **NOTE**: scenes added with code template are not included in the `arm_2d_scenes.h` and you have to include the header file mannually. 
 
+    By default, the display adapter switches scenes without any visual effects or delays when it is proper to do so after receiving a switching request. You can set some predefined switching visual effects by calling the function `arm_2d_scene_player_set_switching_mode()`. For example:
 
-
-By default, the display adapter switches scenes without any visual effects or delays when it is proper to do so after receiving a switching request. You can set some predefined switching visual effects by calling the function `arm_2d_scene_player_set_switching_mode()`. For example:
-
-```c
+    ```c
     /* set switching visual effects: Fade-in-Fade-out in White */
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
                                             ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);
-
+    
     /* the period of the switching effect */
     arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 3000);
     
     arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
-```
+    ```
 
-In some visual effects, you can specify the period of the switching process by calling the function `arm_2d_scene_player_set_switching_period()`. For more, please check the header file `arm_2d_helper_scene.h`. 
+    In some visual effects, you can specify the period of the switching process by calling the function `arm_2d_scene_player_set_switching_period()`. For more, please check the header file `arm_2d_helper_scene.h`. 
 
 
 
