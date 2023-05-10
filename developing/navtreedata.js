@@ -62,7 +62,7 @@ var NAVTREE =
         [ "2.1 Familiar with the basic concepts", "md_getting_started_as_an_application_designer.html#autotoc_md27", null ],
         [ "2.2 Port Arm-2D to your local platform", "md_getting_started_as_an_application_designer.html#autotoc_md28", null ],
         [ "2.3 Try the basic Tile Operations and the Layout Assistant", "md_getting_started_as_an_application_designer.html#autotoc_md29", null ],
-        [ "2.4 Try existing example controls and scene templates", "md_getting_started_as_an_application_designer.html#autotoc_md30", null ],
+        [ "2.4 Try existing example controls", "md_getting_started_as_an_application_designer.html#autotoc_md30", null ],
         [ "2.5 Write a simple GUI Application", "md_getting_started_as_an_application_designer.html#autotoc_md31", null ],
         [ "2.6 Learn the basic method to optimize the performance and memory footprint", "md_getting_started_as_an_application_designer.html#autotoc_md32", null ],
         [ "2.7 Tips for other advanced topics", "md_getting_started_as_an_application_designer.html#autotoc_md33", null ]

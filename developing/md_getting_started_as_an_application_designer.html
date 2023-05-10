@@ -121,7 +121,7 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 <li><a href="#21-familiar-with-the-basic-concepts">2.1 Familiar with the basic concepts</a></li>
 <li><a href="#22-port-arm-2d-to-your-local-platform">2.2 Port Arm-2D to your local platform</a></li>
 <li><a href="#23-try-the-basic-tile-operations-and-the-layout-assistant">2.3 Try the basic Tile Operations and the Layout Assistant</a></li>
-<li><a href="#24-try-existing-example-controls-and-scene-templates">2.4 Try existing example controls and scene templates</a></li>
+<li><a href="#24-try-existing-example-controls">2.4 Try existing example controls</a></li>
 <li><a href="#25-write-a-simple-gui-application">2.5 Write a simple GUI Application</a></li>
 <li><a href="#26-learn-the-basic-method-to-optimize-the-performance-and-memory-footprint">2.6 Learn the basic method to optimize the performance and memory footprint</a></li>
 <li><a href="#27-tips-for-other-advanced-topics">2.7 Tips for other advanced topics</a></li>
@@ -182,14 +182,15 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 </ul>
 <p ><b>Figure 2-1 The Default Scene of an Display Adapter.</b></p>
 <p ><img src="DispAdapterDefaultScene.gif" alt="" class="inline" title="DefaultScene"/></p>
-<p >When learning how to use Arm-2d APIs, you can, of course, use the default pictures coming with Arm-2d, i.e. the CMSIS-Logo as shown in <b>Figure 2-2</b> via corresponding <code><a class="el" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a></code> objects: <code>c_tileCMSISLogoGRAY8</code>, <code>c_tileCMSISLogoRGB565</code> and <code>c_tileCMSISLogoCCCA8888</code> defined in <code>cmsis_logo.c</code>.</p>
+<p >You can replace the code inside <code>__pfb_draw_handler</code> with your own and check the result visually in the default scene coming with the display adapter.</p>
+<p >During this process, you can, of course, use the default pictures coming with Arm-2d, i.e. the CMSIS-Logo as shown in <b>Figure 2-2</b> via corresponding <code><a class="el" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a></code> objects: <code>c_tileCMSISLogoGRAY8</code>, <code>c_tileCMSISLogoRGB565</code> and <code>c_tileCMSISLogoCCCA8888</code> defined in <code>cmsis_logo.c</code>.</p>
 <p ><b>Figure 2-2 The Default Picture resource: CMSIS logo</b></p>
 <p ><img src="../examples/common/asset/CMSIS_Logo_Final.png" alt="" class="inline"/></p>
-<p >Sooner or later, you want to use your own pictures. Arm-2D provides a Python script helping you to convert images into <code><a class="el" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a></code> objects written in C. For more, please read this guide for details.</p>
+<p >But sooner or later, you would like to use your own pictures. Arm-2D provides a Python script helping you to convert images into <code><a class="el" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a></code> objects written in C. For more, please read this guide for details.</p>
 <p >When you complete the above steps, <b>congratulations, you have successfully started Arm-2d.</b></p>
 <h2><a class="anchor" id="autotoc_md30"></a>
-2.4 Try existing example controls and scene templates</h2>
-<p >Arm-2D provides some controls and code templates in the <code>examples/common</code> directory, which are good reference codes and can be used in the project directly. Generally speaking, when you add the component <code>Acceleration::Arm-2D Extras::Controls</code> in the RTE configuration (as shown in <b>Figure 2-3</b>), all control source codes and related resources will be added to the project.</p>
+2.4 Try existing example controls</h2>
+<p >Arm-2D provides some controls in the <code>examples/common</code> directory, which are good reference codes and can be used in the project directly. Generally speaking, when you add the component <code>Acceleration::Arm-2D Extras::Controls</code> in the RTE configuration (as shown in <b>Figure 2-3</b>), all control source codes and related resources will be added to the project.</p>
 <p ><b>NOTE:</b> those unused controls or resources will be removed from the generated firmware image.</p>
 <p ><b>Figure 2-3 Selecting Controls in RTE</b></p>
 <p ><img src="GettingStartedAsAppDesigner_RTE_Controls.png" alt="" class="inline" title="Controls in RTE"/></p>
