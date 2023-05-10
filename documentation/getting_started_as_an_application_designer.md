@@ -2,7 +2,7 @@
 
 ## 1 Before We Start
 
-**Arm-2D is not a GUI.** It lacks many key elements to be called GUI, such as the element tree, the message processing, a rich set of controls, the support for interactive input devices, and a GUI designer.
+**Arm-2D is not a GUI.** To be called GUI, it lacks many critical components, such as the element tree, the message processing, a rich set of controls, the support for interactive input devices, and a good-to-have GUI designer.
 
 If possible, I hope that no one would have to use Arm-2D directly to create GUI applications. However, under the pressure of cost, there are always some embedded products developing GUI applications in resource-constrained environments (e.g. 64K Flash, 12K RAM etc.). Meanwhile, although some devices have relatively richer resources, the application software is often too big to reserve sufficient memory for a decent GUI stack. Supporting GUI application in resource constraint environments is a world "forgotten" by most of the mainstream embedded GUI stacks.
 
@@ -96,17 +96,13 @@ As you can see, the existing code has:
 
 
 
-You can replace the code inside `__pfb_draw_handler` with your own and check the result visually in the default scene coming with the display adapter. 
-
-During this process, you can, of course, use the default pictures coming with Arm-2d, i.e. the CMSIS-Logo as shown in **Figure 2-2** via corresponding `arm_2d_tile_t` objects: `c_tileCMSISLogoGRAY8`, `c_tileCMSISLogoRGB565` and `c_tileCMSISLogoCCCA8888` defined in `cmsis_logo.c`.
+You can replace the code inside `__pfb_draw_handler` with your own and check the result visually in the default scene coming with the display adapter. During this process, you can, of course, use the default pictures coming with Arm-2d, i.e. the CMSIS-Logo as shown in **Figure 2-2** via corresponding `arm_2d_tile_t` objects: `c_tileCMSISLogoGRAY8`, `c_tileCMSISLogoRGB565` and `c_tileCMSISLogoCCCA8888` defined in `cmsis_logo.c`. But sooner or later, you would like to use your own pictures. Arm-2D provides a Python script helping you to convert images into `arm_2d_tile_t` objects written in C. For more, please read this [guide](../tools/README.md) for details. 
 
 **Figure 2-2 The Default Picture resource: CMSIS logo**
 
 ![](../examples/common/asset/CMSIS_Logo_Final.png) 
 
 
-
-But sooner or later, you would like to use your own pictures. Arm-2D provides a Python script helping you to convert images into `arm_2d_tile_t` objects written in C. For more, please read this [guide](../tools/README.md) for details. 
 
 When you complete the above steps, **congratulations, you have successfully started Arm-2d.**
 
@@ -125,6 +121,86 @@ Arm-2D provides some controls in the `examples/common` directory, which are good
 
 
 ### 2.5 Write a simple GUI Application
+
+For an actual application, you cannot write everything in the default scene hidden in the display adapter. You might already know that the display adapter provides a service called Scene Player, which maintains a FIFO of scenes, allowing us to add new scenes and requests scene switching, during which the Scene Player could optionally apply some visual effects like fade-in-fade-out, erasing, sliding etc.
+
+**An application is designed and organized as a series of scenes.** When and How to switch to Which scenes are totally under your control. When using RTE to deploy Arm-2D, there are two simple ways to add a new scene:
+
+- Using RTE configuration to add new scenes
+
+    In RTE configuration, you can change the number of `Acceleration::Arm-2D Helper::Scene` to add new scenes to your project, as shown below:
+
+    **Figure 2-4 Adding new scenes in RTE**
+
+    ![Adding Scenes in RTE](./pictures/AddingScenesinRTE.png) 
+
+All scenes added with this method are included in the header file `arm_2d_scenes.h`, which you can included in your c source code:
+
+```c
+#include "arm_2d_helper.h"          /* arm_2d.h is also included in this header file */
+#include "arm_2d_disp_adapters.h"   /* include all display adapters */
+#include "arm_2d_scenes.h"          /* include all scenes added in RTE */
+```
+
+By calling the constructor `arm_2d_sceneN_init()`, the target scene is created, initialised and added to the Scene Player FIFO. For example:
+
+```c
+int main(void)
+{
+    ...
+    arm_2d_init();
+    disp_adapter0_init();
+
+    /* create scene0 and add to the Display Adapter FIFO */
+    arm_2d_scene0_init(&DISP0_ADAPTER);
+    
+    /* Switch to the next scene, i.e. scene0 in this case  */
+    arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
+    
+    while(1) {
+        disp_adapter0_task();
+        ...
+    }
+}
+```
+
+**NOTE**: if we haven't disabled the default scene in the `Display Adapter 0`, then after adding the scene0 to the FIFO by calling the `arm_2d_scene0_init`(), it is the next available scene in the FIFO, and you have to call `arm_2d_scene_player_switch_to_next_scene()` to show it on the screen. If we have disabled the default scene, then after calling the constructor, scene0 is the 1st available scene in the FIFO and is shown as the current scene on the screen. In this case, you don't have to call `arm_2d_scene_player_switch_to_next_scene()`. 
+
+
+
+- Using Code Template to add new scenes
+
+    Except for the method above, you can add a new scene through the code template. For any given group in the project view, you can right-click and select "**Add New Item to Group**" in the pop-up menu (as shown in **Figure 2-5**), then in the dialog find "**User Code Template**", expand the Acceleration and select the `Arm-2D:Core::User Scene Template` (as shown in **Figure 2-6**). 
+
+    **Figure 2-5 Adding New Items to a Group**
+    
+    ![AddingNewItemsToAGroup](./pictures/AddNewItemsToGroup.png) 
+
+    
+    **Figure 2-6 Adding a New Scene using Code Template**
+    
+    ![AddingScenesViaTempalte](./pictures/AddingScenesViaTemplate.png) 
+    
+    After clicking the "Add" button, two files `arm_2d_scene_template.h` and `arm_2d_scene_template.c` will be added to your project folder. Open those two files and replace all `<NAME>` with your scene name, for example, `MY_SCENE` in upper case and replace all `<scenen>` with the same name in the lower case, for example, `my_scene`.
+    
+    **NOTE**: scenes added with code template are not included in the `arm_2d_scenes.h` and you have to include the header file mannually. 
+
+
+
+By default, the display adapter switches scenes without any visual effects or delays when it is proper to do so after receiving a switching request. You can set some predefined switching visual effects by calling the function `arm_2d_scene_player_set_switching_mode()`. For example:
+
+```c
+    /* set switching visual effects: Fade-in-Fade-out in White */
+    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
+                                            ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);
+
+    /* the period of the switching effect */
+    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 3000);
+    
+    arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
+```
+
+In some visual effects, you can specify the period of the switching process by calling the function `arm_2d_scene_player_set_switching_period()`. For more, please check the header file `arm_2d_helper_scene.h`. 
 
 
 
