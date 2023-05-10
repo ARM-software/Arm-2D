@@ -248,11 +248,95 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 </div><!-- fragment --><p >In some visual effects, you can specify the period of the switching process by calling the function <code><a class="el" href="group__gHelper.html#gac437acd591ac725054b4216fa2351013" title="configure the scene switching period">arm_2d_scene_player_set_switching_period()</a></code>. For more, please check the header file <code><a class="el" href="arm__2d__helper__scene_8h_source.html">arm_2d_helper_scene.h</a></code>.</p>
 <h2><a class="anchor" id="autotoc_md32"></a>
 2.6 Learn the basic method to optimize the performance and memory footprint</h2>
+<p >The design consideration of optimizing performance and memory footprint deserves a dedicated document or maybe more. We can only cover some preliminary tips for optimisation:</p>
+<ul>
+<li><b>For the Arm Compiler 6</b><ul>
+<li>Avoid using Arm Compiler 5 whenever possible.</li>
+<li>If the ROM is sufficient, try to use <b>-Omax + Link Time Optimisation</b></li>
+<li>If the both the performance and the code memory footprint are important, try to use <b>-Os + Link Time Optimisation</b></li>
+<li>If the code memory footprint is vital, try to use <b>-Oz + Link Time Optimisation</b></li>
+<li>Do <b>NOT</b> use <b>-O0</b> unless you are debugging.</li>
+</ul>
+</li>
+<li><b>For RAM memory footprint</b><ul>
+<li>Set the FPB size <b>starting from the 1/10 full framebuffer</b>.</li>
+<li>For the same number of pixels, <b>prioritize the width over the height</b> when setting the PFB. For example, 320 * 8 is better than 80 * 32.</li>
+<li>Whenever possible, <b>the PFB height should be larger than or equal to 8.</b></li>
+</ul>
+</li>
+<li><b>For performance (Frame-rate)</b><ul>
+<li>LCD Latency determines the upper-limit of the system frame-rate. Reduce it towards zero with all the methods available.</li>
+<li><b>Use Asynchornouse mode</b> (e.g. DMA+ISR) when it is possible.</li>
+<li>Using 1/10 framebuffer doesn't mean it is 10x slower than using a full framebuffer</li>
+</ul>
+</li>
+<li><b>For API Usage</b><ul>
+<li><p class="startli">Please use the feature-specific version rather than the more generic version whenever possible for a given operation. This helps to reduce the memory footprint in general.</p>
+<p class="startli">For example: for copying an rgb565 tile with a source mask and no-mirroring, please use the function <code>arm_2d_rgb565_tile_copy_with_src_mask_only()</code> instead of <code>arm_2d_rgb565_tile_copy_with_masks()</code>.</p>
+</li>
+</ul>
+</li>
+</ul>
 <h2><a class="anchor" id="autotoc_md33"></a>
 2.7 Tips for other advanced topics</h2>
-<h1><a class="anchor" id="autotoc_md34"></a>
+<h3><a class="anchor" id="autotoc_md34"></a>
+2.7.1 Benchmarks</h3>
+<p >To evaluate the 2D performance for the target platform, Arm-2D provides two benchmarks, i.e. <b>Benchmark-Generic</b> and <b>Benchmark-Watchpanel</b>. You can deploy one of them by selecting the it in the RTE configuration as shown in <b>Figure 2-7</b>.</p>
+<p ><b>Figure 2-7 Selecting Benchmarks in RTE</b></p>
+<p ><img src="GettingStartedAsAppDesigner_RTE_Controls.png" alt="" class="inline" title="Controls in RTE"/></p>
+<p >The original benchmark cannot fit into the memory if your MCU has a small Flash. To solve this problem, Arm-2D introduces a Tiny mode for both benchmarks. You can enable it by either setting the macro <code>__ARM_2D_CFG_BENCHMARK_TINY_MODE__</code> to <code>1</code> in <code>arm_2d_cfg.h</code> or defining the macro in your project configuration.</p>
+<p ><b>NOTE:</b> You can find ALL benchmark related configurations in <code>arm_2d_cfg.h</code>.</p>
+<p >Running benchmark is simple:</p>
+<ol type="1">
+<li>Include <code>arm_2d_benchmark.h</code></li>
+<li>call function <code>arm_2d_run_benchmark()</code> after initializing Arm-2D</li>
+</ol>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;arm_2d_helper.h&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;arm_2d_benchmark.h&quot;</span></div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main (<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
+<div class="line">    ...</div>
+<div class="line">    <a class="code hl_define" href="group__gKernel.html#gaee644f33c5b07d65d292017b21fb3f39" title="a decoration to make the immediate following code irq-safe">arm_irq_safe</a> {</div>
+<div class="line">        <a class="code hl_function" href="group__gKernel.html#gae417897e7d7186b294c0ff3468102276" title="initialise arm-2d">arm_2d_init</a>();</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    arm_2d_run_benchmark();</div>
+<div class="line">    </div>
+<div class="line">    <span class="keywordflow">while</span>(1) {</div>
+<div class="line">        __NOP();</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md35"></a>
+2.7.2 Asynchronose Mode and RTOS support</h3>
+<p >Arm-2D introduces an asynchronous mode for hardware accelerators and multi-core systems. To enable this feature, you can set the macro <code>__ARM_2D_HAS_ASYNC__</code> defined in <code>arm_2d_cfg.h</code> to <code>1</code>. If you don't have hardware accelerators, 2D capable DMA (for example, DMAC-350) or dedicated Cortex-M core(s) for 2D graphics, enabling the Asynchronous mode brings no benefits.</p>
+<p >When it is good to enable the asynchronous mode, you have to have RTOS support to take advantage of it. You can enable the RTOS support in RTE as shown in <b>Figure 2-8</b>. If you cannot find the desired RTOS in the drop list, please select the User Custom and implement the interfaces listed in the source code <code>arm_2d_helper_rtos_user.c</code>.</p>
+<p ><b>Figure 2-8 Enable RTOS Support in RTE</b></p>
+<p ><img src="EnbleRTOSSupportInRTE.png" alt="" class="inline" title="EnableRTOSSupportInRTE"/></p>
+<p >You do <b>NOT</b> have to enable the RTOS support in the synchronous mode (<code>__ARM_2D_HAS_ASYNC__</code> is <code>0</code> ). Even so, you can still use a dedicated thread to run the Arm-2D display adapter task (e.g. <code>disp_adapter0_task()</code>) and lock the framerate to a desired value. For example:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#ifndef LCD_TARGET_FPS</span></div>
+<div class="line"><span class="preprocessor">#   define LCD_TARGET_FPS       30</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"> </div>
+<div class="line">__NO_RETURN</div>
+<div class="line"><span class="keywordtype">void</span> app_2d_main_thread (<span class="keywordtype">void</span> *argument) </div>
+<div class="line">{</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">while</span>(1) {<span class="comment"></span></div>
+<div class="line"><span class="comment">        //! retrieve the number of system ticks</span></div>
+<div class="line"><span class="comment"></span>        uint32_t wTick = osKernelGetTickCount();        </div>
+<div class="line">        <span class="keywordflow">while</span>(<a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcacf7b5f9e66c44d332ea46d05860d78d1" title="fsm complete">arm_fsm_rt_cpl</a> != disp_adapter0_task());</div>
+<div class="line">        <span class="comment"></span></div>
+<div class="line"><span class="comment">        //! lock frame rate</span></div>
+<div class="line"><span class="comment"></span>        osDelayUntil(wTick + (1000 / LCD_TARGET_FPS));</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">//osThreadExit();</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md36"></a>
 3 Tips For Exploring the Library</h1>
-<h2><a class="anchor" id="autotoc_md35"></a>
+<h2><a class="anchor" id="autotoc_md37"></a>
 "I am a library user, I only care about how to use the library"</h2>
 <ul>
 <li>For library users, <b>ALL</b> useful information, i.e. type definitions, macros, prototypes of functions etc., are stored in header files which have <b>NO</b> double under-scope as their prefixes. We call those header files the <b>PUBLIC HEADER FILES</b>.</li>
