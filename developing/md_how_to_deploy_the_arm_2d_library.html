@@ -118,7 +118,10 @@ Table of Contents</h2>
 </li>
 <li><a href="#3-helper-services-and-extras">3 Helper Services and Extras</a><ul>
 <li><a href="#31-preparation">3.1 Preparation</a></li>
-<li><a href="#32-display-adapter-service">3.2 Display Adapter Service</a></li>
+<li><a href="#32-add-display-adapter-service">3.2 Add Display Adapter Service</a></li>
+<li><a href="#33-configue-the-display-adapter-service">3.3 Configue the Display Adapter Service</a></li>
+<li><a href="#34-implement-the-external-reference-timer">3.4 Implement the External Reference Timer</a></li>
+<li><a href="#35-verifying-the-porting-result">3.5 Verifying The Porting Result</a></li>
 </ul>
 </li>
 <li><a href="#4-example-projects">4 Example Projects</a></li>
@@ -226,23 +229,159 @@ Table of Contents</h2>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 </div><!-- fragment --><p >Here, <code>disp_ram</code> points to the memory space reserved for the LCD display RAM.</p>
-<p ><b>IMPORTANT</b>: When exiting the <code>Disp0_DrawBitmap()</code>, Arm-2D assumes that the target frame buffer has already been flushed to the target screen.</p>
+<p ><b>IMPORTANT</b>:</p>
+<ol type="1">
+<li>When exiting the <code>Disp0_DrawBitmap()</code>, Arm-2D assumes that the target frame buffer has already been flushed to the target screen.</li>
+<li><b>Please verify the <code>Disp0_DrawBitmap()</code> functional correctness without Arm-2d before moving to the next steps.</b></li>
+</ol>
 <h2><a class="anchor" id="autotoc_md47"></a>
-3.2 Display Adapter Service</h2>
-<h1><a class="anchor" id="autotoc_md48"></a>
+3.2 Add Display Adapter Service</h2>
+<p >Deploying Display Adatper service in MDK is simple:</p>
+<ol type="1">
+<li>Open RTE dialog (as shown in <b>Figure 3-2</b>)</li>
+<li>Expand <code>Acceleration::Arm-2D Helper</code></li>
+<li>Select the <b>PFB</b> and increase the number of <b>Display Adapter</b> to <code>1</code>. <b>NOTE</b>: If you have multiple screens, please set the number accordingly.</li>
+<li>If you see any warning message in yellow, please click the Resolve button. The warning should disappear.</li>
+<li>Click <b>OK</b> button to close the RTE dialog.</li>
+</ol>
+<p ><b>Figure 3-2 Selecting Display Adapter Service in RTE</b></p>
+<p ><img src="E:\git\Arm-2D\documentation\pictures\DisplayAdapter.png" alt="AddDisplayAdapter" class="inline"/></p>
+<p >After that, you will see two files, i.e. <code>arm_2d_disp_adapter_0.c</code> and <code>arm_2d_disp_adapter_0.h</code> have been added to the project manager under the <b>Acceleration</b> group.</p>
+<p ><b>IMPORTANT</b>: unless necessary, please do <b>NOT</b> modify the content of the <code>arm_2d_disp_adapter_0.c</code>, as new versions of Arm-2D often introduce new features to the Display Adatper Service, as long as you haven't modified anything in the <code>arm_2d_disp_adapter_0.c</code>, updating to the latest version would be an easy task nothing more than right-clicking the file in the project manager and updating to the latest version in the pop-up menu.</p>
+<p ><b>You have to initalise the Display Adapter service before using it</b>.</p>
+<p >Include <code>arm_2d_disp_adapters.h</code> in your c source code and add the following code to the <code>main()</code> function:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;arm_2d_helper.h&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;arm_2d_disp_adapters.h&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;arm_2d_scenes.h&quot;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main (<span class="keywordtype">void</span>) </div>
+<div class="line">{</div>
+<div class="line">    ...</div>
+<div class="line">    <a class="code hl_define" href="group__gKernel.html#gaee644f33c5b07d65d292017b21fb3f39" title="a decoration to make the immediate following code irq-safe">arm_irq_safe</a> {</div>
+<div class="line">        <a class="code hl_function" href="group__gKernel.html#gae417897e7d7186b294c0ff3468102276" title="initialise arm-2d">arm_2d_init</a>();</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">/* initialize the display adapter 0 service */</span></div>
+<div class="line">    disp_adapter0_init();</div>
+<div class="line">    </div>
+<div class="line">    <span class="keywordflow">while</span> (1) {</div>
+<div class="line">        <span class="comment">/* the task function of the display adapter 0 service */</span></div>
+<div class="line">        disp_adapter0_task();</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --><p >Or the thread function if you want to run Arm-2d in an RTOS environment:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;arm_2d_helper.h&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;arm_2d_disp_adapters.h&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;arm_2d_scenes.h&quot;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#ifndef LCD_TARGET_FPS</span></div>
+<div class="line"><span class="preprocessor">#   define LCD_TARGET_FPS       30</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"> </div>
+<div class="line">__NO_RETURN</div>
+<div class="line"><span class="keywordtype">void</span> app_2d_main_thread (<span class="keywordtype">void</span> *argument) </div>
+<div class="line">{</div>
+<div class="line">    <a class="code hl_define" href="group__gKernel.html#gaee644f33c5b07d65d292017b21fb3f39" title="a decoration to make the immediate following code irq-safe">arm_irq_safe</a> {</div>
+<div class="line">        <a class="code hl_function" href="group__gKernel.html#gae417897e7d7186b294c0ff3468102276" title="initialise arm-2d">arm_2d_init</a>();</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">/* initialize the display adapter 0 service */</span></div>
+<div class="line">    disp_adapter0_init();</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">while</span>(1) {<span class="comment"></span></div>
+<div class="line"><span class="comment">        //! retrieve the number of system ticks</span></div>
+<div class="line"><span class="comment"></span>        uint32_t wTick = osKernelGetTickCount();        </div>
+<div class="line">        <span class="keywordflow">while</span>(<a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcacf7b5f9e66c44d332ea46d05860d78d1" title="fsm complete">arm_fsm_rt_cpl</a> != disp_adapter0_task());</div>
+<div class="line">        <span class="comment"></span></div>
+<div class="line"><span class="comment">        //! lock frame rate</span></div>
+<div class="line"><span class="comment"></span>        osDelayUntil(wTick + (1000 / LCD_TARGET_FPS));</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">//osThreadExit();</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md48"></a>
+3.3 Configue the Display Adapter Service</h2>
+<p >You should configure the Display Adapter service before using it. All the configurations of a Display Adapter service are stored in the corresponding header file, e.g. <code>arm_2d_disp_adapter_0.h</code>. In MDK, all configuration work can be done through the GUI wizard, as shown in <b>Figure 3-3</b>.</p>
+<p ><b>Figure 3-3 Configure the Display Adapter Using the Wizard</b></p>
+<p ><img src="ConfigureDisplayAdapter.png" alt="" class="inline" title="ConfigureTheDisplayAdapter"/></p>
+<p >There are many options available in the list, and we only explain those important and commonly used ones here:</p>
+<p ><b>Table 3-1 The Important and Commonly Used Options of the Display Adapter Service</b></p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Options   </th><th class="markdownTableHeadNone">Value   </th><th class="markdownTableHeadNone">Default   </th><th class="markdownTableHeadNone">Description    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Select the screen colour depth   </td><td class="markdownTableBodyNone">8bits/16bits/32bits   </td><td class="markdownTableBodyNone">16bits   </td><td class="markdownTableBodyNone">The number of bits per pixel. For monochrome LCD and e-ink LCD, please select the 8bits.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Width of the screen   </td><td class="markdownTableBodyNone">8...32767   </td><td class="markdownTableBodyNone">320   </td><td class="markdownTableBodyNone">The width of the target screen    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Height of the screen   </td><td class="markdownTableBodyNone">8...32767   </td><td class="markdownTableBodyNone">240   </td><td class="markdownTableBodyNone">The height of the target screen    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Width of the PFB block   </td><td class="markdownTableBodyNone">1...32767   </td><td class="markdownTableBodyNone">320   </td><td class="markdownTableBodyNone">The width of a partial frame buffer (PFB). If possible, please use the screen width here.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Height of the PFB block   </td><td class="markdownTableBodyNone">1...32767   </td><td class="markdownTableBodyNone">240   </td><td class="markdownTableBodyNone">The height of a partial frame buffer (PFB). It is recommended to start from 1/10 of the height of the screen. If possible, do not use a value smaller than 8.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Width Alignment of generated PFBs   </td><td class="markdownTableBodyNone">1/2/4...128 pixels   </td><td class="markdownTableBodyNone">1 pixel   </td><td class="markdownTableBodyNone">The horizontal pixel alignment of the PFBs sending to the <code>DispN_DrawBitmap()</code> for flushing. It is important for LCDs that have certain pixel alignment requirements. For example, 8 pixel alignment for monochrome LCDs and 4 pixel alignment for e-inks.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Height Alignment of generated PFBs   </td><td class="markdownTableBodyNone">1/2/4...128 pixels   </td><td class="markdownTableBodyNone">1 pixel   </td><td class="markdownTableBodyNone">The vertical pixel alignment of the PFBs sending to the <code>DispN_DrawBitmap()</code> for flushing. It is important for LCDs that have certain pixel alignment requirements. For example, 8 pixel alignment for some 12864 monochrome LCDs.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">PFB Block Count   </td><td class="markdownTableBodyNone">1...32767   </td><td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">The number of PFB blocks in the pool. Please set it to <code>2</code> or more when using Asynchornose flushing mode; otherwise, keep it as <code>1</code>.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Number of iterations   </td><td class="markdownTableBodyNone">0...32767   </td><td class="markdownTableBodyNone">30   </td><td class="markdownTableBodyNone">Calculate the real-time FPS for every specified number of frames. Set it to <code>0</code> to disable the real-time FPS calculation.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">FPS Calculation Mode   </td><td class="markdownTableBodyNone">Render-Only FPS/Real FPS   </td><td class="markdownTableBodyNone">Render-Only FPS   </td><td class="markdownTableBodyNone"><b>Render-Only FPS</b>: record the time used by the renderer and use it to calculate the FPS without taking LCD latency into consideration. <br  />
+<b>Real FPS</b>: calculate the real FPS people actually see on the screen.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Swap the high and low bytes   </td><td class="markdownTableBodyNone">Select/Unselect   </td><td class="markdownTableBodyNone">Unselect   </td><td class="markdownTableBodyNone">Some RGB565 LCDs require swapping the high and the low bytes for each pixel. Please <b>ONLY</b> enable this option when there is no hardware solution to swap the high and low bytes.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Enable the helper service for Asynchronous Flushing   </td><td class="markdownTableBodyNone">Select/Unselect   </td><td class="markdownTableBodyNone">Unselect   </td><td class="markdownTableBodyNone">By selecting this option, a dedicated helper service will be provided for asynchronous flushing mode. For more, please read the guidance in the header file.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Disable the default Scene   </td><td class="markdownTableBodyNone">Select/Unselect   </td><td class="markdownTableBodyNone">Unselect   </td><td class="markdownTableBodyNone">A Display Adapter brings a default scene for indicating successful porting. You can disable it by selecting this option.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Disable the navigation layer   </td><td class="markdownTableBodyNone">Select/Unselect   </td><td class="markdownTableBodyNone">Unselect   </td><td class="markdownTableBodyNone">A Display Adapter uses the navigation layer (which is floating above the content created by users) to show real-time FPS and version info. You should disable it before the product releasing or disable it to add your own navigation layer.   </td></tr>
+</table>
+<p ><b>NOTE</b>:</p>
+<ul>
+<li>If the target device cannot afford the full frame buffer, please set the PFB size (i.e. width and/or height) to a smaller value. <b>We recommend you start with a 1/10 full frame buffer</b>, as it actually isn't 10x slower than using a full frame buffer.</li>
+<li>For <b>monochrome LCDs</b>, you should use 8-bit colour depth and pack every 8 pixels into one byte in the <code>Disp0_DrawBitmap()</code>. Don't forget to set the PFB alignment to 8 horizontally or vertically depending on the monochrome LCD pixel layout.</li>
+<li>For <b>2-bit e-ink LCDs</b>, you should use 8-bit colour depth and pack every 4 pixels into one byte in the <code>Disp0_DrawBitmap()</code>. Don't forget to set the PFB alignment to 4 horizontally or vertically depending on the e-ink LCD pixel layout.</li>
+<li>For <b>4-bit e-ink LCDs</b>, you should use 8-bit colour depth and pack every 2 pixels into one byte in the <code>Disp0_DrawBitmap()</code>. Don't forget to set the PFB alignment to 2 horizontally or vertically depending on the e-ink LCD pixel layout.</li>
+<li>Please make sure the stack size is no less than 3K Bytes.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md49"></a>
+3.4 Implement the External Reference Timer</h2>
+<p >Arm-2D helper service relies on an external reference timer which we should implement:</p>
+<p ><b>Table 3-2 The Interface for Accessing the External Timer</b></p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Interface Prototype   </th><th class="markdownTableHeadNone">Description    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">int64_t <a class="el" href="group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185" title="get the current system stamp from the reference clock">arm_2d_helper_get_system_timestamp(void)</a>   </td><td class="markdownTableBodyNone">a function that returns the number of ticks (timestamp) of the reference timer since reset.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">uint32_t <a class="el" href="group__gHelper.html#gace60efc807106e1526fcc9f673f19b12" title="get the reference clock frequency">arm_2d_helper_get_reference_clock_frequency(void)</a>   </td><td class="markdownTableBodyNone">the frequency of the reference timer.   </td></tr>
+</table>
+<p ><b>We highly recommand you to install perf_counter from Pack-Installer, <a href="https://www.keil.arm.com/packs/">Keil Website</a> or <a href="https://github.com/GorgonMeducer/perf_counter/releases">its Github repo</a> to simplify this process.</b> You have to initialize the perf_counter before using Arm-2D. For more, please read the <a href="https://github.com/GorgonMeducer/perf_counter/blob/main/README.md">guidance here</a>.</p>
+<h2><a class="anchor" id="autotoc_md50"></a>
+3.5 Verifying The Porting Result</h2>
+<p >After finished steps above, if everything goes well, you should see a screen as shown in <b>Figure 3-4</b>. If the colour doesn't look right and the LCD uses RGB565, try to swap the high and low bytes for each pixel. <br  />
+</p>
+<p ><b>Figure 3-4 The Look of The Default Scene In A Succsessuf Porting</b></p>
+<p ><img src="DispAdapterDefaultScene.gif" alt="" class="inline"/></p>
+<p >If you encounter any problems, please feel free to raise an issue.</p>
+<p >Enjoy.</p>
+<h1><a class="anchor" id="autotoc_md51"></a>
 4 Example Projects</h1>
 <p ><b>Table 3-1 Summary</b></p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Projects   </th><th class="markdownTableHeadNone">Description   </th><th class="markdownTableHeadNone">Folder   </th><th class="markdownTableHeadNone">Note    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">benchmark   </td><td class="markdownTableBodyNone">It is an <b>ALL-IN-ONE</b> example that demonstrates almost all features provided by Arm-2D. By setting different PFB sizes, you can evaluate the 2D image processing capability for the target system.   </td><td class="markdownTableBodyNone">examples/benchmark   </td><td class="markdownTableBodyNone">Can be used as benchmark.    </td></tr>
+<td class="markdownTableBodyNone">benchmark   </td><td class="markdownTableBodyNone">It is an <b>ALL-IN-ONE</b> example that demonstrates almost all features provided by Arm-2D. By setting different PFB sizes, you can evaluate the 2D image processing capability for the target system.   </td><td class="markdownTableBodyNone">examples/benchmark   </td><td class="markdownTableBodyNone"><b>Used as benchmark.</b>    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">watch_panel   </td><td class="markdownTableBodyNone">It is a dedicated example of a smart-watch-like panel. A pointer and two gears rotate at different angular velocities on a translucent watch panel with a dynamic background.   </td><td class="markdownTableBodyNone">examples/watch_panel   </td><td class="markdownTableBodyNone">Can be used as benchmark    </td></tr>
+<td class="markdownTableBodyNone">watch_panel   </td><td class="markdownTableBodyNone">It is a dedicated example of a smart-watch-like panel. A pointer and two gears rotate at different angular velocities on a translucent watch panel with a dynamic background.   </td><td class="markdownTableBodyNone">examples/watch_panel   </td><td class="markdownTableBodyNone"><b>Used as benchmark</b>    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">[template][bare-metal][pfb]   </td><td class="markdownTableBodyNone">It is a project template for the bare-metal environment.   </td><td class="markdownTableBodyNone">examples/[template][bare-metal][pfb]   </td><td class="markdownTableBodyNone">Project Template    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">[template][cmsis-rtos2][pfb]   </td><td class="markdownTableBodyNone">It is a project template for the RTOS environment, which use CMSIS-RTO2 as an example to show how Arm-2D can work with an RTOS.   </td><td class="markdownTableBodyNone">examples/[template][cmsis-rtos2][pfb]   </td><td class="markdownTableBodyNone">Project Template   </td></tr>
+<td class="markdownTableBodyNone">[template][cmsis-rtos2][pfb]   </td><td class="markdownTableBodyNone">It is a project template for the RTOS environment, which use CMSIS-RTOS2 as an example to show how Arm-2D can work with an RTOS.   </td><td class="markdownTableBodyNone">examples/[template][cmsis-rtos2][pfb]   </td><td class="markdownTableBodyNone">Project Template   </td></tr>
 </table>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
