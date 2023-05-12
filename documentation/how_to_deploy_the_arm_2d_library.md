@@ -7,6 +7,8 @@ This document describes how to deploy the **Arm-2D** library to your existing MD
 - [2 How to Deploy Arm-2D](#2-how-to-deploy-arm-2d)
   - [2.1 Deploy Using CMSIS-Pack in MDK](#21-deploy-using-cmsis-pack-in-mdk)
 - [3 Helper Services and Extras](#3-helper-services-and-extras)
+  - [3.1 Preparation](#31-preparation)
+  - [3.2 Display Adapter Service](#32-display-adapter-service)
 - [4 Example Projects](#4-example-projects)
 
 
@@ -87,13 +89,79 @@ There are three methods to get Arm-2D:
     
     **Figure 2-9 Configuration Wizard for Arm-2D**
     
-    ![](./pictures/HowToDeploy2_9.png) 
+    ![Arm_2D_CFG](./pictures/HowToDeploy2_9.png) 
     
-    
+    **NOTE**: If you want to support **CCCA8888** (i.e. **RGBA8888**), please selet the `Enable support for accessing individual colour channels`.
 
 
 
 ## 3 Helper Services and Extras
+
+Suppose you want to develop GUI applications directly with Arm-2D. In that case, it implies that you not only use Arm-2D APIs for the framebuffer-based low-level 2D image processing but also want to display the processed result on a screen. An ordinary GUI software stack will provide a dedicated service for connecting a target screen, and users must implement a driver or adapter between the hardware and the service. Such a service usually allows people to refresh the whole screen with a petite frame buffer called partial frame buffer (PFB). This feature is vital for resource-constraint embedded platforms. Arm-2D provide a similar feature through a helper service called Display Adapter Service.
+
+### 3.1 Preparation
+
+Before we start, we have to prepare a low-level flushing function called Disp0_DrawBitmap(). Its prototype is shown below:
+
+```c
+int32_t Disp0_DrawBitmap(int16_t x, 
+                        int16_t y, 
+                        int16_t width, 
+                        int16_t height, 
+                        const uint8_t *bitmap);
+```
+
+Here as shown in **Figure 3-1**:
+
+- `x`,`y` are the absolute coordinates in the target screen
+- `width` and` height` describe the size of the rectangular target area
+- `bitmap` points to a framebuffer which holds all pixels in a rectangular area with the given `width` and `height`. 
+
+
+
+**Figure 3-1 The Scheme of the Low Level Flushing Interface**
+
+<img src="./pictures/Disp0_DrawBitmap.png" alt="Disp0_DrawBitmap" style="zoom:70%;" /> 
+
+Suppose the display RAM of your LCD has been mapped into internal 4G memory space. An example of `Disp0_DrawBitmap()` might look like this:
+
+```c
+/**
+  \fn          int32_t Disp0_DrawBitmap (uint32_t x, uint32_t y, uint32_t width, uint32_t height, const uint8_t *bitmap)
+  \brief       Draw bitmap (bitmap from BMP file without header)
+  \param[in]   x      Start x position in pixels (0 = left corner)
+  \param[in]   y      Start y position in pixels (0 = upper corner)
+  \param[in]   width  Bitmap width in pixels
+  \param[in]   height Bitmap height in pixels
+  \param[in]   bitmap Bitmap data
+  \returns
+   - \b  0: function succeeded
+   - \b -1: function failed
+*/
+int32_t Disp0_DrawBitmap (uint32_t x, uint32_t y, uint32_t width, uint32_t height, const uint8_t *bitmap) 
+{
+
+    volatile uint16_t *phwDes = disp_ram + y * GLCD_WIDTH + x;
+    const uint16_t *phwSrc = (const uint16_t *)bitmap;
+    for (int_fast16_t i = 0; i < height; i++) {
+        memcpy ((uint16_t *)phwDes, phwSrc, width * 2);
+        phwSrc += width;
+        phwDes += GLCD_WIDTH;
+    }
+
+  return 0;
+}
+```
+
+Here, `disp_ram` points to the memory space reserved for the LCD display RAM.
+
+**IMPORTANT**: When exiting the `Disp0_DrawBitmap()`, Arm-2D assumes that the target frame buffer has already been flushed to the target screen. 
+
+
+
+### 3.2 Display Adapter Service
+
+
 
 
 
