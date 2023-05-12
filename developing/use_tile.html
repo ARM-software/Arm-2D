@@ -108,7 +108,7 @@ $(document).ready(function(){initNavTree('use_tile.html',''); initResizable(); }
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p ><a class="anchor" id="md_how_to_use_tile_operations"></a></p>
-<h1><a class="anchor" id="autotoc_md105"></a>
+<h1><a class="anchor" id="autotoc_md107"></a>
 1 Overview</h1>
 <p >The Tile Operation is the most fundamental API category of the Arm-2d. It consists of three sub-categories:</p>
 <ul>
@@ -134,9 +134,9 @@ $(document).ready(function(){initNavTree('use_tile.html',''); initResizable(); }
 </li>
 </ul>
 <p >All related definitions are listed in the interface header file <em><b>Arm_2d_tile.h</b></em> and the default C implementation and Helium implementation can be found in <em><b>Arm_2d_tile.c</b></em>.</p>
-<h1><a class="anchor" id="autotoc_md106"></a>
+<h1><a class="anchor" id="autotoc_md108"></a>
 2 Key Scenarios, Patterns and Use Cases</h1>
-<h2><a class="anchor" id="autotoc_md107"></a>
+<h2><a class="anchor" id="autotoc_md109"></a>
 2.1 Normal Usage</h2>
 <p >A Root tile is a kind of tiles that directly contain the display buffer, and its feature bit <em><b>bIsRoot</b></em> is set, according to the pixel types used in the display buffer to which corresponding pointers should be used.</p>
 <p >It is worth emphasizing that for a root Tile, its Location coordinate must be <em><b>(0,0)</b></em>; otherwise, it is considered illegal.</p>
@@ -221,30 +221,30 @@ $(document).ready(function(){initNavTree('use_tile.html',''); initResizable(); }
 <div class="line">    }</div>
 <div class="line">    ...</div>
 <div class="line">}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md108"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md110"></a>
 2.1.1 Window/Panel Clipping</h3>
 <p ><b>All operations in Arm-2D support region clipping by default</b>, which means users don't have to handle window/panel clipping manually. In rare cases where users have to intersect regions and/or tiles, Arm-2D provides dedicated APIs to facilitate such operations.</p>
 <p >For more details, please refer to <b><a href="#41-basic">section 4.1</a></b>.</p>
-<h3><a class="anchor" id="autotoc_md109"></a>
+<h3><a class="anchor" id="autotoc_md111"></a>
 2.1.2 Texture Tiling</h3>
 <p >Tiling on a target display buffer is one of the most commonly used 2D operations. Arm-2D supports this with tile copy APIs, in which a copy mode can be specified, and <b>Arm_2D_CP_MODE_FILL</b> is used to enable the texture tiling feature.</p>
 <p >For more details, please refer to <b><a href="#42-copy-fill-and-xy-mirroring">section 4.2</a></b>.</p>
-<h2><a class="anchor" id="autotoc_md110"></a>
+<h2><a class="anchor" id="autotoc_md112"></a>
 2.2 Advanced Usage</h2>
-<h3><a class="anchor" id="autotoc_md111"></a>
+<h3><a class="anchor" id="autotoc_md113"></a>
 2.2.1 Partial Frame Buffer (PFB)</h3>
 <p >The so-called Partial Frame Buffer is a special use of the Tile Child scheme. It establishes a root Tile for a tiny rectangular display buffer and derives a Child Tile having the same size as the actual screen. In practice, the GUI software in the upper layer uses the Child Tile (with the full-screen size) to draw graphics and blend visual layers. After completing a frame, the PFB that actually saves the pixel information is sent to the LCD driver for a flush. Since FPB only covers a small area, the drawing process aforementioned, in most cases, will be judged as "no need for actual drawing" and skipped. To display the entire screen, we need to repeat this process continuously and adjust the relative Location between FPB and the Child Tile at the beginning of each iteration. For us, it looks like moving FPB line by line on the screen as shown in <b>Figure 2-4</b>.</p>
 <p ><b>Figure 2-4 How Partial Frame Buffer Works</b></p>
 <p ><img src="Introduction2_3b.png" alt="" class="inline" title="Partial Frame Buffer"/></p>
 <p >More details are shown in a dedicated example project located in "***examples/partial_frame_buffer***" directory.</p>
-<h1><a class="anchor" id="autotoc_md112"></a>
+<h1><a class="anchor" id="autotoc_md114"></a>
 3 Design Considerations</h1>
 <p >Base on the feedbacks collected, design considerations will be documented in the future.</p>
-<h1><a class="anchor" id="autotoc_md113"></a>
+<h1><a class="anchor" id="autotoc_md115"></a>
 4 API Table</h1>
-<h2><a class="anchor" id="autotoc_md114"></a>
+<h2><a class="anchor" id="autotoc_md116"></a>
 4.1 Basic</h2>
-<h3><a class="anchor" id="autotoc_md115"></a>
+<h3><a class="anchor" id="autotoc_md117"></a>
 4.1.1 &lt;strong&gt;arm_2d_tile_generate_child&lt;/strong&gt;</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -267,7 +267,7 @@ $(document).ready(function(){initNavTree('use_tile.html',''); initResizable(); }
 <p >The behaviour of function <em><b><a class="el" href="group__Tile.html#gae4ee095763b33e1a6e9b0203263edfde" title="generate a child tile from the target tile with a given region">arm_2d_tile_generate_child()</a></b></em> is illustrated in the <b>Figure 4.1</b>. This function will generate a child from a target tile based on a given relative region inside the tile. The user has to provide a buffer for the child tile. If there is no intersection between the tile region and the given relative region, i.e. the relative region is out of the tile region, NULL is returned; otherwise, the provided child tile address is returned.</p>
 <p ><b>Figure 4.1 How A Child Tile Is Generated From A Parent Tile</b></p>
 <p ><img src="howtousetileoperation_4_1_1_a.png" alt="" class="inline" title="1608223966544"/></p>
-<h3><a class="anchor" id="autotoc_md116"></a>
+<h3><a class="anchor" id="autotoc_md118"></a>
 4.1.2 &lt;strong&gt;arm_2d_tile_get_root&lt;/strong&gt;</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -293,7 +293,7 @@ $(document).ready(function(){initNavTree('use_tile.html',''); initResizable(); }
 <p ><b>Figure 4.2 How A Root Tile Is Retrieved</b></p>
 <p ><img src="howtousetileoperation_4_1_2.png" alt="" class="inline" title="1608241452844"/></p>
 <p ><b>NOTE:</b> Even if a tile appears inside the root tile, but there could be a string of parents between the target tile and the root, as long as the tile is out of the region of any one of the parents, it is still considered as out of region.</p>
-<h3><a class="anchor" id="autotoc_md117"></a>
+<h3><a class="anchor" id="autotoc_md119"></a>
 4.1.3 &lt;strong&gt;arm_2d_is_root_tile&lt;/strong&gt;</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -308,7 +308,7 @@ $(document).ready(function(){initNavTree('use_tile.html',''); initResizable(); }
 <td class="markdownTableBodyNone"><b>Return Value</b>   </td><td class="markdownTableBodyNone"><em><b>false</b></em>   </td><td class="markdownTableBodyNone">The tile is a child tile, i.e. it has a pointer for a parent tile.   </td></tr>
 </table>
 <p >This function is used to test whether a given tile is a root one or not.</p>
-<h3><a class="anchor" id="autotoc_md118"></a>
+<h3><a class="anchor" id="autotoc_md120"></a>
 4.1.4 &lt;strong&gt;arm_2d_region_intersect&lt;/strong&gt;</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -330,7 +330,7 @@ $(document).ready(function(){initNavTree('use_tile.html',''); initResizable(); }
 <p ><b>NOTE</b>: If you only want to check whether two regions overlap with each other or not, you can omit the region output buffer and use NULL instead.</p>
 <p ><b>Figure 4.3 How Region Intersection/Clipping Works</b></p>
 <p ><img src="howtousetileoperation_4_1_4_a.png" alt="" class="inline" title="1608227540628"/></p>
-<h3><a class="anchor" id="autotoc_md119"></a>
+<h3><a class="anchor" id="autotoc_md121"></a>
 4.1.5 &lt;strong&gt;arm_2d_get_address_and_region_from_tile&lt;/strong&gt;</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -354,7 +354,7 @@ $(document).ready(function(){initNavTree('use_tile.html',''); initResizable(); }
 <li>When calling this macro, a <em><b>pointer variable</b></em> must be passed as the <em><b>__TILE_PTR</b></em> rather than a constant address of the target tile. It is because the macro calls <em><b><a class="el" href="group__Tile.html#gaa2c90673706f32707b09561eb42e87a9" title="get the root tile and the valid region for a given tile">arm_2d_tile_get_root()</a></b></em> and uses its return value to update the pointer represented by <em><b>__TILE_PTR</b></em>.</li>
 <li>Both <em><b>__REGION_NAME</b></em> and <em><b>__BUF_PTR</b></em> <b>MUST</b> be the names of two local variables, which will be declared by this macro. After calling the macro, those local variables will hold the information described in the table above and used by following code within the same braces.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md120"></a>
+<h2><a class="anchor" id="autotoc_md122"></a>
 4.2 Copy, Fill and X/Y Mirroring</h2>
 <p >Tile Copy and Fill operations are <b>mutually exclusive</b> from each other. Their behaviours are illustrated in <b>Figure 4.4</b>.</p>
 <ul>
@@ -394,7 +394,7 @@ $(document).ready(function(){initNavTree('use_tile.html',''); initResizable(); }
 <b>Arm_2D_CP_MODE_X_MIRROR</b> |<br  />
  <b>Arm_2D_CP_MODE_Y_MIRROR</b>   </td><td class="markdownTableBodyNone">Fill a target tile with a X/Y-mirrored source tile   </td><td class="markdownTableBodyNone"></td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md121"></a>
+<h3><a class="anchor" id="autotoc_md123"></a>
 4.2.1 &lt;strong&gt;arm_2d_rgb16_tile_copy&lt;/strong&gt;</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -421,7 +421,7 @@ This usually means that the function is working/implemented in <em><b>synchronou
 </table>
 <p >The behaviour of function <b>arm_2d_rgb16_tile_copy</b> is illustrated in <b>Figure 4.4</b>. This function copies a source tile to a specified region inside the target tile or fills the specified region with a given source tile. Several combinations of modes are supported, e.g. copy with X mirroring and/or Y mirroring.</p>
 <p ><b>NOTE</b>: This function treats all 16-bit colour formats equally, and <b>NO</b> alpha channel is used, even for RGB1555.</p>
-<h3><a class="anchor" id="autotoc_md122"></a>
+<h3><a class="anchor" id="autotoc_md124"></a>
 4.2.2 &lt;strong&gt;arm_2d_rgb32_tile_copy&lt;/strong&gt;</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -447,12 +447,12 @@ This usually means that the function is working/implemented in <em><b>synchronou
 </table>
 <p >The behaviour of function <b>arm_2d_rgb32_tile_copy</b> is illustrated in <b>Figure 4.4</b>. This function copies a source tile to a specified region inside the target tile or fills the specified region with a given source tile. Several combinations of modes are supported, e.g. copy with X mirroring and/or Y mirroring.</p>
 <p ><b>NOTE</b>: This function treats all 32-bit colour formats equally and <b>NO</b> alpha channel is used, e.g. RGBA8888.</p>
-<h2><a class="anchor" id="autotoc_md123"></a>
+<h2><a class="anchor" id="autotoc_md125"></a>
 4.3 Colour Keying</h2>
 <p >Colour-keying is a commonly used scheme to implement non-rectangular UI elements, such as round-corner windows/gadgets, floating logos/strings etc. Colour-keying is relatively simple when compared with the (Alpha) Masking scheme provided in the Alpha-blending operation category, which usually requires an 8-bit masking tile that can cover the source tile completely, and each pixel inside the masking tile is used as the alpha channel during an operation. A dedicated masking tile, of course, takes more memory space than a simple key colour. As long as the desired visual area of the source tile contains no pixel in a given key colour, it is much cheaper and quicker to use Colour-Keying rather than (Alpha) Masking.</p>
 <p ><b>Figure 4.6 How Copy-with-Colour-Keying Works</b></p>
 <p ><img src="howtousetileoperation_4_3.png" alt="" class="inline" title="1608229193551"/></p>
-<h3><a class="anchor" id="autotoc_md124"></a>
+<h3><a class="anchor" id="autotoc_md126"></a>
 4.3.1 arm_2d_c8bit_tile_copy_with_colour_keying</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -481,7 +481,7 @@ This usually means that the function is working/implemented in <em><b>synchronou
 <p >The behaviour of function <b>arm_2d_c8bit_tile_copy_with_colour_keying</b> is illustrated in <b>Figure 4.6</b>. This function copies a given source tile to a specified region inside a target tile, during this process, user can specify a colour as the masking colour. If the colour of the pixel read from the source tile is the masking colour, the copy operation for that pixel will be ignored, as the result, i.e. the pixel in the background will be used. This function is dedicated to all colour formats with 8-bit pixel. <br  />
 </p>
 <p ><b>NOTE</b>: Alpha channels are ignored even if they exist. If you want a version that takes alpha-channel into consideration, please check alpha-blending related APIs.</p>
-<h3><a class="anchor" id="autotoc_md125"></a>
+<h3><a class="anchor" id="autotoc_md127"></a>
 4.3.2 arm_2d_rbg16_tile_copy_with_colour_keying</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -510,7 +510,7 @@ This usually means that the function is working/implemented in <em><b>synchronou
 <p >The behaviour of function <b>arm_2d_rbg16_tile_copy_with_colour_keying</b> is illustrated in <b>Figure 4.6</b>. This function copies a given source tile to a specified region inside a target tile, during this process, user can specify a colour as the masking colour. If the colour of the pixel read from the source tile is the masking colour, the copy operation for that pixel will be ignored, as the result, i.e. the pixel in the background will be used. This function is dedicated to all colour formats with 16-bit pixel. <br  />
 </p>
 <p ><b>NOTE</b>: Alpha channels are ignored even if they exist. If you want a version that takes alpha-channel into consideration, please check alpha-blending related APIs.</p>
-<h3><a class="anchor" id="autotoc_md126"></a>
+<h3><a class="anchor" id="autotoc_md128"></a>
 4.3.3 arm_2d_rbg32_tile_copy_with_colour_keying</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -538,7 +538,7 @@ This usually means that the function is working/implemented in <em><b>synchronou
 </table>
 <p >The behaviour of function <b>arm_2d_rbg32_tile_copy_with_colour_keying</b> is illustrated in <b>Figure 4.6</b>. This function copies a given source tile to a specified region inside a target tile. During this process, the user can specify a colour as the masking colour. If the colour of the pixel read from the source tile is the masking colour, the copy operation for that pixel will be ignored. As a result, i.e. the pixel in the background will be used. This function is dedicated to all colour formats with the 32-bit pixel.</p>
 <p ><b>NOTE</b>: Alpha channels are ignored even if they exist. If you want a version that takes alpha-channel into consideration, please check alpha-blending related APIs.</p>
-<h1><a class="anchor" id="autotoc_md127"></a>
+<h1><a class="anchor" id="autotoc_md129"></a>
 5 Reference</h1>
 <ol type="1">
 <li><a class="el" href="md_introduction.html">Introduction to Arm-2D</a> </li>

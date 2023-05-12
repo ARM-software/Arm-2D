@@ -81,126 +81,129 @@ var NAVTREE =
         [ "Table of Contents", "md_how_to_deploy_the_arm_2d_library.html#autotoc_md41", null ],
         [ "2.1 Deploy Using CMSIS-Pack in MDK", "md_how_to_deploy_the_arm_2d_library.html#autotoc_md44", null ]
       ] ],
-      [ "3 Helper Services and Extras", "md_how_to_deploy_the_arm_2d_library.html#autotoc_md45", null ],
-      [ "4 Example Projects", "md_how_to_deploy_the_arm_2d_library.html#autotoc_md46", null ]
+      [ "3 Helper Services and Extras", "md_how_to_deploy_the_arm_2d_library.html#autotoc_md45", [
+        [ "3.1 Preparation", "md_how_to_deploy_the_arm_2d_library.html#autotoc_md46", null ],
+        [ "3.2 Display Adapter Service", "md_how_to_deploy_the_arm_2d_library.html#autotoc_md47", null ]
+      ] ],
+      [ "4 Example Projects", "md_how_to_deploy_the_arm_2d_library.html#autotoc_md48", null ]
     ] ],
     [ "Introduction for Arm-2D {#intro} <!-- omit from toc -->", "md_introduction.html", [
-      [ "1 Overview", "md_introduction.html#autotoc_md48", [
-        [ "Table of Contents <!-- omit from toc -->", "md_introduction.html#autotoc_md49", null ],
-        [ "1.1 What is Arm-2D", "md_introduction.html#autotoc_md50", null ],
-        [ "1.2 Target Audiences", "md_introduction.html#autotoc_md51", [
-          [ "1.2.1 GUI Service Provider", "md_introduction.html#autotoc_md52", null ],
-          [ "1.2.2 Silicon Vendor", "md_introduction.html#autotoc_md53", null ],
-          [ "1.2.3 Embedded Application Designers", "md_introduction.html#autotoc_md54", null ]
+      [ "1 Overview", "md_introduction.html#autotoc_md50", [
+        [ "Table of Contents <!-- omit from toc -->", "md_introduction.html#autotoc_md51", null ],
+        [ "1.1 What is Arm-2D", "md_introduction.html#autotoc_md52", null ],
+        [ "1.2 Target Audiences", "md_introduction.html#autotoc_md53", [
+          [ "1.2.1 GUI Service Provider", "md_introduction.html#autotoc_md54", null ],
+          [ "1.2.2 Silicon Vendor", "md_introduction.html#autotoc_md55", null ],
+          [ "1.2.3 Embedded Application Designers", "md_introduction.html#autotoc_md56", null ]
         ] ],
-        [ "1.3 Arm-2D Libraries", "md_introduction.html#autotoc_md55", [
-          [ "1.3.1 Standard Software Implementation", "md_introduction.html#autotoc_md56", null ],
-          [ "1.3.2 Helium Acceleration", "md_introduction.html#autotoc_md57", null ],
-          [ "1.3.4 Third-party Implementation", "md_introduction.html#autotoc_md58", null ],
-          [ "1.3.5 Arm Custom Instruction Support", "md_introduction.html#autotoc_md59", null ]
+        [ "1.3 Arm-2D Libraries", "md_introduction.html#autotoc_md57", [
+          [ "1.3.1 Standard Software Implementation", "md_introduction.html#autotoc_md58", null ],
+          [ "1.3.2 Helium Acceleration", "md_introduction.html#autotoc_md59", null ],
+          [ "1.3.4 Third-party Implementation", "md_introduction.html#autotoc_md60", null ],
+          [ "1.3.5 Arm Custom Instruction Support", "md_introduction.html#autotoc_md61", null ]
         ] ],
-        [ "1.4 Scope and Limitations", "md_introduction.html#autotoc_md60", [
-          [ "1.4.1 Scope", "md_introduction.html#autotoc_md61", null ],
-          [ "1.4.2 Limitations", "md_introduction.html#autotoc_md62", null ]
+        [ "1.4 Scope and Limitations", "md_introduction.html#autotoc_md62", [
+          [ "1.4.1 Scope", "md_introduction.html#autotoc_md63", null ],
+          [ "1.4.2 Limitations", "md_introduction.html#autotoc_md64", null ]
         ] ],
-        [ "1.5 Operation Categories", "md_introduction.html#autotoc_md63", null ],
-        [ "1.6 Folder Structures", "md_introduction.html#autotoc_md64", null ]
+        [ "1.5 Operation Categories", "md_introduction.html#autotoc_md65", null ],
+        [ "1.6 Folder Structures", "md_introduction.html#autotoc_md66", null ]
       ] ],
-      [ "2 Basics", "md_introduction.html#autotoc_md65", [
-        [ "2.1 Region", "md_introduction.html#autotoc_md66", [
-          [ "2.1.1 Location", "md_introduction.html#autotoc_md67", null ],
-          [ "2.1.2 Size", "md_introduction.html#autotoc_md68", null ]
+      [ "2 Basics", "md_introduction.html#autotoc_md67", [
+        [ "2.1 Region", "md_introduction.html#autotoc_md68", [
+          [ "2.1.1 Location", "md_introduction.html#autotoc_md69", null ],
+          [ "2.1.2 Size", "md_introduction.html#autotoc_md70", null ]
         ] ],
-        [ "2.2 Bounding Box Model", "md_introduction.html#autotoc_md69", [
-          [ "2.2.1 Absolute Location and Relative Location", "md_introduction.html#autotoc_md70", null ],
-          [ "2.2.2 Absolute Region and Relative Region", "md_introduction.html#autotoc_md71", null ]
+        [ "2.2 Bounding Box Model", "md_introduction.html#autotoc_md71", [
+          [ "2.2.1 Absolute Location and Relative Location", "md_introduction.html#autotoc_md72", null ],
+          [ "2.2.2 Absolute Region and Relative Region", "md_introduction.html#autotoc_md73", null ]
         ] ],
-        [ "2.3 Tile", "md_introduction.html#autotoc_md72", [
-          [ "2.3.1 Root Tile", "md_introduction.html#autotoc_md73", null ],
-          [ "2.3.2 Child Tile", "md_introduction.html#autotoc_md74", null ],
-          [ "2.3.3 Partial Frame Buffer", "md_introduction.html#autotoc_md75", null ]
+        [ "2.3 Tile", "md_introduction.html#autotoc_md74", [
+          [ "2.3.1 Root Tile", "md_introduction.html#autotoc_md75", null ],
+          [ "2.3.2 Child Tile", "md_introduction.html#autotoc_md76", null ],
+          [ "2.3.3 Partial Frame Buffer", "md_introduction.html#autotoc_md77", null ]
         ] ],
-        [ "2.4 Colour", "md_introduction.html#autotoc_md76", null ],
-        [ "2.4 API Usage Modes", "md_introduction.html#autotoc_md77", [
-          [ "2.4.1 Synchronous Mode", "md_introduction.html#autotoc_md78", null ],
-          [ "2.4.2 Asynchronous Mode", "md_introduction.html#autotoc_md79", null ]
+        [ "2.4 Colour", "md_introduction.html#autotoc_md78", null ],
+        [ "2.4 API Usage Modes", "md_introduction.html#autotoc_md79", [
+          [ "2.4.1 Synchronous Mode", "md_introduction.html#autotoc_md80", null ],
+          [ "2.4.2 Asynchronous Mode", "md_introduction.html#autotoc_md81", null ]
         ] ]
       ] ],
-      [ "3 API Summary for commonly used APIs", "md_introduction.html#autotoc_md80", [
-        [ "3.1 Tile Operations", "md_introduction.html#autotoc_md81", null ],
-        [ "3.2 Colour Space Conversion", "md_introduction.html#autotoc_md82", null ],
-        [ "3.3 Alpha Blending and Masks related", "md_introduction.html#autotoc_md83", null ],
-        [ "3.4 Transform (Rotation/Scaling)", "md_introduction.html#autotoc_md84", null ],
-        [ "3.5 Drawing", "md_introduction.html#autotoc_md85", null ],
-        [ "3.6 Filters", "md_introduction.html#autotoc_md86", null ]
+      [ "3 API Summary for commonly used APIs", "md_introduction.html#autotoc_md82", [
+        [ "3.1 Tile Operations", "md_introduction.html#autotoc_md83", null ],
+        [ "3.2 Colour Space Conversion", "md_introduction.html#autotoc_md84", null ],
+        [ "3.3 Alpha Blending and Masks related", "md_introduction.html#autotoc_md85", null ],
+        [ "3.4 Transform (Rotation/Scaling)", "md_introduction.html#autotoc_md86", null ],
+        [ "3.5 Drawing", "md_introduction.html#autotoc_md87", null ],
+        [ "3.6 Filters", "md_introduction.html#autotoc_md88", null ]
       ] ]
     ] ],
     [ "How to Use Layout Assistant <!-- omit from toc -->", "md_how_to_use_layout_assistant.html", [
-      [ "1 Basic Concepts", "md_how_to_use_layout_assistant.html#autotoc_md88", [
-        [ "1.1 Region", "md_how_to_use_layout_assistant.html#autotoc_md89", [
-          [ "1.1.1 Location", "md_how_to_use_layout_assistant.html#autotoc_md90", null ],
-          [ "1.1.2 Size", "md_how_to_use_layout_assistant.html#autotoc_md91", null ]
+      [ "1 Basic Concepts", "md_how_to_use_layout_assistant.html#autotoc_md90", [
+        [ "1.1 Region", "md_how_to_use_layout_assistant.html#autotoc_md91", [
+          [ "1.1.1 Location", "md_how_to_use_layout_assistant.html#autotoc_md92", null ],
+          [ "1.1.2 Size", "md_how_to_use_layout_assistant.html#autotoc_md93", null ]
         ] ],
-        [ "1.2 Boxing Model", "md_how_to_use_layout_assistant.html#autotoc_md92", [
-          [ "1.2.1 Absolute Location and Relative Location", "md_how_to_use_layout_assistant.html#autotoc_md93", null ],
-          [ "1.2.2 Absolute Region and Relative Region", "md_how_to_use_layout_assistant.html#autotoc_md94", null ]
+        [ "1.2 Boxing Model", "md_how_to_use_layout_assistant.html#autotoc_md94", [
+          [ "1.2.1 Absolute Location and Relative Location", "md_how_to_use_layout_assistant.html#autotoc_md95", null ],
+          [ "1.2.2 Absolute Region and Relative Region", "md_how_to_use_layout_assistant.html#autotoc_md96", null ]
         ] ],
-        [ "1.2 Canvas", "md_how_to_use_layout_assistant.html#autotoc_md95", null ],
-        [ "1.3 Container", "md_how_to_use_layout_assistant.html#autotoc_md96", null ]
+        [ "1.2 Canvas", "md_how_to_use_layout_assistant.html#autotoc_md97", null ],
+        [ "1.3 Container", "md_how_to_use_layout_assistant.html#autotoc_md98", null ]
       ] ],
-      [ "2 Alignment", "md_how_to_use_layout_assistant.html#autotoc_md97", null ],
-      [ "3 Layout", "md_how_to_use_layout_assistant.html#autotoc_md98", [
-        [ "3.1 Line Stream Layout", "md_how_to_use_layout_assistant.html#autotoc_md99", [
-          [ "3.1.1 Horizontal Line Stream", "md_how_to_use_layout_assistant.html#autotoc_md100", null ],
-          [ "3.1.2 Vertical Line Stream", "md_how_to_use_layout_assistant.html#autotoc_md101", null ]
+      [ "2 Alignment", "md_how_to_use_layout_assistant.html#autotoc_md99", null ],
+      [ "3 Layout", "md_how_to_use_layout_assistant.html#autotoc_md100", [
+        [ "3.1 Line Stream Layout", "md_how_to_use_layout_assistant.html#autotoc_md101", [
+          [ "3.1.1 Horizontal Line Stream", "md_how_to_use_layout_assistant.html#autotoc_md102", null ],
+          [ "3.1.2 Vertical Line Stream", "md_how_to_use_layout_assistant.html#autotoc_md103", null ]
         ] ],
-        [ "3.2 Stream Layout with Wrapping", "md_how_to_use_layout_assistant.html#autotoc_md102", [
-          [ "3.2.1 Horizontal Stream", "md_how_to_use_layout_assistant.html#autotoc_md103", null ],
-          [ "3.2.2 Vertical Stream", "md_how_to_use_layout_assistant.html#autotoc_md104", null ]
+        [ "3.2 Stream Layout with Wrapping", "md_how_to_use_layout_assistant.html#autotoc_md104", [
+          [ "3.2.1 Horizontal Stream", "md_how_to_use_layout_assistant.html#autotoc_md105", null ],
+          [ "3.2.2 Vertical Stream", "md_how_to_use_layout_assistant.html#autotoc_md106", null ]
         ] ]
       ] ]
     ] ],
     [ "How to Use Tile Operations", "use_tile.html", [
-      [ "1 Overview", "use_tile.html#autotoc_md105", null ],
-      [ "2 Key Scenarios, Patterns and Use Cases", "use_tile.html#autotoc_md106", [
-        [ "2.1 Normal Usage", "use_tile.html#autotoc_md107", [
-          [ "2.1.1 Window/Panel Clipping", "use_tile.html#autotoc_md108", null ],
-          [ "2.1.2 Texture Tiling", "use_tile.html#autotoc_md109", null ]
+      [ "1 Overview", "use_tile.html#autotoc_md107", null ],
+      [ "2 Key Scenarios, Patterns and Use Cases", "use_tile.html#autotoc_md108", [
+        [ "2.1 Normal Usage", "use_tile.html#autotoc_md109", [
+          [ "2.1.1 Window/Panel Clipping", "use_tile.html#autotoc_md110", null ],
+          [ "2.1.2 Texture Tiling", "use_tile.html#autotoc_md111", null ]
         ] ],
-        [ "2.2 Advanced Usage", "use_tile.html#autotoc_md110", [
-          [ "2.2.1 Partial Frame Buffer (PFB)", "use_tile.html#autotoc_md111", null ]
+        [ "2.2 Advanced Usage", "use_tile.html#autotoc_md112", [
+          [ "2.2.1 Partial Frame Buffer (PFB)", "use_tile.html#autotoc_md113", null ]
         ] ]
       ] ],
-      [ "3 Design Considerations", "use_tile.html#autotoc_md112", null ],
-      [ "4 API Table", "use_tile.html#autotoc_md113", [
-        [ "4.1 Basic", "use_tile.html#autotoc_md114", [
-          [ "4.1.1 <strong>arm_2d_tile_generate_child</strong>", "use_tile.html#autotoc_md115", null ],
-          [ "4.1.2 <strong>arm_2d_tile_get_root</strong>", "use_tile.html#autotoc_md116", null ],
-          [ "4.1.3 <strong>arm_2d_is_root_tile</strong>", "use_tile.html#autotoc_md117", null ],
-          [ "4.1.4 <strong>arm_2d_region_intersect</strong>", "use_tile.html#autotoc_md118", null ],
-          [ "4.1.5 <strong>arm_2d_get_address_and_region_from_tile</strong>", "use_tile.html#autotoc_md119", null ]
+      [ "3 Design Considerations", "use_tile.html#autotoc_md114", null ],
+      [ "4 API Table", "use_tile.html#autotoc_md115", [
+        [ "4.1 Basic", "use_tile.html#autotoc_md116", [
+          [ "4.1.1 <strong>arm_2d_tile_generate_child</strong>", "use_tile.html#autotoc_md117", null ],
+          [ "4.1.2 <strong>arm_2d_tile_get_root</strong>", "use_tile.html#autotoc_md118", null ],
+          [ "4.1.3 <strong>arm_2d_is_root_tile</strong>", "use_tile.html#autotoc_md119", null ],
+          [ "4.1.4 <strong>arm_2d_region_intersect</strong>", "use_tile.html#autotoc_md120", null ],
+          [ "4.1.5 <strong>arm_2d_get_address_and_region_from_tile</strong>", "use_tile.html#autotoc_md121", null ]
         ] ],
-        [ "4.2 Copy, Fill and X/Y Mirroring", "use_tile.html#autotoc_md120", [
-          [ "4.2.1 <strong>arm_2d_rgb16_tile_copy</strong>", "use_tile.html#autotoc_md121", null ],
-          [ "4.2.2 <strong>arm_2d_rgb32_tile_copy</strong>", "use_tile.html#autotoc_md122", null ]
+        [ "4.2 Copy, Fill and X/Y Mirroring", "use_tile.html#autotoc_md122", [
+          [ "4.2.1 <strong>arm_2d_rgb16_tile_copy</strong>", "use_tile.html#autotoc_md123", null ],
+          [ "4.2.2 <strong>arm_2d_rgb32_tile_copy</strong>", "use_tile.html#autotoc_md124", null ]
         ] ],
-        [ "4.3 Colour Keying", "use_tile.html#autotoc_md123", [
-          [ "4.3.1 arm_2d_c8bit_tile_copy_with_colour_keying", "use_tile.html#autotoc_md124", null ],
-          [ "4.3.2 arm_2d_rbg16_tile_copy_with_colour_keying", "use_tile.html#autotoc_md125", null ],
-          [ "4.3.3 arm_2d_rbg32_tile_copy_with_colour_keying", "use_tile.html#autotoc_md126", null ]
+        [ "4.3 Colour Keying", "use_tile.html#autotoc_md125", [
+          [ "4.3.1 arm_2d_c8bit_tile_copy_with_colour_keying", "use_tile.html#autotoc_md126", null ],
+          [ "4.3.2 arm_2d_rbg16_tile_copy_with_colour_keying", "use_tile.html#autotoc_md127", null ],
+          [ "4.3.3 arm_2d_rbg32_tile_copy_with_colour_keying", "use_tile.html#autotoc_md128", null ]
         ] ]
       ] ],
-      [ "5 Reference", "use_tile.html#autotoc_md127", null ]
+      [ "5 Reference", "use_tile.html#autotoc_md129", null ]
     ] ],
     [ "Header Files Summary", "headers.html", [
-      [ "1 Overview", "headers.html#autotoc_md128", null ],
-      [ "2 Public Header Files", "headers.html#autotoc_md129", null ],
-      [ "3 Private Header Files", "headers.html#autotoc_md130", null ],
-      [ "4 Templates", "headers.html#autotoc_md131", null ]
+      [ "1 Overview", "headers.html#autotoc_md130", null ],
+      [ "2 Public Header Files", "headers.html#autotoc_md131", null ],
+      [ "3 Private Header Files", "headers.html#autotoc_md132", null ],
+      [ "4 Templates", "headers.html#autotoc_md133", null ]
     ] ],
     [ "How to Contribute", "md_contribution.html", [
-      [ "1 Contributions and Pull Requests", "md_contribution.html#autotoc_md133", [
-        [ "1.1 Issues and Labels", "md_contribution.html#autotoc_md134", null ]
+      [ "1 Contributions and Pull Requests", "md_contribution.html#autotoc_md135", [
+        [ "1.1 Issues and Labels", "md_contribution.html#autotoc_md136", null ]
       ] ]
     ] ],
     [ "Reference", "modules.html", "modules" ]

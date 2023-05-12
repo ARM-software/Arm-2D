@@ -116,7 +116,11 @@ Table of Contents</h2>
 <li><a href="#21-deploy-using-cmsis-pack-in-mdk">2.1 Deploy Using CMSIS-Pack in MDK</a></li>
 </ul>
 </li>
-<li><a href="#3-helper-services-and-extras">3 Helper Services and Extras</a></li>
+<li><a href="#3-helper-services-and-extras">3 Helper Services and Extras</a><ul>
+<li><a href="#31-preparation">3.1 Preparation</a></li>
+<li><a href="#32-display-adapter-service">3.2 Display Adapter Service</a></li>
+</ul>
+</li>
 <li><a href="#4-example-projects">4 Example Projects</a></li>
 </ul>
 <h1><a class="anchor" id="autotoc_md42"></a>
@@ -174,10 +178,58 @@ Table of Contents</h2>
 </p>
 <p >Open the <b>Configuration Wizard</b> and check options available for Arm-2D</p>
 <p ><b>Figure 2-9 Configuration Wizard for Arm-2D</b></p>
-<p ><img src="HowToDeploy2_9.png" alt="" class="inline"/></p>
+<p ><img src="HowToDeploy2_9.png" alt="" class="inline" title="Arm_2D_CFG"/></p>
+<p ><b>NOTE</b>: If you want to support <b>CCCA8888</b> (i.e. <b>RGBA8888</b>), please selet the <code>Enable support for accessing individual colour channels</code>.</p>
 <h1><a class="anchor" id="autotoc_md45"></a>
 3 Helper Services and Extras</h1>
-<h1><a class="anchor" id="autotoc_md46"></a>
+<p >Suppose you want to develop GUI applications directly with Arm-2D. In that case, it implies that you not only use Arm-2D APIs for the framebuffer-based low-level 2D image processing but also want to display the processed result on a screen. An ordinary GUI software stack will provide a dedicated service for connecting a target screen, and users must implement a driver or adapter between the hardware and the service. Such a service usually allows people to refresh the whole screen with a petite frame buffer called partial frame buffer (PFB). This feature is vital for resource-constraint embedded platforms. Arm-2D provide a similar feature through a helper service called Display Adapter Service.</p>
+<h2><a class="anchor" id="autotoc_md46"></a>
+3.1 Preparation</h2>
+<p >Before we start, we have to prepare a low-level flushing function called Disp0_DrawBitmap(). Its prototype is shown below:</p>
+<div class="fragment"><div class="line">int32_t Disp0_DrawBitmap(int16_t x, </div>
+<div class="line">                        int16_t y, </div>
+<div class="line">                        int16_t width, </div>
+<div class="line">                        int16_t height, </div>
+<div class="line">                        <span class="keyword">const</span> uint8_t *bitmap);</div>
+</div><!-- fragment --><p >Here as shown in <b>Figure 3-1</b>:</p>
+<ul>
+<li><code>x</code>,<code>y</code> are the absolute coordinates in the target screen</li>
+<li><code>width</code> and<code>height</code> describe the size of the rectangular target area</li>
+<li><code>bitmap</code> points to a framebuffer which holds all pixels in a rectangular area with the given <code>width</code> and <code>height</code>.</li>
+</ul>
+<p ><b>Figure 3-1 The Scheme of the Low Level Flushing Interface</b></p>
+<p ><img src="./pictures/Disp0_DrawBitmap.png" alt="Disp0_DrawBitmap" style="zoom:70%;" class="inline"/></p>
+<p >Suppose the display RAM of your LCD has been mapped into internal 4G memory space. An example of <code>Disp0_DrawBitmap()</code> might look like this:</p>
+<div class="fragment"><div class="line"><span class="comment">/**</span></div>
+<div class="line"><span class="comment">  \fn          int32_t Disp0_DrawBitmap (uint32_t x, uint32_t y, uint32_t width, uint32_t height, const uint8_t *bitmap)</span></div>
+<div class="line"><span class="comment">  \brief       Draw bitmap (bitmap from BMP file without header)</span></div>
+<div class="line"><span class="comment">  \param[in]   x      Start x position in pixels (0 = left corner)</span></div>
+<div class="line"><span class="comment">  \param[in]   y      Start y position in pixels (0 = upper corner)</span></div>
+<div class="line"><span class="comment">  \param[in]   width  Bitmap width in pixels</span></div>
+<div class="line"><span class="comment">  \param[in]   height Bitmap height in pixels</span></div>
+<div class="line"><span class="comment">  \param[in]   bitmap Bitmap data</span></div>
+<div class="line"><span class="comment">  \returns</span></div>
+<div class="line"><span class="comment">   - \b  0: function succeeded</span></div>
+<div class="line"><span class="comment">   - \b -1: function failed</span></div>
+<div class="line"><span class="comment">*/</span></div>
+<div class="line">int32_t Disp0_DrawBitmap (uint32_t x, uint32_t y, uint32_t width, uint32_t height, <span class="keyword">const</span> uint8_t *bitmap) </div>
+<div class="line">{</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">volatile</span> uint16_t *phwDes = disp_ram + y * GLCD_WIDTH + x;</div>
+<div class="line">    <span class="keyword">const</span> uint16_t *phwSrc = (<span class="keyword">const</span> uint16_t *)bitmap;</div>
+<div class="line">    <span class="keywordflow">for</span> (int_fast16_t i = 0; i &lt; height; i++) {</div>
+<div class="line">        memcpy ((uint16_t *)phwDes, phwSrc, width * 2);</div>
+<div class="line">        phwSrc += width;</div>
+<div class="line">        phwDes += GLCD_WIDTH;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+</div><!-- fragment --><p >Here, <code>disp_ram</code> points to the memory space reserved for the LCD display RAM.</p>
+<p ><b>IMPORTANT</b>: When exiting the <code>Disp0_DrawBitmap()</code>, Arm-2D assumes that the target frame buffer has already been flushed to the target screen.</p>
+<h2><a class="anchor" id="autotoc_md47"></a>
+3.2 Display Adapter Service</h2>
+<h1><a class="anchor" id="autotoc_md48"></a>
 4 Example Projects</h1>
 <p ><b>Table 3-1 Summary</b></p>
 <table class="markdownTable">
