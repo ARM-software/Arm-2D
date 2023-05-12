@@ -18,7 +18,7 @@
 - A **CMSIS-Pack** for ease of use
 - Examples and Documents
 
-![PositionInEcosystem](./documentation/pictures/ReadmeOverview.png)
+<img src="./documentation/pictures/ReadmeOverview.png" alt="PositionInEcosystem" style="zoom:67%;" /> 
 
 **Position in Ecosystem:**
 
@@ -81,7 +81,7 @@ Potential users of Arm-2D may have different backgrounds and purposes. Whether y
 - [Where to Get Started](#where-to-get-started)
 - [Table of Content](#table-of-content)
 - [Features](#features)
-  - [In this version (ver1.1.3-dev)](#in-this-version-ver113-dev)
+  - [In this version (ver1.1.3)](#in-this-version-ver113-dev)
   - [New Features Planned in the Future](#new-features-planned-in-the-future)
 - [1 Introduction](#1-introduction)
   - [1.1 The Background](#11-the-background)
@@ -101,7 +101,7 @@ Potential users of Arm-2D may have different backgrounds and purposes. Whether y
 
 ## Features
 
-### In this version (ver1.1.3-dev)
+### In this version (ver1.1.3)
 
 The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly used in **Deep Embedded Display system**. The supported features include but not limited to:
 
@@ -376,4 +376,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-27 April 2023
+13 May 2023
