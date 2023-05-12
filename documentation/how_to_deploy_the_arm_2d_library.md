@@ -1,7 +1,13 @@
-# How to Deploy the Arm-2D Library {#deploy}
+# How to Deploy the Arm-2D Library {#deploy} <!-- omit from toc -->
 
 This document describes how to deploy the **Arm-2D** library to your existing MDK projects. If you are not familiar with **Arm-2D**, please start from the **[README](../README.md)** first.
 
+### Table of Contents
+- [1 How to get the Arm-2D](#1-how-to-get-the-arm-2d)
+- [2 How to Deploy Arm-2D](#2-how-to-deploy-arm-2d)
+  - [2.1 Deploy Using CMSIS-Pack in MDK](#21-deploy-using-cmsis-pack-in-mdk)
+- [3 Helper Services and Extras](#3-helper-services-and-extras)
+- [4 Example Projects](#4-example-projects)
 
 
 ## 1 How to get the Arm-2D

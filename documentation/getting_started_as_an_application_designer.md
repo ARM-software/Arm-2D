@@ -23,6 +23,8 @@ If you happen to meet the conditions above, **don't panic**, we will try our bes
   - [2.5 Write a simple GUI Application](#25-write-a-simple-gui-application)
   - [2.6 Learn the basic method to optimize the performance and memory footprint](#26-learn-the-basic-method-to-optimize-the-performance-and-memory-footprint)
   - [2.7 Tips for other advanced topics](#27-tips-for-other-advanced-topics)
+    - [2.7.1 Benchmarks](#271-benchmarks)
+    - [2.7.2 Asynchronose Mode and RTOS support](#272-asynchronose-mode-and-rtos-support)
 - [3 Tips For Exploring the Library](#3-tips-for-exploring-the-library)
   - ["I am a library user, I only care about how to use the library"](#i-am-a-library-user-i-only-care-about-how-to-use-the-library)
 

@@ -1,9 +1,26 @@
-# How to Use Layout Assistant
+# How to Use Layout Assistant <!-- omit from toc -->
 
 When we use arm-2d for 2D image processing, almost all APIs need to specify the target Region. Especially for those users who need to use Arm-2D for simple UI design, how to place graphic elements and how to deal with the layout of the screen is essentially a problem of Region calculation. In order to free users from manual Region calculations, Arm-2D refers to the popular GUI layout methodology and provides a series of simple and easy-to-use Helpers in the form of macro templates, called Layout Assistant.
 
 This article will introduce the use of Arm-2D Layout Assistant in detail through examples.
 
+- [1 Basic Concepts](#1-basic-concepts)
+  - [1.1 Region](#11-region)
+    - [1.1.1 Location](#111-location)
+    - [1.1.2 Size](#112-size)
+  - [1.2 Boxing Model](#12-boxing-model)
+    - [1.2.1 Absolute Location and Relative Location](#121-absolute-location-and-relative-location)
+    - [1.2.2 Absolute Region and Relative Region](#122-absolute-region-and-relative-region)
+  - [1.2 Canvas](#12-canvas)
+  - [1.3 Container](#13-container)
+- [2 Alignment](#2-alignment)
+- [3 Layout](#3-layout)
+  - [3.1 Line Stream Layout](#31-line-stream-layout)
+    - [3.1.1 Horizontal Line Stream](#311-horizontal-line-stream)
+    - [3.1.2 Vertical Line Stream](#312-vertical-line-stream)
+  - [3.2 Stream Layout with Wrapping](#32-stream-layout-with-wrapping)
+    - [3.2.1 Horizontal Stream](#321-horizontal-stream)
+    - [3.2.2 Vertical Stream](#322-vertical-stream)
 
 
 ## 1 Basic Concepts
