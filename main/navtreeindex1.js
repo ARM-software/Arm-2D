@@ -1,11 +1,5 @@
 var NAVTREEINDEX1 =
 {
-"group__gAlpha.html#ga9c827e92a33e5eaf1b95930cae3268ad":[9,3,25],
-"group__gAlpha.html#ga9ca55efc1d0ede79b6b747f3f4e399b6":[9,3,114],
-"group__gAlpha.html#ga9dd0ef08943adfdd849c2df06e1d73ed":[9,3,66],
-"group__gAlpha.html#gaa15837e39908675ba85ef23f00861682":[9,3,82],
-"group__gAlpha.html#gaa30eeb5263a6dfb2105af586f6307864":[9,3,115],
-"group__gAlpha.html#gaa83a27f9de5a6180d20007c9c3a3c31d":[9,3,49],
 "group__gAlpha.html#gaaa694b86a24ae15b092de1aa5dd0dea9":[9,3,32],
 "group__gAlpha.html#gaabf4c258c076086cf330245edc3033d3":[9,3,58],
 "group__gAlpha.html#gaafff6cd4e4fd5b599f5a529bba8fbb08":[9,3,106],
@@ -249,5 +243,11 @@ var NAVTREEINDEX1 =
 "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed123_____8SceneFIFO":[9,6,16],
 "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed123_____8Switch":[9,6,18],
 "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed123_____8Switch_8____unnamed129_____8Erase":[9,6,21],
-"group__gHelper.html#structarm__2d__scene__player__t_8____unnamed123_____8Switch_8____unnamed129_____8Fade":[9,6,20]
+"group__gHelper.html#structarm__2d__scene__player__t_8____unnamed123_____8Switch_8____unnamed129_____8Fade":[9,6,20],
+"group__gHelper.html#structarm__2d__scene__player__t_8____unnamed123_____8Switch_8____unnamed129_____8Slide":[9,6,22],
+"group__gHelper.html#structarm__2d__scene__switch__mode__t":[9,6,1],
+"group__gHelper.html#structarm__2d__scene__t":[9,6,2],
+"group__gHelper.html#structarm__2d__scene__t_8____unnamed121____":[9,6,14],
+"group__gHelper.html#union____arm__2d__helper__scene__switch__t":[9,6,0],
+"group__gHelper.html#unionarm__2d__scene__player__t_8____unnamed123_____8Switch_8____unnamed129____":[9,6,19]
 };
