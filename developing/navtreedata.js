@@ -28,7 +28,7 @@ var NAVTREE =
     [ "README {#mainpage} <!-- omit from toc -->", "md__home_runner_work_Arm_2D_Arm_2D_README.html", [
       [ "Overview", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md1", null ],
       [ "Key Messages for You", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md2", null ],
-      [ "Where to Get Started", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md3", null ],
+      [ "How to Get Started", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md3", null ],
       [ "Table of Content", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md4", null ],
       [ "Features", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md5", [
         [ "In this version (ver1.1.3)", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md6", null ],
