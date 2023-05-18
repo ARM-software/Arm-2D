@@ -181,7 +181,7 @@ Deploying Display Adatper service in MDK is simple:
 
 **Figure 3-2 Selecting Display Adapter Service in RTE**
 
-![AddDisplayAdapter](E:\git\Arm-2D\documentation\pictures\DisplayAdapter.png)
+![AddDisplayAdapter](./pictures/DisplayAdapter.png)
 
 After that, you will see two files, i.e. `arm_2d_disp_adapter_0.c` and `arm_2d_disp_adapter_0.h` have been added to the project manager under the **Acceleration** group.
 

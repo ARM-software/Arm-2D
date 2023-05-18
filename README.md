@@ -60,7 +60,7 @@
   - Older APIs will still be usable in newer versions (even if they are marked as deprecated)
   - Arm-2D available for ALL Cortex-M processors
 
-## Where to Get Started
+## How to Get Started
 
 Potential users of Arm-2D may have different backgrounds and purposes. Whether you are an application engineer for developing drivers from a silicon vendor, a system engineer of a GUI stack, or an application developer, based on the purpose of using Arm-2D, there are two ways to get started:
 
