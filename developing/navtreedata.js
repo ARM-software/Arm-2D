@@ -67,7 +67,7 @@ var NAVTREE =
         [ "2.6 Learn the basic method to optimize the performance and memory footprint", "md_getting_started_as_an_application_designer.html#autotoc_md32", null ],
         [ "2.7 Tips for other advanced topics", "md_getting_started_as_an_application_designer.html#autotoc_md33", [
           [ "2.7.1 Benchmarks", "md_getting_started_as_an_application_designer.html#autotoc_md34", null ],
-          [ "2.7.2 Asynchronose Mode and RTOS support", "md_getting_started_as_an_application_designer.html#autotoc_md35", null ]
+          [ "2.7.2 Asynchronous Mode and RTOS support", "md_getting_started_as_an_application_designer.html#autotoc_md35", null ]
         ] ]
       ] ],
       [ "3 Tips For Exploring the Library", "md_getting_started_as_an_application_designer.html#autotoc_md36", [

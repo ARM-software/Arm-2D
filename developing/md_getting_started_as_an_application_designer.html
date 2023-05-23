@@ -252,7 +252,7 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 </div><!-- fragment --><p >In some visual effects, you can specify the period of the switching process by calling the function <code><a class="el" href="group__gHelper.html#gac437acd591ac725054b4216fa2351013" title="configure the scene switching period">arm_2d_scene_player_set_switching_period()</a></code>. For more, please check the header file <code><a class="el" href="arm__2d__helper__scene_8h_source.html">arm_2d_helper_scene.h</a></code>.</p>
 <h2><a class="anchor" id="autotoc_md32"></a>
 2.6 Learn the basic method to optimize the performance and memory footprint</h2>
-<p >The design consideration of optimizing performance and memory footprint deserves a dedicated document or maybe more. We can only cover some preliminary tips for optimisation:</p>
+<p >The design consideration of optimizing performance and memory footprint deserves a dedicated document or maybe more. We can only cover some preliminary tips here:</p>
 <ul>
 <li><b>For the Arm Compiler 6</b><ul>
 <li>Avoid using Arm Compiler 5 whenever possible.</li>
@@ -263,20 +263,20 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 </ul>
 </li>
 <li><b>For RAM memory footprint</b><ul>
-<li>Set the FPB size <b>starting from the 1/10 full framebuffer</b>.</li>
-<li>For the same number of pixels, <b>prioritize the width over the height</b> when setting the PFB. For example, 320 * 8 is better than 80 * 32.</li>
-<li>Whenever possible, <b>the PFB height should be larger than or equal to 8.</b></li>
+<li>Set the FPB size <b>starting from 1/10 full framebuffer</b>.</li>
+<li>For the same number of pixels, <b>prioritize width over height</b> in setting the PFB. For example, 320 * 8 is better than 80 * 32.</li>
+<li>Whenever possible, <b>PFB height should be larger than or equal to 8.</b></li>
 </ul>
 </li>
 <li><b>For performance (Frame-rate)</b><ul>
-<li>LCD Latency determines the upper-limit of the system frame-rate. Reduce it towards zero with all the methods available.</li>
-<li><b>Use Asynchornouse mode</b> (e.g. DMA+ISR) when it is possible.</li>
+<li>LCD Latency determines the upper-limit of the system frame-rate. Please reduce it towards zero with all the methods available.</li>
+<li><b>Use Asynchronous mode</b> (e.g. DMA+ISR) whenever possible.</li>
 <li>Using 1/10 framebuffer doesn't mean it is 10x slower than using a full framebuffer</li>
 </ul>
 </li>
 <li><b>For API Usage</b><ul>
-<li><p class="startli">Please use the feature-specific version rather than the more generic version whenever possible for a given operation. This helps to reduce the memory footprint in general.</p>
-<p class="startli">For example: for copying an rgb565 tile with a source mask and no-mirroring, please use the function <code>arm_2d_rgb565_tile_copy_with_src_mask_only()</code> instead of <code>arm_2d_rgb565_tile_copy_with_masks()</code>.</p>
+<li><p class="startli">Please use the feature-specific version rather than a more generic version whenever possible for a given operation. This helps to reduce the memory footprint in general.</p>
+<p class="startli">For example: for copying an rgb565 tile with a source mask without mirroring, it is better to use the function <code>arm_2d_rgb565_tile_copy_with_src_mask_only()</code> rather than <code>arm_2d_rgb565_tile_copy_with_masks()</code>.</p>
 </li>
 </ul>
 </li>
@@ -285,11 +285,11 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 2.7 Tips for other advanced topics</h2>
 <h3><a class="anchor" id="autotoc_md34"></a>
 2.7.1 Benchmarks</h3>
-<p >To evaluate the 2D performance for the target platform, Arm-2D provides two benchmarks, i.e. <b>Benchmark-Generic</b> and <b>Benchmark-Watchpanel</b>. You can deploy one of them by selecting the it in the RTE configuration as shown in <b>Figure 2-7</b>.</p>
+<p >To evaluate the 2D performance for a given platform, Arm-2D provides two benchmarks, i.e. <b>Benchmark-Generic</b> and <b>Benchmark-Watchpanel</b>. You can deploy the target benchmark by selecting it in the RTE configuration as shown in <b>Figure 2-7</b>.</p>
 <p ><b>Figure 2-7 Selecting Benchmarks in RTE</b></p>
 <p ><img src="GettingStartedAsAppDesigner_RTE_Controls.png" alt="" class="inline" title="Controls in RTE"/></p>
-<p >The original benchmark cannot fit into the memory if your MCU has a small Flash. To solve this problem, Arm-2D introduces a Tiny mode for both benchmarks. You can enable it by either setting the macro <code>__ARM_2D_CFG_BENCHMARK_TINY_MODE__</code> to <code>1</code> in <code>arm_2d_cfg.h</code> or defining the macro in your project configuration.</p>
-<p ><b>NOTE:</b> You can find ALL benchmark related configurations in <code>arm_2d_cfg.h</code>.</p>
+<p >If your MCU has a small flash, the original benchmark cannot fit into the memory. Arm-2D introduces a so called Tiny mode to solve this problem. You can enable it by either setting the macro <code>__ARM_2D_CFG_BENCHMARK_TINY_MODE__</code> to <code>1</code> in <code>arm_2d_cfg.h</code> or defining the macro in your project configuration.</p>
+<p ><b>NOTE:</b> You can find ALL benchmark configurations in <code>arm_2d_cfg.h</code>.</p>
 <p >Running benchmark is simple:</p>
 <ol type="1">
 <li>Include <code>arm_2d_benchmark.h</code></li>
@@ -313,12 +313,13 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 <div class="line">    }</div>
 <div class="line">}</div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md35"></a>
-2.7.2 Asynchronose Mode and RTOS support</h3>
-<p >Arm-2D introduces an asynchronous mode for hardware accelerators and multi-core systems. To enable this feature, you can set the macro <code>__ARM_2D_HAS_ASYNC__</code> defined in <code>arm_2d_cfg.h</code> to <code>1</code>. If you don't have hardware accelerators, 2D capable DMA (for example, DMAC-350) or dedicated Cortex-M core(s) for 2D graphics, enabling the Asynchronous mode brings no benefits.</p>
-<p >When it is good to enable the asynchronous mode, you have to have RTOS support to take advantage of it. You can enable the RTOS support in RTE as shown in <b>Figure 2-8</b>. If you cannot find the desired RTOS in the drop list, please select the User Custom and implement the interfaces listed in the source code <code>arm_2d_helper_rtos_user.c</code>.</p>
+2.7.2 Asynchronous Mode and RTOS support</h3>
+<p >Arm-2D introduces an Asynchronous Mode for hardware accelerators and multi-core systems. To enable this feature, please set the macro <code>__ARM_2D_HAS_ASYNC__</code> defined in <code>arm_2d_cfg.h</code> to <code>1</code>.</p>
+<p ><b>NOTE</b>: If you have no hardware accelerator, 2D capable DMA (for example, DMAC-350) or dedicated Cortex-M core(s) for 2D graphics, enabling the Asynchronous Mode gains nothing.</p>
+<p >When it is good to enable the Asynchronous Mode, you have to have RTOS support also. You can enable the RTOS support in RTE as shown in <b>Figure 2-8</b>. If you cannot find the desired RTOS helper in the drop list, please choose the User Custom and implement the interface functions listed in the source code <code>arm_2d_helper_rtos_user.c</code>.</p>
 <p ><b>Figure 2-8 Enable RTOS Support in RTE</b></p>
 <p ><img src="EnbleRTOSSupportInRTE.png" alt="" class="inline" title="EnableRTOSSupportInRTE"/></p>
-<p >You do <b>NOT</b> have to enable the RTOS support in the synchronous mode (<code>__ARM_2D_HAS_ASYNC__</code> is <code>0</code> ). Even so, you can still use a dedicated thread to run the Arm-2D display adapter task (e.g. <code>disp_adapter0_task()</code>) and lock the framerate to a desired value. For example:</p>
+<p ><b>NOTE</b>: You do <b>NOT</b> have to enable any RTOS helper in the Synchronous Mode (<code>__ARM_2D_HAS_ASYNC__</code> is <code>0</code> ) even if you are using an RTOS. Even in the Synchronous Mode, by using an RTOS, you can run arm-2d in a dedicated thread and lock the framerate to a desired value. For example:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#ifndef LCD_TARGET_FPS</span></div>
 <div class="line"><span class="preprocessor">#   define LCD_TARGET_FPS       30</span></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
