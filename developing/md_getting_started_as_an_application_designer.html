@@ -189,28 +189,28 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 <p >You can replace the code inside <code>__pfb_draw_handler</code> with your own and visually check the result in the default scene hidden by the display adapter. During this process, you can, of course, use the default picture resources coming with Arm-2d, for example, the CMSIS-Logo as shown in <b>Figure 2-2</b> via corresponding <code><a class="el" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a></code> objects: <code>c_tileCMSISLogoGRAY8</code>, <code>c_tileCMSISLogoRGB565</code> and <code>c_tileCMSISLogoCCCA8888</code> defined in <code>cmsis_logo.c</code>. But sooner or later, you would like to use your own pictures. Arm-2D provides a Python script to help you convert images into <code><a class="el" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a></code> objects in C. For more details, please read this guide.</p>
 <p ><b>Figure 2-2 The Default Picture resource: CMSIS logo</b></p>
 <p ><img src="../examples/common/asset/CMSIS_Logo_Final.png" alt="" class="inline"/></p>
-<p >When you complete the above steps, <b>congratulations, you have successfully started Arm-2d.</b></p>
+<p >After finishing the steps above, <b>congratulations, welcome to join the Arm-2D community.</b></p>
 <h2><a class="anchor" id="autotoc_md30"></a>
-2.4 Try existing example controls</h2>
-<p >Arm-2D provides some controls in the <code>examples/common</code> directory, which are good reference codes and can be used in the project directly. Generally speaking, when you add the component <code>Acceleration::Arm-2D Extras::Controls</code> in the RTE configuration (as shown in <b>Figure 2-3</b>), all control source codes and related resources will be added to the project.</p>
-<p ><b>NOTE:</b> those unused controls or resources will be removed from the generated firmware image.</p>
+2.4 Try example controls</h2>
+<p >Arm-2D provides example controls in the <code>examples/common</code> directory, which are not only read as reference codes but also available for user applications. To include those example controls, please add the component <code>Acceleration::Arm-2D Extras::Controls</code> in the RTE configuration (as shown in <b>Figure 2-3</b>). Hence all control source codes and related resources will be added to the project.</p>
+<p ><b>NOTE:</b> The linker will remove those unused controls or resources.</p>
 <p ><b>Figure 2-3 Selecting Controls in RTE</b></p>
 <p ><img src="GettingStartedAsAppDesigner_RTE_Controls.png" alt="" class="inline" title="Controls in RTE"/></p>
 <h2><a class="anchor" id="autotoc_md31"></a>
 2.5 Write a simple GUI Application</h2>
-<p >For an actual application, you cannot write everything in the default scene hidden in the display adapter. You might already know that the display adapter provides a service called Scene Player, which maintains a FIFO of scenes, allowing us to add new scenes and requests scene switching, during which the Scene Player could optionally apply some visual effects like fade-in-fade-out, erasing, sliding etc.</p>
-<p ><b>An application is designed and organized as a series of scenes.</b> When and How to switch to Which scenes are totally under your control. When using RTE to deploy Arm-2D, there are two simple ways to add a new scene:</p>
+<p >For a real application, you cannot write everything in the default scene coming in the display adapter. You might already notice that the display adapter provides a service called Scene Player, which maintains a FIFO of scenes, allowing us to add new scenes and switch to the next, during which the Scene Player could optionally apply some visual effects like fade-in-fade-out, erasing, sliding etc.</p>
+<p ><b>In Arm-2D realm, a GUI application is designed and organized as a series of scenes.</b> When and How to switch to Which scenes are totally under your control. There are two simple ways to add a new scene in MDK:</p>
 <ul>
-<li><p class="startli">Using RTE configuration to add new scenes</p>
-<p class="startli">In RTE configuration, you can change the number of <code>Acceleration::Arm-2D Helper::Scene</code> to add new scenes to your project, as shown below:</p>
+<li><p class="startli">Using RTE configuration to add a number of new scenes</p>
+<p class="startli">In RTE configuration, you can update the number of <code>Acceleration::Arm-2D Helper::Scene</code> to add new scenes, as shown below:</p>
 <p class="startli"><b>Figure 2-4 Adding new scenes in RTE</b></p>
 </li>
 </ul>
 <p ><img src="AddingScenesinRTE.png" alt="" class="inline" title="Adding Scenes in RTE"/></p>
-<p >All scenes added with this method are included in the header file <code>arm_2d_scenes.h</code>, which you can included in your c source code: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &quot;arm_2d_helper.h&quot;</span>          <span class="comment">/* arm_2d.h is also included in this header file */</span></div>
+<p >As all scenes added with this method are included by the header file <code>arm_2d_scenes.h</code> automatically, you can include them in your project like this: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &quot;arm_2d_helper.h&quot;</span>          <span class="comment">/* arm_2d.h is also included in this header file */</span></div>
 <div class="line"><span class="preprocessor">#include &quot;arm_2d_disp_adapters.h&quot;</span>   <span class="comment">/* include all display adapters */</span></div>
 <div class="line"><span class="preprocessor">#include &quot;arm_2d_scenes.h&quot;</span>          <span class="comment">/* include all scenes added in RTE */</span></div>
-</div><!-- fragment --><p >By calling the constructor <code>arm_2d_sceneN_init()</code>, the target scene is created, initialised and added to the Scene Player FIFO. For example:</p>
+</div><!-- fragment --><p >By calling the constructor <code>arm_2d_sceneN_init()</code>, one instance of <em><b>sceneN</b></em> is created, initialized and added to the Scene Player FIFO. For example:</p>
 <div class="fragment"><div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
 <div class="line">    ...</div>
@@ -228,19 +228,19 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 <div class="line">        ...</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><p ><b>NOTE</b>: if we haven't disabled the default scene in the <code>Display Adapter 0</code>, then after adding the scene0 to the FIFO by calling the <code>arm_2d_scene0_init</code>(), it is the next available scene in the FIFO, and you have to call <code><a class="el" href="group__gHelper.html#gae6df5a7c480a7e3f44a926772ba78cb8" title="request switching to the next scene safely">arm_2d_scene_player_switch_to_next_scene()</a></code> to show it on the screen. If we have disabled the default scene, then after calling the constructor, scene0 is the 1st available scene in the FIFO and is shown as the current scene on the screen. In this case, you don't have to call <code><a class="el" href="group__gHelper.html#gae6df5a7c480a7e3f44a926772ba78cb8" title="request switching to the next scene safely">arm_2d_scene_player_switch_to_next_scene()</a></code>.</p>
+</div><!-- fragment --><p ><b>NOTE</b>: if we haven't disabled the default scene in the <code>Display Adapter 0</code>, then after adding the scene0 to the FIFO by calling the <code>arm_2d_scene0_init</code>(), it becomes the next available scene in the FIFO, and you have to call <code><a class="el" href="group__gHelper.html#gae6df5a7c480a7e3f44a926772ba78cb8" title="request switching to the next scene safely">arm_2d_scene_player_switch_to_next_scene()</a></code> to update the FIFO and show it on the screen. If we have disabled the default scene, then after calling the constructor, scene0 is the first available scene in the FIFO and is shown as the current scene on the screen. In this case, you don't have to call <code><a class="el" href="group__gHelper.html#gae6df5a7c480a7e3f44a926772ba78cb8" title="request switching to the next scene safely">arm_2d_scene_player_switch_to_next_scene()</a></code>.</p>
 <ul>
 <li><p class="startli">Using Code Template to add new scenes</p>
-<p class="startli">Except for the method above, you can add a new scene through the code template. For any given group in the project view, you can right-click and select "**Add New Item to Group**" in the pop-up menu (as shown in <b>Figure 2-5</b>), then in the dialog find "**User Code Template**", expand the Acceleration and select the <code>Arm-2D:Core::User Scene Template</code> (as shown in <b>Figure 2-6</b>).</p>
+<p class="startli">Except for the method above, you can add a new scene through the code template. For any given group in the project view, please right-click and select "**Add New Item to Group**" in the pop-up menu (as shown in <b>Figure 2-5</b>), then in the dialog find "**User Code Template**", expand the Acceleration and select the <code>Arm-2D:Core::User Scene Template</code> (as shown in <b>Figure 2-6</b>).</p>
 <p class="startli"><b>Figure 2-5 Adding New Items to a Group</b></p>
 </li>
 </ul>
 <p ><img src="AddNewItemsToGroup.png" alt="" class="inline" title="AddingNewItemsToAGroup"/></p>
 <p ><b>Figure 2-6 Adding a New Scene using Code Template</b></p>
 <p ><img src="AddingScenesViaTemplate.png" alt="" class="inline" title="AddingScenesViaTempalte"/></p>
-<p >After clicking the "Add" button, two files <code>arm_2d_scene_template.h</code> and <code>arm_2d_scene_template.c</code> will be added to your project folder. Open those two files and replace all <code>&lt;NAME&gt;</code> with your scene name, for example, <code>MY_SCENE</code> in upper case and replace all <code>&lt;scenen&gt;</code> with the same name in the lower case, for example, <code>my_scene</code>.</p>
-<p ><b>NOTE</b>: scenes added with code template are not included in the <code>arm_2d_scenes.h</code> and you have to include the header file mannually.</p>
-<p >By default, the display adapter switches scenes without any visual effects or delays when it is proper to do so after receiving a switching request. You can set some predefined switching visual effects by calling the function <code><a class="el" href="group__gHelper.html#ga6b9ef0f3e0f80430fc036f6d3c67c135" title="configure the scene switching mode">arm_2d_scene_player_set_switching_mode()</a></code>. For example:</p>
+<p >After clicking the "Add" button, two files <code>, arm_2d_scene_template.h</code> and <code>arm_2d_scene_template.c</code>, will be added to your project folder. Open them in any editor and replace all <code>&lt;NAME&gt;</code> with your scene name (for example, <code>MY_SCENE</code> in upper case) and supersede all <code>&lt;scenen&gt;</code> with the same name in the lower case (for example, <code>my_scene</code>).</p>
+<p ><b>NOTE</b>: Because scenes added with the code template are not included in the <code>arm_2d_scenes.h</code>, you must manually include the corresponding header files.</p>
+<p >By default, the display adapter switches scenes without any visual effects. You can call the function <code><a class="el" href="group__gHelper.html#ga6b9ef0f3e0f80430fc036f6d3c67c135" title="configure the scene switching mode">arm_2d_scene_player_set_switching_mode()</a></code> to apply some predefined switching visual effects, for example:</p>
 <div class="fragment"><div class="line"><span class="comment">/* set switching visual effects: Fade-in-Fade-out in White */</span></div>
 <div class="line"><a class="code hl_define" href="group__gHelper.html#ga6b9ef0f3e0f80430fc036f6d3c67c135" title="configure the scene switching mode">arm_2d_scene_player_set_switching_mode</a>( &amp;DISP0_ADAPTER,</div>
 <div class="line">                                        ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);</div>
