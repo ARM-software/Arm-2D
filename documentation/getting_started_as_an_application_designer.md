@@ -2,13 +2,13 @@
 
 ## 1 Before We Start
 
-**Arm-2D is not a GUI.** To be called GUI, it lacks many critical components, such as the element tree, the message processing, a rich set of controls, the support for interactive input devices, and a good-to-have GUI designer.
+**Arm-2D is not a GUI.** To be called GUI, it lacks many critical components, such as the element tree, the message processing, a rich set of controls, the support for interactive input devices, and a nice-to-have GUI designer.
 
-If possible, I hope that no one would have to use Arm-2D directly to create GUI applications. However, under the pressure of cost, there are always some embedded products developing GUI applications in resource-constrained environments (e.g. 64K Flash, 12K RAM etc.). Meanwhile, although some devices have relatively richer resources, the application software is often too big to reserve sufficient memory for a decent GUI stack. Supporting GUI application in resource constraint environments is a world "forgotten" by most of the mainstream embedded GUI stacks.
+If possible, I hope that no one would have to use Arm-2D directly to create GUI applications. However, under the cost pressure, some embedded products must develop GUI applications in resource-constrained environments (e.g. 64K Flash, 12K RAM etc.). Meanwhile, even some devices have relatively richer resources, the application software is often too big to reserve sufficient memory for using a decent GUI stack. Supporting GUI applications in resource constraint environments is a world forgotten by the mainstream embedded GUI stacks.
 
 If the graphics in your application is simple, i.e. consists of panels (for displaying parameters and user settings), and the human-machine interactions are implemented based on a keyboard (or a touch panel without complex touch gestures), then using Arm-2D APIs directly to design GUI applications might be an option.  In fact, if you can figure out a way to fulfill the missing parts aforementioned, the GUI application designed with Arm-2D is not only looking good but also has an impressively low memory footprint. 
 
-If you happen to meet the conditions above, **don't panic**, we will try our best to provide you with a simple and efficient user experience. **By focusing on the API usage and following the guidance** introduced in this article, **you can master the Arm-2D application design quickly**.
+If you happen to meet the conditions above, **don't panic**, we will try our best to provide you with a easy-and-efficient development experience. **By focusing on the API usage and following the guidance** introduced in this article, **you can master the Arm-2D application design quickly**.
 
 
 
@@ -33,17 +33,17 @@ If you happen to meet the conditions above, **don't panic**, we will try our bes
 
 ## 2 Step by Step Guidance
 
-### 2.1 Familiar with the basic concepts
+### 2.1 The basic concepts
 
-The first step of getting started is getting familiar with some basic concepts, among which ***Tile***, ***Region*** and corresponding ***Bounding Box model*** are the most fundamental ones, as almost all of the APIs take Tile(s) and Region(s) as input/output parameters. Please kindly reading [**README**](../README.md) and [**Introduction**](./introduction.md) to familiar those basic concepts. 
+The first step of getting started is learning some basic concepts, among which ***Tile***, ***Region*** and ***Bounding Box model*** are the most fundamental ones, because almost all of the APIs take Tile(s) and Region(s) as input/output. Please kindly reading [**README**](../README.md) and [**Introduction**](./introduction.md) for details. 
 
 
 
 ### 2.2 Port Arm-2D to your local platform
 
-After understanding the basic concepts of Arm-2d, we recommend that you follow the steps described in [how_to_deploy_the_arm_2d_library.md](./how_to_deploy_the_arm_2d_library.md) to deploy Arm-2d to your local hardware platform. 
+After learning the basic concepts of Arm-2d, please follow the guidance, [how_to_deploy_the_arm_2d_library.md](./how_to_deploy_the_arm_2d_library.md), to deploy Arm-2d onto your local hardware platform. 
 
-Of course, if you want to skip this step and focus on learning how to use the Arm-2D API, you can start with the template projects in the `example` directory. These template projects provide portings of STM32 Discovery Board, Cortex-M FVP/VHT and MPS2/MPS3 development platforms for both bare metal and RTOS environment respectively. There are other 3rd party portings available on github, for example:
+Of course, if you want to skip the porting step and jump to learn how to use the Arm-2D APIs, please try the template projects we prepared for you in the `examples` directory. These template projects provide porting for STM32 Discovery Board, Cortex-M FVP/VHT and MPS2/MPS3 development platforms in both bare-metal and RTOS environments respectively. In addition, there are other 3rd-party porting available on Github, for example:
 
 - [A porting for Raspberry Pi Pico (using MDK)](https://github.com/GorgonMeducer/Pico_Template)
 - [A porting for LVGL + Arm-2D on Corstone-300-FVP](https://github.com/lvgl/lv_port_an547_cm55_sim)
@@ -52,9 +52,9 @@ Of course, if you want to skip this step and focus on learning how to use the Ar
 
 ### 2.3 Try the basic Tile Operations and the Layout Assistant
 
-After having Arm-2D ready for your platform, it is good to experience the style of Arm-2D API via the article [how_to_use_tile_operations.md](./how_to_use_tile_operations.md). During this process, reading [how_to_use_layout_assistant.md](./how_to_use_layout_assistant.md) to learn the basic layout method will simplify your application development.
+After having a working platform, it is good to try Arm-2D APIs with the help of [how_to_use_tile_operations.md](./how_to_use_tile_operations.md). During this process, reading [how_to_use_layout_assistant.md](./how_to_use_layout_assistant.md) to learn the basic layout method can make your application development much easier.
 
-At this stage, you may have a outstanding question: where should I use these APIs to practice drawing operations? Please open `arm_2d_disp_adapter_0.c`, and find the function `__pfb_draw_handler` as shown below - This is our playground.
+At this stage, one might have an outstanding question: where should I use these APIs to practice drawing operations? Please open `arm_2d_disp_adapter_0.c` and find the function `__pfb_draw_handler` as shown below - This is our playground.
 
 ```c
 static
@@ -84,11 +84,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
 }
 ```
 
-As you can see, the existing code has:
+As you can see, this example code has:
 
-- Fill the background with the white colour
-- Draw a rounded corner box in black with a given opacity ratio in the centre of the screen
-- Draw a busy-wheel with an existing control. 
+- Filled the background with the white colour
+- Drawn a rounded corner box in black with a given opacity ratio in the centre of the screen
+- Drawn a busy-wheel with an existing control. 
 
 
 
@@ -98,7 +98,7 @@ As you can see, the existing code has:
 
 
 
-You can replace the code inside `__pfb_draw_handler` with your own and check the result visually in the default scene coming with the display adapter. During this process, you can, of course, use the default pictures coming with Arm-2d, i.e. the CMSIS-Logo as shown in **Figure 2-2** via corresponding `arm_2d_tile_t` objects: `c_tileCMSISLogoGRAY8`, `c_tileCMSISLogoRGB565` and `c_tileCMSISLogoCCCA8888` defined in `cmsis_logo.c`. But sooner or later, you would like to use your own pictures. Arm-2D provides a Python script helping you to convert images into `arm_2d_tile_t` objects written in C. For more, please read this [guide](../tools/README.md) for details. 
+You can replace the code inside `__pfb_draw_handler` with your own and visually check the result in the default scene hidden by the display adapter. During this process, you can, of course, use the default picture resources coming with Arm-2d, for example, the CMSIS-Logo as shown in **Figure 2-2** via corresponding `arm_2d_tile_t` objects: `c_tileCMSISLogoGRAY8`, `c_tileCMSISLogoRGB565` and `c_tileCMSISLogoCCCA8888` defined in `cmsis_logo.c`. But sooner or later, you would like to use your own pictures. Arm-2D provides a Python script to help you convert images into `arm_2d_tile_t` objects in C. For more details, please read this [guide](../tools/README.md). 
 
 **Figure 2-2 The Default Picture resource: CMSIS logo**
 
