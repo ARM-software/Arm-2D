@@ -154,22 +154,6 @@ static void __before_scene%Instance%_switching_out(arm_2d_scene_t *ptScene)
 }
 
 static
-IMPL_PFB_ON_DRAW(__pfb_draw_scene%Instance%_background_handler)
-{
-    user_scene_%Instance%_t *ptThis = (user_scene_%Instance%_t *)pTarget;
-    ARM_2D_UNUSED(ptTile);
-    ARM_2D_UNUSED(bIsNewFrame);
-    /*-----------------------draw back ground begin-----------------------*/
-
-
-
-    /*-----------------------draw back ground end  -----------------------*/
-    arm_2d_op_wait_async(NULL);
-
-    return arm_fsm_rt_cpl;
-}
-
-static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene%Instance%_handler)
 {
     user_scene_%Instance%_t *ptThis = (user_scene_%Instance%_t *)pTarget;
@@ -299,7 +283,6 @@ user_scene_%Instance%_t *__arm_2d_scene%Instance%_init(   arm_2d_scene_player_t 
         .use_as__arm_2d_scene_t = {
             /* Please uncommon the callbacks if you need them
              */
-            //.fnBackground   = &__pfb_draw_scene%Instance%_background_handler,
             .fnScene        = &__pfb_draw_scene%Instance%_handler,
             .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
