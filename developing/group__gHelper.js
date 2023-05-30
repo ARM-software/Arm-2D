@@ -10,8 +10,8 @@ var group__gHelper =
     [ "arm_2d_scene_t", "group__gHelper.html#structarm__2d__scene__t", [
       [ "ptNext", "group__gHelper.html#a58b6fe1c4ab89fd6a89c8344fcbe85e7", null ],
       [ "ptPlayer", "group__gHelper.html#a02317320d49833d7d6f3fc959d95e5f5", null ],
-      [ "ptDirtyRegion", "group__gHelper.html#a14ff6b13dd709cab6c029631f073ccd4", null ],
       [ "fnBackground", "group__gHelper.html#adfd244e234641aff86db898b9a0120cf", null ],
+      [ "ptDirtyRegion", "group__gHelper.html#a14ff6b13dd709cab6c029631f073ccd4", null ],
       [ "fnScene", "group__gHelper.html#a11df8d98a8cddbc856d69808ded8c733", null ],
       [ "fnOnBGStart", "group__gHelper.html#ae8a3464ab829906cf0711c89624b2a13", null ],
       [ "fnOnBGComplete", "group__gHelper.html#a9f48896229bd93381db449d8a09c8303", null ],

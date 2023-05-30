@@ -608,14 +608,13 @@ switching algorithm </td></tr>
 <tr class="memitem:a02317320d49833d7d6f3fc959d95e5f5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#a02317320d49833d7d6f3fc959d95e5f5">ptPlayer</a></td></tr>
 <tr class="memdesc:a02317320d49833d7d6f3fc959d95e5f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">points to the host scene player  <a href="group__gHelper.html#a02317320d49833d7d6f3fc959d95e5f5">More...</a><br /></td></tr>
 <tr class="separator:a02317320d49833d7d6f3fc959d95e5f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14ff6b13dd709cab6c029631f073ccd4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#a14ff6b13dd709cab6c029631f073ccd4">ptDirtyRegion</a></td></tr>
-<tr class="memdesc:a14ff6b13dd709cab6c029631f073ccd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">dirty region list for the foreground  <a href="group__gHelper.html#a14ff6b13dd709cab6c029631f073ccd4">More...</a><br /></td></tr>
-<tr class="separator:a14ff6b13dd709cab6c029631f073ccd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adfd244e234641aff86db898b9a0120cf"><td class="memItemLeft" align="right" valign="top">arm_2d_helper_draw_handler_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#adfd244e234641aff86db898b9a0120cf">fnBackground</a></td></tr>
-<tr class="memdesc:adfd244e234641aff86db898b9a0120cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">the function pointer for the background  <a href="group__gHelper.html#adfd244e234641aff86db898b9a0120cf">More...</a><br /></td></tr>
 <tr class="separator:adfd244e234641aff86db898b9a0120cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14ff6b13dd709cab6c029631f073ccd4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#a14ff6b13dd709cab6c029631f073ccd4">ptDirtyRegion</a></td></tr>
+<tr class="memdesc:a14ff6b13dd709cab6c029631f073ccd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">dirty region list for the scene  <a href="group__gHelper.html#a14ff6b13dd709cab6c029631f073ccd4">More...</a><br /></td></tr>
+<tr class="separator:a14ff6b13dd709cab6c029631f073ccd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11df8d98a8cddbc856d69808ded8c733"><td class="memItemLeft" align="right" valign="top">arm_2d_helper_draw_handler_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#a11df8d98a8cddbc856d69808ded8c733">fnScene</a></td></tr>
-<tr class="memdesc:a11df8d98a8cddbc856d69808ded8c733"><td class="mdescLeft">&#160;</td><td class="mdescRight">the function pointer for the foreground  <a href="group__gHelper.html#a11df8d98a8cddbc856d69808ded8c733">More...</a><br /></td></tr>
+<tr class="memdesc:a11df8d98a8cddbc856d69808ded8c733"><td class="mdescLeft">&#160;</td><td class="mdescRight">the function pointer for the scene  <a href="group__gHelper.html#a11df8d98a8cddbc856d69808ded8c733">More...</a><br /></td></tr>
 <tr class="separator:a11df8d98a8cddbc856d69808ded8c733"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8a3464ab829906cf0711c89624b2a13"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ae8a3464ab829906cf0711c89624b2a13">fnOnBGStart</a> )(<a class="el" href="group__gHelper.html#structarm__2d__scene__t">arm_2d_scene_t</a> *ptThis)</td></tr>
 <tr class="memdesc:ae8a3464ab829906cf0711c89624b2a13"><td class="mdescLeft">&#160;</td><td class="mdescRight">on-start-drawing-background event handler  <a href="group__gHelper.html#ae8a3464ab829906cf0711c89624b2a13">More...</a><br /></td></tr>
@@ -679,6 +678,21 @@ struct {</td></tr>
 
 </div>
 </div>
+<a id="adfd244e234641aff86db898b9a0120cf" name="adfd244e234641aff86db898b9a0120cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adfd244e234641aff86db898b9a0120cf">&#9670;&nbsp;</a></span>fnBackground</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">arm_2d_helper_draw_handler_t* arm_2d_scene_t::fnBackground</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>Deprecated! Please do NOT use unless you know the consequence </dd></dl>
+
+</div>
+</div>
 <a id="a14ff6b13dd709cab6c029631f073ccd4" name="a14ff6b13dd709cab6c029631f073ccd4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a14ff6b13dd709cab6c029631f073ccd4">&#9670;&nbsp;</a></span>ptDirtyRegion</h2>
 
@@ -691,23 +705,7 @@ struct {</td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>dirty region list for the foreground </p>
-
-</div>
-</div>
-<a id="adfd244e234641aff86db898b9a0120cf" name="adfd244e234641aff86db898b9a0120cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adfd244e234641aff86db898b9a0120cf">&#9670;&nbsp;</a></span>fnBackground</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">arm_2d_helper_draw_handler_t* arm_2d_scene_t::fnBackground</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>the function pointer for the background </p>
+<p>dirty region list for the scene </p>
 
 </div>
 </div>
@@ -723,7 +721,7 @@ struct {</td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>the function pointer for the foreground </p>
+<p>the function pointer for the scene </p>
 
 </div>
 </div>
