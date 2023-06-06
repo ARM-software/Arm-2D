@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        30. May 2023
- * $Revision:    V.1.3.13
+ * $Date:        06. June 2023
+ * $Revision:    V.1.4.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1072,10 +1072,10 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
     
     enum {
         START = 0,
+        DRAW_FRAME_START,
         DRAW_BACKGROUND_PREPARE,
         DRAW_BACKGROUND,
         DRAW_SCENE_PREPARE,
-        DRAW_SCENE_START,
         DRAW_SCENE,
         POST_SCENE_CHECK,
         
@@ -1111,9 +1111,21 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
                 //! no scene available
                 return arm_fsm_rt_cpl;
             }
+            this.Runtime.bUpdateBG = true;
             this.Runtime.chState++;
             // fall-through
-            
+
+        case DRAW_FRAME_START:
+            ARM_2D_INVOKE_RT_VOID(ptScene->fnOnFrameStart, ptScene);
+            if (!this.Runtime.bUpdateBG) {
+                this.Runtime.chState = DRAW_SCENE_PREPARE;
+                break;
+            } else {
+                this.Runtime.bUpdateBG = false;
+                this.Runtime.chState = DRAW_BACKGROUND_PREPARE;
+            }
+            // fall-through
+        
         case DRAW_BACKGROUND_PREPARE:
             if (NULL == ptScene->fnBackground) {
                 /* if the dirty region list is available, draw fnScene directly 
@@ -1168,11 +1180,6 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
                 &this.use_as__arm_2d_helper_pfb_t,
                 ptScene->fnScene,
                 ptScene);
-            this.Runtime.chState = DRAW_SCENE_START;
-            // fall-through
-            
-        case DRAW_SCENE_START:
-            ARM_2D_INVOKE_RT_VOID(ptScene->fnOnFrameStart, ptScene);
             this.Runtime.chState = DRAW_SCENE;
             // fall-through
             
@@ -1219,12 +1226,8 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
                     this.Runtime.chState = SWITCH_SCENE_PREPARE;
                     /* also return arm_fsm_rt_cpl to indicate the completion of a frame */
                 }
-            } else if (this.Runtime.bUpdateBG) {
-                /* user request to draw background again */
-                this.Runtime.bUpdateBG = false;
-                this.Runtime.chState = DRAW_BACKGROUND_PREPARE;
             } else {
-                this.Runtime.chState = DRAW_SCENE_START;
+                this.Runtime.chState = DRAW_FRAME_START;
             }
 
             /* return arm_fsm_rt_cpl to indicate a end of a frame */
