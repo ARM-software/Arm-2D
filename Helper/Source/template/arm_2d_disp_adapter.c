@@ -145,30 +145,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
     return arm_fsm_rt_cpl;
 }
 
-//static
-//IMPL_PFB_ON_DRAW(__pfb_draw_background_handler)
-//{
-//    ARM_2D_UNUSED(pTarget);
-//    ARM_2D_UNUSED(ptTile);
-
-//    arm_2d_canvas(ptTile, __top_container) {
-//    
-//        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
-//        
-//        arm_2d_align_centre(__top_container, 100, 100) {
-//            draw_round_corner_box(  ptTile,
-//                                    &__centre_region,
-//                                    GLCD_COLOR_BLACK,
-//                                    64,
-//                                    bIsNewFrame);
-//        }
-//    }
-
-//    arm_2d_op_wait_async(NULL);
-
-//    return arm_fsm_rt_cpl;
-//}
-
 #if !__DISP%Instance%_CFG_DISABLE_NAVIGATION_LAYER__
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
@@ -431,6 +407,7 @@ void disp_adapter%Instance%_init(void)
 #endif
 
     if (!__DISP%Instance%_CFG_DISABLE_DEFAULT_SCENE__) {
+    #if 0
         /*! define dirty regions */
         IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, const static)
 
@@ -447,12 +424,12 @@ void disp_adapter%Instance%_init(void)
             ),
 
         END_IMPL_ARM_2D_REGION_LIST()
-        
+    #endif
+    
         static arm_2d_scene_t s_tScenes[] = {
             [0] = {
-                //.fnBackground   = &__pfb_draw_background_handler,
                 .fnScene        = &__pfb_draw_handler,
-                .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
+                //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
                 .fnOnFrameStart = &__on_frame_start,
                 .fnOnFrameCPL   = &__on_frame_complete,
                 .fnDepose       = NULL,
