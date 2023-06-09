@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        06. June 2023
- * $Revision:    V.1.4.0
+ * $Date:        09. June 2023
+ * $Revision:    V.1.4.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1167,6 +1167,12 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             
             ARM_2D_INVOKE_RT_VOID(ptScene->fnOnBGComplete, ptScene);
             
+            if (NULL == ptScene->fnBackground && NULL != ptScene->fnScene) {
+                /* avoid call fnScene twice */
+                this.Runtime.chState = POST_SCENE_CHECK;
+                break;
+            }
+
             this.Runtime.chState = DRAW_SCENE_PREPARE;
             // fall-through
             
