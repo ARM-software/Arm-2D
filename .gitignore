@@ -58,3 +58,7 @@ test/arm2d_*.*+*-*/**/*
 test/*.zip
 *.bak
 *.gabwan01
+tools/example.txt
+Library/jinja/input.json
+Library/jinja/example.txt.jinja
+tools/input.json
