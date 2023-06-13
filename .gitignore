@@ -62,3 +62,5 @@ tools/example.txt
 Library/jinja/input.json
 Library/jinja/example.txt.jinja
 tools/input.json
+Library/Source/example.txt
+tools/example.txt.jinja

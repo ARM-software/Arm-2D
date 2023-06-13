@@ -59,12 +59,13 @@ def main(argv):
 
     # Load variables
 
-    if not os.path.isfile(os.path.join(args.folder, args.variable)):
-        print(f"Error: The jason file {os.path.join(args.folder, args.variable)} does not exist.")
-        sys.exit(1)
+
 
     variables = {}
     if args.variable is not None:
+        if not os.path.isfile(os.path.join(args.folder, args.variable)):
+            print(f"Error: The jason file {os.path.join(args.folder, args.variable)} does not exist.")
+            sys.exit(1)
         with open(os.path.join(args.folder, args.variable), 'r') as f:
             variables = json.load(f)
 
