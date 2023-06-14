@@ -22,7 +22,7 @@
 
 **Position in Ecosystem:**
 
-- **Focus on low-level** and works as **an hardware abstraction layer** for 2.5D image processing
+- **Focus on low-level** and works as **a hardware abstraction layer** for 2.5D image processing
 - **Arm-2D is NOT a GUI.**
   - No content creation, complex shape drawing or Scalable Vector Graphics (SVG) support
 - **Provide conveniences for Arm eco-partners to create value through differentiation**
