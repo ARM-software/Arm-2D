@@ -560,10 +560,6 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                     & ~chPixelHeightAlignMask;
             }
 
-        #if __ARM_ARCH == 6 || __TARGET_ARCH_THUMB == 3
-            // reset adapter frame size
-            this.Adapter.tFrameSize = this.tCFG.FrameBuffer.tFrameSize;
-        #else
             if (this.tCFG.FrameBuffer.bDisableDynamicFPBSize) {
                 // reset adapter frame size
                 this.Adapter.tFrameSize = this.tCFG.FrameBuffer.tFrameSize;
@@ -610,7 +606,7 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                     this.Adapter.tFrameSize = this.tCFG.FrameBuffer.tFrameSize;
                 }
             } 
-        #endif
+
         }
         break;
     } while(true);
