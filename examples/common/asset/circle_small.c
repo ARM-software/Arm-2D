@@ -18,7 +18,7 @@
 #endif
 
 
-__attribute__((aligned(4), section("arm2d.asset.c_bmpCircleAlpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpCircleAlpha")
 static const uint8_t c_bmpCircleAlpha[14*14] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x1b, 0x87, 0xdc, 0xff, 0xff, 0xde, 0x89, 0x1d, 0x00, 0x00, 0x00, 
@@ -49,7 +49,7 @@ static const uint8_t c_bmpCircleAlpha[14*14] = {
 /* -13- */
 0x00, 0x00, 0x00, 0x00, 0x38, 0x86, 0xb2, 0xb2, 0x87, 0x3a, 0x00, 0x00, 0x00, 0x00, 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpCircleA2Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpCircleA2Alpha")
 static const uint8_t c_bmpCircleA2Alpha[4*14] = {
 /* -0- */
 0x00, 0xfe, 0x0b, 0x00, 
@@ -80,7 +80,7 @@ static const uint8_t c_bmpCircleA2Alpha[4*14] = {
 /* -13- */
 0x00, 0xa8, 0x02, 0x00, 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpCircleA4Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpCircleA4Alpha")
 static const uint8_t c_bmpCircleA4Alpha[7*14] = {
 /* -0- */
 0x00, 0x10, 0xd8, 0xff, 0x8d, 0x01, 0x00, 
@@ -112,7 +112,7 @@ static const uint8_t c_bmpCircleA4Alpha[7*14] = {
 0x00, 0x00, 0x83, 0xbb, 0x38, 0x00, 0x00, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpCircleGRAY8")))
+ARM_SECTION("arm2d.asset.c_bmpCircleGRAY8")
 const uint8_t c_bmpCircleGRAY8[14*14] = {
 /* -0- */
 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00, 
@@ -144,7 +144,7 @@ const uint8_t c_bmpCircleGRAY8[14*14] = {
 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpCircleRGB565")))
+ARM_SECTION("arm2d.asset.c_bmpCircleRGB565")
 const uint16_t c_bmpCircleRGB565[14*14] = {
 /* -0- */
 0x0000, 0x0000, 0x0000, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0000, 0x0000, 0x0000, 
@@ -176,7 +176,7 @@ const uint16_t c_bmpCircleRGB565[14*14] = {
 0x0000, 0x0000, 0x0000, 0x0000, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0000, 0x0000, 0x0000, 0x0000, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpCircleCCCA8888")))
+ARM_SECTION("arm2d.asset.c_bmpCircleCCCA8888")
 const uint32_t c_bmpCircleCCCA8888[14*14] = {
 /* -0- */
 0x00000000, 0x00000000, 0x00000000, 0x1bffffff, 0x87ffffff, 0xdcffffff, 0xffffffff, 0xffffffff, 0xdeffffff, 0x89ffffff, 0x1dffffff, 0x00000000, 0x00000000, 0x00000000, 
@@ -210,7 +210,7 @@ const uint32_t c_bmpCircleCCCA8888[14*14] = {
 
 
 extern const arm_2d_tile_t c_tileCircleGRAY8;
-__attribute__((section("arm2d.tile.c_tileCircleGRAY8")))
+ARM_SECTION("arm2d.tile.c_tileCircleGRAY8")
 const arm_2d_tile_t c_tileCircleGRAY8 = {
     .tRegion = {
         .tSize = {
@@ -232,7 +232,7 @@ const arm_2d_tile_t c_tileCircleGRAY8 = {
 
 
 extern const arm_2d_tile_t c_tileCircleRGB565;
-__attribute__((section("arm2d.tile.c_tileCircleRGB565")))
+ARM_SECTION("arm2d.tile.c_tileCircleRGB565")
 const arm_2d_tile_t c_tileCircleRGB565 = {
     .tRegion = {
         .tSize = {
@@ -255,7 +255,7 @@ const arm_2d_tile_t c_tileCircleRGB565 = {
 
 extern const arm_2d_tile_t c_tileCircleCCCA8888;
 
-__attribute__((section("arm2d.tile.c_tileCircleCCCA8888")))
+ARM_SECTION("arm2d.tile.c_tileCircleCCCA8888")
 const arm_2d_tile_t c_tileCircleCCCA8888 = {
     .tRegion = {
         .tSize = {
@@ -279,7 +279,7 @@ const arm_2d_tile_t c_tileCircleCCCA8888 = {
 
 extern const arm_2d_tile_t c_tileCircleMask2;
 
-__attribute__((section("arm2d.tile.c_tileCircleMask2")))
+ARM_SECTION("arm2d.tile.c_tileCircleMask2")
 const arm_2d_tile_t c_tileCircleMask2 = {
     .tRegion = {
         .tSize = {
@@ -302,7 +302,7 @@ const arm_2d_tile_t c_tileCircleMask2 = {
 
 extern const arm_2d_tile_t c_tileCircleMask;
 
-__attribute__((section("arm2d.tile.c_tileCircleMask")))
+ARM_SECTION("arm2d.tile.c_tileCircleMask")
 const arm_2d_tile_t c_tileCircleMask = {
     .tRegion = {
         .tSize = {
@@ -325,7 +325,7 @@ const arm_2d_tile_t c_tileCircleMask = {
 
 extern const arm_2d_tile_t c_tileCircleA2Mask;
 
-__attribute__((section("arm2d.tile.c_tileCircleA2Mask")))
+ARM_SECTION("arm2d.tile.c_tileCircleA2Mask")
 const arm_2d_tile_t c_tileCircleA2Mask = {
     .tRegion = {
         .tSize = {
@@ -348,7 +348,7 @@ const arm_2d_tile_t c_tileCircleA2Mask = {
 
 extern const arm_2d_tile_t c_tileCircleA4Mask;
 
-__attribute__((section("arm2d.tile.c_tileCircleA4Mask")))
+ARM_SECTION("arm2d.tile.c_tileCircleA4Mask")
 const arm_2d_tile_t c_tileCircleA4Mask = {
     .tRegion = {
         .tSize = {

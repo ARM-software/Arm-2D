@@ -18,7 +18,7 @@
 #endif
 
 
-__attribute__((aligned(4), section("arm2d.asset.c_bmpPictureSunAlpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpPictureSunAlpha")
 static const uint8_t c_bmpPictureSunAlpha[56*57] = {
 /* -0- */
 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
@@ -307,7 +307,7 @@ static const uint8_t c_bmpPictureSunAlpha[56*57] = {
 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpPictureSunGRAY8")))
+ARM_SECTION("arm2d.asset.c_bmpPictureSunGRAY8")
 const uint8_t c_bmpPictureSunGRAY8[56*57] = {
 /* -0- */
 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
@@ -482,7 +482,7 @@ const uint8_t c_bmpPictureSunGRAY8[56*57] = {
 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpPictureSunRGB565")))
+ARM_SECTION("arm2d.asset.c_bmpPictureSunRGB565")
 const uint16_t c_bmpPictureSunRGB565[56*57] = {
 /* -0- */
 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff,
@@ -771,7 +771,7 @@ const uint16_t c_bmpPictureSunRGB565[56*57] = {
 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpPictureSunCCCA8888")))
+ARM_SECTION("arm2d.asset.c_bmpPictureSunCCCA8888")
 const uint32_t c_bmpPictureSunCCCA8888[56*57] = {
 /* -0- */
 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff,
@@ -1062,7 +1062,7 @@ const uint32_t c_bmpPictureSunCCCA8888[56*57] = {
 
 
 extern const arm_2d_tile_t c_tilePictureSunGRAY8;
-__attribute__((section("arm2d.tile.c_tilePictureSunGRAY8")))
+ARM_SECTION("arm2d.tile.c_tilePictureSunGRAY8")
 const arm_2d_tile_t c_tilePictureSunGRAY8 = {
     .tRegion = {
         .tSize = {
@@ -1084,7 +1084,7 @@ const arm_2d_tile_t c_tilePictureSunGRAY8 = {
 
 
 extern const arm_2d_tile_t c_tilePictureSunRGB565;
-__attribute__((section("arm2d.tile.c_tilePictureSunRGB565")))
+ARM_SECTION("arm2d.tile.c_tilePictureSunRGB565")
 const arm_2d_tile_t c_tilePictureSunRGB565 = {
     .tRegion = {
         .tSize = {
@@ -1107,7 +1107,7 @@ const arm_2d_tile_t c_tilePictureSunRGB565 = {
 
 extern const arm_2d_tile_t c_tilePictureSunCCCA8888;
 
-__attribute__((section("arm2d.tile.c_tilePictureSunCCCA8888")))
+ARM_SECTION("arm2d.tile.c_tilePictureSunCCCA8888")
 const arm_2d_tile_t c_tilePictureSunCCCA8888 = {
     .tRegion = {
         .tSize = {
@@ -1131,7 +1131,7 @@ const arm_2d_tile_t c_tilePictureSunCCCA8888 = {
 
 extern const arm_2d_tile_t c_tilePictureSunMask2;
 
-__attribute__((section("arm2d.tile.c_tilePictureSunMask2")))
+ARM_SECTION("arm2d.tile.c_tilePictureSunMask2")
 const arm_2d_tile_t c_tilePictureSunMask2 = {
     .tRegion = {
         .tSize = {
@@ -1154,7 +1154,7 @@ const arm_2d_tile_t c_tilePictureSunMask2 = {
 
 extern const arm_2d_tile_t c_tilePictureSunMask;
 
-__attribute__((section("arm2d.tile.c_tilePictureSunMask")))
+ARM_SECTION("arm2d.tile.c_tilePictureSunMask")
 const arm_2d_tile_t c_tilePictureSunMask = {
     .tRegion = {
         .tSize = {

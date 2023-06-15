@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        09. April 2023
- * $Revision:    V.1.5.0
+ * $Date:        15. June 2023
+ * $Revision:    V.1.5.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -115,7 +115,7 @@ extern "C" {
                                 ...             /* Event Handler */             \
                                 )                                               \
     ({                                                                          \
-        __attribute__((section(".bss.noinit.arm_2d_pfb_pool")))                 \
+        ARM_SECTION(".bss.noinit.arm_2d_pfb_pool")                              \
          static struct {                                                        \
             arm_2d_pfb_t tFPB;                                                  \
             __ALIGNED(4)                                                        \

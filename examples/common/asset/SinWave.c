@@ -18,7 +18,7 @@
 #endif
 
 
-__attribute__((aligned(4), section("arm2d.asset.c_bmpSinWaveAlpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpSinWaveAlpha")
 static const uint8_t c_bmpSinWaveAlpha[48*12] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x41, 0x93, 0xcc, 0xe5, 0xe9, 0xd8, 0xb1, 0x71, 0x2a, 0x00,
@@ -81,7 +81,7 @@ static const uint8_t c_bmpSinWaveAlpha[48*12] = {
 0xff, 0xd4, 0x8d, 0x4f, 0x28, 0x18, 0x1d, 0x38, 0x72, 0xc5, 0xff, 0xff, 0xff, 0xff, 0xff, 0xf0,
 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpSinWaveA2Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpSinWaveA2Alpha")
 static const uint8_t c_bmpSinWaveA2Alpha[12*12] = {
 /* -0- */
 0x00, 0x90, 0xff, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
@@ -108,7 +108,7 @@ static const uint8_t c_bmpSinWaveA2Alpha[12*12] = {
 /* -11- */
 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x6f, 0x00, 0xfd, 0xff, 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpSinWaveA4Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpSinWaveA4Alpha")
 static const uint8_t c_bmpSinWaveA4Alpha[24*12] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x94, 0xec, 0xde, 0x7b, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -148,7 +148,7 @@ static const uint8_t c_bmpSinWaveA4Alpha[24*12] = {
 0xdf, 0x48, 0x12, 0x31, 0xc7, 0xff, 0xff, 0xff, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpSinWaveGRAY8")))
+ARM_SECTION("arm2d.asset.c_bmpSinWaveGRAY8")
 const uint8_t c_bmpSinWaveGRAY8[48*12] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 0x7d, 0x80, 0x7f, 0x7e, 0x7d, 0x7e, 0x7f, 0x7f, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -188,7 +188,7 @@ const uint8_t c_bmpSinWaveGRAY8[48*12] = {
 0x80, 0x7e, 0x7f, 0x7d, 0x7f, 0x7f, 0x7e, 0x7d, 0x7f, 0x7e, 0x80, 0x82, 0x7e, 0x7e, 0x7f, 0x7e, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpSinWaveRGB565")))
+ARM_SECTION("arm2d.asset.c_bmpSinWaveRGB565")
 const uint16_t c_bmpSinWaveRGB565[48*12] = {
 /* -0- */
 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x001f, 0x4398, 0x43b8, 0x4398, 0x4398, 0x4398, 0x4398, 0x4398, 0x4398, 0x4399, 0x0000,
@@ -252,7 +252,7 @@ const uint16_t c_bmpSinWaveRGB565[48*12] = {
 
 };
 
-__attribute__((section("arm2d.asset.c_bmpSinWaveCCCA8888")))
+ARM_SECTION("arm2d.asset.c_bmpSinWaveCCCA8888")
 const uint32_t c_bmpSinWaveCCCA8888[48*12] = {
 /* -0- */
 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x010000ff, 0x414271c4, 0x934574c7, 0xcc4473c5, 0xe54372c5, 0xe94371c3, 0xd84472c5, 0xb14573c5, 0x714573c6, 0x2a4273c8, 0x00000000,
@@ -318,7 +318,7 @@ const uint32_t c_bmpSinWaveCCCA8888[48*12] = {
 
 
 extern const arm_2d_tile_t c_tileSinWaveGRAY8;
-__attribute__((section("arm2d.tile.c_tileSinWaveGRAY8")))
+ARM_SECTION("arm2d.tile.c_tileSinWaveGRAY8")
 const arm_2d_tile_t c_tileSinWaveGRAY8 = {
     .tRegion = {
         .tSize = {
@@ -340,7 +340,7 @@ const arm_2d_tile_t c_tileSinWaveGRAY8 = {
 
 
 extern const arm_2d_tile_t c_tileSinWaveRGB565;
-__attribute__((section("arm2d.tile.c_tileSinWaveRGB565")))
+ARM_SECTION("arm2d.tile.c_tileSinWaveRGB565")
 const arm_2d_tile_t c_tileSinWaveRGB565 = {
     .tRegion = {
         .tSize = {
@@ -363,7 +363,7 @@ const arm_2d_tile_t c_tileSinWaveRGB565 = {
 
 extern const arm_2d_tile_t c_tileSinWaveCCCA8888;
 
-__attribute__((section("arm2d.tile.c_tileSinWaveCCCA8888")))
+ARM_SECTION("arm2d.tile.c_tileSinWaveCCCA8888")
 const arm_2d_tile_t c_tileSinWaveCCCA8888 = {
     .tRegion = {
         .tSize = {
@@ -387,7 +387,7 @@ const arm_2d_tile_t c_tileSinWaveCCCA8888 = {
 
 extern const arm_2d_tile_t c_tileSinWaveMask2;
 
-__attribute__((section("arm2d.tile.c_tileSinWaveMask2")))
+ARM_SECTION("arm2d.tile.c_tileSinWaveMask2")
 const arm_2d_tile_t c_tileSinWaveMask2 = {
     .tRegion = {
         .tSize = {
@@ -410,7 +410,7 @@ const arm_2d_tile_t c_tileSinWaveMask2 = {
 
 extern const arm_2d_tile_t c_tileSinWaveMask;
 
-__attribute__((section("arm2d.tile.c_tileSinWaveMask")))
+ARM_SECTION("arm2d.tile.c_tileSinWaveMask")
 const arm_2d_tile_t c_tileSinWaveMask = {
     .tRegion = {
         .tSize = {
@@ -433,7 +433,7 @@ const arm_2d_tile_t c_tileSinWaveMask = {
 
 extern const arm_2d_tile_t c_tileSinWaveA2Mask;
 
-__attribute__((section("arm2d.tile.c_tileSinWaveA2Mask")))
+ARM_SECTION("arm2d.tile.c_tileSinWaveA2Mask")
 const arm_2d_tile_t c_tileSinWaveA2Mask = {
     .tRegion = {
         .tSize = {
@@ -456,7 +456,7 @@ const arm_2d_tile_t c_tileSinWaveA2Mask = {
 
 extern const arm_2d_tile_t c_tileSinWaveA4Mask;
 
-__attribute__((section("arm2d.tile.c_tileSinWaveA4Mask")))
+ARM_SECTION("arm2d.tile.c_tileSinWaveA4Mask")
 const arm_2d_tile_t c_tileSinWaveA4Mask = {
     .tRegion = {
         .tSize = {

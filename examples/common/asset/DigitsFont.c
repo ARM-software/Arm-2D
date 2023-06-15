@@ -25,7 +25,7 @@
 #endif
 
 
-__attribute__((aligned(4), section("arm2d.asset.c_bmpDigitsFontAlpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpDigitsFontAlpha")
 static const uint8_t c_bmpDigitsFontAlpha[15*336] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x01, 0x5e, 0xb9, 0xd2, 0xbb, 0x65, 0x05, 0x00, 0x00, 0x00, 0x00, 
@@ -700,7 +700,7 @@ static const uint8_t c_bmpDigitsFontAlpha[15*336] = {
 /* -335- */
 0x00, 0x00, 0x00, 0x01, 0x52, 0xac, 0xd8, 0xe1, 0xda, 0xc3, 0x97, 0x5b, 0x15, 0x00, 0x00, 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpDigitsFontA2Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpDigitsFontA2Alpha")
 const uint8_t c_bmpDigitsFontA2Alpha[4*336] = {
 /* -0- */
 0x00, 0xe4, 0x06, 0x00, 
@@ -1375,7 +1375,7 @@ const uint8_t c_bmpDigitsFontA2Alpha[4*336] = {
 /* -335- */
 0x00, 0xf9, 0x6f, 0x00, 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpDigitsFontA4Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpDigitsFontA4Alpha")
 const uint8_t c_bmpDigitsFontA4Alpha[8*336] = {
 /* -0- */
 0x00, 0x00, 0x50, 0xdb, 0x6b, 0x00, 0x00, 0x00, 
@@ -2054,7 +2054,7 @@ const uint8_t c_bmpDigitsFontA4Alpha[8*336] = {
 
 extern const arm_2d_tile_t c_tileDigitsFontMask;
 
-__attribute__((section("arm2d.tile.c_tileDigitsFontMask")))
+ARM_SECTION("arm2d.tile.c_tileDigitsFontMask")
 const arm_2d_tile_t c_tileDigitsFontMask = {
     .tRegion = {
         .tSize = {
@@ -2077,7 +2077,7 @@ const arm_2d_tile_t c_tileDigitsFontMask = {
 
 extern const arm_2d_tile_t c_tileDigitsFontA2Mask;
 
-__attribute__((section("arm2d.tile.c_tileDigitsFontA2Mask")))
+ARM_SECTION("arm2d.tile.c_tileDigitsFontA2Mask")
 const arm_2d_tile_t c_tileDigitsFontA2Mask = {
     .tRegion = {
         .tSize = {
@@ -2098,7 +2098,7 @@ const arm_2d_tile_t c_tileDigitsFontA2Mask = {
 
 extern const arm_2d_tile_t c_tileDigitsFontA4Mask;
 
-__attribute__((section("arm2d.tile.c_tileDigitsFontA4Mask")))
+ARM_SECTION("arm2d.tile.c_tileDigitsFontA4Mask")
 const arm_2d_tile_t c_tileDigitsFontA4Mask = {
     .tRegion = {
         .tSize = {

@@ -19,7 +19,7 @@
 
 
 
-__attribute__((section("arm2d.asset.c_bmpHeliumGRAY8")))
+ARM_SECTION("arm2d.asset.c_bmpHeliumGRAY8")
 const uint8_t c_bmpHeliumGRAY8[320*256] = {
 /* -0- */
 0x5b, 0x57, 0x57, 0x58, 0x58, 0x58, 0x58, 0x57, 0x58, 0x58, 0x58, 0x58, 0x59, 0x59, 0x59, 0x59, 0x59, 0x59, 0x59, 0x59, 0x59, 0x59, 0x59, 0x59, 0x5b, 0x5a, 0x5a, 0x5a, 0x5a, 0x5a, 0x5b, 0x5a,
@@ -3095,7 +3095,7 @@ const uint8_t c_bmpHeliumGRAY8[320*256] = {
 
 };
 
-__attribute__((section("arm2d.asset.c_bmpHeliumRGB565")))
+ARM_SECTION("arm2d.asset.c_bmpHeliumRGB565")
 const uint16_t c_bmpHeliumRGB565[320*256] = {
 /* -0- */
 0x0238, 0x0218, 0x0218, 0x0238, 0x0238, 0x0238, 0x0238, 0x0218, 0x0238, 0x0238, 0x0238, 0x0238, 0x0238, 0x0238, 0x0238, 0x0238,
@@ -8731,7 +8731,7 @@ const uint16_t c_bmpHeliumRGB565[320*256] = {
 
 };
 
-__attribute__((section("arm2d.asset.c_bmpHeliumCCCN888")))
+ARM_SECTION("arm2d.asset.c_bmpHeliumCCCN888")
 const uint32_t c_bmpHeliumCCCN888[320*256]= {
 /* -0- */
 0xff0347c6, 0xff0043c2, 0xff0043c2, 0xff0044c3, 0xff0044c3, 0xff0045c4, 0xff0045c4, 0xff0043c2, 0xff0044c3, 0xff0044c3, 0xff0044c3, 0xff0045c4, 0xff0046c4, 0xff0046c4, 0xff0046c4, 0xff0046c4,
@@ -14369,7 +14369,7 @@ const uint32_t c_bmpHeliumCCCN888[320*256]= {
 
 
 extern const arm_2d_tile_t c_tileHeliumGRAY8;
-__attribute__((section("arm2d.tile.c_tileHeliumGRAY8")))
+ARM_SECTION("arm2d.tile.c_tileHeliumGRAY8")
 const arm_2d_tile_t c_tileHeliumGRAY8 = {
     .tRegion = {
         .tSize = {
@@ -14391,7 +14391,7 @@ const arm_2d_tile_t c_tileHeliumGRAY8 = {
 
 
 extern const arm_2d_tile_t c_tileHeliumRGB565;
-__attribute__((section("arm2d.tile.c_tileHeliumRGB565")))
+ARM_SECTION("arm2d.tile.c_tileHeliumRGB565")
 const arm_2d_tile_t c_tileHeliumRGB565 = {
     .tRegion = {
         .tSize = {
@@ -14414,7 +14414,7 @@ const arm_2d_tile_t c_tileHeliumRGB565 = {
 
 extern const arm_2d_tile_t c_tileHeliumCCCN888;
 
-__attribute__((section("arm2d.tile.c_tileHeliumCCCN888")))
+ARM_SECTION("arm2d.tile.c_tileHeliumCCCN888")
 const arm_2d_tile_t c_tileHeliumCCCN888 = {
     .tRegion = {
         .tSize = {

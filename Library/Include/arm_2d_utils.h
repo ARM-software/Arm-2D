@@ -21,8 +21,8 @@
  * Title:        arm_2d_utils.h
  * Description:  Public header file for Arm-2D Library
  *
- * $Date:        20. Oct 2022
- * $Revision:    V.1.2.3
+ * $Date:        15. June 2022
+ * $Revision:    V.1.2.4
  *
  * -------------------------------------------------------------------- */
 
@@ -606,14 +606,27 @@ extern "C" {
 /*!
  * \note do NOT use this macro directly
  */
-#define __ARM_ALIGN(__N)        __attribute__((aligned(__N)))
+#define __ARM_ALIGN(__N)            __attribute__((aligned(__N)))
 
 /*!
  * \brief an attribute to specify aligment requirement
  * \note it works for both functions and static/global variables
  */
 #ifndef ARM_ALIGN
-#   define ARM_ALIGN(__N)          __ARM_ALIGN(__N)
+#   define ARM_ALIGN(__N)           __ARM_ALIGN(__N)
+#endif
+
+/*!
+ * \note do NOT use this macro directly
+ */
+#define __ARM_SECTION(__X)          __attribute__((section(__X)))
+
+/*!
+ * \brief an attribute to specify the section
+ * \note it works for both functions and static/global variables
+ */
+#ifndef ARM_SECTION
+#   define ARM_SECTION(__X)         __ARM_SECTION(__X)
 #endif
 
 /*!

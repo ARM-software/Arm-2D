@@ -18,7 +18,7 @@
 #endif
 
 
-__attribute__((aligned(4), section("arm2d.asset.c_bmpWIFISignalAlpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpWIFISignalAlpha")
 static const uint8_t c_bmpWIFISignalAlpha[192*224] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -3157,7 +3157,7 @@ static const uint8_t c_bmpWIFISignalAlpha[192*224] = {
 0x00, 0x04, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpWIFISignalA2Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpWIFISignalA2Alpha")
 static const uint8_t c_bmpWIFISignalA2Alpha[48*224] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -4280,7 +4280,7 @@ static const uint8_t c_bmpWIFISignalA2Alpha[48*224] = {
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpWIFISignalA4Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpWIFISignalA4Alpha")
 static const uint8_t c_bmpWIFISignalA4Alpha[96*224] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -6076,7 +6076,7 @@ static const uint8_t c_bmpWIFISignalA4Alpha[96*224] = {
 
 };
 
-__attribute__((section("arm2d.asset.c_bmpWIFISignalGRAY8")))
+ARM_SECTION("arm2d.asset.c_bmpWIFISignalGRAY8")
 const uint8_t c_bmpWIFISignalGRAY8[192*224] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -7872,7 +7872,7 @@ const uint8_t c_bmpWIFISignalGRAY8[192*224] = {
 
 };
 
-__attribute__((section("arm2d.asset.c_bmpWIFISignalRGB565")))
+ARM_SECTION("arm2d.asset.c_bmpWIFISignalRGB565")
 const uint16_t c_bmpWIFISignalRGB565[192*224] = {
 /* -0- */
 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
@@ -11012,7 +11012,7 @@ const uint16_t c_bmpWIFISignalRGB565[192*224] = {
 
 };
 
-__attribute__((section("arm2d.asset.c_bmpWIFISignalCCCA8888")))
+ARM_SECTION("arm2d.asset.c_bmpWIFISignalCCCA8888")
 const uint32_t c_bmpWIFISignalCCCA8888[192*224] = {
 /* -0- */
 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
@@ -14154,7 +14154,7 @@ const uint32_t c_bmpWIFISignalCCCA8888[192*224] = {
 
 
 extern const arm_2d_tile_t c_tileWIFISignalGRAY8;
-__attribute__((section("arm2d.tile.c_tileWIFISignalGRAY8")))
+ARM_SECTION("arm2d.tile.c_tileWIFISignalGRAY8")
 const arm_2d_tile_t c_tileWIFISignalGRAY8 = {
     .tRegion = {
         .tSize = {
@@ -14176,7 +14176,7 @@ const arm_2d_tile_t c_tileWIFISignalGRAY8 = {
 
 
 extern const arm_2d_tile_t c_tileWIFISignalRGB565;
-__attribute__((section("arm2d.tile.c_tileWIFISignalRGB565")))
+ARM_SECTION("arm2d.tile.c_tileWIFISignalRGB565")
 const arm_2d_tile_t c_tileWIFISignalRGB565 = {
     .tRegion = {
         .tSize = {
@@ -14199,7 +14199,7 @@ const arm_2d_tile_t c_tileWIFISignalRGB565 = {
 
 extern const arm_2d_tile_t c_tileWIFISignalCCCA8888;
 
-__attribute__((section("arm2d.tile.c_tileWIFISignalCCCA8888")))
+ARM_SECTION("arm2d.tile.c_tileWIFISignalCCCA8888")
 const arm_2d_tile_t c_tileWIFISignalCCCA8888 = {
     .tRegion = {
         .tSize = {
@@ -14223,7 +14223,7 @@ const arm_2d_tile_t c_tileWIFISignalCCCA8888 = {
 
 extern const arm_2d_tile_t c_tileWIFISignalMask2;
 
-__attribute__((section("arm2d.tile.c_tileWIFISignalMask2")))
+ARM_SECTION("arm2d.tile.c_tileWIFISignalMask2")
 const arm_2d_tile_t c_tileWIFISignalMask2 = {
     .tRegion = {
         .tSize = {
@@ -14246,7 +14246,7 @@ const arm_2d_tile_t c_tileWIFISignalMask2 = {
 
 extern const arm_2d_tile_t c_tileWIFISignalMask;
 
-__attribute__((section("arm2d.tile.c_tileWIFISignalMask")))
+ARM_SECTION("arm2d.tile.c_tileWIFISignalMask")
 const arm_2d_tile_t c_tileWIFISignalMask = {
     .tRegion = {
         .tSize = {
@@ -14269,7 +14269,7 @@ const arm_2d_tile_t c_tileWIFISignalMask = {
 
 extern const arm_2d_tile_t c_tileWIFISignalA2Mask;
 
-__attribute__((section("arm2d.tile.c_tileWIFISignalA2Mask")))
+ARM_SECTION("arm2d.tile.c_tileWIFISignalA2Mask")
 const arm_2d_tile_t c_tileWIFISignalA2Mask = {
     .tRegion = {
         .tSize = {
@@ -14292,7 +14292,7 @@ const arm_2d_tile_t c_tileWIFISignalA2Mask = {
 
 extern const arm_2d_tile_t c_tileWIFISignalA4Mask;
 
-__attribute__((section("arm2d.tile.c_tileWIFISignalA4Mask")))
+ARM_SECTION("arm2d.tile.c_tileWIFISignalA4Mask")
 const arm_2d_tile_t c_tileWIFISignalA4Mask = {
     .tRegion = {
         .tSize = {

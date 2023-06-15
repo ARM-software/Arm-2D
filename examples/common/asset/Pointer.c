@@ -18,7 +18,7 @@
 #endif
 
 
-__attribute__((aligned(4), section("arm2d.asset.c_bmpPointerAlpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpPointerAlpha")
 static const uint8_t c_bmpPointerAlpha[9*50] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x19, 0x00, 0x00, 0x00, 0x00, 
@@ -121,7 +121,7 @@ static const uint8_t c_bmpPointerAlpha[9*50] = {
 /* -49- */
 0x62, 0x6e, 0x6b, 0x6b, 0x6b, 0x6b, 0x6b, 0x6f, 0x5c, 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpPointerA2Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpPointerA2Alpha")
 static const uint8_t c_bmpPointerA2Alpha[3*50] = {
 /* -0- */
 0x00, 0x00, 0x00, 
@@ -224,7 +224,7 @@ static const uint8_t c_bmpPointerA2Alpha[3*50] = {
 /* -49- */
 0x55, 0x55, 0x01, 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpPointerA4Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpPointerA4Alpha")
 static const uint8_t c_bmpPointerA4Alpha[5*50] = {
 /* -0- */
 0x00, 0x00, 0x01, 0x00, 0x00, 
@@ -328,7 +328,7 @@ static const uint8_t c_bmpPointerA4Alpha[5*50] = {
 0x66, 0x66, 0x66, 0x66, 0x05, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpPointerGRAY8")))
+ARM_SECTION("arm2d.asset.c_bmpPointerGRAY8")
 const uint8_t c_bmpPointerGRAY8[9*50] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x55, 0x00, 0x00, 0x00, 0x00, 
@@ -432,7 +432,7 @@ const uint8_t c_bmpPointerGRAY8[9*50] = {
 0x55, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpPointerRGB565")))
+ARM_SECTION("arm2d.asset.c_bmpPointerRGB565")
 const uint16_t c_bmpPointerRGB565[9*50] = {
 /* -0- */
 0x0000, 0x0000, 0x0000, 0x0000, 0xf800, 0x0000, 0x0000, 0x0000, 0x0000, 
@@ -536,7 +536,7 @@ const uint16_t c_bmpPointerRGB565[9*50] = {
 0xf800, 0xf800, 0xf800, 0xf800, 0xf800, 0xf800, 0xf800, 0xf800, 0xf800, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpPointerCCCA8888")))
+ARM_SECTION("arm2d.asset.c_bmpPointerCCCA8888")
 const uint32_t c_bmpPointerCCCA8888[9*50] = {
 /* -0- */
 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x19ff0000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 
@@ -642,7 +642,7 @@ const uint32_t c_bmpPointerCCCA8888[9*50] = {
 
 
 extern const arm_2d_tile_t c_tilePointerGRAY8;
-__attribute__((section("arm2d.tile.c_tilePointerGRAY8")))
+ARM_SECTION("arm2d.tile.c_tilePointerGRAY8")
 const arm_2d_tile_t c_tilePointerGRAY8 = {
     .tRegion = {
         .tSize = {
@@ -664,7 +664,7 @@ const arm_2d_tile_t c_tilePointerGRAY8 = {
 
 
 extern const arm_2d_tile_t c_tilePointerRGB565;
-__attribute__((section("arm2d.tile.c_tilePointerRGB565")))
+ARM_SECTION("arm2d.tile.c_tilePointerRGB565")
 const arm_2d_tile_t c_tilePointerRGB565 = {
     .tRegion = {
         .tSize = {
@@ -687,7 +687,7 @@ const arm_2d_tile_t c_tilePointerRGB565 = {
 
 extern const arm_2d_tile_t c_tilePointerCCCA8888;
 
-__attribute__((section("arm2d.tile.c_tilePointerCCCA8888")))
+ARM_SECTION("arm2d.tile.c_tilePointerCCCA8888")
 const arm_2d_tile_t c_tilePointerCCCA8888 = {
     .tRegion = {
         .tSize = {
@@ -711,7 +711,7 @@ const arm_2d_tile_t c_tilePointerCCCA8888 = {
 
 extern const arm_2d_tile_t c_tilePointerMask2;
 
-__attribute__((section("arm2d.tile.c_tilePointerMask2")))
+ARM_SECTION("arm2d.tile.c_tilePointerMask2")
 const arm_2d_tile_t c_tilePointerMask2 = {
     .tRegion = {
         .tSize = {
@@ -734,7 +734,7 @@ const arm_2d_tile_t c_tilePointerMask2 = {
 
 extern const arm_2d_tile_t c_tilePointerMask;
 
-__attribute__((section("arm2d.tile.c_tilePointerMask")))
+ARM_SECTION("arm2d.tile.c_tilePointerMask")
 const arm_2d_tile_t c_tilePointerMask = {
     .tRegion = {
         .tSize = {
@@ -757,7 +757,7 @@ const arm_2d_tile_t c_tilePointerMask = {
 
 extern const arm_2d_tile_t c_tilePointerA2Mask;
 
-__attribute__((section("arm2d.tile.c_tilePointerA2Mask")))
+ARM_SECTION("arm2d.tile.c_tilePointerA2Mask")
 const arm_2d_tile_t c_tilePointerA2Mask = {
     .tRegion = {
         .tSize = {
@@ -780,7 +780,7 @@ const arm_2d_tile_t c_tilePointerA2Mask = {
 
 extern const arm_2d_tile_t c_tilePointerA4Mask;
 
-__attribute__((section("arm2d.tile.c_tilePointerA4Mask")))
+ARM_SECTION("arm2d.tile.c_tilePointerA4Mask")
 const arm_2d_tile_t c_tilePointerA4Mask = {
     .tRegion = {
         .tSize = {

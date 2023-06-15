@@ -18,7 +18,7 @@
 #endif
 
 
-__attribute__((aligned(4), section("arm2d.asset.c_bmpBatteryBoarder1Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpBatteryBoarder1Alpha")
 static const uint8_t c_bmpBatteryBoarder1Alpha[57*100] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -521,7 +521,7 @@ static const uint8_t c_bmpBatteryBoarder1Alpha[57*100] = {
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpBatteryBoarder1A2Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpBatteryBoarder1A2Alpha")
 static const uint8_t c_bmpBatteryBoarder1A2Alpha[15*100] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
@@ -724,7 +724,7 @@ static const uint8_t c_bmpBatteryBoarder1A2Alpha[15*100] = {
 /* -99- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpBatteryBoarder1A4Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpBatteryBoarder1A4Alpha")
 static const uint8_t c_bmpBatteryBoarder1A4Alpha[29*100] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -1028,7 +1028,7 @@ static const uint8_t c_bmpBatteryBoarder1A4Alpha[29*100] = {
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpBatteryBoarder1GRAY8")))
+ARM_SECTION("arm2d.asset.c_bmpBatteryBoarder1GRAY8")
 const uint8_t c_bmpBatteryBoarder1GRAY8[57*100] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -1332,7 +1332,7 @@ const uint8_t c_bmpBatteryBoarder1GRAY8[57*100] = {
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpBatteryBoarder1RGB565")))
+ARM_SECTION("arm2d.asset.c_bmpBatteryBoarder1RGB565")
 const uint16_t c_bmpBatteryBoarder1RGB565[57*100] = {
 /* -0- */
 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
@@ -1836,7 +1836,7 @@ const uint16_t c_bmpBatteryBoarder1RGB565[57*100] = {
 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpBatteryBoarder1CCCA8888")))
+ARM_SECTION("arm2d.asset.c_bmpBatteryBoarder1CCCA8888")
 const uint32_t c_bmpBatteryBoarder1CCCA8888[57*100] = {
 /* -0- */
 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
@@ -2342,7 +2342,7 @@ const uint32_t c_bmpBatteryBoarder1CCCA8888[57*100] = {
 
 
 extern const arm_2d_tile_t c_tileBatteryBoarder1GRAY8;
-__attribute__((section("arm2d.tile.c_tileBatteryBoarder1GRAY8")))
+ARM_SECTION("arm2d.tile.c_tileBatteryBoarder1GRAY8")
 const arm_2d_tile_t c_tileBatteryBoarder1GRAY8 = {
     .tRegion = {
         .tSize = {
@@ -2364,7 +2364,7 @@ const arm_2d_tile_t c_tileBatteryBoarder1GRAY8 = {
 
 
 extern const arm_2d_tile_t c_tileBatteryBoarder1RGB565;
-__attribute__((section("arm2d.tile.c_tileBatteryBoarder1RGB565")))
+ARM_SECTION("arm2d.tile.c_tileBatteryBoarder1RGB565")
 const arm_2d_tile_t c_tileBatteryBoarder1RGB565 = {
     .tRegion = {
         .tSize = {
@@ -2387,7 +2387,7 @@ const arm_2d_tile_t c_tileBatteryBoarder1RGB565 = {
 
 extern const arm_2d_tile_t c_tileBatteryBoarder1CCCA8888;
 
-__attribute__((section("arm2d.tile.c_tileBatteryBoarder1CCCA8888")))
+ARM_SECTION("arm2d.tile.c_tileBatteryBoarder1CCCA8888")
 const arm_2d_tile_t c_tileBatteryBoarder1CCCA8888 = {
     .tRegion = {
         .tSize = {
@@ -2411,7 +2411,7 @@ const arm_2d_tile_t c_tileBatteryBoarder1CCCA8888 = {
 
 extern const arm_2d_tile_t c_tileBatteryBoarder1Mask2;
 
-__attribute__((section("arm2d.tile.c_tileBatteryBoarder1Mask2")))
+ARM_SECTION("arm2d.tile.c_tileBatteryBoarder1Mask2")
 const arm_2d_tile_t c_tileBatteryBoarder1Mask2 = {
     .tRegion = {
         .tSize = {
@@ -2434,7 +2434,7 @@ const arm_2d_tile_t c_tileBatteryBoarder1Mask2 = {
 
 extern const arm_2d_tile_t c_tileBatteryBoarder1Mask;
 
-__attribute__((section("arm2d.tile.c_tileBatteryBoarder1Mask")))
+ARM_SECTION("arm2d.tile.c_tileBatteryBoarder1Mask")
 const arm_2d_tile_t c_tileBatteryBoarder1Mask = {
     .tRegion = {
         .tSize = {
@@ -2457,7 +2457,7 @@ const arm_2d_tile_t c_tileBatteryBoarder1Mask = {
 
 extern const arm_2d_tile_t c_tileBatteryBoarder1A2Mask;
 
-__attribute__((section("arm2d.tile.c_tileBatteryBoarder1A2Mask")))
+ARM_SECTION("arm2d.tile.c_tileBatteryBoarder1A2Mask")
 const arm_2d_tile_t c_tileBatteryBoarder1A2Mask = {
     .tRegion = {
         .tSize = {
@@ -2480,7 +2480,7 @@ const arm_2d_tile_t c_tileBatteryBoarder1A2Mask = {
 
 extern const arm_2d_tile_t c_tileBatteryBoarder1A4Mask;
 
-__attribute__((section("arm2d.tile.c_tileBatteryBoarder1A4Mask")))
+ARM_SECTION("arm2d.tile.c_tileBatteryBoarder1A4Mask")
 const arm_2d_tile_t c_tileBatteryBoarder1A4Mask = {
     .tRegion = {
         .tSize = {

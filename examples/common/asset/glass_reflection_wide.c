@@ -18,7 +18,7 @@
 #endif
 
 
-__attribute__((aligned(4), section("arm2d.asset.c_bmpGlassReflectionWAlpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpGlassReflectionWAlpha")
 static const uint8_t c_bmpGlassReflectionWAlpha[19*88] = {
 /* -0- */
 0x00, 0x09, 0x26, 0x3d, 0x4f, 0x62, 0x69, 0x69, 0x69, 0x69, 0x69, 0x69, 0x6a, 0x64, 0x51, 0x40,
@@ -285,7 +285,7 @@ static const uint8_t c_bmpGlassReflectionWAlpha[19*88] = {
 0x00, 0x10, 0x31, 0x4a, 0x60, 0x77, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x81, 0x79, 0x63, 0x4d,
 0x35, 0x14, 0x01, 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpGlassReflectionWA2Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpGlassReflectionWA2Alpha")
 static const uint8_t c_bmpGlassReflectionWA2Alpha[5*88] = {
 /* -0- */
 0x00, 0x55, 0x55, 0x55, 0x00, 
@@ -464,7 +464,7 @@ static const uint8_t c_bmpGlassReflectionWA2Alpha[5*88] = {
 /* -87- */
 0x40, 0xa5, 0xaa, 0x56, 0x00, 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpGlassReflectionWA4Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpGlassReflectionWA4Alpha")
 static const uint8_t c_bmpGlassReflectionWA4Alpha[10*88] = {
 /* -0- */
 0x00, 0x32, 0x64, 0x66, 0x66, 0x66, 0x66, 0x45, 0x02, 0x00, 
@@ -644,7 +644,7 @@ static const uint8_t c_bmpGlassReflectionWA4Alpha[10*88] = {
 0x10, 0x43, 0x76, 0x88, 0x88, 0x88, 0x78, 0x46, 0x13, 0x00, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpGlassReflectionWGRAY8")))
+ARM_SECTION("arm2d.asset.c_bmpGlassReflectionWGRAY8")
 const uint8_t c_bmpGlassReflectionWGRAY8[19*88] = {
 /* -0- */
 0x00, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xfa, 0xf6, 0xf3, 0xee, 0xea, 0xe5, 0xe3, 0xe5, 0xe4, 0xe6, 0xe2, 0x00, 
@@ -824,7 +824,7 @@ const uint8_t c_bmpGlassReflectionWGRAY8[19*88] = {
 0x00, 0xff, 0xff, 0xff, 0xff, 0xff, 0xfe, 0xfa, 0xf6, 0xf2, 0xee, 0xea, 0xe6, 0xe4, 0xe5, 0xe6, 0xe5, 0xe5, 0xff, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpGlassReflectionWRGB565")))
+ARM_SECTION("arm2d.asset.c_bmpGlassReflectionWRGB565")
 const uint16_t c_bmpGlassReflectionWRGB565[19*88] = {
 /* -0- */
 0x0000, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xf7df, 0xf7bf, 0xef9f, 0xe77e, 0xe75e, 0xdf3e, 0xdf1e, 0xdf1e, 0xd71e,
@@ -1092,7 +1092,7 @@ const uint16_t c_bmpGlassReflectionWRGB565[19*88] = {
 0xdf1e, 0xdf3e, 0xffff, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpGlassReflectionWCCCA8888")))
+ARM_SECTION("arm2d.asset.c_bmpGlassReflectionWCCCA8888")
 const uint32_t c_bmpGlassReflectionWCCCA8888[19*88] = {
 /* -0- */
 0x00000000, 0x09ffffff, 0x26ffffff, 0x3dffffff, 0x4fffffff, 0x62ffffff, 0x69ffffff, 0x69f7fafc, 0x69f2f5fc, 0x69eef2fa, 0x69e6eef7, 0x69e1e9f5, 0x6adae4f2, 0x64d8e0f2, 0x51d9e2f5, 0x40d7e3f3,
@@ -1362,7 +1362,7 @@ const uint32_t c_bmpGlassReflectionWCCCA8888[19*88] = {
 
 
 extern const arm_2d_tile_t c_tileGlassReflectionWGRAY8;
-__attribute__((section("arm2d.tile.c_tileGlassReflectionWGRAY8")))
+ARM_SECTION("arm2d.tile.c_tileGlassReflectionWGRAY8")
 const arm_2d_tile_t c_tileGlassReflectionWGRAY8 = {
     .tRegion = {
         .tSize = {
@@ -1384,7 +1384,7 @@ const arm_2d_tile_t c_tileGlassReflectionWGRAY8 = {
 
 
 extern const arm_2d_tile_t c_tileGlassReflectionWRGB565;
-__attribute__((section("arm2d.tile.c_tileGlassReflectionWRGB565")))
+ARM_SECTION("arm2d.tile.c_tileGlassReflectionWRGB565")
 const arm_2d_tile_t c_tileGlassReflectionWRGB565 = {
     .tRegion = {
         .tSize = {
@@ -1407,7 +1407,7 @@ const arm_2d_tile_t c_tileGlassReflectionWRGB565 = {
 
 extern const arm_2d_tile_t c_tileGlassReflectionWCCCA8888;
 
-__attribute__((section("arm2d.tile.c_tileGlassReflectionWCCCA8888")))
+ARM_SECTION("arm2d.tile.c_tileGlassReflectionWCCCA8888")
 const arm_2d_tile_t c_tileGlassReflectionWCCCA8888 = {
     .tRegion = {
         .tSize = {
@@ -1431,7 +1431,7 @@ const arm_2d_tile_t c_tileGlassReflectionWCCCA8888 = {
 
 extern const arm_2d_tile_t c_tileGlassReflectionWMask2;
 
-__attribute__((section("arm2d.tile.c_tileGlassReflectionWMask2")))
+ARM_SECTION("arm2d.tile.c_tileGlassReflectionWMask2")
 const arm_2d_tile_t c_tileGlassReflectionWMask2 = {
     .tRegion = {
         .tSize = {
@@ -1454,7 +1454,7 @@ const arm_2d_tile_t c_tileGlassReflectionWMask2 = {
 
 extern const arm_2d_tile_t c_tileGlassReflectionWMask;
 
-__attribute__((section("arm2d.tile.c_tileGlassReflectionWMask")))
+ARM_SECTION("arm2d.tile.c_tileGlassReflectionWMask")
 const arm_2d_tile_t c_tileGlassReflectionWMask = {
     .tRegion = {
         .tSize = {
@@ -1477,7 +1477,7 @@ const arm_2d_tile_t c_tileGlassReflectionWMask = {
 
 extern const arm_2d_tile_t c_tileGlassReflectionWA2Mask;
 
-__attribute__((section("arm2d.tile.c_tileGlassReflectionWA2Mask")))
+ARM_SECTION("arm2d.tile.c_tileGlassReflectionWA2Mask")
 const arm_2d_tile_t c_tileGlassReflectionWA2Mask = {
     .tRegion = {
         .tSize = {
@@ -1500,7 +1500,7 @@ const arm_2d_tile_t c_tileGlassReflectionWA2Mask = {
 
 extern const arm_2d_tile_t c_tileGlassReflectionWA4Mask;
 
-__attribute__((section("arm2d.tile.c_tileGlassReflectionWA4Mask")))
+ARM_SECTION("arm2d.tile.c_tileGlassReflectionWA4Mask")
 const arm_2d_tile_t c_tileGlassReflectionWA4Mask = {
     .tRegion = {
         .tSize = {

@@ -18,7 +18,7 @@
 #endif
 
 
-__attribute__((aligned(4), section("arm2d.asset.c_bmpSpinWheelAlpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpSpinWheelAlpha")
 static const uint8_t c_bmpSpinWheelAlpha[61*61] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -330,7 +330,7 @@ static const uint8_t c_bmpSpinWheelAlpha[61*61] = {
 
 extern const arm_2d_tile_t c_tileSpinWheelMask;
 
-__attribute__((section("arm2d.tile.c_tileSpinWheelMask")))
+ARM_SECTION("arm2d.tile.c_tileSpinWheelMask")
 const arm_2d_tile_t c_tileSpinWheelMask = {
     .tRegion = {
         .tSize = {

@@ -18,7 +18,7 @@
 #endif
 
 
-__attribute__((aligned(4), section("arm2d.asset.c_bmpWaveAlpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpWaveAlpha")
 static const uint8_t c_bmpWaveAlpha[40*20] = {
 /* -0- */
 0x05, 0x11, 0x1e, 0x2b, 0x38, 0x45, 0x51, 0x5e, 0x6b, 0x78, 0x87, 0x98, 0xa9, 0xba, 0xcb, 0xdd,
@@ -105,7 +105,7 @@ static const uint8_t c_bmpWaveAlpha[40*20] = {
 
 extern const arm_2d_tile_t c_tileWaveMask;
 
-__attribute__((section("arm2d.tile.c_tileWaveMask")))
+ARM_SECTION("arm2d.tile.c_tileWaveMask")
 const arm_2d_tile_t c_tileWaveMask = {
     .tRegion = {
         .tSize = {

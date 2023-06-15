@@ -18,7 +18,7 @@
 #endif
 
 
-__attribute__((aligned(4), section("arm2d.asset.c_bmpCircleMaskAlpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpCircleMaskAlpha")
 const uint8_t c_bmpCircleMaskAlpha[240*240] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -4106,7 +4106,7 @@ const uint8_t c_bmpCircleMaskAlpha[240*240] = {
 
 extern const arm_2d_tile_t c_tileCircleBackgroundMask;
 
-__attribute__((section("arm2d.tile.c_tileCircleBackgroundMask")))
+ARM_SECTION("arm2d.tile.c_tileCircleBackgroundMask")
 const arm_2d_tile_t c_tileCircleBackgroundMask = {
     .tRegion = {
         .tSize = {

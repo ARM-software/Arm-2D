@@ -18,7 +18,7 @@
 #endif
 
 
-__attribute__((aligned(4), section("arm2d.asset.c_bmpWhiteDotAlpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpWhiteDotAlpha")
 static const uint8_t c_bmpWhiteDotAlpha[14*14] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x13, 0x77, 0xc9, 0xed, 0xef, 0xd1, 0x84, 0x1e, 0x00, 0x00, 0x00, 
@@ -50,7 +50,7 @@ static const uint8_t c_bmpWhiteDotAlpha[14*14] = {
 0x00, 0x00, 0x00, 0x12, 0x73, 0xc6, 0xea, 0xec, 0xce, 0x81, 0x1c, 0x00, 0x00, 0x00, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpWhiteDotCCCA8888")))
+ARM_SECTION("arm2d.asset.c_bmpWhiteDotCCCA8888")
 static const uint32_t c_bmpWhiteDotCCCA8888[14*14] = {
 /* -0- */
 0x00000000, 0x00000000, 0x00000000, 0x13ffffff, 0x77ffffff, 0xc9ffffff, 0xedffffff, 0xefffffff, 0xd1ffffff, 0x84ffffff, 0x1effffff, 0x00000000, 0x00000000, 0x00000000, 
@@ -83,7 +83,7 @@ static const uint32_t c_bmpWhiteDotCCCA8888[14*14] = {
 };
 
 
-__attribute__((section("arm2d.asset.c_bmpWhiteDotRGB565")))
+ARM_SECTION("arm2d.asset.c_bmpWhiteDotRGB565")
 static const uint16_t c_bmpWhiteDotRGB565[14*14] = {
 /* -0- */
 0x0000, 0x0000, 0x0000, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0000, 0x0000, 0x0000, 
@@ -116,7 +116,7 @@ static const uint16_t c_bmpWhiteDotRGB565[14*14] = {
 };
 
 
-__attribute__((aligned(4), section("arm2d.asset.c_bmpSmallDotAlpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpSmallDotAlpha")
 static const uint8_t c_bmpSmallDotAlpha[7*7] = {
 /* -0- */
 0x00, 0x5a, 0xd8, 0xf8, 0xd8, 0x59, 0x00, 
@@ -136,7 +136,7 @@ static const uint8_t c_bmpSmallDotAlpha[7*7] = {
 
 
 
-__attribute__((section("arm2d.asset.c_bmpWhiteDotGRAY8")))
+ARM_SECTION("arm2d.asset.c_bmpWhiteDotGRAY8")
 const uint8_t c_bmpWhiteDotGRAY8[14*14] = {
 /* -0- */
 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00, 
@@ -169,7 +169,7 @@ const uint8_t c_bmpWhiteDotGRAY8[14*14] = {
 };
 
 extern const arm_2d_tile_t c_tileWhiteDotGRAY8;
-__attribute__((section("arm2d.tile.c_tileWhiteDotGRAY8")))
+ARM_SECTION("arm2d.tile.c_tileWhiteDotGRAY8")
 const arm_2d_tile_t c_tileWhiteDotGRAY8 = {
     .tRegion = {
         .tSize = {
@@ -190,7 +190,7 @@ const arm_2d_tile_t c_tileWhiteDotGRAY8 = {
 
 extern const arm_2d_tile_t c_tileSmallDotMask;
 
-__attribute__((section("arm2d.tile.c_tileSmallDotMask")))
+ARM_SECTION("arm2d.tile.c_tileSmallDotMask")
 const arm_2d_tile_t c_tileSmallDotMask = {
     .tRegion = {
         .tSize = {
@@ -209,7 +209,7 @@ const arm_2d_tile_t c_tileSmallDotMask = {
 };
 
 extern const arm_2d_tile_t c_tileWhiteDotRGB565;
-__attribute__((section("arm2d.tile.c_tileWhiteDotRGB565")))
+ARM_SECTION("arm2d.tile.c_tileWhiteDotRGB565")
 const arm_2d_tile_t c_tileWhiteDotRGB565 = {
     .tRegion = {
         .tSize = {
@@ -230,7 +230,7 @@ const arm_2d_tile_t c_tileWhiteDotRGB565 = {
 
 extern const arm_2d_tile_t c_tileWhiteDotCCCA8888;
 
-__attribute__((section("arm2d.tile.c_tileWhiteDotCCCA8888")))
+ARM_SECTION("arm2d.tile.c_tileWhiteDotCCCA8888")
 const arm_2d_tile_t c_tileWhiteDotCCCA8888 = {
     .tRegion = {
         .tSize = {
@@ -254,7 +254,7 @@ const arm_2d_tile_t c_tileWhiteDotCCCA8888 = {
 
 extern const arm_2d_tile_t c_tileWhiteDotMask;
 
-__attribute__((section("arm2d.tile.c_tileWhiteDotMask")))
+ARM_SECTION("arm2d.tile.c_tileWhiteDotMask")
 const arm_2d_tile_t c_tileWhiteDotMask = {
     .tRegion = {
         .tSize = {
@@ -277,7 +277,7 @@ const arm_2d_tile_t c_tileWhiteDotMask = {
 
 extern const arm_2d_tile_t c_tileWhiteDotMask2;
 
-__attribute__((section("arm2d.tile.c_tileWhiteDotMask2")))
+ARM_SECTION("arm2d.tile.c_tileWhiteDotMask2")
 const arm_2d_tile_t c_tileWhiteDotMask2 = {
     .tRegion = {
         .tSize = {
@@ -298,7 +298,7 @@ const arm_2d_tile_t c_tileWhiteDotMask2 = {
 
 extern const arm_2d_tile_t c_tileWhiteDotAlphaQuarter;
 
-__attribute__((section("arm2d.tile.c_tileWhiteDotAlphaQuarter")))
+ARM_SECTION("arm2d.tile.c_tileWhiteDotAlphaQuarter")
 const arm_2d_tile_t c_tileWhiteDotAlphaQuarter = {
     .tRegion = {
         .tLocation = {

@@ -18,7 +18,7 @@
 #endif
 
 
-__attribute__((aligned(4), section("arm2d.asset.c_bmpCMSISLogoAlpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpCMSISLogoAlpha")
 static const uint8_t c_bmpCMSISLogoAlpha[163*65] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -801,7 +801,7 @@ static const uint8_t c_bmpCMSISLogoAlpha[163*65] = {
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 0x00, 0x00, 0x00, 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpCMSISLogoA2Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpCMSISLogoA2Alpha")
 static const uint8_t c_bmpCMSISLogoA2Alpha[41*65] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -1064,7 +1064,7 @@ static const uint8_t c_bmpCMSISLogoA2Alpha[41*65] = {
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpCMSISLogoA4Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpCMSISLogoA4Alpha")
 static const uint8_t c_bmpCMSISLogoA4Alpha[82*65] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -1523,7 +1523,7 @@ static const uint8_t c_bmpCMSISLogoA4Alpha[82*65] = {
 0x00, 0x00, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpCMSISLogoGRAY8")))
+ARM_SECTION("arm2d.asset.c_bmpCMSISLogoGRAY8")
 const uint8_t c_bmpCMSISLogoGRAY8[163*65] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -1982,7 +1982,7 @@ const uint8_t c_bmpCMSISLogoGRAY8[163*65] = {
 0x00, 0x00, 0x00, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpCMSISLogoRGB565")))
+ARM_SECTION("arm2d.asset.c_bmpCMSISLogoRGB565")
 const uint16_t c_bmpCMSISLogoRGB565[163*65] = {
 /* -0- */
 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
@@ -2766,7 +2766,7 @@ const uint16_t c_bmpCMSISLogoRGB565[163*65] = {
 0x0000, 0x0000, 0x0000, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpCMSISLogoCCCA8888")))
+ARM_SECTION("arm2d.asset.c_bmpCMSISLogoCCCA8888")
 const uint32_t c_bmpCMSISLogoCCCA8888[163*65] = {
 /* -0- */
 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
@@ -3552,7 +3552,7 @@ const uint32_t c_bmpCMSISLogoCCCA8888[163*65] = {
 
 
 extern const arm_2d_tile_t c_tileCMSISLogoGRAY8;
-__attribute__((section("arm2d.tile.c_tileCMSISLogoGRAY8")))
+ARM_SECTION("arm2d.tile.c_tileCMSISLogoGRAY8")
 const arm_2d_tile_t c_tileCMSISLogoGRAY8 = {
     .tRegion = {
         .tSize = {
@@ -3574,7 +3574,7 @@ const arm_2d_tile_t c_tileCMSISLogoGRAY8 = {
 
 
 extern const arm_2d_tile_t c_tileCMSISLogoRGB565;
-__attribute__((section("arm2d.tile.c_tileCMSISLogoRGB565")))
+ARM_SECTION("arm2d.tile.c_tileCMSISLogoRGB565")
 const arm_2d_tile_t c_tileCMSISLogoRGB565 = {
     .tRegion = {
         .tSize = {
@@ -3597,7 +3597,7 @@ const arm_2d_tile_t c_tileCMSISLogoRGB565 = {
 
 extern const arm_2d_tile_t c_tileCMSISLogoCCCA8888;
 
-__attribute__((section("arm2d.tile.c_tileCMSISLogoCCCA8888")))
+ARM_SECTION("arm2d.tile.c_tileCMSISLogoCCCA8888")
 const arm_2d_tile_t c_tileCMSISLogoCCCA8888 = {
     .tRegion = {
         .tSize = {
@@ -3621,7 +3621,7 @@ const arm_2d_tile_t c_tileCMSISLogoCCCA8888 = {
 
 extern const arm_2d_tile_t c_tileCMSISLogoMask2;
 
-__attribute__((section("arm2d.tile.c_tileCMSISLogoMask2")))
+ARM_SECTION("arm2d.tile.c_tileCMSISLogoMask2")
 const arm_2d_tile_t c_tileCMSISLogoMask2 = {
     .tRegion = {
         .tSize = {
@@ -3644,7 +3644,7 @@ const arm_2d_tile_t c_tileCMSISLogoMask2 = {
 
 extern const arm_2d_tile_t c_tileCMSISLogoMask;
 
-__attribute__((section("arm2d.tile.c_tileCMSISLogoMask")))
+ARM_SECTION("arm2d.tile.c_tileCMSISLogoMask")
 const arm_2d_tile_t c_tileCMSISLogoMask = {
     .tRegion = {
         .tSize = {
@@ -3667,7 +3667,7 @@ const arm_2d_tile_t c_tileCMSISLogoMask = {
 
 extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 
-__attribute__((section("arm2d.tile.c_tileCMSISLogoA2Mask")))
+ARM_SECTION("arm2d.tile.c_tileCMSISLogoA2Mask")
 const arm_2d_tile_t c_tileCMSISLogoA2Mask = {
     .tRegion = {
         .tSize = {
@@ -3690,7 +3690,7 @@ const arm_2d_tile_t c_tileCMSISLogoA2Mask = {
 
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
-__attribute__((section("arm2d.tile.c_tileCMSISLogoA4Mask")))
+ARM_SECTION("arm2d.tile.c_tileCMSISLogoA4Mask")
 const arm_2d_tile_t c_tileCMSISLogoA4Mask = {
     .tRegion = {
         .tSize = {

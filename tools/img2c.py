@@ -58,7 +58,7 @@ hdr="""
 tailDataGRAY8="""
 
 extern const arm_2d_tile_t c_tile{0}GRAY8;
-__attribute__((section(\"arm2d.tile.c_tile{0}GRAY8\")))
+ARM_SECTION(\"arm2d.tile.c_tile{0}GRAY8\")
 const arm_2d_tile_t c_tile{0}GRAY8 = {{
     .tRegion = {{
         .tSize = {{
@@ -81,7 +81,7 @@ const arm_2d_tile_t c_tile{0}GRAY8 = {{
 tailDataRGB565="""
 
 extern const arm_2d_tile_t c_tile{0}RGB565;
-__attribute__((section(\"arm2d.tile.c_tile{0}RGB565\")))
+ARM_SECTION(\"arm2d.tile.c_tile{0}RGB565\")
 const arm_2d_tile_t c_tile{0}RGB565 = {{
     .tRegion = {{
         .tSize = {{
@@ -105,7 +105,7 @@ tailDataRGB888="""
 
 extern const arm_2d_tile_t c_tile{0}CCCN888;
 
-__attribute__((section(\"arm2d.tile.c_tile{0}CCCN888\")))
+ARM_SECTION(\"arm2d.tile.c_tile{0}CCCN888\")
 const arm_2d_tile_t c_tile{0}CCCN888 = {{
     .tRegion = {{
         .tSize = {{
@@ -129,7 +129,7 @@ tailDataRGBA8888="""
 
 extern const arm_2d_tile_t c_tile{0}CCCA8888;
 
-__attribute__((section(\"arm2d.tile.c_tile{0}CCCA8888\")))
+ARM_SECTION(\"arm2d.tile.c_tile{0}CCCA8888\")
 const arm_2d_tile_t c_tile{0}CCCA8888 = {{
     .tRegion = {{
         .tSize = {{
@@ -154,7 +154,7 @@ tailAlpha="""
 
 extern const arm_2d_tile_t c_tile{0}Mask;
 
-__attribute__((section(\"arm2d.tile.c_tile{0}Mask\")))
+ARM_SECTION(\"arm2d.tile.c_tile{0}Mask\")
 const arm_2d_tile_t c_tile{0}Mask = {{
     .tRegion = {{
         .tSize = {{
@@ -178,7 +178,7 @@ tail2BitAlpha="""
 
 extern const arm_2d_tile_t c_tile{0}A2Mask;
 
-__attribute__((section(\"arm2d.tile.c_tile{0}A2Mask\")))
+ARM_SECTION(\"arm2d.tile.c_tile{0}A2Mask\")
 const arm_2d_tile_t c_tile{0}A2Mask = {{
     .tRegion = {{
         .tSize = {{
@@ -202,7 +202,7 @@ tail4BitAlpha="""
 
 extern const arm_2d_tile_t c_tile{0}A4Mask;
 
-__attribute__((section(\"arm2d.tile.c_tile{0}A4Mask\")))
+ARM_SECTION(\"arm2d.tile.c_tile{0}A4Mask\")
 const arm_2d_tile_t c_tile{0}A4Mask = {{
     .tRegion = {{
         .tSize = {{
@@ -227,7 +227,7 @@ tailAlpha2="""
 
 extern const arm_2d_tile_t c_tile{0}Mask2;
 
-__attribute__((section(\"arm2d.tile.c_tile{0}Mask2\")))
+ARM_SECTION(\"arm2d.tile.c_tile{0}Mask2\")
 const arm_2d_tile_t c_tile{0}Mask2 = {{
     .tRegion = {{
         .tSize = {{
@@ -365,7 +365,7 @@ def main(argv):
         print(hdr.format(time.asctime( time.localtime(time.time())), argv[0], resized, args.rot), file=o)
 
         if mode == "RGBA":
-            print('__attribute__((aligned(4), section(\"arm2d.asset.c_bmp%sAlpha\")))' % (arr_name), file=o)
+            print('ARM_ALIGN(4) ARM_SECTION(\"arm2d.asset.c_bmp%sAlpha\")' % (arr_name), file=o)
             # alpha channel array available
             print('static const uint8_t c_bmp%sAlpha[%d*%d] = {' % (arr_name, row, col),file=o)
             cnt = 0
@@ -390,7 +390,7 @@ def main(argv):
                     return ((byteArr & 0x03) << 6) |  ((byteArr & 0xc0) >> 6) | ((byteArr & 0x30) >> 2 ) | ((byteArr & 0x0c) << 2)
 
 
-                print('__attribute__((aligned(4), section(\"arm2d.asset.c_bmp%sA2Alpha\")))' % (arr_name), file=o)
+                print('ARM_ALIGN(4) ARM_SECTION(\"arm2d.asset.c_bmp%sA2Alpha\")' % (arr_name), file=o)
                 print('static const uint8_t c_bmp%sA2Alpha[%d*%d] = {' % (arr_name, (row+3)/4, col),file=o)
                 cnt = 0
                 alpha = data[...,3].astype(np.uint8)
@@ -424,7 +424,7 @@ def main(argv):
                     return ((byteArr & 0x0f) << 4) |  ((byteArr & 0xf0) >> 4)
 
 
-                print('__attribute__((aligned(4), section(\"arm2d.asset.c_bmp%sA4Alpha\")))' % (arr_name), file=o)
+                print('ARM_ALIGN(4) ARM_SECTION(\"arm2d.asset.c_bmp%sA4Alpha\")' % (arr_name), file=o)
                 print('static const uint8_t c_bmp%sA4Alpha[%d*%d] = {' % (arr_name, (row+1)/2, col),file=o)
                 cnt = 0
                 alpha = data[...,3].astype(np.uint8)
@@ -464,7 +464,7 @@ def main(argv):
             RGB = np.rint((R + G + B)/3).astype(np.uint8)
 
             print('',file=o)
-            print('__attribute__((section(\"arm2d.asset.c_bmp%sGRAY8\")))' % (arr_name), file=o)
+            print('ARM_SECTION(\"arm2d.asset.c_bmp%sGRAY8\")' % (arr_name), file=o)
             print('const uint8_t c_bmp%sGRAY8[%d*%d] = {' % (arr_name, row, col), file=o)
             cnt = 0
             for eachRow in RGB:
@@ -491,7 +491,7 @@ def main(argv):
             RGB = R | G | B
 
             print('',file=o)
-            print('__attribute__((section(\"arm2d.asset.c_bmp%sRGB565\")))' % (arr_name), file=o)
+            print('ARM_SECTION(\"arm2d.asset.c_bmp%sRGB565\")' % (arr_name), file=o)
             print('const uint16_t c_bmp%sRGB565[%d*%d] = {' % (arr_name, row, col), file=o)
             cnt = 0
             for eachRow in RGB:
@@ -526,10 +526,10 @@ def main(argv):
             print('',file=o)
 
             if mode == "RGBA":
-                print('__attribute__((section(\"arm2d.asset.c_bmp%sCCCA8888\")))' % (arr_name), file=o)
+                print('ARM_SECTION(\"arm2d.asset.c_bmp%sCCCA8888\")' % (arr_name), file=o)
                 print('const uint32_t c_bmp%sCCCA8888[%d*%d] = {' % (arr_name, row, col), file=o)
             else:
-                print('__attribute__((section(\"arm2d.asset.c_bmp%sCCCN888\")))' % (arr_name), file=o)
+                print('ARM_SECTION(\"arm2d.asset.c_bmp%sCCCN888\")' % (arr_name), file=o)
                 print('const uint32_t c_bmp%sCCCN888[%d*%d]= {' % (arr_name, row, col), file=o)
 
             cnt = 0

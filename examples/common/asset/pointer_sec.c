@@ -18,7 +18,7 @@
 #endif
 
 
-__attribute__((aligned(4), section("arm2d.asset.c_bmpPointerSecAlpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpPointerSecAlpha")
 static const uint8_t c_bmpPointerSecAlpha[9*147] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x2a, 0xa5, 0x15, 0x00, 0x00, 0x00, 
@@ -316,7 +316,7 @@ static const uint8_t c_bmpPointerSecAlpha[9*147] = {
 0x00, 0x00, 0x35, 0xbb, 0xe3, 0xaf, 0x22, 0x00, 0x00, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpPointerSecGRAY8")))
+ARM_SECTION("arm2d.asset.c_bmpPointerSecGRAY8")
 const uint8_t c_bmpPointerSecGRAY8[9*147] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x55, 0x55, 0x55, 0x00, 0x00, 0x00, 
@@ -614,7 +614,7 @@ const uint8_t c_bmpPointerSecGRAY8[9*147] = {
 0x00, 0x00, 0x55, 0x55, 0x55, 0x55, 0x55, 0x00, 0x00, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpPointerSecRGB565")))
+ARM_SECTION("arm2d.asset.c_bmpPointerSecRGB565")
 const uint16_t c_bmpPointerSecRGB565[9*147] = {
 /* -0- */
 0x0000, 0x0000, 0x0000, 0xf800, 0xf800, 0xf800, 0x0000, 0x0000, 0x0000, 
@@ -912,7 +912,7 @@ const uint16_t c_bmpPointerSecRGB565[9*147] = {
 0x0000, 0x0000, 0xf800, 0xf800, 0xf800, 0xf800, 0xf800, 0x0000, 0x0000, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpPointerSecCCCA8888")))
+ARM_SECTION("arm2d.asset.c_bmpPointerSecCCCA8888")
 const uint32_t c_bmpPointerSecCCCA8888[9*147] = {
 /* -0- */
 0x00000000, 0x00000000, 0x00000000, 0x2aff0000, 0xa5ff0000, 0x15ff0000, 0x00000000, 0x00000000, 0x00000000, 
@@ -1212,7 +1212,7 @@ const uint32_t c_bmpPointerSecCCCA8888[9*147] = {
 
 
 extern const arm_2d_tile_t c_tilePointerSecGRAY8;
-__attribute__((section("arm2d.tile.c_tilePointerSecGRAY8")))
+ARM_SECTION("arm2d.tile.c_tilePointerSecGRAY8")
 const arm_2d_tile_t c_tilePointerSecGRAY8 = {
     .tRegion = {
         .tSize = {
@@ -1234,7 +1234,7 @@ const arm_2d_tile_t c_tilePointerSecGRAY8 = {
 
 
 extern const arm_2d_tile_t c_tilePointerSecRGB565;
-__attribute__((section("arm2d.tile.c_tilePointerSecRGB565")))
+ARM_SECTION("arm2d.tile.c_tilePointerSecRGB565")
 const arm_2d_tile_t c_tilePointerSecRGB565 = {
     .tRegion = {
         .tSize = {
@@ -1257,7 +1257,7 @@ const arm_2d_tile_t c_tilePointerSecRGB565 = {
 
 extern const arm_2d_tile_t c_tilePointerSecCCCA8888;
 
-__attribute__((section("arm2d.tile.c_tilePointerSecCCCA8888")))
+ARM_SECTION("arm2d.tile.c_tilePointerSecCCCA8888")
 const arm_2d_tile_t c_tilePointerSecCCCA8888 = {
     .tRegion = {
         .tSize = {
@@ -1281,7 +1281,7 @@ const arm_2d_tile_t c_tilePointerSecCCCA8888 = {
 
 extern const arm_2d_tile_t c_tilePointerSecMask2;
 
-__attribute__((section("arm2d.tile.c_tilePointerSecMask2")))
+ARM_SECTION("arm2d.tile.c_tilePointerSecMask2")
 const arm_2d_tile_t c_tilePointerSecMask2 = {
     .tRegion = {
         .tSize = {
@@ -1304,7 +1304,7 @@ const arm_2d_tile_t c_tilePointerSecMask2 = {
 
 extern const arm_2d_tile_t c_tilePointerSecMask;
 
-__attribute__((section("arm2d.tile.c_tilePointerSecMask")))
+ARM_SECTION("arm2d.tile.c_tilePointerSecMask")
 const arm_2d_tile_t c_tilePointerSecMask = {
     .tRegion = {
         .tSize = {

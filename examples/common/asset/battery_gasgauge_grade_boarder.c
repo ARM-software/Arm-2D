@@ -18,7 +18,7 @@
 #endif
 
 
-__attribute__((aligned(4), section("arm2d.asset.c_bmpBatteryGasGaugeGradeBoarderAlpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpBatteryGasGaugeGradeBoarderAlpha")
 static const uint8_t c_bmpBatteryGasGaugeGradeBoarderAlpha[47*22] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -109,7 +109,7 @@ static const uint8_t c_bmpBatteryGasGaugeGradeBoarderAlpha[47*22] = {
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpBatteryGasGaugeGradeBoarderA2Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpBatteryGasGaugeGradeBoarderA2Alpha")
 static const uint8_t c_bmpBatteryGasGaugeGradeBoarderA2Alpha[12*22] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
@@ -156,7 +156,7 @@ static const uint8_t c_bmpBatteryGasGaugeGradeBoarderA2Alpha[12*22] = {
 /* -21- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpBatteryGasGaugeGradeBoarderA4Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpBatteryGasGaugeGradeBoarderA4Alpha")
 static const uint8_t c_bmpBatteryGasGaugeGradeBoarderA4Alpha[24*22] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -226,7 +226,7 @@ static const uint8_t c_bmpBatteryGasGaugeGradeBoarderA4Alpha[24*22] = {
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpBatteryGasGaugeGradeBoarderGRAY8")))
+ARM_SECTION("arm2d.asset.c_bmpBatteryGasGaugeGradeBoarderGRAY8")
 const uint8_t c_bmpBatteryGasGaugeGradeBoarderGRAY8[47*22] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -296,7 +296,7 @@ const uint8_t c_bmpBatteryGasGaugeGradeBoarderGRAY8[47*22] = {
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpBatteryGasGaugeGradeBoarderRGB565")))
+ARM_SECTION("arm2d.asset.c_bmpBatteryGasGaugeGradeBoarderRGB565")
 const uint16_t c_bmpBatteryGasGaugeGradeBoarderRGB565[47*22] = {
 /* -0- */
 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
@@ -388,7 +388,7 @@ const uint16_t c_bmpBatteryGasGaugeGradeBoarderRGB565[47*22] = {
 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpBatteryGasGaugeGradeBoarderCCCA8888")))
+ARM_SECTION("arm2d.asset.c_bmpBatteryGasGaugeGradeBoarderCCCA8888")
 const uint32_t c_bmpBatteryGasGaugeGradeBoarderCCCA8888[47*22] = {
 /* -0- */
 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
@@ -482,7 +482,7 @@ const uint32_t c_bmpBatteryGasGaugeGradeBoarderCCCA8888[47*22] = {
 
 
 extern const arm_2d_tile_t c_tileBatteryGasGaugeGradeBoarderGRAY8;
-__attribute__((section("arm2d.tile.c_tileBatteryGasGaugeGradeBoarderGRAY8")))
+ARM_SECTION("arm2d.tile.c_tileBatteryGasGaugeGradeBoarderGRAY8")
 const arm_2d_tile_t c_tileBatteryGasGaugeGradeBoarderGRAY8 = {
     .tRegion = {
         .tSize = {
@@ -504,7 +504,7 @@ const arm_2d_tile_t c_tileBatteryGasGaugeGradeBoarderGRAY8 = {
 
 
 extern const arm_2d_tile_t c_tileBatteryGasGaugeGradeBoarderRGB565;
-__attribute__((section("arm2d.tile.c_tileBatteryGasGaugeGradeBoarderRGB565")))
+ARM_SECTION("arm2d.tile.c_tileBatteryGasGaugeGradeBoarderRGB565")
 const arm_2d_tile_t c_tileBatteryGasGaugeGradeBoarderRGB565 = {
     .tRegion = {
         .tSize = {
@@ -527,7 +527,7 @@ const arm_2d_tile_t c_tileBatteryGasGaugeGradeBoarderRGB565 = {
 
 extern const arm_2d_tile_t c_tileBatteryGasGaugeGradeBoarderCCCA8888;
 
-__attribute__((section("arm2d.tile.c_tileBatteryGasGaugeGradeBoarderCCCA8888")))
+ARM_SECTION("arm2d.tile.c_tileBatteryGasGaugeGradeBoarderCCCA8888")
 const arm_2d_tile_t c_tileBatteryGasGaugeGradeBoarderCCCA8888 = {
     .tRegion = {
         .tSize = {
@@ -551,7 +551,7 @@ const arm_2d_tile_t c_tileBatteryGasGaugeGradeBoarderCCCA8888 = {
 
 extern const arm_2d_tile_t c_tileBatteryGasGaugeGradeBoarderMask2;
 
-__attribute__((section("arm2d.tile.c_tileBatteryGasGaugeGradeBoarderMask2")))
+ARM_SECTION("arm2d.tile.c_tileBatteryGasGaugeGradeBoarderMask2")
 const arm_2d_tile_t c_tileBatteryGasGaugeGradeBoarderMask2 = {
     .tRegion = {
         .tSize = {
@@ -574,7 +574,7 @@ const arm_2d_tile_t c_tileBatteryGasGaugeGradeBoarderMask2 = {
 
 extern const arm_2d_tile_t c_tileBatteryGasGaugeGradeBoarderMask;
 
-__attribute__((section("arm2d.tile.c_tileBatteryGasGaugeGradeBoarderMask")))
+ARM_SECTION("arm2d.tile.c_tileBatteryGasGaugeGradeBoarderMask")
 const arm_2d_tile_t c_tileBatteryGasGaugeGradeBoarderMask = {
     .tRegion = {
         .tSize = {
@@ -597,7 +597,7 @@ const arm_2d_tile_t c_tileBatteryGasGaugeGradeBoarderMask = {
 
 extern const arm_2d_tile_t c_tileBatteryGasGaugeGradeBoarderA2Mask;
 
-__attribute__((section("arm2d.tile.c_tileBatteryGasGaugeGradeBoarderA2Mask")))
+ARM_SECTION("arm2d.tile.c_tileBatteryGasGaugeGradeBoarderA2Mask")
 const arm_2d_tile_t c_tileBatteryGasGaugeGradeBoarderA2Mask = {
     .tRegion = {
         .tSize = {
@@ -620,7 +620,7 @@ const arm_2d_tile_t c_tileBatteryGasGaugeGradeBoarderA2Mask = {
 
 extern const arm_2d_tile_t c_tileBatteryGasGaugeGradeBoarderA4Mask;
 
-__attribute__((section("arm2d.tile.c_tileBatteryGasGaugeGradeBoarderA4Mask")))
+ARM_SECTION("arm2d.tile.c_tileBatteryGasGaugeGradeBoarderA4Mask")
 const arm_2d_tile_t c_tileBatteryGasGaugeGradeBoarderA4Mask = {
     .tRegion = {
         .tSize = {

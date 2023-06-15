@@ -18,7 +18,7 @@
 #endif
 
 
-__attribute__((aligned(4), section("arm2d.asset.c_bmpListCoverAlpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpListCoverAlpha")
 static const uint8_t c_bmpListCoverAlpha[36*80] = {
 /* -0- */
 0xbb, 0xe4, 0xe2, 0xe2, 0xe2, 0xe2, 0xe2, 0xe2, 0xe2, 0xe2, 0xe2, 0xe2, 0xe2, 0xe2, 0xe2, 0xe2,
@@ -341,7 +341,7 @@ static const uint8_t c_bmpListCoverAlpha[36*80] = {
 0xef, 0xef, 0xef, 0xef, 0xef, 0xef, 0xef, 0xef, 0xef, 0xef, 0xef, 0xef, 0xef, 0xef, 0xef, 0xef,
 0xef, 0xef, 0xf2, 0xc6, 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpListCoverA2Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpListCoverA2Alpha")
 static const uint8_t c_bmpListCoverA2Alpha[9*80] = {
 /* -0- */
 0xfe, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xbf, 
@@ -504,7 +504,7 @@ static const uint8_t c_bmpListCoverA2Alpha[9*80] = {
 /* -79- */
 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpListCoverA4Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpListCoverA4Alpha")
 static const uint8_t c_bmpListCoverA4Alpha[18*80] = {
 /* -0- */
 0xeb, 0xee, 0xee, 0xee, 0xee, 0xee, 0xee, 0xee, 0xee, 0xee, 0xee, 0xee, 0xee, 0xee, 0xee, 0xee,
@@ -748,7 +748,7 @@ static const uint8_t c_bmpListCoverA4Alpha[18*80] = {
 0xee, 0xcf, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpListCoverGRAY8")))
+ARM_SECTION("arm2d.asset.c_bmpListCoverGRAY8")
 const uint8_t c_bmpListCoverGRAY8[36*80] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -992,7 +992,7 @@ const uint8_t c_bmpListCoverGRAY8[36*80] = {
 0x00, 0x00, 0x00, 0x00, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpListCoverRGB565")))
+ARM_SECTION("arm2d.asset.c_bmpListCoverRGB565")
 const uint16_t c_bmpListCoverRGB565[36*80] = {
 /* -0- */
 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
@@ -1316,7 +1316,7 @@ const uint16_t c_bmpListCoverRGB565[36*80] = {
 0x0000, 0x0000, 0x0000, 0x0000, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpListCoverCCCA8888")))
+ARM_SECTION("arm2d.asset.c_bmpListCoverCCCA8888")
 const uint32_t c_bmpListCoverCCCA8888[36*80] = {
 /* -0- */
 0xbb000000, 0xe4000000, 0xe2000000, 0xe2000000, 0xe2000000, 0xe2000000, 0xe2000000, 0xe2000000, 0xe2000000, 0xe2000000, 0xe2000000, 0xe2000000, 0xe2000000, 0xe2000000, 0xe2000000, 0xe2000000,
@@ -1642,7 +1642,7 @@ const uint32_t c_bmpListCoverCCCA8888[36*80] = {
 
 
 extern const arm_2d_tile_t c_tileListCoverGRAY8;
-__attribute__((section("arm2d.tile.c_tileListCoverGRAY8")))
+ARM_SECTION("arm2d.tile.c_tileListCoverGRAY8")
 const arm_2d_tile_t c_tileListCoverGRAY8 = {
     .tRegion = {
         .tSize = {
@@ -1664,7 +1664,7 @@ const arm_2d_tile_t c_tileListCoverGRAY8 = {
 
 
 extern const arm_2d_tile_t c_tileListCoverRGB565;
-__attribute__((section("arm2d.tile.c_tileListCoverRGB565")))
+ARM_SECTION("arm2d.tile.c_tileListCoverRGB565")
 const arm_2d_tile_t c_tileListCoverRGB565 = {
     .tRegion = {
         .tSize = {
@@ -1687,7 +1687,7 @@ const arm_2d_tile_t c_tileListCoverRGB565 = {
 
 extern const arm_2d_tile_t c_tileListCoverCCCA8888;
 
-__attribute__((section("arm2d.tile.c_tileListCoverCCCA8888")))
+ARM_SECTION("arm2d.tile.c_tileListCoverCCCA8888")
 const arm_2d_tile_t c_tileListCoverCCCA8888 = {
     .tRegion = {
         .tSize = {
@@ -1711,7 +1711,7 @@ const arm_2d_tile_t c_tileListCoverCCCA8888 = {
 
 extern const arm_2d_tile_t c_tileListCoverMask2;
 
-__attribute__((section("arm2d.tile.c_tileListCoverMask2")))
+ARM_SECTION("arm2d.tile.c_tileListCoverMask2")
 const arm_2d_tile_t c_tileListCoverMask2 = {
     .tRegion = {
         .tSize = {
@@ -1734,7 +1734,7 @@ const arm_2d_tile_t c_tileListCoverMask2 = {
 
 extern const arm_2d_tile_t c_tileListCoverMask;
 
-__attribute__((section("arm2d.tile.c_tileListCoverMask")))
+ARM_SECTION("arm2d.tile.c_tileListCoverMask")
 const arm_2d_tile_t c_tileListCoverMask = {
     .tRegion = {
         .tSize = {
@@ -1757,7 +1757,7 @@ const arm_2d_tile_t c_tileListCoverMask = {
 
 extern const arm_2d_tile_t c_tileListCoverA2Mask;
 
-__attribute__((section("arm2d.tile.c_tileListCoverA2Mask")))
+ARM_SECTION("arm2d.tile.c_tileListCoverA2Mask")
 const arm_2d_tile_t c_tileListCoverA2Mask = {
     .tRegion = {
         .tSize = {
@@ -1780,7 +1780,7 @@ const arm_2d_tile_t c_tileListCoverA2Mask = {
 
 extern const arm_2d_tile_t c_tileListCoverA4Mask;
 
-__attribute__((section("arm2d.tile.c_tileListCoverA4Mask")))
+ARM_SECTION("arm2d.tile.c_tileListCoverA4Mask")
 const arm_2d_tile_t c_tileListCoverA4Mask = {
     .tRegion = {
         .tSize = {

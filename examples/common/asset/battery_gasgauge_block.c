@@ -18,7 +18,7 @@
 #endif
 
 
-__attribute__((aligned(4), section("arm2d.asset.c_bmpBatteryGasGaugeBlockAlpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpBatteryGasGaugeBlockAlpha")
 static const uint8_t c_bmpBatteryGasGaugeBlockAlpha[38*13] = {
 /* -0- */
 0x0d, 0x88, 0xc8, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc,
@@ -73,7 +73,7 @@ static const uint8_t c_bmpBatteryGasGaugeBlockAlpha[38*13] = {
 0xd4, 0xd4, 0xd4, 0xd4, 0xd4, 0xd4, 0xd4, 0xd4, 0xd4, 0xd4, 0xd4, 0xd4, 0xd4, 0xd4, 0xd4, 0xd4,
 0xd4, 0xd4, 0xd4, 0xd1, 0x92, 0x12, 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpBatteryGasGaugeBlockA2Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpBatteryGasGaugeBlockA2Alpha")
 static const uint8_t c_bmpBatteryGasGaugeBlockA2Alpha[10*13] = {
 /* -0- */
 0xf8, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x02, 
@@ -102,7 +102,7 @@ static const uint8_t c_bmpBatteryGasGaugeBlockA2Alpha[10*13] = {
 /* -12- */
 0xf8, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x02, 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpBatteryGasGaugeBlockA4Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpBatteryGasGaugeBlockA4Alpha")
 static const uint8_t c_bmpBatteryGasGaugeBlockA4Alpha[19*13] = {
 /* -0- */
 0x80, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc,
@@ -145,7 +145,7 @@ static const uint8_t c_bmpBatteryGasGaugeBlockA4Alpha[19*13] = {
 0xdd, 0xdd, 0x19, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpBatteryGasGaugeBlockGRAY8")))
+ARM_SECTION("arm2d.asset.c_bmpBatteryGasGaugeBlockGRAY8")
 const uint8_t c_bmpBatteryGasGaugeBlockGRAY8[38*13] = {
 /* -0- */
 0x90, 0x8c, 0x8d, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c, 0x8c,
@@ -188,7 +188,7 @@ const uint8_t c_bmpBatteryGasGaugeBlockGRAY8[38*13] = {
 0x8c, 0x8c, 0x8c, 0x8d, 0x8c, 0x89, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpBatteryGasGaugeBlockRGB565")))
+ARM_SECTION("arm2d.asset.c_bmpBatteryGasGaugeBlockRGB565")
 const uint16_t c_bmpBatteryGasGaugeBlockRGB565[38*13] = {
 /* -0- */
 0xfd80, 0xfd20, 0xfd40, 0xfd20, 0xfd20, 0xfd20, 0xfd20, 0xfd20, 0xfd20, 0xfd20, 0xfd20, 0xfd20, 0xfd20, 0xfd20, 0xfd20, 0xfd20,
@@ -244,7 +244,7 @@ const uint16_t c_bmpBatteryGasGaugeBlockRGB565[38*13] = {
 0xfd20, 0xfd20, 0xfd20, 0xfd20, 0xfd20, 0xfcc0, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpBatteryGasGaugeBlockCCCA8888")))
+ARM_SECTION("arm2d.asset.c_bmpBatteryGasGaugeBlockCCCA8888")
 const uint32_t c_bmpBatteryGasGaugeBlockCCCA8888[38*13] = {
 /* -0- */
 0x0dffb000, 0x88ffa500, 0xc8ffa800, 0xccffa500, 0xccffa500, 0xccffa500, 0xccffa500, 0xccffa500, 0xccffa500, 0xccffa500, 0xccffa500, 0xccffa500, 0xccffa500, 0xccffa500, 0xccffa500, 0xccffa500,
@@ -302,7 +302,7 @@ const uint32_t c_bmpBatteryGasGaugeBlockCCCA8888[38*13] = {
 
 
 extern const arm_2d_tile_t c_tileBatteryGasGaugeBlockGRAY8;
-__attribute__((section("arm2d.tile.c_tileBatteryGasGaugeBlockGRAY8")))
+ARM_SECTION("arm2d.tile.c_tileBatteryGasGaugeBlockGRAY8")
 const arm_2d_tile_t c_tileBatteryGasGaugeBlockGRAY8 = {
     .tRegion = {
         .tSize = {
@@ -324,7 +324,7 @@ const arm_2d_tile_t c_tileBatteryGasGaugeBlockGRAY8 = {
 
 
 extern const arm_2d_tile_t c_tileBatteryGasGaugeBlockRGB565;
-__attribute__((section("arm2d.tile.c_tileBatteryGasGaugeBlockRGB565")))
+ARM_SECTION("arm2d.tile.c_tileBatteryGasGaugeBlockRGB565")
 const arm_2d_tile_t c_tileBatteryGasGaugeBlockRGB565 = {
     .tRegion = {
         .tSize = {
@@ -347,7 +347,7 @@ const arm_2d_tile_t c_tileBatteryGasGaugeBlockRGB565 = {
 
 extern const arm_2d_tile_t c_tileBatteryGasGaugeBlockCCCA8888;
 
-__attribute__((section("arm2d.tile.c_tileBatteryGasGaugeBlockCCCA8888")))
+ARM_SECTION("arm2d.tile.c_tileBatteryGasGaugeBlockCCCA8888")
 const arm_2d_tile_t c_tileBatteryGasGaugeBlockCCCA8888 = {
     .tRegion = {
         .tSize = {
@@ -371,7 +371,7 @@ const arm_2d_tile_t c_tileBatteryGasGaugeBlockCCCA8888 = {
 
 extern const arm_2d_tile_t c_tileBatteryGasGaugeBlockMask2;
 
-__attribute__((section("arm2d.tile.c_tileBatteryGasGaugeBlockMask2")))
+ARM_SECTION("arm2d.tile.c_tileBatteryGasGaugeBlockMask2")
 const arm_2d_tile_t c_tileBatteryGasGaugeBlockMask2 = {
     .tRegion = {
         .tSize = {
@@ -391,7 +391,7 @@ const arm_2d_tile_t c_tileBatteryGasGaugeBlockMask2 = {
 
 extern const arm_2d_tile_t c_tileBatteryGasGaugeBlockMask;
 
-__attribute__((section("arm2d.tile.c_tileBatteryGasGaugeBlockMask")))
+ARM_SECTION("arm2d.tile.c_tileBatteryGasGaugeBlockMask")
 const arm_2d_tile_t c_tileBatteryGasGaugeBlockMask = {
     .tRegion = {
         .tSize = {
@@ -414,7 +414,7 @@ const arm_2d_tile_t c_tileBatteryGasGaugeBlockMask = {
 
 extern const arm_2d_tile_t c_tileBatteryGasGaugeBlockA2Mask;
 
-__attribute__((section("arm2d.tile.c_tileBatteryGasGaugeBlockA2Mask")))
+ARM_SECTION("arm2d.tile.c_tileBatteryGasGaugeBlockA2Mask")
 const arm_2d_tile_t c_tileBatteryGasGaugeBlockA2Mask = {
     .tRegion = {
         .tSize = {
@@ -437,7 +437,7 @@ const arm_2d_tile_t c_tileBatteryGasGaugeBlockA2Mask = {
 
 extern const arm_2d_tile_t c_tileBatteryGasGaugeBlockA4Mask;
 
-__attribute__((section("arm2d.tile.c_tileBatteryGasGaugeBlockA4Mask")))
+ARM_SECTION("arm2d.tile.c_tileBatteryGasGaugeBlockA4Mask")
 const arm_2d_tile_t c_tileBatteryGasGaugeBlockA4Mask = {
     .tRegion = {
         .tSize = {

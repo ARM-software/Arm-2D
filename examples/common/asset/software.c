@@ -18,7 +18,7 @@
 #endif
 
 
-__attribute__((aligned(4), section("arm2d.asset.c_bmpSoftwareAlpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpSoftwareAlpha")
 static const uint8_t c_bmpSoftwareAlpha[75*75] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -471,7 +471,7 @@ static const uint8_t c_bmpSoftwareAlpha[75*75] = {
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpSoftwareA2Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpSoftwareA2Alpha")
 static const uint8_t c_bmpSoftwareA2Alpha[19*75] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -699,7 +699,7 @@ static const uint8_t c_bmpSoftwareA2Alpha[19*75] = {
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 0x00, 0x00, 0x00, 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpSoftwareA4Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpSoftwareA4Alpha")
 static const uint8_t c_bmpSoftwareA4Alpha[38*75] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -1003,7 +1003,7 @@ static const uint8_t c_bmpSoftwareA4Alpha[38*75] = {
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpSoftwareGRAY8")))
+ARM_SECTION("arm2d.asset.c_bmpSoftwareGRAY8")
 const uint8_t c_bmpSoftwareGRAY8[75*75] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -1307,7 +1307,7 @@ const uint8_t c_bmpSoftwareGRAY8[75*75] = {
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpSoftwareRGB565")))
+ARM_SECTION("arm2d.asset.c_bmpSoftwareRGB565")
 const uint16_t c_bmpSoftwareRGB565[75*75] = {
 /* -0- */
 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
@@ -1761,7 +1761,7 @@ const uint16_t c_bmpSoftwareRGB565[75*75] = {
 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpSoftwareCCCA8888")))
+ARM_SECTION("arm2d.asset.c_bmpSoftwareCCCA8888")
 const uint32_t c_bmpSoftwareCCCA8888[75*75] = {
 /* -0- */
 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
@@ -2217,7 +2217,7 @@ const uint32_t c_bmpSoftwareCCCA8888[75*75] = {
 
 
 extern const arm_2d_tile_t c_tileSoftwareGRAY8;
-__attribute__((section("arm2d.tile.c_tileSoftwareGRAY8")))
+ARM_SECTION("arm2d.tile.c_tileSoftwareGRAY8")
 const arm_2d_tile_t c_tileSoftwareGRAY8 = {
     .tRegion = {
         .tSize = {
@@ -2239,7 +2239,7 @@ const arm_2d_tile_t c_tileSoftwareGRAY8 = {
 
 
 extern const arm_2d_tile_t c_tileSoftwareRGB565;
-__attribute__((section("arm2d.tile.c_tileSoftwareRGB565")))
+ARM_SECTION("arm2d.tile.c_tileSoftwareRGB565")
 const arm_2d_tile_t c_tileSoftwareRGB565 = {
     .tRegion = {
         .tSize = {
@@ -2262,7 +2262,7 @@ const arm_2d_tile_t c_tileSoftwareRGB565 = {
 
 extern const arm_2d_tile_t c_tileSoftwareCCCA8888;
 
-__attribute__((section("arm2d.tile.c_tileSoftwareCCCA8888")))
+ARM_SECTION("arm2d.tile.c_tileSoftwareCCCA8888")
 const arm_2d_tile_t c_tileSoftwareCCCA8888 = {
     .tRegion = {
         .tSize = {
@@ -2286,7 +2286,7 @@ const arm_2d_tile_t c_tileSoftwareCCCA8888 = {
 
 extern const arm_2d_tile_t c_tileSoftwareMask2;
 
-__attribute__((section("arm2d.tile.c_tileSoftwareMask2")))
+ARM_SECTION("arm2d.tile.c_tileSoftwareMask2")
 const arm_2d_tile_t c_tileSoftwareMask2 = {
     .tRegion = {
         .tSize = {
@@ -2309,7 +2309,7 @@ const arm_2d_tile_t c_tileSoftwareMask2 = {
 
 extern const arm_2d_tile_t c_tileSoftwareMask;
 
-__attribute__((section("arm2d.tile.c_tileSoftwareMask")))
+ARM_SECTION("arm2d.tile.c_tileSoftwareMask")
 const arm_2d_tile_t c_tileSoftwareMask = {
     .tRegion = {
         .tSize = {
@@ -2332,7 +2332,7 @@ const arm_2d_tile_t c_tileSoftwareMask = {
 
 extern const arm_2d_tile_t c_tileSoftwareA2Mask;
 
-__attribute__((section("arm2d.tile.c_tileSoftwareA2Mask")))
+ARM_SECTION("arm2d.tile.c_tileSoftwareA2Mask")
 const arm_2d_tile_t c_tileSoftwareA2Mask = {
     .tRegion = {
         .tSize = {
@@ -2355,7 +2355,7 @@ const arm_2d_tile_t c_tileSoftwareA2Mask = {
 
 extern const arm_2d_tile_t c_tileSoftwareA4Mask;
 
-__attribute__((section("arm2d.tile.c_tileSoftwareA4Mask")))
+ARM_SECTION("arm2d.tile.c_tileSoftwareA4Mask")
 const arm_2d_tile_t c_tileSoftwareA4Mask = {
     .tRegion = {
         .tSize = {

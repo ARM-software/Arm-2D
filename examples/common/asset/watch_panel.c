@@ -18,7 +18,7 @@
 #endif
 
 
-__attribute__((aligned(4), section("arm2d.asset.c_bmpWatchPanelAlpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpWatchPanelAlpha")
 static const uint8_t c_bmpWatchPanelAlpha[221*221] = {
 /* -0- */
 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
@@ -3337,7 +3337,7 @@ static const uint8_t c_bmpWatchPanelAlpha[221*221] = {
 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpWatchPanelGRAY8")))
+ARM_SECTION("arm2d.asset.c_bmpWatchPanelGRAY8")
 const uint8_t c_bmpWatchPanelGRAY8[221*221] = {
 /* -0- */
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -5109,7 +5109,7 @@ const uint8_t c_bmpWatchPanelGRAY8[221*221] = {
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpWatchPanelRGB565")))
+ARM_SECTION("arm2d.asset.c_bmpWatchPanelRGB565")
 const uint16_t c_bmpWatchPanelRGB565[221*221] = {
 /* -0- */
 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
@@ -8428,7 +8428,7 @@ const uint16_t c_bmpWatchPanelRGB565[221*221] = {
 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpWatchPanelCCCA8888")))
+ARM_SECTION("arm2d.asset.c_bmpWatchPanelCCCA8888")
 const uint32_t c_bmpWatchPanelCCCA8888[221*221] = {
 /* -0- */
 0xff000000, 0xff000000, 0xff000000, 0xff000000, 0xff000000, 0xff000000, 0xff000000, 0xff000000, 0xff000000, 0xff000000, 0xff000000, 0xff000000, 0xff000000, 0xff000000, 0xff000000, 0xff000000,
@@ -11749,7 +11749,7 @@ const uint32_t c_bmpWatchPanelCCCA8888[221*221] = {
 
 
 extern const arm_2d_tile_t c_tileWatchPanelGRAY8;
-__attribute__((section("arm2d.tile.c_tileWatchPanelGRAY8")))
+ARM_SECTION("arm2d.tile.c_tileWatchPanelGRAY8")
 const arm_2d_tile_t c_tileWatchPanelGRAY8 = {
     .tRegion = {
         .tSize = {
@@ -11771,7 +11771,7 @@ const arm_2d_tile_t c_tileWatchPanelGRAY8 = {
 
 
 extern const arm_2d_tile_t c_tileWatchPanelRGB565;
-__attribute__((section("arm2d.tile.c_tileWatchPanelRGB565")))
+ARM_SECTION("arm2d.tile.c_tileWatchPanelRGB565")
 const arm_2d_tile_t c_tileWatchPanelRGB565 = {
     .tRegion = {
         .tSize = {
@@ -11794,7 +11794,7 @@ const arm_2d_tile_t c_tileWatchPanelRGB565 = {
 
 extern const arm_2d_tile_t c_tileWatchPanelCCCA8888;
 
-__attribute__((section("arm2d.tile.c_tileWatchPanelCCCA8888")))
+ARM_SECTION("arm2d.tile.c_tileWatchPanelCCCA8888")
 const arm_2d_tile_t c_tileWatchPanelCCCA8888 = {
     .tRegion = {
         .tSize = {
@@ -11818,7 +11818,7 @@ const arm_2d_tile_t c_tileWatchPanelCCCA8888 = {
 
 extern const arm_2d_tile_t c_tileWatchPanelMask2;
 
-__attribute__((section("arm2d.tile.c_tileWatchPanelMask2")))
+ARM_SECTION("arm2d.tile.c_tileWatchPanelMask2")
 const arm_2d_tile_t c_tileWatchPanelMask2 = {
     .tRegion = {
         .tSize = {
@@ -11841,7 +11841,7 @@ const arm_2d_tile_t c_tileWatchPanelMask2 = {
 
 extern const arm_2d_tile_t c_tileWatchPanelMask;
 
-__attribute__((section("arm2d.tile.c_tileWatchPanelMask")))
+ARM_SECTION("arm2d.tile.c_tileWatchPanelMask")
 const arm_2d_tile_t c_tileWatchPanelMask = {
     .tRegion = {
         .tSize = {

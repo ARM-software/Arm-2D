@@ -18,7 +18,7 @@
 #endif
 
 
-__attribute__((aligned(4), section("arm2d.asset.c_bmpGlassReflectionNAlpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpGlassReflectionNAlpha")
 static const uint8_t c_bmpGlassReflectionNAlpha[9*88] = {
 /* -0- */
 0x09, 0x30, 0x59, 0x6a, 0x69, 0x6a, 0x5e, 0x34, 0x09, 
@@ -197,7 +197,7 @@ static const uint8_t c_bmpGlassReflectionNAlpha[9*88] = {
 /* -87- */
 0x0d, 0x3c, 0x6c, 0x81, 0x80, 0x81, 0x72, 0x41, 0x0e, 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpGlassReflectionNA2Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpGlassReflectionNA2Alpha")
 static const uint8_t c_bmpGlassReflectionNA2Alpha[3*88] = {
 /* -0- */
 0x50, 0x15, 0x00, 
@@ -376,7 +376,7 @@ static const uint8_t c_bmpGlassReflectionNA2Alpha[3*88] = {
 /* -87- */
 0x90, 0x5a, 0x00, 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpGlassReflectionNA4Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpGlassReflectionNA4Alpha")
 static const uint8_t c_bmpGlassReflectionNA4Alpha[5*88] = {
 /* -0- */
 0x30, 0x65, 0x66, 0x35, 0x00, 
@@ -556,7 +556,7 @@ static const uint8_t c_bmpGlassReflectionNA4Alpha[5*88] = {
 0x30, 0x86, 0x88, 0x47, 0x00, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpGlassReflectionNGRAY8")))
+ARM_SECTION("arm2d.asset.c_bmpGlassReflectionNGRAY8")
 const uint8_t c_bmpGlassReflectionNGRAY8[9*88] = {
 /* -0- */
 0xff, 0xff, 0xff, 0xfb, 0xf3, 0xeb, 0xe5, 0xe4, 0xd9, 
@@ -736,7 +736,7 @@ const uint8_t c_bmpGlassReflectionNGRAY8[9*88] = {
 0xff, 0xff, 0xff, 0xfb, 0xf2, 0xea, 0xe5, 0xe4, 0xe0, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpGlassReflectionNRGB565")))
+ARM_SECTION("arm2d.asset.c_bmpGlassReflectionNRGB565")
 const uint16_t c_bmpGlassReflectionNRGB565[9*88] = {
 /* -0- */
 0xffff, 0xffff, 0xffff, 0xffdf, 0xef9f, 0xe75e, 0xdf1e, 0xd71e, 0xc71c, 
@@ -916,7 +916,7 @@ const uint16_t c_bmpGlassReflectionNRGB565[9*88] = {
 0xffff, 0xffff, 0xffff, 0xffdf, 0xef9f, 0xe75e, 0xdf3e, 0xd71e, 0xdedd, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpGlassReflectionNCCCA8888")))
+ARM_SECTION("arm2d.asset.c_bmpGlassReflectionNCCCA8888")
 const uint32_t c_bmpGlassReflectionNCCCA8888[9*88] = {
 /* -0- */
 0x09ffffff, 0x30ffffff, 0x59ffffff, 0x6afafafc, 0x69eef2fa, 0x6ae2e9f5, 0x5ed9e3f4, 0x34d7e1f5, 0x09c6e2e2, 
@@ -1098,7 +1098,7 @@ const uint32_t c_bmpGlassReflectionNCCCA8888[9*88] = {
 
 
 extern const arm_2d_tile_t c_tileGlassReflectionNGRAY8;
-__attribute__((section("arm2d.tile.c_tileGlassReflectionNGRAY8")))
+ARM_SECTION("arm2d.tile.c_tileGlassReflectionNGRAY8")
 const arm_2d_tile_t c_tileGlassReflectionNGRAY8 = {
     .tRegion = {
         .tSize = {
@@ -1120,7 +1120,7 @@ const arm_2d_tile_t c_tileGlassReflectionNGRAY8 = {
 
 
 extern const arm_2d_tile_t c_tileGlassReflectionNRGB565;
-__attribute__((section("arm2d.tile.c_tileGlassReflectionNRGB565")))
+ARM_SECTION("arm2d.tile.c_tileGlassReflectionNRGB565")
 const arm_2d_tile_t c_tileGlassReflectionNRGB565 = {
     .tRegion = {
         .tSize = {
@@ -1143,7 +1143,7 @@ const arm_2d_tile_t c_tileGlassReflectionNRGB565 = {
 
 extern const arm_2d_tile_t c_tileGlassReflectionNCCCA8888;
 
-__attribute__((section("arm2d.tile.c_tileGlassReflectionNCCCA8888")))
+ARM_SECTION("arm2d.tile.c_tileGlassReflectionNCCCA8888")
 const arm_2d_tile_t c_tileGlassReflectionNCCCA8888 = {
     .tRegion = {
         .tSize = {
@@ -1167,7 +1167,7 @@ const arm_2d_tile_t c_tileGlassReflectionNCCCA8888 = {
 
 extern const arm_2d_tile_t c_tileGlassReflectionNMask2;
 
-__attribute__((section("arm2d.tile.c_tileGlassReflectionNMask2")))
+ARM_SECTION("arm2d.tile.c_tileGlassReflectionNMask2")
 const arm_2d_tile_t c_tileGlassReflectionNMask2 = {
     .tRegion = {
         .tSize = {
@@ -1190,7 +1190,7 @@ const arm_2d_tile_t c_tileGlassReflectionNMask2 = {
 
 extern const arm_2d_tile_t c_tileGlassReflectionNMask;
 
-__attribute__((section("arm2d.tile.c_tileGlassReflectionNMask")))
+ARM_SECTION("arm2d.tile.c_tileGlassReflectionNMask")
 const arm_2d_tile_t c_tileGlassReflectionNMask = {
     .tRegion = {
         .tSize = {
@@ -1213,7 +1213,7 @@ const arm_2d_tile_t c_tileGlassReflectionNMask = {
 
 extern const arm_2d_tile_t c_tileGlassReflectionNA2Mask;
 
-__attribute__((section("arm2d.tile.c_tileGlassReflectionNA2Mask")))
+ARM_SECTION("arm2d.tile.c_tileGlassReflectionNA2Mask")
 const arm_2d_tile_t c_tileGlassReflectionNA2Mask = {
     .tRegion = {
         .tSize = {
@@ -1236,7 +1236,7 @@ const arm_2d_tile_t c_tileGlassReflectionNA2Mask = {
 
 extern const arm_2d_tile_t c_tileGlassReflectionNA4Mask;
 
-__attribute__((section("arm2d.tile.c_tileGlassReflectionNA4Mask")))
+ARM_SECTION("arm2d.tile.c_tileGlassReflectionNA4Mask")
 const arm_2d_tile_t c_tileGlassReflectionNA4Mask = {
     .tRegion = {
         .tSize = {
