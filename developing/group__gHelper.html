@@ -418,6 +418,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga8568abf593c04cf6df798e82cda60676"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga8568abf593c04cf6df798e82cda60676">arm_2d_helper_pfb_flush</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis)</td></tr>
 <tr class="memdesc:ga8568abf593c04cf6df798e82cda60676"><td class="mdescLeft">&#160;</td><td class="mdescRight">flush the FPB FIFO  <a href="group__gHelper.html#ga8568abf593c04cf6df798e82cda60676">More...</a><br /></td></tr>
 <tr class="separator:ga8568abf593c04cf6df798e82cda60676"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae4017b79661fe52c6115894ebcb094a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gae4017b79661fe52c6115894ebcb094a5">arm_2d_helper_ignore_low_level_flush</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis)</td></tr>
+<tr class="memdesc:gae4017b79661fe52c6115894ebcb094a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">ignore the low level PFB flushing only  <a href="group__gHelper.html#gae4017b79661fe52c6115894ebcb094a5">More...</a><br /></td></tr>
+<tr class="separator:gae4017b79661fe52c6115894ebcb094a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeaaf0ab9b565da461334ed9fc641cc8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaeaaf0ab9b565da461334ed9fc641cc8d">arm_2d_helper_resume_low_level_flush</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis)</td></tr>
+<tr class="memdesc:gaeaaf0ab9b565da461334ed9fc641cc8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">resume the low level PFB flushing  <a href="group__gHelper.html#gaeaaf0ab9b565da461334ed9fc641cc8d">More...</a><br /></td></tr>
+<tr class="separator:gaeaaf0ab9b565da461334ed9fc641cc8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7f397129da5a5d78a7dd6325ab3405ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c">arm_2d_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga7f397129da5a5d78a7dd6325ab3405ef">arm_2d_helper_pfb_update_dependency</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis, uint_fast8_t chMask, const <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__dependency__t">arm_2d_helper_pfb_dependency_t</a> *ptDependency)</td></tr>
 <tr class="memdesc:ga7f397129da5a5d78a7dd6325ab3405ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">update PFB dependency (event handlers)  <a href="group__gHelper.html#ga7f397129da5a5d78a7dd6325ab3405ef">More...</a><br /></td></tr>
 <tr class="separator:ga7f397129da5a5d78a7dd6325ab3405ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1105,7 +1111,8 @@ user registered dependency </td></tr>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
-&lt; user configuration </td></tr>
+&lt; user configuration <p >&lt; temporarily ignore low level flushing </p>
+</td></tr>
 <tr><td class="fieldtype">
 <a id="ab3b8a4706acd6331477a2a42763b7de5" name="ab3b8a4706acd6331477a2a42763b7de5"></a>struct <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t_8Statistics">arm_2d_helper_pfb_t.Statistics</a></td>
 <td class="fieldname">
@@ -1804,6 +1811,7 @@ reserve specific number of PFB for other helper services </td></tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p >&lt; user configuration </p>
+<p >&lt; temporarily ignore low level flushing </p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
@@ -1957,7 +1965,13 @@ bIsNewFrame: 1</td>
 <tr><td class="fieldtype">
 <a id="a4f42ff27488585a33d6bb91e8cf057d5" name="a4f42ff27488585a33d6bb91e8cf057d5"></a>uint8_t</td>
 <td class="fieldname">
-bIsFlushRequested:1</td>
+bIsFlushRequested: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ac05c560fd985bd880a31b531f56afb62" name="ac05c560fd985bd880a31b531f56afb62"></a>uint8_t</td>
+<td class="fieldname">
+bIgnoreLowLevelFlush: 1</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
@@ -2817,7 +2831,7 @@ fStep</td>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the PFB control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the PFB helper control block </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">...</td><td>the used PFB block. </td></tr>
   </table>
   </dd>
@@ -3774,7 +3788,7 @@ fStep</td>
 <p>the task function for pfb helper </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>an initialised PFB control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>an initialised PFB helper control block </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ptDirtyRegions</td><td>a region list pending for refresh, NULL means refreshing the whole screen </td></tr>
   </table>
   </dd>
@@ -3813,7 +3827,59 @@ fStep</td>
 For normal usage, please DO NOT use this function unless you know what you are doing. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>an initialised PFB control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>an initialised PFB helper control block </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gae4017b79661fe52c6115894ebcb094a5" name="gae4017b79661fe52c6115894ebcb094a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae4017b79661fe52c6115894ebcb094a5">&#9670;&nbsp;</a></span>arm_2d_helper_ignore_low_level_flush()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_helper_ignore_low_level_flush </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ignore the low level PFB flushing only </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>an initialised PFB helper control block </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaeaaf0ab9b565da461334ed9fc641cc8d" name="gaeaaf0ab9b565da461334ed9fc641cc8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaeaaf0ab9b565da461334ed9fc641cc8d">&#9670;&nbsp;</a></span>arm_2d_helper_resume_low_level_flush()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_helper_resume_low_level_flush </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>resume the low level PFB flushing </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>an initialised PFB helper control block </td></tr>
   </table>
   </dd>
 </dl>
@@ -3855,7 +3921,7 @@ For normal usage, please DO NOT use this function unless you know what you are d
 <p>update PFB dependency (event handlers) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the PFB control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the PFB helper control block </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">chMask</td><td>the bit mask for event handlers </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ptDependency</td><td>the new dependency description </td></tr>
   </table>
@@ -3899,7 +3965,7 @@ For normal usage, please DO NOT use this function unless you know what you are d
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the PFB control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the PFB helper control block </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ptPFB</td><td>the used PFB block </td></tr>
   </table>
   </dd>
@@ -3969,7 +4035,7 @@ For normal usage, please DO NOT use this function unless you know what you are d
 <p>try to get a PFB block from the pool </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the PFB control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the PFB helper control block </td></tr>
   </table>
   </dd>
 </dl>
@@ -4012,7 +4078,7 @@ For normal usage, please DO NOT use this function unless you know what you are d
 <p>free a PFB block to the pool </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the PFB control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the PFB helper control block </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ptPFB</td><td>the target PFB block </td></tr>
   </table>
   </dd>
