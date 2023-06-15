@@ -333,11 +333,15 @@ void arm_2d_helper_pfb_flush(arm_2d_helper_pfb_t *ptThis)
         this.Adapter.ptFlushing = ptPFB;
         ptPFB->ptPFBHelper = ptThis;
 
-        // call handler
-        (*this.tCFG.Dependency.evtOnLowLevelRendering.fnHandler)(
-                        this.tCFG.Dependency.evtOnLowLevelRendering.pTarget,
-                        ptPFB,
-                        ptPFB->bIsNewFrame);
+        if (NULL != this.tCFG.Dependency.evtOnLowLevelRendering.fnHandler) {
+            // call handler
+            (*this.tCFG.Dependency.evtOnLowLevelRendering.fnHandler)(
+                            this.tCFG.Dependency.evtOnLowLevelRendering.pTarget,
+                            ptPFB,
+                            ptPFB->bIsNewFrame);
+        } else {
+            __arm_2d_helper_pfb_report_rendering_complete(ptThis, ptPFB);
+        }
     }
 }
 

@@ -50,6 +50,8 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #   pragma clang diagnostic ignored "-Wunused-function"
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
+#elif defined(__IS_COMPILER_ARM_COMPILER_5__)
+#   pragma diag_suppress 64
 #endif
 
 /*!
@@ -389,6 +391,8 @@ void arm_2d_helper_film_set_frame(arm_2d_helper_film_t *ptThis, int32_t nIndex);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
+#elif __IS_COMPILER_ARM_COMPILER_5__
+#pragma diag_warning 64
 #endif
 
 #ifdef   __cplusplus
