@@ -130,8 +130,8 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * Title:        #include &quot;arm_2d_helper_pfb.h&quot;</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * Description:  Public header file for the PFB helper service </span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        09. April 2023</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.5.0</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        15. June 2023</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.5.1</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> * Target Processor:  Cortex-M cores</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment"> * -------------------------------------------------------------------- */</span></div>
@@ -224,7 +224,7 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><span class="preprocessor">                                ...             </span><span class="comment">/* Event Handler */</span><span class="preprocessor">             \</span></div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span><span class="preprocessor">                                )                                               \</span></div>
 <div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="preprocessor">    ({                                                                          \</span></div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="preprocessor">        __attribute__((section(&quot;.bss.noinit.arm_2d_pfb_pool&quot;</span>)))                 \</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="preprocessor">        ARM_SECTION(&quot;.bss.noinit.arm_2d_pfb_pool&quot;</span>)                              \</div>
 <div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>         static struct {                                                        \</div>
 <div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            arm_2d_pfb_t tFPB;                                                  \</div>
 <div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>            __ALIGNED(4)                                                        \</div>

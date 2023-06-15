@@ -277,6 +277,8 @@ var group__gKernel =
     [ "ARM_NOINIT", "group__gKernel.html#ga467717c9835f6c6a75f3d6d8c3aee8c8", null ],
     [ "__ARM_ALIGN", "group__gKernel.html#gafa8b32c52e0a64430fc28319e6b30af9", null ],
     [ "ARM_ALIGN", "group__gKernel.html#ga3458644a2202c826043fd8c1b317e138", null ],
+    [ "__ARM_SECTION", "group__gKernel.html#ga124396a1a82a6c87efed5bb8ae21487b", null ],
+    [ "ARM_SECTION", "group__gKernel.html#ga4306344fab53778ee1599b7b791c7f53", null ],
     [ "__RESTRICT", "group__gKernel.html#ga378ac21329d33f561f90265eef89f564", null ],
     [ "__OVERRIDE_WEAK", "group__gKernel.html#gaf675320d8afdd3d72e951d1a5eb9fcd1", null ],
     [ "ARM_2D_SAFE_NAME", "group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23", null ],

@@ -1,5 +1,7 @@
 var NAVTREEINDEX4 =
 {
+"md_getting_started_as_a_professional_user.html":[2],
+"md_getting_started_as_an_application_designer.html":[1],
 "md_getting_started_as_an_application_designer.html#autotoc_md24":[1,0],
 "md_getting_started_as_an_application_designer.html#autotoc_md25":[1,0,0],
 "md_getting_started_as_an_application_designer.html#autotoc_md26":[1,1],

@@ -451,6 +451,11 @@ Macros</h2></td></tr>
 <tr class="memitem:ga3458644a2202c826043fd8c1b317e138"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga3458644a2202c826043fd8c1b317e138">ARM_ALIGN</a>(__N)&#160;&#160;&#160;<a class="el" href="group__gKernel.html#gafa8b32c52e0a64430fc28319e6b30af9">__ARM_ALIGN</a>(__N)</td></tr>
 <tr class="memdesc:ga3458644a2202c826043fd8c1b317e138"><td class="mdescLeft">&#160;</td><td class="mdescRight">an attribute to specify aligment requirement  <a href="group__gKernel.html#ga3458644a2202c826043fd8c1b317e138">More...</a><br /></td></tr>
 <tr class="separator:ga3458644a2202c826043fd8c1b317e138"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga124396a1a82a6c87efed5bb8ae21487b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga124396a1a82a6c87efed5bb8ae21487b">__ARM_SECTION</a>(__X)&#160;&#160;&#160;__attribute__((section(__X)))</td></tr>
+<tr class="separator:ga124396a1a82a6c87efed5bb8ae21487b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4306344fab53778ee1599b7b791c7f53"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga4306344fab53778ee1599b7b791c7f53">ARM_SECTION</a>(__X)&#160;&#160;&#160;<a class="el" href="group__gKernel.html#ga124396a1a82a6c87efed5bb8ae21487b">__ARM_SECTION</a>(__X)</td></tr>
+<tr class="memdesc:ga4306344fab53778ee1599b7b791c7f53"><td class="mdescLeft">&#160;</td><td class="mdescRight">an attribute to specify the section  <a href="group__gKernel.html#ga4306344fab53778ee1599b7b791c7f53">More...</a><br /></td></tr>
+<tr class="separator:ga4306344fab53778ee1599b7b791c7f53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga378ac21329d33f561f90265eef89f564"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga378ac21329d33f561f90265eef89f564">__RESTRICT</a>&#160;&#160;&#160;__restrict</td></tr>
 <tr class="memdesc:ga378ac21329d33f561f90265eef89f564"><td class="mdescLeft">&#160;</td><td class="mdescRight">local variable decoration for pointers: restrict  <a href="group__gKernel.html#ga378ac21329d33f561f90265eef89f564">More...</a><br /></td></tr>
 <tr class="separator:ga378ac21329d33f561f90265eef89f564"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -5618,6 +5623,46 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
 </div><div class="memdoc">
 
 <p>an attribute to specify aligment requirement </p>
+<dl class="section note"><dt>Note</dt><dd>it works for both functions and static/global variables </dd></dl>
+
+</div>
+</div>
+<a id="ga124396a1a82a6c87efed5bb8ae21487b" name="ga124396a1a82a6c87efed5bb8ae21487b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga124396a1a82a6c87efed5bb8ae21487b">&#9670;&nbsp;</a></span>__ARM_SECTION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __ARM_SECTION</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__X</td><td>)</td>
+          <td>&#160;&#160;&#160;__attribute__((section(__X)))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>do NOT use this macro directly </dd></dl>
+
+</div>
+</div>
+<a id="ga4306344fab53778ee1599b7b791c7f53" name="ga4306344fab53778ee1599b7b791c7f53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4306344fab53778ee1599b7b791c7f53">&#9670;&nbsp;</a></span>ARM_SECTION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_SECTION</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__X</td><td>)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="group__gKernel.html#ga124396a1a82a6c87efed5bb8ae21487b">__ARM_SECTION</a>(__X)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>an attribute to specify the section </p>
 <dl class="section note"><dt>Note</dt><dd>it works for both functions and static/global variables </dd></dl>
 
 </div>
