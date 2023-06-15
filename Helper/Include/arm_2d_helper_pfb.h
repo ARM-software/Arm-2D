@@ -22,7 +22,7 @@
  * Description:  Public header file for the PFB helper service 
  *
  * $Date:        15. June 2023
- * $Revision:    V.1.5.1
+ * $Revision:    V.1.5.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -305,7 +305,7 @@ extern "C" {
  *        e.g.
  *        - A ISR to indicate DMA-transfer complete event or 
  *        - A different Thread
- *  \param[in] ptThis the PFB control block
+ *  \param[in] ptThis the PFB helper control block
  *  \param[in] ... the used PFB block.
  *  \note please do not use this parameter, it is only kept for backward
  *        compatability.
@@ -462,8 +462,9 @@ ARM_PRIVATE(
         bool                        bIsRegionChanged;
         uint8_t                     chPT;
         struct {
-            uint8_t                 bIsNewFrame  : 1;
-            uint8_t                 bIsFlushRequested :1;
+            uint8_t                 bIsNewFrame                 : 1;
+            uint8_t                 bIsFlushRequested           : 1;
+            uint8_t                 bIgnoreLowLevelFlush        : 1;            //!< temporarily ignore low level flushing
             uint8_t                 bNoAdditionalDirtyRegionList;
         };
         uint16_t                    hwFreePFBCount;
@@ -541,7 +542,7 @@ arm_2d_region_t arm_2d_helper_pfb_get_display_area(arm_2d_helper_pfb_t *ptThis);
 
 /*!
  * \brief the task function for pfb helper
- * \param[in] ptThis an initialised PFB control block
+ * \param[in] ptThis an initialised PFB helper control block
  * \param[in] ptDirtyRegions a region list pending for refresh, NULL means 
  *                           refreshing the whole screen
  * \retval arm_fsm_rt_cpl complete refreshing one frame
@@ -560,15 +561,32 @@ arm_fsm_rt_t arm_2d_helper_pfb_task(arm_2d_helper_pfb_t *ptThis,
  * \note This function is THREAD-SAFE
  * \note For normal usage, please DO NOT use this function unless you know what
  *       you are doing.
- * \param[in] ptThis an initialised PFB control block
+ * \param[in] ptThis an initialised PFB helper control block
  */
 extern
 ARM_NONNULL(1)
 void arm_2d_helper_pfb_flush(arm_2d_helper_pfb_t *ptThis);
 
+
+/*!
+ * \brief ignore the low level PFB flushing only
+ * \param[in] ptThis an initialised PFB helper control block
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_ignore_low_level_flush(arm_2d_helper_pfb_t *ptThis);
+
+/*!
+ * \brief resume the low level PFB flushing
+ * \param[in] ptThis an initialised PFB helper control block
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_resume_low_level_flush(arm_2d_helper_pfb_t *ptThis);
+
 /*!
  * \brief update PFB dependency (event handlers)
- * \param[in] ptThis the PFB control block
+ * \param[in] ptThis the PFB helper control block
  * \param[in] chMask the bit mask for event handlers
  * \param[in] ptDependency the new dependency description
  * \return arm_2d_err_t the process result
@@ -586,7 +604,7 @@ arm_2d_err_t arm_2d_helper_pfb_update_dependency(
  *        e.g.
  *        - A ISR to indicate DMA-transfer complete event or 
  *        - A different Thread
- *  \param[in] ptThis the PFB control block
+ *  \param[in] ptThis the PFB helper control block
  *  \param[in] ptPFB the used PFB block
  */
 extern
@@ -607,7 +625,7 @@ void arm_2d_helper_swap_rgb16(uint16_t *phwBuffer, uint32_t wCount);
 
 /*!
  * \brief try to get a PFB block from the pool
- * \param[in] ptThis the PFB control block
+ * \param[in] ptThis the PFB helper control block
  * \retval NULL the pool is empty
  * \retval !NULL a valid pfb block 
  */
@@ -617,7 +635,7 @@ arm_2d_pfb_t *__arm_2d_helper_pfb_new(arm_2d_helper_pfb_t *ptThis);
 
 /*!
  * \brief free a PFB block to the pool
- * \param[in] ptThis the PFB control block
+ * \param[in] ptThis the PFB helper control block
  * \param[in] ptPFB the target PFB block
  */
 extern

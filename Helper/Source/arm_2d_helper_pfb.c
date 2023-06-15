@@ -316,6 +316,20 @@ void arm_2d_helper_swap_rgb16(uint16_t *phwBuffer, uint32_t wCount)
 }
 
 ARM_NONNULL(1)
+void arm_2d_helper_ignore_low_level_flush(arm_2d_helper_pfb_t *ptThis)
+{
+    assert(NULL != ptThis);
+    this.Adapter.bIgnoreLowLevelFlush = true;
+}
+
+ARM_NONNULL(1)
+void arm_2d_helper_resume_low_level_flush(arm_2d_helper_pfb_t *ptThis)
+{
+    assert(NULL != ptThis);
+    this.Adapter.bIgnoreLowLevelFlush = false;
+}
+
+ARM_NONNULL(1)
 void arm_2d_helper_pfb_flush(arm_2d_helper_pfb_t *ptThis)
 {
     assert(NULL != ptThis);
@@ -333,14 +347,15 @@ void arm_2d_helper_pfb_flush(arm_2d_helper_pfb_t *ptThis)
         this.Adapter.ptFlushing = ptPFB;
         ptPFB->ptPFBHelper = ptThis;
 
-        if (NULL != this.tCFG.Dependency.evtOnLowLevelRendering.fnHandler) {
+        if (    (NULL == this.tCFG.Dependency.evtOnLowLevelRendering.fnHandler)
+           ||   this.Adapter.bIgnoreLowLevelFlush) {
+           __arm_2d_helper_pfb_report_rendering_complete(ptThis, ptPFB);
+        } else {
             // call handler
             (*this.tCFG.Dependency.evtOnLowLevelRendering.fnHandler)(
                             this.tCFG.Dependency.evtOnLowLevelRendering.pTarget,
                             ptPFB,
                             ptPFB->bIsNewFrame);
-        } else {
-            __arm_2d_helper_pfb_report_rendering_complete(ptThis, ptPFB);
         }
     }
 }
