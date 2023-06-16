@@ -22,7 +22,7 @@
  * Description:  Public header file for the scene service
  *
  * $Date:        16. June 2023
- * $Revision:    V.1.4.2
+ * $Revision:    V.1.4.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -441,6 +441,22 @@ arm_2d_err_t __arm_2d_scene_player_register_on_draw_navigation_event_handler(
                                     arm_2d_helper_draw_handler_t *fnHandler,
                                     void *pTarget,
                                     arm_2d_region_list_item_t *ptDirtyRegions);
+
+/*!
+ * \brief hide the navigation layer
+ * \param[in] ptThis an initialised scene player
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_scene_player_hide_navigation_layer(arm_2d_scene_player_t *ptThis);
+
+/*!
+ * \brief show the navigation layer if there is a valid one
+ * \param[in] ptThis an initialised scene player
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_scene_player_show_navigation_layer(arm_2d_scene_player_t *ptThis);
 
 /*!
  * \brief register / update the evtBeforeSwitching event handler. You can use 

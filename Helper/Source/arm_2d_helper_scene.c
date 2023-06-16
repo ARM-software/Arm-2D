@@ -22,7 +22,7 @@
  * Description:  Public header file for the scene service
  *
  * $Date:        16. June 2023
- * $Revision:    V.1.4.2
+ * $Revision:    V.1.4.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -309,6 +309,20 @@ arm_2d_err_t __arm_2d_scene_player_register_on_draw_navigation_event_handler(
                                     ARM_2D_PFB_DEPEND_ON_NAVIGATION,
                                     &tDependency);
 }
+
+
+ARM_NONNULL(1)
+void arm_2d_scene_player_hide_navigation_layer(arm_2d_scene_player_t *ptThis)
+{
+    arm_2d_helper_hide_navigation_layer(&this.use_as__arm_2d_helper_pfb_t);
+}
+
+ARM_NONNULL(1)
+void arm_2d_scene_player_show_navigation_layer(arm_2d_scene_player_t *ptThis)
+{
+    arm_2d_helper_show_navigation_layer(&this.use_as__arm_2d_helper_pfb_t);
+}
+
 
 
 arm_2d_err_t __arm_2d_scene_player_register_before_switching_event_handler(

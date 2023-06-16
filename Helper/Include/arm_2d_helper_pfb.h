@@ -22,7 +22,7 @@
  * Description:  Public header file for the PFB helper service 
  *
  * $Date:        16. June 2023
- * $Revision:    V.1.5.3
+ * $Revision:    V.1.5.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -464,7 +464,8 @@ ARM_PRIVATE(
         struct {
             uint8_t                 bIsNewFrame                 : 1;
             uint8_t                 bIsFlushRequested           : 1;
-            uint8_t                 bIgnoreLowLevelFlush        : 1;            //!< temporarily ignore low level flushing
+            uint8_t                 bIgnoreLowLevelFlush        : 1;
+            uint8_t                 bHideNavigationLayer        : 1;
             uint8_t                 bNoAdditionalDirtyRegionList;
         };
         uint16_t                    hwFreePFBCount;
@@ -576,6 +577,22 @@ extern
 ARM_NONNULL(1)
 void arm_2d_helper_pfb_flush(arm_2d_helper_pfb_t *ptThis);
 
+/*!
+ * \brief hide the navigation layer
+ * \param[in] ptThis an initialised PFB helper control block
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_hide_navigation_layer(arm_2d_helper_pfb_t *ptThis);
+
+/*!
+ * \brief show the navigation layer if there is a valid one
+ * \param[in] ptThis an initialised PFB helper control block
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_show_navigation_layer(arm_2d_helper_pfb_t *ptThis);
+
 
 /*!
  * \brief ignore the low level PFB flushing only
@@ -592,6 +609,7 @@ void arm_2d_helper_ignore_low_level_flush(arm_2d_helper_pfb_t *ptThis);
 extern
 ARM_NONNULL(1)
 void arm_2d_helper_resume_low_level_flush(arm_2d_helper_pfb_t *ptThis);
+
 
 /*!
  * \brief update PFB dependency (event handlers)

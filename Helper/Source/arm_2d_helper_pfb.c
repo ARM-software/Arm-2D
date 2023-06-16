@@ -22,7 +22,7 @@
  * Description:  the pfb helper service source code
  *
  * $Date:        16. June 2023
- * $Revision:    V.1.5.3
+ * $Revision:    V.1.5.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -337,6 +337,21 @@ void arm_2d_helper_resume_low_level_flush(arm_2d_helper_pfb_t *ptThis)
     this.Adapter.bIgnoreLowLevelFlush = false;
 }
 
+
+ARM_NONNULL(1)
+void arm_2d_helper_hide_navigation_layer(arm_2d_helper_pfb_t *ptThis)
+{
+    assert(NULL != ptThis);
+    this.Adapter.bHideNavigationLayer = true;
+}
+
+ARM_NONNULL(1)
+void arm_2d_helper_show_navigation_layer(arm_2d_helper_pfb_t *ptThis)
+{
+    assert(NULL != ptThis);
+    this.Adapter.bHideNavigationLayer = false;
+}
+
 ARM_NONNULL(1)
 void arm_2d_helper_pfb_flush(arm_2d_helper_pfb_t *ptThis)
 {
@@ -428,7 +443,8 @@ bool __when_dirty_region_list_is_empty(arm_2d_helper_pfb_t *ptThis)
         
         return false;
     } else if ( (NULL != this.tCFG.Dependency.Navigation.evtOnDrawing.fnHandler)
-           &&   (NULL != this.tCFG.Dependency.Navigation.ptDirtyRegion)) {
+           &&   (NULL != this.tCFG.Dependency.Navigation.ptDirtyRegion)
+           &&   (!this.Adapter.bHideNavigationLayer)) {
         
         /* switch to navigation dirty region list */
         this.Adapter.ptDirtyRegion = this.tCFG.Dependency.Navigation.ptDirtyRegion;
@@ -880,7 +896,8 @@ ARM_PT_BEGIN(this.Adapter.chPT)
         this.Statistics.nTotalCycle += __arm_2d_helper_perf_counter_stop(&this.Statistics.lTimestamp);
 
         /* draw navigation layer */
-        if (NULL != this.tCFG.Dependency.Navigation.evtOnDrawing.fnHandler) {
+        if (    (NULL != this.tCFG.Dependency.Navigation.evtOnDrawing.fnHandler)
+            &&  (!this.Adapter.bHideNavigationLayer)) {
             if (arm_fsm_rt_cpl == tResult) {
     ARM_PT_ENTRY()
                 __arm_2d_helper_perf_counter_start(&this.Statistics.lTimestamp); 
