@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        09. June 2023
- * $Revision:    V.1.4.1
+ * $Date:        16. June 2023
+ * $Revision:    V.1.4.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -297,12 +297,11 @@ arm_2d_err_t __arm_2d_scene_player_register_on_draw_navigation_event_handler(
                                     arm_2d_region_list_item_t *ptDirtyRegions)
 {
     assert(NULL != ptThis);
-    assert(NULL != fnHandler);
 
     arm_2d_helper_pfb_dependency_t tDependency = {
         .Navigation.evtOnDrawing.fnHandler = fnHandler,
         .Navigation.evtOnDrawing.pTarget = ((pTarget == NULL) ? ptThis : pTarget),
-        .Navigation.ptDirtyRegion = ptDirtyRegions,
+        .Navigation.ptDirtyRegion = (NULL == fnHandler) ? NULL : ptDirtyRegions,
     };
 
     return arm_2d_helper_pfb_update_dependency(

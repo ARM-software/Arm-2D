@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        15. June 2023
- * $Revision:    V.1.5.2
+ * $Date:        16. June 2023
+ * $Revision:    V.1.5.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -109,8 +109,8 @@ extern "C" {
                                 __SCREEN_WIDTH, /* Screen width */              \
                                 __SCREEN_HEIGHT,/* Screen height */             \
                                 __PIXEL_TYPE,   /* The type of the pixels */    \
-                                __WIDTH,        /* The width of the PFB block */\
-                                __HEIGHT,       /* The height of the PFB block*/\
+                                __PFB_WIDTH,    /* The width of the PFB block */\
+                                __PFB_HEIGHT,   /* The height of the PFB block*/\
                                 __PFB_NUM,      /* Block count in the PFB pool*/\
                                 ...             /* Event Handler */             \
                                 )                                               \
@@ -119,7 +119,7 @@ extern "C" {
          static struct {                                                        \
             arm_2d_pfb_t tFPB;                                                  \
             __ALIGNED(4)                                                        \
-            __PIXEL_TYPE tBuffer[(__WIDTH) * (__HEIGHT)];                       \
+            __PIXEL_TYPE tBuffer[(__PFB_WIDTH) * (__PFB_HEIGHT)];               \
         } s_tPFBs[__PFB_NUM];                                                   \
                                                                                 \
         arm_2d_helper_pfb_cfg_t tCFG = {                                        \
@@ -130,8 +130,8 @@ extern "C" {
                                                                                 \
             .FrameBuffer.ptPFBs = (arm_2d_pfb_t *)s_tPFBs,                      \
             .FrameBuffer.tFrameSize = {                                         \
-                .iWidth = (__WIDTH),                                            \
-                .iHeight = (__HEIGHT),                                          \
+                .iWidth = (__PFB_WIDTH),                                        \
+                .iHeight = (__PFB_HEIGHT),                                      \
             },                                                                  \
             .FrameBuffer.wBufferSize = sizeof(s_tPFBs[0].tBuffer),              \
             .FrameBuffer.hwPFBNum = dimof(s_tPFBs),                             \
@@ -539,6 +539,15 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
 extern
 ARM_NONNULL(1)
 arm_2d_region_t arm_2d_helper_pfb_get_display_area(arm_2d_helper_pfb_t *ptThis);
+
+/*!
+ * \brief get the inital PFB size
+ * \param[in] ptThis the pfb helper control block
+ * \return arm_2d_size_t the PFB size
+ */
+extern
+ARM_NONNULL(1)
+arm_2d_size_t arm_2d_helper_pfb_get_pfb_size(arm_2d_helper_pfb_t *ptThis);
 
 /*!
  * \brief the task function for pfb helper
