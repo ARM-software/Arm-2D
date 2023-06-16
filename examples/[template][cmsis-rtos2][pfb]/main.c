@@ -192,11 +192,11 @@ int main (void)
 
     arm_irq_safe {
         arm_2d_init();
-    } 
+    }
+
+    disp_adapter0_init();
 
 #if !defined(RTE_Acceleration_Arm_2D_Extra_Benchmark)
-    disp_adapter0_init();
-    
     arm_2d_scene_player_register_before_switching_event_handler(
             &DISP0_ADAPTER,
             before_scene_switching_handler);

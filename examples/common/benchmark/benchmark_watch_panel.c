@@ -280,7 +280,7 @@ void platform_1ms_event_handler(void)
     }
 }
 
-void example_gui_init(void)
+void benchmark_watch_panel_init(void)
 {
     arm_extra_controls_init();
 
@@ -307,7 +307,7 @@ void example_gui_init(void)
 }
 
 #if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
-static void example_update_boxes(floating_range_t *ptBoxes, uint_fast16_t hwCount)
+static void __update_boxes(floating_range_t *ptBoxes, uint_fast16_t hwCount)
 {
     assert(NULL != ptBoxes);
     assert(hwCount > 0);
@@ -343,22 +343,15 @@ static void example_update_boxes(floating_range_t *ptBoxes, uint_fast16_t hwCoun
 }
 #endif
 
-void example_gui_do_events(void)
+void benchmark_watch_panel_do_events(void)
 {
 #if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
-    example_update_boxes(s_ptFloatingBoxes, dimof(s_ptFloatingBoxes));
+    __update_boxes(s_ptFloatingBoxes, dimof(s_ptFloatingBoxes));
 #endif
 }
 
 
-__WEAK
-void example_gui_on_refresh_evt_handler(const arm_2d_tile_t *ptFrameBuffer)
-{
-     ARM_2D_UNUSED(ptFrameBuffer);
-}
-
-
-void example_gui_refresh(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
+void benchmark_watch_panel_draw(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
 {
 
     arm_2d_canvas(ptTile, __top_container) {
@@ -588,8 +581,6 @@ void example_gui_refresh(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
         arm_2d_op_wait_async(&ptItem->tOP.use_as__arm_2d_op_core_t);
     }
     arm_2d_op_wait_async(&s_tStarOP.use_as__arm_2d_op_core_t);
-    
-    example_gui_on_refresh_evt_handler(ptTile);
 
 }
 

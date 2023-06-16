@@ -22,22 +22,12 @@
 /*============================ INCLUDES ======================================*/
 #include <stdint.h>
 #include "arm_2d.h"
+#include "arm_2d_scene_benchmark_generic_cover.h"
 
 /*============================ MACROS ========================================*/
-
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
-
-extern
-void example_gui_init(void);
-
-extern
-void example_gui_refresh(const arm_2d_tile_t *ptFrameBuffer, bool bIsNewFrame);
-                            
-extern
-void example_gui_do_events(void);
-
 
 #endif
