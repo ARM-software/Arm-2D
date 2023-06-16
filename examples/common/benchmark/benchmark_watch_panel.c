@@ -44,16 +44,6 @@
 #endif
 
 /*============================ MACROS ========================================*/
-#ifndef __GLCD_CFG_SCEEN_WIDTH__
-#   warning Please specify the screen width by defining the macro __GLCD_CFG_SCEEN_WIDTH__, default value 320 is used for now
-#   define __GLCD_CFG_SCEEN_WIDTH__      320
-#endif
-
-#ifndef __GLCD_CFG_SCEEN_HEIGHT__
-#   warning Please specify the screen height by defining the macro __GLCD_CFG_SCEEN_HEIGHT__, default value 240 is used for now
-#   define __GLCD_CFG_SCEEN_HEIGHT__      320
-#endif
-
 
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
@@ -189,24 +179,12 @@ demo_gears_t s_tGears[] = {
         },
 
         .ptRegion = (arm_2d_region_t []){ {
-            .tLocation = {
-                .iX = ((__GLCD_CFG_SCEEN_WIDTH__ - 41) >> 1) + 30,
-                .iY = ((__GLCD_CFG_SCEEN_HEIGHT__ - 41) >>1) + 30,
-            },
             .tSize = {
                 .iWidth = 41,
                 .iHeight = 41,
             },
             }
         },
-    #if 0  /*! a demo shows how to specifiy the centre of rotation on the target tile */
-        .ptTargetCentre = (arm_2d_location_t []){
-            {
-                .iX = ((__GLCD_CFG_SCEEN_WIDTH__ - 41) >> 1) + 30,
-                .iY = ((__GLCD_CFG_SCEEN_HEIGHT__ - 41) >>1) + 30,
-            },
-        },
-    #endif
         .chOpacity = 255,
     },
 
@@ -219,10 +197,6 @@ demo_gears_t s_tGears[] = {
             .iY = 60,
         },
         .ptRegion = (arm_2d_region_t []){ {
-            .tLocation = {
-                .iX = ((__GLCD_CFG_SCEEN_WIDTH__ - 120) >> 1),
-                .iY = ((__GLCD_CFG_SCEEN_HEIGHT__ - 120) >>1),
-            },
             .tSize = {
                 .iWidth = 120,
                 .iHeight = 120,
@@ -246,10 +220,6 @@ demo_gears_t s_tGears[] = {
             .iY = 99,
         },
         .ptRegion = (arm_2d_region_t []){ {
-            .tLocation = {
-                .iX = ((__GLCD_CFG_SCEEN_WIDTH__ - 198) >> 1),
-                .iY = ((__GLCD_CFG_SCEEN_HEIGHT__ - 198) >>1),
-            },
             .tSize = {
                 .iWidth = 198,
                 .iHeight = 198,
@@ -280,7 +250,7 @@ void platform_1ms_event_handler(void)
     }
 }
 
-void benchmark_watch_panel_init(void)
+void benchmark_watch_panel_init(arm_2d_region_t tScreen)
 {
     arm_extra_controls_init();
 
@@ -298,6 +268,17 @@ void benchmark_watch_panel_init(void)
     }
 #endif
 
+    arm_foreach(demo_gears_t, s_tGears, ptGear) {
+        arm_2d_align_centre(tScreen, ptGear->ptRegion->tSize) {
+            ptGear->ptRegion->tLocation = __centre_region.tLocation;
+        }
+    }
+#if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
+    s_tGears[0].ptRegion->tLocation.iX += 30;
+    s_tGears[0].ptRegion->tLocation.iY += 30;
+#endif
+    
+    
     arm_foreach(demo_gears_t, s_tGears, ptItem) {
         arm_2d_op_init(&ptItem->tOP.use_as__arm_2d_op_core_t,
                         sizeof(ptItem->tOP.use_as__arm_2d_op_core_t));
@@ -358,49 +339,30 @@ void benchmark_watch_panel_draw(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
 #if 1
 
 #if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
-         arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
+        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
 
-        static arm_2d_tile_t s_tPanelTile;
-        
-        arm_2d_tile_generate_child( ptTile,
-                                    (const arm_2d_region_t []) {
-                                        {
-                                            .tSize = {240, 240},
-                                            .tLocation = {
-                                                .iX = ((__GLCD_CFG_SCEEN_WIDTH__ - 240) >> 1),
-                                                .iY = ((__GLCD_CFG_SCEEN_HEIGHT__ - 240) >> 1),
-                                            },
-                                        },
-                                    },
-                                    &s_tPanelTile,
-                                    false);
-        
-        arm_2d_tile_copy_with_des_mask_only(s_ptRefreshLayers->ptTile,
-                                            &s_tPanelTile,
+        arm_2d_align_centre(__top_container, 240, 240) {
+            arm_2d_container(ptTile, __watch_bg, &__centre_region) {
+                
+                arm_2d_tile_copy_with_des_mask_only(
+                                            s_ptRefreshLayers->ptTile,
+                                            &__watch_bg,
                                             &c_tileCircleBackgroundMask,
                                             &(s_ptRefreshLayers->tRegion));
+                arm_2d_op_wait_async(NULL);
+            }
+        }
 
         //! draw the watch panel with transparency effect
-        do {
-            static const arm_2d_region_t tPanelRegion = {
-                .tLocation = {
-                    .iX = ((__GLCD_CFG_SCEEN_WIDTH__ - 221) >> 1),
-                    .iY = ((__GLCD_CFG_SCEEN_HEIGHT__ - 221) >> 1),
-                },
-                .tSize = {
-                    .iWidth = 221,
-                    .iHeight = 221,
-                },
-            };
+        arm_2d_align_centre(__top_container, 221, 221) {
             arm_2d_tile_copy_with_colour_keying_and_opacity(
                                         &c_tileWatchPanel,
                                         ptTile,
-                                        &tPanelRegion,
+                                        &__centre_region,
                                         64,    //!< 25% opacity
                                         (__arm_2d_color_t){GLCD_COLOR_BLACK});
-
-
-        } while(0);
+            arm_2d_op_wait_async(NULL);
+        }
 #else
         arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
 

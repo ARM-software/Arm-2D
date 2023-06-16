@@ -84,7 +84,7 @@ extern uint32_t SystemCoreClock;
 
 /*============================ PROTOTYPES ====================================*/
 extern
-void benchmark_watch_panel_init(void);
+void benchmark_watch_panel_init(arm_2d_region_t tScreen);
 
 extern
 void benchmark_watch_panel_draw(const arm_2d_tile_t *ptTile, bool bIsNewFrame);
@@ -237,8 +237,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_benchmark_watch_panel_handler)
 }
 
 ARM_NONNULL(1)
-user_scene_benchmark_watch_panel_t *__arm_2d_scene_benchmark_watch_panel_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_benchmark_watch_panel_t *ptThis)
+user_scene_benchmark_watch_panel_t *
+    __arm_2d_scene_benchmark_watch_panel_init(
+                                    arm_2d_scene_player_t *ptDispAdapter, 
+                                    user_scene_benchmark_watch_panel_t *ptThis)
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
@@ -273,8 +275,14 @@ user_scene_benchmark_watch_panel_t *__arm_2d_scene_benchmark_watch_panel_init(  
     arm_2d_helper_ignore_low_level_flush(
                                 &(ptDispAdapter->use_as__arm_2d_helper_pfb_t));
     
+    
+    /* get the screen region */
+    arm_2d_region_t tScreen
+        = arm_2d_helper_pfb_get_display_area(
+            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
+
     /* initialize benchmark watch panel */
-    benchmark_watch_panel_init();
+    benchmark_watch_panel_init(tScreen);
     
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
                                         &this.use_as__arm_2d_scene_t, 

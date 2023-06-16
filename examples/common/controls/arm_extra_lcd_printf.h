@@ -87,15 +87,28 @@ extern "C" {
                                         uint8_t *pchCharCode)
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
-#define arm_print_banner(__STR)                                                 \
+#define __arm_print_banner2(__STR, __REGION)                                    \
         do {                                                                    \
             arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);      \
+            arm_lcd_text_set_draw_region(&(__REGION));                          \
             arm_lcd_text_location(                                              \
-                (__GLCD_CFG_SCEEN_HEIGHT__ / 8) / 2 - 1,                        \
-                ((__GLCD_CFG_SCEEN_WIDTH__ / 6) - sizeof(__STR)) / 2);          \
+                ((__REGION).tSize.iHeight / 8) / 2 - 1,                         \
+                (((__REGION).tSize.iWidth / 6) - sizeof(__STR)) / 2);           \
             arm_lcd_puts(__STR);                                                \
         } while(0)
 
+#define __arm_print_banner1(__STR)                                              \
+        do {                                                                    \
+            arm_2d_tile_t *ptTile = arm_2d_get_default_frame_buffer();          \
+            arm_2d_canvas(ptTile, __banner_canvas) {                            \
+                __arm_print_banner2(__STR, __banner_canvas);                    \
+            }                                                                   \
+        } while(0)
+
+#define arm_print_banner(...)                                                   \
+            ARM_CONNECT2(   __arm_print_banner,                                 \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+        
 /*============================ TYPES =========================================*/
 
 typedef struct {
