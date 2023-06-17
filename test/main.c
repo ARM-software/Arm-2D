@@ -103,6 +103,19 @@ __asm("  .global __ARM_use_no_argv\n");
  #define STR1(x)  #x
  #define STR(x)  STR1(x)
 
+__NO_RETURN
+extern void $Super$$exit(int status);
+
+__NO_RETURN
+void $Sub$$exit(int status)
+{
+    int cycles = stop_marker_ccnt();
+    printf("finished in %d cycles \n", cycles);
+
+    $Super$$exit(status);
+}
+
+
 int main()
 {
     DCACHE_ENA();
@@ -114,10 +127,13 @@ int main()
 
     printf("start %s benchmark \n", STR(BENCH));
 
-    start_marker_ccnt();
+    disp_adapter0_init();
     arm_2d_run_benchmark();
-    int cycles = stop_marker_ccnt();
+    start_marker_ccnt();
+    
+    while (1) {
+        disp_adapter0_task();
+    }
 
-    printf("finished in %d cycles \n", cycles);
     return 0;
 }

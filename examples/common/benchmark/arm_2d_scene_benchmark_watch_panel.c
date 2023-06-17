@@ -44,7 +44,9 @@
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wunused-function"
-#   pragma clang diagnostic ignored "-Wmissing-declarations"  
+#   pragma clang diagnostic ignored "-Wmissing-declarations"
+#   pragma clang diagnostic ignored "-Wdouble-promotion"
+#   pragma clang diagnostic ignored "-Wbad-function-cast"  
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #elif __IS_COMPILER_IAR__
 #   pragma diag_suppress=Pa089,Pe188,Pe177,Pe174
@@ -111,6 +113,35 @@ static struct {
 
 /*============================ IMPLEMENTATION ================================*/
 
+#if __IS_COMPILER_ARM_COMPILER_6__
+static __inline__ int __attribute__((__always_inline__, __nodebug__))
+__semihost(int val, const void *ptr) {
+  register int v __asm__("r0") = val;
+  register const void *p __asm__("r1") = ptr;
+  __asm__ __volatile__(
+#if defined(__thumb__)
+#if defined(__ARM_ARCH_PROFILE) && __ARM_ARCH_PROFILE == 'M'
+      "bkpt 0xab"
+#else /* !defined(__ARM_ARCH_PROFILE) || __ARM_ARCH_PROFILE != 'M' */
+#if defined(__USE_HLT_SEMIHOSTING)
+      ".inst.n 0xbabc"
+#else
+      "svc 0xab"
+#endif
+#endif
+#else /* !defined(__thumb__) */
+#if defined(__USE_HLT_SEMIHOSTING)
+      ".inst 0xe10f0070"
+#else
+      "svc 0x123456"
+#endif
+#endif
+      : "+r"(v), "+r"(p)
+      :
+      : "memory", "cc");
+  return v;
+}
+#endif
 
 static void __on_scene_benchmark_watch_panel_depose(arm_2d_scene_t *ptScene)
 {
@@ -178,6 +209,13 @@ static void __on_scene_benchmark_watch_panel_frame_complete(arm_2d_scene_t *ptSc
 
             /* resume low level flush */
             arm_2d_helper_resume_low_level_flush(ptHelper);
+#if __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
+#   if defined(__MICROLIB)
+            __semihost(0x18, (const void *)0x20026);
+#   else
+            exit(0);
+#endif
+#endif
         }
     }
 

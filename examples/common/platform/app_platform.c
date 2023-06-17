@@ -53,6 +53,36 @@
 #endif
 
 
+#if __IS_COMPILER_ARM_COMPILER_6__
+static __inline__ int __attribute__((__always_inline__, __nodebug__))
+__semihost(int val, const void *ptr) {
+  register int v __asm__("r0") = val;
+  register const void *p __asm__("r1") = ptr;
+  __asm__ __volatile__(
+#if defined(__thumb__)
+#if defined(__ARM_ARCH_PROFILE) && __ARM_ARCH_PROFILE == 'M'
+      "bkpt 0xab"
+#else /* !defined(__ARM_ARCH_PROFILE) || __ARM_ARCH_PROFILE != 'M' */
+#if defined(__USE_HLT_SEMIHOSTING)
+      ".inst.n 0xbabc"
+#else
+      "svc 0xab"
+#endif
+#endif
+#else /* !defined(__thumb__) */
+#if defined(__USE_HLT_SEMIHOSTING)
+      ".inst 0xe10f0070"
+#else
+      "svc 0x123456"
+#endif
+#endif
+      : "+r"(v), "+r"(p)
+      :
+      : "memory", "cc");
+  return v;
+}
+#endif
+
 extern void SysTick_Handler(void);
 extern void _ttywrch(int ch);
 
@@ -177,6 +207,7 @@ __NO_RETURN
 void _sys_exit(int ret)
 {
     ARM_2D_UNUSED(ret);
+    __semihost(0x18, (const void *)0x20026);
     while(1) {}
 }
 

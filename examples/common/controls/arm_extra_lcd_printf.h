@@ -92,8 +92,8 @@ extern "C" {
             arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);      \
             arm_lcd_text_set_draw_region(&(__REGION));                          \
             arm_lcd_text_location(                                              \
-                ((__REGION).tSize.iHeight / 8) / 2 - 1,                         \
-                (((__REGION).tSize.iWidth / 6) - sizeof(__STR)) / 2);           \
+                (uint8_t)(((__REGION).tSize.iHeight / 8) / 2 - 1),              \
+                (uint8_t)((((__REGION).tSize.iWidth / 6) - sizeof(__STR)) / 2));\
             arm_lcd_puts(__STR);                                                \
         } while(0)
 
