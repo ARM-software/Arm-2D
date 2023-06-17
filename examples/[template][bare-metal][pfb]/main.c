@@ -25,6 +25,10 @@
 #include "arm_2d_scenes.h"
 #include "arm_2d_disp_adapters.h"
 
+#ifdef RTE_Acceleration_Arm_2D_Extra_Benchmark
+#   include "arm_2d_benchmark.h"
+#endif
+
 #if defined(__clang__)
 #   pragma clang diagnostic push
 #   pragma clang diagnostic ignored "-Wunknown-warning-option"
@@ -185,7 +189,10 @@ int main (void)
     printf("\r\nArm-2D Bare-metal Template\r\n");
  
     disp_adapter0_init();
-    
+
+#ifdef RTE_Acceleration_Arm_2D_Extra_Benchmark
+    arm_2d_run_benchmark();
+#else
     arm_2d_scene_player_register_before_switching_event_handler(
             &DISP0_ADAPTER,
             before_scene_switching_handler);
@@ -210,7 +217,8 @@ int main (void)
     arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 3000);
     
     arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
-    
+#endif
+
     while (1) {
         disp_adapter0_task();
     }

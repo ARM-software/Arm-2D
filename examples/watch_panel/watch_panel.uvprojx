@@ -405,11 +405,6 @@
               <FileType>5</FileType>
               <FilePath>..\common\benchmark\benchmark_watch_panel.h</FilePath>
             </File>
-            <File>
-              <FileName>benchmark_watch_panel_app.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\benchmark\benchmark_watch_panel_app.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -1638,11 +1633,6 @@
               <FileName>benchmark_watch_panel.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\benchmark\benchmark_watch_panel.h</FilePath>
-            </File>
-            <File>
-              <FileName>benchmark_watch_panel_app.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\benchmark\benchmark_watch_panel_app.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2941,11 +2931,6 @@
               <FileType>5</FileType>
               <FilePath>..\common\benchmark\benchmark_watch_panel.h</FilePath>
             </File>
-            <File>
-              <FileName>benchmark_watch_panel_app.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\benchmark\benchmark_watch_panel_app.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -4175,11 +4160,6 @@
               <FileType>5</FileType>
               <FilePath>..\common\benchmark\benchmark_watch_panel.h</FilePath>
             </File>
-            <File>
-              <FileName>benchmark_watch_panel_app.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\benchmark\benchmark_watch_panel_app.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -5408,11 +5388,6 @@
               <FileName>benchmark_watch_panel.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\benchmark\benchmark_watch_panel.h</FilePath>
-            </File>
-            <File>
-              <FileName>benchmark_watch_panel_app.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\benchmark\benchmark_watch_panel_app.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6712,11 +6687,6 @@
               <FileType>5</FileType>
               <FilePath>..\common\benchmark\benchmark_watch_panel.h</FilePath>
             </File>
-            <File>
-              <FileName>benchmark_watch_panel_app.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\benchmark\benchmark_watch_panel_app.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -7946,11 +7916,6 @@
               <FileType>5</FileType>
               <FilePath>..\common\benchmark\benchmark_watch_panel.h</FilePath>
             </File>
-            <File>
-              <FileName>benchmark_watch_panel_app.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\benchmark\benchmark_watch_panel_app.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -9179,11 +9144,6 @@
               <FileName>benchmark_watch_panel.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\benchmark\benchmark_watch_panel.h</FilePath>
-            </File>
-            <File>
-              <FileName>benchmark_watch_panel_app.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\benchmark\benchmark_watch_panel_app.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -10446,11 +10406,6 @@
               <FileName>benchmark_watch_panel.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\benchmark\benchmark_watch_panel.h</FilePath>
-            </File>
-            <File>
-              <FileName>benchmark_watch_panel_app.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\benchmark\benchmark_watch_panel_app.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -11750,11 +11705,6 @@
               <FileType>5</FileType>
               <FilePath>..\common\benchmark\benchmark_watch_panel.h</FilePath>
             </File>
-            <File>
-              <FileName>benchmark_watch_panel_app.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\benchmark\benchmark_watch_panel_app.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -13016,11 +12966,6 @@
               <FileName>benchmark_watch_panel.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\common\benchmark\benchmark_watch_panel.h</FilePath>
-            </File>
-            <File>
-              <FileName>benchmark_watch_panel_app.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\common\benchmark\benchmark_watch_panel_app.c</FilePath>
             </File>
           </Files>
         </Group>

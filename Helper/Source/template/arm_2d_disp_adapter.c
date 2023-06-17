@@ -368,6 +368,13 @@ static void __user_scene_player_init(void)
         //! error detected
         assert(false);
     }
+
+    arm_lcd_text_init((arm_2d_region_t []) {
+                        { .tSize = {
+                            .iWidth = __DISP%Instance%_CFG_SCEEN_WIDTH__,
+                            .iHeight = __DISP%Instance%_CFG_SCEEN_HEIGHT__,
+                        }}});
+
 }
 
 /*----------------------------------------------------------------------------*

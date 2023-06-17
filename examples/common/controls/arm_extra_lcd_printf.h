@@ -172,6 +172,12 @@ arm_2d_font_get_char_descriptor_handler_t
 
 /*============================ PROTOTYPES ====================================*/
 
+/*!
+ * \brief initialize lcd text display service
+ * \param[in] ptScreen the default display area
+ */
+extern
+void arm_lcd_text_init(arm_2d_region_t *ptScreen);
 
 extern
 int arm_lcd_printf(const char *format, ...);

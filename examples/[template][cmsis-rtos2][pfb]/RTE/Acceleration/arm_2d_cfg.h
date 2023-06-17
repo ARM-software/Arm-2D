@@ -124,21 +124,21 @@ extern "C" {
 // <o>Number of iterations <1-2000>
 // <i> run number of iterations in arm-2d benchmark before calculating the result.
 #ifndef ITERATION_CNT
-#   define ITERATION_CNT                                                5
+#   define ITERATION_CNT                                                1000
 #endif
 
 // <q>Use Tiny mode to run benchmark
 // <i> Enable this mode to reduce the benchmark memory footprint (removing background picture etc.)
 // <i> This feature is disabled by default.
 #ifndef __ARM_2D_CFG_BENCHMARK_TINY_MODE__
-#   define __ARM_2D_CFG_BENCHMARK_TINY_MODE__               0
+#   define __ARM_2D_CFG_BENCHMARK_TINY_MODE__                           0
 #endif
 
 // <q> Enable Stopwatch mode in the Benchmark:Watch-panel
 // <i> Only update the second-hand (i.e. red pointer) every second in the watch-panel demo
 // <i> This feature is disabled by default.
 #ifndef __ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__
-#   define __ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__        0
+#   define __ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__                    0
 #endif
 
 
@@ -146,7 +146,7 @@ extern "C" {
 // <i> Exit the arm_2d_run_benchmark() after running specified iterations
 // <i> This feature is disabled by default.
 #ifndef __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
-#   define __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__        0
+#   define __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__                    0
 #endif
 
 //</h>

@@ -64,6 +64,7 @@ const uint8_t Font_6x8_h[(144-32)*8];
 /*============================ LOCAL VARIABLES ===============================*/
 
 static struct {
+    arm_2d_region_t tScreen;
     arm_2d_region_t tRegion;
     struct {
         uint8_t         chX;
@@ -84,10 +85,16 @@ static struct {
     
     
 } s_tLCDTextControl = {
+    .tScreen = {
+        .tSize = {
+            .iWidth = 320,
+            .iHeight = 240,
+        },
+    },
     .tRegion = { 
         .tSize = {
-            .iWidth = __GLCD_CFG_SCEEN_WIDTH__,
-            .iHeight = __GLCD_CFG_SCEEN_HEIGHT__,
+            .iWidth = 320,
+            .iHeight = 240,
         },
     },
     .tColour = {
@@ -103,6 +110,13 @@ static struct {
 };
 
 /*============================ IMPLEMENTATION ================================*/
+
+void arm_lcd_text_init(arm_2d_region_t *ptScreen)
+{
+    assert(NULL != ptScreen);
+    s_tLCDTextControl.tScreen = *ptScreen;
+}
+
 
 void arm_lcd_text_set_colour(COLOUR_INT_TYPE wForeground, COLOUR_INT_TYPE wBackground)
 {
@@ -133,13 +147,7 @@ void arm_lcd_text_set_opacity(uint8_t chOpacity)
 void arm_lcd_text_set_draw_region(arm_2d_region_t *ptRegion)
 {
     if (NULL == ptRegion) {
-        ptRegion =  (arm_2d_region_t []) {
-                    {
-                        .tSize = {
-                            .iWidth = __GLCD_CFG_SCEEN_WIDTH__,
-                            .iHeight = __GLCD_CFG_SCEEN_HEIGHT__,
-                        },
-                    }};
+        ptRegion =  &s_tLCDTextControl.tScreen;
     }
     
     s_tLCDTextControl.tRegion = *ptRegion;
