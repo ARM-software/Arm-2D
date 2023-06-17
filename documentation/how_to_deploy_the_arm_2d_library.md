@@ -330,7 +330,7 @@ Enjoy.
 **Table 3-1 Summary**
 
 
-| Projects                           | Description                                                  | Folder                                      | Note             |
-| ---------------------------------- | ------------------------------------------------------------ | ------------------------------------------- | ---------------- |
-| \[template\]\[bare-metal\]\[pfb\]  | It is a project template for the bare-metal environment.     | examples/\[template\]\[bare-metal\]\[pfb\]  | Project Template |
-| \[template\]\[cmsis-rtos2\]\[pfb\] | It is a project template for the RTOS environment, which use CMSIS-RTOS2 as an example to show how Arm-2D can work with an RTOS. | examples/\[template\]\[cmsis-rtos2\]\[pfb\] | Project Template |
+| Projects                    | Description                                                  | Folder                               | Note             |
+| --------------------------- | ------------------------------------------------------------ | ------------------------------------ | ---------------- |
+| \[template\]\[bare-metal\]  | It is a project template for the bare-metal environment.     | examples/\[template\]\[bare-metal\]  | Project Template |
+| \[template\]\[cmsis-rtos2\] | It is a project template for the RTOS environment, which use CMSIS-RTOS2 as an example to show how Arm-2D can work with an RTOS. | examples/\[template\]\[cmsis-rtos2\] | Project Template |

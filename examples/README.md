@@ -2,13 +2,11 @@
 
 
 
-## 1. Default Examples 
+## 1. Benchmark 
 
+You can now run benchmarks directly in `[template][bare-metal]` and `[template][cmsis-rtso2]` projects by selecting the desired benchmark in RTE.
 
-
-### 1.1 Benchmark
-
-**PROJECT:    benchmark**
+### 1.1 Benchmark: Generic
 
 It is an **ALL-IN-ONE** example that demonstrates almost all the features provided by the library. It is also used as a benchmark of Arm-2D. Since there is no public benchmark available for micro-controllers, we decide to overcome this problem with the following methods and considerations:
 
@@ -50,9 +48,7 @@ It is an **ALL-IN-ONE** example that demonstrates almost all the features provid
 
 
 
-### 1.2 Watch-Panel
-
-**PROJECT:    watch_panel**
+### 1.2 Benchmark: Watch-Panel
 
 It is an example of transform APIs. It consists of seven layers:
 
