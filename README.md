@@ -255,12 +255,10 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 
 ### 3.1 Summary
 
-| Projects                           | Description                                                  | Folder                                      | Note                   |
-| ---------------------------------- | ------------------------------------------------------------ | ------------------------------------------- | ---------------------- |
-| benchmark                          | It is an **ALL-IN-ONE** example that demonstrates almost all features provided by Arm-2D. By setting different PFB sizes, you can evaluate the 2D image processing capability for the target system. | examples/benchmark                          | **Used as benchmark.** |
-| watch_panel                        | It is a dedicated example of a smart-watch-like panel. A pointer and two gears rotate at different angular velocities on a translucent watch panel with a dynamic background. | examples/watch_panel                        | **Used as benchmark**  |
-| \[template\]\[bare-metal\]\[pfb\]  | It is a project template for the bare-metal environment.     | examples/\[template\]\[bare-metal\]\[pfb\]  | Project Template       |
-| \[template\]\[cmsis-rtos2\]\[pfb\] | It is a project template for the RTOS environment, which use CMSIS-RTOS2 as an example to show how Arm-2D can work with an RTOS. | examples/\[template\]\[cmsis-rtos2\]\[pfb\] | Project Template       |
+| Projects                           | Description                                                  | Folder                                      | Note             |
+| ---------------------------------- | ------------------------------------------------------------ | ------------------------------------------- | ---------------- |
+| \[template\]\[bare-metal\]\[pfb\]  | It is a project template for the bare-metal environment.     | examples/\[template\]\[bare-metal\]\[pfb\]  | Project Template |
+| \[template\]\[cmsis-rtos2\]\[pfb\] | It is a project template for the RTOS environment, which use CMSIS-RTOS2 as an example to show how Arm-2D can work with an RTOS. | examples/\[template\]\[cmsis-rtos2\]\[pfb\] | Project Template |
 
 ### 3.2 Benchmark
 
