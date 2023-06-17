@@ -45,13 +45,9 @@ Pre_Include_Global.h
 /documentation/linkchecker-out.csv
 /output
 *.0???
-examples/\[template\]\[bare-metal\]\[pfb\]/project/mdk/RTE/Device/CMSDK_CM0plus/ac6_arm.sct
-examples/\[template\]\[bare-metal\]\[pfb\]/project/mdk/RTE/Device/CMSDK_CM4_FP/ac6_arm.sct
-examples/\[template\]\[bare-metal\]\[pfb\]/project/mdk/RTE/Device/CMSDK_CM7_DP/ac6_arm.sct
-examples/watch_panel/RTE/Device/CMSDK_CM0plus/ac6_arm.sct
-examples/watch_panel/RTE/Device/CMSDK_CM4_FP/ac6_arm.sct
-examples/watch_panel/RTE/Device/CMSDK_CM7_DP/ac6_arm.sct
-examples/watch_panel/RTE/Device/CMSDK_CM0plus/gcc_arm.ld
+examples/\[template\]\[bare-metal\]\/project/mdk/RTE/Device/CMSDK_CM0plus/ac6_arm.sct
+examples/\[template\]\[bare-metal\]\/project/mdk/RTE/Device/CMSDK_CM4_FP/ac6_arm.sct
+examples/\[template\]\[bare-metal\]\/project/mdk/RTE/Device/CMSDK_CM7_DP/ac6_arm.sct
 test/arm2d.cbuild-idx.yml
 test/arm2d.cdefault.yml
 test/arm2d_*.*+*-*/**/*
