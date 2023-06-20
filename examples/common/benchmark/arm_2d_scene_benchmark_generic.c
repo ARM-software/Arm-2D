@@ -212,7 +212,7 @@ static void __on_scene_benchmark_generic_frame_complete(arm_2d_scene_t *ptScene)
             BENCHMARK.fFPS30Freq = (float)
                 ((      (double)(BENCHMARK.wAverage * 30) 
                     /   (double)arm_2d_helper_get_reference_clock_frequency()) 
-                 * ((float)SystemCoreClock / 1000000.0f));
+                 * ((double)SystemCoreClock / 1000000.0f));
 
             /* resume low level flush */
             arm_2d_helper_resume_low_level_flush(ptHelper);

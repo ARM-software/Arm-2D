@@ -313,7 +313,7 @@ static bool __on_each_frame_complete(void *ptTarget)
 //                BENCHMARK.fFPS30Freq = (float)
 //                ((      (double)(BENCHMARK.wAverage * 30) 
 //                    /   (double)arm_2d_helper_get_reference_clock_frequency()) 
-//                 * ((float)SystemCoreClock / 1000000.0f));
+//                 * ((double)SystemCoreClock / 1000000.0f));
                  
                 BENCHMARK.wMin = UINT32_MAX;
                 BENCHMARK.wMax = 0;
