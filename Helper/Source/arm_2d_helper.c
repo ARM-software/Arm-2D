@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        04. May 2023
- * $Revision:    V.1.5.2
+ * $Date:        20. June 2023
+ * $Revision:    V.1.5.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -126,7 +126,9 @@ void arm_2d_helper_init(void)
 #endif
 }
 
-
+/* NOTE: for non-arm architecture, you have to implement those functions.
+ */
+#if defined(__ARM_ARCH) && __ARM_ARCH
 __WEAK int64_t arm_2d_helper_get_system_timestamp(void)
 {
 #if defined(__PERF_COUNTER__)
@@ -142,7 +144,7 @@ uint32_t arm_2d_helper_get_reference_clock_frequency(void)
     extern uint32_t SystemCoreClock;
     return SystemCoreClock;
 }
-
+#endif
 
 int64_t arm_2d_helper_convert_ticks_to_ms(int64_t lTick)
 {
