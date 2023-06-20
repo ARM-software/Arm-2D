@@ -207,6 +207,8 @@ static void __on_scene_benchmark_generic_frame_complete(arm_2d_scene_t *ptScene)
         if (0 == BENCHMARK.wIterations) {
             BENCHMARK.wAverage =
                 (uint32_t)(BENCHMARK.dwTotal / (uint64_t)ITERATION_CNT);
+            BENCHMARK.wAverage = MAX(1, BENCHMARK.wAverage);
+
             BENCHMARK.fFPS30Freq = (float)
                 ((      (double)(BENCHMARK.wAverage * 30) 
                     /   (double)arm_2d_helper_get_reference_clock_frequency()) 

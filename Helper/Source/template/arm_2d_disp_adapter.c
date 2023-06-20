@@ -309,6 +309,7 @@ static bool __on_each_frame_complete(void *ptTarget)
             if (0 == BENCHMARK.wIterations) {
                 BENCHMARK.wAverage =
                     (uint32_t)(BENCHMARK.dwTotal / (uint64_t)__DISP%Instance%_CFG_ITERATION_CNT__);
+                BENCHMARK.wAverage = MAX(1, BENCHMARK.wAverage);
 //                BENCHMARK.fFPS30Freq = (float)
 //                ((      (double)(BENCHMARK.wAverage * 30) 
 //                    /   (double)arm_2d_helper_get_reference_clock_frequency()) 
