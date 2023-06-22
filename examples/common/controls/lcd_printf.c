@@ -222,6 +222,10 @@ ARM_2D_A1_FONT_GET_CHAR_DESCRIPTOR_HANDLER(
     ptDescriptor->tileChar.ptParent = (arm_2d_tile_t *)&ptFont->tileFont;
     ptDescriptor->tileChar.tInfo.bDerivedResource = true;
     
+    ptDescriptor->iAdvance = ptFont->tCharSize.iWidth;
+    ptDescriptor->iBearingX = 0;
+    ptDescriptor->iBearingY = ptFont->tCharSize.iHeight;
+    
     ptDescriptor->tileChar.tRegion.tLocation.iY = 
         (*pchCharCode - (int16_t)this.nOffset) * ptFont->tCharSize.iHeight;
     
