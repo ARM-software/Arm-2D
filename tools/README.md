@@ -24,7 +24,9 @@ The `arm_2d_tile_t` descriptors are used as the standard input and output in mos
 
 ### Usage :
 
-img2c.py [***-h***] [***--format*** \<***FORMAT***\>] [***--name \<NAME\>***] [***--dim DIM DIM***] [***--rot ANGLE***] \<***-i \<Input File Path***\>\> \[***-o \<Output file Path***\>\]
+```sh
+img2c.py [-h] [--format <FORMAT>] [--name <NAME\>] [--dim <Width> <Height>] [--rot <ANGLE>] <-i <Input File Path>> [-o <Output file Path>]
+```
 
 
 
@@ -56,4 +58,48 @@ Needs ***python3***, ***pillow*** (https://python-pillow.org/) & ***numpy***
 pip install Pillow
 pip install numpy
 ```
+
+
+
+
+
+# TrueType Font Convertor (ttf2c.py)
+
+## 1. Overview
+
+This tool will extract the glyph bitmap from the specified TrueType font file according to the text (dictionary) provided by the user and generate a custom font that arm-2d can use directly.
+
+
+
+## 2. How to Use
+
+### Usage:
+
+```sh
+ttf2c.py [-h] <-i <Input File Path>> <-t <Text File Path>>[-o <Output File Path>] [-n <Font Name>]
+```
+
+
+
+| Arguments                 | Description                                                  | Memo     |
+| ------------------------- | ------------------------------------------------------------ | -------- |
+| ***-h, --help***          | show help information                                        |          |
+| -i ***Input File Path***  | Input TTF file (*.ttf)                                       |          |
+| -t **Test File Path**     | A input text file used as reference. ttf2c.py uses the chars in the text file to create a customized font. |          |
+| -o ***Output File Path*** | the path for the output C file containing the customized font using UTF8 coding | Optional |
+| -n ***Font Name***        | the font name: **ARM_2D_FONT_A8_\<Font Name\>**              | Optional |
+| -p Pixel Size             | the desired font size in pixel. The pixel size is only a reference and the actual size will be slightly larger due to the TrueType Font feature. | Optional |
+
+
+
+## 3. Installation:
+
+Needs ***python3***, ***numpy*** and **freetype**:
+
+```
+pip install freetype-py
+pip install numpy
+```
+
+
 

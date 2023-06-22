@@ -195,6 +195,7 @@
             <file category="doc"         name="documentation/index.html"/>
             <file category="preIncludeGlobal"    name="Library/Include/template/arm_2d_cfg.h"   attr="config" version="1.2.0" />
             <file category="utility"     name="tools/img2c.py"                                  attr="config" version="1.2.2"/>
+            <file category="utility"     name="tools/ttf2c.py"                                  attr="config" version="1.0.0"/>
             <file category="other"       name="tools/README.md"                                 attr="config" version="1.2.1"/>
             
             <!-- code template -->

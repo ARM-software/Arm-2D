@@ -113,10 +113,11 @@ extern "C" {
 
 typedef struct {
     arm_2d_tile_t tileChar;
-    int8_t chKerning;
-    int8_t BearingX;
-    int8_t BearingY;
+    int16_t iAdvance;
+    int16_t iBearingX;
+    int16_t iBearingY;
     int8_t chCodeLength;
+    int8_t          : 8;
 } arm_2d_char_descriptor_t;
 
 typedef struct arm_2d_font_t arm_2d_font_t;

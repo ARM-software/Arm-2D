@@ -248,10 +248,12 @@ int8_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8_
 
     (*ppchCharCode) += s_tLCDTextControl.tCharDescriptor.chCodeLength;
 
+    arm_2d_size_t tBBoxSize = s_tLCDTextControl.ptFont->tCharSize;
+
     arm_2d_region_t tDrawRegion = {
         .tLocation = {
-            .iX = iX + s_tLCDTextControl.tCharDescriptor.BearingX,
-            .iY = iY + s_tLCDTextControl.tCharDescriptor.BearingY,
+            .iX = iX + s_tLCDTextControl.tCharDescriptor.iBearingX,
+            .iY = iY + (tBBoxSize.iHeight - s_tLCDTextControl.tCharDescriptor.iBearingY),
          },
         .tSize = s_tLCDTextControl.tCharDescriptor.tileChar.tRegion.tSize,
     };
@@ -274,7 +276,7 @@ int8_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8_
 
     arm_2d_op_wait_async(NULL);
 
-    return s_tLCDTextControl.tCharDescriptor.chKerning;
+    return s_tLCDTextControl.tCharDescriptor.iAdvance;
 }
 
 void arm_lcd_puts(const char *str)
