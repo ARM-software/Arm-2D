@@ -2421,12 +2421,16 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__digit_font_get_char_descriptor)
     arm_2d_user_font_t *ptThis = (arm_2d_user_font_t *)ptFont;
     
     memset(ptDescriptor, 0, sizeof(arm_2d_char_descriptor_t));
-    
-    ptDescriptor->tileChar.tRegion.tSize = ptFont->tCharSize;
+
     ptDescriptor->tileChar.ptParent = (arm_2d_tile_t *)&ptFont->tileFont;
     ptDescriptor->tileChar.tInfo.bDerivedResource = true;
-    ptDescriptor->chCodeLength = 1;
     
+    ptDescriptor->chCodeLength = 1;
+    ptDescriptor->tileChar.tRegion.tSize = ptFont->tCharSize;
+    ptDescriptor->iBearingX = 0;
+    ptDescriptor->iBearingY = ptFont->tCharSize.iHeight;
+    ptDescriptor->iAdvance = ptFont->tCharSize.iWidth;
+
     arm_foreach( arm_2d_char_idx_t, this.tLookUpTable, this.hwCount, ptItem) {
         if (    *pchCharCode >= ptItem->chStartCode[0] 
             &&  *pchCharCode < (ptItem->chStartCode[0] + ptItem->hwCount)) {
