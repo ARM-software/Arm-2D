@@ -182,7 +182,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
         if (BENCHMARK.wAverage) {
             arm_lcd_printf(
                 "FPS:%3d:%dms ",
-                arm_2d_helper_get_reference_clock_frequency() / BENCHMARK.wAverage,
+                MIN(arm_2d_helper_get_reference_clock_frequency() / BENCHMARK.wAverage, 999),
                 (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wAverage));
         }
 
