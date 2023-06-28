@@ -136,7 +136,7 @@ int main (void)
         arm_2d_init();
     }
 
-    printf("\r\nArm-2D Bare-metal Template\r\n");
+    printf("\r\nArm-2D x86 Template\r\n");
  
     disp_adapter0_init();
 
