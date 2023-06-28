@@ -1,0 +1,61 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/user",
+                "${workspaceFolder}/math",
+                "${workspaceFolder}/math/dsp",
+                "${workspaceFolder}/../../../Arm-2D/Helper/Include",
+                "${workspaceFolder}/../../../Arm-2D/Library/Include",
+                "${workspaceFolder}/../../../Arm-2D/examples/common/benchmark",
+                "${workspaceFolder}/../../../Arm-2D/examples/common/controls"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "RTE_Acceleration_Arm_2D_Extra_Benchmark",
+                "RTE_Acceleration_Arm_2D_Helper_Disp_Adapter0",
+                "ARM_SECTION(x)=  ",
+                "__va_list=va_list"
+            ],
+            "compilerPath": "D:/mingw32/bin/gcc.exe",
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++11",
+            "intelliSenseMode": "windows-gcc-x86",
+            "compilerArgs": [
+            ]
+        },
+        {
+            "name": "Win64",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/user",
+                "${workspaceFolder}/math",
+                "${workspaceFolder}/math/dsp",
+                "${workspaceFolder}/../../../Arm-2D/Helper/Include",
+                "${workspaceFolder}/../../../Arm-2D/Library/Include",
+                "${workspaceFolder}/../../../Arm-2D/examples/common/benchmark",
+                "${workspaceFolder}/../../../Arm-2D/examples/common/controls"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "RTE_Acceleration_Arm_2D_Extra_Benchmark",
+                "RTE_Acceleration_Arm_2D_Helper_Disp_Adapter0",
+                "ARM_SECTION(x)=  ",
+                "__va_list=va_list"
+            ],
+            "compilerPath": "D:/mingw64/bin/gcc.exe",
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++11",
+            "intelliSenseMode": "windows-gcc-x64",
+            "compilerArgs": [
+            ]
+        }
+    ],
+    "version": 4
+}
