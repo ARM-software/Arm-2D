@@ -255,10 +255,11 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 
 ### 3.1 Summary
 
-| Projects                    | Description                                                  | Folder                               | Note             |
-| --------------------------- | ------------------------------------------------------------ | ------------------------------------ | ---------------- |
-| \[template\]\[bare-metal\]  | It is a project template for the bare-metal environment.     | examples/\[template\]\[bare-metal\]  | Project Template |
-| \[template\]\[cmsis-rtos2\] | It is a project template for the RTOS environment, which use CMSIS-RTOS2 as an example to show how Arm-2D can work with an RTOS. | examples/\[template\]\[cmsis-rtos2\] | Project Template |
+| Projects                      | Description                                                  | Folder                                 | Note |
+| ----------------------------- | ------------------------------------------------------------ | -------------------------------------- | ---- |
+| \[template\]\[bare-metal\]    | It is a project template for the bare-metal environment.     | examples/\[template\]\[bare-metal\]    |      |
+| \[template\]\[cmsis-rtos2\]   | It is a project template for the RTOS environment, which use CMSIS-RTOS2 as an example to show how Arm-2D can work with an RTOS. | examples/\[template\]\[cmsis-rtos2\]   |      |
+| \[template\]\[x86\]\[vscode\] | It is a project template for x86 environment using VS Code + SDL2 | examples/\[template\]\[x86\]\[vscode\] |      |
 
 ### 3.2 Benchmark
 
@@ -284,7 +285,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
 
 **Figure 1-4 A snapshot of benchmark running on Cortex-M4 FVP platform**
 
-![Benchmark](./documentation/pictures/benchmark.png)
+![Benchmark](./documentation/pictures/benchmark.png) 
 
 - **Use the average cycle count in 1000 iterations as benchmark score.**
 
@@ -292,7 +293,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
 
 **Figure 1-5 Performance Comparison among some Cortex-M processors**
 
-![Performance Comparison among some Cortex-M processors](./documentation/pictures/TopReadme_1_6_2_b.png)
+![Performance Comparison among some Cortex-M processors](./documentation/pictures/TopReadme_1_6_2_b.png) 
 
 ## 4 Limitations
 
