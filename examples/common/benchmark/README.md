@@ -32,7 +32,7 @@ It is an **ALL-IN-ONE** example that demonstrates almost all the features provid
 
 **Figure 1-1 A snapshot of benchmark running on Cortex-M4 FVP platform**
 
-![](../documentation/pictures/benchmark.png) 
+![](../../../documentation/pictures/benchmark.png) 
 
 
 
@@ -44,7 +44,7 @@ It is an **ALL-IN-ONE** example that demonstrates almost all the features provid
 
 **Figure 1-2 Performance Comparison among some Cortex-M processors**
 
-![image-20210318225839820](../documentation/pictures/TopReadme_1_6_2_b.png)
+![image-20210318225839820](../../../documentation/pictures/TopReadme_1_6_2_b.png)
 
 
 
@@ -64,4 +64,4 @@ This demo also shows how a fancy looking clock could be rendered with just less 
 
 **Figure 1-3  A snapshot of watch-panel running on Cortex-M4 FVP platform**
 
-![watch-panel](../documentation/pictures/watch-panel.png)  
+![watch-panel](../../../documentation/pictures/watch-panel.png)  
