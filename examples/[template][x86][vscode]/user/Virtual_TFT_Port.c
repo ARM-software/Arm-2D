@@ -3,6 +3,8 @@
 #include <stdbool.h>
 #include <string.h>
 #include "SDL.h"
+#include "arm_2d.h"
+
 #undef main
 
 #define monochrome_2_RGB888(color)                (color?0x000000:0xffffff)
@@ -87,9 +89,16 @@ static void monitor_sdl_init(void)
 
     SDL_SetEventFilter(quit_filter, NULL);
 
-    window = SDL_CreateWindow("TFT Simulator",
-                              SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                              VT_WIDTH, VT_HEIGHT, 0);       /*last param. SDL_WINDOW_BORDERLESS to hide borders*/
+    window = SDL_CreateWindow(  "Arm-2D v" 
+                                ARM_TO_STRING(ARM_2D_VERSION_MAJOR)
+                                "."
+                                ARM_TO_STRING(ARM_2D_VERSION_MINOR)
+                                "."
+                                ARM_TO_STRING(ARM_2D_VERSION_PATCH)
+                                "-"
+                                ARM_2D_VERSION_STR,
+                                SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+                                VT_WIDTH, VT_HEIGHT, 0);       /*last param. SDL_WINDOW_BORDERLESS to hide borders*/
 
 #if VT_VIRTUAL_MACHINE
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
