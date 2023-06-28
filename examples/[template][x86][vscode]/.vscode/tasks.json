@@ -1,0 +1,113 @@
+{
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "copy32Dll",
+            "command":"${workspaceFolder}/sdl2/autoCopy32.bat",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+        },
+        {
+            "type": "shell",
+            "label": "copy64Dll",
+            "command":"${workspaceFolder}/sdl2/autoCopy64.bat",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+        },
+        {
+            "dependsOn":"copy32Dll",
+            "type": "cppbuild",
+            "label": "C/C++: gcc.exe build x86(32)",
+            "command": "D:/mingw32/bin/gcc.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-DARM_SECTION(x)= ",
+                "-D__va_list=va_list",
+                "-DRTE_Acceleration_Arm_2D_Extra_Benchmark_Watch_Panel",
+                "-DRTE_Acceleration_Arm_2D_Helper_Disp_Adapter0",
+                "-g",
+                "${fileDirname}/*.c",
+                "${workspaceFolder}/../../../Arm-2D/Library/Source/*.c",
+                "${workspaceFolder}/../../../Arm-2D/Helper/Source/*.c",
+                "${workspaceFolder}/../../../Arm-2D/examples/common/controls/*.c",
+                "${workspaceFolder}/../../../Arm-2D/examples/common/benchmark/arm_2d_scene_benchmark_watch_panel*.c",
+                "${workspaceFolder}/../../../Arm-2D/examples/common/benchmark/benchmark_watch_panel*.c",
+                "${workspaceFolder}/../../../Arm-2D/examples/common/asset/*.c",
+                "${workspaceFolder}/math/*.c",
+                "-lSDL2main",
+                "-lSDL2",
+                "-L${workspaceFolder}/sdl2/32/lib",
+                "-I${workspaceFolder}/sdl2/32/include/SDL2",
+                "-I${workspaceFolder}/../../../Arm-2D/Library/Include",
+                "-I${workspaceFolder}/../../../Arm-2D/Helper/Include",
+                "-I${workspaceFolder}/math",
+                "-I${workspaceFolder}/math/dsp",
+                "-I${workspaceFolder}/user",
+                "-I${workspaceFolder}/../../../Arm-2D/examples/common/benchmark",
+                "-I${workspaceFolder}/../../../Arm-2D/examples/common/controls",
+                "-o",
+                "${workspaceFolder}/build/${fileBasenameNoExtension}.exe"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "调试器生成的任务。"
+        },
+        {
+            "dependsOn":"copy64Dll",
+            "type": "cppbuild",
+            "label": "C/C++: gcc.exe build x64(64)",
+            "command": "D:/mingw64/bin/gcc.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-DARM_SECTION(x)= ",
+                "-D__va_list=va_list",
+                "-DRTE_Acceleration_Arm_2D_Extra_Benchmark_Watch_Panel",
+                "-DRTE_Acceleration_Arm_2D_Helper_Disp_Adapter0",
+                "-g",
+                "${fileDirname}/*.c",
+                "${workspaceFolder}/../../../Arm-2D/Library/Source/*.c",
+                "${workspaceFolder}/../../../Arm-2D/Helper/Source/*.c",
+                "${workspaceFolder}/../../../Arm-2D/examples/common/controls/*.c",
+                "${workspaceFolder}/../../../Arm-2D/examples/common/benchmark/arm_2d_scene_benchmark_watch_panel*.c",
+                "${workspaceFolder}/../../../Arm-2D/examples/common/benchmark/benchmark_watch_panel*.c",
+                "${workspaceFolder}/../../../Arm-2D/examples/common/asset/*.c",
+                "${workspaceFolder}/math/*.c",
+                "-lSDL2main",
+                "-lSDL2",
+                "-L${workspaceFolder}/sdl2/64/lib",
+                "-I${workspaceFolder}/sdl2/64/include/SDL2",
+                "-I${workspaceFolder}/../../../Arm-2D/Library/Include",
+                "-I${workspaceFolder}/../../../Arm-2D/Helper/Include",
+                "-I${workspaceFolder}/math",
+                "-I${workspaceFolder}/math/dsp",
+                "-I${workspaceFolder}/user",
+                "-I${workspaceFolder}/../../../Arm-2D/examples/common/benchmark",
+                "-I${workspaceFolder}/../../../Arm-2D/examples/common/controls",
+                "-o",
+                "${workspaceFolder}/build/${fileBasenameNoExtension}.exe"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "调试器生成的任务。"
+        }
+    ],
+    "version": "2.0.0"
+}
