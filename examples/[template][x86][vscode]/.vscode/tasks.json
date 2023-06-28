@@ -9,14 +9,6 @@
             },
         },
         {
-            "type": "shell",
-            "label": "copy64Dll",
-            "command":"${workspaceFolder}/sdl2/autoCopy64.bat",
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-        },
-        {
             "dependsOn":"copy32Dll",
             "type": "cppbuild",
             "label": "C/C++: gcc.exe build x86(32)",
@@ -27,7 +19,7 @@
                 "-D__va_list=va_list",
                 "-g",
                 "-std=gnu11",
-                "${fileDirname}/*.c",
+                "${workspaceFolder}/user/*.c",
                 "${workspaceFolder}/../../../Arm-2D/Library/Source/*.c",
                 "${workspaceFolder}/../../../Arm-2D/Helper/Source/*.c",
                 "${workspaceFolder}/../../../Arm-2D/examples/common/controls/*.c",
@@ -46,7 +38,7 @@
                 "-I${workspaceFolder}/../../../Arm-2D/examples/common/benchmark",
                 "-I${workspaceFolder}/../../../Arm-2D/examples/common/controls",
                 "-o",
-                "${workspaceFolder}/build/${fileBasenameNoExtension}.exe"
+                "${workspaceFolder}/build/arm_2d.exe"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
