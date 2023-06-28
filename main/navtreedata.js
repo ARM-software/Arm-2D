@@ -31,7 +31,7 @@ var NAVTREE =
       [ "How to Get Started", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md3", null ],
       [ "Table of Content", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md4", null ],
       [ "Features", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md5", [
-        [ "In this version (ver1.1.3)", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md6", null ],
+        [ "In this version (ver1.1.4-dev)", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md6", null ],
         [ "New Features Planned in the Future", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md7", null ]
       ] ],
       [ "1 Introduction", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md8", [
@@ -59,15 +59,15 @@ var NAVTREE =
         [ "Table of Content <!-- omit from toc -->", "md_getting_started_as_an_application_designer.html#autotoc_md25", null ]
       ] ],
       [ "2 Step by Step Guidance", "md_getting_started_as_an_application_designer.html#autotoc_md26", [
-        [ "2.1 Familiar with the basic concepts", "md_getting_started_as_an_application_designer.html#autotoc_md27", null ],
+        [ "2.1 The basic concepts", "md_getting_started_as_an_application_designer.html#autotoc_md27", null ],
         [ "2.2 Port Arm-2D to your local platform", "md_getting_started_as_an_application_designer.html#autotoc_md28", null ],
         [ "2.3 Try the basic Tile Operations and the Layout Assistant", "md_getting_started_as_an_application_designer.html#autotoc_md29", null ],
-        [ "2.4 Try existing example controls", "md_getting_started_as_an_application_designer.html#autotoc_md30", null ],
+        [ "2.4 Try example controls", "md_getting_started_as_an_application_designer.html#autotoc_md30", null ],
         [ "2.5 Write a simple GUI Application", "md_getting_started_as_an_application_designer.html#autotoc_md31", null ],
         [ "2.6 Learn the basic method to optimize the performance and memory footprint", "md_getting_started_as_an_application_designer.html#autotoc_md32", null ],
         [ "2.7 Tips for other advanced topics", "md_getting_started_as_an_application_designer.html#autotoc_md33", [
           [ "2.7.1 Benchmarks", "md_getting_started_as_an_application_designer.html#autotoc_md34", null ],
-          [ "2.7.2 Asynchronose Mode and RTOS support", "md_getting_started_as_an_application_designer.html#autotoc_md35", null ]
+          [ "2.7.2 Asynchronous Mode and RTOS support", "md_getting_started_as_an_application_designer.html#autotoc_md35", null ]
         ] ]
       ] ],
       [ "3 Tips For Exploring the Library", "md_getting_started_as_an_application_designer.html#autotoc_md36", [
@@ -217,9 +217,9 @@ var NAVTREEINDEX =
 [
 "group__Deprecated.html",
 "group__gAlpha.html#gaaa694b86a24ae15b092de1aa5dd0dea9",
-"group__gKernel.html",
-"group__gKernel.html#gaeaf81c5ab6173e64f16ae66daa78d915",
-"md_getting_started_as_an_application_designer.html#autotoc_md24"
+"group__gHelper.html#structarm__2d__scene__player__t_8____unnamed123_____8Switch_8____unnamed129_____8Fade",
+"group__gKernel.html#gae3f07984511fe3c476483a8ba0143b44",
+"md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md6"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

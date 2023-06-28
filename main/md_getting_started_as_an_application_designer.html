@@ -109,10 +109,10 @@ $(document).ready(function(){initNavTree('md_getting_started_as_an_application_d
 <div class="contents">
 <div class="textblock"><h1><a class="anchor" id="autotoc_md24"></a>
 1 Before We Start</h1>
-<p ><b>Arm-2D is not a GUI.</b> To be called GUI, it lacks many critical components, such as the element tree, the message processing, a rich set of controls, the support for interactive input devices, and a good-to-have GUI designer.</p>
-<p >If possible, I hope that no one would have to use Arm-2D directly to create GUI applications. However, under the pressure of cost, there are always some embedded products developing GUI applications in resource-constrained environments (e.g. 64K Flash, 12K RAM etc.). Meanwhile, although some devices have relatively richer resources, the application software is often too big to reserve sufficient memory for a decent GUI stack. Supporting GUI application in resource constraint environments is a world "forgotten" by most of the mainstream embedded GUI stacks.</p>
+<p ><b>Arm-2D is not a GUI.</b> To be called GUI, it lacks many critical components, such as the element tree, the message processing, a rich set of controls, the support for interactive input devices, and a nice-to-have GUI designer.</p>
+<p >If possible, I hope that no one would have to use Arm-2D directly to create GUI applications. However, under the cost pressure, some embedded products must develop GUI applications in resource-constrained environments (e.g. 64K Flash, 12K RAM etc.). Meanwhile, even some devices have relatively richer resources, the application software is often too big to reserve sufficient memory for using a decent GUI stack. Supporting GUI applications in resource constraint environments is a world forgotten by the mainstream embedded GUI stacks.</p>
 <p >If the graphics in your application is simple, i.e. consists of panels (for displaying parameters and user settings), and the human-machine interactions are implemented based on a keyboard (or a touch panel without complex touch gestures), then using Arm-2D APIs directly to design GUI applications might be an option. In fact, if you can figure out a way to fulfill the missing parts aforementioned, the GUI application designed with Arm-2D is not only looking good but also has an impressively low memory footprint.</p>
-<p >If you happen to meet the conditions above, <b>don't panic</b>, we will try our best to provide you with a simple and efficient user experience. <b>By focusing on the API usage and following the guidance</b> introduced in this article, <b>you can master the Arm-2D application design quickly</b>.</p>
+<p >If you happen to meet the conditions above, <b>don't panic</b>, we will try our best to provide you with a easy-and-efficient development experience. <b>By focusing on the API usage and following the guidance</b> introduced in this article, <b>you can master the Arm-2D application design quickly</b>.</p>
 <h2><a class="anchor" id="autotoc_md25"></a>
 Table of Content &lt;!-- omit from toc --&gt;</h2>
 <ul>
@@ -139,20 +139,20 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 <h1><a class="anchor" id="autotoc_md26"></a>
 2 Step by Step Guidance</h1>
 <h2><a class="anchor" id="autotoc_md27"></a>
-2.1 Familiar with the basic concepts</h2>
-<p >The first step of getting started is getting familiar with some basic concepts, among which <em><b>Tile</b></em>, <em><b>Region</b></em> and corresponding <em><b>Bounding Box model</b></em> are the most fundamental ones, as almost all of the APIs take Tile(s) and Region(s) as input/output parameters. Please kindly reading <a class="el" href="md__home_runner_work_Arm_2D_Arm_2D_README.html">**README**</a> and <a class="el" href="md_introduction.html">**Introduction**</a> to familiar those basic concepts.</p>
+2.1 The basic concepts</h2>
+<p >The first step of getting started is learning some basic concepts, among which <em><b>Tile</b></em>, <em><b>Region</b></em> and <em><b>Bounding Box model</b></em> are the most fundamental ones, because almost all of the APIs take Tile(s) and Region(s) as input/output. Please kindly reading <a class="el" href="md__home_runner_work_Arm_2D_Arm_2D_README.html">**README**</a> and <a class="el" href="md_introduction.html">**Introduction**</a> for details.</p>
 <h2><a class="anchor" id="autotoc_md28"></a>
 2.2 Port Arm-2D to your local platform</h2>
-<p >After understanding the basic concepts of Arm-2d, we recommend that you follow the steps described in <a class="el" href="md_how_to_deploy_the_arm_2d_library.html">how_to_deploy_the_arm_2d_library.md</a> to deploy Arm-2d to your local hardware platform.</p>
-<p >Of course, if you want to skip this step and focus on learning how to use the Arm-2D API, you can start with the template projects in the <code>example</code> directory. These template projects provide portings of STM32 Discovery Board, Cortex-M FVP/VHT and MPS2/MPS3 development platforms for both bare metal and RTOS environment respectively. There are other 3rd party portings available on github, for example:</p>
+<p >After learning the basic concepts of Arm-2d, please follow the guidance, <a class="el" href="md_how_to_deploy_the_arm_2d_library.html">how_to_deploy_the_arm_2d_library.md</a>, to deploy Arm-2d onto your local hardware platform.</p>
+<p >Of course, if you want to skip the porting step and jump to learn how to use the Arm-2D APIs, please try the template projects we prepared for you in the <code>examples</code> directory. These template projects provide porting for STM32 Discovery Board, Cortex-M FVP/VHT and MPS2/MPS3 development platforms in both bare-metal and RTOS environments respectively. In addition, there are other 3rd-party porting available on Github, for example:</p>
 <ul>
 <li><a href="https://github.com/GorgonMeducer/Pico_Template">A porting for Raspberry Pi Pico (using MDK)</a></li>
 <li><a href="https://github.com/lvgl/lv_port_an547_cm55_sim">A porting for LVGL + Arm-2D on Corstone-300-FVP</a></li>
 </ul>
 <h2><a class="anchor" id="autotoc_md29"></a>
 2.3 Try the basic Tile Operations and the Layout Assistant</h2>
-<p >After having Arm-2D ready for your platform, it is good to experience the style of Arm-2D API via the article <a class="el" href="use_tile.html#md_how_to_use_tile_operations">how_to_use_tile_operations.md</a>. During this process, reading <a class="el" href="md_how_to_use_layout_assistant.html">how_to_use_layout_assistant.md</a> to learn the basic layout method will simplify your application development.</p>
-<p >At this stage, you may have a outstanding question: where should I use these APIs to practice drawing operations? Please open <code>arm_2d_disp_adapter_0.c</code>, and find the function <code>__pfb_draw_handler</code> as shown below - This is our playground.</p>
+<p >After having a working platform, it is good to try Arm-2D APIs with the help of <a class="el" href="use_tile.html#md_how_to_use_tile_operations">how_to_use_tile_operations.md</a>. During this process, reading <a class="el" href="md_how_to_use_layout_assistant.html">how_to_use_layout_assistant.md</a> to learn the basic layout method can make your application development much easier.</p>
+<p >At this stage, one might have an outstanding question: where should I use these APIs to practice drawing operations? Please open <code>arm_2d_disp_adapter_0.c</code> and find the function <code>__pfb_draw_handler</code> as shown below - This is our playground.</p>
 <div class="fragment"><div class="line"><span class="keyword">static</span></div>
 <div class="line">IMPL_PFB_ON_DRAW(__pfb_draw_handler)</div>
 <div class="line">{</div>
@@ -178,39 +178,39 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcacf7b5f9e66c44d332ea46d05860d78d1" title="fsm complete">arm_fsm_rt_cpl</a>;</div>
 <div class="line">}</div>
-</div><!-- fragment --><p >As you can see, the existing code has:</p>
+</div><!-- fragment --><p >As you can see, this example code has:</p>
 <ul>
-<li>Fill the background with the white colour</li>
-<li>Draw a rounded corner box in black with a given opacity ratio in the centre of the screen</li>
-<li>Draw a busy-wheel with an existing control.</li>
+<li>Filled the background with the white colour</li>
+<li>Drawn a rounded corner box in black with a given opacity ratio in the centre of the screen</li>
+<li>Drawn a busy-wheel with an existing control.</li>
 </ul>
 <p ><b>Figure 2-1 The Default Scene of an Display Adapter.</b></p>
 <p ><img src="DispAdapterDefaultScene.gif" alt="" class="inline" title="DefaultScene"/></p>
-<p >You can replace the code inside <code>__pfb_draw_handler</code> with your own and check the result visually in the default scene coming with the display adapter. During this process, you can, of course, use the default pictures coming with Arm-2d, i.e. the CMSIS-Logo as shown in <b>Figure 2-2</b> via corresponding <code><a class="el" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a></code> objects: <code>c_tileCMSISLogoGRAY8</code>, <code>c_tileCMSISLogoRGB565</code> and <code>c_tileCMSISLogoCCCA8888</code> defined in <code>cmsis_logo.c</code>. But sooner or later, you would like to use your own pictures. Arm-2D provides a Python script helping you to convert images into <code><a class="el" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a></code> objects written in C. For more, please read this guide for details.</p>
+<p >You can replace the code inside <code>__pfb_draw_handler</code> with your own and visually check the result in the default scene hidden by the display adapter. During this process, you can, of course, use the default picture resources coming with Arm-2d, for example, the CMSIS-Logo as shown in <b>Figure 2-2</b> via corresponding <code><a class="el" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a></code> objects: <code>c_tileCMSISLogoGRAY8</code>, <code>c_tileCMSISLogoRGB565</code> and <code>c_tileCMSISLogoCCCA8888</code> defined in <code>cmsis_logo.c</code>. But sooner or later, you would like to use your own pictures. Arm-2D provides a Python script to help you convert images into <code><a class="el" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a></code> objects in C. For more details, please read this guide.</p>
 <p ><b>Figure 2-2 The Default Picture resource: CMSIS logo</b></p>
 <p ><img src="../examples/common/asset/CMSIS_Logo_Final.png" alt="" class="inline"/></p>
-<p >When you complete the above steps, <b>congratulations, you have successfully started Arm-2d.</b></p>
+<p >After finishing the steps above, <b>congratulations, welcome to join the Arm-2D community.</b></p>
 <h2><a class="anchor" id="autotoc_md30"></a>
-2.4 Try existing example controls</h2>
-<p >Arm-2D provides some controls in the <code>examples/common</code> directory, which are good reference codes and can be used in the project directly. Generally speaking, when you add the component <code>Acceleration::Arm-2D Extras::Controls</code> in the RTE configuration (as shown in <b>Figure 2-3</b>), all control source codes and related resources will be added to the project.</p>
-<p ><b>NOTE:</b> those unused controls or resources will be removed from the generated firmware image.</p>
+2.4 Try example controls</h2>
+<p >Arm-2D provides example controls in the <code>examples/common</code> directory, which are not only read as reference codes but also available for user applications. To include those example controls, please add the component <code>Acceleration::Arm-2D Extras::Controls</code> in the RTE configuration (as shown in <b>Figure 2-3</b>). Hence all control source codes and related resources will be added to the project.</p>
+<p ><b>NOTE:</b> The linker will remove those unused controls or resources.</p>
 <p ><b>Figure 2-3 Selecting Controls in RTE</b></p>
 <p ><img src="GettingStartedAsAppDesigner_RTE_Controls.png" alt="" class="inline" title="Controls in RTE"/></p>
 <h2><a class="anchor" id="autotoc_md31"></a>
 2.5 Write a simple GUI Application</h2>
-<p >For an actual application, you cannot write everything in the default scene hidden in the display adapter. You might already know that the display adapter provides a service called Scene Player, which maintains a FIFO of scenes, allowing us to add new scenes and requests scene switching, during which the Scene Player could optionally apply some visual effects like fade-in-fade-out, erasing, sliding etc.</p>
-<p ><b>An application is designed and organized as a series of scenes.</b> When and How to switch to Which scenes are totally under your control. When using RTE to deploy Arm-2D, there are two simple ways to add a new scene:</p>
+<p >For a real application, you cannot write everything in the default scene coming in the display adapter. You might already notice that the display adapter provides a service called Scene Player, which maintains a FIFO of scenes, allowing us to add new scenes and switch to the next, during which the Scene Player could optionally apply some visual effects like fade-in-fade-out, erasing, sliding etc.</p>
+<p ><b>In Arm-2D realm, a GUI application is designed and organized as a series of scenes.</b> When and How to switch to Which scenes are totally under your control. There are two simple ways to add a new scene in MDK:</p>
 <ul>
-<li><p class="startli">Using RTE configuration to add new scenes</p>
-<p class="startli">In RTE configuration, you can change the number of <code>Acceleration::Arm-2D Helper::Scene</code> to add new scenes to your project, as shown below:</p>
+<li><p class="startli">Using RTE configuration to add a number of new scenes</p>
+<p class="startli">In RTE configuration, you can update the number of <code>Acceleration::Arm-2D Helper::Scene</code> to add new scenes, as shown below:</p>
 <p class="startli"><b>Figure 2-4 Adding new scenes in RTE</b></p>
 </li>
 </ul>
 <p ><img src="AddingScenesinRTE.png" alt="" class="inline" title="Adding Scenes in RTE"/></p>
-<p >All scenes added with this method are included in the header file <code>arm_2d_scenes.h</code>, which you can included in your c source code: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &quot;arm_2d_helper.h&quot;</span>          <span class="comment">/* arm_2d.h is also included in this header file */</span></div>
+<p >As all scenes added with this method are included by the header file <code>arm_2d_scenes.h</code> automatically, you can include them in your project like this: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &quot;arm_2d_helper.h&quot;</span>          <span class="comment">/* arm_2d.h is also included in this header file */</span></div>
 <div class="line"><span class="preprocessor">#include &quot;arm_2d_disp_adapters.h&quot;</span>   <span class="comment">/* include all display adapters */</span></div>
 <div class="line"><span class="preprocessor">#include &quot;arm_2d_scenes.h&quot;</span>          <span class="comment">/* include all scenes added in RTE */</span></div>
-</div><!-- fragment --><p >By calling the constructor <code>arm_2d_sceneN_init()</code>, the target scene is created, initialised and added to the Scene Player FIFO. For example:</p>
+</div><!-- fragment --><p >By calling the constructor <code>arm_2d_sceneN_init()</code>, one instance of <em><b>sceneN</b></em> is created, initialized and added to the Scene Player FIFO. For example:</p>
 <div class="fragment"><div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
 <div class="line">    ...</div>
@@ -228,19 +228,19 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 <div class="line">        ...</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><p ><b>NOTE</b>: if we haven't disabled the default scene in the <code>Display Adapter 0</code>, then after adding the scene0 to the FIFO by calling the <code>arm_2d_scene0_init</code>(), it is the next available scene in the FIFO, and you have to call <code><a class="el" href="group__gHelper.html#gae6df5a7c480a7e3f44a926772ba78cb8" title="request switching to the next scene safely">arm_2d_scene_player_switch_to_next_scene()</a></code> to show it on the screen. If we have disabled the default scene, then after calling the constructor, scene0 is the 1st available scene in the FIFO and is shown as the current scene on the screen. In this case, you don't have to call <code><a class="el" href="group__gHelper.html#gae6df5a7c480a7e3f44a926772ba78cb8" title="request switching to the next scene safely">arm_2d_scene_player_switch_to_next_scene()</a></code>.</p>
+</div><!-- fragment --><p ><b>NOTE</b>: if we haven't disabled the default scene in the <code>Display Adapter 0</code>, then after adding the scene0 to the FIFO by calling the <code>arm_2d_scene0_init</code>(), it becomes the next available scene in the FIFO, and you have to call <code><a class="el" href="group__gHelper.html#gae6df5a7c480a7e3f44a926772ba78cb8" title="request switching to the next scene safely">arm_2d_scene_player_switch_to_next_scene()</a></code> to update the FIFO and show it on the screen. If we have disabled the default scene, then after calling the constructor, scene0 is the first available scene in the FIFO and is shown as the current scene on the screen. In this case, you don't have to call <code><a class="el" href="group__gHelper.html#gae6df5a7c480a7e3f44a926772ba78cb8" title="request switching to the next scene safely">arm_2d_scene_player_switch_to_next_scene()</a></code>.</p>
 <ul>
 <li><p class="startli">Using Code Template to add new scenes</p>
-<p class="startli">Except for the method above, you can add a new scene through the code template. For any given group in the project view, you can right-click and select "**Add New Item to Group**" in the pop-up menu (as shown in <b>Figure 2-5</b>), then in the dialog find "**User Code Template**", expand the Acceleration and select the <code>Arm-2D:Core::User Scene Template</code> (as shown in <b>Figure 2-6</b>).</p>
+<p class="startli">Except for the method above, you can add a new scene through the code template. For any given group in the project view, please right-click and select "**Add New Item to Group**" in the pop-up menu (as shown in <b>Figure 2-5</b>), then in the dialog find "**User Code Template**", expand the Acceleration and select the <code>Arm-2D:Core::User Scene Template</code> (as shown in <b>Figure 2-6</b>).</p>
 <p class="startli"><b>Figure 2-5 Adding New Items to a Group</b></p>
 </li>
 </ul>
 <p ><img src="AddNewItemsToGroup.png" alt="" class="inline" title="AddingNewItemsToAGroup"/></p>
 <p ><b>Figure 2-6 Adding a New Scene using Code Template</b></p>
 <p ><img src="AddingScenesViaTemplate.png" alt="" class="inline" title="AddingScenesViaTempalte"/></p>
-<p >After clicking the "Add" button, two files <code>arm_2d_scene_template.h</code> and <code>arm_2d_scene_template.c</code> will be added to your project folder. Open those two files and replace all <code>&lt;NAME&gt;</code> with your scene name, for example, <code>MY_SCENE</code> in upper case and replace all <code>&lt;scenen&gt;</code> with the same name in the lower case, for example, <code>my_scene</code>.</p>
-<p ><b>NOTE</b>: scenes added with code template are not included in the <code>arm_2d_scenes.h</code> and you have to include the header file mannually.</p>
-<p >By default, the display adapter switches scenes without any visual effects or delays when it is proper to do so after receiving a switching request. You can set some predefined switching visual effects by calling the function <code><a class="el" href="group__gHelper.html#ga6b9ef0f3e0f80430fc036f6d3c67c135" title="configure the scene switching mode">arm_2d_scene_player_set_switching_mode()</a></code>. For example:</p>
+<p >After clicking the "Add" button, two files <code>, arm_2d_scene_template.h</code> and <code>arm_2d_scene_template.c</code>, will be added to your project folder. Open them in any editor and replace all <code>&lt;NAME&gt;</code> with your scene name (for example, <code>MY_SCENE</code> in upper case) and supersede all <code>&lt;scenen&gt;</code> with the same name in the lower case (for example, <code>my_scene</code>).</p>
+<p ><b>NOTE</b>: Because scenes added with the code template are not included in the <code>arm_2d_scenes.h</code>, you must manually include the corresponding header files.</p>
+<p >By default, the display adapter switches scenes without any visual effects. You can call the function <code><a class="el" href="group__gHelper.html#ga6b9ef0f3e0f80430fc036f6d3c67c135" title="configure the scene switching mode">arm_2d_scene_player_set_switching_mode()</a></code> to apply some predefined switching visual effects, for example:</p>
 <div class="fragment"><div class="line"><span class="comment">/* set switching visual effects: Fade-in-Fade-out in White */</span></div>
 <div class="line"><a class="code hl_define" href="group__gHelper.html#ga6b9ef0f3e0f80430fc036f6d3c67c135" title="configure the scene switching mode">arm_2d_scene_player_set_switching_mode</a>( &amp;DISP0_ADAPTER,</div>
 <div class="line">                                        ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);</div>
@@ -252,7 +252,7 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 </div><!-- fragment --><p >In some visual effects, you can specify the period of the switching process by calling the function <code><a class="el" href="group__gHelper.html#gac437acd591ac725054b4216fa2351013" title="configure the scene switching period">arm_2d_scene_player_set_switching_period()</a></code>. For more, please check the header file <code><a class="el" href="arm__2d__helper__scene_8h_source.html">arm_2d_helper_scene.h</a></code>.</p>
 <h2><a class="anchor" id="autotoc_md32"></a>
 2.6 Learn the basic method to optimize the performance and memory footprint</h2>
-<p >The design consideration of optimizing performance and memory footprint deserves a dedicated document or maybe more. We can only cover some preliminary tips for optimisation:</p>
+<p >The design consideration of optimizing performance and memory footprint deserves a dedicated document or maybe more. We can only cover some preliminary tips here:</p>
 <ul>
 <li><b>For the Arm Compiler 6</b><ul>
 <li>Avoid using Arm Compiler 5 whenever possible.</li>
@@ -263,20 +263,20 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 </ul>
 </li>
 <li><b>For RAM memory footprint</b><ul>
-<li>Set the FPB size <b>starting from the 1/10 full framebuffer</b>.</li>
-<li>For the same number of pixels, <b>prioritize the width over the height</b> when setting the PFB. For example, 320 * 8 is better than 80 * 32.</li>
-<li>Whenever possible, <b>the PFB height should be larger than or equal to 8.</b></li>
+<li>Set the FPB size <b>starting from 1/10 full framebuffer</b>.</li>
+<li>For the same number of pixels, <b>prioritize width over height</b> in setting the PFB. For example, 320 * 8 is better than 80 * 32.</li>
+<li>Whenever possible, <b>PFB height should be larger than or equal to 8.</b></li>
 </ul>
 </li>
 <li><b>For performance (Frame-rate)</b><ul>
-<li>LCD Latency determines the upper-limit of the system frame-rate. Reduce it towards zero with all the methods available.</li>
-<li><b>Use Asynchornouse mode</b> (e.g. DMA+ISR) when it is possible.</li>
+<li>LCD Latency determines the upper-limit of the system frame-rate. Please reduce it towards zero with all the methods available.</li>
+<li><b>Use Asynchronous mode</b> (e.g. DMA+ISR) whenever possible.</li>
 <li>Using 1/10 framebuffer doesn't mean it is 10x slower than using a full framebuffer</li>
 </ul>
 </li>
 <li><b>For API Usage</b><ul>
-<li><p class="startli">Please use the feature-specific version rather than the more generic version whenever possible for a given operation. This helps to reduce the memory footprint in general.</p>
-<p class="startli">For example: for copying an rgb565 tile with a source mask and no-mirroring, please use the function <code>arm_2d_rgb565_tile_copy_with_src_mask_only()</code> instead of <code>arm_2d_rgb565_tile_copy_with_masks()</code>.</p>
+<li><p class="startli">Please use the feature-specific version rather than a more generic version whenever possible for a given operation. This helps to reduce the memory footprint in general.</p>
+<p class="startli">For example: for copying an rgb565 tile with a source mask without mirroring, it is better to use the function <code>arm_2d_rgb565_tile_copy_with_src_mask_only()</code> rather than <code>arm_2d_rgb565_tile_copy_with_masks()</code>.</p>
 </li>
 </ul>
 </li>
@@ -285,11 +285,11 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 2.7 Tips for other advanced topics</h2>
 <h3><a class="anchor" id="autotoc_md34"></a>
 2.7.1 Benchmarks</h3>
-<p >To evaluate the 2D performance for the target platform, Arm-2D provides two benchmarks, i.e. <b>Benchmark-Generic</b> and <b>Benchmark-Watchpanel</b>. You can deploy one of them by selecting the it in the RTE configuration as shown in <b>Figure 2-7</b>.</p>
+<p >To evaluate the 2D performance for a given platform, Arm-2D provides two benchmarks, i.e. <b>Benchmark-Generic</b> and <b>Benchmark-Watchpanel</b>. You can deploy the target benchmark by selecting it in the RTE configuration as shown in <b>Figure 2-7</b>.</p>
 <p ><b>Figure 2-7 Selecting Benchmarks in RTE</b></p>
 <p ><img src="GettingStartedAsAppDesigner_RTE_Controls.png" alt="" class="inline" title="Controls in RTE"/></p>
-<p >The original benchmark cannot fit into the memory if your MCU has a small Flash. To solve this problem, Arm-2D introduces a Tiny mode for both benchmarks. You can enable it by either setting the macro <code>__ARM_2D_CFG_BENCHMARK_TINY_MODE__</code> to <code>1</code> in <code>arm_2d_cfg.h</code> or defining the macro in your project configuration.</p>
-<p ><b>NOTE:</b> You can find ALL benchmark related configurations in <code>arm_2d_cfg.h</code>.</p>
+<p >If your MCU has a small flash, the original benchmark cannot fit into the memory. Arm-2D introduces a so called Tiny mode to solve this problem. You can enable it by either setting the macro <code>__ARM_2D_CFG_BENCHMARK_TINY_MODE__</code> to <code>1</code> in <code>arm_2d_cfg.h</code> or defining the macro in your project configuration.</p>
+<p ><b>NOTE:</b> You can find ALL benchmark configurations in <code>arm_2d_cfg.h</code>.</p>
 <p >Running benchmark is simple:</p>
 <ol type="1">
 <li>Include <code>arm_2d_benchmark.h</code></li>
@@ -313,12 +313,13 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 <div class="line">    }</div>
 <div class="line">}</div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md35"></a>
-2.7.2 Asynchronose Mode and RTOS support</h3>
-<p >Arm-2D introduces an asynchronous mode for hardware accelerators and multi-core systems. To enable this feature, you can set the macro <code>__ARM_2D_HAS_ASYNC__</code> defined in <code>arm_2d_cfg.h</code> to <code>1</code>. If you don't have hardware accelerators, 2D capable DMA (for example, DMAC-350) or dedicated Cortex-M core(s) for 2D graphics, enabling the Asynchronous mode brings no benefits.</p>
-<p >When it is good to enable the asynchronous mode, you have to have RTOS support to take advantage of it. You can enable the RTOS support in RTE as shown in <b>Figure 2-8</b>. If you cannot find the desired RTOS in the drop list, please select the User Custom and implement the interfaces listed in the source code <code>arm_2d_helper_rtos_user.c</code>.</p>
+2.7.2 Asynchronous Mode and RTOS support</h3>
+<p >Arm-2D introduces an Asynchronous Mode for hardware accelerators and multi-core systems. To enable this feature, please set the macro <code>__ARM_2D_HAS_ASYNC__</code> defined in <code>arm_2d_cfg.h</code> to <code>1</code>.</p>
+<p ><b>NOTE</b>: If you have no hardware accelerator, 2D capable DMA (for example, DMAC-350) or dedicated Cortex-M core(s) for 2D graphics, enabling the Asynchronous Mode gains nothing.</p>
+<p >When it is good to enable the Asynchronous Mode, you have to have RTOS support also. You can enable the RTOS support in RTE as shown in <b>Figure 2-8</b>. If you cannot find the desired RTOS helper in the drop list, please choose the User Custom and implement the interface functions listed in the source code <code>arm_2d_helper_rtos_user.c</code>.</p>
 <p ><b>Figure 2-8 Enable RTOS Support in RTE</b></p>
 <p ><img src="EnbleRTOSSupportInRTE.png" alt="" class="inline" title="EnableRTOSSupportInRTE"/></p>
-<p >You do <b>NOT</b> have to enable the RTOS support in the synchronous mode (<code>__ARM_2D_HAS_ASYNC__</code> is <code>0</code> ). Even so, you can still use a dedicated thread to run the Arm-2D display adapter task (e.g. <code>disp_adapter0_task()</code>) and lock the framerate to a desired value. For example:</p>
+<p ><b>NOTE</b>: You do <b>NOT</b> have to enable any RTOS helper in the Synchronous Mode (<code>__ARM_2D_HAS_ASYNC__</code> is <code>0</code> ) even if you are using an RTOS. Even in the Synchronous Mode, by using an RTOS, you can run arm-2d in a dedicated thread and lock the framerate to a desired value. For example:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#ifndef LCD_TARGET_FPS</span></div>
 <div class="line"><span class="preprocessor">#   define LCD_TARGET_FPS       30</span></div>
 <div class="line"><span class="preprocessor">#endif</span></div>

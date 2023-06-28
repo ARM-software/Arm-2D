@@ -219,9 +219,9 @@ Macros</h2></td></tr>
 <tr class="memitem:ga1e2b4e341b1d94065aa2de57f65f1463"><td class="memItemLeft" align="right" valign="top"><a id="ga1e2b4e341b1d94065aa2de57f65f1463" name="ga1e2b4e341b1d94065aa2de57f65f1463"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_FPS_MODE_REAL</b>&#160;&#160;&#160;1</td></tr>
 <tr class="separator:ga1e2b4e341b1d94065aa2de57f65f1463"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga457a16ef9330255578354fcd291a9bc2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga457a16ef9330255578354fcd291a9bc2">ARM_2D_HELPER_PFB_INIT</a>(__CB_ADDR,  __SCREEN_WIDTH,  __SCREEN_HEIGHT,  __PIXEL_TYPE,  __WIDTH,  __HEIGHT,  __PFB_NUM,  ...)</td></tr>
-<tr class="memdesc:ga457a16ef9330255578354fcd291a9bc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">a macro wrapper in uppercase to help initialising PFB service  <a href="group__gHelper.html#ga457a16ef9330255578354fcd291a9bc2">More...</a><br /></td></tr>
-<tr class="separator:ga457a16ef9330255578354fcd291a9bc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac4b43f521c7030ee6d4880f1ea8220f5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gac4b43f521c7030ee6d4880f1ea8220f5">ARM_2D_HELPER_PFB_INIT</a>(__CB_ADDR,  __SCREEN_WIDTH,  __SCREEN_HEIGHT,  __PIXEL_TYPE,  __PFB_WIDTH,  __PFB_HEIGHT,  __PFB_NUM,  ...)</td></tr>
+<tr class="memdesc:gac4b43f521c7030ee6d4880f1ea8220f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">a macro wrapper in uppercase to help initialising PFB service  <a href="group__gHelper.html#gac4b43f521c7030ee6d4880f1ea8220f5">More...</a><br /></td></tr>
+<tr class="separator:gac4b43f521c7030ee6d4880f1ea8220f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga432fd371b045e6ae90f816466f76fa38"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga432fd371b045e6ae90f816466f76fa38">ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER</a>( __CB_ADDR,  __HANDLER, ...)</td></tr>
 <tr class="memdesc:ga432fd371b045e6ae90f816466f76fa38"><td class="mdescLeft">&#160;</td><td class="mdescRight">a macro wrapper to update the evtOnDrawring event handler  <a href="group__gHelper.html#ga432fd371b045e6ae90f816466f76fa38">More...</a><br /></td></tr>
 <tr class="separator:ga432fd371b045e6ae90f816466f76fa38"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -400,6 +400,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga516674d7d321e4ecb058fd3b8ddbab70"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c">arm_2d_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga516674d7d321e4ecb058fd3b8ddbab70">__arm_2d_scene_player_register_on_draw_navigation_event_handler</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis, arm_2d_helper_draw_handler_t *fnHandler, void *pTarget, <a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptDirtyRegions)</td></tr>
 <tr class="memdesc:ga516674d7d321e4ecb058fd3b8ddbab70"><td class="mdescLeft">&#160;</td><td class="mdescRight">register / update the evtOnDrawNavigation event handler. You can use this event to draw an ALWAY-TOP navigation bar or title during switching period.  <a href="group__gHelper.html#ga516674d7d321e4ecb058fd3b8ddbab70">More...</a><br /></td></tr>
 <tr class="separator:ga516674d7d321e4ecb058fd3b8ddbab70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga401b363d3f7120e56a1494d26e3c2af7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga401b363d3f7120e56a1494d26e3c2af7">arm_2d_scene_player_hide_navigation_layer</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis)</td></tr>
+<tr class="memdesc:ga401b363d3f7120e56a1494d26e3c2af7"><td class="mdescLeft">&#160;</td><td class="mdescRight">hide the navigation layer  <a href="group__gHelper.html#ga401b363d3f7120e56a1494d26e3c2af7">More...</a><br /></td></tr>
+<tr class="separator:ga401b363d3f7120e56a1494d26e3c2af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3bac12004dcc0fb152f54118497f2d34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga3bac12004dcc0fb152f54118497f2d34">arm_2d_scene_player_show_navigation_layer</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis)</td></tr>
+<tr class="memdesc:ga3bac12004dcc0fb152f54118497f2d34"><td class="mdescLeft">&#160;</td><td class="mdescRight">show the navigation layer if there is a valid one  <a href="group__gHelper.html#ga3bac12004dcc0fb152f54118497f2d34">More...</a><br /></td></tr>
+<tr class="separator:ga3bac12004dcc0fb152f54118497f2d34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadaa72d1d1c3baf5db91070008c238293"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c">arm_2d_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gadaa72d1d1c3baf5db91070008c238293">__arm_2d_scene_player_register_before_switching_event_handler</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis, <a class="el" href="group__gHelper.html#ga3ebdd610af011bf6094c0f60721a2424">arm_2d_scene_before_scene_switching_handler_t</a> *fnHandler, void *pTarget)</td></tr>
 <tr class="memdesc:gadaa72d1d1c3baf5db91070008c238293"><td class="mdescLeft">&#160;</td><td class="mdescRight">register / update the evtBeforeSwitching event handler. You can use this event to prepare next scenes.  <a href="group__gHelper.html#gadaa72d1d1c3baf5db91070008c238293">More...</a><br /></td></tr>
 <tr class="separator:gadaa72d1d1c3baf5db91070008c238293"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -412,12 +418,27 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf0eef5fe61bc11d102d2180025ada377"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaf0eef5fe61bc11d102d2180025ada377">arm_2d_helper_pfb_get_display_area</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis)</td></tr>
 <tr class="memdesc:gaf0eef5fe61bc11d102d2180025ada377"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the display (screen) region  <a href="group__gHelper.html#gaf0eef5fe61bc11d102d2180025ada377">More...</a><br /></td></tr>
 <tr class="separator:gaf0eef5fe61bc11d102d2180025ada377"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga012c85746e62c16a38f5253fd9d0dca6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga012c85746e62c16a38f5253fd9d0dca6">arm_2d_helper_pfb_get_pfb_size</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis)</td></tr>
+<tr class="memdesc:ga012c85746e62c16a38f5253fd9d0dca6"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the inital PFB size  <a href="group__gHelper.html#ga012c85746e62c16a38f5253fd9d0dca6">More...</a><br /></td></tr>
+<tr class="separator:ga012c85746e62c16a38f5253fd9d0dca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab2cec999a9abbf7ec42bed4352a17b88"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gab2cec999a9abbf7ec42bed4352a17b88">arm_2d_helper_pfb_task</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis, <a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptDirtyRegions)</td></tr>
 <tr class="memdesc:gab2cec999a9abbf7ec42bed4352a17b88"><td class="mdescLeft">&#160;</td><td class="mdescRight">the task function for pfb helper  <a href="group__gHelper.html#gab2cec999a9abbf7ec42bed4352a17b88">More...</a><br /></td></tr>
 <tr class="separator:gab2cec999a9abbf7ec42bed4352a17b88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8568abf593c04cf6df798e82cda60676"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga8568abf593c04cf6df798e82cda60676">arm_2d_helper_pfb_flush</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis)</td></tr>
 <tr class="memdesc:ga8568abf593c04cf6df798e82cda60676"><td class="mdescLeft">&#160;</td><td class="mdescRight">flush the FPB FIFO  <a href="group__gHelper.html#ga8568abf593c04cf6df798e82cda60676">More...</a><br /></td></tr>
 <tr class="separator:ga8568abf593c04cf6df798e82cda60676"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaec3341ff7e558eb0665d1d2819e0e92c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaec3341ff7e558eb0665d1d2819e0e92c">arm_2d_helper_hide_navigation_layer</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis)</td></tr>
+<tr class="memdesc:gaec3341ff7e558eb0665d1d2819e0e92c"><td class="mdescLeft">&#160;</td><td class="mdescRight">hide the navigation layer  <a href="group__gHelper.html#gaec3341ff7e558eb0665d1d2819e0e92c">More...</a><br /></td></tr>
+<tr class="separator:gaec3341ff7e558eb0665d1d2819e0e92c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae7a2c6d89191cfa51b06b24e06a89e2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gae7a2c6d89191cfa51b06b24e06a89e2e">arm_2d_helper_show_navigation_layer</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis)</td></tr>
+<tr class="memdesc:gae7a2c6d89191cfa51b06b24e06a89e2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">show the navigation layer if there is a valid one  <a href="group__gHelper.html#gae7a2c6d89191cfa51b06b24e06a89e2e">More...</a><br /></td></tr>
+<tr class="separator:gae7a2c6d89191cfa51b06b24e06a89e2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae4017b79661fe52c6115894ebcb094a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gae4017b79661fe52c6115894ebcb094a5">arm_2d_helper_ignore_low_level_flush</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis)</td></tr>
+<tr class="memdesc:gae4017b79661fe52c6115894ebcb094a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">ignore the low level PFB flushing only  <a href="group__gHelper.html#gae4017b79661fe52c6115894ebcb094a5">More...</a><br /></td></tr>
+<tr class="separator:gae4017b79661fe52c6115894ebcb094a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeaaf0ab9b565da461334ed9fc641cc8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaeaaf0ab9b565da461334ed9fc641cc8d">arm_2d_helper_resume_low_level_flush</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis)</td></tr>
+<tr class="memdesc:gaeaaf0ab9b565da461334ed9fc641cc8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">resume the low level PFB flushing  <a href="group__gHelper.html#gaeaaf0ab9b565da461334ed9fc641cc8d">More...</a><br /></td></tr>
+<tr class="separator:gaeaaf0ab9b565da461334ed9fc641cc8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7f397129da5a5d78a7dd6325ab3405ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c">arm_2d_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga7f397129da5a5d78a7dd6325ab3405ef">arm_2d_helper_pfb_update_dependency</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis, uint_fast8_t chMask, const <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__dependency__t">arm_2d_helper_pfb_dependency_t</a> *ptDependency)</td></tr>
 <tr class="memdesc:ga7f397129da5a5d78a7dd6325ab3405ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">update PFB dependency (event handlers)  <a href="group__gHelper.html#ga7f397129da5a5d78a7dd6325ab3405ef">More...</a><br /></td></tr>
 <tr class="separator:ga7f397129da5a5d78a7dd6325ab3405ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -608,14 +629,13 @@ switching algorithm </td></tr>
 <tr class="memitem:a02317320d49833d7d6f3fc959d95e5f5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#a02317320d49833d7d6f3fc959d95e5f5">ptPlayer</a></td></tr>
 <tr class="memdesc:a02317320d49833d7d6f3fc959d95e5f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">points to the host scene player  <a href="group__gHelper.html#a02317320d49833d7d6f3fc959d95e5f5">More...</a><br /></td></tr>
 <tr class="separator:a02317320d49833d7d6f3fc959d95e5f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14ff6b13dd709cab6c029631f073ccd4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#a14ff6b13dd709cab6c029631f073ccd4">ptDirtyRegion</a></td></tr>
-<tr class="memdesc:a14ff6b13dd709cab6c029631f073ccd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">dirty region list for the foreground  <a href="group__gHelper.html#a14ff6b13dd709cab6c029631f073ccd4">More...</a><br /></td></tr>
-<tr class="separator:a14ff6b13dd709cab6c029631f073ccd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adfd244e234641aff86db898b9a0120cf"><td class="memItemLeft" align="right" valign="top">arm_2d_helper_draw_handler_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#adfd244e234641aff86db898b9a0120cf">fnBackground</a></td></tr>
-<tr class="memdesc:adfd244e234641aff86db898b9a0120cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">the function pointer for the background  <a href="group__gHelper.html#adfd244e234641aff86db898b9a0120cf">More...</a><br /></td></tr>
 <tr class="separator:adfd244e234641aff86db898b9a0120cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14ff6b13dd709cab6c029631f073ccd4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#a14ff6b13dd709cab6c029631f073ccd4">ptDirtyRegion</a></td></tr>
+<tr class="memdesc:a14ff6b13dd709cab6c029631f073ccd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">dirty region list for the scene  <a href="group__gHelper.html#a14ff6b13dd709cab6c029631f073ccd4">More...</a><br /></td></tr>
+<tr class="separator:a14ff6b13dd709cab6c029631f073ccd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11df8d98a8cddbc856d69808ded8c733"><td class="memItemLeft" align="right" valign="top">arm_2d_helper_draw_handler_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#a11df8d98a8cddbc856d69808ded8c733">fnScene</a></td></tr>
-<tr class="memdesc:a11df8d98a8cddbc856d69808ded8c733"><td class="mdescLeft">&#160;</td><td class="mdescRight">the function pointer for the foreground  <a href="group__gHelper.html#a11df8d98a8cddbc856d69808ded8c733">More...</a><br /></td></tr>
+<tr class="memdesc:a11df8d98a8cddbc856d69808ded8c733"><td class="mdescLeft">&#160;</td><td class="mdescRight">the function pointer for the scene  <a href="group__gHelper.html#a11df8d98a8cddbc856d69808ded8c733">More...</a><br /></td></tr>
 <tr class="separator:a11df8d98a8cddbc856d69808ded8c733"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8a3464ab829906cf0711c89624b2a13"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ae8a3464ab829906cf0711c89624b2a13">fnOnBGStart</a> )(<a class="el" href="group__gHelper.html#structarm__2d__scene__t">arm_2d_scene_t</a> *ptThis)</td></tr>
 <tr class="memdesc:ae8a3464ab829906cf0711c89624b2a13"><td class="mdescLeft">&#160;</td><td class="mdescRight">on-start-drawing-background event handler  <a href="group__gHelper.html#ae8a3464ab829906cf0711c89624b2a13">More...</a><br /></td></tr>
@@ -679,6 +699,21 @@ struct {</td></tr>
 
 </div>
 </div>
+<a id="adfd244e234641aff86db898b9a0120cf" name="adfd244e234641aff86db898b9a0120cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adfd244e234641aff86db898b9a0120cf">&#9670;&nbsp;</a></span>fnBackground</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">arm_2d_helper_draw_handler_t* arm_2d_scene_t::fnBackground</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>Deprecated! Please do NOT use unless you know the consequence </dd></dl>
+
+</div>
+</div>
 <a id="a14ff6b13dd709cab6c029631f073ccd4" name="a14ff6b13dd709cab6c029631f073ccd4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a14ff6b13dd709cab6c029631f073ccd4">&#9670;&nbsp;</a></span>ptDirtyRegion</h2>
 
@@ -691,23 +726,7 @@ struct {</td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>dirty region list for the foreground </p>
-
-</div>
-</div>
-<a id="adfd244e234641aff86db898b9a0120cf" name="adfd244e234641aff86db898b9a0120cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adfd244e234641aff86db898b9a0120cf">&#9670;&nbsp;</a></span>fnBackground</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">arm_2d_helper_draw_handler_t* arm_2d_scene_t::fnBackground</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>the function pointer for the background </p>
+<p>dirty region list for the scene </p>
 
 </div>
 </div>
@@ -723,7 +742,7 @@ struct {</td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>the function pointer for the foreground </p>
+<p>the function pointer for the scene </p>
 
 </div>
 </div>
@@ -1959,7 +1978,19 @@ bIsNewFrame: 1</td>
 <tr><td class="fieldtype">
 <a id="a4f42ff27488585a33d6bb91e8cf057d5" name="a4f42ff27488585a33d6bb91e8cf057d5"></a>uint8_t</td>
 <td class="fieldname">
-bIsFlushRequested:1</td>
+bIsFlushRequested: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ac05c560fd985bd880a31b531f56afb62" name="ac05c560fd985bd880a31b531f56afb62"></a>uint8_t</td>
+<td class="fieldname">
+bIgnoreLowLevelFlush: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ab2b853dd703190b6c831ec76550087f4" name="ab2b853dd703190b6c831ec76550087f4"></a>uint8_t</td>
+<td class="fieldname">
+bHideNavigationLayer: 1</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
@@ -2296,8 +2327,8 @@ fStep</td>
 
 </div>
 </div>
-<a id="ga457a16ef9330255578354fcd291a9bc2" name="ga457a16ef9330255578354fcd291a9bc2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga457a16ef9330255578354fcd291a9bc2">&#9670;&nbsp;</a></span>ARM_2D_HELPER_PFB_INIT</h2>
+<a id="gac4b43f521c7030ee6d4880f1ea8220f5" name="gac4b43f521c7030ee6d4880f1ea8220f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac4b43f521c7030ee6d4880f1ea8220f5">&#9670;&nbsp;</a></span>ARM_2D_HELPER_PFB_INIT</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2330,13 +2361,13 @@ fStep</td>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">__WIDTH, </td>
+          <td class="paramname">__PFB_WIDTH, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">__HEIGHT, </td>
+          <td class="paramname">__PFB_HEIGHT, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -2358,11 +2389,11 @@ fStep</td>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    ({                                                                          \</div>
-<div class="line">        __attribute__((section(<span class="stringliteral">&quot;.bss.noinit.arm_2d_pfb_pool&quot;</span>)))                 \</div>
+<div class="line">        ARM_SECTION(<span class="stringliteral">&quot;.bss.noinit.arm_2d_pfb_pool&quot;</span>)                              \</div>
 <div class="line">         static <span class="keyword">struct </span>{                                                        \</div>
 <div class="line">            arm_2d_pfb_t tFPB;                                                  \</div>
 <div class="line">            __ALIGNED(4)                                                        \</div>
-<div class="line">            __PIXEL_TYPE tBuffer[(__WIDTH) * (__HEIGHT)];                       \</div>
+<div class="line">            __PIXEL_TYPE tBuffer[(__PFB_WIDTH) * (__PFB_HEIGHT)];               \</div>
 <div class="line">        } s_tPFBs[__PFB_NUM];                                                   \</div>
 <div class="line">                                                                                \</div>
 <div class="line">        arm_2d_helper_pfb_cfg_t tCFG = {                                        \</div>
@@ -2373,8 +2404,8 @@ fStep</td>
 <div class="line">                                                                                \</div>
 <div class="line">            .FrameBuffer.ptPFBs = (<a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> *)s_tPFBs,                      \</div>
 <div class="line">            .FrameBuffer.tFrameSize = {                                         \</div>
-<div class="line">                .iWidth = (__WIDTH),                                            \</div>
-<div class="line">                .iHeight = (__HEIGHT),                                          \</div>
+<div class="line">                .iWidth = (__PFB_WIDTH),                                        \</div>
+<div class="line">                .iHeight = (__PFB_HEIGHT),                                      \</div>
 <div class="line">            },                                                                  \</div>
 <div class="line">            .FrameBuffer.wBufferSize = <span class="keyword">sizeof</span>(s_tPFBs[0].tBuffer),              \</div>
 <div class="line">            .FrameBuffer.hwPFBNum = <a class="code hl_define" href="group__gKernel.html#ga7b6c484887a402bba1af11b457264553" title="get the number of items in an given array">dimof</a>(s_tPFBs),                             \</div>
@@ -2409,7 +2440,7 @@ fStep</td>
 <div class="fragment"><div class="line"><span class="keyword">static</span> <a class="code hl_define" href="group__gKernel.html#ga467717c9835f6c6a75f3d6d8c3aee8c8" title="a wrapper for attribute((nonnull))">ARM_NOINIT</a> <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> s_tExamplePFB;</div>
 <div class="line">...</div>
 <div class="line"><span class="comment">// initialise FPB helper</span></div>
-<div class="line">if (<a class="code hl_define" href="group__gHelper.html#ga457a16ef9330255578354fcd291a9bc2" title="a macro wrapper in uppercase to help initialising PFB service">ARM_2D_HELPER_PFB_INIT</a>(</div>
+<div class="line">if (<a class="code hl_define" href="group__gHelper.html#gac4b43f521c7030ee6d4880f1ea8220f5" title="a macro wrapper in uppercase to help initialising PFB service">ARM_2D_HELPER_PFB_INIT</a>(</div>
 <div class="line">    &amp;s_tExamplePFB,                 <span class="comment">// FPB Helper object</span></div>
 <div class="line">    __GLCD_CFG_SCEEN_WIDTH__,       <span class="comment">// screen width</span></div>
 <div class="line">    __GLCD_CFG_SCEEN_HEIGHT__,      <span class="comment">// screen height</span></div>
@@ -2673,7 +2704,7 @@ fStep</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gHelper.html#ga457a16ef9330255578354fcd291a9bc2" title="a macro wrapper in uppercase to help initialising PFB service">ARM_2D_HELPER_PFB_INIT</a>(                                             \</div>
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gHelper.html#gac4b43f521c7030ee6d4880f1ea8220f5" title="a macro wrapper in uppercase to help initialising PFB service">ARM_2D_HELPER_PFB_INIT</a>(                                             \</div>
 <div class="line">                                __CB_ADDR,                                      \</div>
 <div class="line">                                __SCREEN_WIDTH,                                 \</div>
 <div class="line">                                __SCREEN_HEIGHT,                                \</div>
@@ -2819,7 +2850,7 @@ fStep</td>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the PFB control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the PFB helper control block </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">...</td><td>the used PFB block. </td></tr>
   </table>
   </dd>
@@ -3594,6 +3625,58 @@ fStep</td>
 
 </div>
 </div>
+<a id="ga401b363d3f7120e56a1494d26e3c2af7" name="ga401b363d3f7120e56a1494d26e3c2af7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga401b363d3f7120e56a1494d26e3c2af7">&#9670;&nbsp;</a></span>arm_2d_scene_player_hide_navigation_layer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_scene_player_hide_navigation_layer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>hide the navigation layer </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>an initialised scene player </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga3bac12004dcc0fb152f54118497f2d34" name="ga3bac12004dcc0fb152f54118497f2d34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3bac12004dcc0fb152f54118497f2d34">&#9670;&nbsp;</a></span>arm_2d_scene_player_show_navigation_layer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_scene_player_show_navigation_layer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>show the navigation layer if there is a valid one </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>an initialised scene player </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="gadaa72d1d1c3baf5db91070008c238293" name="gadaa72d1d1c3baf5db91070008c238293"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gadaa72d1d1c3baf5db91070008c238293">&#9670;&nbsp;</a></span>__arm_2d_scene_player_register_before_switching_event_handler()</h2>
 
@@ -3747,6 +3830,33 @@ fStep</td>
 
 </div>
 </div>
+<a id="ga012c85746e62c16a38f5253fd9d0dca6" name="ga012c85746e62c16a38f5253fd9d0dca6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga012c85746e62c16a38f5253fd9d0dca6">&#9670;&nbsp;</a></span>arm_2d_helper_pfb_get_pfb_size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a> arm_2d_helper_pfb_get_pfb_size </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get the inital PFB size </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the pfb helper control block </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> the PFB size </dd></dl>
+
+</div>
+</div>
 <a id="gab2cec999a9abbf7ec42bed4352a17b88" name="gab2cec999a9abbf7ec42bed4352a17b88"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gab2cec999a9abbf7ec42bed4352a17b88">&#9670;&nbsp;</a></span>arm_2d_helper_pfb_task()</h2>
 
@@ -3776,7 +3886,7 @@ fStep</td>
 <p>the task function for pfb helper </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>an initialised PFB control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>an initialised PFB helper control block </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ptDirtyRegions</td><td>a region list pending for refresh, NULL means refreshing the whole screen </td></tr>
   </table>
   </dd>
@@ -3815,7 +3925,111 @@ fStep</td>
 For normal usage, please DO NOT use this function unless you know what you are doing. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>an initialised PFB control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>an initialised PFB helper control block </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaec3341ff7e558eb0665d1d2819e0e92c" name="gaec3341ff7e558eb0665d1d2819e0e92c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaec3341ff7e558eb0665d1d2819e0e92c">&#9670;&nbsp;</a></span>arm_2d_helper_hide_navigation_layer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_helper_hide_navigation_layer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>hide the navigation layer </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>an initialised PFB helper control block </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gae7a2c6d89191cfa51b06b24e06a89e2e" name="gae7a2c6d89191cfa51b06b24e06a89e2e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae7a2c6d89191cfa51b06b24e06a89e2e">&#9670;&nbsp;</a></span>arm_2d_helper_show_navigation_layer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_helper_show_navigation_layer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>show the navigation layer if there is a valid one </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>an initialised PFB helper control block </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gae4017b79661fe52c6115894ebcb094a5" name="gae4017b79661fe52c6115894ebcb094a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae4017b79661fe52c6115894ebcb094a5">&#9670;&nbsp;</a></span>arm_2d_helper_ignore_low_level_flush()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_helper_ignore_low_level_flush </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ignore the low level PFB flushing only </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>an initialised PFB helper control block </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaeaaf0ab9b565da461334ed9fc641cc8d" name="gaeaaf0ab9b565da461334ed9fc641cc8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaeaaf0ab9b565da461334ed9fc641cc8d">&#9670;&nbsp;</a></span>arm_2d_helper_resume_low_level_flush()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_helper_resume_low_level_flush </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>resume the low level PFB flushing </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>an initialised PFB helper control block </td></tr>
   </table>
   </dd>
 </dl>
@@ -3857,7 +4071,7 @@ For normal usage, please DO NOT use this function unless you know what you are d
 <p>update PFB dependency (event handlers) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the PFB control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the PFB helper control block </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">chMask</td><td>the bit mask for event handlers </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ptDependency</td><td>the new dependency description </td></tr>
   </table>
@@ -3901,7 +4115,7 @@ For normal usage, please DO NOT use this function unless you know what you are d
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the PFB control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the PFB helper control block </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ptPFB</td><td>the used PFB block </td></tr>
   </table>
   </dd>
@@ -3971,7 +4185,7 @@ For normal usage, please DO NOT use this function unless you know what you are d
 <p>try to get a PFB block from the pool </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the PFB control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the PFB helper control block </td></tr>
   </table>
   </dd>
 </dl>
@@ -4014,7 +4228,7 @@ For normal usage, please DO NOT use this function unless you know what you are d
 <p>free a PFB block to the pool </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the PFB control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the PFB helper control block </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ptPFB</td><td>the target PFB block </td></tr>
   </table>
   </dd>
