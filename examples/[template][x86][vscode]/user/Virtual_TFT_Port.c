@@ -136,7 +136,8 @@ static void monitor_sdl_refr_core(void)
 {
     if(sdl_refr_qry != false)
     {
-        if (arm_2d_helper_is_time_out(1000/60)) {
+        if (arm_2d_helper_is_time_out(1000/60)) 
+        {
             sdl_refr_qry = false;
             SDL_UpdateTexture(texture, NULL, tft_fb, VT_WIDTH * sizeof(uint32_t));
             SDL_RenderClear(renderer);
