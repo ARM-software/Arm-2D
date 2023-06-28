@@ -18,8 +18,6 @@
 
 /*============================ INCLUDES ======================================*/
 #include <stdio.h>
-#include "SDL.h"
-#undef main
 #include "arm_2d_helper.h"
 #include "arm_2d_scenes.h"
 #include "arm_2d_disp_adapters.h"

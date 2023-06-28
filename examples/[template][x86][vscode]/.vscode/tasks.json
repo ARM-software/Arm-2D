@@ -18,6 +18,7 @@
                 "-DARM_SECTION(x)= ",
                 "-D__va_list=va_list",
                 "-g",
+                "-O1",
                 "-std=gnu11",
                 "${workspaceFolder}/user/*.c",
                 "${workspaceFolder}/../../../Arm-2D/Library/Source/*.c",
