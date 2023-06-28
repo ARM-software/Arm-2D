@@ -18,8 +18,9 @@
 
 /*============================ INCLUDES ======================================*/
 #include <stdio.h>
+#include "SDL.h"
+#undef main
 #include "arm_2d_helper.h"
-
 #include "arm_2d_scenes.h"
 #include "arm_2d_disp_adapters.h"
 
@@ -123,6 +124,9 @@ void before_scene_switching_handler(void *pTarget,
     c_SceneLoaders[s_chIndex]();
     s_chIndex++;
 }
+
+extern void lcd_flush(int32_t nMS);
+
 /*----------------------------------------------------------------------------
   Main function
  *----------------------------------------------------------------------------*/
@@ -151,7 +155,9 @@ int main (void)
 #endif
 
     while (1) {
-        disp_adapter0_task();
+        if (arm_fsm_rt_cpl == disp_adapter0_task()) {
+            lcd_flush(1);
+        }
     }
 }
 
