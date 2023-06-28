@@ -4,6 +4,7 @@
 #include <string.h>
 #include "SDL.h"
 #include "arm_2d.h"
+#include <time.h>
 
 #undef main
 
@@ -96,7 +97,15 @@ static void monitor_sdl_init(void)
                                 "."
                                 ARM_TO_STRING(ARM_2D_VERSION_PATCH)
                                 "-"
-                                ARM_2D_VERSION_STR,
+                                ARM_2D_VERSION_STR
+                                " ("
+                                ARM_TO_STRING(VT_WIDTH)
+                                "*"
+                                ARM_TO_STRING(VT_HEIGHT)
+                                " "
+                                ARM_TO_STRING(VT_COLOR_DEPTH)
+                                "bits )"
+                                ,
                                 SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                                 VT_WIDTH, VT_HEIGHT, 0);       /*last param. SDL_WINDOW_BORDERLESS to hide borders*/
 
@@ -195,6 +204,34 @@ static int monitor_sdl_refr_thread(void * param)
     return 0;
 }
 
+
+
+uint32_t VT_timerCallback(uint32_t interval, void *param)
+{
+    //    llTimer_ticks(10);
+    return interval;
+}
+
+int32_t Disp0_DrawBitmap(int16_t x,int16_t y,int16_t width,int16_t height,const uint8_t *bitmap)
+{
+    VT_Fill_Multiple_Colors(x, y,x+width-1,y+height-1,(color_typedef*) bitmap);
+
+    return 0;
+}
+
+uint32_t SystemCoreClock=3600000000;
+
+int64_t arm_2d_helper_get_system_timestamp(void)
+{
+    return (int64_t)clock();
+}
+
+uint32_t arm_2d_helper_get_reference_clock_frequency(void)
+{
+    return 1000;
+}
+
+__attribute__((constructor))
 void VT_Init(void)
 {
     SDL_CreateThread(monitor_sdl_refr_thread, "sdl_refr", NULL);

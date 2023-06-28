@@ -21,7 +21,7 @@
 
 /*============================ INCLUDES ======================================*/
 
-//#include "RTE_Components.h"
+#include "RTE_Components.h"
 
 #ifdef   __cplusplus
 extern "C" {

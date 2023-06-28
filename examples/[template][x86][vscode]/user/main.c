@@ -1,64 +1,162 @@
+/*
+ * Copyright (c) 2009-2022 Arm Limited. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the License); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/*============================ INCLUDES ======================================*/
 #include <stdio.h>
-#include "SDL.h"
-#undef main
-#include "Virtual_TFT_Port.h"
-#include "arm_2d.h"
-#include "arm_2d_disp_adapter_0.h"
-#include "arm_2d_scene_benchmark_watch_panel_cover.h"
-#include <time.h>
+#include "arm_2d_helper.h"
 
+#include "arm_2d_scenes.h"
+#include "arm_2d_disp_adapters.h"
 
-extern
-void disp_adapter0_init(void);
+#ifdef RTE_Acceleration_Arm_2D_Extra_Benchmark
+#   include "arm_2d_benchmark.h"
+#endif
 
-extern
-arm_fsm_rt_t disp_adapter0_task(void);
+#include "arm_2d_scene_meter.h"
+#include "arm_2d_scene_watch.h"
 
-uint32_t VT_timerCallback(uint32_t interval, void *param)
+#if defined(__clang__)
+#   pragma clang diagnostic push
+#   pragma clang diagnostic ignored "-Wunknown-warning-option"
+#   pragma clang diagnostic ignored "-Wreserved-identifier"
+#   pragma clang diagnostic ignored "-Wsign-conversion"
+#   pragma clang diagnostic ignored "-Wpadded"
+#   pragma clang diagnostic ignored "-Wcast-qual"
+#   pragma clang diagnostic ignored "-Wcast-align"
+#   pragma clang diagnostic ignored "-Wmissing-field-initializers"
+#   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
+#   pragma clang diagnostic ignored "-Wmissing-prototypes"
+#   pragma clang diagnostic ignored "-Wunused-variable"
+#   pragma clang diagnostic ignored "-Wunused-parameter"
+#   pragma clang diagnostic ignored "-Wgnu-statement-expression"
+#elif __IS_COMPILER_ARM_COMPILER_5__
+#elif __IS_COMPILER_GCC__
+#   pragma GCC diagnostic push
+#   pragma GCC diagnostic ignored "-Wformat="
+#   pragma GCC diagnostic ignored "-Wpedantic"
+#endif
+
+/*============================ MACROS ========================================*/
+/*============================ MACROFIED FUNCTIONS ===========================*/
+/*============================ TYPES =========================================*/
+/*============================ GLOBAL VARIABLES ==============================*/
+/*============================ PROTOTYPES ====================================*/
+/*============================ LOCAL VARIABLES ===============================*/
+/*============================ IMPLEMENTATION ================================*/
+
+void scene_meter_loader(void) 
 {
-    //    llTimer_ticks(10);
-    return interval;
+    arm_2d_scene_meter_init(&DISP0_ADAPTER);
 }
 
-int32_t Disp0_DrawBitmap(int16_t x,int16_t y,int16_t width,int16_t height,const uint8_t *bitmap)
+void scene_watch_loader(void) 
 {
-    VT_Fill_Multiple_Colors(x, y,x+width-1,y+height-1,(color_typedef*) bitmap);
-
-    return 0;
-}
-
-uint32_t SystemCoreClock=3600000000;
-
-int64_t arm_2d_helper_get_system_timestamp(void)
-{
-    return (int64_t)clock();
-}
-
-uint32_t arm_2d_helper_get_reference_clock_frequency(void)
-{
-    return 1000;
+    arm_2d_scene_watch_init(&DISP0_ADAPTER);
 }
 
 
-int main()
+void scene0_loader(void) 
 {
-    printf("arm-2d sdl\n");
-    VT_Init();
+    arm_2d_scene0_init(&DISP0_ADAPTER);
+}
 
-//    SDL_GetTicks();
-//    SDL_AddTimer(10, VT_timerCallback, NULL);
+void scene1_loader(void) 
+{
+    arm_2d_scene1_init(&DISP0_ADAPTER);
+}
 
+void scene2_loader(void) 
+{
+    arm_2d_scene2_init(&DISP0_ADAPTER);
+}
+
+void scene3_loader(void) 
+{
+    arm_2d_scene3_init(&DISP0_ADAPTER);
+}
+
+void scene4_loader(void) 
+{
+    arm_2d_scene4_init(&DISP0_ADAPTER);
+}
+
+typedef void scene_loader_t(void);
+
+static scene_loader_t * const c_SceneLoaders[] = {
+    scene0_loader,
+    scene1_loader,
+    scene_meter_loader,
+    scene3_loader,
+    scene4_loader,
+    scene2_loader,
+    scene_watch_loader,
+};
+
+
+/* load scene one by one */
+void before_scene_switching_handler(void *pTarget,
+                                    arm_2d_scene_player_t *ptPlayer,
+                                    arm_2d_scene_t *ptScene)
+{
+    static uint_fast8_t s_chIndex = 0;
+
+    if (s_chIndex >= dimof(c_SceneLoaders)) {
+        s_chIndex = 0;
+    }
+    
+    /* call loader */
+    c_SceneLoaders[s_chIndex]();
+    s_chIndex++;
+}
+/*----------------------------------------------------------------------------
+  Main function
+ *----------------------------------------------------------------------------*/
+int main (void) 
+{
     arm_irq_safe {
         arm_2d_init();
     }
 
+    printf("\r\nArm-2D Bare-metal Template\r\n");
+ 
     disp_adapter0_init();
 
+#ifdef RTE_Acceleration_Arm_2D_Extra_Benchmark
     arm_2d_run_benchmark();
-//    arm_2d_scene0_init(&DISP0_ADAPTER);
+#else
+    arm_2d_scene_player_register_before_switching_event_handler(
+            &DISP0_ADAPTER,
+            before_scene_switching_handler);
+    
+    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
+                                            ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);
+    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 3000);
+    
+    arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
+#endif
 
-    while(1)
-    {
+    while (1) {
         disp_adapter0_task();
     }
 }
+
+#if defined(__clang__)
+#   pragma clang diagnostic pop
+#endif
+
+
