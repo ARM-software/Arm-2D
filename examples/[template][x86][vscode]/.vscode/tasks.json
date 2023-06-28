@@ -20,7 +20,7 @@
             "dependsOn":"copy32Dll",
             "type": "cppbuild",
             "label": "C/C++: gcc.exe build x86(32)",
-            "command": "D:/mingw32/bin/gcc.exe",
+            "command": "gcc.exe",
             "args": [
                 "-fdiagnostics-color=always",
                 "-DARM_SECTION(x)= ",
@@ -60,13 +60,13 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "detail": "调试器生成的任务。"
+            "detail": "Debugger generated task"
         },
         {
             "dependsOn":"copy64Dll",
             "type": "cppbuild",
             "label": "C/C++: gcc.exe build x64(64)",
-            "command": "D:/mingw64/bin/gcc.exe",
+            "command": "gcc.exe",
             "args": [
                 "-fdiagnostics-color=always",
                 "-DARM_SECTION(x)= ",
@@ -106,7 +106,7 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "detail": "调试器生成的任务。"
+            "detail": "Debugger generated task"
         }
     ],
     "version": "2.0.0"

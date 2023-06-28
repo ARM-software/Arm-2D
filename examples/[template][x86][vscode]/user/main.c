@@ -36,7 +36,7 @@ int64_t arm_2d_helper_get_system_timestamp(void)
 
 uint32_t arm_2d_helper_get_reference_clock_frequency(void)
 {
-    return SystemCoreClock;
+    return 1000;
 }
 
 int main()

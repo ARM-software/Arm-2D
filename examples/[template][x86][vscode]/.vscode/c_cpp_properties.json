@@ -21,7 +21,7 @@
                 "ARM_SECTION(x)=  ",
                 "__va_list=va_list"
             ],
-            "compilerPath": "D:/mingw32/bin/gcc.exe",
+            "compilerPath": "gcc.exe",
             "cStandard": "gnu11",
             "cppStandard": "gnu++11",
             "intelliSenseMode": "windows-gcc-x86",
@@ -49,7 +49,7 @@
                 "ARM_SECTION(x)=  ",
                 "__va_list=va_list"
             ],
-            "compilerPath": "D:/mingw64/bin/gcc.exe",
+            "compilerPath": "gcc.exe",
             "cStandard": "gnu11",
             "cppStandard": "gnu++11",
             "intelliSenseMode": "windows-gcc-x64",

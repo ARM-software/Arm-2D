@@ -44,7 +44,7 @@ static int16_t last_y = 0;
 
 /*******************************************************************************
  * @name     :VT_Mouse_Get_Point
- * @brief    :获取点击行为以及坐标
+ * @brief    :get mouse click position
  * @param    :x       pointer,save click position x
  *            y       pointer,save click position y
  * @return   :true    press
@@ -189,7 +189,7 @@ static int monitor_sdl_refr_thread(void * param)
 void VT_Init(void)
 {
     SDL_CreateThread(monitor_sdl_refr_thread, "sdl_refr", NULL);
-    while(sdl_inited == false);//等待线程中的初始化完成
+    while(sdl_inited == false);
 }
 
 void VT_Fill_Single_Color(int32_t x1, int32_t y1, int32_t x2, int32_t y2, color_typedef color)
