@@ -326,7 +326,7 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
                 .iY = 0,
             },
             .tSize = {
-                .iWidth = __GLCD_CFG_SCEEN_WIDTH__,
+                .iWidth = 0,
                 .iHeight = 8,
             },
         ),
@@ -357,6 +357,8 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
 
             /* we don't want to refresh "km/h" as there is no change at all */
             s_tDirtyRegions[0].tRegion.tSize.iHeight -= 16; 
+
+            s_tDirtyRegions[0].tRegion.tSize.iWidth = tScreen.tSize.iWidth;
         }
 
     } while(0);

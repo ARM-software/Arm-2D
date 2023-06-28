@@ -175,9 +175,9 @@ static void __on_scene_meter_frame_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     /* switch to next scene after 10s */
-//    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
-//        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
-//    }
+    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
+        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+    }
 }
 
 static void __before_scene_meter_switching_out(arm_2d_scene_t *ptScene)
@@ -185,6 +185,22 @@ static void __before_scene_meter_switching_out(arm_2d_scene_t *ptScene)
     user_scene_meter_t *ptThis = (user_scene_meter_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+}
+
+static
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_background_handler)
+{
+    user_scene_meter_t *ptThis = (user_scene_meter_t *)pTarget;
+    ARM_2D_UNUSED(ptTile);
+    ARM_2D_UNUSED(bIsNewFrame);
+    /*-----------------------draw back ground begin-----------------------*/
+
+
+
+    /*-----------------------draw back ground end  -----------------------*/
+    arm_2d_op_wait_async(NULL);
+
+    return arm_fsm_rt_cpl;
 }
 
 static
@@ -310,7 +326,7 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
                 .iY = 0,
             },
             .tSize = {
-                .iWidth = __GLCD_CFG_SCEEN_WIDTH__,
+                .iWidth = 0,
                 .iHeight = 8,
             },
         ),
@@ -341,6 +357,8 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
 
             /* we don't want to refresh "km/h" as there is no change at all */
             s_tDirtyRegions[0].tRegion.tSize.iHeight -= 16; 
+
+            s_tDirtyRegions[0].tRegion.tSize.iWidth = tScreen.tSize.iWidth;
         }
 
     } while(0);
@@ -360,6 +378,7 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
         .use_as__arm_2d_scene_t = {
             /* Please uncommon the callbacks if you need them
              */
+            //.fnBackground   = &__pfb_draw_scene_meter_background_handler,
             .fnScene        = &__pfb_draw_scene_meter_handler,
             .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             

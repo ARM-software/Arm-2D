@@ -26,6 +26,7 @@
                 "-DARM_SECTION(x)= ",
                 "-D__va_list=va_list",
                 "-g",
+                "-std=gnu11",
                 "${fileDirname}/*.c",
                 "${workspaceFolder}/../../../Arm-2D/Library/Source/*.c",
                 "${workspaceFolder}/../../../Arm-2D/Helper/Source/*.c",
@@ -55,53 +56,10 @@
             ],
             "group": {
                 "kind": "build",
-                "isDefault": true
+                "isDefault": true,
             },
             "detail": "Debugger generated task"
         },
-        {
-            "dependsOn":"copy64Dll",
-            "type": "cppbuild",
-            "label": "C/C++: gcc.exe build x64(64)",
-            "command": "gcc.exe",
-            "args": [
-                "-fdiagnostics-color=always",
-                "-DARM_SECTION(x)= ",
-                "-D__va_list=va_list",
-                "-g",
-                "${fileDirname}/*.c",
-                "${workspaceFolder}/../../../Arm-2D/Library/Source/*.c",
-                "${workspaceFolder}/../../../Arm-2D/Helper/Source/*.c",
-                "${workspaceFolder}/../../../Arm-2D/examples/common/controls/*.c",
-                "${workspaceFolder}/../../../Arm-2D/examples/common/benchmark/*.c",
-                "${workspaceFolder}/../../../Arm-2D/examples/common/asset/*.c",
-                "${workspaceFolder}/math/*.c",
-                "-lSDL2main",
-                "-lSDL2",
-                "-L${workspaceFolder}/sdl2/64/lib",
-                "-I${workspaceFolder}/sdl2/64/include/SDL2",
-                "-I${workspaceFolder}/../../../Arm-2D/Library/Include",
-                "-I${workspaceFolder}/../../../Arm-2D/Helper/Include",
-                "-I${workspaceFolder}/math",
-                "-I${workspaceFolder}/math/dsp",
-                "-I${workspaceFolder}/user",
-                "-I${workspaceFolder}/../../../Arm-2D/examples/common/benchmark",
-                "-I${workspaceFolder}/../../../Arm-2D/examples/common/controls",
-                "-o",
-                "${workspaceFolder}/build/${fileBasenameNoExtension}.exe"
-            ],
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "problemMatcher": [
-                "$gcc"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "detail": "Debugger generated task"
-        }
     ],
     "version": "2.0.0"
 }

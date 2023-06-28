@@ -40,12 +40,15 @@ static SDL_Texture * texture;
 static uint32_t tft_fb[VT_WIDTH * VT_HEIGHT];
 static volatile bool sdl_inited = false;
 static volatile bool sdl_refr_qry = false;
-static volatile bool sdl_refr_cpl = true;
+static volatile bool sdl_refr_cpl = false;
 static volatile bool sdl_quit_qry = false;
 
 static bool left_button_is_down = false;
 static int16_t last_x = 0;
 static int16_t last_y = 0;
+
+
+
 
 /*******************************************************************************
  * @name     :VT_Mouse_Get_Point
@@ -87,6 +90,7 @@ static void monitor_sdl_clean_up(void)
 
 static void monitor_sdl_init(void)
 {
+
     /*Initialize the SDL*/
     SDL_Init(SDL_INIT_VIDEO);
 
@@ -132,14 +136,16 @@ static void monitor_sdl_refr_core(void)
 {
     if(sdl_refr_qry != false)
     {
-        sdl_refr_qry = false;
-        SDL_UpdateTexture(texture, NULL, tft_fb, VT_WIDTH * sizeof(uint32_t));
-        SDL_RenderClear(renderer);
+        if (arm_2d_helper_is_time_out(1000/60)) {
+            sdl_refr_qry = false;
+            SDL_UpdateTexture(texture, NULL, tft_fb, VT_WIDTH * sizeof(uint32_t));
+            SDL_RenderClear(renderer);
 
-        /*Update the renderer with the texture containing the rendered image*/
-        SDL_RenderCopy(renderer, texture, NULL, NULL);
-        SDL_RenderPresent(renderer);
-        sdl_refr_cpl = true;
+            /*Update the renderer with the texture containing the rendered image*/
+            SDL_RenderCopy(renderer, texture, NULL, NULL);
+            SDL_RenderPresent(renderer);
+            sdl_refr_cpl = true;
+        }
     }
 
     SDL_Event event;
@@ -226,13 +232,13 @@ int32_t Disp0_DrawBitmap(int16_t x,int16_t y,int16_t width,int16_t height,const 
 
 void lcd_flush(int32_t nMS)
 {
-    nMS = MAX(1, nMS);
-
-    sdl_refr_qry = true;
     while(!sdl_refr_cpl) {
         SDL_Delay(nMS);
     }
     sdl_refr_cpl = false;
+
+    nMS = MAX(1, nMS);
+    sdl_refr_qry = true;
 }
 
 #if 0

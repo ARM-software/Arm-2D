@@ -4,6 +4,7 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
+                "${workspaceFolder}/sdl2/32/include/SDL2",
                 "${workspaceFolder}/user",
                 "${workspaceFolder}/math",
                 "${workspaceFolder}/math/dsp",
@@ -16,8 +17,6 @@
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE",
-                "RTE_Acceleration_Arm_2D_Extra_Benchmark",
-                "RTE_Acceleration_Arm_2D_Helper_Disp_Adapter0",
                 "ARM_SECTION(x)=  ",
                 "__va_list=va_list"
             ],
@@ -32,6 +31,7 @@
             "name": "Win64",
             "includePath": [
                 "${workspaceFolder}/**",
+                "${workspaceFolder}/sdl2/64/include/SDL2",
                 "${workspaceFolder}/user",
                 "${workspaceFolder}/math",
                 "${workspaceFolder}/math/dsp",
@@ -44,8 +44,6 @@
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE",
-                "RTE_Acceleration_Arm_2D_Extra_Benchmark",
-                "RTE_Acceleration_Arm_2D_Helper_Disp_Adapter0",
                 "ARM_SECTION(x)=  ",
                 "__va_list=va_list"
             ],

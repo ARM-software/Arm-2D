@@ -352,7 +352,7 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
                 .iY = 0,
             },
             .tSize = {
-                .iWidth = __GLCD_CFG_SCEEN_WIDTH__,
+                .iWidth = 0,
                 .iHeight = 8,
             },
         ),
@@ -363,6 +363,8 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
     arm_2d_region_t tScreen
         = arm_2d_helper_pfb_get_display_area(
             &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
+
+    s_tDirtyRegions[0].tRegion.tSize.iWidth = tScreen.tSize.iWidth;
 
     if (NULL == ptThis) {
         ptThis = (user_scene_watch_t *)malloc(sizeof(user_scene_watch_t));

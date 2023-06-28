@@ -151,7 +151,7 @@ static void __on_scene_watch_frame_start(arm_2d_scene_t *ptScene)
     
     /* update second pointer */
     do {
-        if (arm_2d_helper_time_liner_slider(0, 3600, 60 * 1000, &iResult, &this.lTimestamp[1])) {
+        if (arm_2d_helper_time_liner_slider(0, 3600, 60 * 100, &iResult, &this.lTimestamp[1])) {
             this.lTimestamp[1] = 0;
         }
         fAngle = ARM_2D_ANGLE((float)iResult / 10.0f);
@@ -163,7 +163,7 @@ static void __on_scene_watch_frame_start(arm_2d_scene_t *ptScene)
     
     /* update minute pointer */
     do {
-        if (arm_2d_helper_time_liner_slider(0, 3600, 60 * 60 * 1000, &iResult, &this.lTimestamp[2])) {
+        if (arm_2d_helper_time_liner_slider(0, 3600, 60 * 60 * 100, &iResult, &this.lTimestamp[2])) {
             this.lTimestamp[2] = 0;
         }
         fAngle = ARM_2D_ANGLE((float)iResult / 10.0f);
@@ -175,7 +175,7 @@ static void __on_scene_watch_frame_start(arm_2d_scene_t *ptScene)
 
     /* update hour pointer */
     do {
-        if (arm_2d_helper_time_liner_slider(0, 3600, 12*60*60*1000, &iResult, &this.lTimestamp[3])) {
+        if (arm_2d_helper_time_liner_slider(0, 3600, 12*60*60*100, &iResult, &this.lTimestamp[3])) {
             this.lTimestamp[3] = 0;
         }
         fAngle = ARM_2D_ANGLE((float)iResult / 10.0f);
@@ -209,6 +209,21 @@ static void __before_scene_watch_switching_out(arm_2d_scene_t *ptScene)
 
 }
 
+//static
+//IMPL_PFB_ON_DRAW(__pfb_draw_scene_watch_background_handler)
+//{
+//    user_scene_watch_t *ptThis = (user_scene_watch_t *)pTarget;
+//    ARM_2D_UNUSED(ptTile);
+//    ARM_2D_UNUSED(bIsNewFrame);
+//    /*-----------------------draw back ground begin-----------------------*/
+
+
+
+//    /*-----------------------draw back ground end  -----------------------*/
+//    arm_2d_op_wait_async(NULL);
+
+//    return arm_fsm_rt_cpl;
+//}
 
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_watch_handler)
@@ -337,7 +352,7 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
                 .iY = 0,
             },
             .tSize = {
-                .iWidth = __GLCD_CFG_SCEEN_WIDTH__,
+                .iWidth = 0,
                 .iHeight = 8,
             },
         ),
@@ -348,6 +363,8 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
     arm_2d_region_t tScreen
         = arm_2d_helper_pfb_get_display_area(
             &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
+
+    s_tDirtyRegions[0].tRegion.tSize.iWidth = tScreen.tSize.iWidth;
 
     if (NULL == ptThis) {
         ptThis = (user_scene_watch_t *)malloc(sizeof(user_scene_watch_t));
@@ -364,6 +381,7 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
         .use_as__arm_2d_scene_t = {
             /* Please uncommon the callbacks if you need them
              */
+            //.fnBackground   = &__pfb_draw_scene_watch_background_handler,
             .fnScene        = &__pfb_draw_scene_watch_handler,
             .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
