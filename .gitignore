@@ -39,7 +39,6 @@ build
 *.scvd
 .DS_Store
 *@*
-RTE_Components.h
 Pre_Include_Global.h
 /documentation/arm2d.dxy
 /documentation/linkchecker-out.csv
@@ -60,3 +59,11 @@ Library/jinja/example.txt.jinja
 tools/input.json
 Library/Source/example.txt
 tools/example.txt.jinja
+examples/\[template\]\[bare-metal\]/project/mdk/RTE/_AN547-Cortex-M55_r0/RTE_Components.h
+examples/\[template\]\[bare-metal\]/project/mdk/RTE/_STM32F746G-Discovery-GCC/RTE_Components.h
+examples/\[template\]\[bare-metal\]/project/mdk/RTE/_STM32F746G-Discovery/RTE_Components.h
+examples/\[template\]\[cmsis-rtos2\]/RTE/_AN547-Cortex-M55_r0/RTE_Components.h
+examples/\[template\]\[cmsis-rtos2\]/RTE/_FastModel/RTE_Components.h
+examples/\[template\]\[cmsis-rtos2\]/RTE/_STM32F746G-Discovery-GCC/RTE_Components.h
+examples/\[template\]\[cmsis-rtos2\]/RTE/_STM32F746G-Discovery/RTE_Components.h
+examples/\[template\]\[cmsis-rtos2\]/RTE/_V2M-MPS3-CM85/RTE_Components.h
