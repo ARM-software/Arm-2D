@@ -103,14 +103,14 @@ extern "C" {
 // <i> The width of your screen
 // <i> Default: 320
 #ifndef __GLCD_CFG_SCEEN_WIDTH__
-#   define __GLCD_CFG_SCEEN_WIDTH__                                     480
+#   define __GLCD_CFG_SCEEN_WIDTH__                                     800
 #endif
 
 // <o>Height of the screen <8-32767>
 // <i> The height of your screen
 // <i> Default: 240
 #ifndef __GLCD_CFG_SCEEN_HEIGHT__
-#   define __GLCD_CFG_SCEEN_HEIGHT__                                     272
+#   define __GLCD_CFG_SCEEN_HEIGHT__                                    600
 #endif
 
 // <o> The size of the LCD printf text buffer <16-65535>

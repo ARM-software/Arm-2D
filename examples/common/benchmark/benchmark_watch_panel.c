@@ -238,18 +238,6 @@ static arm_2d_op_trans_msk_opa_t s_tStarOP;
 
 /*============================ IMPLEMENTATION ================================*/
 
-static volatile uint32_t s_wSystemTimeInMs = 0;
-static volatile bool s_bTimeout = false;
-extern void platform_1ms_event_handler(void);
-
-void platform_1ms_event_handler(void)
-{
-    s_wSystemTimeInMs++;
-    if (!(s_wSystemTimeInMs & (_BV(10) - 1))) {
-        s_bTimeout = true;
-    }
-}
-
 void benchmark_watch_panel_init(arm_2d_region_t tScreen)
 {
     arm_extra_controls_init();
@@ -545,4 +533,3 @@ void benchmark_watch_panel_draw(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
     arm_2d_op_wait_async(&s_tStarOP.use_as__arm_2d_op_core_t);
 
 }
-

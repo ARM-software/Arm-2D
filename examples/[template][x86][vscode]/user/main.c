@@ -14,7 +14,7 @@ void disp_adapter0_init(void);
 extern
 arm_fsm_rt_t disp_adapter0_task(void);
 
-uint32_t VT_timerCallback(uint32_t interval, void *param)//回调函数
+uint32_t VT_timerCallback(uint32_t interval, void *param)
 {
     //    llTimer_ticks(10);
     return interval;
@@ -39,6 +39,7 @@ uint32_t arm_2d_helper_get_reference_clock_frequency(void)
     return 1000;
 }
 
+
 int main()
 {
     printf("arm-2d sdl\n");
@@ -61,4 +62,3 @@ int main()
         disp_adapter0_task();
     }
 }
-

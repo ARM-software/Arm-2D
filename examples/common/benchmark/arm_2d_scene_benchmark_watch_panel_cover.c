@@ -257,6 +257,7 @@ user_scene_benchmark_watch_panel_cover_t *
     return ptThis;
 }
 
+#if defined(RTE_Acceleration_Arm_2D_Extra_Benchmark_Watch_Panel)
 ARM_NONNULL(1)
 user_scene_benchmark_watch_panel_cover_t * 
     __arm_2d_run_benchmark(arm_2d_scene_player_t *ptDispAdapter)
@@ -268,6 +269,7 @@ user_scene_benchmark_watch_panel_cover_t *
 
     return __arm_2d_scene_benchmark_watch_panel_cover_init(ptDispAdapter, NULL);
 }
+#endif
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
