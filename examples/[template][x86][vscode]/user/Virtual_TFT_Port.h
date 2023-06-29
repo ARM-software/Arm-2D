@@ -7,13 +7,14 @@ extern "C" {
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "arm_2d_disp_adapter_0.h"
 
 //
 // 虚拟屏幕设定参数,即需要一个什么样的屏幕
 //
-#define VT_WIDTH           800
-#define VT_HEIGHT          600
-#define VT_COLOR_DEPTH     16
+#define VT_WIDTH           __DISP0_CFG_SCEEN_WIDTH__
+#define VT_HEIGHT          __DISP0_CFG_SCEEN_HEIGHT__
+#define VT_COLOR_DEPTH     __DISP0_CFG_COLOUR_DEPTH__
 #define VT_VIRTUAL_MACHINE 0                   /*Different rendering should be used if running in a Virtual machine*/
 
 #if VT_COLOR_DEPTH == 1 || VT_COLOR_DEPTH == 8 || VT_COLOR_DEPTH == 16 || VT_COLOR_DEPTH == 24
