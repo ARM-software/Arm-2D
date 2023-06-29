@@ -53,6 +53,8 @@
 #elif defined ( __GNUC__ )
   #include "cmsis_gcc.h"
 
+#elif defined( __clang__ )
+ #include "cmsis_clang.h"
 
 /*
  * IAR Compiler

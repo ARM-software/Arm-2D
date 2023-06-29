@@ -1,0 +1,5 @@
+{
+    "files.associations": {
+        "cmsis_gcc.h": "c"
+    }
+}

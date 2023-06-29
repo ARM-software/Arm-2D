@@ -51,6 +51,53 @@
             ],
             "group": {
                 "kind": "build",
+                "isDefault": false,
+            },
+            "detail": "Debugger generated task"
+        },
+        {
+            "dependsOn":"copy32Dll",
+            "type": "cppbuild",
+            "label": "C/C++: clang.exe build x86(32)",
+            "command": "clang.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-DARM_SECTION(x)= ",
+                "-D__va_list=va_list",
+                "-g",
+                "-O1",
+                "-std=gnu11",
+                "${workspaceFolder}/*.c",
+                "${workspaceFolder}/platform/*.c",
+                "${workspaceFolder}/../../Library/Source/*.c",
+                "${workspaceFolder}/../../Helper/Source/*.c",
+                "${workspaceFolder}/../../examples/common/controls/*.c",
+                "${workspaceFolder}/../../examples/common/benchmark/*.c",
+                "${workspaceFolder}/../../examples/common/asset/*.c",
+                "${workspaceFolder}/platform/math/*.c",
+                "-lSDL2main",
+                "-lSDL2",
+                "-L${workspaceFolder}/sdl2/32/lib/x86",
+                "-I${workspaceFolder}/sdl2/32/include/SDL2",
+                "-I${workspaceFolder}/../../Library/Include",
+                "-I${workspaceFolder}/../../Helper/Include",
+                "-I${workspaceFolder}/platform/math",
+                "-I${workspaceFolder}/platform/math/dsp",
+                "-I${workspaceFolder}",
+                "-I${workspaceFolder}/platform",
+                "-I${workspaceFolder}/../../examples/common/benchmark",
+                "-I${workspaceFolder}/../../examples/common/controls",
+                "-o",
+                "${workspaceFolder}/build/arm_2d.exe"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
                 "isDefault": true,
             },
             "detail": "Debugger generated task"
