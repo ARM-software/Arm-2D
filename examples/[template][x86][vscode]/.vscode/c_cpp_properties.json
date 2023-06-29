@@ -5,13 +5,13 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/sdl2/32/include/SDL2",
-                "${workspaceFolder}/user",
-                "${workspaceFolder}/math",
-                "${workspaceFolder}/math/dsp",
-                "${workspaceFolder}/../../../Arm-2D/Helper/Include",
-                "${workspaceFolder}/../../../Arm-2D/Library/Include",
-                "${workspaceFolder}/../../../Arm-2D/examples/common/benchmark",
-                "${workspaceFolder}/../../../Arm-2D/examples/common/controls"
+                "${workspaceFolder}/platform",
+                "${workspaceFolder}/platform/math",
+                "${workspaceFolder}/platform/math/dsp",
+                "${workspaceFolder}/../../Helper/Include",
+                "${workspaceFolder}/../../Library/Include",
+                "${workspaceFolder}/../../examples/common/benchmark",
+                "${workspaceFolder}/../../examples/common/controls"
             ],
             "defines": [
                 "_DEBUG",
@@ -27,33 +27,6 @@
             "compilerArgs": [
             ]
         },
-        {
-            "name": "Win64",
-            "includePath": [
-                "${workspaceFolder}/**",
-                "${workspaceFolder}/sdl2/64/include/SDL2",
-                "${workspaceFolder}/user",
-                "${workspaceFolder}/math",
-                "${workspaceFolder}/math/dsp",
-                "${workspaceFolder}/../../../Arm-2D/Helper/Include",
-                "${workspaceFolder}/../../../Arm-2D/Library/Include",
-                "${workspaceFolder}/../../../Arm-2D/examples/common/benchmark",
-                "${workspaceFolder}/../../../Arm-2D/examples/common/controls"
-            ],
-            "defines": [
-                "_DEBUG",
-                "UNICODE",
-                "_UNICODE",
-                "ARM_SECTION(x)=  ",
-                "__va_list=va_list"
-            ],
-            "compilerPath": "gcc.exe",
-            "cStandard": "gnu11",
-            "cppStandard": "gnu++11",
-            "intelliSenseMode": "windows-gcc-x64",
-            "compilerArgs": [
-            ]
-        }
     ],
     "version": 4
 }
