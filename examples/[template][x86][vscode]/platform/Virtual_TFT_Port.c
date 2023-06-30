@@ -96,7 +96,9 @@ static void monitor_sdl_init(void)
 
     SDL_SetEventFilter(quit_filter, NULL);
 
-    window = SDL_CreateWindow(  "Arm-2D v" 
+    window = SDL_CreateWindow(  
+                                "NotGenshin Clock(v0.6.0)"
+                                "                                               - Created with Arm-2D v" 
                                 ARM_TO_STRING(ARM_2D_VERSION_MAJOR)
                                 "."
                                 ARM_TO_STRING(ARM_2D_VERSION_MINOR)
@@ -242,23 +244,22 @@ void lcd_flush(int32_t nMS)
     sdl_refr_qry = true;
 }
 
-#if 0
-void __disp_adapter0_request_async_flushing( 
-                                                    void *pTarget,
-                                                    bool bIsNewFrame,
-                                                    int16_t iX, 
-                                                    int16_t iY,
-                                                    int16_t iWidth,
-                                                    int16_t iHeight,
-                                                    const COLOUR_INT *pBuffer)
-{
-
-     VT_Fill_Multiple_Colors(iX, iY,iX+iWidth-1,iY+iHeight-1,(color_typedef*) pBuffer);
-     s_bRequestAsyncFlush = true;
-}
-#endif
-
 uint32_t SystemCoreClock=3600000000;
+
+#if defined(_POSIX_VERSION) || defined(HAS_CLOCK_GETTIME)
+int64_t arm_2d_helper_get_system_timestamp(void)
+{
+    struct timespec timestamp;
+    clock_gettime(CLOCK_MONOTONIC, &timestamp);
+
+    return 1000000ul * timestamp.tv_sec + timestamp.tv_nsec / 1000ul;
+}
+
+uint32_t arm_2d_helper_get_reference_clock_frequency(void)
+{
+    return 1000000ul;
+}
+#else
 
 int64_t arm_2d_helper_get_system_timestamp(void)
 {
@@ -267,8 +268,9 @@ int64_t arm_2d_helper_get_system_timestamp(void)
 
 uint32_t arm_2d_helper_get_reference_clock_frequency(void)
 {
-    return 1000;
+    return CLOCKS_PER_SEC;
 }
+#endif
 
 __attribute__((constructor))
 void VT_Init(void)

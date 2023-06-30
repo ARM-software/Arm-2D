@@ -66,10 +66,8 @@ const uint8_t Font_6x8_h[(144-32)*8];
 static struct {
     arm_2d_region_t tScreen;
     arm_2d_region_t tRegion;
-    struct {
-        uint8_t         chX;
-        uint8_t         chY;
-    } tTextLocation;
+
+    arm_2d_location_t   tDrawOffset;
     
     struct {
         COLOUR_INT_TYPE     tForeground;
@@ -81,9 +79,6 @@ static struct {
     uint32_t       wMode;
     
     const arm_2d_font_t *ptFont;
-    arm_2d_char_descriptor_t tCharDescriptor;
-    
-    
 } s_tLCDTextControl = {
     .tScreen = {
         .tSize = {
@@ -158,18 +153,16 @@ void arm_lcd_text_set_draw_region(arm_2d_region_t *ptRegion)
 
 void arm_lcd_text_location(uint8_t chY, uint8_t chX)
 {
-    s_tLCDTextControl.tTextLocation.chX = chX;
-    s_tLCDTextControl.tTextLocation.chY = chY;
+    arm_2d_size_t tSize = s_tLCDTextControl.ptFont->tCharSize;
     
-    if (    s_tLCDTextControl.tTextLocation.chX *  s_tLCDTextControl.ptFont->tCharSize.iWidth
-        >=  s_tLCDTextControl.tRegion.tSize.iWidth ) {
-        s_tLCDTextControl.tTextLocation.chX = 0;
-        s_tLCDTextControl.tTextLocation.chY++;
-        if (    s_tLCDTextControl.tTextLocation.chY * s_tLCDTextControl.ptFont->tCharSize.iHeight 
-            >= s_tLCDTextControl.tRegion.tSize.iHeight) {
-            s_tLCDTextControl.tTextLocation.chY = 0;
-        }
-    }
+    s_tLCDTextControl.tDrawOffset.iX 
+        = tSize.iWidth * chX % s_tLCDTextControl.tRegion.tSize.iWidth;
+    s_tLCDTextControl.tDrawOffset.iY 
+        = tSize.iHeight * 
+        (   chY + tSize.iWidth * chX 
+        /   s_tLCDTextControl.tRegion.tSize.iWidth);
+
+    s_tLCDTextControl.tDrawOffset.iY %= s_tLCDTextControl.tRegion.tSize.iHeight;
 }
 
 arm_2d_err_t arm_lcd_text_set_font(const arm_2d_font_t *ptFont)
@@ -234,43 +227,59 @@ ARM_2D_A1_FONT_GET_CHAR_DESCRIPTOR_HANDLER(
     return ptDescriptor;
 }
 
-
-int8_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8_t chOpacity)
+static 
+arm_2d_char_descriptor_t *__arm_lcd_get_char_descriptor(const arm_2d_font_t *ptFont, 
+                                                        arm_2d_char_descriptor_t *ptDescriptor, 
+                                                        uint8_t **ppchCharCode)
 {
     assert(NULL != ppchCharCode);
     assert(NULL != (*ppchCharCode));
 
-    if (NULL == ARM_2D_INVOKE(s_tLCDTextControl.ptFont->fnGetCharDescriptor,
-        ARM_2D_PARAM(   s_tLCDTextControl.ptFont,
-                        &s_tLCDTextControl.tCharDescriptor,
+    if (NULL == ARM_2D_INVOKE(ptFont->fnGetCharDescriptor,
+        ARM_2D_PARAM(   ptFont,
+                        ptDescriptor,
                         (uint8_t *)(*ppchCharCode)))) {
         assert(false);
         
+        return NULL;
+    }
+
+    return ptDescriptor;
+}
+
+
+int8_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8_t chOpacity)
+{
+    arm_2d_char_descriptor_t tCharDescriptor;
+    if (NULL == __arm_lcd_get_char_descriptor(  s_tLCDTextControl.ptFont, 
+                                                &tCharDescriptor,
+                                                ppchCharCode)){
         (*ppchCharCode) += 1;
+
         return 0;
     }
 
-    (*ppchCharCode) += s_tLCDTextControl.tCharDescriptor.chCodeLength;
+    (*ppchCharCode) += tCharDescriptor.chCodeLength;
 
     arm_2d_size_t tBBoxSize = s_tLCDTextControl.ptFont->tCharSize;
 
     arm_2d_region_t tDrawRegion = {
         .tLocation = {
-            .iX = iX + s_tLCDTextControl.tCharDescriptor.iBearingX,
-            .iY = iY + (tBBoxSize.iHeight - s_tLCDTextControl.tCharDescriptor.iBearingY),
+            .iX = iX + tCharDescriptor.iBearingX,
+            .iY = iY + (tBBoxSize.iHeight - tCharDescriptor.iBearingY),
          },
-        .tSize = s_tLCDTextControl.tCharDescriptor.tileChar.tRegion.tSize,
+        .tSize = tCharDescriptor.tileChar.tRegion.tSize,
     };
 
     if (NULL != s_tLCDTextControl.ptFont->fnDrawChar) {
         s_tLCDTextControl.ptFont->fnDrawChar(   
                                     s_tLCDTextControl.ptTargetFB,
                                     &tDrawRegion,
-                                    &s_tLCDTextControl.tCharDescriptor.tileChar,
+                                    &tCharDescriptor.tileChar,
                                     s_tLCDTextControl.tColour.tForeground,
                                     chOpacity);
     } else {
-        arm_2d_draw_pattern(&s_tLCDTextControl.tCharDescriptor.tileChar, 
+        arm_2d_draw_pattern(&tCharDescriptor.tileChar, 
                             s_tLCDTextControl.ptTargetFB, 
                             &tDrawRegion,
                             s_tLCDTextControl.wMode,
@@ -280,50 +289,113 @@ int8_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8_
 
     arm_2d_op_wait_async(NULL);
 
-    return s_tLCDTextControl.tCharDescriptor.iAdvance;
+    return tCharDescriptor.iAdvance;
+}
+
+static void __arm_lcd_draw_region_line_wrapping(arm_2d_size_t *ptCharSize, 
+                                                arm_2d_size_t *ptDrawRegionSize)
+{
+    if (s_tLCDTextControl.tDrawOffset.iX >= ptDrawRegionSize->iWidth) {
+        s_tLCDTextControl.tDrawOffset.iX = 0;
+        s_tLCDTextControl.tDrawOffset.iY += ptCharSize->iHeight;
+
+        if (s_tLCDTextControl.tDrawOffset.iY >= ptDrawRegionSize->iHeight) {
+            s_tLCDTextControl.tDrawOffset.iY = 0;
+        }
+    }
+}
+
+arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t *ptFont)
+{
+    if (NULL == ptFont) {
+        ptFont = s_tLCDTextControl.ptFont;
+    }
+    arm_2d_size_t tCharSize = ptFont->tCharSize;
+    arm_2d_region_t tDrawBox = {
+        .tSize.iHeight = tCharSize.iHeight,
+    };
+
+
+    while(*str) {
+        if (*str == '\r') {
+            tDrawBox.tLocation.iX = 0;
+        } else if (*str == '\n') {
+            tDrawBox.tLocation.iX = 0;
+            tDrawBox.tLocation.iY += tCharSize.iHeight;
+
+            tDrawBox.tSize.iHeight = MAX(tDrawBox.tSize.iHeight, tDrawBox.tLocation.iY);
+        } else if (*str == '\t') { 
+            tDrawBox.tLocation.iX += tCharSize.iWidth * 4;
+            tDrawBox.tLocation.iX -= tDrawBox.tLocation.iX 
+                                   % tCharSize.iWidth;
+
+            tDrawBox.tSize.iWidth = MAX(tDrawBox.tSize.iWidth, tDrawBox.tLocation.iX);
+
+        }else if (*str == '\b') {
+            if (tDrawBox.tLocation.iX >= tCharSize.iWidth) {
+                tDrawBox.tLocation.iX -= tCharSize.iWidth;
+            } else {
+                tDrawBox.tLocation.iX = 0;
+            }
+        } else {
+
+            int16_t iAdvance = tCharSize.iWidth;
+
+            arm_2d_char_descriptor_t tDescriptor;
+            if (NULL == __arm_lcd_get_char_descriptor( ptFont, &tDescriptor, (uint8_t **)&str)) {
+                str++;
+            } else{
+                iAdvance = tDescriptor.iAdvance;
+                str += tDescriptor.chCodeLength;
+            }
+
+            tDrawBox.tLocation.iX += iAdvance;
+            tDrawBox.tSize.iWidth = MAX(tDrawBox.tSize.iWidth, tDrawBox.tLocation.iX);
+
+            continue;
+        }
+        
+        str++;
+    }
+
+    return tDrawBox.tSize;
 }
 
 void arm_lcd_puts(const char *str)
 {
+    arm_2d_size_t tCharSize = s_tLCDTextControl.ptFont->tCharSize;
+    arm_2d_size_t tDrawRegionSize = s_tLCDTextControl.tRegion.tSize;
+
     while(*str) {
         if (*str == '\r') {
-            s_tLCDTextControl.tTextLocation.chX = 0;
+            s_tLCDTextControl.tDrawOffset.iX = 0;
         } else if (*str == '\n') {
-            s_tLCDTextControl.tTextLocation.chX = 0;
-            s_tLCDTextControl.tTextLocation.chY++;
-        } else if (*str == '\t') { 
-            s_tLCDTextControl.tTextLocation.chX += 8;
-            s_tLCDTextControl.tTextLocation.chX &= ~(_BV(3)-1);
-
-            if (    s_tLCDTextControl.tTextLocation.chX * s_tLCDTextControl.ptFont->tCharSize.iWidth 
-                >=  s_tLCDTextControl.tRegion.tSize.iWidth ) {
-                s_tLCDTextControl.tTextLocation.chX = 0;
-                s_tLCDTextControl.tTextLocation.chY++;
+            s_tLCDTextControl.tDrawOffset.iX = 0;
+            s_tLCDTextControl.tDrawOffset.iY += tCharSize.iHeight;
+            if (s_tLCDTextControl.tDrawOffset.iY >= tDrawRegionSize.iHeight) {
+                s_tLCDTextControl.tDrawOffset.iY = 0;
             }
+        } else if (*str == '\t') { 
+            s_tLCDTextControl.tDrawOffset.iX += tCharSize.iWidth * 4;
+            s_tLCDTextControl.tDrawOffset.iX -= s_tLCDTextControl.tDrawOffset.iX 
+                                              % tCharSize.iWidth;
+
+            __arm_lcd_draw_region_line_wrapping(&tCharSize, &tDrawRegionSize);
+
         }else if (*str == '\b') {
-            if (s_tLCDTextControl.tTextLocation.chX) {
-                s_tLCDTextControl.tTextLocation.chX--;
+            if (s_tLCDTextControl.tDrawOffset.iX >= tCharSize.iWidth) {
+                s_tLCDTextControl.tDrawOffset.iX -= tCharSize.iWidth;
+            } else {
+                s_tLCDTextControl.tDrawOffset.iX = 0;
             }
         } else {
+            int16_t iX = s_tLCDTextControl.tDrawOffset.iX + s_tLCDTextControl.tRegion.tLocation.iX;
+            int16_t iY = s_tLCDTextControl.tDrawOffset.iY + s_tLCDTextControl.tRegion.tLocation.iY; 
 
-            int16_t iX = s_tLCDTextControl.tTextLocation.chX * s_tLCDTextControl.ptFont->tCharSize.iWidth;
-            int16_t iY = s_tLCDTextControl.tTextLocation.chY * s_tLCDTextControl.ptFont->tCharSize.iHeight;
+            s_tLCDTextControl.tDrawOffset.iX 
+                += lcd_draw_char(   iX, iY, (uint8_t **)&str, s_tLCDTextControl.chOpacity);;
 
-            lcd_draw_char(  s_tLCDTextControl.tRegion.tLocation.iX + iX, 
-                            s_tLCDTextControl.tRegion.tLocation.iY + iY, 
-                            (uint8_t **)&str,
-                            s_tLCDTextControl.chOpacity);
-
-            s_tLCDTextControl.tTextLocation.chX++;
-            if (    s_tLCDTextControl.tTextLocation.chX * s_tLCDTextControl.ptFont->tCharSize.iWidth 
-                >=  s_tLCDTextControl.tRegion.tSize.iWidth ) {
-                s_tLCDTextControl.tTextLocation.chX = 0;
-                s_tLCDTextControl.tTextLocation.chY++;
-                if (    s_tLCDTextControl.tTextLocation.chY * s_tLCDTextControl.ptFont->tCharSize.iHeight 
-                    >= s_tLCDTextControl.tRegion.tSize.iHeight) {
-                    s_tLCDTextControl.tTextLocation.chY = 0;
-                }
-            }
+            __arm_lcd_draw_region_line_wrapping(&tCharSize, &tDrawRegionSize);
 
             continue;
         }

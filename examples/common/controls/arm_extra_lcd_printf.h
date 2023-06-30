@@ -87,28 +87,44 @@ extern "C" {
                                         uint8_t *pchCharCode)
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
-#define __arm_print_banner2(__STR, __REGION)                                    \
+
+
+
+#define __arm_print_banner3(__STR, __REGION, __FONT_PTR)                        \
         do {                                                                    \
-            arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);      \
-            arm_lcd_text_set_draw_region(&(__REGION));                          \
-            arm_lcd_text_location(                                              \
-                (uint8_t)(((__REGION).tSize.iHeight / 8) / 2 - 1),              \
-                (uint8_t)((((__REGION).tSize.iWidth / 6) - sizeof(__STR)) / 2));\
-            arm_lcd_puts(__STR);                                                \
+            if (NULL != (__FONT_PTR)) {                                         \
+                arm_lcd_text_set_font((const arm_2d_font_t *)(__FONT_PTR));     \
+            }                                                                   \
+            arm_2d_align_centre(                                                \
+                (__REGION), arm_lcd_get_string_line_box((__STR),(__FONT_PTR))) {\
+                arm_lcd_text_set_draw_region(&__centre_region);                 \
+                arm_lcd_puts(__STR);                                            \
+            }                                                                   \
         } while(0)
+
+#define __arm_print_banner2(__STR, __REGION)                                    \
+        __arm_print_banner3(__STR, __REGION, NULL)
 
 #define __arm_print_banner1(__STR)                                              \
         do {                                                                    \
-            arm_2d_tile_t *ptTile = arm_2d_get_default_frame_buffer();          \
-            arm_2d_canvas(ptTile, __banner_canvas) {                            \
-                __arm_print_banner2(__STR, __banner_canvas);                    \
+            arm_2d_tile_t *ARM_2D_SAFE_NAME(ptTile)                             \
+                            = arm_2d_get_default_frame_buffer();                \
+            arm_2d_canvas(ARM_2D_SAFE_NAME(ptTile), __banner_canvas) {          \
+                __arm_print_banner3(__STR, __banner_canvas, NULL);              \
             }                                                                   \
         } while(0)
 
 #define arm_print_banner(...)                                                   \
             ARM_CONNECT2(   __arm_print_banner,                                 \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
-        
+
+#define arm_lcd_print_banner(...)               arm_print_banner(__VA_ARGS__)                                
+
+#define arm_lcd_get_string_line_box(__STR, ...)                                 \
+            __arm_lcd_get_string_line_box(                                      \
+                                (__STR),                                        \
+                                (const arm_2d_font_t *)(NULL, ##__VA_ARGS__))
+
 /*============================ TYPES =========================================*/
 
 typedef struct {
@@ -139,7 +155,7 @@ struct arm_2d_font_t {
     arm_2d_tile_t tileFont;
     arm_2d_size_t tCharSize;                                                    //!< CharSize
     uint32_t nCount;                                                            //!< Character count
-    //const uint8_t *chBitmap;                                                  //!< Characters bitmaps
+
     arm_2d_font_get_char_descriptor_handler_t *fnGetCharDescriptor;             //!< On-Get-Char-Descriptor event handler
     arm_2d_font_draw_char_handler_t           *fnDrawChar;                      //!< On-Draw-Char event handler
 };
@@ -235,6 +251,9 @@ void arm_lcd_text_set_draw_region(arm_2d_region_t *ptRegion);
 
 extern
 arm_2d_err_t arm_lcd_text_set_font(const arm_2d_font_t *ptFont);
+
+extern
+arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t *ptFont);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
