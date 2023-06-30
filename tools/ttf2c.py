@@ -52,6 +52,8 @@ c_head_string="""
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #   pragma clang diagnostic ignored "-Wincompatible-pointer-types-discards-qualifiers"
+#elif defined(__IS_COMPILER_GCC__)
+#   pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)
 #   pragma diag_suppress=1296
 #endif
@@ -226,8 +228,8 @@ def generate_glyphs_data(input_file, text, pixel_size):
         
         bitmap_array = np.array(bitmap.buffer, dtype=np.uint8).reshape((height, width))
 
-        if width < width_max or height < height_max:
-           padding = ((0, height_max - height), (0, width_max - width))
+        if width < width_max:
+           padding = ((0, 0), (0, width_max - width))
            bitmap_array = np.pad(bitmap_array, padding, 'constant')
 
         char_mask_array = bitmap_array.flatten()
