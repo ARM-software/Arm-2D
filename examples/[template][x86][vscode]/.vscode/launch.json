@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "debug-only(gdb) x86(32)",
+            "name": "build and run x86(32)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/arm_2d.exe",
@@ -25,58 +25,7 @@
                     "ignoreFailures": true
                 }
             ],
-        },
-        {
-            "name": "build(clang) and debug(gdb) x86(32)",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/build/arm_2d.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "miDebuggerPath": "gdb.exe",
-            "setupCommands": [
-                {
-                    "description": "Enable gdb pretty printing",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                },
-                {
-                    "description": "Set disassbly flavor as Intel",
-                    "text": "-gdb-set disassembly-flavor intel",
-                    "ignoreFailures": true
-                }
-            ],
-            "preLaunchTask": "C/C++: clang.exe build x86(32)"
-        },
-        {
-            "name": "build(gcc) and debug(gdb) x86(32)",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/build/arm_2d.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "miDebuggerPath": "gdb.exe",
-            "setupCommands": [
-                {
-                    "description": "Enable gdb pretty printing",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                },
-                {
-                    "description": "Set disassbly flavor as Intel",
-                    "text": "-gdb-set disassembly-flavor intel",
-                    "ignoreFailures": true
-                }
-            ],
-            "preLaunchTask": "C/C++: gcc.exe build x86(32)"
+            "preLaunchTask": "Make"
         },
     ]
 }

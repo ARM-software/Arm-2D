@@ -67,3 +67,4 @@ examples/\[template\]\[cmsis-rtos2\]/RTE/_FastModel/RTE_Components.h
 examples/\[template\]\[cmsis-rtos2\]/RTE/_STM32F746G-Discovery-GCC/RTE_Components.h
 examples/\[template\]\[cmsis-rtos2\]/RTE/_STM32F746G-Discovery/RTE_Components.h
 examples/\[template\]\[cmsis-rtos2\]/RTE/_V2M-MPS3-CM85/RTE_Components.h
+*.co
