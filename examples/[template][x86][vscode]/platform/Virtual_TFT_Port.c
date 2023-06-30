@@ -96,9 +96,7 @@ static void monitor_sdl_init(void)
 
     SDL_SetEventFilter(quit_filter, NULL);
 
-    window = SDL_CreateWindow(  
-                                "NotGenshin Clock(v0.6.0)"
-                                "                                               - Created with Arm-2D v" 
+    window = SDL_CreateWindow( "Arm-2D v" 
                                 ARM_TO_STRING(ARM_2D_VERSION_MAJOR)
                                 "."
                                 ARM_TO_STRING(ARM_2D_VERSION_MINOR)
