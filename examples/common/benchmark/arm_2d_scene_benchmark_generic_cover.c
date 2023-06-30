@@ -175,6 +175,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_benchmark_generic_cover_handler)
             arm_2d_region_t tScreen = arm_2d_helper_pfb_get_display_area(ptPFBHelper);
             arm_2d_size_t tPFBSize = arm_2d_helper_pfb_get_pfb_size(ptPFBHelper);
             
+            arm_lcd_text_set_font(NULL);
+            arm_lcd_text_set_draw_region(NULL);
+
             arm_lcd_text_location( __GLCD_CFG_SCEEN_HEIGHT__ / 8 - 7, 0);
             arm_lcd_puts(  "All-in-One Test, running "
                         ARM_TO_STRING(ITERATION_CNT)
@@ -185,7 +188,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_benchmark_generic_cover_handler)
                             tPFBSize.iHeight,
                             tScreen.tSize.iWidth, 
                             tScreen.tSize.iHeight);
+#if defined(__i386__) || defined(__x86_64__)
+            arm_lcd_printf( "\r\nCPU Freq: N/A\r\n");
+#else
             arm_lcd_printf( "\r\nCPU Freq: %dMHz\r\n", SystemCoreClock / 1000000ul);
+#endif
             arm_lcd_puts( "Testing...\r\n\r\n");
         } while(0);
 #endif

@@ -242,9 +242,7 @@ void lcd_flush(int32_t nMS)
     sdl_refr_qry = true;
 }
 
-uint32_t SystemCoreClock=3600000000;
-
-#if defined(_POSIX_VERSION) || defined(HAS_CLOCK_GETTIME)
+#if defined(_POSIX_VERSION) || defined(CLOCK_MONOTONIC)
 int64_t arm_2d_helper_get_system_timestamp(void)
 {
     struct timespec timestamp;

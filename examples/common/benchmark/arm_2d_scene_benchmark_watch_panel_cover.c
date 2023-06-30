@@ -190,7 +190,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_benchmark_watch_panel_cover_handler)
                 = &this.use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t;
             arm_2d_region_t tScreen = arm_2d_helper_pfb_get_display_area(ptPFBHelper);
             arm_2d_size_t tPFBSize = arm_2d_helper_pfb_get_pfb_size(ptPFBHelper);
-            
+
+            arm_lcd_text_set_font(NULL);
+            arm_lcd_text_set_draw_region(NULL);
+
             arm_lcd_text_location((uint8_t)(__top_canvas.tSize.iHeight / 8 - 7), 0);
             arm_lcd_puts(  "Transform Test, running "
                         ARM_TO_STRING(ITERATION_CNT)
@@ -201,7 +204,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_benchmark_watch_panel_cover_handler)
                             tPFBSize.iHeight,
                             tScreen.tSize.iWidth, 
                             tScreen.tSize.iHeight);
+#if defined(__i386__) || defined(__x86_64__)
+            arm_lcd_printf( "\r\nCPU Freq: N/A\r\n");
+#else
             arm_lcd_printf( "\r\nCPU Freq: %dMHz\r\n", SystemCoreClock / 1000000ul);
+#endif
             arm_lcd_puts( "Testing...\r\n\r\n");
         } while(0);
 #endif

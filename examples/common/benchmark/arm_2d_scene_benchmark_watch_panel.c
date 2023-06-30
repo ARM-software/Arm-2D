@@ -250,7 +250,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_benchmark_watch_panel_handler)
                 = &this.use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t;
             arm_2d_region_t tScreen = arm_2d_helper_pfb_get_display_area(ptPFBHelper);
             arm_2d_size_t tPFBSize = arm_2d_helper_pfb_get_pfb_size(ptPFBHelper);
-            
+
+            arm_lcd_text_set_font(NULL);
+            arm_lcd_text_set_draw_region(NULL);
+
             arm_lcd_text_location( tScreen.tSize.iHeight / 8 - 7, 0);
             arm_lcd_puts(  "Transform Test, running "
                         ARM_TO_STRING(ITERATION_CNT)
