@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\.."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"cmsis_gcc.h": "c",
+			"arm_2d_helper.h": "c",
+			"arm_2d_helper_pfb.h": "c",
+			"compare": "c",
+			"cstdint": "c"
+		}
+	}
+}
