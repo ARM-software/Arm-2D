@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include "SDL.h"
+#include "SDL2/SDL.h"
 #include "arm_2d.h"
 #include <time.h>
 #include "arm_2d_disp_adapters.h"

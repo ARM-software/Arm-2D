@@ -9,7 +9,7 @@ CC_SRC  += $(wildcard ../../examples/common/benchmark/*.c)
 CC_SRC  += $(wildcard ../../examples/common/controls/*.c)
 
 CC_INC  := .
-CC_INC  += sdl2/32/include/SDL2
+CC_INC  += sdl2/32/include
 CC_INC  += platform
 CC_INC  += platform/math
 CC_INC  += platform/math/dsp
@@ -38,6 +38,7 @@ SIZE    :=  $(CROSS)size
 #----------------------------------------------------------------------------------------------------------------------#
 CCFLAG  +=  -std=gnu11 -O1 -MMD -g
 CCFLAG  +=  -ffunction-sections -fdata-sections
+CCFLAG  +=  -fno-ms-extensions -w
 #CCFLAG  +=  -flto
 
 LDFLAG  +=  -Wl,--warn-common

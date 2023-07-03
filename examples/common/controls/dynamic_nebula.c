@@ -122,8 +122,8 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
         arm_2d_align_centre(__control_canvas, this.tCFG.iRadius * 2, this.tCFG.iRadius * 2) {
 
             arm_2d_location_t tCentre = {
-                    .iX = __centre_region.iWidth >> 1,
-                    .iY = __centre_region.iHeight >> 1,
+                    .iX = __centre_region.tSize.iWidth >> 1,
+                    .iY = __centre_region.tSize.iHeight >> 1,
                 };
 
             int n = this.tCFG.hwParticleCount;
