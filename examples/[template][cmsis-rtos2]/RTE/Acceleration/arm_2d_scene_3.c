@@ -394,6 +394,12 @@ static void __on_scene3_frame_start(arm_2d_scene_t *ptScene)
     user_scene_3_t *ptThis = (user_scene_3_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    int iResult;
+    if (arm_2d_helper_time_liner_slider(0, 1000, 10000, &iResult, &this.lTimestamp[2])) {
+        this.lTimestamp[2] = 0;
+    }
+    this.iProgress = iResult;
+
 }
 
 static void __on_scene3_frame_complete(arm_2d_scene_t *ptScene)
@@ -439,13 +445,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene3_handler)
     /* following code is just a demo, you can remove them */
     
     arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
-
-    if (bIsNewFrame) {
-        this.iProgress++;
-        if (this.iProgress > 1000) {
-            this.iProgress = 0;
-        }
-    }
 
     while(arm_fsm_rt_cpl != list_view_show(&this.tListView, ptTile, NULL, bIsNewFrame));
 
@@ -533,7 +532,7 @@ user_scene_3_t *__arm_2d_scene3_init(   arm_2d_scene_player_t *ptDispAdapter,
 
         //.fnOnBGStart    = &__on_scene3_background_start,
         //.fnOnBGComplete = &__on_scene3_background_complete,
-        //.fnOnFrameStart = &__on_scene3_frame_start,
+        .fnOnFrameStart = &__on_scene3_frame_start,
         .fnOnFrameCPL   = &__on_scene3_frame_complete,
         .fnDepose       = &__on_scene3_depose,
         },
