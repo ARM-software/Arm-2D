@@ -4101,7 +4101,8 @@ static const uint8_t c_bmpMeterPanelAlpha[240*240] = {
 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpMeterPanelA2Alpha")))
+
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpMeterPanelA2Alpha")
 static const uint8_t c_bmpMeterPanelA2Alpha[60*240] = {
 /* -0- */
 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
@@ -5304,7 +5305,8 @@ static const uint8_t c_bmpMeterPanelA2Alpha[60*240] = {
 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 
 };
-__attribute__((aligned(4), section("arm2d.asset.c_bmpMeterPanelA4Alpha")))
+
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpMeterPanelA4Alpha")
 static const uint8_t c_bmpMeterPanelA4Alpha[120*240] = {
 /* -0- */
 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
@@ -13716,7 +13718,7 @@ const uint16_t c_bmpMeterPanelRGB565[240*240] = {
 
 };
 
-ARM_SECTION("arm2d.asset.c_bmpMeterPanelCCCA8888")))
+ARM_SECTION("arm2d.asset.c_bmpMeterPanelCCCA8888")
 const uint32_t c_bmpMeterPanelCCCA8888[240*240] = {
 /* -0- */
 0xff161616, 0xff0d0d0d, 0xff0d0d0d, 0xff0d0d0d, 0xff0d0d0d, 0xff0d0d0d, 0xff0d0d0d, 0xff0d0d0d, 0xff0d0d0d, 0xff0d0d0d, 0xff0d0d0d, 0xff0d0d0d, 0xff0d0d0d, 0xff0d0d0d, 0xff0d0d0d, 0xff0d0d0d,
@@ -17802,7 +17804,7 @@ const uint32_t c_bmpMeterPanelCCCA8888[240*240] = {
 
 
 extern const arm_2d_tile_t c_tileMeterPanelGRAY8;
-ARM_SECTION("arm2d.tile.c_tileMeterPanelGRAY8")))
+ARM_SECTION("arm2d.tile.c_tileMeterPanelGRAY8")
 const arm_2d_tile_t c_tileMeterPanelGRAY8 = {
     .tRegion = {
         .tSize = {
@@ -17824,7 +17826,7 @@ const arm_2d_tile_t c_tileMeterPanelGRAY8 = {
 
 
 extern const arm_2d_tile_t c_tileMeterPanelRGB565;
-ARM_SECTION("arm2d.tile.c_tileMeterPanelRGB565")))
+ARM_SECTION("arm2d.tile.c_tileMeterPanelRGB565")
 const arm_2d_tile_t c_tileMeterPanelRGB565 = {
     .tRegion = {
         .tSize = {
@@ -17847,7 +17849,7 @@ const arm_2d_tile_t c_tileMeterPanelRGB565 = {
 
 extern const arm_2d_tile_t c_tileMeterPanelCCCA8888;
 
-ARM_SECTION("arm2d.tile.c_tileMeterPanelCCCA8888")))
+ARM_SECTION("arm2d.tile.c_tileMeterPanelCCCA8888")
 const arm_2d_tile_t c_tileMeterPanelCCCA8888 = {
     .tRegion = {
         .tSize = {
@@ -17871,7 +17873,7 @@ const arm_2d_tile_t c_tileMeterPanelCCCA8888 = {
 
 extern const arm_2d_tile_t c_tileMeterPanelMask2;
 
-ARM_SECTION("arm2d.tile.c_tileMeterPanelMask2")))
+ARM_SECTION("arm2d.tile.c_tileMeterPanelMask2")
 const arm_2d_tile_t c_tileMeterPanelMask2 = {
     .tRegion = {
         .tSize = {
@@ -17894,7 +17896,7 @@ const arm_2d_tile_t c_tileMeterPanelMask2 = {
 
 extern const arm_2d_tile_t c_tileMeterPanelMask;
 
-ARM_SECTION("arm2d.tile.c_tileMeterPanelMask")))
+ARM_SECTION("arm2d.tile.c_tileMeterPanelMask")
 const arm_2d_tile_t c_tileMeterPanelMask = {
     .tRegion = {
         .tSize = {
@@ -17917,7 +17919,7 @@ const arm_2d_tile_t c_tileMeterPanelMask = {
 
 extern const arm_2d_tile_t c_tileMeterPanelA2Mask;
 
-ARM_SECTION("arm2d.tile.c_tileMeterPanelA2Mask")))
+ARM_SECTION("arm2d.tile.c_tileMeterPanelA2Mask")
 const arm_2d_tile_t c_tileMeterPanelA2Mask = {
     .tRegion = {
         .tSize = {
@@ -17940,7 +17942,7 @@ const arm_2d_tile_t c_tileMeterPanelA2Mask = {
 
 extern const arm_2d_tile_t c_tileMeterPanelA4Mask;
 
-ARM_SECTION("arm2d.tile.c_tileMeterPanelA4Mask")))
+ARM_SECTION("arm2d.tile.c_tileMeterPanelA4Mask")
 const arm_2d_tile_t c_tileMeterPanelA4Mask = {
     .tRegion = {
         .tSize = {
