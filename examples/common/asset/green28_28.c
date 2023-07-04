@@ -18,7 +18,7 @@
 #endif
 
 
-__attribute__((aligned(4), section("arm2d.asset.c_bmpgreen28Alpha")))
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpgreen28Alpha")
 static const uint8_t c_bmpgreen28Alpha[28*28] = {
 /* -0- */
 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
@@ -224,7 +224,7 @@ static const uint8_t c_bmpgreen28A4Alpha[14*28] = {
 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpgreen28GRAY8")))
+ARM_SECTION("arm2d.asset.c_bmpgreen28GRAY8")))
 const uint8_t c_bmpgreen28GRAY8[28*28] = {
 /* -0- */
 0x61, 0x5f, 0x5a, 0x53, 0x43, 0x31, 0x1c, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
@@ -284,7 +284,7 @@ const uint8_t c_bmpgreen28GRAY8[28*28] = {
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x50, 0x6a, 0x67, 0x67, 0x67, 0x67, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpgreen28RGB565")))
+ARM_SECTION("arm2d.asset.c_bmpgreen28RGB565")))
 const uint16_t c_bmpgreen28RGB565[28*28] = {
 /* -0- */
 0x26e3, 0x26c3, 0x2663, 0x25e3, 0x1cc2, 0x1381, 0x09e1, 0x0080, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
@@ -372,7 +372,7 @@ const uint16_t c_bmpgreen28RGB565[28*28] = {
 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x25a3, 0x2f84, 0x2f64, 0x2f64, 0x2f64, 0x2f44, 
 };
 
-__attribute__((section("arm2d.asset.c_bmpgreen28CCCA8888")))
+ARM_SECTION("arm2d.asset.c_bmpgreen28CCCA8888")))
 const uint32_t c_bmpgreen28CCCA8888[28*28] = {
 /* -0- */
 0xff27de1e, 0xff27da1d, 0xff25ce1c, 0xff22bd1a, 0xff1b9a15, 0xff14710f, 0xff0b3f09, 0xff031102, 0xff000000, 0xff000000, 0xff000000, 0xff000000, 0xff000000, 0xff000000, 0xff000000, 0xff000000,
@@ -462,7 +462,7 @@ const uint32_t c_bmpgreen28CCCA8888[28*28] = {
 
 
 extern const arm_2d_tile_t c_tilegreen28GRAY8;
-__attribute__((section("arm2d.tile.c_tilegreen28GRAY8")))
+ARM_SECTION("arm2d.tile.c_tilegreen28GRAY8")))
 const arm_2d_tile_t c_tilegreen28GRAY8 = {
     .tRegion = {
         .tSize = {
@@ -484,7 +484,7 @@ const arm_2d_tile_t c_tilegreen28GRAY8 = {
 
 
 extern const arm_2d_tile_t c_tilegreen28RGB565;
-__attribute__((section("arm2d.tile.c_tilegreen28RGB565")))
+ARM_SECTION("arm2d.tile.c_tilegreen28RGB565")))
 const arm_2d_tile_t c_tilegreen28RGB565 = {
     .tRegion = {
         .tSize = {
@@ -507,7 +507,7 @@ const arm_2d_tile_t c_tilegreen28RGB565 = {
 
 extern const arm_2d_tile_t c_tilegreen28CCCA8888;
 
-__attribute__((section("arm2d.tile.c_tilegreen28CCCA8888")))
+ARM_SECTION("arm2d.tile.c_tilegreen28CCCA8888")))
 const arm_2d_tile_t c_tilegreen28CCCA8888 = {
     .tRegion = {
         .tSize = {
@@ -531,7 +531,7 @@ const arm_2d_tile_t c_tilegreen28CCCA8888 = {
 
 extern const arm_2d_tile_t c_tilegreen28Mask2;
 
-__attribute__((section("arm2d.tile.c_tilegreen28Mask2")))
+ARM_SECTION("arm2d.tile.c_tilegreen28Mask2")))
 const arm_2d_tile_t c_tilegreen28Mask2 = {
     .tRegion = {
         .tSize = {
@@ -554,7 +554,7 @@ const arm_2d_tile_t c_tilegreen28Mask2 = {
 
 extern const arm_2d_tile_t c_tilegreen28Mask;
 
-__attribute__((section("arm2d.tile.c_tilegreen28Mask")))
+ARM_SECTION("arm2d.tile.c_tilegreen28Mask")))
 const arm_2d_tile_t c_tilegreen28Mask = {
     .tRegion = {
         .tSize = {
@@ -577,7 +577,7 @@ const arm_2d_tile_t c_tilegreen28Mask = {
 
 extern const arm_2d_tile_t c_tilegreen28A2Mask;
 
-__attribute__((section("arm2d.tile.c_tilegreen28A2Mask")))
+ARM_SECTION("arm2d.tile.c_tilegreen28A2Mask")))
 const arm_2d_tile_t c_tilegreen28A2Mask = {
     .tRegion = {
         .tSize = {
@@ -600,7 +600,7 @@ const arm_2d_tile_t c_tilegreen28A2Mask = {
 
 extern const arm_2d_tile_t c_tilegreen28A4Mask;
 
-__attribute__((section("arm2d.tile.c_tilegreen28A4Mask")))
+ARM_SECTION("arm2d.tile.c_tilegreen28A4Mask")))
 const arm_2d_tile_t c_tilegreen28A4Mask = {
     .tRegion = {
         .tSize = {

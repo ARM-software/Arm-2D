@@ -128,7 +128,7 @@ void arm_2d_helper_init(void)
 
 /* NOTE: for non-arm architecture, you have to implement those functions.
  */
-#if defined(__ARM_ARCH) && __ARM_ARCH
+#if defined(__ARM_ARCH) && __ARM_ARCH && !defined(__APPLE__)
 __WEAK int64_t arm_2d_helper_get_system_timestamp(void)
 {
 #if defined(__PERF_COUNTER__)

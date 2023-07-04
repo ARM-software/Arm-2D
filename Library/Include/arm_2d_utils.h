@@ -584,6 +584,19 @@ extern "C" {
 #endif
 
 /*!
+ * \note do NOT use this macro directly
+ */
+#define __ARM_SECTION(__X)          __attribute__((section(__X)))
+
+/*!
+ * \brief an attribute to specify the section
+ * \note it works for both functions and static/global variables
+ */
+#ifndef ARM_SECTION
+#   define ARM_SECTION(__X)         __ARM_SECTION(__X)
+#endif
+
+/*!
  * \brief an attribute for static variables that no initialisation is required 
  *        in the C startup process.
  */
@@ -594,7 +607,7 @@ extern "C" {
 #       define ARM_NOINIT   __attribute__(( section( ".bss.noinit")))
 #   elif   defined(__IS_COMPILER_IAR__)
 #       define ARM_NOINIT   __no_init
-#   elif   defined(__IS_COMPILER_GCC__) || defined(__IS_COMPILER_LLVM__)
+#   elif   (defined(__IS_COMPILER_GCC__) || defined(__IS_COMPILER_LLVM__)) && !defined(__APPLE__)
 #       define ARM_NOINIT   __attribute__(( section( ".bss.noinit")))
 #   else
 #       define ARM_NOINIT
@@ -616,18 +629,7 @@ extern "C" {
 #   define ARM_ALIGN(__N)           __ARM_ALIGN(__N)
 #endif
 
-/*!
- * \note do NOT use this macro directly
- */
-#define __ARM_SECTION(__X)          __attribute__((section(__X)))
 
-/*!
- * \brief an attribute to specify the section
- * \note it works for both functions and static/global variables
- */
-#ifndef ARM_SECTION
-#   define ARM_SECTION(__X)         __ARM_SECTION(__X)
-#endif
 
 /*!
  * \brief local variable decoration for pointers: restrict
