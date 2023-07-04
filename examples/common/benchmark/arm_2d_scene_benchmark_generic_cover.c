@@ -188,7 +188,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_benchmark_generic_cover_handler)
                             tPFBSize.iHeight,
                             tScreen.tSize.iWidth, 
                             tScreen.tSize.iHeight);
-#if defined(__i386__) || defined(__x86_64__)
+#if defined(__i386__) || defined(__x86_64__) || defined(__APPLE__)
             arm_lcd_printf( "\r\nCPU Freq: N/A\r\n");
 #else
             arm_lcd_printf( "\r\nCPU Freq: %dMHz\r\n", SystemCoreClock / 1000000ul);
