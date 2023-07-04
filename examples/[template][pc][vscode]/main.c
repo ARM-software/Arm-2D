@@ -18,6 +18,7 @@
 
 /*============================ INCLUDES ======================================*/
 #include <stdio.h>
+#include <SDL2/SDL.h>
 #include "arm_2d_helper.h"
 #include "arm_2d_scenes.h"
 #include "arm_2d_disp_adapters.h"
@@ -131,7 +132,8 @@ extern void monitor_sdl_refr_core(void);
 /*----------------------------------------------------------------------------
   Main function
  *----------------------------------------------------------------------------*/
-int main (void) 
+
+int main(int argc, char* argv[])
 {
     arm_irq_safe {
         arm_2d_init();

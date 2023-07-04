@@ -47,7 +47,7 @@ else ifeq ($(shell uname), Darwin)
 	CCFLAG  += -w -DSDL_DISABLE_ARM_NEON_H -D_THREAD_SAFE
 	CC_INC  += /opt/homebrew/include
 	LD_INC  += /opt/homebrew/lib
-	LD_LIB  := SDL2
+	LD_LIB  := SDL2 SDL2main
 app: $(OUT)
 
 else
