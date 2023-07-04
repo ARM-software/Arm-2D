@@ -33,7 +33,22 @@ ifeq ($(OS),Windows_NT)
 	LD_INC  := sdl2/32/lib/x86
 	LD_LIB  := SDL2main SDL2
 
+	LDFLAG  +=  -Wl,--warn-common
+	LDFLAG  +=  -Wl,--gc-sections
 app: build/SDL2.dll $(OUT)
+
+else ifeq ($(shell uname), Darwin)
+    # Code for OS X
+	CC      := $(CROSS)gcc
+	STRIP   := $(CROSS)strip
+	SIZE    := $(CROSS)size
+	OUT     := build/arm_2d
+	RM      := rm -rf
+	CCFLAG  += -w -DSDL_DISABLE_ARM_NEON_H -D_THREAD_SAFE
+	CC_INC  += /opt/homebrew/include
+	LD_INC  += /opt/homebrew/lib
+	LD_LIB  := SDL2
+app: $(OUT)
 
 else
 	CC      := $(CROSS)gcc
@@ -43,6 +58,8 @@ else
 	RM      := rm -rf
 	CCFLAG  += -w
 	LD_LIB  := SDL2
+	LDFLAG  +=  -Wl,--warn-common
+	LDFLAG  +=  -Wl,--gc-sections
 app: $(OUT)
 
 endif
@@ -53,8 +70,6 @@ CCFLAG  +=  -ffunction-sections -fdata-sections
 CCFLAG  +=  -fno-ms-extensions -w
 # CCFLAG  +=  -flto
 
-LDFLAG  +=  -Wl,--warn-common
-LDFLAG  +=  -Wl,--gc-sections
 # LDFLAG  +=  -flto
 
 #======================================================================================================================#

@@ -124,6 +124,9 @@ void before_scene_switching_handler(void *pTarget,
 }
 
 extern void lcd_flush(int32_t nMS);
+#if defined(__APPLE__)
+extern void monitor_sdl_refr_core(void);
+#endif
 
 /*----------------------------------------------------------------------------
   Main function
@@ -153,9 +156,16 @@ int main (void)
 #endif
 
     while (1) {
+#if defined(__APPLE__)
         if (arm_fsm_rt_cpl == disp_adapter0_task()) {
             lcd_flush(1);
         }
+        monitor_sdl_refr_core();
+#else
+        if (arm_fsm_rt_cpl == disp_adapter0_task()) {
+            lcd_flush(1);
+        }
+#endif
     }
 }
 
