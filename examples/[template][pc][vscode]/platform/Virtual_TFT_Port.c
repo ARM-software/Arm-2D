@@ -275,7 +275,6 @@ uint32_t arm_2d_helper_get_reference_clock_frequency(void)
 }
 #endif
 
-__attribute__((constructor))
 void VT_Init(void)
 {
 #if defined(__APPLE__)

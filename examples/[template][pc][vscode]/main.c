@@ -133,8 +133,13 @@ extern void monitor_sdl_refr_core(void);
   Main function
  *----------------------------------------------------------------------------*/
 
+extern void VT_Init(void);
+
+
 int main(int argc, char* argv[])
 {
+    VT_Init();
+
     arm_irq_safe {
         arm_2d_init();
     }
