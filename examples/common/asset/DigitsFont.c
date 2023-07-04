@@ -2297,6 +2297,7 @@ struct {
     },
 };
 
+__attribute__((packed))
 struct {
     implement(arm_2d_user_font_t);
 
@@ -2431,7 +2432,8 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__digit_font_get_char_descriptor)
     ptDescriptor->iBearingY = ptFont->tCharSize.iHeight;
     ptDescriptor->iAdvance = ptFont->tCharSize.iWidth;
 
-    arm_foreach( arm_2d_char_idx_t, this.tLookUpTable, this.hwCount, ptItem) {
+
+    arm_foreach( arm_2d_char_idx_t, &ARM_2D_FONT_A8_DIGITS_ONLY.tNumbers, this.hwCount, ptItem) {
         if (    *pchCharCode >= ptItem->chStartCode[0] 
             &&  *pchCharCode < (ptItem->chStartCode[0] + ptItem->hwCount)) {
             int16_t iOffset = *pchCharCode - ptItem->chStartCode[0];
