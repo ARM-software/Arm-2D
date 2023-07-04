@@ -3,9 +3,16 @@
     "tasks": [
         {
             "label": "Make",
-            "group": "build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
             "type": "shell",
-            "command": "${workspaceFolder}/build.bat",
+            "command": "make -j",
+            "windows":{
+                "command": "${workspaceFolder}/build.bat",
+            },
+            "problemMatcher": "$gcc",
             "options": {
                 "cwd": "${workspaceFolder}",
             }

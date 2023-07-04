@@ -132,7 +132,8 @@ static void monitor_sdl_init(void)
 }
 
 
-static void monitor_sdl_refr_core(void)
+// static 
+void monitor_sdl_refr_core(void)
 {
     if(sdl_refr_qry != false)
     {
@@ -192,9 +193,11 @@ static void monitor_sdl_refr_core(void)
                 break;
         }
     }
-
+#if defined(__APPLE__)
+#else
     /*Sleep some time*/
     SDL_Delay(1);
+#endif
 }
 
 static int monitor_sdl_refr_thread(void * param)
@@ -204,6 +207,8 @@ static int monitor_sdl_refr_thread(void * param)
     monitor_sdl_init();
 
     /*Run until quit event not arrives*/
+#if defined(__APPLE__)
+#else
     while(sdl_quit_qry == false) {
         /*Refresh handling*/
         monitor_sdl_refr_core();
@@ -211,10 +216,10 @@ static int monitor_sdl_refr_thread(void * param)
 
     monitor_sdl_clean_up();
     exit(0);
-
+#endif
     return 0;
 }
-
+ 
 
 
 uint32_t VT_timerCallback(uint32_t interval, void *param)
@@ -233,16 +238,18 @@ int32_t Disp0_DrawBitmap(int16_t x,int16_t y,int16_t width,int16_t height,const 
 
 void lcd_flush(int32_t nMS)
 {
+#if defined(__APPLE__)
+#else
     while(!sdl_refr_cpl) {
         SDL_Delay(nMS);
     }
     sdl_refr_cpl = false;
-
+#endif
     nMS = MAX(1, nMS);
     sdl_refr_qry = true;
 }
 
-#if defined(_POSIX_VERSION) || defined(CLOCK_MONOTONIC)
+#if defined(_POSIX_VERSION) || defined(CLOCK_MONOTONIC) || defined(__APPLE__)
 int64_t arm_2d_helper_get_system_timestamp(void)
 {
     struct timespec timestamp;
@@ -271,7 +278,11 @@ uint32_t arm_2d_helper_get_reference_clock_frequency(void)
 __attribute__((constructor))
 void VT_Init(void)
 {
+#if defined(__APPLE__)
+    monitor_sdl_refr_thread(NULL);
+#else
     SDL_CreateThread(monitor_sdl_refr_thread, "sdl_refr", NULL);
+#endif
     while(sdl_inited == false);
 }
 
