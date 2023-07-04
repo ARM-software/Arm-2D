@@ -4,8 +4,8 @@
         {
             "label": "Make",
             "group": {
-                "kind": "build",
-                "isDefault": true
+                "kind": "build"
+                // ,"isDefault": true
             },
             "type": "shell",
             "command": "make -j",
@@ -21,7 +21,10 @@
             "label": "Make Clean",
             "group": "build",
             "type": "shell",
-            "command": "${workspaceFolder}/clean.bat",
+            "command": "make clean",
+            "windows":{
+                "command": "${workspaceFolder}/clean.bat",
+            },
             "options": {
                 "cwd": "${workspaceFolder}",
             }

@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(lldb) macos",
+            "name": "build and run on macos (lldb)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/arm_2d",
@@ -11,7 +11,8 @@
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
-            "MIMode": "lldb"
+            "MIMode": "lldb",
+            "preLaunchTask": "Make"
         },
         {
             "name": "build and run x86(32)",
