@@ -43,7 +43,7 @@ The first step of getting started is learning some basic concepts, among which *
 
 After learning the basic concepts of Arm-2d, please follow the guidance, [how_to_deploy_the_arm_2d_library.md](./how_to_deploy_the_arm_2d_library.md), to deploy Arm-2d onto your local hardware platform. 
 
-Of course, if you want to skip the porting step and jump to learn how to use the Arm-2D APIs, please try the template projects we prepared for you in the `examples` directory. These template projects provide porting for STM32 Discovery Board, Cortex-M FVP/VHT and MPS2/MPS3 development platforms in both bare-metal and RTOS environments respectively. In addition, there are other 3rd-party porting available on Github, for example:
+Of course, if you want to skip the porting step and jump to learn how to use the Arm-2D APIs, please try the template projects we prepared for you in the `examples` directory. These template projects provide porting for STM32 Discovery Board, Cortex-M FVP/VHT, MPS2/MPS3 development platforms and **PC (including MacOS, Windows and Linux)**. In addition, there are other 3rd-party porting available on Github, for example:
 
 - [A porting for Raspberry Pi Pico (using MDK)](https://github.com/GorgonMeducer/Pico_Template)
 - [A porting for LVGL + Arm-2D on Corstone-300-FVP](https://github.com/lvgl/lv_port_an547_cm55_sim)
