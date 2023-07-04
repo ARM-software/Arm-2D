@@ -2297,7 +2297,6 @@ struct {
     },
 };
 
-__attribute__((packed))
 struct {
     implement(arm_2d_user_font_t);
 
