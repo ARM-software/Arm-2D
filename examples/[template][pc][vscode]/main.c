@@ -168,7 +168,6 @@ int main(int argc, char* argv[])
             lcd_flush(1);
         }
         monitor_sdl_refr_core();
-        SDL_Delay(1000/60);
 #else
         if (arm_fsm_rt_cpl == disp_adapter0_task()) {
             lcd_flush(1);
