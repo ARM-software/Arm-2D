@@ -213,8 +213,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene4_handler)
                                                         bIsNewFrame);
                     
                     arm_2d_op_wait_async(NULL);
-                    arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_user_font_t.use_as__arm_2d_font_t.tCharSize;
-                    tTextSize.iWidth *= 2;
+
+                    
+                    arm_2d_size_t tTextSize = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_A4_DIGITS_ONLY);
                     
                     arm_2d_align_bottom_centre(__item_region, tTextSize) {
 
@@ -239,8 +240,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene4_handler)
                     
                     arm_2d_op_wait_async(NULL);
                     
-                    arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_user_font_t.use_as__arm_2d_font_t.tCharSize;
-                    tTextSize.iWidth *= 2;
+                    arm_2d_size_t tTextSize = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_A4_DIGITS_ONLY);
                     
                     arm_2d_align_bottom_centre(__item_region, tTextSize) {
 

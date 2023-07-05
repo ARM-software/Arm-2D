@@ -62,6 +62,6 @@ It is an example of transform APIs. It consists of seven layers:
 
 This demo also shows how a fancy looking clock could be rendered with just less than 10K RAM (or even less by using a smaller PFB size). 
 
-**Figure 1-3  A snapshot of watch-panel running on Cortex-M4 FVP platform**
+**Figure 1-3  A snapshot of watch-panel running on simulation**
 
-![watch-panel](../../../documentation/pictures/watch-panel.png)  
+  ![WatchPanel](/Users/gabriel/Documents/Arm-2D/documentation/pictures/watch-panel.png) 

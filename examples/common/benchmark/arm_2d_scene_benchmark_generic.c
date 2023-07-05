@@ -108,7 +108,11 @@ static struct {
     .wMax = 0,
     .dwTotal = 0,
     .wAverage = 0,
+#if defined(__USE_FVP__)
+    .wIterations = 2,
+#else
     .wIterations = ITERATION_CNT,
+#endif
 };
 
 /*============================ IMPLEMENTATION ================================*/

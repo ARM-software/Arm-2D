@@ -111,6 +111,8 @@ static void __on_scene2_depose(arm_2d_scene_t *ptScene)
         *ptItem = 0;
     }
 
+    progress_wheel_depose(&this.tWheel);
+
     if (!this.bUserAllocated) {
         free(ptScene);
     }
@@ -166,10 +168,10 @@ static void __on_scene2_frame_complete(arm_2d_scene_t *ptScene)
         }
     }
     
-//    /* switch to next scene after 20s */
-//    if (arm_2d_helper_is_time_out(20000, &this.lTimestamp[4])) {
-//        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
-//    }
+    /* switch to next scene after 20s */
+    if (arm_2d_helper_is_time_out(20000, &this.lTimestamp[4])) {
+        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+    }
 }
 
 static
@@ -195,25 +197,18 @@ static void draw_buttom(const arm_2d_tile_t *ptTile,
                         uint8_t chOpacity,
                         bool bIsNewFrame)
 {
-    
-
-    arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_user_font_t.use_as__arm_2d_font_t.tCharSize;
-    tTextSize.iWidth *= strlen(pchString);
 
     arm_2d_container(ptTile, __button, ptRegion) {
     
         draw_round_corner_box(&__button, NULL, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
         
-        arm_2d_align_centre(__button_canvas, tTextSize) {
-
-            arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)&__button);
-            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
-            arm_lcd_text_set_draw_region(&__centre_region);
-            arm_lcd_text_set_colour(tColour, GLCD_COLOR_BLACK);
-            arm_lcd_text_set_opacity(chOpacity);
-            arm_lcd_printf("%s", pchString);
-            arm_lcd_text_set_opacity(255);
-        }
+        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)&__button);
+        arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
+        arm_lcd_text_set_opacity(chOpacity);
+        arm_lcd_text_set_colour(tColour, GLCD_COLOR_BLACK);
+        arm_print_banner(pchString, __button_canvas);
+        arm_lcd_text_set_opacity(255);
+        
     }
 }
 
@@ -401,9 +396,10 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
             return NULL;
         }
         bUserAllocated = false;
-    } else {
-        memset(ptScene, 0, sizeof(user_scene_2_t));
     }
+
+    memset(ptScene, 0, sizeof(user_scene_2_t));
+
 
     /*! define dirty regions */
     IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)

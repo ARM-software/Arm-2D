@@ -224,7 +224,7 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 
 **Figure 1-3 The Hierarchy of a Typical Embedded GUI System.**
 
-![The Hierarchy of a Typical Embedded GUI System](./documentation/pictures/TopReadme_1_2b.png)
+![The Hierarchy of a Typical Embedded GUI System](./documentation/pictures/TopReadme_1_2b.png) 
 
 ## 2 The Platform and Dependency
 
@@ -283,9 +283,11 @@ There is no public 2D image processing benchmark available for microcontrollers.
 - **Let those layers float with different angles and speed to cover a sufficient number of conditions.**
 - **Record the cycle count used for blending one frame and run 1000 iterations (frames).**
 
-**Figure 1-4 A snapshot of benchmark running on Cortex-M4 FVP platform**
+**Figure 1-4 A snapshot of the generic benchmark running on Simulation**
 
 ![Benchmark](./documentation/pictures/benchmark.png) 
+
+
 
 - **Use the average cycle count in 1000 iterations as benchmark score.**
 
@@ -375,4 +377,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-13 May 2023
+05 July 2023
