@@ -141,6 +141,11 @@ extern "C" {
 #   define __ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__                    0
 #endif
 
+// <q> Enable the nebula effect mode in the Benchmark:Watch-panel
+// <i> This feature is disabled by default and it is only available in the Tiny mode.
+#ifndef __ARM_2D_CFG_BENCHMARK_WATCH_PANEL_USE_NEBULA__
+#   define __ARM_2D_CFG_BENCHMARK_WATCH_PANEL_USE_NEBULA__              0
+#endif
 
 // <q> Exit benchmark when finished
 // <i> Exit the arm_2d_run_benchmark() after running specified iterations

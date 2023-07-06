@@ -120,6 +120,10 @@ typedef struct {
     bool    bUpdateAnglePerSec;
 } demo_gears_t;
 
+#if __ARM_2D_CFG_BENCHMARK_TINY_MODE__ && __ARM_2D_CFG_BENCHMARK_WATCH_PANEL_USE_NEBULA__
+ARM_NOINIT
+static dynamic_nebula_t s_tNebula;
+#endif
 /*============================ GLOBAL VARIABLES ==============================*/
 
 extern
@@ -273,6 +277,23 @@ void benchmark_watch_panel_init(arm_2d_region_t tScreen)
     }
     arm_2d_op_init(&s_tStarOP.use_as__arm_2d_op_core_t,
                     sizeof(s_tStarOP));
+
+#if __ARM_2D_CFG_BENCHMARK_TINY_MODE__ && __ARM_2D_CFG_BENCHMARK_WATCH_PANEL_USE_NEBULA__
+
+    do {
+        static dynamic_nebula_particle_t s_tParticles[50];
+        dynamic_nebula_cfg_t tCFG = {
+            .fSpeed = 1.5f,
+            .iRadius = 120,
+            .hwVisibleRingWidth = 50,
+            .hwParticleCount = dimof(s_tParticles),
+            .ptParticles = s_tParticles,
+        };
+        dynamic_nebula_init(&s_tNebula, &tCFG);
+    } while(0);
+
+#endif
+
 }
 
 #if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
@@ -354,6 +375,16 @@ void benchmark_watch_panel_draw(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
 #else
         arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
 
+    #if __ARM_2D_CFG_BENCHMARK_WATCH_PANEL_USE_NEBULA__
+        /* show nebula */
+        dynamic_nebula_show(&s_tNebula, 
+                            ptTile, 
+                            &__top_container, 
+                            GLCD_COLOR_WHITE, 
+                            255,
+                            bIsNewFrame);
+    #endif
+    
         spinning_wheel2_show(   ptTile,
                                 __RGB(0x92, 0xD0, 0x50), 
                                 bIsNewFrame);
