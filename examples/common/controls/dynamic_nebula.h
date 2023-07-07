@@ -58,7 +58,7 @@ ARM_PRIVATE(
 
 typedef struct dynamic_nebula_cfg_t {
     int16_t                     iRadius;
-    uint16_t                    hwVisibleRingWidth;
+    int16_t                     iVisibleRingWidth;
     float                       fSpeed;
     uint16_t                    hwParticleCount;
     dynamic_nebula_particle_t  *ptParticles;

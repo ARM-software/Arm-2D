@@ -78,23 +78,23 @@ void dynamic_nebula_init( dynamic_nebula_t *ptThis, dynamic_nebula_cfg_t *ptCFG)
     memset(ptThis, 0, sizeof(dynamic_nebula_t));
 
     this.tCFG = *ptCFG;
-    this.tCFG.hwVisibleRingWidth 
-        = MIN(this.tCFG.iRadius, this.tCFG.hwVisibleRingWidth);
+    this.tCFG.iVisibleRingWidth 
+        = MIN(this.tCFG.iRadius, this.tCFG.iVisibleRingWidth);
 
-    srand(arm_2d_helper_get_system_timestamp());
+    srand((unsigned int)arm_2d_helper_get_system_timestamp());
     
     int n = this.tCFG.hwParticleCount;
     dynamic_nebula_particle_t *ptParticle = this.tCFG.ptParticles;
-    int16_t iInvisibleRadius = this.tCFG.iRadius - this.tCFG.hwVisibleRingWidth;
+    //int16_t iInvisibleRadius = this.tCFG.iRadius - this.tCFG.iVisibleRingWidth;
 
-    this.fOpacityStep = 255.0f / (float)this.tCFG.hwVisibleRingWidth;
+    this.fOpacityStep = 255.0f / (float)this.tCFG.iVisibleRingWidth;
 
     do {
         float fAngle = ARM_2D_ANGLE((float)(rand() % 3600) / 10.0f);
         
         ptParticle->fSin = arm_sin_f32(fAngle);
         ptParticle->fCos = arm_cos_f32(fAngle);
-        ptParticle->fOffset = (float)(rand() % this.tCFG.hwVisibleRingWidth);
+        ptParticle->fOffset = (float)(rand() % this.tCFG.iVisibleRingWidth);
         ptParticle++;
     } while(--n);
 
@@ -128,7 +128,7 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
 
             int n = this.tCFG.hwParticleCount;
             dynamic_nebula_particle_t *ptParticle = this.tCFG.ptParticles;
-            float fInvisibleRadius = (float)(this.tCFG.iRadius - this.tCFG.hwVisibleRingWidth);
+            float fInvisibleRadius = (float)(this.tCFG.iRadius - this.tCFG.iVisibleRingWidth);
 
             do {
                 float fRadius = ptParticle->fOffset + fInvisibleRadius;
@@ -145,7 +145,7 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
                 arm_2d_rgb565_draw_point(&__control, 
                                          tParicleLocation,
                                          tColour,
-                                         hwOpacity);
+                                         (uint8_t)hwOpacity);
                 
                 arm_2d_op_wait_async(NULL);
 
@@ -153,7 +153,7 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
                     ptParticle->fOffset -= this.tCFG.fSpeed;
 
                     if (ptParticle->fOffset <= 0.0f) {
-                        ptParticle->fOffset = (float)this.tCFG.hwVisibleRingWidth;
+                        ptParticle->fOffset = (float)this.tCFG.iVisibleRingWidth;
 
                         float fAngle = ARM_2D_ANGLE((float)(rand() % 3600) / 10.0f);
         
