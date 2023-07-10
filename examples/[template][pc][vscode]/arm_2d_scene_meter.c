@@ -232,7 +232,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
                                 &this.Pointer.tOP,
                                 &c_tilePointerMask,
                                 ptTile,
-                                NULL, //&__centre_region,
+                                &__centre_region,
                                 s_tPointerCenter,
                                 this.Pointer.tHelper.fAngle,
                                 this.Pointer.tHelper.fScale,
@@ -240,6 +240,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
                                 255);
 
             arm_2d_helper_transform_update_dirty_regions(&this.Pointer.tHelper,
+                                                         &__centre_region,
                                                          bIsNewFrame);
 
             arm_2d_op_wait_async((arm_2d_op_core_t *)&this.Pointer.tOP);

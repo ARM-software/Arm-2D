@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        16. June 2023
- * $Revision:    V.1.5.4
+ * $Date:        10. July 2023
+ * $Revision:    V.1.5.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -998,12 +998,14 @@ void arm_2d_helper_transform_init(arm_2d_helper_transform_t *ptThis,
 
 }
 
-ARM_NONNULL(1)
+ARM_NONNULL(1,2)
 void arm_2d_helper_transform_update_dirty_regions(
                                     arm_2d_helper_transform_t *ptThis,
+                                    const arm_2d_region_t *ptCanvas,
                                     bool bIsNewFrame)
 {
     assert(NULL != ptThis);
+    assert(NULL != ptCanvas);
     
     if (!bIsNewFrame) {
         return ;
@@ -1013,10 +1015,12 @@ void arm_2d_helper_transform_update_dirty_regions(
         this.bNeedUpdate = false;
         /* keep the old region */
         this.tDirtyRegions[1].tRegion = this.tDirtyRegions[0].tRegion;
-        
+
         /* update the new region */
         this.tDirtyRegions[0].tRegion = *(this.ptTransformOP->Target.ptRegion);
-            
+        this.tDirtyRegions[0].tRegion.tLocation.iX += ptCanvas->tLocation.iX;
+        this.tDirtyRegions[0].tRegion.tLocation.iY += ptCanvas->tLocation.iY;
+        
         this.tDirtyRegions[0].bIgnore = false;
         this.tDirtyRegions[1].bIgnore = false;
     }

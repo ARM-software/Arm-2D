@@ -238,7 +238,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_watch_handler)
         arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
 
 
-        /* draw the cmsis logo using mask in the centre of the screen */
         arm_2d_align_centre(__canvas, c_tileWatchPanel.tRegion.tSize) {
 
             arm_2d_tile_copy_with_opacity(  &c_tileWatchPanel,
@@ -254,7 +253,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_watch_handler)
                                     &this.Pointers[2].tOP,
                                     &c_tilePointerHourMask,
                                     ptTile,
-                                    NULL, //&__centre_region,
+                                    &__centre_region,
                                     s_tPointerHourCenter,
                                     this.Pointers[2].tHelper.fAngle,
                                     this.Pointers[2].tHelper.fScale,
@@ -263,6 +262,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_watch_handler)
 
                 arm_2d_helper_transform_update_dirty_regions(
                                                     &this.Pointers[2].tHelper,
+                                                    &__centre_region,
                                                     bIsNewFrame);
                 arm_2d_op_wait_async(
                                 &this.Pointers[2].tOP.use_as__arm_2d_op_core_t);
@@ -274,7 +274,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_watch_handler)
                                     &this.Pointers[1].tOP,
                                     &c_tilePointerMask,
                                     ptTile,
-                                    NULL, //&__centre_region,
+                                    &__centre_region,
                                     s_tPointerMinCenter,
                                     this.Pointers[1].tHelper.fAngle,
                                     this.Pointers[1].tHelper.fScale,
@@ -283,6 +283,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_watch_handler)
 
                 arm_2d_helper_transform_update_dirty_regions(
                                                     &this.Pointers[1].tHelper,
+                                                    &__centre_region,
                                                     bIsNewFrame);
 
                 arm_2d_op_wait_async(
@@ -295,7 +296,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_watch_handler)
                                     &this.Pointers[0].tOP,
                                     &c_tilePointerSecMask,
                                     ptTile,
-                                    NULL, //&__centre_region,
+                                    &__centre_region,
                                     s_tPointerSecCenter,
                                     this.Pointers[0].tHelper.fAngle,
                                     this.Pointers[0].tHelper.fScale,
@@ -304,6 +305,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_watch_handler)
 
                 arm_2d_helper_transform_update_dirty_regions(
                                                     &this.Pointers[0].tHelper,
+                                                    &__centre_region,
                                                     bIsNewFrame);
 
 

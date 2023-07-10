@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        16. June 2023
- * $Revision:    V.1.5.4
+ * $Date:        10. July 2023
+ * $Revision:    V.1.5.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -715,9 +715,10 @@ void arm_2d_helper_transform_update_value(  arm_2d_helper_transform_t *ptThis,
  * \param[in] bIsNewFrame whether this is a new frame
  */
 extern
-ARM_NONNULL(1)
+ARM_NONNULL(1,2)
 void arm_2d_helper_transform_update_dirty_regions(
                                     arm_2d_helper_transform_t *ptThis,
+                                    const arm_2d_region_t *ptCanvas,
                                     bool bIsNewFrame);
 
 /*! @} */
