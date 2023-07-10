@@ -188,7 +188,7 @@ var group__gHelper =
     [ "arm_2d_helper_transform_init", "group__gHelper.html#ga076b6793e3c2fc6f1ef064ca700f667e", null ],
     [ "arm_2d_helper_transform_on_frame_begin", "group__gHelper.html#ga646d1178b70b862d77d33f8a84173f0e", null ],
     [ "arm_2d_helper_transform_update_value", "group__gHelper.html#ga95877df905d15cebfc4abb41b9ecdc6a", null ],
-    [ "arm_2d_helper_transform_update_dirty_regions", "group__gHelper.html#gae1474a55957d3c0e9cced49f2501e835", null ],
+    [ "arm_2d_helper_transform_update_dirty_regions", "group__gHelper.html#ga938c015954225ba6c149498b984accce", null ],
     [ "arm_2d_helper_init", "group__gHelper.html#ga9ab5e975303c28c98f1ae62babb8286d", null ],
     [ "arm_2d_helper_backend_task", "group__gHelper.html#ga5161926583cc8da4c4b369b177845e42", null ],
     [ "arm_2d_helper_convert_ticks_to_ms", "group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf", null ],
