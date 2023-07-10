@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        16. June 2023
- * $Revision:    V.1.4.3
+ * $Date:        10. July 2023
+ * $Revision:    V.1.4.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1231,8 +1231,12 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
                         ptScene
                     ));
                 
-                /* update switching mode */
-                this.Switch.tConfig.Feature.chMode = this.Switch.ptMode->chEffects;
+                if (NULL == this.Switch.ptMode) {
+                    this.Switch.tConfig.Feature.chMode = ARM_2D_SCENE_SWITCH_CFG_NONE;
+                } else {
+                    /* update switching mode */
+                    this.Switch.tConfig.Feature.chMode = this.Switch.ptMode->chEffects;
+                }
                 
                 if (    (    ARM_2D_SCENE_SWITCH_CFG_NONE 
                         ==   this.Switch.tConfig.Feature.chMode)
@@ -1257,8 +1261,7 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             break;
         
         case SWITCH_SCENE_PREPARE: {
-                
-                
+
                 assert(     this.Switch.ptMode->chEffects 
                         !=  ARM_2D_SCENE_SWITCH_CFG_NONE);
 
