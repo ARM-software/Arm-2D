@@ -19,7 +19,6 @@ CC_INC  += ../../examples/common/controls
 
 CC_DEF  := ARM_SECTION\(x\)=
 CC_DEF  += __va_list=va_list
-CC_DEF  += __USE_FVP__
 
 #======================================================================================================================#
 ifeq ($(OS),Windows_NT)
