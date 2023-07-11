@@ -135,6 +135,10 @@ extern void monitor_sdl_refr_core(void);
 
 extern void VT_Init(void);
 
+#if defined(__APPLE__)
+extern bool sdk_quit_pending(void);
+extern void sdl_quite_process(void);
+#endif
 
 int main(int argc, char* argv[])
 {
@@ -168,12 +172,18 @@ int main(int argc, char* argv[])
             lcd_flush(1);
         }
         monitor_sdl_refr_core();
+        if(sdk_quit_pending()){
+            break;
+        }
 #else
         if (arm_fsm_rt_cpl == disp_adapter0_task()) {
             lcd_flush(1);
         }
 #endif
     }
+#if defined(__APPLE__)
+    sdl_quite_process();
+#endif
 }
 
 #if defined(__clang__)
