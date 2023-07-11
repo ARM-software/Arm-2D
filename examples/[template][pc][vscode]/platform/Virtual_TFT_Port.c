@@ -219,6 +219,17 @@ static int monitor_sdl_refr_thread(void * param)
 #endif
     return 0;
 }
+#if defined(__APPLE__)
+bool sdk_quit_pending(void)
+{
+    return sdl_quit_qry;
+}
+void sdl_quite_process(void)
+{
+    monitor_sdl_clean_up();
+    exit(0);
+}
+#endif
  
 
 
