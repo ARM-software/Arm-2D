@@ -81,7 +81,7 @@ extern "C" {
 // <i> This feature is enabled by default. There is no guarantee that the performance will increase or decrease. It is all depends your applications. In most of the case, enabling it helps.
 // <i> This feature has no meaning when the anti-alias transform is disabled or the helium acceleration is available.
 #ifndef __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__
-#   define __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__     0
+#   define __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__     1
 #endif
 // </h>
 
@@ -116,7 +116,7 @@ extern "C" {
 // <o> The size of the LCD printf text buffer <16-65535>
 // <i> The text buffer size for the lcd printf service. It determins how many character you can use in one printf string.
 #ifndef __LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__
-#   define __LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__                          64
+#   define __LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__                          80
 #endif
 
 // <h>Benchmark
@@ -141,6 +141,11 @@ extern "C" {
 #   define __ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__                    0
 #endif
 
+// <q> Enable the nebula effect mode in the Benchmark:Watch-panel
+// <i> This feature is disabled by default and it is only available in the Tiny mode.
+#ifndef __ARM_2D_CFG_BENCHMARK_WATCH_PANEL_USE_NEBULA__
+#   define __ARM_2D_CFG_BENCHMARK_WATCH_PANEL_USE_NEBULA__              1
+#endif
 
 // <q> Exit benchmark when finished
 // <i> Exit the arm_2d_run_benchmark() after running specified iterations
