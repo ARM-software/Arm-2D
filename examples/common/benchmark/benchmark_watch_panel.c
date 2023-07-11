@@ -285,7 +285,7 @@ void benchmark_watch_panel_init(arm_2d_region_t tScreen)
         dynamic_nebula_cfg_t tCFG = {
             .fSpeed = 1.5f,
             .iRadius = 120,
-            .hwVisibleRingWidth = 50,
+            .iVisibleRingWidth = 50,
             .hwParticleCount = dimof(s_tParticles),
             .ptParticles = s_tParticles,
         };

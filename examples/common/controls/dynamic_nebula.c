@@ -122,8 +122,8 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
         arm_2d_align_centre(__control_canvas, this.tCFG.iRadius * 2, this.tCFG.iRadius * 2) {
 
             arm_2d_location_t tCentre = {
-                    .iX = __centre_region.tSize.iWidth >> 1,
-                    .iY = __centre_region.tSize.iHeight >> 1,
+                    .iX = (__centre_region.tSize.iWidth >> 1) + __centre_region.tLocation.iX,
+                    .iY = (__centre_region.tSize.iHeight >> 1) + __centre_region.tLocation.iY,
                 };
 
             int n = this.tCFG.hwParticleCount;
@@ -142,10 +142,10 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
 
                 uint16_t hwOpacity = (uint16_t)((float)(ptParticle->fOffset * this.fOpacityStep) * chOpacity) >> 8;
 
-                arm_2d_rgb565_draw_point(&__control, 
-                                         tParicleLocation,
-                                         tColour,
-                                         (uint8_t)hwOpacity);
+                arm_2d_draw_point(  &__control, 
+                                    tParicleLocation,
+                                    tColour,
+                                    (uint8_t)hwOpacity);
                 
                 arm_2d_op_wait_async(NULL);
 

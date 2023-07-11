@@ -213,6 +213,7 @@ extern "C" {
                 arm_2d_gray8_fill_colour_with_a2_mask
 #   define arm_2dp_fill_colour_with_mask_opacity_and_transform                  \
                 arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform
+#   define arm_2d_draw_point        arm_2d_gray8_draw_point
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
 #   define __arm_2d_color_t         arm_2d_color_rgb565_t
@@ -358,6 +359,7 @@ extern "C" {
                 arm_2d_rgb565_fill_colour_with_a2_mask
 #   define arm_2dp_fill_colour_with_mask_opacity_and_transform                  \
                 arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform
+#   define arm_2d_draw_point        arm_2d_rgb565_draw_point
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
 #   define __arm_2d_color_t         arm_2d_color_cccn888_t
@@ -503,6 +505,7 @@ extern "C" {
                 arm_2d_cccn888_fill_colour_with_a2_mask
 #   define arm_2dp_fill_colour_with_mask_opacity_and_transform                  \
                 arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform
+#   define arm_2d_draw_point        arm_2d_cccn888_draw_point
 #else
 #   error Unsupported colour depth!
 #endif
