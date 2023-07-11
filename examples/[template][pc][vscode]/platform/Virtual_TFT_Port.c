@@ -10,12 +10,12 @@
 #undef main
 
 #define monochrome_2_RGB888(color)                (color?0x000000:0xffffff)
-#define RGB233_2_RGB888(color)                    (((color&0xC0)<<16)+((color&0x38)<<10)+((color&0x07)<<5))
+#define GRAY8_2_RGB888(color)                     (((color&0xFF)<<16)+((color&0xFF)<<8)+((color&0xFF)))
 #define RGB565_2_RGB888(color)                    (((color&0xF800)<<8)+((color&0x7E0)<<5)+((color&0x1F)<<3))
 
 
 #define RGB888_2_monochrome(color)                ((color)?0:1)
-#define RGB888_2_RGB233(color)                    ((((color&0xff0000)>>22) << 6) + (((color&0xff00)>>13) << 3) + (((color&0xff)>>5)))
+#define RGB888_2_GRAY8(color)                     (((((color&0xff0000)>>16)) + (((color&0xff00)>>8)) + (((color&0xff)))) / 3)
 #define RGB888_2_RGB565(color)                    ((((color&0xff0000)>>19) << 11) + (((color&0xff00)>>10) << 5) + (((color&0xff)>>3)))
 
 
@@ -24,12 +24,12 @@
 #define DEV_2_VT_RGB(color)                  monochrome_2_RGB888(color)
 #define VT_RGB_2_DEV(color)                  RGB888_2_monochrome(color)
 #elif VT_COLOR_DEPTH == 8
-#define DEV_2_VT_RGB(color)                  RGB233_2_RGB888(color)
-#define VT_RGB_2_DEV(color)                 RGB888_2_RGB233(color)
+#define DEV_2_VT_RGB(color)                  GRAY8_2_RGB888(color)
+#define VT_RGB_2_DEV(color)                  RGB888_2_GRAY8(color)
 #elif VT_COLOR_DEPTH == 16
 #define DEV_2_VT_RGB(color)                  RGB565_2_RGB888(color)
 #define VT_RGB_2_DEV(color)                  RGB888_2_RGB565(color)
-#elif VT_COLOR_DEPTH == 24
+#elif VT_COLOR_DEPTH == 24 || VT_COLOR_DEPTH == 32
 #define DEV_2_VT_RGB(color)                 (color)
 #define VT_RGB_2_DEV(color)                 (color)
 #endif

@@ -18,12 +18,12 @@ extern "C" {
 #define VT_COLOR_DEPTH     __DISP0_CFG_COLOUR_DEPTH__
 #define VT_VIRTUAL_MACHINE 0                   /*Different rendering should be used if running in a Virtual machine*/
 
-#if VT_COLOR_DEPTH == 1 || VT_COLOR_DEPTH == 8 || VT_COLOR_DEPTH == 16 || VT_COLOR_DEPTH == 24
+#if VT_COLOR_DEPTH == 1 || VT_COLOR_DEPTH == 8 || VT_COLOR_DEPTH == 16 || VT_COLOR_DEPTH == 24 || VT_COLOR_DEPTH == 32
 #if VT_COLOR_DEPTH == 1 || VT_COLOR_DEPTH == 8
 typedef uint8_t color_typedef;
 #elif VT_COLOR_DEPTH == 16
 typedef uint16_t color_typedef;
-#elif VT_COLOR_DEPTH == 24
+#elif VT_COLOR_DEPTH == 24 || VT_COLOR_DEPTH == 32
 typedef uint32_t color_typedef;
 #endif
 #else
