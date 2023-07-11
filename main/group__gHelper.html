@@ -463,9 +463,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga95877df905d15cebfc4abb41b9ecdc6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga95877df905d15cebfc4abb41b9ecdc6a">arm_2d_helper_transform_update_value</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__transform__t">arm_2d_helper_transform_t</a> *ptThis, float fAngle, float fScale)</td></tr>
 <tr class="memdesc:ga95877df905d15cebfc4abb41b9ecdc6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">update a given transform helper with new values  <a href="group__gHelper.html#ga95877df905d15cebfc4abb41b9ecdc6a">More...</a><br /></td></tr>
 <tr class="separator:ga95877df905d15cebfc4abb41b9ecdc6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae1474a55957d3c0e9cced49f2501e835"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gae1474a55957d3c0e9cced49f2501e835">arm_2d_helper_transform_update_dirty_regions</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__transform__t">arm_2d_helper_transform_t</a> *ptThis, bool bIsNewFrame)</td></tr>
-<tr class="memdesc:gae1474a55957d3c0e9cced49f2501e835"><td class="mdescLeft">&#160;</td><td class="mdescRight">update the dirty region after a transform operation  <a href="group__gHelper.html#gae1474a55957d3c0e9cced49f2501e835">More...</a><br /></td></tr>
-<tr class="separator:gae1474a55957d3c0e9cced49f2501e835"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga938c015954225ba6c149498b984accce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga938c015954225ba6c149498b984accce">arm_2d_helper_transform_update_dirty_regions</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__transform__t">arm_2d_helper_transform_t</a> *ptThis, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptCanvas, bool bIsNewFrame)</td></tr>
+<tr class="memdesc:ga938c015954225ba6c149498b984accce"><td class="mdescLeft">&#160;</td><td class="mdescRight">update the dirty region after a transform operation  <a href="group__gHelper.html#ga938c015954225ba6c149498b984accce">More...</a><br /></td></tr>
+<tr class="separator:ga938c015954225ba6c149498b984accce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9ab5e975303c28c98f1ae62babb8286d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga9ab5e975303c28c98f1ae62babb8286d">arm_2d_helper_init</a> (void)</td></tr>
 <tr class="memdesc:ga9ab5e975303c28c98f1ae62babb8286d"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize helper services  <a href="group__gHelper.html#ga9ab5e975303c28c98f1ae62babb8286d">More...</a><br /></td></tr>
 <tr class="separator:ga9ab5e975303c28c98f1ae62babb8286d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -4366,8 +4366,8 @@ For normal usage, please DO NOT use this function unless you know what you are d
 
 </div>
 </div>
-<a id="gae1474a55957d3c0e9cced49f2501e835" name="gae1474a55957d3c0e9cced49f2501e835"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gae1474a55957d3c0e9cced49f2501e835">&#9670;&nbsp;</a></span>arm_2d_helper_transform_update_dirty_regions()</h2>
+<a id="ga938c015954225ba6c149498b984accce" name="ga938c015954225ba6c149498b984accce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga938c015954225ba6c149498b984accce">&#9670;&nbsp;</a></span>arm_2d_helper_transform_update_dirty_regions()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -4377,6 +4377,12 @@ For normal usage, please DO NOT use this function unless you know what you are d
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__transform__t">arm_2d_helper_transform_t</a> *&#160;</td>
           <td class="paramname"><em>ptThis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td>
+          <td class="paramname"><em>ptCanvas</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>

@@ -98,7 +98,7 @@ var searchData=
   ['arm_5f2d_5fhelper_5ftransform_5ft_2e_5f_5funnamed144_5f_5f_95',['arm_2d_helper_transform_t.__unnamed144__',['../group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed144____',1,'']]],
   ['arm_5f2d_5fhelper_5ftransform_5ft_2e_5f_5funnamed144_5f_5f_2eangle_96',['arm_2d_helper_transform_t.__unnamed144__.Angle',['../group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed144_____8Angle',1,'']]],
   ['arm_5f2d_5fhelper_5ftransform_5ft_2e_5f_5funnamed144_5f_5f_2escale_97',['arm_2d_helper_transform_t.__unnamed144__.Scale',['../group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed144_____8Scale',1,'']]],
-  ['arm_5f2d_5fhelper_5ftransform_5fupdate_5fdirty_5fregions_98',['arm_2d_helper_transform_update_dirty_regions',['../group__gHelper.html#gae1474a55957d3c0e9cced49f2501e835',1,'arm_2d_helper_pfb.h']]],
+  ['arm_5f2d_5fhelper_5ftransform_5fupdate_5fdirty_5fregions_98',['arm_2d_helper_transform_update_dirty_regions',['../group__gHelper.html#ga938c015954225ba6c149498b984accce',1,'arm_2d_helper_pfb.h']]],
   ['arm_5f2d_5fhelper_5ftransform_5fupdate_5fvalue_99',['arm_2d_helper_transform_update_value',['../group__gHelper.html#ga95877df905d15cebfc4abb41b9ecdc6a',1,'arm_2d_helper_pfb.h']]],
   ['arm_5f2d_5finit_100',['arm_2d_init',['../group__gKernel.html#gae417897e7d7186b294c0ff3468102276',1,'arm_2d.h']]],
   ['arm_5f2d_5finvoke_101',['ARM_2D_INVOKE',['../group__gKernel.html#ga65d234ce6028b539a276e06ac62aa2bc',1,'arm_2d_utils.h']]],
