@@ -33,7 +33,7 @@ ifeq ($(OS),Windows_NT)
 	CC_INC  += sdl2/32/include
 	LD_INC  := sdl2/32/lib/x86
 	LD_LIB  := SDL2main SDL2
-
+	CCFLAG  +=  -w
 	LDFLAG  +=  -Wl,--warn-common
 	LDFLAG  +=  -Wl,--gc-sections
 app: build/SDL2.dll $(OUT)
@@ -45,7 +45,7 @@ else ifeq ($(shell uname), Darwin)
 	SIZE    := $(CROSS)size
 	OUT     := build/arm_2d
 	RM      := rm -rf
-	CCFLAG  += -w -DSDL_DISABLE_ARM_NEON_H -D_THREAD_SAFE
+	CCFLAG  += -DSDL_DISABLE_ARM_NEON_H -D_THREAD_SAFE
 	CC_INC  += /opt/homebrew/include
 	LD_INC  += /opt/homebrew/lib
 	LD_LIB  := SDL2 SDL2main
@@ -57,7 +57,7 @@ else
 	SIZE    := $(CROSS)size
 	OUT     := build/arm_2d
 	RM      := rm -rf
-	CCFLAG  += -w
+	CCFLAG  +=  -w
 	LD_LIB  := SDL2
 	LDFLAG  +=  -Wl,--warn-common
 	LDFLAG  +=  -Wl,--gc-sections
@@ -66,12 +66,14 @@ app: $(OUT)
 endif
 
 #======================================================================================================================#
-CCFLAG  +=  -std=gnu11 -Ofast -MMD -g
+CCFLAG  +=  -std=gnu11 -MMD -g
 CCFLAG  +=  -ffunction-sections -fdata-sections
-CCFLAG  +=  -fno-ms-extensions -w
-# CCFLAG  +=  -flto
+CCFLAG  +=  -fno-ms-extensions
+CCFLAG  +=  -Wno-macro-redefined
 
-# LDFLAG  +=  -flto
+CCFLAG  += 	-Ofast
+CCFLAG  +=  -flto
+LDFLAG  +=  -flto
 
 #======================================================================================================================#
 .DEFAULT_GOAL = all

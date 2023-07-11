@@ -7,6 +7,7 @@ extern "C" {
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <SDL2/SDL.h>
 #include "arm_2d_disp_adapter_0.h"
 
 //
@@ -30,15 +31,11 @@ typedef uint32_t color_typedef;
 #endif
 
 
-
-
-void VT_Init(void);
-void VT_Fill_Single_Color(int32_t x1, int32_t y1, int32_t x2, int32_t y2, color_typedef color);
-void VT_Fill_Multiple_Colors(int32_t x1, int32_t y1, int32_t x2, int32_t y2, color_typedef * color_p);
-void VT_Set_Point(int32_t x, int32_t y, color_typedef color);
-color_typedef VT_Get_Point(int32_t x, int32_t y);
-void VT_Clear(color_typedef color);
-bool VT_Mouse_Get_Point(int16_t *x,int16_t *y);
+extern void VT_init(void);
+extern bool VT_is_request_quit(void);
+extern void VT_deinit(void);
+extern void VT_sdl_flush(int32_t nMS);
+extern void VT_sdl_refresh_task(void);
 
 #ifdef __cplusplus
 } /* extern "C" */

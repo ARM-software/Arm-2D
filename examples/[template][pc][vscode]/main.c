@@ -18,7 +18,7 @@
 
 /*============================ INCLUDES ======================================*/
 #include <stdio.h>
-#include <SDL2/SDL.h>
+#include "Virtual_TFT_Port.h"
 #include "arm_2d_helper.h"
 #include "arm_2d_scenes.h"
 #include "arm_2d_disp_adapters.h"
@@ -124,34 +124,12 @@ void before_scene_switching_handler(void *pTarget,
     s_chIndex++;
 }
 
-extern void lcd_flush(int32_t nMS);
-#if defined(__APPLE__)
-extern void monitor_sdl_refr_core(void);
-#endif
-
 /*----------------------------------------------------------------------------
   Main function
  *----------------------------------------------------------------------------*/
 
-extern void VT_Init(void);
-
-#if defined(__APPLE__)
-extern bool sdk_quit_pending(void);
-extern void sdl_quite_process(void);
-#endif
-
-int main(int argc, char* argv[])
+int app_2d_main_thread (void *argument)
 {
-    VT_Init();
-
-    arm_irq_safe {
-        arm_2d_init();
-    }
-
-    printf("\r\nArm-2D x86 Template\r\n");
- 
-    disp_adapter0_init();
-
 #ifdef RTE_Acceleration_Arm_2D_Extra_Benchmark
     arm_2d_run_benchmark();
 #else
@@ -166,24 +144,39 @@ int main(int argc, char* argv[])
     arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
 #endif
 
-    while (1) {
-#if defined(__APPLE__)
+    while(1) {
         if (arm_fsm_rt_cpl == disp_adapter0_task()) {
-            lcd_flush(1);
+            VT_sdl_flush(1);
         }
-        monitor_sdl_refr_core();
-        if(sdk_quit_pending()){
+    }
+
+    return 0;
+}
+
+
+int main(int argc, char* argv[])
+{
+    VT_init();
+
+    printf("\r\nArm-2D x86 Template\r\n");
+
+    arm_irq_safe {
+        arm_2d_init();
+    }
+
+    disp_adapter0_init();
+
+    SDL_CreateThread(app_2d_main_thread, "arm-2d thread", NULL);
+
+    while (1) {
+        VT_sdl_refresh_task();
+        if(VT_is_request_quit()){
             break;
         }
-#else
-        if (arm_fsm_rt_cpl == disp_adapter0_task()) {
-            lcd_flush(1);
-        }
-#endif
     }
-#if defined(__APPLE__)
-    sdl_quite_process();
-#endif
+
+    VT_deinit();
+    return 0;
 }
 
 #if defined(__clang__)
