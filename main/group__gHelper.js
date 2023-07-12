@@ -65,6 +65,8 @@ var group__gHelper =
       [ "hwPeriodPerFrame", "group__gHelper.html#ac7afe838e59ecfe4d41f0ac1420ac010", null ],
       [ "hwFrameIndex", "group__gHelper.html#afcd507aa1aef13e25c183d920b598ffc", null ]
     ] ],
+    [ "arm_2d_helper_pi_slider_cfg_t", "group__gHelper.html#structarm__2d__helper__pi__slider__cfg__t", null ],
+    [ "arm_2d_helper_pi_slider_t", "group__gHelper.html#structarm__2d__helper__pi__slider__t", null ],
     [ "__arm_2d_helper_scene_switch_t.Feature", "group__gHelper.html#struct____arm__2d__helper__scene__switch__t_8Feature", [
       [ "chMode", "group__gHelper.html#a32e1ccd08315dddf03bcc84d8e25eb46", null ],
       [ "bIgnoreOldSceneBG", "group__gHelper.html#a293bd1e526f3a9b72e8a9c323c835373", null ],
@@ -112,6 +114,7 @@ var group__gHelper =
     [ "arm_2d_helper_transform_t.__unnamed144__", "group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed144____", null ],
     [ "arm_2d_helper_transform_t.__unnamed144__.Angle", "group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed144_____8Angle", null ],
     [ "arm_2d_helper_transform_t.__unnamed144__.Scale", "group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed144_____8Scale", null ],
+    [ "arm_2d_helper_pi_slider_t.__unnamed148__", "group__gHelper.html#structarm__2d__helper__pi__slider__t_8____unnamed148____", null ],
     [ "arm_2d_scene_player_register_on_draw_navigation_event_handler", "group__gHelper.html#ga90130f1c831d7fb20db39f20a488a3e1", null ],
     [ "arm_2d_scene_player_set_switching_mode", "group__gHelper.html#ga6b9ef0f3e0f80430fc036f6d3c67c135", null ],
     [ "arm_2d_scene_player_register_before_switching_event_handler", "group__gHelper.html#ga0c896791f09bdcbb1115746844ddba2b", null ],
@@ -200,6 +203,8 @@ var group__gHelper =
     [ "__arm_2d_helper_time_half_cos_slider", "group__gHelper.html#ga9ade39134ac3f6e485b629f4c3a03ce7", null ],
     [ "__arm_2d_helper_time_cos_slider", "group__gHelper.html#gaf4a791e531e1703b57da899fda365d10", null ],
     [ "__arm_2d_helper_colour_slider", "group__gHelper.html#gaf0581f6d478d0a665cd4ae477e6be6db", null ],
+    [ "arm_2d_helper_pi_slider_init", "group__gHelper.html#gaa5946f15d97b62f2c86c018fbb720583", null ],
+    [ "arm_2d_helper_pi_slider", "group__gHelper.html#ga8b1bfeda16ff74338c13c604575923b3", null ],
     [ "arm_2d_helper_draw_box", "group__gHelper.html#gacd0e2f64404ceef7412a3715c0bc47fd", null ],
     [ "arm_2d_helper_film_next_frame", "group__gHelper.html#ga8973bb94243b6b082f9e2888267bea04", null ],
     [ "arm_2d_helper_film_reset", "group__gHelper.html#gaa3dd9a9991d2cf374924d7d3e57ff69b", null ],
