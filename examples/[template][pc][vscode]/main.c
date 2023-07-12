@@ -104,7 +104,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene3_loader,
     scene4_loader,
     scene2_loader,
-    scene_watch_loader,
+    //scene_watch_loader,
 };
 
 
