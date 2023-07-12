@@ -622,6 +622,8 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                         (   wPFBPixelCount 
                         /   (uint32_t)this.Adapter.tTargetRegion.tSize.iWidth);
                 
+                    iHeight = MIN(iHeight, this.Adapter.tTargetRegion.tSize.iHeight);
+
                     if (this.tCFG.FrameBuffer.u3PixelHeightAlign) {
                         uint_fast8_t chPixelHeightAlignMask 
                             = (1 << this.tCFG.FrameBuffer.u3PixelHeightAlign)-1;
