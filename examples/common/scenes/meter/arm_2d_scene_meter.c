@@ -160,7 +160,7 @@ static void __on_scene_meter_frame_start(arm_2d_scene_t *ptScene)
     float fAngle = ARM_2D_ANGLE((float)iResult / 10.0f);
     
     /* 0 ~ 200 km / h */
-    this.iNumber = (200 * (iResult + 1200) / 2400); 
+    this.iNumber = (int16_t)(200 * (iResult + 1200) / 2400); 
 
     /* update helper with new values*/
     arm_2d_helper_transform_update_value(&this.Pointer.tHelper, fAngle,1.0f);

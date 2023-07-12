@@ -99,20 +99,6 @@ extern "C" {
 #   define __GLCD_CFG_COLOUR_DEPTH__                                    16
 #endif
 
-// <o>Width of the screen <8-32767>
-// <i> The width of your screen
-// <i> Default: 320
-#ifndef __GLCD_CFG_SCEEN_WIDTH__
-#   define __GLCD_CFG_SCEEN_WIDTH__                                     320
-#endif
-
-// <o>Height of the screen <8-32767>
-// <i> The height of your screen
-// <i> Default: 240
-#ifndef __GLCD_CFG_SCEEN_HEIGHT__
-#   define __GLCD_CFG_SCEEN_HEIGHT__                                    240
-#endif
-
 // <o> The size of the LCD printf text buffer <16-65535>
 // <i> The text buffer size for the lcd printf service. It determins how many character you can use in one printf string.
 #ifndef __LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__
@@ -120,6 +106,20 @@ extern "C" {
 #endif
 
 // <h>Benchmark
+
+// <o>Width of the screen <8-32767>
+// <i> The width of your screen for running benchmark
+// <i> Default: 320
+#ifndef __GLCD_CFG_SCEEN_WIDTH__
+#   define __GLCD_CFG_SCEEN_WIDTH__                                     320
+#endif
+
+// <o>Height of the screen <8-32767>
+// <i> The height of your screen for running benchmark
+// <i> Default: 240
+#ifndef __GLCD_CFG_SCEEN_HEIGHT__
+#   define __GLCD_CFG_SCEEN_HEIGHT__                                    240
+#endif
 
 // <o>Number of iterations <1-2000>
 // <i> run number of iterations in arm-2d benchmark before calculating the result.
@@ -141,6 +141,11 @@ extern "C" {
 #   define __ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__                    0
 #endif
 
+// <q> Enable the nebula effect mode in the Benchmark:Watch-panel
+// <i> This feature is disabled by default and it is only available in the Tiny mode.
+#ifndef __ARM_2D_CFG_BENCHMARK_WATCH_PANEL_USE_NEBULA__
+#   define __ARM_2D_CFG_BENCHMARK_WATCH_PANEL_USE_NEBULA__              0
+#endif
 
 // <q> Exit benchmark when finished
 // <i> Exit the arm_2d_run_benchmark() after running specified iterations

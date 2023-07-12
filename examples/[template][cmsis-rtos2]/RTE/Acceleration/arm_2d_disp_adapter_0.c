@@ -64,14 +64,6 @@
 #   define __DISP0_CFG_ITERATION_CNT__     30
 #endif
 
-#ifndef __DISP0_CFG_PFB_BLOCK_WIDTH__
-#   define __DISP0_CFG_PFB_BLOCK_WIDTH__   __DISP0_CFG_SCEEN_WIDTH__
-#endif
-
-#ifndef __DISP0_CFG_PFB_BLOCK_WIDTH__
-#   define __DISP0_CFG_PFB_BLOCK_WIDTH__   __DISP0_CFG_SCEEN_HEIGHT__
-#endif
-
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -182,7 +174,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
         if (BENCHMARK.wAverage) {
             arm_lcd_printf(
                 "FPS:%3d:%dms ",
-                arm_2d_helper_get_reference_clock_frequency() / BENCHMARK.wAverage,
+                MIN(arm_2d_helper_get_reference_clock_frequency() / BENCHMARK.wAverage, 999),
                 (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wAverage));
         }
 
@@ -309,10 +301,11 @@ static bool __on_each_frame_complete(void *ptTarget)
             if (0 == BENCHMARK.wIterations) {
                 BENCHMARK.wAverage =
                     (uint32_t)(BENCHMARK.dwTotal / (uint64_t)__DISP0_CFG_ITERATION_CNT__);
+                BENCHMARK.wAverage = MAX(1, BENCHMARK.wAverage);
 //                BENCHMARK.fFPS30Freq = (float)
 //                ((      (double)(BENCHMARK.wAverage * 30) 
 //                    /   (double)arm_2d_helper_get_reference_clock_frequency()) 
-//                 * ((float)SystemCoreClock / 1000000.0f));
+//                 * ((double)SystemCoreClock / 1000000.0f));
                  
                 BENCHMARK.wMin = UINT32_MAX;
                 BENCHMARK.wMax = 0;

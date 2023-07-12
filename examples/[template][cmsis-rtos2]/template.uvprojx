@@ -3908,7 +3908,7 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>3</wLevel>
+            <wLevel>2</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>0</uC99>
@@ -10701,7 +10701,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="preIncludeGlobal" name="Library\Include\template\arm_2d_cfg.h" version="1.2.0">
+      <file attr="config" category="preIncludeGlobal" name="Library\Include\template\arm_2d_cfg.h" version="1.2.1">
         <instance index="0">RTE\Acceleration\arm_2d_cfg.h</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.4" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
@@ -10719,7 +10719,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_disp_adapter.c" version="1.6.1">
+      <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_disp_adapter.c" version="1.6.2">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.c</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Helper" maxInstances="8"/>
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
@@ -10737,7 +10737,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="Helper\Include\template\arm_2d_disp_adapter.h" version="1.6.1">
+      <file attr="config" category="header" name="Helper\Include\template\arm_2d_disp_adapter.h" version="1.6.2">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.h</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Helper" maxInstances="8"/>
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
@@ -10997,6 +10997,24 @@
       </file>
       <file attr="config" category="utility" name="tools\img2c.py" version="1.2.1">
         <instance index="0">RTE\Acceleration\img2c.py</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.4" condition="CMSIS-DSP"/>
+        <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+        <targetInfos>
+          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="DO_NOT_USE_V2M-MPS3-CM33"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="utility" name="tools\ttf2c.py" version="1.0.0">
+        <instance index="0">RTE\Acceleration\ttf2c.py</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.4" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>

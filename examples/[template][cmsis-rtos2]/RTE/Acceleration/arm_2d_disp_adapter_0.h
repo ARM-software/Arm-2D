@@ -76,7 +76,7 @@ extern "C" {
 // <o>Height of the PFB block
 // <i> The height of your PFB block size used in disp0
 #ifndef __DISP0_CFG_PFB_BLOCK_HEIGHT__
-#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          24
+#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          240
 #endif
 
 // <o>Width Alignment of generated PFBs

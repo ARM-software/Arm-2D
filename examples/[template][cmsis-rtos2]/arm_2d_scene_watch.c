@@ -44,7 +44,8 @@
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wunused-function"
-#   pragma clang diagnostic ignored "-Wmissing-declarations"  
+#   pragma clang diagnostic ignored "-Wmissing-declarations"
+#   pragma clang diagnostic ignored "-Wmissing-variable-declarations"  
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #elif __IS_COMPILER_IAR__
 #   pragma diag_suppress=Pa089,Pe188,Pe177,Pe174
@@ -88,6 +89,7 @@ extern const arm_2d_tile_t c_tilePointerSecMask;
 extern
 const arm_2d_tile_t c_tilePointerMask;
 
+static
 const arm_2d_tile_t c_tilePointerHourMask = 
     impl_child_tile(c_tilePointerSecMask, 0, 80, 9, 67);
 

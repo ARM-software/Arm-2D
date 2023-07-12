@@ -140,6 +140,10 @@ void before_scene_switching_handler(void *pTarget,
                                     arm_2d_scene_player_t *ptPlayer,
                                     arm_2d_scene_t *ptScene)
 {
+    ARM_2D_UNUSED(pTarget);
+    ARM_2D_UNUSED(ptPlayer);
+    ARM_2D_UNUSED(ptScene);
+
     static uint_fast8_t s_chIndex = 0;
 
     if (s_chIndex >= dimof(c_SceneLoaders)) {
@@ -165,7 +169,8 @@ int32_t Disp0_DrawBitmap(int16_t x,
  __NO_RETURN
 void app_2d_main_thread (void *argument) 
 {
-
+    ARM_2D_UNUSED(argument);
+    
 #if defined(RTE_Acceleration_Arm_2D_Extra_Benchmark)
     arm_2d_run_benchmark();
 #endif
