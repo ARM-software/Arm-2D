@@ -397,7 +397,7 @@ static void __app_scene0_init(void)
             },
         ),
 
-    END_IMPL_ARM_2D_REGION_LIST()
+    END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
     
     s_tDirtyRegions[0].tRegion.tLocation = (arm_2d_location_t){
         .iX = ((__DISP0_CFG_SCEEN_WIDTH__ - c_tileHelium.tRegion.tSize.iWidth) >> 1),

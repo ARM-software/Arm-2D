@@ -245,12 +245,12 @@ user_scene_<name>_t *__arm_2d_scene_<name>_init(   arm_2d_scene_player_t *ptDisp
                 .iY = 0,
             },
             .tSize = {
-                .iWidth = __GLCD_CFG_SCEEN_WIDTH__,
+                .iWidth = 0,
                 .iHeight = 8,
             },
         ),
 
-    END_IMPL_ARM_2D_REGION_LIST()
+    END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
     
     /* get the screen region */
     arm_2d_region_t tScreen
@@ -264,7 +264,9 @@ user_scene_<name>_t *__arm_2d_scene_<name>_init(   arm_2d_scene_player_t *ptDisp
     arm_2d_align_centre(tScreen, c_tileCMSISLogoMask.tRegion.tSize) {
         s_tDirtyRegions[0].tRegion = __centre_region;
     }
-    
+
+    s_tDirtyRegions[1].tRegion.tSize.iWidth = tScreen.tSize.iWidth;
+
     if (NULL == ptThis) {
         ptThis = (user_scene_<name>_t *)malloc(sizeof(user_scene_<name>_t));
         assert(NULL != ptThis);

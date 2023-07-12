@@ -184,7 +184,7 @@ static void __on_scene_meter_frame_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     /* switch to next scene after 10s */
-    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
+    if (arm_2d_helper_is_time_out(2000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 }
@@ -341,8 +341,10 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
             },
         ),
 
-    END_IMPL_ARM_2D_REGION_LIST()
+    END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
     
+    s_tDirtyRegions[1].ptNext = NULL;
+
     /* get the screen region */
     arm_2d_region_t tScreen
         = arm_2d_helper_pfb_get_display_area(
@@ -368,12 +370,10 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
             /* we don't want to refresh "km/h" as there is no change at all */
             s_tDirtyRegions[0].tRegion.tSize.iHeight -= 16; 
 
-            s_tDirtyRegions[0].tRegion.tSize.iWidth = tScreen.tSize.iWidth;
+            s_tDirtyRegions[1].tRegion.tSize.iWidth = tScreen.tSize.iWidth;
         }
 
     } while(0);
-
-    s_tDirtyRegions[1].tRegion.tSize.iWidth = tScreen.tSize.iWidth;
     
     if (NULL == ptThis) {
         ptThis = (user_scene_meter_t *)malloc(sizeof(user_scene_meter_t));

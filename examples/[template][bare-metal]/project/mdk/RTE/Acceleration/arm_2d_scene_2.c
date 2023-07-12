@@ -428,7 +428,7 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
                 .iHeight = 8,
             },
         ),
-    END_IMPL_ARM_2D_REGION_LIST()
+    END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
     
     /* get the screen region */
     arm_2d_region_t tScreen
