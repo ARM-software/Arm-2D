@@ -155,10 +155,19 @@ static void __on_scene_meter_frame_start(arm_2d_scene_t *ptScene)
      *-----------------------------------------------------------------------*/
     
     int32_t iResult;
-    /* example: let the pointer swing back and forth between -120 degree and 100 degree */
-    arm_2d_helper_time_cos_slider(-1200, 1000, 3000, 0, &iResult, &this.lTimestamp[1]);
+
+#if 1
+    do {
+        /* example: let the pointer swing back and forth between -120 degree and 100 degree */
+        arm_2d_helper_time_cos_slider(-1200, 1000, 3000, 0, &iResult, &this.lTimestamp[1]);
+    } while(0);
+#else
+    do {
+        arm_2d_helper_pi_slider(&this.tPISlider, 1000, &iResult);
+    } while(0);
+#endif
+
     float fAngle = ARM_2D_ANGLE((float)iResult / 10.0f);
-    
     /* 0 ~ 200 km / h */
     this.iNumber = (int16_t)(200 * (iResult + 1200) / 2400); 
 
@@ -363,6 +372,8 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
         }
 
     } while(0);
+
+    s_tDirtyRegions[1].tRegion.tSize.iWidth = tScreen.tSize.iWidth;
     
     if (NULL == ptThis) {
         ptThis = (user_scene_meter_t *)malloc(sizeof(user_scene_meter_t));
@@ -372,8 +383,9 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
         }
     } else {
         bUserAllocated = true;
-        memset(ptThis, 0, sizeof(user_scene_meter_t));
+       
     }
+     memset(ptThis, 0, sizeof(user_scene_meter_t));
     
     *ptThis = (user_scene_meter_t){
         .use_as__arm_2d_scene_t = {
@@ -397,16 +409,28 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
     /* initialize op */
     ARM_2D_OP_INIT(this.Pointer.tOP);
 
+
     /* initialize transform helper */
     arm_2d_helper_transform_init(&this.Pointer.tHelper,
                                  (arm_2d_op_t *)&this.Pointer.tOP,
                                  0.01f,
                                  0.1f,
                                  &this.use_as__arm_2d_scene_t.ptDirtyRegion);
-    
+
 
     s_tPointerCenter.iX = c_tilePointerMask.tRegion.tSize.iWidth >> 1;
     s_tPointerCenter.iY = 100; /* radius */
+
+    /* initialize PI slider */
+    do {
+        static const arm_2d_helper_pi_slider_cfg_t tCFG = {
+            .fProportionRecip = 7.0f,
+            .fIntegrationRecip = 1.5f,
+            .nInterval = 20, 
+        };
+
+        arm_2d_helper_pi_slider_init(&this.tPISlider, (arm_2d_helper_pi_slider_cfg_t *)&tCFG, 0);
+    } while(0);
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
                                         &this.use_as__arm_2d_scene_t, 

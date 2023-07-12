@@ -383,24 +383,36 @@ bool __arm_2d_helper_time_half_cos_slider(  int32_t nFrom,
 
 
 ARM_NONNULL(1,2)
-arm_2d_helper_pi_slider_t *__arm_2d_helper_pi_slider_init(  
+arm_2d_helper_pi_slider_t *arm_2d_helper_pi_slider_init(  
                                     arm_2d_helper_pi_slider_t *ptThis, 
                                     arm_2d_helper_pi_slider_cfg_t *ptCFG, 
                                     int32_t nStartPosition)
 {
     assert(NULL != ptThis);
-    assert(NULL != ptCFG);
+
+    /* the default parameter for PI control*/
+    arm_2d_helper_pi_slider_cfg_t tCFG = {
+        .fProportionRecip = 5.0f,
+        .fIntegrationRecip = 3.0f,
+        .nInterval = 20,
+    };
+
+    if (NULL == ptCFG) {
+        ptCFG = &tCFG;
+    }
 
     memset(ptThis, 0, sizeof(arm_2d_helper_pi_slider_t));
 
     this.tCFG = *ptCFG;
+
+    this.tCFG.nInterval = arm_2d_helper_convert_ms_to_ticks(this.tCFG.nInterval);
     this.iCurrent = nStartPosition;
 
     return ptThis;
 }
 
 ARM_NONNULL( 1, 3 )
-bool __arm_2d_helper_pi_slider(   arm_2d_helper_pi_slider_t *ptThis,
+bool arm_2d_helper_pi_slider(   arm_2d_helper_pi_slider_t *ptThis,
                                   int32_t nTargetPosition,
                                   int32_t *pnResult)
 {
@@ -428,8 +440,8 @@ bool __arm_2d_helper_pi_slider(   arm_2d_helper_pi_slider_t *ptThis,
                 lElapsed -= this.tCFG.nInterval;
 
                 int32_t nError = nTargetPosition - this.iCurrent;
-                float fProp = (float)nError / (float)this.tCFG.iProportionRecip;
-                this.fOP += fProp / (float)this.tCFG.iIntegrationRecip;
+                float fProp = (float)nError / (float)this.tCFG.fProportionRecip;
+                this.fOP += fProp / (float)this.tCFG.fIntegrationRecip;
                 this.iCurrent += (int32_t)(fProp + this.fOP);
                 float fStableCheck = ABS(fProp) + ABS(this.fOP);
                 if ( fStableCheck < 0.1f ) {

@@ -217,8 +217,8 @@ typedef struct arm_2d_helper_film_t {
  */
 typedef struct arm_2d_helper_pi_slider_cfg_t {
     int32_t nInterval;
-    int16_t iProportionRecip;
-    int16_t iIntegrationRecip;
+    float fProportionRecip;
+    float fIntegrationRecip;
 } arm_2d_helper_pi_slider_cfg_t;
 
 /*!
@@ -381,13 +381,14 @@ uint32_t __arm_2d_helper_colour_slider( uint32_t wFrom,
 /*!
  * \brief initialize the Proportional-Integral Control helper
  * \param[in] the target helper control block
- * \param[in] the configuration structure
+ * \param[in] the configuration structure, NULL means using the default
+ *            parameters, i.e P = 5.0f, I = 3.0f and Interval = 20ms
  * \param[in] nStartPosition the start postion
  * \return arm_2d_helper_pi_slider_t* the control block
  */
 extern
-ARM_NONNULL(1,2)
-arm_2d_helper_pi_slider_t *__arm_2d_helper_pi_slider_init(  
+ARM_NONNULL(1)
+arm_2d_helper_pi_slider_t *arm_2d_helper_pi_slider_init(  
                                     arm_2d_helper_pi_slider_t *ptThis, 
                                     arm_2d_helper_pi_slider_cfg_t *ptCFG, 
                                     int32_t nStartPosition);
@@ -402,7 +403,7 @@ arm_2d_helper_pi_slider_t *__arm_2d_helper_pi_slider_init(
  */
 extern
 ARM_NONNULL( 1, 3 )
-bool __arm_2d_helper_pi_slider(   arm_2d_helper_pi_slider_t *ptThis,
+bool arm_2d_helper_pi_slider(   arm_2d_helper_pi_slider_t *ptThis,
                                   int32_t nTargetPosition,
                                   int32_t *pnResult);
 
