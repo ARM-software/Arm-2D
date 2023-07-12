@@ -392,8 +392,8 @@ arm_2d_helper_pi_slider_t *arm_2d_helper_pi_slider_init(
 
     /* the default parameter for PI control*/
     arm_2d_helper_pi_slider_cfg_t tCFG = {
-        .fProportionRecip = 5.0f,
-        .fIntegrationRecip = 3.0f,
+        .fProportionRecip = 0.2f,
+        .fIntegrationRecip = 0.33f,
         .nInterval = 20,
     };
 
@@ -440,8 +440,8 @@ bool arm_2d_helper_pi_slider(   arm_2d_helper_pi_slider_t *ptThis,
                 lElapsed -= this.tCFG.nInterval;
 
                 int32_t nError = nTargetPosition - this.iCurrent;
-                float fProp = (float)nError / (float)this.tCFG.fProportionRecip;
-                this.fOP += fProp / (float)this.tCFG.fIntegrationRecip;
+                float fProp = (float)nError * this.tCFG.fProportionRecip;
+                this.fOP += fProp * this.tCFG.fIntegrationRecip;
                 this.iCurrent += (int32_t)(fProp + this.fOP);
                 float fStableCheck = ABS(fProp) + ABS(this.fOP);
                 if ( fStableCheck < 0.1f ) {
