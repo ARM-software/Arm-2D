@@ -1,4 +1,6 @@
 #======================================================================================================================#
+# Source code, Include path and predefined macros                                                                      #
+#======================================================================================================================#
 CC_SRC  := $(wildcard *.c)
 CC_SRC  += $(wildcard platform/*.c)
 CC_SRC  += $(wildcard platform/math/*.c)
@@ -20,7 +22,7 @@ CC_INC  += ../../examples/common/controls
 CC_DEF  := ARM_SECTION\(x\)=
 CC_DEF  += __va_list=va_list
 
-#======================================================================================================================#
+#================================== DO NOT MODIFY UNLESS YOU KNOW THE CONSEQUENCES ====================================#
 ifeq ($(OS),Windows_NT)
 	CROSS   := i686-w64-mingw32-
 	CC      := $(CROSS)gcc
@@ -65,6 +67,8 @@ app: $(OUT)
 endif
 
 #======================================================================================================================#
+# Common compilation options                                                                                           #
+#======================================================================================================================#
 CCFLAG  +=  -std=gnu11 -MMD -g
 CCFLAG  +=  -ffunction-sections -fdata-sections
 CCFLAG  +=  -fno-ms-extensions
@@ -74,7 +78,7 @@ CCFLAG  += 	-Ofast
 CCFLAG  +=  -flto
 LDFLAG  +=  -flto
 
-#======================================================================================================================#
+#================================== DO NOT MODIFY UNLESS YOU KNOW THE CONSEQUENCES ====================================#
 .DEFAULT_GOAL = all
 _Comma := ,
 
@@ -96,7 +100,7 @@ CCSuffix := $(CCFLAG) $(addprefix -I,$(CC_INC)) $(addprefix -D,$(CC_DEF))
 LDObject := $(CC_OBJ) $(addprefix -l,$(LD_LIB))
 LDSuffix := $(LDFLAG) $(addprefix -Wl$(_Comma)-L,$(LD_INC))
 
-#======================================================================================================================#
+#================================== DO NOT MODIFY UNLESS YOU KNOW THE CONSEQUENCES ====================================#
 .PHONY: all
 all: app
 	@echo Build Completed.
