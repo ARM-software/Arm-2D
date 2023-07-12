@@ -407,8 +407,11 @@ bool __arm_2d_helper_pi_slider(   arm_2d_helper_pi_slider_t *ptThis,
     int64_t lTimestamp = arm_2d_helper_get_system_timestamp();
     assert( NULL != ptThis );
     assert( NULL != pnResult );
+    bool bResult = false;
 
-    if ( nTargetPosition == this.iCurrent ) {
+    if ( nTargetPosition == this.iCurrent && this.fOP < 0.1f ) {
+        this.lTimestamp = lTimestamp;
+        this.fOP = 0.0f;
         return true;
     } else {
         if ( 0 == this.lTimestamp ) { //first entry init
@@ -433,6 +436,7 @@ bool __arm_2d_helper_pi_slider(   arm_2d_helper_pi_slider_t *ptThis,
                     /* has reached the final value */
                     this.iCurrent = nTargetPosition; /* correct the residual error */
                     this.fOP = 0.0f;
+                    bResult = true;
                 }
             }
             this.nTimeResidual = (int32_t)lElapsed;
@@ -441,7 +445,7 @@ bool __arm_2d_helper_pi_slider(   arm_2d_helper_pi_slider_t *ptThis,
         } while( 0 );
     }
 
-    return false;
+    return bResult;
 }
 
 void arm_2d_helper_draw_box( const arm_2d_tile_t *ptTarget,
