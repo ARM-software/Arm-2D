@@ -54,6 +54,14 @@ extern "C" {
 #   pragma diag_suppress 64
 #endif
 
+
+/* OOC header, please DO NOT modify  */
+#ifdef __ARM_2D_HELPER_IMPLEMENT__
+#   undef __ARM_2D_HELPER_IMPLEMENT__
+#   define __ARM_2D_IMPL__
+#endif
+#include "arm_2d_utils.h"
+
 /*!
  * \addtogroup Deprecated
  * @{
@@ -203,6 +211,30 @@ typedef struct arm_2d_helper_film_t {
     uint16_t hwFrameIndex;                                                      /*!< the frame index used at runtime */
 } arm_2d_helper_film_t;
 
+/*!
+ * \brief the configuration structure for the Proportional-Integral Control
+ * 
+ */
+typedef struct arm_2d_helper_pi_slider_cfg_t {
+    int32_t nInterval;
+    int16_t iProportionRecip;
+    int16_t iIntegrationRecip;
+} arm_2d_helper_pi_slider_cfg_t;
+
+/*!
+ * \brief a helper class for Proportional-Integral Control
+ */
+typedef struct arm_2d_helper_pi_slider_t {
+
+ARM_PRIVATE (
+    arm_2d_helper_pi_slider_cfg_t tCFG;
+    int64_t lTimestamp;
+    int32_t nTimeResidual;
+    int32_t iCurrent;
+    float   fOP;
+)
+} arm_2d_helper_pi_slider_t;
+
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ PROTOTYPES ====================================*/
@@ -345,6 +377,34 @@ uint32_t __arm_2d_helper_colour_slider( uint32_t wFrom,
                                         uint32_t wTo,
                                         int32_t nDistance,
                                         int32_t nOffset);
+
+/*!
+ * \brief initialize the Proportional-Integral Control helper
+ * \param[in] the target helper control block
+ * \param[in] the configuration structure
+ * \param[in] nStartPosition the start postion
+ * \return arm_2d_helper_pi_slider_t* the control block
+ */
+extern
+ARM_NONNULL(1,2)
+arm_2d_helper_pi_slider_t *__arm_2d_helper_pi_slider_init(  
+                                    arm_2d_helper_pi_slider_t *ptThis, 
+                                    arm_2d_helper_pi_slider_cfg_t *ptCFG, 
+                                    int32_t nStartPosition);
+
+/*!
+ * \brief A helper function for Proportional-Integral Control
+ * \param[in] ptThis the control block (arm_2d_helper_pi_slider_t)
+ * \param[in] nTargetPosition the new target position 
+ * \param[in] pnResult a int32_t buffer for reading the current postion
+ * \retval true the slider has reached the target postion
+ * \retval false the slider is still moving
+ */
+extern
+ARM_NONNULL( 1, 3 )
+bool __arm_2d_helper_pi_slider(   arm_2d_helper_pi_slider_t *ptThis,
+                                  int32_t nTargetPosition,
+                                  int32_t *pnResult);
 
 /*!
  * \brier draw a box with specified colour, border width and opacity
