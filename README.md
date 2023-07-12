@@ -78,10 +78,10 @@ Potential users of Arm-2D may have different backgrounds and purposes. Whether y
 
 - [Overview](#overview)
 - [Key Messages for You](#key-messages-for-you)
-- [Where to Get Started](#where-to-get-started)
+- [How to Get Started](#how-to-get-started)
 - [Table of Content](#table-of-content)
 - [Features](#features)
-  - [In this version (ver1.1.3)](#in-this-version-ver113-dev)
+  - [In this version (ver1.1.4)](#in-this-version-ver114)
   - [New Features Planned in the Future](#new-features-planned-in-the-future)
 - [1 Introduction](#1-introduction)
   - [1.1 The Background](#11-the-background)
@@ -101,7 +101,7 @@ Potential users of Arm-2D may have different backgrounds and purposes. Whether y
 
 ## Features
 
-### In this version (ver1.1.4-dev)
+### In this version (ver1.1.4)
 
 The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly used in **Deep Embedded Display system**. The supported features include but not limited to:
 
