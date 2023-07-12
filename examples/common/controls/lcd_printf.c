@@ -119,9 +119,9 @@ void arm_lcd_text_set_colour(COLOUR_INT_TYPE wForeground, COLOUR_INT_TYPE wBackg
     s_tLCDTextControl.tColour.tBackground = wBackground;
 }
 
-void arm_lcd_text_set_target_framebuffer(arm_2d_tile_t *ptFrameBuffer)
+void arm_lcd_text_set_target_framebuffer(const arm_2d_tile_t *ptFrameBuffer)
 {
-    s_tLCDTextControl.ptTargetFB = ptFrameBuffer;
+    s_tLCDTextControl.ptTargetFB = (arm_2d_tile_t *)ptFrameBuffer;
 
     if (NULL == ptFrameBuffer) {
         // use default framebuffer

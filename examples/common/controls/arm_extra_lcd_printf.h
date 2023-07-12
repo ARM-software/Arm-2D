@@ -231,7 +231,7 @@ extern
 void arm_lcd_text_set_opacity(uint8_t chOpacity);
 
 extern 
-void arm_lcd_text_set_target_framebuffer(arm_2d_tile_t *ptFrameBuffer);
+void arm_lcd_text_set_target_framebuffer(const arm_2d_tile_t *ptFrameBuffer);
 
 /*!
  * \brief set the display mode for characters
