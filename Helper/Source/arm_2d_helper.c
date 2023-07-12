@@ -33,6 +33,8 @@
 #include <stdint.h>
 #include <assert.h>
 #include <time.h>
+
+#define __ARM_2D_HELPER_IMPLEMENT__
 #include "arm_2d_helper.h"
 
 #if defined(__PERF_COUNTER__)
@@ -379,6 +381,67 @@ bool __arm_2d_helper_time_half_cos_slider(  int32_t nFrom,
     return false;
 }
 
+
+ARM_NONNULL(1,2)
+arm_2d_helper_pi_slider_t *__arm_2d_helper_pi_slider_init(  arm_2d_helper_pi_slider_t *ptThis, 
+                                                            arm_2d_helper_pi_slider_cfg_t *ptCFG, 
+                                                            int32_t nStartPosition)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptCFG);
+
+    memset(ptThis, 0, sizeof(arm_2d_helper_pi_slider_t));
+
+    this.tCFG = *ptCFG;
+    this.iCurrent = nStartPosition;
+
+    return ptThis;
+}
+
+ARM_NONNULL( 1, 3 )
+bool __arm_2d_helper_pi_slider(   arm_2d_helper_pi_slider_t *ptThis,
+                                  int32_t nTargetPosition,
+                                  int32_t *pnResult)
+{
+    int64_t lTimestamp = arm_2d_helper_get_system_timestamp();
+    assert( NULL != ptThis );
+    assert( NULL != pnResult );
+
+    if ( nTargetPosition == this.iCurrent ) {
+        return true;
+    } else {
+        if ( 0 == this.lTimestamp ) { //first entry init
+            this.lTimestamp = lTimestamp;
+            this.fOP = 0.0f;
+        }
+
+        do {
+            int64_t lElapsed = ( lTimestamp - this.lTimestamp ) + this.nTimeResidual;
+            this.lTimestamp = lTimestamp;
+
+            /* perform iterations */
+            while ( lElapsed > 0 ) {
+                lElapsed -= this.tCFG.nInterval;
+
+                int32_t nError = nTargetPosition - this.iCurrent;
+                float fProp = (float)nError / (float)this.tCFG.iProportionRecip;
+                this.fOP += fProp / (float)this.tCFG.iIntegrationRecip;
+                this.iCurrent += (int32_t)(fProp + this.fOP);
+                float fStableCheck = ABS(fProp) + ABS(this.fOP);
+                if ( fStableCheck < 0.1f ) {
+                    /* has reached the final value */
+                    this.iCurrent = nTargetPosition; /* correct the residual error */
+                    this.fOP = 0.0f;
+                }
+            }
+            this.nTimeResidual = (int32_t)lElapsed;
+            *pnResult = this.iCurrent;
+
+        } while( 0 );
+    }
+
+    return false;
+}
 
 void arm_2d_helper_draw_box( const arm_2d_tile_t *ptTarget,
                              const arm_2d_region_t *ptRegion,
