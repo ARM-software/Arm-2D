@@ -64,14 +64,6 @@
 #   define __DISP%Instance%_CFG_ITERATION_CNT__     30
 #endif
 
-#ifndef __DISP%Instance%_CFG_PFB_BLOCK_WIDTH__
-#   define __DISP%Instance%_CFG_PFB_BLOCK_WIDTH__   __DISP%Instance%_CFG_SCEEN_WIDTH__
-#endif
-
-#ifndef __DISP%Instance%_CFG_PFB_BLOCK_WIDTH__
-#   define __DISP%Instance%_CFG_PFB_BLOCK_WIDTH__   __DISP%Instance%_CFG_SCEEN_HEIGHT__
-#endif
-
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
