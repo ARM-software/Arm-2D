@@ -381,7 +381,7 @@ static void __on_scene3_frame_start(arm_2d_scene_t *ptScene)
     if (arm_2d_helper_time_liner_slider(0, 1000, 10000, &nResult, &this.lTimestamp[2])) {
         this.lTimestamp[2] = 0;
     }
-    this.iProgress = (int16_t)iResult;
+    this.iProgress = (int16_t)nResult;
 
 }
 

@@ -46,8 +46,7 @@
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wunused-function"
-#   pragma clang diagnostic ignored "-Wmissing-declarations"
-#   pragma clang diagnostic ignored "-Wincompatible-pointer-types-discards-qualifiers"
+#   pragma clang diagnostic ignored "-Wmissing-declarations"  
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #   pragma diag_suppress 64,177
 #elif __IS_COMPILER_GCC__
@@ -378,11 +377,11 @@ static void __on_scene3_frame_start(arm_2d_scene_t *ptScene)
     user_scene_3_t *ptThis = (user_scene_3_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    int iResult;
-    if (arm_2d_helper_time_liner_slider(0, 1000, 10000, &iResult, &this.lTimestamp[2])) {
+    int nResult;
+    if (arm_2d_helper_time_liner_slider(0, 1000, 10000, &nResult, &this.lTimestamp[2])) {
         this.lTimestamp[2] = 0;
     }
-    this.iProgress = iResult;
+    this.iProgress = (int16_t)nResult;
 
 }
 
