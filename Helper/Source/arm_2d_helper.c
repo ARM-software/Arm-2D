@@ -393,7 +393,7 @@ arm_2d_helper_pi_slider_t *arm_2d_helper_pi_slider_init(
     /* the default parameter for PI control*/
     arm_2d_helper_pi_slider_cfg_t tCFG = {
         .fProportion = 0.2f,
-        .fIntegration = 0.33f,
+        .fIntegration = 0.3f,
         .nInterval = 20,
     };
 
