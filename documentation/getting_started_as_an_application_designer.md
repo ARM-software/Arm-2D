@@ -252,7 +252,7 @@ If your MCU has a small flash, the original benchmark cannot fit into the memory
 Running benchmark is simple:
 
 1. Include  `arm_2d_benchmark.h` 
-2. call function `arm_2d_run_benchmark()` after initializing Arm-2D
+2. call function `arm_2d_run_benchmark()` after initializing Arm-2D and the display adapter(s). 
 
 ```c
 #include "arm_2d_helper.h"
