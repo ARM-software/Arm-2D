@@ -24,6 +24,7 @@
 #include "arm_2d.h"
 
 #include "arm_2d_helper_scene.h"
+#include "arm_2d_helper.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -86,6 +87,8 @@ ARM_PRIVATE(
         arm_2d_op_fill_cl_msk_opa_trans_t tOP;
         arm_2d_helper_transform_t tHelper;
     } Pointer;
+
+    arm_2d_helper_pi_slider_t tPISlider;
 )
     /* place your public member here */
     
