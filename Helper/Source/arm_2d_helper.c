@@ -436,7 +436,7 @@ bool arm_2d_helper_pi_slider(   arm_2d_helper_pi_slider_t *ptThis,
             this.lTimestamp = lTimestamp;
 
             /* perform iterations */
-            while ( lElapsed > 0 ) {
+            while ( lElapsed >= this.tCFG.nInterval ) {
                 lElapsed -= this.tCFG.nInterval;
 
                 int32_t nError = nTargetPosition - this.iCurrent;
