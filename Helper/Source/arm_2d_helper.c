@@ -421,7 +421,7 @@ bool arm_2d_helper_pi_slider(   arm_2d_helper_pi_slider_t *ptThis,
     assert( NULL != pnResult );
     bool bResult = false;
 
-    if ( nTargetPosition == this.iCurrent && this.fOP < 0.1f ) {
+    if ( nTargetPosition == this.iCurrent && this.fOP <= 0.01f ) {
         this.lTimestamp = lTimestamp;
         this.fOP = 0.0f;
         return true;
