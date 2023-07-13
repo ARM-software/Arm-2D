@@ -444,7 +444,7 @@ bool arm_2d_helper_pi_slider(   arm_2d_helper_pi_slider_t *ptThis,
                 this.fOP += fProp * this.tCFG.fIntegration;
                 this.iCurrent += (int32_t)(fProp + this.fOP);
                 float fStableCheck = ABS(fProp) + ABS(this.fOP);
-                if ( fStableCheck < 0.1f ) {
+                if ( fStableCheck < 0.1f && ABS(nError) < 2 ) {
                     /* has reached the final value */
                     this.iCurrent = nTargetPosition; /* correct the residual error */
                     this.fOP = 0.0f;
