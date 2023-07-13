@@ -71,3 +71,4 @@ examples/\[template\]\[cmsis-rtos2\]/RTE/_V2M-MPS3-CM85/RTE_Components.h
 test/.clangd
 .vscode/settings.json
 examples/\[template\]\[pc\]\[vscode\]/.vscode/settings.json
+examples/\[template\]\[cmsis-rtos2\]/RTE/_V2M-MPS3-CM55/RTE_Components.h
