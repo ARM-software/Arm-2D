@@ -376,10 +376,10 @@ For example, we can create two framebuffers with size **100\*100** and ***200\*5
 
 ```c
 dcl_fb(c_tLayerA)
-implement_tile(c_tLayerA, 100, 100, arm_2d_color_rgb565_t);
+impl_fb(c_tLayerA, 100, 100, arm_2d_color_rgb565_t);
 
 dcl_fb(c_tLayerB)
-implement_tile(c_tLayerB, 200, 50, arm_2d_color_rgb565_t);
+impl_fb(c_tLayerB, 200, 50, arm_2d_color_rgb565_t);
 ```
 
 These layers are stored in RAM, which are used as sources and targets for 2D operations. 
