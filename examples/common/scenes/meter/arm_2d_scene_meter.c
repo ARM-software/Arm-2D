@@ -424,8 +424,8 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
     /* initialize PI slider */
     do {
         static const arm_2d_helper_pi_slider_cfg_t tCFG = {
-            .fProportionRecip = 0.15f,
-            .fIntegrationRecip = 0.6667f,
+            .fProportion = 0.15f,
+            .fIntegration = 0.6667f,
             .nInterval = 20, 
         };
 

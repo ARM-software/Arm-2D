@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        04. May 2023
- * $Revision:    V.1.6.3
+ * $Date:        13. July 2023
+ * $Revision:    V.1.6.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -217,8 +217,8 @@ typedef struct arm_2d_helper_film_t {
  */
 typedef struct arm_2d_helper_pi_slider_cfg_t {
     int32_t nInterval;
-    float fProportionRecip;
-    float fIntegrationRecip;
+    float fProportion;
+    float fIntegration;
 } arm_2d_helper_pi_slider_cfg_t;
 
 /*!
