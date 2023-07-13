@@ -448,10 +448,10 @@ Table of Contents &lt;!-- omit from toc --&gt;</h2>
 <div class="line"><span class="preprocessor">            __impl_fb(__name, __width, __height, __type, ##__VA_ARGS__)</span></div>
 </div><!-- fragment --><p >For example, we can create two framebuffers with size <b>100*100</b> and <em><b>200*50</b></em> respectively and using colour <code><a class="el" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a></code> for pixels:</p>
 <div class="fragment"><div class="line">dcl_fb(c_tLayerA)</div>
-<div class="line">implement_tile(c_tLayerA, 100, 100, <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a>);</div>
+<div class="line">impl_fb(c_tLayerA, 100, 100, <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a>);</div>
 <div class="line"> </div>
 <div class="line">dcl_fb(c_tLayerB)</div>
-<div class="line">implement_tile(c_tLayerB, 200, 50, <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a>);</div>
+<div class="line">impl_fb(c_tLayerB, 200, 50, <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a>);</div>
 </div><!-- fragment --><p >These layers are stored in RAM, which are used as sources and targets for 2D operations.</p>
 <p >Note that in the aforementioned macro template, we use <code>ARM_NOINIT</code> to decorate the display buffer, its definition is shown below:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#ifndef ARM_NOINIT</span></div>

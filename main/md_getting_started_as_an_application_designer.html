@@ -293,23 +293,28 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 <p >Running benchmark is simple:</p>
 <ol type="1">
 <li>Include <code>arm_2d_benchmark.h</code></li>
-<li>call function <code>arm_2d_run_benchmark()</code> after initializing Arm-2D</li>
+<li>call function <code>arm_2d_run_benchmark()</code> after initializing Arm-2D and the display adapter(s).</li>
 </ol>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;arm_2d_helper.h&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;arm_2d_disp_adapters.h&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;arm_2d_scenes.h&quot;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;arm_2d_benchmark.h&quot;</span></div>
 <div class="line"> </div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main (<span class="keywordtype">void</span>)</div>
+<div class="line"><span class="keywordtype">int</span> main (<span class="keywordtype">void</span>) </div>
 <div class="line">{</div>
 <div class="line">    ...</div>
 <div class="line">    <a class="code hl_define" href="group__gKernel.html#gaee644f33c5b07d65d292017b21fb3f39" title="a decoration to make the immediate following code irq-safe">arm_irq_safe</a> {</div>
 <div class="line">        <a class="code hl_function" href="group__gKernel.html#gae417897e7d7186b294c0ff3468102276" title="initialise arm-2d">arm_2d_init</a>();</div>
 <div class="line">    }</div>
 <div class="line"> </div>
+<div class="line">    <span class="comment">/* initialize the display adapter 0 service */</span></div>
+<div class="line">    disp_adapter0_init();</div>
+<div class="line">    </div>
 <div class="line">    arm_2d_run_benchmark();</div>
 <div class="line">    </div>
-<div class="line">    <span class="keywordflow">while</span>(1) {</div>
-<div class="line">        __NOP();</div>
+<div class="line">    <span class="keywordflow">while</span> (1) {</div>
+<div class="line">        <span class="comment">/* the task function of the display adapter 0 service */</span></div>
+<div class="line">        disp_adapter0_task();</div>
 <div class="line">    }</div>
 <div class="line">}</div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md35"></a>
