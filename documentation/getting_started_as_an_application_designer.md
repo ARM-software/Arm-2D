@@ -256,24 +256,28 @@ Running benchmark is simple:
 
 ```c
 #include "arm_2d_helper.h"
+#include "arm_2d_disp_adapters.h"
+#include "arm_2d_scenes.h"
 #include "arm_2d_benchmark.h"
 
-
-int main (void)
+int main (void) 
 {
     ...
     arm_irq_safe {
         arm_2d_init();
     }
-
+ 
+    /* initialize the display adapter 0 service */
+    disp_adapter0_init();
+    
     arm_2d_run_benchmark();
     
-    while(1) {
-        __NOP();
+    while (1) {
+        /* the task function of the display adapter 0 service */
+        disp_adapter0_task();
     }
 }
 ```
-
 
 
 #### 2.7.2 Asynchronous Mode and RTOS support
