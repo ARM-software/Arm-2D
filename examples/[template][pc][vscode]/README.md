@@ -192,3 +192,72 @@ To enable the **intelliSense** working properly, please also update the `.vscode
 
 
 
+### 3.4 How to run benchmarks
+
+Arm-2D provides two benchmark: **Generic** and **WatchPanel**. For details, please check [here](../common/benchmark/README.md). You can run those benchmarks in this project template. In the header file  `platform/RTE_Components.h`, there are three macros:
+
+
+
+```c
+#ifndef RTE_COMPONENTS_H
+#define RTE_COMPONENTS_H
+
+/*
+ * Define the Device Header File: 
+ */
+#define CMSIS_device_header "stdint.h"
+
+//#define RTE_Acceleration_Arm_2D_Extra_Benchmark
+//    #define RTE_Acceleration_Arm_2D_Extra_Benchmark_Generic
+//    #define RTE_Acceleration_Arm_2D_Extra_Benchmark_Watch_Panel
+
+...
+```
+
+
+
+If you want to run the **Generic** benchmark, please uncomment the macro `RTE_Acceleration_Arm_2D_Extra_Benchmark` and `RTE_Acceleration_Arm_2D_Extra_Benchmark_Generic`.
+
+If you want to run the **WatchPanel** benchmark, please uncomment the macro `RTE_Acceleration_Arm_2D_Extra_Benchmark` and `RTE_Acceleration_Arm_2D_Extra_Benchmark_Watch_Panel`.
+
+**NOTE**:
+
+1. You should NOT define macros `RTE_Acceleration_Arm_2D_Extra_Benchmark_Generic` and `RTE_Acceleration_Arm_2D_Extra_Benchmark_Watch_Panel` at the same time.
+
+2. You can find the configurations of benchmarks in `platform/arm_2d_cfg.h`.
+
+3. The corresonponding code to run the benchmark is the following (in `main.c`):
+
+   ```c
+   #ifdef RTE_Acceleration_Arm_2D_Extra_Benchmark
+   #   include "arm_2d_benchmark.h"
+   #endif
+   ...
+   
+   int app_2d_main_thread (void *argument)
+   {
+   #ifdef RTE_Acceleration_Arm_2D_Extra_Benchmark
+       arm_2d_run_benchmark();
+   #else
+       arm_2d_scene_player_register_before_switching_event_handler(
+               &DISP0_ADAPTER,
+               before_scene_switching_handler);
+       
+       arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
+                                               ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);
+       arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 3000);
+       
+       arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
+   #endif
+   
+       while(1) {
+           if (arm_fsm_rt_cpl == disp_adapter0_task()) {
+               VT_sdl_flush(1);
+           }
+       }
+   
+       return 0;
+   }
+   ```
+
+   As you can see, when we define the macro `RTE_Acceleration_Arm_2D_Extra_Benchmark`, the function `arm_2d_run_benchmark` (defined in `arm_2d_benchmark.h`) will be called. 

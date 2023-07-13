@@ -4,7 +4,7 @@
  *      *** Do not modify ! ***
  *
  * Project: 'template' 
- * Target:  'x86' 
+ * Target:  'PC' 
  */
 
 #ifndef RTE_COMPONENTS_H
@@ -17,6 +17,7 @@
 
 //#define RTE_Acceleration_Arm_2D_Extra_Benchmark
 //    #define RTE_Acceleration_Arm_2D_Extra_Benchmark_Generic
+//    #define RTE_Acceleration_Arm_2D_Extra_Benchmark_Watch_Panel
 
 /* ARM::Acceleration:Arm-2D Extras:Controls:1.4.3 */
 #define RTE_Acceleration_Arm_2D_Extra_Controls
