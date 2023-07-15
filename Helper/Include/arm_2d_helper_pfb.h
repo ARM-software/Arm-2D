@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        12. July 2023
- * $Revision:    V.1.5.5
+ * $Date:        15. July 2023
+ * $Revision:    V.1.5.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -466,7 +466,9 @@ ARM_PRIVATE(
             uint8_t                 bIsFlushRequested           : 1;
             uint8_t                 bIgnoreLowLevelFlush        : 1;
             uint8_t                 bHideNavigationLayer        : 1;
-            uint8_t                 bNoAdditionalDirtyRegionList;
+            uint8_t                 bIsDryRun                   : 1;    //!< A flag to indicate whether the first iteration was a dry run
+            uint8_t                 bNoAdditionalDirtyRegionList: 1;
+            uint8_t                                             : 2;
         };
         uint16_t                    hwFreePFBCount;
         arm_2d_pfb_t               *ptCurrent;

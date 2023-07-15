@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        12. July 2023
- * $Revision:    V.1.5.5
+ * $Date:        15. July 2023
+ * $Revision:    V.1.5.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -494,22 +494,24 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                                     arm_2d_helper_pfb_t *ptThis,
                                     arm_2d_region_list_item_t *ptDirtyRegions)
 { 
-//    arm_irq_safe {
-//        ARM_LIST_STACK_POP(this.Adapter.ptFreeList, this.Adapter.ptCurrent);
-//    }
-    this.Adapter.ptCurrent = NULL;
-    arm_irq_safe {
-        /* allocating pfb only when the number of free PFB blocks is larger than
-         * the reserved threashold
-         */
-        if (this.Adapter.hwFreePFBCount > this.tCFG.FrameBuffer.u4PoolReserve) {
-            this.Adapter.ptCurrent = __arm_2d_helper_pfb_new(ptThis);
+
+    if (this.Adapter.bIsDryRun) {
+        this.Adapter.bIsDryRun = false;
+    } else {
+        this.Adapter.ptCurrent = NULL;
+        arm_irq_safe {
+            /* allocating pfb only when the number of free PFB blocks is larger than
+            * the reserved threashold
+            */
+            if (this.Adapter.hwFreePFBCount > this.tCFG.FrameBuffer.u4PoolReserve) {
+                this.Adapter.ptCurrent = __arm_2d_helper_pfb_new(ptThis);
+            }
         }
-    }
-    
-    if (NULL == this.Adapter.ptCurrent) {
-        // no resource left
-        return NULL;
+        
+        if (NULL == this.Adapter.ptCurrent) {
+            // no resource left
+            return NULL;
+        }
     }
     arm_2d_tile_t *ptPartialFrameBuffer = &(this.Adapter.ptCurrent->tTile);
 
@@ -678,6 +680,17 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                                 &this.Adapter.tPFBTile, 
                                 false);
 
+    /* check whether we need a dry run */
+    if (this.Adapter.bFirstIteration && NULL != this.Adapter.ptDirtyRegion) {
+        this.Adapter.bIsDryRun = true;
+
+        /* modify the this.Adapter.tPFBTile to get a dry run: 
+         * ensure that there is no valid region between the parent and the 
+         * child tile.
+         */
+        this.Adapter.tPFBTile.tRegion.tLocation.iX
+            = ptPartialFrameBuffer->tRegion.tSize.iWidth;
+    }
 
     if (!this.tCFG.FrameBuffer.bDoNOTUpdateDefaultFrameBuffer) {
         // update default frame buffer
@@ -701,6 +714,11 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
 static 
 bool __arm_2d_helper_pfb_drawing_iteration_end(arm_2d_helper_pfb_t *ptThis)
 {
+    if (this.Adapter.bIsDryRun) {
+        this.Adapter.bFirstIteration = false;
+        return true;
+    }
+
     __arm_2d_helper_low_level_rendering(ptThis);
     
     arm_2d_tile_t *ptPartialFrameBuffer = &(this.Adapter.ptCurrent->tTile);
