@@ -369,11 +369,14 @@ IMPL_PFB_ON_DRAW(__arm_2d_number_list_draw_cover)
     
     number_list_t *ptThis = (number_list_t *)pTarget;
 
-    arm_2d_align_centre(ptTile->tRegion, c_tileListCoverMask.tRegion.tSize) {
-        arm_2d_fill_colour_with_mask(   ptTile, 
-                                        &__centre_region, 
-                                        &c_tileListCoverMask, 
-                                        (__arm_2d_color_t){GLCD_COLOR_BLACK});
+    arm_2d_canvas(ptTile, __canvas) {
+
+        arm_2d_align_centre(__canvas, c_tileListCoverMask.tRegion.tSize) {
+            arm_2d_fill_colour_with_mask(   ptTile, 
+                                            &__centre_region, 
+                                            &c_tileListCoverMask, 
+                                            (__arm_2d_color_t){GLCD_COLOR_BLACK});
+        }
     }
 
     arm_2d_op_wait_async(NULL);

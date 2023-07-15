@@ -84,15 +84,15 @@ IMPL_ON_DRAW_EVT(__arm_2d_number_list_draw_background)
     
     number_list_t *ptThis = (number_list_t *)pTarget;
 
-
-    if (!this.tNumListCFG.bIgnoreBackground) {
-        arm_2d_fill_colour_with_opacity(
-                            ptTile, 
-                            NULL, 
-                            (__arm_2d_color_t) {this.tNumListCFG.tBackgroundColour},
-                            this.tNumListCFG.chOpacity);
+    arm_2d_canvas(ptTile, __canvas) {
+        if (!this.tNumListCFG.bIgnoreBackground) {
+            arm_2d_fill_colour_with_opacity(
+                                ptTile, 
+                                &__canvas, 
+                                (__arm_2d_color_t) {this.tNumListCFG.tBackgroundColour},
+                                this.tNumListCFG.chOpacity);
+        }
     }
-    
     arm_2d_op_wait_async(NULL);
     
     return arm_fsm_rt_cpl;
@@ -143,21 +143,22 @@ arm_fsm_rt_t __arm_2d_number_list_draw_list_core_item(
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(ptParam);
 
-    arm_lcd_text_set_font(this.tNumListCFG.ptFont);
-
-    arm_lcd_text_set_colour(this.tNumListCFG.tFontColour, this.tNumListCFG.tBackgroundColour);
-    arm_lcd_text_set_display_mode(ARM_2D_DRW_PATN_MODE_COPY);
-    
-    arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-    
     arm_2d_canvas(ptTile, __top_container) {
+        arm_lcd_text_set_font(this.tNumListCFG.ptFont);
+
+        arm_lcd_text_set_colour(this.tNumListCFG.tFontColour, this.tNumListCFG.tBackgroundColour);
+        arm_lcd_text_set_display_mode(ARM_2D_DRW_PATN_MODE_COPY);
+        
+        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+    
         /* print numbers */
         __printf(ptThis,
                  &__top_container,
                  this.tNumListCFG.pchFormatString,
                  this.tNumListCFG.nStart + ptItem->hwID * this.tNumListCFG.iDelta);
+    
+        arm_lcd_text_set_target_framebuffer(NULL);
     }
-    arm_lcd_text_set_target_framebuffer(NULL);
     
     return arm_fsm_rt_cpl;
 }

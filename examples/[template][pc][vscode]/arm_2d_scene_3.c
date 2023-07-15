@@ -215,12 +215,12 @@ arm_fsm_rt_t __list_view_item_0_draw_item(
 
     uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
 
-    draw_round_corner_box(ptTile, NULL, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
-
-    arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_user_font_t.use_as__arm_2d_font_t.tCharSize;
-    tTextSize.iWidth *= 1;
-
     arm_2d_canvas(ptTile, __canvas) {
+        draw_round_corner_box(ptTile, &__canvas, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
+
+        arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_user_font_t.use_as__arm_2d_font_t.tCharSize;
+        tTextSize.iWidth *= 1;
+
         arm_lcd_text_set_target_framebuffer(ptTile);
         arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
         arm_lcd_text_set_opacity(chOpacity);
@@ -250,16 +250,16 @@ arm_fsm_rt_t __list_view_item_1_draw_item(
 
     uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
 
-    draw_round_corner_box(ptTile, NULL, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
-
-    progress_wheel_show(&ptScene->tWheel, 
-                        ptTile, 
-                        NULL, 
-                        ptScene->iProgress,   /* progress 0~1000 */
-                        chOpacity, 
-                        bIsNewFrame);
-
     arm_2d_canvas(ptTile, __canvas) {
+    draw_round_corner_box(ptTile, &__canvas, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
+
+        progress_wheel_show(&ptScene->tWheel, 
+                            ptTile, 
+                            &__canvas, 
+                            ptScene->iProgress,   /* progress 0~1000 */
+                            chOpacity, 
+                            bIsNewFrame);
+    
         arm_lcd_text_set_target_framebuffer(ptTile);
         arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
         arm_lcd_text_set_opacity(chOpacity);
@@ -286,9 +286,9 @@ arm_fsm_rt_t __list_view_item_2_draw_item(
     
     uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
 
-    draw_round_corner_box(ptTile, NULL, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
-
     arm_2d_canvas(ptTile, __canvas) {
+        draw_round_corner_box(ptTile, &__canvas, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
+    
         arm_lcd_text_set_target_framebuffer(ptTile);
         arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
         arm_lcd_text_set_opacity(chOpacity);
@@ -317,10 +317,10 @@ arm_fsm_rt_t __list_view_item_3_draw_item(
 
     uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
 
-    draw_round_corner_box(ptTile, NULL, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
-
-
     arm_2d_canvas(ptTile, __canvas) {
+
+        draw_round_corner_box(ptTile, &__canvas, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
+
         arm_lcd_text_set_target_framebuffer(ptTile);
         arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
         arm_lcd_text_set_opacity(chOpacity);
