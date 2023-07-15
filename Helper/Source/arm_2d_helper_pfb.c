@@ -1037,11 +1037,8 @@ void arm_2d_helper_transform_init(arm_2d_helper_transform_t *ptThis,
     this.tDirtyRegions[0].ptNext = &this.tDirtyRegions[1];
     this.tDirtyRegions[1].bIgnore = true;
 
-    /* append dirty regions to the dirty region list */
-    while(NULL != (*ppDirtyRegionList)) {
-        ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
-    }
-    
+    /* add dirty region items to the list */
+    this.tDirtyRegions[1].ptNext = (*ppDirtyRegionList);
     (*ppDirtyRegionList) = &this.tDirtyRegions[0];
 
 }
