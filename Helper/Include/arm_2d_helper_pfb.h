@@ -350,7 +350,8 @@ typedef struct arm_2d_pfb_t {
 typedef struct arm_2d_region_list_item_t {
     struct arm_2d_region_list_item_t *ptNext;   //!< the next node
     arm_2d_region_t tRegion;                    //!< the region
-    bool bIgnore;                               //!< ignore this region
+    uint8_t         bIgnore     : 1;            //!< ignore this region
+    uint8_t         bUpdated    : 1;            //!< this region item has been updated, PFB helper should refresh it again.
 }arm_2d_region_list_item_t;
 
 /*!

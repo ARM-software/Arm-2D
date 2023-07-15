@@ -184,7 +184,6 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
             int_fast16_t iWidth 
                 = this.tCFG.FrameBuffer.tFrameSize.iWidth & ~chPixelWidthAlignMask;
             
-
             if (0 == iWidth) {
                 int_fast16_t iWidthAlign = (chPixelWidthAlignMask + 1);
                 if (wTotalPixelCount < iWidthAlign) {
@@ -466,13 +465,18 @@ static bool __arm_2d_helper_pfb_get_next_dirty_region(arm_2d_helper_pfb_t *ptThi
         return __when_dirty_region_list_is_empty(ptThis);
     } 
     
-    this.Adapter.ptDirtyRegion = this.Adapter.ptDirtyRegion->ptNext;
-    
-    if (NULL == this.Adapter.ptDirtyRegion) {
-        // reach last item in a chain
-        return __when_dirty_region_list_is_empty(ptThis);
-    } else {
+    if (this.Adapter.ptDirtyRegion->bUpdated) {
+        /* refresh this dirty region item again */
         this.Adapter.bIsRegionChanged = true;
+    } else {
+        this.Adapter.ptDirtyRegion = this.Adapter.ptDirtyRegion->ptNext;
+        
+        if (NULL == this.Adapter.ptDirtyRegion) {
+            // reach last item in a chain
+            return __when_dirty_region_list_is_empty(ptThis);
+        } else {
+            this.Adapter.bIsRegionChanged = true;
+        }
     }
     
     return true;
@@ -498,8 +502,16 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
         /* 
          * NOTE: If this is a dry run, no need to allocate PFB again.
          */
-
+        
         this.Adapter.bIsDryRun = false;
+        /* refresh the first dirty region as people might update dirty region list 
+         * in the dry run
+         */
+        if (NULL == this.Adapter.ptDirtyRegion) {
+            this.Adapter.bIsRegionChanged = true;   
+        } else if (this.Adapter.ptDirtyRegion->bUpdated) {
+            this.Adapter.bIsRegionChanged = true;
+        }
     } else {
         this.Adapter.ptCurrent = NULL;
         arm_irq_safe {
@@ -536,10 +548,17 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
 
     do {
         if (this.Adapter.bIsRegionChanged) {
-        
             this.Adapter.bIsRegionChanged = false;
 
-            if (NULL != this.Adapter.ptDirtyRegion) { 
+            if (NULL != this.Adapter.ptDirtyRegion) {
+
+                if (this.Adapter.ptDirtyRegion->bUpdated) {
+                    /* clear the region updated flag
+                     * NOTE: Please never set bUpdate of a const dirty region
+                     *       item to true
+                     */
+                    this.Adapter.ptDirtyRegion->bUpdated = false;
+                }
                 // calculate the valid region
                 if (    (this.Adapter.ptDirtyRegion->bIgnore)
                     ||  (!arm_2d_region_intersect(
