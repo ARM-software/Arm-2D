@@ -494,8 +494,11 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                                     arm_2d_helper_pfb_t *ptThis,
                                     arm_2d_region_list_item_t *ptDirtyRegions)
 { 
-
     if (this.Adapter.bIsDryRun) {
+        /* 
+         * NOTE: If this is a dry run, no need to allocate PFB again.
+         */
+
         this.Adapter.bIsDryRun = false;
     } else {
         this.Adapter.ptCurrent = NULL;
@@ -684,9 +687,14 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
     if (this.Adapter.bFirstIteration && NULL != this.Adapter.ptDirtyRegion) {
         this.Adapter.bIsDryRun = true;
 
-        /* modify the this.Adapter.tPFBTile to get a dry run: 
-         * ensure that there is no valid region between the parent and the 
-         * child tile.
+        /* if the dirty region list isn't empty, to support the services that
+         * need a dry run to update dirty region (e.g. dynamic dirty regions
+         * and transform helper etc), we will do a dry run for the first 
+         * iteration. 
+         * 
+         * To achieve that, we need to modify the this.Adapter.tPFBTile to  
+         * ensure that there is no valid region between the root tile and
+         * the child tile, i.e draw nothing. 
          */
         this.Adapter.tPFBTile.tRegion.tLocation.iX
             = ptPartialFrameBuffer->tRegion.tSize.iWidth;
@@ -696,9 +704,6 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
         // update default frame buffer
         arm_2d_set_default_frame_buffer(&this.Adapter.tPFBTile);
     }
-    
-    // uncomment this when necessary for debug purpose
-    //arm_2d_rgb16_fill_colour(&this.Adapter.tPFBTile, NULL, 0);
 
     return (arm_2d_tile_t *)&(this.Adapter.tPFBTile);
 }
@@ -715,6 +720,10 @@ static
 bool __arm_2d_helper_pfb_drawing_iteration_end(arm_2d_helper_pfb_t *ptThis)
 {
     if (this.Adapter.bIsDryRun) {
+        /* NOTE: if this is a dry run, we don't have to invoke low level rendering
+         *       process.
+         */
+
         this.Adapter.bFirstIteration = false;
         return true;
     }
