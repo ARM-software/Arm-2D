@@ -453,8 +453,7 @@ The so-called Partial Frame Buffer is a special use of the Tile Child scheme. It
 
 ![How Partial Frame Buffer Works](./pictures/Introduction2_3b.png) 
 
-More details are shown in a dedicated example project located in `examples/benchmark` directory.
-
+The partial frame buffer feature has been integrated into the display adapter service. 
 
 
 ### 2.4 Colour
