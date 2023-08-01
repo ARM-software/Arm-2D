@@ -501,7 +501,7 @@ Table of Contents &lt;!-- omit from toc --&gt;</h2>
 <p >The so-called Partial Frame Buffer is a special use of the Tile Child scheme. It establishes a root Tile for a tiny rectangular display buffer and derives a Child Tile having the same size as the actual screen. In practice, the GUI software in the upper layer uses the Child Tile (with the full-screen size) to draw graphics and blend visual layers. After completing a frame, the PFB that actually saves the pixel information is sent to the LCD driver for a flush. Since FPB only covers a small area, the drawing process aforementioned, in most cases, will be judged as "no need for actual drawing" and skipped. To display the entire screen, we need to repeat this process continuously and adjust the relative Location between FPB and the Child Tile at the beginning of each iteration. For us, it looks like moving FPB line by line on the screen as shown in <b>Figure 2-4</b>.</p>
 <p ><b>Figure 2-4 How Partial Frame Buffer Works</b></p>
 <p ><img src="Introduction2_3b.png" alt="" class="inline" title="How Partial Frame Buffer Works"/></p>
-<p >More details are shown in a dedicated example project located in <code>examples/benchmark</code> directory.</p>
+<p >The partial frame buffer feature has been integrated into the display adapter service.</p>
 <h2><a class="anchor" id="autotoc_md81"></a>
 2.4 Colour</h2>
 <p >Arm-2D has reserved sufficient space for supporting more colour formats. A data structure has been introduced to describe a colour format used in a given tile. The C definition is shown below:</p>
