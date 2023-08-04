@@ -283,7 +283,6 @@ var group__gKernel =
     [ "__OVERRIDE_WEAK", "group__gKernel.html#gaf675320d8afdd3d72e951d1a5eb9fcd1", null ],
     [ "ARM_2D_SAFE_NAME", "group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23", null ],
     [ "arm_2d_safe_name", "group__gKernel.html#ga70a93027501cdb8935d5cd3220cb4e4f", null ],
-    [ "arm_irq_safe", "group__gKernel.html#gaee644f33c5b07d65d292017b21fb3f39", null ],
     [ "__ARM_2D_WRAP_FUNC", "group__gKernel.html#gaeaf81c5ab6173e64f16ae66daa78d915", null ],
     [ "__ARM_2D_ORIG_FUNC", "group__gKernel.html#ga7bb0b6e564d88a5d028d793a6ab31ffc", null ],
     [ "ARM_2D_WRAP_FUNC", "group__gKernel.html#gae2b9b1672ea8c86b1bf00cd50a2b5fc8", null ],

@@ -469,10 +469,8 @@ Macros</h2></td></tr>
 <tr class="memitem:ga70a93027501cdb8935d5cd3220cb4e4f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga70a93027501cdb8935d5cd3220cb4e4f">arm_2d_safe_name</a>(...)&#160;&#160;&#160;<a class="el" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23">ARM_2D_SAFE_NAME</a>(__VA_ARGS__)</td></tr>
 <tr class="memdesc:ga70a93027501cdb8935d5cd3220cb4e4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A macro to generate a safe name, usually used in macro template as the name of local variables.  <a href="group__gKernel.html#ga70a93027501cdb8935d5cd3220cb4e4f">More...</a><br /></td></tr>
 <tr class="separator:ga70a93027501cdb8935d5cd3220cb4e4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaee644f33c5b07d65d292017b21fb3f39"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gaee644f33c5b07d65d292017b21fb3f39">arm_irq_safe</a></td></tr>
-<tr class="memdesc:gaee644f33c5b07d65d292017b21fb3f39"><td class="mdescLeft">&#160;</td><td class="mdescRight">a decoration to make the immediate following code irq-safe  <a href="group__gKernel.html#gaee644f33c5b07d65d292017b21fb3f39">More...</a><br /></td></tr>
-<tr class="separator:gaee644f33c5b07d65d292017b21fb3f39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaeaf81c5ab6173e64f16ae66daa78d915"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gaeaf81c5ab6173e64f16ae66daa78d915">__ARM_2D_WRAP_FUNC</a>(x)&#160;&#160;&#160;__wrap_ ## x</td></tr>
+<tr class="memdesc:gaeaf81c5ab6173e64f16ae66daa78d915"><td class="mdescLeft">&#160;</td><td class="mdescRight">a decoration to make the immediate following code irq-safe  <a href="group__gKernel.html#gaeaf81c5ab6173e64f16ae66daa78d915">More...</a><br /></td></tr>
 <tr class="separator:gaeaf81c5ab6173e64f16ae66daa78d915"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7bb0b6e564d88a5d028d793a6ab31ffc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga7bb0b6e564d88a5d028d793a6ab31ffc">__ARM_2D_ORIG_FUNC</a>(x)&#160;&#160;&#160;__real_ ## x</td></tr>
 <tr class="separator:ga7bb0b6e564d88a5d028d793a6ab31ffc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -5741,32 +5739,6 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
 
 </div>
 </div>
-<a id="gaee644f33c5b07d65d292017b21fb3f39" name="gaee644f33c5b07d65d292017b21fb3f39"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaee644f33c5b07d65d292017b21fb3f39">&#9670;&nbsp;</a></span>arm_irq_safe</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define arm_irq_safe</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(  uint32_t <a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(temp) =                       \</div>
-<div class="line">                        ({uint32_t temp=__get_PRIMASK();__disable_irq();temp;}),\</div>
-<div class="line">                        __set_PRIMASK(<a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(temp)))</div>
-</div><!-- fragment -->
-<p>a decoration to make the immediate following code irq-safe </p>
-<div class="fragment"><div class="line"><a class="code hl_define" href="group__gKernel.html#gaee644f33c5b07d65d292017b21fb3f39" title="a decoration to make the immediate following code irq-safe">arm_irq_safe</a> {</div>
-<div class="line">    <span class="comment">// code inside the brackets are IRQ safe</span></div>
-<div class="line">    ...</div>
-<div class="line">}</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// the printf is IRQ safe</span></div>
-<div class="line"><a class="code hl_define" href="group__gKernel.html#gaee644f33c5b07d65d292017b21fb3f39" title="a decoration to make the immediate following code irq-safe">arm_irq_safe</a> printf(<span class="stringliteral">&quot;IRQ safe printf\n&quot;</span>);</div>
-</div><!-- fragment --> 
-</div>
-</div>
 <a id="gaeaf81c5ab6173e64f16ae66daa78d915" name="gaeaf81c5ab6173e64f16ae66daa78d915"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaeaf81c5ab6173e64f16ae66daa78d915">&#9670;&nbsp;</a></span>__ARM_2D_WRAP_FUNC</h2>
 
@@ -5782,7 +5754,16 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>do NOT use this macro directly </dd></dl>
+
+<p>a decoration to make the immediate following code irq-safe </p>
+<div class="fragment"><div class="line">arm_irq_safe {</div>
+<div class="line">    <span class="comment">// code inside the brackets are IRQ safe</span></div>
+<div class="line">    ...</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// the printf is IRQ safe</span></div>
+<div class="line">arm_irq_safe printf(<span class="stringliteral">&quot;IRQ safe printf\n&quot;</span>);</div>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>do NOT use this macro directly </dd></dl>
 
 </div>
 </div>
