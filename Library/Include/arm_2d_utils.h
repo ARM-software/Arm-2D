@@ -54,7 +54,47 @@
 
 /*! \note arm-2d relies on CMSIS 5.8.0 and above.
  */
+#ifndef HOST
 #include "cmsis_compiler.h"
+#elif defined (_MSC_VER ) 
+#include <stdint.h>
+#define __STATIC_FORCEINLINE static __forceinline
+#define __STATIC_INLINE static __inline
+#define __ALIGNED(x) __declspec(align(x))
+#define __WEAK
+#elif defined ( __APPLE_CC__ )
+#include <stdint.h>
+#define  __ALIGNED(x) __attribute__((aligned(x)))
+#define __STATIC_FORCEINLINE static inline __attribute__((always_inline)) 
+#define __STATIC_INLINE static inline
+#define __WEAK
+#else
+#include <stdint.h>
+#define  __ALIGNED(x) __attribute__((aligned(x)))
+#define __STATIC_FORCEINLINE static inline __attribute__((always_inline)) 
+#define __STATIC_INLINE static inline
+#define __WEAK
+#endif
+
+#ifdef HOST 
+/**
+  \brief   Reverse byte order (16 bit)
+  \details Reverses the byte order within each halfword of a word. For example, 0x12345678 becomes 0x34127856.
+  \param [in]    value  Value to reverse
+  \return               Reversed value
+ */
+__STATIC_FORCEINLINE uint32_t __REV16(uint32_t value)
+{
+    uint16_t a,b;
+    uint32_t ret;
+    a=value&0xFFFF;
+    b=(value>>16)&0xFFFF;
+    ret=a;
+    ret=(ret<<16)&0xFFFF;
+    ret+=b;
+    return ret;
+}
+#endif
 
 #ifdef   __cplusplus
 extern "C" {
@@ -678,11 +718,15 @@ extern "C" {
 
    \endcode
  */
+#ifdef HOST
+#define arm_irq_safe                                                            \
+            arm_using(  uint32_t ARM_2D_SAFE_NAME(temp) = 0)
+#else
 #define arm_irq_safe                                                            \
             arm_using(  uint32_t ARM_2D_SAFE_NAME(temp) =                       \
                         ({uint32_t temp=__get_PRIMASK();__disable_irq();temp;}),\
                         __set_PRIMASK(ARM_2D_SAFE_NAME(temp)))
-
+#endif
 
 #undef ARM_2D_WRAP_FUNC
 #undef __ARM_2D_WRAP_FUNC
