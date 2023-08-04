@@ -51,7 +51,7 @@ extern "C" {
  * @{
  */
 
-#ifndef ___ARM_2D_CFG_HEADER___
+#ifndef ___ARM_2D_CFG_SKIP_HEADER___
 #   ifndef ___ARM_2D_CFG_HEADER___
 #       include "arm_2d_cfg.h"
 #   else

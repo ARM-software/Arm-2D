@@ -2,13 +2,9 @@ cmake_minimum_required(VERSION 3.14)
 project(ARM2D)
 
 option(ARM2D_HOST "Build for host" OFF)
-option(ARM2D_HELIUM "Build with Helium support" OFF)
-option(ARM2D_ALPHA_BLENDING "Build with alpha blending support" OFF)
-option(ARM2D_TRANSFORM "Build with transform support" OFF)
 option(ARM2D_HELPER "Build with helper support" OFF)
 option(ARM2D_CMSIS_RTOS2 "Build with CMSIS-RTOS2 helper support" OFF)
 option(ARM2D_RT_THREAD "Build with RT-Thread helper support" OFF)
-option(ARM2D_CUSTOM_RTOS "Build with custom RTOS helper support" OFF)
 option(ARM2D_LCD_PRINTF "Build with LCD printf support" OFF)
 option(ARM2D_CONTROLS "Build with controls" OFF)
 option(ARM2D_BENCHMARK_GENERIC "Build with generic benchmark support" OFF)
@@ -33,6 +29,12 @@ else()
 
 endif()
 
+
+target_compile_options(ARM2D PUBLIC
+                       -DRTE_Acceleration_Arm_2D
+                       -DRTE_Acceleration_Arm_2D_Alpha_Blending
+                       -DRTE_Acceleration_Arm_2D_Transform
+                       )
 target_compile_options(ARM2D PRIVATE -Wno-format
         -Wno-unused-function)
 
@@ -40,23 +42,16 @@ if (CMAKE_C_COMPILER_ID STREQUAL "GNU")
     target_compile_options(ARM2D PRIVATE -Wno-maybe-uninitialized)
 endif()
         
-target_sources(ARM2D PRIVATE Library/Source/arm_2d.c
+target_sources(ARM2D PRIVATE 
+    Library/Source/arm_2d.c
 	Library/Source/arm_2d_async.c
 	Library/Source/arm_2d_draw.c
-	Library/Source/arm_2d_conversion.c)
+	Library/Source/arm_2d_conversion.c
+    Library/Source/arm_2d_helium.c
+    Library/Source/arm_2d_alpha_blending.c
+    Library/Source/arm_2d_transform.c
+    )
 
-if (ARM2D_HELIUM)
-	target_sources(ARM2D PRIVATE Library/Source/arm_2d_helium.c)
-endif()
-
-if (ARM2D_ALPHA_BLENDING)
-	target_sources(ARM2D PRIVATE Library/Source/arm_2d_alpha_blending.c)
-endif()
-
-if (ARM2D_TRANSFORM)
-	# Require CMSIS-DSP
-	target_sources(ARM2D PRIVATE Library/Source/arm_2d_transform.c)
-endif()
 
 if (ARM2D_HELPER)
 	target_include_directories(ARM2D PUBLIC Helper/Include/)
@@ -67,18 +62,23 @@ if (ARM2D_HELPER)
             Helper/Source/arm_2d_helper_scene.c
             Helper/Source/arm_2d_helper_list.c
             )
+    target_compile_options(ARM2D PUBLIC
+            -DRTE_Acceleration_Arm_2D_Helper_PFB
+            )
 endif()
 
 if (ARM2D_CMSIS_RTOS2)
 	target_sources(ARM2D PRIVATE Helper/Source/template/arm_2d_helper_rtos_cmsis_rtos2.c)
+    target_compile_options(ARM2D PUBLIC
+        -DRTE_Acceleration_Arm_2D_Helper_RTOS_CMSIS_RTOS2
+        )
 endif()
 
 if (ARM2D_RT_THREAD)
 	target_sources(ARM2D PRIVATE Helper/Source/template/arm_2d_helper_rtos_rt_thread.c)
-endif()
-
-if (ARM2D_CUSTOM_RTOS)
-	target_sources(ARM2D PRIVATE Helper/Source/template/arm_2d_helper_rtos_user.c)
+    target_compile_options(ARM2D PUBLIC
+        -DRTE_Acceleration_Arm_2D_Helper_RTOS_RT_Thread
+        )
 endif()
 
 if (ARM2D_LCD_PRINTF)
@@ -86,6 +86,9 @@ if (ARM2D_LCD_PRINTF)
 
 	target_sources(ARM2D PRIVATE examples/common/controls/lcd_printf.c
             examples/common/controls/GLCD_Fonts.c)
+    target_compile_options(ARM2D PUBLIC
+            -DRTE_Acceleration_Arm_2D_Extra_LCD_printf__
+            )
 endif()
 
 if (ARM2D_CONTROLS)
@@ -133,6 +136,9 @@ if (ARM2D_CONTROLS)
             examples/common/asset/helium.c
             examples/common/asset/background.c
           )
+    target_compile_options(ARM2D PUBLIC
+          -DRTE_Acceleration_Arm_2D_Extra_Controls
+          )
 endif()
 
 if (ARM2D_BENCHMARK_GENERIC)
@@ -141,6 +147,10 @@ if (ARM2D_BENCHMARK_GENERIC)
             examples/common/benchmark/arm_2d_scene_benchmark_generic.c
 			examples/common/benchmark/arm_2d_scene_benchmark_generic_cover.c
           )
+    target_compile_options(ARM2D PUBLIC
+          -DRTE_Acceleration_Arm_2D_Extra_Benchmark
+          -DRTE_Acceleration_Arm_2D_Extra_Benchmark_Generic
+          )
 endif()
 
 if (ARM2D_BENCHMARK_WATCHPANEL)
@@ -148,6 +158,10 @@ if (ARM2D_BENCHMARK_WATCHPANEL)
 	target_sources(ARM2D PRIVATE examples/common/benchmark/benchmark_watch_panel.c
             examples/common/benchmark/arm_2d_scene_benchmark_watch_panel.c
 			examples/common/benchmark/arm_2d_scene_benchmark_watch_panel_cover.c
+          )
+    target_compile_options(ARM2D PUBLIC
+          -DRTE_Acceleration_Arm_2D_Extra_Benchmark
+          -DRTE_Acceleration_Arm_2D_Extra_Benchmark_Watch_Panel
           )
 endif()
 
