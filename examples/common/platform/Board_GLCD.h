@@ -37,6 +37,11 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+
+
+#ifdef   __cplusplus
+extern "C" {
+#endif
 //#include "arm_2d/#include "arm_2d.h""
 
 /* Font definitions */
@@ -247,4 +252,9 @@ int32_t GLCD_Draw_Vertical_Bargraph (   arm_2d_region_t *ptRegion,
                                         const color_spectrum_t *ptSpectrum,
                                         uint_fast16_t hwVisibleHeight);
 */
+
+#ifdef   __cplusplus
+}
+#endif
+
 #endif /* __BOARD_GLCD_H */

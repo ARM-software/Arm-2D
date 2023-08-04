@@ -56,6 +56,10 @@
 #   pragma GCC diagnostic ignored "-Wpedantic"
 #endif
 
+#ifdef   __cplusplus
+extern "C" {
+#endif
+
 /*============================ MACROS ========================================*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> -----------------
@@ -230,8 +234,11 @@ int main (void)
     }
 }
 
-#if defined(__clang__)
-#   pragma clang diagnostic pop
+#ifdef   __cplusplus
+}
 #endif
 
 
+#if defined(__clang__)
+#   pragma clang diagnostic pop
+#endif
