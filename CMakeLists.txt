@@ -22,11 +22,24 @@ if (ARM2D_HOST)
 
     target_compile_options(ARM2D PUBLIC 
     -DARM_SECTION\(x\)= 
-    -D__va_list=va_list)
+    -D__va_list=va_list
+    -fms-extensions)
+
+   target_compile_options(ARM2D PRIVATE -Wno-macro-redefined)
 else() 
     target_include_directories(ARM2D PUBLIC ${CMSISCORE}/Include)
+    target_compile_options(ARM2D PRIVATE -Wno-nonnull-compare -Wno-unused-value)
+    target_compile_options(ARM2D PUBLIC -fms-extensions)
+
 endif()
 
+target_compile_options(ARM2D PRIVATE -Wno-format
+        -Wno-unused-function)
+
+if (CMAKE_C_COMPILER_ID STREQUAL "GNU")
+    target_compile_options(ARM2D PRIVATE -Wno-maybe-uninitialized)
+endif()
+        
 target_sources(ARM2D PRIVATE Library/Source/arm_2d.c
 	Library/Source/arm_2d_async.c
 	Library/Source/arm_2d_draw.c
