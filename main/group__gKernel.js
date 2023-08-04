@@ -222,6 +222,7 @@ var group__gKernel =
       [ "ptOriginSide", "group__gKernel.html#a9f82291558b0618554a69191e259b352", null ],
       [ "ptTargetSide", "group__gKernel.html#a8bad2a9f967b1ca4f848ef67c7f41add", null ]
     ] ],
+    [ "__ALIGNED", "group__gKernel.html#gaa65ef8f7a5e8b7a6ea6c1d48b4c78e55", null ],
     [ "__implement_ex", "group__gKernel.html#ga77671429a789a7f89280c090dcf70bf9", null ],
     [ "__inherit_ex", "group__gKernel.html#gaf54863e6804f35f453be141558109325", null ],
     [ "__implement", "group__gKernel.html#gaea7c45a1482899cfc2596d08eb2770a0", null ],
@@ -415,6 +416,7 @@ var group__gKernel =
       [ "ARM_2D_PREF_ACC_HW_ONLY", "group__gKernel.html#gga99fb83031ce9923c84392b4e92f956b5a47f8a479896c1e420ba51b499509e315", null ],
       [ "ARM_2D_PREF_ACC_SW_ONLY", "group__gKernel.html#gga99fb83031ce9923c84392b4e92f956b5a7073e7b41d758c515548cb3d9a97076b", null ]
     ] ],
+    [ "__REV16", "group__gKernel.html#gaa12aedd096506c9639c1581acd5c6a78", null ],
     [ "arm_2d_init", "group__gKernel.html#gae417897e7d7186b294c0ff3468102276", null ],
     [ "arm_2d_set_default_frame_buffer", "group__gKernel.html#ga42407a7eebceade2349b1309bdf78b48", null ],
     [ "arm_2d_get_default_frame_buffer", "group__gKernel.html#gaa0f5857c97450feeb79b3983dd1a950b", null ],
