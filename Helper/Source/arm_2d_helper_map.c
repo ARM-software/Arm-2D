@@ -87,12 +87,18 @@ arm_2d_helper_map_t *__arm_2d_helper_map_init(  arm_2d_helper_map_t *ptThis,
 
     this.tCFG = *ptCFG;
     do {
+        /* validate cell buffer */
         uint32_t wSize = (this.tCFG.VisibleWindow.tGrid.hwColumn + 1) 
                        * (this.tCFG.VisibleWindow.tGrid.hwRow + 1);
         if (this.tCFG.wCellCount < wSize) {
             /* insufficient cells */
             break;
         }
+        /* clean cell */
+        memset( ptCFG->ptCells,
+                0, 
+                sizeof(arm_2d_helper_map_cell_t) * this.tCFG.wCellCount);
+
 
 
         return ptThis;
