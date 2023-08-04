@@ -52,6 +52,24 @@
 #   include __ARM_2D_HAS_USER_HEADER__
 #endif
 
+
+
+#undef __IS_SUPPORTED_ARM_ARCH__
+#if defined(__ARM_ARCH) && __ARM_ARCH && !defined(__APPLE__)
+#   define __IS_SUPPORTED_ARM_ARCH__        1
+#else
+#   define __IS_SUPPORTED_ARM_ARCH__        0
+#endif
+
+/*! \note arm-2d relies on CMSIS 5.8.0 and above.
+ */
+#if __IS_SUPPORTED_ARM_ARCH__
+#   include "cmsis_compiler.h"
+#else
+#   include "arm_2d_user_arch_port.h"
+#endif
+
+
 #ifdef   __cplusplus
 extern "C" {
 #endif
@@ -68,12 +86,6 @@ extern "C" {
  * Environment Detection                                                      *
  *----------------------------------------------------------------------------*/
 
-#undef __IS_SUPPORTED_ARM_ARCH__
-#if defined(__ARM_ARCH) && __ARM_ARCH && !defined(__APPLE__)
-#   define __IS_SUPPORTED_ARM_ARCH__        1
-#else
-#   define __IS_SUPPORTED_ARM_ARCH__        0
-#endif
 
 /* The macros to identify compilers */
 
@@ -117,31 +129,6 @@ extern "C" {
 #       define __IS_COMPILER_GCC__              1
 #   endif
 
-#endif
-
-
-/*! \note arm-2d relies on CMSIS 5.8.0 and above.
- */
-#if __IS_SUPPORTED_ARM_ARCH__
-#include "cmsis_compiler.h"
-#elif defined (_MSC_VER) 
-#include <stdint.h>
-#define __STATIC_FORCEINLINE static __forceinline
-#define __STATIC_INLINE static __inline
-#define __ALIGNED(x) __declspec(align(x))
-#define __WEAK
-#elif defined ( __APPLE_CC__ )
-#include <stdint.h>
-#define  __ALIGNED(x) __attribute__((aligned(x)))
-#define __STATIC_FORCEINLINE static inline __attribute__((always_inline)) 
-#define __STATIC_INLINE static inline
-#define __WEAK
-#else
-#include <stdint.h>
-#define  __ALIGNED(x) __attribute__((aligned(x)))
-#define __STATIC_FORCEINLINE static inline __attribute__((always_inline)) 
-#define __STATIC_INLINE static inline
-#define __WEAK
 #endif
 
 /*----------------------------------------------------------------------------*
@@ -688,8 +675,6 @@ extern "C" {
  */
 #define arm_2d_safe_name(...)    ARM_2D_SAFE_NAME(__VA_ARGS__)
 
-#undef arm_irq_safe
-
 /*!
  * \brief a decoration to make the immediate following code irq-safe
  * 
@@ -704,11 +689,9 @@ extern "C" {
 
    \endcode
  */
-#ifdef __IS_SUPPORTED_ARM_ARCH__
-#define arm_irq_safe                                                            \
-            arm_using(  uint32_t ARM_2D_SAFE_NAME(temp) = 0)
-#else
-#define arm_irq_safe                                                            \
+#if __IS_SUPPORTED_ARM_ARCH__
+#   undef arm_irq_safe
+#   define arm_irq_safe                                                         \
             arm_using(  uint32_t ARM_2D_SAFE_NAME(temp) =                       \
                         ({uint32_t temp=__get_PRIMASK();__disable_irq();temp;}),\
                         __set_PRIMASK(ARM_2D_SAFE_NAME(temp)))
@@ -1009,28 +992,6 @@ struct __arm_slist_node_t {
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
-
-#ifdef __IS_SUPPORTED_ARM_ARCH__ 
-/**
-  \brief   Reverse byte order (16 bit)
-  \details Reverses the byte order within each halfword of a word. For example, 0x12345678 becomes 0x34127856.
-  \param [in]    value  Value to reverse
-  \return               Reversed value
- */
-__STATIC_FORCEINLINE uint32_t __REV16(uint32_t value)
-{
-    uint16_t a,b;
-    uint32_t ret;
-    a=value&0xFFFF;
-    b=(value>>16)&0xFFFF;
-    ret=a;
-    ret=(ret<<16)&0xFFFF;
-    ret+=b;
-    return ret;
-}
-#endif
-
-
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #elif __IS_COMPILER_ARM_COMPILER_5__
@@ -1041,6 +1002,7 @@ __STATIC_FORCEINLINE uint32_t __REV16(uint32_t value)
 #ifdef   __cplusplus
 }
 #endif
+
 
 #endif  /* end of __ARM_2D_UTILS_H__ */
 
