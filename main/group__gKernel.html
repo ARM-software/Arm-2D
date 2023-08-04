@@ -308,20 +308,6 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gaf13eaed48dc922f8799b628d6f90bb1f"><td class="memItemLeft" align="right" valign="top"><a id="gaf13eaed48dc922f8799b628d6f90bb1f" name="gaf13eaed48dc922f8799b628d6f90bb1f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>__IS_SUPPORTED_ARM_ARCH__</b>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:gaf13eaed48dc922f8799b628d6f90bb1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa65ef8f7a5e8b7a6ea6c1d48b4c78e55"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gaa65ef8f7a5e8b7a6ea6c1d48b4c78e55">__ALIGNED</a>(x)&#160;&#160;&#160;__attribute__((aligned(x)))</td></tr>
-<tr class="separator:gaa65ef8f7a5e8b7a6ea6c1d48b4c78e55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab904513442afdf77d4f8c74f23cbb040"><td class="memItemLeft" align="right" valign="top"><a id="gab904513442afdf77d4f8c74f23cbb040" name="gab904513442afdf77d4f8c74f23cbb040"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>__STATIC_FORCEINLINE</b>&#160;&#160;&#160;static inline __attribute__((always_inline))</td></tr>
-<tr class="separator:gab904513442afdf77d4f8c74f23cbb040"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaba87361bfad2ae52cfe2f40c1a1dbf9c"><td class="memItemLeft" align="right" valign="top"><a id="gaba87361bfad2ae52cfe2f40c1a1dbf9c" name="gaba87361bfad2ae52cfe2f40c1a1dbf9c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>__STATIC_INLINE</b>&#160;&#160;&#160;static inline</td></tr>
-<tr class="separator:gaba87361bfad2ae52cfe2f40c1a1dbf9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac607bf387b29162be6a9b77fc7999539"><td class="memItemLeft" align="right" valign="top"><a id="gac607bf387b29162be6a9b77fc7999539" name="gac607bf387b29162be6a9b77fc7999539"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>__WEAK</b></td></tr>
-<tr class="separator:gac607bf387b29162be6a9b77fc7999539"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga77671429a789a7f89280c090dcf70bf9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga77671429a789a7f89280c090dcf70bf9">__implement_ex</a>(__type,  __name)</td></tr>
 <tr class="separator:ga77671429a789a7f89280c090dcf70bf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf54863e6804f35f453be141558109325"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gaf54863e6804f35f453be141558109325">__inherit_ex</a>(__type,  __name)&#160;&#160;&#160;__type  __name</td></tr>
@@ -483,10 +469,8 @@ Macros</h2></td></tr>
 <tr class="memitem:ga70a93027501cdb8935d5cd3220cb4e4f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga70a93027501cdb8935d5cd3220cb4e4f">arm_2d_safe_name</a>(...)&#160;&#160;&#160;<a class="el" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23">ARM_2D_SAFE_NAME</a>(__VA_ARGS__)</td></tr>
 <tr class="memdesc:ga70a93027501cdb8935d5cd3220cb4e4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A macro to generate a safe name, usually used in macro template as the name of local variables.  <a href="group__gKernel.html#ga70a93027501cdb8935d5cd3220cb4e4f">More...</a><br /></td></tr>
 <tr class="separator:ga70a93027501cdb8935d5cd3220cb4e4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaee644f33c5b07d65d292017b21fb3f39"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gaee644f33c5b07d65d292017b21fb3f39">arm_irq_safe</a>&#160;&#160;&#160;            <a class="el" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891">arm_using</a>(  uint32_t <a class="el" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23">ARM_2D_SAFE_NAME</a>(temp) = 0)</td></tr>
-<tr class="memdesc:gaee644f33c5b07d65d292017b21fb3f39"><td class="mdescLeft">&#160;</td><td class="mdescRight">a decoration to make the immediate following code irq-safe  <a href="group__gKernel.html#gaee644f33c5b07d65d292017b21fb3f39">More...</a><br /></td></tr>
-<tr class="separator:gaee644f33c5b07d65d292017b21fb3f39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaeaf81c5ab6173e64f16ae66daa78d915"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gaeaf81c5ab6173e64f16ae66daa78d915">__ARM_2D_WRAP_FUNC</a>(x)&#160;&#160;&#160;__wrap_ ## x</td></tr>
+<tr class="memdesc:gaeaf81c5ab6173e64f16ae66daa78d915"><td class="mdescLeft">&#160;</td><td class="mdescRight">a decoration to make the immediate following code irq-safe  <a href="group__gKernel.html#gaeaf81c5ab6173e64f16ae66daa78d915">More...</a><br /></td></tr>
 <tr class="separator:gaeaf81c5ab6173e64f16ae66daa78d915"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7bb0b6e564d88a5d028d793a6ab31ffc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga7bb0b6e564d88a5d028d793a6ab31ffc">__ARM_2D_ORIG_FUNC</a>(x)&#160;&#160;&#160;__real_ ## x</td></tr>
 <tr class="separator:ga7bb0b6e564d88a5d028d793a6ab31ffc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -944,9 +928,6 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaa12aedd096506c9639c1581acd5c6a78"><td class="memItemLeft" align="right" valign="top">__STATIC_FORCEINLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gaa12aedd096506c9639c1581acd5c6a78">__REV16</a> (uint32_t value)</td></tr>
-<tr class="memdesc:gaa12aedd096506c9639c1581acd5c6a78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverse byte order (16 bit)  <a href="group__gKernel.html#gaa12aedd096506c9639c1581acd5c6a78">More...</a><br /></td></tr>
-<tr class="separator:gaa12aedd096506c9639c1581acd5c6a78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae417897e7d7186b294c0ff3468102276"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gae417897e7d7186b294c0ff3468102276">arm_2d_init</a> (void)</td></tr>
 <tr class="memdesc:gae417897e7d7186b294c0ff3468102276"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialise arm-2d  <a href="group__gKernel.html#gae417897e7d7186b294c0ff3468102276">More...</a><br /></td></tr>
 <tr class="separator:gae417897e7d7186b294c0ff3468102276"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -991,6 +972,7 @@ Variables</h2></td></tr>
 <tr class="separator:ga3cef1eb288e3529dab7e441cc769e1e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+<dl class="section note"><dt>Note</dt><dd>arm-2d relies on CMSIS 5.8.0 and above. </dd></dl>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="struct____arm__slist__node__t" id="struct____arm__slist__node__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#struct____arm__slist__node__t">&#9670;&nbsp;</a></span>__arm_slist_node_t</h2>
@@ -3575,25 +3557,6 @@ target side mask </td></tr>
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="gaa65ef8f7a5e8b7a6ea6c1d48b4c78e55" name="gaa65ef8f7a5e8b7a6ea6c1d48b4c78e55"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa65ef8f7a5e8b7a6ea6c1d48b4c78e55">&#9670;&nbsp;</a></span>__ALIGNED</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define __ALIGNED</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">x</td><td>)</td>
-          <td>&#160;&#160;&#160;__attribute__((aligned(x)))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>arm-2d relies on CMSIS 5.8.0 and above. </dd></dl>
-
-</div>
-</div>
 <a id="ga77671429a789a7f89280c090dcf70bf9" name="ga77671429a789a7f89280c090dcf70bf9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga77671429a789a7f89280c090dcf70bf9">&#9670;&nbsp;</a></span>__implement_ex</h2>
 
@@ -5776,29 +5739,6 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
 
 </div>
 </div>
-<a id="gaee644f33c5b07d65d292017b21fb3f39" name="gaee644f33c5b07d65d292017b21fb3f39"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaee644f33c5b07d65d292017b21fb3f39">&#9670;&nbsp;</a></span>arm_irq_safe</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define arm_irq_safe&#160;&#160;&#160;            <a class="el" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891">arm_using</a>(  uint32_t <a class="el" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23">ARM_2D_SAFE_NAME</a>(temp) = 0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>a decoration to make the immediate following code irq-safe </p>
-<div class="fragment"><div class="line"><a class="code hl_define" href="group__gKernel.html#gaee644f33c5b07d65d292017b21fb3f39" title="a decoration to make the immediate following code irq-safe">arm_irq_safe</a> {</div>
-<div class="line">    <span class="comment">// code inside the brackets are IRQ safe</span></div>
-<div class="line">    ...</div>
-<div class="line">}</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// the printf is IRQ safe</span></div>
-<div class="line"><a class="code hl_define" href="group__gKernel.html#gaee644f33c5b07d65d292017b21fb3f39" title="a decoration to make the immediate following code irq-safe">arm_irq_safe</a> printf(<span class="stringliteral">&quot;IRQ safe printf\n&quot;</span>);</div>
-</div><!-- fragment --> 
-</div>
-</div>
 <a id="gaeaf81c5ab6173e64f16ae66daa78d915" name="gaeaf81c5ab6173e64f16ae66daa78d915"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaeaf81c5ab6173e64f16ae66daa78d915">&#9670;&nbsp;</a></span>__ARM_2D_WRAP_FUNC</h2>
 
@@ -5814,7 +5754,16 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>do NOT use this macro directly </dd></dl>
+
+<p>a decoration to make the immediate following code irq-safe </p>
+<div class="fragment"><div class="line">arm_irq_safe {</div>
+<div class="line">    <span class="comment">// code inside the brackets are IRQ safe</span></div>
+<div class="line">    ...</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// the printf is IRQ safe</span></div>
+<div class="line">arm_irq_safe printf(<span class="stringliteral">&quot;IRQ safe printf\n&quot;</span>);</div>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>do NOT use this macro directly </dd></dl>
 
 </div>
 </div>
@@ -7892,33 +7841,6 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="gaa12aedd096506c9639c1581acd5c6a78" name="gaa12aedd096506c9639c1581acd5c6a78"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa12aedd096506c9639c1581acd5c6a78">&#9670;&nbsp;</a></span>__REV16()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">__STATIC_FORCEINLINE uint32_t __REV16 </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>value</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Reverse byte order (16 bit) </p>
-<p >Reverses the byte order within each halfword of a word. For example, 0x12345678 becomes 0x34127856. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>Value to reverse </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Reversed value </dd></dl>
-
-</div>
-</div>
 <a id="gae417897e7d7186b294c0ff3468102276" name="gae417897e7d7186b294c0ff3468102276"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gae417897e7d7186b294c0ff3468102276">&#9670;&nbsp;</a></span>arm_2d_init()</h2>
 
