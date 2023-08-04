@@ -214,7 +214,7 @@
           </RTE_Components_h>
           
           <Pre_Include_Global_h>
-#define ___ARM_2D_CFG_HEADER___
+#define ___ARM_2D_CFG_SKIP_HEADER___
           </Pre_Include_Global_h>
           
         </component>
