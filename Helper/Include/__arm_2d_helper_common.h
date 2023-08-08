@@ -637,7 +637,7 @@ extern "C" {
  * \return uint32_t the buffer size
  */
 #define get_tile_buffer_size(__name, __type)                                    \
-            (get_2d_layer_buffer_pixel_count(__name) * sizeof(__type))
+            (get_tile_buffer_pixel_count(__name) * sizeof(__type))
 
 
 /*!
