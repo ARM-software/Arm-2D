@@ -743,6 +743,8 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
         arm_2d_set_default_frame_buffer(&this.Adapter.tPFBTile);
     }
 
+    this.Adapter.tPFBTile.tInfo.bVirtualScreen = true;
+
     return (arm_2d_tile_t *)&(this.Adapter.tPFBTile);
 }
 
