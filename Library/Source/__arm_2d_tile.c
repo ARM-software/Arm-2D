@@ -586,6 +586,7 @@ arm_2d_tile_t *arm_2d_tile_generate_child(
     
     ptOutput->tInfo = ptParentTile->tInfo;
     ptOutput->tInfo.bIsRoot = false;
+    ptOutput->tInfo.bVirtualScreen = false;
     
     /* user has to manually set this flag to true to indicate a derived resource */
     ptOutput->tInfo.bDerivedResource = false;
