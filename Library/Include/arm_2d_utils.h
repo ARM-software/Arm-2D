@@ -64,7 +64,17 @@
 /*! \note arm-2d relies on CMSIS 5.8.0 and above.
  */
 #if __IS_SUPPORTED_ARM_ARCH__
+
+#ifdef   __cplusplus
+extern "C" {
+#endif
+
 #   include "cmsis_compiler.h"
+
+#ifdef   __cplusplus
+}
+#endif
+
 #else
 #   include "arm_2d_user_arch_port.h"
 #endif

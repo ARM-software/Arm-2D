@@ -175,9 +175,9 @@ __STATIC_INLINE uint16_t __arm_2d_rgb565_pack(__arm_2d_color_fast_rgb_t * ptRGB)
     assert(NULL != ptRGB);
     
     arm_2d_color_rgb565_t tOutput = {
-        .u5R = (uint16_t) ptRGB->R >> 3,
-        .u6G = (uint16_t) ptRGB->G >> 2,
-        .u5B = (uint16_t) ptRGB->B >> 3,
+        .u5B = (uint16_t) (ptRGB->B >> 3),
+        .u6G = (uint16_t) (ptRGB->G >> 2),
+        .u5R = (uint16_t) (ptRGB->R >> 3),
     };
     return tOutput.tValue;
 }
@@ -194,9 +194,9 @@ __STATIC_INLINE uint32_t __arm_2d_cccn888_pack(__arm_2d_color_fast_rgb_t * ptRGB
     assert(NULL != ptRGB);
     
     arm_2d_color_bgra8888_t tOutput = {
-        .u8R = (uint16_t) ptRGB->R,
-        .u8G = (uint16_t) ptRGB->G,
         .u8B = (uint16_t) ptRGB->B,
+        .u8G = (uint16_t) ptRGB->G,
+        .u8R = (uint16_t) ptRGB->R,
         .u8A = (uint16_t) ptRGB->A,
     };
     return tOutput.tValue;
