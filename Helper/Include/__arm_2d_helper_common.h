@@ -725,6 +725,7 @@ extern "C" {
                                             &ARM_2D_SAFE_NAME(ContainerRegion), \
                                             &(__container_name),                \
                                             false);                             \
+                    __container_name.tInfo.bVirtualScreen = false;              \
                 },                                                              \
                 {                                                               \
                     arm_2d_op_wait_async(NULL);                                 \
