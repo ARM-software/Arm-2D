@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        15. July 2023
- * $Revision:    V.1.5.6
+ * $Date:        09. Aug 2023
+ * $Revision:    V.1.5.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -282,6 +282,25 @@ arm_2d_size_t arm_2d_helper_pfb_get_pfb_size(arm_2d_helper_pfb_t *ptThis)
     assert(NULL != ptThis);
     
     return this.tCFG.FrameBuffer.tFrameSize;
+}
+
+ARM_NONNULL(1)
+arm_2d_location_t arm_2d_helper_pfb_get_absolute_location(  
+                                                    arm_2d_tile_t *ptTile, 
+                                                    arm_2d_location_t tLocation)
+{
+    assert(NULL != ptTile);
+    
+    while( !ptTile->tInfo.bIsRoot && !ptTile->tInfo.bVirtualScreen ) {
+        tLocation.iX += ptTile->tRegion.tLocation.iX;
+        tLocation.iY += ptTile->tRegion.tLocation.iY;
+        
+        ptTile = ptTile->ptParent;
+
+        assert(NULL != ptTile);
+    }
+    
+    return tLocation;
 }
 
 __WEAK 

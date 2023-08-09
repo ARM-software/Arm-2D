@@ -21,8 +21,8 @@
  * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        06. April 2023
- * $Revision:    V.1.1.1
+ * $Date:        9. Aug 2023
+ * $Revision:    V.1.1.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -512,7 +512,8 @@ struct arm_2d_tile_t {
         uint8_t    bHasEnforcedColour   : 1;                                    //!< does this tile contains enforced colour info
         uint8_t    bDerivedResource     : 1;                                    //!< indicate whether this is a derived resources (when bIsRoot == 0)
         uint8_t    bVirtualResource     : 1;                                    //!< indicate whether the resource should be loaded on-demand
-        uint8_t                         : 4;
+        uint8_t    bVirtualScreen       : 1;                                    //!< DO NOT USE! indicate whether the tile is considered as the virtual screen, it is used in dirty region calculation
+        uint8_t                         : 3;
         uint8_t                         : 8;
         uint8_t                         : 8;
         arm_2d_color_info_t    tColourInfo;                                     //!< enforced colour

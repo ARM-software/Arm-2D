@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        15. July 2023
- * $Revision:    V.1.5.6
+ * $Date:        09. Aug 2023
+ * $Revision:    V.1.5.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -543,6 +543,19 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
 extern
 ARM_NONNULL(1)
 arm_2d_region_t arm_2d_helper_pfb_get_display_area(arm_2d_helper_pfb_t *ptThis);
+
+/*!
+ * \brief get the absolute location for a given location on the target tile canvas
+ * \param[in] ptTile the target tile
+ * \param[in] tLocation the location on the target tile canvas
+ * \return arm_2d_location_t the absolute location on a (virtual) screen or on 
+ *         a root tile canvas
+ */
+extern
+ARM_NONNULL(1)
+arm_2d_location_t arm_2d_helper_pfb_get_absolute_location(  
+                                                    arm_2d_tile_t *ptTile, 
+                                                    arm_2d_location_t tLocation);
 
 /*!
  * \brief get the inital PFB size
