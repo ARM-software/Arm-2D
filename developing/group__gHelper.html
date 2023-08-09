@@ -426,6 +426,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf0eef5fe61bc11d102d2180025ada377"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaf0eef5fe61bc11d102d2180025ada377">arm_2d_helper_pfb_get_display_area</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis)</td></tr>
 <tr class="memdesc:gaf0eef5fe61bc11d102d2180025ada377"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the display (screen) region  <a href="group__gHelper.html#gaf0eef5fe61bc11d102d2180025ada377">More...</a><br /></td></tr>
 <tr class="separator:gaf0eef5fe61bc11d102d2180025ada377"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6cd67bb1aebd25b730cd1b52d762a18f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga6cd67bb1aebd25b730cd1b52d762a18f">arm_2d_helper_pfb_get_absolute_location</a> (<a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTile, <a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a> tLocation)</td></tr>
+<tr class="memdesc:ga6cd67bb1aebd25b730cd1b52d762a18f"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the absolute location for a given location on the target tile canvas  <a href="group__gHelper.html#ga6cd67bb1aebd25b730cd1b52d762a18f">More...</a><br /></td></tr>
+<tr class="separator:ga6cd67bb1aebd25b730cd1b52d762a18f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga012c85746e62c16a38f5253fd9d0dca6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga012c85746e62c16a38f5253fd9d0dca6">arm_2d_helper_pfb_get_pfb_size</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis)</td></tr>
 <tr class="memdesc:ga012c85746e62c16a38f5253fd9d0dca6"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the inital PFB size  <a href="group__gHelper.html#ga012c85746e62c16a38f5253fd9d0dca6">More...</a><br /></td></tr>
 <tr class="separator:ga012c85746e62c16a38f5253fd9d0dca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -3962,6 +3965,44 @@ fOP</td>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> the screen region </dd></dl>
+
+</div>
+</div>
+<a id="ga6cd67bb1aebd25b730cd1b52d762a18f" name="ga6cd67bb1aebd25b730cd1b52d762a18f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6cd67bb1aebd25b730cd1b52d762a18f">&#9670;&nbsp;</a></span>arm_2d_helper_pfb_get_absolute_location()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a> arm_2d_helper_pfb_get_absolute_location </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td>
+          <td class="paramname"><em>ptTile</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a>&#160;</td>
+          <td class="paramname"><em>tLocation</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get the absolute location for a given location on the target tile canvas </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptTile</td><td>the target tile </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tLocation</td><td>the location on the target tile canvas </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__gKernel.html#structarm__2d__location__t" title="a type for coordinates (integer)">arm_2d_location_t</a> the absolute location on a (virtual) screen or on a root tile canvas </dd></dl>
 
 </div>
 </div>

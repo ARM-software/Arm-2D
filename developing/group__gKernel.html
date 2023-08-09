@@ -1444,7 +1444,7 @@ the size </td></tr>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
-&lt; enforced colour <p >&lt; is this tile a root tile does this tile contains enforced colour info indicate whether this is a derived resources (when bIsRoot == 0) indicate whether the resource should be loaded on-demand </p>
+&lt; enforced colour <p >&lt; is this tile a root tile does this tile contains enforced colour info indicate whether this is a derived resources (when bIsRoot == 0) indicate whether the resource should be loaded on-demand DO NOT USE! indicate whether the tile is considered as the virtual screen, it is used in dirty region calculation </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a id="a233b05087f132d3ec5f826c99046e094" name="a233b05087f132d3ec5f826c99046e094"></a></td>
@@ -2455,7 +2455,7 @@ u3Variant: 3</td>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p >&lt; enforced colour </p>
-<p >&lt; is this tile a root tile does this tile contains enforced colour info indicate whether this is a derived resources (when bIsRoot == 0) indicate whether the resource should be loaded on-demand </p>
+<p >&lt; is this tile a root tile does this tile contains enforced colour info indicate whether this is a derived resources (when bIsRoot == 0) indicate whether the resource should be loaded on-demand DO NOT USE! indicate whether the tile is considered as the virtual screen, it is used in dirty region calculation </p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
@@ -2480,6 +2480,12 @@ bDerivedResource: 1</td>
 <a id="abf056e3c4342f7a96f03f4a9ba7e9e43" name="abf056e3c4342f7a96f03f4a9ba7e9e43"></a>uint8_t</td>
 <td class="fieldname">
 bVirtualResource: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a5be46a99473e47b4f49cbf217183e0d3" name="a5be46a99473e47b4f49cbf217183e0d3"></a>uint8_t</td>
+<td class="fieldname">
+bVirtualScreen: 1</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
