@@ -95,6 +95,11 @@ void scene4_loader(void)
     arm_2d_scene4_init(&DISP0_ADAPTER);
 }
 
+void scene5_loader(void) 
+{
+    arm_2d_scene5_init(&DISP0_ADAPTER);
+}
+
 typedef void scene_loader_t(void);
 
 static scene_loader_t * const c_SceneLoaders[] = {
@@ -102,6 +107,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene1_loader,
     scene_meter_loader,
     scene3_loader,
+    scene5_loader,
     scene4_loader,
     scene2_loader,
     //scene_watch_loader,

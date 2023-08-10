@@ -20,16 +20,17 @@
 
 #include "arm_2d.h"
 
-#ifdef RTE_Acceleration_Arm_2D_Scene3
+#ifdef RTE_Acceleration_Arm_2D_Scene5
 
-#define __USER_SCENE3_IMPLEMENT__
-#include "arm_2d_scene_3.h"
+#define __USER_SCENE5_IMPLEMENT__
+#include "arm_2d_scene_5.h"
 
 #include "arm_2d_helper.h"
 #include "arm_extra_controls.h"
 
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -87,6 +88,7 @@ typedef struct my_list_item_t {
     implement(arm_2d_list_item_t);
     
     /* you can put your own members here */
+    int16_t iOffset;
 } my_list_item_t;
 
 
@@ -141,8 +143,8 @@ my_list_item_t s_tListArray[] = {
             .Padding = {
                 5,5,
             },
-            .u4Alignment = ARM_2D_ALIGN_TOP,
-            .tSize = { 100, 80 },
+            //.u4Alignment = ARM_2D_ALIGN_TOP,
+            .tSize = { 100, 200 },
             .fnOnDrawItem = &__list_view_item_0_draw_item,
         },
     },
@@ -157,7 +159,7 @@ my_list_item_t s_tListArray[] = {
             .Padding = {
                 5,5,
             },
-            .tSize = { 100, 100 },
+            .tSize = { 100, 200 },
             .fnOnDrawItem = &__list_view_item_1_draw_item,
         },
     },
@@ -172,8 +174,8 @@ my_list_item_t s_tListArray[] = {
             .Padding = {
                 5,5,
             },
-            .u4Alignment = ARM_2D_ALIGN_BOTTOM,
-            .tSize = { 100, 90 },
+            //.u4Alignment = ARM_2D_ALIGN_BOTTOM,
+            .tSize = { 100, 200 },
             .fnOnDrawItem = &__list_view_item_2_draw_item,
         },
     },
@@ -189,7 +191,7 @@ my_list_item_t s_tListArray[] = {
             .Padding = {
                 5,5,
             },
-            .tSize = { 100, 110 },
+            .tSize = { 100, 200 },
             .fnOnDrawItem = &__list_view_item_3_draw_item,
         },
     },
@@ -199,6 +201,8 @@ my_list_item_t s_tListArray[] = {
 
 
 #define ITEM_BG_OPACITY     (255)
+
+#define RADIUS      800.0f
 
 static 
 arm_fsm_rt_t __list_view_item_0_draw_item( 
@@ -216,15 +220,25 @@ arm_fsm_rt_t __list_view_item_0_draw_item(
     uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
 
     arm_2d_canvas(ptTile, __canvas) {
-        draw_round_corner_box(ptTile, &__canvas, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
+        arm_2d_align_top_centre(__canvas, 100, 100) {
 
-        arm_lcd_text_set_target_framebuffer(ptTile);
-        arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
-        arm_lcd_text_set_opacity(chOpacity);
-        arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
-        arm_print_banner("0", __canvas);
-        arm_lcd_text_set_opacity(255);
+            /* adjust item position around a curve*/
+            do {
+                float fYOffset =  (float)ptParam->hwRatio;
+                fYOffset = RADIUS - sqrt(RADIUS * RADIUS - fYOffset * fYOffset);
 
+                __top_centre_region.tLocation.iY += (int16_t) fYOffset;
+            } while(0);
+            
+            draw_round_corner_box(ptTile, &__top_centre_region, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
+
+            arm_lcd_text_set_target_framebuffer(ptTile);
+            arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
+            arm_lcd_text_set_opacity(chOpacity);
+            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
+            arm_print_banner("0", __top_centre_region);
+            arm_lcd_text_set_opacity(255);
+        }
     }
     
     return arm_fsm_rt_cpl;
@@ -239,7 +253,7 @@ arm_fsm_rt_t __list_view_item_1_draw_item(
                                       arm_2d_list_item_param_t *ptParam)
 {
     my_list_item_t *ptThis = (my_list_item_t *)ptItem;
-    user_scene_3_t *ptScene = (user_scene_3_t *)ptItem->pTarget;
+    user_scene_5_t *ptScene = (user_scene_5_t *)ptItem->pTarget;
     ARM_2D_UNUSED(ptItem);
     ARM_2D_UNUSED(bIsNewFrame);
     ARM_2D_UNUSED(ptTile);
@@ -248,21 +262,32 @@ arm_fsm_rt_t __list_view_item_1_draw_item(
     uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
 
     arm_2d_canvas(ptTile, __canvas) {
-    draw_round_corner_box(ptTile, &__canvas, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
+        arm_2d_align_top_centre(__canvas, 100, 100) {
 
-        progress_wheel_show(&ptScene->tWheel, 
-                            ptTile, 
-                            &__canvas, 
-                            ptScene->iProgress,   /* progress 0~1000 */
-                            chOpacity, 
-                            bIsNewFrame);
-    
-        arm_lcd_text_set_target_framebuffer(ptTile);
-        arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
-        arm_lcd_text_set_opacity(chOpacity);
-        arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
-        arm_print_banner("1", __canvas);
-        arm_lcd_text_set_opacity(255);
+            /* adjust item position around a curve*/
+            do {
+                float fYOffset =  (float)ptParam->hwRatio;
+                fYOffset = RADIUS - sqrt(RADIUS * RADIUS - fYOffset * fYOffset);
+
+                __top_centre_region.tLocation.iY += (int16_t) fYOffset;
+            } while(0);
+
+            draw_round_corner_box(ptTile, &__top_centre_region, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
+
+            progress_wheel_show(&ptScene->tWheel, 
+                                ptTile, 
+                                &__top_centre_region, 
+                                ptScene->iProgress,   /* progress 0~1000 */
+                                chOpacity, 
+                                bIsNewFrame);
+        
+            arm_lcd_text_set_target_framebuffer(ptTile);
+            arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
+            arm_lcd_text_set_opacity(chOpacity);
+            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
+            arm_print_banner("1", __top_centre_region);
+            arm_lcd_text_set_opacity(255);
+        }
     }
     
     return arm_fsm_rt_cpl;
@@ -284,15 +309,25 @@ arm_fsm_rt_t __list_view_item_2_draw_item(
     uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
 
     arm_2d_canvas(ptTile, __canvas) {
-        draw_round_corner_box(ptTile, &__canvas, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
-    
-        arm_lcd_text_set_target_framebuffer(ptTile);
-        arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
-        arm_lcd_text_set_opacity(chOpacity);
-        arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
-        arm_print_banner("2", __canvas);
-        arm_lcd_text_set_opacity(255);
+        arm_2d_align_top_centre(__canvas, 100, 100) {
 
+            /* adjust item position around a curve*/
+            do {
+                float fYOffset =  (float)ptParam->hwRatio;
+                fYOffset = RADIUS - sqrt(RADIUS * RADIUS - fYOffset * fYOffset);
+
+                __top_centre_region.tLocation.iY += (int16_t) fYOffset;
+            } while(0);
+
+            draw_round_corner_box(ptTile, &__top_centre_region, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
+        
+            arm_lcd_text_set_target_framebuffer(ptTile);
+            arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
+            arm_lcd_text_set_opacity(chOpacity);
+            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
+            arm_print_banner("2", __top_centre_region);
+            arm_lcd_text_set_opacity(255);
+        }
     }
 
 
@@ -315,25 +350,35 @@ arm_fsm_rt_t __list_view_item_3_draw_item(
     uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
 
     arm_2d_canvas(ptTile, __canvas) {
+        arm_2d_align_top_centre(__canvas, 100, 100) {
 
-        draw_round_corner_box(ptTile, &__canvas, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
+            /* adjust item position around a curve*/
+            do {
+                float fYOffset =  (float)ptParam->hwRatio;
+                fYOffset = RADIUS - sqrt(RADIUS * RADIUS - fYOffset * fYOffset);
 
-        arm_lcd_text_set_target_framebuffer(ptTile);
-        arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
-        arm_lcd_text_set_opacity(chOpacity);
-        arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
-        arm_print_banner("3", __canvas);
-        arm_lcd_text_set_opacity(255);
+                __top_centre_region.tLocation.iY += (int16_t) fYOffset;
+            } while(0);
 
+
+            draw_round_corner_box(ptTile, &__top_centre_region, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
+
+            arm_lcd_text_set_target_framebuffer(ptTile);
+            arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
+            arm_lcd_text_set_opacity(chOpacity);
+            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
+            arm_print_banner("3", __top_centre_region);
+            arm_lcd_text_set_opacity(255);
+        }
     }
     
     return arm_fsm_rt_cpl;
 }
 
 
-static void __on_scene3_depose(arm_2d_scene_t *ptScene)
+static void __on_scene5_depose(arm_2d_scene_t *ptScene)
 {
-    user_scene_3_t *ptThis = (user_scene_3_t *)ptScene;
+    user_scene_5_t *ptThis = (user_scene_5_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
     ptScene->ptPlayer = NULL;
@@ -354,24 +399,24 @@ static void __on_scene3_depose(arm_2d_scene_t *ptScene)
  * Scene 3                                                                    *
  *----------------------------------------------------------------------------*/
 
-static void __on_scene3_background_start(arm_2d_scene_t *ptScene)
+static void __on_scene5_background_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_3_t *ptThis = (user_scene_3_t *)ptScene;
+    user_scene_5_t *ptThis = (user_scene_5_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
-static void __on_scene3_background_complete(arm_2d_scene_t *ptScene)
+static void __on_scene5_background_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_3_t *ptThis = (user_scene_3_t *)ptScene;
+    user_scene_5_t *ptThis = (user_scene_5_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
 
-static void __on_scene3_frame_start(arm_2d_scene_t *ptScene)
+static void __on_scene5_frame_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_3_t *ptThis = (user_scene_3_t *)ptScene;
+    user_scene_5_t *ptThis = (user_scene_5_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
     int nResult;
@@ -382,9 +427,9 @@ static void __on_scene3_frame_start(arm_2d_scene_t *ptScene)
 
 }
 
-static void __on_scene3_frame_complete(arm_2d_scene_t *ptScene)
+static void __on_scene5_frame_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_3_t *ptThis = (user_scene_3_t *)ptScene;
+    user_scene_5_t *ptThis = (user_scene_5_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
     /* switch to next scene after 10s */
@@ -398,9 +443,9 @@ static void __on_scene3_frame_complete(arm_2d_scene_t *ptScene)
 }
 
 static
-IMPL_PFB_ON_DRAW(__pfb_draw_scene3_background_handler)
+IMPL_PFB_ON_DRAW(__pfb_draw_scene5_background_handler)
 {
-    user_scene_3_t *ptThis = (user_scene_3_t *)pTarget;
+    user_scene_5_t *ptThis = (user_scene_5_t *)pTarget;
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
     /*-----------------------draw back ground begin-----------------------*/
@@ -414,9 +459,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene3_background_handler)
 }
 
 static
-IMPL_PFB_ON_DRAW(__pfb_draw_scene3_handler)
+IMPL_PFB_ON_DRAW(__pfb_draw_scene5_handler)
 {
-    user_scene_3_t *ptThis = (user_scene_3_t *)pTarget;
+    user_scene_5_t *ptThis = (user_scene_5_t *)pTarget;
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
     
@@ -434,8 +479,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene3_handler)
     arm_lcd_text_set_draw_region(NULL);
     arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
     arm_lcd_text_location(0,0);
-    //arm_lcd_puts("Scene 3");
-    arm_lcd_printf("scene 3");
+    //arm_lcd_puts("Scene 5");
+    arm_lcd_printf("scene 5");
 
     /*-----------------------draw the foreground end  -----------------------*/
     arm_2d_op_wait_async(NULL);
@@ -444,20 +489,20 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene3_handler)
 }
 
 ARM_NONNULL(1)
-user_scene_3_t *__arm_2d_scene3_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_3_t *ptThis)
+user_scene_5_t *__arm_2d_scene5_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_5_t *ptThis)
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
 
     if (NULL == ptThis) {
-        ptThis = (user_scene_3_t *)malloc(sizeof(user_scene_3_t));
+        ptThis = (user_scene_5_t *)malloc(sizeof(user_scene_5_t));
         assert(NULL != ptThis);
         if (NULL == ptThis) {
             return NULL;
         }
     } else {
-        memset(ptThis, 0, sizeof(user_scene_3_t));
+        memset(ptThis, 0, sizeof(user_scene_5_t));
         bUserAllocated = true;
     }
 
@@ -467,7 +512,7 @@ user_scene_3_t *__arm_2d_scene3_init(   arm_2d_scene_player_t *ptDispAdapter,
         /* a dirty region to be specified at runtime*/
         ADD_REGION_TO_LIST(s_tDirtyRegions,
             .tSize = {
-                0, 110,
+                0, 200,
             },
         ),
         
@@ -497,24 +542,24 @@ user_scene_3_t *__arm_2d_scene3_init(   arm_2d_scene_player_t *ptDispAdapter,
      */
     s_tDirtyRegions[0].tRegion.tLocation = (arm_2d_location_t){
         .iX = 0,
-        .iY = ((tScreen.tSize.iHeight - 110) >> 1),
+        .iY = ((tScreen.tSize.iHeight - 200) >> 1),
     };
     s_tDirtyRegions[0].tRegion.tSize.iWidth = tScreen.tSize.iWidth;
 
-    *ptThis = (user_scene_3_t){
+    *ptThis = (user_scene_5_t){
         .use_as__arm_2d_scene_t = {
         /* Please uncommon the callbacks if you need them
          */
-        //.fnBackground   = &__pfb_draw_scene3_background_handler,
-        .fnScene        = &__pfb_draw_scene3_handler,
+        //.fnBackground   = &__pfb_draw_scene5_background_handler,
+        .fnScene        = &__pfb_draw_scene5_handler,
         .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
         
 
-        //.fnOnBGStart    = &__on_scene3_background_start,
-        //.fnOnBGComplete = &__on_scene3_background_complete,
-        .fnOnFrameStart = &__on_scene3_frame_start,
-        .fnOnFrameCPL   = &__on_scene3_frame_complete,
-        .fnDepose       = &__on_scene3_depose,
+        //.fnOnBGStart    = &__on_scene5_background_start,
+        //.fnOnBGComplete = &__on_scene5_background_complete,
+        .fnOnFrameStart = &__on_scene5_frame_start,
+        .fnOnFrameCPL   = &__on_scene5_frame_complete,
+        .fnDepose       = &__on_scene5_depose,
         },
         .bUserAllocated = bUserAllocated,
     };
@@ -526,7 +571,7 @@ user_scene_3_t *__arm_2d_scene3_init(   arm_2d_scene_player_t *ptDispAdapter,
             .fnIterator = &ARM_2D_LIST_ITERATOR_ARRAY,
             .fnCalculator = &ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL,
             
-            .tListSize = {0, 110},
+            .tListSize = {0, 200},
             .ptItems = (arm_2d_list_item_t *)s_tListArray,
             .hwCount = dimof(s_tListArray),
             .hwItemSizeInByte = sizeof(my_list_item_t),
