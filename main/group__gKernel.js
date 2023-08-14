@@ -356,6 +356,7 @@ var group__gKernel =
     [ "__ARM_2D_HAS_HELIUM_INTEGER__", "group__gKernel.html#ga06a44c9b3da26f938ebf0780fc693e9b", null ],
     [ "__ARM_2D_HAS_HELIUM_FLOAT__", "group__gKernel.html#ga81fc3edf4e9b9ed199f262d2e8634d1a", null ],
     [ "__ARM_2D_HAS_CDE__", "group__gKernel.html#ga0ec19d4c98606a830a90ac39aac41a5e", null ],
+    [ "__ARM_2D_HAS_TIGHTLY_COUPLED_ACC__", "group__gKernel.html#ga25908e166b33d5f00cf5824a4a32f30f", null ],
     [ "__ARM_2D_HAS_HW_ACC__", "group__gKernel.html#gafc15611a43cb4dafc518b4948ab380f8", null ],
     [ "__ARM_2D_HAS_ASYNC__", "group__gKernel.html#ga44b4f0ecafd8d5fb7de9f104d9321998", null ],
     [ "__ARM_2D_CFG_DEFAULT_SUB_TASK_POOL_SIZE__", "group__gKernel.html#ga849a39b45e7a5a22160515dda935ce09", null ],
