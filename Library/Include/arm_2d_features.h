@@ -22,8 +22,8 @@
  * Description:  Public header file to indicate features avaialble for this
  *               arm-2d library variant.
  *
- * $Date:        05. April 2023
- * $Revision:    V.1.0.7
+ * $Date:        14. Aug 2023
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -32,19 +32,6 @@
 #define __ARM_2D_FEATURES_H__
 
 /*============================ INCLUDES ======================================*/
-
-
-#ifdef   __cplusplus
-extern "C" {
-#endif
-
-#if defined(__clang__)
-#   pragma clang diagnostic push
-#   pragma clang diagnostic ignored "-Wunknown-warning-option"
-#   pragma clang diagnostic ignored "-Wreserved-identifier"
-#   pragma clang diagnostic ignored "-Wmicrosoft-anon-tag"
-#   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
-#endif
 
 /*!
  * \addtogroup gKernel 1 Kernel
@@ -57,6 +44,18 @@ extern "C" {
 #   else
 #       include ___ARM_2D_CFG_HEADER___
 #   endif
+#endif
+
+#ifdef   __cplusplus
+extern "C" {
+#endif
+
+#if defined(__clang__)
+#   pragma clang diagnostic push
+#   pragma clang diagnostic ignored "-Wunknown-warning-option"
+#   pragma clang diagnostic ignored "-Wreserved-identifier"
+#   pragma clang diagnostic ignored "-Wmicrosoft-anon-tag"
+#   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #endif
 
 /*============================ MACROS ========================================*/
@@ -84,9 +83,14 @@ extern "C" {
 #   define __ARM_2D_HAS_CDE__                           0       //!< target MCU has no ACI implementation
 #endif
 
-#ifndef __ARM_2D_HAS_HW_ACC__
-#   define __ARM_2D_HAS_HW_ACC__                        0       //!< target MCU has no hardware acceleration for 2D operations
+#ifndef __ARM_2D_HAS_TIGHTLY_COUPLED_ACC__
+#   define __ARM_2D_HAS_TIGHTLY_COUPLED_ACC__           0       //!< target MCU has no tightly coupled acceleration (other than ACI)
 #endif
+
+#ifndef __ARM_2D_HAS_HW_ACC__
+#   define __ARM_2D_HAS_HW_ACC__                        0       //!< target MCU has no dedicated hardware (async) acceleration
+#endif
+
 #if defined(__ARM_2D_HAS_HW_ACC__) && __ARM_2D_HAS_HW_ACC__
 #   if defined(__ARM_2D_HAS_ASYNC__) && !__ARM_2D_HAS_ASYNC__
 #       warning As long as __ARM_2D_HAS_HW_ACC__ is set to 1,\
@@ -244,6 +248,20 @@ extern "C" {
 
 #ifdef   __cplusplus
 }
+#endif
+
+
+/*============================ POST INCLUDES =================================*/
+
+/* include user acceleration header file(s) */
+#if defined(__ARM_2D_HAS_CDE__) && __ARM_2D_HAS_CDE__
+#   include "arm_2d_user_cde.h"
+#endif
+#if defined(__ARM_2D_HAS_TIGHTLY_COUPLED_ACC__) && __ARM_2D_HAS_TIGHTLY_COUPLED_ACC__
+#   include "arm_2d_user_sync_acc.h"
+#endif
+#if defined(__ARM_2D_HAS_HW_ACC__) && __ARM_2D_HAS_HW_ACC__
+#   include "arm_2d_user_async_acc.h"
 #endif
 
 #endif

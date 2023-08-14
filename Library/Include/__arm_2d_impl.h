@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        02. May 2023
- * $Revision:    V.1.3.11
+ * $Date:        14. Aug 2023
+ * $Revision:    V.1.4.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -89,8 +89,9 @@ extern "C" {
         } else {                                                                \
             tResult = (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;                     \
         }
-    
-#define __ARM_2D_PIXEL_BLENDING_GRAY8(__SRC_ADDR, __DES_ADDR, __TRANS)          \
+
+#ifndef __ARM_2D_PIXEL_BLENDING_GRAY8
+#   define __ARM_2D_PIXEL_BLENDING_GRAY8(__SRC_ADDR, __DES_ADDR, __TRANS)       \
             do {                                                                \
                 uint16_t hwOPA = 256 - (__TRANS);                               \
                 const uint8_t *pchSrc = (uint8_t *)(__SRC_ADDR);                \
@@ -100,8 +101,10 @@ extern "C" {
                                      + ((uint16_t)(*pchDes) * (__TRANS))        \
                                      ) >> 8);                                   \
             } while(0)
+#endif
 
-#define __ARM_2D_PIXEL_BLENDING_RGB565(__SRC_ADDR, __DES_ADDR, __TRANS)         \
+#ifndef __ARM_2D_PIXEL_BLENDING_RGB565
+#   define __ARM_2D_PIXEL_BLENDING_RGB565(__SRC_ADDR, __DES_ADDR, __TRANS)      \
             do {                                                                \
                 uint16_t hwOPA = 256 - (__TRANS);                               \
                 __arm_2d_color_fast_rgb_t tSrcPix, tTargetPix;                  \
@@ -119,8 +122,10 @@ extern "C" {
                 /* pack merged stream */                                        \
                 *phwTargetPixel = __arm_2d_rgb565_pack(&tTargetPix);            \
             } while(0)
-            
-#define __ARM_2D_PIXEL_BLENDING_CCCN888(__SRC_ADDR, __DES_ADDR, __TRANS)        \
+#endif
+
+#ifndef __ARM_2D_PIXEL_BLENDING_CCCN888
+#   define __ARM_2D_PIXEL_BLENDING_CCCN888(__SRC_ADDR, __DES_ADDR, __TRANS)     \
             do {                                                                \
                 uint16_t hwOPA = 256 - (__TRANS);                               \
                 /* do not change alpha */                                       \
@@ -135,10 +140,10 @@ extern "C" {
                      pchDes++;                                                  \
                 } while(--ARM_2D_SAFE_NAME(n));                                 \
             } while(0)
+#endif
             
-            
-            
-#define __ARM_2D_PIXEL_BLENDING_OPA_GRAY8(__SRC_ADDR, __DES_ADDR, __OPA)        \
+#ifndef __ARM_2D_PIXEL_BLENDING_OPA_GRAY8
+#   define __ARM_2D_PIXEL_BLENDING_OPA_GRAY8(__SRC_ADDR, __DES_ADDR, __OPA)     \
             do {                                                                \
                 uint16_t hwTrans = 256 - (__OPA);                               \
                 const uint8_t *pchSrc = (uint8_t *)(__SRC_ADDR);                \
@@ -148,8 +153,10 @@ extern "C" {
                                      + ((uint16_t)(*pchDes) * hwTrans)          \
                                      ) >> 8);                                   \
             } while(0)
+#endif
 
-#define __ARM_2D_PIXEL_BLENDING_OPA_RGB565(__SRC_ADDR, __DES_ADDR, __OPA)       \
+#ifndef __ARM_2D_PIXEL_BLENDING_OPA_RGB565
+#   define __ARM_2D_PIXEL_BLENDING_OPA_RGB565(__SRC_ADDR, __DES_ADDR, __OPA)    \
             do {                                                                \
                 uint16_t hwTrans = 256 - (__OPA);                               \
                 __arm_2d_color_fast_rgb_t tSrcPix, tTargetPix;                  \
@@ -167,8 +174,10 @@ extern "C" {
                 /* pack merged stream */                                        \
                 *phwTargetPixel = __arm_2d_rgb565_pack(&tTargetPix);            \
             } while(0)
-            
-#define __ARM_2D_PIXEL_BLENDING_OPA_CCCN888(__SRC_ADDR, __DES_ADDR, __OPA)      \
+#endif
+
+#ifndef __ARM_2D_PIXEL_BLENDING_OPA_CCCN888
+#   define __ARM_2D_PIXEL_BLENDING_OPA_CCCN888(__SRC_ADDR, __DES_ADDR, __OPA)   \
             do {                                                                \
                 uint16_t hwTrans = 256 - (__OPA);                               \
                 /* do not change alpha */                                       \
@@ -183,8 +192,10 @@ extern "C" {
                      pchDes++;                                                  \
                 } while(--ARM_2D_SAFE_NAME(n));                                 \
             } while(0)
+#endif
 
-#define __ARM_2D_PIXEL_AVERAGE_RGB565(__PIXEL_IN, __ALPHA)                      \
+#ifndef __ARM_2D_PIXEL_AVERAGE_RGB565
+#   define __ARM_2D_PIXEL_AVERAGE_RGB565(__PIXEL_IN, __ALPHA)                   \
     do {                                                                        \
         __arm_2d_color_fast_rgb_t tTempColour;                                  \
         __arm_2d_rgb565_unpack((__PIXEL_IN), &tTempColour);                     \
@@ -192,20 +203,24 @@ extern "C" {
         tPixel.G += tTempColour.G * (__ALPHA);                                  \
         tPixel.B += tTempColour.B * (__ALPHA);                                  \
     } while(0)
+#endif
 
-
-#define __ARM_2D_PIXEL_AVERAGE_CCCN888(__PIXEL_IN, __ALPHA)                     \
+#ifndef __ARM_2D_PIXEL_AVERAGE_CCCN888
+#   define __ARM_2D_PIXEL_AVERAGE_CCCN888(__PIXEL_IN, __ALPHA)                  \
     do {                                                                        \
         arm_2d_color_rgb888_t tTempColour = {.tValue = (__PIXEL_IN)};           \
         tPixel.R += tTempColour.u8R * (__ALPHA);                                \
         tPixel.G += tTempColour.u8G * (__ALPHA);                                \
         tPixel.B += tTempColour.u8B * (__ALPHA);                                \
     } while(0)
-    
-#define __ARM_2D_PIXEL_AVERAGE_GRAY8(__PIXEL_IN, __ALPHA)                       \
+#endif
+
+#ifndef __ARM_2D_PIXEL_AVERAGE_GRAY8
+#   define __ARM_2D_PIXEL_AVERAGE_GRAY8(__PIXEL_IN, __ALPHA)                    \
     do {                                                                        \
         tPixel += (uint16_t)(__PIXEL_IN) * (uint16_t)(__ALPHA);                 \
     } while(0)
+#endif
 
 /*============================ TYPES =========================================*/
 
