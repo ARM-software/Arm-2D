@@ -194,8 +194,10 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <div class="line">    <span class="comment">/* the scope of the canvas */</span></div>
 <div class="line">}</div>
 </div><!-- fragment --><p >Here <code>arm_2d_canvas()</code> takes two parameters, i.e. the <b>address of the target Tile</b> and the <b>name of the canvas</b>. <code>arm_2d_canvas()</code> will create a canvas with the specified name for the specified Tile.</p>
-<p ><b>NOTE</b>: Canvas cannot be used outside of curly braces.</p>
-<p >For example:</p>
+<blockquote class="doxtable">
+<p ><b>NOTE</b>: Canvas cannot be used outside of curly braces. </p>
+</blockquote>
+<p>For example:</p>
 <div class="fragment"><div class="line"><span class="keyword">static</span></div>
 <div class="line">IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)</div>
 <div class="line">{</div>
@@ -215,12 +217,12 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <p >The essence of the container is a Child-Tile, and any content that exceeds the rectangular area of the child tile will be clipped. Via the macro <code>arm_2d_container()</code> we can easily create a container. The syntax is as follows:</p>
 <div class="fragment"><div class="line">arm_2d_container(&lt;the address of the target tile&gt;, &lt;the name of the <span class="keyword">new</span> child tile&gt;, &lt;the address of the target region&gt;)</div>
 </div><!-- fragment --><p >Here <code>arm_2d_container()</code> takes three parameters, i.e. the <b>address of the target Tile</b>, the <b>name of the new Child Tile</b>, and <b>the address of the target region</b>. <code>arm_2d_container()</code> will generate a new child tile with the name specified by the user according to the given target Region, and generate the corresponding canvas with <code>__canvas</code> as the suffix. For example, if we specify the name of the child tile as <code>my_container</code>, then the corresponding canvas is called <code>my_container_canvas</code>.</p>
-<p ><b>NOTE</b>: <br  />
-</p>
-<ol type="1">
+<blockquote class="doxtable">
+<p ><b>NOTE</b>:</p><ol type="1">
 <li>The address of the target Region can be <code>NULL</code>. In this case, the child tile essentially coincides with the target Tile in size.</li>
-<li>The child tile and the canvas cannot be used outside of curly braces.</li>
+<li>The child tile and the canvas cannot be used outside of curly braces. </li>
 </ol>
+</blockquote>
 <div class="fragment"><div class="line">RM_NONNULL(1)</div>
 <div class="line">void control_template_show( user_control_template_t *ptThis,</div>
 <div class="line">                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTile, </div>
@@ -264,18 +266,21 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <div class="line">    ...</div>
 <div class="line">}</div>
 </div><!-- fragment --><p >Here the macro helper <code>arm_2d_align_&lt;alignment&gt;</code> takes three arguments, i.e. the <b>target region object</b>, the <b>width</b> and <b>height</b> of the target area.</p>
-<p ><b>NOTE</b>: Please pass the <b><a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b> to the macro helper as the target region but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b>.</p>
-<p ><b>Syntax 2:</b></p>
+<blockquote class="doxtable">
+<p ><b>NOTE</b>: Please pass the <b><a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b> to the macro helper as the target region but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b>. </p>
+</blockquote>
+<p><b>Syntax 2:</b></p>
 <div class="fragment"><div class="line">arm_2d_align_&lt;alignment&gt;(&lt;the target region: <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a>&gt;, &lt;the size of the target area: <a class="code hl_struct" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a>&gt;) {</div>
 <div class="line">    <span class="comment">/* You can use a region called __&lt;alignment&gt;_region in the scope defined by the curly braces*/</span></div>
 <div class="line">    ...</div>
 <div class="line">}</div>
 </div><!-- fragment --><p >Here the macro helper <code>arm_2d_align_&lt;alignment&gt;</code> takes two arguments, i.e. the <b>target region object</b> and the <b>size of the target area</b>.</p>
-<p ><b>NOTE</b>:</p>
-<ol type="1">
+<blockquote class="doxtable">
+<p ><b>NOTE</b>:</p><ol type="1">
 <li>Please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b> to the macro helper as the target region but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b>.</li>
-<li>Please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b> to the macro helper as the size of the target area but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b>.</li>
+<li>Please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b> to the macro helper as the size of the target area but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b>. </li>
 </ol>
+</blockquote>
 <p >Based on the syntax above, the code corresponding to <b>Figure 2-1</b> is as follows:</p>
 <div class="fragment"><div class="line"><span class="keyword">static</span></div>
 <div class="line">IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)</div>
@@ -405,7 +410,9 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <h2><a class="anchor" id="autotoc_md104"></a>
 3.1 Line Stream Layout</h2>
 <p >The Line Stream Layout is a common layout method, which places elements in a specified area one by one.</p>
-<p ><b>Note</b>: If any elements exceed the given area, the Line Stream Layout will not wrap when placing elements.</p>
+<blockquote class="doxtable">
+<p ><b>Note</b>: If any elements exceed the given area, the Line Stream Layout will not wrap when placing elements. </p>
+</blockquote>
 <h3><a class="anchor" id="autotoc_md105"></a>
 3.1.1 Horizontal Line Stream</h3>
 <p >Horizontal placement is one of the common ways of Line Stream Layout. Its syntax is as follows:</p>
@@ -426,11 +433,12 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <div class="line">    </div>
 <div class="line">}</div>
 </div><!-- fragment --><p >Here, <code>arm_2d_layout()</code> takes an <code><a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a></code> object as the target region and <code>__item_line_horizontal()</code> must be used inside the <code>arm_2d_layout()</code> structure. You can list as many <code>__item_line_horizontal()</code> segments as you want. <code>__item_line_horizontal()</code> takes two mandatory parameters, i.e. <b>width</b> and <b>height</b> or one <code><a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a></code> object as the size of the element.</p>
-<p ><b>NOTE</b>:</p>
-<ol type="1">
+<blockquote class="doxtable">
+<p ><b>NOTE</b>:</p><ol type="1">
 <li>Please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b> to the macro helper <code>arm_2d_layout()</code> as the target region but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b>.</li>
-<li>When using the <b>Syntax 2</b>, please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b> to the macro helper <code>__item_line_horizontal()</code> as the size of the target element but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b>.</li>
+<li>When using the <b>Syntax 2</b>, please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b> to the macro helper <code>__item_line_horizontal()</code> as the size of the target element but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b>. </li>
 </ol>
+</blockquote>
 <p ><b>Figure 3-1</b> shows an simple example of the Line Stream Layout, which places four buttons in a line wihout and padding. In the source code, we mark the target area in red, so you can see that the 4th button is actually out of the region.</p>
 <p ><b>Figure 3-1 A Horizontal Line Stream Layout Example</b></p>
 <p ><img src="../documentation/pictures/HowToUseLayoutAssistant3_1_1.png" alt="" class="inline"/></p>
@@ -641,11 +649,12 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <div class="line">    ...</div>
 <div class="line">    </div>
 <div class="line">}</div>
-</div><!-- fragment --><p ><b>NOTE</b>:</p>
-<ol type="1">
+</div><!-- fragment --><blockquote class="doxtable">
+<p ><b>NOTE</b>:</p><ol type="1">
 <li>Please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b> to the macro helper <code>arm_2d_layout()</code> as the target region but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b>.</li>
-<li>When using the <b>Syntax 2</b>, please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b> to the macro helper <code>__item_line_vertical()</code> as the size of the target element but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b>.</li>
+<li>When using the <b>Syntax 2</b>, please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b> to the macro helper <code>__item_line_vertical()</code> as the size of the target element but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b>. </li>
 </ol>
+</blockquote>
 <p ><b>Figure 3-4</b> shows the visual effects of four elements with the same padding using the Vertical Line Stream Layout.</p>
 <p ><b>Figure 3-4 A Vertical Line Stream Layout Example with Padding</b></p>
 <p ><img src="../documentation/pictures/HowToUseLayoutAssistant3_1_4.png" alt="" class="inline"/></p>
@@ -713,11 +722,12 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <div class="line">    ...</div>
 <div class="line">    </div>
 <div class="line">}</div>
-</div><!-- fragment --><p ><b>NOTE</b>:</p>
-<ol type="1">
+</div><!-- fragment --><blockquote class="doxtable">
+<p ><b>NOTE</b>:</p><ol type="1">
 <li>Please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b> to the macro helper <code>arm_2d_layout()</code> as the target region but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b>.</li>
-<li>When using the <b>Syntax 2</b>, please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b> to the macro helper <code>__item_horizontal()</code> as the size of the target element but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b>.</li>
+<li>When using the <b>Syntax 2</b>, please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b> to the macro helper <code>__item_horizontal()</code> as the size of the target element but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b>. </li>
 </ol>
+</blockquote>
 <p ><b>Figure 3-5</b> shows a digits panel implemented with the Horizontal Stream Layout. Padding (2,2,2,2) is added to each element.</p>
 <p ><b>Figure 3-5 A Horizontal Stream Layout Example: Digits Panel</b></p>
 <p ><img src="../documentation/pictures/HowToUseLayoutAssistant3_2_1.png" alt="" class="inline"/></p>
@@ -799,12 +809,13 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <div class="line">    ...</div>
 <div class="line">    </div>
 <div class="line">}</div>
-</div><!-- fragment --><p ><b>NOTE</b>:</p>
-<ol type="1">
+</div><!-- fragment --><blockquote class="doxtable">
+<p ><b>NOTE</b>:</p><ol type="1">
 <li>Please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b> to the macro helper <code>arm_2d_layout()</code> as the target region but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> object</b>.</li>
-<li>When using the <b>Syntax 2</b>, please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b> to the macro helper <code>__item_vertical()</code> as the size of the target element but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b>.</li>
+<li>When using the <b>Syntax 2</b>, please pass an <b><a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b> to the macro helper <code>__item_vertical()</code> as the size of the target element but <b>NOT</b> the <b>address of an <a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> object</b>. </li>
 </ol>
-<p ><b>Figure 3-6</b> shows a digits panel similar to the one shown in <b>Figure 3-5</b>. It is implemented with the Vertical Stream Layout and paddings are added.</p>
+</blockquote>
+<p><b>Figure 3-6</b> shows a digits panel similar to the one shown in <b>Figure 3-5</b>. It is implemented with the Vertical Stream Layout and paddings are added.</p>
 <p ><b>Figure 3-6 A Vertical Stream Layout Example: Digits Panel</b></p>
 <p ><img src="../documentation/pictures/HowToUseLayoutAssistant3_2_2.png" alt="" class="inline"/></p>
 <p >The example code is shown below:</p>
