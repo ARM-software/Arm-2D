@@ -112,7 +112,7 @@ arm_2d_canvas(<The address of the target tile>, <the canvas name>) {
 
 Here `arm_2d_canvas()` takes two parameters, i.e. the **address of the target Tile** and the **name of the canvas**. `arm_2d_canvas()` will create a canvas with the specified name for the specified Tile. 
 
-**NOTE**: Canvas cannot be used outside of curly braces.
+> **NOTE**: Canvas cannot be used outside of curly braces.
 
 For example:
 
@@ -145,10 +145,9 @@ arm_2d_container(<the address of the target tile>, <the name of the new child ti
 
 Here `arm_2d_container()` takes three parameters, i.e. the **address of the target Tile**, the **name of the new Child Tile**, and **the address of the target region**. `arm_2d_container()` will generate a new child tile with the name specified by the user according to the given target Region, and generate the corresponding canvas with `__canvas` as the suffix. For example, if we specify the name of the child tile as `my_container`, then the corresponding canvas is called `my_container_canvas`. 
 
-**NOTE**:  
-
-1. The address of the target Region can be `NULL`. In this case, the child tile essentially coincides with the target Tile in size.
-2. The child tile and the canvas cannot be used outside of curly braces.
+> **NOTE**: 
+> 1. The address of the target Region can be `NULL`. In this case, the child tile essentially coincides with the target Tile in size.
+> 2. The child tile and the canvas cannot be used outside of curly braces.
 
 ```c
 RM_NONNULL(1)
@@ -211,7 +210,7 @@ arm_2d_align_<alignment>(<the target region: arm_2d_region_t>, <the width of the
 
 Here the macro helper `arm_2d_align_<alignment>` takes three arguments, i.e. the **target region object**, the **width** and **height** of the target area. 
 
-**NOTE**: Please pass the **arm_2d_region_t object** to the macro helper as the target region but **NOT** the **address of an arm_2d_region_t object**.
+> **NOTE**: Please pass the **arm_2d_region_t object** to the macro helper as the target region but **NOT** the **address of an arm_2d_region_t object**.
 
 **Syntax 2:**
 
@@ -224,11 +223,9 @@ arm_2d_align_<alignment>(<the target region: arm_2d_region_t>, <the size of the 
 
 Here the macro helper `arm_2d_align_<alignment>` takes two arguments, i.e. the **target region object** and the **size of the target area**. 
 
-**NOTE**: 
-
-1. Please pass an **arm_2d_region_t object** to the macro helper as the target region but **NOT** the **address of an arm_2d_region_t object**. 
-2. Please pass an **arm_2d_size_t object** to the macro helper as the size of the target area but **NOT** the **address of an arm_2d_size_t object**. 
-
+> **NOTE**: 
+> 1. Please pass an **arm_2d_region_t object** to the macro helper as the target region but **NOT** the **address of an arm_2d_region_t object**. 
+> 2. Please pass an **arm_2d_size_t object** to the macro helper as the size of the target area but **NOT** the **address of an arm_2d_size_t object**. 
 
 
 Based on the syntax above, the code corresponding to **Figure 2-1** is as follows:
@@ -372,7 +369,7 @@ When doing layout, users only need to enumerate graphic elements, specify their 
 
 The Line Stream Layout is a common layout method, which places elements in a specified area one by one. 
 
-**Note**: If any elements exceed the given area, the Line Stream Layout will not wrap when placing elements. 
+> **Note**: If any elements exceed the given area, the Line Stream Layout will not wrap when placing elements. 
 
 #### 3.1.1 Horizontal Line Stream
 
@@ -399,10 +396,9 @@ arm_2d_layout(<the target region: arm_2d_region_t>) {
 
 Here, `arm_2d_layout()` takes an `arm_2d_region_t` object as the target region and `__item_line_horizontal()` must be used inside the `arm_2d_layout()` structure. You can list as many `__item_line_horizontal()` segments as you want. `__item_line_horizontal()` takes two mandatory parameters, i.e. **width** and **height** or one `arm_2d_size_t` object as the size of the element.
 
-**NOTE**: 
-
-1. Please pass an **arm_2d_region_t object** to the macro helper `arm_2d_layout()` as the target region but **NOT** the **address of an arm_2d_region_t object**. 
-2. When using the **Syntax 2**, please pass an **arm_2d_size_t object** to the macro helper `__item_line_horizontal()` as the size of the target element but **NOT** the **address of an arm_2d_size_t object**. 
+> **NOTE**: 
+> 1. Please pass an **arm_2d_region_t object** to the macro helper `arm_2d_layout()` as the target region but **NOT** the **address of an arm_2d_region_t object**. 
+> 2. When using the **Syntax 2**, please pass an **arm_2d_size_t object** to the macro helper `__item_line_horizontal()` as the size of the target element but **NOT** the **address of an arm_2d_size_t object**. 
 
 
 
@@ -653,10 +649,9 @@ arm_2d_layout(<the target region: arm_2d_region_t>) {
 }
 ```
 
-**NOTE**: 
-
-1. Please pass an **arm_2d_region_t object** to the macro helper `arm_2d_layout()` as the target region but **NOT** the **address of an arm_2d_region_t object**. 
-2. When using the **Syntax 2**, please pass an **arm_2d_size_t object** to the macro helper `__item_line_vertical()` as the size of the target element but **NOT** the **address of an arm_2d_size_t object**. 
+> **NOTE**: 
+> 1. Please pass an **arm_2d_region_t object** to the macro helper `arm_2d_layout()` as the target region but **NOT** the **address of an arm_2d_region_t object**. 
+> 2. When using the **Syntax 2**, please pass an **arm_2d_size_t object** to the macro helper `__item_line_vertical()` as the size of the target element but **NOT** the **address of an arm_2d_size_t object**. 
 
 
 
@@ -741,10 +736,9 @@ arm_2d_layout(<the target region: arm_2d_region_t>) {
 }
 ```
 
-**NOTE**: 
-
-1. Please pass an **arm_2d_region_t object** to the macro helper `arm_2d_layout()` as the target region but **NOT** the **address of an arm_2d_region_t object**. 
-2. When using the **Syntax 2**, please pass an **arm_2d_size_t object** to the macro helper `__item_horizontal()` as the size of the target element but **NOT** the **address of an arm_2d_size_t object**. 
+> **NOTE**: 
+> 1. Please pass an **arm_2d_region_t object** to the macro helper `arm_2d_layout()` as the target region but **NOT** the **address of an arm_2d_region_t object**. 
+> 2. When using the **Syntax 2**, please pass an **arm_2d_size_t object** to the macro helper `__item_horizontal()` as the size of the target element but **NOT** the **address of an arm_2d_size_t object**. 
 
 
 
@@ -842,10 +836,9 @@ arm_2d_layout(<the target region: arm_2d_region_t>) {
 }
 ```
 
-**NOTE**: 
-
-1. Please pass an **arm_2d_region_t object** to the macro helper `arm_2d_layout()` as the target region but **NOT** the **address of an arm_2d_region_t object**. 
-2. When using the **Syntax 2**, please pass an **arm_2d_size_t object** to the macro helper `__item_vertical()` as the size of the target element but **NOT** the **address of an arm_2d_size_t object**. 
+> **NOTE**: 
+> 1. Please pass an **arm_2d_region_t object** to the macro helper `arm_2d_layout()` as the target region but **NOT** the **address of an arm_2d_region_t object**. 
+> 2. When using the **Syntax 2**, please pass an **arm_2d_size_t object** to the macro helper `__item_vertical()` as the size of the target element but **NOT** the **address of an arm_2d_size_t object**. 
 
 **Figure 3-6** shows a digits panel similar to the one shown in **Figure 3-5**. It is implemented with the Vertical Stream Layout and paddings are added.
 
