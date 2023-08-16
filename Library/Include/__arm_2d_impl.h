@@ -73,6 +73,7 @@ extern "C" {
 #define ARM_2D_TRY_ACCELERATION(__ID, __FUNC_PROTOTYPE, ...)                    \
         if (    (NULL != OP_CORE.ptOp->Info.LowLevelIO.IO[__ID]->HW)            \
             &&  (NULL != OP_CORE.ptOp->Info.LowLevelIO.IO[__ID])) {             \
+            __ARM_2D_PIXEL_BLENDING_INIT;                                       \
             tResult =                                                           \
             (*(__FUNC_PROTOTYPE *)OP_CORE.ptOp->Info.LowLevelIO.IO[__ID]->HW)(  \
                                         ptTask,                                 \
@@ -82,6 +83,7 @@ extern "C" {
 #define ARM_2D_RUN_DEFAULT(__ID, __FUNC_PROTOTYPE, ...)                         \
         if (    (NULL != OP_CORE.ptOp->Info.LowLevelIO.IO[__ID]->SW)            \
             &&  (NULL != OP_CORE.ptOp->Info.LowLevelIO.IO[__ID])) {             \
+            __ARM_2D_PIXEL_BLENDING_INIT;                                       \
             tResult =                                                           \
             (*(__FUNC_PROTOTYPE *)OP_CORE.ptOp->Info.LowLevelIO.IO[__ID]->SW)(  \
                                         ptTask,                                 \
@@ -89,6 +91,10 @@ extern "C" {
         } else {                                                                \
             tResult = (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;                     \
         }
+
+#ifndef __ARM_2D_PIXEL_BLENDING_INIT
+#   define __ARM_2D_PIXEL_BLENDING_INIT
+#endif
 
 #ifndef __ARM_2D_PIXEL_BLENDING_GRAY8
 #   define __ARM_2D_PIXEL_BLENDING_GRAY8(__SRC_ADDR, __DES_ADDR, __TRANS)       \
@@ -141,7 +147,7 @@ extern "C" {
                 } while(--ARM_2D_SAFE_NAME(n));                                 \
             } while(0)
 #endif
-            
+
 #ifndef __ARM_2D_PIXEL_BLENDING_OPA_GRAY8
 #   define __ARM_2D_PIXEL_BLENDING_OPA_GRAY8(__SRC_ADDR, __DES_ADDR, __OPA)     \
             do {                                                                \

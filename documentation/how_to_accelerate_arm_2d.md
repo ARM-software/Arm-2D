@@ -29,6 +29,11 @@ Depending on the capability of the target platform, the acceleration methods mig
 Arm-2D uses some Arm-2D specific Intrinsics in the default low-level C implementations. These intrinsics are defined as macros in  the private header file `__arm_2d_impl.h`:
 
 ```c
+
+#ifndef __ARM_2D_PIXEL_BLENDING_INIT
+#   define __ARM_2D_PIXEL_BLENDING_INIT
+#endif
+
 #ifndef __ARM_2D_PIXEL_BLENDING_GRAY8
 #   define __ARM_2D_PIXEL_BLENDING_GRAY8(__SRC_ADDR, __DES_ADDR, __TRANS)       \
             do {                                                                \
