@@ -167,6 +167,8 @@ Arm-2D uses some Arm-2D specific Intrinsics in the default low-level C implement
 #endif
 ```
 
+> NOTE: Arm-2D will call `__ARM_2D_PIXEL_BLENDING_INIT`  **every time** before running the low-level implementation. 
+
 As shown above, you can override the default definition and implement with your own acceleration. 
 
 
