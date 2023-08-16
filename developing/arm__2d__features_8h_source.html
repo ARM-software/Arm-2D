@@ -188,8 +188,8 @@ $(document).ready(function(){initNavTree('arm__2d__features_8h_source.html','');
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span><span class="preprocessor">#ifndef __ARM_2D_HAS_CDE__</span></div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="group__gKernel.html#ga0ec19d4c98606a830a90ac39aac41a5e">   83</a></span><span class="preprocessor">#   define __ARM_2D_HAS_CDE__                           0       </span><span class="comment">//!&lt; target MCU has no ACI implementation</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span><span class="preprocessor">#ifndef __ARM_2D_HAS_ACI__</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="group__gKernel.html#gaffba2221fe2bc0dce63b975c4256802b">   83</a></span><span class="preprocessor">#   define __ARM_2D_HAS_ACI__                           0       </span><span class="comment">//!&lt; target MCU has no ACI implementation</span></div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="preprocessor">#ifndef __ARM_2D_HAS_TIGHTLY_COUPLED_ACC__</span></div>
@@ -363,8 +363,8 @@ $(document).ready(function(){initNavTree('arm__2d__features_8h_source.html','');
 <div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span><span class="comment">/*============================ POST INCLUDES =================================*/</span></div>
 <div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span> </div>
 <div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span><span class="comment">/* include user acceleration header file(s) */</span></div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span><span class="preprocessor">#if defined(__ARM_2D_HAS_CDE__) &amp;&amp; __ARM_2D_HAS_CDE__</span></div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span><span class="preprocessor">#   include &quot;arm_2d_user_cde.h&quot;</span></div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span><span class="preprocessor">#if defined(__ARM_2D_HAS_ACI__) &amp;&amp; __ARM_2D_HAS_ACI__</span></div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span><span class="preprocessor">#   include &quot;arm_2d_user_aci.h&quot;</span></div>
 <div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span><span class="preprocessor">#if defined(__ARM_2D_HAS_TIGHTLY_COUPLED_ACC__) &amp;&amp; __ARM_2D_HAS_TIGHTLY_COUPLED_ACC__</span></div>
 <div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span><span class="preprocessor">#   include &quot;arm_2d_user_sync_acc.h&quot;</span></div>
