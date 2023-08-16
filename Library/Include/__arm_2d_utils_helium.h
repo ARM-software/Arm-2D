@@ -21,8 +21,8 @@
  * Title:        arm-2d_utils_helium.h
  * Description:  Provides helium utility routines
  *
- * $Date:        5. May 2023
- * $Revision:    V 0.0.4
+ * $Date:        16. Aug 2023
+ * $Revision:    V 1.0.0
  *
  * Target Processor:  Cortex-M cores with Helium
  *
@@ -40,8 +40,8 @@
 #include "arm_2d.h"
 #include <arm_math.h>
 
-#if defined(__ARM_2D_HAS_CDE__) && __ARM_2D_HAS_CDE__
-#include "__arm_2d_cde.h"
+#if defined(__ARM_2D_HAS_ACI__) && __ARM_2D_HAS_ACI__
+#   include "arm_2d_user_aci.h"
 #endif
 
 #ifdef   __cplusplus
@@ -57,8 +57,9 @@ extern "C" {
 #   define ____MVE_WRAPPER(__FUNC)       __FUNC
 #endif
 
-#define __MVE_WRAPPER(__FUNC)       ____MVE_WRAPPER(__FUNC)
-
+#ifndef __MVE_WRAPPER
+#   define __MVE_WRAPPER(__FUNC)       ____MVE_WRAPPER(__FUNC)
+#endif
 
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)

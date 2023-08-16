@@ -169,17 +169,41 @@ Arm-2D uses some Arm-2D specific Intrinsics in the default low-level C implement
 
 > NOTE: Arm-2D will call `__ARM_2D_PIXEL_BLENDING_INIT`  **every time** before running the low-level implementation. 
 
-As shown above, you can override the default definition and implement with your own acceleration. 
+As shown above, you can override the default definition and implement with your own acceleration. Depends on the toolchain and the way of compilation, different ways of overriding the Arm-2D intrinsics are available:
+
+- * Creating a header file called `arm_2d_user_sync_acc.h`, adding your definition in the header file and defining the macro `__ARM_2D_HAS_TIGHTLY_COUPLED_ACC__` to `1` (in `arm_2d_cfg.h` or `-D` option). (**This is the recommended method.**)
+- Using `-D` in command line.
+- Providing your own definition in a header file and pre-including it in the compilation (for example, via `-include` option in GCC, LLVM and Arm Compiler 6).
 
 
 
 ### 1.2 Overriding the Default Low-Level Implementations
 
-Depends on the toolchain and the way of compilation, different ways of overriding the Arm-2D intrinsics are available:
+Arm-2D provides the default C implementations for a set of 2D operations. Although these functions are seperated in different c source files, the prototypes are list in a private header file called `__arm_2d_direct.h`.
 
-- * Creating a header file called `arm_2d_user_sync_acc.h`, adding your definition in the header file and defining the macro `__ARM_2D_HAS_TIGHTLY_COUPLED_ACC__` to `1` (in `arm_2d_cfg.h` or `-D` option). (**This is the recommended method.**)
-- Using `-D` in command line.
-- Providing your own definition in a header file and pre-including it in the compilation (for example, via `-include` option in GCC, LLVM and Arm Compiler 6).
+You can override the default C implementation by using the keyword `__OVERRIDE_WEAK`, for example:
+
+```c
+#define __ARM_2D_IMPL__			/* it is important to define this macro in the begining of your C source file */
+#include "__arm_2d_impl.h"
+
+
+__OVERRIDE_WEAK
+void __arm_2d_impl_rgb565_src_msk_copy(uint16_t * __restrict pSourceBase,
+                                       int16_t iSourceStride,
+                                       uint8_t * __restrict ptSourceMaskBase,
+                                       int16_t iSourceMaskStride,
+                                       arm_2d_size_t *
+                                       __restrict ptSourceMaskSize,
+                                       uint16_t * __restrict pTargetBase,
+                                       int16_t iTargetStride,
+                                       arm_2d_size_t * __restrict ptCopySize)
+{
+    /* your own implementation */
+}
+```
+
+This example code overrides the low-level implementation of **tile-copy-with-src-mask-only for rgb565**. 
 
 
 
@@ -269,8 +293,8 @@ You can use this header file to
 
 > **NOTE**: 
 >
-> 1. The macro `__ARM_2D_HAS_HW_ACC__` does NOT affect the overriding of Arm-2D intrinsics. 
-> 2. It is NOT necessary but recommended to use `arm_2d_user_async_acc.h` to override the Arm-2D intrinsics as long as you have other viable solutions (for example, use `-D` command line option in GCC, LLVM and Arm Compiler 6 )
+> 1. The macro `__ARM_2D_HAS_HW_ACC__` does NOT affect the overriding of Arm-2D intrinsics or overriding the default OPCODEs. 
+> 2. It is NOT necessary but recommended to use `arm_2d_user_async_acc.h` to override the Arm-2D intrinsics and the default OPCODEs as long as you have other viable solutions (for example, use `-D` command line option in GCC, LLVM and Arm Compiler 6 )
 > 3. It is NOT necessary but recommanded to use macro `__ARM_2D_HAS_HW_ACC__` to include the header file `arm_2d_user_async_acc.h` as long as you have other viable solutions (for example, use `-include` command line option in GCC, LLVM and Arm Compiler 6 ).
 
 
@@ -328,11 +352,24 @@ void arm_2d_init(void)
 
 ## 3 Acceleration via Arm Custom Instruction (ACI)
 
+### 3.1 Helium-based ACI and Non-Helium-based ACI
+
+A lot of Arm Cortex-M processors support Arm Custom Instruction. When Helium extension is available, chip designers can implement the so-called Helium-based ACI which can use 128bit wide vectors and Helium registers. 
+
+- For Non-Helium Based ACI, please use the method describe in **Chapter 1 Software Tightly Coupled (Synchronouse) Acceleration** 
+- For Helium Based ACI, please follow the guidance in this chapter. 
+
+
+
+### 3.2 Disable the default Helium Implementation
+
+
+
 
 
 ### 3.3 Insert An User Defined Header File
 
-If you defined the macro `__ARM_2D_HAS_ACI__` to `1`, an user defined header file `arm_2d_user_cde.h` will be included in compilation, as shown below:
+If you defined the macro `__ARM_2D_HAS_ACI__` to `1`, an user defined header file `arm_2d_user_aci.h` will be included in compilation of `arm_2d_helium.c`, as shown below:
 
 ```c
 #if defined(__ARM_2D_HAS_ACI__) && __ARM_2D_HAS_ACI__
@@ -342,18 +379,16 @@ If you defined the macro `__ARM_2D_HAS_ACI__` to `1`, an user defined header fil
 
 You can use this header file to 
 
-- Override Arm-2D intrinsics and 
+- Disable the specfied helium implementation.
 - Provide related information if required, such as function prototypes, variables definitions, user defined types, macros etc. 
 
 > **NOTE**: 
 >
-> 1. The macro `__ARM_2D_HAS_ACI__` does NOT affect the overriding of Arm-2D intrinsics. 
-> 2. It is NOT necessary but recommended to use `arm_2d_user_aci.h` to override the Arm-2D intrinsics as long as you have other viable solutions (for example, use `-D` command line option in GCC, LLVM and Arm Compiler 6 )
-> 3. It is NOT necessary but recommanded to use macro `__ARM_2D_HAS_ACI__` to include the header file `arm_2d_user_aci.h` as long as you have other viable solutions (for example, use `-include` command line option in GCC, LLVM and Arm Compiler 6 ).
+> 1. Please make sure the `arm_2d_user_aci.h` does **NOT** affect C source files other than `arm_2d_helium.c`.
 
 
 
-After setting the macro `__ARM_2D_HAS_ACI__` to `1`, `arm_2d.c` will call the `__arm_2d_aci_init()` that you **MUST** implement in your own c source file. You can initialize the acceleration hardware logic here. If there is nothing to initialize, please place an empty function body in your c source code.
+After setting the macro `__ARM_2D_HAS_ACI__` to `1`, `arm_2d.c` will call the `__arm_2d_aci_init()` that you **MUST** implement in your own c source file. You can initialize the ACI logic if required. If there is nothing to initialize, please place an empty function body in your c source code.
 
 ```c
 ...

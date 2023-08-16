@@ -62,9 +62,10 @@
 
 /*============================ INCLUDES ======================================*/
 
+#include "__arm_2d_utils_helium.h"
 #include "__arm_2d_paving_helium.h"
 #include "__arm_2d_math_helium.h"
-#include "__arm_2d_utils_helium.h"
+
 #ifdef   __cplusplus
 extern "C" {
 #endif
