@@ -206,7 +206,7 @@ You can use this header file to
 
 
 
-After setting the macro `__ARM_2D_HAS_TIGHTLY_COUPLED_ACC__` to `1`, `arm_2d.c` will call the `__arm_2d_sync_acc_init()` that you **MUST** implement in your own c source file. You can initialize the acceleration hardware logic here. 
+After setting the macro `__ARM_2D_HAS_TIGHTLY_COUPLED_ACC__` to `1`, `arm_2d.c` will call the `__arm_2d_sync_acc_init()` that you **MUST** implement in your own c source file. You can initialize the acceleration hardware logic here. If there is nothing to initialize, please place an empty function body in your c source code.
 
 ```c
 ...
@@ -275,7 +275,7 @@ You can use this header file to
 
 
 
-After setting the macro `__ARM_2D_HAS_HW_ACC__` to `1`, `arm_2d.c` will call the `__arm_2d_async_acc_init()` that you **MUST** implement in your own c source file. You can initialize the acceleration hardware logic here. 
+After setting the macro `__ARM_2D_HAS_HW_ACC__` to `1`, `arm_2d.c` will call the `__arm_2d_async_acc_init()` that you **MUST** implement in your own c source file. You can initialize the acceleration hardware logic here. If there is nothing to initialize, please place an empty function body in your c source code.
 
 ```c
 ...
@@ -353,7 +353,7 @@ You can use this header file to
 
 
 
-After setting the macro `__ARM_2D_HAS_ACI__` to `1`, `arm_2d.c` will call the `__arm_2d_aci_init()` that you **MUST** implement in your own c source file. You can initialize the acceleration hardware logic here. 
+After setting the macro `__ARM_2D_HAS_ACI__` to `1`, `arm_2d.c` will call the `__arm_2d_aci_init()` that you **MUST** implement in your own c source file. You can initialize the acceleration hardware logic here. If there is nothing to initialize, please place an empty function body in your c source code.
 
 ```c
 ...
