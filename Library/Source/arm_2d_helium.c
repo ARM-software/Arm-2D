@@ -29,6 +29,7 @@
  * -------------------------------------------------------------------- */
 
 #define __ARM_2D_IMPL__
+#define __ARM_2D_IMPLEMENT_HELIUM__     1
 
 #include "arm_2d.h"
 #include "__arm_2d_impl.h"

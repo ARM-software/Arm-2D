@@ -21,15 +21,15 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        14. Aug 2023
- * $Revision:    V.1.4.0
+ * $Date:        23. Aug 2023
+ * $Revision:    V.1.4.1
  *
  * Target Processor:  Cortex-M cores
  *
  * -------------------------------------------------------------------- */
 
-#ifndef __ARM_2D_ACCELERATION_H__
-#   define __ARM_2D_ACCELERATION_H__      1
+#ifndef __ARM_2D_IMPLEMENT_H__
+#   define __ARM_2D_IMPLEMENT_H__      1
 
 /*============================ INCLUDES ======================================*/
 
@@ -361,7 +361,9 @@ enum {
     //__ARM_2D_OP_IDX_TRANSFORM_WITH_MASKS_AND_OPACITY,                         //!< todo in v1.xx
     __ARM_2D_OP_IDX_TRANSFORM_WITH_SOURCE_MASK_AND_OPACITY,
     //__ARM_2D_OP_IDX_TRANSFORM_WITH_TARGET_MASK_AND_OPACITY,                   //!< todo in v1.xx
-    /*------------ cmsisi-2d operation idx end --------------*/
+    /*------------ arm-2d operation idx end --------------*/
+
+    __ARM_2D_OP_IDX_USER_OP_START,
 };
 //! @}
 

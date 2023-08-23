@@ -257,6 +257,9 @@ extern "C" {
 #if defined(__ARM_2D_HAS_TIGHTLY_COUPLED_ACC__) && __ARM_2D_HAS_TIGHTLY_COUPLED_ACC__
 #   include "arm_2d_user_sync_acc.h"
 #endif
+#if defined(__ARM_2D_HAS_ACI__) && __ARM_2D_HAS_ACI__
+#   include "arm_2d_user_aci.h"
+#endif
 #if defined(__ARM_2D_HAS_HW_ACC__) && __ARM_2D_HAS_HW_ACC__
 #   include "arm_2d_user_async_acc.h"
 #endif

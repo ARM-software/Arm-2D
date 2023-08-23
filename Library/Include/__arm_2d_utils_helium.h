@@ -28,8 +28,6 @@
  *
  * -------------------------------------------------------------------- */
 
-
-
 #ifndef __ARM_2D_UTILS_HELIUM_H__
 #define __ARM_2D_UTILS_HELIUM_H__
 
@@ -39,10 +37,6 @@
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
 #include <arm_math.h>
-
-#if defined(__ARM_2D_HAS_ACI__) && __ARM_2D_HAS_ACI__
-#   include "arm_2d_user_aci.h"
-#endif
 
 #ifdef   __cplusplus
 extern "C" {

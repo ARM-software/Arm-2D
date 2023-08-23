@@ -356,9 +356,6 @@ void arm_2d_init(void)
 
 A lot of Arm Cortex-M processors support Arm Custom Instruction. When Helium extension is available, chip designers can implement the so-called Helium-based ACI which can use 128bit wide vectors and Helium registers. 
 
-- For Non-Helium Based ACI, please use the method describe in **Chapter 1 Software Tightly Coupled (Synchronouse) Acceleration** 
-- For Helium Based ACI, please follow the guidance in this chapter. 
-
 
 
 ### 3.2 Disable the default Helium Implementation
@@ -369,7 +366,7 @@ A lot of Arm Cortex-M processors support Arm Custom Instruction. When Helium ext
 
 ### 3.3 Insert An User Defined Header File
 
-If you defined the macro `__ARM_2D_HAS_ACI__` to `1`, an user defined header file `arm_2d_user_aci.h` will be included in compilation of `arm_2d_helium.c`, as shown below:
+If you defined the macro `__ARM_2D_HAS_ACI__` to `1`, an user defined header file `arm_2d_user_aci.h` will be included in compilation, as shown below:
 
 ```c
 #if defined(__ARM_2D_HAS_ACI__) && __ARM_2D_HAS_ACI__
@@ -379,12 +376,9 @@ If you defined the macro `__ARM_2D_HAS_ACI__` to `1`, an user defined header fil
 
 You can use this header file to 
 
-- Disable the specfied helium implementation.
+- Override Arm-2D intrinsics,
+- Disable the specfied helium implementation, and
 - Provide related information if required, such as function prototypes, variables definitions, user defined types, macros etc. 
-
-> **NOTE**: 
->
-> 1. Please make sure the `arm_2d_user_aci.h` does **NOT** affect C source files other than `arm_2d_helium.c`.
 
 
 
