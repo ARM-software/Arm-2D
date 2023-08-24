@@ -157,6 +157,8 @@ extern "C" {
                 arm_2d_c8bit_fill_colour
 #   define arm_2d_tile_copy_with_colour_keying                                  \
                 arm_2d_c8bit_tile_copy_with_colour_keying
+#   define arm_2d_tile_copy_with_colour_keying_and_opacity                      \
+                arm_2d_gray8_tile_copy_with_colour_keying_and_opacity
 #   define arm_2d_tile_copy_with_colour_keying_only                             \
                 arm_2d_c8bit_tile_copy_with_colour_keying_only
 #   define arm_2d_tile_copy_with_colour_keying_and_x_mirror                     \
@@ -303,6 +305,8 @@ extern "C" {
                 arm_2d_rgb16_fill_colour
 #   define arm_2d_tile_copy_with_colour_keying                                  \
                 arm_2d_rgb16_tile_copy_with_colour_keying
+#   define arm_2d_tile_copy_with_colour_keying_and_opacity                      \
+                arm_2d_rgb565_tile_copy_with_colour_keying_and_opacity
 #   define arm_2d_tile_copy_with_colour_keying_only                             \
                 arm_2d_rgb16_tile_copy_with_colour_keying_only
 #   define arm_2d_tile_copy_with_colour_keying_and_x_mirror                     \
@@ -449,6 +453,8 @@ extern "C" {
                 arm_2d_rgb32_fill_colour
 #   define arm_2d_tile_copy_with_colour_keying                                  \
                 arm_2d_rgb32_tile_copy_with_colour_keying
+#   define arm_2d_tile_copy_with_colour_keying_and_opacity                      \
+                arm_2d_cccn888_tile_copy_with_colour_keying_and_opacity
 #   define arm_2d_tile_copy_with_colour_keying_only                             \
                 arm_2d_rgb32_tile_copy_with_colour_keying_only
 #   define arm_2d_tile_copy_with_colour_keying_and_x_mirror                     \

@@ -103,9 +103,9 @@ typedef struct floating_range_t {
 enum {
 #if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
     BENCHMARK_LAYER_HELIUM,
+    BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING,
 #endif
     BENCHMARK_LAYER_RED_OPA,
-    BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING,
     BENCHMARK_LAYER_ICON,
 };
 
@@ -148,11 +148,12 @@ const arm_2d_tile_t c_tilePictureSun;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
+#if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
 dcl_fb(c_tLayerB)
 
 /* implement a 50*50 framebuffer */
 impl_fb(c_tLayerB, 90, 50, __arm_2d_color_t);
-
+#endif
 
 ARM_NOINIT static uint8_t s_bmpFadeMask[__GLCD_CFG_SCEEN_WIDTH__ >> 1];
 const arm_2d_tile_t c_tileFadeMask = {
@@ -184,8 +185,10 @@ static arm_2d_layer_t s_ptRefreshLayers[] = {
                         .tRegion.tSize.iWidth = 100, 
                         .tRegion.tSize.iHeight = 100
                     ),
+#if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
     [BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING] = 
         arm_2d_layer(   &c_tLayerB, 112, 50, 150),
+#endif
     [BENCHMARK_LAYER_ICON] = 
         arm_2d_layer(&c_tilePictureSun, 255, 0, 0, 
                     .bIsIrregular = true, 
@@ -199,17 +202,18 @@ static floating_range_t s_ptFloatingBoxes[] = {
         .ptLayer = &s_ptRefreshLayers[BENCHMARK_LAYER_HELIUM],
         .tOffset = {-1, -1},
     },
+    [BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING] = {
+        .tRegion = {{0, 0}, {__GLCD_CFG_SCEEN_WIDTH__, __GLCD_CFG_SCEEN_HEIGHT__}},
+        .ptLayer = &s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING],
+        .tOffset = {-2, 4},
+    },
 #endif
     [BENCHMARK_LAYER_RED_OPA] = {
         .tRegion = {{0, 0}, {__GLCD_CFG_SCEEN_WIDTH__, __GLCD_CFG_SCEEN_HEIGHT__}},
         .ptLayer = &s_ptRefreshLayers[BENCHMARK_LAYER_RED_OPA],
         .tOffset = {5, -2},
     },
-    [BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING] = {
-        .tRegion = {{0, 0}, {__GLCD_CFG_SCEEN_WIDTH__, __GLCD_CFG_SCEEN_HEIGHT__}},
-        .ptLayer = &s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING],
-        .tOffset = {-2, 4},
-    },
+
     [BENCHMARK_LAYER_ICON] = {
         .tRegion = {{-100, -100}, {__GLCD_CFG_SCEEN_WIDTH__+200, __GLCD_CFG_SCEEN_HEIGHT__+200}},
         .ptLayer = &s_ptRefreshLayers[BENCHMARK_LAYER_ICON],
@@ -225,10 +229,11 @@ void benchmark_generic_init(void)
 
 #if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
     s_ptRefreshLayers[BENCHMARK_LAYER_HELIUM].wMode = ARM_2D_CP_MODE_FILL;
+    s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode = ARM_2D_CP_MODE_FILL;
 #endif
 
-    s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode = ARM_2D_CP_MODE_FILL;
-    s_ptRefreshLayers[BENCHMARK_LAYER_ICON].wMode = ARM_2D_CP_MODE_COPY;
+
+    s_ptRefreshLayers[BENCHMARK_LAYER_ICON].wMode = ARM_2D_CP_MODE_FILL;
     
     //! generate line-fading template for a half of the screen
     do {
@@ -296,26 +301,26 @@ void benchmark_generic_do_events(void)
 
     __update_boxes(s_ptFloatingBoxes, dimof(s_ptFloatingBoxes));
     
-    if (s_wFrameCounter == 25) {                       //!< every 250 frames
+    if (s_wFrameCounter == 25) {                       //!< every 25 frames
         s_wFrameCounter = 0;
         
         switch(s_wCounter++ & 0x03) {
             case 0:
-                s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode = 
+                s_ptRefreshLayers[BENCHMARK_LAYER_ICON].wMode = 
                     ARM_2D_CP_MODE_FILL;
                 break;
             case 1:
-                s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode = 
+                s_ptRefreshLayers[BENCHMARK_LAYER_ICON].wMode = 
                     ARM_2D_CP_MODE_FILL       | 
                     ARM_2D_CP_MODE_X_MIRROR;
                 break;
             case 2:
-                s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode = 
+                s_ptRefreshLayers[BENCHMARK_LAYER_ICON].wMode = 
                     ARM_2D_CP_MODE_FILL       | 
                     ARM_2D_CP_MODE_Y_MIRROR;
                 break;
             case 3:
-                s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode = 
+                s_ptRefreshLayers[BENCHMARK_LAYER_ICON].wMode = 
                     ARM_2D_CP_MODE_FILL       | 
                     ARM_2D_CP_MODE_X_MIRROR   | 
                     ARM_2D_CP_MODE_Y_MIRROR;
@@ -323,12 +328,10 @@ void benchmark_generic_do_events(void)
         }
 #if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
         s_ptRefreshLayers[BENCHMARK_LAYER_HELIUM].wMode 
-            = s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode;
+            = s_ptRefreshLayers[BENCHMARK_LAYER_ICON].wMode;
+        s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode 
+            = s_ptRefreshLayers[BENCHMARK_LAYER_ICON].wMode;
 #endif
-
-        s_ptRefreshLayers[BENCHMARK_LAYER_ICON].wMode 
-            = s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode 
-            & ~ARM_2D_CP_MODE_FILL;
     }
 }
 
@@ -419,9 +422,9 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
         arm_2d_rgb16_tile_copy( &c_tileCMSISLogo,
                                 ptTile,
                                 &c_tFillRegion,
-                                ptLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode);
+                                ptLayers[BENCHMARK_LAYER_ICON].wMode);
     #else
-        switch (ptLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode) {
+        switch (ptLayers[BENCHMARK_LAYER_ICON].wMode) {
             case ARM_2D_CP_MODE_FILL | ARM_2D_CP_MODE_X_MIRROR:
                 arm_2d_tile_fill_with_x_mirror( &c_tileCMSISLogo,
                                                 ptTile,
@@ -475,9 +478,9 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
             &c_tilePictureSun,
             ptTile,
             &c_tFillRegion,
-            ptLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode);
+            ptLayers[BENCHMARK_LAYER_ICON].wMode | ARM_2D_CP_MODE_FILL);
     #else
-        switch (ptLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode) {
+        switch (ptLayers[BENCHMARK_LAYER_ICON].wMode) {
             case ARM_2D_CP_MODE_FILL | ARM_2D_CP_MODE_X_MIRROR:
                 arm_2d_tile_fill_with_x_mirror( &c_tilePictureSun,
                                                 ptTile,
@@ -578,10 +581,10 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
                 /*! remove ARM_2D_CP_MODE_FILL and only keeps
                  *! mirroring mode
                  */
-                ptLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode
+                ptLayers[BENCHMARK_LAYER_ICON].wMode
                     &~ ARM_2D_CP_MODE_FILL);
 #else
-            switch (ptLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode 
+            switch (ptLayers[BENCHMARK_LAYER_ICON].wMode 
                     &~ ARM_2D_CP_MODE_FILL) {
                 case ARM_2D_CP_MODE_COPY:
                     arm_2d_tile_copy_with_masks_only(
@@ -655,12 +658,13 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
 #endif
         }
     } while(0);
-    
+
+#if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
     arm_2d_fill_colour( s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].ptTile, 
                         NULL, 
                         GLCD_COLOR_GREEN);
 
-
+    
     //!< fill a given tile with the sun icon (with colour-keying)
     switch(s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode) {
         case ARM_2D_CP_MODE_FILL:
@@ -692,9 +696,11 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
                 GLCD_COLOR_WHITE);
                 break;
     }
-    
+
+#endif
+
     arm_2d_op_wait_async(NULL);
-    
+
     arm_foreach(arm_2d_layer_t, ptLayers, hwCount, ptLayer) {
         arm_2d_region_t tRegion = ptLayer->tRegion;
 
@@ -711,7 +717,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
                             ptLayer->chOpacity,
                             (__arm_2d_color_t){ ptLayer->tKeyColour });
             } else {
-                switch(ptLayer->wMode) {
+                switch(ptLayer->wMode & ~ARM_2D_CP_MODE_FILL) {
                     case ARM_2D_CP_MODE_COPY:
                         arm_2d_tile_copy_with_colour_keying_only( 
                                                     ptLayer->ptTile,

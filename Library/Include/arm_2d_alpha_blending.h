@@ -567,8 +567,8 @@ extern "C" {
                                       __SRC_ADDR,   /*   source tile address */ \
                                       __DES_ADDR,   /*   target tile address */ \
                                       __REGION_ADDR,/*   region address */      \
-                                      __ALPHA,     /*   colour */               \
-                                      __COLOUR)      /*   alpha */              \
+                                      __ALPHA,      /*   colour */              \
+                                      __COLOUR)     /*   alpha */               \
             arm_2dp_gray8_tile_copy_with_colour_keying_and_opacity(             \
                                                     NULL,                       \
                                                  (__SRC_ADDR),                  \
