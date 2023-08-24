@@ -187,6 +187,10 @@ You can override the default C implementation by using the keyword `__OVERRIDE_W
 #define __ARM_2D_IMPL__			/* it is important to define this macro in the begining of your C source file */
 #include "__arm_2d_impl.h"
 
+void __arm_2d_sync_acc_init(void)
+{
+    /* some code to initialize the hardware logic if required */
+}
 
 __OVERRIDE_WEAK
 void __arm_2d_impl_rgb565_src_msk_copy(uint16_t * __restrict pSourceBase,
@@ -360,7 +364,112 @@ A lot of Arm Cortex-M processors support Arm Custom Instruction. When Helium ext
 
 ### 3.2 Disable the default Helium Implementation
 
+In the `Library/Include/template` folder, there is a template file for the `arm_2d_user_aci.h`, please follow the guidance in the `DISABLE DEFAULT HELIUM IMPLEMENTATION` section to disable the default Helium implementation of the low level functions.
 
+```c
+#if !defined(__ARM_2D_USER_ACI_H__) && __ARM_2D_HAS_ACI__
+#define __ARM_2D_USER_ACI_H__
+
+/*============================ INCLUDES ======================================*/
+/*
+ * NOTE: You can modify this header file for your ACI acceleration.
+ */
+
+...
+
+/*============================ DISABLE DEFAULT HELIUM IMPLEMENTATION =========*/
+
+#if defined(__ARM_2D_IMPLEMENT_HELIUM__) && __ARM_2D_IMPLEMENT_HELIUM__
+/* 
+ * NOTE: inside this block, you can rename the target low level functions, i.e. 
+ *       functions with prefix like __arm_2d_impl_xxxxx to a different name,
+ *       by doing so, your ACI accelerated low level implementation can override
+ *       the defaultC version. 
+ * 
+ *       For example:
+ *
+ *       #define __arm_2d_impl_cccn888_to_rgb565    \
+ *                    __arm_2d_impl_cccn888_to_rgb565_origin
+ * 
+ *       by doing so, your own ACI version of __arm_2d_impl_cccn888_to_rgb565 
+ *       can override the default WEAK version in arm-2d library.
+ */
+
+
+
+#endif
+
+#endif  /* end of __ARM_2D_USER_ACI_H__ */
+
+```
+
+
+
+For example, suppose you want to accelerate `__arm_2d_impl_rgb565_src_msk_copy` and replace the Helium version with your own ACI accelerated one, then please do the following steps:
+
+1. create a C source file for your own ACI accelerated low level function(s):
+
+```c
+#define __ARM_2D_IMPL__			/* it is important to define this macro in the begining of your C source file */
+#include "__arm_2d_impl.h"
+
+...
+void __arm_2d_aci_init(void)
+{
+    /* some code to initialize the ACI hardware logic of your device */
+}
+...
+
+__OVERRIDE_WEAK
+void __arm_2d_impl_rgb565_src_msk_copy(uint16_t * __restrict pSourceBase,
+                                       int16_t iSourceStride,
+                                       uint8_t * __restrict ptSourceMaskBase,
+                                       int16_t iSourceMaskStride,
+                                       arm_2d_size_t *
+                                       __restrict ptSourceMaskSize,
+                                       uint16_t * __restrict pTargetBase,
+                                       int16_t iTargetStride,
+                                       arm_2d_size_t * __restrict ptCopySize)
+{
+    /* your own implementation */
+}
+```
+
+2. copy the `arm_2d_user_aci.h` from the `Library/Include/template` to your own directory and add the following content:
+
+```c
+#if !defined(__ARM_2D_USER_ACI_H__) && __ARM_2D_HAS_ACI__
+#define __ARM_2D_USER_ACI_H__
+
+...
+
+#if defined(__ARM_2D_IMPLEMENT_HELIUM__) && __ARM_2D_IMPLEMENT_HELIUM__
+/* 
+ * NOTE: inside this block, you can rename the target low level functions, i.e. 
+ *       functions with prefix like __arm_2d_impl_xxxxx to a different name,
+ *       by doing so, your ACI accelerated low level implementation can override
+ *       the defaultC version. 
+ * 
+ *       For example:
+ *
+ *       #define __arm_2d_impl_cccn888_to_rgb565    \
+ *                    __arm_2d_impl_cccn888_to_rgb565_origin
+ * 
+ *       by doing so, your own ACI version of __arm_2d_impl_cccn888_to_rgb565 
+ *       can override the default WEAK version in arm-2d library.
+ */
+
+#define __arm_2d_impl_rgb565_src_msk_copy	__arm_2d_impl_rgb565_src_msk_copy_origin
+
+
+#endif
+...
+
+
+#endif
+```
+
+3. define the macro `__ARM_2D_HAS_ACI` to `1` for the arm-2d library. 
 
 
 
