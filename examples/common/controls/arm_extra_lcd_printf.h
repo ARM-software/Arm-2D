@@ -78,7 +78,8 @@ extern "C" {
                                 const arm_2d_region_t *ptRegion,                \
                                 arm_2d_tile_t *ptileChar,                       \
                                 COLOUR_INT tForeColour,                         \
-                                uint_fast8_t chOpacity)
+                                uint_fast8_t chOpacity,                         \
+                                float fScale)
 
 #define IMPL_FONT_GET_CHAR_DESCRIPTOR(__NAME)                                   \
             arm_2d_char_descriptor_t *__NAME(                                   \
@@ -148,7 +149,8 @@ typedef arm_fsm_rt_t arm_2d_font_draw_char_handler_t(
                                             const arm_2d_region_t *ptRegion,
                                             arm_2d_tile_t *ptileChar,
                                             COLOUR_INT tForeColour,
-                                            uint_fast8_t chOpacity);
+                                            uint_fast8_t chOpacity,
+                                            float fScale);
 
 /* Font definitions */
 struct arm_2d_font_t {
@@ -229,6 +231,9 @@ void arm_lcd_text_set_colour(   COLOUR_INT_TYPE wForeground,
 
 extern
 void arm_lcd_text_set_opacity(uint8_t chOpacity);
+
+extern
+void arm_lcd_text_set_scale(float fScale);
 
 extern 
 void arm_lcd_text_set_target_framebuffer(const arm_2d_tile_t *ptFrameBuffer);

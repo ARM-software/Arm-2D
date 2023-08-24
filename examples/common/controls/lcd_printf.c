@@ -74,9 +74,10 @@ static struct {
         COLOUR_INT_TYPE     tBackground;
     } tColour;
     uint8_t chOpacity;
-    
+
     arm_2d_tile_t *ptTargetFB;
     uint32_t       wMode;
+    float          fScale;
     
     const arm_2d_font_t *ptFont;
 } s_tLCDTextControl = {
@@ -137,6 +138,11 @@ void arm_lcd_text_set_display_mode(uint32_t wMode)
 void arm_lcd_text_set_opacity(uint8_t chOpacity)
 {
     s_tLCDTextControl.chOpacity = chOpacity;
+}
+
+void arm_lcd_text_set_scale(float fScale)
+{
+    s_tLCDTextControl.fScale = fScale;
 }
 
 void arm_lcd_text_set_draw_region(arm_2d_region_t *ptRegion)
@@ -277,7 +283,8 @@ int8_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8_
                                     &tDrawRegion,
                                     &tCharDescriptor.tileChar,
                                     s_tLCDTextControl.tColour.tForeground,
-                                    chOpacity);
+                                    chOpacity,
+                                    s_tLCDTextControl.fScale);
     } else {
         arm_2d_draw_pattern(&tCharDescriptor.tileChar, 
                             s_tLCDTextControl.ptTargetFB, 
@@ -393,7 +400,7 @@ void arm_lcd_puts(const char *str)
             int16_t iY = s_tLCDTextControl.tDrawOffset.iY + s_tLCDTextControl.tRegion.tLocation.iY; 
 
             s_tLCDTextControl.tDrawOffset.iX 
-                += lcd_draw_char(   iX, iY, (uint8_t **)&str, s_tLCDTextControl.chOpacity);;
+                += lcd_draw_char(   iX, iY, (uint8_t **)&str, s_tLCDTextControl.chOpacity);
 
             __arm_lcd_draw_region_line_wrapping(&tCharSize, &tDrawRegionSize);
 

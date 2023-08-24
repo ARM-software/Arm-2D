@@ -2120,25 +2120,13 @@ const arm_2d_tile_t c_tileDigitsFontA4Mask = {
 
 
 static 
-arm_fsm_rt_t __digit_font_a2_draw_char( const arm_2d_tile_t *ptTile,
-                                        const arm_2d_region_t *ptRegion,
-                                        arm_2d_tile_t *ptileChar,
-                                        COLOUR_INT tForeColour,
-                                        uint_fast8_t chOpacity);
+IMPL_FONT_DRAW_CHAR(__digit_font_a2_draw_char);
                                         
 static 
-arm_fsm_rt_t __digit_font_a4_draw_char( const arm_2d_tile_t *ptTile,
-                                        const arm_2d_region_t *ptRegion,
-                                        arm_2d_tile_t *ptileChar,
-                                        COLOUR_INT tForeColour,
-                                        uint_fast8_t chOpacity);
+IMPL_FONT_DRAW_CHAR(__digit_font_a4_draw_char);
 
 static 
-arm_fsm_rt_t __digit_font_a8_draw_char( const arm_2d_tile_t *ptTile,
-                                        const arm_2d_region_t *ptRegion,
-                                        arm_2d_tile_t *ptileChar,
-                                        COLOUR_INT tForeColour,
-                                        uint_fast8_t chOpacity);
+IMPL_FONT_DRAW_CHAR(__digit_font_a8_draw_char);
 
 static 
 arm_2d_char_descriptor_t *
@@ -2403,11 +2391,28 @@ IMPL_FONT_DRAW_CHAR(__digit_font_a4_draw_char)
 static
 IMPL_FONT_DRAW_CHAR(__digit_font_a8_draw_char)
 {
-    return arm_2d_fill_colour_with_mask_and_opacity( 
+    static arm_2d_op_fill_cl_msk_opa_trans_t s_tOP;
+    const bool bIsNewFrame = true;
+    static const arm_2d_location_t c_tCentre = {7,8};
+
+    if (0.0f == fScale || ABS(fScale - 1.0f) < 0.01f) {
+        return arm_2d_fill_colour_with_mask_and_opacity( 
                                             ptTile, 
                                             ptRegion,
                                             ptileChar,
                                             (__arm_2d_color_t){tForeColour},
+                                            chOpacity);
+    }
+
+    return arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                                            &s_tOP,
+                                            ptileChar,
+                                            ptTile, 
+                                            ptRegion,
+                                            c_tCentre,
+                                            0.0f,
+                                            fScale,
+                                            tForeColour,
                                             chOpacity);
 }
 

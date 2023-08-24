@@ -217,10 +217,14 @@ arm_fsm_rt_t __list_view_item_0_draw_item(
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(ptParam);
 
+
     uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
+    int32_t q7ScaleRatio = ((ptParam->chOpacity >> 1) + 128);
+    /* re-use opacity (0~255) as scaling ratio */
+    int32_t nSize = 100 * q7ScaleRatio >> 8;
 
     arm_2d_canvas(ptTile, __canvas) {
-        arm_2d_align_top_centre(__canvas, 100, 100) {
+        arm_2d_align_top_centre(__canvas, nSize, nSize) {
 
             /* adjust item position around a curve*/
             do {
@@ -235,7 +239,8 @@ arm_fsm_rt_t __list_view_item_0_draw_item(
             arm_lcd_text_set_target_framebuffer(ptTile);
             arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
             arm_lcd_text_set_opacity(chOpacity);
-            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
+            arm_lcd_text_set_scale((float)q7ScaleRatio / 256.0f);
+            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A8_DIGITS_ONLY);
             arm_print_banner("0", __top_centre_region);
             arm_lcd_text_set_opacity(255);
         }
@@ -261,8 +266,16 @@ arm_fsm_rt_t __list_view_item_1_draw_item(
 
     uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
 
+    int32_t q7ScaleRatio = ((ptParam->chOpacity >> 1) + 128);
+    /* re-use opacity (0~255) as scaling ratio */
+    int32_t nSize = 100 * q7ScaleRatio >> 8;
+
+    if (bIsNewFrame) {
+        progress_wheel_set_diameter(&ptScene->tWheel, 60 * q7ScaleRatio >> 8);
+    }
+
     arm_2d_canvas(ptTile, __canvas) {
-        arm_2d_align_top_centre(__canvas, 100, 100) {
+        arm_2d_align_top_centre(__canvas, nSize, nSize) {
 
             /* adjust item position around a curve*/
             do {
@@ -284,7 +297,8 @@ arm_fsm_rt_t __list_view_item_1_draw_item(
             arm_lcd_text_set_target_framebuffer(ptTile);
             arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
             arm_lcd_text_set_opacity(chOpacity);
-            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
+            arm_lcd_text_set_scale((float)q7ScaleRatio / 256.0f);
+            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A8_DIGITS_ONLY);
             arm_print_banner("1", __top_centre_region);
             arm_lcd_text_set_opacity(255);
         }
@@ -308,8 +322,12 @@ arm_fsm_rt_t __list_view_item_2_draw_item(
     
     uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
 
+    int32_t q7ScaleRatio = ((ptParam->chOpacity >> 1) + 128);
+    /* re-use opacity (0~255) as scaling ratio */
+    int32_t nSize = 100 * q7ScaleRatio >> 8;
+
     arm_2d_canvas(ptTile, __canvas) {
-        arm_2d_align_top_centre(__canvas, 100, 100) {
+        arm_2d_align_top_centre(__canvas, nSize, nSize) {
 
             /* adjust item position around a curve*/
             do {
@@ -324,7 +342,8 @@ arm_fsm_rt_t __list_view_item_2_draw_item(
             arm_lcd_text_set_target_framebuffer(ptTile);
             arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
             arm_lcd_text_set_opacity(chOpacity);
-            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
+            arm_lcd_text_set_scale((float)q7ScaleRatio / 256.0f);
+            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A8_DIGITS_ONLY);
             arm_print_banner("2", __top_centre_region);
             arm_lcd_text_set_opacity(255);
         }
@@ -349,8 +368,12 @@ arm_fsm_rt_t __list_view_item_3_draw_item(
 
     uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
 
+    int32_t q7ScaleRatio = ((ptParam->chOpacity >> 1) + 128);
+    /* re-use opacity (0~255) as scaling ratio */
+    int32_t nSize = 100 * q7ScaleRatio >> 8;
+
     arm_2d_canvas(ptTile, __canvas) {
-        arm_2d_align_top_centre(__canvas, 100, 100) {
+        arm_2d_align_top_centre(__canvas, nSize, nSize) {
 
             /* adjust item position around a curve*/
             do {
@@ -366,7 +389,8 @@ arm_fsm_rt_t __list_view_item_3_draw_item(
             arm_lcd_text_set_target_framebuffer(ptTile);
             arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
             arm_lcd_text_set_opacity(chOpacity);
-            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
+            arm_lcd_text_set_scale((float)q7ScaleRatio / 256.0f);
+            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A8_DIGITS_ONLY);
             arm_print_banner("3", __top_centre_region);
             arm_lcd_text_set_opacity(255);
         }

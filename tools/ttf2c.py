@@ -95,11 +95,28 @@ static arm_2d_tile_t c_tileUTF8UserFontMask = {{
 static
 IMPL_FONT_DRAW_CHAR(__utf8_font_a8_draw_char)
 {{
-    return arm_2d_fill_colour_with_mask_and_opacity( 
+    static arm_2d_op_fill_cl_msk_opa_trans_t s_tOP;
+    const bool bIsNewFrame = true;
+    static const arm_2d_location_t c_tCentre = {{7,8}};
+
+    if (0.0f == fScale || ABS(fScale - 1.0f) < 0.01f) {{
+        return arm_2d_fill_colour_with_mask_and_opacity( 
                                             ptTile, 
                                             ptRegion,
                                             ptileChar,
                                             (__arm_2d_color_t){{tForeColour}},
+                                            chOpacity);
+    }}
+
+    return arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                                            &s_tOP,
+                                            ptileChar,
+                                            ptTile, 
+                                            ptRegion,
+                                            c_tCentre,
+                                            0.0f,
+                                            fScale,
+                                            tForeColour,
                                             chOpacity);
 }}
 
@@ -291,7 +308,7 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
 
 
 def main():
-    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v1.0.0)')
+    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v1.1.0)')
     parser.add_argument("-i", "--input",    type=str,   help="Path to the TTF file",            required=True)
     parser.add_argument("-t", "--text",     type=str,   help="Path to the text file",           required=True)
     parser.add_argument("-n", "--name",     type=str,   help="The customized UTF8 font name",   required=False,     default="UTF8")

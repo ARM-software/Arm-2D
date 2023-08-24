@@ -323,7 +323,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cversion="2.0.0" condition="Arm-2D-CORE">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cversion="2.1.0" condition="Arm-2D-CORE">
           <description>A example module to print ASCII strings to target string.</description>
           <files>
             <file category="include"     name="examples/common/controls/" />
