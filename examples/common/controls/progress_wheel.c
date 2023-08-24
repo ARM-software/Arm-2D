@@ -87,12 +87,22 @@ void progress_wheel_init(   progress_wheel_t *ptThis,
     memset(ptThis, 0, sizeof(progress_wheel_t));
     this.iDiameter = iDiameter;
     this.tColour = tColour;
-    this.fScale = (float)(  (float)iDiameter 
-                         /  ((float)c_tileQuaterArcMask.tRegion.tSize.iWidth *2.0f));
+    progress_wheel_set_diameter(ptThis, iDiameter);
 
     arm_foreach(arm_2d_op_fill_cl_msk_opa_trans_t, this.tOP, ptItem) {
         ARM_2D_OP_INIT(*ptItem);
     }
+}
+
+
+ARM_NONNULL(1)
+void progress_wheel_set_diameter(progress_wheel_t *ptThis, 
+                                int16_t iDiameter)
+{
+    assert(NULL != ptThis);
+
+    this.fScale = (float)(  (float)iDiameter 
+                         /  ((float)c_tileQuaterArcMask.tRegion.tSize.iWidth *2.0f));
 }
 
 ARM_NONNULL(1)

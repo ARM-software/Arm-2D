@@ -55,6 +55,11 @@ void progress_wheel_init(   progress_wheel_t *ptThis,
                             COLOUR_INT tColour);
 
 extern
+ARM_NONNULL(1)
+void progress_wheel_set_diameter(progress_wheel_t *ptThis, 
+                                int16_t iDiameter);
+
+extern
 ARM_NONNULL(1,2)
 void progress_wheel_show(   progress_wheel_t *ptThis,
                             const arm_2d_tile_t *ptTarget,
