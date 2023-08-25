@@ -64,7 +64,7 @@ extern "C" {
 #   pragma GCC diagnostic ignored "-Wpedantic"
 #   pragma GCC diagnostic ignored "-Wmissing-braces"
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)
-#   pragma diag_suppress 1296,174
+#   pragma diag_suppress 1296,174,64,177
 #endif
 
 /*!

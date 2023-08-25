@@ -72,3 +72,4 @@ test/.clangd
 .vscode/settings.json
 examples/\[template\]\[pc\]\[vscode\]/.vscode/settings.json
 examples/\[template\]\[cmsis-rtos2\]/RTE/_V2M-MPS3-CM55/RTE_Components.h
+examples/\[template\]\[cmsis-rtos2\]/RTE/_STM32F746G-Discovery-AC5/RTE_Components.h

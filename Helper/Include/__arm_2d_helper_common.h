@@ -707,7 +707,7 @@ extern "C" {
                         ARM_2D_SAFE_NAME(ptTile)                                \
                             = arm_2d_get_default_frame_buffer();                \
                         if (NULL == ARM_2D_SAFE_NAME(ptTile)) {                 \
-                            continue;                                           \
+                            break;                                              \
                         }                                                       \
                     }                                                           \
                     if (NULL == (__region_ptr)) {                               \
@@ -733,7 +733,7 @@ extern "C" {
                                             false);                             \
                 },                                                              \
                 {                                                               \
-                    arm_2d_op_wait_async(NULL);                                 \
+                    (void)0;                                                    \
                 })  arm_2d_canvas(  &(__container_name),                        \
                                     __container_name##_canvas)
 

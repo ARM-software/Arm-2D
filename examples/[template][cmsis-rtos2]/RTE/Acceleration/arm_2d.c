@@ -21,8 +21,8 @@
  * Title:        arm-2d.c
  * Description:  Tables for pixel pipeline OPs
  *
- * $Date:        06. April 2023
- * $Revision:    V.1.2.0
+ * $Date:        14. Aug 2023
+ * $Revision:    V.1.2.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -49,16 +49,20 @@ extern "C" {
 
 /*============================ MACROS ========================================*/
 
-#if defined(__ARM_2D_HAS_CDE__) && !__ARM_2D_HAS_CDE__
-#   define __arm_2d_cde_init()
+#if !defined(__ARM_2D_HAS_ACI__) || !__ARM_2D_HAS_ACI__
+#   define __arm_2d_aci_init()
 #endif
 
-#if defined(__ARM_2D_HAS_HELIUM__) && !__ARM_2D_HAS_HELIUM__
+#if !defined(__ARM_2D_HAS_HELIUM__) || !__ARM_2D_HAS_HELIUM__
 #   define __arm_2d_helium_init()
 #endif
 
+#if !defined(__ARM_2D_HAS_TIGHTLY_COUPLED_ACC__) || !__ARM_2D_HAS_TIGHTLY_COUPLED_ACC__
+#   define __arm_2d_sync_acc_init()
+#endif
+
 #if defined(__ARM_2D_HAS_HW_ACC__) && !__ARM_2D_HAS_HW_ACC__
-#   define __arm_2d_acc_init()
+#   define __arm_2d_async_acc_init()
 #endif
 
 #if defined(__ARM_2D_HAS_ASYNC__) && !__ARM_2D_HAS_ASYNC__
@@ -100,22 +104,28 @@ extern
 void __arm_2d_helium_init(void);
 #endif
 
-#if defined(__ARM_2D_HAS_CDE__) && __ARM_2D_HAS_CDE__
+#if defined(__ARM_2D_HAS_ACI__) && __ARM_2D_HAS_ACI__
 /*! 
- * \brief initialise the cde service
+ * \brief initialise the ACI service
  */
 extern
-void __arm_2d_cde_init(void);
+void __arm_2d_aci_init(void);
 #endif
-
-
 
 #if defined(__ARM_2D_HAS_HW_ACC__) && __ARM_2D_HAS_HW_ACC__
 /*! 
- * \brief initialise the hardware accelerator adapter
+ * \brief initialise the hardware (async) acceleration
  */
 extern
-void __arm_2d_acc_init(void);
+void __arm_2d_async_acc_init(void);
+#endif
+
+#if defined(__ARM_2D_HAS_TIGHTLY_COUPLED_ACC__) && __ARM_2D_HAS_TIGHTLY_COUPLED_ACC__
+/*! 
+ * \brief initialise the tightly-coupled (sync) acceleration
+ */
+extern
+void __arm_2d_sync_acc_init(void);
 #endif
 
 
@@ -145,8 +155,9 @@ void arm_2d_init(void)
     } while(0);
 
     __arm_2d_helium_init();                                             
-    __arm_2d_cde_init();                                                
-    __arm_2d_acc_init();                                                
+    __arm_2d_aci_init();   
+    __arm_2d_sync_acc_init();                                             
+    __arm_2d_async_acc_init();                                                
 }
 
 __WEAK

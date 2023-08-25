@@ -21,8 +21,8 @@
  * Title:        arm_2d_utils.h
  * Description:  Public header file for Arm-2D Library
  *
- * $Date:        15. June 2022
- * $Revision:    V.1.2.4
+ * $Date:        25. Aug 2023
+ * $Revision:    V.1.3.0
  *
  * -------------------------------------------------------------------- */
 
@@ -55,7 +55,8 @@
 
 
 #undef __IS_SUPPORTED_ARM_ARCH__
-#if defined(__ARM_ARCH) && __ARM_ARCH && !defined(__APPLE__)
+#if (   (defined(__ARM_ARCH) && __ARM_ARCH)                                     \
+    ||  defined(__TARGET_ARCH_ARM)) && !defined(__APPLE__)
 #   define __IS_SUPPORTED_ARM_ARCH__        1
 #else
 #   define __IS_SUPPORTED_ARM_ARCH__        0
