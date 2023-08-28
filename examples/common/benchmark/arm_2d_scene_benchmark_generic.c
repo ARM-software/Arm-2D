@@ -264,7 +264,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_benchmark_generic_handler)
             arm_lcd_text_set_font(NULL);
             arm_lcd_text_set_draw_region(NULL);
 
-            arm_lcd_text_location( tScreen.tSize.iHeight / 8 - 7, 0);
+            arm_lcd_text_location( (uint8_t)(tScreen.tSize.iHeight / 8 - 7), 0);
             arm_lcd_puts(  "All-in-One Test, running "
                         ARM_TO_STRING(ITERATION_CNT)
                         " iterations\r\n");

@@ -127,10 +127,12 @@ void scene1_loader(void)
     arm_2d_scene1_init(&DISP0_ADAPTER);
 }
 
+#if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 void virtual_resource_demo_loader(void)
 {
     virtual_resource_demo_init();
 }
+#endif
 
 void scene2_loader(void) 
 {

@@ -248,18 +248,20 @@ user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter,
                 .iY = 0,
             },
             .tSize = {
-                .iWidth = __GLCD_CFG_SCEEN_WIDTH__,
+                .iWidth = 0,
                 .iHeight = 8,
             },
         ),
 
     END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
-    
+
+    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
+
     /* get the screen region */
     arm_2d_region_t tScreen
         = arm_2d_helper_pfb_get_display_area(
             &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
-    
+
     /* initialise dirty region 0 at runtime
      * this demo shows that we create a region in the centre of a screen(320*240)
      * for a image stored in the tile c_tileCMSISLogoMask
@@ -267,6 +269,8 @@ user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter,
     arm_2d_align_centre(tScreen, c_tileCMSISLogoMask.tRegion.tSize) {
         s_tDirtyRegions[0].tRegion = __centre_region;
     }
+
+    s_tDirtyRegions[1].tRegion.tSize.iWidth = tScreen.tSize.iWidth;
     
     if (NULL == ptThis) {
         ptThis = (user_scene_0_t *)malloc(sizeof(user_scene_0_t));

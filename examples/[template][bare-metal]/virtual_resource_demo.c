@@ -188,6 +188,7 @@ static void __on_scene0_frame_complete(arm_2d_scene_t *ptScene)
 static
 IMPL_FONT_DRAW_CHAR(__digit_font_a4_draw_char)
 {
+    ARM_2D_UNUSED(fScale);
     return arm_2d_fill_colour_with_a4_mask_and_opacity( ptTile, 
                                             ptRegion,
                                             ptileChar,
@@ -398,6 +399,8 @@ static void __app_scene0_init(void)
         ),
 
     END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
+    
+    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
     
     s_tDirtyRegions[0].tRegion.tLocation = (arm_2d_location_t){
         .iX = ((__DISP0_CFG_SCEEN_WIDTH__ - c_tileHelium.tRegion.tSize.iWidth) >> 1),

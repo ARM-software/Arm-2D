@@ -2369,6 +2369,7 @@ struct {
 static
 IMPL_FONT_DRAW_CHAR(__digit_font_a2_draw_char)
 {
+    ARM_2D_UNUSED(fScale);
     return arm_2d_fill_colour_with_a2_mask_and_opacity( 
                                             ptTile, 
                                             ptRegion,
@@ -2380,6 +2381,7 @@ IMPL_FONT_DRAW_CHAR(__digit_font_a2_draw_char)
 static
 IMPL_FONT_DRAW_CHAR(__digit_font_a4_draw_char)
 {
+    ARM_2D_UNUSED(fScale);
     return arm_2d_fill_colour_with_a4_mask_and_opacity( 
                                             ptTile, 
                                             ptRegion,
