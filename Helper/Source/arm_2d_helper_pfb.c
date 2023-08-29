@@ -1127,7 +1127,6 @@ void arm_2d_helper_transform_update_dirty_regions(
         this.tDirtyRegions[0].tRegion = *(this.ptTransformOP->Target.ptRegion);
         this.tDirtyRegions[0].tRegion.tLocation.iX += ptCanvas->tLocation.iX;
         this.tDirtyRegions[0].tRegion.tLocation.iY += ptCanvas->tLocation.iY;
-        
 
         arm_2d_region_t tOverlapArea, tEnclosureArea;
         if (arm_2d_region_intersect(&this.tDirtyRegions[1].tRegion, 
@@ -1156,7 +1155,6 @@ void arm_2d_helper_transform_update_dirty_regions(
 
                 return ;
             }
-
         }
 
         /* the new region has no overlapping with the old region */

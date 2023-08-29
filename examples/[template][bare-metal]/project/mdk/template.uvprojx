@@ -405,6 +405,16 @@
               <FileType>5</FileType>
               <FilePath>..\..\virtual_resource_demo.h</FilePath>
             </File>
+            <File>
+              <FileName>arm_2d_scene_meter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\arm_2d_scene_meter.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\MeterPanel.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -944,7 +954,7 @@
       <TargetName>V2M-MPS2-CM4</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
+      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -1248,7 +1258,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>6</Optim>
+            <Optim>0</Optim>
             <oTime>1</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -1271,7 +1281,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls></MiscControls>
+              <MiscControls>-Omax</MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2</IncludePath>
@@ -1338,6 +1348,16 @@
               <FileName>virtual_resource_demo.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\virtual_resource_demo.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\arm_2d_scene_meter.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\MeterPanel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2271,6 +2291,16 @@
               <FileName>virtual_resource_demo.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\virtual_resource_demo.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\arm_2d_scene_meter.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\MeterPanel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3206,6 +3236,16 @@
               <FileType>5</FileType>
               <FilePath>..\..\virtual_resource_demo.h</FilePath>
             </File>
+            <File>
+              <FileName>arm_2d_scene_meter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\arm_2d_scene_meter.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\MeterPanel.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4070,6 +4110,16 @@
               <FileName>virtual_resource_demo.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\virtual_resource_demo.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\arm_2d_scene_meter.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\MeterPanel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5005,6 +5055,16 @@
               <FileType>5</FileType>
               <FilePath>..\..\virtual_resource_demo.h</FilePath>
             </File>
+            <File>
+              <FileName>arm_2d_scene_meter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\arm_2d_scene_meter.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\MeterPanel.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5938,6 +5998,16 @@
               <FileName>virtual_resource_demo.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\virtual_resource_demo.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\arm_2d_scene_meter.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\MeterPanel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6873,6 +6943,16 @@
               <FileType>5</FileType>
               <FilePath>..\..\virtual_resource_demo.h</FilePath>
             </File>
+            <File>
+              <FileName>arm_2d_scene_meter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\arm_2d_scene_meter.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\MeterPanel.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -7737,6 +7817,16 @@
               <FileName>virtual_resource_demo.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\virtual_resource_demo.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\arm_2d_scene_meter.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\MeterPanel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8603,6 +8693,16 @@
               <FileType>5</FileType>
               <FilePath>..\..\virtual_resource_demo.h</FilePath>
             </File>
+            <File>
+              <FileName>arm_2d_scene_meter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\arm_2d_scene_meter.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\MeterPanel.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -9467,6 +9567,16 @@
               <FileName>virtual_resource_demo.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\virtual_resource_demo.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\arm_2d_scene_meter.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\MeterPanel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -10857,7 +10967,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="utility" name="tools\img2c.py" version="1.2.1">
+      <file attr="config" category="utility" name="tools\img2c.py" version="1.2.2">
         <instance index="0">RTE\Acceleration\img2c.py</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.5" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>

@@ -33,6 +33,7 @@ import argparse
 import os
 
 
+
 hdr="""
 /* Generated on {0} from {1} */
 /* Re-sized : {2} */
@@ -57,7 +58,7 @@ hdr="""
 tailDataGRAY8="""
 
 extern const arm_2d_tile_t c_tile{0}GRAY8;
-__attribute__((section(\"arm2d.tile.c_tile{0}GRAY8\")))
+ARM_SECTION(\"arm2d.tile.c_tile{0}GRAY8\")
 const arm_2d_tile_t c_tile{0}GRAY8 = {{
     .tRegion = {{
         .tSize = {{
@@ -80,7 +81,7 @@ const arm_2d_tile_t c_tile{0}GRAY8 = {{
 tailDataRGB565="""
 
 extern const arm_2d_tile_t c_tile{0}RGB565;
-__attribute__((section(\"arm2d.tile.c_tile{0}RGB565\")))
+ARM_SECTION(\"arm2d.tile.c_tile{0}RGB565\")
 const arm_2d_tile_t c_tile{0}RGB565 = {{
     .tRegion = {{
         .tSize = {{
@@ -104,7 +105,7 @@ tailDataRGB888="""
 
 extern const arm_2d_tile_t c_tile{0}CCCN888;
 
-__attribute__((section(\"arm2d.tile.c_tile{0}CCCN888\")))
+ARM_SECTION(\"arm2d.tile.c_tile{0}CCCN888\")
 const arm_2d_tile_t c_tile{0}CCCN888 = {{
     .tRegion = {{
         .tSize = {{
@@ -128,7 +129,7 @@ tailDataRGBA8888="""
 
 extern const arm_2d_tile_t c_tile{0}CCCA8888;
 
-__attribute__((section(\"arm2d.tile.c_tile{0}CCCA8888\")))
+ARM_SECTION(\"arm2d.tile.c_tile{0}CCCA8888\")
 const arm_2d_tile_t c_tile{0}CCCA8888 = {{
     .tRegion = {{
         .tSize = {{
@@ -153,7 +154,7 @@ tailAlpha="""
 
 extern const arm_2d_tile_t c_tile{0}Mask;
 
-__attribute__((section(\"arm2d.tile.c_tile{0}Mask\")))
+ARM_SECTION(\"arm2d.tile.c_tile{0}Mask\")
 const arm_2d_tile_t c_tile{0}Mask = {{
     .tRegion = {{
         .tSize = {{
@@ -172,12 +173,61 @@ const arm_2d_tile_t c_tile{0}Mask = {{
 }};
 """
 
+tail2BitAlpha="""
+
+
+extern const arm_2d_tile_t c_tile{0}A2Mask;
+
+ARM_SECTION(\"arm2d.tile.c_tile{0}A2Mask\")
+const arm_2d_tile_t c_tile{0}A2Mask = {{
+    .tRegion = {{
+        .tSize = {{
+            .iWidth = {1},
+            .iHeight = {2},
+        }},
+    }},
+    .tInfo = {{
+        .bIsRoot = true,
+        .bHasEnforcedColour = true,
+        .tColourInfo = {{
+            .chScheme = ARM_2D_COLOUR_MASK_A2,
+        }},
+    }},
+    .pchBuffer = (uint8_t *)c_bmp{0}A2Alpha,
+}};
+"""
+
+tail4BitAlpha="""
+
+
+extern const arm_2d_tile_t c_tile{0}A4Mask;
+
+ARM_SECTION(\"arm2d.tile.c_tile{0}A4Mask\")
+const arm_2d_tile_t c_tile{0}A4Mask = {{
+    .tRegion = {{
+        .tSize = {{
+            .iWidth = {1},
+            .iHeight = {2},
+        }},
+    }},
+    .tInfo = {{
+        .bIsRoot = true,
+        .bHasEnforcedColour = true,
+        .tColourInfo = {{
+            .chScheme = ARM_2D_COLOUR_MASK_A4,
+        }},
+    }},
+    .pchBuffer = (uint8_t *)c_bmp{0}A4Alpha,
+}};
+"""
+
+
 tailAlpha2="""
 
 
 extern const arm_2d_tile_t c_tile{0}Mask2;
 
-__attribute__((section(\"arm2d.tile.c_tile{0}Mask2\")))
+ARM_SECTION(\"arm2d.tile.c_tile{0}Mask2\")
 const arm_2d_tile_t c_tile{0}Mask2 = {{
     .tRegion = {{
         .tSize = {{
@@ -209,15 +259,17 @@ tail="""
 
 def main(argv):
 
-    parser = argparse.ArgumentParser(description='image to C array converter (v1.2.0)')
+    parser = argparse.ArgumentParser(description='image to C array converter (v1.2.2)')
 
-    parser.add_argument('-i', nargs='?', type = str,  required=True, help="Input file (png, bmp, etc..)")
+    parser.add_argument('-i', nargs='?', type = str,  required=False, help="Input file (png, bmp, etc..)")
     parser.add_argument('-o', nargs='?', type = str,  required=False, help="output C file containing RGB56/RGB888/Gray8 and alpha values arrays")
 
-    parser.add_argument('--name', nargs='?',type = str, required=True, help="A specified array name")
+    parser.add_argument('--name', nargs='?',type = str, required=False, help="A specified array name")
     parser.add_argument('--format', nargs='?',type = str, default="all", help="RGB Format (rgb565, rgb32, gray8, all)")
     parser.add_argument('--dim', nargs=2,type = int, help="Resize the image with the given width and height")
     parser.add_argument('--rot', nargs='?',type = float, default=0.0, help="Rotate the image with the given angle in degrees")
+    parser.add_argument('--a2', action='store_true', help="Generate 2bit alpha-mask")
+    parser.add_argument('--a4', action='store_true', help="Generate 4bit alpha-mask")
 
     args = parser.parse_args()
 
@@ -262,18 +314,50 @@ def main(argv):
         resized = True
 
 
-    # palettised
     mode = image.mode
-    if mode == 'P':
+
+    # Modes supported by Pillow
+
+    # 1 (1-bit pixels, black and white, stored with one pixel per byte), the value is in 0-1.
+    # L (8-bit pixels, black and white), the value is in 0-255.
+    # P (8-bit pixels, mapped to any other mode using a color palette), the value is in 0-255.
+    # RGB (3×8-bit pixels, true color), the value is in [0-255, 0-255, 0-255].
+    # RGBA (4×8-bit pixels, true color with transparency mask), the value is in [0-255, 0-255, 0-255, 0-255]
+    # CMYK (4×8-bit pixels, color separation)
+    # YCbCr (3×8-bit pixels, color video format)
+    # LAB (3×8-bit pixels, the L*a*b color space)
+    # HSV (3×8-bit pixels, Hue, Saturation, Value color space)
+    # I (32-bit signed integer pixels)
+    # F (32-bit floating point pixels)
+    # LA (L with alpha)
+    # PA (P with alpha)
+    # RGBX (true color with padding)
+    # RGBa (true color with premultiplied alpha)
+    # La (L with premultiplied alpha)
+    # I;16 (16-bit unsigned integer pixels)
+    # I;16L (16-bit little endian unsigned integer pixels)
+    # I;16B (16-bit big endian unsigned integer pixels)
+    # I;16N (16-bit native endian unsigned integer pixels)
+    # BGR;15 (15-bit reversed true colour)
+    # BGR;16 (16-bit reversed true colour)
+    # BGR;24 (24-bit reversed true colour)
+    # BGR;32 (32-bit reversed true colour)
+
+    # handle {P, LA, RGB, RGBA} for now
+    if mode == 'P' or mode == 'LA':
         image = image.convert('RGBA')
         mode = 'RGBA'
-    # greyscale
     if mode == 'L':
         image = image.convert('RGB')
         mode = 'RGB'
-
     (row, col) = image.size
     data = np.asarray(image)
+
+    # C Array format width
+    WIDTH_ALPHA = 16
+    WIDTH_GRAY8 = 32
+    WIDTH_RGB565 = 16
+    WIDTH_RGB32 = 16
 
     with open(outputfile,"w") as o:
 
@@ -281,7 +365,7 @@ def main(argv):
         print(hdr.format(time.asctime( time.localtime(time.time())), argv[0], resized, args.rot), file=o)
 
         if mode == "RGBA":
-            print('__attribute__((aligned(4), section(\"arm2d.asset.c_bmp%sAlpha\")))' % (arr_name), file=o)
+            print('ARM_ALIGN(4) ARM_SECTION(\"arm2d.asset.c_bmp%sAlpha\")' % (arr_name), file=o)
             # alpha channel array available
             print('static const uint8_t c_bmp%sAlpha[%d*%d] = {' % (arr_name, row, col),file=o)
             cnt = 0
@@ -290,7 +374,7 @@ def main(argv):
                 print("/* -%d- */" % (cnt), file=o)
                 for eachPix in eachRow:
                     alpha = eachPix[3]
-                    if lineWidth % 16 == 15:
+                    if lineWidth % WIDTH_ALPHA == (WIDTH_ALPHA - 1):
                         print("0x%02x," %(alpha) ,file=o)
                     else:
                         print("0x%02x" %(alpha), end =", ",file=o)
@@ -299,9 +383,80 @@ def main(argv):
                 print('',file=o)
             print('};', file=o)
 
+            # 2-bit Alpha channel
+            if args.a2 or args.format == 'all':
+
+                def RevBitPairPerByte(byteArr):
+                    return ((byteArr & 0x03) << 6) |  ((byteArr & 0xc0) >> 6) | ((byteArr & 0x30) >> 2 ) | ((byteArr & 0x0c) << 2)
+
+
+                print('ARM_ALIGN(4) ARM_SECTION(\"arm2d.asset.c_bmp%sA2Alpha\")' % (arr_name), file=o)
+                print('static const uint8_t c_bmp%sA2Alpha[%d*%d] = {' % (arr_name, (row+3)/4, col),file=o)
+                cnt = 0
+                alpha = data[...,3].astype(np.uint8)
+                for eachRow in alpha:
+                    lineWidth=0
+                    print("/* -%d- */" % (cnt), file=o)
+
+                    bitsArr = np.unpackbits(eachRow.astype(np.uint8))
+
+                    # generate indexes for MSB bit pair every byte
+                    idx = np.arange(0, np.size(bitsArr), 8)
+                    idx=np.reshape(np.column_stack((idx+0, idx+1)), (1,-1))
+
+                    # extraction + endianness conversion
+                    packedBytes = RevBitPairPerByte(np.packbits(bitsArr[idx]))
+
+                    for elt in packedBytes:
+                        if lineWidth % WIDTH_ALPHA == (WIDTH_ALPHA-1):
+                            print("0x%02x," %(elt) ,file=o)
+                        else:
+                            print("0x%02x" %(elt), end =", ",file=o)
+                        lineWidth+=1
+                    cnt+=1
+                    print('',file=o)
+                print('};', file=o)
+
+            # 4-bit Alpha channel
+            if args.a4 or args.format == 'all':
+
+                def RevBitQuadPerByte(byteArr):
+                    return ((byteArr & 0x0f) << 4) |  ((byteArr & 0xf0) >> 4)
+
+
+                print('ARM_ALIGN(4) ARM_SECTION(\"arm2d.asset.c_bmp%sA4Alpha\")' % (arr_name), file=o)
+                print('static const uint8_t c_bmp%sA4Alpha[%d*%d] = {' % (arr_name, (row+1)/2, col),file=o)
+                cnt = 0
+                alpha = data[...,3].astype(np.uint8)
+                for eachRow in alpha:
+                    lineWidth=0
+                    print("/* -%d- */" % (cnt), file=o)
+
+                    bitsArr = np.unpackbits(eachRow.astype(np.uint8))
+
+                    # generate indexes for MSB bit quadruplet every byte
+                    idx = np.arange(0, np.size(bitsArr), 8)
+                    idx=np.reshape(np.column_stack(
+                            (np.column_stack((idx+0, idx+1)), np.column_stack((idx+2, idx+3)))),
+                            (1,-1)),
+
+                    # extraction + endianness conversion
+                    packedBytes = RevBitQuadPerByte(np.packbits(bitsArr[idx]))
+
+                    for elt in packedBytes:
+                        if lineWidth % WIDTH_ALPHA == (WIDTH_ALPHA - 1):
+                            print("0x%02x," %(elt) ,file=o)
+                        else:
+                            print("0x%02x" %(elt), end =", ",file=o)
+                        lineWidth+=1
+                    cnt+=1
+                    print('',file=o)
+                print('};', file=o)
+
 
         # Gray8 channel array
         if args.format == 'gray8' or args.format == 'all':
+
             R = (data[...,0]).astype(np.uint16)
             G = (data[...,1]).astype(np.uint16)
             B = (data[...,2]).astype(np.uint16)
@@ -309,14 +464,14 @@ def main(argv):
             RGB = np.rint((R + G + B)/3).astype(np.uint8)
 
             print('',file=o)
-            print('__attribute__((section(\"arm2d.asset.c_bmp%sGRAY8\")))' % (arr_name), file=o)
+            print('ARM_SECTION(\"arm2d.asset.c_bmp%sGRAY8\")' % (arr_name), file=o)
             print('const uint8_t c_bmp%sGRAY8[%d*%d] = {' % (arr_name, row, col), file=o)
             cnt = 0
             for eachRow in RGB:
                 lineWidth=0
                 print("/* -%d- */" % (cnt), file=o)
                 for eachPix in eachRow:
-                    if lineWidth % 32 == 31:
+                    if lineWidth % WIDTH_GRAY8 == (WIDTH_GRAY8 - 1):
                         print("0x%02x," %(eachPix) ,file=o)
                     else:
                         print("0x%02x" %(eachPix), end =", ", file=o)
@@ -336,14 +491,14 @@ def main(argv):
             RGB = R | G | B
 
             print('',file=o)
-            print('__attribute__((section(\"arm2d.asset.c_bmp%sRGB565\")))' % (arr_name), file=o)
+            print('ARM_SECTION(\"arm2d.asset.c_bmp%sRGB565\")' % (arr_name), file=o)
             print('const uint16_t c_bmp%sRGB565[%d*%d] = {' % (arr_name, row, col), file=o)
             cnt = 0
             for eachRow in RGB:
                 lineWidth=0
                 print("/* -%d- */" % (cnt), file=o)
                 for eachPix in eachRow:
-                    if lineWidth % 16 == 15:
+                    if lineWidth % WIDTH_RGB565 == (WIDTH_RGB565 - 1):
                         print("0x%04x," %(eachPix) ,file=o)
                     else:
                         print("0x%04x" %(eachPix), end =", ", file=o)
@@ -371,10 +526,10 @@ def main(argv):
             print('',file=o)
 
             if mode == "RGBA":
-                print('__attribute__((section(\"arm2d.asset.c_bmp%sCCCA8888\")))' % (arr_name), file=o)
+                print('ARM_SECTION(\"arm2d.asset.c_bmp%sCCCA8888\")' % (arr_name), file=o)
                 print('const uint32_t c_bmp%sCCCA8888[%d*%d] = {' % (arr_name, row, col), file=o)
             else:
-                print('__attribute__((section(\"arm2d.asset.c_bmp%sCCCN888\")))' % (arr_name), file=o)
+                print('ARM_SECTION(\"arm2d.asset.c_bmp%sCCCN888\")' % (arr_name), file=o)
                 print('const uint32_t c_bmp%sCCCN888[%d*%d]= {' % (arr_name, row, col), file=o)
 
             cnt = 0
@@ -382,7 +537,7 @@ def main(argv):
                 lineWidth=0
                 print("/* -%d- */" % (cnt), file=o)
                 for eachPix in eachRow:
-                    if lineWidth % 16 == 15:
+                    if lineWidth % WIDTH_RGB32 == (WIDTH_RGB32 - 1):
                         print("0x%08x," %(eachPix) ,file=o)
                     else:
                         print("0x%08x" %(eachPix), end =", ", file=o)
@@ -416,6 +571,12 @@ def main(argv):
 
         if mode == "RGBA":
             print(tailAlpha.format(arr_name, str(row), str(col)), file=o)
+
+            if args.a2 or args.format == 'all':
+                print(tail2BitAlpha.format(arr_name, str(row), str(col)), file=o)
+
+            if args.a4 or args.format == 'all':
+                print(tail4BitAlpha.format(arr_name, str(row), str(col)), file=o)
 
 
         print(tail.format(arr_name, str(row), str(col)), file=o)
