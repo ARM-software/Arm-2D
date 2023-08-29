@@ -1663,7 +1663,8 @@ void __ARM_2D_FUNC(get_alpha_with_opacity) (arm_2d_point_float_t *ptPoint,
         //__ARM_2D_PIXEL_AVERAGE_GRAY8(hwPixelAlpha, hwAlpha);
     }
 
-    if (bIsInside) {
+    if (bIsInside && wTotalAlpha) {
+    //if (bIsInside) {
         uint16_t hwAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
                         + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
         
@@ -1737,7 +1738,9 @@ void __ARM_2D_FUNC(get_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
         //__ARM_2D_PIXEL_AVERAGE_GRAY8(hwPixelAlpha, hwAlpha);
     }
 
-    if (bIsInside) {
+
+    if (bIsInside && wTotalAlpha) {
+    //if (bIsInside) {
         uint16_t hwAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
                         + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
         

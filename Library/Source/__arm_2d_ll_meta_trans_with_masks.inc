@@ -233,7 +233,11 @@ void __MTWM_FUNC(get_pixel_colour_mask)(arm_2d_point_float_t *ptPoint,
 
     }
 
+#if __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
+    if (bIsInside && hwTransparency < 256) {
+#else
     if (bIsInside) {
+#endif
         __API_MTWM_PIXEL_AVERAGE(*pTarget, hwTransparency);
 
     #if __API_MTWM_CFG_SUPPORT_OPACITY && !__API_MTWM_CFG_SUPPORT_SOURCE_MASK
@@ -507,7 +511,11 @@ void __MTWM_FUNC(get_pixel_colour_mask)(arm_2d_point_fx_t  *ptFxPoint,
         hwTransparency += hwAlpha - hwPixelAlpha;
     }
 
+#if __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
+    if (bIsInside && hwTransparency < 256) {
+#else
     if (bIsInside) {
+#endif
         __API_MTWM_PIXEL_AVERAGE(*pTarget, hwTransparency);
 
     #if __API_MTWM_CFG_SUPPORT_OPACITY && !__API_MTWM_CFG_SUPPORT_SOURCE_MASK
