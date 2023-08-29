@@ -116,7 +116,7 @@ extern "C" {
 // <o>Number of iterations <0-2000>
 // <i> run number of iterations before calculate the FPS.
 #ifndef __DISP0_CFG_ITERATION_CNT__
-#   define __DISP0_CFG_ITERATION_CNT__                             30
+#   define __DISP0_CFG_ITERATION_CNT__                             60
 #endif
 
 // <o>FPS Calculation Mode

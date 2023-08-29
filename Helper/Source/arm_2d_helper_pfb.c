@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        09. Aug 2023
- * $Revision:    V.1.5.7
+ * $Date:        29. Aug 2023
+ * $Revision:    V.1.5.8
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1068,6 +1068,43 @@ void arm_2d_helper_transform_init(arm_2d_helper_transform_t *ptThis,
 
 }
 
+ARM_NONNULL(1,2,3)
+arm_2d_region_t *arm_2d_region_get_minimal_enclosure(const arm_2d_region_t *ptInput0,
+                                                     const arm_2d_region_t *ptInput1,
+                                                     arm_2d_region_t *ptOutput)
+{
+    assert(NULL != ptInput0);
+    assert(NULL != ptInput1);
+    assert(NULL != ptOutput);
+
+    int16_t x00, y00, x01, y01, x10, y10, x11, y11;
+    x00 = ptInput0->tLocation.iX;
+    y00 = ptInput0->tLocation.iY;
+    x10 = ptInput1->tLocation.iX;
+    y10 = ptInput1->tLocation.iY;
+
+    arm_2d_location_t tTopLeft = {
+            .iX = MIN(x00, x10),
+            .iY = MIN(y00, y10),
+        };
+
+    x01 = x00 + ptInput0->tSize.iWidth - 1;
+    y01 = y00 + ptInput0->tSize.iHeight - 1;
+    x11 = x10 + ptInput1->tSize.iWidth - 1;
+    y11 = y10 + ptInput1->tSize.iHeight - 1; 
+    
+    arm_2d_location_t tBottomRight = {
+            .iX = MAX(x01, x11),
+            .iY = MAX(y01, y11),
+        };
+
+    ptOutput->tLocation = tTopLeft;
+    ptOutput->tSize.iWidth = tBottomRight.iX - tTopLeft.iX + 1;
+    ptOutput->tSize.iHeight = tBottomRight.iY - tTopLeft.iY + 1;
+
+    return ptOutput;
+}
+
 ARM_NONNULL(1,2)
 void arm_2d_helper_transform_update_dirty_regions(
                                     arm_2d_helper_transform_t *ptThis,
@@ -1091,8 +1128,41 @@ void arm_2d_helper_transform_update_dirty_regions(
         this.tDirtyRegions[0].tRegion.tLocation.iX += ptCanvas->tLocation.iX;
         this.tDirtyRegions[0].tRegion.tLocation.iY += ptCanvas->tLocation.iY;
         
+
+        arm_2d_region_t tOverlapArea, tEnclosureArea;
+        if (arm_2d_region_intersect(&this.tDirtyRegions[1].tRegion, 
+                                    &this.tDirtyRegions[0].tRegion,
+                                    &tOverlapArea)) {
+            /* the new region overlaps with the old region */
+            uint32_t wPixelsRegion0 = this.tDirtyRegions[0].tRegion.tSize.iHeight
+                                    * this.tDirtyRegions[0].tRegion.tSize.iWidth;
+            uint32_t wPixelsRegion1 = this.tDirtyRegions[1].tRegion.tSize.iHeight
+                                    * this.tDirtyRegions[1].tRegion.tSize.iWidth;
+
+
+            arm_2d_region_get_minimal_enclosure(&this.tDirtyRegions[1].tRegion, 
+                                                &this.tDirtyRegions[0].tRegion,
+                                                &tEnclosureArea);
+            
+            uint32_t wPixelsRegionEnclosure = tEnclosureArea.tSize.iHeight
+                                            * tEnclosureArea.tSize.iWidth;
+
+            if (wPixelsRegionEnclosure < wPixelsRegion0 + wPixelsRegion1) {
+                /* we only refresh the enclosure region to save time */
+                this.tDirtyRegions[1].tRegion = tEnclosureArea;
+
+                this.tDirtyRegions[0].bIgnore = true;
+                this.tDirtyRegions[1].bIgnore = false;
+
+                return ;
+            }
+
+        }
+
+        /* the new region has no overlapping with the old region */
         this.tDirtyRegions[0].bIgnore = false;
         this.tDirtyRegions[1].bIgnore = false;
+
     }
 }
 
