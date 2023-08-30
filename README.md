@@ -121,25 +121,24 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
   - Converting colour formats among **GRAY8**, **RGB565** and **RGB888**
   - Ready for **monochrome LCD** (the 1bit colour) and **e-ink displays** (the 2bits and 4bits colour formats)
     - Using **Gray8** as the internal processing format and converting to target colour format inside Display Adapter, e.g. `Disp0_DrawBitmap`
-- **Generic Partial Frame-buffer (PFB)**
-  - Transparent for software/GUI services on upper layers
-  - Easy to Use
-  - No limitation on screen resolution **(See note)**
-  - No limitation on PFB size and shape (it could be a line or a rectangular with any size)  **(See note)**
+- **Display Adapter Service for connecting LCD**
+  - Generic Partial Frame-buffer (PFB)
+    - Easy to Use: transparent for applications
+    - No limitation on screen resolution **(See note)**
+    - No limitation on PFB size and shape (it could be a line or a rectangular with any size)  **(See note)**
+    - Supports PFB alignment for both width and height.
+    >  **NOTE**: As long as the size is smaller than 32767 * 32767. 
   - Supports **Dirty Regions** for refreshing specified areas only
+    - Provides a debug mode for dirty regions
   - Supports swapping high and low bytes for RGB16 pixels
-  - **[new]** Provide a debug mode for dirty regions
-  - **[new]** Support PFB alignment for both width and height.
-  - Introduce a **Scene Player** with various scene switching modes (Fade-In-Fade-Out, Slide, Erase etc.)
-  - Support various Buffer Modes with a built-in framebuffer pool.
-    - Single Buffer/Double-Buffers/Three-Buffers
+  - Provides a **Scene Player** with various scene switching modes (Fade-In-Fade-Out, Slide, Erase etc.)
+  - Supports various Buffer Modes with a built-in framebuffer pool.
+    - Single Buffer/Double-Buffers
     - Ready for Direct Mode
-    - Enhanced Asynchronous Flushing Support (i.e. DMA + ISR)
-
-​        **NOTE**: As long as the size is smaller than 32767 * 32767.
+    - Provides a helper service for Asynchronous Flushing (i.e. DMA + ISR)
 
 - **Transform** (i.e. rotation and scaling)
-  - Supports Colour-keying
+  - With/Without Colour-keying
   - Supports an optional **Opacity** ratio
   - Supports Anti-Alias.
     - You can enable it by defining the macro  `__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__` to `1` at **compile-time**.
@@ -150,8 +149,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
   - Supports both **bare-metal** and **RTOS** environments
   - Ultra small memory footprint
 
-- **Helper Services for Ease-of-Use**
-
+- **Helper Services and Tools**
   - **Timer Services**
 
     - Timeout: `arm_2d_helper_is_time_out`
@@ -172,19 +170,21 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
 
     - Stream Layout (with wrapping), e.g. `__item_horizontal` and `__item_vertical`
 
-  - **[new]** RTOS Helper Services for CMSIS-RTOS2 and RT-Thread
+  - RTOS Helper Services for CMSIS-RTOS2 and RT-Thread
 
   - Templates
 
-    - Provide templates for user controls and scenes.
-    - **[new]** Scene templates for Meter and Watch
-    - **[new]** Provide a template for adding new RTOS support.
+    - Provides templates for user controls and scenes.
+    - Scene templates for Meter and Watch
+    - Provides a template for adding new RTOS support.
 
   - Other Helper services
 
-    - **[new]** A dedicated helper service for transform operations
+    - A dedicated helper service for transform operations
       - Provide dynamic dirty region tracking
       - Double-buffered Angle and Scale updating
+  - A `img2c.py` for generating arm-2d resources from user specified images
+  - A `ttf2c.py` for generating user customized font from user specified TrueType Fonts
 
 - **Ready and Welcome 3rd party adoption**
 
@@ -241,7 +241,7 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 
 **The library is designed with 2D image accelerators in mind and following the feature-agnostic principle.**  The Support for accelerators can be added easily without modifying the existing Arm-2D library or upper-layer software.
 
-**The library is designed with resource constraints in mind.** **For Cortex-M processors with 4K~32K SRAM that cannot afford a complete-framebuffer**, Arm-2D introduces a feature called **Generic Partial Framebuffer** enabling those existing MCUs to run GUI applications in a decent frame rate.
+**The library is designed with resource constraints in mind.** **For Cortex-M processors with 8K~32K SRAM that cannot afford a complete-framebuffer**, Arm-2D introduces a feature called **Generic Partial Framebuffer** enabling those existing MCUs to run GUI applications in a decent frame rate.
 
 ### 2.2 Dependency
 
@@ -344,8 +344,9 @@ There is no public 2D image processing benchmark available for microcontrollers.
 | **[getting_started_as_a_professional_user](./documentation/getting_started_as_a_professional_user.md)** | A guidance for professional users.                           | documentation                                                |
 | **[how_to_deploy_the_arm_2d_library.md](./documentation/how_to_deploy_the_arm_2d_library.md)** | A step by step guide that helps you to deploy the library to your existing or new projects. | documentation                                                |
 | **[introduction.md](./documentation/introduction.md)**       | A relatively detailed introduction for the library, including basic concepts, programmers' mode etc. | documentation                                                |
-| **[how_to_use_layout_assistant.md](/documentation/how_to_use_layout_assistant.md)** | A detailed document introduce the layout assistant helper service. | Documentation                                                |
+| **[how_to_use_layout_assistant.md](/documentation/how_to_use_layout_assistant.md)** | A detailed document introduce the layout assistant helper service. | documentation                                                |
 | **[how_to_use_tile_operations.md](./documentation/how_to_use_tile_operations.md)** | A detailed document elaborates the APIs dedicated to basic tile operations in the arm-2d library. | documentation                                                |
+| **[how_to_accelerate_arm_2d.md](./documentation/how_to_accelerate_arm_2d.md)** | A detailed document elaborates the methods available for accelerating Arm-2D library. | documentation                                                |
 | **how_to_use_alpha_blending_operations.md**                  | A detailed document elaborates the APIs dedicated to alpha-blending services provided by the arm-2d library. | documentation                                                |
 | **how_to_use_conversion_operations.md**                      | A detailed document elaborates the APIs dedicated to colour space conversion services provided by the arm-2d library. | documentation                                                |
 | **how_to_use_drawing_operations.md**                         | A detailed document elaborates the APIs that provide basic point-drawing and colour-filling services in the arm-2d library. | documentation                                                |
@@ -377,4 +378,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-12 July 2023
+30 Aug 2023
