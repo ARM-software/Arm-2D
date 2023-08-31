@@ -55,6 +55,18 @@ extern "C" {
                 (((const arm_2d_tile_t *)&c_tileWhiteDotMask),##__VA_ARGS__))
 
 
+#define draw_round_corner_image(__source_tile_ptr,                              \
+                                __target_tile_ptr,                              \
+                                __region_ptr,                                   \
+                                __is_new_frame,                                 \
+                                ...)                                            \
+    __draw_round_corner_image(                                                  \
+                (__source_tile_ptr),                                            \
+                (__target_tile_ptr),                                            \
+                (__region_ptr),                                                 \
+                (__is_new_frame),                                               \
+                (((const arm_2d_tile_t *)&c_tileWhiteDotMask),##__VA_ARGS__))
+
 /*============================ TYPES =========================================*/
 
 typedef struct {
@@ -86,8 +98,13 @@ void __draw_round_corner_box( const arm_2d_tile_t *ptTarget,
                             bool bIsNewFrame,
                             const arm_2d_tile_t *ptCircleMask);
 
-
-
+extern
+ARM_NONNULL(1)
+void __draw_round_corner_image( const arm_2d_tile_t *ptSource,
+                                const arm_2d_tile_t *ptTarget, 
+                                const arm_2d_region_t *ptRegion,
+                                bool bIsNewFrame,
+                                const arm_2d_tile_t *ptCircleMask);
 
 extern
 void draw_round_corner_border(  const arm_2d_tile_t *ptTarget,

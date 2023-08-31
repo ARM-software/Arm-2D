@@ -154,7 +154,7 @@ void __draw_round_corner_box( const arm_2d_tile_t *ptTarget,
         }
 
         do {
-            const arm_2d_tile_t c_tileWhiteDotAlphaQ3 = 
+            arm_2d_tile_t c_tileWhiteDotAlphaQ3 = 
                 impl_child_tile(*ptCircleMask, 0, iCircleHeight, iCircleWidth, iCircleHeight);
 
             //! copy the bottom left corner
@@ -172,7 +172,7 @@ void __draw_round_corner_box( const arm_2d_tile_t *ptTarget,
         } while(0);
 
         do {
-            const arm_2d_tile_t c_tileWhiteDotAlphaQ4 = 
+            arm_2d_tile_t c_tileWhiteDotAlphaQ4 = 
                 impl_child_tile(*ptCircleMask, iCircleWidth, iCircleHeight, iCircleWidth, iCircleHeight);
 
             //! copy the bottom right corner
@@ -204,6 +204,180 @@ void __draw_round_corner_box( const arm_2d_tile_t *ptTarget,
         }
     }
 }
+
+
+
+ARM_NONNULL(1)
+void __draw_round_corner_image( const arm_2d_tile_t *ptSource,
+                                const arm_2d_tile_t *ptTarget, 
+                                const arm_2d_region_t *ptRegion,
+                                bool bIsNewFrame,
+                                const arm_2d_tile_t *ptCircleMask)
+{
+    assert(NULL != ptTarget);
+    assert(NULL != ptCircleMask);
+    assert(ptCircleMask->tInfo.tColourInfo.chScheme == ARM_2D_COLOUR_8BIT);
+
+    int16_t iCircleWidth = ((ptCircleMask->tRegion.tSize.iWidth + 1) >> 1);
+    int16_t iCircleHeight = ((ptCircleMask->tRegion.tSize.iHeight + 1) >> 1);
+
+    ARM_2D_UNUSED(bIsNewFrame);
+    
+    arm_2d_container(ptTarget, __box, ptRegion) {
+
+        int16_t iBoxWidth = MIN(__box_canvas.tSize.iWidth, ptSource->tRegion.tSize.iWidth);
+        int16_t iBoxHeight = MIN(__box_canvas.tSize.iHeight, ptSource->tRegion.tSize.iHeight);
+
+        do {
+            arm_2d_tile_t c_tileWhiteDotAlphaQ2 = 
+                impl_child_tile(*ptCircleMask, 0, 0, iCircleWidth, iCircleHeight);
+
+            arm_2d_tile_t c_tileSourceQ2 = 
+                impl_child_tile(*ptSource, 0, 0, iCircleWidth, iCircleHeight);
+
+            arm_2d_align_top_left(__box_canvas, c_tileWhiteDotAlphaQ2.tRegion.tSize) {
+
+                arm_2d_tile_copy_with_src_mask_only(&c_tileSourceQ2,
+                                                    &c_tileWhiteDotAlphaQ2,
+                                                    &__box,
+                                                    &__top_left_region);
+                                                            
+                arm_2d_op_wait_async(NULL);
+            }
+        } while(0);
+
+        //! copy the top right corner
+        do {
+            arm_2d_tile_t c_tileWhiteDotAlphaQ1 = 
+                impl_child_tile(*ptCircleMask, iCircleWidth, 0, iCircleWidth, iCircleHeight);
+
+            arm_2d_tile_t c_tileSourceQ1 = 
+                impl_child_tile(*ptSource, 
+                                iBoxWidth - iCircleWidth, 
+                                0, 
+                                iCircleWidth, 
+                                iCircleHeight);
+
+            arm_2d_align_top_right(__box_canvas, c_tileWhiteDotAlphaQ1.tRegion.tSize) {
+                                    
+                arm_2d_tile_copy_with_src_mask_only(&c_tileSourceQ1,
+                                                    &c_tileWhiteDotAlphaQ1,
+                                                    &__box,
+                                                    &__top_right_region);
+
+                arm_2d_op_wait_async(NULL);
+            }
+        } while(0);
+
+        /* top bar */
+        arm_2d_align_top_centre(__box_canvas,
+                                __box_canvas.tSize.iWidth - iCircleWidth * 2,
+                                iCircleHeight) {
+
+            arm_2d_tile_t c_tileSourceTopBar = 
+                impl_child_tile(*ptSource, 
+                                iCircleWidth, 
+                                0, 
+                                iBoxWidth - iCircleWidth * 2, 
+                                iCircleHeight);
+
+            arm_2d_tile_copy_only(&c_tileSourceTopBar,
+                                  &__box,
+                                  &__top_centre_region);
+            
+            arm_2d_op_wait_async(NULL);
+        }
+
+        /* center bar */
+        arm_2d_align_centre(__box_canvas,
+                            __box_canvas.tSize.iWidth,
+                            __box_canvas.tSize.iHeight - iCircleHeight * 2) {
+            
+
+            arm_2d_tile_t c_tileSourceCentreBar = 
+                    impl_child_tile(*ptSource, 
+                                    0,
+                                    iCircleHeight, 
+                                    iBoxWidth, 
+                                    iBoxHeight - iCircleHeight * 2);
+
+            arm_2d_tile_copy_only(&c_tileSourceCentreBar,
+                                  &__box,
+                                  &__centre_region);
+            
+            arm_2d_op_wait_async(NULL);
+        }
+
+        //! copy the bottom left corner
+        do {
+            arm_2d_tile_t c_tileWhiteDotAlphaQ3 = 
+                impl_child_tile(*ptCircleMask, 0, iCircleHeight, iCircleWidth, iCircleHeight);
+
+            arm_2d_tile_t c_tileSourceQ3 = 
+                impl_child_tile(*ptSource, 
+                                0, 
+                                iBoxHeight - iCircleHeight, 
+                                iCircleWidth, 
+                                iCircleHeight);
+
+            arm_2d_align_bottom_left(__box_canvas, c_tileWhiteDotAlphaQ3.tRegion.tSize) {
+                                    
+                arm_2d_tile_copy_with_src_mask_only(&c_tileSourceQ3,
+                                                    &c_tileWhiteDotAlphaQ3,
+                                                    &__box,
+                                                    &__bottom_left_region);
+
+                arm_2d_op_wait_async(NULL);
+            }
+        } while(0);
+
+        //! copy the bottom right corner
+        do {
+            arm_2d_tile_t c_tileWhiteDotAlphaQ4 = 
+                impl_child_tile(*ptCircleMask, iCircleWidth, iCircleHeight, iCircleWidth, iCircleHeight);
+
+            arm_2d_tile_t c_tileSourceQ4 = 
+                impl_child_tile(*ptSource, 
+                                iBoxWidth - iCircleWidth, 
+                                iBoxHeight - iCircleHeight, 
+                                iCircleWidth, 
+                                iCircleHeight);
+
+            arm_2d_align_bottom_right(__box_canvas, c_tileWhiteDotAlphaQ4.tRegion.tSize) {
+                                    
+                arm_2d_tile_copy_with_src_mask_only(&c_tileSourceQ4,
+                                                    &c_tileWhiteDotAlphaQ4,
+                                                    &__box,
+                                                    &__bottom_right_region);
+
+                arm_2d_op_wait_async(NULL);
+            }
+        } while(0);
+
+        /* bottom bar */
+        arm_2d_align_bottom_centre( __box_canvas,
+                                    __box_canvas.tSize.iWidth - iCircleWidth * 2,
+                                    iCircleHeight) {
+
+            arm_2d_tile_t c_tileSourceBottomBar = 
+                impl_child_tile(*ptSource, 
+                                iCircleWidth,
+                                iBoxHeight - iCircleHeight, 
+                                iBoxWidth - iCircleWidth * 2, 
+                                iCircleHeight);
+
+            arm_2d_tile_copy_only(&c_tileSourceBottomBar,
+                                  &__box,
+                                  &__bottom_centre_region);
+            
+            arm_2d_op_wait_async(NULL);
+        }
+    }
+}
+
+
+
+
 
 void draw_round_corner_border(  const arm_2d_tile_t *ptTarget,
                                 const arm_2d_region_t *ptRegion,
