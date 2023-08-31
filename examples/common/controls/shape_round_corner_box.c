@@ -50,26 +50,12 @@
 extern
 const arm_2d_tile_t c_tileWhiteDotAlphaQuarter;
 
-extern
-const arm_2d_tile_t c_tileWhiteDotMask;
+
 
 extern const arm_2d_tile_t c_tileCircleMask;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
-
-const arm_2d_tile_t c_tileWhiteDotAlphaQ4 = 
-    impl_child_tile(c_tileWhiteDotMask, 7, 7, 7, 7);
-
-const arm_2d_tile_t c_tileWhiteDotAlphaQ1 = 
-    impl_child_tile(c_tileWhiteDotMask, 7, 0, 7, 7);
-
-const arm_2d_tile_t c_tileWhiteDotAlphaQ2 = 
-    impl_child_tile(c_tileWhiteDotMask, 0, 0, 7, 7);
-
-const arm_2d_tile_t c_tileWhiteDotAlphaQ3 = 
-    impl_child_tile(c_tileWhiteDotMask, 0, 7, 7, 7);
-    
 
 const arm_2d_tile_t c_tileCircleAlphaQ4 = 
     impl_child_tile(c_tileCircleMask, 7, 7, 7, 7);
@@ -87,47 +73,61 @@ const arm_2d_tile_t c_tileCircleAlphaQ3 =
 /*============================ IMPLEMENTATION ================================*/
 
 ARM_NONNULL(1)
-void draw_round_corner_box( const arm_2d_tile_t *ptTarget, 
+void __draw_round_corner_box( const arm_2d_tile_t *ptTarget, 
                             const arm_2d_region_t *ptRegion,
                             COLOUR_INT tColour,
                             uint8_t chOpacity,
-                            bool bIsNewFrame)
+                            bool bIsNewFrame,
+                            const arm_2d_tile_t *ptCircleMask)
 {
     assert(NULL != ptTarget);
+    assert(NULL != ptCircleMask);
+
+    int16_t iCircleWidth = ((ptCircleMask->tRegion.tSize.iWidth + 1) >> 1);
+    int16_t iCircleHeight = ((ptCircleMask->tRegion.tSize.iHeight + 1) >> 1);
+
     ARM_2D_UNUSED(bIsNewFrame);
     uint16_t hwFillAlpha = (0xFF == chOpacity) ? 0xFF : (0xFF * chOpacity) >> 8;
     
     arm_2d_container(ptTarget, __box, ptRegion) {
 
-        //! copy the top left corner
-        arm_2d_fill_colour_with_mask_and_opacity(   
-                                                &__box, 
-                                                &__box_canvas, 
-                                                &c_tileWhiteDotAlphaQ2, 
-                                                (__arm_2d_color_t){tColour},
-                                                chOpacity);
-                                                    
-        arm_2d_op_wait_async(NULL);
+        do {
+            arm_2d_tile_t c_tileWhiteDotAlphaQ2 = 
+                impl_child_tile(*ptCircleMask, 0, 0, iCircleWidth, iCircleHeight);
 
-        //! copy the top right corner
-        arm_2d_align_top_right(__box_canvas, c_tileWhiteDotAlphaQ1.tRegion.tSize) {
-                                
+            //! copy the top left corner
             arm_2d_fill_colour_with_mask_and_opacity(   
                                                     &__box, 
-                                                    &__top_right_region, 
-                                                    &c_tileWhiteDotAlphaQ1, 
+                                                    &__box_canvas, 
+                                                    &c_tileWhiteDotAlphaQ2, 
                                                     (__arm_2d_color_t){tColour},
                                                     chOpacity);
-
+                                                        
             arm_2d_op_wait_async(NULL);
-        }
+        } while(0);
+
+        do {
+            arm_2d_tile_t c_tileWhiteDotAlphaQ1 = 
+                impl_child_tile(*ptCircleMask, iCircleWidth, 0, iCircleWidth, iCircleHeight);
+
+            //! copy the top right corner
+            arm_2d_align_top_right(__box_canvas, c_tileWhiteDotAlphaQ1.tRegion.tSize) {
+                                    
+                arm_2d_fill_colour_with_mask_and_opacity(   
+                                                        &__box, 
+                                                        &__top_right_region, 
+                                                        &c_tileWhiteDotAlphaQ1, 
+                                                        (__arm_2d_color_t){tColour},
+                                                        chOpacity);
+
+                arm_2d_op_wait_async(NULL);
+            }
+        } while(0);
 
         /* top bar */
         arm_2d_align_top_centre(__box_canvas,
-                                __box_canvas.tSize.iWidth 
-                                - c_tileWhiteDotAlphaQ1.tRegion.tSize.iWidth
-                                - c_tileWhiteDotAlphaQ2.tRegion.tSize.iWidth,
-                                c_tileWhiteDotAlphaQ1.tRegion.tSize.iHeight) {
+                                __box_canvas.tSize.iWidth - iCircleWidth * 2,
+                                iCircleHeight) {
 
             arm_2d_fill_colour_with_opacity(   
                 &__box, 
@@ -141,8 +141,7 @@ void draw_round_corner_box( const arm_2d_tile_t *ptTarget,
         /* center bar */
         arm_2d_align_centre(__box_canvas,
                             __box_canvas.tSize.iWidth,
-                            __box_canvas.tSize.iHeight 
-                            - c_tileWhiteDotAlphaQ1.tRegion.tSize.iHeight * 2) {
+                            __box_canvas.tSize.iHeight - iCircleHeight * 2) {
             
             arm_2d_fill_colour_with_opacity(   
                 &__box, 
@@ -153,40 +152,46 @@ void draw_round_corner_box( const arm_2d_tile_t *ptTarget,
             arm_2d_op_wait_async(NULL);
         }
 
-        //! copy the bottom left corner
-        arm_2d_align_bottom_left(__box_canvas, c_tileWhiteDotAlphaQ3.tRegion.tSize) {
-                                
-            arm_2d_fill_colour_with_mask_and_opacity(   
-                                                    &__box, 
-                                                    &__bottom_left_region, 
-                                                    &c_tileWhiteDotAlphaQ3, 
-                                                    (__arm_2d_color_t){tColour},
-                                                    chOpacity);
+        do {
+            const arm_2d_tile_t c_tileWhiteDotAlphaQ3 = 
+                impl_child_tile(*ptCircleMask, 0, iCircleHeight, iCircleWidth, iCircleHeight);
 
-            arm_2d_op_wait_async(NULL);
-        }
-                                                    
-        arm_2d_op_wait_async(NULL);
+            //! copy the bottom left corner
+            arm_2d_align_bottom_left(__box_canvas, c_tileWhiteDotAlphaQ3.tRegion.tSize) {
+                                    
+                arm_2d_fill_colour_with_mask_and_opacity(   
+                                                        &__box, 
+                                                        &__bottom_left_region, 
+                                                        &c_tileWhiteDotAlphaQ3, 
+                                                        (__arm_2d_color_t){tColour},
+                                                        chOpacity);
 
-        //! copy the bottom right corner
-        arm_2d_align_bottom_right(__box_canvas, c_tileWhiteDotAlphaQ4.tRegion.tSize) {
-                                
-            arm_2d_fill_colour_with_mask_and_opacity(   
-                                                    &__box, 
-                                                    &__bottom_right_region, 
-                                                    &c_tileWhiteDotAlphaQ4, 
-                                                    (__arm_2d_color_t){tColour},
-                                                    chOpacity);
+                arm_2d_op_wait_async(NULL);
+            }
+        } while(0);
 
-            arm_2d_op_wait_async(NULL);
-        }
+        do {
+            const arm_2d_tile_t c_tileWhiteDotAlphaQ4 = 
+                impl_child_tile(*ptCircleMask, iCircleWidth, iCircleHeight, iCircleWidth, iCircleHeight);
+
+            //! copy the bottom right corner
+            arm_2d_align_bottom_right(__box_canvas, c_tileWhiteDotAlphaQ4.tRegion.tSize) {
+                                    
+                arm_2d_fill_colour_with_mask_and_opacity(   
+                                                        &__box, 
+                                                        &__bottom_right_region, 
+                                                        &c_tileWhiteDotAlphaQ4, 
+                                                        (__arm_2d_color_t){tColour},
+                                                        chOpacity);
+
+                arm_2d_op_wait_async(NULL);
+            }
+        } while(0);
 
         /* bottom bar */
-        arm_2d_align_bottom_centre(__box_canvas,
-                                __box_canvas.tSize.iWidth 
-                                - c_tileWhiteDotAlphaQ3.tRegion.tSize.iWidth
-                                - c_tileWhiteDotAlphaQ4.tRegion.tSize.iWidth,
-                                c_tileWhiteDotAlphaQ1.tRegion.tSize.iHeight) {
+        arm_2d_align_bottom_centre( __box_canvas,
+                                    __box_canvas.tSize.iWidth - iCircleWidth * 2,
+                                    iCircleHeight) {
 
             arm_2d_fill_colour_with_opacity(   
                 &__box, 

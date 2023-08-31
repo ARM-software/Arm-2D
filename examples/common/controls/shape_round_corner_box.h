@@ -40,17 +40,6 @@ extern "C" {
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
-/*============================ GLOBAL VARIABLES ==============================*/
-/*============================ PROTOTYPES ====================================*/
-
-
-extern
-void draw_round_corner_box( const arm_2d_tile_t *ptTarget, 
-                            const arm_2d_region_t *ptRegion,
-                            COLOUR_INT tColour,
-                            uint8_t chOpacity,
-                            bool bIsNewFrame);
-
 
 typedef struct {
     uint8_t chLeft;
@@ -65,6 +54,37 @@ typedef struct {
     uint8_t chBottomLeft;
     uint8_t chBottomRight;
 } arm_2d_corner_opacity_t;
+
+/*============================ GLOBAL VARIABLES ==============================*/
+extern
+const arm_2d_tile_t c_tileWhiteDotMask;
+/*============================ PROTOTYPES ====================================*/
+
+#define draw_round_corner_box(  __target_tile_ptr,                              \
+                                __region_ptr,                                   \
+                                __colour,                                       \
+                                __opacity,                                      \
+                                __is_new_frame,                                 \
+                                ...)                                            \
+    __draw_round_corner_box(                                                    \
+                (__target_tile_ptr),                                            \
+                (__region_ptr),                                                 \
+                (__colour),                                                     \
+                (__opacity),                                                    \
+                (__is_new_frame),                                               \
+                (((const arm_2d_tile_t *)&c_tileWhiteDotMask),##__VA_ARGS__))
+
+extern
+ARM_NONNULL(1)
+void __draw_round_corner_box( const arm_2d_tile_t *ptTarget, 
+                            const arm_2d_region_t *ptRegion,
+                            COLOUR_INT tColour,
+                            uint8_t chOpacity,
+                            bool bIsNewFrame,
+                            const arm_2d_tile_t *ptCircleMask);
+
+
+
 
 extern
 void draw_round_corner_border(  const arm_2d_tile_t *ptTarget,
