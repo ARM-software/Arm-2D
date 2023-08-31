@@ -77,6 +77,7 @@ CCFLAG  +=  -Wno-macro-redefined
 CCFLAG  += 	-Ofast
 CCFLAG  +=  -flto
 LDFLAG  +=  -flto
+LDFLAG  +=  -lpthread
 
 #================================== DO NOT MODIFY UNLESS YOU KNOW THE CONSEQUENCES ====================================#
 .DEFAULT_GOAL = all
