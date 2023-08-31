@@ -87,6 +87,8 @@ extern const arm_2d_tile_t c_tileCMSISLogo;
 extern const arm_2d_tile_t c_tileCMSISLogoMask;
 extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
+
+extern const arm_2d_tile_t c_tileBackgroundRGB565;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
@@ -186,6 +188,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
                                     
         }
 
+
+    arm_2d_align_centre(__top_canvas, c_tileBackgroundRGB565.tRegion.tSize) {
+        draw_round_corner_image(&c_tileBackgroundRGB565,
+                                ptTile,
+                                &__centre_region,
+                                bIsNewFrame);
+    }
 
     #if 0
         /* draw the cmsis logo in the centre of the screen */
