@@ -797,8 +797,8 @@ arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
             if (NULL != ptSourceMask) {
                 ptSourceMask = arm_2d_tile_generate_child( 
                                             ptSourceMask,
-                                            //&tSourceTileParam.tValidRegion,
-                                            &tSourceMaskParam.tValidRegion,
+                                            &tSourceTileParam.tValidRegion,
+                                            //&tSourceMaskParam.tValidRegion,
                                             &tSourceMask,
                                             false);
 
@@ -886,8 +886,8 @@ arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
             if (NULL != ptSourceMask) {
                 ptSourceMask = arm_2d_tile_generate_child( 
                                             ptSourceMask,
-                                            //&tOriginTileParam.tValidRegion,
-                                            &tSourceMaskParam.tValidRegion,
+                                            &tOriginTileParam.tValidRegion,
+                                            //&tSourceMaskParam.tValidRegion,
                                             &tSourceMask,
                                             false);
 
