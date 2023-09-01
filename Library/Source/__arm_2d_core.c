@@ -737,6 +737,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
     uint_fast8_t chOriginPixelLenInBit = chTargetPixelLenInBit;
     uint_fast8_t chSourceMaskPixelLenInBit = 8;
     
+    
     __arm_2d_tile_param_t tSourceTileParam;
     __arm_2d_tile_param_t tSourceMaskParam;
     __arm_2d_tile_param_t tTargetTileParam;
@@ -829,11 +830,12 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
         }
         
         if (OP_CORE.ptOp->Info.Param.bHasDesMask) {
+
             arm_2d_op_src_msk_t *ptOP = (arm_2d_op_src_msk_t *)ptThis;
             
-            ptTargetMask = arm_2d_tile_get_root( ptOP->Mask.ptTargetSide, 
-                                    &tTargetMaskParam.tValidRegion, 
-                                    NULL);
+            ptTargetMask = arm_2d_tile_get_root(ptOP->Mask.ptTargetSide, 
+                                                &tTargetMaskParam.tValidRegion, 
+                                                NULL);
             
             if (NULL != ptTargetMask) {
                 uint_fast8_t chTargetMaskPixelLenInBit = 8;
@@ -890,7 +892,9 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                                 &chTargetMaskPixelLenInBit,
                                 true,
                                 0); 
+
             }
+
         }
 
     } else {                                                                    //!< has origin
@@ -1380,6 +1384,7 @@ arm_fsm_rt_t __tile_clipped_pave(
                 break;
             }
         }
+
     #endif
     
         if (NULL != ptClippedRegion) {
@@ -1401,7 +1406,7 @@ arm_fsm_rt_t __tile_clipped_pave(
                                         &tTempSourceTile, 
                                         ptSourceMaskTile,
                                         &tTargetTile, 
-                                        NULL,   //!< target mask
+                                        NULL,   /* we don't need to clip the target mask*/
                                         wMode);
             } else {
                 tResult = (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
@@ -1439,7 +1444,7 @@ static arm_fsm_rt_t __tile_non_negtive_location_pave(
                                                     ptSource, 
                                                     ptSourceMaskTile,
                                                     &tTile, 
-                                                    NULL,       //!< target mask
+                                                    NULL,   /* we don't need to clip the target mask*/
                                                     wMode);
         } else {
             tResult = (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
