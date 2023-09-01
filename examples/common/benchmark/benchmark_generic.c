@@ -89,8 +89,9 @@ typedef struct arm_2d_layer_t {
     arm_2d_region_t         tRegion;
     uint32_t                wMode;
     uint8_t                 chOpacity;
-    uint8_t                 bIsIrregular    : 1;
-    uint8_t                                 : 7;
+    uint8_t                 bIsIrregular        : 1;
+    uint8_t                 bIsRoundedCorner    : 1; 
+    uint8_t                                     : 6;
     COLOUR_INT              tKeyColour;
 } arm_2d_layer_t;
 
@@ -103,6 +104,7 @@ typedef struct floating_range_t {
 enum {
 #if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
     BENCHMARK_LAYER_HELIUM,
+    BENCHMARK_LAYER_HELIUM_ROUNDED_CORNER,
     BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING,
 #endif
     BENCHMARK_LAYER_RED_OPA,
@@ -114,6 +116,11 @@ enum {
 /*! picture helium */
 extern
 const arm_2d_tile_t c_tileHelium ;
+
+const arm_2d_tile_t c_tileHeliumSmall = 
+    impl_child_tile(c_tileHelium, 
+                    ((320 - 180) >> 1), 
+                    ((256 - 240) >> 1), 180, 240);
 
 extern 
 const arm_2d_tile_t c_tileSoftwareMask2;
@@ -179,6 +186,10 @@ static arm_2d_layer_t s_ptRefreshLayers[] = {
 #if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
     [BENCHMARK_LAYER_HELIUM] = 
         arm_2d_layer(&c_tileHelium, 255, -50, -100),
+    [BENCHMARK_LAYER_HELIUM_ROUNDED_CORNER] = 
+        arm_2d_layer(&c_tileHeliumSmall, 255, 100, 100,
+                    .bIsRoundedCorner = true,
+                    ),
 #endif
     [BENCHMARK_LAYER_RED_OPA] = 
         arm_2d_layer(   NULL, 128, 10, 80, 
@@ -198,9 +209,14 @@ static arm_2d_layer_t s_ptRefreshLayers[] = {
 static floating_range_t s_ptFloatingBoxes[] = {
 #if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
     [BENCHMARK_LAYER_HELIUM] = {
-        .tRegion = {{0-200, 0-200}, {__GLCD_CFG_SCEEN_WIDTH__ + 400, 256 + 400}},
+        .tRegion = {{0-200, 0-200}, {__GLCD_CFG_SCEEN_WIDTH__ + 400, __GLCD_CFG_SCEEN_HEIGHT__ + 400}},
         .ptLayer = &s_ptRefreshLayers[BENCHMARK_LAYER_HELIUM],
         .tOffset = {-1, -1},
+    },
+    [BENCHMARK_LAYER_HELIUM_ROUNDED_CORNER] = {
+        .tRegion = {{0-200, 0-200}, {__GLCD_CFG_SCEEN_WIDTH__ + 400, __GLCD_CFG_SCEEN_HEIGHT__ + 400}},
+        .ptLayer = &s_ptRefreshLayers[BENCHMARK_LAYER_HELIUM_ROUNDED_CORNER],
+        .tOffset = {-1, 1},
     },
     [BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING] = {
         .tRegion = {{0, 0}, {__GLCD_CFG_SCEEN_WIDTH__, __GLCD_CFG_SCEEN_HEIGHT__}},
@@ -710,7 +726,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
         
         if (ptLayer->bIsIrregular) {
             if (255 != ptLayer->chOpacity) {
-                arm_2d_alpha_blending_with_colour_keying(
+                arm_2d_tile_copy_with_colour_keying_and_opacity(
                             ptLayer->ptTile,
                             ptTile,
                             &tRegion,
@@ -762,6 +778,11 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
                                                 ptTile,
                                                 &tRegion,
                                                 ptLayer->chOpacity);
+            } else if (ptLayer->bIsRoundedCorner) {
+                draw_round_corner_image(ptLayer->ptTile,
+                                        ptTile,
+                                        &tRegion,
+                                        bIsNewFrame);
             } else {
                 arm_2d_tile_copy_only( ptLayer->ptTile,
                                         ptTile,
