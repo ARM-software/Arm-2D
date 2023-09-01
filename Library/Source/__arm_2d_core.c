@@ -1543,16 +1543,10 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
         //! calculate the valid region in the view of the target tile
         tValidRegion.tLocation = tOffset;
         //if (tOffset.iX != 0 || tOffset.iY != 0) {
-            //!! [Modify][Target.ptTile]
-            //this.Target.ptTile = arm_2d_tile_generate_child(  this.Target.ptTile,
-            //this.use_as__arm_2d_op_core_t.Runtime.ptTargetTile 
             ptTarget = arm_2d_tile_generate_child(  this.Target.ptTile,
                                                     &tValidRegion,
                                                     &tTile,
                                                     true);
-            //!! [Modify][Target.ptTile]
-            //assert(NULL != this.Target.ptTile);
-            //assert(NULL != this.use_as__arm_2d_op_core_t.Runtime.ptTargetTile);
             assert(NULL != ptTarget);
             tTargetCanvas.tLocation.iX -= tOffset.iX;
             tTargetCanvas.tLocation.iY -= tOffset.iY;
@@ -1588,9 +1582,6 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
         }
     }
 
-    //!! [Modify][Target.ptTile]
-    //tDrawRegion.tSize = this.Target.ptTile->tRegion.tSize;
-    //tDrawRegion.tSize = this.use_as__arm_2d_op_core_t.Runtime.ptTargetTile->tRegion.tSize;
     tDrawRegion.tSize = ptTarget->tRegion.tSize;
     if (!arm_2d_region_intersect(   &tDrawRegion, 
                                     &tTargetCanvas, 
@@ -1618,11 +1609,11 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
                 |                              |         |
                 +------------------------------+-- ... --+
          */
-        arm_2d_region_t tClippdRegion;
+        arm_2d_region_t tClippedRegion;
         tResult = __tile_clipped_pave(  &this,
                                         ptTarget,
                                         &tTargetCanvas,
-                                        &tClippdRegion,
+                                        &tClippedRegion,
                                         this.wMode & ~ARM_2D_CP_MODE_FILL);
                                         
         if (tResult < 0) {
@@ -1647,16 +1638,16 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
             +---------------------------------------------------------- ... --+
             */
 
-            if  (tClippdRegion.tSize.iWidth < tDrawRegion.tSize.iWidth) {
+            if  (tClippedRegion.tSize.iWidth < tDrawRegion.tSize.iWidth) {
                 //! something left to draw
 
                 arm_2d_region_t tHeaderRegion = tDrawRegion;
                 tHeaderRegion.tSize.iWidth  = tDrawRegion.tSize.iWidth 
-                                            - tClippdRegion.tSize.iWidth;
-                tHeaderRegion.tLocation.iX += tClippdRegion.tSize.iWidth;
+                                            - tClippedRegion.tSize.iWidth;
+                tHeaderRegion.tLocation.iX += tClippedRegion.tSize.iWidth;
                 
                 if (tTargetCanvas.tLocation.iY < 0) {
-                    tHeaderRegion.tSize.iHeight = tClippdRegion.tSize.iHeight 
+                    tHeaderRegion.tSize.iHeight = tClippedRegion.tSize.iHeight 
                                                 - tTargetCanvas.tLocation.iY;
                     tHeaderRegion.tLocation.iY = tTargetCanvas.tLocation.iY;
                 }
@@ -1699,15 +1690,15 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
             +-----+------------------------------+-- ... --+
             */
 
-            if  (tClippdRegion.tSize.iHeight < tDrawRegion.tSize.iHeight) {
+            if  (tClippedRegion.tSize.iHeight < tDrawRegion.tSize.iHeight) {
                 //! something left to draw
 
                 arm_2d_region_t tFirstColumnRegion = tDrawRegion;
-                tFirstColumnRegion.tSize.iHeight = tDrawRegion.tSize.iHeight - tClippdRegion.tSize.iHeight;
-                tFirstColumnRegion.tLocation.iY += tClippdRegion.tSize.iHeight;
+                tFirstColumnRegion.tSize.iHeight = tDrawRegion.tSize.iHeight - tClippedRegion.tSize.iHeight;
+                tFirstColumnRegion.tLocation.iY += tClippedRegion.tSize.iHeight;
                 
                 if (tTargetCanvas.tLocation.iX < 0) {
-                    tFirstColumnRegion.tSize.iWidth = tClippdRegion.tSize.iWidth 
+                    tFirstColumnRegion.tSize.iWidth = tClippedRegion.tSize.iWidth 
                                                     - tTargetCanvas.tLocation.iX;
                     tFirstColumnRegion.tLocation.iX = tTargetCanvas.tLocation.iX;
                 }
@@ -1744,14 +1735,14 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
                   +------------------------------+-- ... --+
             */
 
-            if (    (tClippdRegion.tSize.iWidth < tDrawRegion.tSize.iWidth)
-                &&  (tClippdRegion.tSize.iHeight < tDrawRegion.tSize.iHeight)) {
+            if (    (tClippedRegion.tSize.iWidth < tDrawRegion.tSize.iWidth)
+                &&  (tClippedRegion.tSize.iHeight < tDrawRegion.tSize.iHeight)) {
 
                 arm_2d_region_t tNonNegRegion = tDrawRegion;
-                tNonNegRegion.tSize.iWidth = tDrawRegion.tSize.iWidth - tClippdRegion.tSize.iWidth;
-                tNonNegRegion.tSize.iHeight = tDrawRegion.tSize.iHeight - tClippdRegion.tSize.iHeight;
-                tNonNegRegion.tLocation.iX += tClippdRegion.tSize.iWidth;
-                tNonNegRegion.tLocation.iY += tClippdRegion.tSize.iHeight;
+                tNonNegRegion.tSize.iWidth = tDrawRegion.tSize.iWidth - tClippedRegion.tSize.iWidth;
+                tNonNegRegion.tSize.iHeight = tDrawRegion.tSize.iHeight - tClippedRegion.tSize.iHeight;
+                tNonNegRegion.tLocation.iX += tClippedRegion.tSize.iWidth;
+                tNonNegRegion.tLocation.iY += tClippedRegion.tSize.iHeight;
 
                 tResult = __tile_non_negtive_location_pave( &this,
                                                             this.Source.ptTile,
