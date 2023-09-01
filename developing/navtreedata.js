@@ -198,15 +198,37 @@ var NAVTREE =
       ] ],
       [ "5 Reference", "use_tile.html#autotoc_md132", null ]
     ] ],
+    [ "How To Accelerate Arm-2D", "md_how_to_accelerate_arm_2d.html", [
+      [ "1 Software Tightly Coupled (Synchronouse) Acceleration", "md_how_to_accelerate_arm_2d.html#autotoc_md134", [
+        [ "1.1 Acceleration via Arm-2D Intrinsics", "md_how_to_accelerate_arm_2d.html#autotoc_md135", null ],
+        [ "1.2 Overriding the Default Low-Level Implementations", "md_how_to_accelerate_arm_2d.html#autotoc_md136", null ],
+        [ "1.3 Insert An User Defined Header File", "md_how_to_accelerate_arm_2d.html#autotoc_md137", null ]
+      ] ],
+      [ "2 Asynchronouse Acceleration", "md_how_to_accelerate_arm_2d.html#autotoc_md138", [
+        [ "2.1 Pixel Pipeline Overview", "md_how_to_accelerate_arm_2d.html#autotoc_md139", null ],
+        [ "2.2 OPCODE based Acceleration Entry", "md_how_to_accelerate_arm_2d.html#autotoc_md140", null ],
+        [ "2.3 Insert An User Defined Header File", "md_how_to_accelerate_arm_2d.html#autotoc_md141", null ],
+        [ "2.4 Software Design Considerations for End Users", "md_how_to_accelerate_arm_2d.html#autotoc_md142", [
+          [ "2.4.1 When and How to Enable Asynchronouse Mode", "md_how_to_accelerate_arm_2d.html#autotoc_md143", null ],
+          [ "2.4.2 How to Manage Dependencies Among 2D Operations", "md_how_to_accelerate_arm_2d.html#autotoc_md144", null ],
+          [ "2.4.3 Acceleration Methods Preference", "md_how_to_accelerate_arm_2d.html#autotoc_md145", null ]
+        ] ]
+      ] ],
+      [ "3 Acceleration via Arm Custom Instruction (ACI)", "md_how_to_accelerate_arm_2d.html#autotoc_md146", [
+        [ "3.1 Helium-based ACI and Non-Helium-based ACI", "md_how_to_accelerate_arm_2d.html#autotoc_md147", null ],
+        [ "3.2 Disable the default Helium Implementation", "md_how_to_accelerate_arm_2d.html#autotoc_md148", null ],
+        [ "3.3 Insert An User Defined Header File", "md_how_to_accelerate_arm_2d.html#autotoc_md149", null ]
+      ] ]
+    ] ],
     [ "Header Files Summary", "headers.html", [
-      [ "1 Overview", "headers.html#autotoc_md133", null ],
-      [ "2 Public Header Files", "headers.html#autotoc_md134", null ],
-      [ "3 Private Header Files", "headers.html#autotoc_md135", null ],
-      [ "4 Templates", "headers.html#autotoc_md136", null ]
+      [ "1 Overview", "headers.html#autotoc_md150", null ],
+      [ "2 Public Header Files", "headers.html#autotoc_md151", null ],
+      [ "3 Private Header Files", "headers.html#autotoc_md152", null ],
+      [ "4 Templates", "headers.html#autotoc_md153", null ]
     ] ],
     [ "How to Contribute", "md_contribution.html", [
-      [ "1 Contributions and Pull Requests", "md_contribution.html#autotoc_md138", [
-        [ "1.1 Issues and Labels", "md_contribution.html#autotoc_md139", null ]
+      [ "1 Contributions and Pull Requests", "md_contribution.html#autotoc_md155", [
+        [ "1.1 Issues and Labels", "md_contribution.html#autotoc_md156", null ]
       ] ]
     ] ],
     [ "Reference", "modules.html", "modules" ]
