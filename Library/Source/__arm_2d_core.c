@@ -1428,14 +1428,10 @@ static arm_fsm_rt_t __tile_non_negtive_location_pave(
         }
 
         arm_2d_tile_t *ptSourceMaskTile = NULL;
-        if (OP_CORE.ptOp->Info.Param.bHasSrcMask) {
-            if (OP_CORE.ptOp->Info.Param.bHasOrigin) {
-                arm_2d_op_src_orig_msk_t *ptOP = (arm_2d_op_src_orig_msk_t *)ptThis; 
-                ptSourceMaskTile = ptOP->Mask.ptOriginSide;
-            } else {
-                arm_2d_op_src_msk_t *ptOP = (arm_2d_op_src_msk_t *)ptThis; 
-                ptSourceMaskTile = ptOP->Mask.ptSourceSide;
-            }
+        if  (   OP_CORE.ptOp->Info.Param.bHasSrcMask 
+            &&  !OP_CORE.ptOp->Info.Param.bHasOrigin) {
+            arm_2d_op_src_msk_t *ptOP = (arm_2d_op_src_msk_t *)ptThis; 
+            ptSourceMaskTile = ptOP->Mask.ptSourceSide;
         }
 
         if (OP_CORE.ptOp->Info.Colour.u3ColourSZ >= ARM_2D_COLOUR_SZ_8BIT) {
