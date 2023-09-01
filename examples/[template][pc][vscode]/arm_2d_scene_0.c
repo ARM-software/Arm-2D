@@ -169,11 +169,18 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
         
         arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
 
+        arm_2d_align_centre(__top_canvas, c_tileBackgroundRGB565.tRegion.tSize) {
+            draw_round_corner_image(&c_tileBackgroundRGB565,
+                                    ptTile,
+                                    &__centre_region,
+                                    bIsNewFrame);
+        }
+
         arm_2d_align_centre(__top_canvas, 200, 100 ) {
             draw_round_corner_box(  ptTile, 
                                     &__centre_region, 
                                     GLCD_COLOR_WHITE, 
-                                    255,
+                                    128,
                                     bIsNewFrame);
             
             arm_2d_op_wait_async(NULL);
@@ -189,12 +196,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
         }
 
 
-    arm_2d_align_centre(__top_canvas, c_tileBackgroundRGB565.tRegion.tSize) {
-        draw_round_corner_image(&c_tileBackgroundRGB565,
-                                ptTile,
-                                &__centre_region,
-                                bIsNewFrame);
-    }
+
 
     #if 0
         /* draw the cmsis logo in the centre of the screen */
