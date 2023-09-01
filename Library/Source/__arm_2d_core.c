@@ -1264,6 +1264,25 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
     return tResult;
 }
 
+static arm_2d_tile_t *__clip_asset_tile(const arm_2d_tile_t *ptOriginAssetTile, 
+                                        const arm_2d_region_t *ptReferenceRegion,
+                                        arm_2d_tile_t *ptOutputAssetTile)
+{
+    arm_2d_region_t tempRegion = {
+        .tLocation = ptOriginAssetTile->tRegion.tLocation,
+        .tSize = ptReferenceRegion->tSize,
+    };
+
+    tempRegion.tLocation.iX = -ptReferenceRegion->tLocation.iX;
+    tempRegion.tLocation.iY = -ptReferenceRegion->tLocation.iY;
+    tempRegion.tSize.iWidth += ptReferenceRegion->tLocation.iX;
+    tempRegion.tSize.iHeight += ptReferenceRegion->tLocation.iY;
+
+    return arm_2d_tile_generate_child(  ptOriginAssetTile, 
+                                        &tempRegion, 
+                                        ptOutputAssetTile, 
+                                        true);
+}
 
 static
 arm_fsm_rt_t __tile_clipped_pave(
@@ -1274,11 +1293,11 @@ arm_fsm_rt_t __tile_clipped_pave(
                             uint32_t wMode)
 {
 
-    arm_2d_tile_t tTempSourceTile = {0};
-    
-
     arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_OUT_OF_REGION;
     do {
+        arm_2d_tile_t tTempSourceTile = {0};
+
+    #if 0
         arm_2d_region_t tempRegion = {
             .tLocation = this.Source.ptTile->tRegion.tLocation,
             .tSize = ptRegion->tSize,
@@ -1289,37 +1308,48 @@ arm_fsm_rt_t __tile_clipped_pave(
         tempRegion.tSize.iWidth += ptRegion->tLocation.iX;
         tempRegion.tSize.iHeight += ptRegion->tLocation.iY;
     
-    
         if (NULL == arm_2d_tile_generate_child( this.Source.ptTile, 
                                     &tempRegion, 
                                     &tTempSourceTile, 
                                     true)) {
             break;
         };
-        
+    #else
+        /* clip the source tile with the region reference of the target tile*/
+        if (NULL == __clip_asset_tile(this.Source.ptTile,
+                                      ptRegion,
+                                      &tTempSourceTile)) {
+            break;
+        }
+
+        if ()
+
+    #endif
         if (NULL != ptClippedRegion) {
             *ptClippedRegion = tTempSourceTile.tRegion;
         }
 
-        arm_2d_tile_t tTargetTile;
-        if (NULL == arm_2d_tile_generate_child( ptTarget,
-                                                ptRegion, 
-                                                &tTargetTile, 
-                                                true)) {
-            break;
-        }
-        
-
-        if (OP_CORE.ptOp->Info.Colour.u3ColourSZ >= ARM_2D_COLOUR_SZ_8BIT) {
-            tResult = __arm_2d_region_calculator( ptThis, 
-                                    &tTempSourceTile, 
-                                    NULL,   //!< source mask
-                                    &tTargetTile, 
-                                    NULL,   //!< target mask
-                                    wMode);
-        } else {
-            tResult = (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
-        }
+        /* generate container for the target tile */
+        do {
+            arm_2d_tile_t tTargetTile;
+            if (NULL == arm_2d_tile_generate_child( ptTarget,
+                                                    ptRegion, 
+                                                    &tTargetTile, 
+                                                    true)) {
+                break;
+            }
+            
+            if (OP_CORE.ptOp->Info.Colour.u3ColourSZ >= ARM_2D_COLOUR_SZ_8BIT) {
+                tResult = __arm_2d_region_calculator( ptThis, 
+                                        &tTempSourceTile, 
+                                        NULL,   //!< source mask
+                                        &tTargetTile, 
+                                        NULL,   //!< target mask
+                                        wMode);
+            } else {
+                tResult = (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
+            }
+        } while(0);
 
     } while(0);
 
