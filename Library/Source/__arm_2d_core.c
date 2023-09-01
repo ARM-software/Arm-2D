@@ -1275,7 +1275,7 @@ arm_fsm_rt_t __tile_clipped_pave(
 {
 
     arm_2d_tile_t tTempSourceTile = {0};
-    arm_2d_tile_t tTargetTile = {0};
+    
 
     arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_OUT_OF_REGION;
     do {
@@ -1301,29 +1301,15 @@ arm_fsm_rt_t __tile_clipped_pave(
             *ptClippedRegion = tTempSourceTile.tRegion;
         }
 
+        arm_2d_tile_t tTargetTile;
         if (NULL == arm_2d_tile_generate_child( ptTarget,
                                                 ptRegion, 
                                                 &tTargetTile, 
                                                 true)) {
             break;
         }
+        
 
-
-    #if 0
-        switch (OP_CORE.ptOp->Info.Colour.u3ColourSZ) {
-            case ARM_2D_COLOUR_SZ_8BIT:
-            case ARM_2D_COLOUR_SZ_16BIT:
-            case ARM_2D_COLOUR_SZ_32BIT:
-                tResult = __arm_2d_region_calculator( ptThis, 
-                                                    &tTempSourceTile, 
-                                                    &tTargetTile, 
-                                                    wMode);
-                break;
-            default:
-                tResult = (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
-                break;
-        }
-    #else
         if (OP_CORE.ptOp->Info.Colour.u3ColourSZ >= ARM_2D_COLOUR_SZ_8BIT) {
             tResult = __arm_2d_region_calculator( ptThis, 
                                     &tTempSourceTile, 
@@ -1334,7 +1320,7 @@ arm_fsm_rt_t __tile_clipped_pave(
         } else {
             tResult = (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
         }
-    #endif
+
     } while(0);
 
     return tResult;
@@ -1353,18 +1339,7 @@ static arm_fsm_rt_t __tile_non_negtive_location_pave(
         if (NULL == arm_2d_tile_generate_child(ptTarget, ptRegion, &tTile, true)) {
             break;
         }
-    #if 0
-        switch (OP_CORE.ptOp->Info.Colour.u3ColourSZ) {
-            case ARM_2D_COLOUR_SZ_8BIT:
-            case ARM_2D_COLOUR_SZ_16BIT:
-            case ARM_2D_COLOUR_SZ_32BIT:
-                tResult = __arm_2d_region_calculator(ptThis, ptSource, &tTile, wMode);
-                break;
-            default:
-                tResult = (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
-                break;
-        }
-    #else
+
         if (OP_CORE.ptOp->Info.Colour.u3ColourSZ >= ARM_2D_COLOUR_SZ_8BIT) {
             tResult = __arm_2d_region_calculator( ptThis, 
                                                     ptSource, 
@@ -1375,7 +1350,7 @@ static arm_fsm_rt_t __tile_non_negtive_location_pave(
         } else {
             tResult = (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
         }
-    #endif
+
     } while(0);
 
     return tResult;
@@ -1473,25 +1448,14 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process( arm_2d_op_core_t *ptOP)
                             &tTempTile, true)) {
             break;
         }
-    #if 0
-        switch (OP_CORE.ptOp->Info.Colour.u3ColourSZ) {
-            case ARM_2D_COLOUR_SZ_8BIT:
-            case ARM_2D_COLOUR_SZ_16BIT:
-            case ARM_2D_COLOUR_SZ_32BIT:
-                tResult = __arm_2d_region_calculator(ptThis, ptSource, &tTile, wMode);
-                break;
-            default:
-                tResult = (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
-                break;
-        }
-    #else
+
         if (OP_CORE.ptOp->Info.Colour.u3ColourSZ >= ARM_2D_COLOUR_SZ_8BIT) {
             tResult = __arm_2d_tile_process( ptThis,
                                             &tTempTile);
         } else {
             tResult = (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
         }
-    #endif
+
     } while(0);
 
     return tResult;
