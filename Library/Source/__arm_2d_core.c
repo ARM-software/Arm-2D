@@ -21,8 +21,8 @@
  * Title:        __arm-2d_core.c
  * Description:  Basic Tile operations
  *
- * $Date:        05. April 2023
- * $Revision:    V.1.6.3
+ * $Date:        01. Sept 2023
+ * $Revision:    V.1.6.4
  *
  * Target Processor:  Cortex-M cores
  *
@@ -720,7 +720,7 @@ static void __arm_2d_source_side_tile_mirror_preprocess(
 
 ARM_NONNULL(1,2)
 static
-arm_fsm_rt_t __arm_2d_region_calculator(  arm_2d_op_cp_t *ptThis,
+arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                                             const arm_2d_tile_t *ptSource,
                                             const arm_2d_tile_t *ptSourceMask,
                                             const arm_2d_tile_t *ptTarget,
@@ -1301,10 +1301,7 @@ arm_fsm_rt_t __tile_clipped_pave(
             *ptClippedRegion = tTempSourceTile.tRegion;
         }
 
-        //! [Modify][Target.ptTile]
-        //if (NULL == arm_2d_tile_generate_child( this.Target.ptTile, 
-        if (NULL == arm_2d_tile_generate_child( //this.use_as__arm_2d_op_core_t.Runtime.ptTargetTile,
-                                                ptTarget,
+        if (NULL == arm_2d_tile_generate_child( ptTarget,
                                                 ptRegion, 
                                                 &tTargetTile, 
                                                 true)) {
@@ -1515,7 +1512,7 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
     arm_fsm_rt_t tResult;
     arm_2d_tile_t tTile = {0};
     arm_2d_region_t tDrawRegion = {0};
-    arm_2d_region_t tTargetRegion = {0};
+    arm_2d_region_t tTargetCanvas = {0};
     const arm_2d_tile_t *ptTarget = NULL;
 
     if (!__arm_2d_op_ensure_resource(ptOP, 4)) {
@@ -1523,15 +1520,13 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
         return arm_fsm_rt_wait_for_res;
     }
     
-    
     if (NULL == this.Target.ptRegion) {
         //! use target region instead
         this.Target.ptRegion = &(this.Target.ptTile->tRegion);
         
-        tTargetRegion.tSize = (*this.Target.ptRegion).tSize;
+        tTargetCanvas.tSize = (*this.Target.ptRegion).tSize;
     } else {
-
-        tTargetRegion = *this.Target.ptRegion;
+        tTargetCanvas = *this.Target.ptRegion;
     }
 
     //! handle the offset of the target tile
@@ -1559,8 +1554,8 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
             //assert(NULL != this.Target.ptTile);
             //assert(NULL != this.use_as__arm_2d_op_core_t.Runtime.ptTargetTile);
             assert(NULL != ptTarget);
-            tTargetRegion.tLocation.iX -= tOffset.iX;
-            tTargetRegion.tLocation.iY -= tOffset.iY;
+            tTargetCanvas.tLocation.iX -= tOffset.iX;
+            tTargetCanvas.tLocation.iY -= tOffset.iY;
         //}
 
     } while(false);
@@ -1569,27 +1564,27 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
 
     if ( this.wMode & ARM_2D_CP_MODE_FILL) {
         /* quickly ignore non visiable area, only for FILL mode */
-        if (tTargetRegion.tLocation.iX < 0) {
-            int_fast16_t iX = tTargetRegion.tLocation.iX;
+        if (tTargetCanvas.tLocation.iX < 0) {
+            int_fast16_t iX = tTargetCanvas.tLocation.iX;
             
-            tTargetRegion.tLocation.iX %= this.Source.ptTile->tRegion.tSize.iWidth;
+            tTargetCanvas.tLocation.iX %= this.Source.ptTile->tRegion.tSize.iWidth;
 
             //! calculate the delta
-            iX = tTargetRegion.tLocation.iX - iX;
+            iX = tTargetCanvas.tLocation.iX - iX;
 
             //! update the width to make sure the range won't be expanded mistakenly
-            tTargetRegion.tSize.iWidth -= iX;
+            tTargetCanvas.tSize.iWidth -= iX;
         }
 
-        if (tTargetRegion.tLocation.iY < 0) {
-            int_fast16_t iY = tTargetRegion.tLocation.iY;
-            tTargetRegion.tLocation.iY %= this.Source.ptTile->tRegion.tSize.iHeight;
+        if (tTargetCanvas.tLocation.iY < 0) {
+            int_fast16_t iY = tTargetCanvas.tLocation.iY;
+            tTargetCanvas.tLocation.iY %= this.Source.ptTile->tRegion.tSize.iHeight;
 
             //! calculate the delta
-            iY = tTargetRegion.tLocation.iY - iY;
+            iY = tTargetCanvas.tLocation.iY - iY;
 
             //! update the width to make sure the range won't be expanded mistakenly
-            tTargetRegion.tSize.iHeight -= iY;
+            tTargetCanvas.tSize.iHeight -= iY;
         }
     }
 
@@ -1598,14 +1593,14 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
     //tDrawRegion.tSize = this.use_as__arm_2d_op_core_t.Runtime.ptTargetTile->tRegion.tSize;
     tDrawRegion.tSize = ptTarget->tRegion.tSize;
     if (!arm_2d_region_intersect(   &tDrawRegion, 
-                                    &tTargetRegion, 
+                                    &tTargetCanvas, 
                                     &tDrawRegion)) {
         //! no overlapping
         return (arm_fsm_rt_t)ARM_2D_ERR_OUT_OF_REGION;
     }
 
-    if (    (tTargetRegion.tLocation.iX < 0) 
-        ||  (tTargetRegion.tLocation.iY < 0)) {
+    if (    (tTargetCanvas.tLocation.iX < 0) 
+        ||  (tTargetCanvas.tLocation.iY < 0)) {
         /*! draw the top left corner */
         /*
           HOW IT WORKS:
@@ -1626,7 +1621,7 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
         arm_2d_region_t tClippdRegion;
         tResult = __tile_clipped_pave(  &this,
                                         ptTarget,
-                                        &tTargetRegion,
+                                        &tTargetCanvas,
                                         &tClippdRegion,
                                         this.wMode & ~ARM_2D_CP_MODE_FILL);
                                         
@@ -1660,10 +1655,10 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
                                             - tClippdRegion.tSize.iWidth;
                 tHeaderRegion.tLocation.iX += tClippdRegion.tSize.iWidth;
                 
-                if (tTargetRegion.tLocation.iY < 0) {
+                if (tTargetCanvas.tLocation.iY < 0) {
                     tHeaderRegion.tSize.iHeight = tClippdRegion.tSize.iHeight 
-                                                - tTargetRegion.tLocation.iY;
-                    tHeaderRegion.tLocation.iY = tTargetRegion.tLocation.iY;
+                                                - tTargetCanvas.tLocation.iY;
+                    tHeaderRegion.tLocation.iY = tTargetCanvas.tLocation.iY;
                 }
 
                 tResult = __tile_clipped_pave(  &this,
@@ -1711,10 +1706,10 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
                 tFirstColumnRegion.tSize.iHeight = tDrawRegion.tSize.iHeight - tClippdRegion.tSize.iHeight;
                 tFirstColumnRegion.tLocation.iY += tClippdRegion.tSize.iHeight;
                 
-                if (tTargetRegion.tLocation.iX < 0) {
+                if (tTargetCanvas.tLocation.iX < 0) {
                     tFirstColumnRegion.tSize.iWidth = tClippdRegion.tSize.iWidth 
-                                                    - tTargetRegion.tLocation.iX;
-                    tFirstColumnRegion.tLocation.iX = tTargetRegion.tLocation.iX;
+                                                    - tTargetCanvas.tLocation.iX;
+                    tFirstColumnRegion.tLocation.iX = tTargetCanvas.tLocation.iX;
                 }
 
                 tResult = __tile_clipped_pave(  &this,
@@ -1760,10 +1755,6 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
 
                 tResult = __tile_non_negtive_location_pave( &this,
                                                             this.Source.ptTile,
-                                                            
-                                                            //! [Modify][Target.ptTile]
-                                                            //this.Target.ptTile,
-                                                            //this.use_as__arm_2d_op_core_t.Runtime.ptTargetTile,
                                                             ptTarget,
                                                             &tNonNegRegion,
                                                             this.wMode);
@@ -1775,12 +1766,8 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
     } else {
         tResult = __tile_non_negtive_location_pave( &this,
                                                     this.Source.ptTile,
-                                                    
-                                                    //! [Modify][Target.ptTile]
-                                                    //this.Target.ptTile,
-                                                    //this.use_as__arm_2d_op_core_t.Runtime.ptTargetTile,
                                                     ptTarget,
-                                                    &tTargetRegion,
+                                                    &tTargetCanvas,
                                                     this.wMode);
     }
 
