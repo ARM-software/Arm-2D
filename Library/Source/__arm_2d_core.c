@@ -788,6 +788,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
     
     if (!OP_CORE.ptOp->Info.Param.bHasOrigin) {                                 //!< no origin 
         if (OP_CORE.ptOp->Info.Param.bHasSrcMask) {
+        #if 0
             arm_2d_op_src_msk_t *ptOP = (arm_2d_op_src_msk_t *)ptThis;  
 
             ptSourceMask = arm_2d_tile_get_root( ptOP->Mask.ptSourceSide, 
@@ -809,6 +810,14 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                                 true,
                                 wMode); 
             }
+        #else
+            ptSourceMask = __arm_2d_tile_region_caculator( 
+                                ptSourceMask, 
+                                &tSourceMaskParam,
+                                &chSourceMaskPixelLenInBit,
+                                true,
+                                wMode);
+        #endif
         }
         
         if (OP_CORE.ptOp->Info.Param.bHasDesMask) {
@@ -877,6 +886,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
         }
     } else {                                                                    //!< has origin
         if (OP_CORE.ptOp->Info.Param.bHasSrcMask) {
+        #if 0
             arm_2d_op_src_orig_msk_t *ptOP = (arm_2d_op_src_orig_msk_t *)ptThis;  
 
             ptSourceMask = arm_2d_tile_get_root( ptOP->Mask.ptOriginSide, 
@@ -898,6 +908,14 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                                 true,
                                 wMode); 
             }
+        #else
+            ptSourceMask = __arm_2d_tile_region_caculator( 
+                                ptSourceMask, 
+                                &tSourceMaskParam,
+                                &chSourceMaskPixelLenInBit,
+                                true,
+                                wMode); 
+        #endif
         }
         
         if (OP_CORE.ptOp->Info.Param.bHasDesMask) {
@@ -975,7 +993,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
 
     /* trim source valid region */
     tSourceTileParam.tValidRegion.tSize = tActualSize;
-//    tSourceMaskParam.tValidRegion.tSize = tActualSize;
+    tSourceMaskParam.tValidRegion.tSize = tActualSize;
 
     if (wMode & ARM_2D_CP_MODE_FILL) {                                          //!< tiling (tile fill) operation
 
@@ -1295,7 +1313,10 @@ arm_fsm_rt_t __tile_clipped_pave(
 
     arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_OUT_OF_REGION;
     do {
-        arm_2d_tile_t tTempSourceTile = {0};
+        arm_2d_tile_t tTempSourceTile;
+        arm_2d_tile_t tTempSourceMaskTile;
+        arm_2d_tile_t *ptSourceTile = NULL;
+        arm_2d_tile_t *ptSourceMaskTile = NULL;
 
     #if 0
         arm_2d_region_t tempRegion = {
@@ -1316,13 +1337,29 @@ arm_fsm_rt_t __tile_clipped_pave(
         };
     #else
         /* clip the source tile with the region reference of the target tile*/
-        if (NULL == __clip_asset_tile(this.Source.ptTile,
-                                      ptRegion,
-                                      &tTempSourceTile)) {
+        ptSourceTile = __clip_asset_tile(this.Source.ptTile,
+                                         ptRegion,
+                                         &tTempSourceTile);
+        if (NULL == ptSourceTile) {
             break;
         }
 
-        if ()
+        if (OP_CORE.ptOp->Info.Param.bHasSrcMask) {
+            if (OP_CORE.ptOp->Info.Param.bHasOrigin) {
+                arm_2d_op_src_orig_msk_t *ptOP = (arm_2d_op_src_orig_msk_t *)ptThis; 
+                ptSourceMaskTile = ptOP->Mask.ptOriginSide;
+            } else {
+                arm_2d_op_src_msk_t *ptOP = (arm_2d_op_src_msk_t *)ptThis; 
+                ptSourceMaskTile = ptOP->Mask.ptSourceSide;
+            }
+
+            ptSourceMaskTile = __clip_asset_tile(ptSourceMaskTile,
+                                                 ptRegion,
+                                                 &tTempSourceMaskTile);
+            if (NULL == ptSourceMaskTile) {
+                break;
+            }
+        }
 
     #endif
         if (NULL != ptClippedRegion) {
@@ -1342,7 +1379,7 @@ arm_fsm_rt_t __tile_clipped_pave(
             if (OP_CORE.ptOp->Info.Colour.u3ColourSZ >= ARM_2D_COLOUR_SZ_8BIT) {
                 tResult = __arm_2d_region_calculator( ptThis, 
                                         &tTempSourceTile, 
-                                        NULL,   //!< source mask
+                                        ptSourceMaskTile,
                                         &tTargetTile, 
                                         NULL,   //!< target mask
                                         wMode);
@@ -1370,10 +1407,21 @@ static arm_fsm_rt_t __tile_non_negtive_location_pave(
             break;
         }
 
+        arm_2d_tile_t *ptSourceMaskTile = NULL;
+        if (OP_CORE.ptOp->Info.Param.bHasSrcMask) {
+            if (OP_CORE.ptOp->Info.Param.bHasOrigin) {
+                arm_2d_op_src_orig_msk_t *ptOP = (arm_2d_op_src_orig_msk_t *)ptThis; 
+                ptSourceMaskTile = ptOP->Mask.ptOriginSide;
+            } else {
+                arm_2d_op_src_msk_t *ptOP = (arm_2d_op_src_msk_t *)ptThis; 
+                ptSourceMaskTile = ptOP->Mask.ptSourceSide;
+            }
+        }
+
         if (OP_CORE.ptOp->Info.Colour.u3ColourSZ >= ARM_2D_COLOUR_SZ_8BIT) {
             tResult = __arm_2d_region_calculator( ptThis, 
                                                     ptSource, 
-                                                    NULL,       //!< source mask
+                                                    ptSourceMaskTile,
                                                     &tTile, 
                                                     NULL,       //!< target mask
                                                     wMode);
