@@ -878,6 +878,7 @@ INPUT                  = ../README.md \
                          ./introduction.md \
                          ./how_to_use_layout_assistant.md \
                          ./how_to_use_tile_operations.md \
+                         ./how_to_accelerate_arm_2d.md \
                          ../Library/Include/README.md \
                          ./contribution.md \
                          ../Library/Include/arm_2d_utils.h \
