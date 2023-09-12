@@ -1253,16 +1253,6 @@ bool __arm_2d_helper_3fb_draw_bitmap( arm_2d_helper_3fb_t *ptThis,
     int16_t iHeight = MIN(iPFBHeight, iLCDHeight);
     int16_t iWidth = MIN(iPFBWidth, iLCDWidth);
 
-#if 0
-    /* 2D copy */
-    for (int_fast16_t i = 0; i < iHeight; i++) {
-        memcpy( (void *)pnTarget, (void *)pnSource, iWidth * chBytePerPixel );
-
-        pnSource += wPFBStrideInByte;
-        pnTarget += wLCDStrideInByte;
-    }
-#endif
-
     return __arm_2d_helper_3fb_dma_2d_copy( pnSource,
                                             wPFBStrideInByte,
                                             pnTarget,
