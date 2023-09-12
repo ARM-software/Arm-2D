@@ -1225,7 +1225,7 @@ bool __arm_2d_helper_3fb_dma_2d_copy(   uintptr_t pnSource,
 
 ARM_NONNULL(1,2)
 bool __arm_2d_helper_3fb_draw_bitmap( arm_2d_helper_3fb_t *ptThis, 
-                                      arm_2d_pfb_t *ptPFB)
+                                      const arm_2d_pfb_t *ptPFB)
 {
     assert(NULL != ptThis);
     assert(NULL != ptPFB);
@@ -1246,7 +1246,7 @@ bool __arm_2d_helper_3fb_draw_bitmap( arm_2d_helper_3fb_t *ptThis,
     uint32_t wPFBStrideInByte = chBytePerPixel * iPFBWidth;
 
     /* calculate source and target address */
-    uintptr_t pnTarget = pnAddress + (iX * iLCDWidth + iY) * chBytePerPixel;
+    uintptr_t pnTarget = pnAddress + (iY * iLCDWidth + iX) * chBytePerPixel;
     uintptr_t pnSource = ptPFB->tTile.nAddress;
 
     /* region clipping */

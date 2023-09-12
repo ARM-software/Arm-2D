@@ -600,7 +600,7 @@ bool arm_2d_port_wait_for_semaphore(uintptr_t pSemaphore)
 }
 
 __WEAK
-void arm_2d_port_set_semaphoret(uintptr_t pSemaphore)
+void arm_2d_port_set_semaphore(uintptr_t pSemaphore)
 {
     ARM_2D_UNUSED(pSemaphore);
 }

@@ -855,7 +855,7 @@ void * arm_2d_helper_3fb_get_flush_pointer(arm_2d_helper_3fb_t *ptThis);
 extern
 ARM_NONNULL(1,2)
 bool __arm_2d_helper_3fb_draw_bitmap(arm_2d_helper_3fb_t *ptThis, 
-                                     arm_2d_pfb_t *ptPFB);
+                                     const arm_2d_pfb_t *ptPFB);
 
 
 /*!
