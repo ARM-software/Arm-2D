@@ -60,7 +60,9 @@
 #endif
 
 #undef arm_irq_safe
-#define arm_irq_safe
+#undef arm_exit_irq_safe
+#define arm_irq_safe  arm_using(  uint32_t ARM_2D_SAFE_NAME(temp) = 0 )
+#define arm_exit_irq_safe    continue
 
 
 /**

@@ -702,11 +702,14 @@ extern "C" {
  */
 #if __IS_SUPPORTED_ARM_ARCH__
 #   undef arm_irq_safe
+#   undef arm_exit_irq_safe
 #   define arm_irq_safe                                                         \
             arm_using(  uint32_t ARM_2D_SAFE_NAME(temp) =                       \
                         ({uint32_t temp=__get_PRIMASK();__disable_irq();temp;}),\
                         __set_PRIMASK(ARM_2D_SAFE_NAME(temp)))
+#   define arm_exit_irq_safe    continue
 #endif
+
 
 #undef ARM_2D_WRAP_FUNC
 #undef __ARM_2D_WRAP_FUNC
