@@ -302,6 +302,36 @@ extern
 bool __arm_2d_helper_is_time_out(int64_t lPeriod, int64_t *plTimestamp);
 
 /*!
+ * \brief get a new semaphore from host RTOS
+ * \return uintptr_t a handler for the semaphore
+ */
+extern
+uintptr_t arm_2d_port_new_semaphore(void);
+
+/*!
+ * \brief free a semaphore
+ * \param[in] pSemaphore the target semaphore
+ */
+extern
+void arm_2d_port_free_semaphore(uintptr_t pSemaphore);
+
+/*!
+ * \brief wait for a semaphore
+ * \param[in] pSemaphore the target semaphore
+ * \retval true we get the semaphore
+ * \retval false we haven't get the sempahore
+ */
+extern 
+bool arm_2d_port_wait_for_semaphore(uintptr_t pSemaphore);
+
+/*!
+ * \brief set a semaphore 
+ * \param[in] pSemaphore the target semaphore
+ */
+extern
+void arm_2d_port_set_semaphore(uintptr_t pSemaphore);
+
+/*!
  * \brief calculate the stroke of a liner slider based on time
  *
  * \param[in] nFrom the start of the slider

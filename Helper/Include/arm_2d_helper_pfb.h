@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        09. Aug 2023
- * $Revision:    V.1.5.7
+ * $Date:        12. Sept 2023
+ * $Revision:    V.1.6.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -330,7 +330,66 @@ extern "C" {
 
 /*============================ TYPES =========================================*/
 
+/*!
+ * \brief direct mode helper service frame-buffer control block states
+ * 
+ * \note state transition diagram
+ *                                    <<< service initialization >>>
+ *                                              | 
+ *                                    ARM_3FB_STATE_READY_FOR_FLUSH <------+
+ *                                              |                          |
+ *                                    ARM_3FB_STATE_FLUSHING               |
+ *                                              |                          |
+ *       ARM_3FB_STATUS_UNUSED --->   ARM_3FB_STATE_COPYING_AS_TARGET      |
+ *                                              |                          |
+ *                                    ARM_3FB_STATE_READY_TO_DRAW          |
+ *                                              |                          |
+ *                                    ARM_3FB_STATE_DRAWING                |
+ *                                              |                          |
+ *                                    ARM_3FB_STATE_COPYING_AS_SOURCE -----+
+ *                                              
+ */
+enum {
+    ARM_3FB_STATE_UNUSED = 0,              //!< the FB hasn't been used
+    ARM_3FB_STATE_COPYING_AS_TARGET,       //!< the FB is used as the target of frame copy, the previous state is ARM_3FB_STATE_FLUSHING (or ARM_3FB_STATE_UNUSED)
+    ARM_3FB_STATE_READY_TO_DRAW,           //!< the FB is ready to draw, the previous state is ARM_3FB_STATE_COPYING_AS_TARGET
+    ARM_3FB_STATE_DRAWING,                 //!< the FB is used for drawing, the previous state is ARM_3FB_STATE_READY_TO_DRAW
+    ARM_3FB_STATE_COPYING_AS_SOURCE,       //!< the FB is used as the source of frame copy, the previous state is ARM_3FB_STATE_READY_FOR_FLUSH
+    ARM_3FB_STATE_READY_TO_FLUSH,         //!< the FB is ready for flushing and waiting for a v-sync event, the previous state is ARM_3FB_STATE_COPYING_AS_SOURCE
+    ARM_3FB_STATE_FLUSHING,                //!< the FB is used for flushing, the previous state is ARM_3FB_STATE_READY_FOR_FLUSH
+};
+
+/*!
+ * \brief configuration structure for the 3fb (direct mode) helper service
+ */
+typedef struct arm_2d_helper_3fb_cfg_t {
+    arm_2d_size_t tScreenSize;              //!< the screen size
+    uint8_t       chPixelBits;              //!< the number of bits in one pixel
+    uintptr_t     pnAddress[3];             //!< addresses of the 3 full-frame-buffer
+} arm_2d_helper_3fb_cfg_t;
+
+#define ARM_2D_3FB_INVALID_IDX      3
+
+/*!
+ * \brief the control block of the 3FB (direct mode) service
+ */
+typedef struct arm_2d_helper_3fb_t {
+ARM_PRIVATE(
+    arm_2d_helper_3fb_cfg_t tCFG;
+
+    struct {
+        uint8_t         u2Drawing       : 2;        //!< FB pointer for drawing
+        uint8_t         u2Flushing      : 2;        //!< FB pointer for flushing
+        uint8_t         u2ReadyToFlush  : 2;        //!< FB pointer of ready to flush
+        uint8_t         u2ReadyToDraw   : 2;        //!< FB pointer of ready to draw
+        uint8_t         tState[3];
+        uintptr_t       tSemaphore;                 //!< semaphore for async access
+    } Runtime;
+)
+} arm_2d_helper_3fb_t;
+
 typedef struct arm_2d_helper_pfb_t arm_2d_helper_pfb_t;
+
 /*!
  * \brief the header of a PFB block
  */
@@ -736,6 +795,89 @@ void arm_2d_helper_transform_update_dirty_regions(
                                     arm_2d_helper_transform_t *ptThis,
                                     const arm_2d_region_t *ptCanvas,
                                     bool bIsNewFrame);
+
+
+/*!
+ * \brief initialize the 3FB (direct mode) service
+ * \param[in] ptThis the helper service control block
+ * \param[in] ptCFG the configuration structure
+ */
+extern
+ARM_NONNULL(1,2)
+void arm_2d_helper_3fb_init(arm_2d_helper_3fb_t *ptThis, 
+                            const arm_2d_helper_3fb_cfg_t *ptCFG);
+
+/*!
+ * \brief An user overridable interface for DMA memory-to-memory copy.
+ *        If you have a DMA, you can implement this function by using
+ *        __OVERRIDE_WEAK. 
+ *        You should implement an ISR for copy-complete event and call
+ *        arm_2d_helper_3fb_report_dma_copy_complete() to notify the 
+ *        3FB (direct mode) helper service.
+ * 
+ * \param[in] ptThis the helper service control block
+ * \param[in] pnSource the source address of the memory block
+ * \param[in] pnTarget the target address
+ * \param[in] nDataItemCount the number of date items
+ * \param[in] chDataItemSize the size of each data item 
+ */
+extern
+ARM_NONNULL(1)
+void __arm_2d_helper_3fb_dma_copy(  arm_2d_helper_3fb_t *ptThis, 
+                                    uintptr_t pnSource,
+                                    uintptr_t pnTarget,
+                                    uint32_t nDataItemCount,
+                                    uint_fast8_t chDataItemSize);
+
+/*!
+ * \brief report the copy-completion event to the 3FB (direct mode) service
+ * \note see function __arm_2d_helper_3fb_dma_copy for details
+ * \param[in] ptThis the helper service control block
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_3fb_report_dma_copy_complete(arm_2d_helper_3fb_t *ptThis);
+
+/*!
+ * \brief get a pointer for flushing
+ * \param[in] ptThis the helper service control block
+ * \return void * the address of a framebuffer
+ * 
+ * \note please only call this function when on vsync event.
+ */
+extern
+ARM_NONNULL(1)
+void * arm_2d_helper_3fb_get_flush_pointer(arm_2d_helper_3fb_t *ptThis);
+
+/*!
+ * \brief please do NOT use this function. It is used by the display adapter.
+ */
+extern
+ARM_NONNULL(1,2)
+bool __arm_2d_helper_3fb_draw_bitmap(arm_2d_helper_3fb_t *ptThis, 
+                                     arm_2d_pfb_t *ptPFB);
+
+
+/*!
+ * \brief An user overridable interface for DMA-2D-Copy.
+ * \param[in] pnSource the source image address
+ * \param[in] wSourceStride the stride of the source image
+ * \param[in] pnTarget the address in the target framebuffer
+ * \param[in] wTargetStride the stride of the target framebuffer
+ * \param[in] iWidth the safe width of the source image
+ * \param[in] iHeight the safe height of the source image
+ * \retval true the 2D copy is complete when leaving this function
+ * \retval false An async 2D copy request is sent to the DMA
+ */
+extern
+__WEAK
+bool __arm_2d_helper_3fb_dma_2d_copy(   uintptr_t pnSource,
+                                        uint32_t wSourceStride,
+                                        uintptr_t pnTarget,
+                                        uint32_t wTargetStride,
+                                        int16_t iWidth,
+                                        int16_t iHeight,
+                                        uint_fast8_t chBytePerPixel);
 
 /*! @} */
 

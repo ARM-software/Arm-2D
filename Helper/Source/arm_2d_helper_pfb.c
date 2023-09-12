@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        29. Aug 2023
- * $Revision:    V.1.5.8
+ * $Date:        12. Sept 2023
+ * $Revision:    V.1.6.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1026,6 +1026,252 @@ ARM_PT_END()
 
     return arm_fsm_rt_cpl;
 }
+
+/*----------------------------------------------------------------------------*
+ * 3FB (Direct Mode) Helper                                                   *
+ *----------------------------------------------------------------------------*/
+
+ARM_NONNULL(1,2)
+void arm_2d_helper_3fb_init(arm_2d_helper_3fb_t *ptThis, 
+                            const arm_2d_helper_3fb_cfg_t *ptCFG)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptCFG);
+    assert((uintptr_t)NULL != ptCFG->pnAddress[0]);
+    assert((uintptr_t)NULL != ptCFG->pnAddress[1]);
+    assert((uintptr_t)NULL != ptCFG->pnAddress[2]);
+    assert(0 == (ptCFG->chPixelBits & 0x7));
+
+    memset(ptThis, 0, sizeof(arm_2d_helper_3fb_t));
+
+    this.tCFG = *ptCFG;
+    uint32_t wFrameBufferSize = this.tCFG.tScreenSize.iHeight 
+                                    * this.tCFG.tScreenSize.iWidth 
+                                    * (this.tCFG.chPixelBits >> 3);
+
+
+    memset((void *)this.tCFG.pnAddress[0], 0, wFrameBufferSize);
+    memset((void *)this.tCFG.pnAddress[1], 0, wFrameBufferSize);
+    memset((void *)this.tCFG.pnAddress[2], 0, wFrameBufferSize);
+
+    this.Runtime.tState[0] = ARM_3FB_STATE_READY_TO_DRAW;
+    this.Runtime.u2ReadyToDraw = 0;
+
+    this.Runtime.tState[1] = ARM_3FB_STATE_DRAWING;
+    this.Runtime.u2Drawing = 1;
+
+    this.Runtime.tState[2] = ARM_3FB_STATE_FLUSHING;
+    this.Runtime.u2Flushing = 2;
+
+    this.Runtime.u2ReadyToFlush = ARM_2D_3FB_INVALID_IDX;
+
+    this.Runtime.tSemaphore = arm_2d_port_new_semaphore();
+}
+
+ARM_NONNULL(1)
+void arm_2d_helper_3fb_report_dma_copy_complete(arm_2d_helper_3fb_t *ptThis)
+{
+    arm_2d_port_set_semaphore(this.Runtime.tSemaphore);
+}
+
+ARM_NONNULL(1)
+__WEAK
+void __arm_2d_helper_3fb_dma_copy(  arm_2d_helper_3fb_t *ptThis, 
+                                    uintptr_t pnSource,
+                                    uintptr_t pnTarget,
+                                    uint32_t nDataItemCount,
+                                    uint_fast8_t chDataItemSize)
+{
+    memcpy((void *)pnTarget, (const void *)pnSource, nDataItemCount * chDataItemSize);
+
+    arm_2d_helper_3fb_report_dma_copy_complete(ptThis);
+}
+
+ARM_NONNULL(1)
+void * arm_2d_helper_3fb_get_flush_pointer(arm_2d_helper_3fb_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    uint_fast8_t chFlushingIndex;
+    uint_fast8_t chReadyToFlushIndex;
+    uint_fast8_t chReadyToDrawIndex;
+
+    arm_irq_safe {
+        chFlushingIndex = this.Runtime.u2Flushing;
+        chReadyToFlushIndex = this.Runtime.u2ReadyToFlush;
+        chReadyToDrawIndex = this.Runtime.u2ReadyToDraw;
+    }
+
+    if (    ARM_2D_3FB_INVALID_IDX != chReadyToFlushIndex
+        &&  ARM_2D_3FB_INVALID_IDX == chReadyToDrawIndex) {
+        /* a new fb is ready to flush and the ready-to-draw slot is available */
+        
+        arm_irq_safe {
+            this.Runtime.tState[chFlushingIndex]        = ARM_3FB_STATE_READY_TO_DRAW;
+            this.Runtime.u2ReadyToDraw = chFlushingIndex;
+
+            this.Runtime.tState[chReadyToFlushIndex]    = ARM_3FB_STATE_FLUSHING;
+            this.Runtime.u2Flushing = chReadyToFlushIndex;
+
+            this.Runtime.u2ReadyToFlush = ARM_2D_3FB_INVALID_IDX;
+        }
+    }
+
+    return (void *)this.tCFG.pnAddress[this.Runtime.u2Flushing];
+}
+
+ARM_NONNULL(1)
+static uintptr_t 
+__arm_2d_helper_3fb_get_drawing_pointer(arm_2d_helper_3fb_t *ptThis, bool bIsNewFrame)
+{
+    assert(NULL != ptThis);
+
+    uint_fast8_t chDrawingIndex;
+    uint_fast8_t chReadyToDrawIndex;
+
+
+    arm_irq_safe {
+        chDrawingIndex = this.Runtime.u2Drawing;
+        chReadyToDrawIndex = this.Runtime.u2ReadyToDraw;
+    }
+
+    uintptr_t pnAddress = this.tCFG.pnAddress[chDrawingIndex];
+    bool bPrepareForCopy = false;
+
+    if (bIsNewFrame) {
+        arm_irq_safe {
+
+            /* drawing: no */
+            if (ARM_2D_3FB_INVALID_IDX == this.Runtime.u2Drawing) {
+                /* ensure ready-to-draw: available */
+                assert(ARM_2D_3FB_INVALID_IDX != chReadyToDrawIndex);
+
+                uint_fast8_t chIndex = chReadyToDrawIndex;
+
+                /* update FB status */
+                this.Runtime.tState[chIndex] = ARM_3FB_STATE_DRAWING;
+
+                /* update pointer */
+                this.Runtime.u2ReadyToDraw = ARM_2D_3FB_INVALID_IDX;
+                this.Runtime.u2Drawing = chIndex;
+
+                pnAddress = this.tCFG.pnAddress[chIndex];
+                arm_exit_irq_safe;   /* jump out */
+            } /* drawing: yes */
+
+            /* check whether Ready-To-Flush is empty */
+            if (this.Runtime.u2ReadyToFlush == ARM_2D_3FB_INVALID_IDX) {
+                
+                /* ensure ready-to-draw: available */
+                assert(ARM_2D_3FB_INVALID_IDX != chReadyToDrawIndex);
+                this.Runtime.tState[chDrawingIndex] = ARM_3FB_STATE_COPYING_AS_SOURCE;
+                this.Runtime.tState[chReadyToDrawIndex] = ARM_3FB_STATE_COPYING_AS_TARGET;
+                this.Runtime.u2ReadyToDraw = ARM_2D_3FB_INVALID_IDX;
+                this.Runtime.u2Drawing = ARM_2D_3FB_INVALID_IDX;
+
+                bPrepareForCopy = true;
+            } 
+        }
+
+        if (bPrepareForCopy) {
+
+            __arm_2d_helper_3fb_dma_copy(ptThis, 
+                                         this.tCFG.pnAddress[chDrawingIndex],
+                                         this.tCFG.pnAddress[chReadyToDrawIndex],
+                                         this.tCFG.tScreenSize.iWidth * this.tCFG.tScreenSize.iHeight,
+                                         this.tCFG.chPixelBits >> 3);
+
+            while(!arm_2d_port_wait_for_semaphore(this.Runtime.tSemaphore));
+
+            /* update state and pointers */
+            arm_irq_safe {
+
+                this.Runtime.tState[chDrawingIndex] = ARM_3FB_STATE_READY_TO_FLUSH;
+                this.Runtime.u2ReadyToFlush = chDrawingIndex;
+
+                this.Runtime.tState[chReadyToDrawIndex] = ARM_3FB_STATE_DRAWING;
+                this.Runtime.u2Drawing = chReadyToDrawIndex;
+
+                pnAddress = this.tCFG.pnAddress[chReadyToDrawIndex];
+            }
+        }
+    }
+
+    return pnAddress;
+}
+
+__WEAK
+bool __arm_2d_helper_3fb_dma_2d_copy(   uintptr_t pnSource,
+                                        uint32_t wSourceStride,
+                                        uintptr_t pnTarget,
+                                        uint32_t wTargetStride,
+                                        int16_t iWidth,
+                                        int16_t iHeight,
+                                        uint_fast8_t chBytePerPixel ) 
+{
+    assert(iWidth * chBytePerPixel <= wSourceStride);
+    assert(iWidth * chBytePerPixel <= wTargetStride);
+
+    /* 2D copy */
+    for (int_fast16_t i = 0; i < iHeight; i++) {
+        memcpy( (void *)pnTarget, (void *)pnSource, iWidth * chBytePerPixel );
+
+        pnSource += wSourceStride;
+        pnTarget += wTargetStride;
+    }
+
+    return true;
+}
+
+ARM_NONNULL(1,2)
+bool __arm_2d_helper_3fb_draw_bitmap( arm_2d_helper_3fb_t *ptThis, 
+                                      arm_2d_pfb_t *ptPFB)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptPFB);
+    assert(0 == (this.tCFG.chPixelBits & 0x07));
+
+    uint_fast8_t chBytesPerPixel = this.tCFG.chPixelBits >> 3;
+    int16_t iLCDWidth = this.tCFG.tScreenSize.iWidth;
+    int16_t iLCDHeight = this.tCFG.tScreenSize.iHeight;
+    uintptr_t pnAddress = __arm_2d_helper_3fb_get_drawing_pointer(ptThis, ptPFB->bIsNewFrame);
+
+    uint_fast8_t chBytePerPixel = this.tCFG.chPixelBits >> 3;
+    uint32_t wLCDStrideInByte = chBytePerPixel * iLCDWidth;
+
+    int16_t iX = ptPFB->tTile.tRegion.tLocation.iX;
+    int16_t iY = ptPFB->tTile.tRegion.tLocation.iY;
+    int16_t iPFBWidth = ptPFB->tTile.tRegion.tSize.iWidth;
+    int16_t iPFBHeight = ptPFB->tTile.tRegion.tSize.iHeight;
+    uint32_t wPFBStrideInByte = chBytePerPixel * iPFBWidth;
+
+    /* calculate source and target address */
+    uintptr_t pnTarget = pnAddress + (iX * iLCDWidth + iY) * chBytePerPixel;
+    uintptr_t pnSource = ptPFB->tTile.nAddress;
+
+    /* region clipping */
+    int16_t iHeight = MIN(iPFBHeight, iLCDHeight);
+    int16_t iWidth = MIN(iPFBWidth, iLCDWidth);
+
+#if 0
+    /* 2D copy */
+    for (int_fast16_t i = 0; i < iHeight; i++) {
+        memcpy( (void *)pnTarget, (void *)pnSource, iWidth * chBytePerPixel );
+
+        pnSource += wPFBStrideInByte;
+        pnTarget += wLCDStrideInByte;
+    }
+#endif
+
+    return __arm_2d_helper_3fb_dma_2d_copy( pnSource,
+                                            wPFBStrideInByte,
+                                            pnTarget,
+                                            wLCDStrideInByte,
+                                            iWidth,
+                                            iHeight,
+                                            chBytePerPixel);
+}
+
 
 
 /*----------------------------------------------------------------------------*

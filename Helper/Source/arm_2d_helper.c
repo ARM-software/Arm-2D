@@ -578,7 +578,7 @@ void arm_2d_helper_rtos_init(void)
 
 }
 
-#if __ARM_2D_HAS_ASYNC__
+
 __WEAK
 uintptr_t arm_2d_port_new_semaphore(void)
 {
@@ -605,6 +605,7 @@ void arm_2d_port_set_semaphoret(uintptr_t pSemaphore)
     ARM_2D_UNUSED(pSemaphore);
 }
 
+#if __ARM_2D_HAS_ASYNC__
 __OVERRIDE_WEAK
 void arm_2d_notif_aync_op_cpl(uintptr_t pUserParam, uintptr_t pSemaphore)
 {
