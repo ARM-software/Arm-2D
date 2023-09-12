@@ -213,7 +213,7 @@ var group__gHelper =
     [ "__arm_2d_helper_3fb_dma_copy", "group__gHelper.html#gaefa8a60f881d59119aaaff0a90a33856", null ],
     [ "arm_2d_helper_3fb_report_dma_copy_complete", "group__gHelper.html#ga87c6ea76937f2b83b2e787a24c82c9fb", null ],
     [ "arm_2d_helper_3fb_get_flush_pointer", "group__gHelper.html#ga94384cabe58f5ddc6d8be92349f5ff99", null ],
-    [ "__arm_2d_helper_3fb_draw_bitmap", "group__gHelper.html#ga7171d4c1a1243a6bf3c07704a7641f70", null ],
+    [ "__arm_2d_helper_3fb_draw_bitmap", "group__gHelper.html#gad9504b41c541cc4bbee54bfbba49f496", null ],
     [ "__arm_2d_helper_3fb_dma_2d_copy", "group__gHelper.html#ga26082413d7d2f2bb526037e90b5cd990", null ],
     [ "arm_2d_helper_init", "group__gHelper.html#ga9ab5e975303c28c98f1ae62babb8286d", null ],
     [ "arm_2d_helper_backend_task", "group__gHelper.html#ga5161926583cc8da4c4b369b177845e42", null ],
