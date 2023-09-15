@@ -404,7 +404,7 @@ void arm_2d_helper_pfb_flush(arm_2d_helper_pfb_t *ptThis)
 static 
 void __arm_2d_helper_enqueue_pfb(arm_2d_helper_pfb_t *ptThis)
 {
-    this.Adapter.ptCurrent->bIsNewFrame = this.Adapter.bFirstIteration;
+    //this.Adapter.ptCurrent->bIsNewFrame = this.Adapter.bFirstIteration;
     bool bIsFlushRequested;
     
     arm_irq_safe {
@@ -546,7 +546,9 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
             // no resource left
             return NULL;
         }
+        this.Adapter.ptCurrent->bIsNewFrame = this.Adapter.bFirstIteration;
     }
+
     arm_2d_tile_t *ptPartialFrameBuffer = &(this.Adapter.ptCurrent->tTile);
 
     if (this.Adapter.bFirstIteration) {
