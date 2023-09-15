@@ -208,6 +208,8 @@ static void __on_scene_benchmark_watch_panel_frame_complete(arm_2d_scene_t *ptSc
                 (uint32_t)(BENCHMARK.dwTotal / (uint64_t)ITERATION_CNT);
             BENCHMARK.wAverage = MAX(1, BENCHMARK.wAverage);
 
+            arm_2d_scene_player_update_scene_background(ptScene->ptPlayer);
+
 #if defined(__i386__) || defined(__x86_64__) || defined(__APPLE__)
             BENCHMARK.fFPS30Freq = 0.0f;
 #else
@@ -316,6 +318,36 @@ user_scene_benchmark_watch_panel_t *
 
     memset(ptThis, 0, sizeof(user_scene_benchmark_watch_panel_t));
 
+
+    /*! define dirty regions */
+    IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
+
+        
+        /* add the last region:
+         * it is the top left corner for text display 
+         */
+        ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
+            0
+        ),
+
+    END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
+
+    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
+
+    /* get the screen region */
+    arm_2d_region_t tScreen
+        = arm_2d_helper_pfb_get_display_area(
+            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
+
+    /* initialise dirty region 0 at runtime
+     * this demo shows that we create a region in the centre of a screen(320*240)
+     * for a image stored in the tile c_tileCMSISLogoMask
+     */
+    arm_2d_align_centre(tScreen, 220, 220) {
+        s_tDirtyRegions[0].tRegion = __centre_region;
+    }
+
+
     *ptThis = (user_scene_benchmark_watch_panel_t){
         .use_as__arm_2d_scene_t = {
             .fnScene        = &__pfb_draw_scene_benchmark_watch_panel_handler,
@@ -325,6 +357,8 @@ user_scene_benchmark_watch_panel_t *
             //.fnBeforeSwitchOut = &__before_scene_benchmark_watch_panel_switching_out,
             .fnOnFrameCPL   = &__on_scene_benchmark_watch_panel_frame_complete,
             .fnDepose       = &__on_scene_benchmark_watch_panel_depose,
+            
+            .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
         },
         .bUserAllocated = bUserAllocated,
     };
@@ -334,14 +368,15 @@ user_scene_benchmark_watch_panel_t *
     arm_2d_helper_ignore_low_level_flush(
                                 &(ptDispAdapter->use_as__arm_2d_helper_pfb_t));
     
-    
-    /* get the screen region */
-    arm_2d_region_t tScreen
-        = arm_2d_helper_pfb_get_display_area(
-            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
+    do {
+        /* get the screen region */
+        arm_2d_region_t tScreen
+            = arm_2d_helper_pfb_get_display_area(
+                &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
 
-    /* initialize benchmark watch panel */
-    benchmark_watch_panel_init(tScreen);
+        /* initialize benchmark watch panel */
+        benchmark_watch_panel_init(tScreen);
+    } while(0);
     
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
                                         &this.use_as__arm_2d_scene_t, 
