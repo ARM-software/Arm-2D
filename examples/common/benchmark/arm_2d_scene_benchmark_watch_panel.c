@@ -260,7 +260,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_benchmark_watch_panel_handler)
             arm_lcd_text_set_font(NULL);
             arm_lcd_text_set_draw_region(NULL);
 
-            arm_lcd_text_location( tScreen.tSize.iHeight / 8 - 7, 0);
+            arm_lcd_text_location( (tScreen.tSize.iHeight + 7) / 8 - 7, 0);
             arm_lcd_puts(  "Transform Test, running "
                         ARM_TO_STRING(ITERATION_CNT)
                         " iterations\r\n");
@@ -289,7 +289,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_benchmark_watch_panel_handler)
                 (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wAverage));
             arm_lcd_printf( 
                 "LCD Latency: %2dms", 
-                (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wLCDLatency) );
+                (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wLCDLatency));
         } while(0);
 #endif
     }
@@ -322,12 +322,15 @@ user_scene_benchmark_watch_panel_t *
     /*! define dirty regions */
     IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
 
-        
-        /* add the last region:
-         * it is the top left corner for text display 
-         */
-        ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
+        ADD_REGION_TO_LIST(s_tDirtyRegions,
             0
+        ),
+        
+        /* a region for the status bar on the bottom of the screen */
+        ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
+            .tSize = {
+                .iHeight = 8,
+            },
         ),
 
     END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
@@ -346,6 +349,9 @@ user_scene_benchmark_watch_panel_t *
     arm_2d_align_centre(tScreen, 240, 240) {
         s_tDirtyRegions[0].tRegion = __centre_region;
     }
+    
+    s_tDirtyRegions[1].tRegion.tLocation.iY = ((tScreen.tSize.iHeight + 7) / 8 - 2) * 8;
+    s_tDirtyRegions[1].tRegion.tSize.iWidth = MIN(240, tScreen.tSize.iWidth);
 
 
     *ptThis = (user_scene_benchmark_watch_panel_t){
