@@ -343,7 +343,7 @@ user_scene_benchmark_watch_panel_t *
      * this demo shows that we create a region in the centre of a screen(320*240)
      * for a image stored in the tile c_tileCMSISLogoMask
      */
-    arm_2d_align_centre(tScreen, 220, 220) {
+    arm_2d_align_centre(tScreen, 240, 240) {
         s_tDirtyRegions[0].tRegion = __centre_region;
     }
 
