@@ -157,10 +157,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
                         {
                             .tLocation = {
                                 .iX = 0,
-                                .iY = __DISP%Instance%_CFG_SCEEN_HEIGHT__ - 17},
+                                .iY = ((__DISP%Instance%_CFG_SCEEN_HEIGHT__ + 7) / 8 - 2) * 8},
                             .tSize = {
                                 .iWidth = __DISP%Instance%_CFG_SCEEN_WIDTH__,
-                                .iHeight = 9,
+                                .iHeight = 8,
                             },
                         },
                     }, 
@@ -389,10 +389,10 @@ void disp_adapter%Instance%_init(void)
             ADD_LAST_REGION_TO_LIST(s_tNavDirtyRegionList,
                 .tLocation = {
                     .iX = 0,
-                    .iY = __DISP%Instance%_CFG_SCEEN_HEIGHT__ - 17},
+                    .iY = ((__DISP%Instance%_CFG_SCEEN_HEIGHT__ + 7) / 8 - 2) * 8},
                 .tSize = {
                     .iWidth = __DISP%Instance%_CFG_SCEEN_WIDTH__,
-                    .iHeight = 9,
+                    .iHeight = 8,
                 },
             ),
 

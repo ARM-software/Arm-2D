@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        12. Sept 2023
- * $Revision:    V.1.6.0
+ * $Date:        15. Sept 2023
+ * $Revision:    V.1.6.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1031,6 +1031,47 @@ ARM_PT_END()
  * 3FB (Direct Mode) Helper                                                   *
  *----------------------------------------------------------------------------*/
 
+ARM_NONNULL(1)
+static
+void __arm_2d_helper_3fb_dma_copy(  arm_2d_helper_3fb_t *ptThis,
+                                    void *pObj,
+                                    uintptr_t pnSource,
+                                    uintptr_t pnTarget,
+                                    uint32_t nDataItemCount,
+                                    uint_fast8_t chDataItemSize)
+{
+    memcpy((void *)pnTarget, (const void *)pnSource, nDataItemCount * chDataItemSize);
+
+    arm_2d_helper_3fb_report_dma_copy_complete(ptThis);
+}
+
+static
+bool __arm_2d_helper_3fb_dma_2d_copy(   arm_2d_helper_3fb_t *ptThis, 
+                                        void *pObj,
+                                        uintptr_t pnSource,
+                                        uint32_t wSourceStride,
+                                        uintptr_t pnTarget,
+                                        uint32_t wTargetStride,
+                                        int16_t iWidth,
+                                        int16_t iHeight,
+                                        uint_fast8_t chBytePerPixel ) 
+{
+    ARM_2D_UNUSED(ptThis);
+    ARM_2D_UNUSED(pObj);
+    assert(iWidth * chBytePerPixel <= wSourceStride);
+    assert(iWidth * chBytePerPixel <= wTargetStride);
+
+    /* 2D copy */
+    for (int_fast16_t i = 0; i < iHeight; i++) {
+        memcpy( (void *)pnTarget, (void *)pnSource, iWidth * chBytePerPixel );
+
+        pnSource += wSourceStride;
+        pnTarget += wTargetStride;
+    }
+
+    return true;
+}
+
 ARM_NONNULL(1,2)
 void arm_2d_helper_3fb_init(arm_2d_helper_3fb_t *ptThis, 
                             const arm_2d_helper_3fb_cfg_t *ptCFG)
@@ -1066,26 +1107,23 @@ void arm_2d_helper_3fb_init(arm_2d_helper_3fb_t *ptThis,
     this.Runtime.u2ReadyToFlush = ARM_2D_3FB_INVALID_IDX;
 
     this.Runtime.tSemaphore = arm_2d_port_new_semaphore();
+
+    if (NULL == this.tCFG.evtOn2DCopy.fnHandler) {
+        this.tCFG.evtOn2DCopy.fnHandler = __arm_2d_helper_3fb_dma_2d_copy;
+    }
+    if (NULL == this.tCFG.evtOnDMACopy.fnHandler) {
+        this.tCFG.evtOnDMACopy.fnHandler = __arm_2d_helper_3fb_dma_copy;
+    }
 }
 
 ARM_NONNULL(1)
 void arm_2d_helper_3fb_report_dma_copy_complete(arm_2d_helper_3fb_t *ptThis)
 {
+    this.Runtime.bFBCopyComplete = true;
     arm_2d_port_set_semaphore(this.Runtime.tSemaphore);
 }
 
-ARM_NONNULL(1)
-__WEAK
-void __arm_2d_helper_3fb_dma_copy(  arm_2d_helper_3fb_t *ptThis, 
-                                    uintptr_t pnSource,
-                                    uintptr_t pnTarget,
-                                    uint32_t nDataItemCount,
-                                    uint_fast8_t chDataItemSize)
-{
-    memcpy((void *)pnTarget, (const void *)pnSource, nDataItemCount * chDataItemSize);
 
-    arm_2d_helper_3fb_report_dma_copy_complete(ptThis);
-}
 
 ARM_NONNULL(1)
 void * arm_2d_helper_3fb_get_flush_pointer(arm_2d_helper_3fb_t *ptThis)
@@ -1175,13 +1213,20 @@ __arm_2d_helper_3fb_get_drawing_pointer(arm_2d_helper_3fb_t *ptThis, bool bIsNew
 
         if (bPrepareForCopy) {
 
+            this.Runtime.bFBCopyComplete = false;
             __arm_2d_helper_3fb_dma_copy(ptThis, 
-                                         this.tCFG.pnAddress[chDrawingIndex],
-                                         this.tCFG.pnAddress[chReadyToDrawIndex],
-                                         this.tCFG.tScreenSize.iWidth * this.tCFG.tScreenSize.iHeight,
-                                         this.tCFG.chPixelBits >> 3);
+                                        this.tCFG.evtOnDMACopy.pObj,
+                                        this.tCFG.pnAddress[chDrawingIndex],
+                                        this.tCFG.pnAddress[chReadyToDrawIndex],
+                                        this.tCFG.tScreenSize.iWidth * this.tCFG.tScreenSize.iHeight,
+                                        this.tCFG.chPixelBits >> 3);
 
-            while(!arm_2d_port_wait_for_semaphore(this.Runtime.tSemaphore));
+            while(true) {
+                if (this.Runtime.bFBCopyComplete) {
+                    break;
+                }
+                while(!arm_2d_port_wait_for_semaphore(this.Runtime.tSemaphore));
+            }
 
             /* update state and pointers */
             arm_irq_safe {
@@ -1200,28 +1245,7 @@ __arm_2d_helper_3fb_get_drawing_pointer(arm_2d_helper_3fb_t *ptThis, bool bIsNew
     return pnAddress;
 }
 
-__WEAK
-bool __arm_2d_helper_3fb_dma_2d_copy(   uintptr_t pnSource,
-                                        uint32_t wSourceStride,
-                                        uintptr_t pnTarget,
-                                        uint32_t wTargetStride,
-                                        int16_t iWidth,
-                                        int16_t iHeight,
-                                        uint_fast8_t chBytePerPixel ) 
-{
-    assert(iWidth * chBytePerPixel <= wSourceStride);
-    assert(iWidth * chBytePerPixel <= wTargetStride);
 
-    /* 2D copy */
-    for (int_fast16_t i = 0; i < iHeight; i++) {
-        memcpy( (void *)pnTarget, (void *)pnSource, iWidth * chBytePerPixel );
-
-        pnSource += wSourceStride;
-        pnTarget += wTargetStride;
-    }
-
-    return true;
-}
 
 ARM_NONNULL(1,2)
 bool __arm_2d_helper_3fb_draw_bitmap( arm_2d_helper_3fb_t *ptThis, 
@@ -1253,13 +1277,16 @@ bool __arm_2d_helper_3fb_draw_bitmap( arm_2d_helper_3fb_t *ptThis,
     int16_t iHeight = MIN(iPFBHeight, iLCDHeight);
     int16_t iWidth = MIN(iPFBWidth, iLCDWidth);
 
-    return __arm_2d_helper_3fb_dma_2d_copy( pnSource,
+    return this.tCFG.evtOn2DCopy.fnHandler(ptThis,
+                                            this.tCFG.evtOnDMACopy.pObj,
+                                            pnSource,
                                             wPFBStrideInByte,
                                             pnTarget,
                                             wLCDStrideInByte,
                                             iWidth,
                                             iHeight,
-                                            chBytePerPixel);
+                                            chBytePerPixel
+                                        );
 }
 
 

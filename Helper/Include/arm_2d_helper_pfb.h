@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        12. Sept 2023
- * $Revision:    V.1.6.0
+ * $Date:        15. Sept 2023
+ * $Revision:    V.1.6.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -340,10 +340,10 @@ extern "C" {
  *                                              |                          |
  *                                    ARM_3FB_STATE_FLUSHING               |
  *                                              |                          |
- *       ARM_3FB_STATUS_UNUSED --->   ARM_3FB_STATE_COPYING_AS_TARGET      |
+ *      ARM_3FB_STATUS_UNUSED --->    ARM_3FB_STATE_READY_TO_DRAW          |
  *                                              |                          |
- *                                    ARM_3FB_STATE_READY_TO_DRAW          |
- *                                              |                          |
+ *                                    ARM_3FB_STATE_COPYING_AS_TARGET      |
+ *                                              |
  *                                    ARM_3FB_STATE_DRAWING                |
  *                                              |                          |
  *                                    ARM_3FB_STATE_COPYING_AS_SOURCE -----+
@@ -359,6 +359,63 @@ enum {
     ARM_3FB_STATE_FLUSHING,                //!< the FB is used for flushing, the previous state is ARM_3FB_STATE_READY_FOR_FLUSH
 };
 
+typedef struct arm_2d_helper_3fb_t arm_2d_helper_3fb_t;
+
+/*!
+ * \brief An interface for 2D-Copy.
+ * \param[in] pnSource the source image address
+ * \param[in] wSourceStride the stride of the source image
+ * \param[in] pnTarget the address in the target framebuffer
+ * \param[in] wTargetStride the stride of the target framebuffer
+ * \param[in] iWidth the safe width of the source image
+ * \param[in] iHeight the safe height of the source image
+ * \retval true the 2D copy is complete when leaving this function
+ * \retval false An async 2D copy request is sent to the DMA
+ */
+typedef
+bool arm_2d_helper_2d_copy_handler_t(   arm_2d_helper_3fb_t *ptThis,
+                                        void *pObj,
+                                        uintptr_t pnSource,
+                                        uint32_t wSourceStride,
+                                        uintptr_t pnTarget,
+                                        uint32_t wTargetStride,
+                                        int16_t iWidth,
+                                        int16_t iHeight,
+                                        uint_fast8_t chBytePerPixel );
+
+typedef struct arm_2d_helper_2d_copy_evt_t {
+    arm_2d_helper_2d_copy_handler_t *fnHandler;
+    void *pObj;
+} arm_2d_helper_2d_copy_evt_t;
+
+/*!
+ * \brief An interface for DMA memory-to-memory copy.
+ *        If you have a DMA, you can implement this function by using
+ *        __OVERRIDE_WEAK. 
+ *        You should implement an ISR for copy-complete event and call
+ *        arm_2d_helper_3fb_report_dma_copy_complete() to notify the 
+ *        3FB (direct mode) helper service.
+ * 
+ * \param[in] ptThis the helper service control block
+ * \param[in] pObj the address of the user object
+ * \param[in] pnSource the source address of the memory block
+ * \param[in] pnTarget the target address
+ * \param[in] nDataItemCount the number of date items
+ * \param[in] chDataItemSize the size of each data item 
+ */
+typedef
+void arm_2d_helper_dma_copy_handler_t(  arm_2d_helper_3fb_t *ptThis,
+                                        void *pObj,
+                                        uintptr_t pnSource,
+                                        uintptr_t pnTarget,
+                                        uint32_t nDataItemCount,
+                                        uint_fast8_t chDataItemSize);
+
+typedef struct arm_2d_helper_dma_copy_evt_t {
+    arm_2d_helper_dma_copy_handler_t *fnHandler;
+    void *pObj;
+} arm_2d_helper_dma_copy_evt_t;
+
 /*!
  * \brief configuration structure for the 3fb (direct mode) helper service
  */
@@ -366,6 +423,9 @@ typedef struct arm_2d_helper_3fb_cfg_t {
     arm_2d_size_t tScreenSize;              //!< the screen size
     uint8_t       chPixelBits;              //!< the number of bits in one pixel
     uintptr_t     pnAddress[3];             //!< addresses of the 3 full-frame-buffer
+
+    arm_2d_helper_2d_copy_evt_t     evtOn2DCopy;
+    arm_2d_helper_dma_copy_evt_t    evtOnDMACopy;
 } arm_2d_helper_3fb_cfg_t;
 
 #define ARM_2D_3FB_INVALID_IDX      3
@@ -384,6 +444,7 @@ ARM_PRIVATE(
         uint8_t         u2ReadyToDraw   : 2;        //!< FB pointer of ready to draw
         uint8_t         tState[3];
         uintptr_t       tSemaphore;                 //!< semaphore for async access
+        bool            bFBCopyComplete;            //!< a flag to indicate the completion of a DMA copy
     } Runtime;
 )
 } arm_2d_helper_3fb_t;
@@ -807,27 +868,6 @@ ARM_NONNULL(1,2)
 void arm_2d_helper_3fb_init(arm_2d_helper_3fb_t *ptThis, 
                             const arm_2d_helper_3fb_cfg_t *ptCFG);
 
-/*!
- * \brief An user overridable interface for DMA memory-to-memory copy.
- *        If you have a DMA, you can implement this function by using
- *        __OVERRIDE_WEAK. 
- *        You should implement an ISR for copy-complete event and call
- *        arm_2d_helper_3fb_report_dma_copy_complete() to notify the 
- *        3FB (direct mode) helper service.
- * 
- * \param[in] ptThis the helper service control block
- * \param[in] pnSource the source address of the memory block
- * \param[in] pnTarget the target address
- * \param[in] nDataItemCount the number of date items
- * \param[in] chDataItemSize the size of each data item 
- */
-extern
-ARM_NONNULL(1)
-void __arm_2d_helper_3fb_dma_copy(  arm_2d_helper_3fb_t *ptThis, 
-                                    uintptr_t pnSource,
-                                    uintptr_t pnTarget,
-                                    uint32_t nDataItemCount,
-                                    uint_fast8_t chDataItemSize);
 
 /*!
  * \brief report the copy-completion event to the 3FB (direct mode) service
@@ -858,26 +898,6 @@ bool __arm_2d_helper_3fb_draw_bitmap(arm_2d_helper_3fb_t *ptThis,
                                      const arm_2d_pfb_t *ptPFB);
 
 
-/*!
- * \brief An user overridable interface for DMA-2D-Copy.
- * \param[in] pnSource the source image address
- * \param[in] wSourceStride the stride of the source image
- * \param[in] pnTarget the address in the target framebuffer
- * \param[in] wTargetStride the stride of the target framebuffer
- * \param[in] iWidth the safe width of the source image
- * \param[in] iHeight the safe height of the source image
- * \retval true the 2D copy is complete when leaving this function
- * \retval false An async 2D copy request is sent to the DMA
- */
-extern
-__WEAK
-bool __arm_2d_helper_3fb_dma_2d_copy(   uintptr_t pnSource,
-                                        uint32_t wSourceStride,
-                                        uintptr_t pnTarget,
-                                        uint32_t wTargetStride,
-                                        int16_t iWidth,
-                                        int16_t iHeight,
-                                        uint_fast8_t chBytePerPixel);
 
 /*! @} */
 
