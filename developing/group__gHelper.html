@@ -132,6 +132,10 @@ Data Structures</h2></td></tr>
 <tr class="memitem:structarm__2d__scene__player__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a></td></tr>
 <tr class="memdesc:structarm__2d__scene__player__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">a class to manage scenes  <a href="group__gHelper.html#structarm__2d__scene__player__t">More...</a><br /></td></tr>
 <tr class="separator:structarm__2d__scene__player__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structarm__2d__helper__2d__copy__evt__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__helper__2d__copy__evt__t">arm_2d_helper_2d_copy_evt_t</a></td></tr>
+<tr class="separator:structarm__2d__helper__2d__copy__evt__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structarm__2d__helper__dma__copy__evt__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__helper__dma__copy__evt__t">arm_2d_helper_dma_copy_evt_t</a></td></tr>
+<tr class="separator:structarm__2d__helper__dma__copy__evt__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structarm__2d__helper__3fb__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__helper__3fb__cfg__t">arm_2d_helper_3fb_cfg_t</a></td></tr>
 <tr class="memdesc:structarm__2d__helper__3fb__cfg__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">configuration structure for the 3fb (direct mode) helper service  <a href="group__gHelper.html#structarm__2d__helper__3fb__cfg__t">More...</a><br /></td></tr>
 <tr class="separator:structarm__2d__helper__3fb__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -192,7 +196,6 @@ Data Structures</h2></td></tr>
 <tr class="memitem:structarm__2d__scene__player__t_8____unnamed123_____8Events"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__scene__player__t_8____unnamed123_____8Events">arm_2d_scene_player_t.__unnamed123__.Events</a></td></tr>
 <tr class="separator:structarm__2d__scene__player__t_8____unnamed123_____8Events"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structarm__2d__helper__3fb__t_8____unnamed136____"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__helper__3fb__t_8____unnamed136____">arm_2d_helper_3fb_t.__unnamed136__</a></td></tr>
-<tr class="memdesc:structarm__2d__helper__3fb__t_8____unnamed136____"><td class="mdescLeft">&#160;</td><td class="mdescRight">&lt; semaphore for async access  <a href="group__gHelper.html#structarm__2d__helper__3fb__t_8____unnamed136____">More...</a><br /></td></tr>
 <tr class="separator:structarm__2d__helper__3fb__t_8____unnamed136____"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structarm__2d__helper__3fb__t_8____unnamed136_____8Runtime"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__helper__3fb__t_8____unnamed136_____8Runtime">arm_2d_helper_3fb_t.__unnamed136__.Runtime</a></td></tr>
 <tr class="separator:structarm__2d__helper__3fb__t_8____unnamed136_____8Runtime"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -321,6 +324,12 @@ Typedefs</h2></td></tr>
 <tr class="memitem:ga3ebdd610af011bf6094c0f60721a2424"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga3ebdd610af011bf6094c0f60721a2424">arm_2d_scene_before_scene_switching_handler_t</a>(void *pTarget, <a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptPlayer, <a class="el" href="group__gHelper.html#structarm__2d__scene__t">arm_2d_scene_t</a> *ptScene)</td></tr>
 <tr class="memdesc:ga3ebdd610af011bf6094c0f60721a2424"><td class="mdescLeft">&#160;</td><td class="mdescRight">the scene player event handler  <a href="group__gHelper.html#ga3ebdd610af011bf6094c0f60721a2424">More...</a><br /></td></tr>
 <tr class="separator:ga3ebdd610af011bf6094c0f60721a2424"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaab8492558fc9281237e674a44b599fe"><td class="memItemLeft" align="right" valign="top">typedef bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaaab8492558fc9281237e674a44b599fe">arm_2d_helper_2d_copy_handler_t</a>(<a class="el" href="group__gHelper.html#structarm__2d__helper__3fb__t">arm_2d_helper_3fb_t</a> *ptThis, void *pObj, uintptr_t pnSource, uint32_t wSourceStride, uintptr_t pnTarget, uint32_t wTargetStride, int16_t iWidth, int16_t iHeight, uint_fast8_t chBytePerPixel)</td></tr>
+<tr class="memdesc:gaaab8492558fc9281237e674a44b599fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">An interface for 2D-Copy.  <a href="group__gHelper.html#gaaab8492558fc9281237e674a44b599fe">More...</a><br /></td></tr>
+<tr class="separator:gaaab8492558fc9281237e674a44b599fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae9d5b9ed784066838051d514da062d09"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gae9d5b9ed784066838051d514da062d09">arm_2d_helper_dma_copy_handler_t</a>(<a class="el" href="group__gHelper.html#structarm__2d__helper__3fb__t">arm_2d_helper_3fb_t</a> *ptThis, void *pObj, uintptr_t pnSource, uintptr_t pnTarget, uint32_t nDataItemCount, uint_fast8_t chDataItemSize)</td></tr>
+<tr class="memdesc:gae9d5b9ed784066838051d514da062d09"><td class="mdescLeft">&#160;</td><td class="mdescRight">An interface for DMA memory-to-memory copy. If you have a DMA, you can implement this function by using __OVERRIDE_WEAK. You should implement an ISR for copy-complete event and call <a class="el" href="group__gHelper.html#ga87c6ea76937f2b83b2e787a24c82c9fb" title="report the copy-completion event to the 3FB (direct mode) service">arm_2d_helper_3fb_report_dma_copy_complete()</a> to notify the 3FB (direct mode) helper service.  <a href="group__gHelper.html#gae9d5b9ed784066838051d514da062d09">More...</a><br /></td></tr>
+<tr class="separator:gae9d5b9ed784066838051d514da062d09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga03c2991d31bd58c8a1d5303fb9460f39"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga03c2991d31bd58c8a1d5303fb9460f39">arm_2d_helper_render_handler_t</a>(void *pTarget, const <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptPFB, bool bIsNewFrame)</td></tr>
 <tr class="memdesc:ga03c2991d31bd58c8a1d5303fb9460f39"><td class="mdescLeft">&#160;</td><td class="mdescRight">the On Low Level Rendering event handler for the low level (LCD Driver)  <a href="group__gHelper.html#ga03c2991d31bd58c8a1d5303fb9460f39">More...</a><br /></td></tr>
 <tr class="separator:ga03c2991d31bd58c8a1d5303fb9460f39"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -512,9 +521,6 @@ Functions</h2></td></tr>
 <tr class="memitem:gab11ea71792f3e2427678f902134e7f87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gab11ea71792f3e2427678f902134e7f87">arm_2d_helper_3fb_init</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__3fb__t">arm_2d_helper_3fb_t</a> *ptThis, const <a class="el" href="group__gHelper.html#structarm__2d__helper__3fb__cfg__t">arm_2d_helper_3fb_cfg_t</a> *ptCFG)</td></tr>
 <tr class="memdesc:gab11ea71792f3e2427678f902134e7f87"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize the 3FB (direct mode) service  <a href="group__gHelper.html#gab11ea71792f3e2427678f902134e7f87">More...</a><br /></td></tr>
 <tr class="separator:gab11ea71792f3e2427678f902134e7f87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaefa8a60f881d59119aaaff0a90a33856"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaefa8a60f881d59119aaaff0a90a33856">__arm_2d_helper_3fb_dma_copy</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__3fb__t">arm_2d_helper_3fb_t</a> *ptThis, uintptr_t pnSource, uintptr_t pnTarget, uint32_t nDataItemCount, uint_fast8_t chDataItemSize)</td></tr>
-<tr class="memdesc:gaefa8a60f881d59119aaaff0a90a33856"><td class="mdescLeft">&#160;</td><td class="mdescRight">An user overridable interface for DMA memory-to-memory copy. If you have a DMA, you can implement this function by using __OVERRIDE_WEAK. You should implement an ISR for copy-complete event and call <a class="el" href="group__gHelper.html#ga87c6ea76937f2b83b2e787a24c82c9fb" title="report the copy-completion event to the 3FB (direct mode) service">arm_2d_helper_3fb_report_dma_copy_complete()</a> to notify the 3FB (direct mode) helper service.  <a href="group__gHelper.html#gaefa8a60f881d59119aaaff0a90a33856">More...</a><br /></td></tr>
-<tr class="separator:gaefa8a60f881d59119aaaff0a90a33856"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga87c6ea76937f2b83b2e787a24c82c9fb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga87c6ea76937f2b83b2e787a24c82c9fb">arm_2d_helper_3fb_report_dma_copy_complete</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__3fb__t">arm_2d_helper_3fb_t</a> *ptThis)</td></tr>
 <tr class="memdesc:ga87c6ea76937f2b83b2e787a24c82c9fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">report the copy-completion event to the 3FB (direct mode) service  <a href="group__gHelper.html#ga87c6ea76937f2b83b2e787a24c82c9fb">More...</a><br /></td></tr>
 <tr class="separator:ga87c6ea76937f2b83b2e787a24c82c9fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -524,9 +530,6 @@ Functions</h2></td></tr>
 <tr class="memitem:gad9504b41c541cc4bbee54bfbba49f496"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gad9504b41c541cc4bbee54bfbba49f496">__arm_2d_helper_3fb_draw_bitmap</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__3fb__t">arm_2d_helper_3fb_t</a> *ptThis, const <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptPFB)</td></tr>
 <tr class="memdesc:gad9504b41c541cc4bbee54bfbba49f496"><td class="mdescLeft">&#160;</td><td class="mdescRight">please do NOT use this function. It is used by the display adapter.  <a href="group__gHelper.html#gad9504b41c541cc4bbee54bfbba49f496">More...</a><br /></td></tr>
 <tr class="separator:gad9504b41c541cc4bbee54bfbba49f496"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga26082413d7d2f2bb526037e90b5cd990"><td class="memItemLeft" align="right" valign="top">__WEAK bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga26082413d7d2f2bb526037e90b5cd990">__arm_2d_helper_3fb_dma_2d_copy</a> (uintptr_t pnSource, uint32_t wSourceStride, uintptr_t pnTarget, uint32_t wTargetStride, int16_t iWidth, int16_t iHeight, uint_fast8_t chBytePerPixel)</td></tr>
-<tr class="memdesc:ga26082413d7d2f2bb526037e90b5cd990"><td class="mdescLeft">&#160;</td><td class="mdescRight">An user overridable interface for DMA-2D-Copy.  <a href="group__gHelper.html#ga26082413d7d2f2bb526037e90b5cd990">More...</a><br /></td></tr>
-<tr class="separator:ga26082413d7d2f2bb526037e90b5cd990"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9ab5e975303c28c98f1ae62babb8286d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga9ab5e975303c28c98f1ae62babb8286d">arm_2d_helper_init</a> (void)</td></tr>
 <tr class="memdesc:ga9ab5e975303c28c98f1ae62babb8286d"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize helper services  <a href="group__gHelper.html#ga9ab5e975303c28c98f1ae62babb8286d">More...</a><br /></td></tr>
 <tr class="separator:ga9ab5e975303c28c98f1ae62babb8286d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -988,6 +991,64 @@ __unnamed__</td>
 
 </div>
 </div>
+<a name="structarm__2d__helper__2d__copy__evt__t" id="structarm__2d__helper__2d__copy__evt__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structarm__2d__helper__2d__copy__evt__t">&#9670;&nbsp;</a></span>arm_2d_helper_2d_copy_evt_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct arm_2d_helper_2d_copy_evt_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a4f4a4f234b8c43d63d3f235e434e4600" name="a4f4a4f234b8c43d63d3f235e434e4600"></a><a class="el" href="group__gHelper.html#gaaab8492558fc9281237e674a44b599fe">arm_2d_helper_2d_copy_handler_t</a> *</td>
+<td class="fieldname">
+fnHandler</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="aff81f7d34035e6bac4bb2affaa15e86f" name="aff81f7d34035e6bac4bb2affaa15e86f"></a>void *</td>
+<td class="fieldname">
+pObj</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structarm__2d__helper__dma__copy__evt__t" id="structarm__2d__helper__dma__copy__evt__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structarm__2d__helper__dma__copy__evt__t">&#9670;&nbsp;</a></span>arm_2d_helper_dma_copy_evt_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct arm_2d_helper_dma_copy_evt_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a111d094917ec1fbf556bed65067031bd" name="a111d094917ec1fbf556bed65067031bd"></a><a class="el" href="group__gHelper.html#gae9d5b9ed784066838051d514da062d09">arm_2d_helper_dma_copy_handler_t</a> *</td>
+<td class="fieldname">
+fnHandler</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a1adab3935eb64f395e77128c44adafbe" name="a1adab3935eb64f395e77128c44adafbe"></a>void *</td>
+<td class="fieldname">
+pObj</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
 <a name="structarm__2d__helper__3fb__cfg__t" id="structarm__2d__helper__3fb__cfg__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structarm__2d__helper__3fb__cfg__t">&#9670;&nbsp;</a></span>arm_2d_helper_3fb_cfg_t</h2>
 
@@ -1020,6 +1081,18 @@ the number of bits in one pixel </td></tr>
 pnAddress[3]</td>
 <td class="fielddoc">
 addresses of the 3 full-frame-buffer </td></tr>
+<tr><td class="fieldtype">
+<a id="a7edb745539434dda193179aa6abbeb75" name="a7edb745539434dda193179aa6abbeb75"></a><a class="el" href="group__gHelper.html#structarm__2d__helper__2d__copy__evt__t">arm_2d_helper_2d_copy_evt_t</a></td>
+<td class="fieldname">
+evtOn2DCopy</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a698d76b0e73275937b91efd783c7fbc5" name="a698d76b0e73275937b91efd783c7fbc5"></a><a class="el" href="group__gHelper.html#structarm__2d__helper__dma__copy__evt__t">arm_2d_helper_dma_copy_evt_t</a></td>
+<td class="fieldname">
+evtOnDMACopy</td>
+<td class="fielddoc">
+</td></tr>
 </table>
 
 </div>
@@ -1043,7 +1116,7 @@ addresses of the 3 full-frame-buffer </td></tr>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
-&lt; semaphore for async access <p >&lt; FB pointer for drawing FB pointer for flushing FB pointer of ready to flush FB pointer of ready to draw </p>
+<p >&lt; FB pointer for drawing FB pointer for flushing FB pointer of ready to flush FB pointer of ready to draw &lt; semaphore for async access a flag to indicate the completion of a DMA copy </p>
 </td></tr>
 </table>
 
@@ -1918,8 +1991,7 @@ evtBeforeSwitching</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p >&lt; semaphore for async access </p>
-<p >&lt; FB pointer for drawing FB pointer for flushing FB pointer of ready to flush FB pointer of ready to draw </p>
+<div class="textblock"><p >&lt; FB pointer for drawing FB pointer for flushing FB pointer of ready to flush FB pointer of ready to draw &lt; semaphore for async access a flag to indicate the completion of a DMA copy </p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
@@ -1985,6 +2057,12 @@ tState[3]</td>
 <a id="a3c23835e3265a9cd7f9447d656fbe69e" name="a3c23835e3265a9cd7f9447d656fbe69e"></a>uintptr_t</td>
 <td class="fieldname">
 tSemaphore</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a3a55e7a3b9ae53c7e03c36e485a26552" name="a3a55e7a3b9ae53c7e03c36e485a26552"></a>bool</td>
+<td class="fieldname">
+bFBCopyComplete</td>
 <td class="fielddoc">
 </td></tr>
 </table>
@@ -3564,6 +3642,67 @@ fOP</td>
 
 </div>
 </div>
+<a id="gaaab8492558fc9281237e674a44b599fe" name="gaaab8492558fc9281237e674a44b599fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaaab8492558fc9281237e674a44b599fe">&#9670;&nbsp;</a></span>arm_2d_helper_2d_copy_handler_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef bool arm_2d_helper_2d_copy_handler_t(<a class="el" href="group__gHelper.html#structarm__2d__helper__3fb__t">arm_2d_helper_3fb_t</a> *ptThis, void *pObj, uintptr_t pnSource, uint32_t wSourceStride, uintptr_t pnTarget, uint32_t wTargetStride, int16_t iWidth, int16_t iHeight, uint_fast8_t chBytePerPixel)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>An interface for 2D-Copy. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pnSource</td><td>the source image address </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">wSourceStride</td><td>the stride of the source image </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pnTarget</td><td>the address in the target framebuffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">wTargetStride</td><td>the stride of the target framebuffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">iWidth</td><td>the safe width of the source image </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">iHeight</td><td>the safe height of the source image </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>the 2D copy is complete when leaving this function </td></tr>
+    <tr><td class="paramname">false</td><td>An async 2D copy request is sent to the DMA </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gae9d5b9ed784066838051d514da062d09" name="gae9d5b9ed784066838051d514da062d09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae9d5b9ed784066838051d514da062d09">&#9670;&nbsp;</a></span>arm_2d_helper_dma_copy_handler_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void arm_2d_helper_dma_copy_handler_t(<a class="el" href="group__gHelper.html#structarm__2d__helper__3fb__t">arm_2d_helper_3fb_t</a> *ptThis, void *pObj, uintptr_t pnSource, uintptr_t pnTarget, uint32_t nDataItemCount, uint_fast8_t chDataItemSize)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>An interface for DMA memory-to-memory copy. If you have a DMA, you can implement this function by using __OVERRIDE_WEAK. You should implement an ISR for copy-complete event and call <a class="el" href="group__gHelper.html#ga87c6ea76937f2b83b2e787a24c82c9fb" title="report the copy-completion event to the 3FB (direct mode) service">arm_2d_helper_3fb_report_dma_copy_complete()</a> to notify the 3FB (direct mode) helper service. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the helper service control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pObj</td><td>the address of the user object </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pnSource</td><td>the source address of the memory block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pnTarget</td><td>the target address </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nDataItemCount</td><td>the number of date items </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">chDataItemSize</td><td>the size of each data item </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga03c2991d31bd58c8a1d5303fb9460f39" name="ga03c2991d31bd58c8a1d5303fb9460f39"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga03c2991d31bd58c8a1d5303fb9460f39">&#9670;&nbsp;</a></span>arm_2d_helper_render_handler_t</h2>
 
@@ -3668,7 +3807,7 @@ fOP</td>
 </div><div class="memdoc">
 
 <p>direct mode helper service frame-buffer control block states </p>
-<dl class="section note"><dt>Note</dt><dd>state transition diagram &lt;&lt;&lt; service initialization &gt;&gt;&gt; | ARM_3FB_STATE_READY_FOR_FLUSH &lt;---&mdash;+ | | ARM_3FB_STATE_FLUSHING | | | ARM_3FB_STATUS_UNUSED &mdash;&gt; ARM_3FB_STATE_COPYING_AS_TARGET | | | ARM_3FB_STATE_READY_TO_DRAW | | | ARM_3FB_STATE_DRAWING | | | ARM_3FB_STATE_COPYING_AS_SOURCE --&mdash;+ </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>state transition diagram &lt;&lt;&lt; service initialization &gt;&gt;&gt; | ARM_3FB_STATE_READY_FOR_FLUSH &lt;---&mdash;+ | | ARM_3FB_STATE_FLUSHING | | | ARM_3FB_STATUS_UNUSED &mdash;&gt; ARM_3FB_STATE_READY_TO_DRAW | | | ARM_3FB_STATE_COPYING_AS_TARGET | | ARM_3FB_STATE_DRAWING | | | ARM_3FB_STATE_COPYING_AS_SOURCE --&mdash;+ </dd></dl>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga97f905ac94bfebd46e50e32c7389e6eba2e3b1d8eaa80bd9c8a9914e29ac6ba01" name="gga97f905ac94bfebd46e50e32c7389e6eba2e3b1d8eaa80bd9c8a9914e29ac6ba01"></a>ARM_3FB_STATE_UNUSED&#160;</td><td class="fielddoc"><p >the FB hasn't been used </p>
 </td></tr>
@@ -4862,64 +5001,6 @@ For normal usage, please DO NOT use this function unless you know what you are d
 
 </div>
 </div>
-<a id="gaefa8a60f881d59119aaaff0a90a33856" name="gaefa8a60f881d59119aaaff0a90a33856"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaefa8a60f881d59119aaaff0a90a33856">&#9670;&nbsp;</a></span>__arm_2d_helper_3fb_dma_copy()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void __arm_2d_helper_3fb_dma_copy </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__3fb__t">arm_2d_helper_3fb_t</a> *&#160;</td>
-          <td class="paramname"><em>ptThis</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uintptr_t&#160;</td>
-          <td class="paramname"><em>pnSource</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uintptr_t&#160;</td>
-          <td class="paramname"><em>pnTarget</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>nDataItemCount</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint_fast8_t&#160;</td>
-          <td class="paramname"><em>chDataItemSize</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>An user overridable interface for DMA memory-to-memory copy. If you have a DMA, you can implement this function by using __OVERRIDE_WEAK. You should implement an ISR for copy-complete event and call <a class="el" href="group__gHelper.html#ga87c6ea76937f2b83b2e787a24c82c9fb" title="report the copy-completion event to the 3FB (direct mode) service">arm_2d_helper_3fb_report_dma_copy_complete()</a> to notify the 3FB (direct mode) helper service. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the helper service control block </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">pnSource</td><td>the source address of the memory block </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">pnTarget</td><td>the target address </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">nDataItemCount</td><td>the number of date items </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">chDataItemSize</td><td>the size of each data item </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="ga87c6ea76937f2b83b2e787a24c82c9fb" name="ga87c6ea76937f2b83b2e787a24c82c9fb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga87c6ea76937f2b83b2e787a24c82c9fb">&#9670;&nbsp;</a></span>arm_2d_helper_3fb_report_dma_copy_complete()</h2>
 
@@ -5002,84 +5083,6 @@ For normal usage, please DO NOT use this function unless you know what you are d
 </div><div class="memdoc">
 
 <p>please do NOT use this function. It is used by the display adapter. </p>
-
-</div>
-</div>
-<a id="ga26082413d7d2f2bb526037e90b5cd990" name="ga26082413d7d2f2bb526037e90b5cd990"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga26082413d7d2f2bb526037e90b5cd990">&#9670;&nbsp;</a></span>__arm_2d_helper_3fb_dma_2d_copy()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">__WEAK bool __arm_2d_helper_3fb_dma_2d_copy </td>
-          <td>(</td>
-          <td class="paramtype">uintptr_t&#160;</td>
-          <td class="paramname"><em>pnSource</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>wSourceStride</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uintptr_t&#160;</td>
-          <td class="paramname"><em>pnTarget</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>wTargetStride</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int16_t&#160;</td>
-          <td class="paramname"><em>iWidth</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int16_t&#160;</td>
-          <td class="paramname"><em>iHeight</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint_fast8_t&#160;</td>
-          <td class="paramname"><em>chBytePerPixel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>An user overridable interface for DMA-2D-Copy. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pnSource</td><td>the source image address </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">wSourceStride</td><td>the stride of the source image </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">pnTarget</td><td>the address in the target framebuffer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">wTargetStride</td><td>the stride of the target framebuffer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">iWidth</td><td>the safe width of the source image </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">iHeight</td><td>the safe height of the source image </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">true</td><td>the 2D copy is complete when leaving this function </td></tr>
-    <tr><td class="paramname">false</td><td>An async 2D copy request is sent to the DMA </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
