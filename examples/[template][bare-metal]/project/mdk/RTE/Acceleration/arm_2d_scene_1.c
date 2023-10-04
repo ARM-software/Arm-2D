@@ -310,7 +310,8 @@ user_scene_1_t *__arm_2d_scene1_init(   arm_2d_scene_player_t *ptDispAdapter,
 
     /* set to the last frame */
     arm_2d_helper_film_set_frame(&s_tileWIFISignalFilm, -1);
-
+    arm_2d_helper_film_set_frame(&s_tileWIFISignalFilmMask, -1);
+    
     *ptScene = (user_scene_1_t){
         .use_as__arm_2d_scene_t = {
         /* Please uncommon the callbacks if you need them
