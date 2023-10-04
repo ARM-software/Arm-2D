@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        13. July 2023
- * $Revision:    V.1.6.4
+ * $Date:        04. Oct 2023
+ * $Revision:    V.1.6.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -64,6 +64,7 @@
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #   pragma GCC diagnostic ignored "-Wunused-value"
+#   pragma GCC diagnostic ignored "-Wnonnull-compare"
 #endif
 
 /*============================ MACROS ========================================*/

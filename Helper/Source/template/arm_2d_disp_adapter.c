@@ -679,7 +679,7 @@ void __disp_adapter%Instance%_vres_buffer_deposer (
 #else
     ARM_2D_UNUSED(pTarget);
     ARM_2D_UNUSED(ptVRES);
-    if (NULL == pBuffer) {
+    if ((intptr_t)NULL == pBuffer) {
         return ;
     }
     

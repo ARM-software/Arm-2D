@@ -55,7 +55,8 @@
 #   pragma GCC diagnostic ignored "-Wpedantic"
 #   pragma GCC diagnostic ignored "-Wunused-function"
 #   pragma GCC diagnostic ignored "-Wunused-variable"
-#   pragma GCC diagnostic ignored "-Wunused-value"
+#   pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
+
 #elif __IS_COMPILER_IAR__
 #   pragma diag_suppress=Pa089,Pe188,Pe177,Pe174
 #endif

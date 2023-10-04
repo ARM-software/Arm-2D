@@ -77,6 +77,7 @@ extern "C" {
 #   pragma GCC diagnostic ignored "-Wenum-compare"
 #   pragma GCC diagnostic ignored "-Wpedantic"
 #   pragma GCC diagnostic ignored "-Wstrict-aliasing"
+#   pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
 #endif
 
 /*============================ MACROS ========================================*/

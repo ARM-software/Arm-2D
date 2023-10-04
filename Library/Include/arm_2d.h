@@ -63,6 +63,7 @@ extern "C" {
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic ignored "-Wpedantic"
 #   pragma GCC diagnostic ignored "-Wmissing-braces"
+#   pragma GCC diagnostic ignored "-Wunused-value"
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)
 #   pragma diag_suppress 1296,174,64,177
 #endif

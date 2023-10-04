@@ -303,6 +303,16 @@
               <FileType>5</FileType>
               <FilePath>..\..\virtual_resource_demo.h</FilePath>
             </File>
+            <File>
+              <FileName>arm_2d_scene_meter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\arm_2d_scene_meter.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\MeterPanel.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -342,13 +352,6 @@
         </Group>
         <Group>
           <GroupName>asset</GroupName>
-          <Files>
-            <File>
-              <FileName>helium.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\common\asset\helium.c</FilePath>
-            </File>
-          </Files>
         </Group>
         <Group>
           <GroupName>::Acceleration</GroupName>
