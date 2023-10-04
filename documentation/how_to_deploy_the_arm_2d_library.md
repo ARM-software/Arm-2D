@@ -91,7 +91,7 @@ There are three methods to get Arm-2D:
     
     **Figure 2-9 Configuration Wizard for Arm-2D**
     
-    ![Arm_2D_CFG](./pictures/HowToDeploy2_9.png) 
+    ![ConfigurationWizardForArm-2D](./pictures/HowToDeploy2_9.png) 
     
     **NOTE**: If you want to support **CCCA8888** (i.e. **RGBA8888**), please selet the `Enable support for accessing individual colour channels`.
 
