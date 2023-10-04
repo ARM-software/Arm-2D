@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_transform.h"
  * Description:  Public header file to contain the APIs for transform
  *
- * $Date:        03 May 2023
- * $Revision:    V.1.0.6
+ * $Date:        04 Oct 2023
+ * $Revision:    V.1.0.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -2091,6 +2091,97 @@ extern "C" {
                             (__DES_REGION_ADDR),                                \
                             (NULL,##__VA_ARGS__));                              \
         })
+
+
+
+#define arm_2d_gray8_fill_colour_with_mask_opacity_and_transform(               \
+                                        __MASK_ADDR,                            \
+                                        __DES_TILE_ADDR,                        \
+                                        __DES_REGION_ADDR,                      \
+                                        __CENTRE,                               \
+                                        __ANGLE,                                \
+                                        __SCALE,                                \
+                                        __MSK_COLOUR,                           \
+                                        __OPACITY,...)                          \
+            ({arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_prepare(  \
+                                        (NULL),                                 \
+                                        (__MASK_ADDR),                          \
+                                        (__CENTRE),                             \
+                                        (float)(__ANGLE),                       \
+                                        (float)(__SCALE),                       \
+                                        (__MSK_COLOUR),                         \
+                                        (__OPACITY));                           \
+            arm_2dp_tile_transform(NULL,                                        \
+                            (__DES_TILE_ADDR),                                  \
+                            (__DES_REGION_ADDR),                                \
+                            (NULL,##__VA_ARGS__));})
+
+#define arm_2d_rgb565_fill_colour_with_mask_opacity_and_transform(              \
+                                        __MASK_ADDR,                            \
+                                        __DES_TILE_ADDR,                        \
+                                        __DES_REGION_ADDR,                      \
+                                        __CENTRE,                               \
+                                        __ANGLE,                                \
+                                        __SCALE,                                \
+                                        __MSK_COLOUR,                           \
+                                        __OPACITY,...)                          \
+            ({arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_prepare( \
+                                        (NULL),                                 \
+                                        (__MASK_ADDR),                          \
+                                        (__CENTRE),                             \
+                                        (float)(__ANGLE),                       \
+                                        (float)(__SCALE),                       \
+                                        (__MSK_COLOUR),                         \
+                                        (__OPACITY));                           \
+            arm_2dp_tile_transform(NULL,                                        \
+                            (__DES_TILE_ADDR),                                  \
+                            (__DES_REGION_ADDR),                                \
+                            (NULL,##__VA_ARGS__));})
+
+#define arm_2d_rgb888_fill_colour_with_mask_opacity_and_transform(              \
+                                        __MASK_ADDR,                            \
+                                        __DES_TILE_ADDR,                        \
+                                        __DES_REGION_ADDR,                      \
+                                        __CENTRE,                               \
+                                        __ANGLE,                                \
+                                        __SCALE,                                \
+                                        __MSK_COLOUR,                           \
+                                        __OPACITY,...)                          \
+            ({arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_prepare(\
+                                        (NULL),                                 \
+                                        (__MASK_ADDR),                          \
+                                        (__CENTRE),                             \
+                                        (float)(__ANGLE),                       \
+                                        (float)(__SCALE),                       \
+                                        (__MSK_COLOUR),                         \
+                                        (__OPACITY));                           \
+            arm_2dp_tile_transform(NULL,                                        \
+                            (__DES_TILE_ADDR),                                  \
+                            (__DES_REGION_ADDR),                                \
+                            (NULL,##__VA_ARGS__));})
+
+#define arm_2d_cccn888_fill_colour_with_mask_opacity_and_transform(             \
+                                        __MASK_ADDR,                            \
+                                        __DES_TILE_ADDR,                        \
+                                        __DES_REGION_ADDR,                      \
+                                        __CENTRE,                               \
+                                        __ANGLE,                                \
+                                        __SCALE,                                \
+                                        __MSK_COLOUR,                           \
+                                        __OPACITY,...)                          \
+            ({arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_prepare(\
+                                        (NULL),                                 \
+                                        (__MASK_ADDR),                          \
+                                        (__CENTRE),                             \
+                                        (float)(__ANGLE),                       \
+                                        (float)(__SCALE),                       \
+                                        (__MSK_COLOUR),                         \
+                                        (__OPACITY));                           \
+            arm_2dp_tile_transform(NULL,                                        \
+                            (__DES_TILE_ADDR),                                  \
+                            (__DES_REGION_ADDR),                                \
+                            (NULL,##__VA_ARGS__));})
+
 
 #define arm_2dp_gray8_tile_transform_with_src_mask(                             \
                                         __CB_ADDR,                              \
