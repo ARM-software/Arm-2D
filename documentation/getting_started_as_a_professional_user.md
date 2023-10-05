@@ -2,12 +2,6 @@
 
 
 
-
-
-
-
-
-
 ### "I am interested in the implementation"
 
 - We apologise that at the current stage (it's the early stage, as you can see), there is no sufficient guidance or documents about:
@@ -40,70 +34,5 @@
     - `arm_2d_async.c` is used to override some infrastructure functions in `arm_2d.c` to support asynchronous mode in the programmers' mode.  
     - ***arm_2d_helium.c*** is used to override some default software algorithm implementations across the library. 
 
-  - Supports for hardware accelerators (both from Arm and 3rd-parties) should be added in the same manner in the future. 
-
-    - Override the target low level IO defined with `def_low_lv_io()` macro that originally defined in `arm_2d_op_table.c` to add your own version of algorithms and hardware accelerations. For example, if you want to add alpha-blending support for RGB565 using your 2D hardware accelerator, you should do the following steps:
-
-      1. In one of your own C source code, override the definition of `__ARM_2D_IO_COPY_WITH_OPACITY_RGB565`
-
-         ```c
-         //! PLEASE add following three lines in your hardware adapter source code
-         #define __ARM_2D_IMPL__
-         #include "arm_2d.h"
-         #include "__arm_2d_impl.h"
-         
-         ...
-         
-         __OVERRIDE_WEAK
-         def_low_lv_io(__ARM_2D_IO_COPY_WITH_OPACITY_RGB565, 
-                         __arm_2d_rgb565_sw_tile_copy_with_opacity,
-                         __arm_2d_rgb565_my_hw_tile_copy_with_opacity);
-         ```
-
-      2. Copy the function body of `__arm_2d_rgb565_sw_tile_copy_with_opacity()` to your source code as a template of the ***hardware adaptor*** and rename it as `__arm_2d_rgb565_my_hw_tile_copy_with_opacity()`
-
-      3. Modify ***\_\_arm_2d_rgb565_my_hw_tile_copy_with_opacity*** to use your own hardware accelerator. 
-
-      4. Based on the arguments passed to the function and the capability of your 2D accelerator, you can:
-
-         - return `ARM_2D_ERR_NOT_SUPPORT` if the hardware isn't capable to do what is requested.
-         - return `arm_fsm_rt_cpl` if the task is done immediately and no need to wait.
-         - return `arm_fsm_rt_async` if the task is done asynchronously and later report to arm-2d by calling function `__arm_2d_notify_sub_task_cpl()`. 
-
-      ***NOTE***: The Arm-2D pipeline will keep issuing tasks to your ***hardware adaptor***, please quickly check whether the hardware is capable of doing the work or not, and then add the task (an `__arm_2d_sub_task_t` object) to a list in ***First-In-First-Out*** manner if your hardware adaptor decides to keep it. After that, your hardware accelerator can fetch tasks one by one.  
-
-``````c
-typedef struct __arm_2d_sub_task_t __arm_2d_sub_task_t;
-
-
-typedef arm_fsm_rt_t __arm_2d_io_func_t(__arm_2d_sub_task_t *ptTask);
-
-typedef struct __arm_2d_low_level_io_t {
-    __arm_2d_io_func_t *SW;
-    __arm_2d_io_func_t *HW;
-} __arm_2d_low_level_io_t;
-
-...
-
-/*----------------------------------------------------------------------------*
- * Low Level IO Interfaces                                                    *
- *----------------------------------------------------------------------------*/
-__WEAK
-def_low_lv_io(__ARM_2D_IO_COPY_C8BIT, __arm_2d_c8bit_sw_tile_copy);
-__WEAK
-def_low_lv_io(__ARM_2D_IO_COPY_RGB16, __arm_2d_rgb16_sw_tile_copy);
-__WEAK
-def_low_lv_io(__ARM_2D_IO_COPY_RGB32, __arm_2d_rgb32_sw_tile_copy);
-
-...
-
-__WEAK
-def_low_lv_io(__ARM_2D_IO_FILL_ONLY_C8BIT, __arm_2d_c8bit_sw_tile_fill_only);
-__WEAK
-def_low_lv_io(__ARM_2D_IO_FILL_ONLY_RGB16, __arm_2d_rgb16_sw_tile_fill_only);
-__WEAK
-def_low_lv_io(__ARM_2D_IO_FILL_ONLY_RGB32, __arm_2d_rgb32_sw_tile_fill_only);
-
-...
-``````
+  - For the way of adding supports for hardware accelerations. Please click to [here](./how_to_accelerate_arm_2d.md) for details. 
 
