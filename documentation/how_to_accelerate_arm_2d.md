@@ -275,9 +275,104 @@ void arm_2d_init(void)
 
 ### 2.1 Pixel Pipeline Overview
 
+Architectually, Arm-2D is designed as a **Pixel-Pipeline** plus **a set of OPCODE**, as shown in **Figure 2-1**. 
+
+**Figure 2-1 Arm-2D Pixel-Pipeline**
+
+![PixelPipeline](./pictures/PixelPipeline.png)
+
+Here, **OPCODE** is the descriptor of any 2D operations. It contains both **the arguments from the caller** and **the references to the actual algorithm** for the specific 2D operation. The **User Interface** part provides APIs that generate and initialize **OPCODE**. The **Frontend** performs some common pre-processing works for each OPCODE and generates **TASK**s for the **Backend**. 
+
+**TASK** is the descriptor of low-level tasks that can be handled by software algorithms and hardware accelerators. The key feature of the Backend is **a Fall-back scheme**, that **the Dispatcher in the Backend will always issue tasks to the HW adaptor** (a driver for a corresponding accelerator) **and falls back to the software algorithm for tasks refused by the HW adaptor**. 
+
+
+
+#### Feature Agnostic
+
+Arm-2D does not propose a standard for what functionality a hardware accelerator should provide, nor does it set requirements for the characteristics of a hardware accelerator. This is intentional. In order to get the best compatibility and interface flexibility, Arm-2D splits 2D processing into simple small tasks, validates parameters passed to the hardware  (e.g. ensuring that the coordinate values are always non-negative, and memory addresses are valid), passes all the task information to the HW adapter, and let the HW adaptor to decide whether the corresponding task can be processed or not. This is the meanning of the **Feature Agnostic**. 
+
 
 
 ### 2.2 OPCODE based Acceleration Entry
+
+Each **OPCODE** refers to a dedicated **Low-Level-IO** that has two function pointers:
+
+```c
+typedef arm_fsm_rt_t __arm_2d_io_func_t(__arm_2d_sub_task_t *ptTask);
+
+typedef struct __arm_2d_low_level_io_t {
+    __arm_2d_io_func_t *SW;
+    __arm_2d_io_func_t *HW;
+} __arm_2d_low_level_io_t;
+```
+
+- Here `SW` points to a software implementation that **won't return until either the 2D operation is complete or some error happens**. 
+
+- Here `HW` points to the **hardware adaptor** (a.k.a driver) of a hardware accelerator that can work asynchronously with the caller of the Arm-2D APIs. Based on the arguments passed to the `SW`, the capability and the status of the 2D accelerator, the **hardware adaptor** might:
+
+  - return `ARM_2D_ERR_NOT_SUPPORT` if the hardware isn't capable to do what is requested.
+
+  - return `arm_fsm_rt_cpl` if the task is done immediately (and no need to wait).
+
+  - return `arm_fsm_rt_async` if the task is done asynchronously and the driver will call function `__arm_2d_notify_sub_task_cpl()` to report the result. 
+
+Arm-2D provides the default C implementation (and the Helium version when it is available) for each OPCODE. 
+
+```c
+/*----------------------------------------------------------------------------*
+ * Low Level IO Interfaces                                                    *
+ *----------------------------------------------------------------------------*/
+__WEAK
+def_low_lv_io(__ARM_2D_IO_COPY_C8BIT, __arm_2d_c8bit_sw_tile_copy);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_COPY_RGB16, __arm_2d_rgb16_sw_tile_copy);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_COPY_RGB32, __arm_2d_rgb32_sw_tile_copy);
+
+...
+
+__WEAK
+def_low_lv_io(__ARM_2D_IO_FILL_ONLY_C8BIT, __arm_2d_c8bit_sw_tile_fill_only);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_FILL_ONLY_RGB16, __arm_2d_rgb16_sw_tile_fill_only);
+__WEAK
+def_low_lv_io(__ARM_2D_IO_FILL_ONLY_RGB32, __arm_2d_rgb32_sw_tile_fill_only);
+
+...
+```
+
+Here `__arm_2d_<colour>_sw_<operation name>` are the default software implementations for corresponding **Low-Level-IO**. The keyword `__WEAK` indicates that the target IOs can be overridden with user-defined ones. For example, if you want to accelerate **copy-with-opacity** for RGB565 using your own hardware accelerator, please do the following steps:
+
+1. In one of your C source file, override the target **Low-Level-IO** `__ARM_2D_IO_COPY_WITH_OPACITY_RGB565`
+
+   ```c
+   //! PLEASE add following three lines in your hardware adapter source code
+   #define __ARM_2D_IMPL__
+   #include "arm_2d.h"
+   #include "__arm_2d_impl.h"
+   
+   ...
+   
+   __OVERRIDE_WEAK
+   def_low_lv_io(  __ARM_2D_IO_COPY_WITH_OPACITY_RGB565,           /* target Low-Level-IO */
+                   __arm_2d_rgb565_sw_tile_copy_with_opacity,      /* SW: the default implementation */
+                   __arm_2d_rgb565_my_hw_tile_copy_with_opacity);  /* HW: the hardware adapter (driver) */
+   ```
+
+2. Copy the function body of `__arm_2d_rgb565_sw_tile_copy_with_opacity()` to your source file, rename it as `__arm_2d_rgb565_my_hw_tile_copy_with_opacity()` and use it as a template of the ***hardware adaptor***. 
+
+3. Update `__arm_2d_rgb565_my_hw_tile_copy_with_opacity` for the hardware accelerator. 
+
+4. Based on the arguments passed to the function and the capability of your 2D accelerator, please:
+
+   - return `ARM_2D_ERR_NOT_SUPPORT` if the hardware isn't capable to do what is requested.
+   - return `arm_fsm_rt_cpl` if the task is done immediately and no need to wait.
+   - return `arm_fsm_rt_async` if the task is done asynchronously and later report to arm-2d by calling function `__arm_2d_notify_sub_task_cpl()`. 
+
+***NOTE***: As the Arm-2D pipeline will keep issuing tasks to your ***hardware adaptor***, please quickly check whether the hardware is capable of doing the task:
+
+- If the **hardware adaptor** decides to keep it, it can add the task (an `__arm_2d_sub_task_t` object) to a waiting list in ***First-In-First-Out*** manner, and handle them later.
+- If the **hardware adaptor** is busy and don't want to maintain a waiting list, it can return `ARM_2D_ERR_NOT_SUPPORT` and the task falls-back to the SW implementation. 
 
 
 
