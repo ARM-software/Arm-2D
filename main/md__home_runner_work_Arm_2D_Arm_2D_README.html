@@ -266,29 +266,30 @@ In this version (ver1.1.5-dev)</h2>
 </li>
 </ul>
 </li>
-<li><b>Generic Partial Frame-buffer (PFB)</b><ul>
-<li>Transparent for software/GUI services on upper layers</li>
-<li>Easy to Use</li>
+<li><b>Display Adapter Service for connecting LCD</b><ul>
+<li>Generic Partial Frame-buffer (PFB)<ul>
+<li>Easy to Use: transparent for applications</li>
 <li>No limitation on screen resolution **(See note)**</li>
 <li>No limitation on PFB size and shape (it could be a line or a rectangular with any size) **(See note)**</li>
-<li>Supports <b>Dirty Regions</b> for refreshing specified areas only</li>
+<li>Supports PFB alignment for both width and height. <blockquote class="doxtable">
+<p ><b>NOTE</b>: As long as the size is smaller than 32767 * 32767. </p>
+</blockquote>
+- Supports <b>Dirty Regions</b> for refreshing specified areas only</li>
+<li>Provides a debug mode for dirty regions</li>
+</ul>
+</li>
 <li>Supports swapping high and low bytes for RGB16 pixels</li>
-<li><b>[new]</b> Provide a debug mode for dirty regions</li>
-<li><b>[new]</b> Support PFB alignment for both width and height.</li>
-<li>Introduce a <b>Scene Player</b> with various scene switching modes (Fade-In-Fade-Out, Slide, Erase etc.)</li>
-<li>Support various Buffer Modes with a built-in framebuffer pool.<ul>
-<li>Single Buffer/Double-Buffers/Three-Buffers</li>
+<li>Provides a <b>Scene Player</b> with various scene switching modes (Fade-In-Fade-Out, Slide, Erase etc.)</li>
+<li>Supports various Buffer Modes with a built-in framebuffer pool.<ul>
+<li>Single Buffer/Double-Buffers</li>
 <li>Ready for Direct Mode</li>
-<li>Enhanced Asynchronous Flushing Support (i.e. DMA + ISR)</li>
+<li>Provides a helper service for Asynchronous Flushing (i.e. DMA + ISR)</li>
 </ul>
 </li>
 </ul>
 </li>
-</ul>
-<p >​ <b>NOTE</b>: As long as the size is smaller than 32767 * 32767.</p>
-<ul>
 <li><b>Transform</b> (i.e. rotation and scaling)<ul>
-<li>Supports Colour-keying</li>
+<li>With/Without Colour-keying</li>
 <li>Supports an optional <b>Opacity</b> ratio</li>
 <li>Supports Anti-Alias.<ul>
 <li>You can enable it by defining the macro <code>__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__</code> to <code>1</code> at <b>compile-time</b>.</li>
@@ -303,7 +304,7 @@ In this version (ver1.1.5-dev)</h2>
 <li>Ultra small memory footprint</li>
 </ul>
 </li>
-<li><b>Helper Services for Ease-of-Use</b><ul>
+<li><b>Helper Services and Tools</b><ul>
 <li><b>Timer Services</b><ul>
 <li>Timeout: <code>arm_2d_helper_is_time_out</code></li>
 <li>Time based functions:<ul>
@@ -324,21 +325,23 @@ In this version (ver1.1.5-dev)</h2>
 <li>Stream Layout (with wrapping), e.g. <code>__item_horizontal</code> and <code>__item_vertical</code></li>
 </ul>
 </li>
-<li><b>[new]</b> RTOS Helper Services for CMSIS-RTOS2 and RT-Thread</li>
+<li>RTOS Helper Services for CMSIS-RTOS2 and RT-Thread</li>
 <li>Templates<ul>
-<li>Provide templates for user controls and scenes.</li>
-<li><b>[new]</b> Scene templates for Meter and Watch</li>
-<li><b>[new]</b> Provide a template for adding new RTOS support.</li>
+<li>Provides templates for user controls and scenes.</li>
+<li>Scene templates for Meter and Watch</li>
+<li>Provides a template for adding new RTOS support.</li>
 </ul>
 </li>
 <li>Other Helper services<ul>
-<li><b>[new]</b> A dedicated helper service for transform operations<ul>
+<li>A dedicated helper service for transform operations<ul>
 <li>Provide dynamic dirty region tracking</li>
 <li>Double-buffered Angle and Scale updating</li>
 </ul>
 </li>
 </ul>
 </li>
+<li>A <code>img2c.py</code> for generating arm-2d resources from user specified images</li>
+<li>A <code>ttf2c.py</code> for generating user customized font from user specified TrueType Fonts</li>
 </ul>
 </li>
 <li><b>Ready and Welcome 3rd party adoption</b><ul>
@@ -384,7 +387,7 @@ New Features Planned in the Future</h2>
 </ul>
 <p ><b>The library is designed with ACI (Arm Custom Instructions) in mind.</b> Accelerations implemented with user-defined instructions can be integrated into the library easily without modifying the existing Arm-2D library or upper-layer software.</p>
 <p ><b>The library is designed with 2D image accelerators in mind and following the feature-agnostic principle.</b> The Support for accelerators can be added easily without modifying the existing Arm-2D library or upper-layer software.</p>
-<p ><b>The library is designed with resource constraints in mind.</b> <b>For Cortex-M processors with 4K~32K SRAM that cannot afford a complete-framebuffer</b>, Arm-2D introduces a feature called <b>Generic Partial Framebuffer</b> enabling those existing MCUs to run GUI applications in a decent frame rate.</p>
+<p ><b>The library is designed with resource constraints in mind.</b> <b>For Cortex-M processors with 8K~32K SRAM that cannot afford a complete-framebuffer</b>, Arm-2D introduces a feature called <b>Generic Partial Framebuffer</b> enabling those existing MCUs to run GUI applications in a decent frame rate.</p>
 <h2><a class="anchor" id="autotoc_md13"></a>
 2.2 Dependency</h2>
 <ul>
@@ -522,16 +525,18 @@ New Features Planned in the Future</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b><a class="el" href="md_introduction.html">introduction.md</a></b>   </td><td class="markdownTableBodyNone">A relatively detailed introduction for the library, including basic concepts, programmers' mode etc.   </td><td class="markdownTableBodyNone">documentation    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>how_to_use_layout_assistant.md</b>   </td><td class="markdownTableBodyNone">A detailed document introduce the layout assistant helper service.   </td><td class="markdownTableBodyNone">Documentation    </td></tr>
+<td class="markdownTableBodyNone"><b>how_to_use_layout_assistant.md</b>   </td><td class="markdownTableBodyNone">A detailed document introduce the layout assistant helper service.   </td><td class="markdownTableBodyNone">documentation    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b><a class="el" href="use_tile.html#md_how_to_use_tile_operations">how_to_use_tile_operations.md</a></b>   </td><td class="markdownTableBodyNone">A detailed document elaborates the APIs dedicated to basic tile operations in the arm-2d library.   </td><td class="markdownTableBodyNone">documentation    </td></tr>
 <tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b><a class="el" href="md_how_to_accelerate_arm_2d.html">how_to_accelerate_arm_2d.md</a></b>   </td><td class="markdownTableBodyNone">A detailed document elaborates the methods available for accelerating Arm-2D library.   </td><td class="markdownTableBodyNone">documentation    </td></tr>
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>how_to_use_alpha_blending_operations.md</b>   </td><td class="markdownTableBodyNone">A detailed document elaborates the APIs dedicated to alpha-blending services provided by the arm-2d library.   </td><td class="markdownTableBodyNone">documentation    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>how_to_use_conversion_operations.md</b>   </td><td class="markdownTableBodyNone">A detailed document elaborates the APIs dedicated to colour space conversion services provided by the arm-2d library.   </td><td class="markdownTableBodyNone">documentation    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>how_to_use_drawing_operations.md</b>   </td><td class="markdownTableBodyNone">A detailed document elaborates the APIs that provide basic point-drawing and colour-filling services in the arm-2d library.   </td><td class="markdownTableBodyNone">documentation    </td></tr>
+<td class="markdownTableBodyNone"><b>how_to_use_conversion_operations.md</b>   </td><td class="markdownTableBodyNone">A detailed document elaborates the APIs dedicated to colour space conversion services provided by the arm-2d library.   </td><td class="markdownTableBodyNone">documentation    </td></tr>
 <tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>how_to_use_drawing_operations.md</b>   </td><td class="markdownTableBodyNone">A detailed document elaborates the APIs that provide basic point-drawing and colour-filling services in the arm-2d library.   </td><td class="markdownTableBodyNone">documentation    </td></tr>
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b><a class="el" href="md_contribution.html">how_to_contribute</a></b>   </td><td class="markdownTableBodyNone">A guidance for contribution.   </td><td class="markdownTableBodyNone">documentation   </td></tr>
 </table>
 <h1><a class="anchor" id="autotoc_md22"></a>
@@ -553,7 +558,7 @@ New Features Planned in the Future</h2>
 </ul>
 <p >Thank you for your time.</p>
 <p ><em><b>Arm-2D Development Team.</b></em></p>
-<p >12 July 2023 </p>
+<p >30 Aug 2023 </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
