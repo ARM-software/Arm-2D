@@ -356,7 +356,7 @@ $(document).ready(function(){initNavTree('md_how_to_accelerate_arm_2d.html','');
 <p >Architectually, Arm-2D is designed as a <b>Pixel-Pipeline</b> plus <b>a set of OPCODE</b>, as shown in <b>Figure 2-1</b>.</p>
 <p ><b>Figure 2-1 Arm-2D Pixel-Pipeline</b></p>
 <p ><img src="PixelPipeline.png" alt="" class="inline" title="PixelPipeline"/></p>
-<p >Here, <b>OPCODE</b> is the descriptor of any 2D operations. It contains both <b>the arguments from the caller</b> and <b>the references to the actual algorithm</b> for the specific 2D operation. The <b>User Interface</b> part provides APIs that generate and initialize <b>OPCODE</b>. The <b>Frontend</b> performs some common pre-processing works for each OPCODE and generates <b>TASK**s for the **Backend</b>.</p>
+<p >Here, <b>OPCODE</b> is the descriptor of 2D operations. It contains both <b>the arguments from the caller</b> and <b>the references to the actual algorithms</b> for the specific 2D operation. The <b>User Interface</b> part provides APIs that generate and initialize <b>OPCODE</b>. The <b>Frontend</b> performs some common pre-processing for each OPCODE and generates <b>TASK**s for the **Backend</b>.</p>
 <p ><b>TASK</b> is the descriptor of low-level tasks that can be handled by software algorithms and hardware accelerators. The key feature of the Backend is <b>a Fall-back scheme</b>, that <b>the Dispatcher in the Backend will always issue tasks to the HW adaptor</b> (a driver for a corresponding accelerator) <b>and falls back to the software algorithm for tasks refused by the HW adaptor</b>.</p>
 <h3><a class="anchor" id="autotoc_md140"></a>
 Feature Agnostic</h3>
@@ -480,16 +480,48 @@ Feature Agnostic</h3>
 2.4 Software Design Considerations for End Users</h2>
 <h3><a class="anchor" id="autotoc_md144"></a>
 2.4.1 When and How to Enable Asynchronouse Mode</h3>
-<h3><a class="anchor" id="autotoc_md145"></a>
+<p >Arm-2D APIs can be used in both Synchronous mode and Asynchronous mode. In fact, The Arm-2D library is designed for working asynchronously, and wrappers are added to support synchronous mode.</p>
+<h4><a class="anchor" id="autotoc_md145"></a>
+Synchronous Mode</h4>
+<p >The Synchronous mode is also known as the classic mode, in which a function call won't return until the task is finished or an error occurred.</p>
+<h4><a class="anchor" id="autotoc_md146"></a>
+Asynchronous Mode</h4>
+<p >The Asynchronous mode is good for the event-driven design paradigm, and it is suitable for most of the RTOS based applications and applications that are written in Protothread and/or FSM in the bare-metal system.</p>
+<p >Please only enable Asynchronouse mode if and only if:</p>
+<ul>
+<li>The runtime supports multi-tasks (e.g. RTOS, protoThread and FSM)</li>
+<li>The device provides Accelerator(s) that works Asynchronousely with CPU (e.g. a 2D-GPU, a 2D-capable DMA or a dedicated processor)</li>
+<li>Hardware Adaptors are implemented for the Accelerator using the method described in Section 2.</li>
+</ul>
+<p >You can enable the Asynchronouse mode by set the macro <code>__ARM_2D_HAS_ASYNC__</code> to <code>1</code>, the default value is <code>0</code>. You can modify the macro value in <code>arm_2d_cfg.h</code> or define the macro <code>__ARM_2D_HAS_ASYNC__</code> directly in your project, which will override the macro value defined in <code>arm_2d_cfg.h</code>:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#ifndef __ARM_2D_USER_CFG_H__</span></div>
+<div class="line"><span class="preprocessor">#define __ARM_2D_USER_CFG_H__</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">/*============================ INCLUDES ======================================*/</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &quot;RTE_Components.h&quot;</span></div>
+<div class="line"> </div>
+<div class="line">...</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// &lt;q&gt;Enable Asynchronous Programmers&#39; model support</span></div>
+<div class="line"><span class="comment">// &lt;i&gt; Note that if you don&#39;t have any hardware accelerator, disable this feature can reduce code size and gain a small performance uplift.</span></div>
+<div class="line"><span class="comment">// &lt;i&gt; This feature is enabled by default.</span></div>
+<div class="line">#ifndef <a class="code hl_define" href="group__gKernel.html#ga44b4f0ecafd8d5fb7de9f104d9321998" title="enable asynchronous mode (enable pipeline)">__ARM_2D_HAS_ASYNC__</a></div>
+<div class="line"><span class="preprocessor">#   define __ARM_2D_HAS_ASYNC__                                     0</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"> </div>
+<div class="line">...</div>
+<div class="line">#endif </div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md147"></a>
 2.4.2 How to Manage Dependencies Among 2D Operations</h3>
-<h3><a class="anchor" id="autotoc_md146"></a>
+<h3><a class="anchor" id="autotoc_md148"></a>
 2.4.3 Acceleration Methods Preference</h3>
-<h1><a class="anchor" id="autotoc_md147"></a>
+<h1><a class="anchor" id="autotoc_md149"></a>
 3 Acceleration via Arm Custom Instruction (ACI)</h1>
-<h2><a class="anchor" id="autotoc_md148"></a>
+<h2><a class="anchor" id="autotoc_md150"></a>
 3.1 Helium-based ACI and Non-Helium-based ACI</h2>
 <p >A lot of Arm Cortex-M processors support Arm Custom Instruction. When Helium extension is available, chip designers can implement the so-called Helium-based ACI which can use 128bit wide vectors and Helium registers.</p>
-<h2><a class="anchor" id="autotoc_md149"></a>
+<h2><a class="anchor" id="autotoc_md151"></a>
 3.2 Disable the default Helium Implementation</h2>
 <p >In the <code>Library/Include/template</code> folder, there is a template file for the <code>arm_2d_user_aci.h</code>, please follow the guidance in the <code>DISABLE DEFAULT HELIUM IMPLEMENTATION</code> section to disable the default Helium implementation of the low level functions.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#if !defined(__ARM_2D_USER_ACI_H__) &amp;&amp; __ARM_2D_HAS_ACI__</span></div>
@@ -587,7 +619,7 @@ Feature Agnostic</h3>
 </div><!-- fragment --><ol type="1">
 <li>define the macro <code>__ARM_2D_HAS_ACI</code> to <code>1</code> for the arm-2d library.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md150"></a>
+<h2><a class="anchor" id="autotoc_md152"></a>
 3.3 Insert An User Defined Header File</h2>
 <p >If you defined the macro <code>__ARM_2D_HAS_ACI__</code> to <code>1</code>, an user defined header file <code>arm_2d_user_aci.h</code> will be included in compilation, as shown below:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#if defined(__ARM_2D_HAS_ACI__) &amp;&amp; __ARM_2D_HAS_ACI__</span></div>
