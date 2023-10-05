@@ -353,9 +353,83 @@ $(document).ready(function(){initNavTree('md_how_to_accelerate_arm_2d.html','');
 2 Asynchronouse Acceleration</h1>
 <h2><a class="anchor" id="autotoc_md139"></a>
 2.1 Pixel Pipeline Overview</h2>
-<h2><a class="anchor" id="autotoc_md140"></a>
-2.2 OPCODE based Acceleration Entry</h2>
+<p >Architectually, Arm-2D is designed as a <b>Pixel-Pipeline</b> plus <b>a set of OPCODE</b>, as shown in <b>Figure 2-1</b>.</p>
+<p ><b>Figure 2-1 Arm-2D Pixel-Pipeline</b></p>
+<p ><img src="PixelPipeline.png" alt="" class="inline" title="PixelPipeline"/></p>
+<p >Here, <b>OPCODE</b> is the descriptor of any 2D operations. It contains both <b>the arguments from the caller</b> and <b>the references to the actual algorithm</b> for the specific 2D operation. The <b>User Interface</b> part provides APIs that generate and initialize <b>OPCODE</b>. The <b>Frontend</b> performs some common pre-processing works for each OPCODE and generates <b>TASK**s for the **Backend</b>.</p>
+<p ><b>TASK</b> is the descriptor of low-level tasks that can be handled by software algorithms and hardware accelerators. The key feature of the Backend is <b>a Fall-back scheme</b>, that <b>the Dispatcher in the Backend will always issue tasks to the HW adaptor</b> (a driver for a corresponding accelerator) <b>and falls back to the software algorithm for tasks refused by the HW adaptor</b>.</p>
+<h3><a class="anchor" id="autotoc_md140"></a>
+Feature Agnostic</h3>
+<p >Arm-2D does not propose a standard for what functionality a hardware accelerator should provide, nor does it set requirements for the characteristics of a hardware accelerator. This is intentional. In order to get the best compatibility and interface flexibility, Arm-2D splits 2D processing into simple small tasks, validates parameters passed to the hardware (e.g. ensuring that the coordinate values are always non-negative, and memory addresses are valid), passes all the task information to the HW adapter, and let the HW adaptor to decide whether the corresponding task can be processed or not. This is the meanning of the <b>Feature Agnostic</b>.</p>
 <h2><a class="anchor" id="autotoc_md141"></a>
+2.2 OPCODE based Acceleration Entry</h2>
+<p >Each <b>OPCODE</b> refers to a dedicated <b>Low-Level-IO</b> that has two function pointers:</p>
+<div class="fragment"><div class="line"><span class="keyword">typedef</span> <a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> __arm_2d_io_func_t(__arm_2d_sub_task_t *ptTask);</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_typedef" href="group__gKernel.html#ga5794a4d595906803e2c82088b3e29464" title="an incomplete defintion which is only used for defining pointers">__arm_2d_low_level_io_t</a> {</div>
+<div class="line">    __arm_2d_io_func_t *SW;</div>
+<div class="line">    __arm_2d_io_func_t *HW;</div>
+<div class="line">} <a class="code hl_typedef" href="group__gKernel.html#ga5794a4d595906803e2c82088b3e29464" title="an incomplete defintion which is only used for defining pointers">__arm_2d_low_level_io_t</a>;</div>
+</div><!-- fragment --><ul>
+<li>Here <code>SW</code> points to a software implementation that <b>won't return until either the 2D operation is complete or some error happens</b>.</li>
+<li>Here <code>HW</code> points to the <b>hardware adaptor</b> (a.k.a driver) of a hardware accelerator that can work asynchronously with the caller of the Arm-2D APIs. Based on the arguments passed to the <code>SW</code>, the capability and the status of the 2D accelerator, the <b>hardware adaptor</b> might:<ul>
+<li>return <code>ARM_2D_ERR_NOT_SUPPORT</code> if the hardware isn't capable to do what is requested.</li>
+<li>return <code>arm_fsm_rt_cpl</code> if the task is done immediately (and no need to wait).</li>
+<li>return <code>arm_fsm_rt_async</code> if the task is done asynchronously and the driver will call function <code>__arm_2d_notify_sub_task_cpl()</code> to report the result.</li>
+</ul>
+</li>
+</ul>
+<p >Arm-2D provides the default C implementation (and the Helium version when it is available) for each OPCODE.</p>
+<div class="fragment"><div class="line"><span class="comment">/*----------------------------------------------------------------------------*</span></div>
+<div class="line"><span class="comment"> * Low Level IO Interfaces                                                    *</span></div>
+<div class="line"><span class="comment"> *----------------------------------------------------------------------------*/</span></div>
+<div class="line">__WEAK</div>
+<div class="line">def_low_lv_io(__ARM_2D_IO_COPY_C8BIT, __arm_2d_c8bit_sw_tile_copy);</div>
+<div class="line">__WEAK</div>
+<div class="line">def_low_lv_io(__ARM_2D_IO_COPY_RGB16, __arm_2d_rgb16_sw_tile_copy);</div>
+<div class="line">__WEAK</div>
+<div class="line">def_low_lv_io(__ARM_2D_IO_COPY_RGB32, __arm_2d_rgb32_sw_tile_copy);</div>
+<div class="line"> </div>
+<div class="line">...</div>
+<div class="line"> </div>
+<div class="line">__WEAK</div>
+<div class="line">def_low_lv_io(__ARM_2D_IO_FILL_ONLY_C8BIT, __arm_2d_c8bit_sw_tile_fill_only);</div>
+<div class="line">__WEAK</div>
+<div class="line">def_low_lv_io(__ARM_2D_IO_FILL_ONLY_RGB16, __arm_2d_rgb16_sw_tile_fill_only);</div>
+<div class="line">__WEAK</div>
+<div class="line">def_low_lv_io(__ARM_2D_IO_FILL_ONLY_RGB32, __arm_2d_rgb32_sw_tile_fill_only);</div>
+<div class="line"> </div>
+<div class="line">...</div>
+</div><!-- fragment --><p >Here <code>__arm_2d_&lt;colour&gt;_sw_&lt;operation name&gt;</code> are the default software implementations for corresponding <b>Low-Level-IO</b>. The keyword <code>__WEAK</code> indicates that the target IOs can be overridden with user-defined ones. For example, if you want to accelerate <b>copy-with-opacity</b> for RGB565 using your own hardware accelerator, please do the following steps:</p>
+<ol type="1">
+<li><p class="startli">In one of your C source file, override the target <b>Low-Level-IO</b> <code>__ARM_2D_IO_COPY_WITH_OPACITY_RGB565</code></p>
+<div class="fragment"><div class="line"><span class="comment">//! PLEASE add following three lines in your hardware adapter source code</span></div>
+<div class="line"><span class="preprocessor">#define __ARM_2D_IMPL__</span></div>
+<div class="line"><span class="preprocessor">#include &quot;arm_2d.h&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;__arm_2d_impl.h&quot;</span></div>
+<div class="line"> </div>
+<div class="line">...</div>
+<div class="line"> </div>
+<div class="line">__OVERRIDE_WEAK</div>
+<div class="line">def_low_lv_io(  __ARM_2D_IO_COPY_WITH_OPACITY_RGB565,           <span class="comment">/* target Low-Level-IO */</span></div>
+<div class="line">                __arm_2d_rgb565_sw_tile_copy_with_opacity,      <span class="comment">/* SW: the default implementation */</span></div>
+<div class="line">                __arm_2d_rgb565_my_hw_tile_copy_with_opacity);  <span class="comment">/* HW: the hardware adapter (driver) */</span></div>
+</div><!-- fragment --></li>
+<li>Copy the function body of <code>__arm_2d_rgb565_sw_tile_copy_with_opacity()</code> to your source file, rename it as <code>__arm_2d_rgb565_my_hw_tile_copy_with_opacity()</code> and use it as a template of the <em><b>hardware adaptor</b></em>.</li>
+<li>Update <code>__arm_2d_rgb565_my_hw_tile_copy_with_opacity</code> for the hardware accelerator.</li>
+<li>Based on the arguments passed to the function and the capability of your 2D accelerator, please:<ul>
+<li>return <code>ARM_2D_ERR_NOT_SUPPORT</code> if the hardware isn't capable to do what is requested.</li>
+<li>return <code>arm_fsm_rt_cpl</code> if the task is done immediately and no need to wait.</li>
+<li>return <code>arm_fsm_rt_async</code> if the task is done asynchronously and later report to arm-2d by calling function <code>__arm_2d_notify_sub_task_cpl()</code>.</li>
+</ul>
+</li>
+</ol>
+<p ><em><b>NOTE</b></em>: As the Arm-2D pipeline will keep issuing tasks to your <em><b>hardware adaptor</b></em>, please quickly check whether the hardware is capable of doing the task:</p>
+<ul>
+<li>If the <b>hardware adaptor</b> decides to keep it, it can add the task (an <code>__arm_2d_sub_task_t</code> object) to a waiting list in <em><b>First-In-First-Out</b></em> manner, and handle them later.</li>
+<li>If the <b>hardware adaptor</b> is busy and don't want to maintain a waiting list, it can return <code>ARM_2D_ERR_NOT_SUPPORT</code> and the task falls-back to the SW implementation.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md142"></a>
 2.3 Insert An User Defined Header File</h2>
 <p >If you defined the macro <code>__ARM_2D_HAS_HW_ACC__</code> to <code>1</code>, an user defined header file <code>arm_2d_user_async_acc.h</code> will be included in compilation, as shown below:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#if defined(__ARM_2D_HAS_HW_ACC__) &amp;&amp; __ARM_2D_HAS_HW_ACC__</span></div>
@@ -402,20 +476,20 @@ $(document).ready(function(){initNavTree('md_how_to_accelerate_arm_2d.html','');
 <div class="line">    __arm_2d_async_acc_init();                                             </div>
 <div class="line">    ...                                              </div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md142"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md143"></a>
 2.4 Software Design Considerations for End Users</h2>
-<h3><a class="anchor" id="autotoc_md143"></a>
-2.4.1 When and How to Enable Asynchronouse Mode</h3>
 <h3><a class="anchor" id="autotoc_md144"></a>
-2.4.2 How to Manage Dependencies Among 2D Operations</h3>
+2.4.1 When and How to Enable Asynchronouse Mode</h3>
 <h3><a class="anchor" id="autotoc_md145"></a>
+2.4.2 How to Manage Dependencies Among 2D Operations</h3>
+<h3><a class="anchor" id="autotoc_md146"></a>
 2.4.3 Acceleration Methods Preference</h3>
-<h1><a class="anchor" id="autotoc_md146"></a>
+<h1><a class="anchor" id="autotoc_md147"></a>
 3 Acceleration via Arm Custom Instruction (ACI)</h1>
-<h2><a class="anchor" id="autotoc_md147"></a>
+<h2><a class="anchor" id="autotoc_md148"></a>
 3.1 Helium-based ACI and Non-Helium-based ACI</h2>
 <p >A lot of Arm Cortex-M processors support Arm Custom Instruction. When Helium extension is available, chip designers can implement the so-called Helium-based ACI which can use 128bit wide vectors and Helium registers.</p>
-<h2><a class="anchor" id="autotoc_md148"></a>
+<h2><a class="anchor" id="autotoc_md149"></a>
 3.2 Disable the default Helium Implementation</h2>
 <p >In the <code>Library/Include/template</code> folder, there is a template file for the <code>arm_2d_user_aci.h</code>, please follow the guidance in the <code>DISABLE DEFAULT HELIUM IMPLEMENTATION</code> section to disable the default Helium implementation of the low level functions.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#if !defined(__ARM_2D_USER_ACI_H__) &amp;&amp; __ARM_2D_HAS_ACI__</span></div>
@@ -513,7 +587,7 @@ $(document).ready(function(){initNavTree('md_how_to_accelerate_arm_2d.html','');
 </div><!-- fragment --><ol type="1">
 <li>define the macro <code>__ARM_2D_HAS_ACI</code> to <code>1</code> for the arm-2d library.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md149"></a>
+<h2><a class="anchor" id="autotoc_md150"></a>
 3.3 Insert An User Defined Header File</h2>
 <p >If you defined the macro <code>__ARM_2D_HAS_ACI__</code> to <code>1</code>, an user defined header file <code>arm_2d_user_aci.h</code> will be included in compilation, as shown below:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#if defined(__ARM_2D_HAS_ACI__) &amp;&amp; __ARM_2D_HAS_ACI__</span></div>
