@@ -281,7 +281,7 @@ Architectually, Arm-2D is designed as a **Pixel-Pipeline** plus **a set of OPCOD
 
 ![PixelPipeline](./pictures/PixelPipeline.png)
 
-Here, **OPCODE** is the descriptor of any 2D operations. It contains both **the arguments from the caller** and **the references to the actual algorithm** for the specific 2D operation. The **User Interface** part provides APIs that generate and initialize **OPCODE**. The **Frontend** performs some common pre-processing works for each OPCODE and generates **TASK**s for the **Backend**. 
+Here, **OPCODE** is the descriptor of 2D operations. It contains both **the arguments from the caller** and **the references to the actual algorithms** for the specific 2D operation. The **User Interface** part provides APIs that generate and initialize **OPCODE**. The **Frontend** performs some common pre-processing for each OPCODE and generates **TASK**s for the **Backend**. 
 
 **TASK** is the descriptor of low-level tasks that can be handled by software algorithms and hardware accelerators. The key feature of the Backend is **a Fall-back scheme**, that **the Dispatcher in the Backend will always issue tasks to the HW adaptor** (a driver for a corresponding accelerator) **and falls back to the software algorithm for tasks refused by the HW adaptor**. 
 
@@ -439,7 +439,54 @@ void arm_2d_init(void)
 
 #### 2.4.1 When and How to Enable Asynchronouse Mode
 
+Arm-2D APIs can be used in both Synchronous mode and Asynchronous mode. In fact, The Arm-2D library is designed for working asynchronously, and wrappers are added to support synchronous mode. 
+
+##### Synchronous Mode
+
+The Synchronous mode is also known as the classic mode, in which a function call won't return until the task is finished or an error occurred. 
+
+##### Asynchronous Mode
+
+The Asynchronous mode is good for the event-driven design paradigm, and it is suitable for most of the RTOS based applications and applications that are written in Protothread and/or FSM in the bare-metal system. 
+
+
+
+Please only enable Asynchronouse mode if and only if:
+
+- The runtime supports multi-tasks (e.g. RTOS, protoThread and FSM)
+- The device provides Accelerator(s) that works Asynchronousely with CPU (e.g. a 2D-GPU, a 2D-capable DMA or a dedicated processor)
+- Hardware Adaptors are implemented for the Accelerator using the method described in Section 2.
+
+
+
+You can enable the Asynchronouse mode by set the macro `__ARM_2D_HAS_ASYNC__` to `1`, the default value is `0`. You can modify the macro value in `arm_2d_cfg.h` or define the macro `__ARM_2D_HAS_ASYNC__` directly in your project, which will override the macro value defined in `arm_2d_cfg.h`:
+
+```c
+#ifndef __ARM_2D_USER_CFG_H__
+#define __ARM_2D_USER_CFG_H__
+
+/*============================ INCLUDES ======================================*/
+
+#include "RTE_Components.h"
+
+...
+
+// <q>Enable Asynchronous Programmers' model support
+// <i> Note that if you don't have any hardware accelerator, disable this feature can reduce code size and gain a small performance uplift.
+// <i> This feature is enabled by default.
+#ifndef __ARM_2D_HAS_ASYNC__
+#   define __ARM_2D_HAS_ASYNC__                                     0
+#endif
+
+...
+#endif 
+```
+
+
+
 #### 2.4.2 How to Manage Dependencies Among 2D Operations
+
+
 
 #### 2.4.3 Acceleration Methods Preference
 

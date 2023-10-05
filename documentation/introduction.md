@@ -643,13 +643,13 @@ Arm-2D APIs can be used in both Synchronous mode and Asynchronous mode. In fact,
 
 #### 2.4.1 Synchronous Mode
 
-The Synchronous mode is also known as the classic mode, in which a function call won't return until the service is finished or an error occurred. In the current version of the Arm-2D library, all examples are written in Synchronous mode. 
+The Synchronous mode is also known as the classic mode, in which a function call won't return until the service is finished or an error occurred. 
 
 #### 2.4.2 Asynchronous Mode
 
 The Asynchronous mode is good for the event-driven design paradigm, and it is suitable for most of the RTOS based applications and applications that are written in protoThread and/or FSM in the bare-metal system. 
 
-The examples and documents for Asynchronous mode will be added soon.
+In the current version of the Arm-2D library, all examples are written in Asynchronous mode. 
 
 ## 3 API Summary for commonly used APIs
 
