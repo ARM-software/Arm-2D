@@ -48,6 +48,7 @@
 #   pragma clang diagnostic ignored "-Wunused-function"
 #   pragma clang diagnostic ignored "-Wmissing-declarations"  
 #elif __IS_COMPILER_ARM_COMPILER_5__
+#   pragma diag_suppress 64,177
 #elif __IS_COMPILER_IAR__
 #   pragma diag_suppress=Pa089,Pe188,Pe177,Pe174
 #elif __IS_COMPILER_GCC__
@@ -56,7 +57,7 @@
 #   pragma GCC diagnostic ignored "-Wpedantic"
 #   pragma GCC diagnostic ignored "-Wunused-function"
 #   pragma GCC diagnostic ignored "-Wunused-variable"
-#   pragma GCC diagnostic ignored "-Wunused-value"
+#   pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
 #endif
 
 /*============================ MACROS ========================================*/
@@ -157,8 +158,11 @@ static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
 {
     user_scene_0_t *ptThis = (user_scene_0_t *)pTarget;
+    arm_2d_size_t tScreenSize = ptTile->tRegion.tSize;
+
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
+    ARM_2D_UNUSED(tScreenSize);
     
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the foreground begin-----------------------*/

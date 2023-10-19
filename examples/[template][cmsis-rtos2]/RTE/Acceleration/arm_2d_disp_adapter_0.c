@@ -82,6 +82,12 @@ int32_t Disp0_DrawBitmap(int16_t x,
 ARM_NOINIT 
 arm_2d_scene_player_t DISP0_ADAPTER;
 
+#if __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
+ARM_NOINIT
+static 
+arm_2d_helper_3fb_t s_tDirectModeHelper;
+#endif
+
 static struct {
     uint32_t wMin;
     uint32_t wMax;
@@ -157,10 +163,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
                         {
                             .tLocation = {
                                 .iX = 0,
-                                .iY = __DISP0_CFG_SCEEN_HEIGHT__ - 17},
+                                .iY = ((__DISP0_CFG_SCEEN_HEIGHT__ + 7) / 8 - 2) * 8},
                             .tSize = {
                                 .iWidth = __DISP0_CFG_SCEEN_WIDTH__,
-                                .iHeight = 9,
+                                .iHeight = 8,
                             },
                         },
                     }, 
@@ -212,7 +218,56 @@ IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
 }
 #endif
 
-#if __DISP0_CFG_ENABLE_ASYNC_FLUSHING__
+#if __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
+__WEAK
+IMPL_PFB_ON_LOW_LV_RENDERING(__glcd0_pfb_render_handler)
+{
+    const arm_2d_tile_t *ptTile = &(ptPFB->tTile);
+
+    ARM_2D_UNUSED(pTarget);
+    ARM_2D_UNUSED(bIsNewFrame);
+
+    if (__arm_2d_helper_3fb_draw_bitmap(&s_tDirectModeHelper,
+                                        ptPFB)) {
+
+        arm_2d_helper_pfb_report_rendering_complete(
+                        &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t);
+    }
+}
+
+void *disp_adapter0_3fb_get_flush_pointer(void)
+{
+    return arm_2d_helper_3fb_get_flush_pointer(&s_tDirectModeHelper);
+}
+
+
+#   if __DISP0_CFG_ENABLE_ASYNC_FLUSHING__
+/* using asynchronous flushing, e.g. using DMA + ISR to offload CPU etc. 
+ * It can significantly reduce the LCD Latency hence improve the overrall 
+ * framerate. 
+ */
+
+void disp_adapter0_insert_2d_copy_complete_event_handler(void)
+{
+    arm_2d_helper_pfb_report_rendering_complete(
+                    &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t);
+}
+
+/* using asynchronous flushing, e.g. using DMA + ISR to offload CPU etc. 
+ * It can significantly reduce the LCD Latency hence improve the overrall 
+ * framerate. 
+ */
+
+void disp_adapter0_insert_dma_copy_complete_event_handler(void)
+{
+    arm_2d_helper_3fb_report_dma_copy_complete(&s_tDirectModeHelper);
+}
+
+
+#   endif
+
+#else
+#   if __DISP0_CFG_ENABLE_ASYNC_FLUSHING__
 
 /* using asynchronous flushing, e.g. using DMA + ISR to offload CPU etc. 
  * It can significantly reduce the LCD Latency hence improve the overrall 
@@ -245,7 +300,7 @@ IMPL_PFB_ON_LOW_LV_RENDERING(__glcd0_pfb_render_handler)
 
 }
 
-#else
+#   else
 /* using asynchronous flushing, i.e. use CPU to flush LCD.
  * The LCD Latency will be high and reduce the overral framerate.
  * Meanwhile, in developing stage, this method can ensure a robust flushing. 
@@ -268,6 +323,7 @@ IMPL_PFB_ON_LOW_LV_RENDERING(__glcd0_pfb_render_handler)
     arm_2d_helper_pfb_report_rendering_complete(
                     &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t);
 }
+#   endif
 #endif
 
 static bool __on_each_frame_complete(void *ptTarget)
@@ -362,6 +418,42 @@ static void __user_scene_player_init(void)
         assert(false);
     }
 
+#if __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
+    do {
+    extern uintptr_t __DISP_ADAPTER0_3FB_FB0_ADDRESS__;
+    extern uintptr_t __DISP_ADAPTER0_3FB_FB1_ADDRESS__;
+    extern uintptr_t __DISP_ADAPTER0_3FB_FB2_ADDRESS__;
+    
+    extern arm_2d_helper_2d_copy_handler_t __disp_adapter0_request_2d_copy;
+    extern arm_2d_helper_dma_copy_handler_t __disp_adapter0_request_dma_copy;
+    
+    
+        arm_2d_helper_3fb_cfg_t tCFG = {
+            .tScreenSize = {
+                __DISP0_CFG_SCEEN_WIDTH__,
+                __DISP0_CFG_SCEEN_HEIGHT__,
+            },
+            .chPixelBits = __DISP0_CFG_COLOUR_DEPTH__,
+            .pnAddress = {
+                [0] = ((uintptr_t)__DISP_ADAPTER0_3FB_FB0_ADDRESS__),
+                [1] = ((uintptr_t)__DISP_ADAPTER0_3FB_FB1_ADDRESS__),
+                [2] = ((uintptr_t)__DISP_ADAPTER0_3FB_FB2_ADDRESS__),
+            },
+#if __DISP0_CFG_ENABLE_ASYNC_FLUSHING__
+            .evtOn2DCopy = {
+                .fnHandler = __disp_adapter0_request_2d_copy,
+            },
+            .evtOnDMACopy = {
+                .fnHandler = __disp_adapter0_request_dma_copy,
+            },
+#endif
+        };
+        
+        arm_2d_helper_3fb_init(&s_tDirectModeHelper, &tCFG);
+    
+    } while(0);
+#endif
+
     arm_lcd_text_init((arm_2d_region_t []) {
                         { .tSize = {
                             .iWidth = __DISP0_CFG_SCEEN_WIDTH__,
@@ -389,10 +481,10 @@ void disp_adapter0_init(void)
             ADD_LAST_REGION_TO_LIST(s_tNavDirtyRegionList,
                 .tLocation = {
                     .iX = 0,
-                    .iY = __DISP0_CFG_SCEEN_HEIGHT__ - 17},
+                    .iY = ((__DISP0_CFG_SCEEN_HEIGHT__ + 7) / 8 - 2) * 8},
                 .tSize = {
                     .iWidth = __DISP0_CFG_SCEEN_WIDTH__,
-                    .iHeight = 9,
+                    .iHeight = 8,
                 },
             ),
 
@@ -587,7 +679,7 @@ void __disp_adapter0_vres_buffer_deposer (
 #else
     ARM_2D_UNUSED(pTarget);
     ARM_2D_UNUSED(ptVRES);
-    if (NULL == pBuffer) {
+    if ((intptr_t)NULL == pBuffer) {
         return ;
     }
     
