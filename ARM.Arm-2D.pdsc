@@ -269,30 +269,30 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="RTOS Helper" Cvariant="CMSIS-RTOS2" Cversion="1.0.1" condition="PFB CMSIS-RTOS2">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="RTOS Helper" Cvariant="CMSIS-RTOS2" Cversion="1.0.2" condition="PFB CMSIS-RTOS2">
           <description>A helper service enables the asynchronose mode on CMSIS-RTOS2.</description>
           <files>
-            <file category="sourceC"     name="Helper/Source/template/arm_2d_helper_rtos_cmsis_rtos2.c" attr="config" version="1.0.1" />
+            <file category="sourceC"     name="Helper/Source/template/arm_2d_helper_rtos_cmsis_rtos2.c" attr="config" version="1.0.2" />
           </files>
           <RTE_Components_h>
     #define RTE_Acceleration_Arm_2D_Helper_RTOS_CMSIS_RTOS2
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="RTOS Helper" Cvariant="RT-Thread" Cversion="1.0.0" condition="Arm-2D-PFB">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="RTOS Helper" Cvariant="RT-Thread" Cversion="1.0.1" condition="Arm-2D-PFB">
           <description>A helper service enables the asynchronose mode on RT-Thread.</description>
           <files>
-            <file category="sourceC"     name="Helper/Source/template/arm_2d_helper_rtos_rt_thread.c" attr="config" version="1.0.0" />
+            <file category="sourceC"     name="Helper/Source/template/arm_2d_helper_rtos_rt_thread.c" attr="config" version="1.0.1" />
           </files>
           <RTE_Components_h>
     #define RTE_Acceleration_Arm_2D_Helper_RTOS_RT_Thread
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="RTOS Helper" Cvariant="User Custom" Cversion="1.0.1" condition="Arm-2D-PFB">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="RTOS Helper" Cvariant="User Custom" Cversion="1.0.2" condition="Arm-2D-PFB">
           <description>A template for user to custom a RTOS wrapper</description>
           <files>
-            <file category="sourceC"     name="Helper/Source/template/arm_2d_helper_rtos_user.c" attr="config" version="1.0.1" />
+            <file category="sourceC"     name="Helper/Source/template/arm_2d_helper_rtos_user.c" attr="config" version="1.0.2" />
           </files>
           <RTE_Components_h>
     #define RTE_Acceleration_Arm_2D_Helper_RTOS_USER

@@ -22,7 +22,7 @@
  * Description:  the pfb helper service source code
  *
  * $Date:        19. Oct 2023
- * $Revision:    V.1.6.2
+ * $Revision:    V.1.6.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -800,18 +800,79 @@ bool __arm_2d_helper_pfb_drawing_iteration_end(arm_2d_helper_pfb_t *ptThis)
     return true;
 }
 
-__WEAK void __arm_2d_helper_perf_counter_start(int64_t *plTimestamp)
+#if     defined(__PERF_COUNTER__)                                               \
+    &&  defined(__PERF_CNT_USE_RTOS__)                                          \
+    &&  __PER_COUNTER_VER__ >= 20204ul
+static task_cycle_info_t s_tPerfCounters[__ARM_2D_PERFC_COUNT - 1];
+
+__WEAK
+void *__arm_2d_helper_perf_counter_get(arm_2d_perfc_type_t tType)
 {
+    if (ARM_2D_PERFC_RENDER == tType) {
+        return &s_tPerfCounters[tType];
+    }
+    
+    return NULL;
+}
+
+__WEAK void __arm_2d_helper_perf_counter_start( int64_t *plTimestamp, 
+                                                arm_2d_perfc_type_t tType)
+{
+    assert(NULL != plTimestamp);
+    if (ARM_2D_PERFC_RENDER == tType) {
+        start_task_cycle_counter(&s_tPerfCounters[tType]);
+    } else {
+        *plTimestamp = arm_2d_helper_get_system_timestamp();
+    }
+}
+
+__WEAK int32_t __arm_2d_helper_perf_counter_stop(int64_t *plTimestamp,
+                                                 arm_2d_perfc_type_t tType)
+{
+    ARM_2D_UNUSED(plTimestamp);
+    
+    assert(NULL != plTimestamp);
+    
+    if (ARM_2D_PERFC_RENDER == tType) {
+        return (int32_t)stop_task_cycle_counter(&s_tPerfCounters[tType]);
+    }
+
+    return (int32_t)(   (int64_t)arm_2d_helper_get_system_timestamp() 
+                    -   (int64_t)*plTimestamp);
+}
+
+#else
+
+__WEAK
+void *__arm_2d_helper_perf_counter_get(arm_2d_perfc_type_t tType)
+{
+    return NULL;
+}
+
+__WEAK void __arm_2d_helper_perf_counter_start( int64_t *plTimestamp, 
+                                                arm_2d_perfc_type_t tType)
+{
+    ARM_2D_UNUSED(tType);
+
     assert(NULL != plTimestamp);
     *plTimestamp = arm_2d_helper_get_system_timestamp();
 }
 
-__WEAK int32_t __arm_2d_helper_perf_counter_stop(int64_t *plTimestamp)
+__WEAK int32_t __arm_2d_helper_perf_counter_stop(int64_t *plTimestamp,
+                                                 arm_2d_perfc_type_t tType)
 {
+    ARM_2D_UNUSED(tType);
+    
     assert(NULL != plTimestamp);
     return (int32_t)(   (int64_t)arm_2d_helper_get_system_timestamp() 
                     -   (int64_t)*plTimestamp);
 }
+
+#endif
+
+
+
+
 
 
 ARM_NONNULL(1)
@@ -895,10 +956,28 @@ arm_fsm_rt_t arm_2d_helper_pfb_task(arm_2d_helper_pfb_t *ptThis,
 
 ARM_PT_BEGIN(this.Adapter.chPT)
 
+#if     defined(__PERF_COUNTER__)                                               \
+    &&  defined(__PERF_CNT_USE_RTOS__)                                          \
+    &&  __PER_COUNTER_VER__ >= 20204ul
+
+    if (!perfc_check_task_stack_canary_safe()) {
+        /* init the cycle counter for the current task */
+        init_task_cycle_counter();
+        
+        /* initialize the cross tasks task-cycle-info object */
+        init_task_cycle_info(&s_tPerfCounters[ARM_2D_PERFC_RENDER]);
+        
+        static task_cycle_info_agent_t s_tAgent;
+        register_task_cycle_agent(&s_tPerfCounters[ARM_2D_PERFC_RENDER],
+                                  &s_tAgent);
+    }
+#endif
+
     this.Statistics.nTotalCycle = 0;
     this.Statistics.nRenderingCycle = 0;
     this.Adapter.bIsNewFrame = true;
-    __arm_2d_helper_perf_counter_start(&this.Statistics.lTimestamp); 
+    __arm_2d_helper_perf_counter_start(&this.Statistics.lTimestamp,
+                                       ARM_2D_PERFC_DRIVER); 
     do {
         /* begin of the drawing iteration, 
          * try to request the tile of frame buffer
@@ -950,11 +1029,13 @@ ARM_PT_BEGIN(this.Adapter.chPT)
 
         /* LCD Latency includes the time of waiting for a PFB block */
         this.Statistics.nRenderingCycle 
-            += __arm_2d_helper_perf_counter_stop(&this.Statistics.lTimestamp); 
+            += __arm_2d_helper_perf_counter_stop(&this.Statistics.lTimestamp,
+                                                 ARM_2D_PERFC_DRIVER);
 
     ARM_PT_ENTRY()
         
-        __arm_2d_helper_perf_counter_start(&this.Statistics.lTimestamp); 
+        __arm_2d_helper_perf_counter_start( &this.Statistics.lTimestamp,
+                                            ARM_2D_PERFC_RENDER); 
         /* draw all the gui elements on target frame buffer */
         tResult = this.tCFG.Dependency.evtOnDrawing.fnHandler(
                                         this.tCFG.Dependency.evtOnDrawing.pTarget,
@@ -964,22 +1045,28 @@ ARM_PT_BEGIN(this.Adapter.chPT)
         // just in case some one forgot to do this...
         arm_2d_op_wait_async(NULL);
 
-        this.Statistics.nTotalCycle += __arm_2d_helper_perf_counter_stop(&this.Statistics.lTimestamp);
+        this.Statistics.nTotalCycle += 
+            __arm_2d_helper_perf_counter_stop(  &this.Statistics.lTimestamp,
+                                                ARM_2D_PERFC_RENDER); 
 
         /* draw navigation layer */
         if (    (NULL != this.tCFG.Dependency.Navigation.evtOnDrawing.fnHandler)
             &&  (!this.Adapter.bHideNavigationLayer)) {
             if (arm_fsm_rt_cpl == tResult) {
     ARM_PT_ENTRY()
-                __arm_2d_helper_perf_counter_start(&this.Statistics.lTimestamp); 
+                __arm_2d_helper_perf_counter_start( &this.Statistics.lTimestamp,
+                                                    ARM_2D_PERFC_RENDER); 
 
                 tResult = this.tCFG.Dependency.Navigation.evtOnDrawing.fnHandler(
-                                        this.tCFG.Dependency.Navigation.evtOnDrawing.pTarget,
-                                        this.Adapter.ptFrameBuffer,
-                                        this.Adapter.bIsNewFrame);
+                        this.tCFG.Dependency.Navigation.evtOnDrawing.pTarget,
+                        this.Adapter.ptFrameBuffer,
+                        this.Adapter.bIsNewFrame);
                 arm_2d_op_wait_async(NULL);
                 
-                this.Statistics.nTotalCycle += __arm_2d_helper_perf_counter_stop(&this.Statistics.lTimestamp);
+                this.Statistics.nTotalCycle += 
+                    __arm_2d_helper_perf_counter_stop(
+                                                    &this.Statistics.lTimestamp,
+                                                    ARM_2D_PERFC_RENDER); 
             }
         }
 
@@ -1013,12 +1100,14 @@ ARM_PT_BEGIN(this.Adapter.chPT)
         }
 
         this.Adapter.bIsNewFrame = false;
-        __arm_2d_helper_perf_counter_start(&this.Statistics.lTimestamp); 
+        __arm_2d_helper_perf_counter_start( &this.Statistics.lTimestamp,
+                                            ARM_2D_PERFC_DRIVER); 
     } while(__arm_2d_helper_pfb_drawing_iteration_end(ptThis));
     
 label_pfb_task_rt_cpl:    
     this.Statistics.nRenderingCycle 
-        += __arm_2d_helper_perf_counter_stop(&this.Statistics.lTimestamp);
+        += __arm_2d_helper_perf_counter_stop(   &this.Statistics.lTimestamp,
+                                                ARM_2D_PERFC_DRIVER); 
 
 ARM_PT_END()
 

@@ -23,6 +23,9 @@
 #include "arm_2d_disp_adapters.h"
 #include "cmsis_os2.h"
 
+#if defined(__PERF_COUNTER__) && defined(__PERF_CNT_USE_RTOS__)
+#   include "perf_counter.h"
+#endif
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -106,6 +109,11 @@ void arm_2d_backend_thread(void *argument)
 {
 
     ARM_2D_UNUSED(argument);
+
+#if defined(__PERF_COUNTER__) && defined(__PERF_CNT_USE_RTOS__)
+    /* init the cycle counter for the current task */
+    init_task_cycle_counter();
+#endif
 
     arm_2d_helper_backend_task();
     

@@ -22,7 +22,7 @@
  * Description:  Public header file for the PFB helper service 
  *
  * $Date:        19. Oct 2023
- * $Revision:    V.1.6.2
+ * $Revision:    V.1.6.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -561,6 +561,17 @@ typedef struct arm_2d_helper_pfb_cfg_t {
     arm_2d_helper_pfb_dependency_t Dependency;                  //!< user registered dependency
 
 } arm_2d_helper_pfb_cfg_t;
+
+/*!
+ * \brief the type of perf counter
+ * 
+ */
+typedef enum {
+    ARM_2D_PERFC_RENDER = 0,
+    ARM_2D_PERFC_DRIVER,
+    
+    __ARM_2D_PERFC_COUNT,
+} arm_2d_perfc_type_t;
 
 /*!
  * \brief the PFB helper control block

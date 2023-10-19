@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        04. Oct 2023
- * $Revision:    V.1.6.5
+ * $Date:        19. Oct 2023
+ * $Revision:    V.1.6.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -611,7 +611,7 @@ __OVERRIDE_WEAK
 void arm_2d_notif_aync_op_cpl(uintptr_t pUserParam, uintptr_t pSemaphore)
 {
     ARM_2D_UNUSED(pUserParam);
-    arm_2d_port_set_semaphoret(pSemaphore);
+    arm_2d_port_set_semaphore(pSemaphore);
 }
 
 __OVERRIDE_WEAK
@@ -626,7 +626,7 @@ __OVERRIDE_WEAK
 void arm_2d_notif_new_op_arrive(uintptr_t pUserParam)
 {
     ARM_2D_UNUSED(pUserParam);
-    arm_2d_port_set_semaphoret(s_tHelper.Async.semTaskAvailable);
+    arm_2d_port_set_semaphore(s_tHelper.Async.semTaskAvailable);
 }
 
 
@@ -634,7 +634,7 @@ __OVERRIDE_WEAK
 void arm_2d_notif_aync_sub_task_cpl(uintptr_t pUserParam)
 {
     ARM_2D_UNUSED(pUserParam);
-    arm_2d_port_set_semaphoret(s_tHelper.Async.semResourceAvailable);
+    arm_2d_port_set_semaphore(s_tHelper.Async.semResourceAvailable);
 }
 
 __OVERRIDE_WEAK
