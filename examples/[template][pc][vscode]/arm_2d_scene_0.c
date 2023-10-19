@@ -64,14 +64,18 @@
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoGRAY8
+#   define c_tileBackground         c_tileBackgroundGRAY8
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoRGB565
+#   define c_tileBackground         c_tileBackgroundRGB565
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoCCCA8888
+#   define c_tileBackground         c_tileBackgroundCCCA8888
+
 #else
 #   error Unsupported colour depth!
 #endif
@@ -88,7 +92,7 @@ extern const arm_2d_tile_t c_tileCMSISLogoMask;
 extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
-extern const arm_2d_tile_t c_tileBackgroundRGB565;
+extern const arm_2d_tile_t c_tileBackground;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
@@ -169,8 +173,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
         
         arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
 
-        arm_2d_align_centre(__top_canvas, c_tileBackgroundRGB565.tRegion.tSize) {
-            draw_round_corner_image(&c_tileBackgroundRGB565,
+        arm_2d_align_centre(__top_canvas, c_tileBackground.tRegion.tSize) {
+            draw_round_corner_image(&c_tileBackground,
                                     ptTile,
                                     &__centre_region,
                                     bIsNewFrame);
