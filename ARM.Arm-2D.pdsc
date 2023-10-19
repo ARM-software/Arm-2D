@@ -336,7 +336,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.5.1" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.5.2" condition="Arm-2D-EXTRA">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <file category="include"     name="examples/common/controls/" />
@@ -402,7 +402,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Benchmark-WatchPanel" Cversion="1.4.1" condition="Arm-2D-Benchmark-WatchPanel">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Benchmark-WatchPanel" Cversion="1.4.2" condition="Arm-2D-Benchmark-WatchPanel">
           <description>An watch-panel benchmark for arm-2d.</description>
           <files>
             <file category="include"     name="examples/common/benchmark/" />

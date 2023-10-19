@@ -96,8 +96,6 @@ void __progress_bar_drill_show( const arm_2d_tile_t *ptTarget,
                                 int_fast16_t iProgress,
                                 bool bIsNewFrame)
 {
-    int_fast16_t iWidth = ptTarget->tRegion.tSize.iWidth * 3 >> 3;         //!< 3/8 Width
- 
     assert(NULL != ptTarget);
     if (iProgress > 1000) {
         iProgress = 0;
@@ -106,11 +104,12 @@ void __progress_bar_drill_show( const arm_2d_tile_t *ptTarget,
     if (NULL == ptRegion) {
         ptRegion = &tTargetRegion;
     }
+    int_fast16_t iWidth = ptRegion->tSize.iWidth * 3 >> 3;         //!< 3/8 Width
 
     arm_2d_region_t tBarRegion = {
         .tLocation = {
-           .iX = (ptRegion->tSize.iWidth - (int16_t)iWidth) / 2,
-           .iY = (ptRegion->tSize.iHeight - c_tileBlueSlash.tRegion.tSize.iHeight) / (int16_t)2,
+           .iX = ptRegion->tLocation.iX + (ptRegion->tSize.iWidth - (int16_t)iWidth) / 2,
+           .iY = ptRegion->tLocation.iY + (ptRegion->tSize.iHeight - c_tileBlueSlash.tRegion.tSize.iHeight) / (int16_t)2,
         },
         .tSize = {
             .iWidth = (int16_t)iWidth,

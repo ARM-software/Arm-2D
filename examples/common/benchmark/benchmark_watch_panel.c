@@ -406,16 +406,13 @@ void benchmark_watch_panel_draw(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
             arm_2d_align_bottom_centre(__centre_region, 200, 24) {
                 __bottom_centre_region.tLocation.iY -= 40;
                 
-                arm_2d_tile_t tPanel;
-                arm_2d_tile_generate_child( ptTile,
-                                            &__bottom_centre_region,
-                                            &tPanel,
-                                            false);
-                progress_bar_flowing_show(  &tPanel, 0, bIsNewFrame,
+                progress_bar_flowing_show(  ptTile, 
+                                            &__bottom_centre_region, 
+                                            0, 
+                                            bIsNewFrame,
                                             GLCD_COLOR_BLACK,
                                             __RGB(0x92, 0xD0, 0x50),
-                                            __RGB(16,16,16)
-                                            );
+                                            __RGB(16,16,16));
             }
         }
 
