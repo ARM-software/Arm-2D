@@ -60,6 +60,8 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wgnu-empty-initializer"
 #   pragma clang diagnostic ignored "-Wshadow"
 #   pragma clang diagnostic ignored "-Wconditional-uninitialized"
+#   pragma clang diagnostic ignored "-Wunsafe-buffer-usage"
+#   pragma clang diagnostic ignored "-Wc23-extensions"
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic ignored "-Wpedantic"
 #   pragma GCC diagnostic ignored "-Wmissing-braces"

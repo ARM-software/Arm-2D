@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        15. Sept 2023
- * $Revision:    V.1.6.1
+ * $Date:        19. Oct 2023
+ * $Revision:    V.1.6.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1042,6 +1042,8 @@ void __arm_2d_helper_3fb_dma_copy(  arm_2d_helper_3fb_t *ptThis,
                                     uint32_t nDataItemCount,
                                     uint_fast8_t chDataItemSize)
 {
+    ARM_2D_UNUSED(pObj);
+    
     memcpy((void *)pnTarget, (const void *)pnSource, nDataItemCount * chDataItemSize);
 
     arm_2d_helper_3fb_report_dma_copy_complete(ptThis);
@@ -1253,11 +1255,12 @@ ARM_NONNULL(1,2)
 bool __arm_2d_helper_3fb_draw_bitmap( arm_2d_helper_3fb_t *ptThis, 
                                       const arm_2d_pfb_t *ptPFB)
 {
+
     assert(NULL != ptThis);
     assert(NULL != ptPFB);
     assert(0 == (this.tCFG.chPixelBits & 0x07));
 
-    uint_fast8_t chBytesPerPixel = this.tCFG.chPixelBits >> 3;
+    //uint_fast8_t chBytesPerPixel = this.tCFG.chPixelBits >> 3;
     int16_t iLCDWidth = this.tCFG.tScreenSize.iWidth;
     int16_t iLCDHeight = this.tCFG.tScreenSize.iHeight;
     uintptr_t pnAddress = __arm_2d_helper_3fb_get_drawing_pointer(ptThis, ptPFB->bIsNewFrame);

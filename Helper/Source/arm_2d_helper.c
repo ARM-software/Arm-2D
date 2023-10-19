@@ -589,7 +589,7 @@ uintptr_t arm_2d_port_new_semaphore(void)
 __WEAK
 void arm_2d_port_free_semaphore(uintptr_t pSemaphore)
 {
-
+    ARM_2D_UNUSED(pSemaphore);
 }
 
 
