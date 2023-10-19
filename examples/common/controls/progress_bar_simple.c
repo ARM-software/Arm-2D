@@ -103,25 +103,27 @@ void progress_bar_simple_init(void)
 
 }
 
-void progress_bar_simple_show(const arm_2d_tile_t *ptTarget, int_fast16_t iProgress)
+void __progress_bar_simple_show(const arm_2d_tile_t *ptTarget, 
+                                const arm_2d_region_t *ptRegion,
+                                int_fast16_t iProgress)
 {
-    int_fast16_t iWidth = ptTarget->tRegion.tSize.iWidth * 3 >> 3;         //!< 3/8 Width
- 
-    assert(NULL != ptTarget);
-    if (iProgress > 1000) {
-        iProgress = 1000;
+    arm_2d_region_t tTargetRegion = {.tSize = ptTarget->tRegion.tSize,};
+    if (NULL == ptRegion) {
+        ptRegion = &tTargetRegion;
     }
- 
+    int_fast16_t iWidth = ptRegion->tSize.iWidth * 3 >> 3;         //!< 3/8 Width
+
     arm_2d_region_t tBarRegion = {
         .tLocation = {
-           .iX = (ptTarget->tRegion.tSize.iWidth - (int16_t)iWidth) / 2,
-           .iY = (ptTarget->tRegion.tSize.iHeight - c_tileSmallDotMask.tRegion.tSize.iHeight) / 2,
+           .iX = ptRegion->tLocation.iX + (ptRegion->tSize.iWidth - (int16_t)iWidth) / 2,
+           .iY = ptRegion->tLocation.iY + (ptRegion->tSize.iHeight - c_tileSmallDotMask.tRegion.tSize.iHeight) / (int16_t)2,
         },
         .tSize = {
             .iWidth = (int16_t)iWidth,
             .iHeight = c_tileSmallDotMask.tRegion.tSize.iHeight,
         },
     };
+
     
     // draw a white box
     arm_2d_helper_draw_box(ptTarget, &tBarRegion, 1, GLCD_COLOR_WHITE, 255 - 64);

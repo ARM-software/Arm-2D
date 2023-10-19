@@ -28,6 +28,43 @@ extern "C" {
 
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
+
+#define progress_bar_simple_show4(   __target_ptr,                              \
+                                    __region_ptr,                               \
+                                    __progress,                                 \
+                                    __is_new_frame)                             \
+            __progress_bar_simple_show( (__target_ptr),                         \
+                                        (__region_ptr),                         \
+                                        (int_fast16_t)(__progress))
+
+#define progress_bar_simple_show3(   __target_ptr,                              \
+                                    __region_ptr,                               \
+                                    __progress)                                 \
+            __progress_bar_simple_show( (__target_ptr),                         \
+                                        (__region_ptr),                         \
+                                        (int_fast16_t)(__progress))
+
+
+#define progress_bar_simple_show2(  __target_ptr,                               \
+                                    __progress)                                 \
+            progress_bar_simple_show3(  (__target_ptr),                         \
+                                        NULL,                                   \
+                                        (int_fast16_t)(__progress))
+
+#define progress_bar_simple_show1(__progress)                                   \
+            progress_bar_simple_show3(   ((const arm_2d_tile_t *ptTarget)(-1))),\
+                                        NULL,                                   \
+                                        (int_fast16_t)(__progress))
+
+#define progress_bar_simple_show0()                                             \
+            progress_bar_simple_show3(   ((const arm_2d_tile_t *ptTarget)(-1))),\
+                                        NULL,                                   \
+                                        (-1))
+
+#define progress_bar_simple_show(...)                                           \
+            ARM_CONNECT2(   progress_bar_simple_show,                           \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
@@ -36,7 +73,9 @@ extern
 void progress_bar_simple_init(void);
 
 extern
-void progress_bar_simple_show(const arm_2d_tile_t *ptTarget, int_fast16_t iProgress);
+void __progress_bar_simple_show(const arm_2d_tile_t *ptTarget, 
+                                const arm_2d_region_t *ptRegion,
+                                int_fast16_t iProgress);
 
 #ifdef   __cplusplus
 }
