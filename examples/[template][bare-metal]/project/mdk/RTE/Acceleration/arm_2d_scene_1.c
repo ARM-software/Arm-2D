@@ -161,7 +161,7 @@ static void __on_scene1_frame_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
     
     /* switch to next scene after 3s */
-    if (arm_2d_helper_is_time_out(6000, &this.lTimestamp[0])) {
+    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 }
@@ -191,9 +191,12 @@ static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene1_handler)
 {
     user_scene_1_t *ptThis = (user_scene_1_t *)pTarget;
+    arm_2d_size_t tScreenSize = ptTile->tRegion.tSize;
+
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
-    
+    ARM_2D_UNUSED(tScreenSize);
+
     /*-----------------------draw the foreground begin-----------------------*/
 
     /* following code is just a demo, you can remove them */
@@ -202,13 +205,43 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene1_handler)
 
         if (bIsNewFrame) {
             int32_t iResult;
-            arm_2d_helper_time_half_cos_slider(0, 1000, 6000, &iResult, &this.lTimestamp[1]);
-            this.hwProgress = (uint16_t)iResult;
+            if (arm_2d_helper_time_half_cos_slider(0, 1000, 6000, &iResult, &this.lTimestamp[1])) {
+                this.hwProgress = -1;
+            } else {
+                this.hwProgress = (uint16_t)iResult;
+            }
         }
+        arm_using(arm_2d_size_t tWiFiLogoSize = s_tileWIFISignalFilm .use_as__arm_2d_tile_t.tRegion .tSize) {
 
-        progress_bar_drill_show(ptTile, this.hwProgress, bIsNewFrame);
-        
+            arm_2d_align_centre(__canvas, 
+                                tScreenSize.iWidth, 
+                                120+tWiFiLogoSize.iHeight) {
+                
+                arm_2d_layout(__centre_region) {
+                    __item_line_vertical(__centre_region.tSize.iWidth, tWiFiLogoSize.iHeight) {
+                        arm_2d_align_centre(__item_region, tWiFiLogoSize) {
+                            
+                            arm_2d_tile_copy_with_src_mask_only(
+                                    (arm_2d_tile_t *)&s_tileWIFISignalFilm,
+                                    (arm_2d_tile_t *)&s_tileWIFISignalFilmMask,
+                                    ptTile,
+                                    &__centre_region);
 
+                        }
+                    }
+                    __item_line_vertical(tScreenSize.iWidth, 40) {
+                        progress_bar_simple_show(ptTile, &__item_region, this.hwProgress, bIsNewFrame);
+                    }
+                    __item_line_vertical(tScreenSize.iWidth, 40) {
+                        progress_bar_drill_show(ptTile, &__item_region, this.hwProgress, bIsNewFrame);
+                    }
+                    __item_line_vertical(tScreenSize.iWidth, 40) {
+                        progress_bar_flowing_show(ptTile, &__item_region, this.hwProgress, bIsNewFrame);
+                    }
+                }
+            }
+        }
+/*
         arm_2d_align_top_right( __canvas, 
                                 s_tileWIFISignalFilm
                                     .use_as__arm_2d_tile_t
@@ -222,7 +255,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene1_handler)
                                     &__top_right_region);
 
         }
-
+*/
         /* draw text at the top-left corner */
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
@@ -250,16 +283,7 @@ user_scene_1_t *__arm_2d_scene1_init(   arm_2d_scene_player_t *ptDispAdapter,
     IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
 
         /* a dirty region to be specified at runtime*/
-        ADD_REGION_TO_LIST(s_tDirtyRegions,
-            .tLocation = {
-                .iX = ((__DISP0_CFG_SCEEN_WIDTH__ - PROGRESSBAR_WIDTH) >> 1),
-                .iY = ((__DISP0_CFG_SCEEN_HEIGHT__ - 32) >> 1),
-            },
-            .tSize = {
-                .iWidth = PROGRESSBAR_WIDTH,
-                .iHeight = 32,
-            },
-        ),
+        ADD_REGION_TO_LIST(s_tDirtyRegions),
 
         ADD_REGION_TO_LIST(s_tDirtyRegions),
 
@@ -279,7 +303,8 @@ user_scene_1_t *__arm_2d_scene1_init(   arm_2d_scene_player_t *ptDispAdapter,
 
     END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
 
-    
+    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
+
     if (NULL == ptScene) {
         ptScene = (user_scene_1_t *)malloc(sizeof(user_scene_1_t));
         assert(NULL != ptScene);
@@ -295,10 +320,14 @@ user_scene_1_t *__arm_2d_scene1_init(   arm_2d_scene_player_t *ptDispAdapter,
     arm_2d_region_t tScreen
         = arm_2d_helper_pfb_get_display_area(
             &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
-    
+
     /* initialise dirty region 0 at runtime
-     * this demo shows that we create a region in the centre of a screen(320*240)
-     * for a image stored in the tile c_tileCMSISLogoMask
+     */
+    arm_2d_align_centre(tScreen, tScreen.tSize.iWidth, 120) {
+        s_tDirtyRegions[0].tRegion = __centre_region;
+    }
+
+    /* initialise dirty region 1 at runtime
      */
     arm_2d_align_top_right( tScreen, 
                             s_tileWIFISignalFilm
@@ -308,10 +337,30 @@ user_scene_1_t *__arm_2d_scene1_init(   arm_2d_scene_player_t *ptDispAdapter,
         s_tDirtyRegions[1].tRegion = __top_right_region;
     }
 
+    arm_using(arm_2d_size_t tWiFiLogoSize = s_tileWIFISignalFilm .use_as__arm_2d_tile_t.tRegion .tSize) {
+
+        arm_2d_align_centre(tScreen, 
+                            tScreen.tSize.iWidth, 
+                            120+tWiFiLogoSize.iHeight) {
+            
+            arm_2d_layout(__centre_region) {
+                __item_line_vertical(__centre_region.tSize.iWidth, tWiFiLogoSize.iHeight) {
+                    arm_2d_align_centre(__item_region, tWiFiLogoSize) {
+                        s_tDirtyRegions[1].tRegion = __centre_region;
+                    }
+                }
+                __item_line_vertical(tScreen.tSize.iWidth, 120) {
+                    s_tDirtyRegions[0].tRegion = __item_region;
+                }
+            }
+        }
+    }
+
     /* set to the last frame */
     arm_2d_helper_film_set_frame(&s_tileWIFISignalFilm, -1);
     arm_2d_helper_film_set_frame(&s_tileWIFISignalFilmMask, -1);
-    
+
+
     *ptScene = (user_scene_1_t){
         .use_as__arm_2d_scene_t = {
         /* Please uncommon the callbacks if you need them
