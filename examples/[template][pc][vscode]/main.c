@@ -61,6 +61,10 @@
 
 void scene_meter_loader(void) 
 {
+    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
+                                            ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT);
+    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 500);
+
     arm_2d_scene_meter_init(&DISP0_ADAPTER);
 }
 
@@ -72,6 +76,10 @@ void scene_watch_loader(void)
 
 void scene0_loader(void) 
 {
+    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
+                                            ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);
+    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 3000);
+
     arm_2d_scene0_init(&DISP0_ADAPTER);
 }
 
@@ -82,16 +90,25 @@ void scene1_loader(void)
 
 void scene2_loader(void) 
 {
+    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
+                                            ARM_2D_SCENE_SWITCH_MODE_SLIDE_RIGHT);
+    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 500);
     arm_2d_scene2_init(&DISP0_ADAPTER);
 }
 
 void scene3_loader(void) 
 {
+    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
+                                            ARM_2D_SCENE_SWITCH_MODE_SLIDE_DOWN);
+    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 500);
     arm_2d_scene3_init(&DISP0_ADAPTER);
 }
 
 void scene4_loader(void) 
 {
+    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
+                                            ARM_2D_SCENE_SWITCH_MODE_SLIDE_UP);
+    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 500);
     arm_2d_scene4_init(&DISP0_ADAPTER);
 }
 
@@ -142,11 +159,12 @@ int app_2d_main_thread (void *argument)
     arm_2d_scene_player_register_before_switching_event_handler(
             &DISP0_ADAPTER,
             before_scene_switching_handler);
-    
+#if 0
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
                                             ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);
     arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 3000);
-    
+#endif
+
     arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
 #endif
 

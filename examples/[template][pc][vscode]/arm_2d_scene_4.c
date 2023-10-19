@@ -149,7 +149,7 @@ static void __on_scene4_frame_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
     
     /* switch to next scene after 3s */
-    if (arm_2d_helper_is_time_out(59000, &this.lTimestamp[0])) {
+    if (arm_2d_helper_is_time_out(29000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 }
@@ -188,7 +188,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene4_handler)
         int32_t iResult;
         
         /* simulate a full battery charging/discharge cycle */
-        arm_2d_helper_time_cos_slider(0, 1000, 60000, 0, &iResult, &this.lTimestamp[1]);
+        arm_2d_helper_time_cos_slider(0, 1000, 30000, 0, &iResult, &this.lTimestamp[1]);
         
         if (this.hwGasgauge < iResult) {
             this.tStatus = BATTERY_STATUS_CHARGING;
