@@ -165,10 +165,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
                         {
                             .tLocation = {
                                 .iX = 0,
-                                .iY = __DISP0_CFG_SCEEN_HEIGHT__ - 17},
+                                .iY = ((__DISP0_CFG_SCEEN_HEIGHT__ + 7) / 8 - 2) * 8},
                             .tSize = {
                                 .iWidth = __DISP0_CFG_SCEEN_WIDTH__,
-                                .iHeight = 9,
+                                .iHeight = 8,
                             },
                         },
                     }, 
@@ -178,6 +178,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
         arm_lcd_text_set_colour(GLCD_COLOR_GREEN, GLCD_COLOR_WHITE);
         arm_lcd_text_location((__DISP0_CFG_SCEEN_HEIGHT__ + 7) / 8 - 2,
                               0);
+
 
         if (BENCHMARK.wAverage) {
             arm_lcd_printf(
@@ -394,10 +395,10 @@ void disp_adapter0_init(void)
             ADD_LAST_REGION_TO_LIST(s_tNavDirtyRegionList,
                 .tLocation = {
                     .iX = 0,
-                    .iY = __DISP0_CFG_SCEEN_HEIGHT__ - 17},
+                    .iY = ((__DISP0_CFG_SCEEN_HEIGHT__ + 7) / 8 - 2) * 8},
                 .tSize = {
                     .iWidth = __DISP0_CFG_SCEEN_WIDTH__,
-                    .iHeight = 9,
+                    .iHeight = 8,
                 },
             ),
 
