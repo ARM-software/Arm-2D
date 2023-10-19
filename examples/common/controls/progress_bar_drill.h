@@ -28,6 +28,47 @@ extern "C" {
 
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
+
+#define progress_bar_drill_show4(   __target_ptr,                               \
+                                    __region_ptr,                               \
+                                    __progress,                                 \
+                                    __is_new_frame)                             \
+            __progress_bar_drill_show(  (__target_ptr),                         \
+                                        (__region_ptr),                         \
+                                        (int_fast16_t)(__progress),             \
+                                        (__is_new_frame))
+
+#define progress_bar_drill_show3(   __target_ptr,                               \
+                                    __progress,                                 \
+                                    __is_new_frame)                             \
+            progress_bar_drill_show4(   (__target_ptr),                         \
+                                        NULL,                                   \
+                                        (int_fast16_t)(__progress),             \
+                                        (__is_new_frame))
+
+#define progress_bar_drill_show2(   __target_ptr,                               \
+                                    __progress)                                 \
+            progress_bar_drill_show4(   (__target_ptr),                         \
+                                        NULL,                                   \
+                                        (int_fast16_t)(__progress),             \
+                                        (true))
+
+#define progress_bar_drill_show1(       __progress)                             \
+            progress_bar_drill_show4(   ((const arm_2d_tile_t *ptTarget)(-1))), \
+                                        NULL,                                   \
+                                        (int_fast16_t)(__progress),             \
+                                        (true))
+
+#define progress_bar_drill_show0()                                              \
+            progress_bar_drill_show4(   ((const arm_2d_tile_t *ptTarget)(-1))), \
+                                        NULL,                                   \
+                                        (-1),                                   \
+                                        (true))
+
+#define progress_bar_drill_show(...)                                            \
+            ARM_CONNECT2(   progress_bar_drill_show,                            \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
@@ -36,7 +77,8 @@ extern
 void progress_bar_drill_init(void);
 
 extern
-void progress_bar_drill_show(   const arm_2d_tile_t *ptTarget, 
+void __progress_bar_drill_show( const arm_2d_tile_t *ptTarget,
+                                const arm_2d_region_t *ptRegion,
                                 int_fast16_t iProgress,
                                 bool bIsNewFrame);
 
