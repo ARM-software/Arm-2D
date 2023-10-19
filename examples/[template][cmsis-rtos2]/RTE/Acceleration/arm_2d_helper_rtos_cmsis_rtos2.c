@@ -103,7 +103,7 @@ bool arm_2d_port_wait_for_semaphore(uintptr_t pSemaphore)
 }
 
 __OVERRIDE_WEAK
-void arm_2d_port_set_semaphoret(uintptr_t pSemaphore)
+void arm_2d_port_set_semaphore(uintptr_t pSemaphore)
 {
     osEventFlagsId_t evtFlag = (osEventFlagsId_t)pSemaphore;
     if (NULL != evtFlag) {
