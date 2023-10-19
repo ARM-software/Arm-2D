@@ -158,8 +158,11 @@ static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene%Instance%_handler)
 {
     user_scene_%Instance%_t *ptThis = (user_scene_%Instance%_t *)pTarget;
+    arm_2d_size_t tScreenSize = ptTile->tRegion.tSize;
+
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
+    ARM_2D_UNUSED(tScreenSize);
     
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the foreground begin-----------------------*/

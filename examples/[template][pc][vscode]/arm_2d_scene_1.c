@@ -161,7 +161,7 @@ static void __on_scene1_frame_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
     
     /* switch to next scene after 3s */
-    if (arm_2d_helper_is_time_out(6000, &this.lTimestamp[0])) {
+    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 }
@@ -194,6 +194,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene1_handler)
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
     
+    arm_2d_size_t tScreenSize = ptTile->tRegion.tSize;
+
     /*-----------------------draw the foreground begin-----------------------*/
 
     /* following code is just a demo, you can remove them */
@@ -206,8 +208,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene1_handler)
             this.hwProgress = (uint16_t)iResult;
         }
 
+        
+
         progress_bar_drill_show(ptTile, this.hwProgress, bIsNewFrame);
         
+
 
         arm_2d_align_top_right( __canvas, 
                                 s_tileWIFISignalFilm
