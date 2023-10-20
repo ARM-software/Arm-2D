@@ -878,8 +878,8 @@
         <TargetCommonOption>
           <Device>CMSDK_CM4_FP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>Keil.V2M-MPS2_CMx_BSP.1.8.0</PackID>
-          <PackURL>http://www.keil.com/pack/</PackURL>
+          <PackID>Keil.V2M-MPS2_CMx_BSP.1.8.1</PackID>
+          <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x400000) IRAM(0x20000000,0x400000) CPUTYPE("Cortex-M4") FPU3(SFPU) CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -1803,14 +1803,14 @@
       <TargetName>FastModel</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6210000::V6.21::.\ArmCompilerforEmbedded6.21</pCCUsed>
+      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>CMSDK_CM4_FP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>Keil.V2M-MPS2_CMx_BSP.1.8.0</PackID>
-          <PackURL>http://www.keil.com/pack/</PackURL>
+          <PackID>Keil.V2M-MPS2_CMx_BSP.1.8.1</PackID>
+          <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x400000) IRAM(0x20000000,0x400000) CPUTYPE("Cortex-M4") FPU3(SFPU) CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -4532,8 +4532,8 @@
         <TargetCommonOption>
           <Device>CMSDK_CM0plus</Device>
           <Vendor>ARM</Vendor>
-          <PackID>Keil.V2M-MPS2_CMx_BSP.1.8.0</PackID>
-          <PackURL>http://www.keil.com/pack/</PackURL>
+          <PackID>Keil.V2M-MPS2_CMx_BSP.1.8.1</PackID>
+          <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00400000) IROM(0x00000000,0x00400000) CPUTYPE("Cortex-M0+") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -5463,8 +5463,8 @@
         <TargetCommonOption>
           <Device>CMSDK_CM7_DP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>Keil.V2M-MPS2_CMx_BSP.1.8.0</PackID>
-          <PackURL>http://www.keil.com/pack/</PackURL>
+          <PackID>Keil.V2M-MPS2_CMx_BSP.1.8.1</PackID>
+          <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00400000) IROM(0x00000000,0x00400000) CPUTYPE("Cortex-M7") FPU3(DFPU) CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -6692,7 +6692,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>0</Optim>
             <oTime>1</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -6711,11 +6711,11 @@
             <v6LangP>3</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
-            <v6Lto>0</v6Lto>
+            <v6Lto>1</v6Lto>
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-Wno-nonportable-include-path</MiscControls>
+              <MiscControls>-Wno-nonportable-include-path -Omax</MiscControls>
               <Define>BENCHMARK_PFB_BLOCK_WIDTH=480,BENCHMARK_PFB_BLOCK_HEIGHT=120,__GLCD_CFG_SCEEN_WIDTH__=480,__GLCD_CFG_SCEEN_HEIGHT__=272,__DISP0_CFG_SCEEN_WIDTH__=480,__DISP0_CFG_SCEEN_HEIGHT__=272,__DISP0_CFG_PFB_BLOCK_WIDTH__=480,__DISP0_CFG_PFB_BLOCK_HEIGHT__=27</Define>
               <Undefine></Undefine>
               <IncludePath>..\common\platform;..\common\platform\stm32f746g-discovery;.</IncludePath>
@@ -10152,7 +10152,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="1.7.1" condition="Arm-2D-Helper" maxInstances="8">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="1.7.2" condition="Arm-2D-Helper" maxInstances="8">
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -10184,7 +10184,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="RTOS Helper" Cvariant="CMSIS-RTOS2" Cvendor="ARM" Cversion="1.0.2" condition="PFB CMSIS-RTOS2">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="RTOS Helper" Cvariant="CMSIS-RTOS2" Cvendor="ARM" Cversion="1.1.0" condition="PFB CMSIS-RTOS2">
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -10280,8 +10280,8 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Source" Cvendor="ARM" Cversion="1.14.3" condition="CMSISCORE">
-        <package name="CMSIS-DSP" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.14.3"/>
+      <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Source" Cvendor="ARM" Cversion="1.15.0" condition="CMSISCORE">
+        <package name="CMSIS-DSP" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.15.0"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0">
             <c>
@@ -10512,7 +10512,7 @@
         </targetInfos>
       </component>
       <component Capiversion="2.1.0" Cclass="CMSIS Driver" Cgroup="USART" Cvendor="Keil" Cversion="1.0.3" condition="CMSDK CMSIS">
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="https://www.keil.com/pack/" vendor="Keil" version="1.8.1"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
           <targetInfo name="V2M-MPS2-CM0+"/>
@@ -10632,20 +10632,20 @@
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM0plus CMSIS">
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="https://www.keil.com/pack/" vendor="Keil" version="1.8.1"/>
         <targetInfos>
           <targetInfo name="V2M-MPS2-CM0+"/>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM4 CMSIS">
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="https://www.keil.com/pack/" vendor="Keil" version="1.8.1"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
           <targetInfo name="V2M-MPS2-CM4"/>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM7 CMSIS">
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="https://www.keil.com/pack/" vendor="Keil" version="1.8.1"/>
         <targetInfos>
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
@@ -10719,9 +10719,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_disp_adapter.c" version="1.7.1">
+      <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_disp_adapter.c" version="1.7.2">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="1.7.1" condition="Arm-2D-Helper" maxInstances="8"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="1.7.2" condition="Arm-2D-Helper" maxInstances="8"/>
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -10737,9 +10737,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="Helper\Include\template\arm_2d_disp_adapter.h" version="1.7.1">
+      <file attr="config" category="header" name="Helper\Include\template\arm_2d_disp_adapter.h" version="1.7.2">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="1.7.1" condition="Arm-2D-Helper" maxInstances="8"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="1.7.2" condition="Arm-2D-Helper" maxInstances="8"/>
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -10791,9 +10791,9 @@
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos/>
       </file>
-      <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_helper_rtos_cmsis_rtos2.c" version="1.0.2">
+      <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_helper_rtos_cmsis_rtos2.c" version="1.1.0">
         <instance index="0">RTE\Acceleration\arm_2d_helper_rtos_cmsis_rtos2.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="RTOS Helper" Cvariant="CMSIS-RTOS2" Cvendor="ARM" Cversion="1.0.2" condition="PFB CMSIS-RTOS2"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="RTOS Helper" Cvariant="CMSIS-RTOS2" Cvendor="ARM" Cversion="1.1.0" condition="PFB CMSIS-RTOS2"/>
         <package name="Arm-2D" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -11178,7 +11178,7 @@
       <file attr="config" category="header" name="CMSIS\Config\RTE_Device.h" version="1.0.0">
         <instance index="0">RTE\Device\CMSDK_CM0plus\RTE_Device.h</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM0plus CMSIS"/>
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="https://www.keil.com/pack/" vendor="Keil" version="1.8.1"/>
         <targetInfos>
           <targetInfo name="V2M-MPS2-CM0+"/>
         </targetInfos>
@@ -11186,7 +11186,7 @@
       <file attr="config" category="linkerScript" condition="ARMCC" name="Device\CMSDK_CM0plus\Source\ARM\ac6_arm.sct" version="1.0.0">
         <instance index="0">RTE\Device\CMSDK_CM0plus\ac6_arm.sct</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM0plus CMSIS"/>
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="https://www.keil.com/pack/" vendor="Keil" version="1.8.1"/>
         <targetInfos>
           <targetInfo name="V2M-MPS2-CM0+"/>
         </targetInfos>
@@ -11194,7 +11194,7 @@
       <file attr="config" category="sourceAsm" condition="ARMCC" name="Device\CMSDK_CM0plus\Source\ARM\startup_CMSDK_CM0plus.S" version="1.0.0">
         <instance index="0">RTE\Device\CMSDK_CM0plus\startup_CMSDK_CM0plus.S</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM0plus CMSIS"/>
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="https://www.keil.com/pack/" vendor="Keil" version="1.8.1"/>
         <targetInfos>
           <targetInfo name="V2M-MPS2-CM0+"/>
         </targetInfos>
@@ -11202,7 +11202,7 @@
       <file attr="config" category="sourceC" name="Device\CMSDK_CM0plus\Source\system_CMSDK_CM0plus.c" version="1.0.0">
         <instance index="0">RTE\Device\CMSDK_CM0plus\system_CMSDK_CM0plus.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM0plus CMSIS"/>
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="https://www.keil.com/pack/" vendor="Keil" version="1.8.1"/>
         <targetInfos>
           <targetInfo name="V2M-MPS2-CM0+"/>
         </targetInfos>
@@ -11234,7 +11234,7 @@
       <file attr="config" category="header" name="CMSIS\Config\RTE_Device.h" version="1.0.0">
         <instance index="0">RTE\Device\CMSDK_CM4_FP\RTE_Device.h</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM4 CMSIS"/>
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="https://www.keil.com/pack/" vendor="Keil" version="1.8.1"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
           <targetInfo name="V2M-MPS2-CM4"/>
@@ -11243,7 +11243,7 @@
       <file attr="config" category="linkerScript" condition="ARMCC" name="Device\CMSDK_CM4\Source\ARM\ac6_arm.sct" version="1.0.0">
         <instance index="0">RTE\Device\CMSDK_CM4_FP\ac6_arm.sct</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM4 CMSIS"/>
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="https://www.keil.com/pack/" vendor="Keil" version="1.8.1"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
           <targetInfo name="V2M-MPS2-CM4"/>
@@ -11252,7 +11252,7 @@
       <file attr="config" category="sourceAsm" condition="ARMCC" name="Device\CMSDK_CM4\Source\ARM\startup_CMSDK_CM4.S" version="1.0.0">
         <instance index="0">RTE\Device\CMSDK_CM4_FP\startup_CMSDK_CM4.S</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM4 CMSIS"/>
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="https://www.keil.com/pack/" vendor="Keil" version="1.8.1"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
           <targetInfo name="V2M-MPS2-CM4"/>
@@ -11261,7 +11261,7 @@
       <file attr="config" category="sourceC" name="Device\CMSDK_CM4\Source\system_CMSDK_CM4.c" version="1.1.0">
         <instance index="0">RTE\Device\CMSDK_CM4_FP\system_CMSDK_CM4.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM4 CMSIS"/>
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="https://www.keil.com/pack/" vendor="Keil" version="1.8.1"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
           <targetInfo name="V2M-MPS2-CM4"/>
@@ -11270,7 +11270,7 @@
       <file attr="config" category="header" name="CMSIS\Config\RTE_Device.h" version="1.0.0">
         <instance index="0">RTE\Device\CMSDK_CM7_DP\RTE_Device.h</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM7 CMSIS"/>
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="https://www.keil.com/pack/" vendor="Keil" version="1.8.1"/>
         <targetInfos>
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
@@ -11278,7 +11278,7 @@
       <file attr="config" category="linkerScript" condition="ARMCC" name="Device\CMSDK_CM7\Source\ARM\ac6_arm.sct" version="1.0.0">
         <instance index="0">RTE\Device\CMSDK_CM7_DP\ac6_arm.sct</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM7 CMSIS"/>
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="https://www.keil.com/pack/" vendor="Keil" version="1.8.1"/>
         <targetInfos>
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
@@ -11286,7 +11286,7 @@
       <file attr="config" category="sourceAsm" condition="ARMCC" name="Device\CMSDK_CM7\Source\ARM\startup_CMSDK_CM7.S" version="1.0.0">
         <instance index="0">RTE\Device\CMSDK_CM7_DP\startup_CMSDK_CM7.S</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM7 CMSIS"/>
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="https://www.keil.com/pack/" vendor="Keil" version="1.8.1"/>
         <targetInfos>
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
@@ -11294,7 +11294,7 @@
       <file attr="config" category="sourceC" name="Device\CMSDK_CM7\Source\system_CMSDK_CM7.c" version="1.0.0">
         <instance index="0">RTE\Device\CMSDK_CM7_DP\system_CMSDK_CM7.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM7 CMSIS"/>
-        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.8.0"/>
+        <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="https://www.keil.com/pack/" vendor="Keil" version="1.8.1"/>
         <targetInfos>
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>

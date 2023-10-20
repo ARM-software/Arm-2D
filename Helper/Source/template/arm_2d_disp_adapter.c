@@ -93,9 +93,10 @@ static struct {
     uint32_t wMax;
     uint64_t dwTotal;
     uint32_t wAverage;
-    float fFPS30Freq;
+    float fCPUUsage;
     uint32_t wIterations;
     uint32_t wLCDLatency;
+     int64_t lTimestamp;
 } BENCHMARK = {
     .wMin = UINT32_MAX,
     .wMax = 0,
@@ -186,8 +187,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
 
 #if __DISP%Instance%_CFG_SCEEN_WIDTH__ >= 240
         arm_lcd_printf( 
-            "LCD-Latency:%2dms", 
-            (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wLCDLatency) );
+            "CPU:%2.2f%% LCD-Latency:%2dms", 
+            BENCHMARK.fCPUUsage,
+            (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wLCDLatency));
 #else
         arm_lcd_printf( 
             "LCD:%2dms",
@@ -330,12 +332,14 @@ static bool __on_each_frame_complete(void *ptTarget)
 {
     ARM_2D_UNUSED(ptTarget);
     
+    int64_t lTimeStamp = arm_2d_helper_get_system_timestamp();
+    
 #if __DISP%Instance%_CFG_FPS_CACULATION_MODE__ == ARM_2D_FPS_MODE_REAL
     static int64_t s_lLastTimeStamp = 0;
-    int64_t lTimeStamp = arm_2d_helper_get_system_timestamp();
+
     int32_t nElapsed = 0;
     if (0 != s_lLastTimeStamp) {
-        nElapsed = (int32_t)(arm_2d_helper_get_system_timestamp() - s_lLastTimeStamp);
+        nElapsed = (int32_t)(lTimeStamp - s_lLastTimeStamp);
     }
     s_lLastTimeStamp = lTimeStamp;
     
@@ -358,15 +362,16 @@ static bool __on_each_frame_complete(void *ptTarget)
                 BENCHMARK.wAverage =
                     (uint32_t)(BENCHMARK.dwTotal / (uint64_t)__DISP%Instance%_CFG_ITERATION_CNT__);
                 BENCHMARK.wAverage = MAX(1, BENCHMARK.wAverage);
-//                BENCHMARK.fFPS30Freq = (float)
-//                ((      (double)(BENCHMARK.wAverage * 30) 
-//                    /   (double)arm_2d_helper_get_reference_clock_frequency()) 
-//                 * ((double)SystemCoreClock / 1000000.0f));
+ 
+                int64_t lElapsed = lTimeStamp - BENCHMARK.lTimestamp;
+                BENCHMARK.fCPUUsage = (float)((double)BENCHMARK.dwTotal / (double)lElapsed) * 100.0f;
                  
                 BENCHMARK.wMin = UINT32_MAX;
                 BENCHMARK.wMax = 0;
                 BENCHMARK.dwTotal = 0;
                 BENCHMARK.wIterations = __DISP%Instance%_CFG_ITERATION_CNT__;
+                
+                BENCHMARK.lTimestamp = arm_2d_helper_get_system_timestamp();
             }
         }
     }
@@ -495,6 +500,9 @@ void disp_adapter%Instance%_init(void)
                         __pfb_draw_navigation,
                         NULL,
                         (arm_2d_region_list_item_t *)s_tNavDirtyRegionList);
+                        
+                        
+        BENCHMARK.lTimestamp = arm_2d_helper_get_system_timestamp();
     } while(0);
 #endif
 

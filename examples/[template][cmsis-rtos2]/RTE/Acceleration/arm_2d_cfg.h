@@ -40,7 +40,7 @@ extern "C" {
 // <i> Note that if you don't have any hardware accelerator, disable this feature can reduce code size and gain a small performance uplift.
 // <i> This feature is enabled by default.
 #ifndef __ARM_2D_HAS_ASYNC__
-#   define __ARM_2D_HAS_ASYNC__                                     1
+#   define __ARM_2D_HAS_ASYNC__                                     0
 #endif
 
 // <q>Enable anti-alias support for all tranform operations.

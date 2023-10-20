@@ -60,6 +60,9 @@
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
+extern
+void *__arm_2d_helper_perf_counter_get(arm_2d_perfc_type_t tType);
+
 /*============================ LOCAL VARIABLES ===============================*/
 
 /*============================ IMPLEMENTATION ================================*/
@@ -100,7 +103,7 @@ bool arm_2d_port_wait_for_semaphore(uintptr_t pSemaphore)
 }
 
 __OVERRIDE_WEAK
-void arm_2d_port_set_semaphoret(uintptr_t pSemaphore)
+void arm_2d_port_set_semaphore(uintptr_t pSemaphore)
 {
     osEventFlagsId_t evtFlag = (osEventFlagsId_t)pSemaphore;
     if (NULL != evtFlag) {
@@ -112,7 +115,7 @@ void arm_2d_port_set_semaphoret(uintptr_t pSemaphore)
 /*----------------------------------------------------------------------------*
  * Application main thread                                                    *
  *----------------------------------------------------------------------------*/
- 
+
 
 __NO_RETURN
 void arm_2d_backend_thread(void *argument)
@@ -122,6 +125,20 @@ void arm_2d_backend_thread(void *argument)
 #if defined(__PERF_COUNTER__) && defined(__PERF_CNT_USE_RTOS__)
     /* init the cycle counter for the current task */
     init_task_cycle_counter();
+    
+    
+    do {
+        task_cycle_info_t *ptInfo = __arm_2d_helper_perf_counter_get(ARM_2D_PERFC_RENDER);
+        if (NULL == ptInfo) {
+            break;
+        }
+        static task_cycle_info_agent_t s_tAgent;
+        
+        /* initialize the cross tasks task-cycle-info object */
+        init_task_cycle_info(ptInfo);
+        register_task_cycle_agent(ptInfo, &s_tAgent);
+
+    } while(0);
 #endif
 
     arm_2d_helper_backend_task();
