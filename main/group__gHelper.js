@@ -182,6 +182,7 @@ var group__gHelper =
       [ "ARM_2D_PFB_DEPEND_ON_EACH_FRAME_CPL", "group__gHelper.html#gga9b29769343da78881f442e657eb62b6ea3cacf8720d5c156fcc2a53a4edcc76b0", null ],
       [ "ARM_2D_PFB_DEPEND_ON_NAVIGATION", "group__gHelper.html#gga9b29769343da78881f442e657eb62b6ea5ad9b404a26865d867e60c3d2dbbacdf", null ]
     ] ],
+    [ "arm_2d_perfc_type_t", "group__gHelper.html#ga8dd76f058279c8c29e30ecad66b59921", null ],
     [ "arm_2d_scene_player_flush_fifo", "group__gHelper.html#ga7248c19138fa0d1352e5c07f197cd0d8", null ],
     [ "arm_2d_scene_player_append_scenes", "group__gHelper.html#ga5725f716e87b58d67316d4536234181b", null ],
     [ "arm_2d_scene_player_update_scene_background", "group__gHelper.html#ga459552534c34589f0cdfa16496b0c312", null ],
