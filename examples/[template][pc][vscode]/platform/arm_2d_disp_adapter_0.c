@@ -64,14 +64,6 @@
 #   define __DISP0_CFG_ITERATION_CNT__     30
 #endif
 
-#ifndef __DISP0_CFG_PFB_BLOCK_WIDTH__
-#   define __DISP0_CFG_PFB_BLOCK_WIDTH__   __DISP0_CFG_SCEEN_WIDTH__
-#endif
-
-#ifndef __DISP0_CFG_PFB_BLOCK_WIDTH__
-#   define __DISP0_CFG_PFB_BLOCK_WIDTH__   __DISP0_CFG_SCEEN_HEIGHT__
-#endif
-
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -90,19 +82,24 @@ int32_t Disp0_DrawBitmap(int16_t x,
 ARM_NOINIT 
 arm_2d_scene_player_t DISP0_ADAPTER;
 
+#if __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
+ARM_NOINIT
+static 
+arm_2d_helper_3fb_t s_tDirectModeHelper;
+#endif
+
 static struct {
     uint32_t wMin;
     uint32_t wMax;
     uint64_t dwTotal;
+    uint64_t dwRenderTotal;
     uint32_t wAverage;
-    float fFPS30Freq;
+    float fCPUUsage;
     uint32_t wIterations;
     uint32_t wLCDLatency;
+     int64_t lTimestamp;
 } BENCHMARK = {
     .wMin = UINT32_MAX,
-    .wMax = 0,
-    .dwTotal = 0,
-    .wAverage = 0,
     .wIterations = __DISP0_CFG_ITERATION_CNT__,
 };
 
@@ -179,7 +176,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
         arm_lcd_text_location((__DISP0_CFG_SCEEN_HEIGHT__ + 7) / 8 - 2,
                               0);
 
-
         if (BENCHMARK.wAverage) {
             arm_lcd_printf(
                 "FPS:%3d:%dms ",
@@ -189,8 +185,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
 
 #if __DISP0_CFG_SCEEN_WIDTH__ >= 240
         arm_lcd_printf( 
-            "LCD-Latency:%2dms", 
-            (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wLCDLatency) );
+            "CPU:%2.2f%% LCD-Latency:%2dms", 
+            BENCHMARK.fCPUUsage,
+            (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wLCDLatency));
 #else
         arm_lcd_printf( 
             "LCD:%2dms",
@@ -221,7 +218,56 @@ IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
 }
 #endif
 
-#if __DISP0_CFG_ENABLE_ASYNC_FLUSHING__
+#if __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
+__WEAK
+IMPL_PFB_ON_LOW_LV_RENDERING(__glcd0_pfb_render_handler)
+{
+    const arm_2d_tile_t *ptTile = &(ptPFB->tTile);
+
+    ARM_2D_UNUSED(pTarget);
+    ARM_2D_UNUSED(bIsNewFrame);
+
+    if (__arm_2d_helper_3fb_draw_bitmap(&s_tDirectModeHelper,
+                                        ptPFB)) {
+
+        arm_2d_helper_pfb_report_rendering_complete(
+                        &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t);
+    }
+}
+
+void *disp_adapter0_3fb_get_flush_pointer(void)
+{
+    return arm_2d_helper_3fb_get_flush_pointer(&s_tDirectModeHelper);
+}
+
+
+#   if __DISP0_CFG_ENABLE_ASYNC_FLUSHING__
+/* using asynchronous flushing, e.g. using DMA + ISR to offload CPU etc. 
+ * It can significantly reduce the LCD Latency hence improve the overrall 
+ * framerate. 
+ */
+
+void disp_adapter0_insert_2d_copy_complete_event_handler(void)
+{
+    arm_2d_helper_pfb_report_rendering_complete(
+                    &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t);
+}
+
+/* using asynchronous flushing, e.g. using DMA + ISR to offload CPU etc. 
+ * It can significantly reduce the LCD Latency hence improve the overrall 
+ * framerate. 
+ */
+
+void disp_adapter0_insert_dma_copy_complete_event_handler(void)
+{
+    arm_2d_helper_3fb_report_dma_copy_complete(&s_tDirectModeHelper);
+}
+
+
+#   endif
+
+#else
+#   if __DISP0_CFG_ENABLE_ASYNC_FLUSHING__
 
 /* using asynchronous flushing, e.g. using DMA + ISR to offload CPU etc. 
  * It can significantly reduce the LCD Latency hence improve the overrall 
@@ -254,7 +300,7 @@ IMPL_PFB_ON_LOW_LV_RENDERING(__glcd0_pfb_render_handler)
 
 }
 
-#else
+#   else
 /* using asynchronous flushing, i.e. use CPU to flush LCD.
  * The LCD Latency will be high and reduce the overral framerate.
  * Meanwhile, in developing stage, this method can ensure a robust flushing. 
@@ -277,18 +323,21 @@ IMPL_PFB_ON_LOW_LV_RENDERING(__glcd0_pfb_render_handler)
     arm_2d_helper_pfb_report_rendering_complete(
                     &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t);
 }
+#   endif
 #endif
 
 static bool __on_each_frame_complete(void *ptTarget)
 {
     ARM_2D_UNUSED(ptTarget);
     
+    int64_t lTimeStamp = arm_2d_helper_get_system_timestamp();
+    
 #if __DISP0_CFG_FPS_CACULATION_MODE__ == ARM_2D_FPS_MODE_REAL
     static int64_t s_lLastTimeStamp = 0;
-    int64_t lTimeStamp = arm_2d_helper_get_system_timestamp();
+
     int32_t nElapsed = 0;
     if (0 != s_lLastTimeStamp) {
-        nElapsed = (int32_t)(arm_2d_helper_get_system_timestamp() - s_lLastTimeStamp);
+        nElapsed = (int32_t)(lTimeStamp - s_lLastTimeStamp);
     }
     s_lLastTimeStamp = lTimeStamp;
     
@@ -305,18 +354,24 @@ static bool __on_each_frame_complete(void *ptTarget)
             BENCHMARK.wMin = MIN((uint32_t)nElapsed, BENCHMARK.wMin);
             BENCHMARK.wMax = MAX(nElapsed, (int32_t)BENCHMARK.wMax);
             BENCHMARK.dwTotal += nElapsed;
+            BENCHMARK.dwRenderTotal += DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nTotalCycle;
             BENCHMARK.wIterations--;
 
             if (0 == BENCHMARK.wIterations) {
                 BENCHMARK.wAverage =
                     (uint32_t)(BENCHMARK.dwTotal / (uint64_t)__DISP0_CFG_ITERATION_CNT__);
-                
                 BENCHMARK.wAverage = MAX(1, BENCHMARK.wAverage);
+ 
+                int64_t lElapsed = lTimeStamp - BENCHMARK.lTimestamp;
+                BENCHMARK.fCPUUsage = (float)((double)BENCHMARK.dwRenderTotal / (double)lElapsed) * 100.0f;
                  
                 BENCHMARK.wMin = UINT32_MAX;
                 BENCHMARK.wMax = 0;
                 BENCHMARK.dwTotal = 0;
+                BENCHMARK.dwRenderTotal = 0;
                 BENCHMARK.wIterations = __DISP0_CFG_ITERATION_CNT__;
+                
+                BENCHMARK.lTimestamp = arm_2d_helper_get_system_timestamp();
             }
         }
     }
@@ -368,6 +423,42 @@ static void __user_scene_player_init(void)
         assert(false);
     }
 
+#if __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
+    do {
+    extern uintptr_t __DISP_ADAPTER0_3FB_FB0_ADDRESS__;
+    extern uintptr_t __DISP_ADAPTER0_3FB_FB1_ADDRESS__;
+    extern uintptr_t __DISP_ADAPTER0_3FB_FB2_ADDRESS__;
+    
+    extern arm_2d_helper_2d_copy_handler_t __disp_adapter0_request_2d_copy;
+    extern arm_2d_helper_dma_copy_handler_t __disp_adapter0_request_dma_copy;
+    
+    
+        arm_2d_helper_3fb_cfg_t tCFG = {
+            .tScreenSize = {
+                __DISP0_CFG_SCEEN_WIDTH__,
+                __DISP0_CFG_SCEEN_HEIGHT__,
+            },
+            .chPixelBits = __DISP0_CFG_COLOUR_DEPTH__,
+            .pnAddress = {
+                [0] = ((uintptr_t)__DISP_ADAPTER0_3FB_FB0_ADDRESS__),
+                [1] = ((uintptr_t)__DISP_ADAPTER0_3FB_FB1_ADDRESS__),
+                [2] = ((uintptr_t)__DISP_ADAPTER0_3FB_FB2_ADDRESS__),
+            },
+#if __DISP0_CFG_ENABLE_ASYNC_FLUSHING__
+            .evtOn2DCopy = {
+                .fnHandler = __disp_adapter0_request_2d_copy,
+            },
+            .evtOnDMACopy = {
+                .fnHandler = __disp_adapter0_request_dma_copy,
+            },
+#endif
+        };
+        
+        arm_2d_helper_3fb_init(&s_tDirectModeHelper, &tCFG);
+    
+    } while(0);
+#endif
+
     arm_lcd_text_init((arm_2d_region_t []) {
                         { .tSize = {
                             .iWidth = __DISP0_CFG_SCEEN_WIDTH__,
@@ -409,6 +500,9 @@ void disp_adapter0_init(void)
                         __pfb_draw_navigation,
                         NULL,
                         (arm_2d_region_list_item_t *)s_tNavDirtyRegionList);
+                        
+                        
+        BENCHMARK.lTimestamp = arm_2d_helper_get_system_timestamp();
     } while(0);
 #endif
 
@@ -593,7 +687,7 @@ void __disp_adapter0_vres_buffer_deposer (
 #else
     ARM_2D_UNUSED(pTarget);
     ARM_2D_UNUSED(ptVRES);
-    if (NULL == pBuffer) {
+    if ((intptr_t)NULL == pBuffer) {
         return ;
     }
     

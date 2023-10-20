@@ -116,7 +116,7 @@ extern "C" {
 // <o>Number of iterations <0-2000>
 // <i> run number of iterations before calculate the FPS.
 #ifndef __DISP0_CFG_ITERATION_CNT__
-#   define __DISP0_CFG_ITERATION_CNT__                             60
+#   define __DISP0_CFG_ITERATION_CNT__                             30
 #endif
 
 // <o>FPS Calculation Mode
@@ -143,6 +143,12 @@ extern "C" {
 // <i> Please select this option when using asynchronous flushing, e.g. DMA + ISR 
 #ifndef __DISP0_CFG_ENABLE_ASYNC_FLUSHING__
 #   define __DISP0_CFG_ENABLE_ASYNC_FLUSHING__                     0
+#endif
+
+// <q>Enable the helper service for 3FB (LCD Direct Mode)
+// <i> You can select this option when your LCD controller supports direct mode
+#ifndef __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
+#   define __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__                 0
 #endif
 
 // <q>Disable the default scene
@@ -281,6 +287,80 @@ void __disp_adapter0_vres_read_memory( intptr_t pObj,
 
 #endif
 
+#if __DISP0_CFG_ENABLE_ASYNC_FLUSHING__
+
+#   if __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
+
+/*!
+ * \brief An user implemented interface for DMA memory-to-memory copy.
+ *        If you have a DMA, you can implement this function by using
+ *        __OVERRIDE_WEAK. 
+ *        You should implement an ISR for copy-complete event and call
+ *        arm_2d_helper_3fb_report_dma_copy_complete() to notify the 
+ *        3FB (direct mode) helper service.
+ * 
+ * \param[in] ptThis the helper service control block
+ * \param[in] pObj the address of the user object
+ * \param[in] pnSource the source address of the memory block
+ * \param[in] pnTarget the target address
+ * \param[in] nDataItemCount the number of date items
+ * \param[in] chDataItemSize the size of each data item 
+ */
+extern
+void __disp_adapter0_request_dma_copy(  arm_2d_helper_3fb_t *ptThis,
+                                        void *pObj,
+                                        uintptr_t pnSource,
+                                        uintptr_t pnTarget,
+                                        uint32_t nDataItemCount,
+                                        uint_fast8_t chDataItemSize);
+
+/*!
+ * \brief An user implemented interface for 2D-Copy.
+ * \param[in] pnSource the source image address
+ * \param[in] wSourceStride the stride of the source image
+ * \param[in] pnTarget the address in the target framebuffer
+ * \param[in] wTargetStride the stride of the target framebuffer
+ * \param[in] iWidth the safe width of the source image
+ * \param[in] iHeight the safe height of the source image
+ * \retval true the 2D copy is complete when leaving this function
+ * \retval false An async 2D copy request is sent to the DMA
+ */
+bool __disp_adapter0_request_2d_copy(   arm_2d_helper_3fb_t *ptThis,
+                                        void *pObj,
+                                        uintptr_t pnSource,
+                                        uint32_t wSourceStride,
+                                        uintptr_t pnTarget,
+                                        uint32_t wTargetStride,
+                                        int16_t iWidth,
+                                        int16_t iHeight,
+                                        uint_fast8_t chBytePerPixel );
+
+/*!
+ * \brief the handler for the 2d copy complete event.
+ * \note When both __DISP0_CFG_ENABLE_ASYNC_FLUSHING__ and 
+ *       __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__ is set to '1', user 
+ *       MUST call this function to notify the PFB helper that the previous
+ *       asynchronouse 2d copy is complete. 
+ * \note When people using DMA+ISR to offload CPU, this fucntion is called in 
+ *       the DMA transfer complete ISR.
+ */
+extern
+void disp_adapter0_insert_2d_copy_complete_event_handler(void);
+
+/*!
+ * \brief the handler for the dma copy complete event.
+ * \note When both __DISP0_CFG_ENABLE_ASYNC_FLUSHING__ and 
+ *       __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__ is set to '1', user 
+ *       MUST call this function to notify the PFB helper that the previous
+ *       dma copy is complete. 
+ * \note When people using DMA+ISR to offload CPU, this fucntion is called in 
+ *       the DMA transfer complete ISR.
+ */
+extern
+void disp_adapter0_insert_dma_copy_complete_event_handler(void);
+
+#   else
+
 /*!
  * \brief It is an user implemented function that request an LCD flushing in 
  *        asynchronous manner. 
@@ -317,9 +397,21 @@ extern void __disp_adapter0_request_async_flushing(
 extern
 void disp_adapter0_insert_async_flushing_complete_event_handler(void);
 
+#   endif
+#endif
 
+#if __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
 
+/*!
+ * \brief get a pointer for flushing
+ * \return void * the address of a framebuffer
+ * 
+ * \note please only call this function when on vsync event.
+ */
+extern
+void *disp_adapter0_3fb_get_flush_pointer(void);
 
+#endif
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
