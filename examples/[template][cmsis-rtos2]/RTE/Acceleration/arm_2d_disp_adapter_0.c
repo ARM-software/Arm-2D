@@ -92,6 +92,7 @@ static struct {
     uint32_t wMin;
     uint32_t wMax;
     uint64_t dwTotal;
+    uint64_t dwRenderTotal;
     uint32_t wAverage;
     float fCPUUsage;
     uint32_t wIterations;
@@ -99,9 +100,6 @@ static struct {
      int64_t lTimestamp;
 } BENCHMARK = {
     .wMin = UINT32_MAX,
-    .wMax = 0,
-    .dwTotal = 0,
-    .wAverage = 0,
     .wIterations = __DISP0_CFG_ITERATION_CNT__,
 };
 
@@ -356,6 +354,7 @@ static bool __on_each_frame_complete(void *ptTarget)
             BENCHMARK.wMin = MIN((uint32_t)nElapsed, BENCHMARK.wMin);
             BENCHMARK.wMax = MAX(nElapsed, (int32_t)BENCHMARK.wMax);
             BENCHMARK.dwTotal += nElapsed;
+            BENCHMARK.dwRenderTotal += DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nTotalCycle;
             BENCHMARK.wIterations--;
 
             if (0 == BENCHMARK.wIterations) {
@@ -364,11 +363,12 @@ static bool __on_each_frame_complete(void *ptTarget)
                 BENCHMARK.wAverage = MAX(1, BENCHMARK.wAverage);
  
                 int64_t lElapsed = lTimeStamp - BENCHMARK.lTimestamp;
-                BENCHMARK.fCPUUsage = (float)((double)BENCHMARK.dwTotal / (double)lElapsed) * 100.0f;
+                BENCHMARK.fCPUUsage = (float)((double)BENCHMARK.dwRenderTotal / (double)lElapsed) * 100.0f;
                  
                 BENCHMARK.wMin = UINT32_MAX;
                 BENCHMARK.wMax = 0;
                 BENCHMARK.dwTotal = 0;
+                BENCHMARK.dwRenderTotal = 0;
                 BENCHMARK.wIterations = __DISP0_CFG_ITERATION_CNT__;
                 
                 BENCHMARK.lTimestamp = arm_2d_helper_get_system_timestamp();
