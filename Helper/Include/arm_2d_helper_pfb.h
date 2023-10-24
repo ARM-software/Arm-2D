@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        19. Oct 2023
- * $Revision:    V.1.6.3
+ * $Date:        24. Oct 2023
+ * $Revision:    V.1.6.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -590,8 +590,8 @@ ARM_PRIVATE(
         arm_2d_tile_t               tPFBTile;
         arm_2d_size_t               tFrameSize;
         uint32_t                    wPFBPixelCount;
-        bool                        bFirstIteration;
-        bool                        bIsRegionChanged;
+        //bool                        bFirstIteration;
+        //bool                        bIsRegionChanged;
         uint8_t                     chPT;
         struct {
             uint8_t                 bIsNewFrame                 : 1;
@@ -600,7 +600,8 @@ ARM_PRIVATE(
             uint8_t                 bHideNavigationLayer        : 1;
             uint8_t                 bIsDryRun                   : 1;    //!< A flag to indicate whether the first iteration was a dry run
             uint8_t                 bNoAdditionalDirtyRegionList: 1;
-            uint8_t                                             : 2;
+            uint8_t                 bFirstIteration             : 1;
+            uint8_t                 bIsRegionChanged            : 1;
         };
         uint16_t                    hwFreePFBCount;
         arm_2d_pfb_t               *ptCurrent;
@@ -610,7 +611,7 @@ ARM_PRIVATE(
             arm_2d_pfb_t           *ptHead;
             arm_2d_pfb_t           *ptTail;
         }FlushFIFO;
-        arm_2d_tile_t               *ptFrameBuffer;
+        arm_2d_tile_t              *ptFrameBuffer;
     } Adapter;
 )
 
