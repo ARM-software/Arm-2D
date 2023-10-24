@@ -699,340 +699,347 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l00590" name="l00590"></a><span class="lineno">  590</span>        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a>               tPFBTile;</div>
 <div class="line"><a id="l00591" name="l00591"></a><span class="lineno">  591</span>        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a>               tFrameSize;</div>
 <div class="line"><a id="l00592" name="l00592"></a><span class="lineno">  592</span>        uint32_t                    wPFBPixelCount;</div>
-<div class="line"><a id="l00593" name="l00593"></a><span class="lineno">  593</span>        <span class="comment">//bool                        bFirstIteration;</span></div>
-<div class="line"><a id="l00594" name="l00594"></a><span class="lineno">  594</span>        <span class="comment">//bool                        bIsRegionChanged;</span></div>
-<div class="line"><a id="l00595" name="l00595"></a><span class="lineno">  595</span>        uint8_t                     chPT;</div>
-<div class="line"><a id="l00596" name="l00596"></a><span class="lineno">  596</span>        <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00597" name="l00597"></a><span class="lineno">  597</span>            uint8_t                 bIsNewFrame                 : 1;</div>
-<div class="line"><a id="l00598" name="l00598"></a><span class="lineno">  598</span>            uint8_t                 bIsFlushRequested           : 1;</div>
-<div class="line"><a id="l00599" name="l00599"></a><span class="lineno">  599</span>            uint8_t                 bIgnoreLowLevelFlush        : 1;</div>
-<div class="line"><a id="l00600" name="l00600"></a><span class="lineno">  600</span>            uint8_t                 bHideNavigationLayer        : 1;</div>
-<div class="line"><a id="l00601" name="l00601"></a><span class="lineno">  601</span>            uint8_t                 bIsDryRun                   : 1;    <span class="comment">//!&lt; A flag to indicate whether the first iteration was a dry run</span></div>
-<div class="line"><a id="l00602" name="l00602"></a><span class="lineno">  602</span>            uint8_t                 bNoAdditionalDirtyRegionList: 1;</div>
-<div class="line"><a id="l00603" name="l00603"></a><span class="lineno">  603</span>            uint8_t                 bFirstIteration             : 1;</div>
-<div class="line"><a id="l00604" name="l00604"></a><span class="lineno">  604</span>            uint8_t                 bIsRegionChanged            : 1;</div>
-<div class="line"><a id="l00605" name="l00605"></a><span class="lineno">  605</span>        };</div>
-<div class="line"><a id="l00606" name="l00606"></a><span class="lineno">  606</span>        uint16_t                    hwFreePFBCount;</div>
-<div class="line"><a id="l00607" name="l00607"></a><span class="lineno">  607</span>        <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a>               *ptCurrent;</div>
-<div class="line"><a id="l00608" name="l00608"></a><span class="lineno">  608</span>        <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a>               *ptFreeList;</div>
-<div class="line"><a id="l00609" name="l00609"></a><span class="lineno">  609</span>        <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a>               *ptFlushing;</div>
-<div class="line"><a id="l00610" name="l00610"></a><span class="lineno">  610</span>        <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00611" name="l00611"></a><span class="lineno">  611</span>            <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a>           *ptHead;</div>
-<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>            <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a>           *ptTail;</div>
-<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span>        }FlushFIFO;</div>
-<div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span>        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a>              *ptFrameBuffer;</div>
-<div class="line"><a id="l00615" name="l00615"></a><span class="lineno">  615</span>    } Adapter;</div>
-<div class="line"><a id="l00616" name="l00616"></a><span class="lineno"><a class="line" href="group__gHelper.html">  616</a></span>)</div>
-<div class="line"><a id="l00617" name="l00617"></a><span class="lineno">  617</span> </div>
-<div class="line"><a id="l00618" name="l00618"></a><span class="lineno"><a class="line" href="group__gHelper.html">  618</a></span>    <span class="keyword">struct</span> {</div>
-<div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span>        int64_t lTimestamp;                                     <span class="comment">//!&lt; PLEASE DO NOT USE</span></div>
-<div class="line"><a id="l00620" name="l00620"></a><span class="lineno">  620</span>        int32_t nTotalCycle;                                    <span class="comment">//!&lt; cycles used by drawing </span></div>
-<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span>        int32_t nRenderingCycle;                                <span class="comment">//!&lt; cycles used in LCD flushing</span></div>
-<div class="line"><a id="l00622" name="l00622"></a><span class="lineno"><a class="line" href="group__gHelper.html#ab51adb462aa0b2046bd8e6a119bc6fc3">  622</a></span>    } <a class="code hl_variable" href="group__gHelper.html#ab51adb462aa0b2046bd8e6a119bc6fc3" title="performance statistics">Statistics</a>;                                               <span class="comment">//!&lt; performance statistics</span></div>
-<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span> </div>
-<div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span>};</div>
-<div class="line"><a id="l00625" name="l00625"></a><span class="lineno">  625</span><span class="comment"></span> </div>
-<div class="line"><a id="l00626" name="l00626"></a><span class="lineno">  626</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00627" name="l00627"></a><span class="lineno">  627</span><span class="comment"> * \brief the Transform helper control block</span></div>
-<div class="line"><a id="l00628" name="l00628"></a><span class="lineno">  628</span><span class="comment"> * </span></div>
-<div class="line"><a id="l00629" name="l00629"></a><span class="lineno">  629</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00630" name="l00630"></a><span class="lineno"><a class="line" href="group__gHelper.html">  630</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00631" name="l00631"></a><span class="lineno">  631</span> </div>
-<div class="line"><a id="l00632" name="l00632"></a><span class="lineno">  632</span>    <span class="keywordtype">float</span> fAngle;</div>
-<div class="line"><a id="l00633" name="l00633"></a><span class="lineno">  633</span>    <span class="keywordtype">float</span> fScale;</div>
-<div class="line"><a id="l00634" name="l00634"></a><span class="lineno">  634</span> </div>
-<div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span>ARM_PRIVATE(</div>
-<div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span>    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__region__list__item__t" title="the node of a region list">arm_2d_region_list_item_t</a> tDirtyRegions[2];</div>
-<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span>    <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__t" title="the base class for operations with only a target tile">arm_2d_op_t</a> *ptTransformOP;</div>
+<div class="line"><a id="l00593" name="l00593"></a><span class="lineno">  593</span>        uint8_t                     chPT;</div>
+<div class="line"><a id="l00594" name="l00594"></a><span class="lineno">  594</span>        <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00595" name="l00595"></a><span class="lineno">  595</span>            uint8_t                 bIsNewFrame                 : 1;</div>
+<div class="line"><a id="l00596" name="l00596"></a><span class="lineno">  596</span>            uint8_t                 bIsFlushRequested           : 1;</div>
+<div class="line"><a id="l00597" name="l00597"></a><span class="lineno">  597</span>            uint8_t                 bIgnoreLowLevelFlush        : 1;</div>
+<div class="line"><a id="l00598" name="l00598"></a><span class="lineno">  598</span>            uint8_t                 bHideNavigationLayer        : 1;</div>
+<div class="line"><a id="l00599" name="l00599"></a><span class="lineno">  599</span>            uint8_t                 bIsDryRun                   : 1;    <span class="comment">//!&lt; A flag to indicate whether the first iteration was a dry run</span></div>
+<div class="line"><a id="l00600" name="l00600"></a><span class="lineno">  600</span>            uint8_t                 bNoAdditionalDirtyRegionList: 1;</div>
+<div class="line"><a id="l00601" name="l00601"></a><span class="lineno">  601</span>            uint8_t                 bFirstIteration             : 1;</div>
+<div class="line"><a id="l00602" name="l00602"></a><span class="lineno">  602</span>            uint8_t                 bIsRegionChanged            : 1;</div>
+<div class="line"><a id="l00603" name="l00603"></a><span class="lineno">  603</span>        };</div>
+<div class="line"><a id="l00604" name="l00604"></a><span class="lineno">  604</span>        uint16_t                    hwFreePFBCount;</div>
+<div class="line"><a id="l00605" name="l00605"></a><span class="lineno">  605</span>        uintptr_t                   pFPBPoolAvailable;</div>
+<div class="line"><a id="l00606" name="l00606"></a><span class="lineno">  606</span>        <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a>               *ptCurrent;</div>
+<div class="line"><a id="l00607" name="l00607"></a><span class="lineno">  607</span>        <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a>               *ptFreeList;</div>
+<div class="line"><a id="l00608" name="l00608"></a><span class="lineno">  608</span>        <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a>               *ptFlushing;</div>
+<div class="line"><a id="l00609" name="l00609"></a><span class="lineno">  609</span>        <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00610" name="l00610"></a><span class="lineno">  610</span>            <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a>           *ptHead;</div>
+<div class="line"><a id="l00611" name="l00611"></a><span class="lineno">  611</span>            <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a>           *ptTail;</div>
+<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>        }FlushFIFO;</div>
+<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span>        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a>              *ptFrameBuffer;</div>
+<div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span>    } Adapter;</div>
+<div class="line"><a id="l00615" name="l00615"></a><span class="lineno"><a class="line" href="group__gHelper.html">  615</a></span>)</div>
+<div class="line"><a id="l00616" name="l00616"></a><span class="lineno">  616</span> </div>
+<div class="line"><a id="l00617" name="l00617"></a><span class="lineno"><a class="line" href="group__gHelper.html">  617</a></span>    <span class="keyword">struct</span> {</div>
+<div class="line"><a id="l00618" name="l00618"></a><span class="lineno">  618</span>        int64_t lTimestamp;                                     <span class="comment">//!&lt; PLEASE DO NOT USE</span></div>
+<div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span>        int32_t nTotalCycle;                                    <span class="comment">//!&lt; cycles used by drawing </span></div>
+<div class="line"><a id="l00620" name="l00620"></a><span class="lineno">  620</span>        int32_t nRenderingCycle;                                <span class="comment">//!&lt; cycles used in LCD flushing</span></div>
+<div class="line"><a id="l00621" name="l00621"></a><span class="lineno"><a class="line" href="group__gHelper.html#ab51adb462aa0b2046bd8e6a119bc6fc3">  621</a></span>    } <a class="code hl_variable" href="group__gHelper.html#ab51adb462aa0b2046bd8e6a119bc6fc3" title="performance statistics">Statistics</a>;                                               <span class="comment">//!&lt; performance statistics</span></div>
+<div class="line"><a id="l00622" name="l00622"></a><span class="lineno">  622</span> </div>
+<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span>};</div>
+<div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span><span class="comment"></span> </div>
+<div class="line"><a id="l00625" name="l00625"></a><span class="lineno">  625</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00626" name="l00626"></a><span class="lineno">  626</span><span class="comment"> * \brief the Transform helper control block</span></div>
+<div class="line"><a id="l00627" name="l00627"></a><span class="lineno">  627</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00628" name="l00628"></a><span class="lineno">  628</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00629" name="l00629"></a><span class="lineno"><a class="line" href="group__gHelper.html">  629</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00630" name="l00630"></a><span class="lineno">  630</span> </div>
+<div class="line"><a id="l00631" name="l00631"></a><span class="lineno">  631</span>    <span class="keywordtype">float</span> fAngle;</div>
+<div class="line"><a id="l00632" name="l00632"></a><span class="lineno">  632</span>    <span class="keywordtype">float</span> fScale;</div>
+<div class="line"><a id="l00633" name="l00633"></a><span class="lineno">  633</span> </div>
+<div class="line"><a id="l00634" name="l00634"></a><span class="lineno">  634</span>ARM_PRIVATE(</div>
+<div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span>    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__region__list__item__t" title="the node of a region list">arm_2d_region_list_item_t</a> tDirtyRegions[2];</div>
+<div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span>    <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__t" title="the base class for operations with only a target tile">arm_2d_op_t</a> *ptTransformOP;</div>
+<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span> </div>
 <div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span> </div>
-<div class="line"><a id="l00639" name="l00639"></a><span class="lineno">  639</span> </div>
-<div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span>    <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00641" name="l00641"></a><span class="lineno">  641</span>        <span class="keywordtype">float</span> fValue;</div>
-<div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span>        <span class="keywordtype">float</span> fStep;</div>
-<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span>    } Angle;</div>
-<div class="line"><a id="l00644" name="l00644"></a><span class="lineno">  644</span> </div>
-<div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span>    <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00646" name="l00646"></a><span class="lineno">  646</span>        <span class="keywordtype">float</span> fValue;</div>
-<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span>        <span class="keywordtype">float</span> fStep;</div>
-<div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span>    } Scale;</div>
-<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span> </div>
-<div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span>    <span class="keywordtype">bool</span> bNeedUpdate;</div>
-<div class="line"><a id="l00651" name="l00651"></a><span class="lineno"><a class="line" href="group__gHelper.html">  651</a></span>)</div>
-<div class="line"><a id="l00652" name="l00652"></a><span class="lineno">  652</span> </div>
-<div class="line"><a id="l00653" name="l00653"></a><span class="lineno">  653</span>} <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a>;</div>
-<div class="line"><a id="l00654" name="l00654"></a><span class="lineno">  654</span> </div>
-<div class="line"><a id="l00655" name="l00655"></a><span class="lineno">  655</span><span class="comment">/*============================ GLOBAL VARIABLES ==============================*/</span></div>
-<div class="line"><a id="l00656" name="l00656"></a><span class="lineno">  656</span><span class="comment">/*============================ LOCAL VARIABLES ===============================*/</span></div>
-<div class="line"><a id="l00657" name="l00657"></a><span class="lineno">  657</span><span class="comment">/*============================ PROTOTYPES ====================================*/</span></div>
-<div class="line"><a id="l00658" name="l00658"></a><span class="lineno">  658</span><span class="comment"></span> </div>
-<div class="line"><a id="l00659" name="l00659"></a><span class="lineno">  659</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span><span class="comment"> * \brief initialize pfb helper service</span></div>
-<div class="line"><a id="l00661" name="l00661"></a><span class="lineno">  661</span><span class="comment"> * \param[in] ptThis the pfb helper control block</span></div>
-<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span><span class="comment"> * \param[in] ptCFG the configuration </span></div>
-<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span><span class="comment"> * \return arm_2d_err_t the process result</span></div>
-<div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span><span class="keyword">extern</span></div>
-<div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span>ARM_NONNULL(1,2)</div>
-<div class="line"><a id="l00667" name="l00667"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99">  667</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c" title="the error code for arm-2d (minimal integer: int8_t)">arm_2d_err_t</a> <a class="code hl_function" href="group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99" title="initialize pfb helper service">arm_2d_helper_pfb_init</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis, </div>
-<div class="line"><a id="l00668" name="l00668"></a><span class="lineno">  668</span>                                    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__cfg__t" title="PFB Helper configuration.">arm_2d_helper_pfb_cfg_t</a> *ptCFG);</div>
-<div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span><span class="comment"></span> </div>
-<div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span><span class="comment"> * \brief get the display (screen) region</span></div>
-<div class="line"><a id="l00672" name="l00672"></a><span class="lineno">  672</span><span class="comment"> * \param[in] ptThis the pfb helper control block</span></div>
-<div class="line"><a id="l00673" name="l00673"></a><span class="lineno">  673</span><span class="comment"> * \return arm_2d_region_t the screen region</span></div>
-<div class="line"><a id="l00674" name="l00674"></a><span class="lineno">  674</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span>extern</div>
-<div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00677" name="l00677"></a><span class="lineno"><a class="line" href="group__gHelper.html#gaf0eef5fe61bc11d102d2180025ada377">  677</a></span><a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> <a class="code hl_function" href="group__gHelper.html#gaf0eef5fe61bc11d102d2180025ada377" title="get the display (screen) region">arm_2d_helper_pfb_get_display_area</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis);</div>
-<div class="line"><a id="l00678" name="l00678"></a><span class="lineno">  678</span><span class="comment"></span> </div>
-<div class="line"><a id="l00679" name="l00679"></a><span class="lineno">  679</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00680" name="l00680"></a><span class="lineno">  680</span><span class="comment"> * \brief get the absolute location for a given location on the target tile canvas</span></div>
-<div class="line"><a id="l00681" name="l00681"></a><span class="lineno">  681</span><span class="comment"> * \param[in] ptTile the target tile</span></div>
-<div class="line"><a id="l00682" name="l00682"></a><span class="lineno">  682</span><span class="comment"> * \param[in] tLocation the location on the target tile canvas</span></div>
-<div class="line"><a id="l00683" name="l00683"></a><span class="lineno">  683</span><span class="comment"> * \return arm_2d_location_t the absolute location on a (virtual) screen or on </span></div>
-<div class="line"><a id="l00684" name="l00684"></a><span class="lineno">  684</span><span class="comment"> *         a root tile canvas</span></div>
-<div class="line"><a id="l00685" name="l00685"></a><span class="lineno">  685</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span>extern</div>
-<div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00688" name="l00688"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga6cd67bb1aebd25b730cd1b52d762a18f">  688</a></span><a class="code hl_struct" href="group__gKernel.html#structarm__2d__location__t" title="a type for coordinates (integer)">arm_2d_location_t</a> <a class="code hl_function" href="group__gHelper.html#ga6cd67bb1aebd25b730cd1b52d762a18f" title="get the absolute location for a given location on the target tile canvas">arm_2d_helper_pfb_get_absolute_location</a>(  </div>
-<div class="line"><a id="l00689" name="l00689"></a><span class="lineno">  689</span>                                                    <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTile, </div>
-<div class="line"><a id="l00690" name="l00690"></a><span class="lineno">  690</span>                                                    <a class="code hl_struct" href="group__gKernel.html#structarm__2d__location__t" title="a type for coordinates (integer)">arm_2d_location_t</a> tLocation);</div>
-<div class="line"><a id="l00691" name="l00691"></a><span class="lineno">  691</span><span class="comment"></span> </div>
-<div class="line"><a id="l00692" name="l00692"></a><span class="lineno">  692</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00693" name="l00693"></a><span class="lineno">  693</span><span class="comment"> * \brief get the inital PFB size</span></div>
-<div class="line"><a id="l00694" name="l00694"></a><span class="lineno">  694</span><span class="comment"> * \param[in] ptThis the pfb helper control block</span></div>
-<div class="line"><a id="l00695" name="l00695"></a><span class="lineno">  695</span><span class="comment"> * \return arm_2d_size_t the PFB size</span></div>
-<div class="line"><a id="l00696" name="l00696"></a><span class="lineno">  696</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00697" name="l00697"></a><span class="lineno">  697</span>extern</div>
-<div class="line"><a id="l00698" name="l00698"></a><span class="lineno">  698</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00699" name="l00699"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga012c85746e62c16a38f5253fd9d0dca6">  699</a></span><a class="code hl_struct" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> <a class="code hl_function" href="group__gHelper.html#ga012c85746e62c16a38f5253fd9d0dca6" title="get the inital PFB size">arm_2d_helper_pfb_get_pfb_size</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis);</div>
-<div class="line"><a id="l00700" name="l00700"></a><span class="lineno">  700</span><span class="comment"></span> </div>
-<div class="line"><a id="l00701" name="l00701"></a><span class="lineno">  701</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00702" name="l00702"></a><span class="lineno">  702</span><span class="comment"> * \brief the task function for pfb helper</span></div>
-<div class="line"><a id="l00703" name="l00703"></a><span class="lineno">  703</span><span class="comment"> * \param[in] ptThis an initialised PFB helper control block</span></div>
-<div class="line"><a id="l00704" name="l00704"></a><span class="lineno">  704</span><span class="comment"> * \param[in] ptDirtyRegions a region list pending for refresh, NULL means </span></div>
-<div class="line"><a id="l00705" name="l00705"></a><span class="lineno">  705</span><span class="comment"> *                           refreshing the whole screen</span></div>
-<div class="line"><a id="l00706" name="l00706"></a><span class="lineno">  706</span><span class="comment"> * \retval arm_fsm_rt_cpl complete refreshing one frame</span></div>
-<div class="line"><a id="l00707" name="l00707"></a><span class="lineno">  707</span><span class="comment"> * \retval arm_fsm_rt_on_going the refreshing work is on-going</span></div>
-<div class="line"><a id="l00708" name="l00708"></a><span class="lineno">  708</span><span class="comment"> * \retval arm_fsm_rt_wait_for_obj user&#39;s OnDrawing event handler wants to wait </span></div>
-<div class="line"><a id="l00709" name="l00709"></a><span class="lineno">  709</span><span class="comment"> *                                 for some objects, e.g. semaphore etc.</span></div>
-<div class="line"><a id="l00710" name="l00710"></a><span class="lineno">  710</span><span class="comment"> * \retval &lt;0 An error is detected</span></div>
-<div class="line"><a id="l00711" name="l00711"></a><span class="lineno">  711</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00712" name="l00712"></a><span class="lineno">  712</span>extern</div>
-<div class="line"><a id="l00713" name="l00713"></a><span class="lineno">  713</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00714" name="l00714"></a><span class="lineno"><a class="line" href="group__gHelper.html#gab2cec999a9abbf7ec42bed4352a17b88">  714</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gHelper.html#gab2cec999a9abbf7ec42bed4352a17b88" title="the task function for pfb helper">arm_2d_helper_pfb_task</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis, </div>
-<div class="line"><a id="l00715" name="l00715"></a><span class="lineno">  715</span>                                    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__region__list__item__t" title="the node of a region list">arm_2d_region_list_item_t</a> *ptDirtyRegions);</div>
-<div class="line"><a id="l00716" name="l00716"></a><span class="lineno">  716</span><span class="comment"></span> </div>
-<div class="line"><a id="l00717" name="l00717"></a><span class="lineno">  717</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00718" name="l00718"></a><span class="lineno">  718</span><span class="comment"> * \brief flush the FPB FIFO </span></div>
-<div class="line"><a id="l00719" name="l00719"></a><span class="lineno">  719</span><span class="comment"> * \note This function is THREAD-SAFE</span></div>
-<div class="line"><a id="l00720" name="l00720"></a><span class="lineno">  720</span><span class="comment"> * \note For normal usage, please DO NOT use this function unless you know what</span></div>
-<div class="line"><a id="l00721" name="l00721"></a><span class="lineno">  721</span><span class="comment"> *       you are doing.</span></div>
-<div class="line"><a id="l00722" name="l00722"></a><span class="lineno">  722</span><span class="comment"> * \param[in] ptThis an initialised PFB helper control block</span></div>
-<div class="line"><a id="l00723" name="l00723"></a><span class="lineno">  723</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00724" name="l00724"></a><span class="lineno">  724</span>extern</div>
-<div class="line"><a id="l00725" name="l00725"></a><span class="lineno">  725</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00726" name="l00726"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga8568abf593c04cf6df798e82cda60676">  726</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga8568abf593c04cf6df798e82cda60676" title="flush the FPB FIFO">arm_2d_helper_pfb_flush</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis);</div>
-<div class="line"><a id="l00727" name="l00727"></a><span class="lineno">  727</span><span class="comment"></span> </div>
-<div class="line"><a id="l00728" name="l00728"></a><span class="lineno">  728</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00729" name="l00729"></a><span class="lineno">  729</span><span class="comment"> * \brief hide the navigation layer</span></div>
-<div class="line"><a id="l00730" name="l00730"></a><span class="lineno">  730</span><span class="comment"> * \param[in] ptThis an initialised PFB helper control block</span></div>
-<div class="line"><a id="l00731" name="l00731"></a><span class="lineno">  731</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00732" name="l00732"></a><span class="lineno">  732</span>extern</div>
-<div class="line"><a id="l00733" name="l00733"></a><span class="lineno">  733</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00734" name="l00734"></a><span class="lineno"><a class="line" href="group__gHelper.html#gaec3341ff7e558eb0665d1d2819e0e92c">  734</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#gaec3341ff7e558eb0665d1d2819e0e92c" title="hide the navigation layer">arm_2d_helper_hide_navigation_layer</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis);</div>
-<div class="line"><a id="l00735" name="l00735"></a><span class="lineno">  735</span><span class="comment"></span> </div>
-<div class="line"><a id="l00736" name="l00736"></a><span class="lineno">  736</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00737" name="l00737"></a><span class="lineno">  737</span><span class="comment"> * \brief show the navigation layer if there is a valid one</span></div>
-<div class="line"><a id="l00738" name="l00738"></a><span class="lineno">  738</span><span class="comment"> * \param[in] ptThis an initialised PFB helper control block</span></div>
-<div class="line"><a id="l00739" name="l00739"></a><span class="lineno">  739</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00740" name="l00740"></a><span class="lineno">  740</span>extern</div>
-<div class="line"><a id="l00741" name="l00741"></a><span class="lineno">  741</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00742" name="l00742"></a><span class="lineno"><a class="line" href="group__gHelper.html#gae7a2c6d89191cfa51b06b24e06a89e2e">  742</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#gae7a2c6d89191cfa51b06b24e06a89e2e" title="show the navigation layer if there is a valid one">arm_2d_helper_show_navigation_layer</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis);</div>
-<div class="line"><a id="l00743" name="l00743"></a><span class="lineno">  743</span> </div>
-<div class="line"><a id="l00744" name="l00744"></a><span class="lineno">  744</span><span class="comment"></span> </div>
-<div class="line"><a id="l00745" name="l00745"></a><span class="lineno">  745</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00746" name="l00746"></a><span class="lineno">  746</span><span class="comment"> * \brief ignore the low level PFB flushing only</span></div>
-<div class="line"><a id="l00747" name="l00747"></a><span class="lineno">  747</span><span class="comment"> * \param[in] ptThis an initialised PFB helper control block</span></div>
-<div class="line"><a id="l00748" name="l00748"></a><span class="lineno">  748</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00749" name="l00749"></a><span class="lineno">  749</span>extern</div>
-<div class="line"><a id="l00750" name="l00750"></a><span class="lineno">  750</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00751" name="l00751"></a><span class="lineno"><a class="line" href="group__gHelper.html#gae4017b79661fe52c6115894ebcb094a5">  751</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#gae4017b79661fe52c6115894ebcb094a5" title="ignore the low level PFB flushing only">arm_2d_helper_ignore_low_level_flush</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis);</div>
-<div class="line"><a id="l00752" name="l00752"></a><span class="lineno">  752</span><span class="comment"></span> </div>
-<div class="line"><a id="l00753" name="l00753"></a><span class="lineno">  753</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00754" name="l00754"></a><span class="lineno">  754</span><span class="comment"> * \brief resume the low level PFB flushing</span></div>
-<div class="line"><a id="l00755" name="l00755"></a><span class="lineno">  755</span><span class="comment"> * \param[in] ptThis an initialised PFB helper control block</span></div>
-<div class="line"><a id="l00756" name="l00756"></a><span class="lineno">  756</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00757" name="l00757"></a><span class="lineno">  757</span>extern</div>
-<div class="line"><a id="l00758" name="l00758"></a><span class="lineno">  758</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00759" name="l00759"></a><span class="lineno"><a class="line" href="group__gHelper.html#gaeaaf0ab9b565da461334ed9fc641cc8d">  759</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#gaeaaf0ab9b565da461334ed9fc641cc8d" title="resume the low level PFB flushing">arm_2d_helper_resume_low_level_flush</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis);</div>
-<div class="line"><a id="l00760" name="l00760"></a><span class="lineno">  760</span> </div>
-<div class="line"><a id="l00761" name="l00761"></a><span class="lineno">  761</span><span class="comment"></span> </div>
-<div class="line"><a id="l00762" name="l00762"></a><span class="lineno">  762</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00763" name="l00763"></a><span class="lineno">  763</span><span class="comment"> * \brief update PFB dependency (event handlers)</span></div>
-<div class="line"><a id="l00764" name="l00764"></a><span class="lineno">  764</span><span class="comment"> * \param[in] ptThis the PFB helper control block</span></div>
-<div class="line"><a id="l00765" name="l00765"></a><span class="lineno">  765</span><span class="comment"> * \param[in] chMask the bit mask for event handlers</span></div>
-<div class="line"><a id="l00766" name="l00766"></a><span class="lineno">  766</span><span class="comment"> * \param[in] ptDependency the new dependency description</span></div>
-<div class="line"><a id="l00767" name="l00767"></a><span class="lineno">  767</span><span class="comment"> * \return arm_2d_err_t the process result</span></div>
-<div class="line"><a id="l00768" name="l00768"></a><span class="lineno">  768</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00769" name="l00769"></a><span class="lineno">  769</span>extern</div>
-<div class="line"><a id="l00770" name="l00770"></a><span class="lineno">  770</span>ARM_NONNULL(1,3)</div>
-<div class="line"><a id="l00771" name="l00771"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga7f397129da5a5d78a7dd6325ab3405ef">  771</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c" title="the error code for arm-2d (minimal integer: int8_t)">arm_2d_err_t</a> <a class="code hl_function" href="group__gHelper.html#ga7f397129da5a5d78a7dd6325ab3405ef" title="update PFB dependency (event handlers)">arm_2d_helper_pfb_update_dependency</a>(</div>
-<div class="line"><a id="l00772" name="l00772"></a><span class="lineno">  772</span>                            <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis, </div>
-<div class="line"><a id="l00773" name="l00773"></a><span class="lineno">  773</span>                            uint_fast8_t chMask,</div>
-<div class="line"><a id="l00774" name="l00774"></a><span class="lineno">  774</span>                            const <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__dependency__t" title="The PFB Helper Service Dependency.">arm_2d_helper_pfb_dependency_t</a> *ptDependency);</div>
-<div class="line"><a id="l00775" name="l00775"></a><span class="lineno">  775</span><span class="comment"></span> </div>
-<div class="line"><a id="l00776" name="l00776"></a><span class="lineno">  776</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00777" name="l00777"></a><span class="lineno">  777</span><span class="comment"> *  \brief tell PFB helper that a low level LCD flushing work is complete</span></div>
-<div class="line"><a id="l00778" name="l00778"></a><span class="lineno">  778</span><span class="comment"> *  \note This function is THREAD-SAFE, You can call this function asynchronously, </span></div>
-<div class="line"><a id="l00779" name="l00779"></a><span class="lineno">  779</span><span class="comment"> *        e.g.</span></div>
-<div class="line"><a id="l00780" name="l00780"></a><span class="lineno">  780</span><span class="comment"> *        - A ISR to indicate DMA-transfer complete event or </span></div>
-<div class="line"><a id="l00781" name="l00781"></a><span class="lineno">  781</span><span class="comment"> *        - A different Thread</span></div>
-<div class="line"><a id="l00782" name="l00782"></a><span class="lineno">  782</span><span class="comment"> *  \param[in] ptThis the PFB helper control block</span></div>
-<div class="line"><a id="l00783" name="l00783"></a><span class="lineno">  783</span><span class="comment"> *  \param[in] ptPFB the used PFB block</span></div>
-<div class="line"><a id="l00784" name="l00784"></a><span class="lineno">  784</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00785" name="l00785"></a><span class="lineno">  785</span>extern</div>
-<div class="line"><a id="l00786" name="l00786"></a><span class="lineno">  786</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00787" name="l00787"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga3f0e4fb8101686169c244a22c2e85f84">  787</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga3f0e4fb8101686169c244a22c2e85f84" title="tell PFB helper that a low level LCD flushing work is complete">__arm_2d_helper_pfb_report_rendering_complete</a>( <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis,</div>
-<div class="line"><a id="l00788" name="l00788"></a><span class="lineno">  788</span>                                                    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> *ptPFB);</div>
-<div class="line"><a id="l00789" name="l00789"></a><span class="lineno">  789</span><span class="comment"></span> </div>
-<div class="line"><a id="l00790" name="l00790"></a><span class="lineno">  790</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00791" name="l00791"></a><span class="lineno">  791</span><span class="comment"> * \brief swap the high and low bytes for each rgb16 pixel</span></div>
-<div class="line"><a id="l00792" name="l00792"></a><span class="lineno">  792</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00793" name="l00793"></a><span class="lineno">  793</span><span class="comment"> * \param[in] phwBuffer the pixel buffer</span></div>
-<div class="line"><a id="l00794" name="l00794"></a><span class="lineno">  794</span><span class="comment"> * \note the phwBuffer MUST aligned to half-word addresses</span></div>
-<div class="line"><a id="l00795" name="l00795"></a><span class="lineno">  795</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00796" name="l00796"></a><span class="lineno">  796</span><span class="comment"> * \param[in] wSize the number of pixels</span></div>
-<div class="line"><a id="l00797" name="l00797"></a><span class="lineno">  797</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00798" name="l00798"></a><span class="lineno">  798</span>extern</div>
-<div class="line"><a id="l00799" name="l00799"></a><span class="lineno"><a class="line" href="group__gHelper.html#gaf07a91ddd548e926e5737db7800c16a9">  799</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#gaf07a91ddd548e926e5737db7800c16a9" title="swap the high and low bytes for each rgb16 pixel">arm_2d_helper_swap_rgb16</a>(uint16_t *phwBuffer, uint32_t wCount);</div>
-<div class="line"><a id="l00800" name="l00800"></a><span class="lineno">  800</span><span class="comment"></span> </div>
-<div class="line"><a id="l00801" name="l00801"></a><span class="lineno">  801</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00802" name="l00802"></a><span class="lineno">  802</span><span class="comment"> * \brief try to get a PFB block from the pool</span></div>
-<div class="line"><a id="l00803" name="l00803"></a><span class="lineno">  803</span><span class="comment"> * \param[in] ptThis the PFB helper control block</span></div>
-<div class="line"><a id="l00804" name="l00804"></a><span class="lineno">  804</span><span class="comment"> * \retval NULL the pool is empty</span></div>
-<div class="line"><a id="l00805" name="l00805"></a><span class="lineno">  805</span><span class="comment"> * \retval !NULL a valid pfb block </span></div>
-<div class="line"><a id="l00806" name="l00806"></a><span class="lineno">  806</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00807" name="l00807"></a><span class="lineno">  807</span>extern</div>
-<div class="line"><a id="l00808" name="l00808"></a><span class="lineno">  808</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00809" name="l00809"></a><span class="lineno"><a class="line" href="group__gHelper.html#gaa7855ac916c44e531c4c8a9c5ec0e69e">  809</a></span><a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> *<a class="code hl_function" href="group__gHelper.html#gaa7855ac916c44e531c4c8a9c5ec0e69e" title="try to get a PFB block from the pool">__arm_2d_helper_pfb_new</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis);</div>
-<div class="line"><a id="l00810" name="l00810"></a><span class="lineno">  810</span><span class="comment"></span> </div>
-<div class="line"><a id="l00811" name="l00811"></a><span class="lineno">  811</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00812" name="l00812"></a><span class="lineno">  812</span><span class="comment"> * \brief free a PFB block to the pool</span></div>
-<div class="line"><a id="l00813" name="l00813"></a><span class="lineno">  813</span><span class="comment"> * \param[in] ptThis the PFB helper control block</span></div>
-<div class="line"><a id="l00814" name="l00814"></a><span class="lineno">  814</span><span class="comment"> * \param[in] ptPFB the target PFB block</span></div>
-<div class="line"><a id="l00815" name="l00815"></a><span class="lineno">  815</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00816" name="l00816"></a><span class="lineno">  816</span>extern</div>
-<div class="line"><a id="l00817" name="l00817"></a><span class="lineno">  817</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00818" name="l00818"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga484b485061778cdf3a2cb4373374c581">  818</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga484b485061778cdf3a2cb4373374c581" title="free a PFB block to the pool">__arm_2d_helper_pfb_free</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis, <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> *ptPFB);</div>
-<div class="line"><a id="l00819" name="l00819"></a><span class="lineno">  819</span><span class="comment"></span> </div>
-<div class="line"><a id="l00820" name="l00820"></a><span class="lineno">  820</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00821" name="l00821"></a><span class="lineno">  821</span><span class="comment"> * \brief initialize a given transform helper</span></div>
-<div class="line"><a id="l00822" name="l00822"></a><span class="lineno">  822</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
-<div class="line"><a id="l00823" name="l00823"></a><span class="lineno">  823</span><span class="comment"> * \param[in] ptTransformOP the target transform OP, NULL is not accepted.</span></div>
-<div class="line"><a id="l00824" name="l00824"></a><span class="lineno">  824</span><span class="comment"> * \param[in] fAngleStep the minimal acceptable angle change. </span></div>
-<div class="line"><a id="l00825" name="l00825"></a><span class="lineno">  825</span><span class="comment"> * \param[in] fScaleStep the minimal acceptable scale ratio change.</span></div>
-<div class="line"><a id="l00826" name="l00826"></a><span class="lineno">  826</span><span class="comment"> * \param[in] ppDirtyRegionList the address of the dirty region list</span></div>
-<div class="line"><a id="l00827" name="l00827"></a><span class="lineno">  827</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00828" name="l00828"></a><span class="lineno">  828</span>extern</div>
-<div class="line"><a id="l00829" name="l00829"></a><span class="lineno">  829</span>ARM_NONNULL(1,2,5)</div>
-<div class="line"><a id="l00830" name="l00830"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga076b6793e3c2fc6f1ef064ca700f667e">  830</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga076b6793e3c2fc6f1ef064ca700f667e" title="initialize a given transform helper">arm_2d_helper_transform_init</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis,</div>
-<div class="line"><a id="l00831" name="l00831"></a><span class="lineno">  831</span>                                  <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__t" title="the base class for operations with only a target tile">arm_2d_op_t</a> *ptTransformOP,</div>
-<div class="line"><a id="l00832" name="l00832"></a><span class="lineno">  832</span>                                  <span class="keywordtype">float</span> fAngleStep,</div>
-<div class="line"><a id="l00833" name="l00833"></a><span class="lineno">  833</span>                                  <span class="keywordtype">float</span> fScaleStep,</div>
-<div class="line"><a id="l00834" name="l00834"></a><span class="lineno">  834</span>                                  <a class="code hl_struct" href="group__gHelper.html#structarm__2d__region__list__item__t" title="the node of a region list">arm_2d_region_list_item_t</a> **ppDirtyRegionList);</div>
-<div class="line"><a id="l00835" name="l00835"></a><span class="lineno">  835</span><span class="comment"></span> </div>
-<div class="line"><a id="l00836" name="l00836"></a><span class="lineno">  836</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00837" name="l00837"></a><span class="lineno">  837</span><span class="comment"> * \brief the on-frame-begin event handler for a given transform helper</span></div>
-<div class="line"><a id="l00838" name="l00838"></a><span class="lineno">  838</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
-<div class="line"><a id="l00839" name="l00839"></a><span class="lineno">  839</span><span class="comment"> * \note Usually this event handler should be insert the frame start event </span></div>
-<div class="line"><a id="l00840" name="l00840"></a><span class="lineno">  840</span><span class="comment"> *       handler of a target scene.</span></div>
-<div class="line"><a id="l00841" name="l00841"></a><span class="lineno">  841</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00842" name="l00842"></a><span class="lineno">  842</span>extern</div>
-<div class="line"><a id="l00843" name="l00843"></a><span class="lineno">  843</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00844" name="l00844"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga646d1178b70b862d77d33f8a84173f0e">  844</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga646d1178b70b862d77d33f8a84173f0e" title="the on-frame-begin event handler for a given transform helper">arm_2d_helper_transform_on_frame_begin</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis);</div>
-<div class="line"><a id="l00845" name="l00845"></a><span class="lineno">  845</span><span class="comment"></span> </div>
-<div class="line"><a id="l00846" name="l00846"></a><span class="lineno">  846</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00847" name="l00847"></a><span class="lineno">  847</span><span class="comment"> * \brief update a given transform helper with new values</span></div>
-<div class="line"><a id="l00848" name="l00848"></a><span class="lineno">  848</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
-<div class="line"><a id="l00849" name="l00849"></a><span class="lineno">  849</span><span class="comment"> * \param[in] fAngle the new angle value</span></div>
-<div class="line"><a id="l00850" name="l00850"></a><span class="lineno">  850</span><span class="comment"> * \param[in] fScale the new scale ratio</span></div>
-<div class="line"><a id="l00851" name="l00851"></a><span class="lineno">  851</span><span class="comment"> * \note The new value is only accepted when the change between the old value </span></div>
-<div class="line"><a id="l00852" name="l00852"></a><span class="lineno">  852</span><span class="comment"> *       and the new value is larger than the minimal acceptable mount.</span></div>
-<div class="line"><a id="l00853" name="l00853"></a><span class="lineno">  853</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00854" name="l00854"></a><span class="lineno">  854</span>extern</div>
-<div class="line"><a id="l00855" name="l00855"></a><span class="lineno">  855</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00856" name="l00856"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga95877df905d15cebfc4abb41b9ecdc6a">  856</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga95877df905d15cebfc4abb41b9ecdc6a" title="update a given transform helper with new values">arm_2d_helper_transform_update_value</a>(  <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis,</div>
-<div class="line"><a id="l00857" name="l00857"></a><span class="lineno">  857</span>                                            <span class="keywordtype">float</span> fAngle,</div>
-<div class="line"><a id="l00858" name="l00858"></a><span class="lineno">  858</span>                                            <span class="keywordtype">float</span> fScale);</div>
-<div class="line"><a id="l00859" name="l00859"></a><span class="lineno">  859</span><span class="comment"></span> </div>
-<div class="line"><a id="l00860" name="l00860"></a><span class="lineno">  860</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00861" name="l00861"></a><span class="lineno">  861</span><span class="comment"> * \brief update the dirty region after a transform operation</span></div>
-<div class="line"><a id="l00862" name="l00862"></a><span class="lineno">  862</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
-<div class="line"><a id="l00863" name="l00863"></a><span class="lineno">  863</span><span class="comment"> * \param[in] bIsNewFrame whether this is a new frame</span></div>
-<div class="line"><a id="l00864" name="l00864"></a><span class="lineno">  864</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00865" name="l00865"></a><span class="lineno">  865</span>extern</div>
-<div class="line"><a id="l00866" name="l00866"></a><span class="lineno">  866</span>ARM_NONNULL(1,2)</div>
-<div class="line"><a id="l00867" name="l00867"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga938c015954225ba6c149498b984accce">  867</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga938c015954225ba6c149498b984accce" title="update the dirty region after a transform operation">arm_2d_helper_transform_update_dirty_regions</a>(</div>
-<div class="line"><a id="l00868" name="l00868"></a><span class="lineno">  868</span>                                    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis,</div>
-<div class="line"><a id="l00869" name="l00869"></a><span class="lineno">  869</span>                                    const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptCanvas,</div>
-<div class="line"><a id="l00870" name="l00870"></a><span class="lineno">  870</span>                                    <span class="keywordtype">bool</span> bIsNewFrame);</div>
-<div class="line"><a id="l00871" name="l00871"></a><span class="lineno">  871</span> </div>
-<div class="line"><a id="l00872" name="l00872"></a><span class="lineno">  872</span><span class="comment"></span> </div>
-<div class="line"><a id="l00873" name="l00873"></a><span class="lineno">  873</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00874" name="l00874"></a><span class="lineno">  874</span><span class="comment"> * \brief initialize the 3FB (direct mode) service</span></div>
-<div class="line"><a id="l00875" name="l00875"></a><span class="lineno">  875</span><span class="comment"> * \param[in] ptThis the helper service control block</span></div>
-<div class="line"><a id="l00876" name="l00876"></a><span class="lineno">  876</span><span class="comment"> * \param[in] ptCFG the configuration structure</span></div>
-<div class="line"><a id="l00877" name="l00877"></a><span class="lineno">  877</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00878" name="l00878"></a><span class="lineno">  878</span>extern</div>
-<div class="line"><a id="l00879" name="l00879"></a><span class="lineno">  879</span>ARM_NONNULL(1,2)</div>
-<div class="line"><a id="l00880" name="l00880"></a><span class="lineno"><a class="line" href="group__gHelper.html#gab11ea71792f3e2427678f902134e7f87">  880</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#gab11ea71792f3e2427678f902134e7f87" title="initialize the 3FB (direct mode) service">arm_2d_helper_3fb_init</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__3fb__t" title="the control block of the 3FB (direct mode) service">arm_2d_helper_3fb_t</a> *ptThis, </div>
-<div class="line"><a id="l00881" name="l00881"></a><span class="lineno">  881</span>                            const <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__3fb__cfg__t" title="configuration structure for the 3fb (direct mode) helper service">arm_2d_helper_3fb_cfg_t</a> *ptCFG);</div>
-<div class="line"><a id="l00882" name="l00882"></a><span class="lineno">  882</span> </div>
-<div class="line"><a id="l00883" name="l00883"></a><span class="lineno">  883</span><span class="comment"></span> </div>
-<div class="line"><a id="l00884" name="l00884"></a><span class="lineno">  884</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00885" name="l00885"></a><span class="lineno">  885</span><span class="comment"> * \brief report the copy-completion event to the 3FB (direct mode) service</span></div>
-<div class="line"><a id="l00886" name="l00886"></a><span class="lineno">  886</span><span class="comment"> * \note see function __arm_2d_helper_3fb_dma_copy for details</span></div>
-<div class="line"><a id="l00887" name="l00887"></a><span class="lineno">  887</span><span class="comment"> * \param[in] ptThis the helper service control block</span></div>
-<div class="line"><a id="l00888" name="l00888"></a><span class="lineno">  888</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00889" name="l00889"></a><span class="lineno">  889</span>extern</div>
-<div class="line"><a id="l00890" name="l00890"></a><span class="lineno">  890</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00891" name="l00891"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga87c6ea76937f2b83b2e787a24c82c9fb">  891</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga87c6ea76937f2b83b2e787a24c82c9fb" title="report the copy-completion event to the 3FB (direct mode) service">arm_2d_helper_3fb_report_dma_copy_complete</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__3fb__t" title="the control block of the 3FB (direct mode) service">arm_2d_helper_3fb_t</a> *ptThis);</div>
-<div class="line"><a id="l00892" name="l00892"></a><span class="lineno">  892</span><span class="comment"></span> </div>
-<div class="line"><a id="l00893" name="l00893"></a><span class="lineno">  893</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00894" name="l00894"></a><span class="lineno">  894</span><span class="comment"> * \brief get a pointer for flushing</span></div>
-<div class="line"><a id="l00895" name="l00895"></a><span class="lineno">  895</span><span class="comment"> * \param[in] ptThis the helper service control block</span></div>
-<div class="line"><a id="l00896" name="l00896"></a><span class="lineno">  896</span><span class="comment"> * \return void * the address of a framebuffer</span></div>
-<div class="line"><a id="l00897" name="l00897"></a><span class="lineno">  897</span><span class="comment"> * </span></div>
-<div class="line"><a id="l00898" name="l00898"></a><span class="lineno">  898</span><span class="comment"> * \note please only call this function when on vsync event.</span></div>
-<div class="line"><a id="l00899" name="l00899"></a><span class="lineno">  899</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00900" name="l00900"></a><span class="lineno">  900</span>extern</div>
-<div class="line"><a id="l00901" name="l00901"></a><span class="lineno">  901</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00902" name="l00902"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga94384cabe58f5ddc6d8be92349f5ff99">  902</a></span><span class="keywordtype">void</span> * <a class="code hl_function" href="group__gHelper.html#ga94384cabe58f5ddc6d8be92349f5ff99" title="get a pointer for flushing">arm_2d_helper_3fb_get_flush_pointer</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__3fb__t" title="the control block of the 3FB (direct mode) service">arm_2d_helper_3fb_t</a> *ptThis);</div>
-<div class="line"><a id="l00903" name="l00903"></a><span class="lineno">  903</span><span class="comment"></span> </div>
-<div class="line"><a id="l00904" name="l00904"></a><span class="lineno">  904</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00905" name="l00905"></a><span class="lineno">  905</span><span class="comment"> * \brief please do NOT use this function. It is used by the display adapter.</span></div>
+<div class="line"><a id="l00639" name="l00639"></a><span class="lineno">  639</span>    <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span>        <span class="keywordtype">float</span> fValue;</div>
+<div class="line"><a id="l00641" name="l00641"></a><span class="lineno">  641</span>        <span class="keywordtype">float</span> fStep;</div>
+<div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span>    } Angle;</div>
+<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span> </div>
+<div class="line"><a id="l00644" name="l00644"></a><span class="lineno">  644</span>    <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span>        <span class="keywordtype">float</span> fValue;</div>
+<div class="line"><a id="l00646" name="l00646"></a><span class="lineno">  646</span>        <span class="keywordtype">float</span> fStep;</div>
+<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span>    } Scale;</div>
+<div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span> </div>
+<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span>    <span class="keywordtype">bool</span> bNeedUpdate;</div>
+<div class="line"><a id="l00650" name="l00650"></a><span class="lineno"><a class="line" href="group__gHelper.html">  650</a></span>)</div>
+<div class="line"><a id="l00651" name="l00651"></a><span class="lineno">  651</span> </div>
+<div class="line"><a id="l00652" name="l00652"></a><span class="lineno">  652</span>} <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a>;</div>
+<div class="line"><a id="l00653" name="l00653"></a><span class="lineno">  653</span> </div>
+<div class="line"><a id="l00654" name="l00654"></a><span class="lineno">  654</span><span class="comment">/*============================ GLOBAL VARIABLES ==============================*/</span></div>
+<div class="line"><a id="l00655" name="l00655"></a><span class="lineno">  655</span><span class="comment">/*============================ LOCAL VARIABLES ===============================*/</span></div>
+<div class="line"><a id="l00656" name="l00656"></a><span class="lineno">  656</span><span class="comment">/*============================ PROTOTYPES ====================================*/</span></div>
+<div class="line"><a id="l00657" name="l00657"></a><span class="lineno">  657</span><span class="comment"></span> </div>
+<div class="line"><a id="l00658" name="l00658"></a><span class="lineno">  658</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00659" name="l00659"></a><span class="lineno">  659</span><span class="comment"> * \brief initialize pfb helper service</span></div>
+<div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span><span class="comment"> * \param[in] ptThis the pfb helper control block</span></div>
+<div class="line"><a id="l00661" name="l00661"></a><span class="lineno">  661</span><span class="comment"> * \param[in] ptCFG the configuration </span></div>
+<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span><span class="comment"> * \return arm_2d_err_t the process result</span></div>
+<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span><span class="keyword">extern</span></div>
+<div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span>ARM_NONNULL(1,2)</div>
+<div class="line"><a id="l00666" name="l00666"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99">  666</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c" title="the error code for arm-2d (minimal integer: int8_t)">arm_2d_err_t</a> <a class="code hl_function" href="group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99" title="initialize pfb helper service">arm_2d_helper_pfb_init</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis, </div>
+<div class="line"><a id="l00667" name="l00667"></a><span class="lineno">  667</span>                                    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__cfg__t" title="PFB Helper configuration.">arm_2d_helper_pfb_cfg_t</a> *ptCFG);<span class="comment"></span></div>
+<div class="line"><a id="l00668" name="l00668"></a><span class="lineno">  668</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span><span class="comment"> * \brief uninitialize pfb helper service</span></div>
+<div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span><span class="comment"> * \param[in] ptThis the pfb helper control block</span></div>
+<div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span><span class="comment"> * \return none</span></div>
+<div class="line"><a id="l00672" name="l00672"></a><span class="lineno">  672</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00673" name="l00673"></a><span class="lineno">  673</span>extern</div>
+<div class="line"><a id="l00674" name="l00674"></a><span class="lineno">  674</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00675" name="l00675"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga91b9bd95fab04511c9ae935757341d6f">  675</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga91b9bd95fab04511c9ae935757341d6f" title="uninitialize pfb helper service">arm_2d_helper_pfb_deinit</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis);</div>
+<div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span><span class="comment"></span> </div>
+<div class="line"><a id="l00677" name="l00677"></a><span class="lineno">  677</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00678" name="l00678"></a><span class="lineno">  678</span><span class="comment"> * \brief get the display (screen) region</span></div>
+<div class="line"><a id="l00679" name="l00679"></a><span class="lineno">  679</span><span class="comment"> * \param[in] ptThis the pfb helper control block</span></div>
+<div class="line"><a id="l00680" name="l00680"></a><span class="lineno">  680</span><span class="comment"> * \return arm_2d_region_t the screen region</span></div>
+<div class="line"><a id="l00681" name="l00681"></a><span class="lineno">  681</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00682" name="l00682"></a><span class="lineno">  682</span>extern</div>
+<div class="line"><a id="l00683" name="l00683"></a><span class="lineno">  683</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00684" name="l00684"></a><span class="lineno"><a class="line" href="group__gHelper.html#gaf0eef5fe61bc11d102d2180025ada377">  684</a></span><a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> <a class="code hl_function" href="group__gHelper.html#gaf0eef5fe61bc11d102d2180025ada377" title="get the display (screen) region">arm_2d_helper_pfb_get_display_area</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis);</div>
+<div class="line"><a id="l00685" name="l00685"></a><span class="lineno">  685</span><span class="comment"></span> </div>
+<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span><span class="comment"> * \brief get the absolute location for a given location on the target tile canvas</span></div>
+<div class="line"><a id="l00688" name="l00688"></a><span class="lineno">  688</span><span class="comment"> * \param[in] ptTile the target tile</span></div>
+<div class="line"><a id="l00689" name="l00689"></a><span class="lineno">  689</span><span class="comment"> * \param[in] tLocation the location on the target tile canvas</span></div>
+<div class="line"><a id="l00690" name="l00690"></a><span class="lineno">  690</span><span class="comment"> * \return arm_2d_location_t the absolute location on a (virtual) screen or on </span></div>
+<div class="line"><a id="l00691" name="l00691"></a><span class="lineno">  691</span><span class="comment"> *         a root tile canvas</span></div>
+<div class="line"><a id="l00692" name="l00692"></a><span class="lineno">  692</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00693" name="l00693"></a><span class="lineno">  693</span>extern</div>
+<div class="line"><a id="l00694" name="l00694"></a><span class="lineno">  694</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00695" name="l00695"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga6cd67bb1aebd25b730cd1b52d762a18f">  695</a></span><a class="code hl_struct" href="group__gKernel.html#structarm__2d__location__t" title="a type for coordinates (integer)">arm_2d_location_t</a> <a class="code hl_function" href="group__gHelper.html#ga6cd67bb1aebd25b730cd1b52d762a18f" title="get the absolute location for a given location on the target tile canvas">arm_2d_helper_pfb_get_absolute_location</a>(  </div>
+<div class="line"><a id="l00696" name="l00696"></a><span class="lineno">  696</span>                                                    <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTile, </div>
+<div class="line"><a id="l00697" name="l00697"></a><span class="lineno">  697</span>                                                    <a class="code hl_struct" href="group__gKernel.html#structarm__2d__location__t" title="a type for coordinates (integer)">arm_2d_location_t</a> tLocation);</div>
+<div class="line"><a id="l00698" name="l00698"></a><span class="lineno">  698</span><span class="comment"></span> </div>
+<div class="line"><a id="l00699" name="l00699"></a><span class="lineno">  699</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00700" name="l00700"></a><span class="lineno">  700</span><span class="comment"> * \brief get the inital PFB size</span></div>
+<div class="line"><a id="l00701" name="l00701"></a><span class="lineno">  701</span><span class="comment"> * \param[in] ptThis the pfb helper control block</span></div>
+<div class="line"><a id="l00702" name="l00702"></a><span class="lineno">  702</span><span class="comment"> * \return arm_2d_size_t the PFB size</span></div>
+<div class="line"><a id="l00703" name="l00703"></a><span class="lineno">  703</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00704" name="l00704"></a><span class="lineno">  704</span>extern</div>
+<div class="line"><a id="l00705" name="l00705"></a><span class="lineno">  705</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00706" name="l00706"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga012c85746e62c16a38f5253fd9d0dca6">  706</a></span><a class="code hl_struct" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> <a class="code hl_function" href="group__gHelper.html#ga012c85746e62c16a38f5253fd9d0dca6" title="get the inital PFB size">arm_2d_helper_pfb_get_pfb_size</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis);</div>
+<div class="line"><a id="l00707" name="l00707"></a><span class="lineno">  707</span><span class="comment"></span> </div>
+<div class="line"><a id="l00708" name="l00708"></a><span class="lineno">  708</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00709" name="l00709"></a><span class="lineno">  709</span><span class="comment"> * \brief the task function for pfb helper</span></div>
+<div class="line"><a id="l00710" name="l00710"></a><span class="lineno">  710</span><span class="comment"> * \param[in] ptThis an initialised PFB helper control block</span></div>
+<div class="line"><a id="l00711" name="l00711"></a><span class="lineno">  711</span><span class="comment"> * \param[in] ptDirtyRegions a region list pending for refresh, NULL means </span></div>
+<div class="line"><a id="l00712" name="l00712"></a><span class="lineno">  712</span><span class="comment"> *                           refreshing the whole screen</span></div>
+<div class="line"><a id="l00713" name="l00713"></a><span class="lineno">  713</span><span class="comment"> * \retval arm_fsm_rt_cpl complete refreshing one frame</span></div>
+<div class="line"><a id="l00714" name="l00714"></a><span class="lineno">  714</span><span class="comment"> * \retval arm_fsm_rt_on_going the refreshing work is on-going</span></div>
+<div class="line"><a id="l00715" name="l00715"></a><span class="lineno">  715</span><span class="comment"> * \retval arm_fsm_rt_wait_for_obj user&#39;s OnDrawing event handler wants to wait </span></div>
+<div class="line"><a id="l00716" name="l00716"></a><span class="lineno">  716</span><span class="comment"> *                                 for some objects, e.g. semaphore etc.</span></div>
+<div class="line"><a id="l00717" name="l00717"></a><span class="lineno">  717</span><span class="comment"> * \retval &lt;0 An error is detected</span></div>
+<div class="line"><a id="l00718" name="l00718"></a><span class="lineno">  718</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00719" name="l00719"></a><span class="lineno">  719</span>extern</div>
+<div class="line"><a id="l00720" name="l00720"></a><span class="lineno">  720</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00721" name="l00721"></a><span class="lineno"><a class="line" href="group__gHelper.html#gab2cec999a9abbf7ec42bed4352a17b88">  721</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gHelper.html#gab2cec999a9abbf7ec42bed4352a17b88" title="the task function for pfb helper">arm_2d_helper_pfb_task</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis, </div>
+<div class="line"><a id="l00722" name="l00722"></a><span class="lineno">  722</span>                                    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__region__list__item__t" title="the node of a region list">arm_2d_region_list_item_t</a> *ptDirtyRegions);</div>
+<div class="line"><a id="l00723" name="l00723"></a><span class="lineno">  723</span><span class="comment"></span> </div>
+<div class="line"><a id="l00724" name="l00724"></a><span class="lineno">  724</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00725" name="l00725"></a><span class="lineno">  725</span><span class="comment"> * \brief flush the FPB FIFO </span></div>
+<div class="line"><a id="l00726" name="l00726"></a><span class="lineno">  726</span><span class="comment"> * \note This function is THREAD-SAFE</span></div>
+<div class="line"><a id="l00727" name="l00727"></a><span class="lineno">  727</span><span class="comment"> * \note For normal usage, please DO NOT use this function unless you know what</span></div>
+<div class="line"><a id="l00728" name="l00728"></a><span class="lineno">  728</span><span class="comment"> *       you are doing.</span></div>
+<div class="line"><a id="l00729" name="l00729"></a><span class="lineno">  729</span><span class="comment"> * \param[in] ptThis an initialised PFB helper control block</span></div>
+<div class="line"><a id="l00730" name="l00730"></a><span class="lineno">  730</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00731" name="l00731"></a><span class="lineno">  731</span>extern</div>
+<div class="line"><a id="l00732" name="l00732"></a><span class="lineno">  732</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00733" name="l00733"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga8568abf593c04cf6df798e82cda60676">  733</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga8568abf593c04cf6df798e82cda60676" title="flush the FPB FIFO">arm_2d_helper_pfb_flush</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis);</div>
+<div class="line"><a id="l00734" name="l00734"></a><span class="lineno">  734</span><span class="comment"></span> </div>
+<div class="line"><a id="l00735" name="l00735"></a><span class="lineno">  735</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00736" name="l00736"></a><span class="lineno">  736</span><span class="comment"> * \brief hide the navigation layer</span></div>
+<div class="line"><a id="l00737" name="l00737"></a><span class="lineno">  737</span><span class="comment"> * \param[in] ptThis an initialised PFB helper control block</span></div>
+<div class="line"><a id="l00738" name="l00738"></a><span class="lineno">  738</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00739" name="l00739"></a><span class="lineno">  739</span>extern</div>
+<div class="line"><a id="l00740" name="l00740"></a><span class="lineno">  740</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00741" name="l00741"></a><span class="lineno"><a class="line" href="group__gHelper.html#gaec3341ff7e558eb0665d1d2819e0e92c">  741</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#gaec3341ff7e558eb0665d1d2819e0e92c" title="hide the navigation layer">arm_2d_helper_hide_navigation_layer</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis);</div>
+<div class="line"><a id="l00742" name="l00742"></a><span class="lineno">  742</span><span class="comment"></span> </div>
+<div class="line"><a id="l00743" name="l00743"></a><span class="lineno">  743</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00744" name="l00744"></a><span class="lineno">  744</span><span class="comment"> * \brief show the navigation layer if there is a valid one</span></div>
+<div class="line"><a id="l00745" name="l00745"></a><span class="lineno">  745</span><span class="comment"> * \param[in] ptThis an initialised PFB helper control block</span></div>
+<div class="line"><a id="l00746" name="l00746"></a><span class="lineno">  746</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00747" name="l00747"></a><span class="lineno">  747</span>extern</div>
+<div class="line"><a id="l00748" name="l00748"></a><span class="lineno">  748</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00749" name="l00749"></a><span class="lineno"><a class="line" href="group__gHelper.html#gae7a2c6d89191cfa51b06b24e06a89e2e">  749</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#gae7a2c6d89191cfa51b06b24e06a89e2e" title="show the navigation layer if there is a valid one">arm_2d_helper_show_navigation_layer</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis);</div>
+<div class="line"><a id="l00750" name="l00750"></a><span class="lineno">  750</span> </div>
+<div class="line"><a id="l00751" name="l00751"></a><span class="lineno">  751</span><span class="comment"></span> </div>
+<div class="line"><a id="l00752" name="l00752"></a><span class="lineno">  752</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00753" name="l00753"></a><span class="lineno">  753</span><span class="comment"> * \brief ignore the low level PFB flushing only</span></div>
+<div class="line"><a id="l00754" name="l00754"></a><span class="lineno">  754</span><span class="comment"> * \param[in] ptThis an initialised PFB helper control block</span></div>
+<div class="line"><a id="l00755" name="l00755"></a><span class="lineno">  755</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00756" name="l00756"></a><span class="lineno">  756</span>extern</div>
+<div class="line"><a id="l00757" name="l00757"></a><span class="lineno">  757</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00758" name="l00758"></a><span class="lineno"><a class="line" href="group__gHelper.html#gae4017b79661fe52c6115894ebcb094a5">  758</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#gae4017b79661fe52c6115894ebcb094a5" title="ignore the low level PFB flushing only">arm_2d_helper_ignore_low_level_flush</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis);</div>
+<div class="line"><a id="l00759" name="l00759"></a><span class="lineno">  759</span><span class="comment"></span> </div>
+<div class="line"><a id="l00760" name="l00760"></a><span class="lineno">  760</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00761" name="l00761"></a><span class="lineno">  761</span><span class="comment"> * \brief resume the low level PFB flushing</span></div>
+<div class="line"><a id="l00762" name="l00762"></a><span class="lineno">  762</span><span class="comment"> * \param[in] ptThis an initialised PFB helper control block</span></div>
+<div class="line"><a id="l00763" name="l00763"></a><span class="lineno">  763</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00764" name="l00764"></a><span class="lineno">  764</span>extern</div>
+<div class="line"><a id="l00765" name="l00765"></a><span class="lineno">  765</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00766" name="l00766"></a><span class="lineno"><a class="line" href="group__gHelper.html#gaeaaf0ab9b565da461334ed9fc641cc8d">  766</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#gaeaaf0ab9b565da461334ed9fc641cc8d" title="resume the low level PFB flushing">arm_2d_helper_resume_low_level_flush</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis);</div>
+<div class="line"><a id="l00767" name="l00767"></a><span class="lineno">  767</span> </div>
+<div class="line"><a id="l00768" name="l00768"></a><span class="lineno">  768</span><span class="comment"></span> </div>
+<div class="line"><a id="l00769" name="l00769"></a><span class="lineno">  769</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00770" name="l00770"></a><span class="lineno">  770</span><span class="comment"> * \brief update PFB dependency (event handlers)</span></div>
+<div class="line"><a id="l00771" name="l00771"></a><span class="lineno">  771</span><span class="comment"> * \param[in] ptThis the PFB helper control block</span></div>
+<div class="line"><a id="l00772" name="l00772"></a><span class="lineno">  772</span><span class="comment"> * \param[in] chMask the bit mask for event handlers</span></div>
+<div class="line"><a id="l00773" name="l00773"></a><span class="lineno">  773</span><span class="comment"> * \param[in] ptDependency the new dependency description</span></div>
+<div class="line"><a id="l00774" name="l00774"></a><span class="lineno">  774</span><span class="comment"> * \return arm_2d_err_t the process result</span></div>
+<div class="line"><a id="l00775" name="l00775"></a><span class="lineno">  775</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00776" name="l00776"></a><span class="lineno">  776</span>extern</div>
+<div class="line"><a id="l00777" name="l00777"></a><span class="lineno">  777</span>ARM_NONNULL(1,3)</div>
+<div class="line"><a id="l00778" name="l00778"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga7f397129da5a5d78a7dd6325ab3405ef">  778</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c" title="the error code for arm-2d (minimal integer: int8_t)">arm_2d_err_t</a> <a class="code hl_function" href="group__gHelper.html#ga7f397129da5a5d78a7dd6325ab3405ef" title="update PFB dependency (event handlers)">arm_2d_helper_pfb_update_dependency</a>(</div>
+<div class="line"><a id="l00779" name="l00779"></a><span class="lineno">  779</span>                            <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis, </div>
+<div class="line"><a id="l00780" name="l00780"></a><span class="lineno">  780</span>                            uint_fast8_t chMask,</div>
+<div class="line"><a id="l00781" name="l00781"></a><span class="lineno">  781</span>                            const <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__dependency__t" title="The PFB Helper Service Dependency.">arm_2d_helper_pfb_dependency_t</a> *ptDependency);</div>
+<div class="line"><a id="l00782" name="l00782"></a><span class="lineno">  782</span><span class="comment"></span> </div>
+<div class="line"><a id="l00783" name="l00783"></a><span class="lineno">  783</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00784" name="l00784"></a><span class="lineno">  784</span><span class="comment"> *  \brief tell PFB helper that a low level LCD flushing work is complete</span></div>
+<div class="line"><a id="l00785" name="l00785"></a><span class="lineno">  785</span><span class="comment"> *  \note This function is THREAD-SAFE, You can call this function asynchronously, </span></div>
+<div class="line"><a id="l00786" name="l00786"></a><span class="lineno">  786</span><span class="comment"> *        e.g.</span></div>
+<div class="line"><a id="l00787" name="l00787"></a><span class="lineno">  787</span><span class="comment"> *        - A ISR to indicate DMA-transfer complete event or </span></div>
+<div class="line"><a id="l00788" name="l00788"></a><span class="lineno">  788</span><span class="comment"> *        - A different Thread</span></div>
+<div class="line"><a id="l00789" name="l00789"></a><span class="lineno">  789</span><span class="comment"> *  \param[in] ptThis the PFB helper control block</span></div>
+<div class="line"><a id="l00790" name="l00790"></a><span class="lineno">  790</span><span class="comment"> *  \param[in] ptPFB the used PFB block</span></div>
+<div class="line"><a id="l00791" name="l00791"></a><span class="lineno">  791</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00792" name="l00792"></a><span class="lineno">  792</span>extern</div>
+<div class="line"><a id="l00793" name="l00793"></a><span class="lineno">  793</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00794" name="l00794"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga3f0e4fb8101686169c244a22c2e85f84">  794</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga3f0e4fb8101686169c244a22c2e85f84" title="tell PFB helper that a low level LCD flushing work is complete">__arm_2d_helper_pfb_report_rendering_complete</a>( <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis,</div>
+<div class="line"><a id="l00795" name="l00795"></a><span class="lineno">  795</span>                                                    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> *ptPFB);</div>
+<div class="line"><a id="l00796" name="l00796"></a><span class="lineno">  796</span><span class="comment"></span> </div>
+<div class="line"><a id="l00797" name="l00797"></a><span class="lineno">  797</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00798" name="l00798"></a><span class="lineno">  798</span><span class="comment"> * \brief swap the high and low bytes for each rgb16 pixel</span></div>
+<div class="line"><a id="l00799" name="l00799"></a><span class="lineno">  799</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00800" name="l00800"></a><span class="lineno">  800</span><span class="comment"> * \param[in] phwBuffer the pixel buffer</span></div>
+<div class="line"><a id="l00801" name="l00801"></a><span class="lineno">  801</span><span class="comment"> * \note the phwBuffer MUST aligned to half-word addresses</span></div>
+<div class="line"><a id="l00802" name="l00802"></a><span class="lineno">  802</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00803" name="l00803"></a><span class="lineno">  803</span><span class="comment"> * \param[in] wSize the number of pixels</span></div>
+<div class="line"><a id="l00804" name="l00804"></a><span class="lineno">  804</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00805" name="l00805"></a><span class="lineno">  805</span>extern</div>
+<div class="line"><a id="l00806" name="l00806"></a><span class="lineno"><a class="line" href="group__gHelper.html#gaf07a91ddd548e926e5737db7800c16a9">  806</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#gaf07a91ddd548e926e5737db7800c16a9" title="swap the high and low bytes for each rgb16 pixel">arm_2d_helper_swap_rgb16</a>(uint16_t *phwBuffer, uint32_t wCount);</div>
+<div class="line"><a id="l00807" name="l00807"></a><span class="lineno">  807</span><span class="comment"></span> </div>
+<div class="line"><a id="l00808" name="l00808"></a><span class="lineno">  808</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00809" name="l00809"></a><span class="lineno">  809</span><span class="comment"> * \brief try to get a PFB block from the pool</span></div>
+<div class="line"><a id="l00810" name="l00810"></a><span class="lineno">  810</span><span class="comment"> * \param[in] ptThis the PFB helper control block</span></div>
+<div class="line"><a id="l00811" name="l00811"></a><span class="lineno">  811</span><span class="comment"> * \retval NULL the pool is empty</span></div>
+<div class="line"><a id="l00812" name="l00812"></a><span class="lineno">  812</span><span class="comment"> * \retval !NULL a valid pfb block </span></div>
+<div class="line"><a id="l00813" name="l00813"></a><span class="lineno">  813</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00814" name="l00814"></a><span class="lineno">  814</span>extern</div>
+<div class="line"><a id="l00815" name="l00815"></a><span class="lineno">  815</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00816" name="l00816"></a><span class="lineno"><a class="line" href="group__gHelper.html#gaa7855ac916c44e531c4c8a9c5ec0e69e">  816</a></span><a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> *<a class="code hl_function" href="group__gHelper.html#gaa7855ac916c44e531c4c8a9c5ec0e69e" title="try to get a PFB block from the pool">__arm_2d_helper_pfb_new</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis);</div>
+<div class="line"><a id="l00817" name="l00817"></a><span class="lineno">  817</span><span class="comment"></span> </div>
+<div class="line"><a id="l00818" name="l00818"></a><span class="lineno">  818</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00819" name="l00819"></a><span class="lineno">  819</span><span class="comment"> * \brief free a PFB block to the pool</span></div>
+<div class="line"><a id="l00820" name="l00820"></a><span class="lineno">  820</span><span class="comment"> * \param[in] ptThis the PFB helper control block</span></div>
+<div class="line"><a id="l00821" name="l00821"></a><span class="lineno">  821</span><span class="comment"> * \param[in] ptPFB the target PFB block</span></div>
+<div class="line"><a id="l00822" name="l00822"></a><span class="lineno">  822</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00823" name="l00823"></a><span class="lineno">  823</span>extern</div>
+<div class="line"><a id="l00824" name="l00824"></a><span class="lineno">  824</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00825" name="l00825"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga484b485061778cdf3a2cb4373374c581">  825</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga484b485061778cdf3a2cb4373374c581" title="free a PFB block to the pool">__arm_2d_helper_pfb_free</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__t" title="the PFB helper control block">arm_2d_helper_pfb_t</a> *ptThis, <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> *ptPFB);</div>
+<div class="line"><a id="l00826" name="l00826"></a><span class="lineno">  826</span><span class="comment"></span> </div>
+<div class="line"><a id="l00827" name="l00827"></a><span class="lineno">  827</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00828" name="l00828"></a><span class="lineno">  828</span><span class="comment"> * \brief initialize a given transform helper</span></div>
+<div class="line"><a id="l00829" name="l00829"></a><span class="lineno">  829</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
+<div class="line"><a id="l00830" name="l00830"></a><span class="lineno">  830</span><span class="comment"> * \param[in] ptTransformOP the target transform OP, NULL is not accepted.</span></div>
+<div class="line"><a id="l00831" name="l00831"></a><span class="lineno">  831</span><span class="comment"> * \param[in] fAngleStep the minimal acceptable angle change. </span></div>
+<div class="line"><a id="l00832" name="l00832"></a><span class="lineno">  832</span><span class="comment"> * \param[in] fScaleStep the minimal acceptable scale ratio change.</span></div>
+<div class="line"><a id="l00833" name="l00833"></a><span class="lineno">  833</span><span class="comment"> * \param[in] ppDirtyRegionList the address of the dirty region list</span></div>
+<div class="line"><a id="l00834" name="l00834"></a><span class="lineno">  834</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00835" name="l00835"></a><span class="lineno">  835</span>extern</div>
+<div class="line"><a id="l00836" name="l00836"></a><span class="lineno">  836</span>ARM_NONNULL(1,2,5)</div>
+<div class="line"><a id="l00837" name="l00837"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga076b6793e3c2fc6f1ef064ca700f667e">  837</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga076b6793e3c2fc6f1ef064ca700f667e" title="initialize a given transform helper">arm_2d_helper_transform_init</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis,</div>
+<div class="line"><a id="l00838" name="l00838"></a><span class="lineno">  838</span>                                  <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__t" title="the base class for operations with only a target tile">arm_2d_op_t</a> *ptTransformOP,</div>
+<div class="line"><a id="l00839" name="l00839"></a><span class="lineno">  839</span>                                  <span class="keywordtype">float</span> fAngleStep,</div>
+<div class="line"><a id="l00840" name="l00840"></a><span class="lineno">  840</span>                                  <span class="keywordtype">float</span> fScaleStep,</div>
+<div class="line"><a id="l00841" name="l00841"></a><span class="lineno">  841</span>                                  <a class="code hl_struct" href="group__gHelper.html#structarm__2d__region__list__item__t" title="the node of a region list">arm_2d_region_list_item_t</a> **ppDirtyRegionList);</div>
+<div class="line"><a id="l00842" name="l00842"></a><span class="lineno">  842</span><span class="comment"></span> </div>
+<div class="line"><a id="l00843" name="l00843"></a><span class="lineno">  843</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00844" name="l00844"></a><span class="lineno">  844</span><span class="comment"> * \brief the on-frame-begin event handler for a given transform helper</span></div>
+<div class="line"><a id="l00845" name="l00845"></a><span class="lineno">  845</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
+<div class="line"><a id="l00846" name="l00846"></a><span class="lineno">  846</span><span class="comment"> * \note Usually this event handler should be insert the frame start event </span></div>
+<div class="line"><a id="l00847" name="l00847"></a><span class="lineno">  847</span><span class="comment"> *       handler of a target scene.</span></div>
+<div class="line"><a id="l00848" name="l00848"></a><span class="lineno">  848</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00849" name="l00849"></a><span class="lineno">  849</span>extern</div>
+<div class="line"><a id="l00850" name="l00850"></a><span class="lineno">  850</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00851" name="l00851"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga646d1178b70b862d77d33f8a84173f0e">  851</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga646d1178b70b862d77d33f8a84173f0e" title="the on-frame-begin event handler for a given transform helper">arm_2d_helper_transform_on_frame_begin</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis);</div>
+<div class="line"><a id="l00852" name="l00852"></a><span class="lineno">  852</span><span class="comment"></span> </div>
+<div class="line"><a id="l00853" name="l00853"></a><span class="lineno">  853</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00854" name="l00854"></a><span class="lineno">  854</span><span class="comment"> * \brief update a given transform helper with new values</span></div>
+<div class="line"><a id="l00855" name="l00855"></a><span class="lineno">  855</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
+<div class="line"><a id="l00856" name="l00856"></a><span class="lineno">  856</span><span class="comment"> * \param[in] fAngle the new angle value</span></div>
+<div class="line"><a id="l00857" name="l00857"></a><span class="lineno">  857</span><span class="comment"> * \param[in] fScale the new scale ratio</span></div>
+<div class="line"><a id="l00858" name="l00858"></a><span class="lineno">  858</span><span class="comment"> * \note The new value is only accepted when the change between the old value </span></div>
+<div class="line"><a id="l00859" name="l00859"></a><span class="lineno">  859</span><span class="comment"> *       and the new value is larger than the minimal acceptable mount.</span></div>
+<div class="line"><a id="l00860" name="l00860"></a><span class="lineno">  860</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00861" name="l00861"></a><span class="lineno">  861</span>extern</div>
+<div class="line"><a id="l00862" name="l00862"></a><span class="lineno">  862</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00863" name="l00863"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga95877df905d15cebfc4abb41b9ecdc6a">  863</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga95877df905d15cebfc4abb41b9ecdc6a" title="update a given transform helper with new values">arm_2d_helper_transform_update_value</a>(  <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis,</div>
+<div class="line"><a id="l00864" name="l00864"></a><span class="lineno">  864</span>                                            <span class="keywordtype">float</span> fAngle,</div>
+<div class="line"><a id="l00865" name="l00865"></a><span class="lineno">  865</span>                                            <span class="keywordtype">float</span> fScale);</div>
+<div class="line"><a id="l00866" name="l00866"></a><span class="lineno">  866</span><span class="comment"></span> </div>
+<div class="line"><a id="l00867" name="l00867"></a><span class="lineno">  867</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00868" name="l00868"></a><span class="lineno">  868</span><span class="comment"> * \brief update the dirty region after a transform operation</span></div>
+<div class="line"><a id="l00869" name="l00869"></a><span class="lineno">  869</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
+<div class="line"><a id="l00870" name="l00870"></a><span class="lineno">  870</span><span class="comment"> * \param[in] bIsNewFrame whether this is a new frame</span></div>
+<div class="line"><a id="l00871" name="l00871"></a><span class="lineno">  871</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00872" name="l00872"></a><span class="lineno">  872</span>extern</div>
+<div class="line"><a id="l00873" name="l00873"></a><span class="lineno">  873</span>ARM_NONNULL(1,2)</div>
+<div class="line"><a id="l00874" name="l00874"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga938c015954225ba6c149498b984accce">  874</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga938c015954225ba6c149498b984accce" title="update the dirty region after a transform operation">arm_2d_helper_transform_update_dirty_regions</a>(</div>
+<div class="line"><a id="l00875" name="l00875"></a><span class="lineno">  875</span>                                    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis,</div>
+<div class="line"><a id="l00876" name="l00876"></a><span class="lineno">  876</span>                                    const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptCanvas,</div>
+<div class="line"><a id="l00877" name="l00877"></a><span class="lineno">  877</span>                                    <span class="keywordtype">bool</span> bIsNewFrame);</div>
+<div class="line"><a id="l00878" name="l00878"></a><span class="lineno">  878</span> </div>
+<div class="line"><a id="l00879" name="l00879"></a><span class="lineno">  879</span><span class="comment"></span> </div>
+<div class="line"><a id="l00880" name="l00880"></a><span class="lineno">  880</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00881" name="l00881"></a><span class="lineno">  881</span><span class="comment"> * \brief initialize the 3FB (direct mode) service</span></div>
+<div class="line"><a id="l00882" name="l00882"></a><span class="lineno">  882</span><span class="comment"> * \param[in] ptThis the helper service control block</span></div>
+<div class="line"><a id="l00883" name="l00883"></a><span class="lineno">  883</span><span class="comment"> * \param[in] ptCFG the configuration structure</span></div>
+<div class="line"><a id="l00884" name="l00884"></a><span class="lineno">  884</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00885" name="l00885"></a><span class="lineno">  885</span>extern</div>
+<div class="line"><a id="l00886" name="l00886"></a><span class="lineno">  886</span>ARM_NONNULL(1,2)</div>
+<div class="line"><a id="l00887" name="l00887"></a><span class="lineno"><a class="line" href="group__gHelper.html#gab11ea71792f3e2427678f902134e7f87">  887</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#gab11ea71792f3e2427678f902134e7f87" title="initialize the 3FB (direct mode) service">arm_2d_helper_3fb_init</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__3fb__t" title="the control block of the 3FB (direct mode) service">arm_2d_helper_3fb_t</a> *ptThis, </div>
+<div class="line"><a id="l00888" name="l00888"></a><span class="lineno">  888</span>                            const <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__3fb__cfg__t" title="configuration structure for the 3fb (direct mode) helper service">arm_2d_helper_3fb_cfg_t</a> *ptCFG);</div>
+<div class="line"><a id="l00889" name="l00889"></a><span class="lineno">  889</span> </div>
+<div class="line"><a id="l00890" name="l00890"></a><span class="lineno">  890</span><span class="comment"></span> </div>
+<div class="line"><a id="l00891" name="l00891"></a><span class="lineno">  891</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00892" name="l00892"></a><span class="lineno">  892</span><span class="comment"> * \brief report the copy-completion event to the 3FB (direct mode) service</span></div>
+<div class="line"><a id="l00893" name="l00893"></a><span class="lineno">  893</span><span class="comment"> * \note see function __arm_2d_helper_3fb_dma_copy for details</span></div>
+<div class="line"><a id="l00894" name="l00894"></a><span class="lineno">  894</span><span class="comment"> * \param[in] ptThis the helper service control block</span></div>
+<div class="line"><a id="l00895" name="l00895"></a><span class="lineno">  895</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00896" name="l00896"></a><span class="lineno">  896</span>extern</div>
+<div class="line"><a id="l00897" name="l00897"></a><span class="lineno">  897</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00898" name="l00898"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga87c6ea76937f2b83b2e787a24c82c9fb">  898</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga87c6ea76937f2b83b2e787a24c82c9fb" title="report the copy-completion event to the 3FB (direct mode) service">arm_2d_helper_3fb_report_dma_copy_complete</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__3fb__t" title="the control block of the 3FB (direct mode) service">arm_2d_helper_3fb_t</a> *ptThis);</div>
+<div class="line"><a id="l00899" name="l00899"></a><span class="lineno">  899</span><span class="comment"></span> </div>
+<div class="line"><a id="l00900" name="l00900"></a><span class="lineno">  900</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00901" name="l00901"></a><span class="lineno">  901</span><span class="comment"> * \brief get a pointer for flushing</span></div>
+<div class="line"><a id="l00902" name="l00902"></a><span class="lineno">  902</span><span class="comment"> * \param[in] ptThis the helper service control block</span></div>
+<div class="line"><a id="l00903" name="l00903"></a><span class="lineno">  903</span><span class="comment"> * \return void * the address of a framebuffer</span></div>
+<div class="line"><a id="l00904" name="l00904"></a><span class="lineno">  904</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00905" name="l00905"></a><span class="lineno">  905</span><span class="comment"> * \note please only call this function when on vsync event.</span></div>
 <div class="line"><a id="l00906" name="l00906"></a><span class="lineno">  906</span><span class="comment"> */</span></div>
 <div class="line"><a id="l00907" name="l00907"></a><span class="lineno">  907</span>extern</div>
-<div class="line"><a id="l00908" name="l00908"></a><span class="lineno">  908</span>ARM_NONNULL(1,2)</div>
-<div class="line"><a id="l00909" name="l00909"></a><span class="lineno"><a class="line" href="group__gHelper.html#gad9504b41c541cc4bbee54bfbba49f496">  909</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#gad9504b41c541cc4bbee54bfbba49f496" title="please do NOT use this function. It is used by the display adapter.">__arm_2d_helper_3fb_draw_bitmap</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__3fb__t" title="the control block of the 3FB (direct mode) service">arm_2d_helper_3fb_t</a> *ptThis, </div>
-<div class="line"><a id="l00910" name="l00910"></a><span class="lineno">  910</span>                                     const <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> *ptPFB);</div>
-<div class="line"><a id="l00911" name="l00911"></a><span class="lineno">  911</span> </div>
-<div class="line"><a id="l00912" name="l00912"></a><span class="lineno">  912</span> </div>
-<div class="line"><a id="l00913" name="l00913"></a><span class="lineno">  913</span><span class="comment"></span> </div>
-<div class="line"><a id="l00914" name="l00914"></a><span class="lineno">  914</span><span class="comment">/*! @} */</span></div>
-<div class="line"><a id="l00915" name="l00915"></a><span class="lineno">  915</span> </div>
-<div class="line"><a id="l00916" name="l00916"></a><span class="lineno">  916</span><span class="preprocessor">#if defined(__clang__)</span></div>
-<div class="line"><a id="l00917" name="l00917"></a><span class="lineno">  917</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
-<div class="line"><a id="l00918" name="l00918"></a><span class="lineno">  918</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00908" name="l00908"></a><span class="lineno">  908</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00909" name="l00909"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga94384cabe58f5ddc6d8be92349f5ff99">  909</a></span><span class="keywordtype">void</span> * <a class="code hl_function" href="group__gHelper.html#ga94384cabe58f5ddc6d8be92349f5ff99" title="get a pointer for flushing">arm_2d_helper_3fb_get_flush_pointer</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__3fb__t" title="the control block of the 3FB (direct mode) service">arm_2d_helper_3fb_t</a> *ptThis);</div>
+<div class="line"><a id="l00910" name="l00910"></a><span class="lineno">  910</span><span class="comment"></span> </div>
+<div class="line"><a id="l00911" name="l00911"></a><span class="lineno">  911</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00912" name="l00912"></a><span class="lineno">  912</span><span class="comment"> * \brief please do NOT use this function. It is used by the display adapter.</span></div>
+<div class="line"><a id="l00913" name="l00913"></a><span class="lineno">  913</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00914" name="l00914"></a><span class="lineno">  914</span>extern</div>
+<div class="line"><a id="l00915" name="l00915"></a><span class="lineno">  915</span>ARM_NONNULL(1,2)</div>
+<div class="line"><a id="l00916" name="l00916"></a><span class="lineno"><a class="line" href="group__gHelper.html#gad9504b41c541cc4bbee54bfbba49f496">  916</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#gad9504b41c541cc4bbee54bfbba49f496" title="please do NOT use this function. It is used by the display adapter.">__arm_2d_helper_3fb_draw_bitmap</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__3fb__t" title="the control block of the 3FB (direct mode) service">arm_2d_helper_3fb_t</a> *ptThis, </div>
+<div class="line"><a id="l00917" name="l00917"></a><span class="lineno">  917</span>                                     const <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> *ptPFB);</div>
+<div class="line"><a id="l00918" name="l00918"></a><span class="lineno">  918</span> </div>
 <div class="line"><a id="l00919" name="l00919"></a><span class="lineno">  919</span> </div>
-<div class="line"><a id="l00920" name="l00920"></a><span class="lineno">  920</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
-<div class="line"><a id="l00921" name="l00921"></a><span class="lineno">  921</span>}</div>
-<div class="line"><a id="l00922" name="l00922"></a><span class="lineno">  922</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00923" name="l00923"></a><span class="lineno">  923</span> </div>
-<div class="line"><a id="l00924" name="l00924"></a><span class="lineno">  924</span> </div>
-<div class="line"><a id="l00925" name="l00925"></a><span class="lineno">  925</span> </div>
-<div class="line"><a id="l00926" name="l00926"></a><span class="lineno">  926</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00920" name="l00920"></a><span class="lineno">  920</span><span class="comment"></span> </div>
+<div class="line"><a id="l00921" name="l00921"></a><span class="lineno">  921</span><span class="comment">/*! @} */</span></div>
+<div class="line"><a id="l00922" name="l00922"></a><span class="lineno">  922</span> </div>
+<div class="line"><a id="l00923" name="l00923"></a><span class="lineno">  923</span><span class="preprocessor">#if defined(__clang__)</span></div>
+<div class="line"><a id="l00924" name="l00924"></a><span class="lineno">  924</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
+<div class="line"><a id="l00925" name="l00925"></a><span class="lineno">  925</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00926" name="l00926"></a><span class="lineno">  926</span> </div>
+<div class="line"><a id="l00927" name="l00927"></a><span class="lineno">  927</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
+<div class="line"><a id="l00928" name="l00928"></a><span class="lineno">  928</span>}</div>
+<div class="line"><a id="l00929" name="l00929"></a><span class="lineno">  929</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00930" name="l00930"></a><span class="lineno">  930</span> </div>
+<div class="line"><a id="l00931" name="l00931"></a><span class="lineno">  931</span> </div>
+<div class="line"><a id="l00932" name="l00932"></a><span class="lineno">  932</span> </div>
+<div class="line"><a id="l00933" name="l00933"></a><span class="lineno">  933</span><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -474,6 +474,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga14181b777abd2c6af671699f9bfd8f99"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c">arm_2d_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99">arm_2d_helper_pfb_init</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis, <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__cfg__t">arm_2d_helper_pfb_cfg_t</a> *ptCFG)</td></tr>
 <tr class="memdesc:ga14181b777abd2c6af671699f9bfd8f99"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize pfb helper service  <a href="group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99">More...</a><br /></td></tr>
 <tr class="separator:ga14181b777abd2c6af671699f9bfd8f99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga91b9bd95fab04511c9ae935757341d6f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga91b9bd95fab04511c9ae935757341d6f">arm_2d_helper_pfb_deinit</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis)</td></tr>
+<tr class="memdesc:ga91b9bd95fab04511c9ae935757341d6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">uninitialize pfb helper service  <a href="group__gHelper.html#ga91b9bd95fab04511c9ae935757341d6f">More...</a><br /></td></tr>
+<tr class="separator:ga91b9bd95fab04511c9ae935757341d6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf0eef5fe61bc11d102d2180025ada377"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaf0eef5fe61bc11d102d2180025ada377">arm_2d_helper_pfb_get_display_area</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis)</td></tr>
 <tr class="memdesc:gaf0eef5fe61bc11d102d2180025ada377"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the display (screen) region  <a href="group__gHelper.html#gaf0eef5fe61bc11d102d2180025ada377">More...</a><br /></td></tr>
 <tr class="separator:gaf0eef5fe61bc11d102d2180025ada377"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -2288,6 +2291,12 @@ __unnamed__</td>
 <a id="af123792cdc243f2b6738af48f3b1dd3b" name="af123792cdc243f2b6738af48f3b1dd3b"></a>uint16_t</td>
 <td class="fieldname">
 hwFreePFBCount</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a3d827b7a279c50cc9779099194a7ee09" name="a3d827b7a279c50cc9779099194a7ee09"></a>uintptr_t</td>
+<td class="fieldname">
+pFPBPoolAvailable</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
@@ -4343,6 +4352,33 @@ fOP</td>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>arm_2d_err_t the process result </dd></dl>
+
+</div>
+</div>
+<a id="ga91b9bd95fab04511c9ae935757341d6f" name="ga91b9bd95fab04511c9ae935757341d6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga91b9bd95fab04511c9ae935757341d6f">&#9670;&nbsp;</a></span>arm_2d_helper_pfb_deinit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_helper_pfb_deinit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>uninitialize pfb helper service </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the pfb helper control block </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
 </div>
 </div>
