@@ -211,6 +211,10 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__digit_font_get_char_descriptor)
     ptDescriptor->tileChar.ptParent = (arm_2d_tile_t *)&ptFont->tileFont;
     ptDescriptor->tileChar.tInfo.bDerivedResource = true;
     ptDescriptor->chCodeLength = 1;
+
+    ptDescriptor->iBearingX = 0;
+    ptDescriptor->iBearingY = ptFont->tCharSize.iHeight;
+    ptDescriptor->iAdvance = ptFont->tCharSize.iWidth;
     
     arm_foreach( arm_2d_char_idx_t, this.tLookUpTable, this.hwCount, ptItem) {
         if (    *pchCharCode >= ptItem->chStartCode[0] 

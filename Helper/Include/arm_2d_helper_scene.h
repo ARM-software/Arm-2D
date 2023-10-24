@@ -200,7 +200,7 @@ struct arm_2d_scene_t {
     arm_2d_scene_t *ptNext;                                                     //!< next scene
     arm_2d_scene_player_t *ptPlayer;                                            //!< points to the host scene player
 
-    /*! \note Deprecated! Please do NOT use unless you know the consequence */
+    /*! \note Please do NOT use it unless it is necessary */
     arm_2d_helper_draw_handler_t    *fnBackground;
 
     arm_2d_region_list_item_t       *ptDirtyRegion;                             //!< dirty region list for the scene
