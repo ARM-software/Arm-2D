@@ -590,8 +590,6 @@ ARM_PRIVATE(
         arm_2d_tile_t               tPFBTile;
         arm_2d_size_t               tFrameSize;
         uint32_t                    wPFBPixelCount;
-        //bool                        bFirstIteration;
-        //bool                        bIsRegionChanged;
         uint8_t                     chPT;
         struct {
             uint8_t                 bIsNewFrame                 : 1;
@@ -604,6 +602,7 @@ ARM_PRIVATE(
             uint8_t                 bIsRegionChanged            : 1;
         };
         uint16_t                    hwFreePFBCount;
+        uintptr_t                   pFPBPoolAvailable;
         arm_2d_pfb_t               *ptCurrent;
         arm_2d_pfb_t               *ptFreeList;
         arm_2d_pfb_t               *ptFlushing;
@@ -666,6 +665,14 @@ extern
 ARM_NONNULL(1,2)
 arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis, 
                                     arm_2d_helper_pfb_cfg_t *ptCFG);
+/*!
+ * \brief uninitialize pfb helper service
+ * \param[in] ptThis the pfb helper control block
+ * \return none
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_pfb_deinit(arm_2d_helper_pfb_t *ptThis);
 
 /*!
  * \brief get the display (screen) region

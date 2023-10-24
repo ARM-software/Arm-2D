@@ -87,13 +87,18 @@ arm_2d_pfb_t *__arm_2d_helper_pfb_new(arm_2d_helper_pfb_t *ptThis)
     assert(NULL != ptThis);
     
     arm_2d_pfb_t *ptPFB = NULL;
+
     arm_irq_safe {
-        this.Adapter.hwFreePFBCount--;
-        ARM_LIST_STACK_POP(this.Adapter.ptFreeList, ptPFB);
+        if (this.Adapter.hwFreePFBCount) {
+            this.Adapter.hwFreePFBCount--;
+            ARM_LIST_STACK_POP(this.Adapter.ptFreeList, ptPFB);
+        }
     }
-    
-    ptPFB->ptPFBHelper = ptThis;
-    
+
+    if (NULL != ptPFB) {
+        ptPFB->ptPFBHelper = ptThis;
+    }
+
     return ptPFB;
 }
 
@@ -109,6 +114,12 @@ void __arm_2d_helper_pfb_free(arm_2d_helper_pfb_t *ptThis, arm_2d_pfb_t *ptPFB)
     arm_irq_safe {
         ARM_LIST_STACK_PUSH(this.Adapter.ptFreeList, ptPFB);
         this.Adapter.hwFreePFBCount++;
+    }
+    
+    /* set event */
+    if  (   (NULL == this.tCFG.Dependency.evtOnLowLevelSyncUp.fnHandler)
+        &&  ((uintptr_t)NULL != this.Adapter.pFPBPoolAvailable)) {
+        arm_2d_port_set_semaphore(this.Adapter.pFPBPoolAvailable);
     }
 }
 
@@ -220,6 +231,12 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
         }
     } while(0);
 
+    if (NULL == this.tCFG.Dependency.evtOnLowLevelSyncUp.fnHandler) {
+        /* use default semaphore */
+        this.Adapter.pFPBPoolAvailable = arm_2d_port_new_semaphore();
+    }
+
+
     // perform validation
     do {
         int_fast16_t n = this.tCFG.FrameBuffer.hwPFBNum;
@@ -266,6 +283,14 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
     this.Adapter.bIsFlushRequested = true;
     
     return ARM_2D_ERR_NONE;
+}
+
+
+ARM_NONNULL(1)
+void arm_2d_helper_pfb_deinit(arm_2d_helper_pfb_t *ptThis) 
+{
+    assert(NULL != ptThis);
+    arm_2d_port_free_semaphore(this.Adapter.pFPBPoolAvailable);
 }
 
 ARM_NONNULL(1)
@@ -1019,6 +1044,9 @@ ARM_PT_BEGIN(this.Adapter.chPT)
                     (*this.tCFG.Dependency.evtOnLowLevelSyncUp.fnHandler)(
                         this.tCFG.Dependency.evtOnLowLevelSyncUp.pTarget
                     );
+                } else if ((uintptr_t)NULL != this.Adapter.pFPBPoolAvailable) {
+                    arm_2d_port_wait_for_semaphore(
+                                                this.Adapter.pFPBPoolAvailable);
                 }
                 continue;
             } else if (-1 == (intptr_t)this.Adapter.ptFrameBuffer) {
