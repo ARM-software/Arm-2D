@@ -34,11 +34,31 @@ extern "C" {
 #endif
 
 /*============================ MACROS ========================================*/
+
+#define progress_wheel_init(__this_ptr, __diameter, __colour)                   \
+            do {                                                                \
+                progress_wheel_cfg_t tCFG = {                                   \
+                    .iWheelDiameter = (__diameter),                             \
+                    .tWheelColour = (COLOUR_INT)(__colour),                     \
+                };                                                              \
+                __progress_wheel_init((__this_ptr), &tCFG);                     \
+            } while(0)
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
+typedef struct progress_wheel_cfg_t {
+    const arm_2d_tile_t *ptileArcMask;
+    const arm_2d_tile_t *ptileDotMask;
+    int16_t iRingWidth;
+    int16_t iDotDiameter;
+    int16_t iWheelDiameter;
+    COLOUR_INT tWheelColour;
+    COLOUR_INT tDotColour;
+} progress_wheel_cfg_t;
+
+
 typedef struct progress_wheel_t {
-    int16_t iDiameter;
-    COLOUR_INT tColour;
+    progress_wheel_cfg_t tCFG;
     float fScale;
     float fAngle;
     arm_2d_op_fill_cl_msk_opa_trans_t tOP[4];
@@ -50,9 +70,8 @@ typedef struct progress_wheel_t {
 
 extern
 ARM_NONNULL(1)
-void progress_wheel_init(   progress_wheel_t *ptThis, 
-                            int16_t iDiameter, 
-                            COLOUR_INT tColour);
+void __progress_wheel_init( progress_wheel_t *ptThis, 
+                            const progress_wheel_cfg_t *ptCFG);
 
 extern
 ARM_NONNULL(1)

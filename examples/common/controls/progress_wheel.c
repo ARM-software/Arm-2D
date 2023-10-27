@@ -78,20 +78,27 @@ extern const arm_2d_tile_t c_tileQuaterArcMask;
 /*============================ IMPLEMENTATION ================================*/
 
 ARM_NONNULL(1)
-void progress_wheel_init(   progress_wheel_t *ptThis, 
-                            int16_t iDiameter, 
-                            COLOUR_INT tColour)
+void __progress_wheel_init( progress_wheel_t *ptThis, 
+                            const progress_wheel_cfg_t *ptCFG)
 {
     assert(NULL != ptThis);
-    
+    assert(NULL != ptCFG);
+
     memset(ptThis, 0, sizeof(progress_wheel_t));
-    this.iDiameter = iDiameter;
-    this.tColour = tColour;
-    progress_wheel_set_diameter(ptThis, iDiameter);
+    this.tCFG = *ptCFG;
+    
+    if (NULL == this.tCFG.ptileArcMask) {
+        this.tCFG.ptileArcMask = (const arm_2d_tile_t *)&c_tileQuaterArcMask;
+    }
+    if (0 == this.tCFG.iWheelDiameter) {
+        this.tCFG.iWheelDiameter = this.tCFG.ptileArcMask->tRegion.tSize.iWidth;
+    }
 
     arm_foreach(arm_2d_op_fill_cl_msk_opa_trans_t, this.tOP, ptItem) {
         ARM_2D_OP_INIT(*ptItem);
     }
+
+    progress_wheel_set_diameter(ptThis, ptCFG->iWheelDiameter);
 }
 
 
@@ -102,7 +109,8 @@ void progress_wheel_set_diameter(progress_wheel_t *ptThis,
     assert(NULL != ptThis);
 
     this.fScale = (float)(  (float)iDiameter 
-                         /  ((float)c_tileQuaterArcMask.tRegion.tSize.iWidth *2.0f));
+                         /  ((float)this.tCFG.ptileArcMask->tRegion.tSize.iWidth *2.0f));
+    this.tCFG.iWheelDiameter = iDiameter;
 }
 
 ARM_NONNULL(1)
@@ -121,7 +129,9 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                             uint8_t chOpacity,
                             bool bIsNewFrame)
 {
-    
+    const arm_2d_tile_t *ptileArcMask = this.tCFG.ptileArcMask;
+    COLOUR_INT tWheelColour = this.tCFG.tWheelColour;
+
     arm_2d_region_t tRegion = {0};
     if (NULL == ptRegion) {
         tRegion.tSize = ptTarget->tRegion.tSize;
@@ -135,8 +145,8 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
     };
     
     arm_2d_location_t tCentre = {
-        .iX = c_tileQuaterArcMask.tRegion.tSize.iWidth - 1,
-        .iY = c_tileQuaterArcMask.tRegion.tSize.iHeight - 1,
+        .iX = ptileArcMask->tRegion.tSize.iWidth - 1,
+        .iY = ptileArcMask->tRegion.tSize.iHeight - 1,
     };
 
     if (bIsNewFrame) {
@@ -153,13 +163,13 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
         arm_2dp_fill_colour_with_mask_opacity_and_transform(
                                         &this.tOP[1],
-                                        &c_tileQuaterArcMask,
+                                        ptileArcMask,
                                         ptTarget,
                                         &tQuater,
                                         tCentre,
                                         ARM_2D_ANGLE(180),
                                         this.fScale,
-                                        this.tColour,
+                                        tWheelColour,
                                         chOpacity,
                                         &tTargetCentre);
         
@@ -172,13 +182,13 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
         arm_2dp_fill_colour_with_mask_opacity_and_transform(
                                         &this.tOP[2],
-                                        &c_tileQuaterArcMask,
+                                        ptileArcMask,
                                         ptTarget,
                                         &tQuater,
                                         tCentre,
                                         ARM_2D_ANGLE(270),
                                         this.fScale,
-                                        this.tColour,
+                                        tWheelColour,
                                         chOpacity,
                                         &tTargetCentre);
             
@@ -189,13 +199,13 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
         arm_2dp_fill_colour_with_mask_opacity_and_transform(
                                         &this.tOP[3],
-                                        &c_tileQuaterArcMask,
+                                        ptileArcMask,
                                         ptTarget,
                                         &tRotationRegion,
                                         tCentre,
                                         ARM_2D_ANGLE(0),
                                         this.fScale,
-                                        this.tColour,
+                                        tWheelColour,
                                         chOpacity,
                                         &tTargetCentre);
 
@@ -213,13 +223,13 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
     arm_2dp_fill_colour_with_mask_opacity_and_transform(
                                     &this.tOP[0],
-                                    &c_tileQuaterArcMask,
+                                    ptileArcMask,
                                     ptTarget,
                                     &tRotationRegion,
                                     tCentre,
                                     this.fAngle + ARM_2D_ANGLE(90),
                                     this.fScale,
-                                    this.tColour,
+                                    tWheelColour,
                                     chOpacity,
                                     &tTargetCentre);
         
