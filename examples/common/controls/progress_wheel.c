@@ -155,11 +155,31 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
     tRotationRegion.tSize.iWidth = ((ptRegion->tSize.iWidth + 1) >> 1);
     tRotationRegion.tSize.iHeight = ((ptRegion->tSize.iHeight + 1) >> 1);
-    
-    if(this.fAngle < ARM_2D_ANGLE(90)){
+
+    if(this.fAngle > ARM_2D_ANGLE(90.0f)){
         arm_2d_region_t tQuater = tRotationRegion;
         tQuater.tLocation.iX += ((ptRegion->tSize.iWidth + 1) >> 1);
-        tQuater.tLocation.iY += ((ptRegion->tSize.iWidth + 1) >> 1);
+
+        arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                                        &this.tOP[3],
+                                        ptileArcMask,
+                                        ptTarget,
+                                        &tQuater,
+                                        tCentre,
+                                        ARM_2D_ANGLE(90.0f),
+                                        this.fScale,
+                                        tWheelColour,
+                                        chOpacity,
+                                        &tTargetCentre);
+
+        arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[3]);
+    }
+
+    if(this.fAngle > ARM_2D_ANGLE(180.0f)){
+        arm_2d_region_t tQuater = tRotationRegion;
+        tQuater.tLocation.iX += ((ptRegion->tSize.iWidth + 1) >> 1);
+        tQuater.tLocation.iY += ((ptRegion->tSize.iHeight + 1) >> 1);
+
 
         arm_2dp_fill_colour_with_mask_opacity_and_transform(
                                         &this.tOP[1],
@@ -167,18 +187,19 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                         ptTarget,
                                         &tQuater,
                                         tCentre,
-                                        ARM_2D_ANGLE(180),
+                                        ARM_2D_ANGLE(180.0f),
                                         this.fScale,
                                         tWheelColour,
                                         chOpacity,
                                         &tTargetCentre);
         
         arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[1]);
+
     }
 
-    if(this.fAngle < ARM_2D_ANGLE(180)){
+    if(this.fAngle > ARM_2D_ANGLE(270.0)){
         arm_2d_region_t tQuater = tRotationRegion;
-        tQuater.tLocation.iY += ((ptRegion->tSize.iWidth + 1) >> 1);
+        tQuater.tLocation.iY += ((ptRegion->tSize.iHeight + 1) >> 1);
 
         arm_2dp_fill_colour_with_mask_opacity_and_transform(
                                         &this.tOP[2],
@@ -186,7 +207,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                         ptTarget,
                                         &tQuater,
                                         tCentre,
-                                        ARM_2D_ANGLE(270),
+                                        ARM_2D_ANGLE(270.0f),
                                         this.fScale,
                                         tWheelColour,
                                         chOpacity,
@@ -195,22 +216,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
         arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[2]);
     } 
 
-    if(this.fAngle < ARM_2D_ANGLE(270)){
 
-        arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                        &this.tOP[3],
-                                        ptileArcMask,
-                                        ptTarget,
-                                        &tRotationRegion,
-                                        tCentre,
-                                        ARM_2D_ANGLE(0),
-                                        this.fScale,
-                                        tWheelColour,
-                                        chOpacity,
-                                        &tTargetCentre);
-
-        arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[3]);
-    }
 
     if (this.fAngle < ARM_2D_ANGLE(90)) {
         tRotationRegion.tLocation.iX += ((ptRegion->tSize.iWidth + 1) >> 1);
@@ -227,7 +233,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                     ptTarget,
                                     &tRotationRegion,
                                     tCentre,
-                                    this.fAngle + ARM_2D_ANGLE(90),
+                                    this.fAngle,
                                     this.fScale,
                                     tWheelColour,
                                     chOpacity,
