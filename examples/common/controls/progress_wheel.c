@@ -216,8 +216,6 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
         arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[2]);
     } 
 
-
-
     if (this.fAngle < ARM_2D_ANGLE(90)) {
         tRotationRegion.tLocation.iX += ((ptRegion->tSize.iWidth + 1) >> 1);
     } else if (this.fAngle < ARM_2D_ANGLE(180)) {
