@@ -70,6 +70,7 @@
 
 
 extern const arm_2d_tile_t c_tileQuaterArcMask;
+extern const arm_2d_tile_t c_tileWhiteDotMask;
 /*============================ PROTOTYPES ====================================*/
 
 /*============================ LOCAL VARIABLES ===============================*/
@@ -88,8 +89,13 @@ void __progress_wheel_init( progress_wheel_t *ptThis,
     this.tCFG = *ptCFG;
     
     if (NULL == this.tCFG.ptileArcMask) {
-        this.tCFG.ptileArcMask = (const arm_2d_tile_t *)&c_tileQuaterArcMask;
+        this.tCFG.ptileArcMask = &c_tileQuaterArcMask;
+        this.tCFG.iRingWidth = 13;
     }
+    //if (NULL == this.tCFG.ptileDotMask) {
+    //    this.tCFG.ptileDotMask = &c_tileWhiteDotMask;
+    //}
+
     if (0 == this.tCFG.iWheelDiameter) {
         this.tCFG.iWheelDiameter = this.tCFG.ptileArcMask->tRegion.tSize.iWidth;
     }
@@ -132,113 +138,136 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
     const arm_2d_tile_t *ptileArcMask = this.tCFG.ptileArcMask;
     COLOUR_INT tWheelColour = this.tCFG.tWheelColour;
 
-    arm_2d_region_t tRegion = {0};
-    if (NULL == ptRegion) {
-        tRegion.tSize = ptTarget->tRegion.tSize;
-        ptRegion = &tRegion;
-    }
-    
-    arm_2d_region_t tRotationRegion = *ptRegion;
-    arm_2d_location_t tTargetCentre = {
-        .iX = ptRegion->tLocation.iX + (ptRegion->tSize.iWidth >> 1),
-        .iY = ptRegion->tLocation.iY + (ptRegion->tSize.iHeight >> 1),
-    };
-    
-    arm_2d_location_t tCentre = {
-        .iX = ptileArcMask->tRegion.tSize.iWidth - 1,
-        .iY = ptileArcMask->tRegion.tSize.iHeight - 1,
-    };
+    arm_2d_container(ptTarget, __wheel, ptRegion) {
 
-    if (bIsNewFrame) {
-        this.fAngle = ARM_2D_ANGLE((float)iProgress * 36.0f / 100.0f);
-    }
-
-    tRotationRegion.tSize.iWidth = ((ptRegion->tSize.iWidth + 1) >> 1);
-    tRotationRegion.tSize.iHeight = ((ptRegion->tSize.iHeight + 1) >> 1);
-
-    if(this.fAngle > ARM_2D_ANGLE(90.0f)){
-        arm_2d_region_t tQuater = tRotationRegion;
-        tQuater.tLocation.iX += ((ptRegion->tSize.iWidth + 1) >> 1);
-
-        arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                        &this.tOP[3],
-                                        ptileArcMask,
-                                        ptTarget,
-                                        &tQuater,
-                                        tCentre,
-                                        ARM_2D_ANGLE(90.0f),
-                                        this.fScale,
-                                        tWheelColour,
-                                        chOpacity,
-                                        &tTargetCentre);
-
-        arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[3]);
-    }
-
-    if(this.fAngle > ARM_2D_ANGLE(180.0f)){
-        arm_2d_region_t tQuater = tRotationRegion;
-        tQuater.tLocation.iX += ((ptRegion->tSize.iWidth + 1) >> 1);
-        tQuater.tLocation.iY += ((ptRegion->tSize.iHeight + 1) >> 1);
-
-
-        arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                        &this.tOP[1],
-                                        ptileArcMask,
-                                        ptTarget,
-                                        &tQuater,
-                                        tCentre,
-                                        ARM_2D_ANGLE(180.0f),
-                                        this.fScale,
-                                        tWheelColour,
-                                        chOpacity,
-                                        &tTargetCentre);
+        arm_2d_region_t tRotationRegion = __wheel_canvas;
+        arm_2d_location_t tTargetCentre = {
+            .iX = __wheel_canvas.tLocation.iX + (__wheel_canvas.tSize.iWidth >> 1),
+            .iY = __wheel_canvas.tLocation.iY + (__wheel_canvas.tSize.iHeight >> 1),
+        };
         
-        arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[1]);
+        arm_2d_location_t tCentre = {
+            .iX = ptileArcMask->tRegion.tSize.iWidth - 1,
+            .iY = ptileArcMask->tRegion.tSize.iHeight - 1,
+        };
 
-    }
+        if (bIsNewFrame) {
+            this.fAngle = ARM_2D_ANGLE((float)iProgress * 36.0f / 100.0f);
+        }
 
-    if(this.fAngle > ARM_2D_ANGLE(270.0)){
-        arm_2d_region_t tQuater = tRotationRegion;
-        tQuater.tLocation.iY += ((ptRegion->tSize.iHeight + 1) >> 1);
+        tRotationRegion.tSize.iWidth = ((__wheel_canvas.tSize.iWidth + 1) >> 1);
+        tRotationRegion.tSize.iHeight = ((__wheel_canvas.tSize.iHeight + 1) >> 1);
 
-        arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                        &this.tOP[2],
-                                        ptileArcMask,
-                                        ptTarget,
-                                        &tQuater,
-                                        tCentre,
-                                        ARM_2D_ANGLE(270.0f),
-                                        this.fScale,
-                                        tWheelColour,
-                                        chOpacity,
-                                        &tTargetCentre);
+        if(this.fAngle > ARM_2D_ANGLE(90.0f)){
+            arm_2d_region_t tQuater = tRotationRegion;
+            tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
+
+            arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                                            &this.tOP[3],
+                                            ptileArcMask,
+                                            &__wheel,
+                                            &tQuater,
+                                            tCentre,
+                                            ARM_2D_ANGLE(90.0f),
+                                            this.fScale,
+                                            tWheelColour,
+                                            chOpacity,
+                                            &tTargetCentre);
+
+            arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[3]);
+        }
+
+        if(this.fAngle > ARM_2D_ANGLE(180.0f)){
+            arm_2d_region_t tQuater = tRotationRegion;
+            tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
+            tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
+
+
+            arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                                            &this.tOP[1],
+                                            ptileArcMask,
+                                            &__wheel,
+                                            &tQuater,
+                                            tCentre,
+                                            ARM_2D_ANGLE(180.0f),
+                                            this.fScale,
+                                            tWheelColour,
+                                            chOpacity,
+                                            &tTargetCentre);
             
-        arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[2]);
-    } 
+            arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[1]);
 
-    if (this.fAngle < ARM_2D_ANGLE(90)) {
-        tRotationRegion.tLocation.iX += ((ptRegion->tSize.iWidth + 1) >> 1);
-    } else if (this.fAngle < ARM_2D_ANGLE(180)) {
-        tRotationRegion.tLocation.iY += ((ptRegion->tSize.iHeight + 1) >> 1);
-        tRotationRegion.tLocation.iX += ((ptRegion->tSize.iWidth + 1) >> 1);
-    } else if (this.fAngle < ARM_2D_ANGLE(270)) {
-        tRotationRegion.tLocation.iY += ((ptRegion->tSize.iHeight + 1) >> 1);
+        }
+
+        if(this.fAngle > ARM_2D_ANGLE(270.0)){
+            arm_2d_region_t tQuater = tRotationRegion;
+            tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
+
+            arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                                            &this.tOP[2],
+                                            ptileArcMask,
+                                            &__wheel,
+                                            &tQuater,
+                                            tCentre,
+                                            ARM_2D_ANGLE(270.0f),
+                                            this.fScale,
+                                            tWheelColour,
+                                            chOpacity,
+                                            &tTargetCentre);
+                
+            arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[2]);
+        } 
+
+        do {
+            arm_2d_region_t tQuater = tRotationRegion;
+            if (this.fAngle < ARM_2D_ANGLE(90)) {
+                tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
+            } else if (this.fAngle < ARM_2D_ANGLE(180)) {
+                tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
+                tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
+            } else if (this.fAngle < ARM_2D_ANGLE(270)) {
+                tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
+            }
+
+            arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                                            &this.tOP[0],
+                                            ptileArcMask,
+                                            &__wheel,
+                                            &tQuater,
+                                            tCentre,
+                                            this.fAngle,
+                                            this.fScale,
+                                            tWheelColour,
+                                            chOpacity,
+                                            &tTargetCentre);
+                
+            arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[0]);
+        } while(0);
+
+        /* draw the starting point */
+        const arm_2d_tile_t *ptileDotMask = this.tCFG.ptileDotMask;
+        if (NULL != ptileDotMask) {
+            
+            arm_2d_region_t tStartPoint = {
+                .tSize = {
+                    .iWidth = ptileDotMask->tRegion.tSize.iWidth >> 1,
+                    .iHeight = ptileDotMask->tRegion.tSize.iHeight,
+                },
+                .tLocation = {
+                    .iX = tTargetCentre.iX - (ptileDotMask->tRegion.tSize.iWidth >> 1),
+                    .iY = tTargetCentre.iY - (this.tCFG.iWheelDiameter >> 1),
+                },
+            };
+            
+            arm_2d_fill_colour_with_mask_and_opacity(
+                    &__wheel,
+                    &tStartPoint,
+                    ptileDotMask,
+                    (__arm_2d_color_t){tWheelColour},
+                    chOpacity);
+
+        } while(0);
     }
-
-    arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                    &this.tOP[0],
-                                    ptileArcMask,
-                                    ptTarget,
-                                    &tRotationRegion,
-                                    tCentre,
-                                    this.fAngle,
-                                    this.fScale,
-                                    tWheelColour,
-                                    chOpacity,
-                                    &tTargetCentre);
-        
-    arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[0]);
-
 }
 
 
