@@ -90,7 +90,6 @@ void __progress_wheel_init( progress_wheel_t *ptThis,
     
     if (NULL == this.tCFG.ptileArcMask) {
         this.tCFG.ptileArcMask = &c_tileQuaterArcMask;
-        this.tCFG.iRingWidth = 13;
     }
     if (NULL == this.tCFG.ptileDotMask) {
         this.tCFG.ptileDotMask = &c_tileWhiteDotMask;

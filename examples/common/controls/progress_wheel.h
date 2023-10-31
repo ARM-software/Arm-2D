@@ -49,8 +49,6 @@ extern "C" {
 typedef struct progress_wheel_cfg_t {
     const arm_2d_tile_t *ptileArcMask;
     const arm_2d_tile_t *ptileDotMask;
-    int16_t iRingWidth;
-    int16_t iDotDiameter;
     int16_t iWheelDiameter;
     COLOUR_INT tWheelColour;
     COLOUR_INT tDotColour;
