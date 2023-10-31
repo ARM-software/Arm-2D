@@ -230,7 +230,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
 
             arm_2d_layout(__centre_region) {
 
-                __item_line_horizontal(128,128) {
+                __item_line_horizontal(60,80) {
                     progress_wheel_show(&this.tWheel,
                                         ptTile, 
                                         &__item_region,       
@@ -262,7 +262,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
                                                     &__item_region, 
                                                     bIsNewFrame));
                 }
-                #if 0
+                
                 __item_line_horizontal(96, 128) {
                 
                     /*
@@ -307,7 +307,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
                         }
                     }
                 }
-                #endif
             }
         }
         
@@ -482,7 +481,7 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
 
     user_scene_2_t *ptThis = (user_scene_2_t *)ptScene;
 
-    progress_wheel_init(&this.tWheel, 120, GLCD_COLOR_GREEN);
+    progress_wheel_init(&this.tWheel, 60, GLCD_COLOR_GREEN);
 
     /* initialize number list */
     do {
