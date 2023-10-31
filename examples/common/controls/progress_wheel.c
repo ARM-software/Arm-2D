@@ -92,9 +92,9 @@ void __progress_wheel_init( progress_wheel_t *ptThis,
         this.tCFG.ptileArcMask = &c_tileQuaterArcMask;
         this.tCFG.iRingWidth = 13;
     }
-    //if (NULL == this.tCFG.ptileDotMask) {
-    //    this.tCFG.ptileDotMask = &c_tileWhiteDotMask;
-    //}
+    if (NULL == this.tCFG.ptileDotMask) {
+        this.tCFG.ptileDotMask = &c_tileWhiteDotMask;
+    }
 
     if (0 == this.tCFG.iWheelDiameter) {
         this.tCFG.iWheelDiameter = this.tCFG.ptileArcMask->tRegion.tSize.iWidth;
@@ -247,7 +247,13 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
         /* draw the starting point */
         const arm_2d_tile_t *ptileDotMask = this.tCFG.ptileDotMask;
         if (NULL != ptileDotMask) {
-            
+            arm_2d_region_t tQuater = tRotationRegion;
+            arm_2d_location_t tDotCentre = {
+                .iX = (ptileDotMask->tRegion.tSize.iWidth + 1) >> 1,
+                .iY = ptileArcMask->tRegion.tSize.iHeight - 1,
+            };
+
+            /*
             arm_2d_region_t tStartPoint = {
                 .tSize = {
                     .iWidth = ptileDotMask->tRegion.tSize.iWidth >> 1,
@@ -265,6 +271,21 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                     ptileDotMask,
                     (__arm_2d_color_t){tWheelColour},
                     chOpacity);
+            */
+
+            arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                                            &this.tOP[4],
+                                            ptileDotMask,
+                                            &__wheel,
+                                            &tQuater,
+                                            tDotCentre,
+                                            0.0f,
+                                            this.fScale,
+                                            tWheelColour,
+                                            chOpacity,
+                                            &tTargetCentre);
+                
+            arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[4]);
 
         } while(0);
     }
