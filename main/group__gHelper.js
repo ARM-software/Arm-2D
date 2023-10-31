@@ -196,6 +196,7 @@ var group__gHelper =
     [ "__arm_2d_scene_player_register_before_switching_event_handler", "group__gHelper.html#gadaa72d1d1c3baf5db91070008c238293", null ],
     [ "arm_2d_scene_player_task", "group__gHelper.html#ga9d3b273bce58d135be740ba682ec11b7", null ],
     [ "arm_2d_helper_pfb_init", "group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99", null ],
+    [ "arm_2d_helper_pfb_deinit", "group__gHelper.html#ga91b9bd95fab04511c9ae935757341d6f", null ],
     [ "arm_2d_helper_pfb_get_display_area", "group__gHelper.html#gaf0eef5fe61bc11d102d2180025ada377", null ],
     [ "arm_2d_helper_pfb_get_absolute_location", "group__gHelper.html#ga6cd67bb1aebd25b730cd1b52d762a18f", null ],
     [ "arm_2d_helper_pfb_get_pfb_size", "group__gHelper.html#ga012c85746e62c16a38f5253fd9d0dca6", null ],
