@@ -61,7 +61,7 @@ typedef struct progress_wheel_t {
     progress_wheel_cfg_t tCFG;
     float fScale;
     float fAngle;
-    arm_2d_op_fill_cl_msk_opa_trans_t tOP[6];
+    arm_2d_op_fill_cl_msk_opa_trans_t tOP[7];
 } progress_wheel_t;
 
 

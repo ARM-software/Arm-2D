@@ -94,6 +94,7 @@ void __progress_wheel_init( progress_wheel_t *ptThis,
     }
     if (NULL == this.tCFG.ptileDotMask) {
         this.tCFG.ptileDotMask = &c_tileWhiteDotMask;
+        this.tCFG.tDotColour = GLCD_COLOR_WHITE;
     }
 
     if (0 == this.tCFG.iWheelDiameter) {
@@ -253,26 +254,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 .iY = ptileArcMask->tRegion.tSize.iHeight - 1,
             };
 
-            /*
-            arm_2d_region_t tStartPoint = {
-                .tSize = {
-                    .iWidth = ptileDotMask->tRegion.tSize.iWidth >> 1,
-                    .iHeight = ptileDotMask->tRegion.tSize.iHeight,
-                },
-                .tLocation = {
-                    .iX = tTargetCentre.iX - (ptileDotMask->tRegion.tSize.iWidth >> 1),
-                    .iY = tTargetCentre.iY - (this.tCFG.iWheelDiameter >> 1),
-                },
-            };
-            
-            arm_2d_fill_colour_with_mask_and_opacity(
-                    &__wheel,
-                    &tStartPoint,
-                    ptileDotMask,
-                    (__arm_2d_color_t){tWheelColour},
-                    chOpacity);
-            */
-
+            /* draw the starting point */
             arm_2dp_fill_colour_with_mask_opacity_and_transform(
                                             &this.tOP[4],
                                             ptileDotMask,
@@ -287,7 +269,45 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 
             arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[4]);
 
-        } while(0);
+
+            /* draw the starting point */
+            arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                                            &this.tOP[5],
+                                            ptileDotMask,
+                                            &__wheel,
+                                            &__wheel_canvas,
+                                            tDotCentre,
+                                            this.fAngle,
+                                            this.fScale,
+                                            tWheelColour,
+                                            255,//chOpacity,
+                                            &tTargetCentre);
+
+            arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[5]);
+
+            
+
+            if (this.tCFG.tDotColour != this.tCFG.tWheelColour) {
+
+                tDotCentre.iY = (float)tDotCentre.iY * 1.10f;
+
+                /* draw the starting point */
+                arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                                                &this.tOP[6],
+                                                ptileDotMask,
+                                                &__wheel,
+                                                &__wheel_canvas,
+                                                tDotCentre,
+                                                this.fAngle,
+                                                this.fScale * 0.90f,
+                                                this.tCFG.tDotColour,
+                                                255,//chOpacity,
+                                                &tTargetCentre);
+
+                arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[6]);
+            }
+
+        }
     }
 }
 
