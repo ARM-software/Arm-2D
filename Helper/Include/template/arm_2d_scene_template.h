@@ -56,7 +56,7 @@ extern "C" {
 
 /*!
  * \brief initalize scene_<name> and add it to a user specified scene player
- * \param[in] __DISP_ADAPTER_PTR the target display adatper (i.e. scene player)
+ * \param[in] __DISP_ADAPTER_PTR the target display adapter (i.e. scene player)
  * \param[in] ... this is an optional parameter. When it is NULL, a new 
  *            user_scene_<name>_t will be allocated from HEAP and freed on
  *            the deposing event. When it is non-NULL, the life-cycle is managed
