@@ -244,9 +244,9 @@ var NAVTREEINDEX =
 [
 "group__Deprecated.html",
 "group__gAlpha.html#gaaa694b86a24ae15b092de1aa5dd0dea9",
-"group__gHelper.html#structarm__2d__helper__2d__copy__evt__t",
-"group__gKernel.html#gaa1a520634c974866fb98044c63143532",
-"group__gTransform.html#structarm__2d__op__trans__msk__t_8Target"
+"group__gHelper.html#struct____arm__2d__helper__scene__switch__t_8Feature",
+"group__gKernel.html#gaa10ffc3aa0daa211e99adf58927f05a8",
+"group__gTransform.html#structarm__2d__op__trans__msk__t_8Source"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

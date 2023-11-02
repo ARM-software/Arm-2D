@@ -522,6 +522,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga076b6793e3c2fc6f1ef064ca700f667e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga076b6793e3c2fc6f1ef064ca700f667e">arm_2d_helper_transform_init</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__transform__t">arm_2d_helper_transform_t</a> *ptThis, <a class="el" href="group__gKernel.html#structarm__2d__op__t">arm_2d_op_t</a> *ptTransformOP, float fAngleStep, float fScaleStep, <a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> **ppDirtyRegionList)</td></tr>
 <tr class="memdesc:ga076b6793e3c2fc6f1ef064ca700f667e"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize a given transform helper  <a href="group__gHelper.html#ga076b6793e3c2fc6f1ef064ca700f667e">More...</a><br /></td></tr>
 <tr class="separator:ga076b6793e3c2fc6f1ef064ca700f667e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac827ff7995d260f06cd3f80c1df0e9b7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gac827ff7995d260f06cd3f80c1df0e9b7">arm_2d_helper_transform_depose</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__transform__t">arm_2d_helper_transform_t</a> *ptThis)</td></tr>
+<tr class="memdesc:gac827ff7995d260f06cd3f80c1df0e9b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">depose a given transform helper  <a href="group__gHelper.html#gac827ff7995d260f06cd3f80c1df0e9b7">More...</a><br /></td></tr>
+<tr class="separator:gac827ff7995d260f06cd3f80c1df0e9b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga646d1178b70b862d77d33f8a84173f0e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga646d1178b70b862d77d33f8a84173f0e">arm_2d_helper_transform_on_frame_begin</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__transform__t">arm_2d_helper_transform_t</a> *ptThis)</td></tr>
 <tr class="memdesc:ga646d1178b70b862d77d33f8a84173f0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">the on-frame-begin event handler for a given transform helper  <a href="group__gHelper.html#ga646d1178b70b862d77d33f8a84173f0e">More...</a><br /></td></tr>
 <tr class="separator:ga646d1178b70b862d77d33f8a84173f0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -2485,6 +2488,12 @@ tDirtyRegions[2]</td>
 <a id="abe581228be8ce2208d5a6086493f50a2" name="abe581228be8ce2208d5a6086493f50a2"></a><a class="el" href="group__gKernel.html#structarm__2d__op__t">arm_2d_op_t</a> *</td>
 <td class="fieldname">
 ptTransformOP</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ae33f70e695933f68ba75f6077bb8650c" name="ae33f70e695933f68ba75f6077bb8650c"></a><a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> **</td>
+<td class="fieldname">
+ppDirtyRegionList</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
@@ -4905,6 +4914,32 @@ For normal usage, please DO NOT use this function unless you know what you are d
     <tr><td class="paramdir">[in]</td><td class="paramname">fAngleStep</td><td>the minimal acceptable angle change. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">fScaleStep</td><td>the minimal acceptable scale ratio change. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ppDirtyRegionList</td><td>the address of the dirty region list </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gac827ff7995d260f06cd3f80c1df0e9b7" name="gac827ff7995d260f06cd3f80c1df0e9b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac827ff7995d260f06cd3f80c1df0e9b7">&#9670;&nbsp;</a></span>arm_2d_helper_transform_depose()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_helper_transform_depose </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__transform__t">arm_2d_helper_transform_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>depose a given transform helper </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target helper </td></tr>
   </table>
   </dd>
 </dl>

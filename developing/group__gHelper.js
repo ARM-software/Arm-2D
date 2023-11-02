@@ -212,6 +212,7 @@ var group__gHelper =
     [ "__arm_2d_helper_pfb_new", "group__gHelper.html#gaa7855ac916c44e531c4c8a9c5ec0e69e", null ],
     [ "__arm_2d_helper_pfb_free", "group__gHelper.html#ga484b485061778cdf3a2cb4373374c581", null ],
     [ "arm_2d_helper_transform_init", "group__gHelper.html#ga076b6793e3c2fc6f1ef064ca700f667e", null ],
+    [ "arm_2d_helper_transform_depose", "group__gHelper.html#gac827ff7995d260f06cd3f80c1df0e9b7", null ],
     [ "arm_2d_helper_transform_on_frame_begin", "group__gHelper.html#ga646d1178b70b862d77d33f8a84173f0e", null ],
     [ "arm_2d_helper_transform_update_value", "group__gHelper.html#ga95877df905d15cebfc4abb41b9ecdc6a", null ],
     [ "arm_2d_helper_transform_update_dirty_regions", "group__gHelper.html#ga938c015954225ba6c149498b984accce", null ],
