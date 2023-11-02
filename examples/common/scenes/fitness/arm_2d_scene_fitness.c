@@ -17,480 +17,457 @@
  */
 
 /*============================ INCLUDES ======================================*/
-#define __PROGRESS_WHEEL_IMPLEMENT__
 
 #include "arm_2d.h"
+
+#define __USER_SCENE_FITNESS_IMPLEMENT__
+#include "arm_2d_scene_fitness.h"
+
 #include "arm_2d_helper.h"
-#include <math.h>
+#include "arm_extra_controls.h"
 
-#include "__common.h"
-
-#include "./progress_wheel.h"
+#include <stdlib.h>
+#include <string.h>
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
 #   pragma clang diagnostic ignored "-Wunknown-warning-option"
 #   pragma clang diagnostic ignored "-Wreserved-identifier"
-#   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wsign-conversion"
 #   pragma clang diagnostic ignored "-Wpadded"
 #   pragma clang diagnostic ignored "-Wcast-qual"
 #   pragma clang diagnostic ignored "-Wcast-align"
 #   pragma clang diagnostic ignored "-Wmissing-field-initializers"
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
-#   pragma clang diagnostic ignored "-Wmissing-braces"
-#   pragma clang diagnostic ignored "-Wunused-const-variable"
-#   pragma clang diagnostic ignored "-Wmissing-declarations"
-#   pragma clang diagnostic ignored "-Wmissing-variable-declarations"
-#   pragma clang diagnostic ignored "-Winitializer-overrides"
+#   pragma clang diagnostic ignored "-Wmissing-prototypes"
+#   pragma clang diagnostic ignored "-Wunused-variable"
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
+#   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
+#   pragma clang diagnostic ignored "-Wunused-function"
+#   pragma clang diagnostic ignored "-Wmissing-declarations"  
+#elif __IS_COMPILER_ARM_COMPILER_5__
+#   pragma diag_suppress 64,177
+#elif __IS_COMPILER_IAR__
+#   pragma diag_suppress=Pa089,Pe188,Pe177,Pe174
+#elif __IS_COMPILER_GCC__
+#   pragma GCC diagnostic push
+#   pragma GCC diagnostic ignored "-Wformat="
+#   pragma GCC diagnostic ignored "-Wpedantic"
+#   pragma GCC diagnostic ignored "-Wunused-function"
+#   pragma GCC diagnostic ignored "-Wunused-variable"
+#   pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
 #endif
 
 /*============================ MACROS ========================================*/
-#if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
+#if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
 
-
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
-
 
 
 #else
 #   error Unsupported colour depth!
 #endif
 
-#undef this
-#define this  (*ptThis)
-
 /*============================ MACROFIED FUNCTIONS ===========================*/
+#undef this
+#define this (*ptThis)
+
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 
-
-extern const arm_2d_tile_t c_tileQuaterArcMask;
-extern const arm_2d_tile_t c_tileWhiteDotMask;
+extern 
+const arm_2d_tile_t c_tileListCoverMask;
 /*============================ PROTOTYPES ====================================*/
-
 /*============================ LOCAL VARIABLES ===============================*/
-
-
 /*============================ IMPLEMENTATION ================================*/
 
-ARM_NONNULL(1)
-void __progress_wheel_init( progress_wheel_t *ptThis, 
-                            const progress_wheel_cfg_t *ptCFG)
-{
-    assert(NULL != ptThis);
-    assert(NULL != ptCFG);
 
-    memset(ptThis, 0, sizeof(progress_wheel_t));
-    this.tCFG = *ptCFG;
+static void __on_scene_fitness_depose(arm_2d_scene_t *ptScene)
+{
+    user_scene_fitness_t *ptThis = (user_scene_fitness_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
     
-    if (NULL == this.tCFG.ptileArcMask) {
-        this.tCFG.ptileArcMask = &c_tileQuaterArcMask;
-    }
-    if (NULL == this.tCFG.ptileDotMask) {
-        this.tCFG.ptileDotMask = &c_tileWhiteDotMask;
-        this.tCFG.tDotColour = GLCD_COLOR_WHITE;
+    ptScene->ptPlayer = NULL;
+    
+    arm_foreach(int64_t,this.lTimestamp, ptItem) {
+        *ptItem = 0;
     }
 
-    if (0 == this.tCFG.iWheelDiameter) {
-        this.tCFG.iWheelDiameter = this.tCFG.ptileArcMask->tRegion.tSize.iWidth;
+    progress_wheel_depose(&this.tWheel);
+
+    if (!this.bUserAllocated) {
+        free(ptScene);
+    }
+}
+
+/*----------------------------------------------------------------------------*
+ * Scene fitness                                                                    *
+ *----------------------------------------------------------------------------*/
+
+static void __on_scene_fitness_background_start(arm_2d_scene_t *ptScene)
+{
+    user_scene_fitness_t *ptThis = (user_scene_fitness_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+}
+
+static void __on_scene_fitness_background_complete(arm_2d_scene_t *ptScene)
+{
+    user_scene_fitness_t *ptThis = (user_scene_fitness_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+}
+
+
+static void __on_scene_fitness_frame_start(arm_2d_scene_t *ptScene)
+{
+    user_scene_fitness_t *ptThis = (user_scene_fitness_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+}
+
+static void __on_scene_fitness_frame_complete(arm_2d_scene_t *ptScene)
+{
+    user_scene_fitness_t *ptThis = (user_scene_fitness_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
+        numer_list_move_selection(&this.tNumberList[0], 100, 10000);
+    }
+    
+    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[1])) {
+        numer_list_move_selection(&this.tNumberList[1], 10, 10000);
+    }
+    
+    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[2])) {
+        numer_list_move_selection(&this.tNumberList[2], 1, 10000);
+    }
+    
+    if (arm_2d_helper_is_time_out(10, &this.lTimestamp[3])) {
+        this.iProgress += 2;
+        if (this.iProgress > 1000) {
+            this.iProgress = 0;
+        }
     }
 
-    arm_foreach(arm_2d_op_fill_cl_msk_opa_trans_t, this.tOP, ptItem) {
-        ARM_2D_OP_INIT(*ptItem);
+    /* switch to next scene after 3s */
+    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[4])) {
+        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
+}
 
-    progress_wheel_set_diameter(ptThis, ptCFG->iWheelDiameter);
+static void __before_scene_fitness_switching_out(arm_2d_scene_t *ptScene)
+{
+    user_scene_fitness_t *ptThis = (user_scene_fitness_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
 
+}
 
-    /* initialize transform helper */
-    arm_2d_helper_transform_init(&this.tTransHelper,
-                                 (arm_2d_op_t *)&this.tOP[5],
-                                 0.01f,
-                                 0.1f,
-                                 this.tCFG.ppList);
+static
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_fitness_handler)
+{
+    user_scene_fitness_t *ptThis = (user_scene_fitness_t *)pTarget;
+    ARM_2D_UNUSED(ptTile);
+    ARM_2D_UNUSED(bIsNewFrame);
+    
+    arm_2d_canvas(ptTile, __top_canvas) {
+    /*-----------------------draw the foreground begin-----------------------*/
+        
+        /* following code is just a demo, you can remove them */
+        
+        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
 
-    arm_2d_region_list_item_t **ppDirtyRegionList = this.tCFG.ppList;
+    #if __FITNESS_CFG_NEBULA_ENABLE__
+        /* show nebula */
+        dynamic_nebula_show(&this.tNebula, 
+                            ptTile, 
+                            &__top_canvas, 
+                            GLCD_COLOR_WHITE, 
+                            255,
+                            bIsNewFrame);
+    #endif
 
-    if (NULL != ppDirtyRegionList) {
-        while(NULL != (*ppDirtyRegionList)) {
-            ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
+        arm_2d_align_centre(__top_canvas, 240, 240 ) {
+            progress_wheel_show(&this.tWheel,
+                                ptTile, 
+                                &__centre_region,       
+                                this.iProgress,         /* progress 0~1000 */
+                                128,                    /* opacity */
+                                bIsNewFrame);
+            arm_2d_op_wait_async(NULL);
         }
 
-        /* add dirty region items to the list */
-        (*ppDirtyRegionList) = &this.tDirtyRegion;
-        this.tDirtyRegion.ptNext = NULL;
+        arm_2d_align_centre(__top_canvas, 84, 80 ) {
+            arm_2d_layout(__centre_region) {
 
-        this.tDirtyRegion.bIgnore = true;
-    }
-}
+                __item_line_horizontal(28, 80) {
+                    while(arm_fsm_rt_cpl != number_list_show(   
+                                                    &this.tNumberList[2], 
+                                                    ptTile, 
+                                                    &__item_region, 
+                                                    bIsNewFrame));
+                }
 
+                __item_line_horizontal(28, 80) {
+                    while(arm_fsm_rt_cpl != number_list_show(   
+                                                    &this.tNumberList[1], 
+                                                    ptTile, 
+                                                    &__item_region, 
+                                                    bIsNewFrame));
+                }
 
-ARM_NONNULL(1)
-void progress_wheel_set_diameter(progress_wheel_t *ptThis, 
-                                int16_t iDiameter)
-{
-    assert(NULL != ptThis);
-
-    this.fScale = (float)(  (float)iDiameter 
-                         /  ((float)this.tCFG.ptileArcMask->tRegion.tSize.iWidth *2.0f));
-    this.tCFG.iWheelDiameter = iDiameter;
-}
-
-ARM_NONNULL(1)
-void progress_wheel_depose(progress_wheel_t *ptThis)
-{
-    arm_foreach(arm_2d_op_fill_cl_msk_opa_trans_t, this.tOP, ptItem) {
-        ARM_2D_OP_DEPOSE(*ptItem);
-    }
-
-    arm_2d_helper_transform_depose(&this.tTransHelper);
-
-    arm_2d_region_list_item_t **ppDirtyRegionList = this.tCFG.ppList;
-
-    if (NULL == ppDirtyRegionList) {
-        return ;
-    }
-
-    while(NULL != (*ppDirtyRegionList)) {
-
-        /* remove the dirty region from the user dirty region list */
-        if ((*ppDirtyRegionList) == &this.tDirtyRegion) {
-            (*ppDirtyRegionList) = this.tDirtyRegion.ptNext;
-            this.tDirtyRegion.ptNext = NULL;
-            break;
+                __item_line_horizontal(28, 80) {
+                    while(arm_fsm_rt_cpl != number_list_show(   
+                                                    &this.tNumberList[0], 
+                                                    ptTile, 
+                                                    &__item_region, 
+                                                    bIsNewFrame));
+                }
+            }
         }
+        /* draw text at the top-left corner */
 
-        ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
+        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+        arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
+        arm_lcd_text_set_draw_region(NULL);
+        arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
+        arm_lcd_text_location(0,0);
+        arm_lcd_puts("Scene fitness");
+
+    /*-----------------------draw the foreground end  -----------------------*/
     }
+    arm_2d_op_wait_async(NULL);
+
+    return arm_fsm_rt_cpl;
 }
 
-ARM_NONNULL(1,2)
-void progress_wheel_show(   progress_wheel_t *ptThis,
-                            const arm_2d_tile_t *ptTarget,
-                            const arm_2d_region_t *ptRegion,
-                            int16_t iProgress,
-                            uint8_t chOpacity,
-                            bool bIsNewFrame)
+static 
+IMPL_PFB_ON_DRAW(__arm_2d_number_list_draw_cover)
 {
+    ARM_2D_UNUSED(bIsNewFrame);
+    
+    number_list_t *ptThis = (number_list_t *)pTarget;
 
-    enum {
-        START,
-        WAIT_CHANGE,
-        DRAW_LAST_QUADRANT,
-        DRAW_WHOLE_WHEEL,
-        DRAW_CURVE,
-        DRAW_START_POINT,
-        DRAW_END_POINT,
-        FINISH,
+    arm_2d_canvas(ptTile, __canvas) {
+
+        arm_2d_align_centre(__canvas, c_tileListCoverMask.tRegion.tSize) {
+            arm_2d_fill_colour_with_mask(   ptTile, 
+                                            &__centre_region, 
+                                            &c_tileListCoverMask, 
+                                            (__arm_2d_color_t){GLCD_COLOR_BLACK});
+        }
+    }
+
+    arm_2d_op_wait_async(NULL);
+    
+    return arm_fsm_rt_cpl;
+}
+
+ARM_NONNULL(1)
+user_scene_fitness_t *__arm_2d_scene_fitness_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_fitness_t *ptThis)
+{
+    bool bUserAllocated = false;
+    assert(NULL != ptDispAdapter);
+
+#if __FITNESS_CFG_NEBULA_ENABLE__
+    /*! define dirty regions */
+    IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
+
+        /* a dirty region to be specified at runtime*/
+        ADD_REGION_TO_LIST(s_tDirtyRegions,
+            0  /* initialize at runtime later */
+        ),
+        
+        /* add the last region:
+         * it is the top left corner for text display 
+         */
+        ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
+            .tLocation = {
+                .iX = 0,
+                .iY = 0,
+            },
+            .tSize = {
+                .iWidth = 0,
+                .iHeight = 8,
+            },
+        ),
+
+    END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
+
+    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
+
+    /* get the screen region */
+    arm_2d_region_t tScreen
+        = arm_2d_helper_pfb_get_display_area(
+            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
+    
+    /* initialise dirty region 0 at runtime
+     * this demo shows that we create a region in the centre of a screen(320*240)
+     * for a image stored in the tile c_tileCMSISLogoMask
+     */
+    arm_2d_align_centre(tScreen, 240, 240) {
+        s_tDirtyRegions[0].tRegion = __centre_region;
+    }
+
+    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].tRegion.tSize.iWidth 
+                                                        = tScreen.tSize.iWidth;
+#else
+    /*! define dirty regions */
+    IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
+
+        /* a dirty region to be specified at runtime*/
+        ADD_REGION_TO_LIST(s_tDirtyRegions,
+            0  /* initialize at runtime later */
+        ),
+        
+        /* add the last region:
+         * it is the top left corner for text display 
+         */
+        ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
+            .tLocation = {
+                .iX = 0,
+                .iY = 0,
+            },
+            .tSize = {
+                .iWidth = 0,
+                .iHeight = 8,
+            },
+        ),
+
+    END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
+
+    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
+
+    /* get the screen region */
+    arm_2d_region_t tScreen
+        = arm_2d_helper_pfb_get_display_area(
+            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
+    
+    /* initialise dirty region 0 at runtime
+     * this demo shows that we create a region in the centre of a screen(320*240)
+     * for a image stored in the tile c_tileCMSISLogoMask
+     */
+    arm_2d_align_centre(tScreen, 84, 80) {
+        s_tDirtyRegions[0].tRegion = __centre_region;
+    }
+
+    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].tRegion.tSize.iWidth 
+                                                        = tScreen.tSize.iWidth;
+#endif
+
+    if (NULL == ptThis) {
+        ptThis = (user_scene_fitness_t *)malloc(sizeof(user_scene_fitness_t));
+        assert(NULL != ptThis);
+        if (NULL == ptThis) {
+            return NULL;
+        }
+    } else {
+        bUserAllocated = true;
+    }
+
+    memset(ptThis, 0, sizeof(user_scene_fitness_t));
+
+    *ptThis = (user_scene_fitness_t){
+        .use_as__arm_2d_scene_t = {
+            /* Please uncommon the callbacks if you need them
+             */
+            .fnScene        = &__pfb_draw_scene_fitness_handler,
+            .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
+            
+
+            //.fnOnBGStart    = &__on_scene_fitness_background_start,
+            //.fnOnBGComplete = &__on_scene_fitness_background_complete,
+            .fnOnFrameStart = &__on_scene_fitness_frame_start,
+            //.fnBeforeSwitchOut = &__before_scene_fitness_switching_out,
+            .fnOnFrameCPL   = &__on_scene_fitness_frame_complete,
+            .fnDepose       = &__on_scene_fitness_depose,
+        },
+        .bUserAllocated = bUserAllocated,
     };
 
-    const arm_2d_tile_t *ptileArcMask = this.tCFG.ptileArcMask;
-    COLOUR_INT tWheelColour = this.tCFG.tWheelColour;
-
-    iProgress = MIN(1000, iProgress);
-
-    int_fast8_t chCurrentQuadrant = iProgress / 250;
-
-    if (this.chState == START && bIsNewFrame) {
-        /* initialize fsm */
-        this.chState = WAIT_CHANGE;
-        this.chLastQuadrant = 0;
-        this.chState = DRAW_WHOLE_WHEEL;
-    }
-
-    arm_2d_container(ptTarget, __wheel, ptRegion) {
+    progress_wheel_init(&this.tWheel, 
+                        240, 
+                        GLCD_COLOR_GREEN,
+                        GLCD_COLOR_WHITE,
+                        &this.use_as__arm_2d_scene_t.ptDirtyRegion);
 
 
-        if ( WAIT_CHANGE == this.chState) {
-            if (this.iLastProgress != iProgress) {
-                this.iLastProgress = iProgress;
-
-                
-
-                int_fast8_t chQuadrantChange = chCurrentQuadrant - this.chLastQuadrant;
-                chQuadrantChange = ABS(chQuadrantChange);
-
-                if (1000 == iProgress && 3 == this.chLastQuadrant) {
-                    this.chState = DRAW_CURVE;
-                } else if (chQuadrantChange < 1) {
-                    /* content changed */
-                    this.chState = DRAW_CURVE;
-                } else if (chQuadrantChange == 1) {
-                    this.chState = DRAW_LAST_QUADRANT;
-                } else {
-                    this.chLastQuadrant = chCurrentQuadrant;
-                    this.chState = DRAW_WHOLE_WHEEL;
-                }
-            }
-        }
-
-        if (DRAW_WHOLE_WHEEL == this.chState) {
-            this.tDirtyRegion.tRegion = __wheel_canvas;
-            this.tDirtyRegion.tRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(&__wheel, __wheel_canvas.tLocation);
-            this.tDirtyRegion.bIgnore = false;
-
-            this.tDirtyRegion.bUpdated = true;      /* request update */
-            this.chState = FINISH;
-        }
-
-        arm_2d_region_t tRotationRegion = __wheel_canvas;
-        arm_2d_location_t tTargetCentre = {
-            .iX = __wheel_canvas.tLocation.iX + (__wheel_canvas.tSize.iWidth >> 1),
-            .iY = __wheel_canvas.tLocation.iY + (__wheel_canvas.tSize.iHeight >> 1),
+    /* initialize number list */
+    do {
+        number_list_cfg_t tCFG = {
+            .hwCount = 10,
+            .nStart = 0,
+            .iDelta = 1,
+            .tFontColour = GLCD_COLOR_WHITE,
+            .tBackgroundColour = GLCD_COLOR_BLACK,
+            .chNextPadding = 3,
+            .chPrviousePadding = 3,
+            .tListSize = {
+                .iHeight = 80,
+                .iWidth = 28,
+            },
+            .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY,
+            /* draw list cover */
+            .fnOnDrawListCover = &__arm_2d_number_list_draw_cover,
         };
-        
-        arm_2d_location_t tCentre = {
-            .iX = ptileArcMask->tRegion.tSize.iWidth - 1,
-            .iY = ptileArcMask->tRegion.tSize.iHeight - 1,
+        number_list_init(&this.tNumberList[0], &tCFG);
+        number_list_init(&this.tNumberList[1], &tCFG);
+    } while(0);
+    
+    /* initialize number list */
+    do {
+        number_list_cfg_t tCFG = {
+            .hwCount = 6,
+            .nStart = 0,
+            .iDelta = 1,
+            .tFontColour = GLCD_COLOR_WHITE,
+            .tBackgroundColour = GLCD_COLOR_BLACK,
+            .chNextPadding = 3,
+            .chPrviousePadding = 3,
+            .tListSize = {
+                .iHeight = 80,
+                .iWidth = 28,
+            },
+            .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY,
+            /* draw list cover */
+            .fnOnDrawListCover = &__arm_2d_number_list_draw_cover,
         };
+        number_list_init(&this.tNumberList[2], &tCFG);
+    } while(0);
+    
+    numer_list_move_selection(&this.tNumberList[0], 100,   10000);
+    numer_list_move_selection(&this.tNumberList[1], 10,    10000);
+    numer_list_move_selection(&this.tNumberList[2], 1,     10000);
 
-        if (bIsNewFrame) {
-            this.fAngle = ARM_2D_ANGLE((float)iProgress * 36.0f / 100.0f);
+#if __FITNESS_CFG_NEBULA_ENABLE__
+    do {
+        dynamic_nebula_cfg_t tCFG = {
+            .fSpeed = 1.0f,
+            .iRadius = 90,
+            .iVisibleRingWidth = 50,
+            .hwParticleCount = dimof(this.tParticles),
+            .ptParticles = this.tParticles,
+        };
+        dynamic_nebula_init(&this.tNebula, &tCFG);
+    } while(0);
+#endif
 
-            /* update helper with new values*/
-            arm_2d_helper_transform_update_value(&this.tTransHelper, this.fAngle, 1.0f);
+    arm_2d_scene_player_append_scenes(  ptDispAdapter, 
+                                        &this.use_as__arm_2d_scene_t, 
+                                        1);
 
-            /* call helper's on-frame-begin event handler */
-            arm_2d_helper_transform_on_frame_begin(&this.tTransHelper);
-        }
-
-        tRotationRegion.tSize.iWidth = ((__wheel_canvas.tSize.iWidth + 1) >> 1);
-        tRotationRegion.tSize.iHeight = ((__wheel_canvas.tSize.iHeight + 1) >> 1);
-
-        if(this.fAngle > ARM_2D_ANGLE(90.0f)){
-            arm_2d_region_t tQuater = tRotationRegion;
-            tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
-
-            arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                            &this.tOP[3],
-                                            ptileArcMask,
-                                            &__wheel,
-                                            &tQuater,
-                                            tCentre,
-                                            ARM_2D_ANGLE(90.0f),
-                                            this.fScale,
-                                            tWheelColour,
-                                            chOpacity,
-                                            &tTargetCentre);
-
-            arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[3]);
-
-            /* update dirty region */
-            if (DRAW_LAST_QUADRANT == this.chState && this.chLastQuadrant == 0) {
-                /* wait idle */
-                if (false == this.tDirtyRegion.bUpdated) {
-                    this.tDirtyRegion.tRegion = tQuater;
-                    this.tDirtyRegion.tRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(&__wheel, tQuater.tLocation);
-                    this.tDirtyRegion.bIgnore = false;
-                    this.tDirtyRegion.bUpdated = true;      /* request update */
-
-                    this.chLastQuadrant = chCurrentQuadrant;
-                    this.chState = DRAW_CURVE;
-                }
-            }
-        }
-
-        if(this.fAngle > ARM_2D_ANGLE(180.0f)){
-            arm_2d_region_t tQuater = tRotationRegion;
-            tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
-            tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
-
-
-            arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                            &this.tOP[1],
-                                            ptileArcMask,
-                                            &__wheel,
-                                            &tQuater,
-                                            tCentre,
-                                            ARM_2D_ANGLE(180.0f),
-                                            this.fScale,
-                                            tWheelColour,
-                                            chOpacity,
-                                            &tTargetCentre);
-            
-            arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[1]);
-
-            /* update dirty region */
-            if (DRAW_LAST_QUADRANT == this.chState && this.chLastQuadrant == 1) {
-                /* wait idle */
-                if (false == this.tDirtyRegion.bUpdated) {
-                    this.tDirtyRegion.tRegion = tQuater;
-                    this.tDirtyRegion.tRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(&__wheel, tQuater.tLocation);
-                    this.tDirtyRegion.bIgnore = false;
-                    this.tDirtyRegion.bUpdated = true;      /* request update */
-
-                    this.chLastQuadrant = chCurrentQuadrant;
-                    this.chState = DRAW_CURVE;
-                }
-            }
-
-        }
-
-        if(this.fAngle > ARM_2D_ANGLE(270.0)){
-            arm_2d_region_t tQuater = tRotationRegion;
-            tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
-
-            arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                            &this.tOP[2],
-                                            ptileArcMask,
-                                            &__wheel,
-                                            &tQuater,
-                                            tCentre,
-                                            ARM_2D_ANGLE(270.0f),
-                                            this.fScale,
-                                            tWheelColour,
-                                            chOpacity,
-                                            &tTargetCentre);
-                
-            arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[2]);
-
-            /* update dirty region */
-            if (DRAW_LAST_QUADRANT == this.chState && this.chLastQuadrant == 2) {
-                /* wait idle */
-                if (false == this.tDirtyRegion.bUpdated) {
-                    this.tDirtyRegion.tRegion = tQuater;
-                    this.tDirtyRegion.tRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(&__wheel, tQuater.tLocation);
-                    this.tDirtyRegion.bIgnore = false;
-                    this.tDirtyRegion.bUpdated = true;      /* request update */
-
-                    this.chLastQuadrant = chCurrentQuadrant;
-                    this.chState = DRAW_CURVE;
-                }
-            }
-
-        } 
-
-        do {
-            arm_2d_region_t tQuater = tRotationRegion;
-            if (this.fAngle < ARM_2D_ANGLE(90)) {
-                tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
-            } else if (this.fAngle < ARM_2D_ANGLE(180)) {
-                tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
-                tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
-            } else if (this.fAngle < ARM_2D_ANGLE(270)) {
-                tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
-            }
-
-            arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                            &this.tOP[0],
-                                            ptileArcMask,
-                                            &__wheel,
-                                            &tQuater,
-                                            tCentre,
-                                            this.fAngle,
-                                            this.fScale,
-                                            tWheelColour,
-                                            chOpacity,
-                                            &tTargetCentre);
-                
-            arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[0]);
-
-            /* update dirty region */
-            if (DRAW_CURVE == this.chState) {
-                /* wait idle */
-                if (false == this.tDirtyRegion.bUpdated) {
-                    this.tDirtyRegion.tRegion = tQuater;
-                    this.tDirtyRegion.tRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(&__wheel, tQuater.tLocation);
-                    this.tDirtyRegion.bIgnore = false;
-
-                    this.tDirtyRegion.bUpdated = true;      /* request update */
-                    this.chState = DRAW_START_POINT;
-                }
-            }
-        } while(0);
-
-        /* draw the starting point */
-        const arm_2d_tile_t *ptileDotMask = this.tCFG.ptileDotMask;
-        if (NULL != ptileDotMask) {
-            arm_2d_region_t tQuater = tRotationRegion;
-            arm_2d_location_t tDotCentre = {
-                .iX = (ptileDotMask->tRegion.tSize.iWidth + 1) >> 1,
-                .iY = ptileArcMask->tRegion.tSize.iHeight - 1,
-            };
-
-            /* draw the starting point */
-            arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                            &this.tOP[4],
-                                            ptileDotMask,
-                                            &__wheel,
-                                            &tQuater,
-                                            tDotCentre,
-                                            0.0f,
-                                            this.fScale,
-                                            tWheelColour,
-                                            chOpacity,
-                                            &tTargetCentre);
-                
-            arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[4]);
-
-            if (DRAW_START_POINT == this.chState) {
-                if (false == this.tDirtyRegion.bUpdated) {
-                    this.tDirtyRegion.tRegion = tQuater;
-                    this.tDirtyRegion.tRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(&__wheel, tQuater.tLocation);
-                    this.tDirtyRegion.bIgnore = false;
-
-                    this.tDirtyRegion.bUpdated = true;      /* request update */
-                    this.chState = FINISH;
-                }
-            }
-
-            /* draw the end point */
-            arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                            &this.tOP[5],
-                                            ptileDotMask,
-                                            &__wheel,
-                                            &__wheel_canvas,
-                                            tDotCentre,
-                                            this.fAngle,
-                                            this.fScale,
-                                            tWheelColour,
-                                            255,//chOpacity,
-                                            &tTargetCentre);
-
-            arm_2d_helper_transform_update_dirty_regions(   &this.tTransHelper,
-                                                            &__wheel_canvas,
-                                                            bIsNewFrame);
-
-            arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[5]);
-
-            if (this.tCFG.tDotColour != this.tCFG.tWheelColour) {
-
-                tDotCentre.iY = (float)tDotCentre.iY * 1.235f;
-
-                /* draw the white dot */
-                arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                                &this.tOP[6],
-                                                ptileDotMask,
-                                                &__wheel,
-                                                &__wheel_canvas,
-                                                tDotCentre,
-                                                this.fAngle,
-                                                this.fScale * 0.80f,
-                                                this.tCFG.tDotColour,
-                                                255,
-                                                &tTargetCentre);
-
-                arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[6]);
-            }
-        }
-    }
-
-    if (FINISH == this.chState) {
-        if (false == this.tDirtyRegion.bUpdated) {
-            this.tDirtyRegion.bIgnore = true;
-            this.chState = WAIT_CHANGE;
-        }
-    }
+    return ptThis;
 }
 
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif
+
+
