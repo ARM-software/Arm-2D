@@ -200,7 +200,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
     /* draw verion info on the bottom right corner */
     arm_lcd_text_set_colour(GLCD_COLOR_LIGHT_GREY, GLCD_COLOR_WHITE);
     arm_lcd_text_location( (__DISP%Instance%_CFG_SCEEN_HEIGHT__ + 7) / 8 - 2, 
-                            (__DISP%Instance%_CFG_SCEEN_WIDTH__ / 6) - 22);
+                            (__DISP%Instance%_CFG_SCEEN_WIDTH__ / 6) - 12);
     arm_lcd_printf("v" 
                     ARM_TO_STRING(ARM_2D_VERSION_MAJOR)
                     "."
