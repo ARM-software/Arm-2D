@@ -30,6 +30,7 @@
 #endif
 
 #include "arm_2d_scene_meter.h"
+#include "arm_2d_scene_fitness.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -53,6 +54,11 @@
 #endif
 
 /*============================ MACROS ========================================*/
+
+#ifndef LCD_TARGET_FPS
+#   define LCD_TARGET_FPS       30
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -122,6 +128,11 @@ void scene_meter_loader(void)
     arm_2d_scene_meter_init(&DISP0_ADAPTER);
 }
 
+void scene_fitness_loader(void) 
+{
+    arm_2d_scene_fitness_init(&DISP0_ADAPTER);
+}
+
 void scene0_loader(void) 
 {
     arm_2d_scene0_init(&DISP0_ADAPTER);
@@ -167,6 +178,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene3_loader,
     scene4_loader,
     scene2_loader,
+    scene_fitness_loader,
 };
 
 
@@ -226,9 +238,19 @@ int main (void)
     
     arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
 #endif
-
+    bool bRefreshLCD = false;
     while (1) {
-        disp_adapter0_task();
+    
+        /* lock framerate */
+        if (arm_2d_helper_is_time_out(1000 / LCD_TARGET_FPS)) {
+            bRefreshLCD = true;
+        }
+        
+        if (bRefreshLCD) {
+            if (arm_fsm_rt_cpl == disp_adapter0_task()) {
+                bRefreshLCD = false;
+            }
+        }
     }
 }
 

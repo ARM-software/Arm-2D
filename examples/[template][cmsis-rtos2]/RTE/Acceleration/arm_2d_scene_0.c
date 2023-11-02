@@ -274,7 +274,8 @@ user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter,
         s_tDirtyRegions[0].tRegion = __centre_region;
     }
 
-    s_tDirtyRegions[1].tRegion.tSize.iWidth = tScreen.tSize.iWidth;
+    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].tRegion.tSize.iWidth 
+                                                        = tScreen.tSize.iWidth;
     
     if (NULL == ptThis) {
         ptThis = (user_scene_0_t *)malloc(sizeof(user_scene_0_t));
@@ -304,6 +305,11 @@ user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter,
         },
         .bUserAllocated = bUserAllocated,
     };
+
+    /* ------------   initialize members of user_scene_0_t begin ---------------*/
+
+
+    /* ------------   initialize members of user_scene_0_t end   ---------------*/
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
                                         &this.use_as__arm_2d_scene_t, 
