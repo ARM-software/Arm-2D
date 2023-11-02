@@ -21,7 +21,7 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        24. Oct 2023
+ * $Date:        02. Nov 2023
  * $Revision:    V.1.6.4
  *
  * Target Processor:  Cortex-M cores
@@ -472,6 +472,7 @@ typedef struct arm_2d_region_list_item_t {
     arm_2d_region_t tRegion;                    //!< the region
     uint8_t         bIgnore     : 1;            //!< ignore this region
     uint8_t         bUpdated    : 1;            //!< this region item has been updated, PFB helper should refresh it again.
+    uint8_t                     : 6;
 }arm_2d_region_list_item_t;
 
 /*!

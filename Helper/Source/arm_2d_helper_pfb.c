@@ -21,7 +21,7 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        24. Oct 2023
+ * $Date:        02. Nov 2023
  * $Revision:    V.1.6.4
  *
  * Target Processor:  Cortex-M cores
@@ -1447,9 +1447,10 @@ void arm_2d_helper_transform_init(arm_2d_helper_transform_t *ptThis,
         ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
     }
 
-    /* add dirty region items to the list */
-    this.tDirtyRegions[1].ptNext = (*ppDirtyRegionList);
+    /* add dirty region item to the list */
     (*ppDirtyRegionList) = &this.tDirtyRegions[0];
+    this.tDirtyRegions[1].ptNext = NULL;
+    
 
 }
 
