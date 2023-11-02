@@ -117,7 +117,14 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
 {
     assert(NULL!= ptThis);
 
+
     arm_2d_container(ptTile, __control, ptRegion) {
+
+        arm_2d_region_t tValidRegionInRoot;
+        const arm_2d_tile_t *ptRootTile = arm_2d_tile_get_root(
+                                                            &__control, 
+                                                            &tValidRegionInRoot, 
+                                                            NULL);
 
         arm_2d_align_centre(__control_canvas, this.tCFG.iRadius * 2, this.tCFG.iRadius * 2) {
 
@@ -140,14 +147,18 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
                         .iY = tCentre.iY + (int16_t)fY,
                     };
 
-                uint16_t hwOpacity = (uint16_t)((float)(ptParticle->fOffset * this.fOpacityStep) * chOpacity) >> 8;
+                if (arm_2d_is_point_inside_region(  &tValidRegionInRoot, 
+                                                    &tParicleLocation)) {
 
-                arm_2d_draw_point(  &__control, 
-                                    tParicleLocation,
-                                    tColour,
-                                    (uint8_t)hwOpacity);
-                
-                arm_2d_op_wait_async(NULL);
+                    uint16_t hwOpacity = (uint16_t)((float)(ptParticle->fOffset * this.fOpacityStep) * chOpacity) >> 8;
+
+                    arm_2d_draw_point(  &__control, 
+                                        tParicleLocation,
+                                        tColour,
+                                        (uint8_t)hwOpacity);
+                    
+                    arm_2d_op_wait_async(NULL);
+                }
 
                 if (bIsNewFrame) {
                     ptParticle->fOffset -= this.tCFG.fSpeed;
