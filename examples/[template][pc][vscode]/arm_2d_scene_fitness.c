@@ -147,16 +147,23 @@ static void __on_scene_fitness_frame_complete(arm_2d_scene_t *ptScene)
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[2])) {
         numer_list_move_selection(&this.tNumberList[2], 1, 10000);
     }
-    
-    if (arm_2d_helper_is_time_out(10, &this.lTimestamp[3])) {
-        this.iProgress += 2;
-        if (this.iProgress > 1000) {
-            this.iProgress = 0;
-        }
-    }
 
-    /* switch to next scene after 3s */
-    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[4])) {
+    do {
+        int32_t nResult;
+        if (arm_2d_helper_time_liner_slider(0, 
+                                            1000, 
+                                            15000, 
+                                            &nResult, 
+                                            &this.lTimestamp[3])) {
+            this.lTimestamp[3] = 0;
+        }
+
+        this.iProgress = nResult;
+    } while(0);
+
+
+    /* switch to next scene after 20s */
+    if (arm_2d_helper_is_time_out(20000, &this.lTimestamp[4])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 }
