@@ -17,13 +17,13 @@
  */
 
 /*============================ INCLUDES ======================================*/
-#define __CONTROL_TEMPLATE_IMPLEMENT__
+#define __<CONTROL_NAME>_IMPLEMENT__
 
 #include "./arm_extra_controls.h"
 #include "./__common.h"
 #include "arm_2d.h"
 #include "arm_2d_helper.h"
-#include "user_control_template.h"
+#include "user_<control_name>.h"
 #include <assert.h>
 #include <string.h>
 
@@ -68,23 +68,26 @@
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
-ARM_NONNULL(1)
-void control_template_init(user_control_template_t *ptThis)
+ARM_NONNULL(1,2)
+void <control_name>_init( user_<control_name>_t *ptThis,
+                          user_<control_name>_cfg_t *ptCFG);
 {
     assert(NULL!= ptThis);
-    memset(ptThis, 0, sizeof(user_control_template_t));
+    memset(ptThis, 0, sizeof(user_<control_name>_t));
+    this.tCFG = *ptCFG;
+
 
 }
 
 ARM_NONNULL(1)
-void control_template_depose( user_control_template_t *ptThis)
+void <control_name>_depose( user_<control_name>_t *ptThis)
 {
     assert(NULL != ptThis);
     
 }
 
 ARM_NONNULL(1)
-void control_template_show( user_control_template_t *ptThis,
+void <control_name>_show( user_<control_name>_t *ptThis,
                             const arm_2d_tile_t *ptTile, 
                             const arm_2d_region_t *ptRegion, 
                             bool bIsNewFrame)

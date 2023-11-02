@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-#ifndef __CONTROL_TEMPLATE_H__
-#define __CONTROL_TEMPLATE_H__
+#ifndef __<CONTROL_NAME>_H__
+#define __<CONTROL_NAME>_H__
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
@@ -37,11 +37,11 @@ extern "C" {
 /*============================ MACROS ========================================*/
 
 /* OOC header, please DO NOT modify  */
-#ifdef __CONTROL_TEMPLATE_IMPLEMENT__
-#   undef   __CONTROL_TEMPLATE_IMPLEMENT__
+#ifdef __<CONTROL_NAME>_IMPLEMENT__
+#   undef   __<CONTROL_NAME>_IMPLEMENT__
 #   define  __ARM_2D_IMPL__
-#elif defined(__CONTROL_TEMPLATE_INHERIT__)
-#   undef   __CONTROL_TEMPLATE_INHERIT__
+#elif defined(__<CONTROL_NAME>_INHERIT__)
+#   undef   __<CONTROL_NAME>_INHERIT__
 #   define __ARM_2D_INHERIT__
 #endif
 #include "arm_2d_utils.h"
@@ -50,14 +50,21 @@ extern "C" {
 /*============================ TYPES =========================================*/
 
 
+typedef struct user_<control_name>_cfg_t {
+
+} user_<control_name>_cfg_t;
+
 /*!
  * \brief a user class for user defined control
  */
-typedef struct user_control_template_t user_control_template_t;
+typedef struct user_<control_name>_t user_<control_name>_t;
 
-struct user_control_template_t {
+struct user_<control_name>_t {
 
 ARM_PRIVATE(
+
+    user_<control_name>_cfg_t tCFG;
+
     /* place your private member here, following two are examples */
     int64_t lTimestamp[1];
     uint8_t chOpacity;
@@ -71,15 +78,16 @@ ARM_PRIVATE(
 
 extern
 ARM_NONNULL(1)
-void control_template_init( user_control_template_t *ptThis);
+void <control_name>_init( user_<control_name>_t *ptThis,
+                          user_<control_name>_cfg_t *ptCFG);
 
 extern
 ARM_NONNULL(1)
-void control_template_depose( user_control_template_t *ptThis);
+void <control_name>_depose( user_<control_name>_t *ptThis);
 
 extern
 ARM_NONNULL(1)
-void control_template_show( user_control_template_t *ptThis,
+void <control_name>_show( user_<control_name>_t *ptThis,
                             const arm_2d_tile_t *ptTile, 
                             const arm_2d_region_t *ptRegion, 
                             bool bIsNewFrame);

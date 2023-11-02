@@ -199,11 +199,11 @@
             <file category="other"       name="tools/README.md"                                 attr="config" version="1.2.1"/>
             
             <!-- code template -->
-            <file category="header"      name="examples/common/controls/template/user_control_template.h"   attr="template"  select="User Control Template" version="1.0.0"/>
-            <file category="sourceC"     name="examples/common/controls/template/user_control_template.c"   attr="template"  select="User Control Template" version="1.0.0"/>
+            <file category="header"      name="examples/common/controls/template/user_control_template.h"   attr="template"  select="User Control Template" version="1.1.0"/>
+            <file category="sourceC"     name="examples/common/controls/template/user_control_template.c"   attr="template"  select="User Control Template" version="1.1.0"/>
             
-            <file category="sourceC"     name="Helper/Source/template/arm_2d_scene_template.c"  attr="template"  select="User Scene Template"   version="1.1.11" />
-            <file category="header"      name="Helper/Include/template/arm_2d_scene_template.h" attr="template"  select="User Scene Template"   version="1.1.11" />
+            <file category="sourceC"     name="Helper/Source/template/arm_2d_scene_template.c"  attr="template"  select="User Scene Template"   version="1.1.12" />
+            <file category="header"      name="Helper/Include/template/arm_2d_scene_template.h" attr="template"  select="User Scene Template"   version="1.1.12" />
 
           </files>
           
