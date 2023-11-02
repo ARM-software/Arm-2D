@@ -977,70 +977,71 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l00868" name="l00868"></a><span class="lineno">  868</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00869" name="l00869"></a><span class="lineno">  869</span><span class="comment"> * \brief update the dirty region after a transform operation</span></div>
 <div class="line"><a id="l00870" name="l00870"></a><span class="lineno">  870</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
-<div class="line"><a id="l00871" name="l00871"></a><span class="lineno">  871</span><span class="comment"> * \param[in] bIsNewFrame whether this is a new frame</span></div>
-<div class="line"><a id="l00872" name="l00872"></a><span class="lineno">  872</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00873" name="l00873"></a><span class="lineno">  873</span>extern</div>
-<div class="line"><a id="l00874" name="l00874"></a><span class="lineno">  874</span>ARM_NONNULL(1,2)</div>
-<div class="line"><a id="l00875" name="l00875"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga938c015954225ba6c149498b984accce">  875</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga938c015954225ba6c149498b984accce" title="update the dirty region after a transform operation">arm_2d_helper_transform_update_dirty_regions</a>(</div>
-<div class="line"><a id="l00876" name="l00876"></a><span class="lineno">  876</span>                                    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis,</div>
-<div class="line"><a id="l00877" name="l00877"></a><span class="lineno">  877</span>                                    const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptCanvas,</div>
-<div class="line"><a id="l00878" name="l00878"></a><span class="lineno">  878</span>                                    <span class="keywordtype">bool</span> bIsNewFrame);</div>
-<div class="line"><a id="l00879" name="l00879"></a><span class="lineno">  879</span> </div>
-<div class="line"><a id="l00880" name="l00880"></a><span class="lineno">  880</span><span class="comment"></span> </div>
-<div class="line"><a id="l00881" name="l00881"></a><span class="lineno">  881</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00882" name="l00882"></a><span class="lineno">  882</span><span class="comment"> * \brief initialize the 3FB (direct mode) service</span></div>
-<div class="line"><a id="l00883" name="l00883"></a><span class="lineno">  883</span><span class="comment"> * \param[in] ptThis the helper service control block</span></div>
-<div class="line"><a id="l00884" name="l00884"></a><span class="lineno">  884</span><span class="comment"> * \param[in] ptCFG the configuration structure</span></div>
-<div class="line"><a id="l00885" name="l00885"></a><span class="lineno">  885</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00886" name="l00886"></a><span class="lineno">  886</span>extern</div>
-<div class="line"><a id="l00887" name="l00887"></a><span class="lineno">  887</span>ARM_NONNULL(1,2)</div>
-<div class="line"><a id="l00888" name="l00888"></a><span class="lineno"><a class="line" href="group__gHelper.html#gab11ea71792f3e2427678f902134e7f87">  888</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#gab11ea71792f3e2427678f902134e7f87" title="initialize the 3FB (direct mode) service">arm_2d_helper_3fb_init</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__3fb__t" title="the control block of the 3FB (direct mode) service">arm_2d_helper_3fb_t</a> *ptThis, </div>
-<div class="line"><a id="l00889" name="l00889"></a><span class="lineno">  889</span>                            const <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__3fb__cfg__t" title="configuration structure for the 3fb (direct mode) helper service">arm_2d_helper_3fb_cfg_t</a> *ptCFG);</div>
-<div class="line"><a id="l00890" name="l00890"></a><span class="lineno">  890</span> </div>
-<div class="line"><a id="l00891" name="l00891"></a><span class="lineno">  891</span><span class="comment"></span> </div>
-<div class="line"><a id="l00892" name="l00892"></a><span class="lineno">  892</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00893" name="l00893"></a><span class="lineno">  893</span><span class="comment"> * \brief report the copy-completion event to the 3FB (direct mode) service</span></div>
-<div class="line"><a id="l00894" name="l00894"></a><span class="lineno">  894</span><span class="comment"> * \note see function __arm_2d_helper_3fb_dma_copy for details</span></div>
-<div class="line"><a id="l00895" name="l00895"></a><span class="lineno">  895</span><span class="comment"> * \param[in] ptThis the helper service control block</span></div>
-<div class="line"><a id="l00896" name="l00896"></a><span class="lineno">  896</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00897" name="l00897"></a><span class="lineno">  897</span>extern</div>
-<div class="line"><a id="l00898" name="l00898"></a><span class="lineno">  898</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00899" name="l00899"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga87c6ea76937f2b83b2e787a24c82c9fb">  899</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga87c6ea76937f2b83b2e787a24c82c9fb" title="report the copy-completion event to the 3FB (direct mode) service">arm_2d_helper_3fb_report_dma_copy_complete</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__3fb__t" title="the control block of the 3FB (direct mode) service">arm_2d_helper_3fb_t</a> *ptThis);</div>
-<div class="line"><a id="l00900" name="l00900"></a><span class="lineno">  900</span><span class="comment"></span> </div>
-<div class="line"><a id="l00901" name="l00901"></a><span class="lineno">  901</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00902" name="l00902"></a><span class="lineno">  902</span><span class="comment"> * \brief get a pointer for flushing</span></div>
-<div class="line"><a id="l00903" name="l00903"></a><span class="lineno">  903</span><span class="comment"> * \param[in] ptThis the helper service control block</span></div>
-<div class="line"><a id="l00904" name="l00904"></a><span class="lineno">  904</span><span class="comment"> * \return void * the address of a framebuffer</span></div>
-<div class="line"><a id="l00905" name="l00905"></a><span class="lineno">  905</span><span class="comment"> * </span></div>
-<div class="line"><a id="l00906" name="l00906"></a><span class="lineno">  906</span><span class="comment"> * \note please only call this function when on vsync event.</span></div>
-<div class="line"><a id="l00907" name="l00907"></a><span class="lineno">  907</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00908" name="l00908"></a><span class="lineno">  908</span>extern</div>
-<div class="line"><a id="l00909" name="l00909"></a><span class="lineno">  909</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00910" name="l00910"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga94384cabe58f5ddc6d8be92349f5ff99">  910</a></span><span class="keywordtype">void</span> * <a class="code hl_function" href="group__gHelper.html#ga94384cabe58f5ddc6d8be92349f5ff99" title="get a pointer for flushing">arm_2d_helper_3fb_get_flush_pointer</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__3fb__t" title="the control block of the 3FB (direct mode) service">arm_2d_helper_3fb_t</a> *ptThis);</div>
-<div class="line"><a id="l00911" name="l00911"></a><span class="lineno">  911</span><span class="comment"></span> </div>
-<div class="line"><a id="l00912" name="l00912"></a><span class="lineno">  912</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00913" name="l00913"></a><span class="lineno">  913</span><span class="comment"> * \brief please do NOT use this function. It is used by the display adapter.</span></div>
-<div class="line"><a id="l00914" name="l00914"></a><span class="lineno">  914</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00915" name="l00915"></a><span class="lineno">  915</span>extern</div>
-<div class="line"><a id="l00916" name="l00916"></a><span class="lineno">  916</span>ARM_NONNULL(1,2)</div>
-<div class="line"><a id="l00917" name="l00917"></a><span class="lineno"><a class="line" href="group__gHelper.html#gad9504b41c541cc4bbee54bfbba49f496">  917</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#gad9504b41c541cc4bbee54bfbba49f496" title="please do NOT use this function. It is used by the display adapter.">__arm_2d_helper_3fb_draw_bitmap</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__3fb__t" title="the control block of the 3FB (direct mode) service">arm_2d_helper_3fb_t</a> *ptThis, </div>
-<div class="line"><a id="l00918" name="l00918"></a><span class="lineno">  918</span>                                     const <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> *ptPFB);</div>
-<div class="line"><a id="l00919" name="l00919"></a><span class="lineno">  919</span> </div>
+<div class="line"><a id="l00871" name="l00871"></a><span class="lineno">  871</span><span class="comment"> * \param[in] ptCanvas the canvas</span></div>
+<div class="line"><a id="l00872" name="l00872"></a><span class="lineno">  872</span><span class="comment"> * \param[in] bIsNewFrame whether this is a new frame</span></div>
+<div class="line"><a id="l00873" name="l00873"></a><span class="lineno">  873</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00874" name="l00874"></a><span class="lineno">  874</span>extern</div>
+<div class="line"><a id="l00875" name="l00875"></a><span class="lineno">  875</span>ARM_NONNULL(1,2)</div>
+<div class="line"><a id="l00876" name="l00876"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga938c015954225ba6c149498b984accce">  876</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga938c015954225ba6c149498b984accce" title="update the dirty region after a transform operation">arm_2d_helper_transform_update_dirty_regions</a>(</div>
+<div class="line"><a id="l00877" name="l00877"></a><span class="lineno">  877</span>                                    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis,</div>
+<div class="line"><a id="l00878" name="l00878"></a><span class="lineno">  878</span>                                    const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptCanvas,</div>
+<div class="line"><a id="l00879" name="l00879"></a><span class="lineno">  879</span>                                    <span class="keywordtype">bool</span> bIsNewFrame);</div>
+<div class="line"><a id="l00880" name="l00880"></a><span class="lineno">  880</span> </div>
+<div class="line"><a id="l00881" name="l00881"></a><span class="lineno">  881</span><span class="comment"></span> </div>
+<div class="line"><a id="l00882" name="l00882"></a><span class="lineno">  882</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00883" name="l00883"></a><span class="lineno">  883</span><span class="comment"> * \brief initialize the 3FB (direct mode) service</span></div>
+<div class="line"><a id="l00884" name="l00884"></a><span class="lineno">  884</span><span class="comment"> * \param[in] ptThis the helper service control block</span></div>
+<div class="line"><a id="l00885" name="l00885"></a><span class="lineno">  885</span><span class="comment"> * \param[in] ptCFG the configuration structure</span></div>
+<div class="line"><a id="l00886" name="l00886"></a><span class="lineno">  886</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00887" name="l00887"></a><span class="lineno">  887</span>extern</div>
+<div class="line"><a id="l00888" name="l00888"></a><span class="lineno">  888</span>ARM_NONNULL(1,2)</div>
+<div class="line"><a id="l00889" name="l00889"></a><span class="lineno"><a class="line" href="group__gHelper.html#gab11ea71792f3e2427678f902134e7f87">  889</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#gab11ea71792f3e2427678f902134e7f87" title="initialize the 3FB (direct mode) service">arm_2d_helper_3fb_init</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__3fb__t" title="the control block of the 3FB (direct mode) service">arm_2d_helper_3fb_t</a> *ptThis, </div>
+<div class="line"><a id="l00890" name="l00890"></a><span class="lineno">  890</span>                            const <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__3fb__cfg__t" title="configuration structure for the 3fb (direct mode) helper service">arm_2d_helper_3fb_cfg_t</a> *ptCFG);</div>
+<div class="line"><a id="l00891" name="l00891"></a><span class="lineno">  891</span> </div>
+<div class="line"><a id="l00892" name="l00892"></a><span class="lineno">  892</span><span class="comment"></span> </div>
+<div class="line"><a id="l00893" name="l00893"></a><span class="lineno">  893</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00894" name="l00894"></a><span class="lineno">  894</span><span class="comment"> * \brief report the copy-completion event to the 3FB (direct mode) service</span></div>
+<div class="line"><a id="l00895" name="l00895"></a><span class="lineno">  895</span><span class="comment"> * \note see function __arm_2d_helper_3fb_dma_copy for details</span></div>
+<div class="line"><a id="l00896" name="l00896"></a><span class="lineno">  896</span><span class="comment"> * \param[in] ptThis the helper service control block</span></div>
+<div class="line"><a id="l00897" name="l00897"></a><span class="lineno">  897</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00898" name="l00898"></a><span class="lineno">  898</span>extern</div>
+<div class="line"><a id="l00899" name="l00899"></a><span class="lineno">  899</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00900" name="l00900"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga87c6ea76937f2b83b2e787a24c82c9fb">  900</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga87c6ea76937f2b83b2e787a24c82c9fb" title="report the copy-completion event to the 3FB (direct mode) service">arm_2d_helper_3fb_report_dma_copy_complete</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__3fb__t" title="the control block of the 3FB (direct mode) service">arm_2d_helper_3fb_t</a> *ptThis);</div>
+<div class="line"><a id="l00901" name="l00901"></a><span class="lineno">  901</span><span class="comment"></span> </div>
+<div class="line"><a id="l00902" name="l00902"></a><span class="lineno">  902</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00903" name="l00903"></a><span class="lineno">  903</span><span class="comment"> * \brief get a pointer for flushing</span></div>
+<div class="line"><a id="l00904" name="l00904"></a><span class="lineno">  904</span><span class="comment"> * \param[in] ptThis the helper service control block</span></div>
+<div class="line"><a id="l00905" name="l00905"></a><span class="lineno">  905</span><span class="comment"> * \return void * the address of a framebuffer</span></div>
+<div class="line"><a id="l00906" name="l00906"></a><span class="lineno">  906</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00907" name="l00907"></a><span class="lineno">  907</span><span class="comment"> * \note please only call this function when on vsync event.</span></div>
+<div class="line"><a id="l00908" name="l00908"></a><span class="lineno">  908</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00909" name="l00909"></a><span class="lineno">  909</span>extern</div>
+<div class="line"><a id="l00910" name="l00910"></a><span class="lineno">  910</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00911" name="l00911"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga94384cabe58f5ddc6d8be92349f5ff99">  911</a></span><span class="keywordtype">void</span> * <a class="code hl_function" href="group__gHelper.html#ga94384cabe58f5ddc6d8be92349f5ff99" title="get a pointer for flushing">arm_2d_helper_3fb_get_flush_pointer</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__3fb__t" title="the control block of the 3FB (direct mode) service">arm_2d_helper_3fb_t</a> *ptThis);</div>
+<div class="line"><a id="l00912" name="l00912"></a><span class="lineno">  912</span><span class="comment"></span> </div>
+<div class="line"><a id="l00913" name="l00913"></a><span class="lineno">  913</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00914" name="l00914"></a><span class="lineno">  914</span><span class="comment"> * \brief please do NOT use this function. It is used by the display adapter.</span></div>
+<div class="line"><a id="l00915" name="l00915"></a><span class="lineno">  915</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00916" name="l00916"></a><span class="lineno">  916</span>extern</div>
+<div class="line"><a id="l00917" name="l00917"></a><span class="lineno">  917</span>ARM_NONNULL(1,2)</div>
+<div class="line"><a id="l00918" name="l00918"></a><span class="lineno"><a class="line" href="group__gHelper.html#gad9504b41c541cc4bbee54bfbba49f496">  918</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#gad9504b41c541cc4bbee54bfbba49f496" title="please do NOT use this function. It is used by the display adapter.">__arm_2d_helper_3fb_draw_bitmap</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__3fb__t" title="the control block of the 3FB (direct mode) service">arm_2d_helper_3fb_t</a> *ptThis, </div>
+<div class="line"><a id="l00919" name="l00919"></a><span class="lineno">  919</span>                                     const <a class="code hl_struct" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> *ptPFB);</div>
 <div class="line"><a id="l00920" name="l00920"></a><span class="lineno">  920</span> </div>
-<div class="line"><a id="l00921" name="l00921"></a><span class="lineno">  921</span><span class="comment"></span> </div>
-<div class="line"><a id="l00922" name="l00922"></a><span class="lineno">  922</span><span class="comment">/*! @} */</span></div>
-<div class="line"><a id="l00923" name="l00923"></a><span class="lineno">  923</span> </div>
-<div class="line"><a id="l00924" name="l00924"></a><span class="lineno">  924</span><span class="preprocessor">#if defined(__clang__)</span></div>
-<div class="line"><a id="l00925" name="l00925"></a><span class="lineno">  925</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
-<div class="line"><a id="l00926" name="l00926"></a><span class="lineno">  926</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00927" name="l00927"></a><span class="lineno">  927</span> </div>
-<div class="line"><a id="l00928" name="l00928"></a><span class="lineno">  928</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
-<div class="line"><a id="l00929" name="l00929"></a><span class="lineno">  929</span>}</div>
-<div class="line"><a id="l00930" name="l00930"></a><span class="lineno">  930</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00931" name="l00931"></a><span class="lineno">  931</span> </div>
+<div class="line"><a id="l00921" name="l00921"></a><span class="lineno">  921</span> </div>
+<div class="line"><a id="l00922" name="l00922"></a><span class="lineno">  922</span><span class="comment"></span> </div>
+<div class="line"><a id="l00923" name="l00923"></a><span class="lineno">  923</span><span class="comment">/*! @} */</span></div>
+<div class="line"><a id="l00924" name="l00924"></a><span class="lineno">  924</span> </div>
+<div class="line"><a id="l00925" name="l00925"></a><span class="lineno">  925</span><span class="preprocessor">#if defined(__clang__)</span></div>
+<div class="line"><a id="l00926" name="l00926"></a><span class="lineno">  926</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
+<div class="line"><a id="l00927" name="l00927"></a><span class="lineno">  927</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00928" name="l00928"></a><span class="lineno">  928</span> </div>
+<div class="line"><a id="l00929" name="l00929"></a><span class="lineno">  929</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
+<div class="line"><a id="l00930" name="l00930"></a><span class="lineno">  930</span>}</div>
+<div class="line"><a id="l00931" name="l00931"></a><span class="lineno">  931</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00932" name="l00932"></a><span class="lineno">  932</span> </div>
 <div class="line"><a id="l00933" name="l00933"></a><span class="lineno">  933</span> </div>
-<div class="line"><a id="l00934" name="l00934"></a><span class="lineno">  934</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00934" name="l00934"></a><span class="lineno">  934</span> </div>
+<div class="line"><a id="l00935" name="l00935"></a><span class="lineno">  935</span><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
