@@ -196,6 +196,10 @@ Include `arm_2d_disp_adapters.h` in your c source code and add the following cod
 #include "arm_2d_disp_adapters.h"
 #include "arm_2d_scenes.h"
 
+#ifndef LCD_TARGET_FPS
+#   define LCD_TARGET_FPS       30
+#endif
+
 int main (void) 
 {
     ...
@@ -206,9 +210,19 @@ int main (void)
     /* initialize the display adapter 0 service */
     disp_adapter0_init();
     
+    bool bRefreshLCD = false;
     while (1) {
-        /* the task function of the display adapter 0 service */
-        disp_adapter0_task();
+    
+        /* lock framerate */
+        if (arm_2d_helper_is_time_out(1000 / LCD_TARGET_FPS)) {
+            bRefreshLCD = true;
+        }
+        
+        if (bRefreshLCD) {
+            if (arm_fsm_rt_cpl == disp_adapter0_task()) {
+                bRefreshLCD = false;
+            }
+        }
     }
 }
 ```
