@@ -1499,6 +1499,7 @@ void arm_2d_helper_transform_update_dirty_regions(
 {
     assert(NULL != ptThis);
     assert(NULL != ptCanvas);
+    arm_2d_tile_t *ptTarget = (arm_2d_tile_t *)this.ptTransformOP->Target.ptTile;
     
     if (!bIsNewFrame) {
         return ;
@@ -1511,8 +1512,10 @@ void arm_2d_helper_transform_update_dirty_regions(
 
         /* update the new region */
         this.tDirtyRegions[0].tRegion = *(this.ptTransformOP->Target.ptRegion);
-        this.tDirtyRegions[0].tRegion.tLocation.iX += ptCanvas->tLocation.iX;
-        this.tDirtyRegions[0].tRegion.tLocation.iY += ptCanvas->tLocation.iY;
+        this.tDirtyRegions[0].tRegion.tLocation 
+            = arm_2d_helper_pfb_get_absolute_location(
+                                        ptTarget, 
+                                        this.tDirtyRegions[0].tRegion.tLocation);
 
         arm_2d_region_t tOverlapArea, tEnclosureArea;
         if (arm_2d_region_intersect(&this.tDirtyRegions[1].tRegion, 

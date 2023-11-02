@@ -868,6 +868,7 @@ void arm_2d_helper_transform_update_value(  arm_2d_helper_transform_t *ptThis,
 /*!
  * \brief update the dirty region after a transform operation
  * \param[in] ptThis the target helper
+ * \param[in] ptCanvas the canvas
  * \param[in] bIsNewFrame whether this is a new frame
  */
 extern
