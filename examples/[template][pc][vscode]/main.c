@@ -29,6 +29,7 @@
 
 #include "arm_2d_scene_meter.h"
 #include "arm_2d_scene_watch.h"
+#include "arm_2d_scene_fitness.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -72,6 +73,12 @@ void scene_watch_loader(void)
 {
     arm_2d_scene_watch_init(&DISP0_ADAPTER);
 }
+
+void scene_fitness_loader(void) 
+{
+    arm_2d_scene_fitness_init(&DISP0_ADAPTER);
+}
+
 
 
 void scene0_loader(void) 
@@ -120,13 +127,14 @@ void scene5_loader(void)
 typedef void scene_loader_t(void);
 
 static scene_loader_t * const c_SceneLoaders[] = {
-    scene0_loader,
-    scene1_loader,
-    scene_meter_loader,
-    scene3_loader,
-    scene5_loader,
-    scene4_loader,
-    scene2_loader,
+    //scene0_loader,
+    //scene1_loader,
+    //scene_meter_loader,
+    //scene3_loader,
+    //scene5_loader,
+    //scene4_loader,
+    //scene2_loader,
+    scene_fitness_loader,
     //scene_watch_loader,
 };
 
