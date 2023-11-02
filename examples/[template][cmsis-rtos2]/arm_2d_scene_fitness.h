@@ -60,7 +60,7 @@ extern "C" {
  *          list. 
  */
 #ifndef __FITNESS_CFG_NEBULA_ENABLE__
-#   define __FITNESS_CFG_NEBULA_ENABLE__        1
+#   define __FITNESS_CFG_NEBULA_ENABLE__        0
 #endif
 
 #if __FITNESS_CFG_NEBULA_ENABLE__
