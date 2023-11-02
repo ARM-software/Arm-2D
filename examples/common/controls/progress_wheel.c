@@ -108,26 +108,26 @@ void __progress_wheel_init( progress_wheel_t *ptThis,
 
     progress_wheel_set_diameter(ptThis, ptCFG->iWheelDiameter);
 
-
-    /* initialize transform helper */
-    arm_2d_helper_transform_init(&this.tTransHelper,
-                                 (arm_2d_op_t *)&this.tOP[5],
-                                 0.01f,
-                                 0.1f,
-                                 this.tCFG.ppList);
-
     arm_2d_region_list_item_t **ppDirtyRegionList = this.tCFG.ppList;
-
     if (NULL != ppDirtyRegionList) {
-        while(NULL != (*ppDirtyRegionList)) {
-            ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
+        /* initialize transform helper */
+        arm_2d_helper_transform_init(&this.tTransHelper,
+                                    (arm_2d_op_t *)&this.tOP[5],
+                                    0.01f,
+                                    0.1f,
+                                    ppDirtyRegionList);
+
+        if (NULL != ppDirtyRegionList) {
+            while(NULL != (*ppDirtyRegionList)) {
+                ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
+            }
+
+            /* add dirty region items to the list */
+            (*ppDirtyRegionList) = &this.tDirtyRegion;
+            this.tDirtyRegion.ptNext = NULL;
+
+            this.tDirtyRegion.bIgnore = true;
         }
-
-        /* add dirty region items to the list */
-        (*ppDirtyRegionList) = &this.tDirtyRegion;
-        this.tDirtyRegion.ptNext = NULL;
-
-        this.tDirtyRegion.bIgnore = true;
     }
 }
 
@@ -198,7 +198,9 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
     int_fast8_t chCurrentQuadrant = iProgress / 250;
 
-    if (this.chState == START && bIsNewFrame) {
+    if (    (this.chState == START) 
+        &&  bIsNewFrame 
+        && (NULL != this.tCFG.ppList)) {
         /* initialize fsm */
         this.chState = WAIT_CHANGE;
         this.chLastQuadrant = 0;
@@ -254,11 +256,13 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
         if (bIsNewFrame) {
             this.fAngle = ARM_2D_ANGLE((float)iProgress * 36.0f / 100.0f);
 
-            /* update helper with new values*/
-            arm_2d_helper_transform_update_value(&this.tTransHelper, this.fAngle, 1.0f);
+            if (NULL != this.tCFG.ppList) {
+                /* update helper with new values*/
+                arm_2d_helper_transform_update_value(&this.tTransHelper, this.fAngle, 1.0f);
 
-            /* call helper's on-frame-begin event handler */
-            arm_2d_helper_transform_on_frame_begin(&this.tTransHelper);
+                /* call helper's on-frame-begin event handler */
+                arm_2d_helper_transform_on_frame_begin(&this.tTransHelper);
+            }
         }
 
         tRotationRegion.tSize.iWidth = ((__wheel_canvas.tSize.iWidth + 1) >> 1);
@@ -454,9 +458,11 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                             255,//chOpacity,
                                             &tTargetCentre);
 
-            arm_2d_helper_transform_update_dirty_regions(   &this.tTransHelper,
-                                                            &__wheel_canvas,
-                                                            bIsNewFrame);
+            if (NULL != this.tCFG.ppList) {
+                arm_2d_helper_transform_update_dirty_regions(   &this.tTransHelper,
+                                                                &__wheel_canvas,
+                                                                bIsNewFrame);
+            }
 
             arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[5]);
 
