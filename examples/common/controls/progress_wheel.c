@@ -17,6 +17,8 @@
  */
 
 /*============================ INCLUDES ======================================*/
+#define __PROGRESS_WHEEL_IMPLEMENT__
+
 #include "arm_2d.h"
 #include "arm_2d_helper.h"
 #include <math.h>
@@ -105,6 +107,20 @@ void __progress_wheel_init( progress_wheel_t *ptThis,
     }
 
     progress_wheel_set_diameter(ptThis, ptCFG->iWheelDiameter);
+
+    arm_2d_region_list_item_t **ppDirtyRegionList = this.tCFG.ppList;
+
+    if (NULL != ppDirtyRegionList) {
+        while(NULL != (*ppDirtyRegionList)) {
+            ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
+        }
+
+        /* add dirty region items to the list */
+        (*ppDirtyRegionList) = &this.tDirtyRegion;
+        this.tDirtyRegion.ptNext = NULL;
+
+        this.tDirtyRegion.bIgnore = true;
+    }
 }
 
 
@@ -124,6 +140,24 @@ void progress_wheel_depose(progress_wheel_t *ptThis)
 {
     arm_foreach(arm_2d_op_fill_cl_msk_opa_trans_t, this.tOP, ptItem) {
         ARM_2D_OP_DEPOSE(*ptItem);
+    }
+
+    arm_2d_region_list_item_t **ppDirtyRegionList = this.tCFG.ppList;
+
+    if (NULL == ppDirtyRegionList) {
+        return ;
+    }
+
+    while(NULL != (*ppDirtyRegionList)) {
+
+        /* remove the dirty region from the user dirty region list */
+        if ((*ppDirtyRegionList) == &this.tDirtyRegion) {
+            (*ppDirtyRegionList) = this.tDirtyRegion.ptNext;
+            this.tDirtyRegion.ptNext = NULL;
+            break;
+        }
+
+        ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
     }
 }
 

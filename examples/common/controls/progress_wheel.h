@@ -33,9 +33,19 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wpadded"
 #endif
 
+/* OOC header, please DO NOT modify  */
+#ifdef __PROGRESS_WHEEL_IMPLEMENT__
+#   undef   __PROGRESS_WHEEL_IMPLEMENT__
+#   define  __ARM_2D_IMPL__
+#elif defined(__PROGRESS_WHEEL_INHERIT__)
+#   undef   __PROGRESS_WHEEL_INHERIT__
+#   define __ARM_2D_INHERIT__
+#endif
+#include "arm_2d_utils.h"
+
 /*============================ MACROS ========================================*/
 
-#define progress_wheel_init(__this_ptr, __diameter, __colour)                   \
+#define __progress_wheel_init0(__this_ptr, __diameter, __colour)                \
             do {                                                                \
                 progress_wheel_cfg_t tCFG = {                                   \
                     .iWheelDiameter = (__diameter),                             \
@@ -43,6 +53,74 @@ extern "C" {
                 };                                                              \
                 __progress_wheel_init((__this_ptr), &tCFG);                     \
             } while(0)
+
+#define __progress_wheel_init1(__this_ptr, __diameter, __colour, __dot_colour)  \
+            do {                                                                \
+                progress_wheel_cfg_t tCFG = {                                   \
+                    .iWheelDiameter = (__diameter),                             \
+                    .tWheelColour = (COLOUR_INT)(__colour),                     \
+                    .tDotColour = (COLOUR_INT)(__dot_colour),                   \
+                };                                                              \
+                __progress_wheel_init((__this_ptr), &tCFG);                     \
+            } while(0)
+
+#define __progress_wheel_init2( __this_ptr,                                     \
+                                __diameter,                                     \
+                                __colour,                                       \
+                                __dot_colour,                                   \
+                                __dirty_region_list_ptr)                        \
+            do {                                                                \
+                progress_wheel_cfg_t tCFG = {                                   \
+                    .iWheelDiameter = (__diameter),                             \
+                    .tWheelColour = (COLOUR_INT)(__colour),                     \
+                    .tDotColour = (COLOUR_INT)(__dot_colour),                   \
+                    .ppList = &(__dirty_region_list_pptr),                      \
+                };                                                              \
+                __progress_wheel_init((__this_ptr), &tCFG);                     \
+            } while(0)
+
+#define __progress_wheel_init3( __this_ptr,                                     \
+                                __diameter,                                     \
+                                __colour,                                       \
+                                __dot_colour,                                   \
+                                __arc_mask_ptr,                                 \
+                                __dirty_region_list_ptr)                        \
+            do {                                                                \
+                progress_wheel_cfg_t tCFG = {                                   \
+                    .ptileArcMask = (__arc_mask_ptr),                           \
+                    .iWheelDiameter = (__diameter),                             \
+                    .tWheelColour = (COLOUR_INT)(__colour),                     \
+                    .tDotColour = (COLOUR_INT)(__dot_colour),                   \
+                    .ppList = &(__dirty_region_list_pptr),                      \
+                };                                                              \
+                __progress_wheel_init((__this_ptr), &tCFG);                     \
+            } while(0)
+
+#define __progress_wheel_init4( __this_ptr,                                     \
+                                __diameter,                                     \
+                                __colour,                                       \
+                                __dot_colour,                                   \
+                                __arc_mask_ptr,                                 \
+                                __dot_mask_ptr,                                 \
+                                __dirty_region_list_ptr)                        \
+            do {                                                                \
+                progress_wheel_cfg_t tCFG = {                                   \
+                    .ptileArcMask = (__arc_mask_ptr),                           \
+                    .ptileDotMask = (__dot_mask_ptr),                           \
+                    .iWheelDiameter = (__diameter),                             \
+                    .tWheelColour = (COLOUR_INT)(__colour),                     \
+                    .tDotColour = (COLOUR_INT)(__dot_colour),                   \
+                    .ppList = &(__dirty_region_list_pptr),                      \
+                };                                                              \
+                __progress_wheel_init((__this_ptr), &tCFG);                     \
+            } while(0)
+
+#define progress_wheel_init(__this_ptr, __diameter, __colour, ...)              \
+            ARM_CONNECT2(   __progress_wheel_init,                              \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))((__this_ptr),       \
+                                                            (__diameter),       \
+                                                            (__colour),         \
+                                                            ##__VA_ARGS__)
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
@@ -52,14 +130,22 @@ typedef struct progress_wheel_cfg_t {
     int16_t iWheelDiameter;
     COLOUR_INT tWheelColour;
     COLOUR_INT tDotColour;
+    arm_2d_region_list_item_t **ppList;
 } progress_wheel_cfg_t;
 
 
 typedef struct progress_wheel_t {
+
+/* private members */
+ARM_PRIVATE(
     progress_wheel_cfg_t tCFG;
     float fScale;
     float fAngle;
     arm_2d_op_fill_cl_msk_opa_trans_t tOP[7];
+
+    arm_2d_region_list_item_t tDirtyRegion;
+)
+
 } progress_wheel_t;
 
 
