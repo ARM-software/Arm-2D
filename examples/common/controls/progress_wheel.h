@@ -68,13 +68,13 @@ extern "C" {
                                 __diameter,                                     \
                                 __colour,                                       \
                                 __dot_colour,                                   \
-                                __dirty_region_list_ptr)                        \
+                                __dirty_region_list_pptr)                       \
             do {                                                                \
                 progress_wheel_cfg_t tCFG = {                                   \
                     .iWheelDiameter = (__diameter),                             \
                     .tWheelColour = (COLOUR_INT)(__colour),                     \
                     .tDotColour = (COLOUR_INT)(__dot_colour),                   \
-                    .ppList = &(__dirty_region_list_pptr),                      \
+                    .ppList = (__dirty_region_list_pptr)),                      \
                 };                                                              \
                 __progress_wheel_init((__this_ptr), &tCFG);                     \
             } while(0)
@@ -84,14 +84,14 @@ extern "C" {
                                 __colour,                                       \
                                 __dot_colour,                                   \
                                 __arc_mask_ptr,                                 \
-                                __dirty_region_list_ptr)                        \
+                                __dirty_region_list_pptr)                       \
             do {                                                                \
                 progress_wheel_cfg_t tCFG = {                                   \
                     .ptileArcMask = (__arc_mask_ptr),                           \
                     .iWheelDiameter = (__diameter),                             \
                     .tWheelColour = (COLOUR_INT)(__colour),                     \
                     .tDotColour = (COLOUR_INT)(__dot_colour),                   \
-                    .ppList = &(__dirty_region_list_pptr),                      \
+                    .ppList = (__dirty_region_list_pptr)),                      \
                 };                                                              \
                 __progress_wheel_init((__this_ptr), &tCFG);                     \
             } while(0)
@@ -102,7 +102,7 @@ extern "C" {
                                 __dot_colour,                                   \
                                 __arc_mask_ptr,                                 \
                                 __dot_mask_ptr,                                 \
-                                __dirty_region_list_ptr)                        \
+                                __dirty_region_list_pptr)                       \
             do {                                                                \
                 progress_wheel_cfg_t tCFG = {                                   \
                     .ptileArcMask = (__arc_mask_ptr),                           \
@@ -110,7 +110,7 @@ extern "C" {
                     .iWheelDiameter = (__diameter),                             \
                     .tWheelColour = (COLOUR_INT)(__colour),                     \
                     .tDotColour = (COLOUR_INT)(__dot_colour),                   \
-                    .ppList = &(__dirty_region_list_pptr),                      \
+                    .ppList = (__dirty_region_list_pptr)),                      \
                 };                                                              \
                 __progress_wheel_init((__this_ptr), &tCFG);                     \
             } while(0)

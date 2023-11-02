@@ -391,7 +391,11 @@ user_scene_fitness_t *__arm_2d_scene_fitness_init(   arm_2d_scene_player_t *ptDi
         .bUserAllocated = bUserAllocated,
     };
 
-    progress_wheel_init(&this.tWheel, 240, GLCD_COLOR_GREEN);
+    progress_wheel_init(&this.tWheel, 
+                        240, 
+                        GLCD_COLOR_GREEN,
+                        GLCD_COLOR_WHITE,
+                        &this.use_as__arm_2d_scene_t.ptDirtyRegion);
 
 
     /* initialize number list */
