@@ -288,7 +288,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
             if (this.tCFG.tDotColour != this.tCFG.tWheelColour) {
 
-                tDotCentre.iY = (float)tDotCentre.iY * 1.10f;
+                tDotCentre.iY = (float)tDotCentre.iY * 1.235f;
 
                 /* draw the starting point */
                 arm_2dp_fill_colour_with_mask_opacity_and_transform(
@@ -298,9 +298,9 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                                 &__wheel_canvas,
                                                 tDotCentre,
                                                 this.fAngle,
-                                                this.fScale * 0.90f,
+                                                this.fScale * 0.80f,
                                                 this.tCFG.tDotColour,
-                                                255,//chOpacity,
+                                                255,
                                                 &tTargetCentre);
 
                 arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[6]);
