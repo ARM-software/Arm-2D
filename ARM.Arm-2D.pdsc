@@ -326,12 +326,13 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cversion="2.1.0" condition="Arm-2D-CORE">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cversion="2.1.1" condition="Arm-2D-CORE">
           <description>A example module to print ASCII strings to target string.</description>
           <files>
             <file category="include"     name="examples/common/controls/" />
             <file category="sourceC"     name="examples/common/controls/lcd_printf.c" />
-            <file category="sourceC"     name="examples/common/controls/GLCD_Fonts.c" />
+            <file category="sourceC"     name="examples/common/controls/GLCD_Fonts.c" attr="config" version="1.0.0" />
+            <file category="sourceC"     name="examples/common/asset/DigitsFont.c"    attr="config" version="1.0.0" />
           </files>
           <RTE_Components_h>
 
@@ -339,7 +340,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.5.4" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.5.5" condition="Arm-2D-EXTRA">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <file category="include"     name="examples/common/controls/" />
@@ -363,7 +364,6 @@
             <file category="sourceC"     name="examples/common/asset/GreenCircle.c" />
             <file category="sourceC"     name="examples/common/asset/QuaterArc.c" />
             <file category="sourceC"     name="examples/common/asset/ListCover.c" />
-            <file category="sourceC"     name="examples/common/asset/DigitsFont.c" />
             <file category="sourceC"     name="examples/common/asset/battery_boarder_1.c" />
             <file category="sourceC"     name="examples/common/asset/battery_gasgauge_block.c" />
             <file category="sourceC"     name="examples/common/asset/battery_gasgauge_grade_boarder.c" />
