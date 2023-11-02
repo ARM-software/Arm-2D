@@ -143,7 +143,12 @@ ARM_PRIVATE(
     float fAngle;
     arm_2d_op_fill_cl_msk_opa_trans_t tOP[7];
 
+    arm_2d_helper_transform_t tTransHelper;
+    
     arm_2d_region_list_item_t tDirtyRegion;
+    uint8_t chState;
+    int8_t  chLastQuadrant;
+    int16_t iLastProgress;
 )
 
 } progress_wheel_t;

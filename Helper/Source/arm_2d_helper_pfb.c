@@ -22,7 +22,7 @@
  * Description:  the pfb helper service source code
  *
  * $Date:        02. Nov 2023
- * $Revision:    V.1.6.4
+ * $Revision:    V.1.6.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1430,7 +1430,8 @@ void arm_2d_helper_transform_init(arm_2d_helper_transform_t *ptThis,
     assert(NULL != ppDirtyRegionList);
     
     memset(ptThis, 0, sizeof(arm_2d_helper_transform_t));
-    
+    this.ppDirtyRegionList = ppDirtyRegionList;
+
     this.ptTransformOP = ptTransformOP;
     this.Angle.fStep = fAngleStep;
     this.Scale.fStep = fScaleStep;
@@ -1450,7 +1451,29 @@ void arm_2d_helper_transform_init(arm_2d_helper_transform_t *ptThis,
     /* add dirty region item to the list */
     (*ppDirtyRegionList) = &this.tDirtyRegions[0];
     this.tDirtyRegions[1].ptNext = NULL;
+}
+
+ARM_NONNULL(1)
+void arm_2d_helper_transform_depose(arm_2d_helper_transform_t *ptThis)
+{
+    assert(NULL != ptThis);
+    arm_2d_region_list_item_t **ppDirtyRegionList = this.ppDirtyRegionList;
     
+    if (NULL == ppDirtyRegionList) {
+        return ;
+    }
+
+    while(NULL != (*ppDirtyRegionList)) {
+
+        /* remove the dirty region from the user dirty region list */
+        if ((*ppDirtyRegionList) == &this.tDirtyRegions[0]) {
+            (*ppDirtyRegionList) = this.tDirtyRegions[1].ptNext;
+            this.tDirtyRegions[1].ptNext = NULL;
+            break;
+        }
+
+        ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
+    }
 
 }
 

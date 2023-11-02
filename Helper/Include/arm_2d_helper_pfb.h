@@ -22,7 +22,7 @@
  * Description:  Public header file for the PFB helper service 
  *
  * $Date:        02. Nov 2023
- * $Revision:    V.1.6.4
+ * $Revision:    V.1.6.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -635,7 +635,7 @@ typedef struct {
 ARM_PRIVATE(
     arm_2d_region_list_item_t tDirtyRegions[2];
     arm_2d_op_t *ptTransformOP;
-
+    arm_2d_region_list_item_t **ppDirtyRegionList;
 
     struct {
         float fValue;
@@ -840,6 +840,14 @@ void arm_2d_helper_transform_init(arm_2d_helper_transform_t *ptThis,
                                   float fAngleStep,
                                   float fScaleStep,
                                   arm_2d_region_list_item_t **ppDirtyRegionList);
+
+/*!
+ * \brief depose a given transform helper
+ * \param[in] ptThis the target helper
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_transform_depose(arm_2d_helper_transform_t *ptThis);
 
 /*!
  * \brief the on-frame-begin event handler for a given transform helper
