@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        10. July 2023
- * $Revision:    V.1.4.4
+ * $Date:        2. Nov 2023
+ * $Revision:    V.1.4.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -671,6 +671,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
     } while(0);
 
     do {
+        arm_2d_tile_t *ptWindow = NULL;
         if (NULL == this.SceneFIFO.ptHead) {
             break;
         }
@@ -683,62 +684,74 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
         switch(this.Switch.tConfig.Feature.chMode) {
             case ARM_2D_SCENE_SWITCH_CFG_ERASE_LEFT:
                 tWindow.tSize.iWidth -= iOffset;
-                arm_2d_tile_generate_child( ptTile, 
-                                            &tWindow, 
-                                            &this.Switch.Erase.tTemp, 
-                                            false);
+                ptWindow = arm_2d_tile_generate_child(  ptTile, 
+                                                        &tWindow, 
+                                                        &this.Switch.Erase.tTemp, 
+                                                        false);
+                if (NULL == ptWindow) {
+                    break;
+                }
 
                 tWindow.tSize.iWidth = iTargetDistance;
-                arm_2d_tile_generate_child( &this.Switch.Erase.tTemp, 
-                                            &tWindow, 
-                                            &this.Switch.Erase.tSceneWindow, 
-                                            false);
+                ptWindow = arm_2d_tile_generate_child(  &this.Switch.Erase.tTemp, 
+                                                        &tWindow, 
+                                                        &this.Switch.Erase.tSceneWindow, 
+                                                        false);
                 break;
             case ARM_2D_SCENE_SWITCH_CFG_ERASE_RIGHT:
                 tWindow.tSize.iWidth -= iOffset;
                 tWindow.tLocation.iX += iOffset;
 
-                arm_2d_tile_generate_child( ptTile, 
-                                            &tWindow, 
-                                            &this.Switch.Erase.tTemp, 
-                                            false);
-                                            
+                ptWindow = arm_2d_tile_generate_child(  ptTile, 
+                                                        &tWindow, 
+                                                        &this.Switch.Erase.tTemp, 
+                                                        false);
+                if (NULL == ptWindow) {
+                    break;
+                }
                 tWindow.tSize.iWidth = iTargetDistance;
                 tWindow.tLocation.iX = -iOffset;
-                arm_2d_tile_generate_child( &this.Switch.Erase.tTemp, 
-                                            &tWindow, 
-                                            &this.Switch.Erase.tSceneWindow, 
-                                            false);
+                ptWindow = arm_2d_tile_generate_child(  &this.Switch.Erase.tTemp, 
+                                                        &tWindow, 
+                                                        &this.Switch.Erase.tSceneWindow, 
+                                                        false);
                 break;
             case ARM_2D_SCENE_SWITCH_CFG_ERASE_UP:
                 tWindow.tSize.iHeight -= iOffset;
-                arm_2d_tile_generate_child( ptTile, 
-                                            &tWindow, 
-                                            &this.Switch.Erase.tTemp, 
-                                            false);
+                ptWindow = arm_2d_tile_generate_child(  ptTile, 
+                                                        &tWindow, 
+                                                        &this.Switch.Erase.tTemp, 
+                                                        false);
+                if (NULL == ptWindow) {
+                    break;
+                }
 
                 tWindow.tSize.iHeight = iTargetDistance;
-                arm_2d_tile_generate_child( &this.Switch.Erase.tTemp, 
-                                            &tWindow, 
-                                            &this.Switch.Erase.tSceneWindow, 
-                                            false);
+                ptWindow = arm_2d_tile_generate_child(  &this.Switch.Erase.tTemp, 
+                                                        &tWindow, 
+                                                        &this.Switch.Erase.tSceneWindow, 
+                                                        false);
                 break;
 
             case ARM_2D_SCENE_SWITCH_CFG_ERASE_DOWN:
                 tWindow.tSize.iHeight -= iOffset;
                 tWindow.tLocation.iY += iOffset;
 
-                arm_2d_tile_generate_child( ptTile, 
-                                            &tWindow, 
-                                            &this.Switch.Erase.tTemp, 
-                                            false);
-                                            
+                ptWindow = arm_2d_tile_generate_child(  ptTile, 
+                                                        &tWindow, 
+                                                        &this.Switch.Erase.tTemp, 
+                                                        false);
+
+                if (NULL == ptWindow) {
+                    break;
+                }
+
                 tWindow.tSize.iHeight = iTargetDistance;
                 tWindow.tLocation.iY = -iOffset;
-                arm_2d_tile_generate_child( &this.Switch.Erase.tTemp, 
-                                            &tWindow, 
-                                            &this.Switch.Erase.tSceneWindow, 
-                                            false);
+                ptWindow = arm_2d_tile_generate_child(  &this.Switch.Erase.tTemp, 
+                                                        &tWindow, 
+                                                        &this.Switch.Erase.tSceneWindow, 
+                                                        false);
                 break;
 
             default:
@@ -748,13 +761,14 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
         /* draw the old scene background */
         ptScene = this.SceneFIFO.ptHead;
 
-        __draw_erase_scene( ptThis, 
-                            ptScene, 
-                            &this.Switch.Erase.tSceneWindow, 
-                            bIsNewFrame,
-                            this.Switch.tConfig.Feature.bIgnoreOldSceneBG,
-                            this.Switch.tConfig.Feature.bIgnoreOldScene);
-        
+        if (NULL != ptWindow) {
+            __draw_erase_scene( ptThis, 
+                                ptScene, 
+                                &this.Switch.Erase.tSceneWindow, 
+                                bIsNewFrame,
+                                this.Switch.tConfig.Feature.bIgnoreOldSceneBG,
+                                this.Switch.tConfig.Feature.bIgnoreOldScene);
+        }
 
 
         /* generate new tile for new scene */
@@ -769,62 +783,75 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
                 tWindow.tSize.iWidth = iOffset;
                 tWindow.tLocation.iX = iTargetDistance - iOffset;
 
-                arm_2d_tile_generate_child( ptTile, 
-                                            &tWindow, 
-                                            &this.Switch.Erase.tTemp, 
-                                            false);
+                ptWindow = arm_2d_tile_generate_child(  ptTile, 
+                                                        &tWindow, 
+                                                        &this.Switch.Erase.tTemp, 
+                                                        false);
+                if (NULL == ptWindow) {
+                    break;
+                }
                                             
                 tWindow.tSize.iWidth = iTargetDistance;
                 tWindow.tLocation.iX = -(iTargetDistance - iOffset);
-                arm_2d_tile_generate_child( &this.Switch.Erase.tTemp, 
-                                            &tWindow, 
-                                            &this.Switch.Erase.tSceneWindow, 
-                                            false);
+                ptWindow = arm_2d_tile_generate_child(  &this.Switch.Erase.tTemp, 
+                                                        &tWindow, 
+                                                        &this.Switch.Erase.tSceneWindow, 
+                                                        false);
                 break;
 
             case ARM_2D_SCENE_SWITCH_CFG_ERASE_RIGHT:
                 tWindow.tSize.iWidth = iOffset;
-                arm_2d_tile_generate_child( ptTile, 
-                                            &tWindow, 
-                                            &this.Switch.Erase.tTemp, 
-                                            false);
+                ptWindow = arm_2d_tile_generate_child(  ptTile, 
+                                                        &tWindow, 
+                                                        &this.Switch.Erase.tTemp, 
+                                                        false);
+                if (NULL == ptWindow) {
+                    break;
+                }
 
                 tWindow.tSize.iWidth = iTargetDistance;
-                arm_2d_tile_generate_child( &this.Switch.Erase.tTemp, 
-                                            &tWindow, 
-                                            &this.Switch.Erase.tSceneWindow, 
-                                            false);
+                ptWindow = arm_2d_tile_generate_child(  &this.Switch.Erase.tTemp, 
+                                                        &tWindow, 
+                                                        &this.Switch.Erase.tSceneWindow, 
+                                                        false);
                 break;
 
             case ARM_2D_SCENE_SWITCH_CFG_ERASE_UP:
                 tWindow.tSize.iHeight = iOffset;
                 tWindow.tLocation.iY = iTargetDistance - iOffset;
 
-                arm_2d_tile_generate_child( ptTile, 
-                                            &tWindow, 
-                                            &this.Switch.Erase.tTemp, 
-                                            false);
-                                            
+                ptWindow = arm_2d_tile_generate_child(  ptTile, 
+                                                        &tWindow, 
+                                                        &this.Switch.Erase.tTemp, 
+                                                        false);
+                if (NULL == ptWindow) {
+                    break;
+                }
+
                 tWindow.tSize.iHeight = iTargetDistance;
                 tWindow.tLocation.iY = -(iTargetDistance - iOffset);
-                arm_2d_tile_generate_child( &this.Switch.Erase.tTemp, 
-                                            &tWindow, 
-                                            &this.Switch.Erase.tSceneWindow, 
-                                            false);
+                ptWindow = arm_2d_tile_generate_child(  &this.Switch.Erase.tTemp, 
+                                                        &tWindow, 
+                                                        &this.Switch.Erase.tSceneWindow, 
+                                                        false);
                 break;
 
             case ARM_2D_SCENE_SWITCH_CFG_ERASE_DOWN:
                 tWindow.tSize.iHeight = iOffset;
-                arm_2d_tile_generate_child( ptTile, 
-                                            &tWindow, 
-                                            &this.Switch.Erase.tTemp, 
-                                            false);
+                ptWindow = arm_2d_tile_generate_child(  ptTile, 
+                                                        &tWindow, 
+                                                        &this.Switch.Erase.tTemp, 
+                                                        false);
+
+                if (NULL == ptWindow) {
+                    break;
+                }
 
                 tWindow.tSize.iHeight = iTargetDistance;
-                arm_2d_tile_generate_child( &this.Switch.Erase.tTemp, 
-                                            &tWindow, 
-                                            &this.Switch.Erase.tSceneWindow, 
-                                            false);
+                ptWindow = arm_2d_tile_generate_child(  &this.Switch.Erase.tTemp, 
+                                                        &tWindow, 
+                                                        &this.Switch.Erase.tSceneWindow, 
+                                                        false);
                 break;
             default:
                 assert(false);      /* this should not happen */
@@ -833,14 +860,15 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
         /* draw the old scene background */
         ptScene = this.SceneFIFO.ptHead->ptNext;
         
-        
-        __draw_erase_scene( ptThis, 
-                            ptScene, 
-                            &this.Switch.Erase.tSceneWindow, 
-                            bIsNewFrame,
-                            this.Switch.tConfig.Feature.bIgnoreNewSceneBG,
-                            this.Switch.tConfig.Feature.bIgnoreNewScene);
-        
+        if (NULL != ptWindow) {
+            __draw_erase_scene( ptThis, 
+                                ptScene, 
+                                &this.Switch.Erase.tSceneWindow, 
+                                bIsNewFrame,
+                                this.Switch.tConfig.Feature.bIgnoreNewSceneBG,
+                                this.Switch.tConfig.Feature.bIgnoreNewScene);
+        }
+
     } while(0);
 
     arm_2d_op_wait_async(NULL);
@@ -952,6 +980,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
     } while(0);
 
     do {
+        arm_2d_tile_t *ptWindow = NULL;
         if (NULL == this.SceneFIFO.ptHead) {
             break;
         }
@@ -964,32 +993,32 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
         switch(this.Switch.tConfig.Feature.chMode) {
             case ARM_2D_SCENE_SWITCH_CFG_SLIDE_LEFT:
                 tWindow.tLocation.iX = -this.Switch.Slide.iOffset;
-                arm_2d_tile_generate_child( ptTile, 
-                                            &tWindow, 
-                                            &this.Switch.Slide.tSceneWindow, 
-                                            false);
+                ptWindow = arm_2d_tile_generate_child(  ptTile, 
+                                                        &tWindow, 
+                                                        &this.Switch.Slide.tSceneWindow, 
+                                                        false);
                 break;
             case ARM_2D_SCENE_SWITCH_CFG_SLIDE_RIGHT:
                 tWindow.tLocation.iX = this.Switch.Slide.iOffset;
-                arm_2d_tile_generate_child( ptTile, 
-                                            &tWindow, 
-                                            &this.Switch.Slide.tSceneWindow, 
-                                            false);
+                ptWindow = arm_2d_tile_generate_child(  ptTile, 
+                                                        &tWindow, 
+                                                        &this.Switch.Slide.tSceneWindow, 
+                                                        false);
                 break;
             case ARM_2D_SCENE_SWITCH_CFG_SLIDE_UP:
                 tWindow.tLocation.iY = -this.Switch.Slide.iOffset;
-                arm_2d_tile_generate_child( ptTile, 
-                                            &tWindow, 
-                                            &this.Switch.Slide.tSceneWindow, 
-                                            false);
+                ptWindow = arm_2d_tile_generate_child(  ptTile, 
+                                                        &tWindow, 
+                                                        &this.Switch.Slide.tSceneWindow, 
+                                                        false);
                 break;
 
             case ARM_2D_SCENE_SWITCH_CFG_SLIDE_DOWN:
                 tWindow.tLocation.iY = this.Switch.Slide.iOffset;
-                arm_2d_tile_generate_child( ptTile, 
-                                            &tWindow, 
-                                            &this.Switch.Slide.tSceneWindow, 
-                                            false);
+                ptWindow = arm_2d_tile_generate_child(  ptTile, 
+                                                        &tWindow, 
+                                                        &this.Switch.Slide.tSceneWindow, 
+                                                        false);
                 break;
 
             default:
@@ -999,14 +1028,14 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
         /* draw the old scene background */
         ptScene = this.SceneFIFO.ptHead;
 
-        __draw_erase_scene( ptThis, 
-                            ptScene, 
-                            &this.Switch.Slide.tSceneWindow, 
-                            bIsNewFrame,
-                            this.Switch.tConfig.Feature.bIgnoreOldSceneBG,
-                            this.Switch.tConfig.Feature.bIgnoreOldScene);
-        
-
+        if (NULL != ptWindow) {
+            __draw_erase_scene( ptThis, 
+                                ptScene, 
+                                &this.Switch.Slide.tSceneWindow, 
+                                bIsNewFrame,
+                                this.Switch.tConfig.Feature.bIgnoreOldSceneBG,
+                                this.Switch.tConfig.Feature.bIgnoreOldScene);
+        }
 
         /* generate new tile for new scene */
         if (NULL == ptScene->ptNext) {
@@ -1018,34 +1047,34 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
         switch(this.Switch.tConfig.Feature.chMode) {
             case ARM_2D_SCENE_SWITCH_CFG_SLIDE_LEFT:
                 tWindow.tLocation.iX = iTargetDistance - this.Switch.Slide.iOffset;
-                arm_2d_tile_generate_child( ptTile, 
-                                            &tWindow, 
-                                            &this.Switch.Slide.tSceneWindow, 
-                                            false);
+                ptWindow = arm_2d_tile_generate_child(  ptTile, 
+                                                        &tWindow, 
+                                                        &this.Switch.Slide.tSceneWindow, 
+                                                        false);
                 break;
 
             case ARM_2D_SCENE_SWITCH_CFG_SLIDE_RIGHT:
                 tWindow.tLocation.iX = -(iTargetDistance - this.Switch.Slide.iOffset);
-                arm_2d_tile_generate_child( ptTile, 
-                                            &tWindow, 
-                                            &this.Switch.Slide.tSceneWindow, 
-                                            false);
+                ptWindow = arm_2d_tile_generate_child(  ptTile, 
+                                                        &tWindow, 
+                                                        &this.Switch.Slide.tSceneWindow, 
+                                                        false);
                 break;
 
             case ARM_2D_SCENE_SWITCH_CFG_SLIDE_UP:
                 tWindow.tLocation.iY = iTargetDistance - this.Switch.Slide.iOffset;
-                arm_2d_tile_generate_child( ptTile, 
-                                            &tWindow, 
-                                            &this.Switch.Slide.tSceneWindow, 
-                                            false);
+                ptWindow = arm_2d_tile_generate_child(  ptTile, 
+                                                        &tWindow, 
+                                                        &this.Switch.Slide.tSceneWindow, 
+                                                        false);
                 break;
 
             case ARM_2D_SCENE_SWITCH_CFG_SLIDE_DOWN:
                 tWindow.tLocation.iY = -(iTargetDistance - this.Switch.Slide.iOffset);
-                arm_2d_tile_generate_child( ptTile, 
-                                            &tWindow, 
-                                            &this.Switch.Slide.tSceneWindow, 
-                                            false);
+                ptWindow = arm_2d_tile_generate_child(  ptTile, 
+                                                        &tWindow, 
+                                                        &this.Switch.Slide.tSceneWindow, 
+                                                        false);
                 break;
             default:
                 assert(false);      /* this should not happen */
@@ -1054,13 +1083,14 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
         /* draw the old scene background */
         ptScene = this.SceneFIFO.ptHead->ptNext;
         
-        
-        __draw_erase_scene( ptThis, 
-                            ptScene, 
-                            &this.Switch.Slide.tSceneWindow, 
-                            bIsNewFrame,
-                            this.Switch.tConfig.Feature.bIgnoreNewSceneBG,
-                            this.Switch.tConfig.Feature.bIgnoreNewScene);
+        if (ptWindow) {
+            __draw_erase_scene( ptThis, 
+                                ptScene, 
+                                &this.Switch.Slide.tSceneWindow, 
+                                bIsNewFrame,
+                                this.Switch.tConfig.Feature.bIgnoreNewSceneBG,
+                                this.Switch.tConfig.Feature.bIgnoreNewScene);
+        }
         
     } while(0);
 
