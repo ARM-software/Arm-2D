@@ -254,6 +254,10 @@ Table of Contents</h2>
 <div class="line"><span class="preprocessor">#include &quot;arm_2d_disp_adapters.h&quot;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;arm_2d_scenes.h&quot;</span></div>
 <div class="line"> </div>
+<div class="line"><span class="preprocessor">#ifndef LCD_TARGET_FPS</span></div>
+<div class="line"><span class="preprocessor">#   define LCD_TARGET_FPS       30</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main (<span class="keywordtype">void</span>) </div>
 <div class="line">{</div>
 <div class="line">    ...</div>
@@ -264,9 +268,19 @@ Table of Contents</h2>
 <div class="line">    <span class="comment">/* initialize the display adapter 0 service */</span></div>
 <div class="line">    disp_adapter0_init();</div>
 <div class="line">    </div>
+<div class="line">    <span class="keywordtype">bool</span> bRefreshLCD = <span class="keyword">false</span>;</div>
 <div class="line">    <span class="keywordflow">while</span> (1) {</div>
-<div class="line">        <span class="comment">/* the task function of the display adapter 0 service */</span></div>
-<div class="line">        disp_adapter0_task();</div>
+<div class="line">    </div>
+<div class="line">        <span class="comment">/* lock framerate */</span></div>
+<div class="line">        <span class="keywordflow">if</span> (<a class="code hl_define" href="group__gHelper.html#gae4ab75c458c5e2ba0355ba76dff03735" title="set an alarm with given period and check the status">arm_2d_helper_is_time_out</a>(1000 / LCD_TARGET_FPS)) {</div>
+<div class="line">            bRefreshLCD = <span class="keyword">true</span>;</div>
+<div class="line">        }</div>
+<div class="line">        </div>
+<div class="line">        <span class="keywordflow">if</span> (bRefreshLCD) {</div>
+<div class="line">            <span class="keywordflow">if</span> (<a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcacf7b5f9e66c44d332ea46d05860d78d1" title="fsm complete">arm_fsm_rt_cpl</a> == disp_adapter0_task()) {</div>
+<div class="line">                bRefreshLCD = <span class="keyword">false</span>;</div>
+<div class="line">            }</div>
+<div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line">}</div>
 </div><!-- fragment --><p >Or the thread function if you want to run Arm-2d in an RTOS environment:</p>
