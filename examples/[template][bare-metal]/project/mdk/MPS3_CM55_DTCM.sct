@@ -44,7 +44,6 @@
 //#define __HEAP_SIZE     0x10000000
 //#define __HEAP_BASE     __RAM2_BASE
 
-#define __HEAP_SIZE     0x00001000
 #define __HEAP_BASE     +0
 
 /*--------------------- Stack / Heap Configuration ---------------------------
@@ -53,7 +52,8 @@
 ;   <o1> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ; </h>
  *----------------------------------------------------------------------------*/
-#define __STACK_SIZE    0x00000800
+#define __STACK_SIZE    0x00000C00
+#define __HEAP_SIZE     0x00001000
 
 #define __RAM1_RW_SIZE 	(__RAM1_SIZE - __STACK_SIZE - __HEAP_SIZE)
 //#define __RAM1_RW_SIZE 	(__RAM1_SIZE - __STACK_SIZE)
