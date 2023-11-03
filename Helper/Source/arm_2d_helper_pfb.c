@@ -871,6 +871,7 @@ __WEAK int32_t __arm_2d_helper_perf_counter_stop(int64_t *plTimestamp,
 __WEAK
 void *__arm_2d_helper_perf_counter_get(arm_2d_perfc_type_t tType)
 {
+    ARM_2D_UNUSED(tType);
     return NULL;
 }
 

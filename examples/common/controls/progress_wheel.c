@@ -196,7 +196,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
     iProgress = MIN(1000, iProgress);
 
-    int_fast8_t chCurrentQuadrant = iProgress / 250;
+    int8_t chCurrentQuadrant = (int8_t)(iProgress / 250);
 
     if (    (this.chState == START) 
         &&  bIsNewFrame 
@@ -216,7 +216,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
                 
 
-                int_fast8_t chQuadrantChange = chCurrentQuadrant - this.chLastQuadrant;
+                int8_t chQuadrantChange = chCurrentQuadrant - this.chLastQuadrant;
                 chQuadrantChange = ABS(chQuadrantChange);
 
                 if (1000 == iProgress && 3 == this.chLastQuadrant) {
@@ -468,7 +468,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
             if (this.tCFG.tDotColour != this.tCFG.tWheelColour) {
 
-                tDotCentre.iY = (float)tDotCentre.iY * 1.235f;
+                tDotCentre.iY = (int16_t)((float)tDotCentre.iY * 1.235f);
 
                 /* draw the white dot */
                 arm_2dp_fill_colour_with_mask_opacity_and_transform(
