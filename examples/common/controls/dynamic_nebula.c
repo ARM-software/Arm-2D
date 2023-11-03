@@ -122,10 +122,7 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
 
         arm_2d_region_t tValidRegionInRoot;
         arm_2d_location_t tOffset;
-        const arm_2d_tile_t *ptRootTile = arm_2d_tile_get_root(
-                                                            &__control, 
-                                                            &tValidRegionInRoot, 
-                                                            &tOffset);
+        arm_2d_tile_get_root( &__control, &tValidRegionInRoot, &tOffset);
         tValidRegionInRoot.tLocation = tOffset;
 
         arm_2d_align_centre(__control_canvas, this.tCFG.iRadius * 2, this.tCFG.iRadius * 2) {
