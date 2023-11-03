@@ -89,7 +89,7 @@ ttf2c.py [-h] <-i <Input File Path>> <-t <Text File Path>>[-o <Output File Path>
 | -o ***Output File Path*** | the path for the output C file containing the customized font using UTF8 coding |          |
 | -n ***Font Name***        | the font name: **ARM_2D_FONT_A8_\<Font Name\>**              | Optional |
 | -p Pixel Size             | the desired font size in pixel. The pixel size is only a reference and the actual size will be slightly larger due to the TrueType Font feature. | Optional |
-| -s ***Font Bit Width***   | the font bit width, must be 1,2,4 or 8 bit                   | Optional |
+| -s ***Font Bit Width***   | the font bit width, must be 1,2,4 or 8 bit. If you omitted this option, the ttf2.py will generate all code for all available bit-widths. | Optional |
 
 
 ## 3. Installation:
