@@ -362,7 +362,7 @@ def main():
     parser.add_argument("-s", "--fontbitsize",type=int, help="font bit size (1,2,4,8)",         required=False,     default=8)
 
     if len(sys.argv)==1:
-        parser.s_help(sys.stderr)
+        parser.print_help(sys.stderr)
         sys.exit(1)
 
     args = parser.parse_args()
