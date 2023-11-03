@@ -2,7 +2,7 @@
 
 ## 1. Overview
 
-The `arm_2d_tile_t` descriptors are used as the standard input and output in most of the arm-2d APIs. This tool helps you to convert a given image into 
+The `arm_2d_tile_t` descriptors are used as the standard input and output in most of the arm-2d APIs. This tool helps you to convert a given image into
 
 - A C array for pixels and (for most of time) a dedicated alpha-mask if the format contains an alpha-channel.
 - `arm_2d_tile_t` descriptors for the image and the alpha-mask(s).
@@ -14,8 +14,8 @@ The `arm_2d_tile_t` descriptors are used as the standard input and output in mos
 - Support popular image formats, e.g. PNG, JPG, JPEG, BMP etc.
 - Output formats:
   - RGB565 with an optional alpha-mask (A2, A4 and A8)
-  - RGBA8888 with alpha-masks, one in a separate alpha-mask and the other in `ARM_2D_CHANNEL_8in32` format. 
-- Support resize before conversion 
+  - RGBA8888 with alpha-masks, one in a separate alpha-mask and the other in `ARM_2D_CHANNEL_8in32` format.
+- Support resize before conversion
 - Support rotation before conversion
 
 
@@ -76,7 +76,7 @@ This tool will extract the glyph bitmap from the specified TrueType font file ac
 ### Usage:
 
 ```sh
-ttf2c.py [-h] <-i <Input File Path>> <-t <Text File Path>>[-o <Output File Path>] [-n <Font Name>]
+ttf2c.py [-h] <-i <Input File Path>> <-t <Text File Path>>[-o <Output File Path>] [-n <Font Name>] [-s <Font Bit Width>]
 ```
 
 
@@ -89,7 +89,7 @@ ttf2c.py [-h] <-i <Input File Path>> <-t <Text File Path>>[-o <Output File Path>
 | -o ***Output File Path*** | the path for the output C file containing the customized font using UTF8 coding | Optional |
 | -n ***Font Name***        | the font name: **ARM_2D_FONT_A8_\<Font Name\>**              | Optional |
 | -p Pixel Size             | the desired font size in pixel. The pixel size is only a reference and the actual size will be slightly larger due to the TrueType Font feature. | Optional |
-
+| -s ***Font Bit Width***   | the font bit width, must be 1,2,4 or 8 bit                   | Optional |
 
 
 ## 3. Installation:
