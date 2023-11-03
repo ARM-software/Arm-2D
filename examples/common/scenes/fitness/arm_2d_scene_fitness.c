@@ -158,7 +158,7 @@ static void __on_scene_fitness_frame_complete(arm_2d_scene_t *ptScene)
             this.lTimestamp[3] = 0;
         }
 
-        this.iProgress = nResult;
+        this.iProgress = (int16_t)nResult;
     } while(0);
 
 
@@ -209,6 +209,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_fitness_handler)
             arm_2d_op_wait_async(NULL);
         }
 
+#if 0
         arm_2d_align_centre(__top_canvas, 84, 80 ) {
             arm_2d_layout(__centre_region) {
 
@@ -237,6 +238,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_fitness_handler)
                 }
             }
         }
+#endif
         /* draw text at the top-left corner */
 
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
