@@ -107,11 +107,14 @@ void __progress_bar_simple_show(const arm_2d_tile_t *ptTarget,
                                 const arm_2d_region_t *ptRegion,
                                 int_fast16_t iProgress)
 {
+    int_fast16_t iWidth = 0;
     arm_2d_region_t tTargetRegion = {.tSize = ptTarget->tRegion.tSize,};
     if (NULL == ptRegion) {
         ptRegion = &tTargetRegion;
+        iWidth = ptRegion->tSize.iWidth * 3 >> 3;         //!< 3/8 Width
+    } else {
+        iWidth = ptRegion->tSize.iWidth;
     }
-    int_fast16_t iWidth = ptRegion->tSize.iWidth * 3 >> 3;         //!< 3/8 Width
 
     arm_2d_region_t tBarRegion = {
         .tLocation = {
