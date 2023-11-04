@@ -121,7 +121,7 @@ IMPL_FONT_DRAW_CHAR(__utf8_font_a{5}_draw_char)
                                             tForeColour,
                                             chOpacity);
 #elif defined(__UTF8_FONT_SIZE_1__)
-    arm_2d_draw_pattern(    ptileChar, 
+    return arm_2d_draw_pattern(    ptileChar, 
                             ptTile, 
                             ptRegion,
                             ARM_2D_DRW_PATN_MODE_COPY,
