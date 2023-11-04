@@ -104,7 +104,7 @@ extern "C" {
  * \retval false operation is busy
  */
 #define ARM_2D_OP_WAIT_ASYNC(...)                                               \
-            arm_2d_op_wait_async((NULL,##__VA_ARGS__))
+            arm_2d_op_wait_async((arm_2d_op_core_t *)(NULL,##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
 
