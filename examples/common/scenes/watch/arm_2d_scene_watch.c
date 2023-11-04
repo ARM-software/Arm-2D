@@ -211,28 +211,16 @@ static void __before_scene_watch_switching_out(arm_2d_scene_t *ptScene)
 
 }
 
-//static
-//IMPL_PFB_ON_DRAW(__pfb_draw_scene_watch_background_handler)
-//{
-//    user_scene_watch_t *ptThis = (user_scene_watch_t *)pTarget;
-//    ARM_2D_UNUSED(ptTile);
-//    ARM_2D_UNUSED(bIsNewFrame);
-//    /*-----------------------draw back ground begin-----------------------*/
-
-
-
-//    /*-----------------------draw back ground end  -----------------------*/
-//    arm_2d_op_wait_async(NULL);
-
-//    return arm_fsm_rt_cpl;
-//}
 
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_watch_handler)
 {
     user_scene_watch_t *ptThis = (user_scene_watch_t *)pTarget;
+    arm_2d_size_t tScreenSize = ptTile->tRegion.tSize;
+
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
+    ARM_2D_UNUSED(tScreenSize);
     
     arm_2d_canvas(ptTile, __canvas) {
     /*-----------------------draw the foreground begin-----------------------*/
