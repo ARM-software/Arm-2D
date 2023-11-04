@@ -230,13 +230,19 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene1_handler)
                         }
                     }
                     __item_line_vertical(tScreenSize.iWidth, 40) {
-                        progress_bar_simple_show(ptTile, &__item_region, this.hwProgress, bIsNewFrame);
+                        arm_2d_container(ptTile, __progress_bar, &__item_region) {
+                            progress_bar_simple_show(&__progress_bar, NULL, this.hwProgress, bIsNewFrame);
+                        }
                     }
                     __item_line_vertical(tScreenSize.iWidth, 40) {
-                        progress_bar_drill_show(ptTile, &__item_region, this.hwProgress, bIsNewFrame);
+                        arm_2d_container(ptTile, __progress_bar, &__item_region) {
+                            progress_bar_drill_show(&__progress_bar, NULL, this.hwProgress, bIsNewFrame);
+                        }
                     }
                     __item_line_vertical(tScreenSize.iWidth, 40) {
-                        progress_bar_flowing_show(ptTile, &__item_region, this.hwProgress, bIsNewFrame);
+                        arm_2d_container(ptTile, __progress_bar, &__item_region) {
+                            progress_bar_flowing_show(&__progress_bar, NULL, this.hwProgress, bIsNewFrame);
+                        }
                     }
                 }
             }
