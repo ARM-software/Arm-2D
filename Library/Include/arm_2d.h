@@ -22,7 +22,7 @@
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        15. July 2023
+ * $Date:        04. Nov 2023
  * $Revision:    V.1.1.5-dev
  *
  * Target Processor:  Cortex-M cores
@@ -97,6 +97,14 @@ extern "C" {
             arm_2d_op_init((arm_2d_op_core_t *)&(__OP), sizeof(__OP))
 #define ARM_2D_OP_DEPOSE(__OP)                                                  \
             arm_2d_op_depose((arm_2d_op_core_t *)&(__OP), sizeof(__OP))
+/*! 
+ * \brief wait asynchronous operation complete
+ * \param[in] ... [OPTIONAL] the address of the target OP (NULL or ignore means using the default OP)
+ * \retval true sync up with operation
+ * \retval false operation is busy
+ */
+#define ARM_2D_OP_WAIT_ASYNC(...)                                               \
+            arm_2d_op_wait_async(NULL, ##__VA_ARGS__)
 
 /*============================ TYPES =========================================*/
 
