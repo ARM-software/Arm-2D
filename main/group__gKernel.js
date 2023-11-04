@@ -370,6 +370,7 @@ var group__gKernel =
     [ "ARM_2D_VERSION_PATCH", "group__gKernel.html#ga84adc455ac15b1574d66130d661dbd7e", null ],
     [ "ARM_2D_VERSION_STR", "group__gKernel.html#ga717a4db05af2c6d8e4ee171f6ba53d52", null ],
     [ "ARM_2D_VERISON", "group__gKernel.html#ga11b2dbdafc85d9d678e52447cc25f9ac", null ],
+    [ "ARM_2D_OP_WAIT_ASYNC", "group__gKernel.html#ga3ca0fed904ecae4e2f09d1064593417e", null ],
     [ "arm_2d_op_evt_handler_t", "group__gKernel.html#ga4e7011e388565d69bc0a1abd1edb636e", null ],
     [ "arm_2d_evt_handler_t", "group__gKernel.html#gaa694e2eb6d25481ef5cc3cc4bbc20eb1", null ],
     [ "__arm_2d_low_level_io_t", "group__gKernel.html#ga5794a4d595906803e2c82088b3e29464", null ],
