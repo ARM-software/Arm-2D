@@ -213,7 +213,7 @@ $(document).ready(function(){initNavTree('arm__2d_8h_source.html',''); initResiz
 <div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="comment"> * \retval false operation is busy</span></div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="comment"> */</span></div>
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="group__gKernel.html#ga3ca0fed904ecae4e2f09d1064593417e">  106</a></span><span class="preprocessor">#define ARM_2D_OP_WAIT_ASYNC(...)                                               \</span></div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span><span class="preprocessor">            arm_2d_op_wait_async(NULL, ##__VA_ARGS__)</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span><span class="preprocessor">            arm_2d_op_wait_async((NULL,##__VA_ARGS__))</span></div>
 <div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="comment">/*============================ TYPES =========================================*/</span></div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="comment"></span> </div>
