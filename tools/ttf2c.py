@@ -273,6 +273,7 @@ def generate_glyphs_data(input_file, text, pixel_size, font_bit_size):
            padding = ((0, 0), (0, width_max - width))
            bitmap_array = np.pad(bitmap_array, padding, 'constant')
 
+        char_index_advance = len(bitmap_array.flatten());
 
         if font_bit_size == 4:
             def RevBitQuadPerByte(byteArr):
@@ -321,7 +322,7 @@ def generate_glyphs_data(input_file, text, pixel_size, font_bit_size):
 
         glyphs_data.append((char, char_mask_array, width, height, current_index, advance_width, bearing_x, bearing_y, utf8_encoding))
 
-        current_index += len(char_mask_array)
+        current_index += char_index_advance
 
     return glyphs_data, width_max, height_max
 
