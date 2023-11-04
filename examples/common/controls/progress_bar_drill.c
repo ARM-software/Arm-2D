@@ -94,6 +94,7 @@ void progress_bar_drill_init(void)
 void __progress_bar_drill_show( const arm_2d_tile_t *ptTarget,
                                 const arm_2d_region_t *ptRegion,
                                 int_fast16_t iProgress,
+                                COLOUR_INT tBarColour,
                                 bool bIsNewFrame)
 {
     assert(NULL != ptTarget);
@@ -177,7 +178,7 @@ void __progress_bar_drill_show( const arm_2d_tile_t *ptTarget,
         tBarRegion.tSize.iWidth = tBarRegion.tSize.iWidth * (int16_t)iProgress / 1000;
         
         //! draw the inner stripe
-        arm_2d_fill_colour(ptTarget, &tBarRegion, GLCD_COLOR_YELLOW);
+        arm_2d_fill_colour(ptTarget, &tBarRegion, tBarColour);
         arm_2d_op_wait_async(NULL);
     }
     

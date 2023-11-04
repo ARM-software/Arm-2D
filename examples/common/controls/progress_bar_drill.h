@@ -21,6 +21,7 @@
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
+#include "__common.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -29,6 +30,17 @@ extern "C" {
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
+#define progress_bar_drill_show5(   __target_ptr,                               \
+                                    __region_ptr,                               \
+                                    __progress,                                 \
+                                    __colour,                                   \
+                                    __is_new_frame)                             \
+            __progress_bar_drill_show(  (__target_ptr),                         \
+                                        (__region_ptr),                         \
+                                        (int_fast16_t)(__progress),             \
+                                        (__colour),                             \
+                                        (__is_new_frame))
+
 #define progress_bar_drill_show4(   __target_ptr,                               \
                                     __region_ptr,                               \
                                     __progress,                                 \
@@ -36,6 +48,7 @@ extern "C" {
             __progress_bar_drill_show(  (__target_ptr),                         \
                                         (__region_ptr),                         \
                                         (int_fast16_t)(__progress),             \
+                                        (GLCD_COLOR_YELLOW),                    \
                                         (__is_new_frame))
 
 #define progress_bar_drill_show3(   __target_ptr,                               \
@@ -80,6 +93,7 @@ extern
 void __progress_bar_drill_show( const arm_2d_tile_t *ptTarget,
                                 const arm_2d_region_t *ptRegion,
                                 int_fast16_t iProgress,
+                                COLOUR_INT tBarColour,
                                 bool bIsNewFrame);
 
 #ifdef   __cplusplus
