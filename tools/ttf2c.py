@@ -121,8 +121,8 @@ IMPL_FONT_DRAW_CHAR(__utf8_font_a{5}_draw_char)
                                             tForeColour,
                                             chOpacity);
 #elif defined(__UTF8_FONT_SIZE_1__)
-    return arm_2d_draw_pattern(    ptileChar, 
-                            ptTile, 
+    return arm_2d_draw_pattern(    ptileChar,
+                            ptTile,
                             ptRegion,
                             ARM_2D_DRW_PATN_MODE_COPY,
                             tForeColour,
@@ -135,7 +135,7 @@ IMPL_FONT_DRAW_CHAR(__utf8_font_a{5}_draw_char)
                                         (__arm_2d_color_t){{tForeColour}},
                                         chOpacity);
 #endif
-                                            
+
 }}
 
 
@@ -279,28 +279,43 @@ def generate_glyphs_data(input_file, text, pixel_size, font_bit_size):
             def RevBitQuadPerByte(byteArr):
                 return ((byteArr & 0x0f) << 4) |  ((byteArr & 0xf0) >> 4)
 
-            bitsArr = np.unpackbits(bitmap_array.astype(np.uint8))
-            # generate indexes for MSB bit quadruplet every byte
-            idx = np.arange(0, np.size(bitsArr), 8)
-            idx = np.reshape(np.column_stack(
-                (np.column_stack((idx+0, idx+1)), np.column_stack((idx+2, idx+3)))),
-                (1,-1)),
+            # temporary array with 2x reduced width & pad
+            (r, c) = np.shape(bitmap_array)
+            tmp = np.empty((0, int((c+1)/2)), dtype=np.uint8)
 
-            # extraction + endianness conversion
-            bitmap_array = RevBitQuadPerByte(np.packbits(bitsArr[idx]))
+            for cur in bitmap_array:
+                bitsArr = np.unpackbits(cur.astype(np.uint8))
+                # generate indexes for MSB bit quadruplet every byte
+                idx = np.arange(0, np.size(bitsArr), 8)
+                idx = np.reshape(np.column_stack(
+                    (np.column_stack((idx+0, idx+1)), np.column_stack((idx+2, idx+3)))),
+                    (1,-1)),
+
+                # extraction + endianness conversion appended in temp array
+                # packbits is taking care of padding
+                tmp = np.vstack([tmp, RevBitQuadPerByte(np.packbits(bitsArr[idx]))])
+
+            bitmap_array = tmp
 
         elif font_bit_size == 2:
             def RevBitPairPerByte(byteArr):
                 return ((byteArr & 0x03) << 6) |  ((byteArr & 0xc0) >> 6) | ((byteArr & 0x30) >> 2 ) | ((byteArr & 0x0c) << 2)
 
-            bitsArr = np.unpackbits(bitmap_array.astype(np.uint8))
+            # temporary array with 4x reduced width & pad
+            (r, c) = np.shape(bitmap_array)
+            tmp = np.empty((0, int((c+3)/4)), dtype=np.uint8)
 
-            # generate indexes for MSB bit pair every byte
-            idx = np.arange(0, np.size(bitsArr), 8)
-            idx = np.reshape(np.column_stack((idx+0, idx+1)), (1,-1))
+            for cur in bitmap_array:
+                bitsArr = np.unpackbits(cur.astype(np.uint8))
 
-            # extraction + endianness conversion
-            bitmap_array = RevBitPairPerByte(np.packbits(bitsArr[idx]))
+                # generate indexes for MSB bit pair every byte
+                idx = np.arange(0, np.size(bitsArr), 8)
+                idx = np.reshape(np.column_stack((idx+0, idx+1)), (1,-1))
+
+                # extraction + endianness conversion appended in temp array
+                tmp = np.vstack([tmp, RevBitPairPerByte(np.packbits(bitsArr[idx]))])
+
+            bitmap_array = tmp
 
         elif font_bit_size == 1:
             def RevBitPerByte(byteArr):
@@ -309,14 +324,20 @@ def generate_glyphs_data(input_file, text, pixel_size, font_bit_size):
                        ((byteArr & 0x04) << 3) | ((byteArr & 0x20) >> 3) | \
                        ((byteArr & 0x08) << 1) | ((byteArr & 0x10) >> 1)
 
-            bitsArr = np.unpackbits(bitmap_array.astype(np.uint8))
+            # temporary array with 8x reduced width & pad
+            (r, c) = np.shape(bitmap_array)
+            tmp = np.empty((0, int((c+7)/8)), dtype=np.uint8)
 
-            # generate indexes for MSB bit every byte
-            idx = np.arange(0, np.size(bitsArr), 8)
+            for cur in bitmap_array:
+                bitsArr = np.unpackbits(cur.astype(np.uint8))
 
-            # extraction + endianness conversion
-            bitmap_array = RevBitPerByte(np.packbits(bitsArr[idx]))
+                # generate indexes for MSB bit every byte
+                idx = np.arange(0, np.size(bitsArr), 8)
 
+                # extraction + endianness conversion
+                tmp = np.vstack([tmp, RevBitPerByte(np.packbits(bitsArr[idx]))])
+
+            bitmap_array = tmp
 
         char_mask_array = bitmap_array.flatten()
 
@@ -399,7 +420,7 @@ def main():
 
     with open(args.output, "w") as outputfile:
         print(c_head_string, file=outputfile)
-       
+
 
     if args.fontbitsize in [1, 2, 4, 8]:
         with open(args.text, 'r', encoding='utf-8') as f:
@@ -407,28 +428,28 @@ def main():
 
             glyphs_data, char_max_width, char_max_height = generate_glyphs_data(args.input, text, args.pixelsize, args.fontbitsize)
             write_c_code(glyphs_data, args.output, args.name, char_max_width, char_max_height, args.fontbitsize)
-    
+
     else:
         with open(args.text, 'r', encoding='utf-8') as f:
             text = f.read()
 
             glyphs_data, char_max_width, char_max_height = generate_glyphs_data(args.input, text, args.pixelsize, 1)
             write_c_code(glyphs_data, args.output, args.name, char_max_width, char_max_height, 1)
-            
-            
+
+
         with open(args.text, 'r', encoding='utf-8') as f:
             text = f.read()
 
             glyphs_data, char_max_width, char_max_height = generate_glyphs_data(args.input, text, args.pixelsize, 2)
             write_c_code(glyphs_data, args.output, args.name, char_max_width, char_max_height, 2)
-    
-    
+
+
         with open(args.text, 'r', encoding='utf-8') as f:
             text = f.read()
 
             glyphs_data, char_max_width, char_max_height = generate_glyphs_data(args.input, text, args.pixelsize, 4)
             write_c_code(glyphs_data, args.output, args.name, char_max_width, char_max_height, 4)
-    
+
 
         with open(args.text, 'r', encoding='utf-8') as f:
             text = f.read()
