@@ -44,19 +44,19 @@
 #   define __STATIC_FORCEINLINE static __forceinline
 #   define __STATIC_INLINE static __inline
 #   define __ALIGNED(x) __declspec(align(x))
-#   define __WEAK
+#   define __WEAK __attribute__((weak))
 #elif defined ( __APPLE_CC__ )
 #   include <stdint.h>
 #   define  __ALIGNED(x) __attribute__((aligned(x)))
 #   define __STATIC_FORCEINLINE static inline __attribute__((always_inline)) 
 #   define __STATIC_INLINE static inline
-#   define __WEAK
+#   define __WEAK __attribute__((weak))
 #else
 #   include <stdint.h>
 #   define  __ALIGNED(x) __attribute__((aligned(x)))
 #   define __STATIC_FORCEINLINE static inline __attribute__((always_inline)) 
 #   define __STATIC_INLINE static inline
-#   define __WEAK
+#   define __WEAK __attribute__((weak))
 #endif
 
 #undef arm_irq_safe
