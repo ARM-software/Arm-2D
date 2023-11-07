@@ -88,21 +88,6 @@ static
 arm_2d_helper_3fb_t s_tDirectModeHelper;
 #endif
 
-static struct {
-    uint32_t wMin;
-    uint32_t wMax;
-    uint64_t dwTotal;
-    uint64_t dwRenderTotal;
-    uint32_t wAverage;
-    float fCPUUsage;
-    uint32_t wIterations;
-    uint32_t wLCDLatency;
-     int64_t lTimestamp;
-} BENCHMARK = {
-    .wMin = UINT32_MAX,
-    .wIterations = __DISP0_CFG_ITERATION_CNT__,
-};
-
 
 /*============================ IMPLEMENTATION ================================*/
 static void __on_frame_start(arm_2d_scene_t *ptScene)
@@ -176,22 +161,22 @@ IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
         arm_lcd_text_location((__DISP0_CFG_SCEEN_HEIGHT__ + 7) / 8 - 2,
                               0);
 
-        if (BENCHMARK.wAverage) {
+        if (DISP0_ADAPTER.Benchmark.wAverage) {
             arm_lcd_printf(
                 "FPS:%3d:%dms ",
-                MIN(arm_2d_helper_get_reference_clock_frequency() / BENCHMARK.wAverage, 999),
-                (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wAverage));
+                MIN(arm_2d_helper_get_reference_clock_frequency() / DISP0_ADAPTER.Benchmark.wAverage, 999),
+                (int32_t)arm_2d_helper_convert_ticks_to_ms(DISP0_ADAPTER.Benchmark.wAverage));
         }
 
 #if __DISP0_CFG_SCEEN_WIDTH__ >= 240
         arm_lcd_printf( 
             "CPU:%2.2f%% LCD-Latency:%2dms", 
-            BENCHMARK.fCPUUsage,
-            (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wLCDLatency));
+            DISP0_ADAPTER.Benchmark.fCPUUsage,
+            (int32_t)arm_2d_helper_convert_ticks_to_ms(DISP0_ADAPTER.Benchmark.wLCDLatency));
 #else
         arm_lcd_printf( 
             "LCD:%2dms",
-            (int32_t)arm_2d_helper_convert_ticks_to_ms(BENCHMARK.wLCDLatency) );
+            (int32_t)arm_2d_helper_convert_ticks_to_ms(DISP0_ADAPTER.Benchmark.wLCDLatency) );
 #endif
     }
 
@@ -200,8 +185,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
     /* draw verion info on the bottom right corner */
     arm_lcd_text_set_colour(GLCD_COLOR_LIGHT_GREY, GLCD_COLOR_WHITE);
     arm_lcd_text_location( (__DISP0_CFG_SCEEN_HEIGHT__ + 7) / 8 - 2, 
-                            (__DISP0_CFG_SCEEN_WIDTH__ / 6) - 22);
-    arm_lcd_printf("arm-2d v" 
+                            (__DISP0_CFG_SCEEN_WIDTH__ / 6) - 12);
+    arm_lcd_printf("v" 
                     ARM_TO_STRING(ARM_2D_VERSION_MAJOR)
                     "."
                     ARM_TO_STRING(ARM_2D_VERSION_MINOR)
@@ -346,32 +331,32 @@ static bool __on_each_frame_complete(void *ptTarget)
 #endif
 
     int32_t nTotalLCDCycCount = DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nRenderingCycle;
-    BENCHMARK.wLCDLatency = nTotalLCDCycCount;
+    DISP0_ADAPTER.Benchmark.wLCDLatency = nTotalLCDCycCount;
 
     /* calculate real-time FPS */
     if (__DISP0_CFG_ITERATION_CNT__) {
-        if (BENCHMARK.wIterations) {
-            BENCHMARK.wMin = MIN((uint32_t)nElapsed, BENCHMARK.wMin);
-            BENCHMARK.wMax = MAX(nElapsed, (int32_t)BENCHMARK.wMax);
-            BENCHMARK.dwTotal += nElapsed;
-            BENCHMARK.dwRenderTotal += DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nTotalCycle;
-            BENCHMARK.wIterations--;
+        if (DISP0_ADAPTER.Benchmark.wIterations) {
+            DISP0_ADAPTER.Benchmark.wMin = MIN((uint32_t)nElapsed, DISP0_ADAPTER.Benchmark.wMin);
+            DISP0_ADAPTER.Benchmark.wMax = MAX(nElapsed, (int32_t)DISP0_ADAPTER.Benchmark.wMax);
+            DISP0_ADAPTER.Benchmark.dwTotal += nElapsed;
+            DISP0_ADAPTER.Benchmark.dwRenderTotal += DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nTotalCycle;
+            DISP0_ADAPTER.Benchmark.wIterations--;
 
-            if (0 == BENCHMARK.wIterations) {
-                BENCHMARK.wAverage =
-                    (uint32_t)(BENCHMARK.dwTotal / (uint64_t)__DISP0_CFG_ITERATION_CNT__);
-                BENCHMARK.wAverage = MAX(1, BENCHMARK.wAverage);
+            if (0 == DISP0_ADAPTER.Benchmark.wIterations) {
+                DISP0_ADAPTER.Benchmark.wAverage =
+                    (uint32_t)(DISP0_ADAPTER.Benchmark.dwTotal / (uint64_t)__DISP0_CFG_ITERATION_CNT__);
+                DISP0_ADAPTER.Benchmark.wAverage = MAX(1, DISP0_ADAPTER.Benchmark.wAverage);
  
-                int64_t lElapsed = lTimeStamp - BENCHMARK.lTimestamp;
-                BENCHMARK.fCPUUsage = (float)((double)BENCHMARK.dwRenderTotal / (double)lElapsed) * 100.0f;
+                int64_t lElapsed = lTimeStamp - DISP0_ADAPTER.Benchmark.lTimestamp;
+                DISP0_ADAPTER.Benchmark.fCPUUsage = (float)((double)DISP0_ADAPTER.Benchmark.dwRenderTotal / (double)lElapsed) * 100.0f;
                  
-                BENCHMARK.wMin = UINT32_MAX;
-                BENCHMARK.wMax = 0;
-                BENCHMARK.dwTotal = 0;
-                BENCHMARK.dwRenderTotal = 0;
-                BENCHMARK.wIterations = __DISP0_CFG_ITERATION_CNT__;
+                DISP0_ADAPTER.Benchmark.wMin = UINT32_MAX;
+                DISP0_ADAPTER.Benchmark.wMax = 0;
+                DISP0_ADAPTER.Benchmark.dwTotal = 0;
+                DISP0_ADAPTER.Benchmark.dwRenderTotal = 0;
+                DISP0_ADAPTER.Benchmark.wIterations = __DISP0_CFG_ITERATION_CNT__;
                 
-                BENCHMARK.lTimestamp = arm_2d_helper_get_system_timestamp();
+                DISP0_ADAPTER.Benchmark.lTimestamp = arm_2d_helper_get_system_timestamp();
             }
         }
     }
@@ -465,6 +450,9 @@ static void __user_scene_player_init(void)
                             .iHeight = __DISP0_CFG_SCEEN_HEIGHT__,
                         }}});
 
+    DISP0_ADAPTER.Benchmark.wMin = UINT32_MAX;
+    DISP0_ADAPTER.Benchmark.wIterations = __DISP0_CFG_ITERATION_CNT__;
+
 }
 
 /*----------------------------------------------------------------------------*
@@ -502,7 +490,7 @@ void disp_adapter0_init(void)
                         (arm_2d_region_list_item_t *)s_tNavDirtyRegionList);
                         
                         
-        BENCHMARK.lTimestamp = arm_2d_helper_get_system_timestamp();
+        DISP0_ADAPTER.Benchmark.lTimestamp = arm_2d_helper_get_system_timestamp();
     } while(0);
 #endif
 
