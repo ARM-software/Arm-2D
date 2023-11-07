@@ -12,7 +12,7 @@ var searchData=
   ['fnscene_9',['fnScene',['../group__gHelper.html#a11df8d98a8cddbc856d69808ded8c733',1,'arm_2d_scene_t']]],
   ['fnswitchdrawer_10',['fnSwitchDrawer',['../group__gHelper.html#abb828a64c4ccfbd867ffd5461824968a',1,'arm_2d_scene_switch_mode_t']]],
   ['foreground_11',['Foreground',['../group__Drawing.html#a86f2a564b2acf6e043bc467683d31729',1,'arm_2d_op_drw_patn_t']]],
-  ['framebuffer_12',['FrameBuffer',['../group__gHelper.html#a8584dccdcc1c30342dc8060d030affb1',1,'arm_2d_helper_pfb_cfg_t']]],
+  ['framebuffer_12',['FrameBuffer',['../group__gHelper.html#a401acad01a7d558e9e6a17aadb46db3c',1,'arm_2d_helper_pfb_cfg_t']]],
   ['fscale_13',['fScale',['../group__gTransform.html#afe43ae7c569abd89f499db003873b915',1,'__arm_2d_transform_info_t']]],
   ['fx_14',['fX',['../group__gKernel.html#ad1c4e04b3b22f47fdc69c1fc92ecb905',1,'arm_2d_point_float_t']]],
   ['fy_15',['fY',['../group__gKernel.html#a912063b5c4243a0ed4e1a655e3cb3082',1,'arm_2d_point_float_t']]]
