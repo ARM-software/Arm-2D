@@ -455,6 +455,40 @@ static void __user_scene_player_init(void)
 
 }
 
+#if !__DISP%Instance%_CFG_DISABLE_NAVIGATION_LAYER__
+__WEAK 
+void disp_adapter%Instance%_navigator_init(void)
+{
+    /*! define dirty regions for the navigation layer */
+    IMPL_ARM_2D_REGION_LIST(s_tNavDirtyRegionList, const static)
+
+        /* a region for the status bar on the bottom of the screen */
+        ADD_LAST_REGION_TO_LIST(s_tNavDirtyRegionList,
+            .tLocation = {
+                .iX = 0,
+                .iY = ((__DISP%Instance%_CFG_SCEEN_HEIGHT__ + 7) / 8 - 2) * 8},
+            .tSize = {
+                .iWidth = __DISP%Instance%_CFG_SCEEN_WIDTH__,
+                .iHeight = 8,
+            },
+        ),
+
+    END_IMPL_ARM_2D_REGION_LIST()
+    /* register event handler for evtOnDrawNavigation */
+    arm_2d_scene_player_register_on_draw_navigation_event_handler(
+                    &DISP%Instance%_ADAPTER,
+                    __disp_adapter%Instance%_draw_navigation,
+                    NULL,
+                    (arm_2d_region_list_item_t *)s_tNavDirtyRegionList);
+}
+#else
+__WEAK 
+void disp_adapter%Instance%_navigator_init(void)
+{
+
+}
+#endif
+
 /*----------------------------------------------------------------------------*
  * Display Adapter Entry                                                      *
  *----------------------------------------------------------------------------*/
@@ -465,34 +499,9 @@ void disp_adapter%Instance%_init(void)
 
     arm_extra_controls_init();
 
-#if !__DISP%Instance%_CFG_DISABLE_NAVIGATION_LAYER__
-    do {
-        /*! define dirty regions for the navigation layer */
-        IMPL_ARM_2D_REGION_LIST(s_tNavDirtyRegionList, const static)
+    disp_adapter%Instance%_navigator_init();
 
-            /* a region for the status bar on the bottom of the screen */
-            ADD_LAST_REGION_TO_LIST(s_tNavDirtyRegionList,
-                .tLocation = {
-                    .iX = 0,
-                    .iY = ((__DISP%Instance%_CFG_SCEEN_HEIGHT__ + 7) / 8 - 2) * 8},
-                .tSize = {
-                    .iWidth = __DISP%Instance%_CFG_SCEEN_WIDTH__,
-                    .iHeight = 8,
-                },
-            ),
-
-        END_IMPL_ARM_2D_REGION_LIST()
-        /* register event handler for evtOnDrawNavigation */
-        arm_2d_scene_player_register_on_draw_navigation_event_handler(
-                        &DISP%Instance%_ADAPTER,
-                        __disp_adapter%Instance%_draw_navigation,
-                        NULL,
-                        (arm_2d_region_list_item_t *)s_tNavDirtyRegionList);
-                        
-                        
-        DISP%Instance%_ADAPTER.Benchmark.lTimestamp = arm_2d_helper_get_system_timestamp();
-    } while(0);
-#endif
+    DISP%Instance%_ADAPTER.Benchmark.lTimestamp = arm_2d_helper_get_system_timestamp();
 
     if (!__DISP%Instance%_CFG_DISABLE_DEFAULT_SCENE__) {
     #if 0
