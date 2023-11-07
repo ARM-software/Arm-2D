@@ -161,22 +161,22 @@ IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
         arm_lcd_text_location((__DISP%Instance%_CFG_SCEEN_HEIGHT__ + 7) / 8 - 2,
                               0);
 
-        if (DISP%INSTANCE%_ADAPTER.BENCHMARK.wAverage) {
+        if (DISP%Instance%_ADAPTER_BENCHMARK.wAverage) {
             arm_lcd_printf(
                 "FPS:%3d:%dms ",
-                MIN(arm_2d_helper_get_reference_clock_frequency() / DISP%INSTANCE%_ADAPTER.BENCHMARK.wAverage, 999),
-                (int32_t)arm_2d_helper_convert_ticks_to_ms(DISP%INSTANCE%_ADAPTER.BENCHMARK.wAverage));
+                MIN(arm_2d_helper_get_reference_clock_frequency() / DISP%Instance%_ADAPTER_BENCHMARK.wAverage, 999),
+                (int32_t)arm_2d_helper_convert_ticks_to_ms(DISP%Instance%_ADAPTER_BENCHMARK.wAverage));
         }
 
 #if __DISP%Instance%_CFG_SCEEN_WIDTH__ >= 240
         arm_lcd_printf( 
             "CPU:%2.2f%% LCD-Latency:%2dms", 
-            DISP%INSTANCE%_ADAPTER.BENCHMARK.fCPUUsage,
-            (int32_t)arm_2d_helper_convert_ticks_to_ms(DISP%INSTANCE%_ADAPTER.BENCHMARK.wLCDLatency));
+            DISP%Instance%_ADAPTER_BENCHMARK.fCPUUsage,
+            (int32_t)arm_2d_helper_convert_ticks_to_ms(DISP%Instance%_ADAPTER_BENCHMARK.wLCDLatency));
 #else
         arm_lcd_printf( 
             "LCD:%2dms",
-            (int32_t)arm_2d_helper_convert_ticks_to_ms(DISP%INSTANCE%_ADAPTER.BENCHMARK.wLCDLatency) );
+            (int32_t)arm_2d_helper_convert_ticks_to_ms(DISP%Instance%_ADAPTER_BENCHMARK.wLCDLatency) );
 #endif
     }
 
@@ -331,32 +331,32 @@ static bool __on_each_frame_complete(void *ptTarget)
 #endif
 
     int32_t nTotalLCDCycCount = DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nRenderingCycle;
-    DISP%INSTANCE%_ADAPTER.BENCHMARK.wLCDLatency = nTotalLCDCycCount;
+    DISP%Instance%_ADAPTER_BENCHMARK.wLCDLatency = nTotalLCDCycCount;
 
     /* calculate real-time FPS */
     if (__DISP%Instance%_CFG_ITERATION_CNT__) {
-        if (DISP%INSTANCE%_ADAPTER.BENCHMARK.wIterations) {
-            DISP%INSTANCE%_ADAPTER.BENCHMARK.wMin = MIN((uint32_t)nElapsed, DISP%INSTANCE%_ADAPTER.BENCHMARK.wMin);
-            DISP%INSTANCE%_ADAPTER.BENCHMARK.wMax = MAX(nElapsed, (int32_t)DISP%INSTANCE%_ADAPTER.BENCHMARK.wMax);
-            DISP%INSTANCE%_ADAPTER.BENCHMARK.dwTotal += nElapsed;
-            DISP%INSTANCE%_ADAPTER.BENCHMARK.dwRenderTotal += DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nTotalCycle;
-            DISP%INSTANCE%_ADAPTER.BENCHMARK.wIterations--;
+        if (DISP%Instance%_ADAPTER_BENCHMARK.wIterations) {
+            DISP%Instance%_ADAPTER_BENCHMARK.wMin = MIN((uint32_t)nElapsed, DISP%Instance%_ADAPTER_BENCHMARK.wMin);
+            DISP%Instance%_ADAPTER_BENCHMARK.wMax = MAX(nElapsed, (int32_t)DISP%Instance%_ADAPTER_BENCHMARK.wMax);
+            DISP%Instance%_ADAPTER_BENCHMARK.dwTotal += nElapsed;
+            DISP%Instance%_ADAPTER_BENCHMARK.dwRenderTotal += DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nTotalCycle;
+            DISP%Instance%_ADAPTER_BENCHMARK.wIterations--;
 
-            if (0 == DISP%INSTANCE%_ADAPTER.BENCHMARK.wIterations) {
-                DISP%INSTANCE%_ADAPTER.BENCHMARK.wAverage =
-                    (uint32_t)(DISP%INSTANCE%_ADAPTER.BENCHMARK.dwTotal / (uint64_t)__DISP%Instance%_CFG_ITERATION_CNT__);
-                DISP%INSTANCE%_ADAPTER.BENCHMARK.wAverage = MAX(1, DISP%INSTANCE%_ADAPTER.BENCHMARK.wAverage);
+            if (0 == DISP%Instance%_ADAPTER_BENCHMARK.wIterations) {
+                DISP%Instance%_ADAPTER_BENCHMARK.wAverage =
+                    (uint32_t)(DISP%Instance%_ADAPTER_BENCHMARK.dwTotal / (uint64_t)__DISP%Instance%_CFG_ITERATION_CNT__);
+                DISP%Instance%_ADAPTER_BENCHMARK.wAverage = MAX(1, DISP%Instance%_ADAPTER_BENCHMARK.wAverage);
  
-                int64_t lElapsed = lTimeStamp - DISP%INSTANCE%_ADAPTER.BENCHMARK.lTimestamp;
-                DISP%INSTANCE%_ADAPTER.BENCHMARK.fCPUUsage = (float)((double)DISP%INSTANCE%_ADAPTER.BENCHMARK.dwRenderTotal / (double)lElapsed) * 100.0f;
+                int64_t lElapsed = lTimeStamp - DISP%Instance%_ADAPTER_BENCHMARK.lTimestamp;
+                DISP%Instance%_ADAPTER_BENCHMARK.fCPUUsage = (float)((double)DISP%Instance%_ADAPTER_BENCHMARK.dwRenderTotal / (double)lElapsed) * 100.0f;
                  
-                DISP%INSTANCE%_ADAPTER.BENCHMARK.wMin = UINT32_MAX;
-                DISP%INSTANCE%_ADAPTER.BENCHMARK.wMax = 0;
-                DISP%INSTANCE%_ADAPTER.BENCHMARK.dwTotal = 0;
-                DISP%INSTANCE%_ADAPTER.BENCHMARK.dwRenderTotal = 0;
-                DISP%INSTANCE%_ADAPTER.BENCHMARK.wIterations = __DISP%Instance%_CFG_ITERATION_CNT__;
+                DISP%Instance%_ADAPTER_BENCHMARK.wMin = UINT32_MAX;
+                DISP%Instance%_ADAPTER_BENCHMARK.wMax = 0;
+                DISP%Instance%_ADAPTER_BENCHMARK.dwTotal = 0;
+                DISP%Instance%_ADAPTER_BENCHMARK.dwRenderTotal = 0;
+                DISP%Instance%_ADAPTER_BENCHMARK.wIterations = __DISP%Instance%_CFG_ITERATION_CNT__;
                 
-                DISP%INSTANCE%_ADAPTER.BENCHMARK.lTimestamp = arm_2d_helper_get_system_timestamp();
+                DISP%Instance%_ADAPTER_BENCHMARK.lTimestamp = arm_2d_helper_get_system_timestamp();
             }
         }
     }
@@ -490,7 +490,7 @@ void disp_adapter%Instance%_init(void)
                         (arm_2d_region_list_item_t *)s_tNavDirtyRegionList);
                         
                         
-        DISP%INSTANCE%_ADAPTER.BENCHMARK.lTimestamp = arm_2d_helper_get_system_timestamp();
+        DISP%Instance%_ADAPTER_BENCHMARK.lTimestamp = arm_2d_helper_get_system_timestamp();
     } while(0);
 #endif
 
