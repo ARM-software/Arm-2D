@@ -226,7 +226,6 @@ struct arm_2d_scene_t {
     };
 };
 
-
 /*!
  * \brief the scene player event handler
  * 
@@ -253,7 +252,19 @@ typedef struct arm_2d_scene_before_scene_switching_evt_t {
  */
 struct arm_2d_scene_player_t {
     inherit(arm_2d_helper_pfb_t);                                               //!< inherit from arm_2d_helper_pfb_t
-    
+
+    struct {
+        uint32_t wMin;
+        uint32_t wMax;
+        uint64_t dwTotal;
+        uint64_t dwRenderTotal;
+        uint32_t wAverage;
+        float fCPUUsage;
+        uint32_t wIterations;
+        uint32_t wLCDLatency;
+        int64_t lTimestamp;
+    } Benchmark;
+
     ARM_PRIVATE(
         struct {
             arm_2d_scene_t *ptHead;                                             //!< points to the head of the FIFO
