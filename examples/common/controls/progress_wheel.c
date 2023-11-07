@@ -150,13 +150,12 @@ void progress_wheel_depose(progress_wheel_t *ptThis)
         ARM_2D_OP_DEPOSE(*ptItem);
     }
 
-    arm_2d_helper_transform_depose(&this.tTransHelper);
-
     arm_2d_region_list_item_t **ppDirtyRegionList = this.tCFG.ppList;
 
     if (NULL == ppDirtyRegionList) {
         return ;
     }
+    arm_2d_helper_transform_depose(&this.tTransHelper);
 
     while(NULL != (*ppDirtyRegionList)) {
 
