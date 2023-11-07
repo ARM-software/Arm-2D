@@ -1,7 +1,7 @@
 function writeHeader() {
-    document.write('Version 1.1.5-dev174');
+    document.write('Version 1.1.5-dev179');
 };
 
 function writeFooter()  {
-    document.write('Generated on Mon Nov  6 2023 19:00:45 for Arm-2D 1.1.5-dev174+g70018e2. Copyright &copy; 2022-2023 Arm Limited (or its affiliates). All rights reserved.');
+    document.write('Generated on Tue Nov  7 2023 02:02:56 for Arm-2D 1.1.5-dev179+g6b88540. Copyright &copy; 2022-2023 Arm Limited (or its affiliates). All rights reserved.');
 };

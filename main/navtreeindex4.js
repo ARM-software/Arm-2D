@@ -1,5 +1,7 @@
 var NAVTREEINDEX4 =
 {
+"group__gTransform.html#structarm__2d__op__trans__msk__t":[10,4,3],
+"group__gTransform.html#structarm__2d__op__trans__msk__t_8Mask":[10,4,17],
 "group__gTransform.html#structarm__2d__op__trans__msk__t_8Origin":[10,4,16],
 "group__gTransform.html#structarm__2d__op__trans__msk__t_8Source":[10,4,15],
 "group__gTransform.html#structarm__2d__op__trans__msk__t_8Target":[10,4,14],
