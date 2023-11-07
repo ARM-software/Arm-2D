@@ -128,8 +128,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
 }
 
 #if !__DISP0_CFG_DISABLE_NAVIGATION_LAYER__
-static
-IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
+__WEAK
+IMPL_PFB_ON_DRAW(__disp_adapter0_draw_navigation)
 {
     ARM_2D_UNUSED(pTarget);
     ARM_2D_UNUSED(bIsNewFrame);
@@ -205,7 +205,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_navigation)
 
 #if __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
 __WEAK
-IMPL_PFB_ON_LOW_LV_RENDERING(__glcd0_pfb_render_handler)
+IMPL_PFB_ON_LOW_LV_RENDERING(__disp_adapter0_pfb_render_handler)
 {
     const arm_2d_tile_t *ptTile = &(ptPFB->tTile);
 
@@ -266,7 +266,7 @@ void disp_adapter0_insert_async_flushing_complete_event_handler(void)
 }
 
 __WEAK
-IMPL_PFB_ON_LOW_LV_RENDERING(__glcd0_pfb_render_handler)
+IMPL_PFB_ON_LOW_LV_RENDERING(__disp_adapter0_pfb_render_handler)
 {
     const arm_2d_tile_t *ptTile = &(ptPFB->tTile);
 
@@ -292,7 +292,7 @@ IMPL_PFB_ON_LOW_LV_RENDERING(__glcd0_pfb_render_handler)
  */
 
 __WEAK
-IMPL_PFB_ON_LOW_LV_RENDERING(__glcd0_pfb_render_handler)
+IMPL_PFB_ON_LOW_LV_RENDERING(__disp_adapter0_pfb_render_handler)
 {
     const arm_2d_tile_t *ptTile = &(ptPFB->tTile);
 
@@ -385,7 +385,7 @@ static void __user_scene_player_init(void)
         ,{
             .evtOnLowLevelRendering = {
                 //! callback for low level rendering
-                .fnHandler = &__glcd0_pfb_render_handler,
+                .fnHandler = &__disp_adapter0_pfb_render_handler,
             },
             .evtOnEachFrameCPL = {
                 .fnHandler = &__on_each_frame_complete,
@@ -485,7 +485,7 @@ void disp_adapter0_init(void)
         /* register event handler for evtOnDrawNavigation */
         arm_2d_scene_player_register_on_draw_navigation_event_handler(
                         &DISP0_ADAPTER,
-                        __pfb_draw_navigation,
+                        __disp_adapter0_draw_navigation,
                         NULL,
                         (arm_2d_region_list_item_t *)s_tNavDirtyRegionList);
                         
