@@ -402,17 +402,27 @@ void arm_2d_helper_pfb_flush(arm_2d_helper_pfb_t *ptThis)
 
     arm_2d_pfb_t *ptPFB = NULL;
     
+    /* atomic access of this.Adapter.pfFlushing */
     arm_irq_safe {
+        if (NULL != this.Adapter.ptFlushing) {
+            arm_exit_irq_safe;
+        }
+
         ARM_LIST_QUEUE_DEQUEUE( this.Adapter.FlushFIFO.ptHead, 
                                 this.Adapter.FlushFIFO.ptTail, 
                                 ptPFB);
+        /* additional protection implemented with bIsFlushRequested Flag
+         * it is not a MUST-have but good for performance
+         */
         this.Adapter.bIsFlushRequested = (NULL == ptPFB);
+
+        if (NULL != ptPFB) {
+            this.Adapter.ptFlushing = ptPFB;
+            ptPFB->ptPFBHelper = ptThis;
+        }
     }
 
     if (NULL != ptPFB) {
-        this.Adapter.ptFlushing = ptPFB;
-        ptPFB->ptPFBHelper = ptThis;
-
         if (    (NULL == this.tCFG.Dependency.evtOnLowLevelRendering.fnHandler)
            ||   this.Adapter.bIgnoreLowLevelFlush) {
            __arm_2d_helper_pfb_report_rendering_complete(ptThis, ptPFB);
@@ -439,12 +449,47 @@ void __arm_2d_helper_enqueue_pfb(arm_2d_helper_pfb_t *ptThis)
                                 this.Adapter.ptCurrent);
     }
     
+    /* only when a flush is requested*/
     if (bIsFlushRequested) {
         arm_2d_helper_pfb_flush(ptThis);
     }
     
 }
 
+ARM_NONNULL(1)
+void __arm_2d_helper_pfb_report_rendering_complete( arm_2d_helper_pfb_t *ptThis,
+                                                    arm_2d_pfb_t *ptPFB)
+{
+    assert(NULL != ptThis);
+
+    /* note: in fact, user can only pass either NULL or this.Adapter.ptFlushing
+     *       to the ptPFB. This makes ptPFB useless. We only keep it for 
+     *       backward compatible.
+     */
+
+    arm_irq_safe {
+        if (NULL == ptPFB) {
+            ptPFB = this.Adapter.ptFlushing;
+            this.Adapter.ptFlushing = NULL;
+        } else if (ptPFB == this.Adapter.ptFlushing) {
+            this.Adapter.ptFlushing = NULL;
+        } else {
+            /* this should not happen */
+            assert(false);
+        }
+    }
+
+    if (NULL == ptPFB) {
+        assert(false);  /* this should not happen */
+        return ;
+    }
+
+    ptPFB->tTile.tRegion.tLocation = (arm_2d_location_t) {0,0};
+    
+    __arm_2d_helper_pfb_free(ptThis, ptPFB);
+    
+    arm_2d_helper_pfb_flush(ptThis);
+}
 
 static
 void __arm_2d_helper_low_level_rendering(arm_2d_helper_pfb_t *ptThis)
@@ -896,42 +941,6 @@ __WEAK int32_t __arm_2d_helper_perf_counter_stop(int64_t *plTimestamp,
 
 #endif
 
-
-
-
-
-
-ARM_NONNULL(1)
-void __arm_2d_helper_pfb_report_rendering_complete( arm_2d_helper_pfb_t *ptThis,
-                                                    arm_2d_pfb_t *ptPFB)
-{
-    assert(NULL != ptThis);
-
-    /* note: in fact, user can only pass either NULL or this.Adapter.ptFlushing
-     *       to the ptPFB. This makes ptPFB useless. We only keep it for 
-     *       backward compatible.
-     */
-
-    arm_irq_safe {
-        if (NULL == ptPFB) {
-            ptPFB = this.Adapter.ptFlushing;
-            this.Adapter.ptFlushing = NULL;
-        } else if (ptPFB == this.Adapter.ptFlushing) {
-            this.Adapter.ptFlushing = NULL;
-        }
-    }
-
-    if (NULL == ptPFB) {
-        assert(false);  /* this should not happen */
-        return ;
-    }
-
-    ptPFB->tTile.tRegion.tLocation = (arm_2d_location_t) {0,0};
-    
-    __arm_2d_helper_pfb_free(ptThis, ptPFB);
-    
-    arm_2d_helper_pfb_flush(ptThis);
-}
 
 
 ARM_NONNULL(1,3)
