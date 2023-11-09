@@ -57,15 +57,15 @@ var group__gHelper =
       [ "evtOnDrawing", "group__gHelper.html#a75436e9711701c092b4bafcc1c868d25", null ],
       [ "evtOnLowLevelSyncUp", "group__gHelper.html#a0ed423f1f6490f8cc89abd55f886f4cd", null ],
       [ "evtOnEachFrameCPL", "group__gHelper.html#a3a09c78af2a4f90fdfed477c0844e4fc", null ],
-      [ "Navigation", "group__gHelper.html#ab812c150c596c69bb2941d6d23013b94", null ]
+      [ "Navigation", "group__gHelper.html#a1dfa3512535435a4e62638185978f4d0", null ]
     ] ],
     [ "arm_2d_helper_pfb_cfg_t", "group__gHelper.html#structarm__2d__helper__pfb__cfg__t", [
       [ "tDisplayArea", "group__gHelper.html#adc4ca6df76cda6514cff8a4cec3918ca", null ],
-      [ "FrameBuffer", "group__gHelper.html#a401acad01a7d558e9e6a17aadb46db3c", null ],
+      [ "FrameBuffer", "group__gHelper.html#adb943e22df0d027cca80b771f2f1edd5", null ],
       [ "Dependency", "group__gHelper.html#a65ec336911098eaed7b2ac60038dda6e", null ]
     ] ],
     [ "arm_2d_helper_pfb_t", "group__gHelper.html#structarm__2d__helper__pfb__t", [
-      [ "Statistics", "group__gHelper.html#a29610747e08468f1bb935c96cb353f72", null ]
+      [ "Statistics", "group__gHelper.html#ad9ea8a067ea00c2db7039f2dc6f56e6e", null ]
     ] ],
     [ "arm_2d_helper_transform_t", "group__gHelper.html#structarm__2d__helper__transform__t", null ],
     [ "arm_2d_helper_film_t", "group__gHelper.html#structarm__2d__helper__film__t", [
@@ -101,6 +101,7 @@ var group__gHelper =
     [ "arm_2d_scene_player_t.__unnamed124__.Events", "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed124_____8Events", null ],
     [ "arm_2d_helper_3fb_t.__unnamed137__", "group__gHelper.html#structarm__2d__helper__3fb__t_8____unnamed137____", null ],
     [ "arm_2d_helper_3fb_t.__unnamed137__.Runtime", "group__gHelper.html#structarm__2d__helper__3fb__t_8____unnamed137_____8Runtime", null ],
+    [ "arm_2d_region_list_item_t.__unnamed140__", "group__gHelper.html#structarm__2d__region__list__item__t_8____unnamed140____", null ],
     [ "arm_2d_helper_pfb_dependency_t.Navigation", "group__gHelper.html#structarm__2d__helper__pfb__dependency__t_8Navigation", null ],
     [ "arm_2d_helper_pfb_cfg_t.FrameBuffer", "group__gHelper.html#structarm__2d__helper__pfb__cfg__t_8FrameBuffer", [
       [ "ptPFBs", "group__gHelper.html#ae32199e047789740867bc43fd74278d1", null ],
@@ -115,19 +116,24 @@ var group__gHelper =
       [ "u3PixelHeightAlign", "group__gHelper.html#a46b5090428aa1c20834ca4f50c9fd1ba", null ],
       [ "u4PoolReserve", "group__gHelper.html#a430f59062291820e08b2cf816d7ef490", null ]
     ] ],
-    [ "arm_2d_helper_pfb_t.__unnamed142__", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed142____", null ],
-    [ "arm_2d_helper_pfb_t.__unnamed142__.Adapter", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed142_____8Adapter", null ],
-    [ "arm_2d_helper_pfb_t.__unnamed142__.Adapter.__unnamed146__", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed142_____8Adapter_8____unnamed146____", null ],
-    [ "arm_2d_helper_pfb_t.__unnamed142__.Adapter.FlushFIFO", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed142_____8Adapter_8FlushFIFO", null ],
+    [ "arm_2d_helper_pfb_cfg_t.DirtyRegion", "group__gHelper.html#structarm__2d__helper__pfb__cfg__t_8DirtyRegion", [
+      [ "ptRegions", "group__gHelper.html#a6a496fcf164bce1b709a9e0a91fd1a8d", null ],
+      [ "chCount", "group__gHelper.html#a55bfdcb94dba247cbe1c0d3a479f17d6", null ]
+    ] ],
+    [ "arm_2d_helper_pfb_t.__unnamed145__", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed145____", null ],
+    [ "arm_2d_helper_pfb_t.__unnamed145__.Adapter", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed145_____8Adapter", null ],
+    [ "arm_2d_helper_pfb_t.__unnamed145__.Adapter.OptimizedDirtyRegions", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed145_____8Adapter_8OptimizedDirtyRegions", null ],
+    [ "arm_2d_helper_pfb_t.__unnamed145__.Adapter.__unnamed150__", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed145_____8Adapter_8____unnamed150____", null ],
+    [ "arm_2d_helper_pfb_t.__unnamed145__.Adapter.FlushFIFO", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed145_____8Adapter_8FlushFIFO", null ],
     [ "arm_2d_helper_pfb_t.Statistics", "group__gHelper.html#structarm__2d__helper__pfb__t_8Statistics", [
       [ "lTimestamp", "group__gHelper.html#a5a48f3e42ab73764014d124cd2764be4", null ],
       [ "nTotalCycle", "group__gHelper.html#aad0c95f31d24233a32300ac6e851506f", null ],
       [ "nRenderingCycle", "group__gHelper.html#a5ae6646bd6957664dcc13172aa268290", null ]
     ] ],
-    [ "arm_2d_helper_transform_t.__unnamed149__", "group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed149____", null ],
-    [ "arm_2d_helper_transform_t.__unnamed149__.Angle", "group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed149_____8Angle", null ],
-    [ "arm_2d_helper_transform_t.__unnamed149__.Scale", "group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed149_____8Scale", null ],
-    [ "arm_2d_helper_pi_slider_t.__unnamed153__", "group__gHelper.html#structarm__2d__helper__pi__slider__t_8____unnamed153____", null ],
+    [ "arm_2d_helper_transform_t.__unnamed153__", "group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed153____", null ],
+    [ "arm_2d_helper_transform_t.__unnamed153__.Angle", "group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed153_____8Angle", null ],
+    [ "arm_2d_helper_transform_t.__unnamed153__.Scale", "group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed153_____8Scale", null ],
+    [ "arm_2d_helper_pi_slider_t.__unnamed157__", "group__gHelper.html#structarm__2d__helper__pi__slider__t_8____unnamed157____", null ],
     [ "arm_2d_scene_player_register_on_draw_navigation_event_handler", "group__gHelper.html#ga90130f1c831d7fb20db39f20a488a3e1", null ],
     [ "arm_2d_scene_player_set_switching_mode", "group__gHelper.html#ga6b9ef0f3e0f80430fc036f6d3c67c135", null ],
     [ "arm_2d_scene_player_register_before_switching_event_handler", "group__gHelper.html#ga0c896791f09bdcbb1115746844ddba2b", null ],
