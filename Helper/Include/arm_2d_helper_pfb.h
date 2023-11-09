@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        08. Nov 2023
- * $Revision:    V.1.6.6
+ * $Date:        09. Nov 2023
+ * $Revision:    V.1.6.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -45,7 +45,6 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #   pragma clang diagnostic ignored "-Wpadded"
 #endif
-
 
 /*!
  * \addtogroup gHelper 7 Helper Services
@@ -468,11 +467,16 @@ typedef struct arm_2d_pfb_t {
  * 
  */
 typedef struct arm_2d_region_list_item_t {
-    struct arm_2d_region_list_item_t *ptNext;   //!< the next node
-    arm_2d_region_t tRegion;                    //!< the region
-    uint8_t         bIgnore     : 1;            //!< ignore this region
-    uint8_t         bUpdated    : 1;            //!< this region item has been updated, PFB helper should refresh it again.
-    uint8_t                     : 6;
+    struct arm_2d_region_list_item_t    *ptNext;                                //!< the next node
+    arm_2d_region_t                     tRegion;                                //!< the region
+    uint8_t                             bIgnore     : 1;                        //!< ignore this region
+    uint8_t                             bUpdated    : 1;                        //!< this region item has been updated, PFB helper should refresh it again.
+    uint8_t                                         : 6;
+
+ARM_PRIVATE(
+    struct arm_2d_region_list_item_t   *ptWorkingListNext;                      //!< the next node in the internal working list
+    bool                                bFromInternalPool;                      //!< a flag indicating whether this list item coming from the internal pool
+)
 }arm_2d_region_list_item_t;
 
 /*!
@@ -544,7 +548,7 @@ typedef struct arm_2d_helper_pfb_cfg_t {
     arm_2d_region_t tDisplayArea;                               //!< screen description
     
     struct {
-        arm_2d_pfb_t  *ptPFBs;                                  //!< current PFB block
+        arm_2d_pfb_t  *ptPFBs;                                  //!< PFB blocks for the internal PFB pool
         arm_2d_size_t  tFrameSize;                              //!< the size of the frame
         uint32_t       wBufferSize;                             //!< the buffer size
         uint16_t       hwPFBNum;                                //!< the number of PFB
@@ -558,6 +562,11 @@ typedef struct arm_2d_helper_pfb_cfg_t {
         uint16_t       u4PoolReserve                    : 4;    //!< reserve specific number of PFB for other helper services
 
     } FrameBuffer;                                              //!< frame buffer context
+
+    struct {
+        arm_2d_region_list_item_t *ptRegions;                   //!< dirty region list item for internal pool
+        uint8_t                   chCount;                      //!< number of dirty region list items
+    } DirtyRegion;
     
     arm_2d_helper_pfb_dependency_t Dependency;                  //!< user registered dependency
 
@@ -586,11 +595,18 @@ ARM_PRIVATE(
     struct {                                                    
         arm_2d_region_t             tDrawRegion;
         arm_2d_region_t             tTargetRegion;
+
         arm_2d_region_list_item_t  *ptDirtyRegion;
+
+        struct {
+            arm_2d_region_list_item_t  *ptWorkingList;
+            arm_2d_region_list_item_t  *ptFreeList;
+        } OptimizedDirtyRegions;
 
         arm_2d_tile_t               tPFBTile;
         arm_2d_size_t               tFrameSize;
         uint32_t                    wPFBPixelCount;
+
         uint8_t                     chPT;
         struct {
             uint8_t                 bIsNewFrame                 : 1;
@@ -603,6 +619,7 @@ ARM_PRIVATE(
             uint8_t                 bIsRegionChanged            : 1;
         };
         uint16_t                    hwFreePFBCount;
+
         uintptr_t                   pFPBPoolAvailable;
         arm_2d_pfb_t               *ptCurrent;
         arm_2d_pfb_t               *ptFreeList;
