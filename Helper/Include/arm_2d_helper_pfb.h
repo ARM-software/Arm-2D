@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        09. Nov 2023
- * $Revision:    V.1.6.7
+ * $Date:        12. Nov 2023
+ * $Revision:    V.1.7.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -520,16 +520,16 @@ enum {
  */
 typedef struct arm_2d_helper_pfb_dependency_t {
     //! event handler for low level rendering
-    arm_2d_helper_render_evt_t  evtOnLowLevelRendering;
+    arm_2d_helper_render_evt_t      evtOnLowLevelRendering;
 
     //! event handler for drawing GUI
-    arm_2d_helper_draw_evt_t    evtOnDrawing;  
+    arm_2d_helper_draw_evt_t        evtOnDrawing;  
 
     //! low level rendering handler wants to sync-up (return arm_fsm_rt_wait_for_obj)
-    arm_2d_evt_t                evtOnLowLevelSyncUp;  
+    arm_2d_evt_t                    evtOnLowLevelSyncUp;  
 
     //! event handler for each frame complete
-    arm_2d_evt_t                evtOnEachFrameCPL;  
+    arm_2d_evt_t                    evtOnEachFrameCPL;  
 
     //! event handler for drawing GUI
     struct {
@@ -600,7 +600,10 @@ ARM_PRIVATE(
 
         struct {
             arm_2d_region_list_item_t  *ptWorkingList;
+            arm_2d_region_list_item_t  *ptOriginalList;
+            arm_2d_region_list_item_t  *ptCandidateList;
             arm_2d_region_list_item_t  *ptFreeList;
+            arm_2d_region_list_item_t  tWorkingItem;
         } OptimizedDirtyRegions;
 
         arm_2d_tile_t               tPFBTile;
@@ -609,14 +612,14 @@ ARM_PRIVATE(
 
         uint8_t                     chPT;
         struct {
-            uint8_t                 bIsNewFrame                 : 1;
-            uint8_t                 bIsFlushRequested           : 1;
-            uint8_t                 bIgnoreLowLevelFlush        : 1;
-            uint8_t                 bHideNavigationLayer        : 1;
-            uint8_t                 bIsDryRun                   : 1;    //!< A flag to indicate whether the first iteration was a dry run
-            uint8_t                 bNoAdditionalDirtyRegionList: 1;
-            uint8_t                 bFirstIteration             : 1;
-            uint8_t                 bIsRegionChanged            : 1;
+            uint8_t                 bIsNewFrame                         : 1;
+            uint8_t                 bIsUsingOptimizedDirtyRegionList    : 1;
+            uint8_t                 bIgnoreLowLevelFlush                : 1;
+            uint8_t                 bHideNavigationLayer                : 1;
+            uint8_t                 bIsDryRun                           : 1;    //!< A flag to indicate whether the first iteration was a dry run
+            uint8_t                 bNoAdditionalDirtyRegionList        : 1;
+            uint8_t                 bFirstIteration                     : 1;
+            uint8_t                 bIsRegionChanged                    : 1;
         };
         uint16_t                    hwFreePFBCount;
 

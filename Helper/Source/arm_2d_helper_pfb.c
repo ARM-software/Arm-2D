@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        09. Nov 2023
- * $Revision:    V.1.6.7
+ * $Date:        12. Nov 2023
+ * $Revision:    V.1.7.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -76,6 +76,12 @@
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ PROTOTYPES ====================================*/
+
+ARM_NONNULL(1)
+static void __arm_2d_helper_dirty_region_pool_free(
+                                            arm_2d_helper_pfb_t *ptThis,
+                                            arm_2d_region_list_item_t *ptItem);
+
 /*============================ IMPLEMENTATION ================================*/
 
 /*----------------------------------------------------------------------------*
@@ -123,51 +129,6 @@ void __arm_2d_helper_pfb_free(arm_2d_helper_pfb_t *ptThis, arm_2d_pfb_t *ptPFB)
         arm_2d_port_set_semaphore(this.Adapter.pFPBPoolAvailable);
     }
 }
-
-ARM_NONNULL(1)
-static void __arm_2d_helper_dirty_region_pool_free(
-                                            arm_2d_helper_pfb_t *ptThis,
-                                            arm_2d_region_list_item_t *ptItem)
-{
-    assert(NULL != ptThis);
-    if (NULL == ptItem) {
-        return ;
-    } else if (!ptItem->bFromInternalPool) {
-        return ;
-    }
-
-    arm_irq_safe {
-        /* PUSH item to the pool in STACK-style */
-        ptItem->ptWorkingListNext = this.Adapter.OptimizedDirtyRegions.ptFreeList;
-        this.Adapter.OptimizedDirtyRegions.ptFreeList = ptItem;
-    }
-}
-
-ARM_NONNULL(1)
-static 
-arm_2d_region_list_item_t *__arm_2d_helper_dirty_region_pool_new(
-                                            arm_2d_helper_pfb_t *ptThis)
-{
-    assert(NULL != ptThis);
-
-    arm_2d_region_list_item_t *ptItem = NULL;
-
-    arm_irq_safe {
-        ptItem = this.Adapter.OptimizedDirtyRegions.ptFreeList;
-        if (NULL != ptItem) {
-            /* POP a dirty region item from the free list in STACK-style */
-            this.Adapter.OptimizedDirtyRegions.ptFreeList = ptItem->ptWorkingListNext;
-        }
-    }
-
-    if (NULL != ptItem) {
-        memset(ptItem, 0, sizeof(arm_2d_region_list_item_t));
-        ptItem->bFromInternalPool = true;
-    }
-
-    return ptItem;
-}
-
 
 ARM_NONNULL(1,2)
 arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis, 
@@ -341,7 +302,7 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
     } while(0);
 
     this.Adapter.bFirstIteration = true;
-    this.Adapter.bIsFlushRequested = true;
+    //this.Adapter.bIsFlushRequested = true;
     
     return ARM_2D_ERR_NONE;
 }
@@ -611,6 +572,19 @@ bool __when_dirty_region_list_is_empty(arm_2d_helper_pfb_t *ptThis)
 
 static bool __arm_2d_helper_pfb_get_next_dirty_region(arm_2d_helper_pfb_t *ptThis)
 {
+#if 0
+    if (this.Adapter.bIsUsingOptimizedDirtyRegionList) {
+        if (NULL == this.Adapter.OptimizedDirtyRegions.ptWorkingList) {
+            /* finished or empty */
+            this.Adapter.bIsUsingOptimizedDirtyRegionList = false;
+        } else {
+            
+
+            return ;
+        }
+    }
+#endif
+
     if (NULL == this.Adapter.ptDirtyRegion) {
         return __when_dirty_region_list_is_empty(ptThis);
     } 
@@ -630,6 +604,74 @@ static bool __arm_2d_helper_pfb_get_next_dirty_region(arm_2d_helper_pfb_t *ptThi
     }
     
     return true;
+}
+
+/*----------------------------------------------------------------------------*
+ * Optimized Dirty Regions                                                    *
+ *----------------------------------------------------------------------------*/
+ARM_NONNULL(1)
+static void __arm_2d_helper_dirty_region_pool_free(
+                                            arm_2d_helper_pfb_t *ptThis,
+                                            arm_2d_region_list_item_t *ptItem)
+{
+    assert(NULL != ptThis);
+    if (NULL == ptItem) {
+        return ;
+    } else if (!ptItem->bFromInternalPool) {
+        return ;
+    }
+
+    arm_irq_safe {
+        /* PUSH item to the pool in STACK-style */
+        ptItem->ptWorkingListNext = this.Adapter.OptimizedDirtyRegions.ptFreeList;
+        this.Adapter.OptimizedDirtyRegions.ptFreeList = ptItem;
+    }
+}
+
+ARM_NONNULL(1)
+static 
+arm_2d_region_list_item_t *__arm_2d_helper_dirty_region_pool_new(
+                                            arm_2d_helper_pfb_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    arm_2d_region_list_item_t *ptItem = NULL;
+
+    arm_irq_safe {
+        ptItem = this.Adapter.OptimizedDirtyRegions.ptFreeList;
+        if (NULL != ptItem) {
+            /* POP a dirty region item from the free list in STACK-style */
+            this.Adapter.OptimizedDirtyRegions.ptFreeList = ptItem->ptWorkingListNext;
+        }
+    }
+
+    if (NULL != ptItem) {
+        memset(ptItem, 0, sizeof(arm_2d_region_list_item_t));
+        ptItem->bFromInternalPool = true;
+    }
+
+    return ptItem;
+}
+
+ARM_NONNULL(1)
+static 
+void __arm_2d_helper_free_dirty_region_working_list(arm_2d_helper_pfb_t *ptThis, 
+                                                    arm_2d_region_list_item_t *ptList)
+{
+    assert(NULL != ptThis);
+
+    /* free the optimized dirty region list*/
+    if (NULL != ptList) {
+        
+        do {
+            arm_2d_region_list_item_t *ptNextItem = ptList->ptWorkingListNext;
+            __arm_2d_helper_dirty_region_pool_free(ptThis, ptList);
+
+            ptList = ptNextItem;
+        } while(NULL != ptList);
+
+        this.Adapter.OptimizedDirtyRegions.ptWorkingList = NULL;
+    }
 }
 
 /*! \brief begin a iteration of drawing and request a frame buffer from 
@@ -1051,62 +1093,6 @@ arm_2d_err_t arm_2d_helper_pfb_update_dependency(
 }
 
 
-ARM_NONNULL(1)
-static 
-void __arm_2d_helper_free_dirty_region_working_list(arm_2d_helper_pfb_t *ptThis)
-{
-    assert(NULL != ptThis);
-
-    /* free the optimized dirty region list*/
-    if (NULL != this.Adapter.OptimizedDirtyRegions.ptWorkingList) {
-        /* free the working list */
-        arm_2d_region_list_item_t *ptItem 
-            = this.Adapter.OptimizedDirtyRegions.ptWorkingList;
-        
-        do {
-            arm_2d_region_list_item_t *ptNextItem = ptItem->ptWorkingListNext;
-            __arm_2d_helper_dirty_region_pool_free(ptThis, ptItem);
-
-            ptItem = ptNextItem;
-        } while(NULL != ptItem);
-
-        this.Adapter.OptimizedDirtyRegions.ptWorkingList = NULL;
-    }
-}
-
-#if 0
-            /* from this point, the this.Adapter.tTargetRegion stores the target
-             * region for refresh and its shape has been adjusted.
-             */
-
-            /* check with the optimization dirty region list*/
-            do {
-                if (NULL == this.Adapter.OptimizedDirtyRegions.ptWorkingList) {
-                    /* for the first fresh request, we only add it to the list */
-                    arm_2d_region_list_item_t *ptDirtyRegion = __arm_2d_helper_dirty_region_pool_new(ptThis);
-                    if (NULL == ptDirtyRegion) {
-                        /* when the pool is empty, skip this optimization */
-                        break;
-                    }
-
-                    ptDirtyRegion->tRegion = this.Adapter.tTargetRegion;
-
-                    /* add to the working list*/
-                    this.Adapter.OptimizedDirtyRegions.ptWorkingList = ptDirtyRegion;
-                    ptDirtyRegion->ptWorkingListNext = NULL;
-                    break;
-                }
-
-
-
-
-            } while(0);
-
-
-
-
-#endif
-
 
 arm_fsm_rt_t arm_2d_helper_pfb_task(arm_2d_helper_pfb_t *ptThis, 
                                     arm_2d_region_list_item_t *ptDirtyRegions) 
@@ -1138,25 +1124,14 @@ ARM_PT_BEGIN(this.Adapter.chPT)
     this.Statistics.nRenderingCycle = 0;
     this.Adapter.bIsNewFrame = true;
 
-#if 0
-    __arm_2d_helper_perf_counter_start( &this.Statistics.lTimestamp,
-                                            ARM_2D_PERFC_RENDER); 
-    /* preprocess dirty region list */
+    /* initialize the OptimizedDirtyRegions service */
     do {
-        __arm_2d_helper_free_dirty_region_working_list(ptThis);
+        this.Adapter.OptimizedDirtyRegions.ptOriginalList = ptDirtyRegions;
+        this.Adapter.bIsUsingOptimizedDirtyRegionList = false;              /* this must be false here */
 
-        if (NULL == this.Adapter.OptimizedDirtyRegions.ptFreeList) {
-            /* not possible to run this optimization */
-            break;
-        }
-
+        assert(NULL == this.Adapter.OptimizedDirtyRegions.ptWorkingList);
+        assert(NULL == this.Adapter.OptimizedDirtyRegions.ptCandidateList);
     } while(0);
-    this.Statistics.nTotalCycle += 
-        __arm_2d_helper_perf_counter_stop(
-                                        &this.Statistics.lTimestamp,
-                                        ARM_2D_PERFC_RENDER); 
-
-#endif
 
     __arm_2d_helper_perf_counter_start(&this.Statistics.lTimestamp,
                                        ARM_2D_PERFC_DRIVER); 
@@ -1234,27 +1209,47 @@ ARM_PT_BEGIN(this.Adapter.chPT)
             __arm_2d_helper_perf_counter_stop(  &this.Statistics.lTimestamp,
                                                 ARM_2D_PERFC_RENDER); 
 
+        if (arm_fsm_rt_on_going == tResult) {
+    ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_on_going)
+        } else if (tResult < 0) {
+            // error was reported
+    ARM_PT_GOTO_PREV_ENTRY(tResult)
+        } else if (arm_fsm_rt_wait_for_obj == tResult) {
+    ARM_PT_GOTO_PREV_ENTRY(tResult)
+        } else { 
+    ARM_PT_YIELD(arm_fsm_rt_on_going)
+        }
+
         /* draw navigation layer */
         if (    (NULL != this.tCFG.Dependency.Navigation.evtOnDrawing.fnHandler)
             &&  (!this.Adapter.bHideNavigationLayer)) {
-            if (arm_fsm_rt_cpl == tResult) {
     ARM_PT_ENTRY()
-                __arm_2d_helper_perf_counter_start( &this.Statistics.lTimestamp,
-                                                    ARM_2D_PERFC_RENDER); 
+            __arm_2d_helper_perf_counter_start( &this.Statistics.lTimestamp,
+                                                ARM_2D_PERFC_RENDER); 
 
-                tResult = this.tCFG.Dependency.Navigation.evtOnDrawing.fnHandler(
-                        this.tCFG.Dependency.Navigation.evtOnDrawing.pTarget,
-                        this.Adapter.ptFrameBuffer,
-                        this.Adapter.bIsNewFrame);
-                arm_2d_op_wait_async(NULL);
-                
-                this.Statistics.nTotalCycle += 
-                    __arm_2d_helper_perf_counter_stop(
-                                                    &this.Statistics.lTimestamp,
-                                                    ARM_2D_PERFC_RENDER); 
+            tResult = this.tCFG.Dependency.Navigation.evtOnDrawing.fnHandler(
+                    this.tCFG.Dependency.Navigation.evtOnDrawing.pTarget,
+                    this.Adapter.ptFrameBuffer,
+                    this.Adapter.bIsNewFrame);
+            arm_2d_op_wait_async(NULL);
+            
+            this.Statistics.nTotalCycle += 
+                __arm_2d_helper_perf_counter_stop(
+                                                &this.Statistics.lTimestamp,
+                                                ARM_2D_PERFC_RENDER); 
+
+        if (arm_fsm_rt_on_going == tResult) {
+        ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_on_going)
+            } else if (tResult < 0) {
+                // error was reported
+        ARM_PT_GOTO_PREV_ENTRY(tResult)
+            } else if (arm_fsm_rt_wait_for_obj == tResult) {
+        ARM_PT_GOTO_PREV_ENTRY(tResult)
+            } else { 
+        ARM_PT_YIELD(arm_fsm_rt_on_going)
             }
         }
-
+        
         /* draw dirty regions */
         if (this.tCFG.FrameBuffer.bDebugDirtyRegions) {
             arm_2d_region_list_item_t *ptRegionListItem = ptDirtyRegions;
@@ -1271,18 +1266,6 @@ ARM_PT_BEGIN(this.Adapter.chPT)
             }
             arm_2d_op_wait_async(NULL);
         }
-        
-
-        if (arm_fsm_rt_on_going == tResult) {
-    ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_on_going)
-        } else if (tResult < 0) {
-            // error was reported
-    ARM_PT_RETURN(tResult)
-        } else if (arm_fsm_rt_wait_for_obj == tResult) {
-    ARM_PT_REPORT_STATUS(tResult)
-        } else { 
-    ARM_PT_YIELD(arm_fsm_rt_on_going)
-        }
 
         this.Adapter.bIsNewFrame = false;
         __arm_2d_helper_perf_counter_start( &this.Statistics.lTimestamp,
@@ -1295,6 +1278,16 @@ label_pfb_task_rt_cpl:
                                                 ARM_2D_PERFC_DRIVER); 
 
 ARM_PT_END()
+
+    /* free working list */
+    __arm_2d_helper_free_dirty_region_working_list(
+                            ptThis, 
+                            this.Adapter.OptimizedDirtyRegions.ptWorkingList);
+    
+    /* free candidate list */
+    __arm_2d_helper_free_dirty_region_working_list(
+                            ptThis, 
+                            this.Adapter.OptimizedDirtyRegions.ptCandidateList);
 
     /* invoke the On Each Frame Complete Event */
     ARM_2D_INVOKE(  this.tCFG.Dependency.evtOnEachFrameCPL.fnHandler,
