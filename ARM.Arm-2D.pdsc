@@ -302,11 +302,11 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cversion="1.8.0" condition="Arm-2D-Helper" maxInstances="8">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cversion="1.8.1" condition="Arm-2D-Helper" maxInstances="8">
           <description>The Display Adapter.</description>
           <files>
-            <file category="sourceC"     name="Helper/Source/template/arm_2d_disp_adapter.c" attr="config" version="1.8.0" />
-            <file category="header"      name="Helper/Include/template/arm_2d_disp_adapter.h" attr="config" version="1.8.0" />
+            <file category="sourceC"     name="Helper/Source/template/arm_2d_disp_adapter.c" attr="config" version="1.8.1" />
+            <file category="header"      name="Helper/Include/template/arm_2d_disp_adapter.h" attr="config" version="1.8.1" />
           </files>
           <RTE_Components_h>
     #define RTE_Acceleration_Arm_2D_Helper_Disp_Adapter%Instance%

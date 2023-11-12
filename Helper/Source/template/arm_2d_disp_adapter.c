@@ -460,7 +460,7 @@ __WEAK
 void disp_adapter%Instance%_navigator_init(void)
 {
     /*! define dirty regions for the navigation layer */
-    IMPL_ARM_2D_REGION_LIST(s_tNavDirtyRegionList, const static)
+    IMPL_ARM_2D_REGION_LIST(s_tNavDirtyRegionList, static)
 
         /* a region for the status bar on the bottom of the screen */
         ADD_LAST_REGION_TO_LIST(s_tNavDirtyRegionList,
