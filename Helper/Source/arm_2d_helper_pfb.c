@@ -843,11 +843,17 @@ label_start_process_candidate:
                     }
 
                     /* todo: try to get residual */
-                    
+
                 } 
                 /* no overlap */
                 ptWorking = ptNextWorking;  /* get the next dirty region in the working list */
             }
+
+            /* remove the candidate from the list */
+            __arm_2d_helper_remove_item_from_weighted_dirty_region_list(
+                &this.Adapter.OptimizedDirtyRegions.ptCandidateList,
+                ptCandidate
+            );
 
             /* add the candidate to the working list */
             __arm_2d_helper_add_item_to_weighted_dirty_region_list(
