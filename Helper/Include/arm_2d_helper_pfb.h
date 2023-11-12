@@ -474,7 +474,7 @@ typedef struct arm_2d_region_list_item_t {
     uint8_t                                         : 6;
 
 ARM_PRIVATE(
-    struct arm_2d_region_list_item_t   *ptWorkingListNext;                      //!< the next node in the internal working list
+    struct arm_2d_region_list_item_t   *ptInternalNext;                         //!< the next node in the internal list
     bool                                bFromInternalPool;                      //!< a flag indicating whether this list item coming from the internal pool
 )
 }arm_2d_region_list_item_t;
@@ -611,17 +611,20 @@ ARM_PRIVATE(
         uint32_t                    wPFBPixelCount;
 
         uint8_t                     chPT;
+        uint8_t                     chFreePFBCount;
         struct {
-            uint8_t                 bIsNewFrame                         : 1;
-            uint8_t                 bIsUsingOptimizedDirtyRegionList    : 1;
-            uint8_t                 bIgnoreLowLevelFlush                : 1;
-            uint8_t                 bHideNavigationLayer                : 1;
-            uint8_t                 bIsDryRun                           : 1;    //!< A flag to indicate whether the first iteration was a dry run
-            uint8_t                 bNoAdditionalDirtyRegionList        : 1;
-            uint8_t                 bFirstIteration                     : 1;
-            uint8_t                 bIsRegionChanged                    : 1;
+            uint16_t                                                    : 1;
+            uint16_t                                                    : 4;
+            uint16_t                bIsNewFrame                         : 1;
+            uint16_t                bIsUsingOptimizedDirtyRegionList    : 1;
+            uint16_t                bIgnoreLowLevelFlush                : 1;
+            uint16_t                bHideNavigationLayer                : 1;
+            uint16_t                bIsDryRun                           : 1;    //!< A flag to indicate whether the first iteration was a dry run
+            uint16_t                bNoAdditionalDirtyRegionList        : 1;
+            uint16_t                bFirstIteration                     : 1;
+            uint16_t                bIsRegionChanged                    : 1;
         };
-        uint16_t                    hwFreePFBCount;
+        
 
         uintptr_t                   pFPBPoolAvailable;
         arm_2d_pfb_t               *ptCurrent;
