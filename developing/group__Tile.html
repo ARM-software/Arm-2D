@@ -275,6 +275,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga2d00179a70df060121eec087a88f5d74"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#ga2d00179a70df060121eec087a88f5d74">arm_2d_region_intersect</a> (const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegionIn0, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegionIn1, <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegionOut)</td></tr>
 <tr class="memdesc:ga2d00179a70df060121eec087a88f5d74"><td class="mdescLeft">&#160;</td><td class="mdescRight">intersect two regions and find the overlapped region  <a href="group__Tile.html#ga2d00179a70df060121eec087a88f5d74">More...</a><br /></td></tr>
 <tr class="separator:ga2d00179a70df060121eec087a88f5d74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga970e2f57bdeb95b21295fb1b8003c6ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#ga970e2f57bdeb95b21295fb1b8003c6ef">arm_2d_region_get_minimal_enclosure</a> (const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptInput0, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptInput1, <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptOutput)</td></tr>
+<tr class="memdesc:ga970e2f57bdeb95b21295fb1b8003c6ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the minimal enclosure region for the given two regions  <a href="group__Tile.html#ga970e2f57bdeb95b21295fb1b8003c6ef">More...</a><br /></td></tr>
+<tr class="separator:ga970e2f57bdeb95b21295fb1b8003c6ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7b1525f76620d2624311ae469bbe0988"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#ga7b1525f76620d2624311ae469bbe0988">arm_2d_is_point_inside_region</a> (const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, const <a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a> *ptPoint)</td></tr>
 <tr class="memdesc:ga7b1525f76620d2624311ae469bbe0988"><td class="mdescLeft">&#160;</td><td class="mdescRight">check whether a point is inside a given region  <a href="group__Tile.html#ga7b1525f76620d2624311ae469bbe0988">More...</a><br /></td></tr>
 <tr class="separator:ga7b1525f76620d2624311ae469bbe0988"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -3338,6 +3341,67 @@ wColour</td>
 <div class="line">                        |<span class="comment">////////////////////////////////////////|</span></div>
 <div class="line">                        |<span class="comment">////////////////////////////////////////|</span></div>
 <div class="line">                        +----------------------------------------+</div>
+<div class="line">                                                 Input Region 1</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga970e2f57bdeb95b21295fb1b8003c6ef" name="ga970e2f57bdeb95b21295fb1b8003c6ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga970e2f57bdeb95b21295fb1b8003c6ef">&#9670;&nbsp;</a></span>arm_2d_region_get_minimal_enclosure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> * arm_2d_region_get_minimal_enclosure </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td>
+          <td class="paramname"><em>ptInput0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td>
+          <td class="paramname"><em>ptInput1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td>
+          <td class="paramname"><em>ptOutput</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get the minimal enclosure region for the given two regions </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptRegionIn0</td><td>the input region 0 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptRegionIn1</td><td>the input region 1 </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ptRegionOut</td><td>the enclosure region </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> * the enclosure region</dd></dl>
+<div class="fragment"><div class="line">HOW IT WORKS:</div>
+<div class="line"> </div>
+<div class="line">                            Output Region</div>
+<div class="line">+------------------------------------------------------+---------+</div>
+<div class="line">| Input Region 0                                       |<span class="comment">/////////|</span></div>
+<div class="line">|                                                      |<span class="comment">/////////|</span></div>
+<div class="line">|                                                      |<span class="comment">/////////|</span></div>
+<div class="line">|                       +------------------------------+---------+</div>
+<div class="line">|                       |                              |         |</div>
+<div class="line">|                       |                              |         |</div>
+<div class="line">|                       |                              |         |</div>
+<div class="line">+-----------------------+------------------------------+         |</div>
+<div class="line">|<span class="comment">///////////////////////|                                        |</span></div>
+<div class="line">|<span class="comment">///////////////////////|                                        |</span></div>
+<div class="line">+-----------------------+----------------------------------------+</div>
 <div class="line">                                                 Input Region 1</div>
 </div><!-- fragment --> 
 </div>

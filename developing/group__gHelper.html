@@ -2196,9 +2196,9 @@ bFBCopyComplete</td>
 <div class="textblock"></div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="a66490571392f20018c6f6aa6f981eb2c" name="a66490571392f20018c6f6aa6f981eb2c"></a>struct <a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *</td>
+<a id="ad98218cacab7e7e69f2af98ae8d74633" name="ad98218cacab7e7e69f2af98ae8d74633"></a>struct <a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *</td>
 <td class="fieldname">
-ptWorkingListNext</td>
+ptInternalNext</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
@@ -2446,15 +2446,15 @@ chPT</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a0237bd78391879fe7f9cd0470b88b65b" name="a0237bd78391879fe7f9cd0470b88b65b"></a>struct <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed145_____8Adapter_8____unnamed150____">arm_2d_helper_pfb_t.__unnamed145__.Adapter.__unnamed150__</a></td>
+<a id="ae6bb7865f51f1a42e46a315946f423c6" name="ae6bb7865f51f1a42e46a315946f423c6"></a>uint8_t</td>
 <td class="fieldname">
-__unnamed__</td>
+chFreePFBCount</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="af123792cdc243f2b6738af48f3b1dd3b" name="af123792cdc243f2b6738af48f3b1dd3b"></a>uint16_t</td>
+<a id="a0237bd78391879fe7f9cd0470b88b65b" name="a0237bd78391879fe7f9cd0470b88b65b"></a>struct <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed145_____8Adapter_8____unnamed150____">arm_2d_helper_pfb_t.__unnamed145__.Adapter.__unnamed150__</a></td>
 <td class="fieldname">
-hwFreePFBCount</td>
+__unnamed__</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
@@ -2558,49 +2558,67 @@ tWorkingItem</td>
 <div class="textblock"></div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="aecc2c24202f92e49fa4ad10392d01b6b" name="aecc2c24202f92e49fa4ad10392d01b6b"></a>uint8_t</td>
+<a id="a575d8964d6ab231b1acddc48bdb7cbdc" name="a575d8964d6ab231b1acddc48bdb7cbdc"></a>uint16_t</td>
 <td class="fieldname">
-bIsNewFrame: 1</td>
+bEncounterDynamicDirtyRegion: 1</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a18396223bc0e59e801d71787c08d5c36" name="a18396223bc0e59e801d71787c08d5c36"></a>uint8_t</td>
+<a id="afe9fc8d624476568212bfd2c2d2fa682" name="afe9fc8d624476568212bfd2c2d2fa682"></a>uint16_t</td>
+<td class="fieldname">
+bFailedToOptimizeDirtyRegion: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a18396223bc0e59e801d71787c08d5c36" name="a18396223bc0e59e801d71787c08d5c36"></a>uint16_t</td>
 <td class="fieldname">
 bIsUsingOptimizedDirtyRegionList: 1</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="ac05c560fd985bd880a31b531f56afb62" name="ac05c560fd985bd880a31b531f56afb62"></a>uint8_t</td>
+<a id="aecc2c24202f92e49fa4ad10392d01b6b" name="aecc2c24202f92e49fa4ad10392d01b6b"></a>uint16_t</td>
+<td class="fieldname">
+bIsNewFrame: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="abb67792e94e88254ca5afecf7c26c912" name="abb67792e94e88254ca5afecf7c26c912"></a>uint16_t</td>
+<td class="fieldname">
+__pad1__: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ac05c560fd985bd880a31b531f56afb62" name="ac05c560fd985bd880a31b531f56afb62"></a>uint16_t</td>
 <td class="fieldname">
 bIgnoreLowLevelFlush: 1</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="ab2b853dd703190b6c831ec76550087f4" name="ab2b853dd703190b6c831ec76550087f4"></a>uint8_t</td>
+<a id="ab2b853dd703190b6c831ec76550087f4" name="ab2b853dd703190b6c831ec76550087f4"></a>uint16_t</td>
 <td class="fieldname">
 bHideNavigationLayer: 1</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a7ab7ae4ba8f5b8876a077301ad1da7b5" name="a7ab7ae4ba8f5b8876a077301ad1da7b5"></a>uint8_t</td>
+<a id="a7ab7ae4ba8f5b8876a077301ad1da7b5" name="a7ab7ae4ba8f5b8876a077301ad1da7b5"></a>uint16_t</td>
 <td class="fieldname">
 bIsDryRun: 1</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a1799378b255eb369c124e2a634a0cf8b" name="a1799378b255eb369c124e2a634a0cf8b"></a>uint8_t</td>
+<a id="a1799378b255eb369c124e2a634a0cf8b" name="a1799378b255eb369c124e2a634a0cf8b"></a>uint16_t</td>
 <td class="fieldname">
 bNoAdditionalDirtyRegionList: 1</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="ae37a64d26925964f4c864bc76e9dfac1" name="ae37a64d26925964f4c864bc76e9dfac1"></a>uint8_t</td>
+<a id="ae37a64d26925964f4c864bc76e9dfac1" name="ae37a64d26925964f4c864bc76e9dfac1"></a>uint16_t</td>
 <td class="fieldname">
 bFirstIteration: 1</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a6dcec6f699875127f772f62b6870eb75" name="a6dcec6f699875127f772f62b6870eb75"></a>uint8_t</td>
+<a id="a6dcec6f699875127f772f62b6870eb75" name="a6dcec6f699875127f772f62b6870eb75"></a>uint16_t</td>
 <td class="fieldname">
 bIsRegionChanged: 1</td>
 <td class="fielddoc">
