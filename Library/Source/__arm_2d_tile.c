@@ -21,8 +21,8 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        04. April 2023
- * $Revision:    V.1.4.1
+ * $Date:        12. Nov 2023
+ * $Revision:    V.1.4.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -179,6 +179,43 @@ bool arm_2d_region_intersect(   const arm_2d_region_t *ptRegionIn0,
     } while(0);
 
     return true;
+}
+
+ARM_NONNULL(1,2,3)
+arm_2d_region_t *arm_2d_region_get_minimal_enclosure(const arm_2d_region_t *ptInput0,
+                                                     const arm_2d_region_t *ptInput1,
+                                                     arm_2d_region_t *ptOutput)
+{
+    assert(NULL != ptInput0);
+    assert(NULL != ptInput1);
+    assert(NULL != ptOutput);
+
+    int16_t x00, y00, x01, y01, x10, y10, x11, y11;
+    x00 = ptInput0->tLocation.iX;
+    y00 = ptInput0->tLocation.iY;
+    x10 = ptInput1->tLocation.iX;
+    y10 = ptInput1->tLocation.iY;
+
+    arm_2d_location_t tTopLeft = {
+            .iX = MIN(x00, x10),
+            .iY = MIN(y00, y10),
+        };
+
+    x01 = x00 + ptInput0->tSize.iWidth - 1;
+    y01 = y00 + ptInput0->tSize.iHeight - 1;
+    x11 = x10 + ptInput1->tSize.iWidth - 1;
+    y11 = y10 + ptInput1->tSize.iHeight - 1; 
+    
+    arm_2d_location_t tBottomRight = {
+            .iX = MAX(x01, x11),
+            .iY = MAX(y01, y11),
+        };
+
+    ptOutput->tLocation = tTopLeft;
+    ptOutput->tSize.iWidth = tBottomRight.iX - tTopLeft.iX + 1;
+    ptOutput->tSize.iHeight = tBottomRight.iY - tTopLeft.iY + 1;
+
+    return ptOutput;
 }
 
 ARM_NONNULL(1,2)

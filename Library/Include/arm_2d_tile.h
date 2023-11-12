@@ -21,8 +21,8 @@
  * Title:        arm_2d_tile.h
  * Description:  Public header file to contain the basic tile operations
  *
- * $Date:        04. April 2023
- * $Revision:    V.1.4.1
+ * $Date:        12. Nov 2023
+ * $Revision:    V.1.4.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -840,6 +840,41 @@ ARM_NONNULL(1,2)
 bool arm_2d_region_intersect(   const arm_2d_region_t *ptRegionIn0,
                                 const arm_2d_region_t *ptRegionIn1,
                                 arm_2d_region_t *ptRegionOut);
+
+
+/*!
+ * \brief get the minimal enclosure region for the given two regions
+ * \param[in] ptRegionIn0 the input region 0
+ * \param[in] ptRegionIn1 the input region 1
+ * \param[out] ptRegionOut the enclosure region
+ * \return arm_2d_region_t * the enclosure region
+ * 
+ * \code
+
+  HOW IT WORKS:
+  
+                              Output Region
+  +------------------------------------------------------+---------+
+  | Input Region 0                                       |/////////|
+  |                                                      |/////////|
+  |                                                      |/////////|
+  |                       +------------------------------+---------+
+  |                       |                              |         |
+  |                       |                              |         |
+  |                       |                              |         |
+  +-----------------------+------------------------------+         |
+  |///////////////////////|                                        |
+  |///////////////////////|                                        |
+  +-----------------------+----------------------------------------+
+                                                   Input Region 1
+ *  \endcode
+ */
+extern
+ARM_NONNULL(1,2,3)
+arm_2d_region_t *arm_2d_region_get_minimal_enclosure(
+                                const arm_2d_region_t *ptInput0,
+                                const arm_2d_region_t *ptInput1,
+                                arm_2d_region_t *ptOutput);
 
 /*!
  * \brief check whether a point is inside a given region

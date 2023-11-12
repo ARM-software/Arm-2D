@@ -741,13 +741,129 @@ ARM_NONNULL(1,2)
 static 
 void __arm_2d_helper_update_dirty_region_working_list(  
                                                 arm_2d_helper_pfb_t *ptThis, 
-                                                arm_2d_region_list_item_t *ptItem)
+                                                arm_2d_region_list_item_t *ptItem,
+                                                bool bEncounterDynamicDirtyRegion)
 {
     assert(NULL != ptThis);
     assert(NULL != ptItem);
 
-    
+    do {
+        arm_2d_region_list_item_t *ptDirtyRegion = ptItem;
 
+        if (bEncounterDynamicDirtyRegion) {
+            ptDirtyRegion = __arm_2d_helper_dirty_region_pool_new(ptThis);
+            if (NULL == ptDirtyRegion) {
+                this.Adapter.bFailedToOptimizeDirtyRegion = true;
+            } else {
+                ptDirtyRegion->tRegion = ptItem->tRegion;
+            }
+        }
+
+        if (this.Adapter.bFailedToOptimizeDirtyRegion) {
+            __arm_2d_helper_dirty_region_pool_free(ptThis, ptDirtyRegion);
+            return ;
+        }
+
+        /* add dirty region to the candidate list */
+        __arm_2d_helper_add_item_to_weighted_dirty_region_list(
+            &this.Adapter.OptimizedDirtyRegions.ptCandidateList,
+            ptDirtyRegion
+        );
+    } while(0);
+
+label_start_process_candidate:
+    /* the process loop */
+    do {
+
+
+        arm_2d_region_list_item_t *ptCandidate 
+            = this.Adapter.OptimizedDirtyRegions.ptCandidateList;
+
+        while(NULL != ptCandidate) {
+            arm_2d_region_list_item_t *ptNextCandiate = ptCandidate->ptInternalNext;
+            arm_2d_region_list_item_t *ptWorking
+                = this.Adapter.OptimizedDirtyRegions.ptWorkingList;
+
+
+            uint32_t wCandidatePixelCount = ptCandidate->tRegion.tSize.iHeight
+                                            * ptCandidate->tRegion.tSize.iWidth;
+            while(NULL != ptWorking) {
+                arm_2d_region_list_item_t *ptNextWorking = ptWorking->ptInternalNext;
+
+                uint32_t wWorkingItemPixelCount 
+                                        = ptWorking->tRegion.tSize.iWidth
+                                        * ptWorking->tRegion.tSize.iHeight;
+                
+                arm_2d_region_t tOverlapArea, tEnclosureArea;
+                if (arm_2d_region_intersect(&ptWorking->tRegion, 
+                                            &ptCandidate->tRegion,
+                                            &tOverlapArea)) {
+                    /* has overlap */
+                    arm_2d_region_get_minimal_enclosure(&ptWorking->tRegion, 
+                                                        &ptCandidate->tRegion,
+                                                        &tEnclosureArea);
+                    
+                    uint32_t wPixelsRegionEnclosure = tEnclosureArea.tSize.iHeight
+                                                    * tEnclosureArea.tSize.iWidth;
+
+                    if (wPixelsRegionEnclosure < wCandidatePixelCount + wWorkingItemPixelCount) {
+                        /* we only refresh the enclosure region to save time */
+                        
+                        /* remove the working item from the list */
+                        __arm_2d_helper_remove_item_from_weighted_dirty_region_list(
+                            &this.Adapter.OptimizedDirtyRegions.ptWorkingList,
+                            ptWorking
+                        );
+                        /* free the working item */
+                        __arm_2d_helper_dirty_region_pool_free(ptThis, ptWorking);
+
+                        /* remove the candidate from the list */
+                        __arm_2d_helper_remove_item_from_weighted_dirty_region_list(
+                            &this.Adapter.OptimizedDirtyRegions.ptCandidateList,
+                            ptCandidate
+                        );
+                        /* free the working item */
+                        __arm_2d_helper_dirty_region_pool_free(ptThis, ptCandidate);
+
+                        arm_2d_region_list_item_t *ptDirtyRegion = __arm_2d_helper_dirty_region_pool_new(ptThis);
+                        if (NULL == ptDirtyRegion) {
+                            this.Adapter.bFailedToOptimizeDirtyRegion = true;
+                            return ;
+                        }
+
+                        
+
+                        /* update candidate list */
+                        __arm_2d_helper_add_item_to_weighted_dirty_region_list(
+                            &this.Adapter.OptimizedDirtyRegions.ptCandidateList,
+                            ptDirtyRegion
+                        );
+
+                        /* re-start processing candidate list from the beginning */
+                        goto label_start_process_candidate;
+                    }
+
+                    /* todo: try to get residual */
+
+                } 
+                /* no overlap */
+                ptWorking = ptNextWorking;  /* get the next dirty region in the working list */
+            }
+
+            /* add the candidate to the working list */
+            __arm_2d_helper_add_item_to_weighted_dirty_region_list(
+                &this.Adapter.OptimizedDirtyRegions.ptWorkingList,
+                ptCandidate
+            );
+
+            /* process next candidate */
+            ptCandidate = ptNextCandiate;
+        }
+
+        if (NULL == ptCandidate) {
+            break;  /* all candidates are processed */
+        }
+    } while(true);
 
 }
 
@@ -829,6 +945,7 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
             this.Adapter.bIsRegionChanged = false;
 
             if (NULL != this.Adapter.ptDirtyRegion) {
+                this.Adapter.bEncounterDynamicDirtyRegion = false;
 
                 if (this.Adapter.ptDirtyRegion->bUpdated) {
                     /* clear the region updated flag
@@ -836,7 +953,9 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                      *       item to true
                      */
                     this.Adapter.ptDirtyRegion->bUpdated = false;
+                    this.Adapter.bEncounterDynamicDirtyRegion = true;
                 }
+
                 // calculate the valid region
                 if (    (this.Adapter.ptDirtyRegion->bIgnore)
                     ||  (!arm_2d_region_intersect(
@@ -1015,7 +1134,12 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
             = ptPartialFrameBuffer->tRegion.tSize.iWidth;
         
         assert(NULL != this.Adapter.ptDirtyRegion);
-        __arm_2d_helper_update_dirty_region_working_list(ptThis, this.Adapter.ptDirtyRegion);
+        if (!this.Adapter.bFailedToCoverDynamicDirtyRegion) {
+            __arm_2d_helper_update_dirty_region_working_list(
+                                    ptThis, 
+                                    this.Adapter.ptDirtyRegion,
+                                    this.Adapter.bEncounterDynamicDirtyRegion);
+        }
     }
 
     if (!this.tCFG.FrameBuffer.bDoNOTUpdateDefaultFrameBuffer) {
@@ -1226,6 +1350,7 @@ ARM_PT_BEGIN(this.Adapter.chPT)
     do {
         this.Adapter.OptimizedDirtyRegions.ptOriginalList = ptDirtyRegions;
         this.Adapter.bIsUsingOptimizedDirtyRegionList = false;              /* this must be false here */
+        this.Adapter.bFailedToCoverDynamicDirtyRegion = false;
 
         assert(NULL == this.Adapter.OptimizedDirtyRegions.ptWorkingList);
         assert(NULL == this.Adapter.OptimizedDirtyRegions.ptCandidateList);
@@ -1723,43 +1848,6 @@ void arm_2d_helper_transform_depose(arm_2d_helper_transform_t *ptThis)
         ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
     }
 
-}
-
-ARM_NONNULL(1,2,3)
-arm_2d_region_t *arm_2d_region_get_minimal_enclosure(const arm_2d_region_t *ptInput0,
-                                                     const arm_2d_region_t *ptInput1,
-                                                     arm_2d_region_t *ptOutput)
-{
-    assert(NULL != ptInput0);
-    assert(NULL != ptInput1);
-    assert(NULL != ptOutput);
-
-    int16_t x00, y00, x01, y01, x10, y10, x11, y11;
-    x00 = ptInput0->tLocation.iX;
-    y00 = ptInput0->tLocation.iY;
-    x10 = ptInput1->tLocation.iX;
-    y10 = ptInput1->tLocation.iY;
-
-    arm_2d_location_t tTopLeft = {
-            .iX = MIN(x00, x10),
-            .iY = MIN(y00, y10),
-        };
-
-    x01 = x00 + ptInput0->tSize.iWidth - 1;
-    y01 = y00 + ptInput0->tSize.iHeight - 1;
-    x11 = x10 + ptInput1->tSize.iWidth - 1;
-    y11 = y10 + ptInput1->tSize.iHeight - 1; 
-    
-    arm_2d_location_t tBottomRight = {
-            .iX = MAX(x01, x11),
-            .iY = MAX(y01, y11),
-        };
-
-    ptOutput->tLocation = tTopLeft;
-    ptOutput->tSize.iWidth = tBottomRight.iX - tTopLeft.iX + 1;
-    ptOutput->tSize.iHeight = tBottomRight.iY - tTopLeft.iY + 1;
-
-    return ptOutput;
 }
 
 ARM_NONNULL(1,2)

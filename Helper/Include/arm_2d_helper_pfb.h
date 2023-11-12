@@ -613,10 +613,13 @@ ARM_PRIVATE(
         uint8_t                     chPT;
         uint8_t                     chFreePFBCount;
         struct {
-            uint16_t                                                    : 1;
-            uint16_t                                                    : 4;
-            uint16_t                bIsNewFrame                         : 1;
+            uint16_t                bEncounterDynamicDirtyRegion        : 1;
+            uint16_t                bFailedToOptimizeDirtyRegion        : 1;
             uint16_t                bIsUsingOptimizedDirtyRegionList    : 1;
+            uint16_t                                                    : 5;
+
+            uint16_t                bIsNewFrame                         : 1;
+            uint16_t                                                    : 1;
             uint16_t                bIgnoreLowLevelFlush                : 1;
             uint16_t                bHideNavigationLayer                : 1;
             uint16_t                bIsDryRun                           : 1;    //!< A flag to indicate whether the first iteration was a dry run
