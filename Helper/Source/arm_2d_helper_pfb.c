@@ -790,10 +790,6 @@ label_start_process_candidate:
             while(NULL != ptWorking) {
                 arm_2d_region_list_item_t *ptNextWorking = ptWorking->ptInternalNext;
 
-                uint32_t wWorkingItemPixelCount 
-                                        = ptWorking->tRegion.tSize.iWidth
-                                        * ptWorking->tRegion.tSize.iHeight;
-                
                 arm_2d_region_t tOverlapArea, tEnclosureArea;
                 if (arm_2d_region_intersect(&ptWorking->tRegion, 
                                             &ptCandidate->tRegion,
@@ -802,7 +798,10 @@ label_start_process_candidate:
                     arm_2d_region_get_minimal_enclosure(&ptWorking->tRegion, 
                                                         &ptCandidate->tRegion,
                                                         &tEnclosureArea);
-                    
+                    uint32_t wWorkingItemPixelCount 
+                                        = ptWorking->tRegion.tSize.iWidth
+                                        * ptWorking->tRegion.tSize.iHeight;
+
                     uint32_t wPixelsRegionEnclosure = tEnclosureArea.tSize.iHeight
                                                     * tEnclosureArea.tSize.iWidth;
 
@@ -831,7 +830,7 @@ label_start_process_candidate:
                             return ;
                         }
 
-                        
+                        ptDirtyRegion->tRegion = tEnclosureArea;
 
                         /* update candidate list */
                         __arm_2d_helper_add_item_to_weighted_dirty_region_list(
@@ -844,7 +843,7 @@ label_start_process_candidate:
                     }
 
                     /* todo: try to get residual */
-
+                    
                 } 
                 /* no overlap */
                 ptWorking = ptNextWorking;  /* get the next dirty region in the working list */
@@ -1134,12 +1133,13 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
             = ptPartialFrameBuffer->tRegion.tSize.iWidth;
         
         assert(NULL != this.Adapter.ptDirtyRegion);
-        if (!this.Adapter.bFailedToCoverDynamicDirtyRegion) {
+        if (!this.Adapter.bFailedToOptimizeDirtyRegion) {
             __arm_2d_helper_update_dirty_region_working_list(
                                     ptThis, 
                                     this.Adapter.ptDirtyRegion,
                                     this.Adapter.bEncounterDynamicDirtyRegion);
         }
+
     }
 
     if (!this.tCFG.FrameBuffer.bDoNOTUpdateDefaultFrameBuffer) {
@@ -1350,7 +1350,7 @@ ARM_PT_BEGIN(this.Adapter.chPT)
     do {
         this.Adapter.OptimizedDirtyRegions.ptOriginalList = ptDirtyRegions;
         this.Adapter.bIsUsingOptimizedDirtyRegionList = false;              /* this must be false here */
-        this.Adapter.bFailedToCoverDynamicDirtyRegion = false;
+        this.Adapter.bFailedToOptimizeDirtyRegion = false;
 
         assert(NULL == this.Adapter.OptimizedDirtyRegions.ptWorkingList);
         assert(NULL == this.Adapter.OptimizedDirtyRegions.ptCandidateList);
