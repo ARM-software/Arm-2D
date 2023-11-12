@@ -368,6 +368,9 @@ static void __user_scene_player_init(void)
 {
     memset(&DISP0_ADAPTER, 0, sizeof(DISP0_ADAPTER));
 
+    ARM_NOINIT
+    static arm_2d_region_list_item_t s_tDirtyRegionList[16]; 
+
     //! initialise FPB helper
     if (ARM_2D_HELPER_PFB_INIT(
         &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t,                            //!< FPB Helper object
@@ -403,6 +406,8 @@ static void __user_scene_player_init(void)
     &&  !__DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
         .FrameBuffer.u4PoolReserve = 3,                                         // reserve 3 PFB blocks for the virtual resource service
 #endif
+        .DirtyRegion.ptRegions = s_tDirtyRegionList,
+        .DirtyRegion.chCount = dimof(s_tDirtyRegionList),
     ) < 0) {
         //! error detected
         assert(false);
