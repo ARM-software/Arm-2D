@@ -21,7 +21,7 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        12. Nov 2023
+ * $Date:        14. Nov 2023
  * $Revision:    V.1.7.0
  *
  * Target Processor:  Cortex-M cores
@@ -248,6 +248,7 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
         uint_fast8_t chCount = this.tCFG.DirtyRegion.chCount;
         arm_2d_region_list_item_t *ptRegion = this.tCFG.DirtyRegion.ptRegions;
         if (    (0 == chCount) ||  (NULL == ptRegion)) {
+            this.Adapter.bIsDirtyRegionOptimizationEnabled = false;
             break;
         }
 
@@ -257,6 +258,8 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
 
             __arm_2d_helper_dirty_region_pool_free(ptThis, ptRegion);
         } while(--chCount);
+
+        this.Adapter.bIsDirtyRegionOptimizationEnabled = true;
     } while(0);
 
     // perform validation
@@ -302,7 +305,6 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
     } while(0);
 
     this.Adapter.bFirstIteration = true;
-    //this.Adapter.bIsFlushRequested = true;
     
     return ARM_2D_ERR_NONE;
 }
@@ -433,10 +435,6 @@ void arm_2d_helper_pfb_flush(arm_2d_helper_pfb_t *ptThis)
         ARM_LIST_QUEUE_DEQUEUE( this.Adapter.FlushFIFO.ptHead, 
                                 this.Adapter.FlushFIFO.ptTail, 
                                 ptPFB);
-        /* additional protection implemented with bIsFlushRequested Flag
-         * it is not a MUST-have but good for performance
-         */
-        //this.Adapter.bIsFlushRequested = (NULL == ptPFB);
 
         if (NULL != ptPFB) {
             this.Adapter.ptFlushing = ptPFB;
@@ -461,21 +459,13 @@ void arm_2d_helper_pfb_flush(arm_2d_helper_pfb_t *ptThis)
 static 
 void __arm_2d_helper_enqueue_pfb(arm_2d_helper_pfb_t *ptThis)
 {
-    //this.Adapter.ptCurrent->bIsNewFrame = this.Adapter.bFirstIteration;
-    bool bIsFlushRequested;
-    
     arm_irq_safe {
-        //bIsFlushRequested = this.Adapter.bIsFlushRequested;
         ARM_LIST_QUEUE_ENQUEUE( this.Adapter.FlushFIFO.ptHead, 
                                 this.Adapter.FlushFIFO.ptTail, 
                                 this.Adapter.ptCurrent);
     }
     
-    /* only when a flush is requested*/
-    //if (bIsFlushRequested) {
-        arm_2d_helper_pfb_flush(ptThis);
-    //}
-    
+    arm_2d_helper_pfb_flush(ptThis);
 }
 
 ARM_NONNULL(1)
@@ -829,7 +819,7 @@ label_start_process_candidate:
                             this.Adapter.bFailedToOptimizeDirtyRegion = true;
                             return ;
                         }
-
+                        /* initialize the newly allocated dirty region item */
                         ptDirtyRegion->tRegion = tEnclosureArea;
 
                         /* update candidate list */
@@ -843,7 +833,7 @@ label_start_process_candidate:
                     }
 
                     /* todo: try to get residual */
-
+                    
                 } 
                 /* no overlap */
                 ptWorking = ptNextWorking;  /* get the next dirty region in the working list */
@@ -893,21 +883,24 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
          * NOTE: If this is a dry run, no need to allocate PFB again.
          */
         
-        if (NULL == this.Adapter.ptDirtyRegion) {
+        if (!this.Adapter.bIsDirtyRegionOptimizationEnabled) {
+
+            this.Adapter.bIsDryRun = false;
+            /* refresh the first dirty region as people might update dirty region list 
+            * in the dry run
+            */
+            if (NULL == this.Adapter.ptDirtyRegion) {
+                this.Adapter.bIsRegionChanged = true;   
+            } else if (this.Adapter.ptDirtyRegion->bUpdated) {
+                this.Adapter.bIsRegionChanged = true;
+            }
+
+        } else {
+            if (NULL == this.Adapter.ptDirtyRegion) {
             /* dry run is finished */
             this.Adapter.bIsRegionChanged = true; 
+            }
         }
-
-    #if 0
-        /* refresh the first dirty region as people might update dirty region list 
-         * in the dry run
-         */
-        else if (this.Adapter.ptDirtyRegion->bUpdated) {
-            this.Adapter.bIsRegionChanged = true;
-        }
-
-        this.Adapter.bIsDryRun = false;
-    #endif
 
     } else {
         this.Adapter.ptCurrent = NULL;
@@ -1113,39 +1106,59 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                                 &this.Adapter.tPFBTile, 
                                 false);
 
-    /* check whether we need a dry run */
-    if (this.Adapter.bFirstIteration && NULL != this.Adapter.ptDirtyRegion) {
-        if (!this.Adapter.bIsDryRun) {
+    if (this.Adapter.bIsDirtyRegionOptimizationEnabled) {
+
+        /* check whether we need a dry run */
+        if (this.Adapter.bFirstIteration && NULL != this.Adapter.ptDirtyRegion) {
+            if (!this.Adapter.bIsDryRun) {
+                this.Adapter.bIsDryRun = true;
+            } else {
+                /* starting the real drawing after the dry run */
+                this.Adapter.bIsDryRun = false;
+                /* this is not the first iteration as it happened in the dry run*/
+                this.Adapter.bFirstIteration = false;
+            }
+        }
+
+        if (this.Adapter.bIsDryRun) {
+            /* if the dirty region list isn't empty, to support the services that
+            * need a dry run to update dirty region (e.g. dynamic dirty regions
+            * and transform helper etc), we will do a dry run for the first 
+            * iteration. 
+            * 
+            * To achieve that, we need to modify the this.Adapter.tPFBTile to  
+            * ensure that there is no valid region between the root tile and
+            * the child tile, i.e draw nothing. 
+            */
+            this.Adapter.tPFBTile.tRegion.tLocation.iX
+                = ptPartialFrameBuffer->tRegion.tSize.iWidth;
+            
+            assert(NULL != this.Adapter.ptDirtyRegion);
+            if (!this.Adapter.bFailedToOptimizeDirtyRegion) {
+                __arm_2d_helper_update_dirty_region_working_list(
+                                        ptThis, 
+                                        this.Adapter.ptDirtyRegion,
+                                        this.Adapter.bEncounterDynamicDirtyRegion);
+            }
+
+        }
+    } else {
+        /* check whether we need a dry run */
+        if (this.Adapter.bFirstIteration && NULL != this.Adapter.ptDirtyRegion) {
             this.Adapter.bIsDryRun = true;
-        } else {
-            /* starting the real drawing after the dry run */
-            this.Adapter.bIsDryRun = false;
-            /* this is not the first iteration as it happened in the dry run*/
-            this.Adapter.bFirstIteration = false;
-        }
-    }
 
-    if (this.Adapter.bIsDryRun) {
-        /* if the dirty region list isn't empty, to support the services that
-        * need a dry run to update dirty region (e.g. dynamic dirty regions
-        * and transform helper etc), we will do a dry run for the first 
-        * iteration. 
-        * 
-        * To achieve that, we need to modify the this.Adapter.tPFBTile to  
-        * ensure that there is no valid region between the root tile and
-        * the child tile, i.e draw nothing. 
-        */
-        this.Adapter.tPFBTile.tRegion.tLocation.iX
-            = ptPartialFrameBuffer->tRegion.tSize.iWidth;
-        
-        assert(NULL != this.Adapter.ptDirtyRegion);
-        if (!this.Adapter.bFailedToOptimizeDirtyRegion) {
-            __arm_2d_helper_update_dirty_region_working_list(
-                                    ptThis, 
-                                    this.Adapter.ptDirtyRegion,
-                                    this.Adapter.bEncounterDynamicDirtyRegion);
+            /* if the dirty region list isn't empty, to support the services that
+            * need a dry run to update dirty region (e.g. dynamic dirty regions
+            * and transform helper etc), we will do a dry run for the first 
+            * iteration. 
+            * 
+            * To achieve that, we need to modify the this.Adapter.tPFBTile to  
+            * ensure that there is no valid region between the root tile and
+            * the child tile, i.e draw nothing. 
+            */
+            this.Adapter.tPFBTile.tRegion.tLocation.iX
+                = ptPartialFrameBuffer->tRegion.tSize.iWidth;
         }
-
     }
 
     if (!this.tCFG.FrameBuffer.bDoNOTUpdateDefaultFrameBuffer) {
@@ -1175,7 +1188,10 @@ bool __arm_2d_helper_pfb_drawing_iteration_end(arm_2d_helper_pfb_t *ptThis)
          */
 
         this.Adapter.bFirstIteration = false;
-        __arm_2d_helper_pfb_get_next_dirty_region(ptThis);
+
+        if (this.Adapter.bIsDirtyRegionOptimizationEnabled) {
+            __arm_2d_helper_pfb_get_next_dirty_region(ptThis);
+        }
         return true;
     }
 
