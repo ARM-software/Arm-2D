@@ -257,6 +257,7 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
             ptRegion->bFromInternalPool = true;
 
             __arm_2d_helper_dirty_region_pool_free(ptThis, ptRegion);
+            ptRegion++;
         } while(--chCount);
 
         this.Adapter.bIsDirtyRegionOptimizationEnabled = true;
