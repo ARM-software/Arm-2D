@@ -1509,6 +1509,22 @@ ARM_PT_BEGIN(this.Adapter.chPT)
                 
                 ptRegionListItem = ptRegionListItem->ptNext;
             }
+
+            if (this.Adapter.bIsDirtyRegionOptimizationEnabled) {
+                ptRegionListItem = this.Adapter.OptimizedDirtyRegions.ptWorkingList;
+
+                while(NULL != ptRegionListItem) {
+                    if (!ptRegionListItem->bIgnore) {
+                        arm_2d_helper_draw_box( this.Adapter.ptFrameBuffer, 
+                                                &ptRegionListItem->tRegion, 
+                                                1,  
+                                                GLCD_COLOR_BLUE, 255);
+                    }
+                    
+                    ptRegionListItem = ptRegionListItem->ptInternalNext;
+                }
+            }
+
         }
 
         this.Adapter.bIsNewFrame = false;
@@ -1881,6 +1897,8 @@ void arm_2d_helper_transform_update_dirty_regions(
 {
     assert(NULL != ptThis);
     assert(NULL != ptCanvas);
+    ARM_2D_UNUSED(ptCanvas);
+
     arm_2d_tile_t *ptTarget = (arm_2d_tile_t *)this.ptTransformOP->Target.ptTile;
     
     if (!bIsNewFrame) {
