@@ -563,7 +563,7 @@ bool __when_dirty_region_list_is_empty(arm_2d_helper_pfb_t *ptThis)
 
 static bool __arm_2d_helper_pfb_get_next_dirty_region(arm_2d_helper_pfb_t *ptThis)
 {
-#if 0
+#if 1
     if (this.Adapter.bIsUsingOptimizedDirtyRegionList) {
         if (NULL == this.Adapter.OptimizedDirtyRegions.ptWorkingList) {
             /* finished or empty */
@@ -765,8 +765,6 @@ void __arm_2d_helper_update_dirty_region_working_list(
 label_start_process_candidate:
     /* the process loop */
     do {
-
-
         arm_2d_region_list_item_t *ptCandidate 
             = this.Adapter.OptimizedDirtyRegions.ptCandidateList;
 
@@ -775,14 +773,38 @@ label_start_process_candidate:
             arm_2d_region_list_item_t *ptWorking
                 = this.Adapter.OptimizedDirtyRegions.ptWorkingList;
 
-
             uint32_t wCandidatePixelCount = ptCandidate->tRegion.tSize.iHeight
                                             * ptCandidate->tRegion.tSize.iWidth;
             while(NULL != ptWorking) {
                 arm_2d_region_list_item_t *ptNextWorking = ptWorking->ptInternalNext;
-
                 arm_2d_region_t tOverlapArea, tEnclosureArea;
-                if (arm_2d_region_intersect(&ptWorking->tRegion, 
+
+                int_fast8_t chResult = arm_2d_is_region_inside_target(&ptCandidate->tRegion,
+                                                                      &ptWorking->tRegion);
+
+                if (1 == chResult) {
+                    /* the candidate is inside the working region,
+                     * remove the candidate from the list 
+                     */
+                    __arm_2d_helper_remove_item_from_weighted_dirty_region_list(
+                        &this.Adapter.OptimizedDirtyRegions.ptCandidateList,
+                        ptCandidate
+                    );
+                    /* free the working item */
+                    __arm_2d_helper_dirty_region_pool_free(ptThis, ptCandidate);
+
+                    goto label_move_to_next_candidate;
+                } else if (-1 == chResult) {
+                    /* remove the working item from the list */
+                    __arm_2d_helper_remove_item_from_weighted_dirty_region_list(
+                        &this.Adapter.OptimizedDirtyRegions.ptWorkingList,
+                        ptWorking
+                    );
+
+                    /* free the working item */
+                    __arm_2d_helper_dirty_region_pool_free(ptThis, ptWorking);
+                    
+                } else if (arm_2d_region_intersect(&ptWorking->tRegion, 
                                             &ptCandidate->tRegion,
                                             &tOverlapArea)) {
                     /* has overlap */
@@ -835,10 +857,14 @@ label_start_process_candidate:
 
                     /* todo: try to get residual */
                     
-                } 
+                }
                 /* no overlap */
                 ptWorking = ptNextWorking;  /* get the next dirty region in the working list */
             }
+
+            /* default: no way to optimize the candidate,
+             *          add the candidate to the working list
+             */
 
             /* remove the candidate from the list */
             __arm_2d_helper_remove_item_from_weighted_dirty_region_list(
@@ -852,6 +878,7 @@ label_start_process_candidate:
                 ptCandidate
             );
 
+label_move_to_next_candidate:
             /* process next candidate */
             ptCandidate = ptNextCandiate;
         }
