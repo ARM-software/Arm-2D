@@ -281,6 +281,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga7b1525f76620d2624311ae469bbe0988"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#ga7b1525f76620d2624311ae469bbe0988">arm_2d_is_point_inside_region</a> (const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, const <a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a> *ptPoint)</td></tr>
 <tr class="memdesc:ga7b1525f76620d2624311ae469bbe0988"><td class="mdescLeft">&#160;</td><td class="mdescRight">check whether a point is inside a given region  <a href="group__Tile.html#ga7b1525f76620d2624311ae469bbe0988">More...</a><br /></td></tr>
 <tr class="separator:ga7b1525f76620d2624311ae469bbe0988"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga77b64272065500911f7e8c6734019106"><td class="memItemLeft" align="right" valign="top">int_fast8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#ga77b64272065500911f7e8c6734019106">arm_2d_is_region_inside_target</a> (const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptTarget)</td></tr>
+<tr class="memdesc:ga77b64272065500911f7e8c6734019106"><td class="mdescLeft">&#160;</td><td class="mdescRight">check whether a given region is inside the target region  <a href="group__Tile.html#ga77b64272065500911f7e8c6734019106">More...</a><br /></td></tr>
+<tr class="separator:ga77b64272065500911f7e8c6734019106"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa2c90673706f32707b09561eb42e87a9"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#gaa2c90673706f32707b09561eb42e87a9">arm_2d_tile_get_root</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTile, <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptValidRegion, <a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a> *ptOffset)</td></tr>
 <tr class="memdesc:gaa2c90673706f32707b09561eb42e87a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the root tile and the valid region for a given tile  <a href="group__Tile.html#gaa2c90673706f32707b09561eb42e87a9">More...</a><br /></td></tr>
 <tr class="separator:gaa2c90673706f32707b09561eb42e87a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -3447,6 +3450,51 @@ wColour</td>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ga77b64272065500911f7e8c6734019106" name="ga77b64272065500911f7e8c6734019106"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga77b64272065500911f7e8c6734019106">&#9670;&nbsp;</a></span>arm_2d_is_region_inside_target()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int_fast8_t arm_2d_is_region_inside_target </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td>
+          <td class="paramname"><em>ptRegion</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td>
+          <td class="paramname"><em>ptTarget</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>check whether a given region is inside the target region </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptRegion</td><td>a given region </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptTarget</td><td>the target region used as the reference </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">1</td><td>the given region is inside the target region </td></tr>
+    <tr><td class="paramname">-1</td><td>the target region is inside the given region </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 the given region is outside of the target region or it only partially overlaps with the target region </dd></dl>
 
 </div>
 </div>
