@@ -563,22 +563,29 @@ bool __when_dirty_region_list_is_empty(arm_2d_helper_pfb_t *ptThis)
 
 static bool __arm_2d_helper_pfb_get_next_dirty_region(arm_2d_helper_pfb_t *ptThis)
 {
-#if 1
+
     if (this.Adapter.bIsUsingOptimizedDirtyRegionList) {
-        if (NULL == this.Adapter.OptimizedDirtyRegions.ptWorkingList) {
+        if (NULL == this.Adapter.ptDirtyRegion->ptInternalNext) {
             /* finished or empty */
             this.Adapter.bIsUsingOptimizedDirtyRegionList = false;
             this.Adapter.ptDirtyRegion = this.Adapter.OptimizedDirtyRegions.ptOriginalList;
+
+            if (NULL == this.Adapter.ptDirtyRegion) {
+                // reach last item in a chain
+                return __when_dirty_region_list_is_empty(ptThis);
+            } else {
+                this.Adapter.bIsRegionChanged = true;
+            }
+
+            return true;
         } else {
             this.Adapter.ptDirtyRegion
-                = this.Adapter.OptimizedDirtyRegions.ptWorkingList;
+                = this.Adapter.ptDirtyRegion->ptInternalNext;
             
-
             this.Adapter.bIsRegionChanged = true;
             return true;
         }
     }
-#endif
 
     if (NULL == this.Adapter.ptDirtyRegion) {
         return __when_dirty_region_list_is_empty(ptThis);
@@ -803,7 +810,7 @@ label_start_process_candidate:
 
                     /* free the working item */
                     __arm_2d_helper_dirty_region_pool_free(ptThis, ptWorking);
-                    
+
                 } else if (arm_2d_region_intersect(&ptWorking->tRegion, 
                                             &ptCandidate->tRegion,
                                             &tOverlapArea)) {
@@ -952,20 +959,26 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
 
     if (this.Adapter.bFirstIteration) {
 
-        /* NOTE: this only works for the optimized-dirty-region services */
-        if (this.Adapter.bIsDryRun && this.tCFG.FrameBuffer.bDebugDirtyRegions) {
-            /* in dirty region debug mode, we will refresh the whole screen
-             * instead of the dirty regions to show the optimized dirty regions
-             * correctly.
-             */
-            this.Adapter.bIsDryRun = false;             /* clear the DryRun flag */
+        if (this.Adapter.bIsDryRun) {
+            if (this.tCFG.FrameBuffer.bDebugDirtyRegions) {
+                /* in dirty region debug mode, we will refresh the whole screen
+                * instead of the dirty regions to show the optimized dirty regions
+                * correctly.
+                */
+                this.Adapter.bIsDryRun = false;             /* clear the DryRun flag */
 
-            /* NOTE: due to the dry run, it is not the first iteration of a frame 
-             *       but this flag is set to true when all dirty regions are visited, 
-             *       so we have to clear it manually.
-             * */
-            this.Adapter.bFirstIteration = false;       
-            this.Adapter.ptDirtyRegion = NULL;          /* refresh the whole screen */
+                /* NOTE: due to the dry run, it is not the first iteration of a frame 
+                *       but this flag is set to true when all dirty regions are visited, 
+                *       so we have to clear it manually.
+                * */
+                this.Adapter.bFirstIteration = false;       
+                this.Adapter.ptDirtyRegion = NULL;          /* refresh the whole screen */
+            } else {
+                /* Use the optimized dirty region working list for refresh
+                 */
+                this.Adapter.ptDirtyRegion = this.Adapter.OptimizedDirtyRegions.ptWorkingList;
+                this.Adapter.bIsUsingOptimizedDirtyRegionList = true;
+            }
         } else {
             this.Adapter.ptDirtyRegion = ptDirtyRegions;
         }
