@@ -208,7 +208,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
     arm_2d_container(ptTarget, __wheel, ptRegion) {
 
         if ( WAIT_CHANGE == this.chState) {
-            //if (this.iLastProgress != iProgress) {
+            if (this.iLastProgress != iProgress) {
                 this.iLastProgress = iProgress;
 
                 int8_t chQuadrantChange = chCurrentQuadrant - this.chLastQuadrant;
@@ -225,7 +225,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                     this.chLastQuadrant = chCurrentQuadrant;
                     this.chState = DRAW_WHOLE_WHEEL;
                 }
-            //}
+            }
         }
 
         if (DRAW_WHOLE_WHEEL == this.chState) {
