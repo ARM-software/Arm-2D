@@ -22,7 +22,7 @@
  * Description:  the pfb helper service source code
  *
  * $Date:        15. Nov 2023
- * $Revision:    V.1.7.0-dev
+ * $Revision:    V.1.7.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
