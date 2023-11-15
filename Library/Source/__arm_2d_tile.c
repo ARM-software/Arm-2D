@@ -21,8 +21,8 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        12. Nov 2023
- * $Revision:    V.1.4.2
+ * $Date:        15. Nov 2023
+ * $Revision:    V.1.4.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -240,6 +240,39 @@ bool arm_2d_is_point_inside_region( const arm_2d_region_t *ptRegion,
     } while(0);
 
     return false;
+}
+
+ARM_NONNULL(1,2)
+int_fast8_t arm_2d_is_region_inside_target(const arm_2d_region_t *ptRegion,
+                                           const arm_2d_region_t *ptTarget)
+{
+    do {
+        arm_2d_location_t tTopLeft = ptRegion->tLocation;
+        arm_2d_location_t tBottomRight = {
+            .iX = ptRegion->tLocation.iX + ptRegion->tSize.iWidth - 1,
+            .iY = ptRegion->tLocation.iY + ptRegion->tSize.iHeight - 1,
+        };
+
+        if (    arm_2d_is_point_inside_region(ptTarget, &tTopLeft)
+            &&  arm_2d_is_point_inside_region(ptTarget, &tBottomRight)) {
+            return 1;
+        }
+    } while(0);
+
+    do {
+        arm_2d_location_t tTopLeft = ptTarget->tLocation;
+        arm_2d_location_t tBottomRight = {
+            .iX = ptTarget->tLocation.iX + ptTarget->tSize.iWidth - 1,
+            .iY = ptTarget->tLocation.iY + ptTarget->tSize.iHeight - 1,
+        };
+
+        if (    arm_2d_is_point_inside_region(ptRegion, &tTopLeft)
+            &&  arm_2d_is_point_inside_region(ptRegion, &tBottomRight)) {
+            return -1;
+        }
+    } while(0);
+
+    return 0;
 }
 
 

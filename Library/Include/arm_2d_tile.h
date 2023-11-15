@@ -21,8 +21,8 @@
  * Title:        arm_2d_tile.h
  * Description:  Public header file to contain the basic tile operations
  *
- * $Date:        12. Nov 2023
- * $Revision:    V.1.4.2
+ * $Date:        15. Nov 2023
+ * $Revision:    V.1.4.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -887,6 +887,20 @@ extern
 ARM_NONNULL(1,2)
 bool arm_2d_is_point_inside_region( const arm_2d_region_t *ptRegion,
                                     const arm_2d_location_t *ptPoint);
+
+/*!
+ * \brief check whether a given region is inside the target region
+ * \param[in] ptRegion a given region
+ * \param[in] ptTarget the target region used as the reference
+ * \retval 1 the given region is inside the target region
+ * \retval -1 the target region is inside the given region
+ * \return 0 the given region is outside of the target region or 
+ *           it only partially overlaps with the target region
+ */
+extern
+ARM_NONNULL(1,2)
+int_fast8_t arm_2d_is_region_inside_target(const arm_2d_region_t *ptRegion,
+                                           const arm_2d_region_t *ptTarget);
 
 /*!
  * \brief get the root tile and the valid region for a given tile
