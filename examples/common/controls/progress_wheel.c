@@ -201,19 +201,15 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
         &&  bIsNewFrame 
         && (NULL != this.tCFG.ppList)) {
         /* initialize fsm */
-        this.chState = WAIT_CHANGE;
         this.chLastQuadrant = 0;
         this.chState = DRAW_WHOLE_WHEEL;
     }
 
     arm_2d_container(ptTarget, __wheel, ptRegion) {
 
-
         if ( WAIT_CHANGE == this.chState) {
-            if (this.iLastProgress != iProgress) {
+            //if (this.iLastProgress != iProgress) {
                 this.iLastProgress = iProgress;
-
-                
 
                 int8_t chQuadrantChange = chCurrentQuadrant - this.chLastQuadrant;
                 chQuadrantChange = ABS(chQuadrantChange);
@@ -229,7 +225,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                     this.chLastQuadrant = chCurrentQuadrant;
                     this.chState = DRAW_WHOLE_WHEEL;
                 }
-            }
+            //}
         }
 
         if (DRAW_WHOLE_WHEEL == this.chState) {
@@ -435,8 +431,15 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
             if (DRAW_START_POINT == this.chState) {
                 if (false == this.tDirtyRegion.bUpdated) {
-                    this.tDirtyRegion.tRegion = tQuater;
-                    this.tDirtyRegion.tRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(&__wheel, tQuater.tLocation);
+
+                    this.tDirtyRegion.tRegion = *(this.tOP[4].Target.ptRegion);
+
+                    arm_2d_region_intersect(&this.tDirtyRegion.tRegion, 
+                                            &tRotationRegion,
+                                            &this.tDirtyRegion.tRegion);
+                                            
+                    this.tDirtyRegion.tRegion.tLocation 
+                        = arm_2d_helper_pfb_get_absolute_location(&__wheel,  this.tDirtyRegion.tRegion.tLocation);
                     this.tDirtyRegion.bIgnore = false;
 
                     this.tDirtyRegion.bUpdated = true;      /* request update */
