@@ -898,8 +898,8 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
 
         } else {
             if (NULL == this.Adapter.ptDirtyRegion) {
-            /* dry run is finished */
-            this.Adapter.bIsRegionChanged = true; 
+                /* dry run is finished */
+                this.Adapter.bIsRegionChanged = true; 
             }
         }
 
@@ -924,9 +924,26 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
     arm_2d_tile_t *ptPartialFrameBuffer = &(this.Adapter.ptCurrent->tTile);
 
     if (this.Adapter.bFirstIteration) {
-        this.Adapter.ptDirtyRegion = ptDirtyRegions;
+
+        /* NOTE: this only works for the optimized-dirty-region services */
+        if (this.Adapter.bIsDryRun && this.tCFG.FrameBuffer.bDebugDirtyRegions) {
+            /* in dirty region debug mode, we will refresh the whole screen
+             * instead of the dirty regions to show the optimized dirty regions
+             * correctly.
+             */
+            this.Adapter.bIsDryRun = false;             /* clear the DryRun flag */
+
+            /* NOTE: due to the dry run, it is not the first iteration of a frame 
+             *       but this flag is set to true when all dirty regions are visited, 
+             *       so we have to clear it manually.
+             * */
+            this.Adapter.bFirstIteration = false;       
+            this.Adapter.ptDirtyRegion = NULL;          /* refresh the whole screen */
+        } else {
+            this.Adapter.ptDirtyRegion = ptDirtyRegions;
+        }
         
-        if (NULL == ptDirtyRegions) {
+        if (NULL == this.Adapter.ptDirtyRegion) {
             /* since we draw the whole frame, no need to take the additional 
              * dirty region list into consideration 
              */
@@ -1116,7 +1133,11 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
             } else {
                 /* starting the real drawing after the dry run */
                 this.Adapter.bIsDryRun = false;
-                /* this is not the first iteration as it happened in the dry run*/
+
+                /* NOTE: due to the dry run, it is not the first iteration of a frame 
+                *       but this flag is set to true when all dirty regions are visited, 
+                *       so we have to clear it manually.
+                */
                 this.Adapter.bFirstIteration = false;
             }
         }
@@ -1505,7 +1526,7 @@ ARM_PT_BEGIN(this.Adapter.chPT)
                     arm_2d_helper_draw_box( this.Adapter.ptFrameBuffer, 
                                             &ptRegionListItem->tRegion, 
                                             1,  
-                                            GLCD_COLOR_GREEN, 128);
+                                            GLCD_COLOR_GREEN, 255);
                 }
                 
                 ptRegionListItem = ptRegionListItem->ptNext;
@@ -1519,7 +1540,7 @@ ARM_PT_BEGIN(this.Adapter.chPT)
                         arm_2d_helper_draw_box( this.Adapter.ptFrameBuffer, 
                                                 &ptRegionListItem->tRegion, 
                                                 1,  
-                                                GLCD_COLOR_BLUE, 255);
+                                                GLCD_COLOR_RED, 255);
                     }
                     
                     ptRegionListItem = ptRegionListItem->ptInternalNext;
