@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        14. Nov 2023
- * $Revision:    V.1.7.0
+ * $Date:        15. Nov 2023
+ * $Revision:    V.1.7.0-dev
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1369,14 +1369,14 @@ ARM_PT_BEGIN(this.Adapter.chPT)
     this.Adapter.bIsNewFrame = true;
 
     /* initialize the OptimizedDirtyRegions service */
-    do {
+    if (this.Adapter.bIsDirtyRegionOptimizationEnabled) {
         this.Adapter.OptimizedDirtyRegions.ptOriginalList = ptDirtyRegions;
         this.Adapter.bIsUsingOptimizedDirtyRegionList = false;              /* this must be false here */
         this.Adapter.bFailedToOptimizeDirtyRegion = false;
 
         assert(NULL == this.Adapter.OptimizedDirtyRegions.ptWorkingList);
         assert(NULL == this.Adapter.OptimizedDirtyRegions.ptCandidateList);
-    } while(0);
+    }
 
     __arm_2d_helper_perf_counter_start(&this.Statistics.lTimestamp,
                                        ARM_2D_PERFC_DRIVER); 
@@ -1509,7 +1509,6 @@ ARM_PT_BEGIN(this.Adapter.chPT)
                 
                 ptRegionListItem = ptRegionListItem->ptNext;
             }
-            arm_2d_op_wait_async(NULL);
         }
 
         this.Adapter.bIsNewFrame = false;
@@ -1524,15 +1523,17 @@ label_pfb_task_rt_cpl:
 
 ARM_PT_END()
 
-    /* free working list */
-    __arm_2d_helper_free_dirty_region_working_list(
-                            ptThis, 
-                            this.Adapter.OptimizedDirtyRegions.ptWorkingList);
-    
-    /* free candidate list */
-    __arm_2d_helper_free_dirty_region_working_list(
-                            ptThis, 
-                            this.Adapter.OptimizedDirtyRegions.ptCandidateList);
+    if (this.Adapter.bIsDirtyRegionOptimizationEnabled) {
+        /* free working list */
+        __arm_2d_helper_free_dirty_region_working_list(
+                                ptThis, 
+                                this.Adapter.OptimizedDirtyRegions.ptWorkingList);
+        
+        /* free candidate list */
+        __arm_2d_helper_free_dirty_region_working_list(
+                                ptThis, 
+                                this.Adapter.OptimizedDirtyRegions.ptCandidateList);
+    }
 
     /* invoke the On Each Frame Complete Event */
     ARM_2D_INVOKE(  this.tCFG.Dependency.evtOnEachFrameCPL.fnHandler,
