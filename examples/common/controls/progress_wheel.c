@@ -230,6 +230,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
         if (DRAW_WHOLE_WHEEL == this.chState) {
             this.tDirtyRegion.tRegion = __wheel_canvas;
+
             this.tDirtyRegion.tRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(&__wheel, __wheel_canvas.tLocation);
             this.tDirtyRegion.bIgnore = false;
 
@@ -285,8 +286,17 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
             if (DRAW_LAST_QUADRANT == this.chState && this.chLastQuadrant == 0) {
                 /* wait idle */
                 if (false == this.tDirtyRegion.bUpdated) {
-                    this.tDirtyRegion.tRegion = tQuater;
-                    this.tDirtyRegion.tRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(&__wheel, tQuater.tLocation);
+                    //this.tDirtyRegion.tRegion = tQuater;
+
+                    this.tDirtyRegion.tRegion = *(this.tOP[3].Target.ptRegion);
+                    this.tDirtyRegion.tRegion.tLocation.iX += tQuater.tLocation.iX;
+                    this.tDirtyRegion.tRegion.tLocation.iY += tQuater.tLocation.iY;
+
+                    arm_2d_region_intersect(&this.tDirtyRegion.tRegion, 
+                                            &tQuater,
+                                            &this.tDirtyRegion.tRegion);
+                                            
+                    this.tDirtyRegion.tRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(&__wheel, this.tDirtyRegion.tRegion.tLocation);
                     this.tDirtyRegion.bIgnore = false;
                     this.tDirtyRegion.bUpdated = true;      /* request update */
 
@@ -320,8 +330,18 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
             if (DRAW_LAST_QUADRANT == this.chState && this.chLastQuadrant == 1) {
                 /* wait idle */
                 if (false == this.tDirtyRegion.bUpdated) {
-                    this.tDirtyRegion.tRegion = tQuater;
-                    this.tDirtyRegion.tRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(&__wheel, tQuater.tLocation);
+                    //this.tDirtyRegion.tRegion = tQuater;
+
+                    this.tDirtyRegion.tRegion = *(this.tOP[1].Target.ptRegion);
+                    this.tDirtyRegion.tRegion.tLocation.iX += tQuater.tLocation.iX;
+                    this.tDirtyRegion.tRegion.tLocation.iY += tQuater.tLocation.iY;
+
+                    arm_2d_region_intersect(&this.tDirtyRegion.tRegion, 
+                                            &tQuater,
+                                            &this.tDirtyRegion.tRegion);
+                                            
+                    this.tDirtyRegion.tRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(&__wheel, this.tDirtyRegion.tRegion.tLocation);
+
                     this.tDirtyRegion.bIgnore = false;
                     this.tDirtyRegion.bUpdated = true;      /* request update */
 
@@ -354,8 +374,17 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
             if (DRAW_LAST_QUADRANT == this.chState && this.chLastQuadrant == 2) {
                 /* wait idle */
                 if (false == this.tDirtyRegion.bUpdated) {
-                    this.tDirtyRegion.tRegion = tQuater;
-                    this.tDirtyRegion.tRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(&__wheel, tQuater.tLocation);
+                    //this.tDirtyRegion.tRegion = tQuater;
+
+                    this.tDirtyRegion.tRegion = *(this.tOP[2].Target.ptRegion);
+                    this.tDirtyRegion.tRegion.tLocation.iX += tQuater.tLocation.iX;
+                    this.tDirtyRegion.tRegion.tLocation.iY += tQuater.tLocation.iY;
+
+                    arm_2d_region_intersect(&this.tDirtyRegion.tRegion, 
+                                            &tQuater,
+                                            &this.tDirtyRegion.tRegion);
+
+                    this.tDirtyRegion.tRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(&__wheel, this.tDirtyRegion.tRegion.tLocation);
                     this.tDirtyRegion.bIgnore = false;
                     this.tDirtyRegion.bUpdated = true;      /* request update */
 
@@ -395,8 +424,17 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
             if (DRAW_CURVE == this.chState) {
                 /* wait idle */
                 if (false == this.tDirtyRegion.bUpdated) {
-                    this.tDirtyRegion.tRegion = tQuater;
-                    this.tDirtyRegion.tRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(&__wheel, tQuater.tLocation);
+                    //this.tDirtyRegion.tRegion = tQuater;
+
+                    this.tDirtyRegion.tRegion = *(this.tOP[0].Target.ptRegion);
+                    this.tDirtyRegion.tRegion.tLocation.iX += tQuater.tLocation.iX;
+                    this.tDirtyRegion.tRegion.tLocation.iY += tQuater.tLocation.iY;
+
+                    arm_2d_region_intersect(&this.tDirtyRegion.tRegion, 
+                                            &tQuater,
+                                            &this.tDirtyRegion.tRegion);
+
+                    this.tDirtyRegion.tRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(&__wheel, this.tDirtyRegion.tRegion.tLocation);
                     this.tDirtyRegion.bIgnore = false;
 
                     this.tDirtyRegion.bUpdated = true;      /* request update */
@@ -433,6 +471,8 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 if (false == this.tDirtyRegion.bUpdated) {
 
                     this.tDirtyRegion.tRegion = *(this.tOP[4].Target.ptRegion);
+                    this.tDirtyRegion.tRegion.tLocation.iX += tRotationRegion.tLocation.iX;
+                    this.tDirtyRegion.tRegion.tLocation.iY += tRotationRegion.tLocation.iY;
 
                     arm_2d_region_intersect(&this.tDirtyRegion.tRegion, 
                                             &tRotationRegion,
