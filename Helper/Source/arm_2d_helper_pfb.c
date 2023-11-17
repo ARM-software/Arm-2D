@@ -103,7 +103,24 @@ arm_2d_pfb_t *__arm_2d_helper_pfb_new(arm_2d_helper_pfb_t *ptThis)
     }
 
     if (NULL != ptPFB) {
+        ARM_2D_LOG_INFO(
+            HELPER_PFB, 
+            2, 
+            "PFB Pool", 
+            "Allocate a new PFB [%p], %d is left",
+            ptPFB,
+            this.Adapter.chFreePFBCount
+        );
+
         ptPFB->ptPFBHelper = ptThis;
+    } else {
+         ARM_2D_LOG_WARNING(
+            HELPER_PFB, 
+            2, 
+            "PFB Pool", 
+            "Failed to allocate a PFB from pool, %d is left",
+            this.Adapter.chFreePFBCount
+        );
     }
 
     return ptPFB;
@@ -128,6 +145,15 @@ void __arm_2d_helper_pfb_free(arm_2d_helper_pfb_t *ptThis, arm_2d_pfb_t *ptPFB)
         &&  ((uintptr_t)NULL != this.Adapter.pFPBPoolAvailable)) {
         arm_2d_port_set_semaphore(this.Adapter.pFPBPoolAvailable);
     }
+
+    ARM_2D_LOG_INFO(
+        HELPER_PFB, 
+        2, 
+        "PFB Pool", 
+        "Free a PFB to the pool [%p], %d is left",
+        ptPFB,
+        this.Adapter.chFreePFBCount
+    );
 }
 
 ARM_NONNULL(1,2)
@@ -542,6 +568,13 @@ bool __when_dirty_region_list_is_empty(arm_2d_helper_pfb_t *ptThis)
         // no dirty region is available
         this.Adapter.bFirstIteration = true;
         
+        ARM_2D_LOG_INFO(
+            HELPER_PFB, 
+            2, 
+            "Get Next Dirty Region", 
+            "No more dirty regions."
+        );
+
         return false;
     } else if ( (NULL != this.tCFG.Dependency.Navigation.evtOnDrawing.fnHandler)
            &&   (NULL != this.tCFG.Dependency.Navigation.ptDirtyRegion)
@@ -552,11 +585,27 @@ bool __when_dirty_region_list_is_empty(arm_2d_helper_pfb_t *ptThis)
         this.Adapter.bNoAdditionalDirtyRegionList = true;
         
         this.Adapter.bIsRegionChanged = true;
+
+        ARM_2D_LOG_INFO(
+            HELPER_PFB, 
+            2, 
+            "Get Next Dirty Region", 
+            "Get dirty region item from the navigation list [%p]",
+            this.Adapter.ptDirtyRegion
+        );
+
         return true;
     } else {
         // no dirty region is available
         this.Adapter.bFirstIteration = true;
         
+        ARM_2D_LOG_INFO(
+            HELPER_PFB, 
+            2, 
+            "Get Next Dirty Region", 
+            "No more dirty regions."
+        );
+
         return false;
     }
 }
@@ -565,14 +614,26 @@ static bool __arm_2d_helper_pfb_get_next_dirty_region(arm_2d_helper_pfb_t *ptThi
 {
 
     if (this.Adapter.bIsUsingOptimizedDirtyRegionList) {
+        
+
         if (NULL == this.Adapter.ptDirtyRegion->ptInternalNext) {
             /* finished or empty */
             this.Adapter.bIsUsingOptimizedDirtyRegionList = false;
             this.Adapter.ptDirtyRegion = this.Adapter.OptimizedDirtyRegions.ptOriginalList;
 
+            ARM_2D_LOG_INFO(
+                HELPER_PFB, 
+                2, 
+                "Get Next Dirty Region", 
+                "Reach the end of the optimized working list, use the original dirty region list [%p]",
+                this.Adapter.ptDirtyRegion
+            );
+
             if (NULL == this.Adapter.ptDirtyRegion) {
-                // reach last item in a chain
-                return __when_dirty_region_list_is_empty(ptThis);
+                // no dirty region is available
+                this.Adapter.bFirstIteration = true;
+                
+                return false;
             } else {
                 this.Adapter.bIsRegionChanged = true;
             }
@@ -581,8 +642,17 @@ static bool __arm_2d_helper_pfb_get_next_dirty_region(arm_2d_helper_pfb_t *ptThi
         } else {
             this.Adapter.ptDirtyRegion
                 = this.Adapter.ptDirtyRegion->ptInternalNext;
-            
+
             this.Adapter.bIsRegionChanged = true;
+
+            ARM_2D_LOG_INFO(
+                HELPER_PFB, 
+                2, 
+                "Get Next Dirty Region", 
+                "Get a dirty region[%p] from the optimized working list",
+                this.Adapter.ptDirtyRegion
+            );
+
             return true;
         }
     }
@@ -604,6 +674,14 @@ static bool __arm_2d_helper_pfb_get_next_dirty_region(arm_2d_helper_pfb_t *ptThi
             this.Adapter.bIsRegionChanged = true;
         }
     }
+
+    ARM_2D_LOG_INFO(
+        HELPER_PFB, 
+        2, 
+        "Get Next Dirty Region", 
+        "Get a dirty region item [%p] in the normal way",
+        this.Adapter.ptDirtyRegion
+    );
     
     return true;
 }
@@ -1076,7 +1154,7 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                 HELPER_PFB, 
                 1, 
                 "Iteration Begin", 
-                "In the dry run, ptCurrent is set to NULL"
+                "In the dry run, ptCurrent is set to NULL. Try to allocate a new PFB from the pool..."
             );
 
              arm_irq_safe {
@@ -1096,6 +1174,14 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
 
     } else {
         this.Adapter.ptCurrent = NULL;
+
+        ARM_2D_LOG_INFO(
+            HELPER_PFB, 
+            1, 
+            "Iteration Begin", 
+            "Try to allocate a new PFB from the pool..."
+        );
+
         arm_irq_safe {
             /* allocating pfb only when the number of free PFB blocks is larger than
             * the reserved threashold
@@ -1109,6 +1195,7 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
             // no resource left
             return NULL;
         }
+
         this.Adapter.ptCurrent->bIsNewFrame = this.Adapter.bFirstIteration;
     }
 
@@ -1119,6 +1206,14 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
     if (this.Adapter.bFirstIteration) {
 
         if (this.Adapter.bIsDryRun) {
+
+            ARM_2D_LOG_INFO(
+                DIRTY_REGION_OPTIMISATION, 
+                1, 
+                "Iteration Begin", 
+                "Reset to the start of a frame in dry run mode"
+            );
+
             if (this.tCFG.FrameBuffer.bDebugDirtyRegions) {
                 /* in dirty region debug mode, we will refresh the whole screen
                 * instead of the dirty regions to show the optimized dirty regions
@@ -1135,14 +1230,32 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
 
                 
             } else {
+
                 /* Use the optimized dirty region working list for refresh
                  */
                 assert(NULL != this.Adapter.OptimizedDirtyRegions.ptWorkingList);
                 this.Adapter.ptDirtyRegion = this.Adapter.OptimizedDirtyRegions.ptWorkingList;
                 
                 this.Adapter.bIsUsingOptimizedDirtyRegionList = (NULL != this.Adapter.ptDirtyRegion);
+
+                ARM_2D_LOG_INFO(
+                    DIRTY_REGION_OPTIMISATION, 
+                    1, 
+                    "Iteration Begin", 
+                    "Get the first dirty region from the working list [%p]", 
+                    this.Adapter.ptDirtyRegion
+                );
             }
         } else {
+
+            ARM_2D_LOG_INFO(
+                HELPER_PFB, 
+                1, 
+                "Iteration Begin", 
+                "The start of a frame in normal mode, get the first dirty region in ptDirtyRegions [%p] ",
+                ptDirtyRegions
+            );
+
             this.Adapter.ptDirtyRegion = ptDirtyRegions;
         }
         
@@ -1181,6 +1294,15 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                                 &this.tCFG.tDisplayArea, 
                                 &(this.Adapter.ptDirtyRegion->tRegion), 
                                 &this.Adapter.tTargetRegion))) {
+
+                    ARM_2D_LOG_INFO(
+                        HELPER_PFB, 
+                        1, 
+                        "Iteration Begin", 
+                        "The dirty region item flags to be ignored[%d] or there is no overlapping with the display area [%p] ",
+                        this.Adapter.ptDirtyRegion->bIgnore,
+                        this.Adapter.ptDirtyRegion
+                    );
 
                     /*----------------------------------------------------------------*
                      * the code segment for try next dirty region or end early: BEGIN *
@@ -1380,6 +1502,14 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
         if (this.Adapter.bFirstIteration && NULL != ptDirtyRegions) {
             if (!this.Adapter.bIsDryRun) {
                 this.Adapter.bIsDryRun = true;
+
+                ARM_2D_LOG_INFO(
+                    HELPER_PFB, 
+                    1, 
+                    "Iteration Begin", 
+                    "--------------------Dry Run Begin--------------------"
+                );
+
             } else {
                 /* starting the real drawing after the dry run */
                 this.Adapter.bIsDryRun = false;
@@ -1389,6 +1519,13 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                 *       so we have to clear it manually.
                 */
                 this.Adapter.bFirstIteration = false;
+
+                ARM_2D_LOG_INFO(
+                    HELPER_PFB, 
+                    1, 
+                    "Iteration Begin", 
+                    "--------------------Dry Run End ---------------------\r\n"
+                );
             }
         }
 
@@ -1407,6 +1544,14 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
             
             assert(NULL != this.Adapter.ptDirtyRegion);
             if (!this.Adapter.bFailedToOptimizeDirtyRegion) {
+
+                ARM_2D_LOG_INFO(
+                    DIRTY_REGION_OPTIMISATION, 
+                    1, 
+                    "Iteration Begin", 
+                    "Update dirty region working list."
+                );
+
                 __arm_2d_helper_update_dirty_region_working_list(
                                         ptThis, 
                                         this.Adapter.ptDirtyRegion,
@@ -1432,6 +1577,13 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
             */
             this.Adapter.tPFBTile.tRegion.tLocation.iX
                 = ptPartialFrameBuffer->tRegion.tSize.iWidth;
+            
+            ARM_2D_LOG_INFO(
+                HELPER_PFB, 
+                0, 
+                "Iteration Begin", 
+                "Start Dry-run"
+            );
         }
     }
 
@@ -1457,6 +1609,15 @@ static
 bool __arm_2d_helper_pfb_drawing_iteration_end(arm_2d_helper_pfb_t *ptThis)
 {
     if (this.Adapter.bIsDryRun) {
+
+        ARM_2D_LOG_INFO(
+            HELPER_PFB, 
+            1, 
+            "Iteration End", 
+            "End iteration in dry run mode"
+        );
+
+
         /* NOTE: if this is a dry run, we don't have to invoke low level rendering
          *       process.
          */
@@ -1466,8 +1627,16 @@ bool __arm_2d_helper_pfb_drawing_iteration_end(arm_2d_helper_pfb_t *ptThis)
         if (this.Adapter.bIsDirtyRegionOptimizationEnabled) {
             __arm_2d_helper_pfb_get_next_dirty_region(ptThis);
         }
+
         return true;
     }
+
+    ARM_2D_LOG_INFO(
+        HELPER_PFB, 
+        1, 
+        "Iteration End", 
+        "End iteration in normal mode. Send PFB to display driver..."
+    );
 
     __arm_2d_helper_low_level_rendering(ptThis);
     
@@ -1742,8 +1911,7 @@ ARM_PT_BEGIN(this.Adapter.chPT)
             HELPER_PFB, 
             0, 
             "PFB TASK", 
-            "Get a PFB [%p]",
-            this.Adapter.ptFrameBuffer
+            "Get a PFB"
         );
 
     ARM_PT_ENTRY()
@@ -1909,7 +2077,7 @@ ARM_PT_END()
         HELPER_PFB, 
         0, 
         "PFB TASK", 
-        "Drawing frame complete."
+        "Drawing frame complete.\r\n\r\n"
     );
 
     return arm_fsm_rt_cpl;
