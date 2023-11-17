@@ -413,7 +413,6 @@ void arm_lcd_puts(const char *str)
 
 #if defined(__IS_COMPILER_IAR__) && __IS_COMPILER_IAR__
 #define __va_list    va_list
-
 #endif
 
 int arm_lcd_printf(const char *format, ...)

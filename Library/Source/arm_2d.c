@@ -35,6 +35,8 @@
 #include "arm_2d.h"
 #include "__arm_2d_impl.h"
 #include <stdlib.h>
+#include <stdarg.h>
+#include <stdio.h>
 
 #define __ARM_2D_COMPILATION_UNIT
 #include "../Source/__arm_2d_core.c"
@@ -77,6 +79,10 @@ extern "C" {
  equal to 4, set it to the default value 4.
 #   undef __ARM_2D_CFG_DEFAULT_SUB_TASK_POOL_SIZE__
 #   define __ARM_2D_CFG_DEFAULT_SUB_TASK_POOL_SIZE__          4
+#endif
+
+#if defined(__IS_COMPILER_IAR__) && __IS_COMPILER_IAR__
+#define __va_list    va_list
 #endif
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
@@ -177,6 +183,90 @@ void *__arm_2d_allocate_scratch_memory( uint32_t wSize,
     return pBuff;
 }
 
+__WEAK
+void __arm_2d_free_scratch_memory( arm_2d_mem_type_t tType,
+                                   void *pBuff)
+{
+    ARM_2D_UNUSED(tType);
+
+    free(pBuff);
+}
+
+
+typedef union arm_2d_log_chn_t {
+    struct {
+        uint32_t        u28ChannelMask  : 28;
+        uint32_t        u4Type          : 4; 
+    };
+    uint32_t wValue;
+} arm_2d_log_chn_t;
+
+
+__WEAK
+void __arm_2d_log_printf(int32_t nIndentLevel, 
+                         uint32_t wChannelMask,
+                         const char *pchPrefix,
+                         const char *pchFormatString,
+                         ...)
+{
+    arm_2d_log_chn_t tChannelInfo = {
+        .wValue = wChannelMask,
+    };
+
+    if (!(__ARM_2D_LOG_CHANNEL_MASK_FILTER__ & wChannelMask)) {
+        return ;
+    }
+
+    uint32_t wMask = _BV(27);
+
+    for (int32_t i = 0; i < 4; i++) {
+        wMask <<= 1;
+        if (!(wMask & wChannelMask)) {
+            continue;
+        }
+
+        /* start a new line */
+        __ARM_2D_PORT_PRINTF__("\r\n");
+
+        for (int32_t n = 0; n < nIndentLevel; n++) {
+            __ARM_2D_PORT_PRINTF__("\t");
+        }
+
+        if          (ARM_2D_LOG_CHN_TYPE_USER       == wMask) {
+            __ARM_2D_PORT_PRINTF__("[USER]");
+        } else if   (ARM_2D_LOG_CHN_TYPE_INFO       == wMask) {
+            __ARM_2D_PORT_PRINTF__("[INFO]");
+        } else if   (ARM_2D_LOG_CHN_TYPE_WARNING    == wMask) {
+            __ARM_2D_PORT_PRINTF__("[WARNING]");
+        } else if   (ARM_2D_LOG_CHN_TYPE_ERROR      == wMask) {
+            __ARM_2D_PORT_PRINTF__("[ERROR]");
+        }
+
+        if (NULL != pchPrefix && strnlen(pchPrefix, 256) > 0) {
+            __ARM_2D_PORT_PRINTF__("[%s]", pchPrefix);
+        }
+
+        int real_size;
+        char *pchStringBuffer = __arm_2d_allocate_scratch_memory(__ARM_2D_LOG_MAX_STRING_LEN__, 1, ARM_2D_MEM_TYPE_FAST);
+        
+        if (NULL != pchStringBuffer) {
+            __va_list ap;
+            va_start(ap, pchFormatString);
+                real_size = vsnprintf(pchStringBuffer, __ARM_2D_LOG_MAX_STRING_LEN__-1, pchFormatString, ap);
+            va_end(ap);
+            real_size = MIN(__ARM_2D_LOG_MAX_STRING_LEN__-1, real_size);
+            pchStringBuffer[real_size] = '\0';
+
+            __ARM_2D_PORT_PRINTF__("%s", pchStringBuffer);
+
+            free(pchStringBuffer);
+        } else {
+            __ARM_2D_PORT_PRINTF__("[Insufficient memory for logging]%s", pchFormatString);
+        }
+    }
+
+}
+
 
 __WEAK
 arm_2d_op_core_t *arm_2d_op_init(arm_2d_op_core_t *ptOP, size_t tSize)
@@ -184,7 +274,7 @@ arm_2d_op_core_t *arm_2d_op_init(arm_2d_op_core_t *ptOP, size_t tSize)
     if (NULL != ptOP) {
         memset(ptOP, 0, MAX(tSize, sizeof(arm_2d_op_core_t)));
     }
-    
+
     return ptOP;
 }
 
@@ -192,6 +282,7 @@ __WEAK
 arm_2d_op_core_t *arm_2d_op_depose(arm_2d_op_core_t *ptOP, size_t tSize)
 {
     ARM_2D_UNUSED(tSize);
+
     return ptOP;
 }
 

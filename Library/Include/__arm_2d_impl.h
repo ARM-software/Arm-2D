@@ -593,6 +593,10 @@ void *__arm_2d_allocate_scratch_memory( uint32_t wSize,
                                         uint_fast8_t nAlign,
                                         arm_2d_mem_type_t tType);
 
+extern
+void __arm_2d_free_scratch_memory( arm_2d_mem_type_t tType,
+                                   void *pBuff);
+
 /*----------------------------------------------------------------------------*
  * Default Software Implementations                                           *
  *----------------------------------------------------------------------------*/

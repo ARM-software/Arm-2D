@@ -21,8 +21,8 @@
  * Title:        arm_2d_utils.h
  * Description:  Public header file for Arm-2D Library
  *
- * $Date:        25. Aug 2023
- * $Revision:    V.1.3.0
+ * $Date:        17. Nov 2023
+ * $Revision:    V.1.4.0
  *
  * -------------------------------------------------------------------- */
 
@@ -989,6 +989,175 @@ const __arm_2d_low_level_io_t LOW_LEVEL_IO##__NAME = {                          
  */
 #define ref_low_lv_io(__NAME)       __ref_low_lv_io(__NAME)
 
+/*----------------------------------------------------------------------------*
+ * LOG                                                                        *
+ *----------------------------------------------------------------------------*/
+
+/*!
+ * \brief the bit-mask for log channels
+ */
+#define ARM_2D_LOG_CHN_TYPE_USER                            _BV(28)             //!< the channel for user messages
+#define ARM_2D_LOG_CHN_TYPE_INFO                            _BV(29)             //!< the channel for generic information
+#define ARM_2D_LOG_CHN_TYPE_WARNING                         _BV(30)             //!< the channel for warnings messages
+#define ARM_2D_LOG_CHN_TYPE_ERROR                           _BV(31)             //!< the channel for error messages
+
+#define ARM_2D_LOG_CHN_PIPELINE                             _BV(0)              //!< the channel dedicated to the pixel-pipeline
+#define ARM_2D_LOG_CHN_OPCODE                               _BV(1)              //!< the channel dedicated to OPCODEs and related algorithms
+#define ARM_2D_LOG_CHN_HELPER                               _BV(2)              //!< the channel dedicated to Helper services
+#define ARM_2D_LOG_CHN_HELPER_PFB                           _BV(3)              //!< the channel dedicated to the PFB helper service
+#define ARM_2D_LOG_CHN_SCENE_PLAYER                         _BV(4)              //!< the channel dedicated to the scene player service
+#define ARM_2D_LOG_CHN_DIRTY_REGION_OPTIMISATION            _BV(5)              //!< the channel dedicated to the dirty region optimization services
+#define ARM_2D_LOG_CHN_APP                                  _BV(24)             //!< the channel dedicated to applications and examples
+
+
+/*!
+ * \brief the filter to enable log channels
+ */
+#ifndef __ARM_2D_LOG_CHANNEL_MASK_FILTER__
+#   define __ARM_2D_LOG_CHANNEL_MASK_FILTER__               0xFFFFFFFF
+#endif
+
+#ifndef __ARM_2D_LOG_PRINTF_PIPELINE
+
+/*!
+ * \brief the log printf entry dedicated to pixel pipeline
+ */
+#   define __ARM_2D_LOG_PRINTF_PIPELINE         __arm_2d_log_printf
+#endif
+
+#ifndef __ARM_2D_LOG_PRINTF_OPCODE
+/*!
+ * \brief the log printf entry dedicated to OPCODEs and related algorithms
+ */
+#   define __ARM_2D_LOG_PRINTF_OPCODE           __arm_2d_log_printf
+#endif
+
+#ifndef __ARM_2D_LOG_PRINTF_HELPER
+/*!
+ * \brief the log printf entry dedicated to Helper services
+ */
+#   define __ARM_2D_LOG_PRINTF_HELPER           __arm_2d_log_printf
+#endif
+
+#ifndef __ARM_2D_LOG_PRINTF_HELPER_PFB
+/*!
+ * \brief the log printf entry dedicated to the PFB helper service
+ */
+#   define __ARM_2D_LOG_PRINTF_HELPER_PFB       __arm_2d_log_printf
+#endif
+
+#ifndef __ARM_2D_LOG_PRINTF_SCENE_PLAYER
+/*!
+ * \brief the log printf entry dedicated to the scene player service
+ */
+#   define __ARM_2D_LOG_PRINTF_SCENE_PLAYER     __arm_2d_log_printf
+#endif
+
+#ifndef __ARM_2D_LOG_PRINTF_DIRTY_REGION_OPTIMISATION
+/*!
+ * \brief the log printf entry dedicated to the dirty region optimization service
+ */
+#   define __ARM_2D_LOG_PRINTF_DIRTY_REGION_OPTIMISATION                        \
+                                                __arm_2d_log_printf
+#endif
+
+#ifndef __ARM_2D_LOG_PRINTF_APP
+/*!
+ * \brief the log printf entry dedicated to applications and examples
+ */
+#   define __ARM_2D_LOG_PRINTF_APP              __arm_2d_log_printf
+#endif
+
+#if defined(__ARM_2D_CFG_ENABLE_LOG__) && __ARM_2D_CFG_ENABLE_LOG__
+/*!
+ * \brief the log entry for generic information
+ * \param[in] __CHN the channel name, e.g. PIPELINE, OPCODE, HELPER, HELPER_PFB etc.
+ * \param[in] __INDENT number of indents before print actual content
+ * \param[in] __PREFIX a string used as prefix, we can use it to print content
+ *                      like function name, service name etc. 
+ * \param[in] __FORMAT_STR the format string used in printf
+ * \param[in] ... the optional parameters
+ */
+#   define ARM_2D_LOG_INFO(__CHN, __INDENT, __PREFIX, __FORMAT_STR, ...)        \
+            __ARM_2D_LOG_PRINTF_##__CHN(                                        \
+                (__INDENT),                                                     \
+                (ARM_2D_LOG_CHN_TYPE_INFO | ARM_2D_LOG_CHN_##__CHN),            \
+                (__PREFIX),                                                     \
+                (__FORMAT_STR),##__VA_ARGS__)
+
+/*!
+ * \brief the log entry for warning messages
+ * \param[in] __CHN the channel name, e.g. PIPELINE, OPCODE, HELPER, HELPER_PFB etc.
+ * \param[in] __INDENT number of indents before print actual content
+ * \param[in] __PREFIX a string used as prefix, we can use it to print content
+ *                      like function name, service name etc. 
+ * \param[in] __FORMAT_STR the format string used in printf
+ * \param[in] ... the optional parameters
+ */
+#   define ARM_2D_LOG_WARNING(__CHN, __INDENT, __PREFIX, __FORMAT_STR, ...)     \
+            __ARM_2D_LOG_PRINTF_##__CHN(                                        \
+                (__INDENT),                                                     \
+                (ARM_2D_LOG_CHN_TYPE_WARNING | ARM_2D_LOG_CHN_##__CHN),         \
+                (__PREFIX),                                                     \
+                (__FORMAT_STR),##__VA_ARGS__)
+
+/*!
+ * \brief the log entry for error messages
+ * \param[in] __CHN the channel name, e.g. PIPELINE, OPCODE, HELPER, HELPER_PFB etc.
+ * \param[in] __INDENT number of indents before print actual content
+ * \param[in] __PREFIX a string used as prefix, we can use it to print content
+ *                      like function name, service name etc. 
+ * \param[in] __FORMAT_STR the format string used in printf
+ * \param[in] ... the optional parameters
+ */
+#   define ARM_2D_LOG_ERROR(__CHN, __INDENT, __PREFIX, __FORMAT_STR, ...)       \
+            __ARM_2D_LOG_PRINTF_##__CHN(                                        \
+                (__INDENT),                                                     \
+                (ARM_2D_LOG_CHN_TYPE_ERROR | ARM_2D_LOG_CHN_##__CHN),           \
+                (__PREFIX),                                                     \
+                (__FORMAT_STR),##__VA_ARGS__)
+
+/*!
+ * \brief the log entry for user messages
+ * \param[in] __CHN the channel name, e.g. PIPELINE, OPCODE, HELPER, HELPER_PFB etc.
+ * \param[in] __INDENT number of indents before print actual content
+ * \param[in] __PREFIX a string used as prefix, we can use it to print content
+ *                      like function name, service name etc. 
+ * \param[in] __FORMAT_STR the format string used in printf
+ * \param[in] ... the optional parameters
+ */
+#   define ARM_2D_LOG_USER(__CHN, __INDENT, __PREFIX, __FORMAT_STR, ...)        \
+            __ARM_2D_LOG_PRINTF_##__CHN(                                        \
+                (__INDENT),                                                     \
+                (ARM_2D_LOG_CHN_TYPE_USER | ARM_2D_LOG_CHN_##__CHN),            \
+                (__PREFIX),                                                     \
+                (__FORMAT_STR),##__VA_ARGS__)
+
+#else
+#   define ARM_2D_LOG_INFO(__CHN, __INDENT, __PREFIX, __FORMAT_STR, ...)
+#   define ARM_2D_LOG_WARNING(__CHN, __INDENT, __PREFIX, __FORMAT_STR, ...)
+#   define ARM_2D_LOG_ERROR(__CHN, __INDENT, __PREFIX, __FORMAT_STR, ...)
+#   define ARM_2D_LOG_USER(__CHN, __INDENT, __PREFIX, __FORMAT_STR, ...)
+#endif
+
+
+#ifndef __ARM_2D_PORT_PRINTF__
+/*!
+ * \brief the low level entry for printf
+ * \note you can define this macro for retargeting
+ */
+#   define __ARM_2D_PORT_PRINTF__(__format, ...)   printf((__format), ##__VA_ARGS__)
+#endif
+
+#ifndef __ARM_2D_LOG_MAX_STRING_LEN__
+/*!
+ * \brief the maximum allowed string length. The log service requests the specified 
+ *        number of bytes for storing string. default value is 256
+ * \note please make sure there are sufficient memory in HEAP.
+ */
+#   define __ARM_2D_LOG_MAX_STRING_LEN__        256
+#endif
+
 /*============================ TYPES =========================================*/
 
 /*!
@@ -1005,6 +1174,23 @@ struct __arm_slist_node_t {
 
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
+
+/*!
+ * \brief an entry for log printf
+ * \param[in] nIndentLevel number of indents before print actual content
+ * \param[in] wChannelMask a bit-mask to indicate the log channel
+ * \param[in] pchPrefix a string used as prefix, we can use it to print content
+ *                      like function name, service name etc.
+ * \param[in] pchFormatString the format string used in printf
+ * \param[in] ... the optional parameters
+ */
+extern
+void __arm_2d_log_printf(int32_t nIndentLevel, 
+                         uint32_t wChannelMask,
+                         const char *pchPrefix,
+                         const char *pchFormatString,
+                         ...);
+
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

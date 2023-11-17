@@ -13,7 +13,18 @@
 			"arm_2d_helper.h": "c",
 			"arm_2d_helper_pfb.h": "c",
 			"compare": "c",
-			"cstdint": "c"
+			"cstdint": "c",
+			"__locale": "c",
+			"atomic": "c",
+			"bit": "c",
+			"cstddef": "c",
+			"ios": "c",
+			"limits": "c",
+			"locale": "c",
+			"memory": "c",
+			"new": "c",
+			"string": "c",
+			"type_traits": "c"
 		}
 	}
 }
