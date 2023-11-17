@@ -1005,7 +1005,7 @@ label_start_process_candidate:
                         tEnclosureArea.tSize.iHeight
                     );
 
-                    if (wPixelsRegionEnclosure < wCandidatePixelCount + wWorkingItemPixelCount) {
+                    if (wPixelsRegionEnclosure <= wCandidatePixelCount + wWorkingItemPixelCount) {
                         /* we only refresh the enclosure region to save time */
                         
                         ARM_2D_LOG_INFO(
