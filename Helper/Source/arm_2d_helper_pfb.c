@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        15. Nov 2023
- * $Revision:    V.1.7.0
+ * $Date:        17. Nov 2023
+ * $Revision:    V.1.7.1-dev
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -627,6 +627,8 @@ static void __arm_2d_helper_dirty_region_pool_free(
         /* PUSH item to the pool in STACK-style */
         ptItem->ptInternalNext = this.Adapter.OptimizedDirtyRegions.ptFreeList;
         this.Adapter.OptimizedDirtyRegions.ptFreeList = ptItem;
+        this.Adapter.OptimizedDirtyRegions.iFreeCount++;
+        assert(this.Adapter.OptimizedDirtyRegions.iFreeCount > 0);
     }
 }
 
@@ -644,6 +646,8 @@ arm_2d_region_list_item_t *__arm_2d_helper_dirty_region_pool_new(
         if (NULL != ptItem) {
             /* POP a dirty region item from the free list in STACK-style */
             this.Adapter.OptimizedDirtyRegions.ptFreeList = ptItem->ptInternalNext;
+            this.Adapter.OptimizedDirtyRegions.iFreeCount--;
+            assert(this.Adapter.OptimizedDirtyRegions.iFreeCount >= 0);
         }
     }
 
@@ -912,7 +916,7 @@ static
 arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                                     arm_2d_helper_pfb_t *ptThis,
                                     arm_2d_region_list_item_t *ptDirtyRegions)
-{ 
+{
     if (this.Adapter.bIsDryRun) {
         /* 
          * NOTE: If this is a dry run, no need to allocate PFB again.
@@ -937,6 +941,22 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
             }
         }
 
+        if (NULL == this.Adapter.ptCurrent) {
+             arm_irq_safe {
+                /* allocating pfb only when the number of free PFB blocks is larger than
+                * the reserved threashold
+                */
+                if (this.Adapter.chFreePFBCount > this.tCFG.FrameBuffer.u4PoolReserve) {
+                    this.Adapter.ptCurrent = __arm_2d_helper_pfb_new(ptThis);
+                }
+            }
+            
+            if (NULL == this.Adapter.ptCurrent) {
+                // no resource left
+                return NULL;
+            }
+        }
+
     } else {
         this.Adapter.ptCurrent = NULL;
         arm_irq_safe {
@@ -954,6 +974,8 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
         }
         this.Adapter.ptCurrent->bIsNewFrame = this.Adapter.bFirstIteration;
     }
+
+    assert(NULL != this.Adapter.ptCurrent);
 
     arm_2d_tile_t *ptPartialFrameBuffer = &(this.Adapter.ptCurrent->tTile);
 
@@ -973,11 +995,15 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                 * */
                 this.Adapter.bFirstIteration = false;       
                 this.Adapter.ptDirtyRegion = NULL;          /* refresh the whole screen */
+
+                
             } else {
                 /* Use the optimized dirty region working list for refresh
                  */
+                assert(NULL != this.Adapter.OptimizedDirtyRegions.ptWorkingList);
                 this.Adapter.ptDirtyRegion = this.Adapter.OptimizedDirtyRegions.ptWorkingList;
-                this.Adapter.bIsUsingOptimizedDirtyRegionList = true;
+                
+                this.Adapter.bIsUsingOptimizedDirtyRegionList = (NULL != this.Adapter.ptDirtyRegion);
             }
         } else {
             this.Adapter.ptDirtyRegion = ptDirtyRegions;
@@ -1214,7 +1240,7 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
     if (this.Adapter.bIsDirtyRegionOptimizationEnabled) {
 
         /* check whether we need a dry run */
-        if (this.Adapter.bFirstIteration && NULL != this.Adapter.ptDirtyRegion) {
+        if (this.Adapter.bFirstIteration && NULL != ptDirtyRegions) {
             if (!this.Adapter.bIsDryRun) {
                 this.Adapter.bIsDryRun = true;
             } else {
@@ -1248,12 +1274,14 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                                         ptThis, 
                                         this.Adapter.ptDirtyRegion,
                                         this.Adapter.bEncounterDynamicDirtyRegion);
+                /* reset flag */
+                this.Adapter.bEncounterDynamicDirtyRegion = false;
             }
 
         }
     } else {
         /* check whether we need a dry run */
-        if (this.Adapter.bFirstIteration && NULL != this.Adapter.ptDirtyRegion) {
+        if (this.Adapter.bFirstIteration && NULL != ptDirtyRegions) {
             this.Adapter.bIsDryRun = true;
 
             /* if the dirty region list isn't empty, to support the services that
