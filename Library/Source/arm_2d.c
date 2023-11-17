@@ -235,7 +235,11 @@ void __arm_2d_log_printf(int32_t nIndentLevel,
         if          (ARM_2D_LOG_CHN_TYPE_USER       == wMask) {
             __ARM_2D_PORT_PRINTF__("[USER]");
         } else if   (ARM_2D_LOG_CHN_TYPE_INFO       == wMask) {
+        #if defined(__ARM_2D_CFG_LOG_OUTPUT_SUPPORT_COLOUR__) && __ARM_2D_CFG_LOG_OUTPUT_SUPPORT_COLOUR__
             __ARM_2D_PORT_PRINTF__(ARM_2D_TERMINAL_COLOUR_BRIGHT_BLACK "[INFO]" ARM_2D_TERMINAL_COLOUR_DEFAULT);
+        #else
+            __ARM_2D_PORT_PRINTF__("      ");
+        #endif
         } else if   (ARM_2D_LOG_CHN_TYPE_WARNING    == wMask) {
             __ARM_2D_PORT_PRINTF__(ARM_2D_TERMINAL_COLOUR_YELLOW "[WARNING]" ARM_2D_TERMINAL_COLOUR_DEFAULT);
         } else if   (ARM_2D_LOG_CHN_TYPE_ERROR      == wMask) {
