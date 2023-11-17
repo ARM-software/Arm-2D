@@ -1010,6 +1010,22 @@ const __arm_2d_low_level_io_t LOW_LEVEL_IO##__NAME = {                          
 #define ARM_2D_LOG_CHN_APP                                  _BV(24)             //!< the channel dedicated to applications and examples
 
 
+#if defined(__ARM_2D_CFG_LOG_OUTPUT_SUPPORT_COLOUR__) && __ARM_2D_CFG_LOG_OUTPUT_SUPPORT_COLOUR__
+#   define ARM_2D_TERMINAL_COLOUR_DEFAULT          "\x1b[0m"
+#   define ARM_2D_TERMINAL_COLOUR_GREEN            "\x1b[32m"
+#   define ARM_2D_TERMINAL_COLOUR_RED              "\x1b[31m"
+#   define ARM_2D_TERMINAL_COLOUR_YELLOW           "\x1b[33m"
+#   define ARM_2D_TERMINAL_COLOUR_WHITE            "\x1b[97m"
+#   define ARM_2D_TERMINAL_COLOUR_BRIGHT_BLACK     "\x1b[90m"  
+#else
+#   define ARM_2D_TERMINAL_COLOUR_DEFAULT
+#   define ARM_2D_TERMINAL_COLOUR_GREEN
+#   define ARM_2D_TERMINAL_COLOUR_RED
+#   define ARM_2D_TERMINAL_COLOUR_YELLOW
+#   define ARM_2D_TERMINAL_COLOUR_WHITE
+#   define ARM_2D_TERMINAL_COLOUR_BRIGHT_BLACK
+#endif
+
 /*!
  * \brief the filter to enable log channels
  */

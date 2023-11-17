@@ -66,6 +66,12 @@ extern "C" {
 #   define __ARM_2D_CFG_ENABLE_LOG__                                0
 #endif
 
+// <q>The terminal support colour
+// <i> The terminal is compatible with VT100 and support colour display. This feature is disabled by default.
+#ifndef __ARM_2D_CFG_LOG_OUTPUT_SUPPORT_COLOUR__
+#   define __ARM_2D_CFG_LOG_OUTPUT_SUPPORT_COLOUR__                 0
+#endif
+
 // <o>The maximum length of log string <64-65535>
 // <i> The number of bytes requested from heap during log output
 // <i> Default: 256
