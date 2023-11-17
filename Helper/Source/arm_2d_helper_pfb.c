@@ -630,6 +630,13 @@ static void __arm_2d_helper_dirty_region_pool_free(
         this.Adapter.OptimizedDirtyRegions.iFreeCount++;
         assert(this.Adapter.OptimizedDirtyRegions.iFreeCount > 0);
     }
+
+    ARM_2D_LOG_INFO(DIRTY_REGION_OPTIMISATION, 
+                2, 
+                "Dirty Region Pool", 
+                "Free Dirty Region Item [%p], %d items available", 
+                (void *)ptItem,
+                this.Adapter.OptimizedDirtyRegions.iFreeCount);
 }
 
 ARM_NONNULL(1)
@@ -654,6 +661,21 @@ arm_2d_region_list_item_t *__arm_2d_helper_dirty_region_pool_new(
     if (NULL != ptItem) {
         memset(ptItem, 0, sizeof(arm_2d_region_list_item_t));
         ptItem->bFromInternalPool = true;
+
+        ARM_2D_LOG_INFO(
+            DIRTY_REGION_OPTIMISATION, 
+            2, 
+            "Dirty Region Pool", 
+            "Allocate a new dirty region item [%p], %d item left", 
+            (void *)ptItem,
+            this.Adapter.OptimizedDirtyRegions.iFreeCount);
+    } else {
+        ARM_2D_LOG_INFO(
+            DIRTY_REGION_OPTIMISATION, 
+            2, 
+            "Dirty Region Pool", 
+            "Failed to allocate dirty region item", 
+            (void *)ptItem);
     }
 
     return ptItem;
@@ -753,9 +775,27 @@ void __arm_2d_helper_update_dirty_region_working_list(
         arm_2d_region_list_item_t *ptDirtyRegion = ptItem;
 
         if (bEncounterDynamicDirtyRegion) {
+
+            ARM_2D_LOG_INFO(
+                DIRTY_REGION_OPTIMISATION, 
+                1, 
+                "UPDATE_WORKING_LIST", 
+                "Encounter Dynamic Dirty Region [%p]", 
+                (void *)ptItem
+            );
+
             ptDirtyRegion = __arm_2d_helper_dirty_region_pool_new(ptThis);
             if (NULL == ptDirtyRegion) {
                 this.Adapter.bFailedToOptimizeDirtyRegion = true;
+
+                ARM_2D_LOG_WARNING(
+                    DIRTY_REGION_OPTIMISATION, 
+                    1, 
+                    "UPDATE_WORKING_LIST", 
+                    "Failed to allocate dirty region item for dynamic dirty region [%p]", 
+                    (void *)ptItem
+                );
+
             } else {
                 ptDirtyRegion->tRegion = ptItem->tRegion;
             }
@@ -784,11 +824,37 @@ label_start_process_candidate:
             arm_2d_region_list_item_t *ptWorking
                 = this.Adapter.OptimizedDirtyRegions.ptWorkingList;
 
+            ARM_2D_LOG_INFO(
+                DIRTY_REGION_OPTIMISATION, 
+                1, 
+                "UPDATE_WORKING_LIST", 
+                "Get one candidate [%p], x:%d y:%d w:%d h:%d", 
+                (void *)ptCandidate,
+                ptCandidate->tRegion.tLocation.iX,
+                ptCandidate->tRegion.tLocation.iY,
+                ptCandidate->tRegion.tSize.iWidth,
+                ptCandidate->tRegion.tSize.iHeight
+            );
+
+
             uint32_t wCandidatePixelCount = ptCandidate->tRegion.tSize.iHeight
                                             * ptCandidate->tRegion.tSize.iWidth;
             while(NULL != ptWorking) {
                 arm_2d_region_list_item_t *ptNextWorking = ptWorking->ptInternalNext;
                 arm_2d_region_t tOverlapArea, tEnclosureArea;
+
+
+                ARM_2D_LOG_INFO(
+                    DIRTY_REGION_OPTIMISATION, 
+                    2, 
+                    "UPDATE_WORKING_LIST", 
+                    "Try an exiting dirty region in working list [%p], x:%d y:%d w:%d h:%d", 
+                    (void *)ptWorking,
+                    ptWorking->tRegion.tLocation.iX,
+                    ptWorking->tRegion.tLocation.iY,
+                    ptWorking->tRegion.tSize.iWidth,
+                    ptWorking->tRegion.tSize.iHeight
+                );
 
                 int_fast8_t chResult = arm_2d_is_region_inside_target(&ptCandidate->tRegion,
                                                                       &ptWorking->tRegion);
@@ -797,6 +863,16 @@ label_start_process_candidate:
                     /* the candidate is inside the working region,
                      * remove the candidate from the list 
                      */
+
+                    ARM_2D_LOG_INFO(
+                        DIRTY_REGION_OPTIMISATION, 
+                        3, 
+                        "UPDATE_WORKING_LIST", 
+                        "The candidate [%p] is inside the working region [%p], drop it directly", 
+                        (void *)ptCandidate,
+                        (void *)ptWorking
+                    );
+
                     __arm_2d_helper_remove_item_from_weighted_dirty_region_list(
                         &this.Adapter.OptimizedDirtyRegions.ptCandidateList,
                         ptCandidate
@@ -807,6 +883,16 @@ label_start_process_candidate:
                     goto label_move_to_next_candidate;
                 } else if (-1 == chResult) {
                     /* remove the working item from the list */
+
+                    ARM_2D_LOG_INFO(
+                        DIRTY_REGION_OPTIMISATION, 
+                        3, 
+                        "UPDATE_WORKING_LIST", 
+                        "The working region [%p] is inside the candidate region [%p], remove the working region from the working list", 
+                        (void *)ptWorking, 
+                        (void *)ptCandidate
+                    );
+
                     __arm_2d_helper_remove_item_from_weighted_dirty_region_list(
                         &this.Adapter.OptimizedDirtyRegions.ptWorkingList,
                         ptWorking
@@ -829,9 +915,30 @@ label_start_process_candidate:
                     uint32_t wPixelsRegionEnclosure = tEnclosureArea.tSize.iHeight
                                                     * tEnclosureArea.tSize.iWidth;
 
+
+                    ARM_2D_LOG_INFO(
+                        DIRTY_REGION_OPTIMISATION, 
+                        3, 
+                        "UPDATE_WORKING_LIST", 
+                        "The candidate overlaps with the working one, get the minimal enclosure region x=%d y%d w=%d h=%d", 
+                        tEnclosureArea.tLocation.iX,
+                        tEnclosureArea.tLocation.iY,
+                        tEnclosureArea.tSize.iWidth,
+                        tEnclosureArea.tSize.iHeight
+                    );
+
                     if (wPixelsRegionEnclosure < wCandidatePixelCount + wWorkingItemPixelCount) {
                         /* we only refresh the enclosure region to save time */
                         
+                        ARM_2D_LOG_INFO(
+                            DIRTY_REGION_OPTIMISATION, 
+                            4, 
+                            "UPDATE_WORKING_LIST", 
+                            "Use the minimal enclosure region and free the candidates[%p] and working one [%p]", 
+                            (void *)ptCandidate,
+                            (void *)ptWorking
+                        );
+
                         /* remove the working item from the list */
                         __arm_2d_helper_remove_item_from_weighted_dirty_region_list(
                             &this.Adapter.OptimizedDirtyRegions.ptWorkingList,
@@ -862,6 +969,14 @@ label_start_process_candidate:
                             ptDirtyRegion
                         );
 
+                        ARM_2D_LOG_INFO(
+                            DIRTY_REGION_OPTIMISATION, 
+                            4, 
+                            "UPDATE_WORKING_LIST", 
+                            "Generate a new candidate[%p] with the enclosure region and add it to the candidate list", 
+                            (void *)ptDirtyRegion
+                        );
+
                         /* re-start processing candidate list from the beginning */
                         goto label_start_process_candidate;
                     }
@@ -889,6 +1004,14 @@ label_start_process_candidate:
                 ptCandidate
             );
 
+            ARM_2D_LOG_INFO(
+                DIRTY_REGION_OPTIMISATION, 
+                1, 
+                "UPDATE_WORKING_LIST", 
+                "Add the candidate[%p] to the working list", 
+                (void *)ptCandidate
+            );
+
 label_move_to_next_candidate:
             /* process next candidate */
             ptCandidate = ptNextCandiate;
@@ -898,6 +1021,13 @@ label_move_to_next_candidate:
             break;  /* all candidates are processed */
         }
     } while(true);
+
+    ARM_2D_LOG_INFO(
+        DIRTY_REGION_OPTIMISATION, 
+        1, 
+        "UPDATE_WORKING_LIST", 
+        "All candidates are processed."
+    );
 
 }
 
@@ -942,6 +1072,13 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
         }
 
         if (NULL == this.Adapter.ptCurrent) {
+            ARM_2D_LOG_WARNING(
+                HELPER_PFB, 
+                1, 
+                "Iteration Begin", 
+                "In the dry run, ptCurrent is set to NULL"
+            );
+
              arm_irq_safe {
                 /* allocating pfb only when the number of free PFB blocks is larger than
                 * the reserved threashold
@@ -1501,6 +1638,13 @@ ARM_PT_BEGIN(this.Adapter.chPT)
     }
 #endif
 
+    ARM_2D_LOG_INFO(
+        HELPER_PFB, 
+        0, 
+        "PFB TASK", 
+        "Start a new frame.."
+    );
+
     this.Statistics.nTotalCycle = 0;
     this.Statistics.nRenderingCycle = 0;
     this.Adapter.bIsNewFrame = true;
@@ -1547,12 +1691,24 @@ ARM_PT_BEGIN(this.Adapter.chPT)
              *         concept of (full) frame per sec.              
              */
         
+            ARM_2D_LOG_INFO(
+                HELPER_PFB, 
+                0, 
+                "PFB TASK", 
+                "Iteration Begin, request a PFB..."
+            );
             // request to draw the whole LCD
             this.Adapter.ptFrameBuffer = 
                 __arm_2d_helper_pfb_drawing_iteration_begin( 
                                                         ptThis, 
                                                         ptDirtyRegions);
             if (NULL == this.Adapter.ptFrameBuffer) {
+                ARM_2D_LOG_INFO(
+                    HELPER_PFB, 
+                    0, 
+                    "PFB TASK", 
+                    "No PFB is available, waiting..."
+                );
                 if (NULL != this.tCFG.Dependency.evtOnLowLevelSyncUp.fnHandler){
                      // wait until lcd is ready
                     (*this.tCFG.Dependency.evtOnLowLevelSyncUp.fnHandler)(
@@ -1565,6 +1721,14 @@ ARM_PT_BEGIN(this.Adapter.chPT)
                 continue;
             } else if (-1 == (intptr_t)this.Adapter.ptFrameBuffer) {
                 /* display driver wants to end the drawing */
+
+                ARM_2D_LOG_INFO(
+                    HELPER_PFB, 
+                    0, 
+                    "PFB TASK", 
+                    "End the frame drawing."
+                );
+
                 goto label_pfb_task_rt_cpl;
             }
         } while(NULL == this.Adapter.ptFrameBuffer);
@@ -1574,8 +1738,25 @@ ARM_PT_BEGIN(this.Adapter.chPT)
             += __arm_2d_helper_perf_counter_stop(&this.Statistics.lTimestamp,
                                                  ARM_2D_PERFC_DRIVER);
 
+        ARM_2D_LOG_INFO(
+            HELPER_PFB, 
+            0, 
+            "PFB TASK", 
+            "Get a PFB [%p]",
+            this.Adapter.ptFrameBuffer
+        );
+
     ARM_PT_ENTRY()
         
+        ARM_2D_LOG_INFO(
+            HELPER_PFB, 
+            0, 
+            "PFB TASK", 
+            "Call on-drawing-event-handler [%p]( user-obj: %p)",
+            this.tCFG.Dependency.evtOnDrawing.fnHandler,
+            this.tCFG.Dependency.evtOnDrawing.pTarget
+        );
+
         __arm_2d_helper_perf_counter_start( &this.Statistics.lTimestamp,
                                             ARM_2D_PERFC_RENDER); 
         /* draw all the gui elements on target frame buffer */
@@ -1590,6 +1771,14 @@ ARM_PT_BEGIN(this.Adapter.chPT)
         this.Statistics.nTotalCycle += 
             __arm_2d_helper_perf_counter_stop(  &this.Statistics.lTimestamp,
                                                 ARM_2D_PERFC_RENDER); 
+
+        ARM_2D_LOG_INFO(
+            HELPER_PFB, 
+            0, 
+            "PFB TASK", 
+            "on-drawing-event-handler return [%d]",
+            tResult
+        );
 
         if (arm_fsm_rt_on_going == tResult) {
     ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_on_going)
@@ -1609,6 +1798,15 @@ ARM_PT_BEGIN(this.Adapter.chPT)
             __arm_2d_helper_perf_counter_start( &this.Statistics.lTimestamp,
                                                 ARM_2D_PERFC_RENDER); 
 
+            ARM_2D_LOG_INFO(
+                HELPER_PFB, 
+                0, 
+                "PFB TASK", 
+                "draw navigation layer [%p]( user-obj: %p)",
+                this.tCFG.Dependency.Navigation.evtOnDrawing.fnHandler,
+                this.tCFG.Dependency.Navigation.evtOnDrawing.pTarget
+            );
+
             tResult = this.tCFG.Dependency.Navigation.evtOnDrawing.fnHandler(
                     this.tCFG.Dependency.Navigation.evtOnDrawing.pTarget,
                     this.Adapter.ptFrameBuffer,
@@ -1619,6 +1817,14 @@ ARM_PT_BEGIN(this.Adapter.chPT)
                 __arm_2d_helper_perf_counter_stop(
                                                 &this.Statistics.lTimestamp,
                                                 ARM_2D_PERFC_RENDER); 
+
+            ARM_2D_LOG_INFO(
+                HELPER_PFB, 
+                0, 
+                "PFB TASK", 
+                "draw navigation layer return [%d]",
+                tResult
+            );
 
         if (arm_fsm_rt_on_going == tResult) {
         ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_on_going)
@@ -1677,6 +1883,13 @@ label_pfb_task_rt_cpl:
 ARM_PT_END()
 
     if (this.Adapter.bIsDirtyRegionOptimizationEnabled) {
+        ARM_2D_LOG_INFO(
+            DIRTY_REGION_OPTIMISATION, 
+            0, 
+            "PFB TASK", 
+            "Free the working list and the candidate list."
+        );
+
         /* free working list */
         __arm_2d_helper_free_dirty_region_working_list(
                                 ptThis, 
@@ -1691,6 +1904,13 @@ ARM_PT_END()
     /* invoke the On Each Frame Complete Event */
     ARM_2D_INVOKE(  this.tCFG.Dependency.evtOnEachFrameCPL.fnHandler,
                     this.tCFG.Dependency.evtOnEachFrameCPL.pTarget);
+
+    ARM_2D_LOG_INFO(
+        HELPER_PFB, 
+        0, 
+        "PFB TASK", 
+        "Drawing frame complete."
+    );
 
     return arm_fsm_rt_cpl;
 }
