@@ -979,9 +979,7 @@ label_start_process_candidate:
                     /* free the working item */
                     __arm_2d_helper_dirty_region_pool_free(ptThis, ptWorking);
 
-                } else if (arm_2d_region_intersect(&ptWorking->tRegion, 
-                                            &ptCandidate->tRegion,
-                                            &tOverlapArea)) {
+                } else {
                     /* has overlap */
                     arm_2d_region_get_minimal_enclosure(&ptWorking->tRegion, 
                                                         &ptCandidate->tRegion,
@@ -998,7 +996,7 @@ label_start_process_candidate:
                         DIRTY_REGION_OPTIMISATION, 
                         3, 
                         "UPDATE_WORKING_LIST", 
-                        "The candidate overlaps with the working one, get the minimal enclosure region x=%d y%d w=%d h=%d", 
+                        "Get the minimal enclosure region x=%d y%d w=%d h=%d", 
                         tEnclosureArea.tLocation.iX,
                         tEnclosureArea.tLocation.iY,
                         tEnclosureArea.tSize.iWidth,
