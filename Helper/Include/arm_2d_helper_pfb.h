@@ -22,7 +22,7 @@
  * Description:  Public header file for the PFB helper service 
  *
  * $Date:        17. Nov 2023
- * $Revision:    V.1.7.1-dev
+ * $Revision:    V.1.7.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */

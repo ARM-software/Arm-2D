@@ -22,7 +22,7 @@
  * Description:  the pfb helper service source code
  *
  * $Date:        17. Nov 2023
- * $Revision:    V.1.7.1-dev
+ * $Revision:    V.1.7.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1125,6 +1125,8 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                                     arm_2d_helper_pfb_t *ptThis,
                                     arm_2d_region_list_item_t *ptDirtyRegions)
 {
+label_iteration_begin_start:
+
     if (this.Adapter.bIsDryRun) {
         /* 
          * NOTE: If this is a dry run, no need to allocate PFB again.
@@ -1149,7 +1151,10 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
             }
         }
 
-        if (NULL == this.Adapter.ptCurrent) {
+        assert(NULL != this.Adapter.ptCurrent); /* this should not happen */
+
+        if (NULL == this.Adapter.ptCurrent) {   /* but just in case */
+            
             ARM_2D_LOG_WARNING(
                 HELPER_PFB, 
                 1, 
@@ -1315,6 +1320,18 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                         continue;    //!< try next region
                     }
 
+                    if (this.Adapter.bIsDryRun) {
+
+                        ARM_2D_LOG_INFO(
+                            HELPER_PFB, 
+                            1, 
+                            "Iteration Begin", 
+                            "It appears we can end dry run earlier."
+                        );
+
+                        goto label_iteration_begin_start;
+                    }
+
                     /* free pfb */
                     arm_irq_safe {
                         __arm_2d_helper_pfb_free(ptThis, this.Adapter.ptCurrent);
@@ -1349,6 +1366,24 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                     }
 
                     if (bIsInside) {
+
+                        ARM_2D_LOG_INFO(
+                            HELPER_PFB, 
+                            1, 
+                            "Iteration Begin", 
+                            "The dirty region[%p](x=%d y=%d w=%d h=%d) is inside one of the working dirty region[%p](x=%d y=%d w=%d h=%d), ignore it.",
+                            (void *)ptRegion,
+                            ptRegion->tRegion.tLocation.iX,
+                            ptRegion->tRegion.tLocation.iY,
+                            ptRegion->tRegion.tSize.iWidth,
+                            ptRegion->tRegion.tSize.iHeight,
+                            (void *)ptWorking,
+                            ptWorking->tRegion.tLocation.iX,
+                            ptWorking->tRegion.tLocation.iY,
+                            ptWorking->tRegion.tSize.iWidth,
+                            ptWorking->tRegion.tSize.iHeight
+                        );
+
                         /*----------------------------------------------------------------*
                         * the code segment for try next dirty region or end early: BEGIN *
                         *----------------------------------------------------------------*/
