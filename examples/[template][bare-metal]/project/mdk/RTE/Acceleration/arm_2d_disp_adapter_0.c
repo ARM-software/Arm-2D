@@ -64,6 +64,14 @@
 #   define __DISP0_CFG_ITERATION_CNT__     30
 #endif
 
+#if __DISP0_CFG_OPTIMIZE_DIRTY_REGIONS__
+#   if      !defined(__DISP0_CFG_DIRTY_REGION_POOL_SIZE__)             \
+        ||  __DISP0_CFG_DIRTY_REGION_POOL_SIZE__ < 4
+#       undef __DISP0_CFG_DIRTY_REGION_POOL_SIZE__
+#       define __DISP0_CFG_DIRTY_REGION_POOL_SIZE__            4
+#   endif
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -368,6 +376,11 @@ static void __user_scene_player_init(void)
 {
     memset(&DISP0_ADAPTER, 0, sizeof(DISP0_ADAPTER));
 
+#if __DISP0_CFG_OPTIMIZE_DIRTY_REGIONS__
+    ARM_NOINIT
+    static arm_2d_region_list_item_t s_tDirtyRegionList[__DISP0_CFG_DIRTY_REGION_POOL_SIZE__]; 
+#endif
+
     //! initialise FPB helper
     if (ARM_2D_HELPER_PFB_INIT(
         &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t,                            //!< FPB Helper object
@@ -402,6 +415,10 @@ static void __user_scene_player_init(void)
 #if     __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                          \
     &&  !__DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
         .FrameBuffer.u4PoolReserve = 3,                                         // reserve 3 PFB blocks for the virtual resource service
+#endif
+#if __DISP0_CFG_OPTIMIZE_DIRTY_REGIONS__
+        .DirtyRegion.ptRegions = s_tDirtyRegionList,
+        .DirtyRegion.chCount = dimof(s_tDirtyRegionList),
 #endif
     ) < 0) {
         //! error detected
@@ -460,7 +477,7 @@ __WEAK
 void disp_adapter0_navigator_init(void)
 {
     /*! define dirty regions for the navigation layer */
-    IMPL_ARM_2D_REGION_LIST(s_tNavDirtyRegionList, const static)
+    IMPL_ARM_2D_REGION_LIST(s_tNavDirtyRegionList, static)
 
         /* a region for the status bar on the bottom of the screen */
         ADD_LAST_REGION_TO_LIST(s_tNavDirtyRegionList,

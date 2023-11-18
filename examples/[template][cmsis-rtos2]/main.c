@@ -131,12 +131,12 @@ typedef void scene_loader_t(void);
 
 
 static scene_loader_t * const c_SceneLoaders[] = {
-//    scene0_loader,
-//    scene1_loader,
-//    scene_meter_loader,
-//    scene3_loader,
-//    scene4_loader,
-//    scene2_loader,
+    scene0_loader,
+    scene1_loader,
+    scene_meter_loader,
+    scene3_loader,
+    scene4_loader,
+    scene2_loader,
     scene_fitness_loader,
     //scene_watch_loader,
 };

@@ -124,13 +124,25 @@ extern "C" {
 //     <1=>     Real FPS
 // <i> Decide the meaning of the real time FPS display
 #ifndef __DISP0_CFG_FPS_CACULATION_MODE__
-#   define __DISP0_CFG_FPS_CACULATION_MODE__                       0
+#   define __DISP0_CFG_FPS_CACULATION_MODE__                       1
 #endif
 
 // <q> Enable Dirty Region Debug Mode
 // <i> Draw dirty regions on the screen for debug.
 #ifndef __DISP0_CFG_DEBUG_DIRTY_REGIONS__
 #   define __DISP0_CFG_DEBUG_DIRTY_REGIONS__                       0
+#endif
+
+// <q> Enable Dirty Region Optimization Service
+// <i> Optimize dirty regions to avoid fresh overlapped areas
+#ifndef __DISP0_CFG_OPTIMIZE_DIRTY_REGIONS__
+#   define __DISP0_CFG_OPTIMIZE_DIRTY_REGIONS__                    1
+#endif
+
+// <o> Dirty Region Pool Size <4-255>
+// <i> The number of dirty region items available for the dirty region optimization service
+#ifndef __DISP0_CFG_DIRTY_REGION_POOL_SIZE__
+#   define __DISP0_CFG_DIRTY_REGION_POOL_SIZE__                    8
 #endif
 
 // <q> Swap the high and low bytes
