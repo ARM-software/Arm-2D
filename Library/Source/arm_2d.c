@@ -21,8 +21,8 @@
  * Title:        arm-2d.c
  * Description:  Tables for pixel pipeline OPs
  *
- * $Date:        14. Aug 2023
- * $Revision:    V.1.2.1
+ * $Date:        18. Nov 2023
+ * $Revision:    V.1.3.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -37,6 +37,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include <string.h>
 
 #define __ARM_2D_COMPILATION_UNIT
 #include "../Source/__arm_2d_core.c"
@@ -246,7 +247,7 @@ void __arm_2d_log_printf(int32_t nIndentLevel,
             __ARM_2D_PORT_PRINTF__(ARM_2D_TERMINAL_COLOUR_RED "[ERROR]" ARM_2D_TERMINAL_COLOUR_DEFAULT);
         }
 
-        if (NULL != pchPrefix && strnlen(pchPrefix, 256) > 0) {
+        if (NULL != pchPrefix && strlen(pchPrefix) > 0) {
             __ARM_2D_PORT_PRINTF__("[%s]", pchPrefix);
         }
 
