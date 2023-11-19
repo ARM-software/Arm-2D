@@ -96,7 +96,7 @@ extern "C" {
 #endif
 
 #ifndef _BV
-#   define _BV(__BIT)       (1 << (__BIT))
+#   define _BV(__BIT)       ((unsigned)1 << (__BIT))
 #endif
 
 #ifndef ABS

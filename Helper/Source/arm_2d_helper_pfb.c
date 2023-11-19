@@ -919,7 +919,7 @@ label_start_process_candidate:
                                             * ptCandidate->tRegion.tSize.iWidth;
             while(NULL != ptWorking) {
                 arm_2d_region_list_item_t *ptNextWorking = ptWorking->ptInternalNext;
-                arm_2d_region_t tOverlapArea, tEnclosureArea;
+                arm_2d_region_t tEnclosureArea;
 
 
                 ARM_2D_LOG_INFO(
