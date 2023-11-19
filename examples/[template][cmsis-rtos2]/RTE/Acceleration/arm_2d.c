@@ -21,8 +21,8 @@
  * Title:        arm-2d.c
  * Description:  Tables for pixel pipeline OPs
  *
- * $Date:        18. Nov 2023
- * $Revision:    V.1.3.0
+ * $Date:        19. Nov 2023
+ * $Revision:    V.1.3.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -45,10 +45,17 @@
 #define __ARM_2D_COMPILATION_UNIT
 #include "../Source/__arm_2d_tile.c"
 
+#if defined(__clang__)
+#   pragma clang diagnostic ignored "-Wunknown-warning-option"
+#   pragma clang diagnostic ignored "-Wformat-nonliteral"
+#endif
+
 
 #ifdef   __cplusplus
 extern "C" {
 #endif
+
+
 
 /*============================ MACROS ========================================*/
 
@@ -210,9 +217,9 @@ void __arm_2d_log_printf(int32_t nIndentLevel,
                          const char *pchFormatString,
                          ...)
 {
-    arm_2d_log_chn_t tChannelInfo = {
-        .wValue = wChannelMask,
-    };
+//    arm_2d_log_chn_t tChannelInfo = {
+//        .wValue = wChannelMask,
+//    };
 
     if (!(__ARM_2D_LOG_CHANNEL_MASK_FILTER__ & wChannelMask)) {
         return ;
