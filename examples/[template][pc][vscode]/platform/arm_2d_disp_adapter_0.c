@@ -64,6 +64,14 @@
 #   define __DISP0_CFG_ITERATION_CNT__     30
 #endif
 
+#if __DISP0_CFG_OPTIMIZE_DIRTY_REGIONS__
+#   if      !defined(__DISP0_CFG_DIRTY_REGION_POOL_SIZE__)             \
+        ||  __DISP0_CFG_DIRTY_REGION_POOL_SIZE__ < 4
+#       undef __DISP0_CFG_DIRTY_REGION_POOL_SIZE__
+#       define __DISP0_CFG_DIRTY_REGION_POOL_SIZE__            4
+#   endif
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -368,8 +376,10 @@ static void __user_scene_player_init(void)
 {
     memset(&DISP0_ADAPTER, 0, sizeof(DISP0_ADAPTER));
 
+#if __DISP0_CFG_OPTIMIZE_DIRTY_REGIONS__
     ARM_NOINIT
-    static arm_2d_region_list_item_t s_tDirtyRegionList[16]; 
+    static arm_2d_region_list_item_t s_tDirtyRegionList[__DISP0_CFG_DIRTY_REGION_POOL_SIZE__]; 
+#endif
 
     //! initialise FPB helper
     if (ARM_2D_HELPER_PFB_INIT(
@@ -406,8 +416,10 @@ static void __user_scene_player_init(void)
     &&  !__DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
         .FrameBuffer.u4PoolReserve = 3,                                         // reserve 3 PFB blocks for the virtual resource service
 #endif
+#if __DISP0_CFG_OPTIMIZE_DIRTY_REGIONS__
         .DirtyRegion.ptRegions = s_tDirtyRegionList,
         .DirtyRegion.chCount = dimof(s_tDirtyRegionList),
+#endif
     ) < 0) {
         //! error detected
         assert(false);
