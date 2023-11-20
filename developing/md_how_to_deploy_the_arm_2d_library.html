@@ -270,17 +270,8 @@ Table of Contents</h2>
 <div class="line">    </div>
 <div class="line">    <span class="keywordtype">bool</span> bRefreshLCD = <span class="keyword">false</span>;</div>
 <div class="line">    <span class="keywordflow">while</span> (1) {</div>
-<div class="line">    </div>
 <div class="line">        <span class="comment">/* lock framerate */</span></div>
-<div class="line">        <span class="keywordflow">if</span> (<a class="code hl_define" href="group__gHelper.html#gae4ab75c458c5e2ba0355ba76dff03735" title="set an alarm with given period and check the status">arm_2d_helper_is_time_out</a>(1000 / LCD_TARGET_FPS)) {</div>
-<div class="line">            bRefreshLCD = <span class="keyword">true</span>;</div>
-<div class="line">        }</div>
-<div class="line">        </div>
-<div class="line">        <span class="keywordflow">if</span> (bRefreshLCD) {</div>
-<div class="line">            <span class="keywordflow">if</span> (<a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcacf7b5f9e66c44d332ea46d05860d78d1" title="fsm complete">arm_fsm_rt_cpl</a> == disp_adapter0_task()) {</div>
-<div class="line">                bRefreshLCD = <span class="keyword">false</span>;</div>
-<div class="line">            }</div>
-<div class="line">        }</div>
+<div class="line">    disp_adapter0_task(LCD_TARGET_FPS);</div>
 <div class="line">    }</div>
 <div class="line">}</div>
 </div><!-- fragment --><p >Or the thread function if you want to run Arm-2d in an RTOS environment:</p>
@@ -314,7 +305,7 @@ Table of Contents</h2>
 <div class="line">    <span class="comment">//osThreadExit();</span></div>
 <div class="line">}</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md48"></a>
-3.3 Configue the Display Adapter Service</h2>
+3.3 Configure the Display Adapter Service</h2>
 <p >You should configure the Display Adapter service before using it. All the configurations of a Display Adapter service are stored in the corresponding header file, e.g. <code>arm_2d_disp_adapter_0.h</code>. In MDK, all configuration work can be done through the GUI wizard, as shown in <b>Figure 3-3</b>.</p>
 <p ><b>Figure 3-3 Configure the Display Adapter Using the Wizard</b></p>
 <p ><img src="ConfigureDisplayAdapter.png" alt="" class="inline" title="ConfigureTheDisplayAdapter"/></p>
@@ -382,7 +373,64 @@ Table of Contents</h2>
 <p ><img src="DispAdapterDefaultScene.gif" alt="" class="inline"/></p>
 <p >If you encounter any problems, please feel free to raise an issue.</p>
 <p >Enjoy.</p>
-<h1><a class="anchor" id="autotoc_md51"></a>
+<h2><a class="anchor" id="autotoc_md51"></a>
+3.6 Asynchronous Flushing Mode</h2>
+<p >Different from the method described in <b>section 3.1</b> that uses the CPU to do the flushing work, it is possible to use DMA (or peripherals with similar capability) to flush the framebuffer to LCD, we call it <b>Asynchronous Flushing</b> mode, and the method described before is often referred as <b>Synchronous Flushing</b> mode.</p>
+<p >To enable Asynchronous Flushing:</p>
+<ol type="1">
+<li>Select <code>Enable the helper service for Asynchronous Flushing</code> in Display Adapter configuration wizard, or equivalently define the macro <code>__DISP0_CFG_ENABLE_ASYNC_FLUSHING__</code> as <code>1</code>.</li>
+<li>Implement the user defined function called <code>__disp_adapterN_request_async_flushing()</code>, here <code>N</code> is the corresponding display adapter index number. The function prototype is shown as below: <div class="fragment"><div class="line"><span class="comment">/*!</span></div>
+<div class="line"><span class="comment"> * \brief It is an user implemented function that request an LCD flushing in </span></div>
+<div class="line"><span class="comment"> *        asynchronous manner. </span></div>
+<div class="line"><span class="comment"> * \note User MUST implement this function when </span></div>
+<div class="line"><span class="comment"> *       __DISP0_CFG_ENABLE_ASYNC_FLUSHING__ is set to &#39;1&#39;</span></div>
+<div class="line"><span class="comment"> *</span></div>
+<div class="line"><span class="comment"> * \param[in] pTarget an user specified object address</span></div>
+<div class="line"><span class="comment"> * \param[in] bIsNewFrame whether this flushing request is the first iteration </span></div>
+<div class="line"><span class="comment"> *            of a new frame.</span></div>
+<div class="line"><span class="comment"> * \param[in] iX the x coordinate of a flushing window in the target screen</span></div>
+<div class="line"><span class="comment"> * \param[in] iY the y coordinate of a flushing window in the target screen</span></div>
+<div class="line"><span class="comment"> * \param[in] iWidth the width of a flushing window</span></div>
+<div class="line"><span class="comment"> * \param[in] iHeight the height of a flushing window</span></div>
+<div class="line"><span class="comment"> * \param[in] pBuffer the frame buffer address</span></div>
+<div class="line"><span class="comment"> */</span></div>
+<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> __disp_adapter0_request_async_flushing( </div>
+<div class="line">    <span class="keywordtype">void</span> *pTarget,</div>
+<div class="line">    <span class="keywordtype">bool</span> bIsNewFrame,</div>
+<div class="line">    int16_t iX, </div>
+<div class="line">    int16_t iY,</div>
+<div class="line">    int16_t iWidth,</div>
+<div class="line">    int16_t iHeight,</div>
+<div class="line">    <span class="keyword">const</span> COLOUR_INT *pBuffer);</div>
+</div><!-- fragment --> ​ We use this function to send a DMA transaction request, and enable interrupt generation for this transaction.</li>
+<li>In the DMA transaction complete interrupt service routine, call function <code>disp_adapter0_insert_async_flushing_complete_event_handler()</code> to report the event to the display adapter service.</li>
+</ol>
+<div class="fragment"><div class="line"><span class="comment">/*!</span></div>
+<div class="line"><span class="comment"> * \brief the handler for the asynchronous flushing complete event.</span></div>
+<div class="line"><span class="comment"> * \note When __DISP0_CFG_ENABLE_ASYNC_FLUSHING__ is set to &#39;1&#39;, user </span></div>
+<div class="line"><span class="comment"> *       MUST call this function to notify the PFB helper that the previous</span></div>
+<div class="line"><span class="comment"> *       asynchronous flushing is complete. </span></div>
+<div class="line"><span class="comment"> * \note When people using DMA+ISR to offload CPU, this fucntion is called in </span></div>
+<div class="line"><span class="comment"> *       the DMA transfer complete ISR.</span></div>
+<div class="line"><span class="comment"> */</span></div>
+<div class="line"><span class="keyword">extern</span></div>
+<div class="line"><span class="keywordtype">void</span> disp_adapter0_insert_async_flushing_complete_event_handler(<span class="keywordtype">void</span>);</div>
+</div><!-- fragment --><blockquote class="doxtable">
+<p >NOTE: If the device connects LCD via SPI, when using DMA for transaction, please handle the CS signal properly. Usually, we set the CS to low before sending the DMA transaction request in <code>__disp_adapterN_request_async_flushing()</code> and raise CS to high in the DMA transaction complete interrupt service routine (ISR). </p>
+</blockquote>
+<ol type="1">
+<li>In <b>Asynchronous Flushing</b> mode, it is better to increase the<code>PFB Block Count</code> to <code>2</code> (or even <code>3</code>) in the configuration wizard, or equivalently define the macro <code>__DISP0_CFG_PFB_HEAP_SIZE__</code> as <code>2</code> (or even <code>3</code>). A typical configuration is shown in <b>Figure 3-5</b>.</li>
+</ol>
+<p ><b>Figure 3-5 A Typical Configuration for Enabling Asynchronous Flushing Mode in the Wizard.</b></p>
+<p ><img src="EnableAsynchronosFlushingInWizard.png" alt="" class="inline" title="image-20231120152652919"/></p>
+<p >It is worth to note that in Asynchronous Flushing mode, because the LCD Flushing parallels with the new FPB drawing:</p>
+<ul>
+<li>If the <b>actual LCD Latency</b> is equals to or smaller than the PFB drawing time, the <b>displayed LCD Latency</b> is <code>0ms</code>, otherwise</li>
+<li>The <b>displayed LCD latency</b> is equals to <b>the Actual LCD Latency minus the PFB Drawing time</b>, and usually very small.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md52"></a>
+3.7 Direct Mode (3FB Mode)</h2>
+<h1><a class="anchor" id="autotoc_md53"></a>
 4 Example Projects</h1>
 <p ><b>Table 3-1 Summary</b></p>
 <table class="markdownTable">
