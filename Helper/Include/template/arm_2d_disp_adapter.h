@@ -326,9 +326,8 @@ void __disp_adapter%Instance%_vres_read_memory( intptr_t pObj,
 
 /*!
  * \brief An user implemented interface for DMA memory-to-memory copy.
- *        If you have a DMA, you can implement this function by using
- *        __OVERRIDE_WEAK. 
  *        You should implement an ISR for copy-complete event and call
+ *        disp_adapter%Instance%_insert_dma_copy_complete_event_handler() or
  *        arm_2d_helper_3fb_report_dma_copy_complete() to notify the 
  *        3FB (direct mode) helper service.
  * 
@@ -357,6 +356,10 @@ void __disp_adapter%Instance%_request_dma_copy(  arm_2d_helper_3fb_t *ptThis,
  * \param[in] iHeight the safe height of the source image
  * \retval true the 2D copy is complete when leaving this function
  * \retval false An async 2D copy request is sent to the DMA
+ *
+ * \note if false is replied, you have to call 
+ *       disp_adapter%Instance%_insert_2d_copy_complete_event_handler() to report
+ *       the completion of the 2d-copy. 
  */
 bool __disp_adapter%Instance%_request_2d_copy(   arm_2d_helper_3fb_t *ptThis,
                                         void *pObj,
