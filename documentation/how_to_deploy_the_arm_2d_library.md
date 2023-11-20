@@ -97,6 +97,16 @@ There are three methods to get Arm-2D:
 
 
 
+### 2.2 Deploy Using CMake
+
+It is easy to deploying arm-2d as a library using CMake, for details, please check the [CMakeLists.txt](../CMakeList.txt). 
+
+### 2.3 Deploy Using Makefile
+
+It is possible to deploy arm-2d using Makefile. We supposes you familiar with writing Makefile scripts and hence provides an [Makefile](../examples/[template][pc][vscode]/Makefile) used on PC as a good example. 
+
+
+
 ## 3 Helper Services and Extras
 
 Suppose you want to develop GUI applications directly with Arm-2D. In that case, it implies that you not only use Arm-2D APIs for the framebuffer-based low-level 2D image processing but also want to display the processed result on a screen. An ordinary GUI software stack will provide a dedicated service for connecting a target screen, and users must implement a driver or adapter between the hardware and the service. Such a service usually allows people to refresh the whole screen with a petite frame buffer called partial frame buffer (PFB). This feature is vital for resource-constraint embedded platforms. Arm-2D provide a similar feature through a helper service called Display Adapter Service.
