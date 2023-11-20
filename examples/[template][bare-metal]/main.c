@@ -240,19 +240,10 @@ int main (void)
     
     arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
 #endif
-    bool bRefreshLCD = false;
+
     while (1) {
-    
         /* lock framerate */
-        if (arm_2d_helper_is_time_out(1000 / LCD_TARGET_FPS)) {
-            bRefreshLCD = true;
-        }
-        
-        if (bRefreshLCD) {
-            if (arm_fsm_rt_cpl == disp_adapter0_task()) {
-                bRefreshLCD = false;
-            }
-        }
+        disp_adapter0_task(LCD_TARGET_FPS);
     }
 }
 

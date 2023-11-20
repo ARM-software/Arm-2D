@@ -124,7 +124,7 @@ extern "C" {
 //     <1=>     Real FPS
 // <i> Decide the meaning of the real time FPS display
 #ifndef __DISP0_CFG_FPS_CACULATION_MODE__
-#   define __DISP0_CFG_FPS_CACULATION_MODE__                       0
+#   define __DISP0_CFG_FPS_CACULATION_MODE__                       1
 #endif
 
 // <q> Enable Dirty Region Debug Mode
@@ -194,7 +194,7 @@ extern "C" {
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
-#define disp_adapter0_impl_vres(__COLOUR_FORMAT, __WIDTH, __HEIGHT,...)\
+#define disp_adapter0_impl_vres(__COLOUR_FORMAT, __WIDTH, __HEIGHT,...)         \
 {                                                                               \
     .tTile = {                                                                  \
         .tRegion = {                                                            \
@@ -212,11 +212,32 @@ extern "C" {
             },                                                                  \
         },                                                                      \
     },                                                                          \
-    .Load       = &__disp_adapter0_vres_asset_loader,                  \
-    .Depose     = &__disp_adapter0_vres_buffer_deposer,                \
+    .Load       = &__disp_adapter0_vres_asset_loader,                           \
+    .Depose     = &__disp_adapter0_vres_buffer_deposer,                         \
     __VA_ARGS__                                                                 \
 }
 #endif
+
+#define disp_adapter0_task(...)                                                 \
+        ({                                                                      \
+        static bool ARM_2D_SAFE_NAME(s_bRefreshLCD) = false;                    \
+        arm_fsm_rt_t ARM_2D_SAFE_NAME(ret) = arm_fsm_rt_on_going;               \
+        if (!__ARM_VA_NUM_ARGS(__VA_ARGS__)) {                                  \
+            ARM_2D_SAFE_NAME(ret) = __disp_adapter0_task();                     \
+        } else {                                                                \
+            if (!ARM_2D_SAFE_NAME(s_bRefreshLCD)) {                             \
+                /* lock framerate */                                            \
+                if (arm_2d_helper_is_time_out(1000 / (1000,##__VA_ARGS__))) {   \
+                    ARM_2D_SAFE_NAME(s_bRefreshLCD) = true;                     \
+                }                                                               \
+            } else {                                                            \
+                ARM_2D_SAFE_NAME(ret) = __disp_adapter0_task();                 \
+                if (arm_fsm_rt_cpl == ARM_2D_SAFE_NAME(ret)) {                  \
+                    ARM_2D_SAFE_NAME(s_bRefreshLCD) = false;                    \
+                }                                                               \
+            }                                                                   \
+        };                                                                      \
+        ARM_2D_SAFE_NAME(ret);})
 
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -230,7 +251,7 @@ extern
 void disp_adapter0_init(void);
 
 extern
-arm_fsm_rt_t disp_adapter0_task(void);
+arm_fsm_rt_t __disp_adapter0_task(void);
 
 
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__

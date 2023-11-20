@@ -556,7 +556,7 @@ void disp_adapter0_init(void)
     }
 }
 
-arm_fsm_rt_t disp_adapter0_task(void)
+arm_fsm_rt_t __disp_adapter0_task(void)
 {
     return arm_2d_scene_player_task(&DISP0_ADAPTER);
 }

@@ -212,17 +212,8 @@ int main (void)
     
     bool bRefreshLCD = false;
     while (1) {
-    
         /* lock framerate */
-        if (arm_2d_helper_is_time_out(1000 / LCD_TARGET_FPS)) {
-            bRefreshLCD = true;
-        }
-        
-        if (bRefreshLCD) {
-            if (arm_fsm_rt_cpl == disp_adapter0_task()) {
-                bRefreshLCD = false;
-            }
-        }
+		disp_adapter0_task(LCD_TARGET_FPS);
     }
 }
 ```
@@ -263,7 +254,7 @@ void app_2d_main_thread (void *argument)
 
 
 
-### 3.3 Configue the Display Adapter Service
+### 3.3 Configure the Display Adapter Service
 
 You should configure the Display Adapter service before using it. All the configurations of a Display Adapter service are stored in the corresponding header file, e.g. `arm_2d_disp_adapter_0.h`. In MDK, all configuration work can be done through the GUI wizard, as shown in **Figure 3-3**. 
 
@@ -336,6 +327,80 @@ After finished steps above, if everything goes well, you should see a screen as 
 If you encounter any problems, please feel free to raise an issue. 
 
 Enjoy.
+
+
+
+### 3.6 Asynchronous Flushing Mode
+
+Different from the method described in **section 3.1** that uses the CPU to do the flushing work, it is possible to use DMA (or peripherals with similar capability) to flush the framebuffer to LCD, we call it **Asynchronous Flushing** mode, and the method described before is often referred as **Synchronous Flushing** mode. 
+
+To enable Asynchronous Flushing:
+
+1. Select `Enable the helper service for Asynchronous Flushing` in Display Adapter configuration wizard, or equivalently define the macro `__DISP0_CFG_ENABLE_ASYNC_FLUSHING__` as `1`.
+2. Implement the user defined function called `__disp_adapterN_request_async_flushing()`, here `N` is the corresponding display adapter index number. The function prototype is shown as below:
+```c
+/*!
+ * \brief It is an user implemented function that request an LCD flushing in 
+ *        asynchronous manner. 
+ * \note User MUST implement this function when 
+ *       __DISP0_CFG_ENABLE_ASYNC_FLUSHING__ is set to '1'
+ *
+ * \param[in] pTarget an user specified object address
+ * \param[in] bIsNewFrame whether this flushing request is the first iteration 
+ *            of a new frame.
+ * \param[in] iX the x coordinate of a flushing window in the target screen
+ * \param[in] iY the y coordinate of a flushing window in the target screen
+ * \param[in] iWidth the width of a flushing window
+ * \param[in] iHeight the height of a flushing window
+ * \param[in] pBuffer the frame buffer address
+ */
+extern void __disp_adapter0_request_async_flushing( 
+    void *pTarget,
+    bool bIsNewFrame,
+    int16_t iX, 
+    int16_t iY,
+    int16_t iWidth,
+    int16_t iHeight,
+    const COLOUR_INT *pBuffer);
+```
+​	We use this function to send a DMA transaction request, and enable interrupt generation for this transaction.
+
+3. In the DMA transaction complete interrupt service routine, call function `disp_adapter0_insert_async_flushing_complete_event_handler()` to report the event to the display adapter service.
+
+```c
+/*!
+ * \brief the handler for the asynchronous flushing complete event.
+ * \note When __DISP0_CFG_ENABLE_ASYNC_FLUSHING__ is set to '1', user 
+ *       MUST call this function to notify the PFB helper that the previous
+ *       asynchronous flushing is complete. 
+ * \note When people using DMA+ISR to offload CPU, this fucntion is called in 
+ *       the DMA transfer complete ISR.
+ */
+extern
+void disp_adapter0_insert_async_flushing_complete_event_handler(void);
+```
+
+>  NOTE: If the device connects LCD via SPI, when using DMA for transaction, please handle the CS signal properly. Usually, we set the CS to low before sending the DMA transaction request in `__disp_adapterN_request_async_flushing()` and raise CS to high in the DMA transaction complete interrupt service routine (ISR).
+
+4. In **Asynchronous Flushing** mode, it is better to increase the`PFB Block Count` to `2` (or even `3`) in the configuration wizard, or equivalently define the macro `__DISP0_CFG_PFB_HEAP_SIZE__` as `2` (or even `3`).  A typical configuration is shown in **Figure 3-5**.
+
+
+
+**Figure 3-5 A Typical Configuration for Enabling Asynchronous Flushing Mode in the Wizard.**
+
+![image-20231120152652919](./pictures/EnableAsynchronosFlushingInWizard.png) 
+
+
+
+It is worth to note that in Asynchronous Flushing mode, because the LCD Flushing parallels with the new FPB drawing:
+
+- If the **actual LCD Latency** is equals to or smaller than the PFB drawing time, the **displayed LCD Latency** is `0ms`, otherwise
+- The **displayed LCD latency** is equals to **the Actual LCD Latency minus the PFB Drawing time**, and usually very small. 
+
+
+
+
+### 3.7 Direct Mode (3FB Mode)
 
 
 

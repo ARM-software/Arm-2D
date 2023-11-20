@@ -62,6 +62,7 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wconditional-uninitialized"
 #   pragma clang diagnostic ignored "-Wunsafe-buffer-usage"
 #   pragma clang diagnostic ignored "-Wc23-extensions"
+#   pragma clang diagnostic ignored "-Wunused-value"
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic ignored "-Wpedantic"
 #   pragma GCC diagnostic ignored "-Wmissing-braces"
