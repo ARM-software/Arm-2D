@@ -223,7 +223,7 @@ int main (void)
     bool bRefreshLCD = false;
     while (1) {
         /* lock framerate */
-		disp_adapter0_task(LCD_TARGET_FPS);
+        disp_adapter0_task(LCD_TARGET_FPS);
     }
 }
 ```
