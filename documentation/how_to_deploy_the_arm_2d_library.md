@@ -332,12 +332,12 @@ Enjoy.
 
 ### 3.6 Asynchronous Flushing Mode
 
-Different from the method described in **section 3.1** that uses the CPU to do the flushing work, it is possible to use DMA (or peripherals with similar capability) to flush the framebuffer to LCD, we call it **Asynchronous Flushing** mode, and the method described before is often referred as **Synchronous Flushing** mode. 
+Different from the method described in **section 3.1** that lets the CPU flush the LCD directly, it is possible to use DMA (or peripherals with similar capability) to offload the processor - we call it **Asynchronous Flushing** mode, and the method described before is often referred as **Synchronous Flushing** mode. 
 
 To enable Asynchronous Flushing:
 
-1. Select `Enable the helper service for Asynchronous Flushing` in Display Adapter configuration wizard, or equivalently define the macro `__DISP0_CFG_ENABLE_ASYNC_FLUSHING__` as `1`.
-2. Implement the user defined function called `__disp_adapterN_request_async_flushing()`, here `N` is the corresponding display adapter index number. The function prototype is shown as below:
+1. Select `Enable the helper service for Asynchronous Flushing` in the Display Adapter configuration wizard, or equivalently define the macro `__DISPn_CFG_ENABLE_ASYNC_FLUSHING__` as `1` (here **n** represents the display adapter index number).
+2. Implement the user defined function called `__disp_adapterN_request_async_flushing()`(here **N** represents the display adapter index number). The function prototype is shown as below:
 ```c
 /*!
  * \brief It is an user implemented function that request an LCD flushing in 
@@ -365,7 +365,7 @@ extern void __disp_adapter0_request_async_flushing(
 ```
 ​	We use this function to send a DMA transaction request, and enable interrupt generation for this transaction.
 
-3. In the DMA transaction complete interrupt service routine, call function `disp_adapter0_insert_async_flushing_complete_event_handler()` to report the event to the display adapter service.
+3. In the DMA transaction complete interrupt service routine, call function `disp_adapterN_insert_async_flushing_complete_event_handler()` to report the event to the display adapter service (here **N** represents the display adapter index number).
 
 ```c
 /*!
@@ -382,7 +382,7 @@ void disp_adapter0_insert_async_flushing_complete_event_handler(void);
 
 >  NOTE: If the device connects LCD via SPI, when using DMA for transaction, please handle the CS signal properly. Usually, we set the CS to low before sending the DMA transaction request in `__disp_adapterN_request_async_flushing()` and raise CS to high in the DMA transaction complete interrupt service routine (ISR).
 
-4. In **Asynchronous Flushing** mode, it is better to increase the`PFB Block Count` to `2` (or even `3`) in the configuration wizard, or equivalently define the macro `__DISP0_CFG_PFB_HEAP_SIZE__` as `2` (or even `3`).  A typical configuration is shown in **Figure 3-5**.
+4. In **Asynchronous Flushing** mode, it is better to increase the`PFB Block Count` to `2` (or even `3`) in the configuration wizard, or equivalently define the macro `__DISPn_CFG_PFB_HEAP_SIZE__` as `2` (or even `3`), here **n** represents the display adapter index number. A typical configuration is shown in **Figure 3-5**.
 
 
 
@@ -401,6 +401,113 @@ It is worth to note that in Asynchronous Flushing mode, because the LCD Flushing
 
 
 ### 3.7 Direct Mode (3FB Mode)
+
+To avoid the tearing effects, some devices provide a dedicated LCD controller peripheral, often known as **LTDC**. The LCD controller maps a **FULL framebuffer** as the display RAM and copies the content in the display RAM to the LCD in a fixed frequency. During this period, there is a time-window indicated by a signal often known as **TE** or **VSYNC**, as long as we can finish flushing the LCD in this time-window, the tearing problem can be avoided. 
+
+Direct mode is such a mode that exchanges the FULL framebuffer as the display RAM on VSYNC or TE events. Arm-2D supports the Direct Mode through a dedicated helper service. 
+
+To enable the 3FB helper service:
+
+1. Select `Enable the helper service for 3FB (LCD Direct Mode)` in the Display Adapter Configuration Wizard, or equivalently define the macro `__DISPn_CFG_ENABLE_3FB_HELPER_SERVICE__` as `1` (here **n** represents the  display adapter index number).
+2. Implement the following `uintptr_t` variables to indicate the address of three **FULL-Framebuffer**:
+
+```c
+    extern uintptr_t __DISP_ADAPTERn_3FB_FB0_ADDRESS__;
+    extern uintptr_t __DISP_ADAPTERn_3FB_FB1_ADDRESS__;
+    extern uintptr_t __DISP_ADAPTERn_3FB_FB2_ADDRESS__;
+```
+
+>  NOTE:  
+>
+> 1. Here **n** represents the display adapter index number.
+> 2. The three variables should be initialized with the proper value before initialization of the corresponding display adapter service. 
+
+3. In the **VSYN** or **TE** event handler, call function `disp_adapterN_3fb_get_flush_pointer()` to get a framebuffer pointer and use it to update the LTDC. (Here **N** represent the display adapter index number)
+
+
+
+In fact, the Direct Mode can be used together with the Asynchronous Flushing mode. If the two modes are enabled at the same time, users have to implement the following functions:
+
+```c
+/*!
+ * \brief An user implemented interface for DMA memory-to-memory copy.
+ *        You should implement an ISR for copy-complete event and call
+ *        disp_adapterN_insert_dma_copy_complete_event_handler() or
+ *        arm_2d_helper_3fb_report_dma_copy_complete() to notify the 
+ *        3FB (direct mode) helper service.
+ * 
+ * \param[in] ptThis the helper service control block
+ * \param[in] pObj the address of the user object
+ * \param[in] pnSource the source address of the memory block
+ * \param[in] pnTarget the target address
+ * \param[in] nDataItemCount the number of date items
+ * \param[in] chDataItemSize the size of each data item 
+ */
+extern
+void __disp_adapterN_request_dma_copy(  arm_2d_helper_3fb_t *ptThis,
+                                        void *pObj,
+                                        uintptr_t pnSource,
+                                        uintptr_t pnTarget,
+                                        uint32_t nDataItemCount,
+                                        uint_fast8_t chDataItemSize);
+
+/*!
+ * \brief An user implemented interface for 2D-Copy.
+ * \param[in] pnSource the source image address
+ * \param[in] wSourceStride the stride of the source image
+ * \param[in] pnTarget the address in the target framebuffer
+ * \param[in] wTargetStride the stride of the target framebuffer
+ * \param[in] iWidth the safe width of the source image
+ * \param[in] iHeight the safe height of the source image
+ * \retval true the 2D copy is complete when leaving this function
+ * \retval false An async 2D copy request is sent to the DMA
+ *
+ * \note if false is replied, you have to call 
+ *       disp_adapter0_insert_2d_copy_complete_event_handler() to report
+ *       the completion of the 2d-copy. 
+ */
+bool __disp_adapterN_request_2d_copy(   arm_2d_helper_3fb_t *ptThis,
+                                        void *pObj,
+                                        uintptr_t pnSource,
+                                        uint32_t wSourceStride,
+                                        uintptr_t pnTarget,
+                                        uint32_t wTargetStride,
+                                        int16_t iWidth,
+                                        int16_t iHeight,
+                                        uint_fast8_t chBytePerPixel );
+```
+
+
+
+In DMA transaction complete event handler, please call the corresponding function to report the completion of the transaction:
+
+```c
+/*!
+ * \brief the handler for the 2d copy complete event.
+ * \note When both __DISPn_CFG_ENABLE_ASYNC_FLUSHING__ and 
+ *       __DISPn_CFG_ENABLE_3FB_HELPER_SERVICE__ is set to '1', user 
+ *       MUST call this function to notify the PFB helper that the previous
+ *       asynchronouse 2d copy is complete. 
+ * \note When people using DMA+ISR to offload CPU, this fucntion is called in 
+ *       the DMA transfer complete ISR.
+ */
+extern
+void disp_adapterN_insert_2d_copy_complete_event_handler(void);
+
+/*!
+ * \brief the handler for the dma copy complete event.
+ * \note When both __DISPn_CFG_ENABLE_ASYNC_FLUSHING__ and 
+ *       __DISPn_CFG_ENABLE_3FB_HELPER_SERVICE__ is set to '1', user 
+ *       MUST call this function to notify the PFB helper that the previous
+ *       dma copy is complete. 
+ * \note When people using DMA+ISR to offload CPU, this fucntion is called in 
+ *       the DMA transfer complete ISR.
+ */
+extern
+void disp_adapterN_insert_dma_copy_complete_event_handler(void);
+```
+
+> NOTE: Here, **N** and **n** represents the display adapter index number. 
 
 
 
