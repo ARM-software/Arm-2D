@@ -375,11 +375,11 @@ Table of Contents</h2>
 <p >Enjoy.</p>
 <h2><a class="anchor" id="autotoc_md51"></a>
 3.6 Asynchronous Flushing Mode</h2>
-<p >Different from the method described in <b>section 3.1</b> that uses the CPU to do the flushing work, it is possible to use DMA (or peripherals with similar capability) to flush the framebuffer to LCD, we call it <b>Asynchronous Flushing</b> mode, and the method described before is often referred as <b>Synchronous Flushing</b> mode.</p>
+<p >Different from the method described in <b>section 3.1</b> that lets the CPU flush the LCD directly, it is possible to use DMA (or peripherals with similar capability) to offload the processor - we call it <b>Asynchronous Flushing</b> mode, and the method described before is often referred as <b>Synchronous Flushing</b> mode.</p>
 <p >To enable Asynchronous Flushing:</p>
 <ol type="1">
-<li>Select <code>Enable the helper service for Asynchronous Flushing</code> in Display Adapter configuration wizard, or equivalently define the macro <code>__DISP0_CFG_ENABLE_ASYNC_FLUSHING__</code> as <code>1</code>.</li>
-<li>Implement the user defined function called <code>__disp_adapterN_request_async_flushing()</code>, here <code>N</code> is the corresponding display adapter index number. The function prototype is shown as below: <div class="fragment"><div class="line"><span class="comment">/*!</span></div>
+<li>Select <code>Enable the helper service for Asynchronous Flushing</code> in the Display Adapter configuration wizard, or equivalently define the macro <code>__DISPn_CFG_ENABLE_ASYNC_FLUSHING__</code> as <code>1</code> (here <b>n</b> represents the display adapter index number).</li>
+<li>Implement the user defined function called <code>__disp_adapterN_request_async_flushing()</code>(here <b>N</b> represents the display adapter index number). The function prototype is shown as below: <div class="fragment"><div class="line"><span class="comment">/*!</span></div>
 <div class="line"><span class="comment"> * \brief It is an user implemented function that request an LCD flushing in </span></div>
 <div class="line"><span class="comment"> *        asynchronous manner. </span></div>
 <div class="line"><span class="comment"> * \note User MUST implement this function when </span></div>
@@ -403,7 +403,7 @@ Table of Contents</h2>
 <div class="line">    int16_t iHeight,</div>
 <div class="line">    <span class="keyword">const</span> COLOUR_INT *pBuffer);</div>
 </div><!-- fragment --> ​ We use this function to send a DMA transaction request, and enable interrupt generation for this transaction.</li>
-<li>In the DMA transaction complete interrupt service routine, call function <code>disp_adapter0_insert_async_flushing_complete_event_handler()</code> to report the event to the display adapter service.</li>
+<li>In the DMA transaction complete interrupt service routine, call function <code>disp_adapterN_insert_async_flushing_complete_event_handler()</code> to report the event to the display adapter service (here <b>N</b> represents the display adapter index number).</li>
 </ol>
 <div class="fragment"><div class="line"><span class="comment">/*!</span></div>
 <div class="line"><span class="comment"> * \brief the handler for the asynchronous flushing complete event.</span></div>
@@ -419,7 +419,7 @@ Table of Contents</h2>
 <p >NOTE: If the device connects LCD via SPI, when using DMA for transaction, please handle the CS signal properly. Usually, we set the CS to low before sending the DMA transaction request in <code>__disp_adapterN_request_async_flushing()</code> and raise CS to high in the DMA transaction complete interrupt service routine (ISR). </p>
 </blockquote>
 <ol type="1">
-<li>In <b>Asynchronous Flushing</b> mode, it is better to increase the<code>PFB Block Count</code> to <code>2</code> (or even <code>3</code>) in the configuration wizard, or equivalently define the macro <code>__DISP0_CFG_PFB_HEAP_SIZE__</code> as <code>2</code> (or even <code>3</code>). A typical configuration is shown in <b>Figure 3-5</b>.</li>
+<li>In <b>Asynchronous Flushing</b> mode, it is better to increase the<code>PFB Block Count</code> to <code>2</code> (or even <code>3</code>) in the configuration wizard, or equivalently define the macro <code>__DISPn_CFG_PFB_HEAP_SIZE__</code> as <code>2</code> (or even <code>3</code>), here <b>n</b> represents the display adapter index number. A typical configuration is shown in <b>Figure 3-5</b>.</li>
 </ol>
 <p ><b>Figure 3-5 A Typical Configuration for Enabling Asynchronous Flushing Mode in the Wizard.</b></p>
 <p ><img src="EnableAsynchronosFlushingInWizard.png" alt="" class="inline" title="image-20231120152652919"/></p>
@@ -430,6 +430,101 @@ Table of Contents</h2>
 </ul>
 <h2><a class="anchor" id="autotoc_md52"></a>
 3.7 Direct Mode (3FB Mode)</h2>
+<p >To avoid the tearing effects, some devices provide a dedicated LCD controller peripheral, often known as <b>LTDC</b>. The LCD controller maps a <b>FULL framebuffer</b> as the display RAM and copies the content in the display RAM to the LCD in a fixed frequency. During this period, there is a time-window indicated by a signal often known as <b>TE</b> or <b>VSYNC</b>, as long as we can finish flushing the LCD in this time-window, the tearing problem can be avoided.</p>
+<p >Direct mode is such a mode that exchanges the FULL framebuffer as the display RAM on VSYNC or TE events. Arm-2D supports the Direct Mode through a dedicated helper service.</p>
+<p >To enable the 3FB helper service:</p>
+<ol type="1">
+<li>Select <code>Enable the helper service for 3FB (LCD Direct Mode)</code> in the Display Adapter Configuration Wizard, or equivalently define the macro <code>__DISPn_CFG_ENABLE_3FB_HELPER_SERVICE__</code> as <code>1</code> (here <b>n</b> represents the display adapter index number).</li>
+<li>Implement the following <code>uintptr_t</code> variables to indicate the address of three <b>FULL-Framebuffer</b>:</li>
+</ol>
+<div class="fragment"><div class="line"><span class="keyword">extern</span> uintptr_t __DISP_ADAPTERn_3FB_FB0_ADDRESS__;</div>
+<div class="line"><span class="keyword">extern</span> uintptr_t __DISP_ADAPTERn_3FB_FB1_ADDRESS__;</div>
+<div class="line"><span class="keyword">extern</span> uintptr_t __DISP_ADAPTERn_3FB_FB2_ADDRESS__;</div>
+</div><!-- fragment --><blockquote class="doxtable">
+<p >NOTE: <br  />
+</p>
+<ol type="1">
+<li>Here <b>n</b> represents the display adapter index number.</li>
+<li>The three variables should be initialized with the proper value before initialization of the corresponding display adapter service. </li>
+</ol>
+</blockquote>
+<ol type="1">
+<li>In the <b>VSYN</b> or <b>TE</b> event handler, call function <code>disp_adapterN_3fb_get_flush_pointer()</code> to get a framebuffer pointer and use it to update the LTDC. (Here <b>N</b> represent the display adapter index number)</li>
+</ol>
+<p >In fact, the Direct Mode can be used together with the Asynchronous Flushing mode. If the two modes are enabled at the same time, users have to implement the following functions:</p>
+<div class="fragment"><div class="line"><span class="comment">/*!</span></div>
+<div class="line"><span class="comment"> * \brief An user implemented interface for DMA memory-to-memory copy.</span></div>
+<div class="line"><span class="comment"> *        You should implement an ISR for copy-complete event and call</span></div>
+<div class="line"><span class="comment"> *        disp_adapterN_insert_dma_copy_complete_event_handler() or</span></div>
+<div class="line"><span class="comment"> *        arm_2d_helper_3fb_report_dma_copy_complete() to notify the </span></div>
+<div class="line"><span class="comment"> *        3FB (direct mode) helper service.</span></div>
+<div class="line"><span class="comment"> * </span></div>
+<div class="line"><span class="comment"> * \param[in] ptThis the helper service control block</span></div>
+<div class="line"><span class="comment"> * \param[in] pObj the address of the user object</span></div>
+<div class="line"><span class="comment"> * \param[in] pnSource the source address of the memory block</span></div>
+<div class="line"><span class="comment"> * \param[in] pnTarget the target address</span></div>
+<div class="line"><span class="comment"> * \param[in] nDataItemCount the number of date items</span></div>
+<div class="line"><span class="comment"> * \param[in] chDataItemSize the size of each data item </span></div>
+<div class="line"><span class="comment"> */</span></div>
+<div class="line"><span class="keyword">extern</span></div>
+<div class="line"><span class="keywordtype">void</span> __disp_adapterN_request_dma_copy(  <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__3fb__t" title="the control block of the 3FB (direct mode) service">arm_2d_helper_3fb_t</a> *ptThis,</div>
+<div class="line">                                        <span class="keywordtype">void</span> *pObj,</div>
+<div class="line">                                        uintptr_t pnSource,</div>
+<div class="line">                                        uintptr_t pnTarget,</div>
+<div class="line">                                        uint32_t nDataItemCount,</div>
+<div class="line">                                        uint_fast8_t chDataItemSize);</div>
+<div class="line"><span class="comment"></span> </div>
+<div class="line"><span class="comment">/*!</span></div>
+<div class="line"><span class="comment"> * \brief An user implemented interface for 2D-Copy.</span></div>
+<div class="line"><span class="comment"> * \param[in] pnSource the source image address</span></div>
+<div class="line"><span class="comment"> * \param[in] wSourceStride the stride of the source image</span></div>
+<div class="line"><span class="comment"> * \param[in] pnTarget the address in the target framebuffer</span></div>
+<div class="line"><span class="comment"> * \param[in] wTargetStride the stride of the target framebuffer</span></div>
+<div class="line"><span class="comment"> * \param[in] iWidth the safe width of the source image</span></div>
+<div class="line"><span class="comment"> * \param[in] iHeight the safe height of the source image</span></div>
+<div class="line"><span class="comment"> * \retval true the 2D copy is complete when leaving this function</span></div>
+<div class="line"><span class="comment"> * \retval false An async 2D copy request is sent to the DMA</span></div>
+<div class="line"><span class="comment"> *</span></div>
+<div class="line"><span class="comment"> * \note if false is replied, you have to call </span></div>
+<div class="line"><span class="comment"> *       disp_adapter0_insert_2d_copy_complete_event_handler() to report</span></div>
+<div class="line"><span class="comment"> *       the completion of the 2d-copy. </span></div>
+<div class="line"><span class="comment"> */</span></div>
+<div class="line"><span class="keywordtype">bool</span> __disp_adapterN_request_2d_copy(   <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__3fb__t" title="the control block of the 3FB (direct mode) service">arm_2d_helper_3fb_t</a> *ptThis,</div>
+<div class="line">                                        <span class="keywordtype">void</span> *pObj,</div>
+<div class="line">                                        uintptr_t pnSource,</div>
+<div class="line">                                        uint32_t wSourceStride,</div>
+<div class="line">                                        uintptr_t pnTarget,</div>
+<div class="line">                                        uint32_t wTargetStride,</div>
+<div class="line">                                        int16_t iWidth,</div>
+<div class="line">                                        int16_t iHeight,</div>
+<div class="line">                                        uint_fast8_t chBytePerPixel );</div>
+</div><!-- fragment --><p >In DMA transaction complete event handler, please call the corresponding function to report the completion of the transaction:</p>
+<div class="fragment"><div class="line"><span class="comment">/*!</span></div>
+<div class="line"><span class="comment"> * \brief the handler for the 2d copy complete event.</span></div>
+<div class="line"><span class="comment"> * \note When both __DISPn_CFG_ENABLE_ASYNC_FLUSHING__ and </span></div>
+<div class="line"><span class="comment"> *       __DISPn_CFG_ENABLE_3FB_HELPER_SERVICE__ is set to &#39;1&#39;, user </span></div>
+<div class="line"><span class="comment"> *       MUST call this function to notify the PFB helper that the previous</span></div>
+<div class="line"><span class="comment"> *       asynchronouse 2d copy is complete. </span></div>
+<div class="line"><span class="comment"> * \note When people using DMA+ISR to offload CPU, this fucntion is called in </span></div>
+<div class="line"><span class="comment"> *       the DMA transfer complete ISR.</span></div>
+<div class="line"><span class="comment"> */</span></div>
+<div class="line"><span class="keyword">extern</span></div>
+<div class="line"><span class="keywordtype">void</span> disp_adapterN_insert_2d_copy_complete_event_handler(<span class="keywordtype">void</span>);</div>
+<div class="line"><span class="comment"></span> </div>
+<div class="line"><span class="comment">/*!</span></div>
+<div class="line"><span class="comment"> * \brief the handler for the dma copy complete event.</span></div>
+<div class="line"><span class="comment"> * \note When both __DISPn_CFG_ENABLE_ASYNC_FLUSHING__ and </span></div>
+<div class="line"><span class="comment"> *       __DISPn_CFG_ENABLE_3FB_HELPER_SERVICE__ is set to &#39;1&#39;, user </span></div>
+<div class="line"><span class="comment"> *       MUST call this function to notify the PFB helper that the previous</span></div>
+<div class="line"><span class="comment"> *       dma copy is complete. </span></div>
+<div class="line"><span class="comment"> * \note When people using DMA+ISR to offload CPU, this fucntion is called in </span></div>
+<div class="line"><span class="comment"> *       the DMA transfer complete ISR.</span></div>
+<div class="line"><span class="comment"> */</span></div>
+<div class="line"><span class="keyword">extern</span></div>
+<div class="line"><span class="keywordtype">void</span> disp_adapterN_insert_dma_copy_complete_event_handler(<span class="keywordtype">void</span>);</div>
+</div><!-- fragment --><blockquote class="doxtable">
+<p >NOTE: Here, <b>N</b> and <b>n</b> represents the display adapter index number. </p>
+</blockquote>
 <h1><a class="anchor" id="autotoc_md53"></a>
 4 Example Projects</h1>
 <p ><b>Table 3-1 Summary</b></p>
