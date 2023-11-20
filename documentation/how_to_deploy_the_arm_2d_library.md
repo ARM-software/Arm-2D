@@ -99,11 +99,11 @@ There are three methods to get Arm-2D:
 
 ### 2.2 Deploy Using CMake
 
-It is easy to deploying arm-2d as a library using CMake, for details, please check the [CMakeLists.txt](../CMakeList.txt). 
+It is easy to deploying arm-2d as a library using CMake, for details, please check the [CMakeLists.txt](../CMakeLists.txt). 
 
 ### 2.3 Deploy Using Makefile
 
-It is possible to deploy arm-2d using Makefile. We supposes you familiar with writing Makefile scripts and hence provides an [Makefile](../examples/[template][pc][vscode]/Makefile) used on PC as a good example. 
+It is possible to deploy arm-2d using Makefile. We supposes you familiar with writing Makefile scripts and hence provide an [Makefile](../examples/[template][pc][vscode]/Makefile) used on PC as a good example. 
 
 
 
