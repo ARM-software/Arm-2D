@@ -219,6 +219,8 @@ var group__gHelper =
     [ "arm_2d_helper_swap_rgb16", "group__gHelper.html#gaf07a91ddd548e926e5737db7800c16a9", null ],
     [ "__arm_2d_helper_pfb_new", "group__gHelper.html#gaa7855ac916c44e531c4c8a9c5ec0e69e", null ],
     [ "__arm_2d_helper_pfb_free", "group__gHelper.html#ga484b485061778cdf3a2cb4373374c581", null ],
+    [ "arm_2d_helper_pfb_enable_dirty_region_optimization", "group__gHelper.html#ga3143cf1a38a0868035618dc5d91e94fa", null ],
+    [ "arm_2d_helper_pfb_disable_dirty_region_optimization", "group__gHelper.html#ga2397e6e7f240d0902d3b5d3eee794cf3", null ],
     [ "arm_2d_helper_transform_init", "group__gHelper.html#ga076b6793e3c2fc6f1ef064ca700f667e", null ],
     [ "arm_2d_helper_transform_depose", "group__gHelper.html#gac827ff7995d260f06cd3f80c1df0e9b7", null ],
     [ "arm_2d_helper_transform_on_frame_begin", "group__gHelper.html#ga646d1178b70b862d77d33f8a84173f0e", null ],

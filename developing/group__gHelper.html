@@ -527,6 +527,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga484b485061778cdf3a2cb4373374c581"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga484b485061778cdf3a2cb4373374c581">__arm_2d_helper_pfb_free</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis, <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptPFB)</td></tr>
 <tr class="memdesc:ga484b485061778cdf3a2cb4373374c581"><td class="mdescLeft">&#160;</td><td class="mdescRight">free a PFB block to the pool  <a href="group__gHelper.html#ga484b485061778cdf3a2cb4373374c581">More...</a><br /></td></tr>
 <tr class="separator:ga484b485061778cdf3a2cb4373374c581"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3143cf1a38a0868035618dc5d91e94fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga3143cf1a38a0868035618dc5d91e94fa">arm_2d_helper_pfb_enable_dirty_region_optimization</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis, <a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptRegions, uint_fast8_t chCount)</td></tr>
+<tr class="memdesc:ga3143cf1a38a0868035618dc5d91e94fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable dirty region optimization service  <a href="group__gHelper.html#ga3143cf1a38a0868035618dc5d91e94fa">More...</a><br /></td></tr>
+<tr class="separator:ga3143cf1a38a0868035618dc5d91e94fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2397e6e7f240d0902d3b5d3eee794cf3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga2397e6e7f240d0902d3b5d3eee794cf3">arm_2d_helper_pfb_disable_dirty_region_optimization</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis)</td></tr>
+<tr class="memdesc:ga2397e6e7f240d0902d3b5d3eee794cf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">disable dirty region optimization service  <a href="group__gHelper.html#ga2397e6e7f240d0902d3b5d3eee794cf3">More...</a><br /></td></tr>
+<tr class="separator:ga2397e6e7f240d0902d3b5d3eee794cf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga076b6793e3c2fc6f1ef064ca700f667e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga076b6793e3c2fc6f1ef064ca700f667e">arm_2d_helper_transform_init</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__transform__t">arm_2d_helper_transform_t</a> *ptThis, <a class="el" href="group__gKernel.html#structarm__2d__op__t">arm_2d_op_t</a> *ptTransformOP, float fAngleStep, float fScaleStep, <a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> **ppDirtyRegionList)</td></tr>
 <tr class="memdesc:ga076b6793e3c2fc6f1ef064ca700f667e"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize a given transform helper  <a href="group__gHelper.html#ga076b6793e3c2fc6f1ef064ca700f667e">More...</a><br /></td></tr>
 <tr class="separator:ga076b6793e3c2fc6f1ef064ca700f667e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -2202,9 +2208,15 @@ ptInternalNext</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a1bcefde34d5dc7eb31efdb206430a6b8" name="a1bcefde34d5dc7eb31efdb206430a6b8"></a>bool</td>
+<a id="a1bcefde34d5dc7eb31efdb206430a6b8" name="a1bcefde34d5dc7eb31efdb206430a6b8"></a>uint8_t</td>
 <td class="fieldname">
-bFromInternalPool</td>
+bFromInternalPool: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a39384e6fb6c89bb61c5865aa1d62644c" name="a39384e6fb6c89bb61c5865aa1d62644c"></a>uint8_t</td>
+<td class="fieldname">
+bFromHeap: 1</td>
 <td class="fielddoc">
 </td></tr>
 </table>
@@ -2567,6 +2579,18 @@ iFreeCount</td>
 <a id="ab5ed6a07e41a71a6b74b7c9408d66af3" name="ab5ed6a07e41a71a6b74b7c9408d66af3"></a>uint16_t</td>
 <td class="fieldname">
 bIsDirtyRegionOptimizationEnabled: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a7985bb285c4a1ac02c1d5d40aff2c558" name="a7985bb285c4a1ac02c1d5d40aff2c558"></a>uint16_t</td>
+<td class="fieldname">
+bEnableDirtyRegionOptimizationRequest: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="afc0f40f68fd286ee38a4d327dcbe8153" name="afc0f40f68fd286ee38a4d327dcbe8153"></a>uint16_t</td>
+<td class="fieldname">
+bDisableDirtyRegionOptimizationRequest: 1</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
@@ -5094,6 +5118,76 @@ For normal usage, please DO NOT use this function unless you know what you are d
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the PFB helper control block </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ptPFB</td><td>the target PFB block </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga3143cf1a38a0868035618dc5d91e94fa" name="ga3143cf1a38a0868035618dc5d91e94fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3143cf1a38a0868035618dc5d91e94fa">&#9670;&nbsp;</a></span>arm_2d_helper_pfb_enable_dirty_region_optimization()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_helper_pfb_enable_dirty_region_optimization </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *&#160;</td>
+          <td class="paramname"><em>ptRegions</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint_fast8_t&#160;</td>
+          <td class="paramname"><em>chCount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>enable dirty region optimization service </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the PFB helper control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptRegions</td><td>an optional array of dirty region items, which will be added to the dirty region item pool. NULL is acceptable. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">chCount</td><td>the number of items in the array. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga2397e6e7f240d0902d3b5d3eee794cf3" name="ga2397e6e7f240d0902d3b5d3eee794cf3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2397e6e7f240d0902d3b5d3eee794cf3">&#9670;&nbsp;</a></span>arm_2d_helper_pfb_disable_dirty_region_optimization()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_helper_pfb_disable_dirty_region_optimization </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>disable dirty region optimization service </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the PFB helper control block </td></tr>
   </table>
   </dd>
 </dl>
