@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        17. Nov 2023
- * $Revision:    V.1.7.1
+ * $Date:        21. Nov 2023
+ * $Revision:    V.1.7.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -475,7 +475,9 @@ typedef struct arm_2d_region_list_item_t {
 
 ARM_PRIVATE(
     struct arm_2d_region_list_item_t   *ptInternalNext;                         //!< the next node in the internal list
-    bool                                bFromInternalPool;                      //!< a flag indicating whether this list item coming from the internal pool
+    uint8_t                             bFromInternalPool : 1;                  //!< a flag indicating whether this list item coming from the internal pool
+    uint8_t                             bFromHeap         : 1;                  //!< whether this item comes from the HEAP
+    uint8_t                                               : 6;
 )
 }arm_2d_region_list_item_t;
 
@@ -614,20 +616,22 @@ ARM_PRIVATE(
         uint8_t                     chPT;
         uint8_t                     chFreePFBCount;
         struct {
-            uint16_t                bIsDirtyRegionOptimizationEnabled   : 1;
-            uint16_t                bEncounterDynamicDirtyRegion        : 1;
-            uint16_t                bFailedToOptimizeDirtyRegion        : 1;
-            uint16_t                bIsUsingOptimizedDirtyRegionList    : 1;
-            uint16_t                                                    : 4;
+            uint16_t                bIsDirtyRegionOptimizationEnabled       : 1;
+            uint16_t                bEnableDirtyRegionOptimizationRequest   : 1;
+            uint16_t                bDisableDirtyRegionOptimizationRequest  : 1;
+            uint16_t                bEncounterDynamicDirtyRegion            : 1;
+            uint16_t                bFailedToOptimizeDirtyRegion            : 1;
+            uint16_t                bIsUsingOptimizedDirtyRegionList        : 1;
+            uint16_t                                                        : 2;
 
-            uint16_t                bIsNewFrame                         : 1;
-            uint16_t                                                    : 1;
-            uint16_t                bIgnoreLowLevelFlush                : 1;
-            uint16_t                bHideNavigationLayer                : 1;
-            uint16_t                bIsDryRun                           : 1;    //!< A flag to indicate whether the first iteration was a dry run
-            uint16_t                bNoAdditionalDirtyRegionList        : 1;
-            uint16_t                bFirstIteration                     : 1;
-            uint16_t                bIsRegionChanged                    : 1;
+            uint16_t                bIsNewFrame                             : 1;
+            uint16_t                                                        : 1;
+            uint16_t                bIgnoreLowLevelFlush                    : 1;
+            uint16_t                bHideNavigationLayer                    : 1;
+            uint16_t                bIsDryRun                               : 1;    //!< A flag to indicate whether the first iteration was a dry run
+            uint16_t                bNoAdditionalDirtyRegionList            : 1;
+            uint16_t                bFirstIteration                         : 1;
+            uint16_t                bIsRegionChanged                        : 1;
         };
         
 
@@ -852,6 +856,28 @@ arm_2d_pfb_t *__arm_2d_helper_pfb_new(arm_2d_helper_pfb_t *ptThis);
 extern
 ARM_NONNULL(1)
 void __arm_2d_helper_pfb_free(arm_2d_helper_pfb_t *ptThis, arm_2d_pfb_t *ptPFB);
+
+/*!
+ * \brief enable dirty region optimization service
+ * \param[in] ptThis the PFB helper control block
+ * \param[in] ptRegions an optional array of dirty region items, which will be
+ *            added to the dirty region item pool. NULL is acceptable.
+ * \param[in] chCount the number of items in the array.
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_pfb_enable_dirty_region_optimization(
+                                            arm_2d_helper_pfb_t *ptThis,
+                                            arm_2d_region_list_item_t *ptRegions,
+                                            uint_fast8_t chCount);
+/*!
+ * \brief disable dirty region optimization service
+ * \param[in] ptThis the PFB helper control block
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_pfb_disable_dirty_region_optimization(
+                                                arm_2d_helper_pfb_t *ptThis);
 
 /*!
  * \brief initialize a given transform helper

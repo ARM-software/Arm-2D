@@ -24,7 +24,8 @@
 			"memory": "c",
 			"new": "c",
 			"string": "c",
-			"type_traits": "c"
+			"type_traits": "c",
+			"__config": "c"
 		}
 	}
 }

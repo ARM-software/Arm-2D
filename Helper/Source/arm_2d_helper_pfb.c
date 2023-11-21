@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        17. Nov 2023
- * $Revision:    V.1.7.1
+ * $Date:        21. Nov 2023
+ * $Revision:    V.1.7.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -34,6 +34,7 @@
 #include <stdint.h>
 #include <assert.h>
 #include "arm_2d_helper.h"
+#include "__arm_2d_impl.h"
 
 #if defined(__PERF_COUNTER__)
 #   include "perf_counter.h"
@@ -335,7 +336,6 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
     
     return ARM_2D_ERR_NONE;
 }
-
 
 ARM_NONNULL(1)
 void arm_2d_helper_pfb_deinit(arm_2d_helper_pfb_t *ptThis) 
@@ -689,6 +689,45 @@ static bool __arm_2d_helper_pfb_get_next_dirty_region(arm_2d_helper_pfb_t *ptThi
 /*----------------------------------------------------------------------------*
  * Optimized Dirty Regions                                                    *
  *----------------------------------------------------------------------------*/
+
+ARM_NONNULL(1)
+void arm_2d_helper_pfb_enable_dirty_region_optimization(
+                                        arm_2d_helper_pfb_t *ptThis,
+                                        arm_2d_region_list_item_t *ptRegions,
+                                        uint_fast8_t chCount)
+{
+    assert(NULL != ptThis);
+    arm_irq_safe {
+        this.Adapter.bEnableDirtyRegionOptimizationRequest = true;
+        this.Adapter.bDisableDirtyRegionOptimizationRequest = false;
+    }
+
+    if ((0 == chCount) || (NULL == ptRegions)) {
+        return ;
+    }
+
+    do {
+        memset(ptRegions, 0, sizeof(arm_2d_region_list_item_t) );
+        ptRegions->bFromInternalPool = true;
+
+        __arm_2d_helper_dirty_region_pool_free(ptThis, ptRegions);
+        ptRegions++;
+    } while(--chCount);
+}
+
+ARM_NONNULL(1)
+void arm_2d_helper_pfb_disable_dirty_region_optimization(
+                                                arm_2d_helper_pfb_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    arm_irq_safe {
+        this.Adapter.bEnableDirtyRegionOptimizationRequest = false;
+        this.Adapter.bDisableDirtyRegionOptimizationRequest = true;
+    }
+}
+
+
 ARM_NONNULL(1)
 static void __arm_2d_helper_dirty_region_pool_free(
                                             arm_2d_helper_pfb_t *ptThis,
@@ -701,20 +740,31 @@ static void __arm_2d_helper_dirty_region_pool_free(
         return ;
     }
 
-    arm_irq_safe {
-        /* PUSH item to the pool in STACK-style */
-        ptItem->ptInternalNext = this.Adapter.OptimizedDirtyRegions.ptFreeList;
-        this.Adapter.OptimizedDirtyRegions.ptFreeList = ptItem;
-        this.Adapter.OptimizedDirtyRegions.iFreeCount++;
-        assert(this.Adapter.OptimizedDirtyRegions.iFreeCount > 0);
-    }
+    if (ptItem->bFromHeap) {
+        __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, ptItem);
 
-    ARM_2D_LOG_INFO(DIRTY_REGION_OPTIMISATION, 
-                2, 
-                "Dirty Region Pool", 
-                "Free Dirty Region Item [%p], %d items available", 
-                (void *)ptItem,
-                this.Adapter.OptimizedDirtyRegions.iFreeCount);
+        ARM_2D_LOG_INFO(DIRTY_REGION_OPTIMISATION, 
+                    2, 
+                    "Dirty Region Pool", 
+                    "Free Dirty Region Item [%p] to HEAP", 
+                    (void *)ptItem);
+    } else {
+
+        arm_irq_safe {
+            /* PUSH item to the pool in STACK-style */
+            ptItem->ptInternalNext = this.Adapter.OptimizedDirtyRegions.ptFreeList;
+            this.Adapter.OptimizedDirtyRegions.ptFreeList = ptItem;
+            this.Adapter.OptimizedDirtyRegions.iFreeCount++;
+            assert(this.Adapter.OptimizedDirtyRegions.iFreeCount > 0);
+        }
+
+        ARM_2D_LOG_INFO(DIRTY_REGION_OPTIMISATION, 
+                    2, 
+                    "Dirty Region Pool", 
+                    "Free Dirty Region Item [%p], %d items available", 
+                    (void *)ptItem,
+                    this.Adapter.OptimizedDirtyRegions.iFreeCount);
+    }
 }
 
 ARM_NONNULL(1)
@@ -723,9 +773,8 @@ arm_2d_region_list_item_t *__arm_2d_helper_dirty_region_pool_new(
                                             arm_2d_helper_pfb_t *ptThis)
 {
     assert(NULL != ptThis);
-
     arm_2d_region_list_item_t *ptItem = NULL;
-
+    bool bFromHeap = false;
     arm_irq_safe {
         ptItem = this.Adapter.OptimizedDirtyRegions.ptFreeList;
         if (NULL != ptItem) {
@@ -736,17 +785,37 @@ arm_2d_region_list_item_t *__arm_2d_helper_dirty_region_pool_new(
         }
     }
 
+    if (NULL == ptItem) {
+        /* try to borrow items from the heap */
+        ptItem = (arm_2d_region_list_item_t *)
+                    __arm_2d_allocate_scratch_memory(
+                        sizeof(arm_2d_region_list_item_t),
+                        __alignof__(arm_2d_region_list_item_t),
+                        ARM_2D_MEM_TYPE_FAST);
+        bFromHeap = true;
+    }
+
     if (NULL != ptItem) {
         memset(ptItem, 0, sizeof(arm_2d_region_list_item_t));
         ptItem->bFromInternalPool = true;
+        ptItem->bFromHeap = bFromHeap;
 
-        ARM_2D_LOG_INFO(
-            DIRTY_REGION_OPTIMISATION, 
-            2, 
-            "Dirty Region Pool", 
-            "Allocate a new dirty region item [%p], %d item left", 
-            (void *)ptItem,
-            this.Adapter.OptimizedDirtyRegions.iFreeCount);
+        if (bFromHeap) {
+            ARM_2D_LOG_INFO(
+                DIRTY_REGION_OPTIMISATION, 
+                2, 
+                "Dirty Region Pool", 
+                "Allocate a new dirty region item [%p] from HEAP as POOL is empty", 
+                (void *)ptItem);
+        } else {
+            ARM_2D_LOG_INFO(
+                DIRTY_REGION_OPTIMISATION, 
+                2, 
+                "Dirty Region Pool", 
+                "Allocate a new dirty region item [%p], %d item left", 
+                (void *)ptItem,
+                this.Adapter.OptimizedDirtyRegions.iFreeCount);
+        }
     } else {
         ARM_2D_LOG_INFO(
             DIRTY_REGION_OPTIMISATION, 
@@ -1217,11 +1286,11 @@ label_iteration_begin_start:
                 "Reset to the start of a frame in dry run mode"
             );
 
-            if (this.tCFG.FrameBuffer.bDebugDirtyRegions) {
-                /* in dirty region debug mode, we will refresh the whole screen
-                * instead of the dirty regions to show the optimized dirty regions
-                * correctly.
-                */
+            if (    this.tCFG.FrameBuffer.bDebugDirtyRegions
+                ||  this.Adapter.bFailedToOptimizeDirtyRegion) {
+                /* In dirty region debug mode (or failed to optimize the dirty regions), 
+                 * we have to refresh the whole screen instead of the dirty regions
+                 */
                 this.Adapter.bIsDryRun = false;             /* clear the DryRun flag */
 
                 /* NOTE: due to the dry run, it is not the first iteration of a frame 
@@ -1851,6 +1920,16 @@ ARM_PT_BEGIN(this.Adapter.chPT)
     this.Statistics.nRenderingCycle = 0;
     this.Adapter.bIsNewFrame = true;
 
+    arm_irq_safe {
+        if (this.Adapter.bEnableDirtyRegionOptimizationRequest) {
+            this.Adapter.bEnableDirtyRegionOptimizationRequest = false;
+            this.Adapter.bIsDirtyRegionOptimizationEnabled = true;
+        } else if (this.Adapter.bDisableDirtyRegionOptimizationRequest) {
+            this.Adapter.bDisableDirtyRegionOptimizationRequest = false;
+            this.Adapter.bIsDirtyRegionOptimizationEnabled = false;
+        }
+    }
+
     /* initialize the OptimizedDirtyRegions service */
     if (this.Adapter.bIsDirtyRegionOptimizationEnabled) {
         this.Adapter.OptimizedDirtyRegions.ptOriginalList = ptDirtyRegions;
@@ -2100,6 +2179,17 @@ ARM_PT_END()
         __arm_2d_helper_free_dirty_region_working_list(
                                 ptThis, 
                                 this.Adapter.OptimizedDirtyRegions.ptCandidateList);
+
+        if (this.Adapter.bFailedToOptimizeDirtyRegion) {
+            this.Adapter.bIsDirtyRegionOptimizationEnabled = false;
+
+            ARM_2D_LOG_WARNING(
+                DIRTY_REGION_OPTIMISATION, 
+                0, 
+                "PFB TASK", 
+                "As we failed to optimize dirty regions due to insufficient dirty region items in the pool, we have to turn of the optimization service."
+            );
+        }
     }
 
     /* invoke the On Each Frame Complete Event */
