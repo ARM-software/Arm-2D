@@ -106,21 +106,25 @@ Potential users of Arm-2D may have different backgrounds and purposes. Whether y
 The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly used in **Deep Embedded Display system**. The supported features include but not limited to:
 
 - **CMSIS-Pack is available.**
+
 - **Alpha-Blending** / **Masks**
   - With or without Colour-Keying
   - Filling-Colour with an mask and an optional opacity
     - For drawing anti-alias icons/texts in a specified colour
     - Supports A2, A4 and A8 masks
+  
 - **Image Copy (Tiling)**
   - With or without Colour-Keying
   - Supports four mirroring modes: No-mirroring, X-mirroring, Y-mirroring and XY-mirroring
   - Supports **masks** on the source side and/or the target side
+  
 - **Supported Colour formats**
   - **GRAY8 (8-bit Grayscale)**, **RGB565** and **RGB888**
   - Generic **C8BIT (8bit colour)**, **RGB16** and **RGB32**
   - Converting colour formats among **GRAY8**, **RGB565** and **RGB888**
   - Ready for **monochrome LCD** (the 1bit colour) and **e-ink displays** (the 2bits and 4bits colour formats)
     - Using **Gray8** as the internal processing format and converting to target colour format inside Display Adapter, e.g. `Disp0_DrawBitmap`
+  
 - **Display Adapter Service for connecting LCD**
   - Generic Partial Frame-buffer (PFB)
     - Easy to Use: transparent for applications
@@ -128,15 +132,20 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
     - No limitation on PFB size and shape (it could be a line or a rectangular with any size)  **(See note)**
     - Supports PFB alignment for both width and height.
     >  **NOTE**: As long as the size is smaller than 32767 * 32767. 
+    
   - Supports **Dirty Regions** for refreshing specified areas only
     - Provides a debug mode for dirty regions
+    - **[new]** Provides optimization for dirty regions to reduce the chances of refreshing overlapped ones.
+    
   - Supports swapping high and low bytes for RGB16 pixels
+  
   - Provides a **Scene Player** with various scene switching modes (Fade-In-Fade-Out, Slide, Erase etc.)
+
   - Supports various Buffer Modes with a built-in framebuffer pool.
     - Single Buffer/Double-Buffers
-    - Ready for Direct Mode
+    - **[new]** Provides a helper service for Direct Mode
     - Provides a helper service for Asynchronous Flushing (i.e. DMA + ISR)
-
+  
 - **Transform** (i.e. rotation and scaling)
   - With/Without Colour-keying
   - Supports an optional **Opacity** ratio
@@ -175,7 +184,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
   - Templates
 
     - Provides templates for user controls and scenes.
-    - Scene templates for Meter and Watch
+    - Scene templates for Meter, Watch and Fitness trackers
     - Provides a template for adding new RTOS support.
 
   - Other Helper services
@@ -184,7 +193,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
       - Provide dynamic dirty region tracking
       - Double-buffered Angle and Scale updating
   - A `img2c.py` for generating arm-2d resources from user specified images
-  - A `ttf2c.py` for generating user customized font from user specified TrueType Fonts
+  - A `ttf2c.py` for generating user customized A1, A2, A4 and A8 fonts from an user specified TrueType Font
 
 - **Ready and Welcome 3rd party adoption**
 
@@ -378,4 +387,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-30 Aug 2023
+21 Nov 2023
