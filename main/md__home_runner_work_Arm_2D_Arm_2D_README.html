@@ -274,15 +274,20 @@ In this version (ver1.1.5-dev)</h2>
 <li>Supports PFB alignment for both width and height. <blockquote class="doxtable">
 <p ><b>NOTE</b>: As long as the size is smaller than 32767 * 32767. </p>
 </blockquote>
-- Supports <b>Dirty Regions</b> for refreshing specified areas only</li>
+<br  />
+</li>
+</ul>
+</li>
+<li>Supports <b>Dirty Regions</b> for refreshing specified areas only<ul>
 <li>Provides a debug mode for dirty regions</li>
+<li><b>[new]</b> Provides optimization for dirty regions to reduce the chances of refreshing overlapped ones.</li>
 </ul>
 </li>
 <li>Supports swapping high and low bytes for RGB16 pixels</li>
 <li>Provides a <b>Scene Player</b> with various scene switching modes (Fade-In-Fade-Out, Slide, Erase etc.)</li>
 <li>Supports various Buffer Modes with a built-in framebuffer pool.<ul>
 <li>Single Buffer/Double-Buffers</li>
-<li>Ready for Direct Mode</li>
+<li><b>[new]</b> Provides a helper service for Direct Mode</li>
 <li>Provides a helper service for Asynchronous Flushing (i.e. DMA + ISR)</li>
 </ul>
 </li>
@@ -328,7 +333,7 @@ In this version (ver1.1.5-dev)</h2>
 <li>RTOS Helper Services for CMSIS-RTOS2 and RT-Thread</li>
 <li>Templates<ul>
 <li>Provides templates for user controls and scenes.</li>
-<li>Scene templates for Meter and Watch</li>
+<li>Scene templates for Meter, Watch and Fitness trackers</li>
 <li>Provides a template for adding new RTOS support.</li>
 </ul>
 </li>
@@ -341,7 +346,7 @@ In this version (ver1.1.5-dev)</h2>
 </ul>
 </li>
 <li>A <code>img2c.py</code> for generating arm-2d resources from user specified images</li>
-<li>A <code>ttf2c.py</code> for generating user customized font from user specified TrueType Fonts</li>
+<li>A <code>ttf2c.py</code> for generating user customized A1, A2, A4 and A8 fonts from an user specified TrueType Font</li>
 </ul>
 </li>
 <li><b>Ready and Welcome 3rd party adoption</b><ul>
@@ -558,7 +563,7 @@ New Features Planned in the Future</h2>
 </ul>
 <p >Thank you for your time.</p>
 <p ><em><b>Arm-2D Development Team.</b></em></p>
-<p >30 Aug 2023 </p>
+<p >21 Nov 2023 </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
