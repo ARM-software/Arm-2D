@@ -53,6 +53,7 @@
             <accept  Dcore="Cortex-M23"/>
             <accept  Dcore="Cortex-M33"/>
             <accept  Dcore="Cortex-M35P"/>
+            <accept  Dcore="Cortex-M52"/>
             <accept  Dcore="Cortex-M55"/>
             <accept  Dcore="Cortex-M85"/>
             <accept  Dcore="Star-MC1"/>
@@ -66,6 +67,7 @@
 
         <condition id="Helium">
             <description>Support All processors with Helium</description>
+            <!--accept  Dcore="Cortex-M52"/-->
             <accept  Dcore="Cortex-M55"/>
             <accept  Dcore="Cortex-M85"/>
             <accept  Dcore="ARMV81MML"/>
