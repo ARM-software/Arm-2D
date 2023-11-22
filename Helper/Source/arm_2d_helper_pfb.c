@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        21. Nov 2023
- * $Revision:    V.1.7.2
+ * $Date:        22. Nov 2023
+ * $Revision:    V.1.7.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -619,6 +619,7 @@ static bool __arm_2d_helper_pfb_get_next_dirty_region(arm_2d_helper_pfb_t *ptThi
         if (NULL == this.Adapter.ptDirtyRegion->ptInternalNext) {
             /* finished or empty */
             this.Adapter.bIsUsingOptimizedDirtyRegionList = false;
+        #if 0
             this.Adapter.ptDirtyRegion = this.Adapter.OptimizedDirtyRegions.ptOriginalList;
 
             ARM_2D_LOG_INFO(
@@ -639,6 +640,21 @@ static bool __arm_2d_helper_pfb_get_next_dirty_region(arm_2d_helper_pfb_t *ptThi
             }
 
             return true;
+        #else
+            this.Adapter.ptDirtyRegion = NULL;
+            // no dirty region is available
+            this.Adapter.bFirstIteration = true;
+
+            ARM_2D_LOG_INFO(
+                HELPER_PFB, 
+                2, 
+                "Get Next Dirty Region", 
+                "Reach the end of the optimized working list.",
+                this.Adapter.ptDirtyRegion
+            );
+
+            return false;
+        #endif
         } else {
             this.Adapter.ptDirtyRegion
                 = this.Adapter.ptDirtyRegion->ptInternalNext;
@@ -1049,6 +1065,7 @@ label_start_process_candidate:
                     __arm_2d_helper_dirty_region_pool_free(ptThis, ptWorking);
 
                 } else {
+                    
                     /* has overlap */
                     arm_2d_region_get_minimal_enclosure(&ptWorking->tRegion, 
                                                         &ptCandidate->tRegion,
@@ -1072,7 +1089,7 @@ label_start_process_candidate:
                         tEnclosureArea.tSize.iHeight
                     );
 
-                    if (wPixelsRegionEnclosure <= wCandidatePixelCount + wWorkingItemPixelCount) {
+                    if (wPixelsRegionEnclosure <= (wCandidatePixelCount + wWorkingItemPixelCount + 100)) {
                         /* we only refresh the enclosure region to save time */
                         
                         ARM_2D_LOG_INFO(
@@ -1126,8 +1143,21 @@ label_start_process_candidate:
                         goto label_start_process_candidate;
                     }
 
-                    /* todo: try to get residual */
-                    
+                #if 0
+                    /* remove common part */
+                    do {
+                        arm_2d_region_t tOverlapped;
+                        
+                        if (!arm_2d_region_intersect(&ptWorking->tRegion, 
+                                                    &ptCandidate->tRegion,
+                                                    &tOverlapped)) {
+                            break;
+                        }
+
+
+
+                    } while(0);
+                #endif
                 }
                 /* no overlap */
                 ptWorking = ptNextWorking;  /* get the next dirty region in the working list */
@@ -1411,7 +1441,7 @@ label_iteration_begin_start:
                      * the code segment for try next dirty region or end early: END *
                      *--------------------------------------------------------------*/
                 }
-
+            #if 0
                 if (    this.Adapter.bIsDirtyRegionOptimizationEnabled
                     &&  !this.Adapter.bIsUsingOptimizedDirtyRegionList
                     &&  !this.Adapter.bIsDryRun) {
@@ -1476,7 +1506,7 @@ label_iteration_begin_start:
                     }
 
                 }
-
+            #endif
             } else {
                 this.Adapter.tTargetRegion = this.tCFG.tDisplayArea;
             }
