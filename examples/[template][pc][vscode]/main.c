@@ -30,6 +30,7 @@
 #include "arm_2d_scene_meter.h"
 #include "arm_2d_scene_watch.h"
 #include "arm_2d_scene_fitness.h"
+#include "arm_2d_scene_audiomark.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -87,6 +88,16 @@ void scene_fitness_loader(void)
     arm_2d_scene_fitness_init(&DISP0_ADAPTER);
 }
 
+void scene_audiomark_loader(void) 
+{
+    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
+                                            ARM_2D_SCENE_SWITCH_MODE_SLIDE_RIGHT);
+    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 500);
+
+    arm_2d_scene_audiomark_init(&DISP0_ADAPTER);
+}
+
+
 
 
 void scene0_loader(void) 
@@ -142,6 +153,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene5_loader,
     scene4_loader,
     scene2_loader,
+    scene_audiomark_loader,
     scene_fitness_loader,
     //scene_watch_loader,
 };
