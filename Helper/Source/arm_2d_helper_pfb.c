@@ -665,8 +665,12 @@ static bool __arm_2d_helper_pfb_get_next_dirty_region(arm_2d_helper_pfb_t *ptThi
                 HELPER_PFB, 
                 2, 
                 "Get Next Dirty Region", 
-                "Get a dirty region[%p] from the optimized working list",
-                this.Adapter.ptDirtyRegion
+                "Get a dirty region[%p] from the optimized working list, x=%d y=%d w=%d h=%d",
+                this.Adapter.ptDirtyRegion,
+                this.Adapter.ptDirtyRegion->tRegion.tLocation.iX,
+                this.Adapter.ptDirtyRegion->tRegion.tLocation.iY,
+                this.Adapter.ptDirtyRegion->tRegion.tSize.iWidth,
+                this.Adapter.ptDirtyRegion->tRegion.tSize.iHeight
             );
 
             return true;
@@ -1352,7 +1356,6 @@ label_start_process_candidate:
                         }
 
                         if (bXCinW) {
-
                             if (!bYWinC) {
                                 /* 
                                  * we don't care bYCinW, as (bYCinW == true) has 
@@ -1381,7 +1384,35 @@ label_start_process_candidate:
                                                         &tResidual);
 
                             }
+                        } else if (bXWinC) {
 
+                            if (!bYCinW) {
+                                /* 
+                                 * we don't care bYWinC, as (bYCinW == true) has 
+                                 * been filtered before, i.e. the Candidate region
+                                 * is inside the Working region.
+                                 * 
+                                 * remove overlapped region from working region
+                                 * in Y direction
+                                 */
+                                
+                                ptWResidual = 
+                                    __arm_2d_remove_overlapped_region_vertically(
+                                                        &(ptWorking->tRegion),
+                                                        &tOverlapped,
+                                                        &tResidual);
+
+                            } else if (iCX0 == iWX0 || iCX1 == iWX1) {
+                                /* the candidate region sticks to the right side
+                                 * or left side of the working region 
+                                 */
+
+                                ptCResidual = 
+                                    __arm_2d_remove_overlapped_region_horizontally(
+                                                        &(ptCandidate->tRegion),
+                                                        &tOverlapped,
+                                                        &tResidual);
+                            }
 
                         }
 
@@ -1654,8 +1685,12 @@ label_iteration_begin_start:
                     DIRTY_REGION_OPTIMISATION, 
                     1, 
                     "Iteration Begin", 
-                    "Get the first dirty region from the working list [%p]", 
-                    this.Adapter.ptDirtyRegion
+                    "Get the first dirty region[%p] from the working list , x=%d y=%d w=%d h=%d", 
+                    this.Adapter.ptDirtyRegion,
+                    this.Adapter.ptDirtyRegion->tRegion.tLocation.iX,
+                    this.Adapter.ptDirtyRegion->tRegion.tLocation.iY,
+                    this.Adapter.ptDirtyRegion->tRegion.tSize.iWidth,
+                    this.Adapter.ptDirtyRegion->tRegion.tSize.iHeight
                 );
             }
         } else {
