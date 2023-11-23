@@ -542,6 +542,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga646d1178b70b862d77d33f8a84173f0e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga646d1178b70b862d77d33f8a84173f0e">arm_2d_helper_transform_on_frame_begin</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__transform__t">arm_2d_helper_transform_t</a> *ptThis)</td></tr>
 <tr class="memdesc:ga646d1178b70b862d77d33f8a84173f0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">the on-frame-begin event handler for a given transform helper  <a href="group__gHelper.html#ga646d1178b70b862d77d33f8a84173f0e">More...</a><br /></td></tr>
 <tr class="separator:ga646d1178b70b862d77d33f8a84173f0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae0a55fbb4852fbfaa59041efc6f1ce21"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gae0a55fbb4852fbfaa59041efc6f1ce21">arm_2d_helper_transform_force_update</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__transform__t">arm_2d_helper_transform_t</a> *ptThis)</td></tr>
+<tr class="memdesc:gae0a55fbb4852fbfaa59041efc6f1ce21"><td class="mdescLeft">&#160;</td><td class="mdescRight">force transform helper to update dirty region  <a href="group__gHelper.html#gae0a55fbb4852fbfaa59041efc6f1ce21">More...</a><br /></td></tr>
+<tr class="separator:gae0a55fbb4852fbfaa59041efc6f1ce21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga95877df905d15cebfc4abb41b9ecdc6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga95877df905d15cebfc4abb41b9ecdc6a">arm_2d_helper_transform_update_value</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__transform__t">arm_2d_helper_transform_t</a> *ptThis, float fAngle, float fScale)</td></tr>
 <tr class="memdesc:ga95877df905d15cebfc4abb41b9ecdc6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">update a given transform helper with new values  <a href="group__gHelper.html#ga95877df905d15cebfc4abb41b9ecdc6a">More...</a><br /></td></tr>
 <tr class="separator:ga95877df905d15cebfc4abb41b9ecdc6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -5302,6 +5305,33 @@ For normal usage, please DO NOT use this function unless you know what you are d
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Usually this event handler should be insert the frame start event handler of a target scene. </dd></dl>
+
+</div>
+</div>
+<a id="gae0a55fbb4852fbfaa59041efc6f1ce21" name="gae0a55fbb4852fbfaa59041efc6f1ce21"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae0a55fbb4852fbfaa59041efc6f1ce21">&#9670;&nbsp;</a></span>arm_2d_helper_transform_force_update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_helper_transform_force_update </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__transform__t">arm_2d_helper_transform_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>force transform helper to update dirty region </p>
+<dl class="section note"><dt>Note</dt><dd>sometimes, we want to force transform helper to update dirty regions even if both the angel and scale keep the same, for example, the pivots are updated. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target helper </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
