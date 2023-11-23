@@ -1173,6 +1173,7 @@ label_start_process_candidate:
                     /* free the working item */
                     __arm_2d_helper_dirty_region_pool_free(ptThis, ptWorking);
 
+                    goto label_move_to_next_working;
                 } else {
                     
                     /* has overlap */
@@ -1266,6 +1267,17 @@ label_start_process_candidate:
                                                     &tOverlapped)) {
                             break;
                         }
+
+                        ARM_2D_LOG_INFO(
+                            DIRTY_REGION_OPTIMISATION, 
+                            4, 
+                            "UPDATE_WORKING_LIST", 
+                            "The candidate overlaps with the working region, x=%d y=%d w=%d h=%d", 
+                            tOverlapped.tLocation.iX,
+                            tOverlapped.tLocation.iY,
+                            tOverlapped.tSize.iWidth,
+                            tOverlapped.tSize.iHeight
+                        );
 
                         int16_t iCX0 = ptCandidate->tRegion.tLocation.iX;
                         int16_t iCX1 = ptCandidate->tRegion.tLocation.iX
@@ -1364,6 +1376,17 @@ label_start_process_candidate:
                                  * 
                                  * remove overlapped region from candidate region
                                  * in Y direction
+                                 * 
+                                 *    Working
+                                 *    +----------------------------+
+                                 *    |                            |
+                                 *    |  Candidate                 |
+                                 *    |  +------------------+      |
+                                 *    |  |//////Overlap/////|      |
+                                 *    +--+------------------+------+
+                                 *       |                  |
+                                 *       |                  |
+                                 *       +------------------+
                                  */
 
                                 ptCResidual = 
@@ -1376,6 +1399,18 @@ label_start_process_candidate:
                             } else if (iCX0 == iWX0 || iCX1 == iWX1) {
                                 /* the candidate region sticks to the right side
                                  * or left side of the working region 
+                                 *
+                                 *       Candidate
+                                 *       +------------------+
+                                 *       |                  |   Working
+                                 *       +------------------+------+
+                                 *       |//////////////////|      |
+                                 *       |//////Overlap/////|      |
+                                 *       |//////////////////|      |
+                                 *       +------------------+------+
+                                 *       |                  |
+                                 *       |                  |
+                                 *       +------------------+
                                  */
                                 ptWResidual = 
                                     __arm_2d_remove_overlapped_region_horizontally(
@@ -1388,12 +1423,23 @@ label_start_process_candidate:
 
                             if (!bYCinW) {
                                 /* 
-                                 * we don't care bYWinC, as (bYCinW == true) has 
+                                 * we don't care bYWinC, as (bYWinC == true) has 
                                  * been filtered before, i.e. the Candidate region
                                  * is inside the Working region.
                                  * 
                                  * remove overlapped region from working region
                                  * in Y direction
+                                 * 
+                                 *    Candidate
+                                 *    +----------------------------+
+                                 *    |                            |
+                                 *    |  Working                   |
+                                 *    |  +------------------+      |
+                                 *    |  |//////Overlap/////|      |
+                                 *    +--+------------------+------+
+                                 *       |                  |
+                                 *       |                  |
+                                 *       +------------------+
                                  */
                                 
                                 ptWResidual = 
@@ -1405,6 +1451,19 @@ label_start_process_candidate:
                             } else if (iCX0 == iWX0 || iCX1 == iWX1) {
                                 /* the candidate region sticks to the right side
                                  * or left side of the working region 
+                                 *
+                                 *
+                                 *       Working
+                                 *       +------------------+
+                                 *       |                  |   Candidate
+                                 *       +------------------+------+
+                                 *       |//////////////////|      |
+                                 *       |//////Overlap/////|      |
+                                 *       |//////////////////|      |
+                                 *       +------------------+------+
+                                 *       |                  |
+                                 *       |                  |
+                                 *       +------------------+
                                  */
 
                                 ptCResidual = 
@@ -1414,6 +1473,100 @@ label_start_process_candidate:
                                                         &tResidual);
                             }
 
+                        } else if (bYCinW) {
+                            if (!bXWinC) {
+                                /* 
+                                 * we don't care bXCinW, as (bXCinW == true) has 
+                                 * been filtered before, i.e. the Candidate region
+                                 * is inside the Working region.
+                                 * 
+                                 * remove overlapped region from candidate region
+                                 * in X direction
+                                 *     
+                                 *     Working
+                                 *     +-------------------+
+                                 *     |     Candidate     | 
+                                 *     |     +-------------+-------+
+                                 *     |     |/////////////|       |
+                                 *     |     |/////Overlap/|       |
+                                 *     |     +-------------+-------+
+                                 *     |                   |
+                                 *     +-------------------+
+                                 */
+                                ptCResidual = 
+                                    __arm_2d_remove_overlapped_region_horizontally(
+                                                        &(ptCandidate->tRegion),
+                                                        &tOverlapped,
+                                                        &tResidual);
+
+                            } else if (iCY0 == iWY0 || iCY1 == iWY1) {
+                                /* the candidate region sticks to the top 
+                                 * or bottom of the working region 
+                                 *
+                                 *    Candidate          
+                                 *    +--+------------------+------+
+                                 *    |  |//////////////////|      |
+                                 *    |  |//////Overlap/////|      |
+                                 *    |  |//////////////////|      |
+                                 *    +--+------------------+------+
+                                 *       |                  |
+                                 *       |                  |
+                                 *       +------------------+
+                                 *       Working
+                                 */
+                                ptWResidual = 
+                                    __arm_2d_remove_overlapped_region_vertically(
+                                                        &(ptWorking->tRegion),
+                                                        &tOverlapped,
+                                                        &tResidual);
+                            }
+                        } else if (bYWinC) {
+                            if (!bXCinW) {
+                                /* 
+                                 * we don't care bXWinC, as (bXWinC == true) has 
+                                 * been filtered before, i.e. the Candidate region
+                                 * is inside the Working region.
+                                 * 
+                                 * remove overlapped region from working region
+                                 * in X direction
+                                 *     
+                                 *     Candidate
+                                 *     +-------------------+
+                                 *     |     Working       | 
+                                 *     |     +-------------+-------+
+                                 *     |     |/////////////|       |
+                                 *     |     |/////Overlap/|       |
+                                 *     |     +-------------+-------+
+                                 *     |                   |
+                                 *     +-------------------+
+                                 */
+                                ptWResidual = 
+                                    __arm_2d_remove_overlapped_region_horizontally(
+                                                        &(ptWorking->tRegion),
+                                                        &tOverlapped,
+                                                        &tResidual);
+                            } else if (iCY0 == iWY0 || iCY1 == iWY1) {
+                                /* the Working region sticks to the top 
+                                 * or bottom of the working region 
+                                 *
+                                 *    Working          
+                                 *    +--+------------------+------+
+                                 *    |  |//////////////////|      |
+                                 *    |  |//////Overlap/////|      |
+                                 *    |  |//////////////////|      |
+                                 *    +--+------------------+------+
+                                 *       |                  |
+                                 *       |                  |
+                                 *       +------------------+
+                                 *       Candidate
+                                 */
+                                ptCResidual = 
+                                    __arm_2d_remove_overlapped_region_vertically(
+                                                        &(ptCandidate->tRegion),
+                                                        &tOverlapped,
+                                                        &tResidual);
+
+                            }
                         }
 
 
@@ -1466,7 +1619,7 @@ label_start_process_candidate:
                                 DIRTY_REGION_OPTIMISATION, 
                                 3, 
                                 "UPDATE_WORKING_LIST", 
-                                "The working [%p] is overlap with working region [%p] and inside the candidate region in X axis or Y axis, remove the working region and add the shrunk one into candidate list", 
+                                "The working [%p] is overlap with overlap region [%p] and inside the candidate region in X axis or Y axis, remove the working region and add the shrunk one into candidate list", 
                                 (void *)ptWorking, 
                                 (void *)ptCandidate
                             );
@@ -1501,12 +1654,13 @@ label_start_process_candidate:
                                 ptDirtyRegion
                             );
 
-                            goto label_start_process_candidate;
+                            goto label_move_to_next_working;
                         }
 
                     } while(0);
 
                 }
+label_move_to_next_working:
                 /* no overlap */
                 ptWorking = ptNextWorking;  /* get the next dirty region in the working list */
             }
