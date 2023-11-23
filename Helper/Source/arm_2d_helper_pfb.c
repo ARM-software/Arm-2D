@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        22. Nov 2023
- * $Revision:    V.1.7.3
+ * $Date:        23. Nov 2023
+ * $Revision:    V.1.7.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -3066,6 +3066,7 @@ void arm_2d_helper_transform_depose(arm_2d_helper_transform_t *ptThis)
 
 }
 
+
 ARM_NONNULL(1,2)
 void arm_2d_helper_transform_update_dirty_regions(
                                     arm_2d_helper_transform_t *ptThis,
@@ -3084,15 +3085,40 @@ void arm_2d_helper_transform_update_dirty_regions(
     
     if (this.bNeedUpdate) {
         this.bNeedUpdate = false;
+
+
+        arm_2d_region_t tCanvas = *ptCanvas;
+        arm_2d_region_t tNewRegion = *(this.ptTransformOP->Target.ptRegion);
+
+    #if 0
+        tCanvas.tLocation = arm_2d_helper_pfb_get_absolute_location(
+                                        ptTarget, 
+                                        tCanvas.tLocation);
+    #endif
+
+        tNewRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(
+                                        ptTarget, 
+                                        tNewRegion.tLocation);
+
+        if (!arm_2d_region_intersect(   &tNewRegion, 
+                                        &tCanvas,
+                                        &tNewRegion)) {
+            return ;
+        }
+
         /* keep the old region */
         this.tDirtyRegions[1].tRegion = this.tDirtyRegions[0].tRegion;
 
         /* update the new region */
-        this.tDirtyRegions[0].tRegion = *(this.ptTransformOP->Target.ptRegion);
+        this.tDirtyRegions[0].tRegion = tNewRegion;
+    #if 0
         this.tDirtyRegions[0].tRegion.tLocation 
             = arm_2d_helper_pfb_get_absolute_location(
                                         ptTarget, 
                                         this.tDirtyRegions[0].tRegion.tLocation);
+    #endif
+       
+        
 
         arm_2d_region_t tOverlapArea, tEnclosureArea;
         if (arm_2d_region_intersect(&this.tDirtyRegions[1].tRegion, 
@@ -3129,7 +3155,6 @@ void arm_2d_helper_transform_update_dirty_regions(
 
     }
 }
-
 ARM_NONNULL(1)
 void arm_2d_helper_transform_on_frame_begin(arm_2d_helper_transform_t *ptThis)
 {
