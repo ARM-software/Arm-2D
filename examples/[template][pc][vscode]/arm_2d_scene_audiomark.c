@@ -86,29 +86,7 @@ extern const arm_2d_tile_t c_tileCMSISLogo;
 extern const arm_2d_tile_t c_tileCMSISLogoMask;
 extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
-extern const arm_2d_tile_t c_tileAudioPOVGRAY8;
 
-extern
-struct {
-    implement(arm_2d_user_font_t);
-    arm_2d_char_idx_t tUTF8Table;
-} ARM_2D_FONT_ARIAL32_A4;
-
-extern
-struct {
-    implement(arm_2d_user_font_t);
-    arm_2d_char_idx_t tUTF8Table;
-} ARM_2D_FONT_ARIAL20_A4;
-
-extern
-struct {
-    implement(arm_2d_user_font_t);
-    arm_2d_char_idx_t tUTF8Table;
-} ARM_2D_FONT_ARIAL16_A4;
-
-extern const arm_2d_tile_t c_tileInnerGearMask;
-extern const arm_2d_tile_t c_tileInnerGearMidMask;
-extern const arm_2d_tile_t c_tileGenshinPointerMask;
 
 extern const arm_2d_tile_t c_tileBigWhiteDotMask;
 extern const arm_2d_tile_t c_tileQuaterArcBigMask;
@@ -117,8 +95,8 @@ extern const arm_2d_tile_t c_tileQuaterArcBigMask;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
-#define PROCESSOR_INFO(__NAME, __SIZE, __SCORE, __COLOUR, __SCORE_COLOUR, __FONT)        \
-            {__NAME, (__SIZE), (__SCORE), (__COLOUR), (__SCORE_COLOUR), (arm_2d_font_t *)&(__FONT)}
+#define PROCESSOR_INFO(__NAME, __SIZE, __SCORE, __COLOUR, __SCORE_COLOUR)       \
+            {__NAME, (__SIZE), (__SCORE), (__COLOUR), (__SCORE_COLOUR)}
 
 static const struct {
     const char  *pchName;
@@ -126,20 +104,19 @@ static const struct {
     int16_t     iAudioMark;
     COLOUR_INT  tColour;
     COLOUR_INT  tScoreColour;
-    arm_2d_font_t *ptScoreFont;
 } c_tProcessorInfo[] = {
     [AUDIOMARK_CORTEX_M4]           
-        = PROCESSOR_INFO( "Cortex-M4",           100 + 75 * 0,    73,     __RGB(0x40, 0x40, 0x40),  __RGB(0x80, 0x80, 0x80), ARM_2D_FONT_ARIAL20_A4 ),
+        = PROCESSOR_INFO( "Cortex-M4",           100 + 75 * 0,    73,     __RGB(0x40, 0x40, 0x40),  __RGB(0x80, 0x80, 0x80) ),
     [AUDIOMARK_CORTEX_M33]          
-        = PROCESSOR_INFO( "Cortex-M33",           65 + 75 * 1,    101,    __RGB(0x60, 0x60, 0x60),  __RGB(0xFF, 0xFF, 0xFF), ARM_2D_FONT_ARIAL20_A4 ),
+        = PROCESSOR_INFO( "Cortex-M33",           65 + 75 * 1,    101,    __RGB(0x60, 0x60, 0x60),  __RGB(0xFF, 0xFF, 0xFF) ),
     [AUDIOMARK_CORTEX_M7]           
-        = PROCESSOR_INFO( "Cortex-M7",            35 + 75 * 2,    132,    __RGB(0x80, 0x80, 0x80),  __RGB(0x80, 0x80, 0x80), ARM_2D_FONT_ARIAL20_A4 ),
+        = PROCESSOR_INFO( "Cortex-M7",            35 + 75 * 2,    132,    __RGB(0x80, 0x80, 0x80),  __RGB(0x80, 0x80, 0x80) ),
     [AUDIOMARK_CORTEX_M85_SCALER]   
-        = PROCESSOR_INFO( "Cortex-M85 Scaler",    20 + 75 * 3,    201,    __RGB(0x00, 0x80, 0x00),  __RGB(0xFF, 0xFF, 0xFF), ARM_2D_FONT_ARIAL32_A4 ),
+        = PROCESSOR_INFO( "Cortex-M85 Scaler",    20 + 75 * 3,    201,    __RGB(0x00, 0x80, 0x00),  __RGB(0xFF, 0xFF, 0xFF) ),
     [AUDIOMARK_CORTEX_M55_HELIUM]   
-        = PROCESSOR_INFO( "Cortex-M55 Helium",    20 + 75 * 4,    367,    __RGB(0x00, 0xC0, 0x00),  __RGB(0x00, 0xC0, 0x00), ARM_2D_FONT_ARIAL32_A4 ),
+        = PROCESSOR_INFO( "Cortex-M55 Helium",    20 + 75 * 4,    367,    __RGB(0x00, 0xC0, 0x00),  __RGB(0x00, 0xC0, 0x00) ),
     [AUDIOMARK_CORTEX_M85_HELIUM]   
-        = PROCESSOR_INFO( "Cortex-M85 Helium",    40 + 75 * 5,    423,    GLCD_COLOR_GREEN,         __RGB(0xFF, 0x80, 0x00), ARM_2D_FONT_ARIAL32_A4),
+        = PROCESSOR_INFO( "Cortex-M85 Helium",    40 + 75 * 5,    423,    GLCD_COLOR_GREEN,         __RGB(0xFF, 0x80, 0x00) ),
 };
 
 /*============================ IMPLEMENTATION ================================*/
