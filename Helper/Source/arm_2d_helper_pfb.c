@@ -923,6 +923,101 @@ arm_2d_region_list_item_t * __arm_2d_helper_remove_item_from_weighted_dirty_regi
     return ptItem;
 }
 
+ARM_NONNULL(1,2,3)
+static 
+arm_2d_region_t * __arm_2d_remove_overlapped_region_vertically (
+                                         const arm_2d_region_t *ptOriginal,
+                                         const arm_2d_region_t *ptOverlap,
+                                         arm_2d_region_t *ptResidual)
+{
+    assert(NULL != ptOriginal);
+    assert(NULL != ptOverlap);
+    assert(NULL != ptResidual);
+
+    *ptResidual = *ptOriginal;
+
+    if (ptOriginal->tLocation.iY == ptOverlap->tLocation.iY) {
+        /*
+         *
+         *    +----------------------------+
+         *    |                            |
+         *    |  Original                  |
+         *    |  +------------------+      |
+         *    |  |//////Overlap/////|      |
+         *    +--+------------------+------+
+         *       |                  |
+         *       |                  |
+         *       +------------------+
+         */
+
+        ptResidual->tLocation.iY += ptOverlap->tSize.iHeight;
+        ptResidual->tSize.iHeight -= ptOverlap->tSize.iHeight;
+    } else {
+        /*       Original
+         *       +------------------+
+         *       |                  |
+         *    +--+------------------+------+
+         *    |  |//////Overlap/////|      |
+         *    |  |//////////////////|      |
+         *    |  +------------------+      |
+         *    |                            |
+         *    +----------------------------+
+         */
+        ptResidual->tSize.iHeight -= ptOverlap->tSize.iHeight;
+    }
+
+    return ptResidual;
+}
+
+
+
+ARM_NONNULL(1,2,3)
+static 
+arm_2d_region_t * __arm_2d_remove_overlapped_region_horizontally (
+                                         const arm_2d_region_t *ptOriginal,
+                                         const arm_2d_region_t *ptOverlap,
+                                         arm_2d_region_t *ptResidual)
+{
+    assert(NULL != ptOriginal);
+    assert(NULL != ptOverlap);
+    assert(NULL != ptResidual);
+
+    *ptResidual = *ptOriginal;
+
+    if (ptOriginal->tLocation.iX == ptOverlap->tLocation.iX) {
+        /*
+         *
+         *     +-------------------+
+         *     |     Original      | 
+         *     |     +-------------+-------+
+         *     |     |/////////////|       |
+         *     |     |/////Overlap/|       |
+         *     |     +-------------+-------+
+         *     |                   |
+         *     +-------------------+
+         */
+
+        ptResidual->tLocation.iX += ptOverlap->tSize.iWidth;
+        ptResidual->tSize.iWidth -= ptOverlap->tSize.iWidth;
+    } else {
+        /*
+         *
+         *         +-------------------+
+         * Original|                   | 
+         *   +-----+-----------+       |
+         *   |     |///////////|       |
+         *   |     |///Overlap/|       |
+         *   +-----+-----------+       |
+         *         |                   |
+         *         +-------------------+
+         */
+
+        ptResidual->tSize.iWidth -= ptOverlap->tSize.iWidth;
+    }
+
+    return ptResidual;
+}
+
 
 ARM_NONNULL(1,2)
 static 
@@ -982,10 +1077,19 @@ label_start_process_candidate:
         arm_2d_region_list_item_t *ptCandidate 
             = this.Adapter.OptimizedDirtyRegions.ptCandidateList;
 
+        
+
         while(NULL != ptCandidate) {
             arm_2d_region_list_item_t *ptNextCandiate = ptCandidate->ptInternalNext;
             arm_2d_region_list_item_t *ptWorking
                 = this.Adapter.OptimizedDirtyRegions.ptWorkingList;
+
+            /* remove the candidate from the list */
+            __arm_2d_helper_remove_item_from_weighted_dirty_region_list(
+                &this.Adapter.OptimizedDirtyRegions.ptCandidateList,
+                ptCandidate
+            );
+
 
             ARM_2D_LOG_INFO(
                 DIRTY_REGION_OPTIMISATION, 
@@ -998,7 +1102,6 @@ label_start_process_candidate:
                 ptCandidate->tRegion.tSize.iWidth,
                 ptCandidate->tRegion.tSize.iHeight
             );
-
 
             uint32_t wCandidatePixelCount = ptCandidate->tRegion.tSize.iHeight
                                             * ptCandidate->tRegion.tSize.iWidth;
@@ -1036,10 +1139,12 @@ label_start_process_candidate:
                         (void *)ptWorking
                     );
 
+                #if 0
                     __arm_2d_helper_remove_item_from_weighted_dirty_region_list(
                         &this.Adapter.OptimizedDirtyRegions.ptCandidateList,
                         ptCandidate
                     );
+                #endif
                     /* free the working item */
                     __arm_2d_helper_dirty_region_pool_free(ptThis, ptCandidate);
 
@@ -1110,11 +1215,13 @@ label_start_process_candidate:
                         __arm_2d_helper_dirty_region_pool_free(ptThis, ptWorking);
 
                         /* remove the candidate from the list */
+                    #if 0
                         __arm_2d_helper_remove_item_from_weighted_dirty_region_list(
                             &this.Adapter.OptimizedDirtyRegions.ptCandidateList,
                             ptCandidate
                         );
-                        /* free the working item */
+                    #endif
+                        /* free the candidate */
                         __arm_2d_helper_dirty_region_pool_free(ptThis, ptCandidate);
 
                         arm_2d_region_list_item_t *ptDirtyRegion = __arm_2d_helper_dirty_region_pool_new(ptThis);
@@ -1143,10 +1250,12 @@ label_start_process_candidate:
                         goto label_start_process_candidate;
                     }
 
-                #if 0
+
                     /* remove common part */
                     do {
-                        arm_2d_region_t tOverlapped;
+                        arm_2d_region_t tOverlapped, tResidual;
+                        arm_2d_region_t *ptCResidual = NULL;
+                        arm_2d_region_t *ptWResidual = NULL;
                         
                         if (!arm_2d_region_intersect(&ptWorking->tRegion, 
                                                     &ptCandidate->tRegion,
@@ -1154,10 +1263,218 @@ label_start_process_candidate:
                             break;
                         }
 
+                        int16_t iCX0 = ptCandidate->tRegion.tLocation.iX;
+                        int16_t iCX1 = ptCandidate->tRegion.tLocation.iX
+                                     + ptCandidate->tRegion.tSize.iWidth
+                                     - 1;
+                        int16_t iCY0 = ptCandidate->tRegion.tLocation.iY;
+                        int16_t iCY1 = ptCandidate->tRegion.tLocation.iY
+                                     + ptCandidate->tRegion.tSize.iHeight
+                                     - 1;
 
+                        
+                        int16_t iWX0 = ptWorking->tRegion.tLocation.iX;
+                        int16_t iWX1 = ptWorking->tRegion.tLocation.iX
+                                     + ptWorking->tRegion.tSize.iWidth
+                                     - 1;
+                        int16_t iWY0 = ptWorking->tRegion.tLocation.iY;
+                        int16_t iWY1 = ptWorking->tRegion.tLocation.iY
+                                     + ptWorking->tRegion.tSize.iHeight
+                                     - 1;
+
+                        bool bXCinW = false;
+                        bool bXWinC = false;
+                        bool bYCinW = false;
+                        bool bYWinC = false;
+
+                        if (iCX0 < iWX0) {
+                            if (iCX1 >= iWX1) {
+                                /*
+                                 *    [CCCCCCCCCCCCCCCCCCC]
+                                 *           [WWWWWWWWWWWW]
+                                 */
+                                bXWinC = true;
+                            }
+                        } else if (iCX0 > iWX0) {
+                            if (iCX1 <= iWX1) {
+                                /*
+                                 *               [CCCCCCCC]
+                                 *           [WWWWWWWWWWWW]
+                                 */
+                                bXCinW = true;
+                            }
+                        } else {
+                            if (iCX1 <= iWX1) {
+                                /*
+                                 *           [CCCCCCCC]
+                                 *           [WWWWWWWWWWWW]
+                                 */
+                                bXCinW = true;
+                            } else {
+                                /*
+                                 *           [CCCCCCCCCCCCCCCC]
+                                 *           [WWWWWWWWWWWW]
+                                 */
+                                bXWinC = true;
+                            }
+                        }
+
+                        if (iCY0 < iWY0) {
+                            if (iCY1 >= iWY1) {
+                                /*
+                                 *    [CCCCCCCCCCCCCCCCCCC]
+                                 *           [WWWWWWWWWWWW]
+                                 */
+                                bYWinC = true;
+                            }
+                        } else if (iCY0 > iWY0) {
+                            if (iCY1 <= iWY1) {
+                                /*
+                                 *               [CCCCCCCC]
+                                 *           [WWWWWWWWWWWW]
+                                 */
+                                bYCinW = true;
+                            }
+                        } else {
+                            if (iCY1 <= iWY1) {
+                                /*
+                                 *           [CCCCCCCC]
+                                 *           [WWWWWWWWWWWW]
+                                 */
+                                bYCinW = true;
+                            } else {
+                                /*
+                                 *           [CCCCCCCCCCCCCCCC]
+                                 *           [WWWWWWWWWWWW]
+                                 */
+                                bYWinC = true;
+                            }
+                        }
+
+                        if (bXCinW) {
+
+                            if (!bYWinC) {
+                                /* 
+                                 * we don't care bYCinW, as (bYCinW == true) has 
+                                 * been filtered before, i.e. the Candidate region
+                                 * is inside the Working region.
+                                 * 
+                                 * remove overlapped region from candidate region
+                                 * in Y direction
+                                 */
+
+                                ptCResidual = 
+                                    __arm_2d_remove_overlapped_region_vertically(
+                                                        &(ptCandidate->tRegion),
+                                                        &tOverlapped,
+                                                        &tResidual);
+
+
+                            } else if (iCX0 == iWX0 || iCX1 == iWX1) {
+                                /* the candidate region sticks to the right side
+                                 * or left side of the working region 
+                                 */
+                                ptWResidual = 
+                                    __arm_2d_remove_overlapped_region_horizontally(
+                                                        &(ptWorking->tRegion),
+                                                        &tOverlapped,
+                                                        &tResidual);
+
+                            }
+
+
+                        }
+
+
+                        if (NULL != ptCResidual) {
+                            /* the candidate is inside the working region horizontally or vertically,
+                             */
+
+                            ARM_2D_LOG_INFO(
+                                DIRTY_REGION_OPTIMISATION, 
+                                3, 
+                                "UPDATE_WORKING_LIST", 
+                                "The candidate [%p] is overlap with working region [%p] and inside the working region in X axis or Y axis, free the original candidate and add the shrunk one into candidate list", 
+                                (void *)ptCandidate,
+                                (void *)ptWorking
+                            );
+
+                        #if 0
+                            __arm_2d_helper_remove_item_from_weighted_dirty_region_list(
+                                &this.Adapter.OptimizedDirtyRegions.ptCandidateList,
+                                ptCandidate
+                            );
+                        #endif
+                            /* free the candidate */
+                            __arm_2d_helper_dirty_region_pool_free(ptThis, ptCandidate);
+
+                            arm_2d_region_list_item_t *ptDirtyRegion = __arm_2d_helper_dirty_region_pool_new(ptThis);
+                            if (NULL == ptDirtyRegion) {
+                                assert( false == ptCandidate->bFromInternalPool);
+
+                                /* suppose nothing happened */
+                                break;
+                            }
+                            /* initialize the newly allocated dirty region item */
+                            ptDirtyRegion->tRegion = *ptCResidual;
+
+                            /* update candidate list */
+                            __arm_2d_helper_add_item_to_weighted_dirty_region_list(
+                                &this.Adapter.OptimizedDirtyRegions.ptCandidateList,
+                                ptDirtyRegion
+                            );
+
+                            goto label_start_process_candidate;
+                        }
+
+                        if (NULL != ptWResidual) {
+                            /* the working region is inside the candidate region horizontally or vertically,
+                             * remove the working region from the list 
+                             */
+                            ARM_2D_LOG_INFO(
+                                DIRTY_REGION_OPTIMISATION, 
+                                3, 
+                                "UPDATE_WORKING_LIST", 
+                                "The working [%p] is overlap with working region [%p] and inside the candidate region in X axis or Y axis, remove the working region and add the shrunk one into candidate list", 
+                                (void *)ptWorking, 
+                                (void *)ptCandidate
+                            );
+
+                            __arm_2d_helper_remove_item_from_weighted_dirty_region_list(
+                                &this.Adapter.OptimizedDirtyRegions.ptWorkingList,
+                                ptWorking
+                            );
+
+                            /* free the working item */
+                            __arm_2d_helper_dirty_region_pool_free(ptThis, ptWorking);
+
+                            arm_2d_region_list_item_t *ptDirtyRegion = __arm_2d_helper_dirty_region_pool_new(ptThis);
+                            if (NULL == ptDirtyRegion) {
+                                assert( false == ptWorking->bFromInternalPool);
+
+                                /* add it back */
+                                __arm_2d_helper_add_item_to_weighted_dirty_region_list(
+                                    &this.Adapter.OptimizedDirtyRegions.ptWorkingList,
+                                    ptWorking
+                                );
+
+                                /* suppose nothing happened */
+                                break;
+                            }
+
+                            ptDirtyRegion->tRegion = *ptWResidual;
+
+                            /* update candidate list */
+                            __arm_2d_helper_add_item_to_weighted_dirty_region_list(
+                                &this.Adapter.OptimizedDirtyRegions.ptCandidateList,
+                                ptDirtyRegion
+                            );
+
+                            goto label_start_process_candidate;
+                        }
 
                     } while(0);
-                #endif
+
                 }
                 /* no overlap */
                 ptWorking = ptNextWorking;  /* get the next dirty region in the working list */
@@ -1167,13 +1484,6 @@ label_start_process_candidate:
              *          add the candidate to the working list
              */
 
-            /* remove the candidate from the list */
-            __arm_2d_helper_remove_item_from_weighted_dirty_region_list(
-                &this.Adapter.OptimizedDirtyRegions.ptCandidateList,
-                ptCandidate
-            );
-
-            /* add the candidate to the working list */
             __arm_2d_helper_add_item_to_weighted_dirty_region_list(
                 &this.Adapter.OptimizedDirtyRegions.ptWorkingList,
                 ptCandidate
