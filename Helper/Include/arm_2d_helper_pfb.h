@@ -22,7 +22,7 @@
  * Description:  Public header file for the PFB helper service 
  *
  * $Date:        23. Nov 2023
- * $Revision:    V.1.7.4
+ * $Revision:    V.1.7.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -912,6 +912,18 @@ void arm_2d_helper_transform_depose(arm_2d_helper_transform_t *ptThis);
 extern
 ARM_NONNULL(1)
 void arm_2d_helper_transform_on_frame_begin(arm_2d_helper_transform_t *ptThis);
+
+/*!
+ * \brief force transform helper to update dirty region
+ *
+ * \note sometimes, we want to force transform helper to update dirty regions 
+ *       even if both the angel and scale keep the same, for example, the pivots
+ *       are updated.
+ * \param[in] ptThis the target helper
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_transform_force_update(arm_2d_helper_transform_t *ptThis);
 
 /*!
  * \brief update a given transform helper with new values
