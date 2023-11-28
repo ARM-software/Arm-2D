@@ -1181,7 +1181,7 @@ extern "C" {
  *
  * \note prototype 4:
  *          __item_vertical(__width, __height, 
-                                 __left, __right, __top, __bottom) {
+ *                          __left, __right, __top, __bottom) {
  *              code body that can use __item_region
  *          }
  */
@@ -1218,8 +1218,8 @@ extern "C" {
                     {arm_2d_op_wait_async(NULL);})
 
 /*!
- * \brief generate a temporary arm_2d_region_t object with use specified info for
-*         top-left alignment. 
+ * \brief generate a temporary arm_2d_region_t object with user specified info for
+ *        top-left alignment. 
  * \param ... parameter list 
  * 
  * \note prototype 1:
@@ -1271,8 +1271,8 @@ extern "C" {
                     {arm_2d_op_wait_async(NULL);})
 
 /*!
- * \brief generate a temporary arm_2d_region_t object with use specified info for
-*         top-central alignment. 
+ * \brief generate a temporary arm_2d_region_t object with user specified info for
+ *        top-central alignment. 
  * \param ... parameter list 
  * 
  * \note prototype 1:
@@ -1324,8 +1324,8 @@ extern "C" {
                     {arm_2d_op_wait_async(NULL);})
 
 /*!
- * \brief generate a temporary arm_2d_region_t object with use specified info for
-*         top-right alignment. 
+ * \brief generate a temporary arm_2d_region_t object with user specified info for
+ *        top-right alignment. 
  * \param ... parameter list 
  * 
  * \note prototype 1:
@@ -1399,8 +1399,8 @@ extern "C" {
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
 /*!
- * \brief generate a temporary arm_2d_region_t object with use specified info for
-*         left alignment. 
+ * \brief generate a temporary arm_2d_region_t object with user specified info for
+ *        left alignment. 
  * \param ... parameter list 
  * 
  * \note prototype 1:
@@ -1457,8 +1457,8 @@ extern "C" {
                         {arm_2d_op_wait_async(NULL);})
 
 /*!
- * \brief generate a temporary arm_2d_region_t object with use specified info for
-*         central alignment. 
+ * \brief generate a temporary arm_2d_region_t object with user specified info for
+ *        central alignment. 
  * \param ... parameter list 
  * 
  * \note prototype 1:
@@ -1535,8 +1535,8 @@ extern "C" {
 
 
 /*!
- * \brief generate a temporary arm_2d_region_t object with use specified info for
-*         right alignment. 
+ * \brief generate a temporary arm_2d_region_t object with user specified info for
+ *        right alignment. 
  * \param ... parameter list 
  * 
  * \note prototype 1:
@@ -1590,8 +1590,8 @@ extern "C" {
                 {arm_2d_op_wait_async(NULL);})
 
 /*!
- * \brief generate a temporary arm_2d_region_t object with use specified info for
-*         bottom-left alignment. 
+ * \brief generate a temporary arm_2d_region_t object with user specified info for
+ *        bottom-left alignment. 
  * \param ... parameter list 
  * 
  * \note prototype 1:
@@ -1646,8 +1646,8 @@ extern "C" {
                 {arm_2d_op_wait_async(NULL);})
 
 /*!
- * \brief generate a temporary arm_2d_region_t object with use specified info for
-*         bottom-central alignment. 
+ * \brief generate a temporary arm_2d_region_t object with user specified info for
+ *        bottom-central alignment. 
  * \param ... parameter list 
  * 
  * \note prototype 1:
@@ -1703,8 +1703,8 @@ extern "C" {
                 {arm_2d_op_wait_async(NULL);})
 
 /*!
- * \brief generate a temporary arm_2d_region_t object with use specified info for
-*         bottom-right alignment. 
+ * \brief generate a temporary arm_2d_region_t object with user specified info for
+ *        bottom-right alignment. 
  * \param ... parameter list 
  * 
  * \note prototype 1:
@@ -1721,6 +1721,39 @@ extern "C" {
 #define arm_2d_align_bottom_right(...)                                          \
             ARM_CONNECT2(   __arm_2d_align_bottom_right,                        \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+
+
+
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define arm_2d_dock_top(__region, __height)                                     \
+            arm_using(                                                          \
+                arm_2d_region_t __top_region = (__region),                      \
+                {                                                               \
+                    __top_region.tSize.iHeight = (__height);                    \
+                },                                                              \
+                {arm_2d_op_wait_async(NULL);})
+
+/*!
+ * \brief generate a temporary arm_2d_region_t object that docks to the top with 
+ *        an user specified height. 
+ * 
+ * \note prototype:
+ *          arm_2d_align_top_centre(__region, __size) {
+ *              code body that can use __top_centre_region
+ *          }
+ * 
+ * \note prototype 2:
+ *          arm_2d_align_top_centre(__region, __width, __height) {
+ *              code body that can use __top_centre_region
+ *          }
+ *          
+ */
+
+
 
 
 /*!
