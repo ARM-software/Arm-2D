@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        08. Feb 2023
- * $Revision:    V.1.1.0
+ * $Date:        28. Nov 2023
+ * $Revision:    V.1.1.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -67,6 +67,12 @@ extern "C" {
 
 /*! @} */
 
+
+/*
+ * IMPORTANT: The following colour-type-free macros are only used in examples. 
+ *            They only cover a small range of APIs. They are not guaranteed and
+ *            subject to change. Please do NOT use them in your applications.
+ */
 
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
