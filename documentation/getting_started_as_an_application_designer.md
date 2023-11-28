@@ -332,9 +332,11 @@ void app_2d_main_thread (void *argument)
 
 - Despite which processor you use, during the compilation, all C source files are safe to be added to the compilation (and we highly recommend you to do this for simplicity reason). For example, when you use Cortex-M4, which doesn't support Helium extension (introduced by Armv8.1-M architecture and first implemented by the Cortex-M55 processor), it is OK to include `arm_2d_helium.c` in the compilation process, as the C source files are constructed with environment detection in pre-processing phase. 
 
-- In your application, including `arm_2d.h` is sufficient to get all the services and APIs ready for you. 
+- In your application, please include `arm_2d.h` to use the services and APIs in `Library`. 
 
-- Make sure that the library is initialised by calling `arm_2d_init()` before using any of the services. 
+- In your application, including `arm_2d_helper.h` (which includes `arm_2d.h`) is sufficient to get ALL the services and APIs ready for you.
+
+- Please call  `arm_2d_init()` before using any services. 
 
   **NOTE**: 
 
