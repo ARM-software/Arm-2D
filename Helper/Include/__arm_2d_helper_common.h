@@ -23,7 +23,7 @@
  *               arm-2d helper services
  *
  * $Date:        28. Nov 2023
- * $Revision:    V.1.1.1
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1726,8 +1726,14 @@ extern "C" {
 
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief generate a temporary arm_2d_region_t object that docks to the top with 
+ *        an user specified height. 
  * 
+ * \note prototype:
+ *          arm_2d_dock_top(__region, __height) {
+ *              code body that can use __top_region
+ *          }
+ *          
  */
 #define arm_2d_dock_top(__region, __height)                                     \
             arm_using(                                                          \
@@ -1738,23 +1744,63 @@ extern "C" {
                 {arm_2d_op_wait_async(NULL);})
 
 /*!
- * \brief generate a temporary arm_2d_region_t object that docks to the top with 
- *        an user specified height. 
+ * \brief generate a temporary arm_2d_region_t object that docks to the bottom
+ *        with an user specified height. 
  * 
  * \note prototype:
- *          arm_2d_align_top_centre(__region, __size) {
- *              code body that can use __top_centre_region
- *          }
- * 
- * \note prototype 2:
- *          arm_2d_align_top_centre(__region, __width, __height) {
- *              code body that can use __top_centre_region
+ *          arm_2d_dock_bottom(__region, __height) {
+ *              code body that can use __bottom_region
  *          }
  *          
  */
+#define arm_2d_dock_bottom(__region, __height)                                  \
+            arm_using(                                                          \
+                arm_2d_region_t __top_region = (__region),                      \
+                {                                                               \
+                    __top_region.tSize.iHeight = (__height);                    \
+                    __top_region.tLocation.iY += (__region).tSize.iHeight       \
+                                               - (__height);                    \
+                },                                                              \
+                {arm_2d_op_wait_async(NULL);})
+
+/*!
+ * \brief generate a temporary arm_2d_region_t object that docks to the left with 
+ *        an user specified height. 
+ * 
+ * \note prototype:
+ *          arm_2d_dock_left(__region, __width) {
+ *              code body that can use __left_region
+ *          }
+ *          
+ */
+#define arm_2d_dock_left(__region, __width)                                     \
+            arm_using(                                                          \
+                arm_2d_region_t __top_region = (__region),                      \
+                {                                                               \
+                    __top_region.tSize.iWidth = (__width);                      \
+                },                                                              \
+                {arm_2d_op_wait_async(NULL);})
 
 
-
+/*!
+ * \brief generate a temporary arm_2d_region_t object that docks to the right
+ *        with an user specified height. 
+ * 
+ * \note prototype:
+ *          arm_2d_dock_right(__region, __width) {
+ *              code body that can use __right_region
+ *          }
+ *          
+ */
+#define arm_2d_dock_right(__region, __width)                                    \
+            arm_using(                                                          \
+                arm_2d_region_t __top_region = (__region),                      \
+                {                                                               \
+                    __top_region.tSize.iWidth = (__width);                      \
+                    __top_region.tLocation.iX += (__region).tSize.iWidth        \
+                                               - (__width);                     \
+                },                                                              \
+                {arm_2d_op_wait_async(NULL);})
 
 /*!
  * \brief a template for implement a on draw event handler
