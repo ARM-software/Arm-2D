@@ -67,10 +67,8 @@
 
         <condition id="Helium">
             <description>Support All processors with Helium</description>
-            <!--accept  Dcore="Cortex-M52"/-->
-            <accept  Dcore="Cortex-M55"/>
-            <accept  Dcore="Cortex-M85"/>
-            <accept  Dcore="ARMV81MML"/>
+            <accept  Dmve="MVE"/>
+            <accept  Dmve="FP_MVE"/>
         </condition>
         
         <condition id="CMSIS-CORE">
@@ -209,6 +207,11 @@
 
           </files>
           
+          <environments>
+            <environment name="uv">
+              <CMisc>-std=gnu11</CMisc>
+            </environment>
+          </environments>
           <RTE_Components_h>
 
 #define RTE_Acceleration_Arm_2D
