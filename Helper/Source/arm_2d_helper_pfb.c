@@ -877,6 +877,8 @@ void __arm_2d_helper_add_item_to_weighted_dirty_region_list(
 {
     assert(NULL != pptList);
     assert(NULL != ptItem);
+    arm_2d_region_list_item_t **pptListOrigin = pptList;
+    ARM_2D_UNUSED(pptListOrigin);
 
     if (NULL != *pptList) {
         uint32_t wItemPixelCount = ptItem->tRegion.tSize.iHeight 
@@ -891,12 +893,31 @@ void __arm_2d_helper_add_item_to_weighted_dirty_region_list(
                 /* add item to the list */
                 ptItem->ptInternalNext = (*pptList);
                 *pptList = ptItem;
+
+                ARM_2D_LOG_INFO(
+                    DIRTY_REGION_OPTIMISATION, 
+                    3, 
+                    "ADD_ITEM_TO_DIRTY_REGION_LIST", 
+                    "Insert item [%p] to the list [%p]", 
+                    (void *)ptItem,
+                    (void *)pptListOrigin
+                );
+
                 return;
             }
 
             pptList = &(ptItemInList->ptInternalNext);
         } while(NULL != (*pptList));
     }
+
+    ARM_2D_LOG_INFO(
+        DIRTY_REGION_OPTIMISATION, 
+        3, 
+        "ADD_ITEM_TO_DIRTY_REGION_LIST", 
+        "Append item [%p] to the list [%p]", 
+        (void *)ptItem,
+        (void *)pptListOrigin
+    );
 
     /* add item to the list */
     ptItem->ptInternalNext = (*pptList);
@@ -911,6 +932,10 @@ arm_2d_region_list_item_t * __arm_2d_helper_remove_item_from_weighted_dirty_regi
 {
     assert(NULL != pptList);
     assert(NULL != ptItem);
+    arm_2d_region_list_item_t **pptListOrigin = pptList;
+    ARM_2D_UNUSED(pptListOrigin);
+
+    bool bFindItem = false;
 
     while(NULL != (*pptList)) {
 
@@ -918,10 +943,32 @@ arm_2d_region_list_item_t * __arm_2d_helper_remove_item_from_weighted_dirty_regi
         if ((*pptList) == ptItem) {
             (*pptList) = ptItem->ptInternalNext;
             ptItem->ptInternalNext = NULL;
+
+            ARM_2D_LOG_INFO(
+                DIRTY_REGION_OPTIMISATION, 
+                3, 
+                "REMOTE_ITEM_FROM_DIRTY_REGION_LIST", 
+                "Remove item [%p] from the list [%p]", 
+                (void *)ptItem,
+                (void *)pptListOrigin
+            );
+
+            bFindItem = true;
             break ;
         }
 
         pptList = &((*pptList)->ptInternalNext);
+    }
+
+    if (!bFindItem) {
+        ARM_2D_LOG_INFO(
+            DIRTY_REGION_OPTIMISATION, 
+            3, 
+            "REMOTE_ITEM_FROM_DIRTY_REGION_LIST", 
+            "Cannot find the item [%p] from the list [%p]", 
+            (void *)ptItem,
+            (void *)pptListOrigin
+        );
     }
 
     return ptItem;
@@ -1078,13 +1125,17 @@ void __arm_2d_helper_update_dirty_region_working_list(
 label_start_process_candidate:
     /* the process loop */
     do {
-        arm_2d_region_list_item_t *ptCandidate 
-            = this.Adapter.OptimizedDirtyRegions.ptCandidateList;
+        arm_2d_region_list_item_t *ptCandidate = NULL;
 
-        
+label_move_to_next_candidate:
+        do {
+            ptCandidate 
+                = this.Adapter.OptimizedDirtyRegions.ptCandidateList;
+            
+            if (NULL == ptCandidate) {
+                break;
+            }
 
-        while(NULL != ptCandidate) {
-            arm_2d_region_list_item_t *ptNextCandiate = ptCandidate->ptInternalNext;
             arm_2d_region_list_item_t *ptWorking
                 = this.Adapter.OptimizedDirtyRegions.ptWorkingList;
 
@@ -1093,7 +1144,6 @@ label_start_process_candidate:
                 &this.Adapter.OptimizedDirtyRegions.ptCandidateList,
                 ptCandidate
             );
-
 
             ARM_2D_LOG_INFO(
                 DIRTY_REGION_OPTIMISATION, 
@@ -1112,7 +1162,6 @@ label_start_process_candidate:
             while(NULL != ptWorking) {
                 arm_2d_region_list_item_t *ptNextWorking = ptWorking->ptInternalNext;
                 arm_2d_region_t tEnclosureArea;
-
 
                 ARM_2D_LOG_INFO(
                     DIRTY_REGION_OPTIMISATION, 
@@ -1669,11 +1718,6 @@ label_move_to_next_working:
              *          add the candidate to the working list
              */
 
-            __arm_2d_helper_add_item_to_weighted_dirty_region_list(
-                &this.Adapter.OptimizedDirtyRegions.ptWorkingList,
-                ptCandidate
-            );
-
             ARM_2D_LOG_INFO(
                 DIRTY_REGION_OPTIMISATION, 
                 1, 
@@ -1682,10 +1726,15 @@ label_move_to_next_working:
                 (void *)ptCandidate
             );
 
-label_move_to_next_candidate:
+            __arm_2d_helper_add_item_to_weighted_dirty_region_list(
+                &this.Adapter.OptimizedDirtyRegions.ptWorkingList,
+                ptCandidate
+            );
+
+
             /* process next candidate */
-            ptCandidate = ptNextCandiate;
-        }
+            //ptCandidate = ptNextCandiate;
+        } while(true);
 
         if (NULL == ptCandidate) {
             break;  /* all candidates are processed */
