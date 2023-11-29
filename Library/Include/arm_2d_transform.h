@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_transform.h"
  * Description:  Public header file to contain the APIs for transform
  *
- * $Date:        04 Oct 2023
- * $Revision:    V.1.0.7
+ * $Date:        29 Nov 2023
+ * $Revision:    V.1.0.8
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */

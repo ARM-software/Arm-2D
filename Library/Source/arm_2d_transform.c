@@ -21,8 +21,8 @@
  * Title:        arm-2d_transform.c
  * Description:  APIs for tile transform
  *
- * $Date:        04 Oct 2023
- * $Revision:    V.1.0.7
+ * $Date:        29 Nov 2023
+ * $Revision:    V.1.0.8
  *
  * Target Processor:  Cortex-M cores
  *
@@ -1305,7 +1305,14 @@ arm_fsm_rt_t arm_2dp_tile_transform(arm_2d_op_trans_t *ptOP,
         return arm_fsm_rt_on_going;
     }
 
-    if (NULL != ptRegion) {
+    arm_2d_region_t tTargetRegion = {
+        .tSize = ptTarget->tRegion.tSize
+    };
+    if (NULL == ptRegion) {
+        ptRegion = &tTargetRegion;
+    }
+
+    //if (NULL != ptRegion) {
         __arm_2d_transform_info_t *ptTransform
             = (__arm_2d_transform_info_t *)
                 (   (uintptr_t)ptThis
@@ -1332,10 +1339,10 @@ arm_fsm_rt_t arm_2dp_tile_transform(arm_2d_op_trans_t *ptOP,
 
             ptTargetCentre = &tTargetCentre;
         }
-    } else {
-        this.Target.ptTile = ptTarget;
-        //this.Target.ptRegion = ptRegion;
-    }
+    //} else {
+    //    this.Target.ptTile = ptTarget;
+    //    //this.Target.ptRegion = ptRegion;
+    //}
 
     this.Target.ptRegion = NULL;
 
