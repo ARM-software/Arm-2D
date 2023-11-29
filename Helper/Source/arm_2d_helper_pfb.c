@@ -474,6 +474,20 @@ void arm_2d_helper_pfb_flush(arm_2d_helper_pfb_t *ptThis)
            ||   this.Adapter.bIgnoreLowLevelFlush) {
            __arm_2d_helper_pfb_report_rendering_complete(ptThis, ptPFB);
         } else {
+
+            ARM_2D_LOG_INFO(
+                HELPER_PFB, 
+                0, 
+                "FLUSH_PFB", 
+                "Request Flushing PFB [%p] , x=%d y=%d w=%d h=%d",
+                (void *)ptPFB, 
+                ptPFB->tTile.tRegion.tLocation.iX,
+                ptPFB->tTile.tRegion.tLocation.iY,
+                ptPFB->tTile.tRegion.tSize.iWidth,
+                ptPFB->tTile.tRegion.tSize.iHeight
+            );
+
+
             // call handler
             (*this.tCFG.Dependency.evtOnLowLevelRendering.fnHandler)(
                             this.tCFG.Dependency.evtOnLowLevelRendering.pTarget,
@@ -522,6 +536,18 @@ void __arm_2d_helper_pfb_report_rendering_complete( arm_2d_helper_pfb_t *ptThis,
         assert(false);  /* this should not happen */
         return ;
     }
+
+    ARM_2D_LOG_INFO(
+        HELPER_PFB, 
+        0, 
+        "REPORT_RENDERING_COMPLETE", 
+        "Flushing PFB [%p] is complete, x=%d y=%d w=%d h=%d",
+        (void *)ptPFB, 
+        ptPFB->tTile.tRegion.tLocation.iX,
+        ptPFB->tTile.tRegion.tLocation.iY,
+        ptPFB->tTile.tRegion.tSize.iWidth,
+        ptPFB->tTile.tRegion.tSize.iHeight
+    );
 
     ptPFB->tTile.tRegion.tLocation = (arm_2d_location_t) {0,0};
     
@@ -1862,6 +1888,7 @@ label_iteration_begin_start:
 
             if (    this.tCFG.FrameBuffer.bDebugDirtyRegions
                 ||  this.Adapter.bFailedToOptimizeDirtyRegion) {
+            //if (this.Adapter.bFailedToOptimizeDirtyRegion) {
                 /* In dirty region debug mode (or failed to optimize the dirty regions), 
                  * we have to refresh the whole screen instead of the dirty regions
                  */
@@ -2116,28 +2143,28 @@ label_iteration_begin_start:
                     this.Adapter.tFrameSize.iWidth 
                         = this.Adapter.tTargetRegion.tSize.iWidth;
                     
-                    int16_t iHeight = (int16_t)
+                    int32_t nHeight = (int32_t)
                         (   wPFBPixelCount 
                         /   (uint32_t)this.Adapter.tTargetRegion.tSize.iWidth);
                 
-                    iHeight = MIN(iHeight, this.Adapter.tTargetRegion.tSize.iHeight);
+                    nHeight = MIN(nHeight, this.Adapter.tTargetRegion.tSize.iHeight);
 
                     if (this.tCFG.FrameBuffer.u3PixelHeightAlign) {
                         uint_fast8_t chPixelHeightAlignMask 
                             = (1 << this.tCFG.FrameBuffer.u3PixelHeightAlign)-1;
 
                         
-                        iHeight &= ~chPixelHeightAlignMask;
+                        nHeight &= ~chPixelHeightAlignMask;
 
-                        if (0 == iHeight) {
+                        if (0 == nHeight) {
                             // reset adapter frame size
                             this.Adapter.tFrameSize = this.tCFG.FrameBuffer.tFrameSize;
                         } else {
-                            this.Adapter.tFrameSize.iHeight = iHeight;
+                            this.Adapter.tFrameSize.iHeight = (int16_t)nHeight;
                         } 
 
                     } else {
-                        this.Adapter.tFrameSize.iHeight = iHeight;
+                        this.Adapter.tFrameSize.iHeight = (int16_t)nHeight;
                     }
 
                 } else {
@@ -2697,22 +2724,12 @@ ARM_PT_BEGIN(this.Adapter.chPT)
         }
         
         /* draw dirty regions */
-        if (this.tCFG.FrameBuffer.bDebugDirtyRegions) {
-            arm_2d_region_list_item_t *ptRegionListItem = ptDirtyRegions;
-            
-            while(NULL != ptRegionListItem) {
-                if (!ptRegionListItem->bIgnore) {
-                    arm_2d_helper_draw_box( this.Adapter.ptFrameBuffer, 
-                                            &ptRegionListItem->tRegion, 
-                                            1,  
-                                            GLCD_COLOR_GREEN, 255);
-                }
-                
-                ptRegionListItem = ptRegionListItem->ptNext;
-            }
+        if (this.tCFG.FrameBuffer.bDebugDirtyRegions && !this.Adapter.bIsDryRun) {
+
 
             if (this.Adapter.bIsDirtyRegionOptimizationEnabled) {
-                ptRegionListItem = this.Adapter.OptimizedDirtyRegions.ptWorkingList;
+                arm_2d_region_list_item_t *ptRegionListItem 
+                    = this.Adapter.OptimizedDirtyRegions.ptWorkingList;
 
                 while(NULL != ptRegionListItem) {
                     if (!ptRegionListItem->bIgnore) {
@@ -2724,8 +2741,21 @@ ARM_PT_BEGIN(this.Adapter.chPT)
                     
                     ptRegionListItem = ptRegionListItem->ptInternalNext;
                 }
-            }
+            } else {
+                arm_2d_region_list_item_t *ptRegionListItem = ptDirtyRegions;
+            
+                while(NULL != ptRegionListItem) {
+                    if (!ptRegionListItem->bIgnore) {
 
+                        arm_2d_helper_draw_box( this.Adapter.ptFrameBuffer, 
+                                                &ptRegionListItem->tRegion, 
+                                                1,  
+                                                GLCD_COLOR_GREEN, 255);
+                    }
+                    
+                    ptRegionListItem = ptRegionListItem->ptNext;
+                }
+            }
         }
 
         this.Adapter.bIsNewFrame = false;
@@ -2747,6 +2777,52 @@ ARM_PT_END()
             "PFB TASK", 
             "Free the working list and the candidate list."
         );
+
+#if 1 /* reserved for debug only */
+        do {
+            arm_2d_region_list_item_t *ptRegionListItem = ptDirtyRegions;
+            
+            while(NULL != ptRegionListItem) {
+                if (!ptRegionListItem->bIgnore) {
+                    ARM_2D_LOG_INFO(
+                        DIRTY_REGION_OPTIMISATION, 
+                        0, 
+                        "PFB TASK", 
+                        "Original Dirty Region [%p], x=%d\ty=%d\t w=%d\th%d",
+                        (void *)ptRegionListItem,
+                        ptRegionListItem->tRegion.tLocation.iX,
+                        ptRegionListItem->tRegion.tLocation.iY,
+                        ptRegionListItem->tRegion.tSize.iWidth,
+                        ptRegionListItem->tRegion.tSize.iHeight
+                    );
+                }
+                
+                ptRegionListItem = ptRegionListItem->ptNext;
+            }
+
+            if (this.Adapter.bIsDirtyRegionOptimizationEnabled) {
+                ptRegionListItem = this.Adapter.OptimizedDirtyRegions.ptWorkingList;
+
+                while(NULL != ptRegionListItem) {
+                    if (!ptRegionListItem->bIgnore) {
+                        ARM_2D_LOG_INFO(
+                            DIRTY_REGION_OPTIMISATION, 
+                            0, 
+                            "PFB TASK", 
+                            "Optimized Dirty Region [%p], x=%d\ty=%d\t w=%d\th%d",
+                            (void *)ptRegionListItem,
+                            ptRegionListItem->tRegion.tLocation.iX,
+                            ptRegionListItem->tRegion.tLocation.iY,
+                            ptRegionListItem->tRegion.tSize.iWidth,
+                            ptRegionListItem->tRegion.tSize.iHeight
+                        );
+                    }
+                    
+                    ptRegionListItem = ptRegionListItem->ptInternalNext;
+                }
+            }
+        } while(0);
+#endif
 
         /* free working list */
         __arm_2d_helper_free_dirty_region_working_list(
@@ -3159,7 +3235,6 @@ void arm_2d_helper_transform_update_dirty_regions(
         /* update the new region */
         this.tDirtyRegions[0].tRegion = tNewRegion;
         
-
         arm_2d_region_t tOverlapArea, tEnclosureArea;
         if (arm_2d_region_intersect(&this.tDirtyRegions[1].tRegion, 
                                     &this.tDirtyRegions[0].tRegion,
