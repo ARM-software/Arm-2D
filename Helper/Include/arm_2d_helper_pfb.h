@@ -946,7 +946,7 @@ void arm_2d_helper_transform_update_value(  arm_2d_helper_transform_t *ptThis,
  * \param[in] bIsNewFrame whether this is a new frame
  */
 extern
-ARM_NONNULL(1,2)
+ARM_NONNULL(1)
 void arm_2d_helper_transform_update_dirty_regions(
                                     arm_2d_helper_transform_t *ptThis,
                                     const arm_2d_region_t *ptCanvas,
