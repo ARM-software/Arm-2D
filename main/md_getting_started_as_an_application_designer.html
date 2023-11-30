@@ -354,8 +354,9 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 <li>Any symbol, e.g. file name, function name, macro name, type name etc., having a double under-scope as the prefix is considered as <b>PRIVATE</b> to the library. You should save your time from touching them.</li>
 <li>The library is designed with the philosophy that Users are free to use anything in public header files and should not touch anything marked implicitly or explicitly as private.</li>
 <li>Despite which processor you use, during the compilation, all C source files are safe to be added to the compilation (and we highly recommend you to do this for simplicity reason). For example, when you use Cortex-M4, which doesn't support Helium extension (introduced by Armv8.1-M architecture and first implemented by the Cortex-M55 processor), it is OK to include <code>arm_2d_helium.c</code> in the compilation process, as the C source files are constructed with environment detection in pre-processing phase.</li>
-<li>In your application, including <code><a class="el" href="arm__2d_8h_source.html">arm_2d.h</a></code> is sufficient to get all the services and APIs ready for you.</li>
-<li><p class="startli">Make sure that the library is initialised by calling <code><a class="el" href="group__gKernel.html#gae417897e7d7186b294c0ff3468102276" title="initialise arm-2d">arm_2d_init()</a></code> before using any of the services.</p>
+<li>In your application, please include <code><a class="el" href="arm__2d_8h_source.html">arm_2d.h</a></code> to use the services and APIs in <code>Library</code>.</li>
+<li>In your application, including <code><a class="el" href="arm__2d__helper_8h_source.html">arm_2d_helper.h</a></code> (which includes <code><a class="el" href="arm__2d_8h_source.html">arm_2d.h</a></code>) is sufficient to get ALL the services and APIs ready for you.</li>
+<li><p class="startli">Please call <code><a class="el" href="group__gKernel.html#gae417897e7d7186b294c0ff3468102276" title="initialise arm-2d">arm_2d_init()</a></code> before using any services.</p>
 <p class="startli"><b>NOTE</b>:</p><ol type="1">
 <li>Feature configuration macros are checked by <code>arm_2d_feature.h</code>. For the current stage of the library, please <b>DO NOT</b> override those feature configuration macros. </li>
 </ol>
