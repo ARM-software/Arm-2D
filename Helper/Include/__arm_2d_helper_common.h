@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        28. Nov 2023
- * $Revision:    V.1.2.0
+ * $Date:        30. Nov 2023
+ * $Revision:    V.1.3.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -882,6 +882,70 @@ extern "C" {
  * \brief Please do NOT use this macro
  * 
  */
+#define ____item_line_dock_horizontal5( __width,                                \
+                                        __left, __right, __top, __bottom)       \
+    arm_using(  arm_2d_region_t __item_region,                                  \
+                {                                                               \
+                    __item_region.tSize.iWidth = (__width);                     \
+                    __item_region.tSize.iHeight                                 \
+                        = (__arm_2d_layout_area.tSize.iHeight);                 \
+                    __item_region.tLocation = __arm_2d_layout.tLocation;        \
+                    __item_region.tLocation.iX += (__left);                     \
+                    __item_region.tLocation.iY += (__top);                      \
+                },                                                              \
+                {                                                               \
+                    __arm_2d_layout.tLocation.iX +=                             \
+                        (__width) + (__left) + (__right);                       \
+                    int16_t ARM_2D_SAFE_NAME(iHeight)                           \
+                        = (__arm_2d_layout_area.tSize.iHeight)                  \
+                        + (__top)                                               \
+                        + (__bottom);                                           \
+                    __arm_2d_layout.tSize.iHeight = MAX(                        \
+                                                __arm_2d_layout.tSize.iHeight,  \
+                                                ARM_2D_SAFE_NAME(iHeight));     \
+                    int16_t ARM_2D_SAFE_NAME(iWidth)                            \
+                        = (__width) + (__left) + (__right);                     \
+                    __arm_2d_layout.tSize.iWidth = MAX(                         \
+                                                __arm_2d_layout.tSize.iWidth,   \
+                                                ARM_2D_SAFE_NAME(iWidth));      \
+                    arm_2d_op_wait_async(NULL);                                 \
+                })
+
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define ____item_line_dock_horizontal1(__width)                                 \
+            ____item_line_dock_horizontal5(__width, 0, 0, 0, 0)
+
+
+/*!
+ * \brief generate a arm_2d_region (i.e. __item_region) to dock a specific 
+ *        rectangular area horizontally.
+ * \param ... parameter list 
+ * 
+ * \note prototype 1:
+ *          __item_line_dock_horizontal(__width) {
+ *              code body that can use __item_region
+ *          }
+ *
+ * \note prototype 2:
+ *          __item_line_dock_horizontal(__width, __left, __right, __top, __bottom) {
+ *              code body that can use __item_region
+ *          }
+ *
+ */
+#define __item_line_dock_horizontal(...)                                        \
+            ARM_CONNECT2(   ____item_line_dock_horizontal,                      \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+
+
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
 #define ____item_line_vertical1(__size)                                         \
             ____item_line_vertical5(__size, 0, 0, 0, 0)
 
@@ -961,6 +1025,67 @@ extern "C" {
             ARM_CONNECT2(   ____item_line_vertical,                             \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define ____item_line_dock_vertical5(   __height,                               \
+                                        __left, __right, __top, __bottom)       \
+    arm_using(  arm_2d_region_t __item_region,                                  \
+                {                                                               \
+                    __item_region.tSize.iWidth                                  \
+                        = (__arm_2d_layout_area.tSize.iWidth);                  \
+                    __item_region.tSize.iHeight = (__height);                   \
+                    __item_region.tLocation = __arm_2d_layout.tLocation;        \
+                    __item_region.tLocation.iX += (__left);                     \
+                    __item_region.tLocation.iY += (__top);                      \
+                },                                                              \
+                {                                                               \
+                    __arm_2d_layout.tLocation.iY +=                             \
+                        (__height) + (__top) + (__bottom);                      \
+                    int16_t ARM_2D_SAFE_NAME(iHeight)                           \
+                        = (__height) + (__top) + (__bottom);                    \
+                    __arm_2d_layout.tSize.iHeight = MAX(                        \
+                                                __arm_2d_layout.tSize.iHeight,  \
+                                                ARM_2D_SAFE_NAME(iHeight));     \
+                    int16_t ARM_2D_SAFE_NAME(iWidth)                            \
+                        = (__arm_2d_layout_area.tSize.iWidth)                   \
+                        + (__left)                                              \
+                        + (__right);                                            \
+                    __arm_2d_layout.tSize.iWidth = MAX(                         \
+                                                __arm_2d_layout.tSize.iWidth,   \
+                                                ARM_2D_SAFE_NAME(iWidth));      \
+                    arm_2d_op_wait_async(NULL);                                 \
+                })
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define ____item_line_dock_vertical1(__height)                                  \
+            ____item_line_dock_vertical5(__height, 0, 0, 0, 0)
+
+
+/*!
+ * \brief generate a arm_2d_region (i.e. __item_region) to dock a specific 
+ *        rectangular area vertically.
+ * \param ... parameter list 
+ * 
+ * \note prototype 1:
+ *          __item_line_dock_vertical(__size) {
+ *              code body that can use __item_region
+ *          }
+ *
+ * \note prototype 2:
+ *          __item_line_dock_vertical(__size, __left, __right, __top, __bottom) {
+ *              code body that can use __item_region
+ *          }
+ *
+ */
+#define __item_line_dock_vertical(...)                                          \
+            ARM_CONNECT2(   ____item_line_dock_vertical,                        \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
 /*!
  * \brief Please do NOT use this macro
@@ -1755,10 +1880,10 @@ extern "C" {
  */
 #define arm_2d_dock_bottom(__region, __height)                                  \
             arm_using(                                                          \
-                arm_2d_region_t __top_region = (__region),                      \
+                arm_2d_region_t __bottom_region = (__region),                   \
                 {                                                               \
-                    __top_region.tSize.iHeight = (__height);                    \
-                    __top_region.tLocation.iY += (__region).tSize.iHeight       \
+                    __bottom_region.tSize.iHeight = (__height);                 \
+                    __bottom_region.tLocation.iY += (__region).tSize.iHeight    \
                                                - (__height);                    \
                 },                                                              \
                 {arm_2d_op_wait_async(NULL);})
@@ -1775,9 +1900,9 @@ extern "C" {
  */
 #define arm_2d_dock_left(__region, __width)                                     \
             arm_using(                                                          \
-                arm_2d_region_t __top_region = (__region),                      \
+                arm_2d_region_t __left_region = (__region),                     \
                 {                                                               \
-                    __top_region.tSize.iWidth = (__width);                      \
+                    __left_region.tSize.iWidth = (__width);                     \
                 },                                                              \
                 {arm_2d_op_wait_async(NULL);})
 
@@ -1794,13 +1919,53 @@ extern "C" {
  */
 #define arm_2d_dock_right(__region, __width)                                    \
             arm_using(                                                          \
-                arm_2d_region_t __top_region = (__region),                      \
+                arm_2d_region_t __right_region = (__region),                    \
                 {                                                               \
-                    __top_region.tSize.iWidth = (__width);                      \
-                    __top_region.tLocation.iX += (__region).tSize.iWidth        \
+                    __right_region.tSize.iWidth = (__width);                    \
+                    __right_region.tLocation.iX += (__region).tSize.iWidth      \
                                                - (__width);                     \
                 },                                                              \
                 {arm_2d_op_wait_async(NULL);})
+
+
+/*!
+ * \brief generate a temporary arm_2d_region_t object that docks to the region
+ *        centre vertically with an user specified __height. 
+ * 
+ * \note prototype:
+ *          arm_2d_dock_vertical(__region, __height) {
+ *              code body that can use __vertical_region
+ *          }
+ *          
+ */
+#define arm_2d_dock_vertical(__region, __height)                                \
+            arm_using(  arm_2d_region_t __vertical_region = (__region),         \
+                        {                                                       \
+                            __vertical_region.tSize.iHeight = (__height);       \
+                            __vertical_region.tLocation.iY                      \
+                                += ((__region).tSize.iHeight - (__height))>> 1; \
+                        },                                                      \
+                        {arm_2d_op_wait_async(NULL);})
+
+
+/*!
+ * \brief generate a temporary arm_2d_region_t object that docks to the region
+ *        centre horizontally with an user specified __width. 
+ * 
+ * \note prototype:
+ *          arm_2d_dock_horizontal(__region, __width) {
+ *              code body that can use __horizontal_region
+ *          }
+ *          
+ */
+#define arm_2d_dock_horizontal(__region, __width)                               \
+            arm_using(  arm_2d_region_t __horizontal_region = (__region),       \
+                        {                                                       \
+                            __horizontal_region.tSize.iWidth = (__width);       \
+                            __horizontal_region.tLocation.iX                    \
+                                += ((__region).tSize.iWidth - (__width))  >> 1; \
+                        },                                                      \
+                        {arm_2d_op_wait_async(NULL);})
 
 /*!
  * \brief a template for implement a on draw event handler
