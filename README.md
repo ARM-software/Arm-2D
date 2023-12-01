@@ -101,7 +101,7 @@ Potential users of Arm-2D may have different backgrounds and purposes. Whether y
 
 ## Features
 
-### In this version (ver1.1.5-dev)
+### In this version (ver1.1.5)
 
 The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly used in **Deep Embedded Display system**. The supported features include but not limited to:
 
@@ -387,4 +387,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-21 Nov 2023
+1 Dec 2023
