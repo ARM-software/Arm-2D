@@ -81,7 +81,7 @@ Potential users of Arm-2D may have different backgrounds and purposes. Whether y
 - [How to Get Started](#how-to-get-started)
 - [Table of Content](#table-of-content)
 - [Features](#features)
-  - [In this version (ver1.1.5-dev)](#in-this-version-ver115-dev)
+  - [In this version (ver1.1.5)](#in-this-version-ver115-dev)
   - [New Features Planned in the Future](#new-features-planned-in-the-future)
 - [1 Introduction](#1-introduction)
   - [1.1 The Background](#11-the-background)
@@ -135,7 +135,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
     
   - Supports **Dirty Regions** for refreshing specified areas only
     - Provides a debug mode for dirty regions
-    - **[new]** Provides optimization for dirty regions to reduce the chances of refreshing overlapped ones.
+    - **[new]** Provides optimization for dirty regions to reduce the chances of refreshing overlapped areas.
     
   - Supports swapping high and low bytes for RGB16 pixels
   
@@ -173,7 +173,9 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
 
   - **Layout Assistant**
 
-    - Docking Alignments, e.g. `arm_2d_align_centre`, `arm_2d_align_bottom_right` etc.
+    - Alignments, e.g. `arm_2d_align_centre`, `arm_2d_align_bottom_right` etc.
+
+    - **[new]** Docking, e.g. `arm_2d_dock_top`,`arm_2d_dock_right`, `arm_2d_dock_vertical`, `__item_line_dock_horizontal` etc.
 
     - Line Stream Layout, e.g. `__item_line_horizontal` and `__item_line_vertical`
 
@@ -182,19 +184,19 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
   - RTOS Helper Services for CMSIS-RTOS2 and RT-Thread
 
   - Templates
-
+  
     - Provides templates for user controls and scenes.
     - Scene templates for Meter, Watch and Fitness trackers
     - Provides a template for adding new RTOS support.
 
   - Other Helper services
-
+  
     - A dedicated helper service for transform operations
       - Provide dynamic dirty region tracking
       - Double-buffered Angle and Scale updating
   - A `img2c.py` for generating arm-2d resources from user specified images
   - A `ttf2c.py` for generating user customized A1, A2, A4 and A8 fonts from an user specified TrueType Font
-
+  
 - **Ready and Welcome 3rd party adoption**
 
   - Successful story: accelerating LVGL as soft-GPU when Helium is ready
@@ -294,9 +296,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
 
 **Figure 1-4 A snapshot of the generic benchmark running on Simulation**
 
-![Benchmark](./documentation/pictures/benchmark.png) 
-
-
+<img src="./documentation/pictures/benchmark.png" alt="Benchmark" style="zoom: 50%;" /> 
 
 - **Use the average cycle count in 1000 iterations as benchmark score.**
 
