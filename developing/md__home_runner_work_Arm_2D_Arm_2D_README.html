@@ -206,7 +206,7 @@ Table of Content</h1>
 <li><a href="#how-to-get-started">How to Get Started</a></li>
 <li><a href="#table-of-content">Table of Content</a></li>
 <li><a href="#features">Features</a><ul>
-<li><a href="#in-this-version-ver115-dev">In this version (ver1.1.5-dev)</a></li>
+<li><a href="#in-this-version-ver115-dev">In this version (ver1.1.5)</a></li>
 <li><a href="#new-features-planned-in-the-future">New Features Planned in the Future</a></li>
 </ul>
 </li>
@@ -280,7 +280,7 @@ In this version (ver1.1.5)</h2>
 </li>
 <li>Supports <b>Dirty Regions</b> for refreshing specified areas only<ul>
 <li>Provides a debug mode for dirty regions</li>
-<li><b>[new]</b> Provides optimization for dirty regions to reduce the chances of refreshing overlapped ones.</li>
+<li><b>[new]</b> Provides optimization for dirty regions to reduce the chances of refreshing overlapped areas.</li>
 </ul>
 </li>
 <li>Supports swapping high and low bytes for RGB16 pixels</li>
@@ -325,7 +325,8 @@ In this version (ver1.1.5)</h2>
 </ul>
 </li>
 <li><b>Layout Assistant</b><ul>
-<li>Docking Alignments, e.g. <code>arm_2d_align_centre</code>, <code>arm_2d_align_bottom_right</code> etc.</li>
+<li>Alignments, e.g. <code>arm_2d_align_centre</code>, <code>arm_2d_align_bottom_right</code> etc.</li>
+<li><b>[new]</b> Docking, e.g. <code>arm_2d_dock_top</code>,<code>arm_2d_dock_right</code>, <code>arm_2d_dock_vertical</code>, <code>__item_line_dock_horizontal</code> etc.</li>
 <li>Line Stream Layout, e.g. <code>__item_line_horizontal</code> and <code>__item_line_vertical</code></li>
 <li>Stream Layout (with wrapping), e.g. <code>__item_horizontal</code> and <code>__item_vertical</code></li>
 </ul>
@@ -447,7 +448,7 @@ New Features Planned in the Future</h2>
 <li><b>Record the cycle count used for blending one frame and run 1000 iterations (frames).</b></li>
 </ul>
 <p ><b>Figure 1-4 A snapshot of the generic benchmark running on Simulation</b></p>
-<p ><img src="benchmark.png" alt="" class="inline" title="Benchmark"/></p>
+<p ><img src="./documentation/pictures/benchmark.png" alt="Benchmark" style="zoom: 50%;" class="inline"/></p>
 <ul>
 <li><b>Use the average cycle count in 1000 iterations as benchmark score.</b><ul>
 <li>Based on that, for typical embedded application requirement, we derive a more meaningful metrics called the <b>Minimal Frequency Required for 30 FPS (MHz)</b> as shown in <b>Figure 1-5</b>.</li>
