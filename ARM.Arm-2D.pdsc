@@ -23,12 +23,6 @@
     <keyword>Image Processing</keyword>
   </keywords>
   
-    <requirements>
-        <languages>
-            <language name="C" version="99"/>
-        </languages>
-    </requirements>
-  
     <conditions> 
         <!--
         <condition id="Arm Compiler">
