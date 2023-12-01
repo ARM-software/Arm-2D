@@ -60,9 +60,9 @@
 - Improves the support for C++ compilation.
 - Fixes the support for the Arm Compiler 5.
 - Improve the support for Arm Compiler 6.21.
-- Adds a new document "**How To Accelerate Arm-2D**"
-- Updates the document "How To Deploy Arm-2D" to introduce the supports for Asynchronous Flushing Mode and Direct Mode.
+- Adds a new document **How To Accelerate Arm-2D**
+- Updates the document **How To Deploy Arm-2D** to introduce the supports for Asynchronous Flushing Mode and Direct Mode.
 - Updates the benchmark generic result.
-- Updates README.md
+- Updates README.md.
 - Adds **ReleaseNote.md**
 
