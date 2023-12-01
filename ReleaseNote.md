@@ -62,7 +62,7 @@
 - Improve the support for Arm Compiler 6.21.
 - Adds a new document "**How To Accelerate Arm-2D**"
 - Updates the document "How To Deploy Arm-2D" to introduce the supports for Asynchronous Flushing Mode and Direct Mode.
-- Update benchmarks
-- Update README.md
+- Updates the benchmark generic result.
+- Updates README.md
 - Adds **ReleaseNote.md**
 
