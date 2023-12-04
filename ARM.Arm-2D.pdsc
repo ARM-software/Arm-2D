@@ -200,12 +200,7 @@
             <file category="header"      name="Helper/Include/template/arm_2d_scene_template.h" attr="template"  select="User Scene Template"   version="1.1.13" />
 
           </files>
-          
-          <environments>
-            <environment name="uv">
-              <CMisc>-std=gnu11</CMisc>
-            </environment>
-          </environments>
+
           <RTE_Components_h>
 
 #define RTE_Acceleration_Arm_2D
