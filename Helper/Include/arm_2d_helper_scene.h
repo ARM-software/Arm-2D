@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        2. Nov 2023
- * $Revision:    V.1.4.5
+ * $Date:        26. Dec 2023
+ * $Revision:    V.1.4.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -260,7 +260,8 @@ struct arm_2d_scene_player_t {
         uint64_t dwRenderTotal;
         uint32_t wAverage;
         float fCPUUsage;
-        uint32_t wIterations;
+        uint16_t hwIterations;
+        uint16_t hwFrameCounter;
         uint32_t wLCDLatency;
         int64_t lTimestamp;
     } Benchmark;

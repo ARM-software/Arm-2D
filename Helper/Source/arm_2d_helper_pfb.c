@@ -2731,7 +2731,7 @@ ARM_PT_END()
             "Free the working list and the candidate list."
         );
 
-#if 1 /* reserved for debug only */
+#if 0 /* reserved for debug only */
         do {
             arm_2d_region_list_item_t *ptRegionListItem = ptDirtyRegions;
             

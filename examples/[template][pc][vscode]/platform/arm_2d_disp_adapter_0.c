@@ -343,16 +343,18 @@ static bool __on_each_frame_complete(void *ptTarget)
 
     /* calculate real-time FPS */
     if (__DISP0_CFG_ITERATION_CNT__) {
-        if (DISP0_ADAPTER.Benchmark.wIterations) {
+        if (DISP0_ADAPTER.Benchmark.hwIterations) {
+            int32_t nRenderCycle = DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nTotalCycle;
             DISP0_ADAPTER.Benchmark.wMin = MIN((uint32_t)nElapsed, DISP0_ADAPTER.Benchmark.wMin);
             DISP0_ADAPTER.Benchmark.wMax = MAX(nElapsed, (int32_t)DISP0_ADAPTER.Benchmark.wMax);
             DISP0_ADAPTER.Benchmark.dwTotal += nElapsed;
-            DISP0_ADAPTER.Benchmark.dwRenderTotal += DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nTotalCycle;
-            DISP0_ADAPTER.Benchmark.wIterations--;
+            DISP0_ADAPTER.Benchmark.dwRenderTotal += nRenderCycle;
+            DISP0_ADAPTER.Benchmark.hwIterations--;
+            DISP0_ADAPTER.Benchmark.hwFrameCounter += (nRenderCycle != 0) ? 1 : 0;
 
-            if (0 == DISP0_ADAPTER.Benchmark.wIterations) {
+            if (0 == DISP0_ADAPTER.Benchmark.hwIterations) {
                 DISP0_ADAPTER.Benchmark.wAverage =
-                    (uint32_t)(DISP0_ADAPTER.Benchmark.dwTotal / (uint64_t)__DISP0_CFG_ITERATION_CNT__);
+                    (uint32_t)(DISP0_ADAPTER.Benchmark.dwTotal / (uint64_t)DISP0_ADAPTER.Benchmark.hwFrameCounter);
                 DISP0_ADAPTER.Benchmark.wAverage = MAX(1, DISP0_ADAPTER.Benchmark.wAverage);
  
                 int64_t lElapsed = lTimeStamp - DISP0_ADAPTER.Benchmark.lTimestamp;
@@ -362,7 +364,8 @@ static bool __on_each_frame_complete(void *ptTarget)
                 DISP0_ADAPTER.Benchmark.wMax = 0;
                 DISP0_ADAPTER.Benchmark.dwTotal = 0;
                 DISP0_ADAPTER.Benchmark.dwRenderTotal = 0;
-                DISP0_ADAPTER.Benchmark.wIterations = __DISP0_CFG_ITERATION_CNT__;
+                DISP0_ADAPTER.Benchmark.hwIterations = __DISP0_CFG_ITERATION_CNT__;
+                DISP0_ADAPTER.Benchmark.hwFrameCounter = 0;
                 
                 DISP0_ADAPTER.Benchmark.lTimestamp = arm_2d_helper_get_system_timestamp();
             }
@@ -468,7 +471,8 @@ static void __user_scene_player_init(void)
                         }}});
 
     DISP0_ADAPTER.Benchmark.wMin = UINT32_MAX;
-    DISP0_ADAPTER.Benchmark.wIterations = __DISP0_CFG_ITERATION_CNT__;
+    DISP0_ADAPTER.Benchmark.hwIterations = __DISP0_CFG_ITERATION_CNT__;
+    DISP0_ADAPTER.Benchmark.hwFrameCounter = 0;
 
 }
 
