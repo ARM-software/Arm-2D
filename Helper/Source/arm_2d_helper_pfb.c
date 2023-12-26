@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        29. Nov 2023
- * $Revision:    V.1.7.6
+ * $Date:        26. Dec 2023
+ * $Revision:    V.1.7.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1906,22 +1906,41 @@ label_iteration_begin_start:
 
                 /* Use the optimized dirty region working list for refresh
                  */
-                assert(NULL != this.Adapter.OptimizedDirtyRegions.ptWorkingList);
                 this.Adapter.ptDirtyRegion = this.Adapter.OptimizedDirtyRegions.ptWorkingList;
-                
                 this.Adapter.bIsUsingOptimizedDirtyRegionList = (NULL != this.Adapter.ptDirtyRegion);
 
-                ARM_2D_LOG_INFO(
-                    DIRTY_REGION_OPTIMISATION, 
-                    1, 
-                    "Iteration Begin", 
-                    "Get the first dirty region[%p] from the working list , x=%d y=%d w=%d h=%d", 
-                    this.Adapter.ptDirtyRegion,
-                    this.Adapter.ptDirtyRegion->tRegion.tLocation.iX,
-                    this.Adapter.ptDirtyRegion->tRegion.tLocation.iY,
-                    this.Adapter.ptDirtyRegion->tRegion.tSize.iWidth,
-                    this.Adapter.ptDirtyRegion->tRegion.tSize.iHeight
-                );
+                if (NULL == this.Adapter.ptDirtyRegion) {
+                    assert(NULL != ptDirtyRegions);
+
+                    ARM_2D_LOG_INFO(
+                        DIRTY_REGION_OPTIMISATION, 
+                        1, 
+                        "Iteration Begin", 
+                        "No valid dirty region in the list, ignore this frame",
+                    );
+
+                    /* free pfb */
+                    arm_irq_safe {
+                        __arm_2d_helper_pfb_free(ptThis, this.Adapter.ptCurrent);
+                        this.Adapter.ptCurrent = NULL;
+                    }
+
+                    // out of lcd 
+                    return (arm_2d_tile_t *)-1;
+                } else {
+
+                    ARM_2D_LOG_INFO(
+                        DIRTY_REGION_OPTIMISATION, 
+                        1, 
+                        "Iteration Begin", 
+                        "Get the first dirty region[%p] from the working list , x=%d y=%d w=%d h=%d", 
+                        this.Adapter.ptDirtyRegion,
+                        this.Adapter.ptDirtyRegion->tRegion.tLocation.iX,
+                        this.Adapter.ptDirtyRegion->tRegion.tLocation.iY,
+                        this.Adapter.ptDirtyRegion->tRegion.tSize.iWidth,
+                        this.Adapter.ptDirtyRegion->tRegion.tSize.iHeight
+                    );
+                }
             }
         } else {
 
