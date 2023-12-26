@@ -343,16 +343,16 @@ static bool __on_each_frame_complete(void *ptTarget)
 
     /* calculate real-time FPS */
     if (__DISP%Instance%_CFG_ITERATION_CNT__) {
-        if (DISP%Instance%_ADAPTER.Benchmark.wIterations) {
+        if (DISP%Instance%_ADAPTER.Benchmark.hwIterations) {
             int32_t nRenderCycle = DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t.Statistics.nTotalCycle;
             DISP%Instance%_ADAPTER.Benchmark.wMin = MIN((uint32_t)nElapsed, DISP%Instance%_ADAPTER.Benchmark.wMin);
             DISP%Instance%_ADAPTER.Benchmark.wMax = MAX(nElapsed, (int32_t)DISP%Instance%_ADAPTER.Benchmark.wMax);
             DISP%Instance%_ADAPTER.Benchmark.dwTotal += nElapsed;
             DISP%Instance%_ADAPTER.Benchmark.dwRenderTotal += nRenderCycle;
-            DISP%Instance%_ADAPTER.Benchmark.wIterations--;
+            DISP%Instance%_ADAPTER.Benchmark.hwIterations--;
             DISP%Instance%_ADAPTER.Benchmark.hwFrameCounter += (nRenderCycle != 0) ? 1 : 0;
 
-            if (0 == DISP%Instance%_ADAPTER.Benchmark.wIterations) {
+            if (0 == DISP%Instance%_ADAPTER.Benchmark.hwIterations) {
 
                 if (0 == DISP%Instance%_ADAPTER.Benchmark.hwFrameCounter) {
                     DISP%Instance%_ADAPTER.Benchmark.hwFrameCounter = 1;
@@ -369,7 +369,7 @@ static bool __on_each_frame_complete(void *ptTarget)
                 DISP%Instance%_ADAPTER.Benchmark.wMax = 0;
                 DISP%Instance%_ADAPTER.Benchmark.dwTotal = 0;
                 DISP%Instance%_ADAPTER.Benchmark.dwRenderTotal = 0;
-                DISP%Instance%_ADAPTER.Benchmark.wIterations = __DISP%Instance%_CFG_ITERATION_CNT__;
+                DISP%Instance%_ADAPTER.Benchmark.hwIterations = __DISP%Instance%_CFG_ITERATION_CNT__;
                 DISP%Instance%_ADAPTER.Benchmark.hwFrameCounter = 0;
 
                 DISP%Instance%_ADAPTER.Benchmark.lTimestamp = arm_2d_helper_get_system_timestamp();
@@ -476,7 +476,7 @@ static void __user_scene_player_init(void)
                         }}});
 
     DISP%Instance%_ADAPTER.Benchmark.wMin = UINT32_MAX;
-    DISP%Instance%_ADAPTER.Benchmark.wIterations = __DISP%Instance%_CFG_ITERATION_CNT__;
+    DISP%Instance%_ADAPTER.Benchmark.hwIterations = __DISP%Instance%_CFG_ITERATION_CNT__;
     DISP%Instance%_ADAPTER.Benchmark.hwFrameCounter = 0;
 }
 
