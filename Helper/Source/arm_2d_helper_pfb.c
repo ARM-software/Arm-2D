@@ -1888,7 +1888,6 @@ label_iteration_begin_start:
 
             if (    this.tCFG.FrameBuffer.bDebugDirtyRegions
                 ||  this.Adapter.bFailedToOptimizeDirtyRegion) {
-            //if (this.Adapter.bFailedToOptimizeDirtyRegion) {
                 /* In dirty region debug mode (or failed to optimize the dirty regions), 
                  * we have to refresh the whole screen instead of the dirty regions
                  */
@@ -2035,72 +2034,7 @@ label_iteration_begin_start:
                      * the code segment for try next dirty region or end early: END *
                      *--------------------------------------------------------------*/
                 }
-            #if 0
-                if (    this.Adapter.bIsDirtyRegionOptimizationEnabled
-                    &&  !this.Adapter.bIsUsingOptimizedDirtyRegionList
-                    &&  !this.Adapter.bIsDryRun) {
-                    /* check whether the dirty region could be optimized */
 
-                    arm_2d_region_list_item_t *ptWorking = this.Adapter.OptimizedDirtyRegions.ptWorkingList;
-                    arm_2d_region_list_item_t *ptRegion = this.Adapter.ptDirtyRegion;
-                    bool bIsInside = false;
-
-                    while(NULL != ptWorking) {
-                        if (1 == arm_2d_is_region_inside_target(&ptRegion->tRegion, 
-                                                                &ptWorking->tRegion)) {
-                            /* the region is inside the target region */
-                            bIsInside = true;
-                            break;
-                        }
-
-                        ptWorking = ptWorking->ptInternalNext;
-                    }
-
-                    if (bIsInside) {
-
-                        ARM_2D_LOG_INFO(
-                            HELPER_PFB, 
-                            1, 
-                            "Iteration Begin", 
-                            "The dirty region[%p](x=%d y=%d w=%d h=%d) is inside one of the working dirty region[%p](x=%d y=%d w=%d h=%d), ignore it.",
-                            (void *)ptRegion,
-                            ptRegion->tRegion.tLocation.iX,
-                            ptRegion->tRegion.tLocation.iY,
-                            ptRegion->tRegion.tSize.iWidth,
-                            ptRegion->tRegion.tSize.iHeight,
-                            (void *)ptWorking,
-                            ptWorking->tRegion.tLocation.iX,
-                            ptWorking->tRegion.tLocation.iY,
-                            ptWorking->tRegion.tSize.iWidth,
-                            ptWorking->tRegion.tSize.iHeight
-                        );
-
-                        /*----------------------------------------------------------------*
-                        * the code segment for try next dirty region or end early: BEGIN *
-                        *----------------------------------------------------------------*/
-                        if (__arm_2d_helper_pfb_get_next_dirty_region(ptThis)) {
-                            /* note, this function updates the 
-                            * this.Adapter.bIsRegionChanged flag
-                            */
-
-                            continue;    //!< try next region
-                        }
-
-                        /* free pfb */
-                        arm_irq_safe {
-                            __arm_2d_helper_pfb_free(ptThis, this.Adapter.ptCurrent);
-                            this.Adapter.ptCurrent = NULL;
-                        }
-
-                        // out of lcd 
-                        return (arm_2d_tile_t *)-1;
-                        /*--------------------------------------------------------------*
-                        * the code segment for try next dirty region or end early: END *
-                        *--------------------------------------------------------------*/
-                    }
-
-                }
-            #endif
             } else {
                 this.Adapter.tTargetRegion = this.tCFG.tDisplayArea;
             }
