@@ -353,6 +353,11 @@ static bool __on_each_frame_complete(void *ptTarget)
             DISP0_ADAPTER.Benchmark.hwFrameCounter += (nRenderCycle != 0) ? 1 : 0;
 
             if (0 == DISP0_ADAPTER.Benchmark.hwIterations) {
+
+                if (0 == DISP0_ADAPTER.Benchmark.hwFrameCounter) {
+                    DISP0_ADAPTER.Benchmark.hwFrameCounter = 1;
+                }
+
                 DISP0_ADAPTER.Benchmark.wAverage =
                     (uint32_t)(DISP0_ADAPTER.Benchmark.dwTotal / (uint64_t)DISP0_ADAPTER.Benchmark.hwFrameCounter);
                 DISP0_ADAPTER.Benchmark.wAverage = MAX(1, DISP0_ADAPTER.Benchmark.wAverage);
@@ -366,7 +371,7 @@ static bool __on_each_frame_complete(void *ptTarget)
                 DISP0_ADAPTER.Benchmark.dwRenderTotal = 0;
                 DISP0_ADAPTER.Benchmark.hwIterations = __DISP0_CFG_ITERATION_CNT__;
                 DISP0_ADAPTER.Benchmark.hwFrameCounter = 0;
-                
+
                 DISP0_ADAPTER.Benchmark.lTimestamp = arm_2d_helper_get_system_timestamp();
             }
         }
@@ -473,7 +478,6 @@ static void __user_scene_player_init(void)
     DISP0_ADAPTER.Benchmark.wMin = UINT32_MAX;
     DISP0_ADAPTER.Benchmark.hwIterations = __DISP0_CFG_ITERATION_CNT__;
     DISP0_ADAPTER.Benchmark.hwFrameCounter = 0;
-
 }
 
 #if !__DISP0_CFG_DISABLE_NAVIGATION_LAYER__
@@ -560,7 +564,7 @@ void disp_adapter0_init(void)
     }
 }
 
-arm_fsm_rt_t disp_adapter0_task(void)
+arm_fsm_rt_t __disp_adapter0_task(void)
 {
     return arm_2d_scene_player_task(&DISP0_ADAPTER);
 }
