@@ -355,15 +355,40 @@ static bool __on_each_frame_complete(void *ptTarget)
             if (0 == DISP%Instance%_ADAPTER.Benchmark.hwIterations) {
 
                 if (0 == DISP%Instance%_ADAPTER.Benchmark.hwFrameCounter) {
-                    DISP%Instance%_ADAPTER.Benchmark.hwFrameCounter = 1;
+                    DISP%Instance%_ADAPTER.Benchmark.wAverage = 0;
+                } else {
+                    DISP%Instance%_ADAPTER.Benchmark.wAverage =
+                        (uint32_t)(DISP%Instance%_ADAPTER.Benchmark.dwTotal / (uint64_t)DISP%Instance%_ADAPTER.Benchmark.hwFrameCounter);
+                    DISP%Instance%_ADAPTER.Benchmark.wAverage = MAX(1, DISP%Instance%_ADAPTER.Benchmark.wAverage);
                 }
 
-                DISP%Instance%_ADAPTER.Benchmark.wAverage =
-                    (uint32_t)(DISP%Instance%_ADAPTER.Benchmark.dwTotal / (uint64_t)DISP%Instance%_ADAPTER.Benchmark.hwFrameCounter);
-                DISP%Instance%_ADAPTER.Benchmark.wAverage = MAX(1, DISP%Instance%_ADAPTER.Benchmark.wAverage);
- 
                 int64_t lElapsed = lTimeStamp - DISP%Instance%_ADAPTER.Benchmark.lTimestamp;
-                DISP%Instance%_ADAPTER.Benchmark.fCPUUsage = (float)((double)DISP%Instance%_ADAPTER.Benchmark.dwRenderTotal / (double)lElapsed) * 100.0f;
+                if (lElapsed) {
+                    DISP%Instance%_ADAPTER.Benchmark.fCPUUsage = (float)((double)DISP%Instance%_ADAPTER.Benchmark.dwRenderTotal / (double)lElapsed) * 100.0f;
+                }
+
+                /* log statistics */
+                if (DISP%Instance%_ADAPTER.Benchmark.wAverage) {
+                    ARM_2D_LOG_INFO(
+                        STATISTICS, 
+                        0, 
+                        "DISP_ADAPTER%Instance%", 
+                        "FPS:%3d(%dms)\tCPU:%2.2f%%\tLCD-Latency:%2dms",
+                        MIN(arm_2d_helper_get_reference_clock_frequency() / DISP%Instance%_ADAPTER.Benchmark.wAverage, 999),
+                        (int32_t)arm_2d_helper_convert_ticks_to_ms(DISP%Instance%_ADAPTER.Benchmark.wAverage),
+                        DISP%Instance%_ADAPTER.Benchmark.fCPUUsage,
+                        (int32_t)arm_2d_helper_convert_ticks_to_ms(DISP%Instance%_ADAPTER.Benchmark.wLCDLatency)
+                    );
+                } else {
+                    ARM_2D_LOG_INFO(
+                        STATISTICS, 
+                        0, 
+                        "DISP_ADAPTER%Instance%", 
+                        "FPS: SKIPPED\tCPU:%2.2f%%\tLCD-Latency:%2dms",
+                        DISP%Instance%_ADAPTER.Benchmark.fCPUUsage,
+                        (int32_t)arm_2d_helper_convert_ticks_to_ms(DISP%Instance%_ADAPTER.Benchmark.wLCDLatency)
+                    );
+                }
                  
                 DISP%Instance%_ADAPTER.Benchmark.wMin = UINT32_MAX;
                 DISP%Instance%_ADAPTER.Benchmark.wMax = 0;
