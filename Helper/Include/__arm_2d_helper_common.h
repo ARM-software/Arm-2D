@@ -900,7 +900,8 @@ extern "C" {
                     __arm_2d_layout.tLocation.iX +=                             \
                         (__width) + (__left) + (__right);                       \
                     __arm_2d_layout.tSize.iHeight =                             \
-                        __arm_2d_layout_area.tSize.iHeight;                     \
+                        MAX(__arm_2d_layout_area.tSize.iHeight,                 \
+                            __arm_2d_layout.tSize.iHeight);                     \
                     int16_t ARM_2D_SAFE_NAME(iWidth)                            \
                         = (__width) + (__left) + (__right);                     \
                     __arm_2d_layout.tSize.iWidth = MAX(                         \
@@ -1051,7 +1052,8 @@ extern "C" {
                                                 __arm_2d_layout.tSize.iHeight,  \
                                                 ARM_2D_SAFE_NAME(iHeight));     \
                     __arm_2d_layout.tSize.iWidth =                              \
-                        __arm_2d_layout_area.tSize.iWidth;                      \
+                        MAX(__arm_2d_layout_area.tSize.iWidth,                  \
+                            __arm_2d_layout.tSize.iWidth);                      \
                     arm_2d_op_wait_async(NULL);                                 \
                 })
 
