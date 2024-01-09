@@ -156,7 +156,7 @@ uintptr_t __disp_adapter0_vres_get_asset_address(   uintptr_t pObj,
 
 static void __on_scene_depose(arm_2d_scene_t *ptScene)
 {
-    free(ptScene);
+    __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
 }
 
 
@@ -413,7 +413,10 @@ static void __app_scene0_init(void)
     s_tDirtyRegions[0].tRegion.tSize = c_tileHelium.tRegion.tSize;
     
     
-    arm_2d_scene_t *ptScene = (arm_2d_scene_t *)malloc(sizeof(arm_2d_scene_t));
+    arm_2d_scene_t *ptScene = (arm_2d_scene_t *)
+                    __arm_2d_allocate_scratch_memory(   sizeof(arm_2d_scene_t),
+                                                        __alignof__(arm_2d_scene_t),
+                                                        ARM_2D_MEM_TYPE_UNSPECIFIED);
     assert(NULL != ptScene);
     
     *ptScene = (arm_2d_scene_t){
