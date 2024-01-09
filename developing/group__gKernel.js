@@ -451,6 +451,8 @@ var group__gKernel =
     [ "arm_2d_op_wait_async", "group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989", null ],
     [ "arm_2d_get_op_status", "group__gKernel.html#ga78ba01fb790d0a43878499dcb2639e0d", null ],
     [ "arm_2d_task", "group__gKernel.html#ga14a09993e474bef1266e2572146b8341", null ],
+    [ "__arm_2d_allocate_scratch_memory", "group__gKernel.html#ga6c15020a09927cd68765b059d1f203bb", null ],
+    [ "__arm_2d_free_scratch_memory", "group__gKernel.html#ga6d1168d18401f7799e37c0c2306a9241", null ],
     [ "ARM_2D_RUNTIME_FEATURE", "group__gKernel.html#gae30937777f3c67e2418c9c26c76fb501", null ],
     [ "ARM_2D_VERSION", "group__gKernel.html#ga3cef1eb288e3529dab7e441cc769e1e2", null ]
 ];
