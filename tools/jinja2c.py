@@ -3,12 +3,12 @@
 
 # *************************************************************************************************
 #  Arm 2D project
-#  @file        img2c.py
+#  @file        jinja2c.py
 #  @brief       Jinja Launcher for arm-2d code templates
 #
 # *************************************************************************************************
 #
-# * Copyright (C) 2010-2022 ARM Limited or its affiliates. All rights reserved.
+# * Copyright (C) 2010-2024 ARM Limited or its affiliates. All rights reserved.
 # *
 # * SPDX-License-Identifier: Apache-2.0
 # *
