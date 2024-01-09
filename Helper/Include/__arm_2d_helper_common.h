@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        30. Nov 2023
- * $Revision:    V.1.3.0
+ * $Date:        09. Jan 2024
+ * $Revision:    V.1.3.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -888,7 +888,10 @@ extern "C" {
                 {                                                               \
                     __item_region.tSize.iWidth = (__width);                     \
                     __item_region.tSize.iHeight                                 \
-                        = (__arm_2d_layout_area.tSize.iHeight);                 \
+                        = (__arm_2d_layout_area.tSize.iHeight)                  \
+                        - (__top) - (__bottom);                                 \
+                    __item_region.tSize.iHeight                                 \
+                        = MAX(0, __item_region.tSize.iHeight);                  \
                     __item_region.tLocation = __arm_2d_layout.tLocation;        \
                     __item_region.tLocation.iX += (__left);                     \
                     __item_region.tLocation.iY += (__top);                      \
@@ -896,13 +899,8 @@ extern "C" {
                 {                                                               \
                     __arm_2d_layout.tLocation.iX +=                             \
                         (__width) + (__left) + (__right);                       \
-                    int16_t ARM_2D_SAFE_NAME(iHeight)                           \
-                        = (__arm_2d_layout_area.tSize.iHeight)                  \
-                        + (__top)                                               \
-                        + (__bottom);                                           \
-                    __arm_2d_layout.tSize.iHeight = MAX(                        \
-                                                __arm_2d_layout.tSize.iHeight,  \
-                                                ARM_2D_SAFE_NAME(iHeight));     \
+                    __arm_2d_layout.tSize.iHeight =                             \
+                        __arm_2d_layout_area.tSize.iHeight;                     \
                     int16_t ARM_2D_SAFE_NAME(iWidth)                            \
                         = (__width) + (__left) + (__right);                     \
                     __arm_2d_layout.tSize.iWidth = MAX(                         \
@@ -1035,7 +1033,10 @@ extern "C" {
     arm_using(  arm_2d_region_t __item_region,                                  \
                 {                                                               \
                     __item_region.tSize.iWidth                                  \
-                        = (__arm_2d_layout_area.tSize.iWidth);                  \
+                        = (__arm_2d_layout_area.tSize.iWidth)                   \
+                        - (__left) - (__right);                                 \
+                    __item_region.tSize.iWidth                                  \
+                        = MAX(0, __item_region.tSize.iWidth);                   \
                     __item_region.tSize.iHeight = (__height);                   \
                     __item_region.tLocation = __arm_2d_layout.tLocation;        \
                     __item_region.tLocation.iX += (__left);                     \
@@ -1049,13 +1050,8 @@ extern "C" {
                     __arm_2d_layout.tSize.iHeight = MAX(                        \
                                                 __arm_2d_layout.tSize.iHeight,  \
                                                 ARM_2D_SAFE_NAME(iHeight));     \
-                    int16_t ARM_2D_SAFE_NAME(iWidth)                            \
-                        = (__arm_2d_layout_area.tSize.iWidth)                   \
-                        + (__left)                                              \
-                        + (__right);                                            \
-                    __arm_2d_layout.tSize.iWidth = MAX(                         \
-                                                __arm_2d_layout.tSize.iWidth,   \
-                                                ARM_2D_SAFE_NAME(iWidth));      \
+                    __arm_2d_layout.tSize.iWidth =                              \
+                        __arm_2d_layout_area.tSize.iWidth;                      \
                     arm_2d_op_wait_async(NULL);                                 \
                 })
 
@@ -2049,7 +2045,7 @@ typedef struct arm_2d_helper_draw_evt_t {
 
 __STATIC_INLINE
 uint8_t arm_2d_helper_alpha_mix(uint_fast8_t chAlpha1, 
-                                                uint_fast8_t chAlpha2)
+                                uint_fast8_t chAlpha2)
 {
     chAlpha1 = MIN(255, chAlpha1);
     chAlpha2 = MIN(255, chAlpha2);
