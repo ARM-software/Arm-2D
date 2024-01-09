@@ -886,7 +886,7 @@ extern "C" {
                                         __left, __right, __top, __bottom)       \
     arm_using(  arm_2d_region_t __item_region,                                  \
                 {                                                               \
-                    __item_region.tSize.iWidth = (__width);                     \
+                    __item_region.tSize.iWidth = MAX((__width), 0);             \
                     __item_region.tSize.iHeight                                 \
                         = (__arm_2d_layout_area.tSize.iHeight)                  \
                         - (__top) - (__bottom);                                 \
@@ -897,16 +897,15 @@ extern "C" {
                     __item_region.tLocation.iY += (__top);                      \
                 },                                                              \
                 {                                                               \
-                    __arm_2d_layout.tLocation.iX +=                             \
-                        (__width) + (__left) + (__right);                       \
                     __arm_2d_layout.tSize.iHeight =                             \
                         MAX(__arm_2d_layout_area.tSize.iHeight,                 \
                             __arm_2d_layout.tSize.iHeight);                     \
                     int16_t ARM_2D_SAFE_NAME(iWidth)                            \
-                        = (__width) + (__left) + (__right);                     \
+                                = MAX((__width), 0) + (__left) + (__right);     \
                     __arm_2d_layout.tSize.iWidth = MAX(                         \
                                                 __arm_2d_layout.tSize.iWidth,   \
                                                 ARM_2D_SAFE_NAME(iWidth));      \
+                    __arm_2d_layout.tLocation.iX += ARM_2D_SAFE_NAME(iWidth);   \
                     arm_2d_op_wait_async(NULL);                                 \
                 })
 
@@ -918,6 +917,15 @@ extern "C" {
 #define ____item_line_dock_horizontal1(__width)                                 \
             ____item_line_dock_horizontal5(__width, 0, 0, 0, 0)
 
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define ____item_line_dock_horizontal0()                                        \
+            ____item_line_dock_horizontal5( ( __arm_2d_layout_area.tLocation.iX \
+                                            + __arm_2d_layout_area.tSize.iWidth \
+                                            - __arm_2d_layout.tLocation.iX),    \
+                                            0, 0, 0, 0)
 
 /*!
  * \brief generate a arm_2d_region (i.e. __item_region) to dock a specific 
@@ -925,11 +933,16 @@ extern "C" {
  * \param ... parameter list 
  * 
  * \note prototype 1:
+ *          __item_line_dock_horizontal() {
+ *              code body that can use __item_region
+ *          }
+ * 
+ * \note prototype 2:
  *          __item_line_dock_horizontal(__width) {
  *              code body that can use __item_region
  *          }
  *
- * \note prototype 2:
+ * \note prototype 3:
  *          __item_line_dock_horizontal(__width, __left, __right, __top, __bottom) {
  *              code body that can use __item_region
  *          }
@@ -1038,19 +1051,18 @@ extern "C" {
                         - (__left) - (__right);                                 \
                     __item_region.tSize.iWidth                                  \
                         = MAX(0, __item_region.tSize.iWidth);                   \
-                    __item_region.tSize.iHeight = (__height);                   \
+                    __item_region.tSize.iHeight = MAX((__height), 0);           \
                     __item_region.tLocation = __arm_2d_layout.tLocation;        \
                     __item_region.tLocation.iX += (__left);                     \
                     __item_region.tLocation.iY += (__top);                      \
                 },                                                              \
                 {                                                               \
-                    __arm_2d_layout.tLocation.iY +=                             \
-                        (__height) + (__top) + (__bottom);                      \
                     int16_t ARM_2D_SAFE_NAME(iHeight)                           \
-                        = (__height) + (__top) + (__bottom);                    \
+                                =  MAX((__height), 0) + (__top) + (__bottom);   \
                     __arm_2d_layout.tSize.iHeight = MAX(                        \
                                                 __arm_2d_layout.tSize.iHeight,  \
                                                 ARM_2D_SAFE_NAME(iHeight));     \
+                    __arm_2d_layout.tLocation.iY += ARM_2D_SAFE_NAME(iHeight);  \
                     __arm_2d_layout.tSize.iWidth =                              \
                         MAX(__arm_2d_layout_area.tSize.iWidth,                  \
                             __arm_2d_layout.tSize.iWidth);                      \
@@ -1064,6 +1076,16 @@ extern "C" {
 #define ____item_line_dock_vertical1(__height)                                  \
             ____item_line_dock_vertical5(__height, 0, 0, 0, 0)
 
+
+/*!
+ * \brief Please do NOT use this macro
+ * 
+ */
+#define ____item_line_dock_vertical0()                                          \
+            ____item_line_dock_vertical5(   ( __arm_2d_layout_area.tLocation.iY \
+                                            + __arm_2d_layout_area.tSize.iHeight\
+                                            - __arm_2d_layout.tLocation.iY),    \
+                                            0, 0, 0, 0)
 
 /*!
  * \brief generate a arm_2d_region (i.e. __item_region) to dock a specific 

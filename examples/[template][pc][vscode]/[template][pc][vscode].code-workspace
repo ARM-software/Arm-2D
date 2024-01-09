@@ -26,7 +26,8 @@
 			"string": "c",
 			"type_traits": "c",
 			"__config": "c",
-			"typeinfo": "c"
+			"typeinfo": "c",
+			"charconv": "cpp"
 		}
 	}
 }
