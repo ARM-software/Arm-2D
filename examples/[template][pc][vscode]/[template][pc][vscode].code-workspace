@@ -25,7 +25,8 @@
 			"new": "c",
 			"string": "c",
 			"type_traits": "c",
-			"__config": "c"
+			"__config": "c",
+			"typeinfo": "c"
 		}
 	}
 }
