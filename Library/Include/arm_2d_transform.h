@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_transform.h"
  * Description:  Public header file to contain the APIs for transform
  *
- * $Date:        29 Nov 2023
- * $Revision:    V.1.0.8
+ * $Date:        12 Jan 2024
+ * $Revision:    V.1.0.9
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1473,7 +1473,7 @@ extern "C" {
                                             (float)(__SCALE),                   \
                                                    (__MSK_COLOUR))
 
-#define arm_2d_gray8_tile_transform_only(  __SRC_TILE_ADDR,                     \
+#define arm_2d_gray8_tile_transform_only_prepare(  __SRC_TILE_ADDR,             \
                                             __CENTRE,                           \
                                             __ANGLE,                            \
                                             __SCALE)                            \
@@ -1483,7 +1483,7 @@ extern "C" {
                                             (float)(__ANGLE),                   \
                                             (float)(__SCALE))
 
-#define arm_2d_rgb565_tile_transform_only(  __SRC_TILE_ADDR,                    \
+#define arm_2d_rgb565_tile_transform_only_prepare(  __SRC_TILE_ADDR,            \
                                             __CENTRE,                           \
                                             __ANGLE,                            \
                                             __SCALE)                            \
@@ -1493,7 +1493,7 @@ extern "C" {
                                             (float)(__ANGLE),                   \
                                             (float)(__SCALE))
 
-#define arm_2d_cccn888_tile_transform_only( __SRC_TILE_ADDR,                    \
+#define arm_2d_cccn888_tile_transform_only_prepare( __SRC_TILE_ADDR,            \
                                             __CENTRE,                           \
                                             __ANGLE,                            \
                                             __SCALE)                            \
@@ -1836,6 +1836,66 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
+
+#define arm_2d_gray8_tile_transform_only(   __SRC_TILE_ADDR,                    \
+                                            __DES_TILE_ADDR,                    \
+                                            __DES_REGION_ADDR,                  \
+                                            __CENTRE,                           \
+                                            __ANGLE,                            \
+                                            __SCALE,                            \
+                                            ...)                                \
+        ({                                                                      \
+            arm_2dp_gray8_tile_transform_only_prepare(                          \
+                                        NULL,                                   \
+                                        (__SRC_TILE_ADDR),                      \
+                                        (__CENTRE),                             \
+                                        (float)(__ANGLE),                       \
+                                        (float)(__SCALE));                      \
+            arm_2dp_tile_transform(NULL,                                        \
+                            (__DES_TILE_ADDR),                                  \
+                            (__DES_REGION_ADDR),                                \
+                            (NULL,##__VA_ARGS__));                              \
+        })
+
+#define arm_2d_rgb565_tile_transform_only(  __SRC_TILE_ADDR,                    \
+                                            __DES_TILE_ADDR,                    \
+                                            __DES_REGION_ADDR,                  \
+                                            __CENTRE,                           \
+                                            __ANGLE,                            \
+                                            __SCALE,                            \
+                                            ...)                                \
+        ({                                                                      \
+            arm_2dp_rgb565_tile_transform_only_prepare(                         \
+                                        NULL,                                   \
+                                        (__SRC_TILE_ADDR),                      \
+                                        (__CENTRE),                             \
+                                        (float)(__ANGLE),                       \
+                                        (float)(__SCALE));                      \
+            arm_2dp_tile_transform(NULL,                                        \
+                            (__DES_TILE_ADDR),                                  \
+                            (__DES_REGION_ADDR),                                \
+                            (NULL,##__VA_ARGS__));                              \
+        })
+
+#define arm_2d_cccn888_tile_transform_only( __SRC_TILE_ADDR,                    \
+                                            __DES_TILE_ADDR,                    \
+                                            __DES_REGION_ADDR,                  \
+                                            __CENTRE,                           \
+                                            __ANGLE,                            \
+                                            __SCALE,                            \
+                                            ...)                                \
+        ({                                                                      \
+            arm_2dp_cccn888_tile_transform_only_prepare(                        \
+                                        NULL,                                   \
+                                        (__SRC_TILE_ADDR),                      \
+                                        (__CENTRE),                             \
+                                        (float)(__ANGLE),                       \
+                                        (float)(__SCALE));                      \
+            arm_2dp_tile_transform(NULL,                                        \
+                            (__DES_TILE_ADDR),                                  \
+                            (__DES_REGION_ADDR),                                \
+                            (NULL,##__VA_ARGS__));                              \
+        })
 
 #define arm_2dp_gray8_tile_transform_with_opacity(                              \
                                         __CB_ADDR,                              \
