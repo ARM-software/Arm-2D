@@ -106,7 +106,7 @@ static void __on_scene%Instance%_depose(arm_2d_scene_t *ptScene)
     }
 
     if (!this.bUserAllocated) {
-        free(ptScene);
+        __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
 }
 
@@ -278,7 +278,10 @@ user_scene_%Instance%_t *__arm_2d_scene%Instance%_init(   arm_2d_scene_player_t 
                                                         = tScreen.tSize.iWidth;
     
     if (NULL == ptThis) {
-        ptThis = (user_scene_%Instance%_t *)malloc(sizeof(user_scene_%Instance%_t));
+        ptThis = (user_scene_%Instance%_t *)
+                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_%Instance%_t),
+                                                        __alignof__(user_scene_%Instance%_t),
+                                                        ARM_2D_MEM_TYPE_UNSPECIFIED);
         assert(NULL != ptThis);
         if (NULL == ptThis) {
             return NULL;

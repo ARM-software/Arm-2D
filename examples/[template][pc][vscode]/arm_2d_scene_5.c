@@ -217,7 +217,6 @@ arm_fsm_rt_t __list_view_item_0_draw_item(
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(ptParam);
 
-
     uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
     int32_t q7ScaleRatio = ((ptParam->chOpacity >> 1) + 128);
     /* re-use opacity (0~255) as scaling ratio */
@@ -415,7 +414,7 @@ static void __on_scene5_depose(arm_2d_scene_t *ptScene)
     progress_wheel_depose(&this.tWheel);
 
     if (!this.bUserAllocated) {
-        free(ptScene);
+        __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
 }
 
@@ -520,7 +519,10 @@ user_scene_5_t *__arm_2d_scene5_init(   arm_2d_scene_player_t *ptDispAdapter,
     assert(NULL != ptDispAdapter);
 
     if (NULL == ptThis) {
-        ptThis = (user_scene_5_t *)malloc(sizeof(user_scene_5_t));
+        ptThis = (user_scene_5_t *)
+                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_5_t),
+                                                        __alignof__(user_scene_5_t),
+                                                        ARM_2D_MEM_TYPE_UNSPECIFIED);
         assert(NULL != ptThis);
         if (NULL == ptThis) {
             return NULL;

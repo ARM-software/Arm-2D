@@ -221,7 +221,7 @@ void __arm_2d_log_printf(int32_t nIndentLevel,
 //        .wValue = wChannelMask,
 //    };
 
-    if (!(__ARM_2D_LOG_CHANNEL_MASK_FILTER__ & wChannelMask)) {
+    if ((__ARM_2D_LOG_CHANNEL_MASK_FILTER__ & wChannelMask) != wChannelMask) {
         return ;
     }
 

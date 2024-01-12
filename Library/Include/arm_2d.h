@@ -266,6 +266,28 @@ arm_2d_op_status_t arm_2d_get_op_status(arm_2d_op_core_t *ptOP);
 extern
 arm_fsm_rt_t arm_2d_task(arm_2d_task_t *ptTask);
 
+/*!
+ * \brief allocate a memory block with specified memory type
+ * 
+ * \param wSize the minimal size
+ * \param nAlign the alignment
+ * \param tType the type of memory
+ * \return void* the memory address
+ */
+extern
+void *__arm_2d_allocate_scratch_memory( uint32_t wSize, 
+                                        uint_fast8_t nAlign,
+                                        arm_2d_mem_type_t tType);
+/*!
+ * \brief free a specified memory block
+ * 
+ * \param tType the type of memory
+ * \param pBuff the address of the memory
+ */
+extern
+void __arm_2d_free_scratch_memory( arm_2d_mem_type_t tType,
+                                   void *pBuff);
+
 /*! @} */
 
 /*! \note delibrately comment out */

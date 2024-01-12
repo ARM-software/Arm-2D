@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        26. Dec 2023
- * $Revision:    V.1.7.7
+ * $Date:        27. Dec 2023
+ * $Revision:    V.1.7.8
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1915,7 +1915,7 @@ label_iteration_begin_start:
                         DIRTY_REGION_OPTIMISATION, 
                         1, 
                         "Iteration Begin", 
-                        "No valid dirty region in the list, ignore this frame",
+                        "No valid dirty region in the list, ignore this frame"
                     );
 
                     /* free pfb */

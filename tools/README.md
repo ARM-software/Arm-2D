@@ -7,8 +7,6 @@ The `arm_2d_tile_t` descriptors are used as the standard input and output in mos
 - A C array for pixels and (for most of time) a dedicated alpha-mask if the format contains an alpha-channel.
 - `arm_2d_tile_t` descriptors for the image and the alpha-mask(s).
 
-
-
 ### FEATURE
 
 - Support popular image formats, e.g. PNG, JPG, JPEG, BMP etc.
@@ -18,17 +16,13 @@ The `arm_2d_tile_t` descriptors are used as the standard input and output in mos
 - Support resize before conversion
 - Support rotation before conversion
 
-
-
 ## 2. How to Use
 
-### Usage :
+### Usage
 
 ```sh
 img2c.py [-h] [--format <FORMAT>] [--name <NAME\>] [--dim <Width> <Height>] [--rot <ANGLE>] <-i <Input File Path>> [-o <Output file Path>]
 ```
-
-
 
 | Arguments                 | Description                                                  | Memo     |
 | ------------------------- | ------------------------------------------------------------ | -------- |
@@ -41,27 +35,20 @@ img2c.py [-h] [--format <FORMAT>] [--name <NAME\>] [--dim <Width> <Height>] [--r
 | --rot ***angle***         | Rotate the image with the given angle in degrees             | Optional |
 | --a2, --a4                | introduce extra A2 / A4 masks when it is possible.           | Optional |
 
+## Example
 
-## Example:
-
-```
+```sh
 python img2c.py -i ..\examples\benchmark\asset\HeliumRes.jpg --name Helium
 ```
 
+## Installation
 
+Needs ***python3***, ***pillow*** (<https://python-pillow.org/>) & ***numpy***
 
-## Installation:
-
-Needs ***python3***, ***pillow*** (https://python-pillow.org/) & ***numpy***
-
-```
+```sh
 pip install Pillow
 pip install numpy
 ```
-
-
-
-
 
 # TrueType Font Convertor (ttf2c.py)
 
@@ -69,17 +56,13 @@ pip install numpy
 
 This tool will extract the glyph bitmap from the specified TrueType font file according to the text (dictionary) provided by the user and generate a custom font that arm-2d can use directly.
 
-
-
 ## 2. How to Use
 
-### Usage:
+### Usage
 
 ```sh
 ttf2c.py [-h] <-i <Input File Path>> <-t <Text File Path>>[-o <Output File Path>] [-n <Font Name>] [-s <Font Bit Width>]
 ```
-
-
 
 | Arguments                 | Description                                                  | Memo     |
 | ------------------------- | ------------------------------------------------------------ | -------- |
@@ -91,15 +74,11 @@ ttf2c.py [-h] <-i <Input File Path>> <-t <Text File Path>>[-o <Output File Path>
 | -p Pixel Size             | the desired font size in pixel. The pixel size is only a reference and the actual size will be slightly larger due to the TrueType Font feature. | Optional |
 | -s ***Font Bit Width***   | the font bit width, must be 1,2,4 or 8 bit. If you omitted this option, the ttf2.py will generate all code for all available bit-widths. | Optional |
 
-
-## 3. Installation:
+## 3. Installation
 
 Needs ***python3***, ***numpy*** and **freetype**:
 
-```
+```sh
 pip install freetype-py
 pip install numpy
 ```
-
-
-

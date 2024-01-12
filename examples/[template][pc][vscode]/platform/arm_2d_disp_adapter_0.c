@@ -353,20 +353,50 @@ static bool __on_each_frame_complete(void *ptTarget)
             DISP0_ADAPTER.Benchmark.hwFrameCounter += (nRenderCycle != 0) ? 1 : 0;
 
             if (0 == DISP0_ADAPTER.Benchmark.hwIterations) {
-                DISP0_ADAPTER.Benchmark.wAverage =
-                    (uint32_t)(DISP0_ADAPTER.Benchmark.dwTotal / (uint64_t)DISP0_ADAPTER.Benchmark.hwFrameCounter);
-                DISP0_ADAPTER.Benchmark.wAverage = MAX(1, DISP0_ADAPTER.Benchmark.wAverage);
- 
+
+                if (0 == DISP0_ADAPTER.Benchmark.hwFrameCounter) {
+                    DISP0_ADAPTER.Benchmark.wAverage = 0;
+                } else {
+                    DISP0_ADAPTER.Benchmark.wAverage =
+                        (uint32_t)(DISP0_ADAPTER.Benchmark.dwTotal / (uint64_t)DISP0_ADAPTER.Benchmark.hwFrameCounter);
+                    DISP0_ADAPTER.Benchmark.wAverage = MAX(1, DISP0_ADAPTER.Benchmark.wAverage);
+                }
+
                 int64_t lElapsed = lTimeStamp - DISP0_ADAPTER.Benchmark.lTimestamp;
-                DISP0_ADAPTER.Benchmark.fCPUUsage = (float)((double)DISP0_ADAPTER.Benchmark.dwRenderTotal / (double)lElapsed) * 100.0f;
-                 
+                if (lElapsed) {
+                    DISP0_ADAPTER.Benchmark.fCPUUsage = (float)((double)DISP0_ADAPTER.Benchmark.dwRenderTotal / (double)lElapsed) * 100.0f;
+                }
+
+                /* log statistics */
+                if (DISP0_ADAPTER.Benchmark.wAverage) {
+                    ARM_2D_LOG_INFO(
+                        STATISTICS, 
+                        0, 
+                        "DISP_ADAPTER0", 
+                        "FPS:%3d(%dms)\tCPU:%2.2f%%\tLCD-Latency:%2dms",
+                        MIN(arm_2d_helper_get_reference_clock_frequency() / DISP0_ADAPTER.Benchmark.wAverage, 999),
+                        (int32_t)arm_2d_helper_convert_ticks_to_ms(DISP0_ADAPTER.Benchmark.wAverage),
+                        DISP0_ADAPTER.Benchmark.fCPUUsage,
+                        (int32_t)arm_2d_helper_convert_ticks_to_ms(DISP0_ADAPTER.Benchmark.wLCDLatency)
+                    );
+                } else {
+                    ARM_2D_LOG_INFO(
+                        STATISTICS, 
+                        0, 
+                        "DISP_ADAPTER0", 
+                        "FPS: SKIPPED\tCPU:%2.2f%%\tLCD-Latency:%2dms",
+                        DISP0_ADAPTER.Benchmark.fCPUUsage,
+                        (int32_t)arm_2d_helper_convert_ticks_to_ms(DISP0_ADAPTER.Benchmark.wLCDLatency)
+                    );
+                }
+
                 DISP0_ADAPTER.Benchmark.wMin = UINT32_MAX;
                 DISP0_ADAPTER.Benchmark.wMax = 0;
                 DISP0_ADAPTER.Benchmark.dwTotal = 0;
                 DISP0_ADAPTER.Benchmark.dwRenderTotal = 0;
                 DISP0_ADAPTER.Benchmark.hwIterations = __DISP0_CFG_ITERATION_CNT__;
                 DISP0_ADAPTER.Benchmark.hwFrameCounter = 0;
-                
+
                 DISP0_ADAPTER.Benchmark.lTimestamp = arm_2d_helper_get_system_timestamp();
             }
         }
@@ -473,7 +503,6 @@ static void __user_scene_player_init(void)
     DISP0_ADAPTER.Benchmark.wMin = UINT32_MAX;
     DISP0_ADAPTER.Benchmark.hwIterations = __DISP0_CFG_ITERATION_CNT__;
     DISP0_ADAPTER.Benchmark.hwFrameCounter = 0;
-
 }
 
 #if !__DISP0_CFG_DISABLE_NAVIGATION_LAYER__
@@ -560,7 +589,7 @@ void disp_adapter0_init(void)
     }
 }
 
-arm_fsm_rt_t disp_adapter0_task(void)
+arm_fsm_rt_t __disp_adapter0_task(void)
 {
     return arm_2d_scene_player_task(&DISP0_ADAPTER);
 }

@@ -21,8 +21,8 @@
  * Title:        arm_2d_utils.h
  * Description:  Public header file for Arm-2D Library
  *
- * $Date:        17. Nov 2023
- * $Revision:    V.1.4.0
+ * $Date:        27. Dec 2023
+ * $Revision:    V.1.4.1
  *
  * -------------------------------------------------------------------- */
 
@@ -1007,6 +1007,7 @@ const __arm_2d_low_level_io_t LOW_LEVEL_IO##__NAME = {                          
 #define ARM_2D_LOG_CHN_HELPER_PFB                           _BV(3)              //!< the channel dedicated to the PFB helper service
 #define ARM_2D_LOG_CHN_SCENE_PLAYER                         _BV(4)              //!< the channel dedicated to the scene player service
 #define ARM_2D_LOG_CHN_DIRTY_REGION_OPTIMISATION            _BV(5)              //!< the channel dedicated to the dirty region optimization services
+#define ARM_2D_LOG_CHN_STATISTICS                           _BV(6)              //!< the channel dedicated to show statistics
 #define ARM_2D_LOG_CHN_APP                                  _BV(24)             //!< the channel dedicated to applications and examples
 
 
@@ -1075,6 +1076,13 @@ const __arm_2d_low_level_io_t LOW_LEVEL_IO##__NAME = {                          
  */
 #   define __ARM_2D_LOG_PRINTF_DIRTY_REGION_OPTIMISATION                        \
                                                 __arm_2d_log_printf
+#endif
+
+#ifndef __ARM_2D_LOG_PRINTF_STATISTICS
+/*!
+ * \brief the log printf entry dedicated to show statistics
+ */
+#   define __ARM_2D_LOG_PRINTF_STATISTICS     __arm_2d_log_printf
 #endif
 
 #ifndef __ARM_2D_LOG_PRINTF_APP

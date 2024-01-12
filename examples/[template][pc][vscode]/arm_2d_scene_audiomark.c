@@ -139,7 +139,7 @@ static void __on_scene_audiomark_depose(arm_2d_scene_t *ptScene)
     }
 
     if (!this.bUserAllocated) {
-        free(ptScene);
+        __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
 }
 
@@ -288,7 +288,10 @@ user_scene_audiomark_t *__arm_2d_scene_audiomark_init(   arm_2d_scene_player_t *
 #endif
 
     if (NULL == ptThis) {
-        ptThis = (user_scene_audiomark_t *)malloc(sizeof(user_scene_audiomark_t));
+        ptThis = (user_scene_audiomark_t *)
+                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_audiomark_t),
+                                                        __alignof__(user_scene_audiomark_t),
+                                                        ARM_2D_MEM_TYPE_UNSPECIFIED);
         assert(NULL != ptThis);
         if (NULL == ptThis) {
             return NULL;
