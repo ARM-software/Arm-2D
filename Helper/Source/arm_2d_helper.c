@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        19. Oct 2023
- * $Revision:    V.1.6.6
+ * $Date:        12. Jan 2024
+ * $Revision:    V.1.6.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -468,10 +468,12 @@ void arm_2d_helper_draw_box( const arm_2d_tile_t *ptTarget,
                              uint8_t chOpacity)
 {
     assert( NULL != ptTarget );
-    if (NULL == ptRegion) {
-        ptRegion = &(ptTarget->tRegion);
-    }
     
+    arm_2d_region_t tTargetRegion = {.tSize = ptTarget->tRegion.tSize};
+    if (NULL == ptRegion) {
+        ptRegion = &tTargetRegion;
+    }
+
     arm_2d_region_t tDrawRegion = *ptRegion;
     
     tDrawRegion.tSize.iHeight = iBorderWidth;
