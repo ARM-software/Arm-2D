@@ -50,7 +50,7 @@ extern void *__Vectors;                   /* see startup file */
 /*----------------------------------------------------------------------------
   Define clocks
  *----------------------------------------------------------------------------*/
-#define  XTAL            (50000000UL)     /* Oscillator frequency */
+#define  XTAL            (40000000UL)     /* Oscillator frequency */
 
 #define  SYSTEM_CLOCK    (XTAL / 2U)
 
