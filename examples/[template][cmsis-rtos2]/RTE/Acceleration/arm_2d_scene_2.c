@@ -114,7 +114,7 @@ static void __on_scene2_depose(arm_2d_scene_t *ptScene)
     progress_wheel_depose(&this.tWheel);
 
     if (!this.bUserAllocated) {
-        free(ptScene);
+        __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
 }
 
@@ -393,7 +393,10 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
     assert(NULL != ptDispAdapter);
 
     if (NULL == ptScene) {
-        ptScene = (user_scene_2_t *)malloc(sizeof(user_scene_2_t));
+        ptScene = (user_scene_2_t *)
+                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_2_t),
+                                                        __alignof__(user_scene_2_t),
+                                                        ARM_2D_MEM_TYPE_UNSPECIFIED);
         assert(NULL != ptScene);
         if (NULL == ptScene) {
             return NULL;

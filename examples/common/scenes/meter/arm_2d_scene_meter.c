@@ -122,7 +122,7 @@ static void __on_scene_meter_depose(arm_2d_scene_t *ptScene)
     ARM_2D_OP_DEPOSE(this.Pointer.tOP);
 
     if (!this.bUserAllocated) {
-        free(ptScene);
+        __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
 }
 
@@ -363,7 +363,10 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
     } while(0);
     
     if (NULL == ptThis) {
-        ptThis = (user_scene_meter_t *)malloc(sizeof(user_scene_meter_t));
+        ptThis = (user_scene_meter_t *)
+                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_meter_t),
+                                                        __alignof__(user_scene_meter_t),
+                                                        ARM_2D_MEM_TYPE_UNSPECIFIED);
         assert(NULL != ptThis);
         if (NULL == ptThis) {
             return NULL;
