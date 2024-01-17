@@ -312,6 +312,7 @@ var group__gKernel =
     [ "ARM_2D_LOG_CHN_HELPER_PFB", "group__gKernel.html#ga2b1e51aa66da8924ffbb20ee2b59b287", null ],
     [ "ARM_2D_LOG_CHN_SCENE_PLAYER", "group__gKernel.html#ga14ea07132f4d192791de617bad2acdc2", null ],
     [ "ARM_2D_LOG_CHN_DIRTY_REGION_OPTIMISATION", "group__gKernel.html#gaa130a97ff01860e978c44695940535c8", null ],
+    [ "ARM_2D_LOG_CHN_STATISTICS", "group__gKernel.html#ga9f0662b800984befddc5b992cb95d3db", null ],
     [ "ARM_2D_LOG_CHN_APP", "group__gKernel.html#ga69ee2461c9d2e7e18fb3c8ffb813ab0b", null ],
     [ "__ARM_2D_LOG_CHANNEL_MASK_FILTER__", "group__gKernel.html#gabb97f095c1b7008ddc040dd2e4ee8956", null ],
     [ "__ARM_2D_LOG_PRINTF_PIPELINE", "group__gKernel.html#ga3444a14b6ed5db5779062ff8c869627d", null ],
@@ -320,6 +321,7 @@ var group__gKernel =
     [ "__ARM_2D_LOG_PRINTF_HELPER_PFB", "group__gKernel.html#gaf49ae5bb916a809ef95f80bb1150bdef", null ],
     [ "__ARM_2D_LOG_PRINTF_SCENE_PLAYER", "group__gKernel.html#ga9fb68dd8cea3ec82926474c62991e4c9", null ],
     [ "__ARM_2D_LOG_PRINTF_DIRTY_REGION_OPTIMISATION", "group__gKernel.html#ga850d6ad8b140cf06e8a3b9f15ebba8c4", null ],
+    [ "__ARM_2D_LOG_PRINTF_STATISTICS", "group__gKernel.html#ga957bf3cf1b03aa1a9c4f66a481dffa72", null ],
     [ "__ARM_2D_LOG_PRINTF_APP", "group__gKernel.html#ga0c7e6681cf34e44da15d7a0ecc5a8757", null ],
     [ "__ARM_2D_PORT_PRINTF__", "group__gKernel.html#ga70345f74f3f3d3b2e04253a8c789a408", null ],
     [ "__ARM_2D_LOG_MAX_STRING_LEN__", "group__gKernel.html#gaccb1514908427de165810b052fc7fcc6", null ],
@@ -449,6 +451,8 @@ var group__gKernel =
     [ "arm_2d_op_wait_async", "group__gKernel.html#ga129e2a7110847b0fd22eeb6351205989", null ],
     [ "arm_2d_get_op_status", "group__gKernel.html#ga78ba01fb790d0a43878499dcb2639e0d", null ],
     [ "arm_2d_task", "group__gKernel.html#ga14a09993e474bef1266e2572146b8341", null ],
+    [ "__arm_2d_allocate_scratch_memory", "group__gKernel.html#ga6c15020a09927cd68765b059d1f203bb", null ],
+    [ "__arm_2d_free_scratch_memory", "group__gKernel.html#ga6d1168d18401f7799e37c0c2306a9241", null ],
     [ "ARM_2D_RUNTIME_FEATURE", "group__gKernel.html#gae30937777f3c67e2418c9c26c76fb501", null ],
     [ "ARM_2D_VERSION", "group__gKernel.html#ga3cef1eb288e3529dab7e441cc769e1e2", null ]
 ];

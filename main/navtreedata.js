@@ -31,7 +31,7 @@ var NAVTREE =
       [ "How to Get Started", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md3", null ],
       [ "Table of Content", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md4", null ],
       [ "Features", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md5", [
-        [ "In this version (ver1.1.5)", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md6", null ],
+        [ "In this version (ver1.1.6-dev)", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md6", null ],
         [ "New Features Planned in the Future", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md7", null ]
       ] ],
       [ "1 Introduction", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md8", [
@@ -249,8 +249,8 @@ var NAVTREEINDEX =
 "group__Deprecated.html",
 "group__gAlpha.html#gaa30eeb5263a6dfb2105af586f6307864",
 "group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3aa416368cd1714f333c53c5302eeac9fd",
-"group__gKernel.html#ga7ad429ad90a0c226dc31f9d540ace6fa",
-"group__gTransform.html#afe43ae7c569abd89f499db003873b915"
+"group__gKernel.html#ga78ba01fb790d0a43878499dcb2639e0d",
+"group__gTransform.html#abe28664647ee93207c7635c7dbe30b07"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
