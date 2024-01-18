@@ -22,223 +22,6 @@
   </DaveTm>
 
   <Target>
-    <TargetName>DO_NOT_USE_V2M-MPS3-CM33</TargetName>
-    <ToolsetNumber>0x4</ToolsetNumber>
-    <ToolsetName>ARM-ADS</ToolsetName>
-    <TargetOption>
-      <CLKADS>12000000</CLKADS>
-      <OPTTT>
-        <gFlags>1</gFlags>
-        <BeepAtEnd>1</BeepAtEnd>
-        <RunSim>0</RunSim>
-        <RunTarget>1</RunTarget>
-        <RunAbUc>0</RunAbUc>
-      </OPTTT>
-      <OPTHX>
-        <HexSelection>1</HexSelection>
-        <FlashByte>65535</FlashByte>
-        <HexRangeLowAddress>0</HexRangeLowAddress>
-        <HexRangeHighAddress>0</HexRangeHighAddress>
-        <HexOffset>0</HexOffset>
-      </OPTHX>
-      <OPTLEX>
-        <PageWidth>79</PageWidth>
-        <PageLength>66</PageLength>
-        <TabStop>8</TabStop>
-        <ListingPath>.\Out\</ListingPath>
-      </OPTLEX>
-      <ListingPage>
-        <CreateCListing>1</CreateCListing>
-        <CreateAListing>1</CreateAListing>
-        <CreateLListing>1</CreateLListing>
-        <CreateIListing>0</CreateIListing>
-        <AsmCond>1</AsmCond>
-        <AsmSymb>1</AsmSymb>
-        <AsmXref>0</AsmXref>
-        <CCond>1</CCond>
-        <CCode>0</CCode>
-        <CListInc>0</CListInc>
-        <CSymb>0</CSymb>
-        <LinkerCodeListing>0</LinkerCodeListing>
-      </ListingPage>
-      <OPTXL>
-        <LMap>1</LMap>
-        <LComments>1</LComments>
-        <LGenerateSymbols>1</LGenerateSymbols>
-        <LLibSym>1</LLibSym>
-        <LLines>1</LLines>
-        <LLocSym>1</LLocSym>
-        <LPubSym>1</LPubSym>
-        <LXref>0</LXref>
-        <LExpSel>0</LExpSel>
-      </OPTXL>
-      <OPTFL>
-        <tvExp>1</tvExp>
-        <tvExpOptDlg>0</tvExpOptDlg>
-        <IsCurrentTarget>0</IsCurrentTarget>
-      </OPTFL>
-      <CpuCode>7</CpuCode>
-      <DebugOpt>
-        <uSim>0</uSim>
-        <uTrg>1</uTrg>
-        <sLdApp>1</sLdApp>
-        <sGomain>1</sGomain>
-        <sRbreak>1</sRbreak>
-        <sRwatch>1</sRwatch>
-        <sRmem>1</sRmem>
-        <sRfunc>1</sRfunc>
-        <sRbox>1</sRbox>
-        <tLdApp>1</tLdApp>
-        <tGomain>0</tGomain>
-        <tRbreak>1</tRbreak>
-        <tRwatch>1</tRwatch>
-        <tRmem>1</tRmem>
-        <tRfunc>0</tRfunc>
-        <tRbox>1</tRbox>
-        <tRtrace>1</tRtrace>
-        <sRSysVw>1</sRSysVw>
-        <tRSysVw>1</tRSysVw>
-        <sRunDeb>0</sRunDeb>
-        <sLrtime>0</sLrtime>
-        <bEvRecOn>1</bEvRecOn>
-        <bSchkAxf>0</bSchkAxf>
-        <bTchkAxf>0</bTchkAxf>
-        <nTsel>12</nTsel>
-        <sDll></sDll>
-        <sDllPa></sDllPa>
-        <sDlgDll></sDlgDll>
-        <sDlgPa></sDlgPa>
-        <sIfile>.\Dbg_Sim.ini</sIfile>
-        <tDll></tDll>
-        <tDllPa></tDllPa>
-        <tDlgDll></tDlgDll>
-        <tDlgPa></tDlgPa>
-        <tIfile>.\Dbg_MPS3.ini</tIfile>
-        <pMon>BIN\ULP2V8M.DLL</pMon>
-      </DebugOpt>
-      <TargetDriverDllRegistry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ULP2V8M</Key>
-          <Name>-UAny -O718 -S12 -C0 -P00000002 -N00("ARM CoreSight SW-DP") -D00(6BA02477) -L00(0) -TO69650 -TC50000000 -TT10000000 -TP8 -TDX31 -TDD0 -TDS8000 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>UL2V8M</Key>
-          <Name>UL2V8M(-S0 -C0 -P0  -FC1000 -FD20000000</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ARMRTXEVENTFLAGS</Key>
-          <Name>-L70 -Z18 -C0 -M0 -T1</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGTARM</Key>
-          <Name>(6010=1995,111,2472,707,0)(6018=-1,-1,-1,-1,0)(6019=-1,-1,-1,-1,0)(6008=2055,176,2349,361,0)(6009=-1,-1,-1,-1,0)(6014=0,0,258,731,0)(6015=0,0,258,622,0)(6003=-1,-1,-1,-1,0)(6000=-1,-1,-1,-1,0)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ARMDBGFLAGS</Key>
-          <Name></Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGUARM</Key>
-          <Name></Name>
-        </SetRegEntry>
-      </TargetDriverDllRegistry>
-      <Breakpoint/>
-      <WatchWindow1>
-        <Ww>
-          <count>0</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>c_tLCDDisplayBuffer</ItemText>
-        </Ww>
-      </WatchWindow1>
-      <MemoryWindow1>
-        <Mm>
-          <WinNumber>1</WinNumber>
-          <SubType>1</SubType>
-          <ItemText>0x10000000</ItemText>
-          <AccSizeX>0</AccSizeX>
-        </Mm>
-      </MemoryWindow1>
-      <MemoryWindow2>
-        <Mm>
-          <WinNumber>2</WinNumber>
-          <SubType>1</SubType>
-          <ItemText>0x20000000</ItemText>
-          <AccSizeX>0</AccSizeX>
-        </Mm>
-      </MemoryWindow2>
-      <MemoryWindow3>
-        <Mm>
-          <WinNumber>3</WinNumber>
-          <SubType>1</SubType>
-          <ItemText>0x10000000</ItemText>
-          <AccSizeX>0</AccSizeX>
-        </Mm>
-      </MemoryWindow3>
-      <MemoryWindow4>
-        <Mm>
-          <WinNumber>4</WinNumber>
-          <SubType>1</SubType>
-          <ItemText>0x00000000</ItemText>
-          <AccSizeX>0</AccSizeX>
-        </Mm>
-      </MemoryWindow4>
-      <ScvdPack>
-        <Filename>C:\Users\gabriel\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\RTOS2\RTX\RTX5.scvd</Filename>
-        <Type>ARM.CMSIS.5.9.0</Type>
-        <SubType>1</SubType>
-      </ScvdPack>
-      <Tracepoint>
-        <THDelay>0</THDelay>
-      </Tracepoint>
-      <DebugFlag>
-        <trace>0</trace>
-        <periodic>1</periodic>
-        <aLwin>0</aLwin>
-        <aCover>0</aCover>
-        <aSer1>0</aSer1>
-        <aSer2>0</aSer2>
-        <aPa>0</aPa>
-        <viewmode>1</viewmode>
-        <vrSel>0</vrSel>
-        <aSym>0</aSym>
-        <aTbox>0</aTbox>
-        <AscS1>0</AscS1>
-        <AscS2>0</AscS2>
-        <AscS3>0</AscS3>
-        <aSer3>0</aSer3>
-        <eProf>0</eProf>
-        <aLa>0</aLa>
-        <aPa1>0</aPa1>
-        <AscS4>0</AscS4>
-        <aSer4>0</aSer4>
-        <StkLoc>0</StkLoc>
-        <TrcWin>0</TrcWin>
-        <newCpu>0</newCpu>
-        <uProt>0</uProt>
-      </DebugFlag>
-      <LintExecutable></LintExecutable>
-      <LintConfigFile></LintConfigFile>
-      <bLintAuto>0</bLintAuto>
-      <bAutoGenD>0</bAutoGenD>
-      <LntExFlags>0</LntExFlags>
-      <pMisraName></pMisraName>
-      <pszMrule></pszMrule>
-      <pSingCmds></pSingCmds>
-      <pMultCmds></pMultCmds>
-      <pMisraNamep></pMisraNamep>
-      <pszMrulep></pszMrulep>
-      <pSingCmdsp></pSingCmdsp>
-      <pMultCmdsp></pMultCmdsp>
-    </TargetOption>
-  </Target>
-
-  <Target>
     <TargetName>V2M-MPS2-CM4</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
@@ -1812,7 +1595,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>ST-LINKIII-KEIL_SWO</Key>
-          <Name>-U0672FF3832394D3457182635 -O8399 -SF10000 -C0 -A0 -I0 -HNlocalhost -HP7184 -P1 -N00("ARM CoreSight SW-DP (ARM Core") -D00(5BA02477) -L00(0) -TO131090 -TC216000000 -TT10000000 -TP21 -TDS8011 -TDT0 -TDC1F -TIEFFFFFFFF -TIP9 -FO15 -FD20000000 -FC1000 -FN1 -FF0STM32F7x_1024.FLM -FS08000000 -FL0100000 -FP0($$Device:STM32F746NGHx$CMSIS\Flash\STM32F7x_1024.FLM) -WA0 -WE0 -WVCE4 -WS2710 -WM0 -WP2</Name>
+          <Name>-U0672FF3832394D3457182635 -O8399 -SF10000 -C0 -A0 -I0 -HNlocalhost -HP7184 -P1 -N00("ARM CoreSight SW-DP (ARM Core") -D00(5BA02477) -L00(0) -TO131090 -TC216000000 -TT10000000 -TP21 -TDS8011 -TDT0 -TDC1F -TIEFFFFFFFF -TIP9 -FO15 -FD20000000 -FC1000 -FN1 -FF0STM32F7x_1024.FLM -FS08000000 -FL0100000 -FP0($$Device:STM32F746NGHx$CMSIS\Flash\STM32F7x_1024.FLM) -WA0 -WE0 -WVCE4 -WS2710 -WM0 -WP2 -WK0</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -1906,8 +1689,8 @@
         </Mm>
       </MemoryWindow4>
       <ScvdPack>
-        <Filename>C:\Users\gabriel\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\RTOS2\RTX\RTX5.scvd</Filename>
-        <Type>ARM::CMSIS@5.9.0</Type>
+        <Filename>C:\Users\gabriel\AppData\Local\Arm\Packs\ARM\CMSIS-RTX\5.8.0\RTX5.scvd</Filename>
+        <Type>ARM::CMSIS-RTX@5.8.0</Type>
         <SubType>1</SubType>
       </ScvdPack>
       <Tracepoint>
@@ -2170,8 +1953,8 @@
         </Mm>
       </MemoryWindow4>
       <ScvdPack>
-        <Filename>C:\Users\gabriel\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\RTOS2\RTX\RTX5.scvd</Filename>
-        <Type>ARM::CMSIS@5.9.0</Type>
+        <Filename>C:\Users\gabriel\AppData\Local\Arm\Packs\ARM\CMSIS-RTX\5.8.0\RTX5.scvd</Filename>
+        <Type>ARM::CMSIS-RTX@5.8.0</Type>
         <SubType>1</SubType>
       </ScvdPack>
       <Tracepoint>
@@ -2979,7 +2762,7 @@
 
   <Group>
     <GroupName>::Acceleration</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>1</RteFlg>
@@ -3019,7 +2802,7 @@
 
   <Group>
     <GroupName>::Device</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>1</RteFlg>

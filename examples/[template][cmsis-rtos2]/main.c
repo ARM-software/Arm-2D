@@ -76,7 +76,7 @@ extern "C" {
 // <i> Specify the arm-2d application thread stack size
 // <i> Default: 2048
 #ifndef APP_STACK_SIZE
-#   define APP_STACK_SIZE       (3 * 1024ul)
+#   define APP_STACK_SIZE       (3072ul)
 #endif
 
 // <<< end of configuration section >>>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2024 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -17,7 +17,7 @@
  */
 
 /*-----------------------------------------------------------------------------
- * File     MPS3_CM55.h
+ * File     MPS3_PERIPHERALS.h
  * Brief    CMSIS Core Peripheral Access Layer Header File for
  *          MPS3_CM55 Device (AN540)
  * Version  1.0.0
@@ -26,129 +26,15 @@
 #ifndef MPS3_CM55_H
 #define MPS3_CM55_H
 
+#include "RTE_Components.h"             /* Component selection */
+#include CMSIS_device_header
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
 /* -------------------------  Interrupt Number Definition  ------------------------ */
-
-typedef enum IRQn
-{
-/* -------------------  Processor Exceptions Numbers  ----------------------------- */
-  NonMaskableInt_IRQn           =  -14,     /*  2 Non Maskable Interrupt */
-  HardFault_IRQn                =  -13,     /*  3 HardFault Interrupt */
-  MemoryManagement_IRQn         =  -12,     /*  4 Memory Management Interrupt */
-  BusFault_IRQn                 =  -11,     /*  5 Bus Fault Interrupt */
-  UsageFault_IRQn               =  -10,     /*  6 Usage Fault Interrupt */
-  SecureFault_IRQn              =   -9,     /*  7 Secure Fault Interrupt */
-  SVC_IRQn                      =   -5,     /* 11 SV Call Interrupt */
-  DebugMonitor_IRQn             =   -4,     /* 12 Debug Monitor Interrupt */
-  PendSV_IRQn                   =   -2,     /* 14 Pend SV Interrupt */
-  SysTick_IRQn                  =   -1,     /* 15 System Tick Interrupt */
-
-/* ----------------------  Processor Interrupt Numbers  --------------------------- */
-  NONSEC_WATCHDOG_RESET_IRQn    =    0,     /*    Non-Secure Watchdog Reset Interrupt */
-  NONSEC_WATCHDOG_IRQn          =    1,     /*    Non-Secure Watchdog Interrupt */
-  TIMER0_IRQn                   =    3,     /*    TIMER 0 Interrupt */
-  TIMER1_IRQn                   =    4,     /*    TIMER 1 Interrupt */
-  DUALTIMER_IRQn                =    5,     /*    Dual Timer Interrupt */
-  MPC_IRQn                      =    9,     /*    MPC Combined (Secure) Interrupt */
-  PPC_IRQn                      =   10,     /*    PPC Combined (Secure) Interrupt */
-  MSC_IRQn                      =   11,     /*    MSC Combined (Secure) Interrput */
-  BRIDGE_ERROR_IRQn             =   12,     /*    Bridge Error Combined (Secure) Interrupt */
-
-  FPIDC_IRQn                    =   27,     /*    Masked floating-point divide-by-zero exception */
-  FPDZC_IRQn                    =   28,     /*    Masked floating-point underflow exception */
-  FPOFC_IRQn                    =   29,     /*    Masked floating-point overflow exception */
-  FPUFC_IRQn                    =   30,     /*    Masked floating-point input denormal exception */
-  FPIXC_IRQn                    =   31,     /*    Masked floating-point inexact exception */
-
-  UART0RX_IRQn                  =   32,     /*    UART 0 Receive Interrupt */
-  UART0TX_IRQn                  =   33,     /*    UART 0 Transmit Interrupt */
-  UART1RX_IRQn                  =   34,     /*    UART 1 Receive Interrupt */
-  UART1TX_IRQn                  =   35,     /*    UART 1 Transmit Interrupt */
-  UART2RX_IRQn                  =   36,     /*    UART 2 Receive Interrupt */
-  UART2TX_IRQn                  =   37,     /*    UART 2 Transmit Interrupt */
-  UART3RX_IRQn                  =   38,     /*    UART 3 Receive Interrupt */
-  UART3TX_IRQn                  =   39,     /*    UART 3 Transmit Interrupt */
-  UART4RX_IRQn                  =   40,     /*    UART 4 Receive Interrupt */
-  UART4TX_IRQn                  =   41,     /*    UART 4 Transmit Interrupt */
-  UART0_IRQn                    =   42,     /*    UART 0 Combined Interrupt */
-  UART1_IRQn                    =   43,     /*    UART 1 Combined Interrupt */
-  UART2_IRQn                    =   44,     /*    UART 2 Combined Interrupt */
-  UART3_IRQn                    =   45,     /*    UART 3 Combined Interrupt */
-  UART4_IRQn                    =   46,     /*    UART 4 Combined Interrupt */
-  UARTOVF_IRQn                  =   47,     /*    UART Overflow (0, 1, 2, 3, 4 & 5) Interrupt */
-  ETHERNET_IRQn                 =   48,     /*    Ethernet Interrupt */
-  I2S0_IRQn                     =   49,     /*    FPGA Audio I2S Interrupt */
-  TSC_IRQn                      =   50,     /*    Touch Screen Interrupt */
-  USB_IRQn                      =   51,     /*    USB Interrupt */
-  SPI0_IRQn                     =   52,     /*    SPI ADC Interrupt */
-  SPI1_IRQn                     =   53,     /*    SPI (Shield 0) Interrupt */
-  SPI2_IRQn                     =   54,     /*    SPI (Shield 1) Interrupt */
-  GPIO0_IRQn                    =   68,     /*    GPIO 0 Combined Interrupt */
-  GPIO1_IRQn                    =   69,     /*    GPIO 1 Combined Interrupt */
-  GPIO2_IRQn                    =   70,     /*    GPIO 2 Combined Interrupt */
-  GPIO3_IRQn                    =   71,     /*    GPIO 3 Combined Interrupt */
-  GPIO0_0_IRQn                  =   72,     /*    GPIO 0 individual interrupt 0 */
-  GPIO0_1_IRQn                  =   73,     /*    GPIO 0 individual interrupt 1 */
-  GPIO0_2_IRQn                  =   74,     /*    GPIO 0 individual interrupt 2 */
-  GPIO0_3_IRQn                  =   75,     /*    GPIO 0 individual interrupt 3 */
-  GPIO0_4_IRQn                  =   76,     /*    GPIO 0 individual interrupt 4 */
-  GPIO0_5_IRQn                  =   77,     /*    GPIO 0 individual interrupt 5 */
-  GPIO0_6_IRQn                  =   78,     /*    GPIO 0 individual interrupt 6 */
-  GPIO0_7_IRQn                  =   79,     /*    GPIO 0 individual interrupt 7 */
-  GPIO0_8_IRQn                  =   80,     /*    GPIO 0 individual interrupt 8 */
-  GPIO0_9_IRQn                  =   81,     /*    GPIO 0 individual interrupt 9 */
-  GPIO0_10_IRQn                 =   82,     /*    GPIO 0 individual interrupt 10 */
-  GPIO0_11_IRQn                 =   83,     /*    GPIO 0 individual interrupt 11 */
-  GPIO0_12_IRQn                 =   84,     /*    GPIO 0 individual interrupt 12 */
-  GPIO0_13_IRQn                 =   85,     /*    GPIO 0 individual interrupt 13 */
-  GPIO0_14_IRQn                 =   86,     /*    GPIO 0 individual interrupt 14 */
-  GPIO0_15_IRQn                 =   87,     /*    GPIO 0 individual interrupt 15 */
-  GPIO1_0_IRQn                  =   88,     /*    GPIO 1 individual interrupt 0 */
-  GPIO1_1_IRQn                  =   89,     /*    GPIO 1 individual interrupt 1 */
-  GPIO1_2_IRQn                  =   90,     /*    GPIO 1 individual interrupt 2 */
-  GPIO1_3_IRQn                  =   91,     /*    GPIO 1 individual interrupt 3 */
-  GPIO1_4_IRQn                  =   92,     /*    GPIO 1 individual interrupt 4 */
-  GPIO1_5_IRQn                  =   93,     /*    GPIO 1 individual interrupt 5 */
-  GPIO1_6_IRQn                  =   94,     /*    GPIO 1 individual interrupt 6 */
-  GPIO1_7_IRQn                  =   95,     /*    GPIO 1 individual interrupt 7 */
-  GPIO1_8_IRQn                  =   96,     /*    GPIO 1 individual interrupt 8 */
-  GPIO1_9_IRQn                  =   97,     /*    GPIO 1 individual interrupt 9 */
-  GPIO1_10_IRQn                 =   98,     /*    GPIO 1 individual interrupt 10 */
-  GPIO1_11_IRQn                 =   99,     /*    GPIO 1 individual interrupt 11 */
-  GPIO1_12_IRQn                 =  100,     /*    GPIO 1 individual interrupt 12 */
-  GPIO1_13_IRQn                 =  101,     /*    GPIO 1 individual interrupt 13 */
-  GPIO1_14_IRQn                 =  102,     /*    GPIO 1 individual interrupt 14 */
-  GPIO1_15_IRQn                 =  103,     /*    GPIO 1 individual interrupt 15 */
-  GPIO2_0_IRQn                  =  104,     /*    GPIO 2 individual interrupt 0 */
-  GPIO2_1_IRQn                  =  105,     /*    GPIO 2 individual interrupt 1 */
-  GPIO2_2_IRQn                  =  106,     /*    GPIO 2 individual interrupt 2 */
-  GPIO2_3_IRQn                  =  107,     /*    GPIO 2 individual interrupt 3 */
-  GPIO2_4_IRQn                  =  108,     /*    GPIO 2 individual interrupt 4 */
-  GPIO2_5_IRQn                  =  109,     /*    GPIO 2 individual interrupt 5 */
-  GPIO2_6_IRQn                  =  110,     /*    GPIO 2 individual interrupt 6 */
-  GPIO2_7_IRQn                  =  111,     /*    GPIO 2 individual interrupt 7 */
-  GPIO2_8_IRQn                  =  112,     /*    GPIO 2 individual interrupt 8 */
-  GPIO2_9_IRQn                  =  113,     /*    GPIO 2 individual interrupt 9 */
-  GPIO2_10_IRQn                 =  114,     /*    GPIO 2 individual interrupt 10 */
-  GPIO2_11_IRQn                 =  115,     /*    GPIO 2 individual interrupt 11 */
-  GPIO2_12_IRQn                 =  116,     /*    GPIO 2 individual interrupt 12 */
-  GPIO2_13_IRQn                 =  117,     /*    GPIO 2 individual interrupt 13 */
-  GPIO2_14_IRQn                 =  118,     /*    GPIO 2 individual interrupt 14 */
-  GPIO2_15_IRQn                 =  119,     /*    GPIO 2 individual interrupt 15 */
-  GPIO3_0_IRQn                  =  120,     /*    GPIO 3 individual interrupt 0 */
-  GPIO3_1_IRQn                  =  121,     /*    GPIO 3 individual interrupt 1 */
-  GPIO3_2_IRQn                  =  122,     /*    GPIO 3 individual interrupt 2 */
-  GPIO3_3_IRQn                  =  123,     /*    GPIO 3 individual interrupt 3 */
-  UART5RX_IRQn                  =  124,     /*    UART 5 Receive Interrupt */
-  UART5TX_IRQn                  =  125,     /*    UART 5 Transmit Interrupt */
-  UART5_IRQn                    =  126,     /*    UART 5 Combined Interrupt */
-  HDCLCD_IRQn                   =  127      /*    HDCLCD Interrupt */
-} IRQn_Type;
-
 
 /* ================================================================================ */
 /* ================      Processor and Core Peripheral Section     ================ */
@@ -175,23 +61,6 @@ typedef enum IRQn
 #else
   #warning Not supported compiler type
 #endif
-
-
-/* --------  Configuration of the Cortex-M Processor and Core Peripherals  ------- */
-#define __ARMv81MML_REV           0x0001U   /* Core revision r0p1 */
-#define __SAUREGION_PRESENT       1U        /* SAU regions present */
-#define __MPU_PRESENT             1U        /* MPU present */
-#define __VTOR_PRESENT            1U        /* VTOR present */
-#define __NVIC_PRIO_BITS          3U        /* Number of Bits used for Priority Levels */
-#define __Vendor_SysTickConfig    0U        /* Set to 1 if different SysTick Config is used */
-#define __FPU_PRESENT             1U        /* FPU present */
-#define __FPU_DP                  1U        /* double precision FPU */
-#define __DSP_PRESENT             1U        /* DSP extension present */
-#define __MVE_PRESENT             1U        /* MVE extensions present */
-#define __MVE_FP                  1U        /* MVE floating point present */
-
-#include "core_armv81mml.h"                 /* Processor and core peripherals */
-#include "system_MPS3_CM55.h"                   /* System Header */
 
 
 /* ================================================================================ */
