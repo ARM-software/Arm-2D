@@ -220,6 +220,42 @@ static void __on_scene_benchmark_watch_panel_frame_complete(arm_2d_scene_t *ptSc
                  * ((double)SystemCoreClock / 1000000.0f));
 #endif
 
+            do {
+                arm_2d_helper_pfb_t *ptPFBHelper 
+                    = &this.use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t;
+                arm_2d_region_t tScreen = arm_2d_helper_pfb_get_display_area(ptPFBHelper);
+                arm_2d_size_t tPFBSize = arm_2d_helper_pfb_get_pfb_size(ptPFBHelper);
+
+                ARM_2D_LOG_INFO(
+                    STATISTICS, 
+                    0, 
+                    "BENCHMARK",
+                    /*------ format string -------*/
+                    "Running "ARM_TO_STRING(ITERATION_CNT)" iterations, "
+                    "PFB Size: %d*%d, Screen Size: %d*%d, "
+                #if !(defined(__i386__) || defined(__x86_64__) || defined(__APPLE__))
+                    "CPU Freq: %dMHz, "
+                #endif
+                    "Average: %d, "
+                #if !(defined(__i386__) || defined(__x86_64__) || defined(__APPLE__))
+                    "FPS30Freq: %4.2f MHz\r\n"
+                #endif
+                    ,
+                    /*------ data ----------------*/
+                    tPFBSize.iWidth,
+                    tPFBSize.iHeight,
+                    tScreen.tSize.iWidth, 
+                    tScreen.tSize.iHeight,
+                #if !(defined(__i386__) || defined(__x86_64__) || defined(__APPLE__))
+                    SystemCoreClock / 1000000ul,
+                #endif
+                    BENCHMARK.wAverage
+                #if !(defined(__i386__) || defined(__x86_64__) || defined(__APPLE__))
+                    ,BENCHMARK.fFPS30Freq
+                #endif
+                );
+            } while(0);
+
             /* resume low level flush */
             arm_2d_helper_resume_low_level_flush(ptHelper);
 #if __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
