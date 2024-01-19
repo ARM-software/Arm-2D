@@ -214,6 +214,8 @@ int main (void)
 
 #ifdef RTE_Acceleration_Arm_2D_Extra_Benchmark
     arm_2d_run_benchmark();
+#   undef LCD_TARGET_FPS
+#   define LCD_TARGET_FPS
 #else
     arm_2d_scene_player_register_before_switching_event_handler(
             &DISP0_ADAPTER,
