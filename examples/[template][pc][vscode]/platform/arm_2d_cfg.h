@@ -63,7 +63,7 @@ extern "C" {
 // <q>Enable Log
 // <i> This feature is disabled by default.
 #ifndef __ARM_2D_CFG_ENABLE_LOG__
-#   define __ARM_2D_CFG_ENABLE_LOG__                                0
+#   define __ARM_2D_CFG_ENABLE_LOG__                                1
 #endif
 
 // <q>The terminal support colour
@@ -82,6 +82,7 @@ extern "C" {
 /* The filter of log channels. Please comment the channels that you want to mask.
  */
 #ifndef __ARM_2D_LOG_CHANNEL_MASK_FILTER__
+
 #   define __ARM_2D_LOG_CHANNEL_MASK_FILTER__                                   \
             (   ARM_2D_LOG_CHN_TYPE_USER                                        \
             |   ARM_2D_LOG_CHN_TYPE_INFO                                        \
@@ -93,7 +94,9 @@ extern "C" {
             |   ARM_2D_LOG_CHN_HELPER_PFB                                       \
             |   ARM_2D_LOG_CHN_SCENE_PLAYER                                     \
             |   ARM_2D_LOG_CHN_DIRTY_REGION_OPTIMISATION                        \
+            |   ARM_2D_LOG_CHN_STATISTICS                                       \
             |   ARM_2D_LOG_CHN_APP)
+
 #endif
 // </h>
 
