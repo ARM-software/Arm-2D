@@ -1,7 +1,0 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/schemas/projmgr/1.4.0/tools/projmgr/schemas/cdefault.schema.json
-
-default:
-  compiler: IAR
-  misc:
-    - C-CPP: [--dlib_config DLib_Config_Full.h]
-      Link: [--semihosting]

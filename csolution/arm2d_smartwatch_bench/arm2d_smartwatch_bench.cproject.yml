@@ -1,0 +1,48 @@
+project:
+  groups:
+    - group: App
+      files:
+        - file: ../main.c
+      add-path:
+        - ../../examples/common/platform/
+
+      define:
+        - BENCH=WATCHPANEL
+
+
+  components:
+    - component: ARM::Acceleration:Arm-2D:Core
+    - component: ARM::Acceleration:Arm-2D:Alpha-Blending
+    - component: ARM::Acceleration:Arm-2D:Transform
+    - component: ARM::Acceleration:Arm-2D Helper:PFB
+    - component: ARM::Acceleration:Arm-2D Extras:Benchmark-WatchPanel
+      define:
+      - ITERATION_CNT=10
+
+    - component: ARM::Acceleration:Arm-2D Extras:Controls
+    - component: ARM::Acceleration:Arm-2D Extras:LCD ASCII Printf
+    - component: ARM::Acceleration:Arm-2D Helper:Display Adapter
+
+    - component: CMSIS-Compiler:CORE
+    - component: CMSIS-Compiler:STDOUT:Custom
+      not-for-context:
+      	# use semihosting
+        - +VHT-Corstone-300-NOLCD
+        - +VHT-Corstone-310-NOLCD
+
+
+    - component: perf_counter:Core&Source
+
+    - component: ARM::CMSIS:CORE
+    - component: ARM::CMSIS:DSP&Source
+      define:
+        - ARM_FAST_ALLOW_TABLES
+        - ARM_FFT_ALLOW_TABLES
+        - ARM_ALL_FAST_TABLES
+        - ARM_MATH_LOOPUNROLL
+        - DISABLEFLOAT16
+
+
+  layers:
+    - layer: ../boot.clayer.yml
+
