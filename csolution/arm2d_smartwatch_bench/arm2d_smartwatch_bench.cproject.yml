@@ -7,7 +7,7 @@ project:
         - ../../examples/common/platform/
 
       define:
-        - BENCH=WATCHPANEL
+        - BENCH: WATCHPANEL
 
 
   components:
@@ -17,7 +17,7 @@ project:
     - component: ARM::Acceleration:Arm-2D Helper:PFB
     - component: ARM::Acceleration:Arm-2D Extras:Benchmark-WatchPanel
       define:
-      - ITERATION_CNT=10
+      - ITERATION_CNT: 10
 
     - component: ARM::Acceleration:Arm-2D Extras:Controls
     - component: ARM::Acceleration:Arm-2D Extras:LCD ASCII Printf
