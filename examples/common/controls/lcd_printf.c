@@ -142,7 +142,11 @@ void arm_lcd_text_set_opacity(uint8_t chOpacity)
 
 void arm_lcd_text_set_scale(float fScale)
 {
-    s_tLCDTextControl.fScale = fScale;
+    if (ABS(fScale - 1.0f) > 0.01f) {
+        s_tLCDTextControl.fScale = ABS(fScale);
+    } else {
+        s_tLCDTextControl.fScale = 0.0f;
+    }
 }
 
 void arm_lcd_text_set_draw_region(arm_2d_region_t *ptRegion)
@@ -251,10 +255,10 @@ arm_2d_char_descriptor_t *__arm_lcd_get_char_descriptor(const arm_2d_font_t *ptF
     }
 
     /* NOTE: when the FONT mask insn't ARM_2D_COLOUR_8BIT, the scaling behaviour is unpredicted */
-    if (s_tLCDTextControl.fScale != 1.0f) {
+    if (s_tLCDTextControl.fScale > 0.0f) {
         ptDescriptor->iAdvance = (int16_t)((float)ptDescriptor->iAdvance * s_tLCDTextControl.fScale);
-        ptDescriptor->iBearingX = (int16_t)((float)ptDescriptor->iBearingX * s_tLCDTextControl.fScale);
-        ptDescriptor->iBearingY = (int16_t)((float)ptDescriptor->iBearingY * s_tLCDTextControl.fScale);
+        //ptDescriptor->iBearingX = (int16_t)((float)ptDescriptor->iBearingX * s_tLCDTextControl.fScale);
+        //ptDescriptor->iBearingY = (int16_t)((float)ptDescriptor->iBearingY * s_tLCDTextControl.fScale);
     }
 
     return ptDescriptor;

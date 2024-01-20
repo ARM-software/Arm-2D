@@ -2397,25 +2397,38 @@ IMPL_FONT_DRAW_CHAR(__digit_font_a8_draw_char)
     const bool bIsNewFrame = true;
     static const arm_2d_location_t c_tCentre = {7,8};
 
-    if (0.0f == fScale || ABS(fScale - 1.0f) < 0.01f) {
-        return arm_2d_fill_colour_with_mask_and_opacity( 
-                                            ptTile, 
+    if (fScale == 0.0f) {
+        if (chOpacity == 255) {
+            return arm_2d_fill_colour_with_mask(
+                                            ptTile,
+                                            ptRegion,
+                                            ptileChar,
+                                            (__arm_2d_color_t){tForeColour});
+        }
+
+        return arm_2d_fill_colour_with_mask_and_opacity(
+                                            ptTile,
                                             ptRegion,
                                             ptileChar,
                                             (__arm_2d_color_t){tForeColour},
                                             chOpacity);
     }
 
+    arm_2d_location_t tTargetCenter = ptRegion->tLocation;
+    tTargetCenter.iX += ptRegion->tSize.iWidth >> 1;
+    tTargetCenter.iY += ptRegion->tSize.iHeight >> 1;
+
     return arm_2dp_fill_colour_with_mask_opacity_and_transform(
                                             &s_tOP,
                                             ptileChar,
-                                            ptTile, 
-                                            ptRegion,
+                                            ptTile,
+                                            NULL,
                                             c_tCentre,
                                             0.0f,
                                             fScale,
                                             tForeColour,
-                                            chOpacity);
+                                            chOpacity,
+                                            &tTargetCenter);
 }
 
 static
