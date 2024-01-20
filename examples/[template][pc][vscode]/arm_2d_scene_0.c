@@ -241,8 +241,23 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
                                                 (arm_2d_corner_opacity_t)
                                                     {0, 128, 128, 128});
 
-                    arm_lcd_text_set_scale(1.5f);
-                    arm_lcd_print_banner("1234567890", __item_region, &ARM_2D_FONT_A8_DIGITS_ONLY);
+                    arm_2d_dock_vertical(__item_region, 
+                                        ARM_2D_FONT_A8_DIGITS_ONLY
+                                            .use_as__arm_2d_user_font_t
+                                                .use_as__arm_2d_font_t
+                                                    .tCharSize.iHeight) {
+                        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+                        arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_A8_DIGITS_ONLY);
+                        arm_lcd_text_set_draw_region(&__vertical_region);
+                        arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
+                        arm_lcd_text_location(0,0);
+                        
+                        for (int n = 0; n < 10; n++) {
+                            arm_lcd_text_set_scale(0.5f + 0.1f * (float)n);
+                            arm_lcd_printf("%d", n);
+                        }
+                    }
+                    //arm_lcd_print_banner("1234567890", __item_region, &ARM_2D_FONT_A8_DIGITS_ONLY);
                 }
             }
                                     

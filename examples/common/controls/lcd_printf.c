@@ -257,6 +257,7 @@ arm_2d_char_descriptor_t *__arm_lcd_get_char_descriptor(const arm_2d_font_t *ptF
     /* NOTE: when the FONT mask insn't ARM_2D_COLOUR_8BIT, the scaling behaviour is unpredicted */
     if (s_tLCDTextControl.fScale > 0.0f) {
         ptDescriptor->iAdvance = (int16_t)((float)ptDescriptor->iAdvance * s_tLCDTextControl.fScale);
+        /* NOTE: No need to adjust bearings in the following way. */
         //ptDescriptor->iBearingX = (int16_t)((float)ptDescriptor->iBearingX * s_tLCDTextControl.fScale);
         //ptDescriptor->iBearingY = (int16_t)((float)ptDescriptor->iBearingY * s_tLCDTextControl.fScale);
     }
