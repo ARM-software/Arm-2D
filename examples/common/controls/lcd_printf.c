@@ -142,7 +142,7 @@ void arm_lcd_text_set_opacity(uint8_t chOpacity)
 
 void arm_lcd_text_set_scale(float fScale)
 {
-    if (ABS(fScale - 1.0f) > 0.01f) {
+    if ((fScale != 0.0f) && ABS(fScale - 1.0f) > 0.01f) {
         s_tLCDTextControl.fScale = ABS(fScale);
     } else {
         s_tLCDTextControl.fScale = 0.0f;
@@ -199,7 +199,9 @@ arm_2d_err_t arm_lcd_text_set_font(const arm_2d_font_t *ptFont)
 
         /* reset draw pointer */
         arm_lcd_text_location(0,0);
-        
+        /* reset zoom */
+        arm_lcd_text_set_scale(0.0f);
+
         return ARM_2D_ERR_NONE;
     } while(0);
     
