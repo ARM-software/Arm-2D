@@ -21,8 +21,8 @@
  * Title:        arm-2d_transform.c
  * Description:  APIs for tile transform
  *
- * $Date:        12 Jan 2024
- * $Revision:    V.1.0.9
+ * $Date:        20 Jan 2024
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -570,8 +570,8 @@ static arm_2d_err_t __arm_2d_transform_preprocess_source(
     do {
         arm_2d_point_float_t tPoint;
 
-        arm_2d_location_t tTopLeft = {.iX = INT16_MAX, .iY = INT16_MAX};
-        arm_2d_location_t tBottomRight = {.iX = INT16_MIN, .iY = INT16_MIN};
+        arm_2d_point_float_t tTopLeft = {.fX = (float)INT16_MAX, .fY = (float)INT16_MAX};
+        arm_2d_point_float_t tBottomRight = {.fX = (float)INT16_MIN, .fY = (float)INT16_MIN};
 
         //! Top Left
         arm_2d_location_t tCornerPoint = tOrigValidRegion.tLocation;
@@ -582,11 +582,11 @@ static arm_2d_err_t __arm_2d_transform_preprocess_source(
                                 &tPoint);
 
         do {
-            tTopLeft.iX = MIN(tTopLeft.iX, tPoint.fX);
-            tTopLeft.iY = MIN(tTopLeft.iY, tPoint.fY);
+            tTopLeft.fX = MIN(tTopLeft.fX, tPoint.fX);
+            tTopLeft.fY = MIN(tTopLeft.fY, tPoint.fY);
 
-            tBottomRight.iX = MAX(tBottomRight.iX, tPoint.fX);
-            tBottomRight.iY = MAX(tBottomRight.iY, tPoint.fY);
+            tBottomRight.fX = MAX(tBottomRight.fX, tPoint.fX);
+            tBottomRight.fY = MAX(tBottomRight.fY, tPoint.fY);
         } while(0);
 
         //! Bottom Left
@@ -598,11 +598,11 @@ static arm_2d_err_t __arm_2d_transform_preprocess_source(
                                 &tPoint);
 
         do {
-            tTopLeft.iX = MIN(tTopLeft.iX, tPoint.fX);
-            tTopLeft.iY = MIN(tTopLeft.iY, tPoint.fY);
+            tTopLeft.fX = MIN(tTopLeft.fX, tPoint.fX);
+            tTopLeft.fY = MIN(tTopLeft.fY, tPoint.fY);
 
-            tBottomRight.iX = MAX(tBottomRight.iX, tPoint.fX);
-            tBottomRight.iY = MAX(tBottomRight.iY, tPoint.fY);
+            tBottomRight.fX = MAX(tBottomRight.fX, tPoint.fX);
+            tBottomRight.fY = MAX(tBottomRight.fY, tPoint.fY);
         } while(0);
 
         //! Top Right
@@ -616,11 +616,11 @@ static arm_2d_err_t __arm_2d_transform_preprocess_source(
                                 &tPoint);
 
         do {
-            tTopLeft.iX = MIN(tTopLeft.iX, tPoint.fX);
-            tTopLeft.iY = MIN(tTopLeft.iY, tPoint.fY);
+            tTopLeft.fX = MIN(tTopLeft.fX, tPoint.fX);
+            tTopLeft.fY = MIN(tTopLeft.fY, tPoint.fY);
 
-            tBottomRight.iX = MAX(tBottomRight.iX, tPoint.fX);
-            tBottomRight.iY = MAX(tBottomRight.iY, tPoint.fY);
+            tBottomRight.fX = MAX(tBottomRight.fX, tPoint.fX);
+            tBottomRight.fY = MAX(tBottomRight.fY, tPoint.fY);
         } while(0);
 
         //! Bottom Right
@@ -632,18 +632,21 @@ static arm_2d_err_t __arm_2d_transform_preprocess_source(
                                 &tPoint);
 
         do {
-            tTopLeft.iX = MIN(tTopLeft.iX, tPoint.fX);
-            tTopLeft.iY = MIN(tTopLeft.iY, tPoint.fY);
+            tTopLeft.fX = MIN(tTopLeft.fX, tPoint.fX);
+            tTopLeft.fY = MIN(tTopLeft.fY, tPoint.fY);
 
-            tBottomRight.iX = MAX(tBottomRight.iX, tPoint.fX);
-            tBottomRight.iY = MAX(tBottomRight.iY, tPoint.fY);
+            tBottomRight.fX = MAX(tBottomRight.fX, tPoint.fX);
+            tBottomRight.fY = MAX(tBottomRight.fY, tPoint.fY);
         } while(0);
 
         //! calculate the region
-        ptTransform->tDummySourceOffset = tTopLeft;
+        ptTransform->tDummySourceOffset = (arm_2d_location_t){
+                                            (int16_t)(tTopLeft.fX + 0.5f), 
+                                            (int16_t)(tTopLeft.fY + 0.5f),
+                                        };
 
-        ptSource->tRegion.tSize.iHeight = tBottomRight.iY - tTopLeft.iY + 1;
-        ptSource->tRegion.tSize.iWidth = tBottomRight.iX - tTopLeft.iX + 1;
+        ptSource->tRegion.tSize.iHeight = (int16_t)(tBottomRight.fY - tTopLeft.fY + 1.9f);
+        ptSource->tRegion.tSize.iWidth = (int16_t)(tBottomRight.fX - tTopLeft.fX + 1.9f);
 
         ptTransform->fScale = 1.0f / ptTransform->fScale;
 

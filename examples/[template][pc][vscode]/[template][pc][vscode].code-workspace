@@ -27,7 +27,8 @@
 			"type_traits": "c",
 			"__config": "c",
 			"typeinfo": "c",
-			"charconv": "cpp"
+			"charconv": "cpp",
+			"*.inc": "c"
 		}
 	}
 }
