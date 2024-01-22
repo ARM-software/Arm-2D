@@ -21,8 +21,8 @@
  * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        4. Nov 2023
- * $Revision:    V.1.1.3
+ * $Date:        22. Jan 2024
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -71,20 +71,38 @@ extern "C" {
 /* A patch for GCC support */
 #if defined(__IS_COMPILER_GCC__) && __IS_COMPILER_GCC__ && __ARM_2D_HAS_HELIUM__
 
-#   ifndef __ARM_2D_SUPPRESS_GCC_HELIUM_PATCH_WARNING__
-#       pragma GCC warning "As GCC has compilation issues for supporting Helium,\
+#   if  (__GNUC__ > 13) ||                                                      \
+        (__GNUC__ == 13 && __GNUC_MINOR__ > 2) ||                               \
+        (__GNUC__ == 13 && __GNUC_MINOR__ == 2 && __GNUC_PATCHLEVEL__ >= 1)
+
+    /* require minimal gcc version: 13.2 rel1 */
+#       ifndef __ARM_2D_SUPPRESS_GCC_HELIUM_PERFORMANCE_WARNING__
+#           pragma GCC warning "GCC only has basic support for Helium and its\
+ performance might highly like disappoint you,You can define a macro\
+ __ARM_2D_SUPPRESS_GCC_HELIUM_PERFORMANCE_WARNING__ to suppress this warning."
+#       endif
+
+#   else
+    /* the gcc version is too low to support helium well */
+#       ifndef __ARM_2D_SUPPRESS_GCC_HELIUM_PATCH_WARNING__
+#           pragma GCC warning "As GCC has compilation issues for supporting Helium,\
  the scalar version is used. You can define a macro\
  __ARM_2D_SUPPRESS_GCC_HELIUM_PATCH_WARNING__ to suppress this warning."
+#       endif
+
+#       undef __ARM_2D_HAS_HELIUM__
+#       undef __ARM_2D_HAS_HELIUM_INTEGER__
+#       undef __ARM_2D_HAS_HELIUM_FLOAT__
+
+#       define __ARM_2D_HAS_HELIUM__                        0                       //!< target MCU has no Helium extension
+#       define __ARM_2D_HAS_HELIUM_INTEGER__                0                       //!< target MCU has no Helium integer extension
+#       define __ARM_2D_HAS_HELIUM_FLOAT__                  0                       //!< target MCU has no Helium floating point extension
+
 #   endif
 
-#   undef __ARM_2D_HAS_HELIUM__
-#   undef __ARM_2D_HAS_HELIUM_INTEGER__
-#   undef __ARM_2D_HAS_HELIUM_FLOAT__
-
-#   define __ARM_2D_HAS_HELIUM__                        0                       //!< target MCU has no Helium extension
-#   define __ARM_2D_HAS_HELIUM_INTEGER__                0                       //!< target MCU has no Helium integer extension
-#   define __ARM_2D_HAS_HELIUM_FLOAT__                  0                       //!< target MCU has no Helium floating point extension
 #endif
+
+
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
