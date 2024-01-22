@@ -63,7 +63,7 @@ extern "C" {
 // <q>Enable Log
 // <i> This feature is disabled by default.
 #ifndef __ARM_2D_CFG_ENABLE_LOG__
-#   define __ARM_2D_CFG_ENABLE_LOG__                                1
+#   define __ARM_2D_CFG_ENABLE_LOG__                                0
 #endif
 
 // <q>The terminal support colour
