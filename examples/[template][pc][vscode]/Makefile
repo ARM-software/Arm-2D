@@ -21,6 +21,7 @@ CC_INC  += ../../examples/common/controls
 
 CC_DEF  := ARM_SECTION\(x\)=
 CC_DEF  += __va_list=va_list
+CC_DEF  += _RTE_=1
 
 #================================== DO NOT MODIFY UNLESS YOU KNOW THE CONSEQUENCES ====================================#
 ifeq ($(OS),Windows_NT)
