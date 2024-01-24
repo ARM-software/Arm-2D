@@ -21,8 +21,8 @@
  * Title:        __arm-2d_core.c
  * Description:  Basic Tile operations
  *
- * $Date:        01. Sept 2023
- * $Revision:    V.1.6.4
+ * $Date:        24. Jan 2024
+ * $Revision:    V.1.6.5
  *
  * Target Processor:  Cortex-M cores
  *
@@ -92,7 +92,7 @@ arm_2d_runtime_feature_t ARM_2D_RUNTIME_FEATURE = {
 };
 
 
-const arm_2d_version_t ARM_2D_VERSION = {
+const arm_2d_version_t ARM_2D_VERSION_INFO = {
     .Major = ARM_2D_VERSION_MAJOR,
     .Minor = ARM_2D_VERSION_MINOR,
     .Patch = ARM_2D_VERSION_PATCH,

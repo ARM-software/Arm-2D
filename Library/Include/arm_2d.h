@@ -147,7 +147,7 @@ arm_2d_runtime_feature_t ARM_2D_RUNTIME_FEATURE;
  * 
  */
 extern 
-const arm_2d_version_t ARM_2D_VERSION;
+const arm_2d_version_t ARM_2D_VERSION_INFO;
 
 /*============================ PROTOTYPES ====================================*/
 
