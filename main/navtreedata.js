@@ -249,7 +249,7 @@ var NAVTREEINDEX =
 "group__Deprecated.html",
 "group__gAlpha.html#gaa30eeb5263a6dfb2105af586f6307864",
 "group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3aa416368cd1714f333c53c5302eeac9fd",
-"group__gKernel.html#ga78ba01fb790d0a43878499dcb2639e0d",
+"group__gKernel.html#ga78be8ff33693f2eae081de96a352f6d3",
 "group__gTransform.html#abe28664647ee93207c7635c7dbe30b07"
 ];
 
