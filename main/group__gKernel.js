@@ -454,5 +454,5 @@ var group__gKernel =
     [ "__arm_2d_allocate_scratch_memory", "group__gKernel.html#ga6c15020a09927cd68765b059d1f203bb", null ],
     [ "__arm_2d_free_scratch_memory", "group__gKernel.html#ga6d1168d18401f7799e37c0c2306a9241", null ],
     [ "ARM_2D_RUNTIME_FEATURE", "group__gKernel.html#gae30937777f3c67e2418c9c26c76fb501", null ],
-    [ "ARM_2D_VERSION", "group__gKernel.html#ga3cef1eb288e3529dab7e441cc769e1e2", null ]
+    [ "ARM_2D_VERSION_INFO", "group__gKernel.html#ga76f331271253911a2df3e75e1a8283e9", null ]
 ];
