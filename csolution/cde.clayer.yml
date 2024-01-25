@@ -1,0 +1,21 @@
+layer:
+
+  description: Arm2d CDE acceleration
+
+  groups:
+    - group: arm2d_rgb565_cde
+      files:
+        - file: ../Acceleration/Arm/ACI/arm_2d_rgb565_aci_lib.c
+
+      add-path:
+        - ../Acceleration/Arm/ACI/
+#        - ../examples/common/platform/
+#         - .
+
+    - group: arm2d_other_cde
+#      files:
+#        - file: ../examples/common/platform/app_platform.c
+#        - file: ../examples/common/platform/mps2/GLCD_V2M-MPS2.c
+#        - file: ../examples/common/platform/mps2/platform_mps2.c
+
+
