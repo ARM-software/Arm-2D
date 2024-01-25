@@ -665,8 +665,8 @@ extern "C" {
         pSource += SRC_OFFSET;                                                  \
                                                                                 \
         for (int_fast16_t y = 0; y < ptDstCopySize->iHeight; y++) {             \
-            ARM_PIX_SCLTYP(sz)  *pDst = pTarget;                                \
-            ARM_PIX_SCLTYP(sz)  *pSrc = pSource;                                \
+            __typeof__(pTarget)  pDst = pTarget;                                \
+            __typeof__(pSource)  pSrc = pSource;                                \
             uint32_t             dstWidth = ptDstCopySize->iWidth;              \
                                                                                 \
             SETUP_MIRROR(srcWidth);                                             \

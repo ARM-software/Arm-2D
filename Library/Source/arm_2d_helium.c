@@ -530,7 +530,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_tile_copy_opacity)(uint8_t * __RESTRICT 
             uint16x8_t      vecSrc = vldrbq_z_u16(pSource, tailPred);
 
             vecTgt = vmulq_x(vecTgt, hwRatioCompl, tailPred);
-            vecTgt = vmlaq_m(vecTgt, vecSrc, hwRatio, tailPred);
+            vecTgt = vmlaq_m(vecTgt, vecSrc, (uint16_t)hwRatio, tailPred);
             vecTgt  = vecTgt  >> 8;
 
             vstrbq_p_u16(pTarget , vecTgt , tailPred);
@@ -614,7 +614,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_tile_copy_colour_keying_opacity)(uint8_t
             uint16x8_t      vecSrc = vldrbq_z_u16(pSource, tailPred);
 
             vecTgt = vmulq_x(vecTgt, hwRatioCompl, tailPred);
-            vecTgt = vmlaq_m(vecTgt, vecSrc, hwRatio, tailPred);
+            vecTgt = vmlaq_m(vecTgt, vecSrc, (uint16_t)hwRatio, tailPred);
             vecTgt  = vecTgt  >> 8;
 
             vstrbq_p_u16(pTarget , vecTgt ,
@@ -703,7 +703,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_opacity)(uint8_t * _
             uint16x8_t      vecTgt = vldrbq_z_u16(pTarget, tailPred);
 
             vecTgt = vmulq_x(vecTgt, hwRatioCompl, tailPred);
-            vecTgt = vmlaq_m(vecTgt, vecSrc, hwRatio, tailPred);
+            vecTgt = vmlaq_m(vecTgt, vecSrc, (uint16_t)hwRatio, tailPred);
             vecTgt  = vecTgt  >> 8;
 
             vstrbq_p_u16(pTarget , vecTgt , tailPred);
@@ -1341,8 +1341,6 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_tile_copy_opacity)(   uint32_t *pwSour
     uint16_t        hwRatioCompl = 256 - (uint16_t) hwRatio;
 
 #ifdef USE_MVE_INTRINSICS
-
-
     int32_t         blkCnt;
     int32_t         row = ptCopySize->iHeight;
 
@@ -1358,8 +1356,8 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_tile_copy_opacity)(   uint32_t *pwSour
         blkCnt = ptCopySize->iWidth;
 
         while (blkCnt > 0) {
-            vstrbq_u16((const uint8_t *)pwTarget,
-                       vmlaq(vmulq(vecSrc, hwRatio), vecTrg, hwRatioCompl) >> 8);
+            vstrbq_u16((uint8_t *)pwTarget,
+                       vmlaq(vmulq(vecSrc, (uint16_t)hwRatio), vecTrg, hwRatioCompl) >> 8);
 
             pwTarget += 2;
 
@@ -1535,9 +1533,9 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_tile_copy_colour_keying_opacity)(uint3
             uint16x8_t      vTrg16t = vmovltq_x(vTrg8, p);
 
             /* A/G blending */
-            int16x8_t       vecOutb = vmlaq_m(vmulq_x(vSrc16b, hwRatio, p), vTrg16b, hwRatioCompl, p);
+            int16x8_t       vecOutb = vmlaq_m(vmulq_x(vSrc16b, (uint16_t)hwRatio, p), vTrg16b, hwRatioCompl, p);
             /* R/B blending */
-            int16x8_t       vecOutt = vmlaq_m(vmulq_x(vSrc16t, hwRatio, p), vTrg16t, hwRatioCompl, p);
+            int16x8_t       vecOutt = vmlaq_m(vmulq_x(vSrc16t, (uint16_t)hwRatio, p), vTrg16t, hwRatioCompl, p);
 
             /* merge into 8-bit vector */
             int8x16_t       vecOut8 = vuninitializedq_s8();
