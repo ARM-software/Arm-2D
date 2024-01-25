@@ -25,13 +25,16 @@ default:
         - --diag_suppress=L6314W
 
     - for-compiler: GCC
-      C:
+      C-CPP:
+        - -fms-extensions
         - -Ofast
         - -ffast-math
         - -std=gnu11
         - -flax-vector-conversions
         - -ffunction-sections
         - -fdata-sections
+        - -DUSE_MVE_INTRINSICS
+        - -D__ARM_2D_SUPPRESS_GCC_HELIUM_PERFORMANCE_WARNING__
       Link:
         - --specs=nano.specs
         - --specs=rdimon.specs
@@ -41,6 +44,7 @@ default:
         - -Wl,--gc-sections
       Library:
         - -lm
+        #- -lrdimon
 
     - for-compiler: CLANG
       C:

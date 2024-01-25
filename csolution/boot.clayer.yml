@@ -13,6 +13,7 @@ layer:
         - __USE_AN547__
       add-path:
         - ../examples/common/platform/mps3/
+        - ../examples/common/platform/mps3/v2m_mps3/
         - ../examples/common/platform/
         - .
       for-context:
@@ -123,11 +124,12 @@ layer:
     #     - +VHT-Corstone-310-NOLCD
     #   for-compiler: CLANG
 
-    # - script: linker/sse300_mps3/gcc_sse300_mps3.ld
-    #   for-context:
-    #     - +VHT-Corstone-300
-    #     - +VHT-Corstone-300-NOLCD
-    #   for-compiler: GCC
+    - script: linker/sse300_mps3/gcc_sse300_mps3.ld
+      for-context:
+        - +VHT-Corstone-300
+        - +VHT-Corstone-300-NOLCD
+        - +VHT-Corstone-300-NOLCD-CDE
+      for-compiler: GCC
 
     # - script: linker/sse310_mps3/gcc_sse310_mps3_s.ld
     #   for-context:
