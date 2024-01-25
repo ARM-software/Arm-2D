@@ -24,8 +24,13 @@ solution:
     - type: VHT-Corstone-310
       device: ARM::SSE-310-MPS3_FVP
 
-    - type: VHT-Corstone-300
-      device: ARM::SSE-300-MPS3
+    - type: VHT-Corstone-310-CDE
+      device: ARM::SSE-310-MPS3_FVP
+      misc:
+        - C-CPP:
+          - -mcpu=cortex-m85+cdecp0
+      add-path:
+        - ../Acceleration/Arm/ACI/
 
     - type: VHT-Corstone-310-NOLCD
       device: ARM::SSE-310-MPS3_FVP
@@ -34,12 +39,48 @@ solution:
         - __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
         - __ARM_2D_CFG_ENABLE_LOG__: 1
 
+    - type: VHT-Corstone-310-NOLCD-CDE
+      device: ARM::SSE-310-MPS3_FVP
+      define:
+        - __ARM_2D_NOLCD
+        - __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
+        - __ARM_2D_CFG_ENABLE_LOG__: 1
+      misc:
+        - C-CPP:
+          - -mcpu=cortex-m85+cdecp0
+      add-path:
+        - ../Acceleration/Arm/ACI/
+
+    - type: VHT-Corstone-300
+      device: ARM::SSE-300-MPS3
+
+    - type: VHT-Corstone-300-CDE
+      device: ARM::SSE-300-MPS3
+      misc:
+        - C-CPP:
+          - -mcpu=cortex-m55+cdecp0
+      add-path:
+        - ../Acceleration/Arm/ACI/
+
     - type: VHT-Corstone-300-NOLCD
       device: ARM::SSE-300-MPS3
       define:
         - __ARM_2D_NOLCD
         - __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
         - __ARM_2D_CFG_ENABLE_LOG__: 1
+
+    - type: VHT-Corstone-300-NOLCD-CDE
+      device: ARM::SSE-300-MPS3
+      define:
+        - __ARM_2D_NOLCD
+        - __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
+        - __ARM_2D_CFG_ENABLE_LOG__: 1
+      misc:
+        - C-CPP:
+          - -mcpu=cortex-m55+cdecp0
+      add-path:
+        - ../Acceleration/Arm/ACI/
+
 
 # to be re-enabled later
 #- type: VHT_M55

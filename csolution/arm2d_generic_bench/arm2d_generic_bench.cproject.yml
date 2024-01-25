@@ -29,6 +29,8 @@ project:
       	# use semihosting
         - +VHT-Corstone-300-NOLCD
         - +VHT-Corstone-310-NOLCD
+        - +VHT-Corstone-310-NOLCD-CDE
+        - +VHT-Corstone-300-NOLCD-CDE
 
 
     - component: perf_counter:Core&Source
@@ -46,4 +48,9 @@ project:
 
   layers:
     - layer: ../boot.clayer.yml
-
+    - layer: ../cde.clayer.yml
+      for-context:
+        - +VHT-Corstone-300-CDE
+        - +VHT-Corstone-310-CDE
+        - +VHT-Corstone-300-NOLCD-CDE
+        - +VHT-Corstone-310-NOLCD-CDE

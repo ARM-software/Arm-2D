@@ -18,8 +18,10 @@ layer:
         - .
       for-context:
         - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
         - +VHT-Corstone-300-NOLCD
         - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
         - +VHT-Corstone-310-NOLCD
 
     - group: platform_mps2
@@ -34,8 +36,10 @@ layer:
         - .
       not-for-context:
         - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
         - +VHT-Corstone-300-NOLCD
         - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
         - +VHT-Corstone-310-NOLCD
 
 
@@ -44,71 +48,85 @@ layer:
     - component: Device:Startup&C Startup
       not-for-context:
         - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
         - +VHT-Corstone-300-NOLCD
         - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
         - +VHT-Corstone-310-NOLCD
 
     - component: ARM::Device:Definition
       for-context:
         - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
         - +VHT-Corstone-300-NOLCD
         - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
         - +VHT-Corstone-310-NOLCD
 
 
     - component: ARM::Device:Startup&C Startup
       for-context:
         - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
         - +VHT-Corstone-300-NOLCD
         - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
         - +VHT-Corstone-310-NOLCD
 
 
     - component: ARM::Device:Native Driver:Timeout
       for-context:
         - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
         - +VHT-Corstone-300-NOLCD
         - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
         - +VHT-Corstone-310-NOLCD
 
 
     - component: ARM::Device:Native Driver:SysCounter
       for-context:
         - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
         - +VHT-Corstone-300-NOLCD
         - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
         - +VHT-Corstone-310-NOLCD
 
 
     - component: ARM::Device:Native Driver:SysTimer
       for-context:
         - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
         - +VHT-Corstone-300-NOLCD
         - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
         - +VHT-Corstone-310-NOLCD
-
 
     - component: DMA350
       for-context:
         - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
         - +VHT-Corstone-310-NOLCD
-
 
     - component: ARM::Device:Native Driver:SSE-310 Remap
       for-context:
         - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
         - +VHT-Corstone-310-NOLCD
 
   linker:
     - script: linker/sse300_mps3/ac6_sse300_mps3_s.sct
       for-context:
         - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
         - +VHT-Corstone-300-NOLCD
       for-compiler: AC6
 
     - script: linker/sse310_mps3/ac6_sse310_mps3_s.sct
       for-context:
         - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
         - +VHT-Corstone-310-NOLCD
       for-compiler: AC6
 
@@ -127,6 +145,7 @@ layer:
     - script: linker/sse300_mps3/gcc_sse300_mps3.ld
       for-context:
         - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
         - +VHT-Corstone-300-NOLCD
         - +VHT-Corstone-300-NOLCD-CDE
       for-compiler: GCC
@@ -140,9 +159,11 @@ layer:
     - regions: linker/sse300_mps3/region_defs.h
       for-context:
         - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
         - +VHT-Corstone-300-NOLCD
 
     - regions: linker/sse310_mps3/region_defs.h
       for-context:
         - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
         - +VHT-Corstone-310-NOLCD
