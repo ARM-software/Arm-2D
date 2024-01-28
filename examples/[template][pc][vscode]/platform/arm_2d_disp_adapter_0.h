@@ -57,14 +57,14 @@ extern "C" {
 // <i> The width of your screen
 // <i> Default: 320
 #ifndef __DISP0_CFG_SCEEN_WIDTH__
-#   define __DISP0_CFG_SCEEN_WIDTH__                               800
+#   define __DISP0_CFG_SCEEN_WIDTH__                               854
 #endif
 
 // <o>Height of the screen <8-32767>
 // <i> The height of your screen
 // <i> Default: 240
 #ifndef __DISP0_CFG_SCEEN_HEIGHT__
-#   define __DISP0_CFG_SCEEN_HEIGHT__                              600
+#   define __DISP0_CFG_SCEEN_HEIGHT__                              480
 #endif
 
 // <o>Width of the PFB block
@@ -76,7 +76,7 @@ extern "C" {
 // <o>Height of the PFB block
 // <i> The height of your PFB block size used in disp0
 #ifndef __DISP0_CFG_PFB_BLOCK_HEIGHT__
-#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          (__DISP0_CFG_SCEEN_HEIGHT__ / 10)
+#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          (__DISP0_CFG_SCEEN_HEIGHT__)
 #endif
 
 // <o>Width Alignment of generated PFBs
@@ -104,7 +104,7 @@ extern "C" {
 //     <7=>   128 pixel
 // <i> Make sure the y and height of the PFB is always aligned to 2^n pixels
 #ifndef __DISP0_CFG_PFB_PIXEL_ALIGN_HEIGHT__
-#   define __DISP0_CFG_PFB_PIXEL_ALIGN_HEIGHT__                    0
+#   define __DISP0_CFG_PFB_PIXEL_ALIGN_HEIGHT__                    2
 #endif
 
 // <o>PFB Block Count <1-65535>
@@ -149,6 +149,21 @@ extern "C" {
 // <i> Swap the high and low bytes of the 16bit-pixels
 #ifndef __DISP0_CFG_SWAP_RGB16_HIGH_AND_LOW_BYTES__
 #   define __DISP0_CFG_SWAP_RGB16_HIGH_AND_LOW_BYTES__             0
+#endif
+
+#define __DISP0_SCREEN_NO_ROTATION__    0
+#define __DISP0_SCREEN_ROTATE_90__      1
+#define __DISP0_SCREEN_ROTATE_180__     2
+#define __DISP0_SCREEN_ROTATE_270__     3
+
+// <o>Rotate the Screen
+//     <__DISP0_SCREEN_NO_ROTATION__=>    NO Rotate
+//     <__DISP0_SCREEN_ROTATE_90__=>    90 Degree
+//     <__DISP0_SCREEN_ROTATE_180__=>   180 Degree
+//     <__DISP0_SCREEN_ROTATE_270__=>   270 Degree
+// <i> Rotate the Screen for specified degrees.
+#ifndef __DISP0_CFG_ROTATE_SCREEN__
+#   define __DISP0_CFG_ROTATE_SCREEN__                             __DISP0_SCREEN_ROTATE_90__
 #endif
 
 // <q>Enable the helper service for Asynchronous Flushing

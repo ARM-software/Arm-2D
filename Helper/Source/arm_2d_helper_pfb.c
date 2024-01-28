@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        27. Dec 2023
- * $Revision:    V.1.7.8
+ * $Date:        28. Jan 2024
+ * $Revision:    V.1.8.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -3278,3 +3278,57 @@ void arm_2d_helper_transform_update_value(  arm_2d_helper_transform_t *ptThis,
     }
 }
 
+/*----------------------------------------------------------------------------*
+ * Rotate PFB Helper                                                          *
+ *----------------------------------------------------------------------------*/
+
+
+__WEAK 
+void __arm_2d_rotate_90_rgb565( uint16_t * __restrict phwOrigin,
+                                uint16_t * __restrict phwOutput,
+                                int16_t iOriginWidth,
+                                int16_t iOriginHeight)
+{
+    int16_t iOutputWidth = iOriginHeight;
+
+    for(int16_t iOriginX = 0; iOriginX < iOriginWidth; iOriginX++) {    
+        int16_t iOriginColumn = iOriginX;
+
+        uint16_t * __restrict phwOutputLine = &phwOutput[iOriginColumn * iOutputWidth];
+
+        for(int16_t iOriginY = iOriginHeight - 1; iOriginY >= 0; iOriginY--) {
+            *phwOutputLine++ = phwOrigin[iOriginY * iOriginWidth];
+        }
+        phwOrigin++;
+    }
+}
+
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_rgb565( arm_2d_pfb_t *ptOrigin, 
+                                                    arm_2d_pfb_t *ptScratch,
+                                                    const arm_2d_size_t *ptScreenSize)
+{
+    assert(NULL != ptOrigin);
+    assert(NULL != ptScratch);
+
+    uint16_t * __restrict phwOrigin = (uint16_t * __restrict)ptOrigin->tTile.phwBuffer;
+    uint16_t * __restrict phwOutput = (uint16_t * __restrict)ptScratch->tTile.phwBuffer;
+
+    int16_t iWidth = ptOrigin->tTile.tRegion.tSize.iWidth;
+    int16_t iHeight = ptOrigin->tTile.tRegion.tSize.iHeight;
+
+    __arm_2d_rotate_90_rgb565(phwOrigin, phwOutput, iWidth, iHeight);
+
+    ptOrigin->tTile.tRegion.tSize.iWidth = iHeight;
+    ptOrigin->tTile.tRegion.tSize.iHeight = iWidth;
+
+    arm_2d_location_t tNewLocation = {
+        ptScreenSize->iHeight - (ptOrigin->tTile.tRegion.tLocation.iY + iHeight - 1) - 1,
+        ptOrigin->tTile.tRegion.tLocation.iX,
+    };
+
+    ptOrigin->tTile.tRegion.tLocation = tNewLocation;
+    ptOrigin->tTile.phwBuffer = phwOutput;
+    ptScratch->tTile.phwBuffer = phwOrigin;
+
+    return ptOrigin;
+}

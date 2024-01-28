@@ -13,8 +13,15 @@ extern "C" {
 //
 // 虚拟屏幕设定参数,即需要一个什么样的屏幕
 //
-#define VT_WIDTH           __DISP0_CFG_SCEEN_WIDTH__
-#define VT_HEIGHT          __DISP0_CFG_SCEEN_HEIGHT__
+#if     __DISP0_CFG_ROTATE_SCREEN__ == __DISP0_SCREEN_ROTATE_90__\
+    ||  __DISP0_CFG_ROTATE_SCREEN__ == __DISP0_SCREEN_ROTATE_270__
+#   define VT_WIDTH           __DISP0_CFG_SCEEN_HEIGHT__
+#   define VT_HEIGHT          __DISP0_CFG_SCEEN_WIDTH__
+#else
+#   define VT_WIDTH           __DISP0_CFG_SCEEN_WIDTH__
+#   define VT_HEIGHT          __DISP0_CFG_SCEEN_HEIGHT__
+#endif
+
 #define VT_COLOR_DEPTH     __DISP0_CFG_COLOUR_DEPTH__
 #define VT_VIRTUAL_MACHINE 0                   /*Different rendering should be used if running in a Virtual machine*/
 

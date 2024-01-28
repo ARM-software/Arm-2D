@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        27. Dec 2023
- * $Revision:    V.1.7.8
+ * $Date:        28. Jan 2024
+ * $Revision:    V.1.8.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -992,6 +992,119 @@ ARM_NONNULL(1,2)
 bool __arm_2d_helper_3fb_draw_bitmap(arm_2d_helper_3fb_t *ptThis, 
                                      const arm_2d_pfb_t *ptPFB);
 
+/*!
+ * \brief rotate a given gray8 PFB for 90 degree
+ * \param[in] ptOrigin the original PFB
+ * \param[in] ptScratch A scratch PFB
+ * \param[in] ptScreenSize the screen size
+ * \return arm_2d_pfb_t * the output PFB
+ */
+extern
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_gray8( 
+                                            arm_2d_pfb_t *ptOrigin, 
+                                            arm_2d_pfb_t *ptScratch,
+                                            const arm_2d_size_t *ptScreenSize);
+/*!
+ * \brief rotate a given gray8 PFB for 180 degree
+ * \param[in] ptOrigin the original PFB
+ * \param[in] ptScratch A scratch PFB
+ * \param[in] ptScreenSize the screen size
+ * \return arm_2d_pfb_t * the output PFB
+ */
+extern
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_gray8( 
+                                            arm_2d_pfb_t *ptOrigin, 
+                                            arm_2d_pfb_t *ptScratch,
+                                            const arm_2d_size_t *ptScreenSize);
+/*!
+ * \brief rotate a given gray8 PFB for 270 degree
+ * \param[in] ptOrigin the original PFB
+ * \param[in] ptScratch A scratch PFB
+ * \param[in] ptScreenSize the screen size
+ * \return arm_2d_pfb_t * the output PFB
+ */
+extern
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate270_gray8( 
+                                            arm_2d_pfb_t *ptOrigin, 
+                                            arm_2d_pfb_t *ptScratch,
+                                            const arm_2d_size_t *ptScreenSize);
+
+/*!
+ * \brief rotate a given rgb565 PFB for 90 degree
+ * \param[in] ptOrigin the original PFB
+ * \param[in] ptScratch A scratch PFB
+ * \param[in] ptScreenSize the screen size
+ * \return arm_2d_pfb_t * the output PFB
+ */
+extern
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_rgb565( 
+                                            arm_2d_pfb_t *ptOrigin, 
+                                            arm_2d_pfb_t *ptScratch,
+                                            const arm_2d_size_t *ptScreenSize);
+
+/*!
+ * \brief rotate a given rgb565 PFB for 180 degree
+ * \param[in] ptOrigin the original PFB
+ * \param[in] ptScratch A scratch PFB
+ * \param[in] ptScreenSize the screen size
+ * \return arm_2d_pfb_t * the output PFB
+ */
+extern
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_rgb565( 
+                                            arm_2d_pfb_t *ptOrigin, 
+                                            arm_2d_pfb_t *ptScratch,
+                                            const arm_2d_size_t *ptScreenSize);
+
+/*!
+ * \brief rotate a given rgb565 PFB for 270 degree
+ * \param[in] ptOrigin the original PFB
+ * \param[in] ptScratch A scratch PFB
+ * \param[in] ptScreenSize the screen size
+ * \return arm_2d_pfb_t * the output PFB
+ */
+extern
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate270_rgb565( 
+                                            arm_2d_pfb_t *ptOrigin, 
+                                            arm_2d_pfb_t *ptScratch,
+                                            const arm_2d_size_t *ptScreenSize);
+
+/*!
+ * \brief rotate a given cccn888 PFB for 90 degree
+ * \param[in] ptOrigin the original PFB
+ * \param[in] ptScratch A scratch PFB
+ * \param[in] ptScreenSize the screen size
+ * \return arm_2d_pfb_t * the output PFB
+ */
+extern
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_cccn888( 
+                                            arm_2d_pfb_t *ptOrigin, 
+                                            arm_2d_pfb_t *ptScratch,
+                                            const arm_2d_size_t *ptScreenSize);
+/*!
+ * \brief rotate a given cccn888 PFB for 180 degree
+ * \param[in] ptOrigin the original PFB
+ * \param[in] ptScratch A scratch PFB
+ * \param[in] ptScreenSize the screen size
+ * \return arm_2d_pfb_t * the output PFB
+ */
+extern
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_cccn888( 
+                                            arm_2d_pfb_t *ptOrigin, 
+                                            arm_2d_pfb_t *ptScratch,
+                                            const arm_2d_size_t *ptScreenSize);
+
+/*!
+ * \brief rotate a given cccn888 PFB for 270 degree
+ * \param[in] ptOrigin the original PFB
+ * \param[in] ptScratch A scratch PFB
+ * \param[in] ptScreenSize the screen size
+ * \return arm_2d_pfb_t * the output PFB
+ */
+extern
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate270_cccn888( 
+                                            arm_2d_pfb_t *ptOrigin, 
+                                            arm_2d_pfb_t *ptScratch,
+                                            const arm_2d_size_t *ptScreenSize);
 
 
 /*! @} */
