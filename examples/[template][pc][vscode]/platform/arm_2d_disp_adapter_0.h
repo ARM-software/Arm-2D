@@ -57,14 +57,14 @@ extern "C" {
 // <i> The width of your screen
 // <i> Default: 320
 #ifndef __DISP0_CFG_SCEEN_WIDTH__
-#   define __DISP0_CFG_SCEEN_WIDTH__                               854
+#   define __DISP0_CFG_SCEEN_WIDTH__                               800
 #endif
 
 // <o>Height of the screen <8-32767>
 // <i> The height of your screen
 // <i> Default: 240
 #ifndef __DISP0_CFG_SCEEN_HEIGHT__
-#   define __DISP0_CFG_SCEEN_HEIGHT__                              480
+#   define __DISP0_CFG_SCEEN_HEIGHT__                              600
 #endif
 
 // <o>Width of the PFB block
@@ -76,7 +76,7 @@ extern "C" {
 // <o>Height of the PFB block
 // <i> The height of your PFB block size used in disp0
 #ifndef __DISP0_CFG_PFB_BLOCK_HEIGHT__
-#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          (__DISP0_CFG_SCEEN_HEIGHT__)
+#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          (__DISP0_CFG_SCEEN_HEIGHT__/10)
 #endif
 
 // <o>Width Alignment of generated PFBs
@@ -163,7 +163,7 @@ extern "C" {
 //     <__DISP0_SCREEN_ROTATE_270__=>   270 Degree
 // <i> Rotate the Screen for specified degrees.
 #ifndef __DISP0_CFG_ROTATE_SCREEN__
-#   define __DISP0_CFG_ROTATE_SCREEN__                             __DISP0_SCREEN_ROTATE_90__
+#   define __DISP0_CFG_ROTATE_SCREEN__                             __DISP0_SCREEN_NO_ROTATION__
 #endif
 
 // <q>Enable the helper service for Asynchronous Flushing

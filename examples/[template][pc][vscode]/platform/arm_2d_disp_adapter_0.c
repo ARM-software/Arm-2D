@@ -218,11 +218,28 @@ static arm_2d_pfb_t * __rotate_screen(arm_2d_pfb_t *ptOrigin)
         = __arm_2d_helper_pfb_new(&DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t);
     assert(NULL != ptScratchPFB);
 
-    __arm_2d_helper_pfb_rotate90_rgb565(
+#if     __DISP0_CFG_COLOUR_DEPTH__ == 8
+    __arm_2d_helper_pfb_rotate90_c8bit(
                         ptOrigin, 
                         ptScratchPFB, 
                         (const arm_2d_size_t[]){__DISP0_CFG_SCEEN_WIDTH__, 
                                                 __DISP0_CFG_SCEEN_HEIGHT__});
+#elif   __DISP0_CFG_COLOUR_DEPTH__ == 16
+    __arm_2d_helper_pfb_rotate90_rgb16(
+                        ptOrigin, 
+                        ptScratchPFB, 
+                        (const arm_2d_size_t[]){__DISP0_CFG_SCEEN_WIDTH__, 
+                                                __DISP0_CFG_SCEEN_HEIGHT__});
+#elif __DISP0_CFG_COLOUR_DEPTH__ == 32
+    __arm_2d_helper_pfb_rotate90_rgb32(
+                        ptOrigin, 
+                        ptScratchPFB, 
+                        (const arm_2d_size_t[]){__DISP0_CFG_SCEEN_WIDTH__, 
+                                                __DISP0_CFG_SCEEN_HEIGHT__});
+#else
+    /* unsupported color depth */
+    assert(false);
+#endif
 
     /* free scratch */
     __arm_2d_helper_pfb_free(   &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t, 

@@ -3282,9 +3282,28 @@ void arm_2d_helper_transform_update_value(  arm_2d_helper_transform_t *ptThis,
  * Rotate PFB Helper                                                          *
  *----------------------------------------------------------------------------*/
 
+__WEAK 
+void __arm_2d_rotate_90_c8bit(  uint8_t * __restrict pchOrigin,
+                                uint8_t * __restrict pchOutput,
+                                int16_t iOriginWidth,
+                                int16_t iOriginHeight)
+{
+    int16_t iOutputWidth = iOriginHeight;
+
+    for(int16_t iOriginX = 0; iOriginX < iOriginWidth; iOriginX++) {    
+        int16_t iOriginColumn = iOriginX;
+
+        uint8_t * __restrict pchOutputLine = &pchOutput[iOriginColumn * iOutputWidth];
+
+        for(int16_t iOriginY = iOriginHeight - 1; iOriginY >= 0; iOriginY--) {
+            *pchOutputLine++ = pchOrigin[iOriginY * iOriginWidth];
+        }
+        pchOrigin++;
+    }
+}
 
 __WEAK 
-void __arm_2d_rotate_90_rgb565( uint16_t * __restrict phwOrigin,
+void __arm_2d_rotate_90_rgb16(  uint16_t * __restrict phwOrigin,
                                 uint16_t * __restrict phwOutput,
                                 int16_t iOriginWidth,
                                 int16_t iOriginHeight)
@@ -3303,7 +3322,57 @@ void __arm_2d_rotate_90_rgb565( uint16_t * __restrict phwOrigin,
     }
 }
 
-arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_rgb565( arm_2d_pfb_t *ptOrigin, 
+__WEAK 
+void __arm_2d_rotate_90_rgb32(  uint32_t * __restrict pwOrigin,
+                                uint32_t * __restrict pwOutput,
+                                int16_t iOriginWidth,
+                                int16_t iOriginHeight)
+{
+    int16_t iOutputWidth = iOriginHeight;
+
+    for(int16_t iOriginX = 0; iOriginX < iOriginWidth; iOriginX++) {    
+        int16_t iOriginColumn = iOriginX;
+
+        uint32_t * __restrict pwOutputLine = &pwOutput[iOriginColumn * iOutputWidth];
+
+        for(int16_t iOriginY = iOriginHeight - 1; iOriginY >= 0; iOriginY--) {
+            *pwOutputLine++ = pwOrigin[iOriginY * iOriginWidth];
+        }
+        pwOrigin++;
+    }
+}
+
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_c8bit(  arm_2d_pfb_t *ptOrigin, 
+                                                    arm_2d_pfb_t *ptScratch,
+                                                    const arm_2d_size_t *ptScreenSize)
+{
+    assert(NULL != ptOrigin);
+    assert(NULL != ptScratch);
+
+    uint8_t * __restrict pchOrigin = (uint8_t * __restrict)ptOrigin->tTile.pchBuffer;
+    uint8_t * __restrict pchOutput = (uint8_t * __restrict)ptScratch->tTile.pchBuffer;
+
+    int16_t iWidth = ptOrigin->tTile.tRegion.tSize.iWidth;
+    int16_t iHeight = ptOrigin->tTile.tRegion.tSize.iHeight;
+
+    __arm_2d_rotate_90_c8bit(pchOrigin, pchOutput, iWidth, iHeight);
+
+    ptOrigin->tTile.tRegion.tSize.iWidth = iHeight;
+    ptOrigin->tTile.tRegion.tSize.iHeight = iWidth;
+
+    arm_2d_location_t tNewLocation = {
+        ptScreenSize->iHeight - (ptOrigin->tTile.tRegion.tLocation.iY + iHeight - 1) - 1,
+        ptOrigin->tTile.tRegion.tLocation.iX,
+    };
+
+    ptOrigin->tTile.tRegion.tLocation = tNewLocation;
+    ptOrigin->tTile.pchBuffer = pchOutput;
+    ptScratch->tTile.pchBuffer = pchOrigin;
+
+    return ptOrigin;
+}
+
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_rgb16(  arm_2d_pfb_t *ptOrigin, 
                                                     arm_2d_pfb_t *ptScratch,
                                                     const arm_2d_size_t *ptScreenSize)
 {
@@ -3316,7 +3385,7 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_rgb565( arm_2d_pfb_t *ptOrigin,
     int16_t iWidth = ptOrigin->tTile.tRegion.tSize.iWidth;
     int16_t iHeight = ptOrigin->tTile.tRegion.tSize.iHeight;
 
-    __arm_2d_rotate_90_rgb565(phwOrigin, phwOutput, iWidth, iHeight);
+    __arm_2d_rotate_90_rgb16(phwOrigin, phwOutput, iWidth, iHeight);
 
     ptOrigin->tTile.tRegion.tSize.iWidth = iHeight;
     ptOrigin->tTile.tRegion.tSize.iHeight = iWidth;
@@ -3329,6 +3398,36 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_rgb565( arm_2d_pfb_t *ptOrigin,
     ptOrigin->tTile.tRegion.tLocation = tNewLocation;
     ptOrigin->tTile.phwBuffer = phwOutput;
     ptScratch->tTile.phwBuffer = phwOrigin;
+
+    return ptOrigin;
+}
+
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_rgb32(  arm_2d_pfb_t *ptOrigin, 
+                                                    arm_2d_pfb_t *ptScratch,
+                                                    const arm_2d_size_t *ptScreenSize)
+{
+    assert(NULL != ptOrigin);
+    assert(NULL != ptScratch);
+
+    uint32_t * __restrict pwOrigin = (uint32_t * __restrict)ptOrigin->tTile.pwBuffer;
+    uint32_t * __restrict pwOutput = (uint32_t * __restrict)ptScratch->tTile.pwBuffer;
+
+    int16_t iWidth = ptOrigin->tTile.tRegion.tSize.iWidth;
+    int16_t iHeight = ptOrigin->tTile.tRegion.tSize.iHeight;
+
+    __arm_2d_rotate_90_rgb32(pwOrigin, pwOutput, iWidth, iHeight);
+
+    ptOrigin->tTile.tRegion.tSize.iWidth = iHeight;
+    ptOrigin->tTile.tRegion.tSize.iHeight = iWidth;
+
+    arm_2d_location_t tNewLocation = {
+        ptScreenSize->iHeight - (ptOrigin->tTile.tRegion.tLocation.iY + iHeight - 1) - 1,
+        ptOrigin->tTile.tRegion.tLocation.iX,
+    };
+
+    ptOrigin->tTile.tRegion.tLocation = tNewLocation;
+    ptOrigin->tTile.pwBuffer = pwOutput;
+    ptScratch->tTile.pwBuffer = pwOrigin;
 
     return ptOrigin;
 }

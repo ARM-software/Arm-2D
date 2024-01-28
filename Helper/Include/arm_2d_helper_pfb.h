@@ -993,14 +993,14 @@ bool __arm_2d_helper_3fb_draw_bitmap(arm_2d_helper_3fb_t *ptThis,
                                      const arm_2d_pfb_t *ptPFB);
 
 /*!
- * \brief rotate a given gray8 PFB for 90 degree
+ * \brief rotate a given c8bit PFB for 90 degree
  * \param[in] ptOrigin the original PFB
  * \param[in] ptScratch A scratch PFB
  * \param[in] ptScreenSize the screen size
  * \return arm_2d_pfb_t * the output PFB
  */
 extern
-arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_gray8( 
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_c8bit( 
                                             arm_2d_pfb_t *ptOrigin, 
                                             arm_2d_pfb_t *ptScratch,
                                             const arm_2d_size_t *ptScreenSize);
@@ -1030,14 +1030,14 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate270_gray8(
                                             const arm_2d_size_t *ptScreenSize);
 
 /*!
- * \brief rotate a given rgb565 PFB for 90 degree
+ * \brief rotate a given 16bit PFB for 90 degree
  * \param[in] ptOrigin the original PFB
  * \param[in] ptScratch A scratch PFB
  * \param[in] ptScreenSize the screen size
  * \return arm_2d_pfb_t * the output PFB
  */
 extern
-arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_rgb565( 
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_rgb16( 
                                             arm_2d_pfb_t *ptOrigin, 
                                             arm_2d_pfb_t *ptScratch,
                                             const arm_2d_size_t *ptScreenSize);
@@ -1069,14 +1069,14 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate270_rgb565(
                                             const arm_2d_size_t *ptScreenSize);
 
 /*!
- * \brief rotate a given cccn888 PFB for 90 degree
+ * \brief rotate a given rgb32 PFB for 90 degree
  * \param[in] ptOrigin the original PFB
  * \param[in] ptScratch A scratch PFB
  * \param[in] ptScreenSize the screen size
  * \return arm_2d_pfb_t * the output PFB
  */
 extern
-arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_cccn888( 
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_rgb32( 
                                             arm_2d_pfb_t *ptOrigin, 
                                             arm_2d_pfb_t *ptScratch,
                                             const arm_2d_size_t *ptScreenSize);
