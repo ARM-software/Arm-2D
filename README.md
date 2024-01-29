@@ -128,10 +128,14 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
 - **Display Adapter Service for connecting LCD**
   - Generic Partial Frame-buffer (PFB)
     - Easy to Use: transparent for applications
-    - No limitation on screen resolution **(See note)**
-    - No limitation on PFB size and shape (it could be a line or a rectangular with any size)  **(See note)**
+    - No limitation on screen resolution **(See note 1)**
+    - Flexible in PFB size and shape (it could be a line or a rectangular with any size)  **(See note 2)**
     - Supports PFB alignment for both width and height.
-    >  **NOTE**: As long as the size is smaller than 32767 * 32767. 
+    >  **NOTE**: 
+    >
+    >  1. As long as the size is smaller than 32767 * 32767. 
+    >
+    >  2. As long as the total pixel numebr is smaller than 16M pixels.
     
   - Supports **Dirty Regions** for refreshing specified areas only
     - Provides a debug mode for dirty regions
@@ -140,7 +144,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
   - Supports swapping high and low bytes for RGB16 pixels
   
   - Provides a **Scene Player** with various scene switching modes (Fade-In-Fade-Out, Slide, Erase etc.)
-
+  
   - Supports various Buffer Modes with a built-in framebuffer pool.
     - Single Buffer/Double-Buffers
     - **[new]** Provides a helper service for Direct Mode

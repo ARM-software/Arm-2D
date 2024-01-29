@@ -295,7 +295,10 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
         int_fast16_t n = this.tCFG.FrameBuffer.hwPFBNum;
         arm_2d_pfb_t *ptItem = this.tCFG.FrameBuffer.ptPFBs;
         uint32_t wBufferSize = this.tCFG.FrameBuffer.u24BufferSize;
-        
+        arm_2d_color_info_t tColourFormat = {
+            .u7ColourFormat = this.tCFG.FrameBuffer.u7ColourFormat,
+        };
+
         // handle alignments
         wBufferSize += __alignof__(arm_2d_pfb_t) - 1;
         wBufferSize &= ~(__alignof__(arm_2d_pfb_t) - 1);
@@ -321,6 +324,9 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
             
             // update buffer size
             ptItem->u24Size = wBufferSize;
+
+            // save colour format
+            ptItem->u7ColourFormat = tColourFormat.u7ColourFormat;
 
             __arm_2d_helper_pfb_free(ptThis, ptItem);
             
