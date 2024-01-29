@@ -58,7 +58,7 @@ var group__gKernel =
       [ "pTarget", "group__gKernel.html#afaf83f02ebbc3a7fecbdddfa3eaca8f6", null ]
     ] ],
     [ "__arm_2d_op_info_t", "group__gKernel.html#union____arm__2d__op__info__t", [
-      [ "Info", "group__gKernel.html#aeb317542dc8cadcfe47639a16dbb3b5c", null ],
+      [ "Info", "group__gKernel.html#a4a2e9e81c028fc1f54ee52295fb90dc9", null ],
       [ "wID", "group__gKernel.html#a7eaf57395ac174e3588fa638bd4fdac4", null ]
     ] ],
     [ "arm_2d_op_status_t", "group__gKernel.html#unionarm__2d__op__status__t", [
@@ -95,25 +95,26 @@ var group__gKernel =
       [ "u3ColourSZ", "group__gKernel.html#a18e0ce378792885287bfd2164fb67afe", null ],
       [ "bBigEndian", "group__gKernel.html#a00b36e47c8ccbf0a0b27b35bbae417b9", null ]
     ] ],
-    [ "arm_2d_tile_t.__unnamed20__", "group__gKernel.html#structarm__2d__tile__t_8____unnamed20____", null ],
-    [ "arm_2d_tile_t.__unnamed22__", "group__gKernel.html#unionarm__2d__tile__t_8____unnamed22____", [
+    [ "arm_2d_color_info_t.__unnamed20__", "group__gKernel.html#structarm__2d__color__info__t_8____unnamed20____", null ],
+    [ "arm_2d_tile_t.__unnamed22__", "group__gKernel.html#structarm__2d__tile__t_8____unnamed22____", null ],
+    [ "arm_2d_tile_t.__unnamed24__", "group__gKernel.html#unionarm__2d__tile__t_8____unnamed24____", [
       [ "ptParent", "group__gKernel.html#ab7d503e832b5eb1efecb3e1efb47a940", null ],
       [ "pchBuffer", "group__gKernel.html#aafb142b4ace10f2f28b36f6e21c0bc37", null ],
       [ "phwBuffer", "group__gKernel.html#a7ab9bae0edae834bd1b221ed16f9f5a9", null ],
       [ "pwBuffer", "group__gKernel.html#ada33927dfd1b467fd0ca5c1f41fe9cf1", null ],
       [ "nAddress", "group__gKernel.html#a60672198cd98a34cba84050872e49921", null ]
     ] ],
-    [ "__arm_2d_mem_info_t.__unnamed24__", "group__gKernel.html#struct____arm__2d__mem__info__t_8____unnamed24____", [
+    [ "__arm_2d_mem_info_t.__unnamed26__", "group__gKernel.html#struct____arm__2d__mem__info__t_8____unnamed26____", [
       [ "u24SizeInByte", "group__gKernel.html#a75e880fb524b7cffc852cd04e4dfe622", null ],
       [ "u2ItemSize", "group__gKernel.html#ab2186430e13e48786ab36b925c08e341", null ],
       [ "u2Align", "group__gKernel.html#a02a93e63bbb7831e443437701ee61935", null ],
       [ "u2Type", "group__gKernel.html#ac712e5a5e27efc804722be62a4f3ef9e", null ]
     ] ],
-    [ "__arm_2d_mem_t.__unnamed26__", "group__gKernel.html#union____arm__2d__mem__t_8____unnamed26____", [
+    [ "__arm_2d_mem_t.__unnamed28__", "group__gKernel.html#union____arm__2d__mem__t_8____unnamed28____", [
       [ "ptNext", "group__gKernel.html#a280a9f91f9dc54ebfa734ac5e72ac5fe", null ],
       [ "wSignature", "group__gKernel.html#a66be4b09ac357a42181e2f4cbb795ba3", null ]
     ] ],
-    [ "arm_2d_task_t.__unnamed28__", "group__gKernel.html#structarm__2d__task__t_8____unnamed28____", null ],
+    [ "arm_2d_task_t.__unnamed30__", "group__gKernel.html#structarm__2d__task__t_8____unnamed30____", null ],
     [ "__arm_2d_op_info_t.Info", "group__gKernel.html#struct____arm__2d__op__info__t_8Info", [
       [ "Colour", "group__gKernel.html#adfe6076e1d429c24edcbb2686bb39567", null ],
       [ "Param", "group__gKernel.html#ab7dccc7d9373cd4717256318909fcebe", null ],
@@ -125,7 +126,7 @@ var group__gKernel =
     [ "__arm_2d_op_info_t.Info.Param", "group__gKernel.html#union____arm__2d__op__info__t_8Info_8Param", [
       [ "chValue", "group__gKernel.html#a14feacf4173e75400b4bf5d23be613f4", null ]
     ] ],
-    [ "__arm_2d_op_info_t.Info.Param.__unnamed34__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8Param_8____unnamed34____", [
+    [ "__arm_2d_op_info_t.Info.Param.__unnamed36__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8Param_8____unnamed36____", [
       [ "bHasSource", "group__gKernel.html#a20300cbf0fd7048d6c53680add0bae93", null ],
       [ "bHasTarget", "group__gKernel.html#a953434e6f818bd41905c39ea14698e00", null ],
       [ "bHasSrcMask", "group__gKernel.html#a7c66e904cad6508e4945d09f2145413f", null ],
@@ -134,39 +135,39 @@ var group__gKernel =
       [ "bAllowEnforcedColour", "group__gKernel.html#afcec6e72ec1717659666cbeb104b1ab9", null ]
     ] ],
     [ "__arm_2d_op_info_t.Info.LowLevelInterfaceIndex", "group__gKernel.html#union____arm__2d__op__info__t_8Info_8LowLevelInterfaceIndex", null ],
-    [ "__arm_2d_op_info_t.Info.LowLevelInterfaceIndex.__unnamed36__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelInterfaceIndex_8____unnamed36____", [
+    [ "__arm_2d_op_info_t.Info.LowLevelInterfaceIndex.__unnamed38__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelInterfaceIndex_8____unnamed38____", [
       [ "CopyLike", "group__gKernel.html#a70eb9faba18ebf32e1398d257acefc32", null ],
       [ "FillLike", "group__gKernel.html#a58e2f0256c99554dc01d5d236d9a2613", null ]
     ] ],
-    [ "__arm_2d_op_info_t.Info.LowLevelInterfaceIndex.__unnamed38__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelInterfaceIndex_8____unnamed38____", [
+    [ "__arm_2d_op_info_t.Info.LowLevelInterfaceIndex.__unnamed40__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelInterfaceIndex_8____unnamed40____", [
       [ "CopyOrigLike", "group__gKernel.html#a7f612e916edb730626c520af4d82fe98", null ],
       [ "FillOrigLike", "group__gKernel.html#a0cc8932eca451a82e4e5247aa234fb9d", null ]
     ] ],
-    [ "__arm_2d_op_info_t.Info.LowLevelInterfaceIndex.__unnamed40__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelInterfaceIndex_8____unnamed40____", [
+    [ "__arm_2d_op_info_t.Info.LowLevelInterfaceIndex.__unnamed42__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelInterfaceIndex_8____unnamed42____", [
       [ "TileProcessLike", "group__gKernel.html#a7978d3a17b01a1ab3f31acf1bd676a11", null ]
     ] ],
     [ "__arm_2d_op_info_t.Info.LowLevelIO", "group__gKernel.html#union____arm__2d__op__info__t_8Info_8LowLevelIO", [
       [ "IO", "group__gKernel.html#a831516650d9e1ad301d96668244c7093", null ]
     ] ],
-    [ "__arm_2d_op_info_t.Info.LowLevelIO.__unnamed42__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelIO_8____unnamed42____", [
+    [ "__arm_2d_op_info_t.Info.LowLevelIO.__unnamed44__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelIO_8____unnamed44____", [
       [ "ptCopyLike", "group__gKernel.html#a78caf4b9fec0a9a010be0a037d635f1f", null ],
       [ "ptFillLike", "group__gKernel.html#acedb0e487366d8e124e77657cddf021d", null ]
     ] ],
-    [ "__arm_2d_op_info_t.Info.LowLevelIO.__unnamed44__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelIO_8____unnamed44____", [
+    [ "__arm_2d_op_info_t.Info.LowLevelIO.__unnamed46__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelIO_8____unnamed46____", [
       [ "ptCopyOrigLike", "group__gKernel.html#a399c799507a0d599f40310af517ee752", null ],
       [ "ptFillOrigLike", "group__gKernel.html#af3203a6f198876164fe21b05540b51d0", null ]
     ] ],
-    [ "__arm_2d_op_info_t.Info.LowLevelIO.__unnamed46__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelIO_8____unnamed46____", [
+    [ "__arm_2d_op_info_t.Info.LowLevelIO.__unnamed48__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelIO_8____unnamed48____", [
       [ "ptTileProcessLike", "group__gKernel.html#aa643d17e74108930c55010a2b86e8e1b", null ]
     ] ],
-    [ "arm_2d_op_status_t.__unnamed48__", "group__gKernel.html#structarm__2d__op__status__t_8____unnamed48____", [
+    [ "arm_2d_op_status_t.__unnamed50__", "group__gKernel.html#structarm__2d__op__status__t_8____unnamed50____", [
       [ "u4SubTaskCount", "group__gKernel.html#a8baeec3b7715b9505d90e374936e1901", null ],
       [ "bIsBusy", "group__gKernel.html#affd00185d2d6d71145d204cf976fd14f", null ],
       [ "bIOError", "group__gKernel.html#ad7551e58ef98ea1d20198afc88febadb", null ],
       [ "bOpCpl", "group__gKernel.html#a52ac3218410df3b2407283060212090f", null ]
     ] ],
-    [ "arm_2d_op_core_t.__unnamed50__", "group__gKernel.html#structarm__2d__op__core__t_8____unnamed50____", null ],
-    [ "arm_2d_op_core_t.__unnamed50__.Preference", "group__gKernel.html#structarm__2d__op__core__t_8____unnamed50_____8Preference", null ],
+    [ "arm_2d_op_core_t.__unnamed52__", "group__gKernel.html#structarm__2d__op__core__t_8____unnamed52____", null ],
+    [ "arm_2d_op_core_t.__unnamed52__.Preference", "group__gKernel.html#structarm__2d__op__core__t_8____unnamed52_____8Preference", null ],
     [ "arm_2d_op_t.Target", "group__gKernel.html#structarm__2d__op__t_8Target", [
       [ "ptTile", "group__gKernel.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
       [ "ptRegion", "group__gKernel.html#a0cb326a2a86a2a0e46a3b1226fb97c65", null ]
@@ -331,12 +332,14 @@ var group__gKernel =
     [ "ARM_2D_M_COLOUR_SZ_8BIT", "group__gKernel.html#ga1682db336ec45448e7c1d46dbb7c553f", null ],
     [ "ARM_2D_M_COLOUR_SZ_16BIT", "group__gKernel.html#ga336788c5b714db75500cff64b9e4fe39", null ],
     [ "ARM_2D_M_COLOUR_SZ_32BIT", "group__gKernel.html#ga7682582b0d68539c3fa94dbfbb8118b3", null ],
+    [ "ARM_2D_M_COLOUR_SZ_24BIT", "group__gKernel.html#ga22cc6be052d0a57c0f5e2242ff211b83", null ],
     [ "ARM_2D_M_COLOUR_SZ_1BIT_msk", "group__gKernel.html#gaa0e2782b565844c471cf1f198ec56979", null ],
     [ "ARM_2D_M_COLOUR_SZ_2BIT_msk", "group__gKernel.html#ga2979dec2f537a0d6a78b665eced2b3c0", null ],
     [ "ARM_2D_M_COLOUR_SZ_4BIT_msk", "group__gKernel.html#ga47c48da11616accd1ae2d81871861fd4", null ],
     [ "ARM_2D_M_COLOUR_SZ_8BIT_msk", "group__gKernel.html#ga4b39d00cce49c2c8aa193b86f9e4e0c0", null ],
     [ "ARM_2D_M_COLOUR_SZ_16BIT_msk", "group__gKernel.html#gaa7d211247955d58dedc3146d539e4b05", null ],
     [ "ARM_2D_M_COLOUR_SZ_32BIT_msk", "group__gKernel.html#ga040556b8689612eec17479e02e3fc31a", null ],
+    [ "ARM_2D_M_COLOUR_SZ_24BIT_msk", "group__gKernel.html#ga0110e4ecd63d2b909b5c8f589ed33bd5", null ],
     [ "ARM_2D_M_COLOUR_SZ_msk", "group__gKernel.html#ga3875326bba890eb0f8680584648a5629", null ],
     [ "ARM_2D_M_COLOUR_LITTLE_ENDIAN", "group__gKernel.html#gadb8b1ef5ffb9a718e9fef246b09d7d23", null ],
     [ "ARM_2D_M_COLOUR_BIG_ENDIAN", "group__gKernel.html#ga3d104377895c4f2135c673c20aba6e8b", null ],
@@ -359,12 +362,14 @@ var group__gKernel =
     [ "ARM_2D_M_COLOUR_16BIT", "group__gKernel.html#ga441fd78aae18a38a35c0e5b1fe11dfed", null ],
     [ "ARM_2D_M_COLOUR_RGB16", "group__gKernel.html#ga999de09c65fb2efc2d63b83d6735a3a8", null ],
     [ "ARM_2D_M_COLOUR_RGB565", "group__gKernel.html#ga6c17184d6c9ec3c09440d8f9ea403bd2", null ],
+    [ "ARM_2D_M_COLOUR_24BIT", "group__gKernel.html#ga2252b154ddcfe91645037cc26ecc963a", null ],
+    [ "ARM_2D_M_COLOUR_RGB24", "group__gKernel.html#gaabc72a0634e14a16b8f8ace81fcc8583", null ],
     [ "ARM_2D_M_COLOUR_32BIT", "group__gKernel.html#gab994a5ebf8543874e1f4361fdac10b78", null ],
     [ "ARM_2D_M_COLOUR_RGB32", "group__gKernel.html#ga5e1cc9e403631fac643eef1fdce55162", null ],
     [ "ARM_2D_M_COLOUR_CCCN888", "group__gKernel.html#ga93a29eaa2ff25f126a31fc98ae0936dd", null ],
     [ "ARM_2D_M_COLOUR_CCCA8888", "group__gKernel.html#ga3ca0dfcee2069013ee9d2bc124f1bdd6", null ],
-    [ "ARM_2D_M_COLOUR_RGB888", "group__gKernel.html#ga41b5fa2855b78c5859acce3eaee6a4e2", null ],
-    [ "ARM_2D_M_COLOUR_BGRAA8888", "group__gKernel.html#ga198543c9f203094ff7cb668dbebcefea", null ],
+    [ "ARM_2D_M_COLOUR_RGBX888", "group__gKernel.html#ga56c196afdaca221b27729c94e176d21e", null ],
+    [ "ARM_2D_M_COLOUR_BGRA8888", "group__gKernel.html#ga599f23738f743f523415f4f907b7976a", null ],
     [ "ARM_2D_M_CHANNEL_8in32", "group__gKernel.html#gaf019de20bddf451404fcda5170a09fb4", null ],
     [ "ARM_2D_OP_INFO_PARAM_HAS_SOURCE", "group__gKernel.html#gaf4d64252a01f52b7f98447caddedd228", null ],
     [ "ARM_2D_OP_INFO_PARAM_HAS_TARGET", "group__gKernel.html#ga58e1483f5219fa8b051311b15fa90f3f", null ],
@@ -429,7 +434,8 @@ var group__gKernel =
       [ "ARM_2D_COLOUR_SZ_4BIT", "group__gKernel.html#gga06fc87d81c62e9abb8790b6e5713c55bac063df9d23d0a8dd6234003636dacf9e", null ],
       [ "ARM_2D_COLOUR_SZ_8BIT", "group__gKernel.html#gga06fc87d81c62e9abb8790b6e5713c55ba96378d24be8aabb704be24a9c06fad2b", null ],
       [ "ARM_2D_COLOUR_SZ_16BIT", "group__gKernel.html#gga06fc87d81c62e9abb8790b6e5713c55baa581a9deb872893773fe7c5f615f1771", null ],
-      [ "ARM_2D_COLOUR_SZ_32BIT", "group__gKernel.html#gga06fc87d81c62e9abb8790b6e5713c55bab73d9139521893b7600e21c84c091614", null ]
+      [ "ARM_2D_COLOUR_SZ_32BIT", "group__gKernel.html#gga06fc87d81c62e9abb8790b6e5713c55bab73d9139521893b7600e21c84c091614", null ],
+      [ "ARM_2D_COLOUR_SZ_24BIT", "group__gKernel.html#gga06fc87d81c62e9abb8790b6e5713c55bab0943aba100210ae3202c32fd14e6e15", null ]
     ] ],
     [ "arm_2d_mem_type_t", "group__gKernel.html#ga75983a418ea2c46866c20e2f1379c5cc", [
       [ "ARM_2D_MEM_TYPE_UNSPECIFIED", "group__gKernel.html#gga75983a418ea2c46866c20e2f1379c5ccac7f5e1b2ee0887e398840015ecd496c2", null ],
