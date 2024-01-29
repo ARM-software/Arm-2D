@@ -13,8 +13,8 @@ extern "C" {
 //
 // 虚拟屏幕设定参数,即需要一个什么样的屏幕
 //
-#if     __DISP0_CFG_ROTATE_SCREEN__ == __DISP0_SCREEN_ROTATE_90__\
-    ||  __DISP0_CFG_ROTATE_SCREEN__ == __DISP0_SCREEN_ROTATE_270__
+#if     __DISP0_CFG_ROTATE_SCREEN__ == ARM_SCREEN_ROTATE_90\
+    ||  __DISP0_CFG_ROTATE_SCREEN__ == ARM_SCREEN_ROTATE_270
 #   define VT_WIDTH           __DISP0_CFG_SCEEN_HEIGHT__
 #   define VT_HEIGHT          __DISP0_CFG_SCEEN_WIDTH__
 #else

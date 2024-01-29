@@ -83,6 +83,129 @@ static void __arm_2d_helper_dirty_region_pool_free(
                                             arm_2d_helper_pfb_t *ptThis,
                                             arm_2d_region_list_item_t *ptItem);
 
+/*!
+ * \brief rotate a given c8bit PFB for 90 degree
+ * \param[in] ptOrigin the original PFB
+ * \param[in] ptScratch A scratch PFB
+ * \param[in] ptScreenSize the screen size
+ * \return arm_2d_pfb_t * the output PFB
+ */
+static
+ARM_NONNULL(1,2,3)
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_c8bit( 
+                                            arm_2d_pfb_t *ptOrigin, 
+                                            arm_2d_pfb_t *ptScratch,
+                                            const arm_2d_size_t *ptScreenSize);
+/*!
+ * \brief rotate a given gray8 PFB for 180 degree
+ * \param[in] ptOrigin the original PFB
+ * \param[in] ptScratch A scratch PFB
+ * \param[in] ptScreenSize the screen size
+ * \return arm_2d_pfb_t * the output PFB
+ */
+static
+ARM_NONNULL(1,2,3)
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_gray8( 
+                                            arm_2d_pfb_t *ptOrigin, 
+                                            arm_2d_pfb_t *ptScratch,
+                                            const arm_2d_size_t *ptScreenSize);
+/*!
+ * \brief rotate a given gray8 PFB for 270 degree
+ * \param[in] ptOrigin the original PFB
+ * \param[in] ptScratch A scratch PFB
+ * \param[in] ptScreenSize the screen size
+ * \return arm_2d_pfb_t * the output PFB
+ */
+static
+ARM_NONNULL(1,2,3)
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate270_gray8( 
+                                            arm_2d_pfb_t *ptOrigin, 
+                                            arm_2d_pfb_t *ptScratch,
+                                            const arm_2d_size_t *ptScreenSize);
+
+/*!
+ * \brief rotate a given 16bit PFB for 90 degree
+ * \param[in] ptOrigin the original PFB
+ * \param[in] ptScratch A scratch PFB
+ * \param[in] ptScreenSize the screen size
+ * \return arm_2d_pfb_t * the output PFB
+ */
+static
+ARM_NONNULL(1,2,3)
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_rgb16( 
+                                            arm_2d_pfb_t *ptOrigin, 
+                                            arm_2d_pfb_t *ptScratch,
+                                            const arm_2d_size_t *ptScreenSize);
+
+/*!
+ * \brief rotate a given rgb565 PFB for 180 degree
+ * \param[in] ptOrigin the original PFB
+ * \param[in] ptScratch A scratch PFB
+ * \param[in] ptScreenSize the screen size
+ * \return arm_2d_pfb_t * the output PFB
+ */
+static
+ARM_NONNULL(1,2,3)
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_rgb565( 
+                                            arm_2d_pfb_t *ptOrigin, 
+                                            arm_2d_pfb_t *ptScratch,
+                                            const arm_2d_size_t *ptScreenSize);
+
+/*!
+ * \brief rotate a given rgb565 PFB for 270 degree
+ * \param[in] ptOrigin the original PFB
+ * \param[in] ptScratch A scratch PFB
+ * \param[in] ptScreenSize the screen size
+ * \return arm_2d_pfb_t * the output PFB
+ */
+static
+ARM_NONNULL(1,2,3)
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate270_rgb565( 
+                                            arm_2d_pfb_t *ptOrigin, 
+                                            arm_2d_pfb_t *ptScratch,
+                                            const arm_2d_size_t *ptScreenSize);
+
+/*!
+ * \brief rotate a given rgb32 PFB for 90 degree
+ * \param[in] ptOrigin the original PFB
+ * \param[in] ptScratch A scratch PFB
+ * \param[in] ptScreenSize the screen size
+ * \return arm_2d_pfb_t * the output PFB
+ */
+static
+ARM_NONNULL(1,2,3)
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_rgb32( 
+                                            arm_2d_pfb_t *ptOrigin, 
+                                            arm_2d_pfb_t *ptScratch,
+                                            const arm_2d_size_t *ptScreenSize);
+/*!
+ * \brief rotate a given cccn888 PFB for 180 degree
+ * \param[in] ptOrigin the original PFB
+ * \param[in] ptScratch A scratch PFB
+ * \param[in] ptScreenSize the screen size
+ * \return arm_2d_pfb_t * the output PFB
+ */
+static
+ARM_NONNULL(1,2,3)
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_cccn888( 
+                                            arm_2d_pfb_t *ptOrigin, 
+                                            arm_2d_pfb_t *ptScratch,
+                                            const arm_2d_size_t *ptScreenSize);
+
+/*!
+ * \brief rotate a given cccn888 PFB for 270 degree
+ * \param[in] ptOrigin the original PFB
+ * \param[in] ptScratch A scratch PFB
+ * \param[in] ptScreenSize the screen size
+ * \return arm_2d_pfb_t * the output PFB
+ */
+static
+ARM_NONNULL(1,2,3)
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate270_cccn888( 
+                                            arm_2d_pfb_t *ptOrigin, 
+                                            arm_2d_pfb_t *ptScratch,
+                                            const arm_2d_size_t *ptScreenSize);
+
 /*============================ IMPLEMENTATION ================================*/
 
 /*----------------------------------------------------------------------------*
@@ -594,35 +717,44 @@ void __arm_2d_helper_low_level_rendering(arm_2d_helper_pfb_t *ptThis)
         /* get a scratch PFB */
         arm_2d_pfb_t *ptScratchPFB 
             = __arm_2d_helper_pfb_new(&DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t);
+        arm_2d_pfb_t *ptOutput = this.Adapter.ptCurrent;
+        arm_2d_pfb_t *ptOldPFB = this.Adapter.ptCurrent;
+
         assert(NULL != ptScratchPFB);
 
         switch (this.tCFG.FrameBuffer.u4RotateScreen) {
             default:
             case ARM_SCREEN_NO_ROTATION:
+                /* this should not happen */
+                assert(false);
+                ptOldPFB = ptScratchPFB;
                 break;
             case ARM_SCREEN_ROTATE_90:
+
+                /* check colour format */
                 switch (tColourFormat.u3ColourSZ) {
                     case ARM_2D_M_COLOUR_SZ_8BIT:
-                        __arm_2d_helper_pfb_rotate90_c8bit(
-                            this.Adapter.ptCurrent, 
+                        ptOutput = __arm_2d_helper_pfb_rotate90_c8bit(
+                            ptOldPFB, 
                             ptScratchPFB, 
                             &this.tCFG.tDisplayArea.tSize);
                         break;
                     case ARM_2D_M_COLOUR_SZ_16BIT:
-                        __arm_2d_helper_pfb_rotate90_rgb16(
-                            this.Adapter.ptCurrent, 
+                        ptOutput = __arm_2d_helper_pfb_rotate90_rgb16(
+                            ptOldPFB, 
                             ptScratchPFB, 
                             &this.tCFG.tDisplayArea.tSize);
                         break;
                     case ARM_2D_M_COLOUR_SZ_32BIT:
-                        __arm_2d_helper_pfb_rotate90_rgb32(
-                            this.Adapter.ptCurrent, 
+                        ptOutput = __arm_2d_helper_pfb_rotate90_rgb32(
+                            ptOldPFB, 
                             ptScratchPFB, 
                             &this.tCFG.tDisplayArea.tSize);
                         break;
                     default:
                         /* unsupported */
                         assert(false);
+                        ptOldPFB = ptScratchPFB;
                         break;
                 }
                 break;
@@ -632,9 +764,11 @@ void __arm_2d_helper_low_level_rendering(arm_2d_helper_pfb_t *ptThis)
                 break;
         }
 
-        /* free scratch */
+        /* free the old PFB */
         __arm_2d_helper_pfb_free(   &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t, 
-                                    ptScratchPFB);
+                                    ptOldPFB);
+        /* points to the new output */
+        this.Adapter.ptCurrent = ptOutput;
     }
 
 
@@ -3407,6 +3541,8 @@ void __arm_2d_rotate_90_rgb32(  uint32_t * __restrict pwOrigin,
     }
 }
 
+static
+ARM_NONNULL(1,2,3)
 arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_c8bit(  arm_2d_pfb_t *ptOrigin, 
                                                     arm_2d_pfb_t *ptScratch,
                                                     const arm_2d_size_t *ptScreenSize)
@@ -3422,21 +3558,25 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_c8bit(  arm_2d_pfb_t *ptOrigin,
 
     __arm_2d_rotate_90_c8bit(pchOrigin, pchOutput, iWidth, iHeight, iHeight);
 
-    ptOrigin->tTile.tRegion.tSize.iWidth = iHeight;
-    ptOrigin->tTile.tRegion.tSize.iHeight = iWidth;
+    *ptScratch = *ptOrigin;
+    ptScratch->tTile.pchBuffer = (uint8_t *)pchOutput;
+    ptScratch->ptNext = NULL;
+
+    ptScratch->tTile.tRegion.tSize.iWidth = iHeight;
+    ptScratch->tTile.tRegion.tSize.iHeight = iWidth;
 
     arm_2d_location_t tNewLocation = {
         ptScreenSize->iHeight - (ptOrigin->tTile.tRegion.tLocation.iY + iHeight - 1) - 1,
         ptOrigin->tTile.tRegion.tLocation.iX,
     };
 
-    ptOrigin->tTile.tRegion.tLocation = tNewLocation;
-    ptOrigin->tTile.pchBuffer = pchOutput;
-    ptScratch->tTile.pchBuffer = pchOrigin;
+    ptScratch->tTile.tRegion.tLocation = tNewLocation;
 
-    return ptOrigin;
+    return ptScratch;
 }
 
+static
+ARM_NONNULL(1,2,3)
 arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_rgb16(  arm_2d_pfb_t *ptOrigin, 
                                                     arm_2d_pfb_t *ptScratch,
                                                     const arm_2d_size_t *ptScreenSize)
@@ -3452,21 +3592,25 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_rgb16(  arm_2d_pfb_t *ptOrigin,
 
     __arm_2d_rotate_90_rgb16(phwOrigin, phwOutput, iWidth, iHeight, iHeight);
 
-    ptOrigin->tTile.tRegion.tSize.iWidth = iHeight;
-    ptOrigin->tTile.tRegion.tSize.iHeight = iWidth;
+    *ptScratch = *ptOrigin;
+    ptScratch->tTile.phwBuffer = (uint16_t *)phwOutput;
+    ptScratch->ptNext = NULL;
+
+    ptScratch->tTile.tRegion.tSize.iWidth = iHeight;
+    ptScratch->tTile.tRegion.tSize.iHeight = iWidth;
 
     arm_2d_location_t tNewLocation = {
         ptScreenSize->iHeight - (ptOrigin->tTile.tRegion.tLocation.iY + iHeight - 1) - 1,
         ptOrigin->tTile.tRegion.tLocation.iX,
     };
 
-    ptOrigin->tTile.tRegion.tLocation = tNewLocation;
-    ptOrigin->tTile.phwBuffer = phwOutput;
-    ptScratch->tTile.phwBuffer = phwOrigin;
+    ptScratch->tTile.tRegion.tLocation = tNewLocation;
 
-    return ptOrigin;
+    return ptScratch;
 }
 
+static
+ARM_NONNULL(1,2,3)
 arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_rgb32(  arm_2d_pfb_t *ptOrigin, 
                                                     arm_2d_pfb_t *ptScratch,
                                                     const arm_2d_size_t *ptScreenSize)
@@ -3482,17 +3626,19 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_rgb32(  arm_2d_pfb_t *ptOrigin,
 
     __arm_2d_rotate_90_rgb32(pwOrigin, pwOutput, iWidth, iHeight, iHeight);
 
-    ptOrigin->tTile.tRegion.tSize.iWidth = iHeight;
-    ptOrigin->tTile.tRegion.tSize.iHeight = iWidth;
+    *ptScratch = *ptOrigin;
+    ptScratch->tTile.pwBuffer = (uint32_t *)pwOutput;
+    ptScratch->ptNext = NULL;
+
+    ptScratch->tTile.tRegion.tSize.iWidth = iHeight;
+    ptScratch->tTile.tRegion.tSize.iHeight = iWidth;
 
     arm_2d_location_t tNewLocation = {
         ptScreenSize->iHeight - (ptOrigin->tTile.tRegion.tLocation.iY + iHeight - 1) - 1,
         ptOrigin->tTile.tRegion.tLocation.iX,
     };
 
-    ptOrigin->tTile.tRegion.tLocation = tNewLocation;
-    ptOrigin->tTile.pwBuffer = pwOutput;
-    ptScratch->tTile.pwBuffer = pwOrigin;
+    ptScratch->tTile.tRegion.tLocation = tNewLocation;
 
-    return ptOrigin;
+    return ptScratch;
 }

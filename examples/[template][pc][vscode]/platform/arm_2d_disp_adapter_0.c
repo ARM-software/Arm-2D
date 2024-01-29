@@ -212,43 +212,6 @@ IMPL_PFB_ON_DRAW(__disp_adapter0_draw_navigation)
 }
 #endif
 
-static arm_2d_pfb_t * __rotate_screen(arm_2d_pfb_t *ptOrigin)
-{
-    /* get a scratch PFB */
-    arm_2d_pfb_t *ptScratchPFB 
-        = __arm_2d_helper_pfb_new(&DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t);
-    assert(NULL != ptScratchPFB);
-
-#if     __DISP0_CFG_COLOUR_DEPTH__ == 8
-    __arm_2d_helper_pfb_rotate90_c8bit(
-                        ptOrigin, 
-                        ptScratchPFB, 
-                        (const arm_2d_size_t[]){__DISP0_CFG_SCEEN_WIDTH__, 
-                                                __DISP0_CFG_SCEEN_HEIGHT__});
-#elif   __DISP0_CFG_COLOUR_DEPTH__ == 16
-    __arm_2d_helper_pfb_rotate90_rgb16(
-                        ptOrigin, 
-                        ptScratchPFB, 
-                        (const arm_2d_size_t[]){__DISP0_CFG_SCEEN_WIDTH__, 
-                                                __DISP0_CFG_SCEEN_HEIGHT__});
-#elif __DISP0_CFG_COLOUR_DEPTH__ == 32
-    __arm_2d_helper_pfb_rotate90_rgb32(
-                        ptOrigin, 
-                        ptScratchPFB, 
-                        (const arm_2d_size_t[]){__DISP0_CFG_SCEEN_WIDTH__, 
-                                                __DISP0_CFG_SCEEN_HEIGHT__});
-#else
-    /* unsupported color depth */
-    assert(false);
-#endif
-
-    /* free scratch */
-    __arm_2d_helper_pfb_free(   &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t, 
-                                ptScratchPFB);
-
-    return ptOrigin;
-}
-
 #if __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
 __WEAK
 IMPL_PFB_ON_LOW_LV_RENDERING(__disp_adapter0_pfb_render_handler)
@@ -468,7 +431,7 @@ static void __user_scene_player_init(void)
 #if     __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                          \
     &&  !__DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
         + 3 
-#elif __DISP0_CFG_ROTATE_SCREEN__ != __DISP0_SCREEN_NO_ROTATION__
+#else
         + (__DISP0_CFG_ROTATE_SCREEN__ > 0)
 #endif
         ,{

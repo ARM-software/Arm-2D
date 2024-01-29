@@ -157,13 +157,13 @@ extern "C" {
 #define __DISP0_SCREEN_ROTATE_270__     3
 
 // <o>Rotate the Screen
-//     <__DISP0_SCREEN_NO_ROTATION__=>    NO Rotate
-//     <__DISP0_SCREEN_ROTATE_90__=>    90 Degree
-//     <__DISP0_SCREEN_ROTATE_180__=>   180 Degree
-//     <__DISP0_SCREEN_ROTATE_270__=>   270 Degree
+//     <ARM_SCREEN_NO_ROTATION=>    NO Rotate
+//     <ARM_SCREEN_ROTATE_90=>    90 Degree
+//     <ARM_SCREEN_ROTATE_180=>   180 Degree
+//     <ARM_SCREEN_ROTATE_270=>   270 Degree
 // <i> Rotate the Screen for specified degrees.
 #ifndef __DISP0_CFG_ROTATE_SCREEN__
-#   define __DISP0_CFG_ROTATE_SCREEN__                             __DISP0_SCREEN_ROTATE_90__
+#   define __DISP0_CFG_ROTATE_SCREEN__                             ARM_SCREEN_ROTATE_90
 #endif
 
 // <q>Enable the helper service for Asynchronous Flushing
