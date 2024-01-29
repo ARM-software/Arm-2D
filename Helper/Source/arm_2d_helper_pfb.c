@@ -577,11 +577,22 @@ void __arm_2d_helper_low_level_rendering(arm_2d_helper_pfb_t *ptThis)
             + this.Adapter.tTargetRegion.tLocation.iY,
     };
 
-    if (this.tCFG.FrameBuffer.bSwapRGB16) {
+    
+    arm_2d_color_info_t tColourFormat = {
+        .u7ColourFormat = this.tCFG.FrameBuffer.u7ColourFormat,
+    };
+
+    /* swap the low and high byte for RGB565 and RGB16 */
+    if ((this.tCFG.FrameBuffer.bSwapRGB16)
+    &&  (tColourFormat.u3ColourSZ == ARM_2D_M_COLOUR_SZ_16BIT)) {
         arm_2d_helper_swap_rgb16( this.Adapter.ptCurrent->tTile.phwBuffer, 
                                     get_tile_buffer_pixel_count(
                                         this.Adapter.ptCurrent->tTile));
     }
+
+
+
+
 
     __arm_2d_helper_enqueue_pfb(ptThis);
 

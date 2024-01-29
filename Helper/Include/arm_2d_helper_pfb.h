@@ -512,6 +512,17 @@ typedef struct arm_2d_helper_render_evt_t {
 } arm_2d_helper_render_evt_t;
 
 
+/*!
+ * \brief the enumeration for screen rotation
+ * 
+ */
+enum {
+    ARM_SCREEN_NO_ROTATION,
+    ARM_SCREEN_ROTATE_0 = ARM_SCREEN_NO_ROTATION,
+    ARM_SCREEN_ROTATE_90,
+    ARM_SCREEN_ROTATE_180,
+    ARM_SCREEN_ROTATE_270,
+};
 
 /*!
  * \brief the enumeration for events
@@ -570,7 +581,8 @@ typedef struct arm_2d_helper_pfb_cfg_t {
         uint32_t       bDisableDynamicFPBSize           : 1;    //!< A flag to disable resize of the PFB block
         uint32_t       bSwapRGB16                       : 1;    //!< A flag to enable swapping high and low bytes of an RGB16 pixel
         uint32_t       bDebugDirtyRegions               : 1;    //!< A flag to show dirty regions on screen for debug
-        uint32_t                                        : 10;
+        uint32_t       u4RotateScreen                   : 2;    //!< screen rotation - 0: no rotation, 1: 90 degree, 2: 180 degree, 3: 270 degree
+        uint32_t                                        : 8;
         uint32_t       u3PixelWidthAlign                : 3;    //!< Pixel alignment in Width for dirty region (2^n)
         uint32_t       u3PixelHeightAlign               : 3;    //!< Pixel alignment in Height for dirty region (2^n)
         uint32_t       u4PoolReserve                    : 4;    //!< reserve specific number of PFB for other helper services

@@ -472,8 +472,7 @@ static void __user_scene_player_init(void)
 #if     __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                          \
     &&  !__DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
         + 3 
-#endif
-#if __DISP0_CFG_ROTATE_SCREEN__ != __DISP0_SCREEN_NO_ROTATION__
+#elif __DISP0_CFG_ROTATE_SCREEN__ != __DISP0_SCREEN_NO_ROTATION__
         + (__DISP0_CFG_ROTATE_SCREEN__ > 0)
 #endif
         ,{
@@ -491,6 +490,7 @@ static void __user_scene_player_init(void)
 #if __DISP0_CFG_DEBUG_DIRTY_REGIONS__
         .FrameBuffer.bDebugDirtyRegions = true,
 #endif
+        .FrameBuffer.u4RotateScreen = __DISP0_CFG_ROTATE_SCREEN__,
         .FrameBuffer.u3PixelWidthAlign = __DISP0_CFG_PFB_PIXEL_ALIGN_WIDTH__,
         .FrameBuffer.u3PixelHeightAlign = __DISP0_CFG_PFB_PIXEL_ALIGN_HEIGHT__,
 #if     __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                          \
