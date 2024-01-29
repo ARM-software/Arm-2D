@@ -269,15 +269,23 @@ In this version (ver1.1.6-dev)</h2>
 <li><b>Display Adapter Service for connecting LCD</b><ul>
 <li>Generic Partial Frame-buffer (PFB)<ul>
 <li>Easy to Use: transparent for applications</li>
-<li>No limitation on screen resolution **(See note)**</li>
-<li>No limitation on PFB size and shape (it could be a line or a rectangular with any size) **(See note)**</li>
+<li>No limitation on screen resolution **(See note 1)**</li>
+<li>Flexible in PFB size and shape (it could be a line or a rectangular with any size) **(See note 2)**</li>
 <li>Supports PFB alignment for both width and height. <blockquote class="doxtable">
-<p ><b>NOTE</b>: As long as the size is smaller than 32767 * 32767. </p>
+<p ><b>NOTE</b>:</p>
 </blockquote>
-<br  />
 </li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+<p >As long as the size is smaller than 32767 * 32767.</p>
+<ol type="1">
+<li>As long as the total pixel numebr is smaller than 16M pixels. </li>
+</ol>
+<p ><br  />
+</p><ul>
 <li>Supports <b>Dirty Regions</b> for refreshing specified areas only<ul>
 <li>Provides a debug mode for dirty regions</li>
 <li><b>[new]</b> Provides optimization for dirty regions to reduce the chances of refreshing overlapped areas.</li>
@@ -292,8 +300,7 @@ In this version (ver1.1.6-dev)</h2>
 </ul>
 </li>
 </ul>
-</li>
-<li><b>Transform</b> (i.e. rotation and scaling)<ul>
+<p ><b>Transform</b> (i.e. rotation and scaling)</p><ul>
 <li>With/Without Colour-keying</li>
 <li>Supports an optional <b>Opacity</b> ratio</li>
 <li>Supports Anti-Alias.<ul>
@@ -302,14 +309,12 @@ In this version (ver1.1.6-dev)</h2>
 </li>
 <li>Supports source masks</li>
 </ul>
-</li>
-<li><b>An Unified and User-Friendly Programmers' Model</b><ul>
+<p ><b>An Unified and User-Friendly Programmers' Model</b></p><ul>
 <li>APIs can be used in <b>Synchronous</b> manner ( <b>Classic Blocking-code</b> ) and/or <b>Asynchronous</b> manner ( <b>Event-Driven</b> )</li>
 <li>Supports both <b>bare-metal</b> and <b>RTOS</b> environments</li>
 <li>Ultra small memory footprint</li>
 </ul>
-</li>
-<li><b>Helper Services and Tools</b><ul>
+<p ><b>Helper Services and Tools</b></p><ul>
 <li><b>Timer Services</b><ul>
 <li>Timeout: <code>arm_2d_helper_is_time_out</code></li>
 <li>Time based functions:<ul>
@@ -349,11 +354,9 @@ In this version (ver1.1.6-dev)</h2>
 <li>A <code>img2c.py</code> for generating arm-2d resources from user specified images</li>
 <li>A <code>ttf2c.py</code> for generating user customized A1, A2, A4 and A8 fonts from an user specified TrueType Font</li>
 </ul>
-</li>
-<li><b>Ready and Welcome 3rd party adoption</b><ul>
+<p ><b>Ready and Welcome 3rd party adoption</b></p>
+<ul>
 <li>Successful story: accelerating LVGL as soft-GPU when Helium is ready</li>
-</ul>
-</li>
 </ul>
 <h2><a class="anchor" id="autotoc_md7"></a>
 New Features Planned in the Future</h2>
