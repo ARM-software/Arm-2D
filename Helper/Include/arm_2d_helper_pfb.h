@@ -138,7 +138,7 @@ extern "C" {
             },                                                                  \
             .FrameBuffer.u24BufferSize = sizeof(s_tPFBs[0].tBuffer),            \
             .FrameBuffer.u7ColourFormat = (__COLOUR_FORMAT),                    \
-            .FrameBuffer.hwPFBNum = dimof(s_tPFBs),                             \
+            .FrameBuffer.u8PFBNum = dimof(s_tPFBs),                             \
             .Dependency =                                                       \
             __VA_ARGS__                                                         \
         };                                                                      \
@@ -565,15 +565,15 @@ typedef struct arm_2d_helper_pfb_cfg_t {
         uint32_t       u24BufferSize                    : 24;   //!< the buffer size
         uint32_t       u7ColourFormat                   : 7 ;   //!< the colour format
         uint32_t                                        : 1 ;   //!< reserved
-        uint16_t       hwPFBNum;                                //!< the number of PFB
-        uint16_t       bDoNOTUpdateDefaultFrameBuffer   : 1;    //!< A flag to disable automatically default-framebuffer-registration
-        uint16_t       bDisableDynamicFPBSize           : 1;    //!< A flag to disable resize of the PFB block
-        uint16_t       bSwapRGB16                       : 1;    //!< A flag to enable swapping high and low bytes of an RGB16 pixel
-        uint16_t       bDebugDirtyRegions               : 1;    //!< A flag to show dirty regions on screen for debug
-        uint16_t                                        : 2;
-        uint16_t       u3PixelWidthAlign                : 3;    //!< Pixel alignment in Width for dirty region (2^n)
-        uint16_t       u3PixelHeightAlign               : 3;    //!< Pixel alignment in Height for dirty region (2^n)
-        uint16_t       u4PoolReserve                    : 4;    //!< reserve specific number of PFB for other helper services
+        uint32_t       u8PFBNum                         : 8;    //!< the number of PFB
+        uint32_t       bDoNOTUpdateDefaultFrameBuffer   : 1;    //!< A flag to disable automatically default-framebuffer-registration
+        uint32_t       bDisableDynamicFPBSize           : 1;    //!< A flag to disable resize of the PFB block
+        uint32_t       bSwapRGB16                       : 1;    //!< A flag to enable swapping high and low bytes of an RGB16 pixel
+        uint32_t       bDebugDirtyRegions               : 1;    //!< A flag to show dirty regions on screen for debug
+        uint32_t                                        : 10;
+        uint32_t       u3PixelWidthAlign                : 3;    //!< Pixel alignment in Width for dirty region (2^n)
+        uint32_t       u3PixelHeightAlign               : 3;    //!< Pixel alignment in Height for dirty region (2^n)
+        uint32_t       u4PoolReserve                    : 4;    //!< reserve specific number of PFB for other helper services
 
     } FrameBuffer;                                              //!< frame buffer context
 

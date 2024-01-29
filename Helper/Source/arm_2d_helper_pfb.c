@@ -292,7 +292,7 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
 
     // perform validation
     do {
-        int_fast16_t n = this.tCFG.FrameBuffer.hwPFBNum;
+        uint_fast8_t n = this.tCFG.FrameBuffer.u8PFBNum;
         arm_2d_pfb_t *ptItem = this.tCFG.FrameBuffer.ptPFBs;
         uint32_t wBufferSize = this.tCFG.FrameBuffer.u24BufferSize;
         arm_2d_color_info_t tColourFormat = {
