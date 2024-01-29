@@ -311,7 +311,8 @@ enum {
     ARM_2D_COLOUR_SZ_4BIT = 2,            //!< 16 colours or 16 gray-levels
     ARM_2D_COLOUR_SZ_8BIT = 3,            //!< 256 colours
     ARM_2D_COLOUR_SZ_16BIT = 4,           //!< 16bits
-    ARM_2D_COLOUR_SZ_32BIT = 5,           //!< true colour
+    ARM_2D_COLOUR_SZ_32BIT = 5,           //!< true colour (32bit)
+    ARM_2D_COLOUR_SZ_24BIT = 6,           //!< true colour (24bit)
 
     ARM_2D_COLOUR_SZ_1BIT_msk   =   ARM_2D_COLOUR_SZ_1BIT << 1,
     ARM_2D_COLOUR_SZ_2BIT_msk   =   ARM_2D_COLOUR_SZ_2BIT << 1,
@@ -319,6 +320,7 @@ enum {
     ARM_2D_COLOUR_SZ_8BIT_msk   =   ARM_2D_COLOUR_SZ_8BIT << 1,
     ARM_2D_COLOUR_SZ_16BIT_msk  =   ARM_2D_COLOUR_SZ_16BIT<< 1,
     ARM_2D_COLOUR_SZ_32BIT_msk  =   ARM_2D_COLOUR_SZ_32BIT<< 1,
+    ARM_2D_COLOUR_SZ_24BIT_msk  =   ARM_2D_COLOUR_SZ_24BIT<< 1,
     ARM_2D_COLOUR_SZ_msk        =   (0x07 << 1),
 
     ARM_2D_COLOUR_LITTLE_ENDIAN       = 0,
@@ -344,6 +346,7 @@ enum {
 #define ARM_2D_M_COLOUR_SZ_8BIT             3       //!< 256 colours
 #define ARM_2D_M_COLOUR_SZ_16BIT            4       //!< 16bits
 #define ARM_2D_M_COLOUR_SZ_32BIT            5       //!< true colour
+#define ARM_2D_M_COLOUR_SZ_24BIT            6       //!< true colour
 
 #define ARM_2D_M_COLOUR_SZ_1BIT_msk         (ARM_2D_M_COLOUR_SZ_1BIT << 1)      //!< bitmask for 1bit colour formats
 #define ARM_2D_M_COLOUR_SZ_2BIT_msk         (ARM_2D_M_COLOUR_SZ_2BIT << 1)      //!< bitmask for 2bit colour formats
@@ -351,6 +354,7 @@ enum {
 #define ARM_2D_M_COLOUR_SZ_8BIT_msk         (ARM_2D_M_COLOUR_SZ_8BIT << 1)      //!< bitmask for 8bit colour formats
 #define ARM_2D_M_COLOUR_SZ_16BIT_msk        (ARM_2D_M_COLOUR_SZ_16BIT<< 1)      //!< bitmask for 16bit colour formats
 #define ARM_2D_M_COLOUR_SZ_32BIT_msk        (ARM_2D_M_COLOUR_SZ_32BIT<< 1)      //!< bitmask for 32bit colour formats
+#define ARM_2D_M_COLOUR_SZ_24BIT_msk        (ARM_2D_M_COLOUR_SZ_24BIT<< 1)      //!< bitmask for 24bit colour formats
 #define ARM_2D_M_COLOUR_SZ_msk              (0x07 << 1),                        //!< bitmask for the SZ bitfield
 
 #define ARM_2D_M_COLOUR_LITTLE_ENDIAN       0       //!< pixels are stored in little endian
@@ -395,7 +399,10 @@ enum {
     ARM_2D_COLOUR_RGB565_BE   =   ARM_2D_COLOUR_SZ_16BIT_msk        |
                                   ARM_2D_COLOUR_BIG_ENDIAN_msk      ,
  */
- 
+
+    ARM_2D_COLOUR_24BIT       =   ARM_2D_COLOUR_SZ_24BIT_msk        ,   /* not supported yet */
+    ARM_2D_COLOUR_RGB24       =   ARM_2D_COLOUR_SZ_24BIT_msk        ,   /* not supported yet */
+
     ARM_2D_COLOUR_32BIT       =   ARM_2D_COLOUR_SZ_32BIT_msk        ,
     ARM_2D_COLOUR_RGB32       =   ARM_2D_COLOUR_SZ_32BIT_msk        ,
 
@@ -413,6 +420,7 @@ enum {
                                   ARM_2D_COLOUR_HAS_ALPHA_msk       |
                                   ARM_2D_COLOUR_BIG_ENDIAN_msk      ,
 */
+
     ARM_2D_CHANNEL_8in32      =   ARM_2D_COLOUR_SZ_32BIT_msk        |
                                   ARM_2D_COLOUR_HAS_ALPHA_msk       |
                                   ARM_2D_COLOUR_VARIANT_msk   ,
@@ -438,7 +446,10 @@ enum {
 #define ARM_2D_M_COLOUR_RGB565_BE   (   ARM_2D_M_COLOUR_SZ_16BIT_msk            \
                                     |   ARM_2D_M_COLOUR_BIG_ENDIAN_msk          )
  */
- 
+
+#define ARM_2D_M_COLOUR_24BIT       ARM_2D_M_COLOUR_SZ_24BIT_msk                //!< macro for the generic 24bit colour formats
+#define ARM_2D_M_COLOUR_RGB24       ARM_2D_M_COLOUR_SZ_24BIT_msk                //!< macro for the generic 24bit colour formats
+
 #define ARM_2D_M_COLOUR_32BIT       ARM_2D_M_COLOUR_SZ_32BIT_msk                //!< macro for the generic 32bit colour formats
 #define ARM_2D_M_COLOUR_RGB32       ARM_2D_M_COLOUR_SZ_32BIT_msk                //!< macro for the generic 32bit colour formats
 
@@ -448,8 +459,8 @@ enum {
 #define ARM_2D_M_COLOUR_CCCA8888    (   ARM_2D_M_COLOUR_SZ_32BIT_msk            \
                                     |   ARM_2D_M_COLOUR_HAS_ALPHA_msk)
 
-#define ARM_2D_M_COLOUR_RGB888      ARM_2D_M_COLOUR_CCCN888                     //!< macro for the RGB888 (BGRN8888)
-#define ARM_2D_M_COLOUR_BGRAA8888   ARM_2D_M_COLOUR_CCCA8888                    //!< macro for the BGRA8888
+#define ARM_2D_M_COLOUR_RGBX888     ARM_2D_M_COLOUR_CCCN888                     //!< macro for the RGB888 (BGRN8888)
+#define ARM_2D_M_COLOUR_BGRA8888    ARM_2D_M_COLOUR_CCCA8888                    //!< macro for the BGRA8888
 
 /* not supported yet
 #define ARM_2D_M_COLOUR_NCCC888     (   ARM_2D_M_COLOUR_RGB32                   \
@@ -469,10 +480,15 @@ enum {
  */
 typedef union {
     struct {
-        uint8_t bHasAlpha  : 1;     //!< whether the target colour has alpha channel
-        uint8_t u3ColourSZ : 3;     //!< the size of the colour
-        uint8_t bBigEndian : 1;     //!< whether the colour is stored in big endian
-        uint8_t u3Variant  : 3;
+        uint8_t bHasAlpha       : 1;     //!< whether the target colour has alpha channel
+        uint8_t u3ColourSZ      : 3;     //!< the size of the colour
+        uint8_t bBigEndian      : 1;     //!< whether the colour is stored in big endian
+        uint8_t u2Variant       : 2;
+        uint8_t                 : 1;
+    };
+    struct {
+        uint8_t u7ColourFormat  : 7;
+        uint8_t                 : 1;
     };
     uint8_t chScheme;
 } arm_2d_color_info_t;

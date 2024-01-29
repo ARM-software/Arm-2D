@@ -72,6 +72,7 @@
 #   endif
 #endif
 
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -463,6 +464,7 @@ static void __user_scene_player_init(void)
         __DISP0_CFG_SCEEN_WIDTH__,                                     //!< screen width
         __DISP0_CFG_SCEEN_HEIGHT__,                                    //!< screen height
         COLOUR_INT,                                                    //!< colour date type
+        __DISP0_COLOUR_FORMAT__,                                       //!< colour format
         __DISP0_CFG_PFB_BLOCK_WIDTH__,                                 //!< PFB block width
         __DISP0_CFG_PFB_BLOCK_HEIGHT__,                                //!< PFB block height
         __DISP0_CFG_PFB_HEAP_SIZE__                                    //!< number of PFB in the PFB pool

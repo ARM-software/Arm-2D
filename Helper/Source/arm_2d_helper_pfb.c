@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        28. Jan 2024
- * $Revision:    V.1.8.0
+ * $Date:        29. Jan 2024
+ * $Revision:    V.1.8.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -294,7 +294,7 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
     do {
         int_fast16_t n = this.tCFG.FrameBuffer.hwPFBNum;
         arm_2d_pfb_t *ptItem = this.tCFG.FrameBuffer.ptPFBs;
-        uint32_t wBufferSize = this.tCFG.FrameBuffer.wBufferSize;
+        uint32_t wBufferSize = this.tCFG.FrameBuffer.u24BufferSize;
         
         // handle alignments
         wBufferSize += __alignof__(arm_2d_pfb_t) - 1;
@@ -304,7 +304,7 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
             return ARM_2D_ERR_MISSING_PARAM;
         } else if ( (0 == this.tCFG.FrameBuffer.tFrameSize.iHeight)
                  || (0 == this.tCFG.FrameBuffer.tFrameSize.iWidth)
-                 || (0 == this.tCFG.FrameBuffer.wBufferSize)) {
+                 || (0 == wBufferSize)) {
             return ARM_2D_ERR_INVALID_PARAM;
         }
         

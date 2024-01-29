@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        28. Jan 2024
- * $Revision:    V.1.8.0
+ * $Date:        29. Jan 2024
+ * $Revision:    V.1.8.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -65,6 +65,8 @@ extern "C" {
  * \param[in] __SCREEN_HEIGHT the hight of the screen
  * \param[in] __PIXEL_TYPE the integer type of the pixel, i.e. uint8_t, uint16_t,
  *                         uint32_t
+ * \param[in] __COLOUR_FORMAT the screen colour format, i.e. ARM_2D_COLOUR_CCCN888,
+ *                         ARM_2D_COLOUR_RGB565 etc.
  * \param[in] __WIDTH the width of the PFB block
  * \param[in] __HEIGHT the height of the PFB block
  * \note For the same number of pixels in a PFB block, please priority the width
@@ -83,6 +85,7 @@ extern "C" {
         __GLCD_CFG_SCEEN_WIDTH__,       // screen width
         __GLCD_CFG_SCEEN_HEIGHT__,      // screen height
         uint16_t,                       // colour date type
+        ARM_2D_COLOUR_RGB565,           // colour format
         240,                            // PFB block width
         1,                              // PFB block height
         1,                              // number of PFB in the PFB pool
@@ -108,6 +111,7 @@ extern "C" {
                                 __SCREEN_WIDTH, /* Screen width */              \
                                 __SCREEN_HEIGHT,/* Screen height */             \
                                 __PIXEL_TYPE,   /* The type of the pixels */    \
+                                __COLOUR_FORMAT,/* the colour format */         \
                                 __PFB_WIDTH,    /* The width of the PFB block */\
                                 __PFB_HEIGHT,   /* The height of the PFB block*/\
                                 __PFB_NUM,      /* Block count in the PFB pool*/\
@@ -132,7 +136,8 @@ extern "C" {
                 .iWidth = (__PFB_WIDTH),                                        \
                 .iHeight = (__PFB_HEIGHT),                                      \
             },                                                                  \
-            .FrameBuffer.wBufferSize = sizeof(s_tPFBs[0].tBuffer),              \
+            .FrameBuffer.u24BufferSize = sizeof(s_tPFBs[0].tBuffer),            \
+            .FrameBuffer.u7ColourFormat = (__COLOUR_FORMAT),                    \
             .FrameBuffer.hwPFBNum = dimof(s_tPFBs),                             \
             .Dependency =                                                       \
             __VA_ARGS__                                                         \
@@ -223,6 +228,8 @@ extern "C" {
  * \param[in] __SCREEN_HEIGHT the hight of the screen
  * \param[in] __PIXEL_TYPE the integer type of the pixel, i.e. uint8_t, uint16_t,
  *                         uint32_t
+ * \param[in] __COLOUR_FORMAT the screen colour format, i.e. ARM_2D_COLOUR_CCCN888,
+ *                         ARM_2D_COLOUR_RGB565 etc.
  * \param[in] __WIDTH the width of the PFB block
  * \param[in] __HEIGHT the height of the PFB block
  * \note For the same number of pixels in a PFB block, please priority the width
@@ -241,6 +248,7 @@ extern "C" {
         __GLCD_CFG_SCEEN_WIDTH__,       // screen width
         __GLCD_CFG_SCEEN_HEIGHT__,      // screen height
         uint16_t,                       // colour date type
+        ARM_2D_COLOUR_RGB565,           // colour format
         240,                            // PFB block width
         1,                              // PFB block height
         1,                              // number of PFB in the PFB pool
@@ -266,6 +274,7 @@ extern "C" {
                                 __SCREEN_WIDTH,                                 \
                                 __SCREEN_HEIGHT,                                \
                                 __PIXEL_TYPE,                                   \
+                                __COLOUR_FORMAT,                                \
                                 __WIDTH,                                        \
                                 __HEIGHT,                                       \
                                 __PFB_NUM,                                      \
@@ -276,6 +285,7 @@ extern "C" {
                                 __SCREEN_WIDTH,                                 \
                                 __SCREEN_HEIGHT,                                \
                                 __PIXEL_TYPE,                                   \
+                                __COLOUR_FORMAT,                                \
                                 __WIDTH,                                        \
                                 __HEIGHT,                                       \
                                 __PFB_NUM,                                      \
@@ -458,7 +468,7 @@ typedef struct arm_2d_pfb_t {
     arm_2d_helper_pfb_t *ptPFBHelper;                                           //!< the pfb helper service current PFB block comes from
     arm_2d_tile_t tTile;                                                        //!< descriptor
     uint32_t u24Size                : 24;
-    uint32_t                        : 7;
+    uint32_t u7ColourFormat         : 7;                                        //!< colour format
     uint32_t bIsNewFrame            : 1;                                        //!< a flag to indicate the starting of a frame
 }arm_2d_pfb_t;
 
@@ -552,7 +562,9 @@ typedef struct arm_2d_helper_pfb_cfg_t {
     struct {
         arm_2d_pfb_t  *ptPFBs;                                  //!< PFB blocks for the internal PFB pool
         arm_2d_size_t  tFrameSize;                              //!< the size of the frame
-        uint32_t       wBufferSize;                             //!< the buffer size
+        uint32_t       u24BufferSize                    : 24;   //!< the buffer size
+        uint32_t       u7ColourFormat                   : 7 ;   //!< the colour format
+        uint32_t                                        : 1 ;   //!< reserved
         uint16_t       hwPFBNum;                                //!< the number of PFB
         uint16_t       bDoNOTUpdateDefaultFrameBuffer   : 1;    //!< A flag to disable automatically default-framebuffer-registration
         uint16_t       bDisableDynamicFPBSize           : 1;    //!< A flag to disable resize of the PFB block

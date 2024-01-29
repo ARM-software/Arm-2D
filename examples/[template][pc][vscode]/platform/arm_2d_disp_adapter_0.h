@@ -57,14 +57,14 @@ extern "C" {
 // <i> The width of your screen
 // <i> Default: 320
 #ifndef __DISP0_CFG_SCEEN_WIDTH__
-#   define __DISP0_CFG_SCEEN_WIDTH__                               800
+#   define __DISP0_CFG_SCEEN_WIDTH__                               480
 #endif
 
 // <o>Height of the screen <8-32767>
 // <i> The height of your screen
 // <i> Default: 240
 #ifndef __DISP0_CFG_SCEEN_HEIGHT__
-#   define __DISP0_CFG_SCEEN_HEIGHT__                              600
+#   define __DISP0_CFG_SCEEN_HEIGHT__                              276
 #endif
 
 // <o>Width of the PFB block
@@ -163,7 +163,7 @@ extern "C" {
 //     <__DISP0_SCREEN_ROTATE_270__=>   270 Degree
 // <i> Rotate the Screen for specified degrees.
 #ifndef __DISP0_CFG_ROTATE_SCREEN__
-#   define __DISP0_CFG_ROTATE_SCREEN__                             __DISP0_SCREEN_NO_ROTATION__
+#   define __DISP0_CFG_ROTATE_SCREEN__                             __DISP0_SCREEN_ROTATE_90__
 #endif
 
 // <q>Enable the helper service for Asynchronous Flushing
@@ -205,6 +205,16 @@ extern "C" {
 #endif
 // <<< end of configuration section >>>
 
+
+#ifndef __DISP0_COLOUR_FORMAT__
+#   if      __DISP0_CFG_COLOUR_DEPTH__ == 8
+#       define __DISP0_COLOUR_FORMAT__  ARM_2D_COLOUR_GRAY8
+#   elif    __DISP0_CFG_COLOUR_DEPTH__ == 16
+#       define __DISP0_COLOUR_FORMAT__  ARM_2D_COLOUR_RGB565
+#   elif    __DISP0_CFG_COLOUR_DEPTH__ == 32
+#       define __DISP0_COLOUR_FORMAT__  ARM_2D_COLOUR_CCCN888
+#   endif
+#endif
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
