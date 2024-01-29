@@ -151,11 +151,6 @@ extern "C" {
 #   define __DISP0_CFG_SWAP_RGB16_HIGH_AND_LOW_BYTES__             0
 #endif
 
-#define __DISP0_SCREEN_NO_ROTATION__    0
-#define __DISP0_SCREEN_ROTATE_90__      1
-#define __DISP0_SCREEN_ROTATE_180__     2
-#define __DISP0_SCREEN_ROTATE_270__     3
-
 // <o>Rotate the Screen
 //     <ARM_SCREEN_NO_ROTATION=>    NO Rotate
 //     <ARM_SCREEN_ROTATE_90=>    90 Degree
