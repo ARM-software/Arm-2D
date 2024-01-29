@@ -21,8 +21,8 @@
  * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        24. Jan 2024
- * $Revision:    V.1.2.1
+ * $Date:        29. Jan 2024
+ * $Revision:    V.1.2.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
