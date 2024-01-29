@@ -2333,55 +2333,55 @@ u7ColourFormat: 7</td>
 <td class="fielddoc">
 the colour format </td></tr>
 <tr><td class="fieldtype">
-<a id="a75594dcac11af071a52375d4f16427bd" name="a75594dcac11af071a52375d4f16427bd"></a>uint16_t</td>
+<a id="a26ab328c65e4015c58e21c63186427e6" name="a26ab328c65e4015c58e21c63186427e6"></a>uint32_t</td>
 <td class="fieldname">
-hwPFBNum</td>
+u8PFBNum: 8</td>
 <td class="fielddoc">
 the number of PFB </td></tr>
 <tr><td class="fieldtype">
-<a id="a506e5cc591a5b598b60a4bbac83b5415" name="a506e5cc591a5b598b60a4bbac83b5415"></a>uint16_t</td>
+<a id="a506e5cc591a5b598b60a4bbac83b5415" name="a506e5cc591a5b598b60a4bbac83b5415"></a>uint32_t</td>
 <td class="fieldname">
 bDoNOTUpdateDefaultFrameBuffer: 1</td>
 <td class="fielddoc">
 A flag to disable automatically default-framebuffer-registration. </td></tr>
 <tr><td class="fieldtype">
-<a id="a3491f099ff99db25de694b559954bd68" name="a3491f099ff99db25de694b559954bd68"></a>uint16_t</td>
+<a id="a3491f099ff99db25de694b559954bd68" name="a3491f099ff99db25de694b559954bd68"></a>uint32_t</td>
 <td class="fieldname">
 bDisableDynamicFPBSize: 1</td>
 <td class="fielddoc">
 A flag to disable resize of the PFB block. </td></tr>
 <tr><td class="fieldtype">
-<a id="a545d827276ad405ea34db579f2ef9e2c" name="a545d827276ad405ea34db579f2ef9e2c"></a>uint16_t</td>
+<a id="a545d827276ad405ea34db579f2ef9e2c" name="a545d827276ad405ea34db579f2ef9e2c"></a>uint32_t</td>
 <td class="fieldname">
 bSwapRGB16: 1</td>
 <td class="fielddoc">
 A flag to enable swapping high and low bytes of an RGB16 pixel. </td></tr>
 <tr><td class="fieldtype">
-<a id="ad94e55fd91058d326dc2cf338ac34258" name="ad94e55fd91058d326dc2cf338ac34258"></a>uint16_t</td>
+<a id="ad94e55fd91058d326dc2cf338ac34258" name="ad94e55fd91058d326dc2cf338ac34258"></a>uint32_t</td>
 <td class="fieldname">
 bDebugDirtyRegions: 1</td>
 <td class="fielddoc">
 A flag to show dirty regions on screen for debug. </td></tr>
 <tr><td class="fieldtype">
-<a id="abb67792e94e88254ca5afecf7c26c912" name="abb67792e94e88254ca5afecf7c26c912"></a>uint16_t</td>
+<a id="abb67792e94e88254ca5afecf7c26c912" name="abb67792e94e88254ca5afecf7c26c912"></a>uint32_t</td>
 <td class="fieldname">
-__pad1__: 2</td>
+__pad1__: 10</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a66627248877a7be4a40fe181d326b7ea" name="a66627248877a7be4a40fe181d326b7ea"></a>uint16_t</td>
+<a id="a66627248877a7be4a40fe181d326b7ea" name="a66627248877a7be4a40fe181d326b7ea"></a>uint32_t</td>
 <td class="fieldname">
 u3PixelWidthAlign: 3</td>
 <td class="fielddoc">
 Pixel alignment in Width for dirty region (2^n) </td></tr>
 <tr><td class="fieldtype">
-<a id="a46b5090428aa1c20834ca4f50c9fd1ba" name="a46b5090428aa1c20834ca4f50c9fd1ba"></a>uint16_t</td>
+<a id="a46b5090428aa1c20834ca4f50c9fd1ba" name="a46b5090428aa1c20834ca4f50c9fd1ba"></a>uint32_t</td>
 <td class="fieldname">
 u3PixelHeightAlign: 3</td>
 <td class="fielddoc">
 Pixel alignment in Height for dirty region (2^n) </td></tr>
 <tr><td class="fieldtype">
-<a id="a430f59062291820e08b2cf816d7ef490" name="a430f59062291820e08b2cf816d7ef490"></a>uint16_t</td>
+<a id="a430f59062291820e08b2cf816d7ef490" name="a430f59062291820e08b2cf816d7ef490"></a>uint32_t</td>
 <td class="fieldname">
 u4PoolReserve: 4</td>
 <td class="fielddoc">
@@ -3182,7 +3182,7 @@ fOP</td>
 <div class="line">            },                                                                  \</div>
 <div class="line">            .FrameBuffer.u24BufferSize = <span class="keyword">sizeof</span>(s_tPFBs[0].tBuffer),            \</div>
 <div class="line">            .FrameBuffer.u7ColourFormat = (__COLOUR_FORMAT),                    \</div>
-<div class="line">            .FrameBuffer.hwPFBNum = <a class="code hl_define" href="group__gKernel.html#ga7b6c484887a402bba1af11b457264553" title="get the number of items in an given array">dimof</a>(s_tPFBs),                             \</div>
+<div class="line">            .FrameBuffer.u8PFBNum = <a class="code hl_define" href="group__gKernel.html#ga7b6c484887a402bba1af11b457264553" title="get the number of items in an given array">dimof</a>(s_tPFBs),                             \</div>
 <div class="line">            .Dependency =                                                       \</div>
 <div class="line">            __VA_ARGS__                                                         \</div>
 <div class="line">        };                                                                      <a class="code hl_function" href="group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99" title="initialize pfb helper service">\</a></div>

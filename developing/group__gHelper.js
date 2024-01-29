@@ -109,7 +109,7 @@ var group__gHelper =
       [ "tFrameSize", "group__gHelper.html#a3b6ffb221416cc974d254f474a88bb0d", null ],
       [ "u24BufferSize", "group__gHelper.html#a1e1257725564ed895ff82ac0b65ab918", null ],
       [ "u7ColourFormat", "group__gHelper.html#a25a30f7e12432aabb431448785012826", null ],
-      [ "hwPFBNum", "group__gHelper.html#a75594dcac11af071a52375d4f16427bd", null ],
+      [ "u8PFBNum", "group__gHelper.html#a26ab328c65e4015c58e21c63186427e6", null ],
       [ "bDoNOTUpdateDefaultFrameBuffer", "group__gHelper.html#a506e5cc591a5b598b60a4bbac83b5415", null ],
       [ "bDisableDynamicFPBSize", "group__gHelper.html#a3491f099ff99db25de694b559954bd68", null ],
       [ "bSwapRGB16", "group__gHelper.html#a545d827276ad405ea34db579f2ef9e2c", null ],
