@@ -590,7 +590,52 @@ void __arm_2d_helper_low_level_rendering(arm_2d_helper_pfb_t *ptThis)
                                         this.Adapter.ptCurrent->tTile));
     }
 
+    if (this.tCFG.FrameBuffer.u4RotateScreen) {
+        /* get a scratch PFB */
+        arm_2d_pfb_t *ptScratchPFB 
+            = __arm_2d_helper_pfb_new(&DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t);
+        assert(NULL != ptScratchPFB);
 
+        switch (this.tCFG.FrameBuffer.u4RotateScreen) {
+            default:
+            case ARM_SCREEN_NO_ROTATION:
+                break;
+            case ARM_SCREEN_ROTATE_90:
+                switch (tColourFormat.u3ColourSZ) {
+                    case ARM_2D_M_COLOUR_SZ_8BIT:
+                        __arm_2d_helper_pfb_rotate90_c8bit(
+                            this.Adapter.ptCurrent, 
+                            ptScratchPFB, 
+                            &this.tCFG.tDisplayArea.tSize);
+                        break;
+                    case ARM_2D_M_COLOUR_SZ_16BIT:
+                        __arm_2d_helper_pfb_rotate90_rgb16(
+                            this.Adapter.ptCurrent, 
+                            ptScratchPFB, 
+                            &this.tCFG.tDisplayArea.tSize);
+                        break;
+                    case ARM_2D_M_COLOUR_SZ_32BIT:
+                        __arm_2d_helper_pfb_rotate90_rgb32(
+                            this.Adapter.ptCurrent, 
+                            ptScratchPFB, 
+                            &this.tCFG.tDisplayArea.tSize);
+                        break;
+                    default:
+                        /* unsupported */
+                        assert(false);
+                        break;
+                }
+                break;
+            case ARM_SCREEN_ROTATE_180:
+                break;
+            case ARM_SCREEN_ROTATE_270:
+                break;
+        }
+
+        /* free scratch */
+        __arm_2d_helper_pfb_free(   &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t, 
+                                    ptScratchPFB);
+    }
 
 
 
@@ -3303,9 +3348,10 @@ __WEAK
 void __arm_2d_rotate_90_c8bit(  uint8_t * __restrict pchOrigin,
                                 uint8_t * __restrict pchOutput,
                                 int16_t iOriginWidth,
-                                int16_t iOriginHeight)
+                                int16_t iOriginHeight,
+                                int16_t iOutputWidth)
 {
-    int16_t iOutputWidth = iOriginHeight;
+    assert(iOriginHeight <= iOutputWidth);
 
     for(int16_t iOriginX = 0; iOriginX < iOriginWidth; iOriginX++) {    
         int16_t iOriginColumn = iOriginX;
@@ -3323,9 +3369,10 @@ __WEAK
 void __arm_2d_rotate_90_rgb16(  uint16_t * __restrict phwOrigin,
                                 uint16_t * __restrict phwOutput,
                                 int16_t iOriginWidth,
-                                int16_t iOriginHeight)
+                                int16_t iOriginHeight,
+                                int16_t iOutputWidth)
 {
-    int16_t iOutputWidth = iOriginHeight;
+    assert(iOriginHeight <= iOutputWidth);
 
     for(int16_t iOriginX = 0; iOriginX < iOriginWidth; iOriginX++) {    
         int16_t iOriginColumn = iOriginX;
@@ -3343,9 +3390,10 @@ __WEAK
 void __arm_2d_rotate_90_rgb32(  uint32_t * __restrict pwOrigin,
                                 uint32_t * __restrict pwOutput,
                                 int16_t iOriginWidth,
-                                int16_t iOriginHeight)
+                                int16_t iOriginHeight,
+                                int16_t iOutputWidth)
 {
-    int16_t iOutputWidth = iOriginHeight;
+    assert(iOriginHeight <= iOutputWidth);
 
     for(int16_t iOriginX = 0; iOriginX < iOriginWidth; iOriginX++) {    
         int16_t iOriginColumn = iOriginX;
@@ -3372,7 +3420,7 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_c8bit(  arm_2d_pfb_t *ptOrigin,
     int16_t iWidth = ptOrigin->tTile.tRegion.tSize.iWidth;
     int16_t iHeight = ptOrigin->tTile.tRegion.tSize.iHeight;
 
-    __arm_2d_rotate_90_c8bit(pchOrigin, pchOutput, iWidth, iHeight);
+    __arm_2d_rotate_90_c8bit(pchOrigin, pchOutput, iWidth, iHeight, iHeight);
 
     ptOrigin->tTile.tRegion.tSize.iWidth = iHeight;
     ptOrigin->tTile.tRegion.tSize.iHeight = iWidth;
@@ -3402,7 +3450,7 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_rgb16(  arm_2d_pfb_t *ptOrigin,
     int16_t iWidth = ptOrigin->tTile.tRegion.tSize.iWidth;
     int16_t iHeight = ptOrigin->tTile.tRegion.tSize.iHeight;
 
-    __arm_2d_rotate_90_rgb16(phwOrigin, phwOutput, iWidth, iHeight);
+    __arm_2d_rotate_90_rgb16(phwOrigin, phwOutput, iWidth, iHeight, iHeight);
 
     ptOrigin->tTile.tRegion.tSize.iWidth = iHeight;
     ptOrigin->tTile.tRegion.tSize.iHeight = iWidth;
@@ -3432,7 +3480,7 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_rgb32(  arm_2d_pfb_t *ptOrigin,
     int16_t iWidth = ptOrigin->tTile.tRegion.tSize.iWidth;
     int16_t iHeight = ptOrigin->tTile.tRegion.tSize.iHeight;
 
-    __arm_2d_rotate_90_rgb32(pwOrigin, pwOutput, iWidth, iHeight);
+    __arm_2d_rotate_90_rgb32(pwOrigin, pwOutput, iWidth, iHeight, iHeight);
 
     ptOrigin->tTile.tRegion.tSize.iWidth = iHeight;
     ptOrigin->tTile.tRegion.tSize.iHeight = iWidth;

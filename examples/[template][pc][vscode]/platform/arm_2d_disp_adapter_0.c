@@ -342,10 +342,6 @@ IMPL_PFB_ON_LOW_LV_RENDERING(__disp_adapter0_pfb_render_handler)
 __WEAK
 IMPL_PFB_ON_LOW_LV_RENDERING(__disp_adapter0_pfb_render_handler)
 {
-#if __DISP0_CFG_ROTATE_SCREEN__ != __DISP0_SCREEN_NO_ROTATION__
-    ptPFB = __rotate_screen((arm_2d_pfb_t *)ptPFB);
-#endif
-
     const arm_2d_tile_t *ptTile = &(ptPFB->tTile);
 
     ARM_2D_UNUSED(pTarget);
