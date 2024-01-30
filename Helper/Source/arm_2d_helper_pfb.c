@@ -22,7 +22,7 @@
  * Description:  the pfb helper service source code
  *
  * $Date:        30. Jan 2024
- * $Revision:    V.1.8.2
+ * $Revision:    V.1.8.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -98,7 +98,7 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_c8bit(
                                             arm_2d_pfb_t *ptScratch,
                                             const arm_2d_size_t *ptScreenSize);
 /*!
- * \brief rotate a given gray8 PFB for 180 degree
+ * \brief rotate a given c8bit PFB for 180 degree
  * \param[in] ptOrigin the original PFB
  * \param[in] ptScratch A scratch PFB
  * \param[in] ptScreenSize the screen size
@@ -106,12 +106,12 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_c8bit(
  */
 static
 ARM_NONNULL(1,2,3)
-arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_gray8( 
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_c8bit( 
                                             arm_2d_pfb_t *ptOrigin, 
                                             arm_2d_pfb_t *ptScratch,
                                             const arm_2d_size_t *ptScreenSize);
 /*!
- * \brief rotate a given gray8 PFB for 270 degree
+ * \brief rotate a given c8bit PFB for 270 degree
  * \param[in] ptOrigin the original PFB
  * \param[in] ptScratch A scratch PFB
  * \param[in] ptScreenSize the screen size
@@ -119,13 +119,13 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_gray8(
  */
 static
 ARM_NONNULL(1,2,3)
-arm_2d_pfb_t * __arm_2d_helper_pfb_rotate270_gray8( 
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate270_c8bit( 
                                             arm_2d_pfb_t *ptOrigin, 
                                             arm_2d_pfb_t *ptScratch,
                                             const arm_2d_size_t *ptScreenSize);
 
 /*!
- * \brief rotate a given 16bit PFB for 90 degree
+ * \brief rotate a given rgb16 PFB for 90 degree
  * \param[in] ptOrigin the original PFB
  * \param[in] ptScratch A scratch PFB
  * \param[in] ptScreenSize the screen size
@@ -139,7 +139,7 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_rgb16(
                                             const arm_2d_size_t *ptScreenSize);
 
 /*!
- * \brief rotate a given rgb565 PFB for 180 degree
+ * \brief rotate a given rgb16 PFB for 180 degree
  * \param[in] ptOrigin the original PFB
  * \param[in] ptScratch A scratch PFB
  * \param[in] ptScreenSize the screen size
@@ -147,13 +147,13 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_rgb16(
  */
 static
 ARM_NONNULL(1,2,3)
-arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_rgb565( 
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_rgb16( 
                                             arm_2d_pfb_t *ptOrigin, 
                                             arm_2d_pfb_t *ptScratch,
                                             const arm_2d_size_t *ptScreenSize);
 
 /*!
- * \brief rotate a given rgb565 PFB for 270 degree
+ * \brief rotate a given rgb16 PFB for 270 degree
  * \param[in] ptOrigin the original PFB
  * \param[in] ptScratch A scratch PFB
  * \param[in] ptScreenSize the screen size
@@ -161,7 +161,7 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_rgb565(
  */
 static
 ARM_NONNULL(1,2,3)
-arm_2d_pfb_t * __arm_2d_helper_pfb_rotate270_rgb565( 
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate270_rgb16( 
                                             arm_2d_pfb_t *ptOrigin, 
                                             arm_2d_pfb_t *ptScratch,
                                             const arm_2d_size_t *ptScreenSize);
@@ -180,7 +180,7 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_rgb32(
                                             arm_2d_pfb_t *ptScratch,
                                             const arm_2d_size_t *ptScreenSize);
 /*!
- * \brief rotate a given cccn888 PFB for 180 degree
+ * \brief rotate a given rgb32 PFB for 180 degree
  * \param[in] ptOrigin the original PFB
  * \param[in] ptScratch A scratch PFB
  * \param[in] ptScreenSize the screen size
@@ -188,13 +188,13 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_rgb32(
  */
 static
 ARM_NONNULL(1,2,3)
-arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_cccn888( 
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_rgb32( 
                                             arm_2d_pfb_t *ptOrigin, 
                                             arm_2d_pfb_t *ptScratch,
                                             const arm_2d_size_t *ptScreenSize);
 
 /*!
- * \brief rotate a given cccn888 PFB for 270 degree
+ * \brief rotate a given rgb32 PFB for 270 degree
  * \param[in] ptOrigin the original PFB
  * \param[in] ptScratch A scratch PFB
  * \param[in] ptScreenSize the screen size
@@ -202,7 +202,7 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_cccn888(
  */
 static
 ARM_NONNULL(1,2,3)
-arm_2d_pfb_t * __arm_2d_helper_pfb_rotate270_cccn888( 
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate270_rgb32( 
                                             arm_2d_pfb_t *ptOrigin, 
                                             arm_2d_pfb_t *ptScratch,
                                             const arm_2d_size_t *ptScreenSize);
@@ -730,8 +730,8 @@ void __arm_2d_helper_low_level_rendering(arm_2d_helper_pfb_t *ptThis)
                 assert(false);
                 ptOldPFB = ptScratchPFB;
                 break;
-            case ARM_SCREEN_ROTATE_90:
 
+            case ARM_SCREEN_ROTATE_90:
                 /* check colour format */
                 switch (tColourFormat.u3ColourSZ) {
                     case ARM_2D_M_COLOUR_SZ_8BIT:
@@ -762,6 +762,32 @@ void __arm_2d_helper_low_level_rendering(arm_2d_helper_pfb_t *ptThis)
             case ARM_SCREEN_ROTATE_180:
                 break;
             case ARM_SCREEN_ROTATE_270:
+                /* check colour format */
+                switch (tColourFormat.u3ColourSZ) {
+                    case ARM_2D_M_COLOUR_SZ_8BIT:
+                        ptOutput = __arm_2d_helper_pfb_rotate270_c8bit(
+                            ptOldPFB, 
+                            ptScratchPFB, 
+                            &this.tCFG.tDisplayArea.tSize);
+                        break;
+                    case ARM_2D_M_COLOUR_SZ_16BIT:
+                        ptOutput = __arm_2d_helper_pfb_rotate270_rgb16(
+                            ptOldPFB, 
+                            ptScratchPFB, 
+                            &this.tCFG.tDisplayArea.tSize);
+                        break;
+                    case ARM_2D_M_COLOUR_SZ_32BIT:
+                        ptOutput = __arm_2d_helper_pfb_rotate270_rgb32(
+                            ptOldPFB, 
+                            ptScratchPFB, 
+                            &this.tCFG.tDisplayArea.tSize);
+                        break;
+                    default:
+                        /* unsupported */
+                        assert(false);
+                        ptOldPFB = ptScratchPFB;
+                        break;
+                }
                 break;
         }
 
@@ -3476,7 +3502,7 @@ void arm_2d_helper_transform_update_value(  arm_2d_helper_transform_t *ptThis,
 }
 
 /*----------------------------------------------------------------------------*
- * Rotate PFB Helper                                                          *
+ * PFB Rotate Screen 90 PFB Helper                                            *
  *----------------------------------------------------------------------------*/
 
 __WEAK 
@@ -3514,7 +3540,7 @@ void __arm_2d_rotate_90_rgb16(  uint16_t * __restrict phwOrigin,
 {
     assert(iOriginHeight <= iOutputWidth);
 
-#if 0
+#if 0 /* We keep this prototype algorihtm for ease of understanding */
     for (int16_t iOriginY = 0; iOriginY < iOriginHeight; iOriginY++) {
         uint16_t * __restrict phwSrcLine = phwOrigin;
         
@@ -3677,3 +3703,221 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate90_rgb32(  arm_2d_pfb_t *ptOrigin,
 
     return ptScratch;
 }
+
+
+
+/*----------------------------------------------------------------------------*
+ * PFB Rotate Screen 270 PFB Helper                                           *
+ *----------------------------------------------------------------------------*/
+
+__WEAK 
+void __arm_2d_rotate_270_c8bit(  uint8_t * __restrict pchOrigin,
+                                uint8_t * __restrict pchOutput,
+                                int_fast16_t iOriginWidth,
+                                int_fast16_t iOriginHeight,
+                                int_fast16_t iOutputWidth)
+{
+    assert(iOriginHeight <= iOutputWidth);
+
+    uintptr_t uColoumOffset =  iOutputWidth * (iOriginWidth - 1);
+    uint8_t * __restrict pchDesColumnStart = pchOutput + uColoumOffset;
+
+    int_fast16_t iOriginY = iOriginHeight;
+    do {
+        uint8_t * __restrict pchSrcLine = pchOrigin;
+
+        /* select a column in target buffer */
+        uint8_t * __restrict pchDesColumn = pchDesColumnStart++;;
+
+        int_fast16_t iOriginX = iOriginWidth;
+        do {
+            *pchDesColumn = *pchSrcLine++;
+            pchDesColumn -= iOutputWidth;
+        } while(--iOriginX);
+
+        pchOrigin += iOriginWidth;
+    } while(--iOriginY);
+}
+
+__WEAK 
+void __arm_2d_rotate_270_rgb16(  uint16_t * __restrict phwOrigin,
+                                uint16_t * __restrict phwOutput,
+                                int_fast16_t iOriginWidth,
+                                int_fast16_t iOriginHeight,
+                                int_fast16_t iOutputWidth)
+{
+    assert(iOriginHeight <= iOutputWidth);
+
+#if 0 /* We keep this prototype algorihtm for ease of understanding */
+    uintptr_t uColoumOffset =  iOutputWidth * (iOriginWidth - 1);
+    
+    for (int16_t iOriginY = 0; iOriginY < iOriginHeight; iOriginY++) {
+        uint16_t * __restrict phwSrcLine = phwOrigin;
+        
+        /* select a column in target buffer */
+        uint16_t * __restrict phwDesColumn = phwOutput + iOriginY + uColoumOffset;
+        
+        for (int16_t iOriginX = 0; iOriginX < iOriginWidth; iOriginX++) {
+            *phwDesColumn = *phwSrcLine++;
+            
+            phwDesColumn -= iOutputWidth;
+        }
+
+        phwOrigin += iOriginWidth;
+    }
+#else
+
+    uintptr_t uColoumOffset =  iOutputWidth * (iOriginWidth - 1);
+    uint16_t * __restrict phwDesColumnStart = phwOutput + uColoumOffset;
+
+    int_fast16_t iOriginY = iOriginHeight;
+    do {
+        uint16_t * __restrict phwSrcLine = phwOrigin;
+
+        /* select a column in target buffer */
+        uint16_t * __restrict phwDesColumn = phwDesColumnStart++;;
+
+        int_fast16_t iOriginX = iOriginWidth;
+        do {
+            *phwDesColumn = *phwSrcLine++;
+            phwDesColumn -= iOutputWidth;
+        } while(--iOriginX);
+
+        phwOrigin += iOriginWidth;
+    } while(--iOriginY);
+
+#endif
+}
+
+__WEAK 
+void __arm_2d_rotate_270_rgb32(  uint32_t * __restrict pwOrigin,
+                                uint32_t * __restrict pwOutput,
+                                int_fast16_t iOriginWidth,
+                                int_fast16_t iOriginHeight,
+                                int_fast16_t iOutputWidth)
+{
+    assert(iOriginHeight <= iOutputWidth);
+
+    uintptr_t uColoumOffset =  iOutputWidth * (iOriginWidth - 1);
+    uint32_t * __restrict pwDesColumnStart = pwOutput + uColoumOffset;
+
+    int_fast16_t iOriginY = iOriginHeight;
+    do {
+        uint32_t * __restrict pwSrcLine = pwOrigin;
+
+        /* select a column in target buffer */
+        uint32_t * __restrict pwDesColumn = pwDesColumnStart++;;
+
+        int_fast16_t iOriginX = iOriginWidth;
+        do {
+            *pwDesColumn = *pwSrcLine++;
+            pwDesColumn -= iOutputWidth;
+        } while(--iOriginX);
+
+        pwOrigin += iOriginWidth;
+    } while(--iOriginY);
+
+}
+
+static
+ARM_NONNULL(1,2,3)
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate270_c8bit(  arm_2d_pfb_t *ptOrigin, 
+                                                    arm_2d_pfb_t *ptScratch,
+                                                    const arm_2d_size_t *ptScreenSize)
+{
+    assert(NULL != ptOrigin);
+    assert(NULL != ptScratch);
+
+    uint8_t * __restrict pchOrigin = (uint8_t * __restrict)ptOrigin->tTile.pchBuffer;
+    uint8_t * __restrict pchOutput = (uint8_t * __restrict)ptScratch->tTile.pchBuffer;
+
+    int16_t iWidth = ptOrigin->tTile.tRegion.tSize.iWidth;
+    int16_t iHeight = ptOrigin->tTile.tRegion.tSize.iHeight;
+
+    __arm_2d_rotate_270_c8bit(pchOrigin, pchOutput, iWidth, iHeight, iHeight);
+
+    *ptScratch = *ptOrigin;
+    ptScratch->tTile.pchBuffer = (uint8_t *)pchOutput;
+    ptScratch->ptNext = NULL;
+
+    ptScratch->tTile.tRegion.tSize.iWidth = iHeight;
+    ptScratch->tTile.tRegion.tSize.iHeight = iWidth;
+
+    arm_2d_location_t tNewLocation = {
+        ptOrigin->tTile.tRegion.tLocation.iY,
+        ptScreenSize->iWidth - (ptOrigin->tTile.tRegion.tLocation.iX + iWidth - 1) - 1,
+    };
+
+    ptScratch->tTile.tRegion.tLocation = tNewLocation;
+
+    return ptScratch;
+}
+
+static
+ARM_NONNULL(1,2,3)
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate270_rgb16(  arm_2d_pfb_t *ptOrigin, 
+                                                    arm_2d_pfb_t *ptScratch,
+                                                    const arm_2d_size_t *ptScreenSize)
+{
+    assert(NULL != ptOrigin);
+    assert(NULL != ptScratch);
+
+    uint16_t * __restrict phwOrigin = (uint16_t * __restrict)ptOrigin->tTile.phwBuffer;
+    uint16_t * __restrict phwOutput = (uint16_t * __restrict)ptScratch->tTile.phwBuffer;
+
+    int16_t iWidth = ptOrigin->tTile.tRegion.tSize.iWidth;
+    int16_t iHeight = ptOrigin->tTile.tRegion.tSize.iHeight;
+
+    __arm_2d_rotate_270_rgb16(phwOrigin, phwOutput, iWidth, iHeight, iHeight);
+
+    *ptScratch = *ptOrigin;
+    ptScratch->tTile.phwBuffer = (uint16_t *)phwOutput;
+    ptScratch->ptNext = NULL;
+
+    ptScratch->tTile.tRegion.tSize.iWidth = iHeight;
+    ptScratch->tTile.tRegion.tSize.iHeight = iWidth;
+
+    arm_2d_location_t tNewLocation = {
+        ptOrigin->tTile.tRegion.tLocation.iY,
+        ptScreenSize->iWidth - (ptOrigin->tTile.tRegion.tLocation.iX + iWidth - 1) - 1,
+    };
+
+    ptScratch->tTile.tRegion.tLocation = tNewLocation;
+
+    return ptScratch;
+}
+
+static
+ARM_NONNULL(1,2,3)
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate270_rgb32(  arm_2d_pfb_t *ptOrigin, 
+                                                    arm_2d_pfb_t *ptScratch,
+                                                    const arm_2d_size_t *ptScreenSize)
+{
+    assert(NULL != ptOrigin);
+    assert(NULL != ptScratch);
+
+    uint32_t * __restrict pwOrigin = (uint32_t * __restrict)ptOrigin->tTile.pwBuffer;
+    uint32_t * __restrict pwOutput = (uint32_t * __restrict)ptScratch->tTile.pwBuffer;
+
+    int16_t iWidth = ptOrigin->tTile.tRegion.tSize.iWidth;
+    int16_t iHeight = ptOrigin->tTile.tRegion.tSize.iHeight;
+
+    __arm_2d_rotate_270_rgb32(pwOrigin, pwOutput, iWidth, iHeight, iHeight);
+
+    *ptScratch = *ptOrigin;
+    ptScratch->tTile.pwBuffer = (uint32_t *)pwOutput;
+    ptScratch->ptNext = NULL;
+
+    ptScratch->tTile.tRegion.tSize.iWidth = iHeight;
+    ptScratch->tTile.tRegion.tSize.iHeight = iWidth;
+
+    arm_2d_location_t tNewLocation = {
+        ptOrigin->tTile.tRegion.tLocation.iY,
+        ptScreenSize->iWidth - (ptOrigin->tTile.tRegion.tLocation.iX + iWidth - 1) - 1,
+    };
+
+    ptScratch->tTile.tRegion.tLocation = tNewLocation;
+
+    return ptScratch;
+}
+
