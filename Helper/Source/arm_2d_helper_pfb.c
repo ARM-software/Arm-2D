@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        29. Jan 2024
- * $Revision:    V.1.8.1
+ * $Date:        30. Jan 2024
+ * $Revision:    V.1.8.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -3488,15 +3488,19 @@ void __arm_2d_rotate_90_c8bit(  uint8_t * __restrict pchOrigin,
 {
     assert(iOriginHeight <= iOutputWidth);
 
-    for(int16_t iOriginX = 0; iOriginX < iOriginWidth; iOriginX++) {    
-        int16_t iOriginColumn = iOriginX;
-
-        uint8_t * __restrict pchOutputLine = &pchOutput[iOriginColumn * iOutputWidth];
-
-        for(int16_t iOriginY = iOriginHeight - 1; iOriginY >= 0; iOriginY--) {
-            *pchOutputLine++ = pchOrigin[iOriginY * iOriginWidth];
+    for (int16_t iOriginY = 0; iOriginY < iOriginHeight; iOriginY++) {
+        uint8_t * __restrict pchSrcLine = pchOrigin;
+        
+        /* select a column in target buffer */
+        uint8_t * __restrict pchDesColumn = pchOutput + (iOriginHeight - iOriginY - 1);
+        
+        for (int16_t iOriginX = 0; iOriginX < iOriginWidth; iOriginX++) {
+            *pchDesColumn = *pchSrcLine++;
+            
+            pchDesColumn += iOutputWidth;
         }
-        pchOrigin++;
+
+        pchOrigin += iOriginWidth;
     }
 }
 
@@ -3509,15 +3513,19 @@ void __arm_2d_rotate_90_rgb16(  uint16_t * __restrict phwOrigin,
 {
     assert(iOriginHeight <= iOutputWidth);
 
-    for(int16_t iOriginX = 0; iOriginX < iOriginWidth; iOriginX++) {    
-        int16_t iOriginColumn = iOriginX;
-
-        uint16_t * __restrict phwOutputLine = &phwOutput[iOriginColumn * iOutputWidth];
-
-        for(int16_t iOriginY = iOriginHeight - 1; iOriginY >= 0; iOriginY--) {
-            *phwOutputLine++ = phwOrigin[iOriginY * iOriginWidth];
+    for (int16_t iOriginY = 0; iOriginY < iOriginHeight; iOriginY++) {
+        uint16_t * __restrict phwSrcLine = phwOrigin;
+        
+        /* select a column in target buffer */
+        uint16_t * __restrict phwDesColumn = phwOutput + (iOriginHeight - iOriginY - 1);
+        
+        for (int16_t iOriginX = 0; iOriginX < iOriginWidth; iOriginX++) {
+            *phwDesColumn = *phwSrcLine++;
+            
+            phwDesColumn += iOutputWidth;
         }
-        phwOrigin++;
+
+        phwOrigin += iOriginWidth;
     }
 }
 
@@ -3530,15 +3538,19 @@ void __arm_2d_rotate_90_rgb32(  uint32_t * __restrict pwOrigin,
 {
     assert(iOriginHeight <= iOutputWidth);
 
-    for(int16_t iOriginX = 0; iOriginX < iOriginWidth; iOriginX++) {    
-        int16_t iOriginColumn = iOriginX;
-
-        uint32_t * __restrict pwOutputLine = &pwOutput[iOriginColumn * iOutputWidth];
-
-        for(int16_t iOriginY = iOriginHeight - 1; iOriginY >= 0; iOriginY--) {
-            *pwOutputLine++ = pwOrigin[iOriginY * iOriginWidth];
+    for (int16_t iOriginY = 0; iOriginY < iOriginHeight; iOriginY++) {
+        uint32_t * __restrict pwSrcLine = pwOrigin;
+        
+        /* select a column in target buffer */
+        uint32_t * __restrict pwDesColumn = pwOutput + (iOriginHeight - iOriginY - 1);
+        
+        for (int16_t iOriginX = 0; iOriginX < iOriginWidth; iOriginX++) {
+            *pwDesColumn = *pwSrcLine++;
+            
+            pwDesColumn += iOutputWidth;
         }
-        pwOrigin++;
+
+        pwOrigin += iOriginWidth;
     }
 }
 
