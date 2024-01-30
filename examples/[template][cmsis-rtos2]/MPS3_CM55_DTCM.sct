@@ -1,4 +1,3 @@
-
 #! armclang -E --target=arm-arm-none-eabi -mcpu=cortex-m33 -xc
 ; command above MUST be in first line (no comment above!)
 
@@ -30,11 +29,9 @@
 ;   <o0> RAM2 Base Address    <0x0-0xFFFFFFFF:8>
 ;   <o1> RAM2 Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ; </h>
- *----------------------------------------------------------------------------*/
+*----------------------------------------------------------------------------*/
 #define __RAM2_BASE     0x70000000
 #define __RAM2_SIZE     0x10000000
-//#define __HEAP_SIZE     0x10000000
-//#define __HEAP_BASE     __RAM2_BASE
 
 #define __HEAP_SIZE     0x00001000
 #define __HEAP_BASE     +0
