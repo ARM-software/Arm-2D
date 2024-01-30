@@ -79,3 +79,4 @@ examples/\[template\]\[cmsis-rtos2\]/RTE/_V2M-MPS2-CM4/RTE_Components.h
 *.db
 examples/\[template\]\[bare-metal\]/project/mdk/RTE/_V2M-MPS3-CM55/RTE_Components.h
 *.ttf
+RTE_Components.h
