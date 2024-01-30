@@ -67,14 +67,22 @@ extern "C" {
 #   define __DISP%Instance%_CFG_SCEEN_HEIGHT__                              240
 #endif
 
+/*
+  ARM_SCREEN_NO_ROTATION   0
+  ARM_SCREEN_ROTATE_90     1
+  ARM_SCREEN_ROTATE_180    2
+  ARM_SCREEN_ROTATE_270    3
+ */
+
 // <o>Rotate the Screen
-//     <ARM_SCREEN_NO_ROTATION=>  NO Rotation
-//     <ARM_SCREEN_ROTATE_90=>    90 Degree
-//     <ARM_SCREEN_ROTATE_180=>   180 Degree
-//     <ARM_SCREEN_ROTATE_270=>   270 Degree
+//     <0=>  NO Rotation
+//     <1=>    90 Degree
+//     <2=>   180 Degree
+//     <3=>   270 Degree
 // <i> Rotate the Screen for specified degrees.
+// <i> NOTE: This is extremely slow. Please avoid using it whenever it is possible.
 #ifndef __DISP%Instance%_CFG_ROTATE_SCREEN__
-#   define __DISP%Instance%_CFG_ROTATE_SCREEN__                             ARM_SCREEN_NO_ROTATION
+#   define __DISP%Instance%_CFG_ROTATE_SCREEN__                             0
 #endif
 
 // <o>Width of the PFB block

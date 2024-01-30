@@ -1751,7 +1751,7 @@
       <OPTFL>
         <tvExp>1</tvExp>
         <tvExpOptDlg>0</tvExpOptDlg>
-        <IsCurrentTarget>1</IsCurrentTarget>
+        <IsCurrentTarget>0</IsCurrentTarget>
       </OPTFL>
       <CpuCode>7</CpuCode>
       <DebugOpt>
@@ -2226,7 +2226,7 @@
       <OPTFL>
         <tvExp>1</tvExp>
         <tvExpOptDlg>0</tvExpOptDlg>
-        <IsCurrentTarget>0</IsCurrentTarget>
+        <IsCurrentTarget>1</IsCurrentTarget>
       </OPTFL>
       <CpuCode>7</CpuCode>
       <DebugOpt>
@@ -2386,7 +2386,7 @@
       </MemoryWindow4>
       <ScvdPack>
         <Filename>C:\Users\gabriel\AppData\Local\Arm\Packs\Keil\ARM_Compiler\1.7.2\EventRecorder.scvd</Filename>
-        <Type>Keil.ARM_Compiler.1.7.2</Type>
+        <Type>Keil::ARM_Compiler@1.7.2</Type>
         <SubType>1</SubType>
       </ScvdPack>
       <Tracepoint>
@@ -2397,7 +2397,7 @@
         <periodic>1</periodic>
         <aLwin>0</aLwin>
         <aCover>0</aCover>
-        <aSer1>1</aSer1>
+        <aSer1>0</aSer1>
         <aSer2>0</aSer2>
         <aPa>0</aPa>
         <viewmode>1</viewmode>
@@ -2412,7 +2412,7 @@
         <aLa>0</aLa>
         <aPa1>0</aPa1>
         <AscS4>0</AscS4>
-        <aSer4>0</aSer4>
+        <aSer4>1</aSer4>
         <StkLoc>0</StkLoc>
         <TrcWin>0</TrcWin>
         <newCpu>0</newCpu>
@@ -2748,7 +2748,7 @@
 
   <Group>
     <GroupName>::Acceleration</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>1</RteFlg>

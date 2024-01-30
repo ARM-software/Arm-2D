@@ -21,7 +21,9 @@
 
 /*============================ INCLUDES ======================================*/
 
-#include "RTE_Components.h"
+#if defined(_RTE_)
+#   include "RTE_Components.h"
+#endif
 
 #ifdef   __cplusplus
 extern "C" {
