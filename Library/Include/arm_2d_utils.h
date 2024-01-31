@@ -229,6 +229,10 @@ extern "C" {
 #   define ARM_2D_UNUSED(__VAR)     (void)(__VAR)
 #endif
 
+#ifndef ARM_2D_PARAM
+#   define ARM_2D_PARAM(__VAR)     (void)(__VAR)
+#endif
+
 #undef ARM_TYPE_CONVERT
 /*!
  * \brief convert a given variable to a specified type, the converted result 

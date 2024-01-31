@@ -220,6 +220,11 @@ extern "C" {
 #define IMPL_PFB_ON_FRAME_SYNC_UP(__NAME)                                       \
             bool __NAME(void *pTarget)
 
+#define IMPL_PFB_BEFORE_FLUSHING(__NAME)                                        \
+            bool __NAME(void *pTarget,                                          \
+                        arm_2d_pfb_t *ptOrigin,                                 \
+                        arm_2d_pfb_t *ptScratch)
+
 
 /*!
  * \brief a macro wrapper in lowercase to help initialising PFB service
@@ -530,12 +535,6 @@ typedef struct arm_2d_helper_before_flushing_evt_t {
     void *pTarget;
 } arm_2d_helper_before_flushing_evt_t;
 
-#define ARM_SCREEN_NO_ROTATION      0
-#define ARM_SCREEN_ROTATE_0         0
-#define ARM_SCREEN_ROTATE_90        1
-#define ARM_SCREEN_ROTATE_180       2
-#define ARM_SCREEN_ROTATE_270       3
-
 /*!
  * \brief the enumeration for events
  * 
@@ -596,8 +595,7 @@ typedef struct arm_2d_helper_pfb_cfg_t {
         uint32_t       bDisableDynamicFPBSize           : 1;    //!< A flag to disable resize of the PFB block
         uint32_t       bSwapRGB16                       : 1;    //!< A flag to enable swapping high and low bytes of an RGB16 pixel
         uint32_t       bDebugDirtyRegions               : 1;    //!< A flag to show dirty regions on screen for debug
-        uint32_t       u4RotateScreen                   : 2;    //!< screen rotation - 0: no rotation, 1: 90 degree, 2: 180 degree, 3: 270 degree
-        uint32_t                                        : 8;
+        uint32_t                                        : 10;
         uint32_t       u3PixelWidthAlign                : 3;    //!< Pixel alignment in Width for dirty region (2^n)
         uint32_t       u3PixelHeightAlign               : 3;    //!< Pixel alignment in Height for dirty region (2^n)
         uint32_t       u4PoolReserve                    : 4;    //!< reserve specific number of PFB for other helper services
