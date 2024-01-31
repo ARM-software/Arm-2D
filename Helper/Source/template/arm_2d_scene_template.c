@@ -154,11 +154,13 @@ static void __before_scene_<name>_switching_out(arm_2d_scene_t *ptScene)
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_<name>_handler)
 {
+    ARM_2D_PARAM(pTarget);
+    ARM_2D_PARAM(ptTile);
+    ARM_2D_PARAM(bIsNewFrame);
+
     user_scene_<name>_t *ptThis = (user_scene_<name>_t *)pTarget;
     arm_2d_size_t tScreenSize = ptTile->tRegion.tSize;
 
-    ARM_2D_UNUSED(ptTile);
-    ARM_2D_UNUSED(bIsNewFrame);
     ARM_2D_UNUSED(tScreenSize);
 
     arm_2d_canvas(ptTile, __top_canvas) {

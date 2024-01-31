@@ -72,7 +72,6 @@
 #   endif
 #endif
 
-
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -99,6 +98,7 @@ arm_2d_helper_3fb_t s_tDirectModeHelper;
 
 
 /*============================ IMPLEMENTATION ================================*/
+
 static void __on_frame_start(arm_2d_scene_t *ptScene)
 {
     ARM_2D_UNUSED(ptScene);
@@ -408,6 +408,52 @@ static bool __on_each_frame_complete(void *ptTarget)
     return true;
 }
 
+#if __DISP0_CFG_ROTATE_SCREEN__
+/*!
+ * \brief before-flushing event handler
+ * \param[in] ptOrigin the original PFB
+ * \param[in] ptScratch A scratch PFB
+ * \return true the new content is stored in ptScratch
+ * \return false the new content is stored in ptOrigin
+ */
+static IMPL_PFB_BEFORE_FLUSHING(__before_flushing)
+{
+    ARM_2D_PARAM(pTarget);
+    ARM_2D_PARAM(ptOrigin);
+    ARM_2D_PARAM(ptScratch);
+
+
+#if      __DISP0_CFG_COLOUR_DEPTH__ == 8
+#   define __COLOUR_NAME__  c8bit
+#elif    __DISP0_CFG_COLOUR_DEPTH__ == 16
+#   define __COLOUR_NAME__  rgb16
+#elif    __DISP0_CFG_COLOUR_DEPTH__ == 32
+#   define __COLOUR_NAME__  rgb32
+#endif
+
+#if     __DISP0_CFG_ROTATE_SCREEN__ == 1
+#   define __ROTATE__       90
+#elif   __DISP0_CFG_ROTATE_SCREEN__ == 2
+#   define __ROTATE__       180
+#elif   __DISP0_CFG_ROTATE_SCREEN__ == 3
+#   define __ROTATE__       270
+#endif
+
+    ARM_CONNECT(__arm_2d_helper_pfb_rotate, __ROTATE__,_, __COLOUR_NAME__)(
+        ptOrigin, 
+        ptScratch,
+        (arm_2d_size_t []) {
+            {
+                __DISP0_CFG_SCEEN_WIDTH__,
+                __DISP0_CFG_SCEEN_HEIGHT__
+            }
+        });
+
+    return true;
+}
+
+#endif
+
 static void __user_scene_player_init(void)
 {
     memset(&DISP0_ADAPTER, 0, sizeof(DISP0_ADAPTER));
@@ -442,6 +488,11 @@ static void __user_scene_player_init(void)
             .evtOnEachFrameCPL = {
                 .fnHandler = &__on_each_frame_complete,
             },
+#if __DISP0_CFG_ROTATE_SCREEN__
+            .evtBeforeFlushing = {
+                .fnHandler = &__before_flushing,
+            },
+#endif
         },
 #if __DISP0_CFG_SWAP_RGB16_HIGH_AND_LOW_BYTES__
         .FrameBuffer.bSwapRGB16 = true,
@@ -449,7 +500,6 @@ static void __user_scene_player_init(void)
 #if __DISP0_CFG_DEBUG_DIRTY_REGIONS__
         .FrameBuffer.bDebugDirtyRegions = true,
 #endif
-        .FrameBuffer.u4RotateScreen = __DISP0_CFG_ROTATE_SCREEN__,
         .FrameBuffer.u3PixelWidthAlign = __DISP0_CFG_PFB_PIXEL_ALIGN_WIDTH__,
         .FrameBuffer.u3PixelHeightAlign = __DISP0_CFG_PFB_PIXEL_ALIGN_HEIGHT__,
 #if     __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                          \
