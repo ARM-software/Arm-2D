@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        30. Jan 2024
- * $Revision:    V.1.8.3
+ * $Date:        31. Jan 2024
+ * $Revision:    V.1.8.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -4120,18 +4120,23 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_c8bit(  arm_2d_pfb_t *ptOrigin,
     int16_t iWidth = ptOrigin->tTile.tRegion.tSize.iWidth;
     int16_t iHeight = ptOrigin->tTile.tRegion.tSize.iHeight;
 
-    __arm_2d_rotate_180_c8bit(pchOrigin, pchOutput, iWidth, iHeight, iHeight);
+    __arm_2d_impl_c8bit_copy_xy_mirror(
+        pchOrigin,
+        iWidth,
+        pchOutput,
+        iWidth,
+        (arm_2d_size_t []){
+            {iWidth, iHeight},
+        }
+    );
 
     *ptScratch = *ptOrigin;
     ptScratch->tTile.pchBuffer = (uint8_t *)pchOutput;
     ptScratch->ptNext = NULL;
 
-    ptScratch->tTile.tRegion.tSize.iWidth = iHeight;
-    ptScratch->tTile.tRegion.tSize.iHeight = iWidth;
-
     arm_2d_location_t tNewLocation = {
-        ptOrigin->tTile.tRegion.tLocation.iY,
         ptScreenSize->iWidth - (ptOrigin->tTile.tRegion.tLocation.iX + iWidth - 1) - 1,
+        ptScreenSize->iHeight - (ptOrigin->tTile.tRegion.tLocation.iY + iHeight - 1) - 1,
     };
 
     ptScratch->tTile.tRegion.tLocation = tNewLocation;
@@ -4154,7 +4159,6 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_rgb16(  arm_2d_pfb_t *ptOrigin,
     int16_t iWidth = ptOrigin->tTile.tRegion.tSize.iWidth;
     int16_t iHeight = ptOrigin->tTile.tRegion.tSize.iHeight;
 
-    //__arm_2d_rotate_180_rgb16(phwOrigin, phwOutput, iWidth, iHeight, iHeight);
     __arm_2d_impl_rgb16_copy_xy_mirror(
         phwOrigin,
         iWidth,
@@ -4164,7 +4168,6 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_rgb16(  arm_2d_pfb_t *ptOrigin,
             {iWidth, iHeight},
         }
     );
-
 
     *ptScratch = *ptOrigin;
     ptScratch->tTile.phwBuffer = (uint16_t *)phwOutput;
@@ -4195,18 +4198,23 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_rgb32(  arm_2d_pfb_t *ptOrigin,
     int16_t iWidth = ptOrigin->tTile.tRegion.tSize.iWidth;
     int16_t iHeight = ptOrigin->tTile.tRegion.tSize.iHeight;
 
-    __arm_2d_rotate_180_rgb32(pwOrigin, pwOutput, iWidth, iHeight, iHeight);
+    __arm_2d_impl_rgb32_copy_xy_mirror(
+        pwOrigin,
+        iWidth,
+        pwOutput,
+        iWidth,
+        (arm_2d_size_t []){
+            {iWidth, iHeight},
+        }
+    );
 
     *ptScratch = *ptOrigin;
     ptScratch->tTile.pwBuffer = (uint32_t *)pwOutput;
     ptScratch->ptNext = NULL;
 
-    ptScratch->tTile.tRegion.tSize.iWidth = iHeight;
-    ptScratch->tTile.tRegion.tSize.iHeight = iWidth;
-
     arm_2d_location_t tNewLocation = {
-        ptOrigin->tTile.tRegion.tLocation.iY,
         ptScreenSize->iWidth - (ptOrigin->tTile.tRegion.tLocation.iX + iWidth - 1) - 1,
+        ptScreenSize->iHeight - (ptOrigin->tTile.tRegion.tLocation.iY + iHeight - 1) - 1,
     };
 
     ptScratch->tTile.tRegion.tLocation = tNewLocation;
