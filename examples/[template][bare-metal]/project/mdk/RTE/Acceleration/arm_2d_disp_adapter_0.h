@@ -67,12 +67,20 @@ extern "C" {
 #   define __DISP0_CFG_SCEEN_HEIGHT__                              240
 #endif
 
+/*
+  ARM_SCREEN_NO_ROTATION   0
+  ARM_SCREEN_ROTATE_90     1
+  ARM_SCREEN_ROTATE_180    2
+  ARM_SCREEN_ROTATE_270    3
+ */
+
 // <o>Rotate the Screen
 //     <0=>  NO Rotation
 //     <1=>    90 Degree
 //     <2=>   180 Degree
 //     <3=>   270 Degree
 // <i> Rotate the Screen for specified degrees.
+// <i> NOTE: This is extremely slow. Please avoid using it whenever it is possible.
 #ifndef __DISP0_CFG_ROTATE_SCREEN__
 #   define __DISP0_CFG_ROTATE_SCREEN__                             0
 #endif
@@ -146,7 +154,7 @@ extern "C" {
 // <q> Enable Dirty Region Optimization Service
 // <i> Optimize dirty regions to avoid fresh overlapped areas
 #ifndef __DISP0_CFG_OPTIMIZE_DIRTY_REGIONS__
-#   define __DISP0_CFG_OPTIMIZE_DIRTY_REGIONS__                    0
+#   define __DISP0_CFG_OPTIMIZE_DIRTY_REGIONS__                    1
 #endif
 
 // <o> Dirty Region Pool Size <4-255>
