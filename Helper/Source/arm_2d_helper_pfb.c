@@ -3996,115 +3996,6 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate270_rgb32(  arm_2d_pfb_t *ptOrigin,
  * PFB Rotate Screen 180 PFB Helper                                           *
  *----------------------------------------------------------------------------*/
 
-__WEAK 
-void __arm_2d_rotate_180_c8bit(  uint8_t * __restrict pchOrigin,
-                                uint8_t * __restrict pchOutput,
-                                int_fast16_t iOriginWidth,
-                                int_fast16_t iOriginHeight,
-                                int_fast16_t iOutputWidth)
-{
-    assert(iOriginHeight <= iOutputWidth);
-
-    uintptr_t uColoumOffset =  iOutputWidth * (iOriginWidth - 1);
-    uint8_t * __restrict pchDesColumnStart = pchOutput + uColoumOffset;
-
-    int_fast16_t iOriginY = iOriginHeight;
-    do {
-        uint8_t * __restrict pchSrcLine = pchOrigin;
-
-        /* select a column in target buffer */
-        uint8_t * __restrict pchDesColumn = pchDesColumnStart++;;
-
-        int_fast16_t iOriginX = iOriginWidth;
-        do {
-            *pchDesColumn = *pchSrcLine++;
-            pchDesColumn -= iOutputWidth;
-        } while(--iOriginX);
-
-        pchOrigin += iOriginWidth;
-    } while(--iOriginY);
-}
-
-__WEAK 
-void __arm_2d_rotate_180_rgb16(  uint16_t * __restrict phwOrigin,
-                                uint16_t * __restrict phwOutput,
-                                int_fast16_t iOriginWidth,
-                                int_fast16_t iOriginHeight,
-                                int_fast16_t iOutputWidth)
-{
-    assert(iOriginHeight <= iOutputWidth);
-
-#if 0 /* We keep this prototype algorihtm for ease of understanding */
-    uintptr_t uColoumOffset =  iOutputWidth * (iOriginWidth - 1);
-    
-    for (int16_t iOriginY = 0; iOriginY < iOriginHeight; iOriginY++) {
-        uint16_t * __restrict phwSrcLine = phwOrigin;
-        
-        /* select a column in target buffer */
-        uint16_t * __restrict phwDesColumn = phwOutput + iOriginY + uColoumOffset;
-        
-        for (int16_t iOriginX = 0; iOriginX < iOriginWidth; iOriginX++) {
-            *phwDesColumn = *phwSrcLine++;
-            
-            phwDesColumn -= iOutputWidth;
-        }
-
-        phwOrigin += iOriginWidth;
-    }
-#else
-
-    uintptr_t uColoumOffset =  iOutputWidth * (iOriginWidth - 1);
-    uint16_t * __restrict phwDesColumnStart = phwOutput + uColoumOffset;
-
-    int_fast16_t iOriginY = iOriginHeight;
-    do {
-        uint16_t * __restrict phwSrcLine = phwOrigin;
-
-        /* select a column in target buffer */
-        uint16_t * __restrict phwDesColumn = phwDesColumnStart++;;
-
-        int_fast16_t iOriginX = iOriginWidth;
-        do {
-            *phwDesColumn = *phwSrcLine++;
-            phwDesColumn -= iOutputWidth;
-        } while(--iOriginX);
-
-        phwOrigin += iOriginWidth;
-    } while(--iOriginY);
-
-#endif
-}
-
-__WEAK 
-void __arm_2d_rotate_180_rgb32(  uint32_t * __restrict pwOrigin,
-                                uint32_t * __restrict pwOutput,
-                                int_fast16_t iOriginWidth,
-                                int_fast16_t iOriginHeight,
-                                int_fast16_t iOutputWidth)
-{
-    assert(iOriginHeight <= iOutputWidth);
-
-    uintptr_t uColoumOffset =  iOutputWidth * (iOriginWidth - 1);
-    uint32_t * __restrict pwDesColumnStart = pwOutput + uColoumOffset;
-
-    int_fast16_t iOriginY = iOriginHeight;
-    do {
-        uint32_t * __restrict pwSrcLine = pwOrigin;
-
-        /* select a column in target buffer */
-        uint32_t * __restrict pwDesColumn = pwDesColumnStart++;;
-
-        int_fast16_t iOriginX = iOriginWidth;
-        do {
-            *pwDesColumn = *pwSrcLine++;
-            pwDesColumn -= iOutputWidth;
-        } while(--iOriginX);
-
-        pwOrigin += iOriginWidth;
-    } while(--iOriginY);
-
-}
-
 static
 ARM_NONNULL(1,2,3)
 arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_c8bit(  arm_2d_pfb_t *ptOrigin, 
@@ -4185,7 +4076,7 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_rgb16(  arm_2d_pfb_t *ptOrigin,
 
 static
 ARM_NONNULL(1,2,3)
-arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_rgb32(  arm_2d_pfb_t *ptOrigin, 
+arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_rgb32( arm_2d_pfb_t *ptOrigin, 
                                                     arm_2d_pfb_t *ptScratch,
                                                     const arm_2d_size_t *ptScreenSize)
 {
