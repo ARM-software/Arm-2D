@@ -116,7 +116,6 @@ var group__gHelper =
       [ "bDisableDynamicFPBSize", "group__gHelper.html#a3491f099ff99db25de694b559954bd68", null ],
       [ "bSwapRGB16", "group__gHelper.html#a545d827276ad405ea34db579f2ef9e2c", null ],
       [ "bDebugDirtyRegions", "group__gHelper.html#ad94e55fd91058d326dc2cf338ac34258", null ],
-      [ "u4RotateScreen", "group__gHelper.html#a27d8e30d7f5cef7483f18218bdd38d4c", null ],
       [ "u3PixelWidthAlign", "group__gHelper.html#a66627248877a7be4a40fe181d326b7ea", null ],
       [ "u3PixelHeightAlign", "group__gHelper.html#a46b5090428aa1c20834ca4f50c9fd1ba", null ],
       [ "u4PoolReserve", "group__gHelper.html#a430f59062291820e08b2cf816d7ef490", null ]
