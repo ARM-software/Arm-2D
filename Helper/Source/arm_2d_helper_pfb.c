@@ -3558,22 +3558,63 @@ void __arm_2d_rotate_90_rgb16(  uint16_t * __restrict phwOrigin,
     }
 #else
 
-    int_fast16_t iOriginY = iOriginHeight - 1;
-    uint16_t * __restrict phwDesColumnStart = phwOutput + iOriginY;
-    do {
-        uint16_t * __restrict phwSrcLine = phwOrigin;
-        
-        /* select a column in target buffer */
-        uint16_t * __restrict phwDesColumn = phwDesColumnStart--;
-        
-        int_fast16_t iOriginX = iOriginWidth;
-        do {
-            *phwDesColumn = *phwSrcLine++;
-            phwDesColumn += iOutputWidth;
-        } while(--iOriginX);
+    if ((0 == (iOriginWidth & 0x3)) && (0 == (iOutputWidth & 0x3))) {
+        int_fast16_t iOriginY = iOriginHeight;
+        uint16_t * __restrict phwDesColumnStart = phwOutput + (iOriginHeight - 1);
 
-        phwOrigin += iOriginWidth;
-    } while(iOriginY--);
+        do {
+            uint16_t * __restrict phwSrcLine[4] = {
+                phwOrigin + iOriginWidth * 0,
+                phwOrigin + iOriginWidth * 1,
+                phwOrigin + iOriginWidth * 2,
+                phwOrigin + iOriginWidth * 3,
+            };
+
+            /* select a column in target buffer */
+            uint16_t * __restrict phwDesColumn = phwDesColumnStart;
+            phwDesColumnStart -= 4;
+
+            int_fast16_t iOriginX = iOriginWidth;
+            do {
+                uint64_t * __restrict pdw4PixelStride = (uint64_t * __restrict)(phwDesColumn - 3);
+                register uint64_t dw4PixelStride;
+
+                dw4PixelStride = *phwSrcLine[0]++;
+                dw4PixelStride <<= 16;
+                dw4PixelStride |= *phwSrcLine[1]++;
+                dw4PixelStride <<= 16;
+                dw4PixelStride |= *phwSrcLine[2]++;
+                dw4PixelStride <<= 16;
+                dw4PixelStride |= *phwSrcLine[3]++;
+                
+                *pdw4PixelStride = dw4PixelStride;
+                
+                phwDesColumn += iOutputWidth;
+            } while(--iOriginX);
+
+            phwOrigin += iOriginWidth * 4;
+
+            iOriginY -= 4;
+        } while(iOriginY);
+
+    } else {
+        int_fast16_t iOriginY = iOriginHeight - 1;
+        uint16_t * __restrict phwDesColumnStart = phwOutput + iOriginY;
+        do {
+            uint16_t * __restrict phwSrcLine = phwOrigin;
+            
+            /* select a column in target buffer */
+            uint16_t * __restrict phwDesColumn = phwDesColumnStart--;
+            
+            int_fast16_t iOriginX = iOriginWidth;
+            do {
+                *phwDesColumn = *phwSrcLine++;
+                phwDesColumn += iOutputWidth;
+            } while(--iOriginX);
+
+            phwOrigin += iOriginWidth;
+        } while(iOriginY--);
+    }
 
 #endif
 }
