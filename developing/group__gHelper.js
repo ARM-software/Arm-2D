@@ -53,12 +53,14 @@ var group__gHelper =
       [ "fnHandler", "group__gHelper.html#a328824317c21ed14e7913c38833f98c5", null ],
       [ "pTarget", "group__gHelper.html#a269627325c973faac9523cfb5177443a", null ]
     ] ],
+    [ "arm_2d_helper_before_flushing_evt_t", "group__gHelper.html#structarm__2d__helper__before__flushing__evt__t", null ],
     [ "arm_2d_helper_pfb_dependency_t", "group__gHelper.html#structarm__2d__helper__pfb__dependency__t", [
       [ "evtOnLowLevelRendering", "group__gHelper.html#a85bd7ad0d6a3c150a6ef8ac6ee9aaeed", null ],
       [ "evtOnDrawing", "group__gHelper.html#a75436e9711701c092b4bafcc1c868d25", null ],
       [ "evtOnLowLevelSyncUp", "group__gHelper.html#a0ed423f1f6490f8cc89abd55f886f4cd", null ],
       [ "evtOnEachFrameCPL", "group__gHelper.html#a3a09c78af2a4f90fdfed477c0844e4fc", null ],
-      [ "Navigation", "group__gHelper.html#ae13b5f69dae5f471372611003f8936d9", null ]
+      [ "Navigation", "group__gHelper.html#ae13b5f69dae5f471372611003f8936d9", null ],
+      [ "evtBeforeFlushing", "group__gHelper.html#acf349e434e1a7056507ae25497d677fe", null ]
     ] ],
     [ "arm_2d_helper_pfb_cfg_t", "group__gHelper.html#structarm__2d__helper__pfb__cfg__t", [
       [ "tDisplayArea", "group__gHelper.html#adc4ca6df76cda6514cff8a4cec3918ca", null ],
@@ -154,6 +156,7 @@ var group__gHelper =
     [ "arm_2d_helper_2d_copy_handler_t", "group__gHelper.html#gaaab8492558fc9281237e674a44b599fe", null ],
     [ "arm_2d_helper_dma_copy_handler_t", "group__gHelper.html#gae9d5b9ed784066838051d514da062d09", null ],
     [ "arm_2d_helper_render_handler_t", "group__gHelper.html#ga03c2991d31bd58c8a1d5303fb9460f39", null ],
+    [ "arm_2d_helper_before_flushing_handler_t", "group__gHelper.html#ga4134cd0ed302d130720a15281e6cd56a", null ],
     [ "arm_2d_scene_player_switch_mode_t", "group__gHelper.html#gab79c6ab3540af636c218dc40fa065ac3", [
       [ "ARM_2D_SCENE_SWITCH_CFG_NONE", "group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a416989811443930b2d7cf186135580b2", null ],
       [ "ARM_2D_SCENE_SWITCH_CFG_USER", "group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a11b0ad1005d9022ef71697b05865065c", null ],
@@ -234,6 +237,15 @@ var group__gHelper =
     [ "arm_2d_helper_3fb_report_dma_copy_complete", "group__gHelper.html#ga87c6ea76937f2b83b2e787a24c82c9fb", null ],
     [ "arm_2d_helper_3fb_get_flush_pointer", "group__gHelper.html#ga94384cabe58f5ddc6d8be92349f5ff99", null ],
     [ "__arm_2d_helper_3fb_draw_bitmap", "group__gHelper.html#gad9504b41c541cc4bbee54bfbba49f496", null ],
+    [ "__arm_2d_helper_pfb_rotate90_c8bit", "group__gHelper.html#ga413b85a6582f1d894eae5c9ba88d9fe2", null ],
+    [ "__arm_2d_helper_pfb_rotate180_c8bit", "group__gHelper.html#ga63b7af25cc39dbbde1f2f2cfe8711247", null ],
+    [ "__arm_2d_helper_pfb_rotate270_c8bit", "group__gHelper.html#ga118f6122101bca193bccd26bee7da474", null ],
+    [ "__arm_2d_helper_pfb_rotate90_rgb16", "group__gHelper.html#ga242f73f69f914f4546bdd2549622c306", null ],
+    [ "__arm_2d_helper_pfb_rotate180_rgb16", "group__gHelper.html#ga7efe00d102b76d591f99585804bf2dd8", null ],
+    [ "__arm_2d_helper_pfb_rotate270_rgb16", "group__gHelper.html#ga057ca0ef8259371f70e817303425e28d", null ],
+    [ "__arm_2d_helper_pfb_rotate90_rgb32", "group__gHelper.html#ga7bae3d1725228f6b3011945482286e3f", null ],
+    [ "__arm_2d_helper_pfb_rotate180_rgb32", "group__gHelper.html#ga244fcde0c53f1d123ac5a6c2fa2b2ff2", null ],
+    [ "__arm_2d_helper_pfb_rotate270_rgb32", "group__gHelper.html#ga1735b2f8f58cdc0cd453a5b92768eabb", null ],
     [ "arm_2d_helper_init", "group__gHelper.html#ga9ab5e975303c28c98f1ae62babb8286d", null ],
     [ "arm_2d_helper_backend_task", "group__gHelper.html#ga5161926583cc8da4c4b369b177845e42", null ],
     [ "arm_2d_helper_convert_ticks_to_ms", "group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf", null ],

@@ -149,8 +149,11 @@ Data Structures</h2></td></tr>
 <tr class="memdesc:structarm__2d__region__list__item__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">the node of a region list  <a href="group__gHelper.html#structarm__2d__region__list__item__t">More...</a><br /></td></tr>
 <tr class="separator:structarm__2d__region__list__item__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structarm__2d__helper__render__evt__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__helper__render__evt__t">arm_2d_helper_render_evt_t</a></td></tr>
-<tr class="memdesc:structarm__2d__helper__render__evt__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">on low level render event  <a href="group__gHelper.html#structarm__2d__helper__render__evt__t">More...</a><br /></td></tr>
+<tr class="memdesc:structarm__2d__helper__render__evt__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">low level render event  <a href="group__gHelper.html#structarm__2d__helper__render__evt__t">More...</a><br /></td></tr>
 <tr class="separator:structarm__2d__helper__render__evt__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structarm__2d__helper__before__flushing__evt__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__helper__before__flushing__evt__t">arm_2d_helper_before_flushing_evt_t</a></td></tr>
+<tr class="memdesc:structarm__2d__helper__before__flushing__evt__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">screen rotation event  <a href="group__gHelper.html#structarm__2d__helper__before__flushing__evt__t">More...</a><br /></td></tr>
+<tr class="separator:structarm__2d__helper__before__flushing__evt__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structarm__2d__helper__pfb__dependency__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__dependency__t">arm_2d_helper_pfb_dependency_t</a></td></tr>
 <tr class="memdesc:structarm__2d__helper__pfb__dependency__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">The PFB Helper Service Dependency.  <a href="group__gHelper.html#structarm__2d__helper__pfb__dependency__t">More...</a><br /></td></tr>
 <tr class="separator:structarm__2d__helper__pfb__dependency__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -356,6 +359,9 @@ Typedefs</h2></td></tr>
 <tr class="memitem:ga03c2991d31bd58c8a1d5303fb9460f39"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga03c2991d31bd58c8a1d5303fb9460f39">arm_2d_helper_render_handler_t</a>(void *pTarget, const <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptPFB, bool bIsNewFrame)</td></tr>
 <tr class="memdesc:ga03c2991d31bd58c8a1d5303fb9460f39"><td class="mdescLeft">&#160;</td><td class="mdescRight">the On Low Level Rendering event handler for the low level (LCD Driver)  <a href="group__gHelper.html#ga03c2991d31bd58c8a1d5303fb9460f39">More...</a><br /></td></tr>
 <tr class="separator:ga03c2991d31bd58c8a1d5303fb9460f39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4134cd0ed302d130720a15281e6cd56a"><td class="memItemLeft" align="right" valign="top">typedef bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga4134cd0ed302d130720a15281e6cd56a">arm_2d_helper_before_flushing_handler_t</a>(void *pTarget, <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptOrigin, <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptScratch)</td></tr>
+<tr class="memdesc:ga4134cd0ed302d130720a15281e6cd56a"><td class="mdescLeft">&#160;</td><td class="mdescRight">before-flushing event handler  <a href="group__gHelper.html#ga4134cd0ed302d130720a15281e6cd56a">More...</a><br /></td></tr>
+<tr class="separator:ga4134cd0ed302d130720a15281e6cd56a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -578,6 +584,33 @@ Functions</h2></td></tr>
 <tr class="memitem:gad9504b41c541cc4bbee54bfbba49f496"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gad9504b41c541cc4bbee54bfbba49f496">__arm_2d_helper_3fb_draw_bitmap</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__3fb__t">arm_2d_helper_3fb_t</a> *ptThis, const <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptPFB)</td></tr>
 <tr class="memdesc:gad9504b41c541cc4bbee54bfbba49f496"><td class="mdescLeft">&#160;</td><td class="mdescRight">please do NOT use this function. It is used by the display adapter.  <a href="group__gHelper.html#gad9504b41c541cc4bbee54bfbba49f496">More...</a><br /></td></tr>
 <tr class="separator:gad9504b41c541cc4bbee54bfbba49f496"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga413b85a6582f1d894eae5c9ba88d9fe2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga413b85a6582f1d894eae5c9ba88d9fe2">__arm_2d_helper_pfb_rotate90_c8bit</a> (<a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptOrigin, <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptScratch, const <a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a> *ptScreenSize)</td></tr>
+<tr class="memdesc:ga413b85a6582f1d894eae5c9ba88d9fe2"><td class="mdescLeft">&#160;</td><td class="mdescRight">rotate a given c8bit PFB for 90 degree  <a href="group__gHelper.html#ga413b85a6582f1d894eae5c9ba88d9fe2">More...</a><br /></td></tr>
+<tr class="separator:ga413b85a6582f1d894eae5c9ba88d9fe2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga63b7af25cc39dbbde1f2f2cfe8711247"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga63b7af25cc39dbbde1f2f2cfe8711247">__arm_2d_helper_pfb_rotate180_c8bit</a> (<a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptOrigin, <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptScratch, const <a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a> *ptScreenSize)</td></tr>
+<tr class="memdesc:ga63b7af25cc39dbbde1f2f2cfe8711247"><td class="mdescLeft">&#160;</td><td class="mdescRight">rotate a given c8bit PFB for 180 degree  <a href="group__gHelper.html#ga63b7af25cc39dbbde1f2f2cfe8711247">More...</a><br /></td></tr>
+<tr class="separator:ga63b7af25cc39dbbde1f2f2cfe8711247"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga118f6122101bca193bccd26bee7da474"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga118f6122101bca193bccd26bee7da474">__arm_2d_helper_pfb_rotate270_c8bit</a> (<a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptOrigin, <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptScratch, const <a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a> *ptScreenSize)</td></tr>
+<tr class="memdesc:ga118f6122101bca193bccd26bee7da474"><td class="mdescLeft">&#160;</td><td class="mdescRight">rotate a given c8bit PFB for 270 degree  <a href="group__gHelper.html#ga118f6122101bca193bccd26bee7da474">More...</a><br /></td></tr>
+<tr class="separator:ga118f6122101bca193bccd26bee7da474"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga242f73f69f914f4546bdd2549622c306"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga242f73f69f914f4546bdd2549622c306">__arm_2d_helper_pfb_rotate90_rgb16</a> (<a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptOrigin, <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptScratch, const <a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a> *ptScreenSize)</td></tr>
+<tr class="memdesc:ga242f73f69f914f4546bdd2549622c306"><td class="mdescLeft">&#160;</td><td class="mdescRight">rotate a given rgb16 PFB for 90 degree  <a href="group__gHelper.html#ga242f73f69f914f4546bdd2549622c306">More...</a><br /></td></tr>
+<tr class="separator:ga242f73f69f914f4546bdd2549622c306"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7efe00d102b76d591f99585804bf2dd8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga7efe00d102b76d591f99585804bf2dd8">__arm_2d_helper_pfb_rotate180_rgb16</a> (<a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptOrigin, <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptScratch, const <a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a> *ptScreenSize)</td></tr>
+<tr class="memdesc:ga7efe00d102b76d591f99585804bf2dd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">rotate a given rgb16 PFB for 180 degree  <a href="group__gHelper.html#ga7efe00d102b76d591f99585804bf2dd8">More...</a><br /></td></tr>
+<tr class="separator:ga7efe00d102b76d591f99585804bf2dd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga057ca0ef8259371f70e817303425e28d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga057ca0ef8259371f70e817303425e28d">__arm_2d_helper_pfb_rotate270_rgb16</a> (<a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptOrigin, <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptScratch, const <a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a> *ptScreenSize)</td></tr>
+<tr class="memdesc:ga057ca0ef8259371f70e817303425e28d"><td class="mdescLeft">&#160;</td><td class="mdescRight">rotate a given rgb16 PFB for 270 degree  <a href="group__gHelper.html#ga057ca0ef8259371f70e817303425e28d">More...</a><br /></td></tr>
+<tr class="separator:ga057ca0ef8259371f70e817303425e28d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7bae3d1725228f6b3011945482286e3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga7bae3d1725228f6b3011945482286e3f">__arm_2d_helper_pfb_rotate90_rgb32</a> (<a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptOrigin, <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptScratch, const <a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a> *ptScreenSize)</td></tr>
+<tr class="memdesc:ga7bae3d1725228f6b3011945482286e3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">rotate a given rgb32 PFB for 90 degree  <a href="group__gHelper.html#ga7bae3d1725228f6b3011945482286e3f">More...</a><br /></td></tr>
+<tr class="separator:ga7bae3d1725228f6b3011945482286e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga244fcde0c53f1d123ac5a6c2fa2b2ff2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga244fcde0c53f1d123ac5a6c2fa2b2ff2">__arm_2d_helper_pfb_rotate180_rgb32</a> (<a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptOrigin, <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptScratch, const <a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a> *ptScreenSize)</td></tr>
+<tr class="memdesc:ga244fcde0c53f1d123ac5a6c2fa2b2ff2"><td class="mdescLeft">&#160;</td><td class="mdescRight">rotate a given rgb32 PFB for 180 degree  <a href="group__gHelper.html#ga244fcde0c53f1d123ac5a6c2fa2b2ff2">More...</a><br /></td></tr>
+<tr class="separator:ga244fcde0c53f1d123ac5a6c2fa2b2ff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1735b2f8f58cdc0cd453a5b92768eabb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga1735b2f8f58cdc0cd453a5b92768eabb">__arm_2d_helper_pfb_rotate270_rgb32</a> (<a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptOrigin, <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptScratch, const <a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a> *ptScreenSize)</td></tr>
+<tr class="memdesc:ga1735b2f8f58cdc0cd453a5b92768eabb"><td class="mdescLeft">&#160;</td><td class="mdescRight">rotate a given rgb32 PFB for 270 degree  <a href="group__gHelper.html#ga1735b2f8f58cdc0cd453a5b92768eabb">More...</a><br /></td></tr>
+<tr class="separator:ga1735b2f8f58cdc0cd453a5b92768eabb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9ab5e975303c28c98f1ae62babb8286d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga9ab5e975303c28c98f1ae62babb8286d">arm_2d_helper_init</a> (void)</td></tr>
 <tr class="memdesc:ga9ab5e975303c28c98f1ae62babb8286d"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize helper services  <a href="group__gHelper.html#ga9ab5e975303c28c98f1ae62babb8286d">More...</a><br /></td></tr>
 <tr class="separator:ga9ab5e975303c28c98f1ae62babb8286d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1289,7 +1322,7 @@ __unnamed__</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p >on low level render event </p>
+<div class="textblock"><p >low level render event </p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
@@ -1304,6 +1337,36 @@ event handler function </td></tr>
 pTarget</td>
 <td class="fielddoc">
 user attached target </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structarm__2d__helper__before__flushing__evt__t" id="structarm__2d__helper__before__flushing__evt__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structarm__2d__helper__before__flushing__evt__t">&#9670;&nbsp;</a></span>arm_2d_helper_before_flushing_evt_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct arm_2d_helper_before_flushing_evt_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p >screen rotation event </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a2c1b54056bf2f736b32b102fa3fa84d7" name="a2c1b54056bf2f736b32b102fa3fa84d7"></a><a class="el" href="group__gHelper.html#ga4134cd0ed302d130720a15281e6cd56a">arm_2d_helper_before_flushing_handler_t</a> *</td>
+<td class="fieldname">
+fnHandler</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a6871f0d90a072955dc66103b7a35b554" name="a6871f0d90a072955dc66103b7a35b554"></a>void *</td>
+<td class="fieldname">
+pTarget</td>
+<td class="fielddoc">
+</td></tr>
 </table>
 
 </div>
@@ -1352,6 +1415,12 @@ event handler for each frame complete </td></tr>
 Navigation</td>
 <td class="fielddoc">
 event handler for drawing GUI </td></tr>
+<tr><td class="fieldtype">
+<a id="acf349e434e1a7056507ae25497d677fe" name="acf349e434e1a7056507ae25497d677fe"></a><a class="el" href="group__gHelper.html#structarm__2d__helper__before__flushing__evt__t">arm_2d_helper_before_flushing_evt_t</a></td>
+<td class="fieldname">
+evtBeforeFlushing</td>
+<td class="fielddoc">
+event handler for screen rotation </td></tr>
 </table>
 
 </div>
@@ -4083,6 +4152,32 @@ fOP</td>
 
 </div>
 </div>
+<a id="ga4134cd0ed302d130720a15281e6cd56a" name="ga4134cd0ed302d130720a15281e6cd56a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4134cd0ed302d130720a15281e6cd56a">&#9670;&nbsp;</a></span>arm_2d_helper_before_flushing_handler_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef bool arm_2d_helper_before_flushing_handler_t(void *pTarget, <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptOrigin, <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptScratch)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>before-flushing event handler </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptOrigin</td><td>the original PFB </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptScratch</td><td>A scratch PFB </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true the new content is stored in ptScratch </dd>
+<dd>
+false the new content is stored in ptOrigin </dd></dl>
+
+</div>
+</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="gab79c6ab3540af636c218dc40fa065ac3" name="gab79c6ab3540af636c218dc40fa065ac3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gab79c6ab3540af636c218dc40fa065ac3">&#9670;&nbsp;</a></span>arm_2d_scene_player_switch_mode_t</h2>
@@ -5606,6 +5701,411 @@ For normal usage, please DO NOT use this function unless you know what you are d
 </div><div class="memdoc">
 
 <p>please do NOT use this function. It is used by the display adapter. </p>
+
+</div>
+</div>
+<a id="ga413b85a6582f1d894eae5c9ba88d9fe2" name="ga413b85a6582f1d894eae5c9ba88d9fe2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga413b85a6582f1d894eae5c9ba88d9fe2">&#9670;&nbsp;</a></span>__arm_2d_helper_pfb_rotate90_c8bit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> * __arm_2d_helper_pfb_rotate90_c8bit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptOrigin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptScratch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a> *&#160;</td>
+          <td class="paramname"><em>ptScreenSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>rotate a given c8bit PFB for 90 degree </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptOrigin</td><td>the original PFB </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptScratch</td><td>A scratch PFB </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptScreenSize</td><td>the screen size </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> * the output PFB </dd></dl>
+
+</div>
+</div>
+<a id="ga63b7af25cc39dbbde1f2f2cfe8711247" name="ga63b7af25cc39dbbde1f2f2cfe8711247"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga63b7af25cc39dbbde1f2f2cfe8711247">&#9670;&nbsp;</a></span>__arm_2d_helper_pfb_rotate180_c8bit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> * __arm_2d_helper_pfb_rotate180_c8bit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptOrigin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptScratch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a> *&#160;</td>
+          <td class="paramname"><em>ptScreenSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>rotate a given c8bit PFB for 180 degree </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptOrigin</td><td>the original PFB </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptScratch</td><td>A scratch PFB </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptScreenSize</td><td>the screen size </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> * the output PFB </dd></dl>
+
+</div>
+</div>
+<a id="ga118f6122101bca193bccd26bee7da474" name="ga118f6122101bca193bccd26bee7da474"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga118f6122101bca193bccd26bee7da474">&#9670;&nbsp;</a></span>__arm_2d_helper_pfb_rotate270_c8bit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> * __arm_2d_helper_pfb_rotate270_c8bit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptOrigin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptScratch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a> *&#160;</td>
+          <td class="paramname"><em>ptScreenSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>rotate a given c8bit PFB for 270 degree </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptOrigin</td><td>the original PFB </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptScratch</td><td>A scratch PFB </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptScreenSize</td><td>the screen size </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> * the output PFB </dd></dl>
+
+</div>
+</div>
+<a id="ga242f73f69f914f4546bdd2549622c306" name="ga242f73f69f914f4546bdd2549622c306"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga242f73f69f914f4546bdd2549622c306">&#9670;&nbsp;</a></span>__arm_2d_helper_pfb_rotate90_rgb16()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> * __arm_2d_helper_pfb_rotate90_rgb16 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptOrigin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptScratch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a> *&#160;</td>
+          <td class="paramname"><em>ptScreenSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>rotate a given rgb16 PFB for 90 degree </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptOrigin</td><td>the original PFB </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptScratch</td><td>A scratch PFB </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptScreenSize</td><td>the screen size </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> * the output PFB </dd></dl>
+
+</div>
+</div>
+<a id="ga7efe00d102b76d591f99585804bf2dd8" name="ga7efe00d102b76d591f99585804bf2dd8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7efe00d102b76d591f99585804bf2dd8">&#9670;&nbsp;</a></span>__arm_2d_helper_pfb_rotate180_rgb16()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> * __arm_2d_helper_pfb_rotate180_rgb16 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptOrigin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptScratch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a> *&#160;</td>
+          <td class="paramname"><em>ptScreenSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>rotate a given rgb16 PFB for 180 degree </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptOrigin</td><td>the original PFB </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptScratch</td><td>A scratch PFB </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptScreenSize</td><td>the screen size </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> * the output PFB </dd></dl>
+
+</div>
+</div>
+<a id="ga057ca0ef8259371f70e817303425e28d" name="ga057ca0ef8259371f70e817303425e28d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga057ca0ef8259371f70e817303425e28d">&#9670;&nbsp;</a></span>__arm_2d_helper_pfb_rotate270_rgb16()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> * __arm_2d_helper_pfb_rotate270_rgb16 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptOrigin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptScratch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a> *&#160;</td>
+          <td class="paramname"><em>ptScreenSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>rotate a given rgb16 PFB for 270 degree </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptOrigin</td><td>the original PFB </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptScratch</td><td>A scratch PFB </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptScreenSize</td><td>the screen size </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> * the output PFB </dd></dl>
+
+</div>
+</div>
+<a id="ga7bae3d1725228f6b3011945482286e3f" name="ga7bae3d1725228f6b3011945482286e3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7bae3d1725228f6b3011945482286e3f">&#9670;&nbsp;</a></span>__arm_2d_helper_pfb_rotate90_rgb32()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> * __arm_2d_helper_pfb_rotate90_rgb32 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptOrigin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptScratch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a> *&#160;</td>
+          <td class="paramname"><em>ptScreenSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>rotate a given rgb32 PFB for 90 degree </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptOrigin</td><td>the original PFB </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptScratch</td><td>A scratch PFB </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptScreenSize</td><td>the screen size </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> * the output PFB </dd></dl>
+
+</div>
+</div>
+<a id="ga244fcde0c53f1d123ac5a6c2fa2b2ff2" name="ga244fcde0c53f1d123ac5a6c2fa2b2ff2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga244fcde0c53f1d123ac5a6c2fa2b2ff2">&#9670;&nbsp;</a></span>__arm_2d_helper_pfb_rotate180_rgb32()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> * __arm_2d_helper_pfb_rotate180_rgb32 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptOrigin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptScratch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a> *&#160;</td>
+          <td class="paramname"><em>ptScreenSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>rotate a given rgb32 PFB for 180 degree </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptOrigin</td><td>the original PFB </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptScratch</td><td>A scratch PFB </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptScreenSize</td><td>the screen size </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> * the output PFB </dd></dl>
+
+</div>
+</div>
+<a id="ga1735b2f8f58cdc0cd453a5b92768eabb" name="ga1735b2f8f58cdc0cd453a5b92768eabb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1735b2f8f58cdc0cd453a5b92768eabb">&#9670;&nbsp;</a></span>__arm_2d_helper_pfb_rotate270_rgb32()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> * __arm_2d_helper_pfb_rotate270_rgb32 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptOrigin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptScratch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a> *&#160;</td>
+          <td class="paramname"><em>ptScreenSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>rotate a given rgb32 PFB for 270 degree </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptOrigin</td><td>the original PFB </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptScratch</td><td>A scratch PFB </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptScreenSize</td><td>the screen size </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__gHelper.html#structarm__2d__pfb__t" title="the header of a PFB block">arm_2d_pfb_t</a> * the output PFB </dd></dl>
 
 </div>
 </div>
