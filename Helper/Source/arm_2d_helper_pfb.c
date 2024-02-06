@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        31. Jan 2024
- * $Revision:    V.1.8.4
+ * $Date:        6. Feb 2024
+ * $Revision:    V.1.8.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -597,7 +597,7 @@ void __arm_2d_helper_low_level_rendering(arm_2d_helper_pfb_t *ptThis)
     if (NULL != this.tCFG.Dependency.evtBeforeFlushing.fnHandler) {
         /* get a scratch PFB */
         arm_2d_pfb_t *ptScratchPFB 
-            = __arm_2d_helper_pfb_new(&DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t);
+            = __arm_2d_helper_pfb_new(ptThis);
 
         assert(NULL != ptScratchPFB);
         if (this.tCFG.Dependency.evtBeforeFlushing.fnHandler(
@@ -606,14 +606,12 @@ void __arm_2d_helper_low_level_rendering(arm_2d_helper_pfb_t *ptThis)
                                     ptScratchPFB)) {
             /* the new content is stored in the ptScratchPFB */
             /* free the old PFB */
-            __arm_2d_helper_pfb_free(   &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t, 
-                                        this.Adapter.ptCurrent);
+            __arm_2d_helper_pfb_free(ptThis,this.Adapter.ptCurrent);
             /* points to the new output */
             this.Adapter.ptCurrent = ptScratchPFB;
         } else {
              /* free the scratch PFB */
-            __arm_2d_helper_pfb_free(   &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t, 
-                                        ptScratchPFB);
+            __arm_2d_helper_pfb_free(ptThis, ptScratchPFB);
         }
     }
 
