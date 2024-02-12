@@ -573,7 +573,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_tile_copy_opacity)(uint8_t * __RESTRICT 
             "   letp                    lr, 2b                       \n"
             "1:                                                      \n"
 
-            : [pTarget] "+r"(pTarget),  [pSource] "+r" (pSource)
+            : [pTarget] "+l"(pTarget),  [pSource] "+l" (pSource)
             : [hwRatio] "r" (hwRatio), [hwRatioCompl] "r" (hwRatioCompl),
               [loopCnt] "r"(blkCnt/16), [tail] "r"(blkCnt & 0xf)
             :"q0", "q1", "q2", "memory", "r14");
@@ -661,7 +661,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_tile_copy_colour_keying_opacity)(uint8_t
             "   letp                    lr, 2b                       \n"
             "1:                                                      \n"
 
-            : [pTarget] "+r"(pTarget),  [pSource] "+r" (pSource)
+            : [pTarget] "+l"(pTarget),  [pSource] "+l" (pSource)
             : [hwRatio] "r" (hwRatio), [hwRatioCompl] "r" (hwRatioCompl),
               [loopCnt] "r"(blkCnt/16), [tail] "r"(blkCnt & 0xf),
               [Colour] "r" (Colour)
@@ -745,7 +745,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_opacity)(uint8_t * _
             "   letp                    lr, 2b                       \n"
             "1:                                                      \n"
 
-            : [pTarget] "+r"(pTarget)
+            : [pTarget] "+l"(pTarget)
             : [hwRatio] "r" (hwRatio), [hwRatioCompl] "r" (hwRatioCompl),
               [loopCnt] "r"(blkCnt/16), [tail] "r"(blkCnt & 0xf),
               [vecSrc] "t" (vecSrc)
