@@ -53,9 +53,27 @@
 
 #define __arm_2d_impl_rgb565_colour_filling_with_opacity    \
                  __arm_2d_impl_rgb565_colour_filling_with_opacity_orig
+#define __arm_2d_impl_rgb565_colour_filling_mask_opacity \
+                  __arm_2d_impl_rgb565_colour_filling_mask_opacity_orig
 
+#define __arm_2d_impl_rgb565_tile_copy_opacity \
+                  __arm_2d_impl_rgb565_tile_copy_opacity_orig
+
+#define __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity \
+                __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity_orig
+
+#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy \
+                __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_orig
+
+#define __arm_2d_impl_rgb565_colour_filling_mask_opacity_transform \
+                __arm_2d_impl_rgb565_colour_filling_mask_opacity_transform_orig
+
+#define __arm_2d_impl_rgb565_colour_filling_a2_mask_opacity \
+                __arm_2d_impl_rgb565_colour_filling_a2_mask_opacity_orig
+
+#define __arm_2d_impl_rgb565_colour_filling_a4_mask \
+                __arm_2d_impl_rgb565_colour_filling_a4_mask_orig
 
 #endif
 
-#endif  /* end of __ARM_2D_USER_ACI_H__ */
-
+#endif                          /* end of __ARM_2D_USER_ACI_H__ */
