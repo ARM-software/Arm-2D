@@ -55,6 +55,19 @@ extern "C" {
  */
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
+
+#define arm_2d_rgb565_fill_colour_with_mask_and_x_mirror(                       \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __ALPHA_ADDR,   /*   alpha tile address */  \
+                                    __COLOUR)       /*   colour */              \
+            arm_2dp_rgb565_fill_colour_with_mask_and_x_mirror(                  \
+                                      NULL,                                     \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR),                           \
+                                     (__ALPHA_ADDR),                            \
+                                     (__COLOUR))
+
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
