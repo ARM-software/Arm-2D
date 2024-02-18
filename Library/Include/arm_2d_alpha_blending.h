@@ -4173,9 +4173,10 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_fill_with_des_mask_and_xy_mirror(
                                         const arm_2d_tile_t *ptDesMask,
                                         const arm_2d_region_t *ptRegion);
 
-
-
 /*! @} */
+
+/*========================= POST INCLUDES ====================================*/
+#include "__arm_2d_fill_colour_with_mask_and_mirroring.h"
 
 #if defined(__clang__)
 #pragma clang diagnostic pop

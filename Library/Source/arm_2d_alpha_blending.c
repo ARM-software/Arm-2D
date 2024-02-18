@@ -69,19 +69,13 @@ extern "C" {
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
-//static
-//const uint8_t c_chA2MaskTable[4]  = {0, 85, 170, 255};
-
-//static
-//const uint8_t c_chA4MaskTable[16] = {0, 17, 34,  51, 68, 85, 102, 119,
-//                                     136, 153, 170, 187, 204, 221, 238, 255};
-
-
 /*============================ INCLUDES ======================================*/
 
 #define __ARM_2D_COMPILATION_UNIT
-#include "__arm_2d_colour_filling_with_alpha.c"
+#include "__arm_2d_fill_colour_with_alpha.c"
 
+#define __ARM_2D_COMPILATION_UNIT
+#include "__arm_2d_fill_colour_with_mask_and_mirroring.c"
 
 /*============================ IMPLEMENTATION ================================*/
 
@@ -3401,9 +3395,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_AND_XY_MIRROR_CCCN888
         },
     },
 };
-
-
-
 
 #ifdef   __cplusplus
 }
