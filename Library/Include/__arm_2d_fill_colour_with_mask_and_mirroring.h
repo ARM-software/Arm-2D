@@ -59,6 +59,15 @@ extern "C" {
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
+extern
+ARM_NONNULL(2,4)
+arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask_and_x_mirror(
+                                        arm_2d_op_fill_cl_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_tile_t *ptAlpha,
+                                        arm_2d_color_rgb565_t tColour);
+
 /*! @} */
 
 #if defined(__clang__)

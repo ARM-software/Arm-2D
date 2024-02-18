@@ -2715,9 +2715,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_SRC_MASK_AND_Y_MIRROR_CCCN888 
     },
 };
 
-
-
-
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_AND_XY_MIRROR_GRAY8 = {
     .Info = {
         .Colour = {
@@ -2737,7 +2734,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_AND_XY_MIRROR_GRAY8 =
     },
 };
 
-
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_AND_XY_MIRROR_RGB565 = {
     .Info = {
         .Colour = {
@@ -2756,7 +2752,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_AND_XY_MIRROR_RGB565 
         },
     },
 };
-
 
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_AND_XY_MIRROR_CCCN888 = {
     .Info = {
@@ -2796,7 +2791,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_SRC_MASK_AND_XY_MIRROR_GRAY8 =
         },
     },
 };
-
 
 const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_SRC_MASK_AND_XY_MIRROR_RGB565 = {
     .Info = {
@@ -2839,10 +2833,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_SRC_MASK_AND_XY_MIRROR_CCCN888
     },
 };
 
-
-
-
-
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_GRAY8 = {
     .Info = {
         .Colour = {
@@ -2862,7 +2852,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_GRAY8 = {
         },
     },
 };
-
 
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_RGB565 = {
     .Info = {
@@ -2884,7 +2873,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_RGB565 = {
     },
 };
 
-
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_CCCN888 = {
     .Info = {
         .Colour = {
@@ -2905,7 +2893,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_CCCN888 = {
     },
 };
 
-
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_ONLY_GRAY8 = {
     .Info = {
         .Colour = {
@@ -2925,7 +2912,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_ONLY_GRAY8 = {
     },
 };
 
-
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_ONLY_RGB565 = {
     .Info = {
         .Colour = {
@@ -2944,7 +2930,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_ONLY_RGB565 = {
         },
     },
 };
-
 
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_ONLY_CCCN888 = {
     .Info = {
@@ -2985,7 +2970,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_ONLY_GRAY8 = {
     },
 };
 
-
 const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_ONLY_RGB565 = {
     .Info = {
         .Colour = {
@@ -3005,7 +2989,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_ONLY_RGB565 = {
         },
     },
 };
-
 
 const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_ONLY_CCCN888 = {
     .Info = {
@@ -3027,7 +3010,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_ONLY_CCCN888 = {
     },
 };
 
-
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_AND_X_MIRROR_GRAY8 = {
     .Info = {
         .Colour = {
@@ -3047,7 +3029,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_AND_X_MIRROR_GRAY8 = 
     },
 };
 
-
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_AND_X_MIRROR_RGB565 = {
     .Info = {
         .Colour = {
@@ -3066,7 +3047,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_AND_X_MIRROR_RGB565 =
         },
     },
 };
-
 
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_AND_X_MIRROR_CCCN888 = {
     .Info = {
@@ -3107,7 +3087,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_AND_X_MIRROR_GRAY8 = 
     },
 };
 
-
 const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_AND_X_MIRROR_RGB565 = {
     .Info = {
         .Colour = {
@@ -3127,7 +3106,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_AND_X_MIRROR_RGB565 =
         },
     },
 };
-
 
 const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_AND_X_MIRROR_CCCN888 = {
     .Info = {
@@ -3149,8 +3127,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_AND_X_MIRROR_CCCN888 
     },
 };
 
-
-
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_AND_Y_MIRROR_GRAY8 = {
     .Info = {
         .Colour = {
@@ -3170,7 +3146,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_AND_Y_MIRROR_GRAY8 = 
     },
 };
 
-
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_AND_Y_MIRROR_RGB565 = {
     .Info = {
         .Colour = {
@@ -3189,7 +3164,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_AND_Y_MIRROR_RGB565 =
         },
     },
 };
-
 
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_AND_Y_MIRROR_CCCN888 = {
     .Info = {
@@ -3230,7 +3204,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_AND_Y_MIRROR_GRAY8 = 
     },
 };
 
-
 const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_AND_Y_MIRROR_RGB565 = {
     .Info = {
         .Colour = {
@@ -3250,7 +3223,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_AND_Y_MIRROR_RGB565 =
         },
     },
 };
-
 
 const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_AND_Y_MIRROR_CCCN888 = {
     .Info = {
@@ -3272,9 +3244,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_AND_Y_MIRROR_CCCN888 
     },
 };
 
-
-
-
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_AND_XY_MIRROR_GRAY8 = {
     .Info = {
         .Colour = {
@@ -3294,7 +3263,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_AND_XY_MIRROR_GRAY8 =
     },
 };
 
-
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_AND_XY_MIRROR_RGB565 = {
     .Info = {
         .Colour = {
@@ -3313,7 +3281,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_AND_XY_MIRROR_RGB565 
         },
     },
 };
-
 
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_AND_XY_MIRROR_CCCN888 = {
     .Info = {
@@ -3354,7 +3321,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_AND_XY_MIRROR_GRAY8 =
     },
 };
 
-
 const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_AND_XY_MIRROR_RGB565 = {
     .Info = {
         .Colour = {
@@ -3374,7 +3340,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_AND_XY_MIRROR_RGB565 
         },
     },
 };
-
 
 const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_AND_XY_MIRROR_CCCN888 = {
     .Info = {
