@@ -52,7 +52,7 @@
 
 #if (__ARM_FEATURE_CDE_COPROC & (0x1 << ARM_2D_RGB565_ACI_LIB_COPRO_ID) ) == 0
 #error "__ARM_FEATURE_CDE_COPROC does not have correct feature bits set"
-#endif                          /* */
+#endif
 #define __ARM_2D_IMPL__
 #include "__arm_2d_impl.h"
 #include <RTE_Components.h>
@@ -64,17 +64,143 @@
 /* Vector RGB565 Mix */
 #define VRGB565MIX_ACI(In1Out, In2, Ratio)                           \
     __arm_vcx3qa(0, In1Out, In2, Ratio, 1)
-__STATIC_FORCEINLINE
-uint16x8_t __arm_2d_cde_vrgb565_blend(uint16x8_t vec1, uint16x8_t vec2,        uint16x8_t vratio)
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_cde_rgb565_blendq(uint16x8_t vec1, uint16x8_t vec2,        uint16x8_t vratio)
 {
     return __arm_vcx3qa(ARM_2D_RGB565_ACI_LIB_COPRO_ID, vec1, vec2, vratio, 1);
 }
-__STATIC_FORCEINLINE
-uint16x8_t __arm_2d_cde_vrgb565_blend_m(uint16x8_t vec1, uint16x8_t vec2,
+
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_cde_rgb565_blendq_m(uint16x8_t vec1, uint16x8_t vec2,
                                                                uint16x8_t vratio,
-                                                               mve_pred16_t p){    return __arm_vcx3qa_m(ARM_2D_RGB565_ACI_LIB_COPRO_ID, vec1, vec2, vratio, 1, p);
+                                                               mve_pred16_t p)
+{
+    return __arm_vcx3qa_m(ARM_2D_RGB565_ACI_LIB_COPRO_ID, vec1, vec2, vratio, 1, p);
 }
 
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_cde_rgb565_red_unpckbq(uint16x8_t in)
+{
+    return __arm_vcx2q(ARM_2D_RGB565_ACI_LIB_COPRO_ID, in, 0b0000001);
+}
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_cde_rgb565_red_unpckbq_m(uint16x8_t inactive, uint16x8_t in, mve_pred16_t p)
+{
+    return __arm_vcx2q_m(ARM_2D_RGB565_ACI_LIB_COPRO_ID, inactive, in, 0b0000001, p);
+}
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_cde_rgb565_red_unpcktq(uint16x8_t in)
+{
+    return __arm_vcx2q(ARM_2D_RGB565_ACI_LIB_COPRO_ID, in, 0b1000001);
+}
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_cde_rgb565_red_unpcktq_m(uint16x8_t inactive, uint16x8_t in, mve_pred16_t p)
+{
+    return __arm_vcx2q_m(ARM_2D_RGB565_ACI_LIB_COPRO_ID, inactive, in, 0b1000001, p);
+}
+
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_cde_rgb565_green_unpckbq(uint16x8_t in)
+{
+    return __arm_vcx2q(ARM_2D_RGB565_ACI_LIB_COPRO_ID, in, 0b0000010);
+}
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_cde_rgb565_green_unpckbq_m(uint16x8_t inactive, uint16x8_t in, mve_pred16_t p)
+{
+    return __arm_vcx2q_m(ARM_2D_RGB565_ACI_LIB_COPRO_ID, inactive, in, 0b0000010, p);
+}
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_cde_rgb565_green_unpcktq(uint16x8_t in)
+{
+    return __arm_vcx2q(ARM_2D_RGB565_ACI_LIB_COPRO_ID, in, 0b1000010);
+}
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_cde_rgb565_blue_unpcktq_m(uint16x8_t inactive, uint16x8_t in, mve_pred16_t p)
+{
+    return __arm_vcx2q_m(ARM_2D_RGB565_ACI_LIB_COPRO_ID, inactive, in, 0b0000100, p);
+}
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_cde_rgb565_blue_unpckbq(uint16x8_t in)
+{
+    return __arm_vcx2q(ARM_2D_RGB565_ACI_LIB_COPRO_ID, in, 0b0000100);
+}
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_cde_rgb565_blue_unpckbq_m(uint16x8_t inactive, uint16x8_t in, mve_pred16_t p)
+{
+    return __arm_vcx2q_m(ARM_2D_RGB565_ACI_LIB_COPRO_ID, inactive, in, 0b0000010, p);
+}
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_cde_rgb565_blue_unpcktq(uint16x8_t in)
+{
+    return __arm_vcx2q(ARM_2D_RGB565_ACI_LIB_COPRO_ID, in, 0b1000100);
+}
+
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_cde_rgb565_packbq(uint16x8_t R, uint16x8_t G,        uint16x8_t B)
+{
+    return __arm_vcx3qa(ARM_2D_RGB565_ACI_LIB_COPRO_ID, R, G, B, 0);
+}
+
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_cde_rgb565_packbq_m(uint16x8_t R, uint16x8_t G,
+                                                               uint16x8_t B,
+                                                               mve_pred16_t p)
+{
+    return __arm_vcx3qa_m(ARM_2D_RGB565_ACI_LIB_COPRO_ID, R, G, B, 0, p);
+}
+
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_cde_rgb565_packtq(uint16x8_t R, uint16x8_t G,        uint16x8_t B)
+{
+    return __arm_vcx3qa(ARM_2D_RGB565_ACI_LIB_COPRO_ID, R, G, B, 0b100);
+}
+
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_cde_rgb565_packtq_m(uint16x8_t R, uint16x8_t G,
+                                                               uint16x8_t B,
+                                                               mve_pred16_t p)
+{
+    return __arm_vcx3qa_m(ARM_2D_RGB565_ACI_LIB_COPRO_ID, R, G, B, 0b100, p);
+}
+
+
+
+#define VRGB16_UNPACK_RED_ACC_BOT(acc, in)      __arm_vcx2qa(0, acc, in, 0b0000001)
+#define VRGB16_UNPACK_RED_ACC_TOP(acc, in)      __arm_vcx2qa(0, acc, in, 0b1000001)
+
+#define VRGB16_UNPACK_GREEN_ACC_BOT(acc, in)    __arm_vcx2qa(0, acc, in, 0b0000010)
+#define VRGB16_UNPACK_GREEN_ACC_TOP(acc, in)    __arm_vcx2qa(0, acc, in, 0b1000010)
+
+#define VRGB16_UNPACK_BLUE_ACC_BOT(acc, in)     __arm_vcx2qa(0, acc, in, 0b0000100)
+#define VRGB16_UNPACK_BLUE_ACC_TOP(acc, in)     __arm_vcx2qa(0, acc, in, 0b1000100)
+
+#define VRGB16_PACK_RED_ACC_BOT(acc, in)        __arm_vcx2qa(0, acc, in, 0b0001000)
+#define VRGB16_PACK_RED_ACC_TOP(acc, in)        __arm_vcx2qa(0, acc, in, 0b1001000)
+
+#define VRGB16_PACK_GREEN_ACC_BOT(acc, in)      __arm_vcx2qa(0, acc, in, 0b0010000)
+#define VRGB16_PACK_GREEN_ACC_TOP(acc, in)      __arm_vcx2qa(0, acc, in, 0b1010000)
+
+#define VRGB16_PACK_BLUE_ACC_BOT(acc, in)       __arm_vcx2qa(0, acc, in, 0b0100000)
+#define VRGB16_PACK_BLUE_ACC_TOP(acc, in)       __arm_vcx2qa(0, acc, in, 0b1100000)
+
+void __arm_2d_aci_init(void);
 
 #endif                          /* __ARM_FEATURE_CDE  */
 #endif                          /* __ARM_2D_RGB565_ACI_LIB_H__ */

@@ -74,6 +74,18 @@
 #define __arm_2d_impl_rgb565_colour_filling_a4_mask \
                 __arm_2d_impl_rgb565_colour_filling_a4_mask_orig
 
+#define __arm_2d_impl_rgb565_des_msk_copy \
+                __arm_2d_impl_rgb565_des_msk_copy_orig
+
+#define __arm_2d_impl_rgb565_transform_with_opacity \
+                __arm_2d_impl_rgb565_transform_with_opacity_orig
+
+#define __arm_2d_impl_rgb565_transform_with_src_mask \
+                __arm_2d_impl_rgb565_transform_with_src_mask_orig
+
+#define __arm_2d_impl_rgb565_transform \
+                __arm_2d_impl_rgb565_transform_orig
+
 #endif
 
 #endif                          /* end of __ARM_2D_USER_ACI_H__ */

@@ -50,106 +50,8 @@ uint32_t uint32x4_to_uint32x1(std::valarray < uint8_t > v)
     return val;
 }
 
-
-ACI_Status arm_2d_rgb565_aci_fvp::exec_cx1(const ACICX1DecodeInfo * decode_info,
-                                 uint32_t rd_val, uint32_t * result)
-{
-    return ACI_STATUS_NOT_IMPLEMENTED;
-}
-
-ACI_Status arm_2d_rgb565_aci_fvp::exec_cx1_d(const ACICX1DecodeInfo * decode_info,
-                                   uint64_t rfd_val, uint64_t * result)
-{
-    return ACI_STATUS_NOT_IMPLEMENTED;
-}
-
-ACI_Status arm_2d_rgb565_aci_fvp::exec_cx2(const ACICX2DecodeInfo * decode_info,
-                                 uint32_t rd_val, uint32_t rn_val, uint32_t * result)
-{
-    return ACI_STATUS_NOT_IMPLEMENTED;
-}
-
-ACI_Status arm_2d_rgb565_aci_fvp::exec_cx2_d(const ACICX2DecodeInfo * decode_info,
-                                   uint64_t rfd_val, uint64_t rn_val, uint64_t * result)
-{
-    return ACI_STATUS_NOT_IMPLEMENTED;
-}
-
-ACI_Status arm_2d_rgb565_aci_fvp::exec_cx3(const ACICX3DecodeInfo * decode_info,
-                                 uint32_t rd_val,
-                                 uint32_t rn_val, uint32_t rm_val, uint32_t * result)
-{
-    return ACI_STATUS_NOT_IMPLEMENTED;
-}
-
-ACI_Status arm_2d_rgb565_aci_fvp::exec_cx3_d(const ACICX3DecodeInfo * decode_info,
-                                   uint64_t rfd_val,
-                                   uint64_t rn_val, uint64_t rm_val, uint64_t * result)
-{
-    return ACI_STATUS_NOT_IMPLEMENTED;
-}
-
-ACI_Status arm_2d_rgb565_aci_fvp::exec_vcx1_s(const ACIVCX1DecodeInfo * decode_info,
-                                    uint32_t sd_val, uint32_t * result)
-{
-    return ACI_STATUS_NOT_IMPLEMENTED;
-}
-
-ACI_Status arm_2d_rgb565_aci_fvp::exec_vcx1_d(const ACIVCX1DecodeInfo * decode_info,
-                                    uint64_t dd_val, uint64_t * result)
-{
-    return ACI_STATUS_NOT_IMPLEMENTED;
-}
-
-
-ACI_Status arm_2d_rgb565_aci_fvp::exec_vcx1_beatwise(const ACIVCX1DecodeInfo * decode_info,
-                                           uint32_t d_val,
-                                           uint8_t beat, uint8_t elmt_mask, uint32_t * result)
-{
-    return ACI_STATUS_NOT_IMPLEMENTED;
-}
-
-ACI_Status arm_2d_rgb565_aci_fvp::exec_vcx2_s(const ACIVCX2DecodeInfo * decode_info,
-                                    uint32_t sd_val, uint32_t sm_val, uint32_t * result)
-{
-    return ACI_STATUS_NOT_IMPLEMENTED;
-}
-
-ACI_Status arm_2d_rgb565_aci_fvp::exec_vcx2_d(const ACIVCX2DecodeInfo * decode_info,
-                                    uint64_t dd_val, uint64_t dm_val, uint64_t * result)
-{
-    return ACI_STATUS_NOT_IMPLEMENTED;
-}
-
-
-
-
-ACI_Status arm_2d_rgb565_aci_fvp::exec_vcx2_beatwise(const ACIVCX2DecodeInfo * decode_info,
-                                           uint32_t d_val,
-                                           uint32_t m_val,
-                                           uint8_t beat, uint8_t elmt_mask, uint32_t * result)
-{
-    return ACI_STATUS_NOT_IMPLEMENTED;
-}
-
-
-ACI_Status arm_2d_rgb565_aci_fvp::exec_vcx3_s(const ACIVCX3DecodeInfo * decode_info,
-                                    uint32_t sd_val,
-                                    uint32_t sn_val, uint32_t sm_val, uint32_t * result)
-{
-    return ACI_STATUS_NOT_IMPLEMENTED;
-}
-
-ACI_Status arm_2d_rgb565_aci_fvp::exec_vcx3_d(const ACIVCX3DecodeInfo * decode_info,
-                                    uint64_t dd_val,
-                                    uint64_t dn_val, uint64_t dm_val, uint64_t * result)
-{
-    return ACI_STATUS_NOT_IMPLEMENTED;
-}
-
-
-
-void arm_mix_rgb16_uint16x2(uint16_t * out, const uint16_t * in1, const uint16_t * in2, uint16_t * ratio)
+void arm_mix_rgb16_uint16x2(uint16_t * out, const uint16_t * in1, const uint16_t * in2,
+                            const uint16_t * ratio)
 {
 
     int32_t         blkCnt;
@@ -203,7 +105,7 @@ void arm_mix_rgb16_uint16x2(uint16_t * out, const uint16_t * in1, const uint16_t
         /* pack merged stream */
         *out = (r1 >> 3) | ((g1 & maskGpk) << 3) | ((b1 & maskRpk) << 8);
         out++;
-        ratio ++;
+        ratio++;
 
         blkCnt -= 1;
     }
@@ -211,26 +113,253 @@ void arm_mix_rgb16_uint16x2(uint16_t * out, const uint16_t * in1, const uint16_t
 }
 
 
+void arm_pack_rgb16_uint16x2(uint16_t * out, uint16_t * in_r, const uint16_t * in_g,
+                             const uint16_t * in_b, bool is_bottom)
+{
+
+    int32_t         blkCnt;
+    uint16_t        maskRpk = 0x00f8;
+    uint16_t        maskGpk = 0x00fc;
+    blkCnt = 2;
+
+    do {
+        uint16_t         R, B, G;
+
+        R = *in_r;
+        G = *in_g;
+        B = *in_b;
+
+        if (!is_bottom) {
+            R >>= 8;
+            G >>= 8;
+            B >>= 8;
+        }
+
+        *out = (B >> 3) | ((G & maskGpk) << 3) | ((R & maskRpk) << 8);
+        out++;
+        in_r++;
+        in_g++;
+        in_b++;
+        blkCnt -= 1;
+    }
+    while (blkCnt > 0);
+}
+
+void arm_mix_unpack_blue_uint16x2(uint16_t * out, const uint16_t * in1, bool is_bottom)
+{
+
+    int32_t         blkCnt;
+    uint16_t        maskRunpk = 0x001f;
+    blkCnt = 2;
+    do {
+        uint8_t         R;
+
+        R = *in1++ & maskRunpk;
+        R = R << 3;
+
+        *out++ = is_bottom ? R : R << 8;
+
+        blkCnt -= 1;
+    }
+    while (blkCnt > 0);
+}
+
+void arm_mix_unpack_green_uint16x2(uint16_t * out, const uint16_t * in1, bool is_bottom)
+{
+
+    int32_t         blkCnt;
+    uint16_t        maskGunpk = 0x003f;
+    blkCnt = 2;
+    do {
+        uint8_t         G;
+
+        G = ((*in1++ >> 5) & maskGunpk);
+        G = G << 2;
+
+        *out++ = is_bottom ? G : G << 8;
+
+        blkCnt -= 1;
+    }
+    while (blkCnt > 0);
+}
+
+void arm_mix_unpack_red_uint16x2(uint16_t * out, const uint16_t * in1, bool is_bottom)
+{
+
+    int32_t         blkCnt;
+    blkCnt = 2;
+    do {
+        uint8_t         B;
+
+
+        B = *in1++ >> 11;
+        B = B << 3;
+
+        *out++ = is_bottom ? B : B << 8;
+
+        blkCnt -= 1;
+    }
+    while (blkCnt > 0);
+}
+
+ACI_Status arm_2d_rgb565_aci_fvp::exec_cx1(const ACICX1DecodeInfo * decode_info,
+                                           uint32_t rd_val, uint32_t * result)
+{
+    return ACI_STATUS_NOT_IMPLEMENTED;
+}
+
+ACI_Status arm_2d_rgb565_aci_fvp::exec_cx1_d(const ACICX1DecodeInfo * decode_info,
+                                             uint64_t rfd_val, uint64_t * result)
+{
+    return ACI_STATUS_NOT_IMPLEMENTED;
+}
+
+ACI_Status arm_2d_rgb565_aci_fvp::exec_cx2(const ACICX2DecodeInfo * decode_info,
+                                           uint32_t rd_val, uint32_t rn_val, uint32_t * result)
+{
+    return ACI_STATUS_NOT_IMPLEMENTED;
+}
+
+ACI_Status arm_2d_rgb565_aci_fvp::exec_cx2_d(const ACICX2DecodeInfo * decode_info,
+                                             uint64_t rfd_val, uint64_t rn_val, uint64_t * result)
+{
+    return ACI_STATUS_NOT_IMPLEMENTED;
+}
+
+ACI_Status arm_2d_rgb565_aci_fvp::exec_cx3(const ACICX3DecodeInfo * decode_info,
+                                           uint32_t rd_val,
+                                           uint32_t rn_val, uint32_t rm_val, uint32_t * result)
+{
+    return ACI_STATUS_NOT_IMPLEMENTED;
+}
+
+ACI_Status arm_2d_rgb565_aci_fvp::exec_cx3_d(const ACICX3DecodeInfo * decode_info,
+                                             uint64_t rfd_val,
+                                             uint64_t rn_val, uint64_t rm_val, uint64_t * result)
+{
+    return ACI_STATUS_NOT_IMPLEMENTED;
+}
+
+ACI_Status arm_2d_rgb565_aci_fvp::exec_vcx1_s(const ACIVCX1DecodeInfo * decode_info,
+                                              uint32_t sd_val, uint32_t * result)
+{
+    return ACI_STATUS_NOT_IMPLEMENTED;
+}
+
+ACI_Status arm_2d_rgb565_aci_fvp::exec_vcx1_d(const ACIVCX1DecodeInfo * decode_info,
+                                              uint64_t dd_val, uint64_t * result)
+{
+    return ACI_STATUS_NOT_IMPLEMENTED;
+}
+
+
+ACI_Status arm_2d_rgb565_aci_fvp::exec_vcx1_beatwise(const ACIVCX1DecodeInfo * decode_info,
+                                                     uint32_t d_val,
+                                                     uint8_t beat, uint8_t elmt_mask,
+                                                     uint32_t * result)
+{
+    return ACI_STATUS_NOT_IMPLEMENTED;
+}
+
+ACI_Status arm_2d_rgb565_aci_fvp::exec_vcx2_s(const ACIVCX2DecodeInfo * decode_info,
+                                              uint32_t sd_val, uint32_t sm_val, uint32_t * result)
+{
+    return ACI_STATUS_NOT_IMPLEMENTED;
+}
+
+ACI_Status arm_2d_rgb565_aci_fvp::exec_vcx2_d(const ACIVCX2DecodeInfo * decode_info,
+                                              uint64_t dd_val, uint64_t dm_val, uint64_t * result)
+{
+    return ACI_STATUS_NOT_IMPLEMENTED;
+}
+
+
+
+
+ACI_Status arm_2d_rgb565_aci_fvp::exec_vcx2_beatwise(const ACIVCX2DecodeInfo * decode_info,
+                                                     uint32_t d_val,
+                                                     uint32_t m_val,
+                                                     uint8_t beat, uint8_t elmt_mask,
+                                                     uint32_t * result)
+{
+
+    if (!isCDECoprocessorValid(decode_info->coproc))
+        return ACI_STATUS_NOT_IMPLEMENTED;
+
+    //printf("elmt_mask %x imm %x beat %d\n", elmt_mask, decode_info->imm, beat);
+
+    bool is_bottom = (decode_info->imm & 0b1000000) > 0 ? false : true;
+
+    switch (decode_info->imm & 0xf) {
+      case 0b0000001:
+          arm_mix_unpack_red_uint16x2((uint16_t *) & d_val, (uint16_t *) & m_val, is_bottom);
+          *result = *(uint32_t *) & d_val;
+          return ACI_STATUS_OK;
+          break;
+      case 0b0000010:
+          arm_mix_unpack_green_uint16x2((uint16_t *) & d_val, (uint16_t *) & m_val, is_bottom);
+          *result = *(uint32_t *) & d_val;
+          return ACI_STATUS_OK;
+          break;
+      case 0b0000100:
+          arm_mix_unpack_blue_uint16x2((uint16_t *) & d_val, (uint16_t *) & m_val, is_bottom);
+          *result = *(uint32_t *) & d_val;
+          return ACI_STATUS_OK;
+          break;
+      default:
+          return ACI_STATUS_NOT_IMPLEMENTED;
+
+    }
+
+}
+
+
+
+ACI_Status arm_2d_rgb565_aci_fvp::exec_vcx3_s(const ACIVCX3DecodeInfo * decode_info,
+                                              uint32_t sd_val,
+                                              uint32_t sn_val, uint32_t sm_val, uint32_t * result)
+{
+    return ACI_STATUS_NOT_IMPLEMENTED;
+}
+
+ACI_Status arm_2d_rgb565_aci_fvp::exec_vcx3_d(const ACIVCX3DecodeInfo * decode_info,
+                                              uint64_t dd_val,
+                                              uint64_t dn_val, uint64_t dm_val, uint64_t * result)
+{
+    return ACI_STATUS_NOT_IMPLEMENTED;
+}
+
+
+
+
+
 
 ACI_Status arm_2d_rgb565_aci_fvp::exec_vcx3_beatwise(const ACIVCX3DecodeInfo * decode_info,
-                                           uint32_t d_val,
-                                           uint32_t n_val,
-                                           uint32_t m_val,
-                                           uint8_t beat, uint8_t elmt_mask, uint32_t * result)
+                                                     uint32_t d_val,
+                                                     uint32_t n_val,
+                                                     uint32_t m_val,
+                                                     uint8_t beat, uint8_t elmt_mask,
+                                                     uint32_t * result)
 {
 
     if (!isCDECoprocessorValid(decode_info->coproc))
         return ACI_STATUS_NOT_IMPLEMENTED;
 
 
-    /* unpack current 32-bit word into byte array */
-    std::valarray < uint8_t > d(4), n(4), m(4);
-    m = uint32x1_to_uint8x4(m_val);
-    n = uint32x1_to_uint8x4(n_val);
+
 
     if (decode_info->accumulate) {
-        arm_mix_rgb16_uint16x2((uint16_t*)&d_val, (uint16_t*)&d_val, (uint16_t*)&n_val, (uint16_t*)&m_val);
-        *result = *(uint32_t *)&d_val;
+        if ((decode_info->imm & 0xf) == 1)
+            arm_mix_rgb16_uint16x2((uint16_t *) & d_val, (uint16_t *) & d_val, (uint16_t *) & n_val,
+                                   (uint16_t *) & m_val);
+        else {
+            bool is_bottom = (decode_info->imm & 0b100) > 0 ? false : true;
+            arm_pack_rgb16_uint16x2((uint16_t *) & d_val, (uint16_t *) & d_val,
+                                    (uint16_t *) & n_val, (uint16_t *) & m_val, is_bottom);
+        //printf("%x %x %x\n",d_val, n_val, m_val);
+        }
+
+        *result = *(uint32_t *) & d_val;
         return ACI_STATUS_OK;
     } else
         return ACI_STATUS_NOT_IMPLEMENTED;

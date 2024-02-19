@@ -94,7 +94,7 @@ static int8_t   A4_masks_shifts[4 * 3] = {
 };
 
 
-//#define COMPARE_CDE_TEST 1
+#define COMPARE_CDE_TEST 1
 
 #if COMPARE_CDE_TEST
 #include <stdio.h>
@@ -128,7 +128,7 @@ static void __arm_2d_cde_rgb565_init(void)
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_rgb565_colour_filling_with_opacity(uint16_t *
+    void __arm_2d_impl_rgb565_colour_filling_with_opacity(uint16_t *
                                                           __RESTRICT pTargetBase,
                                                           int16_t iTargetStride,
                                                           arm_2d_size_t *
@@ -202,7 +202,7 @@ void __arm_2d_impl_rgb565_colour_filling_with_opacity(uint16_t *
                 | vmulq((vecB0 & vecMaskBpck), 256);
 
 
-            uint16x8_t      cde = __arm_2d_cde_vrgb565_blend(vecColour,
+            uint16x8_t      cde = __arm_2d_cde_rgb565_blendq(vecColour,
                                                              vecIn,
                                                              vecRatio);
 
@@ -215,7 +215,7 @@ void __arm_2d_impl_rgb565_colour_filling_with_opacity(uint16_t *
             }
 #endif
             vst1q_p_u16(phwTarget,
-                        __arm_2d_cde_vrgb565_blend_m(vecColour, vld1q_z(phwTarget, p), vecRatio, p),
+                        __arm_2d_cde_rgb565_blendq_m(vecColour, vld1q_z(phwTarget, p), vecRatio, p),
                         p);
 
             phwTarget += 8;
@@ -230,7 +230,7 @@ void __arm_2d_impl_rgb565_colour_filling_with_opacity(uint16_t *
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_rgb565_colour_filling_mask_opacity(uint16_t * __RESTRICT pTarget,
+    void __arm_2d_impl_rgb565_colour_filling_mask_opacity(uint16_t * __RESTRICT pTarget,
                                                           int16_t iTargetStride,
                                                           uint8_t * __RESTRICT pchAlpha,
                                                           int16_t iAlphaStride,
@@ -257,7 +257,7 @@ void __arm_2d_impl_rgb565_colour_filling_mask_opacity(uint16_t * __RESTRICT pTar
 #endif
             uint16x8_t      vecAlpha = vsubq_u16(v256, vecTransp);
 
-            vecTarget = __arm_2d_cde_vrgb565_blend_m(vecTarget, vdupq_n_u16(Colour), vecAlpha, p);
+            vecTarget = __arm_2d_cde_rgb565_blendq_m(vecTarget, vdupq_n_u16(Colour), vecAlpha, p);
 
 
             vst1q_p_u16(pCurTarget, vecTarget, p);
@@ -274,7 +274,7 @@ void __arm_2d_impl_rgb565_colour_filling_mask_opacity(uint16_t * __RESTRICT pTar
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_rgb565_tile_copy_opacity(uint16_t * __RESTRICT phwSourceBase,
+    void __arm_2d_impl_rgb565_tile_copy_opacity(uint16_t * __RESTRICT phwSourceBase,
                                                 int16_t iSourceStride,
                                                 uint16_t * __RESTRICT phwTargetBase,
                                                 int16_t iTargetStride,
@@ -346,7 +346,7 @@ void __arm_2d_impl_rgb565_tile_copy_opacity(uint16_t * __RESTRICT phwSourceBase,
             uint16x8_t      vOut = vecR0 >> 3 | vmulq((vecG0 & vecMaskGpck), 8)
                 | vmulq((vecB0 & vecMaskBpck), 256);
 
-            uint16x8_t      cde = __arm_2d_cde_vrgb565_blend(vld1q(phwSource),
+            uint16x8_t      cde = __arm_2d_cde_rgb565_blendq(vld1q(phwSource),
                                                              vld1q(phwTarget),
                                                              vdupq_n_u16(hwRatio));
 
@@ -362,9 +362,9 @@ void __arm_2d_impl_rgb565_tile_copy_opacity(uint16_t * __RESTRICT phwSourceBase,
                 //printf("ok %d %d\n", errorCnt, okCnt);
             }
 #else
-            uint16x8_t      vOut = __arm_2d_cde_vrgb565_blend_m(vld1q(phwSource),
-                                                              vld1q(phwTarget),
-                                                              vdupq_n_u16(hwRatio), p);
+            uint16x8_t      vOut = __arm_2d_cde_rgb565_blendq_m(vld1q(phwSource),
+                                                                vld1q(phwTarget),
+                                                                vdupq_n_u16(hwRatio), p);
 #endif
 
             vst1q_p(phwTarget, vOut, p);
@@ -382,7 +382,7 @@ void __arm_2d_impl_rgb565_tile_copy_opacity(uint16_t * __RESTRICT phwSourceBase,
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity(uint16_t * __RESTRICT pSourceBase,
+    void __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity(uint16_t * __RESTRICT pSourceBase,
                                                               int16_t iSourceStride,
                                                               uint16_t * __RESTRICT pTargetBase,
                                                               int16_t iTargetStride,
@@ -410,9 +410,9 @@ void __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity(uint16_t * __RESTRICT 
             uint16x8_t      vecIn = vld1q(pSource);
             uint16x8_t      vecTarget = vld1q(pTargetBase);
 
-            uint16x8_t      vOut = __arm_2d_cde_vrgb565_blend_m(vecIn,
-                                                              vecTarget,
-                                                              vdupq_n_u16(hwRatio), p);
+            uint16x8_t      vOut = __arm_2d_cde_rgb565_blendq_m(vecIn,
+                                                                vecTarget,
+                                                                vdupq_n_u16(hwRatio), p);
 
             vst1q_p(pTarget, vOut, vcmpneq_m_n_s16(vecIn, Colour, p));
 
@@ -471,7 +471,7 @@ void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy(uint16_t * __RESTRICT pSourceB
             uint16x8_t      vecTarget2 =
                 __arm_2d_rgb565_blending_opacity_single_vec(vecTarget, vecSource, vecHwOpacity);
 
-            vecTarget = __arm_2d_cde_vrgb565_blend_m(vecTarget, vecSource, vecHwOpacity, p);
+            vecTarget = __arm_2d_cde_rgb565_blendq_m(vecTarget, vecSource, vecHwOpacity, p);
 
             if (COMPARE_Q15_VEC(vecTarget2, vecTarget) == 0) {
                 printf("error\n");
@@ -479,7 +479,7 @@ void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy(uint16_t * __RESTRICT pSourceB
             } else
                 okCnt++;
 #else
-            vecTarget = __arm_2d_cde_vrgb565_blend_m(vecTarget, vecSource, vecHwOpacity, p);
+            vecTarget = __arm_2d_cde_rgb565_blendq_m(vecTarget, vecSource, vecHwOpacity, p);
 #endif
 
             vst1q_p(ptTargetCur, vecTarget, p);
@@ -503,7 +503,7 @@ void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy(uint16_t * __RESTRICT pSourceB
 
 static
 mve_pred16_t __arm_2d_is_point_vec_inside_region_s16(const arm_2d_region_t * ptRegion,
-                                                   const arm_2d_point_s16x8_t * ptPoint)
+                                                     const arm_2d_point_s16x8_t * ptPoint)
 {
     mve_pred16_t    p0 = vcmpgeq(ptPoint->X, ptRegion->tLocation.iX);
     p0 = vcmpgeq_m(ptPoint->Y, ptRegion->tLocation.iY, p0);
@@ -604,7 +604,7 @@ static void __arm_2d_impl_rgb565_get_alpha_with_opacity(arm_2d_point_s16x8_t * p
         int16_t         correctionOffset = vminvq_s16(32767, vPoint.Y) - 1;
         uint16x8_t      ptOffs = vPoint.X + (vPoint.Y - correctionOffset) * iOrigStride;
         uint8_t        *pOriginCorrected = pOrigin + (correctionOffset * iOrigStride);
-        vHwPixelAlpha = vldrbq_gather_offset_z_u16(pOriginCorrected, ptOffs, predTail & p);;
+        vHwPixelAlpha = vldrbq_gather_offset_z_u16(pOriginCorrected, ptOffs, predTail & p);
 
         vHwPixelAlpha = vpselq(vdupq_n_u16(hwOpacity),
                                vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 8),
@@ -623,7 +623,7 @@ static void __arm_2d_impl_rgb565_get_alpha_with_opacity(arm_2d_point_s16x8_t * p
     vBlended = __arm_2d_rgb565_blending_single_vec_with_scal(vTarget, &tSrcPix, vhwTransparency);
 
     uint16x8_t      cde =
-        __arm_2d_cde_vrgb565_blend(vTarget, vdupq_n_u16(MaskColour), vhwTransparency);
+        __arm_2d_cde_rgb565_blendq(vTarget, vdupq_n_u16(MaskColour), vhwTransparency);
 
 
     if (COMPARE_Q15_VEC(cde, vBlended) == 0) {
@@ -635,7 +635,7 @@ static void __arm_2d_impl_rgb565_get_alpha_with_opacity(arm_2d_point_s16x8_t * p
         //printf("ok %d %d\n", errorCnt, okCnt);
         okCnt++;
 #else
-    vBlended = __arm_2d_cde_vrgb565_blend(vTarget, vdupq_n_u16(MaskColour), vhwTransparency);
+    vBlended = __arm_2d_cde_rgb565_blendq(vTarget, vdupq_n_u16(MaskColour), vhwTransparency);
 #endif
 
     vTarget = vpselq_u16(vBlended, vTarget, predGlb);
@@ -731,15 +731,1096 @@ __OVERRIDE_WEAK
 }
 
 
+__STATIC_FORCEINLINE
+    void __arm_2d_rgb565_unpack_single_vec_cde(uint16x8_t in,
+                                               uint16x8_t * R, uint16x8_t * G, uint16x8_t * B)
+{
+    *R = __arm_2d_cde_rgb565_red_unpckbq(in);
+    *G = __arm_2d_cde_rgb565_green_unpckbq(in);
+    *B = __arm_2d_cde_rgb565_blue_unpckbq(in);
+}
 
 
-void __arm_2d_impl_rgb565_colour_filling_a2_mask_opacity(uint16_t * __restrict pTarget,
-                                                         int16_t iTargetStride,
-                                                         uint8_t * __restrict pchAlpha,
-                                                         int16_t iAlphaStride,
-                                                         int32_t nAlphaOffset,
-                                                         arm_2d_size_t * __restrict ptCopySize,
-                                                         uint16_t Colour, uint_fast16_t hwOpacity)
+
+
+static
+void __arm_2d_impl_rgb565_get_pixel_colour_with_alpha(arm_2d_point_s16x8_t * ptPoint,
+                                                      arm_2d_region_t * ptOrigValidRegion,
+                                                      uint16_t * pOrigin,
+                                                      int16_t iOrigStride,
+                                                      uint16_t * pTarget,
+                                                      uint16_t MaskColour,
+                                                      uint_fast16_t hwOpacity, uint32_t elts)
+{
+    mve_pred16_t    predTail = vctp16q(elts);
+    uint16x8_t      vTarget = vld1q(pTarget);
+    int16x8_t       vXi = ((ptPoint->X) >> 6);
+    int16x8_t       vYi = ((ptPoint->Y) >> 6);
+    uint16x8_t      vAvgR, vAvgG, vAvgB;
+
+
+
+    mve_pred16_t    predGlb = 0;
+
+#if defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__) &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
+    {
+
+        uint16x8_t      vAvgPixelR, vAvgPixelG, vAvgPixelB;
+
+        uint16x8_t      R, G, B;
+        uint16x8_t      vAreaTR, vAreaTL, vAreaBR, vAreaBL;
+        int16x8_t       vOne = vdupq_n_s16(((1) << 6));
+        int16x8_t       vWX = ptPoint->X - ((vXi) << 6);
+        int16x8_t       vWY = ptPoint->Y - ((vYi) << 6);
+        vAreaTR = vmulq_u16(vWX, vWY);
+        vAreaTL = vmulq_u16((vOne - vWX), vWY);
+        vAreaBR = vmulq_u16(vWX, (vOne - vWY));
+        vAreaBL = vmulq_u16((vOne - vWX), (vOne - vWY));
+        vAreaTR = vqshlq_n_u16(vAreaTR, 4);
+        vAreaTL = vqshlq_n_u16(vAreaTL, 4);
+        vAreaBR = vqshlq_n_u16(vAreaBR, 4);
+        vAreaBL = vqshlq_n_u16(vAreaBL, 4);
+        {
+            uint16x8_t      ptVal;
+            arm_2d_point_s16x8_t vPoint = {.X = vXi,.Y = vYi };
+            mve_pred16_t    p = __arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+            uint16x8_t      ptOffs = vPoint.X + vPoint.Y * iOrigStride;
+            ptVal = vldrhq_gather_shifted_offset_z_u16(pOrigin, ptOffs, predTail & p);
+            predGlb |= p;
+            p = vcmpneq_m_n_u16(ptVal, MaskColour, p);
+            predGlb |= p;
+            ptVal = vpselq_u16(ptVal, vTarget, p);
+
+
+            __arm_2d_rgb565_unpack_single_vec_cde(ptVal, &R, &G, &B);
+
+            vAvgPixelR = vrmulhq_u16(vAreaBL, R);
+            vAvgPixelG = vrmulhq_u16(vAreaBL, G);
+            vAvgPixelB = vrmulhq_u16(vAreaBL, B);
+        }
+        {
+            uint16x8_t      ptVal;
+            arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1),.Y = vYi };
+            mve_pred16_t    p = __arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+            uint16x8_t      ptOffs = vPoint.X + vPoint.Y * iOrigStride;
+            ptVal = vldrhq_gather_shifted_offset_z_u16(pOrigin, ptOffs, predTail & p);
+            predGlb |= p;
+            p = vcmpneq_m_n_u16(ptVal, MaskColour, p);
+            predGlb |= p;
+            ptVal = vpselq_u16(ptVal, vTarget, p);
+            __arm_2d_rgb565_unpack_single_vec_cde(ptVal, &R, &G, &B);
+
+            vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAreaBR, R));
+            vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAreaBR, G));
+            vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAreaBR, B));
+        }
+        {
+            uint16x8_t      ptVal;
+            arm_2d_point_s16x8_t vPoint = {.X = vXi,.Y = vaddq_n_s16(vYi, 1) };
+            mve_pred16_t    p = __arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+            uint16x8_t      ptOffs = vPoint.X + vPoint.Y * iOrigStride;
+            ptVal = vldrhq_gather_shifted_offset_z_u16(pOrigin, ptOffs, predTail & p);
+            predGlb |= p;
+            p = vcmpneq_m_n_u16(ptVal, MaskColour, p);
+            predGlb |= p;
+            ptVal = vpselq_u16(ptVal, vTarget, p);
+            __arm_2d_rgb565_unpack_single_vec_cde(ptVal, &R, &G, &B);
+            vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAreaTL, R));
+            vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAreaTL, G));
+            vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAreaTL, B));
+        }
+        {
+            uint16x8_t      ptVal;
+            arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1),.Y = vaddq_n_s16(vYi, 1) };
+            mve_pred16_t    p = __arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+            uint16x8_t      ptOffs = vPoint.X + vPoint.Y * iOrigStride;
+            ptVal = vldrhq_gather_shifted_offset_z_u16(pOrigin, ptOffs, predTail & p);
+            predGlb |= p;
+            p = vcmpneq_m_n_u16(ptVal, MaskColour, p);
+            predGlb |= p;
+            ptVal = vpselq_u16(ptVal, vTarget, p);
+            __arm_2d_rgb565_unpack_single_vec_cde(ptVal, &R, &G, &B);
+            vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAreaTR, R));
+            vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAreaTR, G));
+            vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAreaTR, B));
+        };
+
+
+        vAvgR = (vAvgPixelR);
+        vAvgG = (vAvgPixelG);
+        vAvgB = (vAvgPixelB);
+    }
+#else
+    {
+
+        uint16x8_t      ptVal;
+        arm_2d_point_s16x8_t vPoint = {.X = vXi,.Y = vYi };
+        mve_pred16_t    p = __arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+        uint16x8_t      ptOffs = vPoint.X + vPoint.Y * iOrigStride;
+        ptVal = vldrhq_gather_shifted_offset_z_u16(pOrigin, ptOffs, predTail & p);
+        predGlb |= p;
+        p = vcmpneq_m_n_u16(ptVal, MaskColour, p);
+        predGlb |= p;
+        ptVal = vpselq_u16(ptVal, vTarget, p);
+        __arm_2d_rgb565_unpack_single_vec_cde(ptVal, &vAvgR, &vAvgG, &vAvgB);
+
+    }
+
+#endif
+
+    uint16x8_t      vBlended;
+
+    uint16x8_t      vTargetR, vTargetG, vTargetB;
+    __arm_2d_rgb565_unpack_single_vec_cde(vTarget, &vTargetR, &vTargetG, &vTargetB);
+
+
+    uint16_t        transp = 256 - (uint16_t) hwOpacity;
+    vAvgR = vqaddq(vAvgR * (uint16_t) hwOpacity, vTargetR * transp);
+    vAvgG = vqaddq(vAvgG * (uint16_t) hwOpacity, vTargetG * transp);
+    vAvgB = vqaddq(vAvgB * (uint16_t) hwOpacity, vTargetB * transp);
+
+
+#ifdef COMPARE_CDE_TEST
+    uint16x8_t      vBlendedc = __arm_2d_cde_rgb565_packtq(vAvgR, vAvgG, vAvgB);
+
+    vAvgR = vAvgR >> 8;
+    vAvgG = vAvgG >> 8;
+    vAvgB = vAvgB >> 8;
+    vBlended = __arm_2d_rgb565_pack_single_vec(vAvgR, vAvgG, vAvgB);
+
+
+    if (COMPARE_Q15_VEC(vBlendedc, vBlended) == 0) {
+        printf("error %d %d\n", errorCnt, okCnt);
+        DUMP_Q15_VEC(vBlendedc);
+        DUMP_Q15_VEC(vBlended);
+    }
+#else
+    vBlended = __arm_2d_cde_rgb565_packtq(vAvgR, vAvgG, vAvgB);
+#endif
+    vTarget = vpselq_u16(vBlended, vTarget, predGlb);
+
+    vst1q_p(pTarget, vTarget, predTail);
+}
+
+
+
+static
+void __arm_2d_impl_rgb565_get_pixel_colour_with_alpha_offs_compensated(arm_2d_point_s16x8_t *
+                                                                       ptPoint,
+                                                                       arm_2d_region_t *
+                                                                       ptOrigValidRegion,
+                                                                       uint16_t * pOrigin,
+                                                                       int16_t iOrigStride,
+                                                                       uint16_t * pTarget,
+                                                                       uint16_t MaskColour,
+                                                                       uint_fast16_t hwOpacity,
+                                                                       uint32_t elts)
+{
+    mve_pred16_t    predTail = vctp16q(elts);
+    uint16x8_t      vTarget = vld1q(pTarget);
+    int16x8_t       vXi = ((ptPoint->X) >> 6);
+    int16x8_t       vYi = ((ptPoint->Y) >> 6);
+    uint16x8_t      vAvgR, vAvgG, vAvgB;
+
+
+
+    mve_pred16_t    predGlb = 0;
+
+#if defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__) &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
+    {
+
+        uint16x8_t      vAvgPixelR, vAvgPixelG, vAvgPixelB;
+
+        uint16x8_t      R, G, B;
+        __typeof__(vAvgPixelR) vAreaTR, vAreaTL, vAreaBR, vAreaBL;
+        int16x8_t       vOne = vdupq_n_s16(((1) << 6));
+        int16x8_t       vWX = ptPoint->X - ((vXi) << 6);
+        int16x8_t       vWY = ptPoint->Y - ((vYi) << 6);
+        vAreaTR = vmulq_u16(vWX, vWY);
+        vAreaTL = vmulq_u16((vOne - vWX), vWY);
+        vAreaBR = vmulq_u16(vWX, (vOne - vWY));
+        vAreaBL = vmulq_u16((vOne - vWX), (vOne - vWY));
+        vAreaTR = vqshlq_n_u16(vAreaTR, 4);
+        vAreaTL = vqshlq_n_u16(vAreaTL, 4);
+        vAreaBR = vqshlq_n_u16(vAreaBR, 4);
+        vAreaBL = vqshlq_n_u16(vAreaBL, 4); {
+            uint16x8_t      ptVal;
+            arm_2d_point_s16x8_t vPoint = {.X = vXi,.Y = vYi };
+            mve_pred16_t    p = __arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+            int16_t         correctionOffset = vminvq_s16(32767, vPoint.Y) - 1;
+            uint16x8_t      ptOffs = vPoint.X + (vPoint.Y - correctionOffset) * iOrigStride;
+            uint16_t       *pOriginCorrected = pOrigin + (correctionOffset * iOrigStride);
+            ptVal = vldrhq_gather_shifted_offset_z_u16(pOriginCorrected, ptOffs, predTail & p);
+            p = vcmpneq_m_n_u16(ptVal, MaskColour, p);
+            predGlb |= p;
+            ptVal = vpselq_u16(ptVal, vTarget, p);
+            __arm_2d_rgb565_unpack_single_vec_cde(ptVal, &R, &G, &B);
+            vAvgPixelR = vrmulhq_u16(vAreaBL, R);
+            vAvgPixelG = vrmulhq_u16(vAreaBL, G);
+            vAvgPixelB = vrmulhq_u16(vAreaBL, B);
+        } {
+            uint16x8_t      ptVal;
+            arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1),.Y = vYi };
+            mve_pred16_t    p = __arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+            int16_t         correctionOffset = vminvq_s16(32767, vPoint.Y) - 1;
+            uint16x8_t      ptOffs = vPoint.X + (vPoint.Y - correctionOffset) * iOrigStride;
+            uint16_t       *pOriginCorrected = pOrigin + (correctionOffset * iOrigStride);
+            ptVal = vldrhq_gather_shifted_offset_z_u16(pOriginCorrected, ptOffs, predTail & p);
+            p = vcmpneq_m_n_u16(ptVal, MaskColour, p);
+            predGlb |= p;
+            ptVal = vpselq_u16(ptVal, vTarget, p);
+            __arm_2d_rgb565_unpack_single_vec_cde(ptVal, &R, &G, &B);
+            vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAreaBR, R));
+            vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAreaBR, G));
+            vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAreaBR, B));
+        } {
+            uint16x8_t      ptVal;
+            arm_2d_point_s16x8_t vPoint = {.X = vXi,.Y = vaddq_n_s16(vYi, 1) };
+            mve_pred16_t    p = __arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+            int16_t         correctionOffset = vminvq_s16(32767, vPoint.Y) - 1;
+            uint16x8_t      ptOffs = vPoint.X + (vPoint.Y - correctionOffset) * iOrigStride;
+            uint16_t       *pOriginCorrected = pOrigin + (correctionOffset * iOrigStride);
+            ptVal = vldrhq_gather_shifted_offset_z_u16(pOriginCorrected, ptOffs, predTail & p);
+            p = vcmpneq_m_n_u16(ptVal, MaskColour, p);
+            predGlb |= p;
+            ptVal = vpselq_u16(ptVal, vTarget, p);
+            __arm_2d_rgb565_unpack_single_vec_cde(ptVal, &R, &G, &B);
+            vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAreaTL, R));
+            vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAreaTL, G));
+            vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAreaTL, B));
+        } {
+            uint16x8_t      ptVal;
+            arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1),.Y = vaddq_n_s16(vYi, 1) };
+            mve_pred16_t    p = __arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+            int16_t         correctionOffset = vminvq_s16(32767, vPoint.Y) - 1;
+            uint16x8_t      ptOffs = vPoint.X + (vPoint.Y - correctionOffset) * iOrigStride;
+            uint16_t       *pOriginCorrected = pOrigin + (correctionOffset * iOrigStride);
+            ptVal = vldrhq_gather_shifted_offset_z_u16(pOriginCorrected, ptOffs, predTail & p);
+            p = vcmpneq_m_n_u16(ptVal, MaskColour, p);
+            predGlb |= p;
+            ptVal = vpselq_u16(ptVal, vTarget, p);
+            __arm_2d_rgb565_unpack_single_vec_cde(ptVal, &R, &G, &B);
+            vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAreaTR, R));
+            vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAreaTR, G));
+            vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAreaTR, B));
+        };
+
+
+
+        vAvgR = (vAvgPixelR);
+        vAvgG = (vAvgPixelG);
+        vAvgB = (vAvgPixelB);
+    }
+
+#else
+    {
+        uint16x8_t      ptVal;
+        arm_2d_point_s16x8_t vPoint = {.X = vXi,.Y = vYi };
+        mve_pred16_t    p = __arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+        int16_t         correctionOffset = vminvq_s16(32767, vPoint.Y) - 1;
+        uint16x8_t      ptOffs = vPoint.X + (vPoint.Y - correctionOffset) * iOrigStride;
+        uint16_t       *pOriginCorrected = pOrigin + (correctionOffset * iOrigStride);
+        ptVal = vldrhq_gather_shifted_offset_z_u16(pOriginCorrected, ptOffs, predTail & p);
+        p = vcmpneq_m_n_u16(ptVal, MaskColour, p);
+        predGlb |= p;
+        ptVal = vpselq_u16(ptVal, vTarget, p);
+        __arm_2d_rgb565_unpack_single_vec_cde(ptVal, &vAvgR, &vAvgG, &vAvgB);
+
+    }
+
+#endif
+    uint16x8_t      vBlended;
+
+    uint16x8_t      vTargetR, vTargetG, vTargetB;
+    __arm_2d_rgb565_unpack_single_vec_cde(vTarget, &vTargetR, &vTargetG, &vTargetB);
+    uint16_t        transp = 256 - (uint16_t) hwOpacity;
+    vAvgR = vqaddq(vAvgR * (uint16_t) hwOpacity, vTargetR * transp);
+    vAvgG = vqaddq(vAvgG * (uint16_t) hwOpacity, vTargetG * transp);
+    vAvgB = vqaddq(vAvgB * (uint16_t) hwOpacity, vTargetB * transp);
+
+
+#ifdef COMPARE_CDE_TEST
+    uint16x8_t      vBlendedc = __arm_2d_cde_rgb565_packtq(vAvgR, vAvgG, vAvgB);
+
+    vAvgR = vAvgR >> 8;
+    vAvgG = vAvgG >> 8;
+    vAvgB = vAvgB >> 8;
+    vBlended = __arm_2d_rgb565_pack_single_vec(vAvgR, vAvgG, vAvgB);
+
+    if (COMPARE_Q15_VEC(vBlendedc, vBlended) == 0) {
+        printf("error %d %d\n", errorCnt, okCnt);
+        DUMP_Q15_VEC(vBlendedc);
+        DUMP_Q15_VEC(vBlended);
+    }
+#else
+    vBlended = __arm_2d_cde_rgb565_packtq(vAvgR, vAvgG, vAvgB);
+#endif
+    vTarget = vpselq_u16(vBlended, vTarget, predGlb);
+
+    vst1q_p(pTarget, vTarget, predTail);
+}
+
+
+__OVERRIDE_WEAK
+    void __arm_2d_impl_rgb565_transform_with_opacity(__arm_2d_param_copy_orig_t * ptParam,
+                                                     __arm_2d_transform_info_t * ptInfo,
+                                                     uint_fast16_t hwRatio)
+{
+    int32_t         iHeight = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iHeight;
+    int32_t         iWidth = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iWidth;
+
+    int32_t         iTargetStride = ptParam->use_as____arm_2d_param_copy_t.tTarget.iStride;
+    uint16_t       *pTargetBase = ptParam->use_as____arm_2d_param_copy_t.tTarget.pBuffer;
+    uint16_t       *pOrigin = ptParam->tOrigin.pBuffer;
+    int32_t         iOrigStride = ptParam->tOrigin.iStride;
+    uint16_t        MaskColour = ptInfo->Mask.hwColour;
+    float           fAngle = -ptInfo->fAngle;
+    arm_2d_location_t tOffset =
+        ptParam->use_as____arm_2d_param_copy_t.tSource.tValidRegion.tLocation;
+    arm_2d_location_t *pCenter = &(ptInfo->tCenter);
+
+    q31_t           invIWidth = iWidth > 1 ? 0x7fffffff / (iWidth - 1) : 0x7fffffff;
+    arm_2d_rot_linear_regr_t regrCoefs[2];
+    arm_2d_location_t SrcPt = ptInfo->tDummySourceOffset;
+
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+    hwRatio += (hwRatio == 255);
+#endif
+
+
+
+
+    _Bool           gatherLoadIdxOverflow;
+    gatherLoadIdxOverflow =
+        __arm_2d_transform_regression(&ptParam->use_as____arm_2d_param_copy_t.tCopySize,
+                                      &SrcPt,
+                                      fAngle,
+                                      ptInfo->fScale, &tOffset, pCenter, iOrigStride, regrCoefs);
+
+
+    /* slopes between 1st and last columns */
+    int32_t         slopeY, slopeX;
+
+    slopeY = MULTFX((regrCoefs[1].interceptY - regrCoefs[0].interceptY), invIWidth);
+    slopeX = MULTFX((regrCoefs[1].interceptX - regrCoefs[0].interceptX), invIWidth);
+
+    int32_t         nrmSlopeX = 17 - __CLZ(ABS(slopeX));
+    int32_t         nrmSlopeY = 17 - __CLZ(ABS(slopeY));
+
+    slopeX = ARSHIFT(slopeX, nrmSlopeX);
+    slopeY = ARSHIFT(slopeY, nrmSlopeY);
+
+
+    if (!gatherLoadIdxOverflow) {
+
+        for (int32_t y = 0; y < iHeight; y++) {
+
+            int32_t         colFirstY = __QADD((regrCoefs[0].slopeY * y), regrCoefs[0].interceptY);
+            int32_t         colFirstX = __QADD((regrCoefs[0].slopeX * y), regrCoefs[0].interceptX);
+
+
+            colFirstX = colFirstX >> 10;
+            colFirstY = colFirstY >> 10;
+
+            int32_t         nbVecElts = iWidth;
+            int16x8_t       vX = (int16x8_t) vidupq_n_u16(0, 1);
+            uint16_t       *pTargetBaseCur = pTargetBase;
+
+
+            vX = ((vX) << 6);
+
+            while (nbVecElts > 0) {
+
+                arm_2d_point_s16x8_t tPointV;
+
+                tPointV.X = vqdmulhq_n_s16(vX, slopeX);
+                tPointV.X = vaddq_n_s16(vqrshlq_n_s16(tPointV.X, nrmSlopeX), colFirstX);
+
+                tPointV.Y = vqdmulhq_n_s16(vX, slopeY);
+                tPointV.Y = vaddq_n_s16(vqrshlq_n_s16(tPointV.Y, nrmSlopeY), colFirstY);
+
+                __arm_2d_impl_rgb565_get_pixel_colour_with_alpha(&tPointV,
+                                                                 &ptParam->tOrigin.tValidRegion,
+                                                                 pOrigin, iOrigStride,
+                                                                 pTargetBaseCur,
+                                                                 MaskColour, hwRatio, nbVecElts);
+                pTargetBaseCur += 8;
+                vX += ((8) << 6);
+                nbVecElts -= 8;
+            }
+            pTargetBase += iTargetStride;
+        }
+
+    } else {
+
+        for (int32_t y = 0; y < iHeight; y++) {
+
+            int32_t         colFirstY = __QADD((regrCoefs[0].slopeY * y), regrCoefs[0].interceptY);
+            int32_t         colFirstX = __QADD((regrCoefs[0].slopeX * y), regrCoefs[0].interceptX);
+
+
+            colFirstX = colFirstX >> 10;
+            colFirstY = colFirstY >> 10;
+
+            int32_t         nbVecElts = iWidth;
+            int16x8_t       vX = (int16x8_t) vidupq_n_u16(0, 1);
+            uint16_t       *pTargetBaseCur = pTargetBase;
+
+
+            vX = ((vX) << 6);
+
+            while (nbVecElts > 0) {
+
+                arm_2d_point_s16x8_t tPointV;
+
+                tPointV.X = vqdmulhq_n_s16(vX, slopeX);
+                tPointV.X = vaddq_n_s16(vqrshlq_n_s16(tPointV.X, nrmSlopeX), colFirstX);
+
+                tPointV.Y = vqdmulhq_n_s16(vX, slopeY);
+                tPointV.Y = vaddq_n_s16(vqrshlq_n_s16(tPointV.Y, nrmSlopeY), colFirstY);
+
+                __arm_2d_impl_rgb565_get_pixel_colour_with_alpha_offs_compensated
+                    (&tPointV, &ptParam->tOrigin.tValidRegion, pOrigin, iOrigStride,
+                     pTargetBaseCur, MaskColour, hwRatio, nbVecElts);
+
+                pTargetBaseCur += 8;
+                vX += ((8) << 6);
+                nbVecElts -= 8;
+            }
+            pTargetBase += iTargetStride;
+        }
+    }
+
+}
+
+static
+void __arm_2d_impl_rgb565_get_pixel_colour_src_mask(arm_2d_point_s16x8_t * ptPoint,
+                                                    arm_2d_region_t * ptOrigValidRegion,
+                                                    uint16_t * pOrigin,
+                                                    int16_t iOrigStride,
+                                                    uint16_t * pTarget,
+                                                    uint8_t * pchOrigMask,
+                                                    int16_t iOrigmaskStride, uint32_t elts)
+{
+
+    mve_pred16_t    predTail = vctp16q(elts);
+    uint16x8_t      vTarget = vld1q(pTarget);
+    uint16x8_t      vAvgTransparency;
+    mve_pred16_t    predGlb = 0;
+
+    int16x8_t       vXi = ((ptPoint->X) >> 6);
+    int16x8_t       vYi = ((ptPoint->Y) >> 6);
+
+#if defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__) &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
+
+    uint16x8_t      vAvgPixelR, vAvgPixelG, vAvgPixelB;
+    uint16x8_t      vAvgR, vAvgG, vAvgB, vAvgTrans;
+
+
+
+    uint16x8_t      R, G, B, vPixelAlpha;
+    __typeof__(vAvgPixelR) vAreaTR, vAreaTL, vAreaBR, vAreaBL;
+    int16x8_t       vOne = vdupq_n_s16(((1) << 6));
+    int16x8_t       vWX = ptPoint->X - ((vXi) << 6);
+    int16x8_t       vWY = ptPoint->Y - ((vYi) << 6);
+    vAreaTR = vmulq_u16(vWX, vWY);
+    vAreaTL = vmulq_u16((vOne - vWX), vWY);
+    vAreaBR = vmulq_u16(vWX, (vOne - vWY));
+    vAreaBL = vmulq_u16((vOne - vWX), (vOne - vWY));
+    vAreaTR = vqshlq_n_u16(vAreaTR, 4);
+    vAreaTL = vqshlq_n_u16(vAreaTL, 4);
+    vAreaBR = vqshlq_n_u16(vAreaBR, 4);
+    vAreaBL = vqshlq_n_u16(vAreaBL, 4);; {
+        arm_2d_point_s16x8_t vPoint = {.X = vXi,.Y = vYi };
+        mve_pred16_t    p = __arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+        predGlb |= p;
+        int16_t         correctionOffset = vminvq_s16(32767, vPoint.Y) - 1;
+        uint16x8_t      ptOffs = vPoint.X + (vPoint.Y - correctionOffset) * iOrigStride;
+        uint16_t       *pOriginCorrected = pOrigin + (correctionOffset * iOrigStride);
+        uint16x8_t      ptVal =
+            vldrhq_gather_shifted_offset_z_u16(pOriginCorrected, ptOffs, predTail & p);
+        __arm_2d_rgb565_unpack_single_vec_cde(ptVal, &R, &G, &B);
+        uint16x8_t      maskOffs = 1 * vPoint.X + (vPoint.Y - correctionOffset) * iOrigmaskStride;
+        uint8_t        *pMaskCorrected = pchOrigMask + (correctionOffset * iOrigmaskStride);
+        vPixelAlpha = vldrbq_gather_offset_z_u16(pMaskCorrected, maskOffs, predTail & p);;
+        vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));;
+        uint16x8_t      vAlpha = vmulq_u16((vAreaBL >> 8), vPixelAlpha);
+        vAvgTransparency = vAreaBL - vAlpha;
+        vAvgPixelR = vrmulhq_u16(vAlpha, R);
+        vAvgPixelG = vrmulhq_u16(vAlpha, G);
+        vAvgPixelB = vrmulhq_u16(vAlpha, B);;
+    } {
+        arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1),.Y = vYi };
+        mve_pred16_t    p = __arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+        predGlb |= p;
+        int16_t         correctionOffset = vminvq_s16(32767, vPoint.Y) - 1;
+        uint16x8_t      ptOffs = vPoint.X + (vPoint.Y - correctionOffset) * iOrigStride;
+        uint16_t       *pOriginCorrected = pOrigin + (correctionOffset * iOrigStride);
+        uint16x8_t      ptVal =
+            vldrhq_gather_shifted_offset_z_u16(pOriginCorrected, ptOffs, predTail & p);
+        __arm_2d_rgb565_unpack_single_vec_cde(ptVal, &R, &G, &B);
+        uint16x8_t      maskOffs = 1 * vPoint.X + (vPoint.Y - correctionOffset) * iOrigmaskStride;
+        uint8_t        *pMaskCorrected = pchOrigMask + (correctionOffset * iOrigmaskStride);
+        vPixelAlpha = vldrbq_gather_offset_z_u16(pMaskCorrected, maskOffs, predTail & p);;
+        vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));;
+        uint16x8_t      vAlpha = vmulq_u16((vAreaBR >> 8), vPixelAlpha);
+        vAvgTransparency = vqaddq(vAvgTransparency, vAreaBR - vAlpha);
+        vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
+        vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
+        vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));;
+    } {
+        arm_2d_point_s16x8_t vPoint = {.X = vXi,.Y = vaddq_n_s16(vYi, 1) };
+        mve_pred16_t    p = __arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+        predGlb |= p;
+        int16_t         correctionOffset = vminvq_s16(32767, vPoint.Y) - 1;
+        uint16x8_t      ptOffs = vPoint.X + (vPoint.Y - correctionOffset) * iOrigStride;
+        uint16_t       *pOriginCorrected = pOrigin + (correctionOffset * iOrigStride);
+        uint16x8_t      ptVal =
+            vldrhq_gather_shifted_offset_z_u16(pOriginCorrected, ptOffs, predTail & p);
+        __arm_2d_rgb565_unpack_single_vec_cde(ptVal, &R, &G, &B);
+        uint16x8_t      maskOffs = 1 * vPoint.X + (vPoint.Y - correctionOffset) * iOrigmaskStride;
+        uint8_t        *pMaskCorrected = pchOrigMask + (correctionOffset * iOrigmaskStride);
+        vPixelAlpha = vldrbq_gather_offset_z_u16(pMaskCorrected, maskOffs, predTail & p);;
+        vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));;
+        uint16x8_t      vAlpha = vmulq_u16((vAreaTL >> 8), vPixelAlpha);
+        vAvgTransparency = vqaddq(vAvgTransparency, vAreaTL - vAlpha);
+        vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
+        vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
+        vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));;
+    } {
+        arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1),.Y = vaddq_n_s16(vYi, 1) };
+        mve_pred16_t    p = __arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+        predGlb |= p;
+        int16_t         correctionOffset = vminvq_s16(32767, vPoint.Y) - 1;
+        uint16x8_t      ptOffs = vPoint.X + (vPoint.Y - correctionOffset) * iOrigStride;
+        uint16_t       *pOriginCorrected = pOrigin + (correctionOffset * iOrigStride);
+        uint16x8_t      ptVal =
+            vldrhq_gather_shifted_offset_z_u16(pOriginCorrected, ptOffs, predTail & p);
+        __arm_2d_rgb565_unpack_single_vec_cde(ptVal, &R, &G, &B);
+        uint16x8_t      maskOffs = 1 * vPoint.X + (vPoint.Y - correctionOffset) * iOrigmaskStride;
+        uint8_t        *pMaskCorrected = pchOrigMask + (correctionOffset * iOrigmaskStride);
+        vPixelAlpha = vldrbq_gather_offset_z_u16(pMaskCorrected, maskOffs, predTail & p);;
+        vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));;
+        uint16x8_t      vAlpha = vmulq_u16((vAreaTR >> 8), vPixelAlpha);
+        vAvgTransparency = vqaddq(vAvgTransparency, vAreaTR - vAlpha);
+        vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
+        vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
+        vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));;
+    };
+
+#else
+    vAvgR = (vAvgPixelR);
+    vAvgG = (vAvgPixelG);
+    vAvgB = (vAvgPixelB);
+    vAvgTrans = (vAvgTransparency);
+
+
+    uint16x8_t      vAvgPixelR, vAvgPixelG, vAvgPixelB;
+    uint16x8_t      vAvgR, vAvgG, vAvgB, vAvgTrans;
+    {
+        uint16x8_t      R, G, B, vPixelAlpha;
+
+        arm_2d_point_s16x8_t vPoint = {.X = vXi,.Y = vYi };
+        mve_pred16_t    p = __arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+        predGlb |= p;
+        int16_t         correctionOffset = vminvq_s16(32767, vPoint.Y) - 1;
+        uint16x8_t      ptOffs = vPoint.X + (vPoint.Y - correctionOffset) * iOrigStride;
+        uint16_t       *pOriginCorrected = pOrigin + (correctionOffset * iOrigStride);
+        uint16x8_t      ptVal =
+            vldrhq_gather_shifted_offset_z_u16(pOriginCorrected, ptOffs, predTail & p);
+        __arm_2d_rgb565_unpack_single_vec_cde(ptVal, &R, &G, &B);
+        uint16x8_t      maskOffs = 1 * vPoint.X + (vPoint.Y - correctionOffset) * iOrigmaskStride;
+        uint8_t        *pMaskCorrected = pchOrigMask + (correctionOffset * iOrigmaskStride);
+        vPixelAlpha = vldrbq_gather_offset_z_u16(pMaskCorrected, maskOffs, predTail & p);;
+        vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));;
+
+
+        uint16x8_t      vAlpha = vmulq_u16((vdupq_n_u16(65535) >> 8), vPixelAlpha);
+        vAvgTransparency = vdupq_n_u16(65535) - vAlpha;
+        vAvgPixelR = vrmulhq_u16(vAlpha, R);
+        vAvgPixelG = vrmulhq_u16(vAlpha, G);
+        vAvgPixelB = vrmulhq_u16(vAlpha, B);;
+
+    }
+#endif
+
+    vAvgR = (vAvgPixelR);
+    vAvgG = (vAvgPixelG);
+    vAvgB = (vAvgPixelB);
+    vAvgTrans = (vAvgTransparency);
+
+
+    uint16x8_t      vBlended;
+    uint16x8_t      vTargetR, vTargetG, vTargetB;
+
+    __arm_2d_rgb565_unpack_single_vec_cde(vTarget, &vTargetR, &vTargetG, &vTargetB);
+
+
+    vAvgR = vqaddq(vAvgR, vrmulhq(vTargetR, vAvgTrans));
+    vAvgR = vminq(vAvgR, vdupq_n_u16(255));
+    vAvgG = vqaddq(vAvgG, vrmulhq(vTargetG, vAvgTrans));
+    vAvgG = vminq(vAvgG, vdupq_n_u16(255));
+    vAvgB = vqaddq(vAvgB, vrmulhq(vTargetB, vAvgTrans));
+    vAvgB = vminq(vAvgB, vdupq_n_u16(255));;
+
+    vBlended = __arm_2d_cde_rgb565_packtq(vAvgR, vAvgG, vAvgB);
+
+
+    vTarget = vpselq_u16(vBlended, vTarget, predGlb);
+
+    vst1q_p(pTarget, vTarget, predTail);
+}
+
+
+__OVERRIDE_WEAK
+    void __arm_2d_impl_rgb565_transform_with_src_mask(__arm_2d_param_copy_orig_msk_t * ptThis,
+                                                      __arm_2d_transform_info_t * ptInfo)
+{
+
+    __arm_2d_param_copy_orig_t *ptParam = &(ptThis->use_as____arm_2d_param_copy_orig_t);
+
+
+    int_fast16_t    iHeight = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iHeight;
+    int_fast16_t    iWidth = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iWidth;
+
+    int_fast16_t    iTargetStride = ptParam->use_as____arm_2d_param_copy_t.tTarget.iStride;
+    uint16_t       *pTargetBase = ptParam->use_as____arm_2d_param_copy_t.tTarget.pBuffer;
+    int_fast16_t    iOrigStride = ptParam->tOrigin.iStride;
+
+
+    uint8_t        *pOriginMask = (*ptThis).tOrigMask.pBuffer;
+    int_fast16_t    iOrigMaskStride = (*ptThis).tOrigMask.iStride;
+
+    float           fAngle = -ptInfo->fAngle;
+    arm_2d_location_t tOffset =
+        ptParam->use_as____arm_2d_param_copy_t.tSource.tValidRegion.tLocation;
+    q31_t           invIWidth = iWidth > 1 ? 0x7fffffff / (iWidth - 1) : 0x7fffffff;
+    arm_2d_rot_linear_regr_t regrCoefs[2];
+    arm_2d_location_t SrcPt = ptInfo->tDummySourceOffset;
+
+
+    __arm_2d_transform_regression(&ptParam->use_as____arm_2d_param_copy_t.tCopySize,
+                                  &SrcPt,
+                                  fAngle,
+                                  ptInfo->fScale,
+                                  &tOffset, &(ptInfo->tCenter), iOrigStride, regrCoefs);
+
+
+
+    /* slopes between 1st and last columns */
+    int32_t         slopeY, slopeX;
+
+    slopeY = MULTFX((regrCoefs[1].interceptY - regrCoefs[0].interceptY), invIWidth);
+    slopeX = MULTFX((regrCoefs[1].interceptX - regrCoefs[0].interceptX), invIWidth);
+
+    int32_t         nrmSlopeX = 17 - __CLZ(ABS(slopeX));
+    int32_t         nrmSlopeY = 17 - __CLZ(ABS(slopeY));
+
+    slopeX = ARSHIFT(slopeX, nrmSlopeX);
+    slopeY = ARSHIFT(slopeY, nrmSlopeY);
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+        int32_t         colFirstY = __QADD((regrCoefs[0].slopeY * y), regrCoefs[0].interceptY);
+        int32_t         colFirstX = __QADD((regrCoefs[0].slopeX * y), regrCoefs[0].interceptX);
+
+
+        colFirstX = colFirstX >> 10;
+        colFirstY = colFirstY >> 10;
+
+        int32_t         nbVecElts = iWidth;
+        int16x8_t       vX = (int16x8_t) vidupq_n_u16(0, 1);
+        uint16_t       *pTargetBaseCur = pTargetBase;
+
+
+        vX = ((vX) << 6);
+
+        while (nbVecElts > 0) {
+            arm_2d_point_s16x8_t tPointV;
+
+            tPointV.X = vqdmulhq_n_s16(vX, slopeX);
+            tPointV.X = vaddq_n_s16(vqrshlq_n_s16(tPointV.X, nrmSlopeX), colFirstX);
+
+            tPointV.Y = vqdmulhq_n_s16(vX, slopeY);
+            tPointV.Y = vaddq_n_s16(vqrshlq_n_s16(tPointV.Y, nrmSlopeY), colFirstY);
+
+
+
+            __arm_2d_impl_rgb565_get_pixel_colour_src_mask(&tPointV,
+                                                           &ptParam->tOrigin.tValidRegion,
+                                                           ptParam->tOrigin.pBuffer,
+                                                           iOrigStride,
+                                                           pTargetBaseCur,
+                                                           pOriginMask, iOrigMaskStride, nbVecElts);
+
+            pTargetBaseCur += 8;
+            vX += ((8) << 6);
+            nbVecElts -= 8;
+        }
+        pTargetBase += iTargetStride;
+    }
+}
+
+
+
+
+
+
+
+static
+void __arm_2d_impl_rgb565_get_pixel_colour(arm_2d_point_s16x8_t * ptPoint,
+                                           arm_2d_region_t * ptOrigValidRegion,
+                                           uint16_t * pOrigin,
+                                           int16_t iOrigStride,
+                                           uint16_t * pTarget, uint16_t MaskColour, uint32_t elts)
+{
+    mve_pred16_t    predTail = vctp16q(elts);
+    uint16x8_t      vTarget = vld1q(pTarget);
+    int16x8_t       vXi = ((ptPoint->X) >> 6);
+    int16x8_t       vYi = ((ptPoint->Y) >> 6);
+    uint16x8_t      vDstPixel;
+
+
+
+    mve_pred16_t    predGlb = 0;
+
+
+    {
+
+        uint16x8_t      vAvgPixelR, vAvgPixelG, vAvgPixelB;
+
+        uint16x8_t      R, G, B;
+        __typeof__(vAvgPixelR) vAreaTR, vAreaTL, vAreaBR, vAreaBL;
+        int16x8_t       vOne = vdupq_n_s16(((1) << 6));
+        int16x8_t       vWX = ptPoint->X - ((vXi) << 6);
+        int16x8_t       vWY = ptPoint->Y - ((vYi) << 6);
+        vAreaTR = vmulq_u16(vWX, vWY);
+        vAreaTL = vmulq_u16((vOne - vWX), vWY);
+        vAreaBR = vmulq_u16(vWX, (vOne - vWY));
+        vAreaBL = vmulq_u16((vOne - vWX), (vOne - vWY));
+        vAreaTR = vqshlq_n_u16(vAreaTR, 4);
+        vAreaTL = vqshlq_n_u16(vAreaTL, 4);
+        vAreaBR = vqshlq_n_u16(vAreaBR, 4);
+        vAreaBL = vqshlq_n_u16(vAreaBL, 4);; {
+            uint16x8_t      ptVal;
+            arm_2d_point_s16x8_t vPoint = {.X = vXi,.Y = vYi };
+            mve_pred16_t    p = __arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+            uint16x8_t      ptOffs = vPoint.X + vPoint.Y * iOrigStride;
+            ptVal = vldrhq_gather_shifted_offset_z_u16(pOrigin, ptOffs, predTail & p);
+            predGlb |= p;;
+            p = vcmpneq_m_n_u16(ptVal, MaskColour, p);
+            predGlb |= p;
+            ptVal = vpselq_u16(ptVal, vTarget, p);
+            __arm_2d_rgb565_unpack_single_vec_cde(ptVal, &R, &G, &B);;
+            vAvgPixelR = vrmulhq_u16(vAreaBL, R);
+            vAvgPixelG = vrmulhq_u16(vAreaBL, G);
+            vAvgPixelB = vrmulhq_u16(vAreaBL, B);;
+        } {
+            uint16x8_t      ptVal;
+            arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1),.Y = vYi };
+            mve_pred16_t    p = __arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+            uint16x8_t      ptOffs = vPoint.X + vPoint.Y * iOrigStride;
+            ptVal = vldrhq_gather_shifted_offset_z_u16(pOrigin, ptOffs, predTail & p);
+            predGlb |= p;;
+            p = vcmpneq_m_n_u16(ptVal, MaskColour, p);
+            predGlb |= p;
+            ptVal = vpselq_u16(ptVal, vTarget, p);
+            __arm_2d_rgb565_unpack_single_vec_cde(ptVal, &R, &G, &B);;
+            vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAreaBR, R));
+            vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAreaBR, G));
+            vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAreaBR, B));;
+        } {
+            uint16x8_t      ptVal;
+            arm_2d_point_s16x8_t vPoint = {.X = vXi,.Y = vaddq_n_s16(vYi, 1) };
+            mve_pred16_t    p = __arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+            uint16x8_t      ptOffs = vPoint.X + vPoint.Y * iOrigStride;
+            ptVal = vldrhq_gather_shifted_offset_z_u16(pOrigin, ptOffs, predTail & p);
+            predGlb |= p;;
+            p = vcmpneq_m_n_u16(ptVal, MaskColour, p);
+            predGlb |= p;
+            ptVal = vpselq_u16(ptVal, vTarget, p);
+            __arm_2d_rgb565_unpack_single_vec_cde(ptVal, &R, &G, &B);;
+            vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAreaTL, R));
+            vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAreaTL, G));
+            vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAreaTL, B));;
+        } {
+            uint16x8_t      ptVal;
+            arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1),.Y = vaddq_n_s16(vYi, 1) };
+            mve_pred16_t    p = __arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+            uint16x8_t      ptOffs = vPoint.X + vPoint.Y * iOrigStride;
+            ptVal = vldrhq_gather_shifted_offset_z_u16(pOrigin, ptOffs, predTail & p);
+            predGlb |= p;;
+            p = vcmpneq_m_n_u16(ptVal, MaskColour, p);
+            predGlb |= p;
+            ptVal = vpselq_u16(ptVal, vTarget, p);
+            __arm_2d_rgb565_unpack_single_vec_cde(ptVal, &R, &G, &B);;
+            vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAreaTR, R));
+            vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAreaTR, G));
+            vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAreaTR, B));;
+        };
+
+
+
+
+        vDstPixel = __arm_2d_rgb565_pack_single_vec((vAvgPixelR), (vAvgPixelG), (vAvgPixelB));
+    }
+    vTarget = vpselq_u16(vDstPixel, vTarget, predGlb);
+
+
+    vst1q_p(pTarget, vTarget, predTail);
+}
+
+
+
+
+static
+void __arm_2d_impl_rgb565_get_pixel_colour_offs_compensated(arm_2d_point_s16x8_t * ptPoint,
+                                                            arm_2d_region_t * ptOrigValidRegion,
+                                                            uint16_t * pOrigin,
+                                                            int16_t iOrigStride,
+                                                            uint16_t * pTarget, uint16_t MaskColour,
+                                                            uint32_t elts)
+{
+    mve_pred16_t    predTail = vctp16q(elts);
+    uint16x8_t      vTarget = vld1q(pTarget);
+    int16x8_t       vXi = ((ptPoint->X) >> 6);
+    int16x8_t       vYi = ((ptPoint->Y) >> 6);
+    uint16x8_t      vDstPixel;
+
+
+
+    mve_pred16_t    predGlb = 0;
+
+
+    {
+
+        uint16x8_t      vAvgPixelR, vAvgPixelG, vAvgPixelB;
+
+        uint16x8_t      R, G, B;
+        __typeof__(vAvgPixelR) vAreaTR, vAreaTL, vAreaBR, vAreaBL;
+        int16x8_t       vOne = vdupq_n_s16(((1) << 6));
+        int16x8_t       vWX = ptPoint->X - ((vXi) << 6);
+        int16x8_t       vWY = ptPoint->Y - ((vYi) << 6);
+        vAreaTR = vmulq_u16(vWX, vWY);
+        vAreaTL = vmulq_u16((vOne - vWX), vWY);
+        vAreaBR = vmulq_u16(vWX, (vOne - vWY));
+        vAreaBL = vmulq_u16((vOne - vWX), (vOne - vWY));
+        vAreaTR = vqshlq_n_u16(vAreaTR, 4);
+        vAreaTL = vqshlq_n_u16(vAreaTL, 4);
+        vAreaBR = vqshlq_n_u16(vAreaBR, 4);
+        vAreaBL = vqshlq_n_u16(vAreaBL, 4);; {
+            uint16x8_t      ptVal;
+            arm_2d_point_s16x8_t vPoint = {.X = vXi,.Y = vYi };
+            mve_pred16_t    p = __arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+            int16_t         correctionOffset = vminvq_s16(32767, vPoint.Y) - 1;
+            uint16x8_t      ptOffs = vPoint.X + (vPoint.Y - correctionOffset) * iOrigStride;
+            uint16_t       *pOriginCorrected = pOrigin + (correctionOffset * iOrigStride);
+            ptVal = vldrhq_gather_shifted_offset_z_u16(pOriginCorrected, ptOffs, predTail & p);
+            p = vcmpneq_m_n_u16(ptVal, MaskColour, p);
+            predGlb |= p;
+            ptVal = vpselq_u16(ptVal, vTarget, p);;
+            __arm_2d_rgb565_unpack_single_vec_cde(ptVal, &R, &G, &B);;
+            vAvgPixelR = vrmulhq_u16(vAreaBL, R);
+            vAvgPixelG = vrmulhq_u16(vAreaBL, G);
+            vAvgPixelB = vrmulhq_u16(vAreaBL, B);;
+        } {
+            uint16x8_t      ptVal;
+            arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1),.Y = vYi };
+            mve_pred16_t    p = __arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+            int16_t         correctionOffset = vminvq_s16(32767, vPoint.Y) - 1;
+            uint16x8_t      ptOffs = vPoint.X + (vPoint.Y - correctionOffset) * iOrigStride;
+            uint16_t       *pOriginCorrected = pOrigin + (correctionOffset * iOrigStride);
+            ptVal = vldrhq_gather_shifted_offset_z_u16(pOriginCorrected, ptOffs, predTail & p);
+            p = vcmpneq_m_n_u16(ptVal, MaskColour, p);
+            predGlb |= p;
+            ptVal = vpselq_u16(ptVal, vTarget, p);;
+            __arm_2d_rgb565_unpack_single_vec_cde(ptVal, &R, &G, &B);;
+            vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAreaBR, R));
+            vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAreaBR, G));
+            vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAreaBR, B));;
+        } {
+            uint16x8_t      ptVal;
+            arm_2d_point_s16x8_t vPoint = {.X = vXi,.Y = vaddq_n_s16(vYi, 1) };
+            mve_pred16_t    p = __arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+            int16_t         correctionOffset = vminvq_s16(32767, vPoint.Y) - 1;
+            uint16x8_t      ptOffs = vPoint.X + (vPoint.Y - correctionOffset) * iOrigStride;
+            uint16_t       *pOriginCorrected = pOrigin + (correctionOffset * iOrigStride);
+            ptVal = vldrhq_gather_shifted_offset_z_u16(pOriginCorrected, ptOffs, predTail & p);
+            p = vcmpneq_m_n_u16(ptVal, MaskColour, p);
+            predGlb |= p;
+            ptVal = vpselq_u16(ptVal, vTarget, p);;
+            __arm_2d_rgb565_unpack_single_vec_cde(ptVal, &R, &G, &B);;
+            vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAreaTL, R));
+            vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAreaTL, G));
+            vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAreaTL, B));;
+        } {
+            uint16x8_t      ptVal;
+            arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1),.Y = vaddq_n_s16(vYi, 1) };
+            mve_pred16_t    p = __arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+            int16_t         correctionOffset = vminvq_s16(32767, vPoint.Y) - 1;
+            uint16x8_t      ptOffs = vPoint.X + (vPoint.Y - correctionOffset) * iOrigStride;
+            uint16_t       *pOriginCorrected = pOrigin + (correctionOffset * iOrigStride);
+            ptVal = vldrhq_gather_shifted_offset_z_u16(pOriginCorrected, ptOffs, predTail & p);
+            p = vcmpneq_m_n_u16(ptVal, MaskColour, p);
+            predGlb |= p;
+            ptVal = vpselq_u16(ptVal, vTarget, p);;
+            __arm_2d_rgb565_unpack_single_vec_cde(ptVal, &R, &G, &B);;
+            vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAreaTR, R));
+            vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAreaTR, G));
+            vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAreaTR, B));;
+        };
+
+
+
+
+        vDstPixel = __arm_2d_cde_rgb565_packtq((vAvgPixelR), (vAvgPixelG), (vAvgPixelB));
+    }
+    vTarget = vpselq_u16(vDstPixel, vTarget, predGlb);
+
+
+    vst1q_p(pTarget, vTarget, predTail);
+}
+
+
+__OVERRIDE_WEAK
+    void __arm_2d_impl_rgb565_transform(__arm_2d_param_copy_orig_t * ptParam,
+                                        __arm_2d_transform_info_t * ptInfo)
+{
+    int32_t         iHeight = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iHeight;
+    int32_t         iWidth = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iWidth;
+    int32_t         iTargetStride = ptParam->use_as____arm_2d_param_copy_t.tTarget.iStride;
+    uint16_t       *pTargetBase = ptParam->use_as____arm_2d_param_copy_t.tTarget.pBuffer;
+    uint16_t       *pOrigin = ptParam->tOrigin.pBuffer;
+    int32_t         iOrigStride = ptParam->tOrigin.iStride;
+    uint16_t        MaskColour = ptInfo->Mask.hwColour;
+    float32_t       fAngle = -ptInfo->fAngle;
+    arm_2d_location_t tOffset =
+        ptParam->use_as____arm_2d_param_copy_t.tSource.tValidRegion.tLocation;
+    arm_2d_location_t *pCenter = &(ptInfo->tCenter);
+    q31_t           invIWidth = (iWidth > 1) ? 0x7fffffff / (iWidth - 1) : 0x7fffffff;
+    arm_2d_rot_linear_regr_t regrCoefs[2];
+    arm_2d_location_t SrcPt = ptInfo->tDummySourceOffset;
+
+
+
+    _Bool           gatherLoadIdxOverflow;
+
+    gatherLoadIdxOverflow =
+        __arm_2d_transform_regression(&ptParam->use_as____arm_2d_param_copy_t.tCopySize,
+                                      &SrcPt,
+                                      fAngle,
+                                      ptInfo->fScale, &tOffset, pCenter, iOrigStride, regrCoefs);
+
+
+
+    /* slopes between 1st and last columns */
+    int32_t         slopeY, slopeX;
+
+    slopeY = MULTFX((regrCoefs[1].interceptY - regrCoefs[0].interceptY), invIWidth);
+    slopeX = MULTFX((regrCoefs[1].interceptX - regrCoefs[0].interceptX), invIWidth);
+
+    int32_t         nrmSlopeX = 17 - __CLZ(ABS(slopeX));
+    int32_t         nrmSlopeY = 17 - __CLZ(ABS(slopeY));
+
+    slopeX = ARSHIFT(slopeX, nrmSlopeX);
+    slopeY = ARSHIFT(slopeY, nrmSlopeY);
+
+
+    if (!gatherLoadIdxOverflow) {
+
+
+        for (int32_t y = 0; y < iHeight; y++) {
+
+
+            int32_t         colFirstY = __QADD((regrCoefs[0].slopeY * y), regrCoefs[0].interceptY);
+            int32_t         colFirstX = __QADD((regrCoefs[0].slopeX * y), regrCoefs[0].interceptX);
+
+
+            colFirstX = colFirstX >> 10;
+            colFirstY = colFirstY >> 10;
+
+            int32_t         nbVecElts = iWidth;
+            int16x8_t       vX = (int16x8_t) vidupq_n_u16(0, 1);
+            uint16_t       *pTargetBaseCur = pTargetBase;
+
+
+            vX = ((vX) << 6);
+
+            while (nbVecElts > 0) {
+                arm_2d_point_s16x8_t tPointV;
+
+                tPointV.X = vqdmulhq_n_s16(vX, slopeX);
+                tPointV.X = vaddq_n_s16(vqrshlq_n_s16(tPointV.X, nrmSlopeX), colFirstX);
+
+                tPointV.Y = vqdmulhq_n_s16(vX, slopeY);
+                tPointV.Y = vaddq_n_s16(vqrshlq_n_s16(tPointV.Y, nrmSlopeY), colFirstY);
+
+                __arm_2d_impl_rgb565_get_pixel_colour(&tPointV,
+                                                      &ptParam->tOrigin.tValidRegion,
+                                                      pOrigin,
+                                                      iOrigStride,
+                                                      pTargetBaseCur, MaskColour, nbVecElts);
+
+                pTargetBaseCur += 8;
+                vX += ((1 << 6) * 8);
+                nbVecElts -= 8;
+            }
+            pTargetBase += iTargetStride;
+        }
+
+
+    } else {
+        for (int32_t y = 0; y < iHeight; y++) {
+
+
+            int32_t         colFirstY = __QADD((regrCoefs[0].slopeY * y), regrCoefs[0].interceptY);
+            int32_t         colFirstX = __QADD((regrCoefs[0].slopeX * y), regrCoefs[0].interceptX);
+
+
+            colFirstX = colFirstX >> 10;
+            colFirstY = colFirstY >> 10;
+
+            int32_t         nbVecElts = iWidth;
+            int16x8_t       vX = (int16x8_t) vidupq_n_u16(0, 1);
+            uint16_t       *pTargetBaseCur = pTargetBase;
+
+
+            vX = ((vX) << 6);
+
+            while (nbVecElts > 0) {
+                arm_2d_point_s16x8_t tPointV;
+
+                tPointV.X = vqdmulhq_n_s16(vX, slopeX);
+                tPointV.X = vaddq_n_s16(vqrshlq_n_s16(tPointV.X, nrmSlopeX), colFirstX);
+
+                tPointV.Y = vqdmulhq_n_s16(vX, slopeY);
+                tPointV.Y = vaddq_n_s16(vqrshlq_n_s16(tPointV.Y, nrmSlopeY), colFirstY);
+
+                __arm_2d_impl_rgb565_get_pixel_colour_offs_compensated(&tPointV,
+                                                                       &ptParam->tOrigin.
+                                                                       tValidRegion, pOrigin,
+                                                                       iOrigStride, pTargetBaseCur,
+                                                                       MaskColour, nbVecElts);
+
+                pTargetBaseCur += 8;
+                vX += ((8) << 6);
+                nbVecElts -= 8;
+            }
+            pTargetBase += iTargetStride;
+        }
+    }
+
+}
+
+__OVERRIDE_WEAK
+    void __arm_2d_impl_rgb565_colour_filling_a2_mask_opacity(uint16_t * __RESTRICT pTarget,
+                                                             int16_t iTargetStride,
+                                                             uint8_t * __RESTRICT pchAlpha,
+                                                             int16_t iAlphaStride,
+                                                             int32_t nAlphaOffset,
+                                                             arm_2d_size_t * __RESTRICT ptCopySize,
+                                                             uint16_t Colour,
+                                                             uint_fast16_t hwOpacity)
 {
     int_fast16_t    iHeight = ptCopySize->iHeight;
     int_fast16_t    iWidth = ptCopySize->iWidth;
@@ -786,11 +1867,11 @@ void __arm_2d_impl_rgb565_colour_filling_a2_mask_opacity(uint16_t * __restrict p
 
 
             uint16x8_t      cde =
-                __arm_2d_cde_vrgb565_blend(vecTarget, vdupq_n_u16(Colour), vecAlpha);
+                __arm_2d_cde_rgb565_blendq(vecTarget, vdupq_n_u16(Colour), vecAlpha);
 
 
             uint16x8_t      vecR, vecG, vecB;
-            __arm_2d_rgb565_unpack_single_vec(vecTarget, &vecR, &vecG, &vecB);
+            __arm_2d_rgb565_unpack_single_vec_cde(vecTarget, &vecR, &vecG, &vecB);
             vecR = vmulq(vecR, vecAlpha);
             vecR = vmlaq(vecR, vecTransp, (uint16_t) tSrcPix.R);
             vecR = vecR >> 8;
@@ -814,7 +1895,7 @@ void __arm_2d_impl_rgb565_colour_filling_a2_mask_opacity(uint16_t * __restrict p
                 okCnt++;
             //   printf("ok2 %d %d\n", errorCnt, okCnt++);
 #else
-            vecTarget = __arm_2d_cde_vrgb565_blend_m(vecTarget, vdupq_n_u16(Colour), vecAlpha, p);;
+            vecTarget = __arm_2d_cde_rgb565_blendq_m(vecTarget, vdupq_n_u16(Colour), vecAlpha, p);
 #endif
 
 
@@ -830,13 +1911,14 @@ void __arm_2d_impl_rgb565_colour_filling_a2_mask_opacity(uint16_t * __restrict p
 }
 
 
-void __arm_2d_impl_rgb565_colour_filling_a4_mask(uint16_t * __restrict pTarget,
-                                                 int16_t iTargetStride,
-                                                 uint8_t * __restrict pchAlpha,
-                                                 int16_t iAlphaStride,
-                                                 int32_t nAlphaOffset,
-                                                 arm_2d_size_t *
-                                                 __restrict ptCopySize, uint16_t Colour)
+__OVERRIDE_WEAK
+    void __arm_2d_impl_rgb565_colour_filling_a4_mask(uint16_t * __RESTRICT pTarget,
+                                                     int16_t iTargetStride,
+                                                     uint8_t * __RESTRICT pchAlpha,
+                                                     int16_t iAlphaStride,
+                                                     int32_t nAlphaOffset,
+                                                     arm_2d_size_t *
+                                                     __RESTRICT ptCopySize, uint16_t Colour)
 {
     int_fast16_t    iHeight = ptCopySize->iHeight;
     int_fast16_t    iWidth = ptCopySize->iWidth;
@@ -880,10 +1962,10 @@ void __arm_2d_impl_rgb565_colour_filling_a4_mask(uint16_t * __restrict pTarget,
 
 
             uint16x8_t      cde =
-                __arm_2d_cde_vrgb565_blend(vecTarget, vdupq_n_u16(Colour), vecAlpha);
+                __arm_2d_cde_rgb565_blendq(vecTarget, vdupq_n_u16(Colour), vecAlpha);
 
             uint16x8_t      vecR, vecG, vecB;
-            __arm_2d_rgb565_unpack_single_vec(vecTarget, &vecR, &vecG, &vecB);
+            __arm_2d_rgb565_unpack_single_vec_cde(vecTarget, &vecR, &vecG, &vecB);
 
             vecR = vmulq(vecR, vecAlpha);
             vecR = vmlaq(vecR, vecTransp, (uint16_t) tSrcPix.R);
@@ -913,7 +1995,7 @@ void __arm_2d_impl_rgb565_colour_filling_a4_mask(uint16_t * __restrict pTarget,
                 okCnt++;
             //   printf("ok3 %d %d\n", errorCnt, okCnt++);
 #else
-            vecTarget = __arm_2d_cde_vrgb565_blend_m(vecTarget, vdupq_n_u16(Colour), vecAlpha, p);;
+            vecTarget = __arm_2d_cde_rgb565_blendq_m(vecTarget, vdupq_n_u16(Colour), vecAlpha, p);
 #endif
             vst1q_p_u16(pCurTarget, vecTarget, p);
             pAlpha += (8 * 1 / 2);
@@ -925,6 +2007,79 @@ void __arm_2d_impl_rgb565_colour_filling_a4_mask(uint16_t * __restrict pTarget,
         pTarget += (iTargetStride);
     };
 
+}
+
+
+__OVERRIDE_WEAK
+    void __arm_2d_impl_rgb565_des_msk_copy(uint16_t * __RESTRICT pSourceBase,
+                                           int16_t iSourceStride,
+                                           uint16_t * __RESTRICT pTargetBase,
+                                           int16_t iTargetStride,
+                                           uint8_t * __RESTRICT ptTargetMaskBase,
+                                           int16_t iTargetMaskStride,
+                                           arm_2d_size_t * __RESTRICT ptTargetMaskSize,
+                                           arm_2d_size_t * __RESTRICT ptCopySize)
+{
+    int_fast16_t    iHeight = ptCopySize->iHeight;
+    int_fast16_t    iWidth = ptCopySize->iWidth;
+    uint16x8_t      v256 = vdupq_n_u16(256);
+    uint8_t        *ptTargetMask = ptTargetMaskBase;
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+
+        uint16_t       *__RESTRICT ptSrc = pSourceBase;
+        uint16_t       *__RESTRICT ptTargetCur = pTargetBase;
+        uint8_t        *__RESTRICT ptTargetMaskCur = ptTargetMask;
+
+        int32_t         blkCnt = iWidth;
+
+        do {
+            mve_pred16_t    p = vctp16q((uint32_t) blkCnt);
+            uint16x8_t      vecTarget = vld1q_z(ptTargetCur, p);
+            uint16x8_t      vecSource = vld1q_z(ptSrc, p);
+            uint16x8_t      vecTargetMask = vldrbq_z_u16(ptTargetMaskCur, p);
+            uint16x8_t      vecHwOpacity = vsubq_x(v256, vecTargetMask, p);
+
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            vecHwOpacity =
+                vpselq(vdupq_n_u16(0), vecHwOpacity, vcmpeqq_m_n_u16(vecHwOpacity, 1, p));
+#endif
+
+#if COMPARE_CDE_TEST
+            uint16x8_t      cde = __arm_2d_cde_rgb565_blendq(vecTarget, vecSource,
+                                                             vecHwOpacity);
+
+            vecTarget =
+                __arm_2d_rgb565_blending_opacity_single_vec(vecTarget, vecSource, vecHwOpacity);
+
+
+
+            if (COMPARE_Q15_VEC(cde, vecTarget) == 0) {
+
+                DUMP_Q15_VEC(cde);
+                DUMP_Q15_VEC(vecHwOpacity);
+                DUMP_Q15_VEC(vecTarget);
+                printf("blkCnt %x\n", blkCnt);
+
+            }
+#else
+            vecTarget = __arm_2d_cde_rgb565_blendq_m(vecTarget, vecSource, vecHwOpacity, p);
+#endif
+            vst1q_p(ptTargetCur, vecTarget, p);
+
+
+            ptTargetMaskCur += (128 / 16);
+            ptTargetCur += (128 / 16);
+            ptSrc += (128 / 16);
+            blkCnt -= (128 / 16);
+        }
+        while (blkCnt > 0);
+
+        pSourceBase += (iSourceStride);
+        pTargetBase += (iTargetStride);
+        ptTargetMask += (iTargetMaskStride);
+    }
 }
 
 

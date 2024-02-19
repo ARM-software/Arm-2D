@@ -64,8 +64,8 @@ private:
         "VNOT_IMPL2A",     // vcx2a_s
         "VNOT_IMPL2",      // vcx2_d
         "VNOT_IMPL2A",     // vcx2a_d
-        "VNOT_IMPL2",      // vcx2_v
-        "VNOT_IMPL2A",     // vcx2a_v
+        "VRGBPCKUNPK",     // vcx2_v
+        "VRGBPCKUNPKACC",  // vcx2a_v
         "VNOT_IMPL3",      // vcx3_s
         "VNOT_IMPL3A",     // vcx3a_s
         "VNOT_IMPL3",      // vcx3_d
