@@ -22,8 +22,8 @@
  * Description:  A private header file for 
  *               colour-filling-with-mask-and-mirroring
  *
- * $Date:        18. Feb 2024
- * $Revision:    V.0.5.0
+ * $Date:        19. Feb 2024
+ * $Revision:    V.0.6.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -68,6 +68,20 @@ extern "C" {
                                      (__ALPHA_ADDR),                            \
                                      (__COLOUR))
 
+#define arm_2d_rgb565_fill_colour_with_mask_x_mirror_and_opacity(               \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __ALPHA_ADDR,   /*   alpha tile address */  \
+                                    __COLOUR,       /*   colour */              \
+                                    __OPACITY)      /*   opacity */             \
+            arm_2dp_rgb565_fill_colour_with_mask_x_mirror_and_opacity(          \
+                                      NULL,                                     \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR),                           \
+                                     (__ALPHA_ADDR),                            \
+                                     (__COLOUR),                                \
+                                     (__OPACITY))
+
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
@@ -80,6 +94,16 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask_and_x_mirror(
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
                                         arm_2d_color_rgb565_t tColour);
+
+extern
+ARM_NONNULL(2,4)
+arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask_x_mirror_and_opacity(
+                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_tile_t *ptAlpha,
+                                        arm_2d_color_rgb565_t tColour,
+                                        uint8_t chOpacity);
 
 /*! @} */
 

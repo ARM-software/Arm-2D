@@ -212,12 +212,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
                                                             (__arm_2d_color_t){GLCD_COLOR_BLACK},
                                                             128);
                     #else
-                        arm_2dp_rgb565_fill_colour_with_mask_and_x_mirror(   
+                        arm_2dp_rgb565_fill_colour_with_mask_x_mirror_and_opacity(   
                                                             NULL,
                                                             ptTile, 
                                                             &__centre_region, 
                                                             &c_tileCMSISLogoMask, 
-                                                            (__arm_2d_color_t){GLCD_COLOR_BLACK});
+                                                            (__arm_2d_color_t){GLCD_COLOR_BLACK},
+                                                            128);
                     #endif
                     }
                 #endif

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2024 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        02. May 2023
- * $Revision:    V.1.6.1
+ * $Date:        18. Feb 2024
+ * $Revision:    V.1.6.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -303,6 +303,33 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_AND_Y_MIRROR_CCCN888;
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_AND_XY_MIRROR_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_X_MIRROR_AND_OPACITY_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_Y_MIRROR_AND_OPACITY_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_XY_MIRROR_AND_OPACITY_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_X_MIRROR_AND_OPACITY_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_Y_MIRROR_AND_OPACITY_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_XY_MIRROR_AND_OPACITY_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_X_MIRROR_AND_OPACITY_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_Y_MIRROR_AND_OPACITY_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_XY_MIRROR_AND_OPACITY_CCCN888;
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_OPACITY_GRAY8;

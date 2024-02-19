@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        18. Feb 2024
- * $Revision:    V.1.4.2
+ * $Date:        19. Feb 2024
+ * $Revision:    V.1.4.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -332,9 +332,9 @@ enum {
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_OPACITY 
         = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A8_MASK_AND_OPACITY,
     
-    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_OPACITY_AND_X_MIRROR,
-    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_OPACITY_AND_Y_MIRROR,
-    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_OPACITY_AND_XY_MIRROR,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_X_MIRROR_AND_OPACITY,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_Y_MIRROR_AND_OPACITY,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_XY_MIRROR_AND_OPACITY,
 
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_OPACITY_AND_REPEAT,
     
@@ -1298,6 +1298,17 @@ extern
 arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_and_x_mirror(
                                                 __arm_2d_sub_task_t *ptTask);
 
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_x_mirror_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_x_mirror_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_x_mirror_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
 
 extern
 arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_opacity(__arm_2d_sub_task_t *ptTask);

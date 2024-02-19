@@ -57,14 +57,14 @@ extern "C" {
 // <i> The width of your screen
 // <i> Default: 320
 #ifndef __DISP0_CFG_SCEEN_WIDTH__
-#   define __DISP0_CFG_SCEEN_WIDTH__                               480
+#   define __DISP0_CFG_SCEEN_WIDTH__                               800
 #endif
 
 // <o>Height of the screen <8-32767>
 // <i> The height of your screen
 // <i> Default: 240
 #ifndef __DISP0_CFG_SCEEN_HEIGHT__
-#   define __DISP0_CFG_SCEEN_HEIGHT__                              272
+#   define __DISP0_CFG_SCEEN_HEIGHT__                              600
 #endif
 
 // <o>Width of the PFB block
