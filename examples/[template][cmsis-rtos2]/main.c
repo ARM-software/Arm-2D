@@ -179,6 +179,8 @@ int32_t Disp0_DrawBitmap(int16_t x,
  __NO_RETURN
 void app_2d_main_thread (void *argument) 
 {
+    init_task_cycle_counter();
+    
     ARM_2D_UNUSED(argument);
     
 #if defined(RTE_Acceleration_Arm_2D_Extra_Benchmark)
