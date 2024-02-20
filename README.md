@@ -300,7 +300,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
 
 **Figure 1-4 A snapshot of the generic benchmark running on Simulation**
 
-<img src="./documentation/pictures/benchmark.png" alt="Benchmark" style="zoom: 50%;" /> 
+<img src="./documentation/pictures/benchmark.png" alt="Benchmark"  /> 
 
 - **Use the average cycle count in 1000 iterations as benchmark score.**
 
