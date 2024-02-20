@@ -426,6 +426,107 @@ void __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity(uint16_t * __RESTRICT 
     }
 }
 
+
+__OVERRIDE_WEAK
+void __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill(uint16_t * __RESTRICT ptSourceBase,
+                                                      int16_t iSourceStride,
+                                                      arm_2d_size_t * __RESTRICT ptSourceSize,
+                                                      uint8_t * __RESTRICT ptSourceMaskBase,
+                                                      int16_t iSourceMaskStride,
+                                                      arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+                                                      uint16_t * __RESTRICT ptTargetBase,
+                                                      int16_t iTargetStride,
+                                                      arm_2d_size_t * __RESTRICT ptTargetSize,
+                                                      uint8_t * __RESTRICT ptTargetMaskBase,
+                                                      int16_t iTargetMaskStride,
+                                                      arm_2d_size_t * __RESTRICT ptTargetMaskSize)
+{
+    uint16x8_t      v256 = vdupq_n_u16(256);
+    uint8_t        *__RESTRICT ptTargetMaskLineBase = ptTargetMaskBase;
+
+    for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
+        uint16_t       *__RESTRICT ptSource = ptSourceBase;
+        uint8_t        *ptSourceMask = ptSourceMaskBase;
+
+        for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
+            uint16_t       *__RESTRICT ptTarget = ptTargetBase;
+            uint8_t        *__RESTRICT ptTargetMask = ptTargetMaskLineBase;
+            uint_fast32_t   wLengthLeft = ptTargetSize->iWidth;
+
+            do {
+                uint_fast32_t   wLength =
+                    ((wLengthLeft) <
+                     (ptSourceSize->iWidth) ? (wLengthLeft) : (ptSourceSize->iWidth));
+
+
+                uint16_t       *__RESTRICT ptSrc = ptSource;
+                uint16_t       *__RESTRICT ptTargetCur = ptTarget;
+                uint8_t        *__RESTRICT ptSrcMsk = ptSourceMask;
+                uint8_t        *__RESTRICT ptTargetMaskCur = ptTargetMask;
+                int32_t         blkCnt = wLength;
+
+                do {
+                    mve_pred16_t    p = vctp16q((uint32_t) blkCnt);
+
+                    uint16x8_t      vecTarget = vld1q_z(ptTargetCur, p);
+                    uint16x8_t      vecSource = vld1q_z(ptSrc, p);
+                    uint16x8_t      vecSrcMsk = vldrbq_z_u16(ptSrcMsk, p);
+                    uint16x8_t      vecTargetMask = vldrbq_z_u16(ptTargetMaskCur, p);
+                    uint16x8_t      vecHwOpacity = vsubq_x(v256,
+                                                           vshrq_x(vmulq_x(vecSrcMsk, vecTargetMask, p),
+                                                                    8, p), p);
+
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                    vecHwOpacity = vpselq(vdupq_n_u16(0), vecHwOpacity,
+                                          vcmpeqq_n_u16(vecHwOpacity, 2));
+#endif
+
+#if COMPARE_CDE_TEST
+                    uint16x8_t      vecTarget2 =
+                        __arm_2d_rgb565_blending_opacity_single_vec(vecTarget, vecSource,
+                                                                    vecHwOpacity);
+
+                    vecTarget = __arm_2d_cde_rgb565_blendq_m(vecTarget, vecSource, vecHwOpacity, p);
+
+                    if (COMPARE_Q15_VEC(vecTarget2, vecTarget) == 0) {
+                        printf("error\n");
+                        errorCnt++;
+                    } else
+                        okCnt++;
+#else
+                    vecTarget = __arm_2d_cde_rgb565_blendq_m(vecTarget, vecSource, vecHwOpacity, p);
+#endif
+
+                    vst1q_p(ptTargetCur, vecTarget, p);
+
+
+                    ptSrcMsk += (128 / 16);
+                    ptTargetMaskCur += (128 / 16);
+                    ptTargetCur += (128 / 16);
+                    ptSrc += (128 / 16);
+                    blkCnt -= (128 / 16);
+                }
+                while (blkCnt > 0);
+
+                ptTarget += wLength;
+                ptTargetMask += wLength;
+                wLengthLeft -= wLength;
+            } while (wLengthLeft);
+
+
+            ptSource += iSourceStride;
+            ptTargetBase += iTargetStride;
+            ptSourceMask += iSourceMaskStride;
+            ptTargetMaskLineBase = ptTargetMaskBase;
+            iTargetY++;
+            if (iTargetY >= ptTargetSize->iHeight) {
+                break;
+            }
+        }
+    }
+}
+
+
 void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy(uint16_t * __RESTRICT pSourceBase,
                                                   int16_t iSourceStride,
                                                   uint8_t * __RESTRICT ptSourceMaskBase,
@@ -501,9 +602,9 @@ void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy(uint16_t * __RESTRICT pSourceB
 }
 
 
-static
-mve_pred16_t __arm_2d_is_point_vec_inside_region_s16(const arm_2d_region_t * ptRegion,
-                                                     const arm_2d_point_s16x8_t * ptPoint)
+__STATIC_FORCEINLINE
+    mve_pred16_t __arm_2d_is_point_vec_inside_region_s16(const arm_2d_region_t * ptRegion,
+                                                         const arm_2d_point_s16x8_t * ptPoint)
 {
     mve_pred16_t    p0 = vcmpgeq(ptPoint->X, ptRegion->tLocation.iX);
     p0 = vcmpgeq_m(ptPoint->Y, ptRegion->tLocation.iY, p0);
@@ -515,13 +616,16 @@ mve_pred16_t __arm_2d_is_point_vec_inside_region_s16(const arm_2d_region_t * ptR
 
 
 
-static void __arm_2d_impl_rgb565_get_alpha_with_opacity(arm_2d_point_s16x8_t * ptPoint,
-                                                        arm_2d_region_t * ptOrigValidRegion,
-                                                        uint8_t * pOrigin,
-                                                        int16_t iOrigStride,
-                                                        uint16_t * pTarget,
-                                                        uint16_t MaskColour,
-                                                        uint_fast16_t hwOpacity, uint32_t elts)
+__STATIC_FORCEINLINE void __arm_2d_impl_rgb565_get_alpha_with_opacity(arm_2d_point_s16x8_t *
+                                                                      ptPoint,
+                                                                      arm_2d_region_t *
+                                                                      ptOrigValidRegion,
+                                                                      uint8_t * pOrigin,
+                                                                      int16_t iOrigStride,
+                                                                      uint16_t * pTarget,
+                                                                      uint16_t MaskColour,
+                                                                      uint_fast16_t hwOpacity,
+                                                                      uint32_t elts)
 {
     mve_pred16_t    predTail = vctp16q(elts);
     uint16x8_t      vTarget = vld1q_u16(pTarget);
@@ -647,7 +751,7 @@ static void __arm_2d_impl_rgb565_get_alpha_with_opacity(arm_2d_point_s16x8_t * p
 
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_rgb565_colour_filling_mask_opacity_transformx(__arm_2d_param_copy_orig_t *
+void __arm_2d_impl_rgb565_colour_filling_mask_opacity_transform(__arm_2d_param_copy_orig_t *
                                                                     ptParam,
                                                                     __arm_2d_transform_info_t *
                                                                     ptInfo, uint_fast16_t hwRatio)
@@ -743,14 +847,14 @@ void __arm_2d_rgb565_unpack_single_vec_cde(uint16x8_t in,
 
 
 
-static
+__STATIC_FORCEINLINE
 void __arm_2d_impl_rgb565_get_pixel_colour_with_alpha(arm_2d_point_s16x8_t * ptPoint,
-                                                      arm_2d_region_t * ptOrigValidRegion,
-                                                      uint16_t * pOrigin,
-                                                      int16_t iOrigStride,
-                                                      uint16_t * pTarget,
-                                                      uint16_t MaskColour,
-                                                      uint_fast16_t hwOpacity, uint32_t elts)
+                                                          arm_2d_region_t * ptOrigValidRegion,
+                                                          uint16_t * pOrigin,
+                                                          int16_t iOrigStride,
+                                                          uint16_t * pTarget,
+                                                          uint16_t MaskColour,
+                                                          uint_fast16_t hwOpacity, uint32_t elts)
 {
     mve_pred16_t    predTail = vctp16q(elts);
     uint16x8_t      vTarget = vld1q(pTarget);
@@ -904,17 +1008,17 @@ void __arm_2d_impl_rgb565_get_pixel_colour_with_alpha(arm_2d_point_s16x8_t * ptP
 
 
 
-static
+__STATIC_FORCEINLINE
 void __arm_2d_impl_rgb565_get_pixel_colour_with_alpha_offs_compensated(arm_2d_point_s16x8_t *
-                                                                       ptPoint,
-                                                                       arm_2d_region_t *
-                                                                       ptOrigValidRegion,
-                                                                       uint16_t * pOrigin,
-                                                                       int16_t iOrigStride,
-                                                                       uint16_t * pTarget,
-                                                                       uint16_t MaskColour,
-                                                                       uint_fast16_t hwOpacity,
-                                                                       uint32_t elts)
+                                                                           ptPoint,
+                                                                           arm_2d_region_t *
+                                                                           ptOrigValidRegion,
+                                                                           uint16_t * pOrigin,
+                                                                           int16_t iOrigStride,
+                                                                           uint16_t * pTarget,
+                                                                           uint16_t MaskColour,
+                                                                           uint_fast16_t hwOpacity,
+                                                                           uint32_t elts)
 {
     mve_pred16_t    predTail = vctp16q(elts);
     uint16x8_t      vTarget = vld1q(pTarget);
@@ -1190,14 +1294,14 @@ void __arm_2d_impl_rgb565_transform_with_opacity(__arm_2d_param_copy_orig_t * pt
 
 }
 
-static
+__STATIC_FORCEINLINE
 void __arm_2d_impl_rgb565_get_pixel_colour_src_mask(arm_2d_point_s16x8_t * ptPoint,
-                                                    arm_2d_region_t * ptOrigValidRegion,
-                                                    uint16_t * pOrigin,
-                                                    int16_t iOrigStride,
-                                                    uint16_t * pTarget,
-                                                    uint8_t * pchOrigMask,
-                                                    int16_t iOrigmaskStride, uint32_t elts)
+                                                        arm_2d_region_t * ptOrigValidRegion,
+                                                        uint16_t * pOrigin,
+                                                        int16_t iOrigStride,
+                                                        uint16_t * pTarget,
+                                                        uint8_t * pchOrigMask,
+                                                        int16_t iOrigmaskStride, uint32_t elts)
 {
 
     mve_pred16_t    predTail = vctp16q(elts);
@@ -1458,12 +1562,13 @@ void __arm_2d_impl_rgb565_transform_with_src_mask(__arm_2d_param_copy_orig_msk_t
 
 
 
-static
+__STATIC_FORCEINLINE
 void __arm_2d_impl_rgb565_get_pixel_colour(arm_2d_point_s16x8_t * ptPoint,
-                                           arm_2d_region_t * ptOrigValidRegion,
-                                           uint16_t * pOrigin,
-                                           int16_t iOrigStride,
-                                           uint16_t * pTarget, uint16_t MaskColour, uint32_t elts)
+                                               arm_2d_region_t * ptOrigValidRegion,
+                                               uint16_t * pOrigin,
+                                               int16_t iOrigStride,
+                                               uint16_t * pTarget, uint16_t MaskColour,
+                                               uint32_t elts)
 {
     mve_pred16_t    predTail = vctp16q(elts);
     uint16x8_t      vTarget = vld1q(pTarget);
@@ -1560,13 +1665,13 @@ void __arm_2d_impl_rgb565_get_pixel_colour(arm_2d_point_s16x8_t * ptPoint,
 
 
 
-static
+__STATIC_FORCEINLINE
 void __arm_2d_impl_rgb565_get_pixel_colour_offs_compensated(arm_2d_point_s16x8_t * ptPoint,
-                                                            arm_2d_region_t * ptOrigValidRegion,
-                                                            uint16_t * pOrigin,
-                                                            int16_t iOrigStride,
-                                                            uint16_t * pTarget, uint16_t MaskColour,
-                                                            uint32_t elts)
+                                                                arm_2d_region_t * ptOrigValidRegion,
+                                                                uint16_t * pOrigin,
+                                                                int16_t iOrigStride,
+                                                                uint16_t * pTarget,
+                                                                uint16_t MaskColour, uint32_t elts)
 {
     mve_pred16_t    predTail = vctp16q(elts);
     uint16x8_t      vTarget = vld1q(pTarget);
@@ -1781,10 +1886,11 @@ void __arm_2d_impl_rgb565_transform(__arm_2d_param_copy_orig_t * ptParam,
                 tPointV.Y = vaddq_n_s16(vqrshlq_n_s16(tPointV.Y, nrmSlopeY), colFirstY);
 
                 __arm_2d_impl_rgb565_get_pixel_colour_offs_compensated(&tPointV,
-                                                                       &ptParam->tOrigin.
-                                                                       tValidRegion, pOrigin,
-                                                                       iOrigStride, pTargetBaseCur,
-                                                                       MaskColour, nbVecElts);
+                                                                       &ptParam->
+                                                                       tOrigin.tValidRegion,
+                                                                       pOrigin, iOrigStride,
+                                                                       pTargetBaseCur, MaskColour,
+                                                                       nbVecElts);
 
                 pTargetBaseCur += 8;
                 vX += ((8) << 6);

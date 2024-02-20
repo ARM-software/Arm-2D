@@ -53,6 +53,7 @@
 
 #define __arm_2d_impl_rgb565_colour_filling_with_opacity    \
                  __arm_2d_impl_rgb565_colour_filling_with_opacity_orig
+
 #define __arm_2d_impl_rgb565_colour_filling_mask_opacity \
                   __arm_2d_impl_rgb565_colour_filling_mask_opacity_orig
 
@@ -64,6 +65,9 @@
 
 #define __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy \
                 __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_orig
+
+#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill \
+                __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_orig
 
 #define __arm_2d_impl_rgb565_colour_filling_mask_opacity_transform \
                 __arm_2d_impl_rgb565_colour_filling_mask_opacity_transform_orig
@@ -85,6 +89,7 @@
 
 #define __arm_2d_impl_rgb565_transform \
                 __arm_2d_impl_rgb565_transform_orig
+
 
 #endif
 
