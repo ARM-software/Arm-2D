@@ -15,12 +15,12 @@
  */
 #define CMSIS_device_header "SSE300MPS3.h"
 
-/* ARM::Acceleration:Arm-2D Extras:Benchmark-WatchPanel@1.4.2 */
+/* ARM::Acceleration:Arm-2D Extras:Benchmark-WatchPanel@1.4.3 */
 #define RTE_Acceleration_Arm_2D_Extra_Benchmark
     #define RTE_Acceleration_Arm_2D_Extra_Benchmark_Watch_Panel
 /* ARM::Acceleration:Arm-2D Extras:Controls@1.5.7 */
 #define RTE_Acceleration_Arm_2D_Extra_Controls
-/* ARM::Acceleration:Arm-2D Extras:LCD ASCII Printf@2.1.1 */
+/* ARM::Acceleration:Arm-2D Extras:LCD ASCII Printf@2.2.1 */
 #define RTE_Acceleration_Arm_2D_Extra_LCD_printf__
 /* ARM::Acceleration:Arm-2D Helper:Display Adapter@1.9.1 */
 #define RTE_Acceleration_Arm_2D_Helper_Disp_Adapter0
