@@ -31,9 +31,10 @@
 #ifndef __ARM_2D_RGB565_ACI_LIB_H__
 #define __ARM_2D_RGB565_ACI_LIB_H__
 
-#ifdef __ARM_FEATURE_CDE
 /* The following library uses CDE coprocessor 0 */
 #define ARM_2D_RGB565_ACI_LIB_COPRO_ID  0
+
+#ifdef __ARM_FEATURE_CDE
 /*
     // Mnemonic                  | Class          | Copro |  Opcode        | CDERTLID  | Comment
     //---------------------------|----------------|-------|----------------|-----------|----------

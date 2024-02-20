@@ -94,7 +94,8 @@ static int8_t   A4_masks_shifts[4 * 3] = {
 };
 
 
-//#define COMPARE_CDE_TEST 1
+//#define COMPARE_CDE_TEST2 1
+
 
 #if COMPARE_CDE_TEST
 #include <stdio.h>
@@ -2173,10 +2174,204 @@ void __arm_2d_impl_rgb565_des_msk_copy(uint16_t * __RESTRICT pSourceBase,
 }
 
 
+
+__OVERRIDE_WEAK
+void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_x_mirror(uint16_t * __RESTRICT pSourceBase,
+                                                           int16_t iSourceStride,
+                                                           uint8_t * __RESTRICT ptSourceMaskBase,
+                                                           int16_t iSourceMaskStride,
+                                                           arm_2d_size_t *
+                                                           __RESTRICT ptSourceMaskSize,
+                                                           uint16_t * __RESTRICT pTargetBase,
+                                                           int16_t iTargetStride,
+                                                           uint8_t * __RESTRICT ptTargetMaskBase,
+                                                           int16_t iTargetMaskStride,
+                                                           arm_2d_size_t *
+                                                           __RESTRICT ptTargetMaskSize,
+                                                           arm_2d_size_t * __RESTRICT ptCopySize)
+{
+    int_fast16_t    iHeight = ptCopySize->iHeight;
+    int_fast16_t    iWidth = ptCopySize->iWidth;
+    uint16x8_t      v256 = vdupq_n_u16(256);
+    uint8_t        *ptSourceMask = ptSourceMaskBase;
+    uint8_t        *ptTargetMask = ptTargetMaskBase;
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+        uint16_t       *__RESTRICT ptSrc = pSourceBase;
+        uint16_t       *__RESTRICT ptTargetCur = pTargetBase;
+        uint8_t        *__RESTRICT ptSrcMsk = ptSourceMask;
+        uint8_t        *__RESTRICT ptTargetMaskCur = ptTargetMask;
+        uint32_t        curDecrStride1Idx = iWidth - 1;
+        int32_t         blkCnt = iWidth;
+        uint16x8_t      vDecrStride1Offs = vddupq_wb_u16(&curDecrStride1Idx, 1);
+
+        do {
+            uint16x8_t      vecTarget = vld1q(ptTargetCur);
+            uint16x8_t      vecSource = vldrhq_gather_shifted_offset(ptSrc, vDecrStride1Offs);
+            uint16x8_t      vecSrcMsk = vldrbq_gather_offset_u16(ptSrcMsk, vDecrStride1Offs);
+            uint16x8_t      vecTargetMask = vldrbq_u16((uint8_t *) ptTargetMaskCur);
+            uint16x8_t      vecHwOpacity = vsubq(v256, (vecSrcMsk * vecTargetMask) >> 8);
+
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            vecHwOpacity = vpselq(vdupq_n_u16(0), vecHwOpacity, vcmpeqq_n_u16(vecHwOpacity, 2));
+#endif
+
+            vecTarget =
+                __arm_2d_cde_rgb565_blendq(vecTarget, vecSource, vecHwOpacity);
+
+
+
+            vst1q_p(ptTargetCur, vecTarget, vctp16q(blkCnt));
+            vDecrStride1Offs = vddupq_wb_u16(&curDecrStride1Idx, 1);
+            ptTargetMaskCur += (128 / 16);
+            ptTargetCur += (128 / 16);
+            blkCnt -= (128 / 16);
+        }
+        while (blkCnt > 0);
+        pSourceBase += iSourceStride;
+        pTargetBase += iTargetStride;
+        ptSourceMask += iSourceMaskStride;
+        ptTargetMask = ptTargetMaskBase;
+    }
+}
+
+
+__OVERRIDE_WEAK
+void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_y_mirror(uint16_t * __RESTRICT pSourceBase,
+                                                           int16_t iSourceStride,
+                                                           uint8_t * __RESTRICT ptSourceMaskBase,
+                                                           int16_t iSourceMaskStride,
+                                                           arm_2d_size_t *
+                                                           __RESTRICT ptSourceMaskSize,
+                                                           uint16_t * __RESTRICT pTargetBase,
+                                                           int16_t iTargetStride,
+                                                           uint8_t * __RESTRICT ptTargetMaskBase,
+                                                           int16_t iTargetMaskStride,
+                                                           arm_2d_size_t *
+                                                           __RESTRICT ptTargetMaskSize,
+                                                           arm_2d_size_t * __RESTRICT ptCopySize)
+{
+    int_fast16_t    iHeight = ptCopySize->iHeight;
+    int_fast16_t    iWidth = ptCopySize->iWidth;
+    uint16x8_t      v256 = vdupq_n_u16(256);
+
+    pSourceBase += iSourceStride * (ptCopySize->iHeight - 1);
+
+    assert (ptCopySize->iHeight <= ptSourceMaskSize->iHeight);
+    ptSourceMaskBase += iSourceMaskStride * (ptCopySize->iHeight - 1);
+
+    uint8_t        *ptSourceMask = ptSourceMaskBase;
+    uint8_t        *ptTargetMask = ptTargetMaskBase;
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+        uint16_t       *__RESTRICT ptSrc = pSourceBase;
+        uint16_t       *__RESTRICT ptTargetCur = pTargetBase;
+        uint8_t        *__RESTRICT ptSrcMsk = ptSourceMask;
+        uint8_t        *__RESTRICT ptTargetMaskCur = ptTargetMask;
+
+        int32_t         blkCnt = iWidth;
+        do {
+            uint16x8_t      vecTarget = vld1q(ptTargetCur);
+            uint16x8_t      vecSource = vld1q(ptSrc);
+            uint16x8_t      vecSrcMsk = vldrbq_u16(ptSrcMsk);
+            uint16x8_t      vecTargetMask = vldrbq_u16(ptTargetMaskCur);
+            uint16x8_t      vecHwOpacity = vsubq(v256, (vecSrcMsk * vecTargetMask) >> 8);
+
+            #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            vecHwOpacity = vpselq(vdupq_n_u16(0), vecHwOpacity, vcmpeqq_n_u16(vecHwOpacity, 2));
+            #endif
+
+
+            vecTarget =
+                __arm_2d_cde_rgb565_blendq(vecTarget, vecSource, vecHwOpacity);
+
+            vst1q_p(ptTargetCur, vecTarget, vctp16q(blkCnt));
+            ptSrcMsk += (128 / 16);
+            ptTargetMaskCur += (128 / 16);
+            ptTargetCur += (128 / 16);
+            ptSrc += (128 / 16);
+            blkCnt -= (128 / 16);
+        }
+        while (blkCnt > 0);
+        pSourceBase -= iSourceStride;
+        pTargetBase += (iTargetStride);
+        ptSourceMask -= iSourceMaskStride;
+        ptTargetMask = ptTargetMaskBase;
+    }
+}
+
+
+
+__OVERRIDE_WEAK
+void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_xy_mirror(uint16_t * __RESTRICT pSourceBase,
+                                                            int16_t iSourceStride,
+                                                            uint8_t * __RESTRICT ptSourceMaskBase,
+                                                            int16_t iSourceMaskStride,
+                                                            arm_2d_size_t *
+                                                            __RESTRICT ptSourceMaskSize,
+                                                            uint16_t * __RESTRICT pTargetBase,
+                                                            int16_t iTargetStride,
+                                                            uint8_t * __RESTRICT ptTargetMaskBase,
+                                                            int16_t iTargetMaskStride,
+                                                            arm_2d_size_t *
+                                                            __RESTRICT ptTargetMaskSize,
+                                                            arm_2d_size_t * __RESTRICT ptCopySize)
+{
+    int_fast16_t    iHeight = ptCopySize->iHeight;
+    int_fast16_t    iWidth = ptCopySize->iWidth;
+    uint16x8_t      v256 = vdupq_n_u16(256);
+
+    pSourceBase += iSourceStride * (ptCopySize->iHeight - 1);
+
+    assert (ptCopySize->iHeight <= ptSourceMaskSize->iHeight);
+    ptSourceMaskBase += iSourceMaskStride * (ptCopySize->iHeight - 1);
+
+    uint8_t        *ptSourceMask = ptSourceMaskBase;
+    uint8_t        *ptTargetMask = ptTargetMaskBase;
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+        uint16_t       *__RESTRICT ptSrc = pSourceBase;
+        uint16_t       *__RESTRICT ptTargetCur = pTargetBase;
+        uint8_t        *__RESTRICT ptSrcMsk = ptSourceMask;
+        uint8_t        *__RESTRICT ptTargetMaskCur = ptTargetMask;
+        uint32_t        curDecrStride1Idx = iWidth - 1;
+        int32_t         blkCnt = iWidth;
+        uint16x8_t      vDecrStride1Offs = vddupq_wb_u16(&curDecrStride1Idx, 1);
+
+        do {
+            uint16x8_t      vecTarget = vld1q(ptTargetCur);
+            uint16x8_t      vecSource = vldrhq_gather_shifted_offset(ptSrc, vDecrStride1Offs);
+            uint16x8_t      vecSrcMsk = vldrbq_gather_offset_u16(ptSrcMsk, vDecrStride1Offs);
+            uint16x8_t      vecTargetMask = vldrbq_u16((uint8_t *) ptTargetMaskCur);
+            uint16x8_t      vecHwOpacity = vsubq(v256, (vecSrcMsk * vecTargetMask) >> 8);
+
+            #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            vecHwOpacity = vpselq(vdupq_n_u16(0), vecHwOpacity, vcmpeqq_n_u16(vecHwOpacity, 2));
+            #endif
+
+            vecTarget =
+                __arm_2d_cde_rgb565_blendq(vecTarget, vecSource, vecHwOpacity);
+
+            vst1q_p(ptTargetCur, vecTarget, vctp16q(blkCnt));
+
+            vDecrStride1Offs = vddupq_wb_u16(&curDecrStride1Idx, 1);
+            ptTargetMaskCur += (128 / 16);
+            ptTargetCur += (128 / 16);
+            blkCnt -= (128 / 16);
+        }
+        while (blkCnt > 0);
+
+        pSourceBase -= iSourceStride;
+        pTargetBase += (iTargetStride);
+        ptSourceMask -= iSourceMaskStride;
+        ptTargetMask = ptTargetMaskBase;
+    }
+}
+
 #endif
 
 void __arm_2d_aci_init(void)
 {
+#ifdef __ARM_FEATURE_CDE
     if (__ARM_FEATURE_CDE_COPROC & (1 << ARM_2D_RGB565_ACI_LIB_COPRO_ID))
         __arm_2d_cde_rgb565_init();
+#endif
 }

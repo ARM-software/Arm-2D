@@ -90,6 +90,16 @@
 #define __arm_2d_impl_rgb565_transform \
                 __arm_2d_impl_rgb565_transform_orig
 
+#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_x_mirror \
+                __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_x_mirror_orig
+
+#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_y_mirror \
+                __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_y_mirror_orig
+
+#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_xy_mirror \
+                __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_xy_mirror_orig
+
+
 
 #endif
 
