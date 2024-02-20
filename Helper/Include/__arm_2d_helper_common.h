@@ -630,14 +630,20 @@ extern "C" {
 #define impl_heap_fb(__tile_name, __width, __height, __colour_type)             \
     arm_using(                                                                  \
         arm_2d_tile_t __tile_name = {                                           \
-            .pchBuffer = malloc((__width) * (__height) * sizeof(__colour_type)),\
+            .pchBuffer = __arm_2d_allocate_scratch_memory(                      \
+                (__width) * (__height) * sizeof(__colour_type),                 \
+                __alignof__(__colour_type),                                     \
+                ARM_2D_MEM_TYPE_FAST),                                          \
         },                                                                      \
         ({__tile_name.tRegion.tSize.iWidth = (__width);                         \
          __tile_name.tRegion.tSize.iHeight = (__height);                        \
          __tile_name.tInfo.bIsRoot = true;                                      \
          assert(NULL != __tile_name.pchBuffer);                                 \
         }),                                                                     \
-        ({ arm_2d_op_wait_async(NULL); free(__tile_name.phwBuffer); }) )
+        ({  arm_2d_op_wait_async(NULL);                                         \
+            __arm_2d_free_scratch_memory(                                       \
+                ARM_2D_MEM_TYPE_FAST,                                           \
+                __tile_name.phwBuffer); }) )
 
 /*!
  * \brief calculate the number of pixels in a given tile

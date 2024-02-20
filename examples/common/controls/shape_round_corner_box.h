@@ -54,18 +54,56 @@ extern "C" {
                 (__is_new_frame),                                               \
                 (((const arm_2d_tile_t *)&c_tileWhiteDotMask),##__VA_ARGS__))
 
+#define __draw_round_corner_image2( __source_tile_ptr,                          \
+                                    __target_tile_ptr,                          \
+                                    __region_ptr,                               \
+                                    __is_new_frame,                             \
+                                    __opacity,                                  \
+                                    __circle_mask_addr)                         \
+    __draw_round_corner_image(                                                  \
+                (__source_tile_ptr),                                            \
+                (__target_tile_ptr),                                            \
+                (__region_ptr),                                                 \
+                (__is_new_frame),                                               \
+                (__opacity),                                                    \
+                ((const arm_2d_tile_t *)(__circle_mask_addr)))
+
+#define __draw_round_corner_image1( __source_tile_ptr,                          \
+                                    __target_tile_ptr,                          \
+                                    __region_ptr,                               \
+                                    __is_new_frame,                             \
+                                    __opacity)                                  \
+    __draw_round_corner_image(                                                  \
+                (__source_tile_ptr),                                            \
+                (__target_tile_ptr),                                            \
+                (__region_ptr),                                                 \
+                (__is_new_frame),                                               \
+                (__opacity),                                                    \
+                ((const arm_2d_tile_t *)&c_tileWhiteDotMask))
+
+#define __draw_round_corner_image0( __source_tile_ptr,                          \
+                                    __target_tile_ptr,                          \
+                                    __region_ptr,                               \
+                                    __is_new_frame)                             \
+    __draw_round_corner_image(                                                  \
+                (__source_tile_ptr),                                            \
+                (__target_tile_ptr),                                            \
+                (__region_ptr),                                                 \
+                (__is_new_frame),                                               \
+                0xFF,                                                           \
+                ((const arm_2d_tile_t *)&c_tileWhiteDotMask))
 
 #define draw_round_corner_image(__source_tile_ptr,                              \
                                 __target_tile_ptr,                              \
                                 __region_ptr,                                   \
                                 __is_new_frame,                                 \
                                 ...)                                            \
-    __draw_round_corner_image(                                                  \
-                (__source_tile_ptr),                                            \
-                (__target_tile_ptr),                                            \
-                (__region_ptr),                                                 \
-                (__is_new_frame),                                               \
-                (((const arm_2d_tile_t *)&c_tileWhiteDotMask),##__VA_ARGS__))
+            ARM_CONNECT2(   __draw_round_corner_image,                          \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(                    \
+                                                (__source_tile_ptr),            \
+                                                (__target_tile_ptr),            \
+                                                (__region_ptr),                 \
+                                                (__is_new_frame),##__VA_ARGS__)
 
 /*============================ TYPES =========================================*/
 
@@ -104,6 +142,7 @@ void __draw_round_corner_image( const arm_2d_tile_t *ptSource,
                                 const arm_2d_tile_t *ptTarget, 
                                 const arm_2d_region_t *ptRegion,
                                 bool bIsNewFrame,
+                                uint8_t chOpacity,
                                 const arm_2d_tile_t *ptCircleMask);
 
 extern
