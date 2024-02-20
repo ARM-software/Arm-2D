@@ -570,20 +570,13 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
         arm_2d_align_centre(__canvas, c_tileCMSISLogoMask.tRegion.tSize) {
 
 #if 0
-
-            //!< copy CMSIS logo (with masks) to the centre of the right panel
             arm_2d_tile_copy_with_masks(
                 &c_tileCMSISLogo,
                 &c_tileCMSISLogoMask,
                 &tTempPanel,
                 &c_tileFadeMask,
-                &__centre_region,                                               
-                
-                /*! remove ARM_2D_CP_MODE_FILL and only keeps
-                 *! mirroring mode
-                 */
-                ptLayers[BENCHMARK_LAYER_ICON].wMode
-                    &~ ARM_2D_CP_MODE_FILL);
+                &c_tFillRegion,                                               
+                ptLayers[BENCHMARK_LAYER_ICON].wMode);
 #else
             switch (ptLayers[BENCHMARK_LAYER_ICON].wMode 
                     &~ ARM_2D_CP_MODE_FILL) {
@@ -593,8 +586,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
                         &c_tileCMSISLogoMask,
                         &tTempPanel,
                         &c_tileFadeMask,
-                        NULL                                        
-                    );
+                        &c_tFillRegion);
                     break;
                 case ARM_2D_CP_MODE_X_MIRROR:
                     arm_2d_tile_fill_with_masks_and_x_mirror(
@@ -602,8 +594,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
                         &c_tileCMSISLogoMask,
                         &tTempPanel,
                         &c_tileFadeMask,
-                        NULL
-                    );
+                        &c_tFillRegion);
                     break;
                 case ARM_2D_CP_MODE_Y_MIRROR:
                     arm_2d_tile_fill_with_masks_and_y_mirror(
@@ -611,8 +602,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
                         &c_tileCMSISLogoMask,
                         &tTempPanel,
                         &c_tileFadeMask,
-                        NULL
-                    );
+                        &c_tFillRegion);
                     break;
                 case ARM_2D_CP_MODE_XY_MIRROR:
                     arm_2d_tile_fill_with_masks_and_xy_mirror(
@@ -620,8 +610,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
                         &c_tileCMSISLogoMask,
                         &tTempPanel,
                         &c_tileFadeMask,
-                        NULL
-                    );
+                        &c_tFillRegion);
                     break;
             }
 #endif

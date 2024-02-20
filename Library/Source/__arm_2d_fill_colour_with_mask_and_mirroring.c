@@ -21,8 +21,8 @@
  * Title:        __arm_2d_fill_colour_with_mask_and_mirroring.c
  * Description:  APIs for colour-filling-with-mask-and-mirroring
  *
- * $Date:        19. Feb 2024
- * $Revision:    V.0.6.0
+ * $Date:        20. Feb 2024
+ * $Revision:    V.0.6.1
  *
  * Target Processor:  Cortex-M cores
  *
