@@ -85,19 +85,27 @@ extern "C" {
     ] 
 %}
 
-{%- for mirror_name, 
+{%- for mirror_name,
+        mask_x_init, mask_next_alpha,
+        chn_mask_x_init, chn_mask_next_alpha,
         mask_y_init, mask_move_to_next_line, 
         chn_mask_y_init, chn_mask_move_to_next_line 
 in [
-    (   'X_MIRROR', 
+    (   'X_MIRROR',
+        'pchSourceMaskCur += iWidth - 1;', 'pchSourceMaskCur--',
+        'pwSourceMaskCur += iWidth - 1;', 'pwSourceMaskCur--',
         '', 'pchAlpha += iAlphaStride;', 
         '', 'pwAlpha += iAlphaStride;'),
-    (   'Y_MIRROR', 
+    (   'Y_MIRROR',
+        '', 'pchSourceMaskCur++',
+        '', 'pwSourceMaskCur++',
         'pchAlpha += iAlphaStride * (iHeight - 1);', 'pchAlpha -= iAlphaStride;', 
         'pwAlpha += iAlphaStride * (iHeight - 1);', 'pwAlpha -= iAlphaStride;'),
     (   'XY_MIRROR',
-        'pchAlpha += iAlphaStride * (iHeight - 1);', 'pchAlpha += iAlphaStride;', 
-        'pwAlpha += iAlphaStride * (iHeight - 1);', 'pwAlpha += iAlphaStride;'),
+        'pchSourceMaskCur += iWidth - 1;', 'pchSourceMaskCur--',
+        'pwSourceMaskCur += iWidth - 1;', 'pwSourceMaskCur--',
+        'pchAlpha += iAlphaStride * (iHeight - 1);', 'pchAlpha -= iAlphaStride;', 
+        'pwAlpha += iAlphaStride * (iHeight - 1);', 'pwAlpha -= iAlphaStride;'),
     ] 
 %}
 
@@ -188,10 +196,10 @@ void __arm_2d_impl_{{colour_name | lower}}_colour_filling_mask_{{mirror_name | l
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *pchSourceMaskCur = pchAlpha;
-        pchSourceMaskCur += ptCopySize->iWidth - 1;
+        {{mask_x_init}}
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwAlpha = 256 - (*pchSourceMaskCur--);
+            uint16_t hwAlpha = 256 - (*{{mask_next_alpha}});
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
@@ -221,10 +229,10 @@ void __arm_2d_impl_{{colour_name | lower}}_colour_filling_channel_mask_{{mirror_
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwSourceMaskCur = pwAlpha;
-        pwSourceMaskCur += ptCopySize->iWidth - 1;
+        {{chn_mask_x_init}}
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwAlpha = 256 - *(uint8_t *)(pwSourceMaskCur--);
+            uint16_t hwAlpha = 256 - *(uint8_t *)({{chn_mask_next_alpha}});
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
@@ -354,10 +362,10 @@ void __arm_2d_impl_{{colour_name | lower}}_colour_filling_mask_{{mirror_name | l
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *pchSourceMaskCur = pchAlpha;
-        pchSourceMaskCur += ptCopySize->iWidth - 1;
+        {{mask_x_init}}
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwAlpha = 256 - ((*pchSourceMaskCur--) * hwOpacity >> 8);
+            uint16_t hwAlpha = 256 - ((*{{mask_next_alpha}}) * hwOpacity >> 8);
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
@@ -388,10 +396,10 @@ void __arm_2d_impl_{{colour_name | lower}}_colour_filling_channel_mask_{{mirror_
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwSourceMaskCur = pwAlpha;
-        pwSourceMaskCur += ptCopySize->iWidth - 1;
+        {{chn_mask_x_init}}
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwAlpha = 256 - (*(uint8_t *)(pwSourceMaskCur--) * hwOpacity >> 8);
+            uint16_t hwAlpha = 256 - (*(uint8_t *)({{chn_mask_next_alpha}}) * hwOpacity >> 8);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);

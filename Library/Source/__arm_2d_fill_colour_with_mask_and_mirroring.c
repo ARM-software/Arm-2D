@@ -165,7 +165,7 @@ void __arm_2d_impl_gray8_colour_filling_mask_x_mirror(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *pchSourceMaskCur = pchAlpha;
-        pchSourceMaskCur += ptCopySize->iWidth - 1;
+        pchSourceMaskCur += iWidth - 1;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - (*pchSourceMaskCur--);
@@ -198,7 +198,7 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_x_mirror(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwSourceMaskCur = pwAlpha;
-        pwSourceMaskCur += ptCopySize->iWidth - 1;
+        pwSourceMaskCur += iWidth - 1;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - *(uint8_t *)(pwSourceMaskCur--);
@@ -331,7 +331,7 @@ void __arm_2d_impl_gray8_colour_filling_mask_x_mirror_opacity(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *pchSourceMaskCur = pchAlpha;
-        pchSourceMaskCur += ptCopySize->iWidth - 1;
+        pchSourceMaskCur += iWidth - 1;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - ((*pchSourceMaskCur--) * hwOpacity >> 8);
@@ -365,7 +365,7 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_x_mirror_opacity(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwSourceMaskCur = pwAlpha;
-        pwSourceMaskCur += ptCopySize->iWidth - 1;
+        pwSourceMaskCur += iWidth - 1;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - (*(uint8_t *)(pwSourceMaskCur--) * hwOpacity >> 8);
@@ -521,10 +521,10 @@ void __arm_2d_impl_gray8_colour_filling_mask_y_mirror(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *pchSourceMaskCur = pchAlpha;
-        pchSourceMaskCur += ptCopySize->iWidth - 1;
+        
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwAlpha = 256 - (*pchSourceMaskCur--);
+            uint16_t hwAlpha = 256 - (*pchSourceMaskCur++);
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
@@ -554,10 +554,10 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_y_mirror(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwSourceMaskCur = pwAlpha;
-        pwSourceMaskCur += ptCopySize->iWidth - 1;
+        
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwAlpha = 256 - *(uint8_t *)(pwSourceMaskCur--);
+            uint16_t hwAlpha = 256 - *(uint8_t *)(pwSourceMaskCur++);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
@@ -687,10 +687,10 @@ void __arm_2d_impl_gray8_colour_filling_mask_y_mirror_opacity(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *pchSourceMaskCur = pchAlpha;
-        pchSourceMaskCur += ptCopySize->iWidth - 1;
+        
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwAlpha = 256 - ((*pchSourceMaskCur--) * hwOpacity >> 8);
+            uint16_t hwAlpha = 256 - ((*pchSourceMaskCur++) * hwOpacity >> 8);
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
@@ -721,10 +721,10 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_y_mirror_opacity(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwSourceMaskCur = pwAlpha;
-        pwSourceMaskCur += ptCopySize->iWidth - 1;
+        
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwAlpha = 256 - (*(uint8_t *)(pwSourceMaskCur--) * hwOpacity >> 8);
+            uint16_t hwAlpha = 256 - (*(uint8_t *)(pwSourceMaskCur++) * hwOpacity >> 8);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
@@ -877,7 +877,7 @@ void __arm_2d_impl_gray8_colour_filling_mask_xy_mirror(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *pchSourceMaskCur = pchAlpha;
-        pchSourceMaskCur += ptCopySize->iWidth - 1;
+        pchSourceMaskCur += iWidth - 1;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - (*pchSourceMaskCur--);
@@ -887,7 +887,7 @@ void __arm_2d_impl_gray8_colour_filling_mask_xy_mirror(
             __ARM_2D_PIXEL_BLENDING_GRAY8(&chColour, pchTarget++, hwAlpha);
         }
 
-        pchAlpha += iAlphaStride;
+        pchAlpha -= iAlphaStride;
         pchTarget += (iTargetStride - iWidth);
     }
 }
@@ -910,7 +910,7 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_xy_mirror(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwSourceMaskCur = pwAlpha;
-        pwSourceMaskCur += ptCopySize->iWidth - 1;
+        pwSourceMaskCur += iWidth - 1;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - *(uint8_t *)(pwSourceMaskCur--);
@@ -921,7 +921,7 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_xy_mirror(
             __ARM_2D_PIXEL_BLENDING_GRAY8(&chColour, pchTarget++, hwAlpha);
         }
 
-        pwAlpha += iAlphaStride;
+        pwAlpha -= iAlphaStride;
         pchTarget += (iTargetStride - iWidth);
     }
 }
@@ -1043,7 +1043,7 @@ void __arm_2d_impl_gray8_colour_filling_mask_xy_mirror_opacity(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *pchSourceMaskCur = pchAlpha;
-        pchSourceMaskCur += ptCopySize->iWidth - 1;
+        pchSourceMaskCur += iWidth - 1;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - ((*pchSourceMaskCur--) * hwOpacity >> 8);
@@ -1053,7 +1053,7 @@ void __arm_2d_impl_gray8_colour_filling_mask_xy_mirror_opacity(
             __ARM_2D_PIXEL_BLENDING_GRAY8(&chColour, pchTarget++, hwAlpha);
         }
 
-        pchAlpha += iAlphaStride;
+        pchAlpha -= iAlphaStride;
         pchTarget += (iTargetStride - iWidth);
     }
 }
@@ -1077,7 +1077,7 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_xy_mirror_opacity(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwSourceMaskCur = pwAlpha;
-        pwSourceMaskCur += ptCopySize->iWidth - 1;
+        pwSourceMaskCur += iWidth - 1;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - (*(uint8_t *)(pwSourceMaskCur--) * hwOpacity >> 8);
@@ -1088,7 +1088,7 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_xy_mirror_opacity(
             __ARM_2D_PIXEL_BLENDING_GRAY8(&chColour, pchTarget++, hwAlpha);
         }
 
-        pwAlpha += iAlphaStride;
+        pwAlpha -= iAlphaStride;
         pchTarget += (iTargetStride - iWidth);
     }
 }
@@ -1233,7 +1233,7 @@ void __arm_2d_impl_rgb565_colour_filling_mask_x_mirror(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *pchSourceMaskCur = pchAlpha;
-        pchSourceMaskCur += ptCopySize->iWidth - 1;
+        pchSourceMaskCur += iWidth - 1;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - (*pchSourceMaskCur--);
@@ -1266,7 +1266,7 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwSourceMaskCur = pwAlpha;
-        pwSourceMaskCur += ptCopySize->iWidth - 1;
+        pwSourceMaskCur += iWidth - 1;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - *(uint8_t *)(pwSourceMaskCur--);
@@ -1399,7 +1399,7 @@ void __arm_2d_impl_rgb565_colour_filling_mask_x_mirror_opacity(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *pchSourceMaskCur = pchAlpha;
-        pchSourceMaskCur += ptCopySize->iWidth - 1;
+        pchSourceMaskCur += iWidth - 1;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - ((*pchSourceMaskCur--) * hwOpacity >> 8);
@@ -1433,7 +1433,7 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror_opacity(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwSourceMaskCur = pwAlpha;
-        pwSourceMaskCur += ptCopySize->iWidth - 1;
+        pwSourceMaskCur += iWidth - 1;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - (*(uint8_t *)(pwSourceMaskCur--) * hwOpacity >> 8);
@@ -1589,10 +1589,10 @@ void __arm_2d_impl_rgb565_colour_filling_mask_y_mirror(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *pchSourceMaskCur = pchAlpha;
-        pchSourceMaskCur += ptCopySize->iWidth - 1;
+        
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwAlpha = 256 - (*pchSourceMaskCur--);
+            uint16_t hwAlpha = 256 - (*pchSourceMaskCur++);
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
@@ -1622,10 +1622,10 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_y_mirror(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwSourceMaskCur = pwAlpha;
-        pwSourceMaskCur += ptCopySize->iWidth - 1;
+        
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwAlpha = 256 - *(uint8_t *)(pwSourceMaskCur--);
+            uint16_t hwAlpha = 256 - *(uint8_t *)(pwSourceMaskCur++);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
@@ -1755,10 +1755,10 @@ void __arm_2d_impl_rgb565_colour_filling_mask_y_mirror_opacity(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *pchSourceMaskCur = pchAlpha;
-        pchSourceMaskCur += ptCopySize->iWidth - 1;
+        
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwAlpha = 256 - ((*pchSourceMaskCur--) * hwOpacity >> 8);
+            uint16_t hwAlpha = 256 - ((*pchSourceMaskCur++) * hwOpacity >> 8);
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
@@ -1789,10 +1789,10 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_y_mirror_opacity(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwSourceMaskCur = pwAlpha;
-        pwSourceMaskCur += ptCopySize->iWidth - 1;
+        
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwAlpha = 256 - (*(uint8_t *)(pwSourceMaskCur--) * hwOpacity >> 8);
+            uint16_t hwAlpha = 256 - (*(uint8_t *)(pwSourceMaskCur++) * hwOpacity >> 8);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
@@ -1945,7 +1945,7 @@ void __arm_2d_impl_rgb565_colour_filling_mask_xy_mirror(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *pchSourceMaskCur = pchAlpha;
-        pchSourceMaskCur += ptCopySize->iWidth - 1;
+        pchSourceMaskCur += iWidth - 1;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - (*pchSourceMaskCur--);
@@ -1955,7 +1955,7 @@ void __arm_2d_impl_rgb565_colour_filling_mask_xy_mirror(
             __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTarget++, hwAlpha);
         }
 
-        pchAlpha += iAlphaStride;
+        pchAlpha -= iAlphaStride;
         phwTarget += (iTargetStride - iWidth);
     }
 }
@@ -1978,7 +1978,7 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_xy_mirror(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwSourceMaskCur = pwAlpha;
-        pwSourceMaskCur += ptCopySize->iWidth - 1;
+        pwSourceMaskCur += iWidth - 1;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - *(uint8_t *)(pwSourceMaskCur--);
@@ -1989,7 +1989,7 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_xy_mirror(
             __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTarget++, hwAlpha);
         }
 
-        pwAlpha += iAlphaStride;
+        pwAlpha -= iAlphaStride;
         phwTarget += (iTargetStride - iWidth);
     }
 }
@@ -2111,7 +2111,7 @@ void __arm_2d_impl_rgb565_colour_filling_mask_xy_mirror_opacity(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *pchSourceMaskCur = pchAlpha;
-        pchSourceMaskCur += ptCopySize->iWidth - 1;
+        pchSourceMaskCur += iWidth - 1;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - ((*pchSourceMaskCur--) * hwOpacity >> 8);
@@ -2121,7 +2121,7 @@ void __arm_2d_impl_rgb565_colour_filling_mask_xy_mirror_opacity(
             __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTarget++, hwAlpha);
         }
 
-        pchAlpha += iAlphaStride;
+        pchAlpha -= iAlphaStride;
         phwTarget += (iTargetStride - iWidth);
     }
 }
@@ -2145,7 +2145,7 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_xy_mirror_opacity(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwSourceMaskCur = pwAlpha;
-        pwSourceMaskCur += ptCopySize->iWidth - 1;
+        pwSourceMaskCur += iWidth - 1;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - (*(uint8_t *)(pwSourceMaskCur--) * hwOpacity >> 8);
@@ -2156,7 +2156,7 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_xy_mirror_opacity(
             __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTarget++, hwAlpha);
         }
 
-        pwAlpha += iAlphaStride;
+        pwAlpha -= iAlphaStride;
         phwTarget += (iTargetStride - iWidth);
     }
 }
@@ -2301,7 +2301,7 @@ void __arm_2d_impl_cccn888_colour_filling_mask_x_mirror(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *pchSourceMaskCur = pchAlpha;
-        pchSourceMaskCur += ptCopySize->iWidth - 1;
+        pchSourceMaskCur += iWidth - 1;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - (*pchSourceMaskCur--);
@@ -2334,7 +2334,7 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask_x_mirror(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwSourceMaskCur = pwAlpha;
-        pwSourceMaskCur += ptCopySize->iWidth - 1;
+        pwSourceMaskCur += iWidth - 1;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - *(uint8_t *)(pwSourceMaskCur--);
@@ -2467,7 +2467,7 @@ void __arm_2d_impl_cccn888_colour_filling_mask_x_mirror_opacity(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *pchSourceMaskCur = pchAlpha;
-        pchSourceMaskCur += ptCopySize->iWidth - 1;
+        pchSourceMaskCur += iWidth - 1;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - ((*pchSourceMaskCur--) * hwOpacity >> 8);
@@ -2501,7 +2501,7 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask_x_mirror_opacity(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwSourceMaskCur = pwAlpha;
-        pwSourceMaskCur += ptCopySize->iWidth - 1;
+        pwSourceMaskCur += iWidth - 1;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - (*(uint8_t *)(pwSourceMaskCur--) * hwOpacity >> 8);
@@ -2657,10 +2657,10 @@ void __arm_2d_impl_cccn888_colour_filling_mask_y_mirror(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *pchSourceMaskCur = pchAlpha;
-        pchSourceMaskCur += ptCopySize->iWidth - 1;
+        
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwAlpha = 256 - (*pchSourceMaskCur--);
+            uint16_t hwAlpha = 256 - (*pchSourceMaskCur++);
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
@@ -2690,10 +2690,10 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask_y_mirror(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwSourceMaskCur = pwAlpha;
-        pwSourceMaskCur += ptCopySize->iWidth - 1;
+        
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwAlpha = 256 - *(uint8_t *)(pwSourceMaskCur--);
+            uint16_t hwAlpha = 256 - *(uint8_t *)(pwSourceMaskCur++);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
@@ -2823,10 +2823,10 @@ void __arm_2d_impl_cccn888_colour_filling_mask_y_mirror_opacity(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *pchSourceMaskCur = pchAlpha;
-        pchSourceMaskCur += ptCopySize->iWidth - 1;
+        
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwAlpha = 256 - ((*pchSourceMaskCur--) * hwOpacity >> 8);
+            uint16_t hwAlpha = 256 - ((*pchSourceMaskCur++) * hwOpacity >> 8);
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
@@ -2857,10 +2857,10 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask_y_mirror_opacity(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwSourceMaskCur = pwAlpha;
-        pwSourceMaskCur += ptCopySize->iWidth - 1;
+        
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwAlpha = 256 - (*(uint8_t *)(pwSourceMaskCur--) * hwOpacity >> 8);
+            uint16_t hwAlpha = 256 - (*(uint8_t *)(pwSourceMaskCur++) * hwOpacity >> 8);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
@@ -3013,7 +3013,7 @@ void __arm_2d_impl_cccn888_colour_filling_mask_xy_mirror(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *pchSourceMaskCur = pchAlpha;
-        pchSourceMaskCur += ptCopySize->iWidth - 1;
+        pchSourceMaskCur += iWidth - 1;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - (*pchSourceMaskCur--);
@@ -3023,7 +3023,7 @@ void __arm_2d_impl_cccn888_colour_filling_mask_xy_mirror(
             __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTarget++, hwAlpha);
         }
 
-        pchAlpha += iAlphaStride;
+        pchAlpha -= iAlphaStride;
         pwTarget += (iTargetStride - iWidth);
     }
 }
@@ -3046,7 +3046,7 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask_xy_mirror(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwSourceMaskCur = pwAlpha;
-        pwSourceMaskCur += ptCopySize->iWidth - 1;
+        pwSourceMaskCur += iWidth - 1;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - *(uint8_t *)(pwSourceMaskCur--);
@@ -3057,7 +3057,7 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask_xy_mirror(
             __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTarget++, hwAlpha);
         }
 
-        pwAlpha += iAlphaStride;
+        pwAlpha -= iAlphaStride;
         pwTarget += (iTargetStride - iWidth);
     }
 }
@@ -3179,7 +3179,7 @@ void __arm_2d_impl_cccn888_colour_filling_mask_xy_mirror_opacity(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *pchSourceMaskCur = pchAlpha;
-        pchSourceMaskCur += ptCopySize->iWidth - 1;
+        pchSourceMaskCur += iWidth - 1;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - ((*pchSourceMaskCur--) * hwOpacity >> 8);
@@ -3189,7 +3189,7 @@ void __arm_2d_impl_cccn888_colour_filling_mask_xy_mirror_opacity(
             __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTarget++, hwAlpha);
         }
 
-        pchAlpha += iAlphaStride;
+        pchAlpha -= iAlphaStride;
         pwTarget += (iTargetStride - iWidth);
     }
 }
@@ -3213,7 +3213,7 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask_xy_mirror_opacity(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwSourceMaskCur = pwAlpha;
-        pwSourceMaskCur += ptCopySize->iWidth - 1;
+        pwSourceMaskCur += iWidth - 1;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - (*(uint8_t *)(pwSourceMaskCur--) * hwOpacity >> 8);
@@ -3224,7 +3224,7 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask_xy_mirror_opacity(
             __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTarget++, hwAlpha);
         }
 
-        pwAlpha += iAlphaStride;
+        pwAlpha -= iAlphaStride;
         pwTarget += (iTargetStride - iWidth);
     }
 }
