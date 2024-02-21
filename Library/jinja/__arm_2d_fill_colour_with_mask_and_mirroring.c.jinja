@@ -85,10 +85,19 @@ extern "C" {
     ] 
 %}
 
-{%- for mirror_name, mask_init, mask_move_to_next_line, chn_mask_init, chn_mask_move_to_next_line in [
-    ('X_MIRROR', '', 'pchAlpha += iAlphaStride;', '', 'pwAlpha += iAlphaStride;'),
-    ('Y_MIRROR', 'pchAlpha += iAlphaStride * (iHeight - 1);', 'pchAlpha -= iAlphaStride;', 'pwAlpha += iAlphaStride * (iHeight - 1);', 'pwAlpha -= iAlphaStride;'),
-    ('XY_MIRROR','pchAlpha += iAlphaStride * (iHeight - 1);', 'pchAlpha += iAlphaStride;', 'pwAlpha += iAlphaStride * (iHeight - 1);', 'pwAlpha += iAlphaStride;'),
+{%- for mirror_name, 
+        mask_y_init, mask_move_to_next_line, 
+        chn_mask_y_init, chn_mask_move_to_next_line 
+in [
+    (   'X_MIRROR', 
+        '', 'pchAlpha += iAlphaStride;', 
+        '', 'pwAlpha += iAlphaStride;'),
+    (   'Y_MIRROR', 
+        'pchAlpha += iAlphaStride * (iHeight - 1);', 'pchAlpha -= iAlphaStride;', 
+        'pwAlpha += iAlphaStride * (iHeight - 1);', 'pwAlpha -= iAlphaStride;'),
+    (   'XY_MIRROR',
+        'pchAlpha += iAlphaStride * (iHeight - 1);', 'pchAlpha += iAlphaStride;', 
+        'pwAlpha += iAlphaStride * (iHeight - 1);', 'pwAlpha += iAlphaStride;'),
     ] 
 %}
 
@@ -174,7 +183,7 @@ void __arm_2d_impl_{{colour_name | lower}}_colour_filling_mask_{{mirror_name | l
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
 
-    {{mask_init}}
+    {{mask_y_init}}
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
@@ -207,7 +216,7 @@ void __arm_2d_impl_{{colour_name | lower}}_colour_filling_channel_mask_{{mirror_
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
 
-    {{chn_mask_init}}
+    {{chn_mask_y_init}}
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
@@ -340,7 +349,7 @@ void __arm_2d_impl_{{colour_name | lower}}_colour_filling_mask_{{mirror_name | l
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
 
-    {{mask_init}}
+    {{mask_y_init}}
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
@@ -374,7 +383,7 @@ void __arm_2d_impl_{{colour_name | lower}}_colour_filling_channel_mask_{{mirror_
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
 
-    {{chn_mask_init}}
+    {{chn_mask_y_init}}
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
