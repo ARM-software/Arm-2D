@@ -815,6 +815,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
     }
 
 #if !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
+#if 0
     if (NULL != arm_2d_tile_generate_child( ptTile, 
                                 (arm_2d_region_t []){
                                     {
@@ -849,8 +850,10 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
         arm_2d_op_wait_async(NULL);
     }
 #endif
+#endif
 
 #if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
+
     if (NULL != arm_2d_tile_generate_child( ptTile, 
                                 (arm_2d_region_t []){
                                     {
