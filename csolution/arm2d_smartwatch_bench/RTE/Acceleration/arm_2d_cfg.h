@@ -21,7 +21,9 @@
 
 /*============================ INCLUDES ======================================*/
 
-#include "RTE_Components.h"
+#if defined(_RTE_)
+#   include "RTE_Components.h"
+#endif
 
 #ifdef   __cplusplus
 extern "C" {
@@ -83,8 +85,7 @@ extern "C" {
  */
 #ifndef __ARM_2D_LOG_CHANNEL_MASK_FILTER__
 #   define __ARM_2D_LOG_CHANNEL_MASK_FILTER__                                   \
-            (   ARM_2D_LOG_CHN_TYPE_USER                                        \
-            |   ARM_2D_LOG_CHN_TYPE_INFO                                        \
+            (   ARM_2D_LOG_CHN_TYPE_INFO                                        \
             |   ARM_2D_LOG_CHN_TYPE_WARNING                                     \
             |   ARM_2D_LOG_CHN_TYPE_ERROR                                       \
             |   ARM_2D_LOG_CHN_STATISTICS                                       \

@@ -67,6 +67,24 @@ extern "C" {
 #   define __DISP0_CFG_SCEEN_HEIGHT__                              240
 #endif
 
+/*
+  ARM_SCREEN_NO_ROTATION   0
+  ARM_SCREEN_ROTATE_90     1
+  ARM_SCREEN_ROTATE_180    2
+  ARM_SCREEN_ROTATE_270    3
+ */
+
+// <o>Rotate the Screen
+//     <0=>  NO Rotation
+//     <1=>    90 Degree
+//     <2=>   180 Degree
+//     <3=>   270 Degree
+// <i> Rotate the Screen for specified degrees.
+// <i> NOTE: This is extremely slow. Please avoid using it whenever it is possible.
+#ifndef __DISP0_CFG_ROTATE_SCREEN__
+#   define __DISP0_CFG_ROTATE_SCREEN__                             0
+#endif
+
 // <o>Width of the PFB block
 // <i> The width of your PFB block size used in disp0
 #ifndef __DISP0_CFG_PFB_BLOCK_WIDTH__
@@ -175,7 +193,11 @@ extern "C" {
 #   define __DISP0_CFG_DISABLE_NAVIGATION_LAYER__                  0
 #endif
 
-// <q>Enable the virtual resource helper service
+// <o>Maximum number of Virtual Resources used per API
+//     <0=>     NO Virtual Resource
+//     <1=>     1 Per API
+//     <2=>     2 Per API
+//     <3=>     3 Per API
 // <i> Introduce a helper service for loading virtual resources.
 // <i> This feature is disabled by default.
 #ifndef __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
@@ -190,6 +212,15 @@ extern "C" {
 #endif
 // <<< end of configuration section >>>
 
+#ifndef __DISP0_COLOUR_FORMAT__
+#   if      __DISP0_CFG_COLOUR_DEPTH__ == 8
+#       define __DISP0_COLOUR_FORMAT__  ARM_2D_COLOUR_GRAY8
+#   elif    __DISP0_CFG_COLOUR_DEPTH__ == 16
+#       define __DISP0_COLOUR_FORMAT__  ARM_2D_COLOUR_RGB565
+#   elif    __DISP0_CFG_COLOUR_DEPTH__ == 32
+#       define __DISP0_COLOUR_FORMAT__  ARM_2D_COLOUR_CCCN888
+#   endif
+#endif
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
