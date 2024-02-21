@@ -52,13 +52,13 @@
 
 
 #define __arm_2d_impl_rgb565_colour_filling_with_opacity    \
-                 __arm_2d_impl_rgb565_colour_filling_with_opacity_orig
+                __arm_2d_impl_rgb565_colour_filling_with_opacity_orig
 
 #define __arm_2d_impl_rgb565_colour_filling_mask_opacity \
-                  __arm_2d_impl_rgb565_colour_filling_mask_opacity_orig
+                __arm_2d_impl_rgb565_colour_filling_mask_opacity_orig
 
 #define __arm_2d_impl_rgb565_tile_copy_opacity \
-                  __arm_2d_impl_rgb565_tile_copy_opacity_orig
+                __arm_2d_impl_rgb565_tile_copy_opacity_orig
 
 #define __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity \
                 __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity_orig
@@ -99,7 +99,14 @@
 #define __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_xy_mirror \
                 __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_xy_mirror_orig
 
+#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_x_mirror \
+                __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_x_mirror_orig
 
+#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_y_mirror \
+                __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_y_mirror_orig
+
+#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_xy_mirror \
+                __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_xy_mirror_orig
 
 #endif
 
