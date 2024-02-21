@@ -77,22 +77,27 @@ extern "C" {
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ INCLUDES ======================================*/
 /*============================ IMPLEMENTATION ================================*/
+
+{%- for colour_name, colour_int, colour_var_name in [
+    ('rgb565', 'uint16_t', 'hwColour' ),
+    ] 
+%}
 /*
- * Target Colour: RGB565
+ * Target Colour: {{colour_name | upper}}
  */
 
 /*----------------------------------------------------------------------------*
  * Fill colour with mask and x mirror                                         *
  *----------------------------------------------------------------------------*/
 __WEAK
-def_low_lv_io(  __ARM_2D_IO_FILL_COLOUR_WITH_MASK_AND_X_MIRROR_RGB565, 
-                __arm_2d_rgb565_sw_colour_filling_with_mask_and_x_mirror);
+def_low_lv_io(  __ARM_2D_IO_FILL_COLOUR_WITH_MASK_AND_X_MIRROR_{{colour_name | upper}}, 
+                __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_mask_and_x_mirror);
 
 
-const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_AND_X_MIRROR_RGB565 = {
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_AND_X_MIRROR_{{colour_name | upper}} = {
     .Info = {
         .Colour = {
-            .chScheme   = ARM_2D_COLOUR_RGB565,
+            .chScheme   = ARM_2D_COLOUR_{{colour_name | upper}},
         },
         .Param = {
             .bHasSource     = true,
@@ -102,19 +107,19 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_AND_X_MIRROR_RGB565 = {
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_X_MIRROR,
         
         .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_MASK_AND_X_MIRROR_RGB565),
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_MASK_AND_X_MIRROR_{{colour_name | upper}}),
             .ptFillLike = NULL, 
         },
     },
 };
 
 ARM_NONNULL(2,4)
-arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask_and_x_mirror(
+arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_mask_and_x_mirror(
                                         arm_2d_op_fill_cl_msk_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
-                                        arm_2d_color_rgb565_t tColour)
+                                        arm_2d_color_{{colour_name | lower}}_t tColour)
 {
     assert(NULL != ptTarget);
     assert(NULL != ptAlpha);
@@ -135,26 +140,26 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask_and_x_mirror(
         return arm_fsm_rt_on_going;
     }
 
-    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_MASK_AND_X_MIRROR_RGB565;
+    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_MASK_AND_X_MIRROR_{{colour_name | upper}};
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
     this.Mask.ptTile = ptAlpha;
     this.wMode = ARM_2D_CP_MODE_X_MIRROR;
-    this.hwColour = tColour.tValue;
+    this.{{colour_var_name}} = tColour.tValue;
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 
 }
 
 __WEAK
-void __arm_2d_impl_rgb565_colour_filling_mask_x_mirror(
-                            uint16_t *__RESTRICT phwTarget,
+void __arm_2d_impl_{{colour_name | lower}}_colour_filling_mask_x_mirror(
+                            {{colour_int}} *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
                             int16_t iAlphaStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
-                            uint16_t hwColour)
+                            {{colour_int}} {{colour_var_name}})
 {
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
@@ -169,7 +174,7 @@ void __arm_2d_impl_rgb565_colour_filling_mask_x_mirror(
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
-            __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTarget++, hwAlpha);
+            __ARM_2D_PIXEL_BLENDING_{{colour_name | upper}}(&{{colour_var_name}}, phwTarget++, hwAlpha);
         }
 
         pchAlpha += iAlphaStride;
@@ -179,13 +184,13 @@ void __arm_2d_impl_rgb565_colour_filling_mask_x_mirror(
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 __WEAK
-void __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror(
-                            uint16_t *__RESTRICT phwTarget,
+void __arm_2d_impl_{{colour_name | lower}}_colour_filling_channel_mask_x_mirror(
+                            {{colour_int}} *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
                             int16_t iAlphaStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
-                            uint16_t hwColour)
+                            {{colour_int}} {{colour_var_name}})
 {
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
@@ -201,7 +206,7 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror(
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
-            __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTarget++, hwAlpha);
+            __ARM_2D_PIXEL_BLENDING_{{colour_name | upper}}(&{{colour_var_name}}, phwTarget++, hwAlpha);
         }
 
         pwAlpha += iAlphaStride;
@@ -211,7 +216,7 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror(
 #endif
 
 /* default software adaptor for low-level interface */
-arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_and_x_mirror(
+arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_mask_and_x_mirror(
                                                 __arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptTask->ptOP)
@@ -220,22 +225,22 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_and_x_mirror(
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #else
-        __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror(
+        __arm_2d_impl_{{colour_name | lower}}_colour_filling_channel_mask_x_mirror(
                         ptTask->Param.tCopy.tTarget.pBuffer,
                         ptTask->Param.tCopy.tTarget.iStride,
                         ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                         ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                         &(ptTask->Param.tCopy.tCopySize),
-                        this.hwColour);
+                        this.{{colour_var_name}});
     #endif
     } else {
-        __arm_2d_impl_rgb565_colour_filling_mask_x_mirror(
+        __arm_2d_impl_{{colour_name | lower}}_colour_filling_mask_x_mirror(
                         ptTask->Param.tCopy.tTarget.pBuffer,
                         ptTask->Param.tCopy.tTarget.iStride,
                         ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                         ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                         &(ptTask->Param.tCopy.tCopySize),
-                        this.hwColour);
+                        this.{{colour_var_name}});
     }
     return arm_fsm_rt_cpl;
 }
@@ -244,14 +249,14 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_and_x_mirror(
  * Fill colour with mask, x mirror and opacity                                *
  *----------------------------------------------------------------------------*/
 __WEAK
-def_low_lv_io(  __ARM_2D_IO_FILL_COLOUR_WITH_MASK_X_MIRROR_AND_OPACITY_RGB565, 
-                __arm_2d_rgb565_sw_colour_filling_with_mask_x_mirror_and_opacity);
+def_low_lv_io(  __ARM_2D_IO_FILL_COLOUR_WITH_MASK_X_MIRROR_AND_OPACITY_{{colour_name | upper}}, 
+                __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_mask_x_mirror_and_opacity);
 
 
-const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_X_MIRROR_AND_OPACITY_RGB565 = {
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_X_MIRROR_AND_OPACITY_{{colour_name | upper}} = {
     .Info = {
         .Colour = {
-            .chScheme   = ARM_2D_COLOUR_RGB565,
+            .chScheme   = ARM_2D_COLOUR_{{colour_name | upper}},
         },
         .Param = {
             .bHasSource     = true,
@@ -261,19 +266,19 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_X_MIRROR_AND_OPACITY_RG
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_X_MIRROR_AND_OPACITY,
         
         .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_MASK_X_MIRROR_AND_OPACITY_RGB565),
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_MASK_X_MIRROR_AND_OPACITY_{{colour_name | upper}}),
             .ptFillLike = NULL, 
         },
     },
 };
 
 ARM_NONNULL(2,4)
-arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask_x_mirror_and_opacity(
+arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_mask_x_mirror_and_opacity(
                                         arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
-                                        arm_2d_color_rgb565_t tColour,
+                                        arm_2d_color_{{colour_name | lower}}_t tColour,
                                         uint8_t chOpacity)
 {
     assert(NULL != ptTarget);
@@ -295,13 +300,13 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask_x_mirror_and_opacity(
         return arm_fsm_rt_on_going;
     }
 
-    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_MASK_X_MIRROR_AND_OPACITY_RGB565;
+    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_MASK_X_MIRROR_AND_OPACITY_{{colour_name | upper}};
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
     this.Mask.ptTile = ptAlpha;
     this.wMode = ARM_2D_CP_MODE_X_MIRROR;
-    this.hwColour = tColour.tValue;
+    this.{{colour_var_name}} = tColour.tValue;
     this.chRatio = chOpacity;
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
@@ -309,13 +314,13 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask_x_mirror_and_opacity(
 }
 
 __WEAK
-void __arm_2d_impl_rgb565_colour_filling_mask_x_mirror_opacity(
-                            uint16_t *__RESTRICT phwTarget,
+void __arm_2d_impl_{{colour_name | lower}}_colour_filling_mask_x_mirror_opacity(
+                            {{colour_int}} *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
                             int16_t iAlphaStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
-                            uint16_t hwColour,
+                            {{colour_int}} {{colour_var_name}},
                             uint16_t hwOpacity)
 {
     int_fast16_t iHeight = ptCopySize->iHeight;
@@ -331,7 +336,7 @@ void __arm_2d_impl_rgb565_colour_filling_mask_x_mirror_opacity(
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
-            __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTarget++, hwAlpha);
+            __ARM_2D_PIXEL_BLENDING_{{colour_name | upper}}(&{{colour_var_name}}, phwTarget++, hwAlpha);
         }
 
         pchAlpha += iAlphaStride;
@@ -341,13 +346,13 @@ void __arm_2d_impl_rgb565_colour_filling_mask_x_mirror_opacity(
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 __WEAK
-void __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror_opacity(
-                            uint16_t *__RESTRICT phwTarget,
+void __arm_2d_impl_{{colour_name | lower}}_colour_filling_channel_mask_x_mirror_opacity(
+                            {{colour_int}} *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
                             int16_t iAlphaStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
-                            uint16_t hwColour,
+                            {{colour_int}} {{colour_var_name}},
                             uint16_t hwOpacity)
 {
     int_fast16_t iHeight = ptCopySize->iHeight;
@@ -364,7 +369,7 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror_opacity(
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
-            __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTarget++, hwAlpha);
+            __ARM_2D_PIXEL_BLENDING_{{colour_name | upper}}(&{{colour_var_name}}, phwTarget++, hwAlpha);
         }
 
         pwAlpha += iAlphaStride;
@@ -374,7 +379,7 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror_opacity(
 #endif
 
 /* default software adaptor for low-level interface */
-arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_x_mirror_and_opacity(
+arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_mask_x_mirror_and_opacity(
                                                 __arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptTask->ptOP)
@@ -384,49 +389,52 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_x_mirror_and_opacity(
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #else
         if (this.chRatio == 255) {
-            __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror(
+            __arm_2d_impl_{{colour_name | lower}}_colour_filling_channel_mask_x_mirror(
                             ptTask->Param.tCopy.tTarget.pBuffer,
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                             &(ptTask->Param.tCopy.tCopySize),
-                            this.hwColour);
+                            this.{{colour_var_name}});
         } else {
-            __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror_opacity(
+            __arm_2d_impl_{{colour_name | lower}}_colour_filling_channel_mask_x_mirror_opacity(
                             ptTask->Param.tCopy.tTarget.pBuffer,
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                             &(ptTask->Param.tCopy.tCopySize),
-                            this.hwColour,
+                            this.{{colour_var_name}},
                             this.chRatio);
         }
     #endif
     } else {
         if (this.chRatio == 255) {
-            __arm_2d_impl_rgb565_colour_filling_mask_x_mirror(
+            __arm_2d_impl_{{colour_name | lower}}_colour_filling_mask_x_mirror(
                             ptTask->Param.tCopy.tTarget.pBuffer,
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                             &(ptTask->Param.tCopy.tCopySize),
-                            this.hwColour);
+                            this.{{colour_var_name}});
         } else {
-            __arm_2d_impl_rgb565_colour_filling_mask_x_mirror_opacity(
+            __arm_2d_impl_{{colour_name | lower}}_colour_filling_mask_x_mirror_opacity(
                             ptTask->Param.tCopy.tTarget.pBuffer,
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                             &(ptTask->Param.tCopy.tCopySize),
-                            this.hwColour,
+                            this.{{colour_var_name}},
                             this.chRatio);
         }
     }
     return arm_fsm_rt_cpl;
 }
 
+{%- endfor %}
+
 #ifdef   __cplusplus
 }
 #endif
 
 #endif /* __ARM_2D_COMPILATION_UNIT */
+
