@@ -112,8 +112,8 @@ static void __on_frame_complete(arm_2d_scene_t *ptScene)
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_handler)
 {
-    ARM_2D_UNUSED(pTarget);
-    ARM_2D_UNUSED(ptTile);
+    ARM_2D_PARAM(pTarget);
+    ARM_2D_PARAM(ptTile);
 
     arm_2d_canvas(ptTile, __top_container) {
     
@@ -139,8 +139,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
 __WEAK
 IMPL_PFB_ON_DRAW(__disp_adapter0_draw_navigation)
 {
-    ARM_2D_UNUSED(pTarget);
-    ARM_2D_UNUSED(bIsNewFrame);
+    ARM_2D_PARAM(pTarget);
+    ARM_2D_PARAM(bIsNewFrame);
 
     arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
     arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
@@ -217,8 +217,8 @@ IMPL_PFB_ON_LOW_LV_RENDERING(__disp_adapter0_pfb_render_handler)
 {
     const arm_2d_tile_t *ptTile = &(ptPFB->tTile);
 
-    ARM_2D_UNUSED(pTarget);
-    ARM_2D_UNUSED(bIsNewFrame);
+    ARM_2D_PARAM(pTarget);
+    ARM_2D_PARAM(bIsNewFrame);
 
     if (__arm_2d_helper_3fb_draw_bitmap(&s_tDirectModeHelper,
                                         ptPFB)) {
@@ -278,8 +278,8 @@ IMPL_PFB_ON_LOW_LV_RENDERING(__disp_adapter0_pfb_render_handler)
 {
     const arm_2d_tile_t *ptTile = &(ptPFB->tTile);
 
-    ARM_2D_UNUSED(pTarget);
-    ARM_2D_UNUSED(bIsNewFrame);
+    ARM_2D_PARAM(pTarget);
+    ARM_2D_PARAM(bIsNewFrame);
 
     /* request an asynchronous flushing */
     __disp_adapter0_request_async_flushing(
@@ -304,8 +304,8 @@ IMPL_PFB_ON_LOW_LV_RENDERING(__disp_adapter0_pfb_render_handler)
 {
     const arm_2d_tile_t *ptTile = &(ptPFB->tTile);
 
-    ARM_2D_UNUSED(pTarget);
-    ARM_2D_UNUSED(bIsNewFrame);
+    ARM_2D_PARAM(pTarget);
+    ARM_2D_PARAM(bIsNewFrame);
 
     Disp0_DrawBitmap(ptTile->tRegion.tLocation.iX,
                     ptTile->tRegion.tLocation.iY,
@@ -321,7 +321,7 @@ IMPL_PFB_ON_LOW_LV_RENDERING(__disp_adapter0_pfb_render_handler)
 
 static bool __on_each_frame_complete(void *ptTarget)
 {
-    ARM_2D_UNUSED(ptTarget);
+    ARM_2D_PARAM(ptTarget);
     
     int64_t lTimeStamp = arm_2d_helper_get_system_timestamp();
     
@@ -405,6 +405,53 @@ static bool __on_each_frame_complete(void *ptTarget)
     return true;
 }
 
+
+#if __DISP0_CFG_ROTATE_SCREEN__
+/*!
+ * \brief before-flushing event handler
+ * \param[in] ptOrigin the original PFB
+ * \param[in] ptScratch A scratch PFB
+ * \return true the new content is stored in ptScratch
+ * \return false the new content is stored in ptOrigin
+ */
+static IMPL_PFB_BEFORE_FLUSHING(__before_flushing)
+{
+    ARM_2D_PARAM(pTarget);
+    ARM_2D_PARAM(ptOrigin);
+    ARM_2D_PARAM(ptScratch);
+
+
+#if      __DISP0_CFG_COLOUR_DEPTH__ == 8
+#   define __COLOUR_NAME__  c8bit
+#elif    __DISP0_CFG_COLOUR_DEPTH__ == 16
+#   define __COLOUR_NAME__  rgb16
+#elif    __DISP0_CFG_COLOUR_DEPTH__ == 32
+#   define __COLOUR_NAME__  rgb32
+#endif
+
+#if     __DISP0_CFG_ROTATE_SCREEN__ == 1
+#   define __ROTATE__       90
+#elif   __DISP0_CFG_ROTATE_SCREEN__ == 2
+#   define __ROTATE__       180
+#elif   __DISP0_CFG_ROTATE_SCREEN__ == 3
+#   define __ROTATE__       270
+#endif
+
+    ARM_CONNECT(__arm_2d_helper_pfb_rotate, __ROTATE__,_, __COLOUR_NAME__)(
+        ptOrigin, 
+        ptScratch,
+        (arm_2d_size_t []) {
+            {
+                __DISP0_CFG_SCEEN_WIDTH__,
+                __DISP0_CFG_SCEEN_HEIGHT__
+            }
+        });
+
+    return true;
+}
+
+#endif
+
 static void __user_scene_player_init(void)
 {
     memset(&DISP0_ADAPTER, 0, sizeof(DISP0_ADAPTER));
@@ -420,13 +467,16 @@ static void __user_scene_player_init(void)
         __DISP0_CFG_SCEEN_WIDTH__,                                     //!< screen width
         __DISP0_CFG_SCEEN_HEIGHT__,                                    //!< screen height
         COLOUR_INT,                                                             //!< colour date type
+        __DISP0_COLOUR_FORMAT__,                                       //!< colour format
         __DISP0_CFG_PFB_BLOCK_WIDTH__,                                 //!< PFB block width
         __DISP0_CFG_PFB_BLOCK_HEIGHT__,                                //!< PFB block height
         __DISP0_CFG_PFB_HEAP_SIZE__                                    //!< number of PFB in the PFB pool
 
 #if     __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                          \
     &&  !__DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
-        + 3
+        + __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
+#else
+        + (__DISP0_CFG_ROTATE_SCREEN__ > 0)
 #endif
         ,{
             .evtOnLowLevelRendering = {
@@ -436,6 +486,11 @@ static void __user_scene_player_init(void)
             .evtOnEachFrameCPL = {
                 .fnHandler = &__on_each_frame_complete,
             },
+#if __DISP0_CFG_ROTATE_SCREEN__
+            .evtBeforeFlushing = {
+                .fnHandler = &__before_flushing,
+            },
+#endif
         },
 #if __DISP0_CFG_SWAP_RGB16_HIGH_AND_LOW_BYTES__
         .FrameBuffer.bSwapRGB16 = true,
@@ -447,7 +502,8 @@ static void __user_scene_player_init(void)
         .FrameBuffer.u3PixelHeightAlign = __DISP0_CFG_PFB_PIXEL_ALIGN_HEIGHT__,
 #if     __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                          \
     &&  !__DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
-        .FrameBuffer.u4PoolReserve = 3,                                         // reserve 3 PFB blocks for the virtual resource service
+        // reserve PFB blocks for the virtual resource service
+        .FrameBuffer.u4PoolReserve = __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__,
 #endif
 #if __DISP0_CFG_OPTIMIZE_DIRTY_REGIONS__
         .DirtyRegion.ptRegions = s_tDirtyRegionList,
