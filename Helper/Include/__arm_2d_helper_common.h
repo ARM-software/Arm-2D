@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        09. Jan 2024
- * $Revision:    V.1.3.1
+ * $Date:        21. Feb 2024
+ * $Revision:    V.1.4.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -213,12 +213,32 @@ extern "C" {
                 arm_2dp_gray8_tile_rotation_with_src_mask
 #   define arm_2d_fill_colour_with_a2_mask_and_opacity                          \
                 arm_2d_gray8_fill_colour_with_a2_mask_and_opacity
+#   define arm_2d_fill_colour_with_a2_mask                                      \
+                arm_2d_gray8_fill_colour_with_a2_mask
 #   define arm_2d_fill_colour_with_a4_mask                                      \
                 arm_2d_gray8_fill_colour_with_a4_mask
 #   define arm_2d_fill_colour_with_a4_mask_and_opacity                          \
                 arm_2d_gray8_fill_colour_with_a4_mask_and_opacity
-#   define arm_2d_fill_colour_with_a2_mask                                      \
-                arm_2d_gray8_fill_colour_with_a2_mask
+#   define arm_2d_fill_colour_with_a8_mask                                      \
+                arm_2d_gray8_fill_colour_with_a8_mask
+#   define arm_2d_fill_colour_with_a8_mask_and_opacity                          \
+                arm_2d_gray8_fill_colour_with_a8_mask_and_opacity
+#   define arm_2d_fill_colour_with_mask                                         \
+                arm_2d_gray8_fill_colour_with_mask
+#   define arm_2d_fill_colour_with_mask_and_opacity                             \
+                arm_2d_gray8_fill_colour_with_mask_and_opacity
+#   define arm_2d_fill_colour_with_mask_and_x_mirror                            \
+                arm_2d_gray8_fill_colour_with_mask_and_x_mirror
+#   define arm_2d_fill_colour_with_mask_x_mirror_and_opacity                    \
+                arm_2d_gray8_fill_colour_with_mask_x_mirror_and_opacity
+#   define arm_2d_fill_colour_with_mask_and_y_mirror                            \
+                arm_2d_gray8_fill_colour_with_mask_and_y_mirror
+#   define arm_2d_fill_colour_with_mask_y_mirror_and_opacity                    \
+                arm_2d_gray8_fill_colour_with_mask_y_mirror_and_opacity
+#   define arm_2d_fill_colour_with_mask_and_xy_mirror                           \
+                arm_2d_gray8_fill_colour_with_mask_and_xy_mirror
+#   define arm_2d_fill_colour_with_mask_xy_mirror_and_opacity                   \
+                arm_2d_gray8_fill_colour_with_mask_xy_mirror_and_opacity
 #   define arm_2dp_fill_colour_with_mask_opacity_and_transform                  \
                 arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform
 #   define arm_2d_fill_colour_with_mask_opacity_and_transform                   \
@@ -363,12 +383,32 @@ extern "C" {
                 arm_2dp_rgb565_tile_rotation_with_src_mask
 #   define arm_2d_fill_colour_with_a2_mask_and_opacity                          \
                 arm_2d_rgb565_fill_colour_with_a2_mask_and_opacity
+#   define arm_2d_fill_colour_with_a2_mask                                      \
+                arm_2d_rgb565_fill_colour_with_a2_mask
 #   define arm_2d_fill_colour_with_a4_mask                                      \
                 arm_2d_rgb565_fill_colour_with_a4_mask
 #   define arm_2d_fill_colour_with_a4_mask_and_opacity                          \
                 arm_2d_rgb565_fill_colour_with_a4_mask_and_opacity
-#   define arm_2d_fill_colour_with_a2_mask                                      \
-                arm_2d_rgb565_fill_colour_with_a2_mask
+#   define arm_2d_fill_colour_with_a8_mask                                      \
+                arm_2d_rgb565_fill_colour_with_a8_mask
+#   define arm_2d_fill_colour_with_a8_mask_and_opacity                          \
+                arm_2d_rgb565_fill_colour_with_a8_mask_and_opacity
+#   define arm_2d_fill_colour_with_mask                                         \
+                arm_2d_rgb565_fill_colour_with_mask
+#   define arm_2d_fill_colour_with_mask_and_opacity                             \
+                arm_2d_rgb565_fill_colour_with_mask_and_opacity
+#   define arm_2d_fill_colour_with_mask_and_x_mirror                            \
+                arm_2d_rgb565_fill_colour_with_mask_and_x_mirror
+#   define arm_2d_fill_colour_with_mask_x_mirror_and_opacity                    \
+                arm_2d_rgb565_fill_colour_with_mask_x_mirror_and_opacity
+#   define arm_2d_fill_colour_with_mask_and_y_mirror                            \
+                arm_2d_rgb565_fill_colour_with_mask_and_y_mirror
+#   define arm_2d_fill_colour_with_mask_y_mirror_and_opacity                    \
+                arm_2d_rgb565_fill_colour_with_mask_y_mirror_and_opacity
+#   define arm_2d_fill_colour_with_mask_and_xy_mirror                           \
+                arm_2d_rgb565_fill_colour_with_mask_and_xy_mirror
+#   define arm_2d_fill_colour_with_mask_xy_mirror_and_opacity                   \
+                arm_2d_rgb565_fill_colour_with_mask_xy_mirror_and_opacity
 #   define arm_2dp_fill_colour_with_mask_opacity_and_transform                  \
                 arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform
 #   define arm_2d_fill_colour_with_mask_opacity_and_transform                   \
@@ -513,12 +553,32 @@ extern "C" {
                 arm_2dp_cccn888_tile_rotation_with_src_mask
 #   define arm_2d_fill_colour_with_a2_mask_and_opacity                          \
                 arm_2d_cccn888_fill_colour_with_a2_mask_and_opacity
+#   define arm_2d_fill_colour_with_a2_mask                                      \
+                arm_2d_cccn888_fill_colour_with_a2_mask
 #   define arm_2d_fill_colour_with_a4_mask                                      \
                 arm_2d_cccn888_fill_colour_with_a4_mask
 #   define arm_2d_fill_colour_with_a4_mask_and_opacity                          \
                 arm_2d_cccn888_fill_colour_with_a4_mask_and_opacity
-#   define arm_2d_fill_colour_with_a2_mask                                      \
-                arm_2d_cccn888_fill_colour_with_a2_mask
+#   define arm_2d_fill_colour_with_a8_mask                                      \
+                arm_2d_cccn888_fill_colour_with_a8_mask
+#   define arm_2d_fill_colour_with_a8_mask_and_opacity                          \
+                arm_2d_cccn888_fill_colour_with_a8_mask_and_opacity
+#   define arm_2d_fill_colour_with_mask                                         \
+                arm_2d_cccn888_fill_colour_with_mask
+#   define arm_2d_fill_colour_with_mask_and_opacity                             \
+                arm_2d_cccn888_fill_colour_with_mask_and_opacity
+#   define arm_2d_fill_colour_with_mask_and_x_mirror                            \
+                arm_2d_cccn888_fill_colour_with_mask_and_x_mirror
+#   define arm_2d_fill_colour_with_mask_x_mirror_and_opacity                    \
+                arm_2d_cccn888_fill_colour_with_mask_x_mirror_and_opacity
+#   define arm_2d_fill_colour_with_mask_and_y_mirror                            \
+                arm_2d_cccn888_fill_colour_with_mask_and_y_mirror
+#   define arm_2d_fill_colour_with_mask_y_mirror_and_opacity                    \
+                arm_2d_cccn888_fill_colour_with_mask_y_mirror_and_opacity
+#   define arm_2d_fill_colour_with_mask_and_xy_mirror                           \
+                arm_2d_cccn888_fill_colour_with_mask_and_xy_mirror
+#   define arm_2d_fill_colour_with_mask_xy_mirror_and_opacity                   \
+                arm_2d_cccn888_fill_colour_with_mask_xy_mirror_and_opacity
 #   define arm_2dp_fill_colour_with_mask_opacity_and_transform                  \
                 arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform
 #   define arm_2d_fill_colour_with_mask_opacity_and_transform                   \
