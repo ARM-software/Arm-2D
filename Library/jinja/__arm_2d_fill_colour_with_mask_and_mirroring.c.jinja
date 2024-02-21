@@ -85,10 +85,10 @@ extern "C" {
     ] 
 %}
 
-{%- for mirror_name, mask_move_to_next_line in [
-    ('X_MIRROR', ''),
-    ('Y_MIRROR', ''),
-    ('XY_MIRROR', ''),
+{%- for mirror_name, mask_init, mask_move_to_next_line, chn_mask_init, chn_mask_move_to_next_line in [
+    ('X_MIRROR', '', 'pchAlpha += iAlphaStride;', '', 'pwAlpha += iAlphaStride;'),
+    ('Y_MIRROR', 'pchAlpha += iAlphaStride * (iHeight - 1);', 'pchAlpha -= iAlphaStride;', 'pwAlpha += iAlphaStride * (iHeight - 1);', 'pwAlpha -= iAlphaStride;'),
+    ('XY_MIRROR','pchAlpha += iAlphaStride * (iHeight - 1);', 'pchAlpha += iAlphaStride;', 'pwAlpha += iAlphaStride * (iHeight - 1);', 'pwAlpha += iAlphaStride;'),
     ] 
 %}
 
@@ -174,6 +174,8 @@ void __arm_2d_impl_{{colour_name | lower}}_colour_filling_mask_{{mirror_name | l
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
 
+    {{mask_init}}
+
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *pchSourceMaskCur = pchAlpha;
@@ -187,7 +189,7 @@ void __arm_2d_impl_{{colour_name | lower}}_colour_filling_mask_{{mirror_name | l
             __ARM_2D_PIXEL_BLENDING_{{colour_name | upper}}(&{{colour_int_prefix}}Colour, p{{colour_int_prefix}}Target++, hwAlpha);
         }
 
-        pchAlpha += iAlphaStride;
+        {{mask_move_to_next_line}}
         p{{colour_int_prefix}}Target += (iTargetStride - iWidth);
     }
 }
@@ -205,6 +207,8 @@ void __arm_2d_impl_{{colour_name | lower}}_colour_filling_channel_mask_{{mirror_
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
 
+    {{chn_mask_init}}
+
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwSourceMaskCur = pwAlpha;
@@ -219,7 +223,7 @@ void __arm_2d_impl_{{colour_name | lower}}_colour_filling_channel_mask_{{mirror_
             __ARM_2D_PIXEL_BLENDING_{{colour_name | upper}}(&{{colour_int_prefix}}Colour, p{{colour_int_prefix}}Target++, hwAlpha);
         }
 
-        pwAlpha += iAlphaStride;
+        {{chn_mask_move_to_next_line}}
         p{{colour_int_prefix}}Target += (iTargetStride - iWidth);
     }
 }
@@ -336,6 +340,8 @@ void __arm_2d_impl_{{colour_name | lower}}_colour_filling_mask_{{mirror_name | l
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
 
+    {{mask_init}}
+
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *pchSourceMaskCur = pchAlpha;
@@ -349,7 +355,7 @@ void __arm_2d_impl_{{colour_name | lower}}_colour_filling_mask_{{mirror_name | l
             __ARM_2D_PIXEL_BLENDING_{{colour_name | upper}}(&{{colour_int_prefix}}Colour, p{{colour_int_prefix}}Target++, hwAlpha);
         }
 
-        pchAlpha += iAlphaStride;
+        {{mask_move_to_next_line}}
         p{{colour_int_prefix}}Target += (iTargetStride - iWidth);
     }
 }
@@ -368,6 +374,8 @@ void __arm_2d_impl_{{colour_name | lower}}_colour_filling_channel_mask_{{mirror_
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
 
+    {{chn_mask_init}}
+
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwSourceMaskCur = pwAlpha;
@@ -382,7 +390,7 @@ void __arm_2d_impl_{{colour_name | lower}}_colour_filling_channel_mask_{{mirror_
             __ARM_2D_PIXEL_BLENDING_{{colour_name | upper}}(&{{colour_int_prefix}}Colour, p{{colour_int_prefix}}Target++, hwAlpha);
         }
 
-        pwAlpha += iAlphaStride;
+        {{chn_mask_move_to_next_line}}
         p{{colour_int_prefix}}Target += (iTargetStride - iWidth);
     }
 }
