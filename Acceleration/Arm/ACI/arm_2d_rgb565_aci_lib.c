@@ -2556,7 +2556,6 @@ void __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_xy_mirror(uint16_t * __RESTRIC
                                                             arm_2d_size_t *
                                                             __RESTRICT ptTargetMaskSize)
 {
-printf("xx\n");
     assert(ptSourceSize->iHeight <= ptSourceMaskSize->iHeight);
     ptSourceMaskBase += iSourceMaskStride * (ptSourceSize->iHeight - 1);
 
