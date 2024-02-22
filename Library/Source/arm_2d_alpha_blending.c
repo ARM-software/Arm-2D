@@ -21,8 +21,8 @@
  * Title:        arm_2d_alpha_blending.c
  * Description:  APIs for various alpha related operations
  *
- * $Date:        04. April 2023
- * $Revision:    V.1.6.2
+ * $Date:        21. Feb 2024
+ * $Revision:    V.1.6.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -876,7 +876,7 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_opacity( arm_2d_op_alpha_t *ptOP,
 arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_opacity(__arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_alpha_t, ptTask->ptOP)
-    assert(ARM_2D_COLOUR_RGB565 == OP_CORE.ptOp->Info.Colour.chScheme);
+    assert(ARM_2D_COLOUR_GRAY8 == OP_CORE.ptOp->Info.Colour.chScheme);
     
     if (255 == this.chRatio) {
         __arm_2d_impl_c8bit_copy(   ptTask->Param.tCopy.tSource.pBuffer,

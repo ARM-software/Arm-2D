@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        19. Feb 2024
- * $Revision:    V.1.4.3
+ * $Date:        21. Feb 2024
+ * $Revision:    V.1.4.4
  *
  * Target Processor:  Cortex-M cores
  *
@@ -1308,6 +1308,53 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_x_mirror_and_opacity(
 
 extern
 arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_x_mirror_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_and_y_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_and_y_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_and_y_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_y_mirror_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_y_mirror_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_y_mirror_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_and_xy_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_and_xy_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_and_xy_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_xy_mirror_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_xy_mirror_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_xy_mirror_and_opacity(
                                                 __arm_2d_sub_task_t *ptTask);
 
 extern

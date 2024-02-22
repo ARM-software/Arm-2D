@@ -155,12 +155,51 @@ void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget,
     arm_2d_canvas(ptTarget, __top_container) {
 
         arm_2d_align_centre(__top_container, 55, 55) {
-            arm_2d_fill_colour_with_mask_and_opacity(  
+
+            arm_2d_region_t tDrawRegion = {
+                .tLocation = __centre_region.tLocation,
+                .tSize = c_tileGreenCircleQuaterMask.tRegion.tSize
+            };
+
+            arm_2d_fill_colour_with_mask_xy_mirror_and_opacity(  
                                             ptTarget,
-                                            &__centre_region,
-                                            &c_tileGreenCircleMask,
+                                            &tDrawRegion,
+                                            &c_tileGreenCircleQuaterMask,
                                             (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY},
                                             128);
+            arm_2d_op_wait_async(NULL);
+
+            tDrawRegion.tLocation.iX += c_tileGreenCircleQuaterMask.tRegion.tSize.iWidth;
+
+            arm_2d_fill_colour_with_mask_y_mirror_and_opacity(  
+                                ptTarget,
+                                &tDrawRegion,
+                                &c_tileGreenCircleQuaterMask,
+                                (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY},
+                                128);
+
+            arm_2d_op_wait_async(NULL);
+
+            tDrawRegion.tLocation.iY += c_tileGreenCircleQuaterMask.tRegion.tSize.iHeight;
+
+            arm_2d_fill_colour_with_mask_and_opacity(  
+                                ptTarget,
+                                &tDrawRegion,
+                                &c_tileGreenCircleQuaterMask,
+                                (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY},
+                                128);
+
+            arm_2d_op_wait_async(NULL);
+
+            tDrawRegion.tLocation.iX -= c_tileGreenCircleQuaterMask.tRegion.tSize.iWidth;
+
+            arm_2d_fill_colour_with_mask_x_mirror_and_opacity(  
+                                ptTarget,
+                                &tDrawRegion,
+                                &c_tileGreenCircleQuaterMask,
+                                (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY},
+                                128);
+
             arm_2d_op_wait_async(NULL);
 
             const arm_2d_location_t c_tCentre = {
@@ -168,7 +207,6 @@ void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget,
                 .iY = 0,
             };
 
-            
             if (bIsNewFrame) {
                 s_fAngle += ARM_2D_ANGLE(6.0f);
                 s_fAngle = ARM_2D_FMODF(s_fAngle,ARM_2D_ANGLE(360));
@@ -181,7 +219,7 @@ void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget,
                                             &__centre_region,
                                             c_tCentre,
                                             s_fAngle,
-                                            1.0f,
+                                            1.01f,
                                             Colour,
                                             64
                                         );
