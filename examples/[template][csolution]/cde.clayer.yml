@@ -5,10 +5,10 @@ layer:
   groups:
     - group: arm2d_rgb565_cde
       files:
-        - file: ../Acceleration/Arm/ACI/arm_2d_rgb565_aci_lib.c
+        - file: ../../Acceleration/Arm/ACI/arm_2d_rgb565_aci_lib.c
 
       add-path:
-        - ../Acceleration/Arm/ACI/
+        - ../../Acceleration/Arm/ACI/
 #        - ../examples/common/platform/
 #         - .
 

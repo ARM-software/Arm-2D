@@ -4,10 +4,10 @@ project:
       files:
         - file: ../main.c
       add-path:
-        - ../../examples/common/platform/
+        - ../../../examples/common/platform/
 
       define:
-        - BENCH: WATCHPANEL
+        - BENCH: GENERIC_BLENDING
 
 
   components:
@@ -15,7 +15,7 @@ project:
     - component: ARM::Acceleration:Arm-2D:Alpha-Blending
     - component: ARM::Acceleration:Arm-2D:Transform
     - component: ARM::Acceleration:Arm-2D Helper:PFB
-    - component: ARM::Acceleration:Arm-2D Extras:Benchmark-WatchPanel
+    - component: ARM::Acceleration:Arm-2D Extras:Benchmark-Generic
       define:
       - ITERATION_CNT: 10
 
@@ -45,12 +45,18 @@ project:
         - DISABLEFLOAT16
 
 
+
   layers:
     - layer: ../boot.clayer.yml
     - layer: ../cde.clayer.yml
       for-context:
-        - +VHT-Corstone-300-NOLCD-CDE
-        - +VHT-Corstone-310-NOLCD-CDE
         - +VHT-Corstone-300-CDE
         - +VHT-Corstone-310-CDE
-
+        - +VHT-Corstone-300-NOLCD-CDE
+        - +VHT-Corstone-310-NOLCD-CDE
+    #- layer: ../printf_mpsx.clayer.yml
+    #  for-context:
+    #    - +VHT-Corstone-300-CDE
+    #    - +VHT-Corstone-310-CDE
+    #    - +VHT-Corstone-300-NOLCD-CDE
+    #    - +VHT-Corstone-310-NOLCD-CDE

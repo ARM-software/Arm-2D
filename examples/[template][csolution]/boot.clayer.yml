@@ -5,16 +5,15 @@ layer:
   groups:
     - group: platform_mps3
       files:
-        #- file: ../examples/common/platform/app_platform.c
-        - file: ../examples/common/platform/mps3/GLCD_V2M-MPS3_AN540.c
-        - file: ../examples/common/platform/mps3/platform_mps3.c
+        - file: ../common/platform/mps3/GLCD_V2M-MPS3_AN540.c
+        - file: ../common/platform/mps3/platform_mps3.c
 
       define:
         - __USE_AN547__
       add-path:
-        - ../examples/common/platform/mps3/
-        - ../examples/common/platform/mps3/v2m_mps3/
-        - ../examples/common/platform/
+        - ../common/platform/mps3/
+        - ../common/platform/mps3/v2m_mps3/
+        - ../common/platform/
         - .
       for-context:
         - +VHT-Corstone-300
@@ -28,13 +27,13 @@ layer:
 
     - group: platform_mps2
       files:
-        - file: ../examples/common/platform/app_platform.c
-        - file: ../examples/common/platform/mps2/GLCD_V2M-MPS2.c
-        - file: ../examples/common/platform/mps2/platform_mps2.c
+        - file: ../common/platform/app_platform.c
+        - file: ../common/platform/mps2/GLCD_V2M-MPS2.c
+        - file: ../common/platform/mps2/platform_mps2.c
 
       add-path:
-        - ../examples/common/platform/mps2/
-        - ../examples/common/platform/
+        - ../common/platform/mps2/
+        - ../common/platform/
         - .
       not-for-context:
         - +VHT-Corstone-300
