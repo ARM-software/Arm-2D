@@ -1,0 +1,510 @@
+build:
+  generated-by: csolution version 2.2.1
+  solution: ../arm2d.csolution.yml
+  project: ../arm2d_generic_bench/arm2d_generic_bench.cproject.yml
+  context: arm2d_generic_bench.Release+VHT-Corstone-300-NOLCD-CDE
+  compiler: AC6@6.21
+  device: ARM::SSE-300-MPS3
+  device-pack: ARM::V2M_MPS3_SSE_300_BSP@1.4.0
+  processor:
+    dsp: on
+    fpu: dp
+    core: Cortex-M55
+  packs:
+    - pack: ARM::Arm-2D@9.9.99
+      path: ../..
+    - pack: ARM::CMSIS-Compiler@2.0.0
+      path: ${CMSIS_PACK_ROOT}/ARM/CMSIS-Compiler/2.0.0
+    - pack: ARM::CMSIS-DSP@1.15.0
+      path: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0
+    - pack: ARM::CMSIS@6.0.0
+      path: ../../../../CMSIS_6
+    - pack: ARM::V2M_MPS3_SSE_300_BSP@1.4.0
+      path: ${CMSIS_PACK_ROOT}/ARM/V2M_MPS3_SSE_300_BSP/1.4.0
+    - pack: GorgonMeducer::perf_counter@2.2.3
+      path: ${CMSIS_PACK_ROOT}/GorgonMeducer/perf_counter/2.2.3
+  optimize: speed
+  debug: on
+  misc:
+    ASM:
+      - -masm=auto
+    C:
+      - -std=gnu11
+      - -Ofast
+      - -ffast-math
+      - -ffunction-sections
+      - -Wno-macro-redefined
+      - -Wno-pragma-pack
+      - -Wno-parentheses-equality
+      - -Wno-license-management
+      - -fshort-enums -fshort-wchar
+      - -mcpu=cortex-m55+cdecp0
+    CPP:
+      - -Ofast
+      - -ffast-math
+      - -ffunction-sections
+      - -Wno-macro-redefined
+      - -Wno-pragma-pack
+      - -Wno-parentheses-equality
+      - -Wno-license-management
+      - -fshort-enums -fshort-wchar
+      - -mcpu=cortex-m55+cdecp0
+    Link:
+      - --entry=Reset_Handler
+      - --map
+      - --info summarysizes
+      - --diag_suppress=L6314W
+  define:
+    - __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
+    - __ARM_2D_NOLCD
+    - __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
+    - __ARM_2D_CFG_ENABLE_LOG__: 1
+    - _RTE_
+  add-path:
+    - ../../Acceleration/Arm/ACI
+    - ../RTE/Device/SSE-300-MPS3
+    - ../arm2d_generic_bench/RTE/Acceleration
+    - ../arm2d_generic_bench/RTE/_Release_VHT-Corstone-300-NOLCD-CDE
+    - ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Include
+    - ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/PrivateInclude
+    - ${CMSIS_PACK_ROOT}/ARM/V2M_MPS3_SSE_300_BSP/1.4.0/Board/Device_Definition
+    - ${CMSIS_PACK_ROOT}/ARM/V2M_MPS3_SSE_300_BSP/1.4.0/Board/Platform
+    - ${CMSIS_PACK_ROOT}/ARM/V2M_MPS3_SSE_300_BSP/1.4.0/Device/Include
+    - ${CMSIS_PACK_ROOT}/GorgonMeducer/perf_counter/2.2.3/lib
+    - ../../../../CMSIS_6/CMSIS/Core/Include
+    - ../../Helper/Include
+    - ../../Library/Include
+    - ../../examples/common/benchmark
+    - ../../examples/common/controls
+  output-dirs:
+    intdir: intdir
+    outdir: outdir
+    rtedir: ../arm2d_generic_bench/RTE
+  output:
+    - type: elf
+      file: arm2d_generic_bench.axf
+  components:
+    - component: ARM::Acceleration:Arm-2D Extras:Benchmark-Generic@1.4.3
+      condition: Arm-2D-Benchmark-Generic
+      from-pack: ARM::Arm-2D@9.9.99
+      selected-by: ARM::Acceleration:Arm-2D Extras:Benchmark-Generic
+      define:
+        - ITERATION_CNT: 10
+      files:
+        - file: ../../examples/common/benchmark/arm_2d_scene_benchmark_generic.c
+          category: sourceC
+        - file: ../../examples/common/benchmark/arm_2d_scene_benchmark_generic_cover.c
+          category: sourceC
+        - file: ../../examples/common/benchmark/benchmark_generic.c
+          category: sourceC
+    - component: ARM::Acceleration:Arm-2D Extras:Controls@1.5.8
+      condition: Arm-2D-EXTRA
+      from-pack: ARM::Arm-2D@9.9.99
+      selected-by: ARM::Acceleration:Arm-2D Extras:Controls
+      files:
+        - file: ../../examples/common/asset/GreenCircle.c
+          category: sourceC
+        - file: ../../examples/common/asset/Lighting.c
+          category: sourceC
+        - file: ../../examples/common/asset/ListCover.c
+          category: sourceC
+        - file: ../../examples/common/asset/Pointer.c
+          category: sourceC
+        - file: ../../examples/common/asset/QuaterArc.c
+          category: sourceC
+        - file: ../../examples/common/asset/SinWave.c
+          category: sourceC
+        - file: ../../examples/common/asset/SpinWheel.c
+          category: sourceC
+        - file: ../../examples/common/asset/background.c
+          category: sourceC
+        - file: ../../examples/common/asset/battery_boarder_1.c
+          category: sourceC
+        - file: ../../examples/common/asset/battery_gasgauge_block.c
+          category: sourceC
+        - file: ../../examples/common/asset/battery_gasgauge_grade_boarder.c
+          category: sourceC
+        - file: ../../examples/common/asset/blue_slashes.c
+          category: sourceC
+        - file: ../../examples/common/asset/circle_mask.c
+          category: sourceC
+        - file: ../../examples/common/asset/circle_small.c
+          category: sourceC
+        - file: ../../examples/common/asset/cmsis_logo.c
+          category: sourceC
+        - file: ../../examples/common/asset/gear_01.c
+          category: sourceC
+        - file: ../../examples/common/asset/gear_02.c
+          category: sourceC
+        - file: ../../examples/common/asset/glass_reflection_narrow.c
+          category: sourceC
+        - file: ../../examples/common/asset/glass_reflection_wide.c
+          category: sourceC
+        - file: ../../examples/common/asset/helium.c
+          category: sourceC
+        - file: ../../examples/common/asset/pointer_sec.c
+          category: sourceC
+        - file: ../../examples/common/asset/small_icon_sun.c
+          category: sourceC
+        - file: ../../examples/common/asset/software.c
+          category: sourceC
+        - file: ../../examples/common/asset/star.c
+          category: sourceC
+        - file: ../../examples/common/asset/watch_panel.c
+          category: sourceC
+        - file: ../../examples/common/asset/wave.c
+          category: sourceC
+        - file: ../../examples/common/asset/white_dot.c
+          category: sourceC
+        - file: ../../examples/common/asset/wifi_signal.c
+          category: sourceC
+        - file: ../../examples/common/controls/battery_gasgauge.c
+          category: sourceC
+        - file: ../../examples/common/controls/busy_wheel.c
+          category: sourceC
+        - file: ../../examples/common/controls/controls.c
+          category: sourceC
+        - file: ../../examples/common/controls/dynamic_nebula.c
+          category: sourceC
+        - file: ../../examples/common/controls/list_view.c
+          category: sourceC
+        - file: ../../examples/common/controls/number_list.c
+          category: sourceC
+        - file: ../../examples/common/controls/progress_bar_drill.c
+          category: sourceC
+        - file: ../../examples/common/controls/progress_bar_flowing.c
+          category: sourceC
+        - file: ../../examples/common/controls/progress_bar_simple.c
+          category: sourceC
+        - file: ../../examples/common/controls/progress_wheel.c
+          category: sourceC
+        - file: ../../examples/common/controls/shape_round_corner_box.c
+          category: sourceC
+        - file: ../../examples/common/controls/spinning_wheel.c
+          category: sourceC
+    - component: ARM::Acceleration:Arm-2D Extras:LCD ASCII Printf@2.2.1
+      condition: Arm-2D-CORE
+      from-pack: ARM::Arm-2D@9.9.99
+      selected-by: ARM::Acceleration:Arm-2D Extras:LCD ASCII Printf
+      files:
+        - file: ../../examples/common/controls/lcd_printf.c
+          category: sourceC
+        - file: ../arm2d_generic_bench/RTE/Acceleration/DigitsFont.c
+          category: sourceC
+          attr: config
+          version: 1.2.0
+        - file: ../arm2d_generic_bench/RTE/Acceleration/GLCD_Fonts.c
+          category: sourceC
+          attr: config
+          version: 1.0.0
+    - component: ARM::Acceleration:Arm-2D Helper:Display Adapter@2.1.0
+      condition: Arm-2D-Helper
+      from-pack: ARM::Arm-2D@9.9.99
+      selected-by: ARM::Acceleration:Arm-2D Helper:Display Adapter
+      files:
+        - file: ../arm2d_generic_bench/RTE/Acceleration/arm_2d_disp_adapter_0.h
+          category: header
+          attr: config
+          version: 2.1.0
+        - file: ../arm2d_generic_bench/RTE/Acceleration/arm_2d_disp_adapter_0.c
+          category: sourceC
+          attr: config
+          version: 2.1.0
+    - component: ARM::Acceleration:Arm-2D Helper:PFB@1.9.0
+      condition: Arm-2D-CORE
+      from-pack: ARM::Arm-2D@9.9.99
+      selected-by: ARM::Acceleration:Arm-2D Helper:PFB
+      files:
+        - file: ../../Helper/Source/arm_2d_helper.c
+          category: sourceC
+        - file: ../../Helper/Source/arm_2d_helper_list.c
+          category: sourceC
+        - file: ../../Helper/Source/arm_2d_helper_pfb.c
+          category: sourceC
+        - file: ../../Helper/Source/arm_2d_helper_scene.c
+          category: sourceC
+    - component: ARM::Acceleration:Arm-2D:Alpha-Blending@1.1.5
+      condition: Arm-2D-CORE
+      from-pack: ARM::Arm-2D@9.9.99
+      selected-by: ARM::Acceleration:Arm-2D:Alpha-Blending
+      files:
+        - file: ../../Library/Source/arm_2d_alpha_blending.c
+          category: sourceC
+    - component: ARM::Acceleration:Arm-2D:Core@1.1.5
+      condition: CMSIS-DSP
+      from-pack: ARM::Arm-2D@9.9.99
+      selected-by: ARM::Acceleration:Arm-2D:Core
+      files:
+        - file: ../../Library/Source/arm_2d_async.c
+          category: sourceC
+        - file: ../../Library/Source/arm_2d_conversion.c
+          category: sourceC
+        - file: ../../Library/Source/arm_2d_draw.c
+          category: sourceC
+        - file: ../../Library/Source/arm_2d_helium.c
+          category: sourceC
+        - file: ../arm2d_generic_bench/RTE/Acceleration/arm_2d_cfg.h
+          category: preIncludeGlobal
+          attr: config
+          version: 1.3.2
+        - file: ../arm2d_generic_bench/RTE/Acceleration/arm_2d.c
+          category: sourceC
+          attr: config
+          version: 1.3.1
+        - file: ../arm2d_generic_bench/RTE/Acceleration/README.md
+          category: other
+          attr: config
+          version: 1.2.2
+        - file: ../arm2d_generic_bench/RTE/Acceleration/img2c.py
+          category: utility
+          attr: config
+          version: 1.2.2
+        - file: ../arm2d_generic_bench/RTE/Acceleration/ttf2c.py
+          category: utility
+          attr: config
+          version: 1.2.0
+    - component: ARM::Acceleration:Arm-2D:Transform@1.1.6
+      condition: Arm-2D-CORE
+      from-pack: ARM::Arm-2D@9.9.99
+      selected-by: ARM::Acceleration:Arm-2D:Transform
+      files:
+        - file: ../../Library/Source/arm_2d_transform.c
+          category: sourceC
+    - component: ARM::CMSIS-Compiler:CORE@1.0.0
+      condition: ARMCC CortexDevice
+      from-pack: ARM::CMSIS-Compiler@2.0.0
+      selected-by: CMSIS-Compiler:CORE
+      files:
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-Compiler/2.0.0/source/armcc/retarget_io.c
+          category: sourceC
+    - component: ARM::CMSIS:CORE@6.0.0
+      condition: ARMv6_7_8-M Device
+      from-pack: ARM::CMSIS@6.0.0
+      selected-by: ARM::CMSIS:CORE
+    - component: ARM::CMSIS:DSP&Source@1.15.0
+      condition: CMSISCORE
+      from-pack: ARM::CMSIS-DSP@1.15.0
+      selected-by: ARM::CMSIS:DSP&Source
+      define:
+        - ARM_FAST_ALLOW_TABLES
+        - ARM_FFT_ALLOW_TABLES
+        - ARM_ALL_FAST_TABLES
+        - ARM_MATH_LOOPUNROLL
+        - DISABLEFLOAT16
+      files:
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/BasicMathFunctions/BasicMathFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/BasicMathFunctions/BasicMathFunctionsF16.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/BayesFunctions/BayesFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/BayesFunctions/BayesFunctionsF16.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/CommonTables/CommonTables.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/CommonTables/CommonTablesF16.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/ComplexMathFunctions/ComplexMathFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/ComplexMathFunctions/ComplexMathFunctionsF16.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/ControllerFunctions/ControllerFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/DistanceFunctions/DistanceFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/DistanceFunctions/DistanceFunctionsF16.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/FastMathFunctions/FastMathFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/FastMathFunctions/FastMathFunctionsF16.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/FilteringFunctions/FilteringFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/FilteringFunctions/FilteringFunctionsF16.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/InterpolationFunctions/InterpolationFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/InterpolationFunctions/InterpolationFunctionsF16.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/MatrixFunctions/MatrixFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/MatrixFunctions/MatrixFunctionsF16.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/QuaternionMathFunctions/QuaternionMathFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/SVMFunctions/SVMFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/SVMFunctions/SVMFunctionsF16.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/StatisticsFunctions/StatisticsFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/StatisticsFunctions/StatisticsFunctionsF16.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/SupportFunctions/SupportFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/SupportFunctions/SupportFunctionsF16.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/TransformFunctions/TransformFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/Source/TransformFunctions/TransformFunctionsF16.c
+          category: source
+    - component: ARM::Device:Definition@2.0.0
+      condition: SSE-300-MPS3 Device
+      from-pack: ARM::V2M_MPS3_SSE_300_BSP@1.4.0
+      selected-by: ARM::Device:Definition
+      files:
+        - file: ${CMSIS_PACK_ROOT}/ARM/V2M_MPS3_SSE_300_BSP/1.4.0/Board/Device_Definition/device_definition.c
+          category: source
+        - file: ../RTE/Device/SSE-300-MPS3/RTE_Device.h
+          category: header
+          attr: config
+          version: 1.1.0
+        - file: ../RTE/Device/SSE-300-MPS3/cmsis_driver_config.h
+          category: header
+          attr: config
+          version: 1.1.1
+        - file: ../RTE/Device/SSE-300-MPS3/device_cfg.h
+          category: header
+          attr: config
+          version: 1.1.3
+    - component: ARM::Device:Native Driver:SysCounter@1.1.0
+      condition: SSE-300-MPS3 Device
+      from-pack: ARM::V2M_MPS3_SSE_300_BSP@1.4.0
+      selected-by: ARM::Device:Native Driver:SysCounter
+      files:
+        - file: ${CMSIS_PACK_ROOT}/ARM/V2M_MPS3_SSE_300_BSP/1.4.0/Device/Source/syscounter_armv8-m_cntrl_drv.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/V2M_MPS3_SSE_300_BSP/1.4.0/Device/Source/syscounter_armv8-m_read_drv.c
+          category: source
+    - component: ARM::Device:Native Driver:SysTimer@1.1.0
+      condition: SSE-300-MPS3 Device
+      from-pack: ARM::V2M_MPS3_SSE_300_BSP@1.4.0
+      selected-by: ARM::Device:Native Driver:SysTimer
+      files:
+        - file: ${CMSIS_PACK_ROOT}/ARM/V2M_MPS3_SSE_300_BSP/1.4.0/Device/Source/systimer_armv8-m_drv.c
+          category: source
+    - component: ARM::Device:Native Driver:Timeout@1.0.0
+      condition: SSE-300-MPS3 Systimer Syscounter
+      from-pack: ARM::V2M_MPS3_SSE_300_BSP@1.4.0
+      selected-by: ARM::Device:Native Driver:Timeout
+      files:
+        - file: ${CMSIS_PACK_ROOT}/ARM/V2M_MPS3_SSE_300_BSP/1.4.0/Device/Source/systimer_armv8-m_timeout.c
+          category: source
+    - component: ARM::Device:Startup&C Startup@2.0.0
+      condition: SSE-300-MPS3 Device
+      from-pack: ARM::V2M_MPS3_SSE_300_BSP@1.4.0
+      selected-by: ARM::Device:Startup&C Startup
+      files:
+        - file: ../RTE/Device/SSE-300-MPS3/region_defs.h
+          category: header
+          attr: config
+          version: 1.0.0
+        - file: ../RTE/Device/SSE-300-MPS3/region_limits.h
+          category: header
+          attr: config
+          version: 1.0.0
+        - file: ../RTE/Device/SSE-300-MPS3/linker_SSE300MPS3_secure.sct
+          category: linkerScript
+          attr: config
+          version: 1.1.0
+        - file: ../RTE/Device/SSE-300-MPS3/startup_SSE300MPS3.c
+          category: source
+          attr: config
+          version: 1.1.1
+        - file: ../RTE/Device/SSE-300-MPS3/system_SSE300MPS3.c
+          category: source
+          attr: config
+          version: 1.1.1
+    - component: GorgonMeducer::Utilities:perf_counter:Core&Source@2.2.3
+      condition: CMSIS-CORE
+      from-pack: GorgonMeducer::perf_counter@2.2.3
+      selected-by: perf_counter:Core&Source
+      files:
+        - file: ${CMSIS_PACK_ROOT}/GorgonMeducer/perf_counter/2.2.3/perf_counter.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/GorgonMeducer/perf_counter/2.2.3/systick_wrapper_gnu.s
+          category: source
+  linker:
+    script: ../linker/sse300_mps3/ac6_sse300_mps3_s.sct
+    regions: ../linker/sse300_mps3/region_defs.h
+  groups:
+    - group: App
+      define:
+        - BENCH: GENERIC_BLENDING
+      add-path:
+        - ../../examples/common/platform
+      files:
+        - file: ../main.c
+          category: sourceC
+    - group: platform_mps3
+      define:
+        - __USE_AN547__
+      add-path:
+        - ../../examples/common/platform/mps3
+        - ../../examples/common/platform/mps3/v2m_mps3
+        - ../../examples/common/platform
+        - ..
+      files:
+        - file: ../../examples/common/platform/mps3/GLCD_V2M-MPS3_AN540.c
+          category: sourceC
+        - file: ../../examples/common/platform/mps3/platform_mps3.c
+          category: sourceC
+    - group: arm2d_rgb565_cde
+      add-path:
+        - ../../Acceleration/Arm/ACI
+      files:
+        - file: ../../Acceleration/Arm/ACI/arm_2d_rgb565_aci_lib.c
+          category: sourceC
+    - group: arm2d_other_cde
+  constructed-files:
+    - file: ../arm2d_generic_bench/RTE/_Release_VHT-Corstone-300-NOLCD-CDE/Pre_Include_Global.h
+      category: preIncludeGlobal
+    - file: ../arm2d_generic_bench/RTE/_Release_VHT-Corstone-300-NOLCD-CDE/RTE_Components.h
+      category: header
+  licenses:
+    - license: <unknown>
+      license-agreement: ${CMSIS_PACK_ROOT}/ARM/Arm-2D/9.9.99/LICENSE
+      packs:
+        - pack: ARM::Arm-2D@9.9.99
+      components:
+        - component: ARM::Acceleration:Arm-2D Extras:Benchmark-Generic@1.4.3
+        - component: ARM::Acceleration:Arm-2D Extras:Controls@1.5.8
+        - component: ARM::Acceleration:Arm-2D Extras:LCD ASCII Printf@2.2.1
+        - component: ARM::Acceleration:Arm-2D Helper:Display Adapter@2.1.0
+        - component: ARM::Acceleration:Arm-2D Helper:PFB@1.9.0
+        - component: ARM::Acceleration:Arm-2D:Alpha-Blending@1.1.5
+        - component: ARM::Acceleration:Arm-2D:Core@1.1.5
+        - component: ARM::Acceleration:Arm-2D:Transform@1.1.6
+    - license: <unknown>
+      license-agreement: ${CMSIS_PACK_ROOT}/ARM/CMSIS-Compiler/2.0.0/LICENSE
+      packs:
+        - pack: ARM::CMSIS-Compiler@2.0.0
+      components:
+        - component: ARM::CMSIS-Compiler:CORE@1.0.0
+    - license: <unknown>
+      license-agreement: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.15.0/LICENSE
+      packs:
+        - pack: ARM::CMSIS-DSP@1.15.0
+      components:
+        - component: ARM::CMSIS:DSP&Source@1.15.0
+    - license: <unknown>
+      license-agreement: ${CMSIS_PACK_ROOT}/ARM/CMSIS/6.0.0/LICENSE
+      packs:
+        - pack: ARM::CMSIS@6.0.0
+      components:
+        - component: ARM::CMSIS:CORE@6.0.0
+    - license: <unknown>
+      packs:
+        - pack: ARM::V2M_MPS3_SSE_300_BSP@1.4.0
+      components:
+        - component: ARM::Device:Definition@2.0.0
+        - component: ARM::Device:Native Driver:SysCounter@1.1.0
+        - component: ARM::Device:Native Driver:SysTimer@1.1.0
+        - component: ARM::Device:Native Driver:Timeout@1.0.0
+        - component: ARM::Device:Startup&C Startup@2.0.0
+    - license: <unknown>
+      license-agreement: ${CMSIS_PACK_ROOT}/GorgonMeducer/perf_counter/2.2.3/lib/LICENSE
+      packs:
+        - pack: GorgonMeducer::perf_counter@2.2.3
+      components:
+        - component: GorgonMeducer::Utilities:perf_counter:Core&Source@2.2.3
