@@ -24,7 +24,7 @@ The `arm_2d_tile_t` descriptors are used as the standard input and output in mos
 img2c.py [-h] [--format <FORMAT>] [--name <NAME\>] [--dim <Width> <Height>] [--rot <ANGLE>] <-i <Input File Path>> [-o <Output file Path>]
 ```
 
-| Arguments                 | Description                                                  | Memo     |
+| Arguments                 | Description                                                  | NOTE     |
 | ------------------------- | ------------------------------------------------------------ | -------- |
 | ***-h, --help***          | show help information                                        |          |
 | -i ***Input File Path***  | Input file (png, bmp, etc..)                                 |          |
