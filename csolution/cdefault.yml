@@ -35,9 +35,9 @@ default:
         - -fdata-sections
         - -D__ARM_2D_SUPPRESS_GCC_HELIUM_PERFORMANCE_WARNING__
       Link:
-        #- --specs=nano.specs
-        #- --specs=rdimon.specs
-        - --specs=nosys.specs
+        - --specs=nano.specs
+        - --specs=rdimon.specs
+        #- --specs=nosys.specs
         - -Wl,-Map=$elf()$.map
         - -lm
         - -Wl,--wrap=SysTick_Handler

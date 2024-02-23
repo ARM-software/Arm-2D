@@ -231,8 +231,8 @@ void __arm_copy_16_mve_narrow(  uint16_t *phwSource,
         "   letp                lr, 2b                                 \n"
         "1:                                                            \n"
 
-        "   add.n               %[phwSource], #2                       \n"
-        "   add.n               %[phwTarget], #2                       \n"
+        "   adds               %[phwSource], #2                        \n"
+        "   adds               %[phwTarget], #2                        \n"
         "   subs                %[iWidth], #1                          \n"
         "   bne                 3b                                     \n"
 
@@ -296,8 +296,8 @@ void __arm_copy_32_mve_narrow(   uint32_t *pwSource,
         "   letp                lr, 2b                                \n"
         "1:                                                           \n"
 
-        "   add.n               %[pwSource], #4                       \n"
-        "   add.n               %[pwTarget], #4                       \n"
+        "   adds               %[pwSource], #4                        \n"
+        "   adds               %[pwTarget], #4                        \n"
         "   subs                %[iWidth], #1                         \n"
         "   bne                 3b                                    \n"
 
@@ -552,13 +552,13 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_tile_copy_opacity)(uint8_t * __RESTRICT 
             "   vmla.s16                q0, q1, %[hwRatio]           \n"
             "   vldrb.u16               q2, [%[pTarget], #8]         \n"
             "   vshr.u16                q0, q0, #8                   \n"
-            "   vstrb.u16               q0, [%[pTarget]], #8         \n"
+            "   vstrb.16                q0, [%[pTarget]], #8         \n"
             "   vmul.u16                q2, q2, %[hwRatioCompl]      \n"
             "   vldrb.u16               q1, [%[pSource]], #8         \n"
             "   vmla.s16                q2, q1, %[hwRatio]           \n"
             "   vldrb.u16               q0, [%[pTarget], #8]         \n"
             "   vshr.u16                q2, q2, #8                   \n"
-            "   vstrb.u16               q2, [%[pTarget]], #8         \n"
+            "   vstrb.16                q2, [%[pTarget]], #8         \n"
             "   le                      lr, 2b                       \n"
             "1:                                                      \n"
             /* tail */
@@ -569,7 +569,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_tile_copy_opacity)(uint8_t * __RESTRICT 
             "   vmla.s16                q0, q1, %[hwRatio]           \n"
             "   vshr.u16                q1, q0, #8                   \n"
             "   vldrb.u16               q0, [%[pTarget], #8]         \n"
-            "   vstrb.u16               q1, [%[pTarget]], #8         \n"
+            "   vstrb.16                q1, [%[pTarget]], #8         \n"
             "   letp                    lr, 2b                       \n"
             "1:                                                      \n"
 
@@ -637,15 +637,15 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_tile_copy_colour_keying_opacity)(uint8_t
             "   vmla.s16                q0, q1, %[hwRatio]           \n"
             "   vldrb.u16               q2, [%[pTarget], #8]         \n"
             "   vshr.u16                q0, q0, #8                   \n"
-            "   vpt.u16                 ne, q1, %[Colour]            \n"
-            "   vstrbt.u16              q0, [%[pTarget]], #8         \n"
+            "   vpt.i16                 ne, q1, %[Colour]            \n"
+            "   vstrbt.16               q0, [%[pTarget]], #8         \n"
             "   vmul.u16                q2, q2, %[hwRatioCompl]      \n"
             "   vldrb.u16               q1, [%[pSource]], #8         \n"
             "   vmla.s16                q2, q1, %[hwRatio]           \n"
             "   vldrb.u16               q0, [%[pTarget], #8]         \n"
             "   vshr.u16                q2, q2, #8                   \n"
-            "   vpt.u16                 ne, q1, %[Colour]            \n"
-            "   vstrbt.u16              q2, [%[pTarget]], #8         \n"
+            "   vpt.i16                 ne, q1, %[Colour]            \n"
+            "   vstrbt.16               q2, [%[pTarget]], #8         \n"
             "   le                      lr, 2b                       \n"
             "1:                                                      \n"
             /* tail */
@@ -656,8 +656,8 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_tile_copy_colour_keying_opacity)(uint8_t
             "   vmla.s16                q0, q1, %[hwRatio]           \n"
             "   vshr.u16                q2, q0, #8                   \n"
             "   vldrb.u16               q0, [%[pTarget], #8]         \n"
-            "   vpt.u16                 ne, q1, %[Colour]            \n"
-            "   vstrbt.u16              q2, [%[pTarget]], #8         \n"
+            "   vpt.i16                 ne, q1, %[Colour]            \n"
+            "   vstrbt.16               q2, [%[pTarget]], #8         \n"
             "   letp                    lr, 2b                       \n"
             "1:                                                      \n"
 
@@ -721,27 +721,27 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_opacity)(uint8_t * _
             "   wls                     lr, %[loopCnt], 1f           \n"
             "2:                                                      \n"
 
-            "   vmla.s16                q0, %[vecSrc], %[hwRatio]    \n"
+            "   vmla.s16                q0, %q[vecSrc], %[hwRatio]   \n"
             "   vldrb.u16               q2, [%[pTarget], #8]         \n"
             "   vshr.u16                q0, q0, #8                   \n"
             "   vmul.u16                q2, q2, %[hwRatioCompl]      \n"
-            "   vstrb.u16               q0, [%[pTarget]], #8         \n"
-            "   vmla.s16                q2, %[vecSrc], %[hwRatio]    \n"
+            "   vstrb.16                q0, [%[pTarget]], #8         \n"
+            "   vmla.s16                q2, %q[vecSrc], %[hwRatio]   \n"
             "   vldrb.u16               q0, [%[pTarget], #8]         \n"
             "   vshr.u16                q2, q2, #8                   \n"
             "   vmul.u16                q0, q0, %[hwRatioCompl]      \n"
-            "   vstrb.u16               q2, [%[pTarget]], #8         \n"
+            "   vstrb.16                q2, [%[pTarget]], #8         \n"
             "   le                      lr, 2b                       \n"
             "1:                                                      \n"
             /* tail */
             "   wlstp.16                lr, %[tail], 1f              \n"
             "2:                                                      \n"
 
-            "   vmla.s16                q0, %[vecSrc], %[hwRatio]    \n"
+            "   vmla.s16                q0, %q[vecSrc], %[hwRatio]   \n"
             "   vshr.u16                q2, q0, #8                   \n"
             "   vldrb.u16               q0, [%[pTarget], #8]         \n"
             "   vmul.u16                q0, q0, %[hwRatioCompl]      \n"
-            "   vstrb.u16               q2, [%[pTarget]], #8         \n"
+            "   vstrb.16                q2, [%[pTarget]], #8         \n"
             "   letp                    lr, 2b                       \n"
             "1:                                                      \n"
 
@@ -876,19 +876,19 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_tile_copy_opacity)(   uint16_t *phwSour
         // right shift by 5 (x 1/32) for M55 friendly
         // IV / Mul pipe interleaving
         "   vqdmulh.s16             q2, q4, %[rshft5]            \n"
-        "   vand                    q7, q4, %[vecMaskR]          \n"
+        "   vand                    q7, q4, %q[vecMaskR]         \n"
 
         "   vmul.i16                q6, q7, %[ratio2x8]          \n"
         // B source extraction
-        "   vand                    q7, q5, %[vecMaskR]          \n"
+        "   vand                    q7, q5, %q[vecMaskR]         \n"
         // B mix
         "   vmla.s16                q6, q7, %[ratio1x8]          \n"
         // G extraction
-        "   vand                    q2, q2, %[vecMaskG]          \n"
+        "   vand                    q2, q2, %q[vecMaskG]         \n"
         "   vshr.u16                q7, q5, #5                   \n"
         "   vmul.i16                q2, q2, %[ratio2x4]          \n"
         // G extraction
-        "   vand                    q7, q7, %[vecMaskG]          \n"
+        "   vand                    q7, q7, %q[vecMaskG]         \n"
         // G mix
         "   vmla.s16                q2, q7, %[ratio1x4]          \n"
         // R extraction
@@ -908,7 +908,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_tile_copy_opacity)(   uint16_t *phwSour
         "   vshr.u16                q4, q7, #8                   \n"
         // schedule next source load
         "   vldrh.u16               q5, [%[pSource]], #16        \n"
-        "   vand                    q7, q4, %[vecMaskBpck]       \n"
+        "   vand                    q7, q4, %q[vecMaskBpck]      \n"
         // pack R & G
         // vmulq((vecG0 & vecMaskGpck), 8) + vmulq((vecR0 & vecMaskRpck), 256)
         "   vmla.s16                q2, q7, %[twofiftysix]       \n"
@@ -1057,14 +1057,14 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_opacity)(
         ".p2align 2                                              \n"
         "2:                                                      \n"
         // B target extraction
-        "   vand                    q7, q4, %[vecMaskR]          \n"
+        "   vand                    q7, q4, %q[vecMaskR]         \n"
         "   vldrh.u16               q6, [%[scratch]]             \n"
         "   vshr.u16                q2, q4, #5                   \n"
 
         // B mix
         "   vmla.s16                q6, q7, %[ratio2x8]          \n"
         // G extraction
-        "   vand                    q7, q2, %[vecMaskG]          \n"
+        "   vand                    q7, q2, %q[vecMaskG]         \n"
 
         // G extraction
         "   vldrh.u16               q2, [%[scratch], #32]        \n"
@@ -1084,7 +1084,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_opacity)(
         "   vand                    q2, q2, q7                   \n"
 
         "   vmul.i16                q2, q2, %[eight]             \n"
-        "   vand                    q7, q4, %[vecMaskBpck]       \n"
+        "   vand                    q7, q4, %q[vecMaskBpck]      \n"
 
         // pack R & G
         "   vmla.s16                q2, q7, %[twofiftysix]       \n"
@@ -1258,22 +1258,22 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity)(
         ".p2align 2                                              \n"
         "   vldrh.u16               q4, [%[pTarget]]             \n"
         "   vldrh.u16               q5, [%[pSource]], #16        \n"
-        "   vand                    q7, q4, %[vecMaskR]          \n"
+        "   vand                    q7, q4, %q[vecMaskR]         \n"
         "   wlstp.16                lr, %[loopCnt], 1f           \n"
         "2:                                                      \n"
         // B target extraction
         "   vshr.u16                q2, q4, #5                   \n"
         "   vmul.i16                q6, q7, %[ratio2x8]          \n"
         // B source extraction
-        "   vand                    q7, q5, %[vecMaskR]          \n"
+        "   vand                    q7, q5, %q[vecMaskR]         \n"
         // B mix
         "   vmla.s16                q6, q7, %[ratio1x8]          \n"
         // G extraction
-        "   vand                    q2, q2, %[vecMaskG]          \n"
+        "   vand                    q2, q2, %q[vecMaskG]         \n"
         "   vshr.u16                q7, q5, #5                   \n"
         "   vmul.i16                q2, q2, %[ratio2x4]          \n"
         // G extraction
-        "   vand                    q7, q7, %[vecMaskG]          \n"
+        "   vand                    q7, q7, %q[vecMaskG]         \n"
         // G mix
         "   vmla.s16                q2, q7, %[ratio1x4]          \n"
         // R extraction
@@ -1293,7 +1293,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity)(
         "   vshr.u16                q4, q7, #8                   \n"
         // schedule next source load
         "   vldrh.u16               q5, [%[pSource]], #16        \n"
-        "   vand                    q7, q4, %[vecMaskBpck]       \n"
+        "   vand                    q7, q4, %q[vecMaskBpck]      \n"
         // pack R & G
         // vmulq((vecG0 & vecMaskGpck), 8) + vmulq((vecR0 & vecMaskRpck), 256)
         "   vmla.s16                q2, q7, %[twofiftysix]       \n"
@@ -1304,8 +1304,8 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity)(
         // pack blue with R&G
         "   vorr                    q2, q2, q7                   \n"
         "   vldrh.u16               q6, [%[pSource], #-32]       \n"
-        "   vand                    q7, q4, %[vecMaskR]          \n"
-        "   vpt.u16                 ne, q6, %[hwColour]          \n"
+        "   vand                    q7, q4, %q[vecMaskR]         \n"
+        "   vpt.i16                 ne, q6, %[hwColour]          \n"
         "   vstrht.16               q2, [%[pTarget]], #16        \n"
         "   letp                    lr, 2b                       \n"
         "1:                                                      \n"
@@ -1473,7 +1473,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_opacity)(
         "   wlstp.16                lr, %[loopCnt], 1f             \n"
         ".p2align 2                                                \n"
         "2:                                                        \n"
-        "   vmov                    q2, %[vColor]                  \n"
+        "   vmov                    q2, %q[vColor]                 \n"
         "   vmla.s16                q2, q1, %[hwRatioCompl]        \n"
         "   vldrb.u16               q1, [%[pTarget], #8]           \n"
         "   vshr.u16                q2, q2, #8                     \n"
@@ -1698,15 +1698,15 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_tile_copy_with_opacity_direct)(const ui
         "   wlstp.16                lr, %[loopCnt], 1f           \n"
         "2:                                                      \n"
 
-        "   vand                    q6, q4, %[vecMaskR]          \n"
+        "   vand                    q6, q4, %q[vecMaskR]         \n"
         "   vmul.i16                q6, q6, %[ratio2x8]          \n"
         "   vshr.u16                q2, q4, #5                   \n"
-        "   vand                    q7, q5, %[vecMaskR]          \n"
+        "   vand                    q7, q5, %q[vecMaskR]         \n"
         "   vmla.s16                q6, q7, %[ratio1x8]          \n"
-        "   vand                    q2, q2, %[vecMaskG]          \n"
+        "   vand                    q2, q2, %q[vecMaskG]         \n"
         "   vshr.u16                q7, q5, #5                   \n"
         "   vmul.i16                q2, q2, %[ratio2x4]          \n"
-        "   vand                    q7, q7, %[vecMaskG]          \n"
+        "   vand                    q7, q7, %q[vecMaskG]         \n"
         "   vmla.s16                q2, q7, %[ratio1x4]          \n"
         "   vshr.u16                q4, q4, #11                  \n"
         "   vmul.i16                q7, q4, %[ratio2x8]          \n"
@@ -1721,7 +1721,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_tile_copy_with_opacity_direct)(const ui
         "   vldrw.u32               q4, [sp]                     \n"
         "   vand                    q2, q2, q4                   \n"
         "   vmul.i16                q2, q2, %[eight]             \n"
-        "   vand                    q4, q7, %[vecMaskBpck]       \n" // Q7 = vecB0
+        "   vand                    q4, q7, %q[vecMaskBpck]      \n" // Q7 = vecB0
         "   vldrh.u16               q5, [%[in1]], #16            \n"
         "   vmla.s16                q2, q4, %[twofiftysix]       \n"
         // (vecR0 >> 3) >> 8
@@ -2312,13 +2312,13 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask)(uint8_t * __RESTRIC
             "   vmovt.i16               q1, #256                     \n"
 #endif
 
-            "   vsub.i16                vecAlphaCompl, %[vec256], q1 \n"
+            "   vsub.i16                vecAlphaCompl, %q[vec256], q1\n"
             "   vmul.u16                q3, q0, vecAlphaCompl        \n"
             "   vldrb.u16               q0, [%[pTarget], #8]         \n"
             "   vmla.u16                q3, q1, %[Colour]            \n"
             "   vldrb.u16               q1, [%[pAlpha]], #8          \n"
             "   vshr.u16                q3, q3, #8                   \n"
-            "   vstrb.u16               q3, [%[pTarget]], #8         \n"
+            "   vstrb.16                q3, [%[pTarget]], #8         \n"
             "   letp                    lr, 2b                       \n"
             "1:                                                      \n"
 
@@ -2384,7 +2384,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_a2_mask_opacity)(uint8_t 
         ".p2align 2                                              \n"
         "   vldrb.u16               q0, [%[pTarget]]             \n"
         "   vldrb.u16               q1, [%[pAlpha]], #8          \n"
-        "   vmulh.u8                q1, q1, %[vOpacity]          \n"
+        "   vmulh.u8                q1, q1, %q[vOpacity]         \n"
         "   wlstp.16                lr, %[loopCnt], 1f           \n"
         "2:                                                      \n"
 
@@ -2394,14 +2394,14 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_a2_mask_opacity)(uint8_t 
         "   vmovt.i16               q1, #256                     \n"
 #endif
 
-        "   vsub.i16                vecAlphaCompl, %[vec256], q1 \n"
+        "   vsub.i16                vecAlphaCompl, %q[vec256], q1\n"
         "   vmul.u16                q3, q0, vecAlphaCompl        \n"
         "   vldrb.u16               q0, [%[pTarget], #8]         \n"
         "   vmla.u16                q3, q1, %[Colour]            \n"
         "   vldrb.u16               q1, [%[pAlpha]], #8          \n"
-        "   vmulh.u8                q1, q1, %[vOpacity]          \n"
+        "   vmulh.u8                q1, q1, %q[vOpacity]         \n"
         "   vshr.u16                q3, q3, #8                   \n"
-        "   vstrb.u16               q3, [%[pTarget]], #8         \n"
+        "   vstrb.16                q3, [%[pTarget]], #8         \n"
         "   letp                    lr, 2b                       \n"
         "1:                                                      \n"
 
@@ -2469,7 +2469,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_a4_mask_opacity)(uint8_t 
         ".p2align 2                                              \n"
         "   vldrb.u16               q0, [%[pTarget]]             \n"
         "   vldrb.u16               q1, [%[pAlpha]], #8          \n"
-        "   vmulh.u8                q1, q1, %[vOpacity]          \n"
+        "   vmulh.u8                q1, q1, %q[vOpacity]         \n"
         "   wlstp.16                lr, %[loopCnt], 1f           \n"
         "2:                                                      \n"
 
@@ -2479,14 +2479,14 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_a4_mask_opacity)(uint8_t 
         "   vmovt.i16               q1, #256                     \n"
 #endif
 
-        "   vsub.i16                vecAlphaCompl, %[vec256], q1 \n"
+        "   vsub.i16                vecAlphaCompl, %q[vec256], q1\n"
         "   vmul.u16                q3, q0, vecAlphaCompl        \n"
         "   vldrb.u16               q0, [%[pTarget], #8]         \n"
         "   vmla.u16                q3, q1, %[Colour]            \n"
         "   vldrb.u16               q1, [%[pAlpha]], #8          \n"
-        "   vmulh.u8                q1, q1, %[vOpacity]          \n"
+        "   vmulh.u8                q1, q1, %q[vOpacity]         \n"
         "   vshr.u16                q3, q3, #8                   \n"
-        "   vstrb.u16               q3, [%[pTarget]], #8         \n"
+        "   vstrb.16                q3, [%[pTarget]], #8         \n"
         "   letp                    lr, 2b                       \n"
         "1:                                                      \n"
 
@@ -2536,7 +2536,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask_opacity)(uint8_t * _
         ".p2align 2                                              \n"
         "   vldrb.u16               q0, [%[pTarget]]             \n"
         "   vldrb.u16               q1, [%[pAlpha]], #8          \n"
-        "   vmulh.u8                q1, q1, %[vOpacity]          \n"
+        "   vmulh.u8                q1, q1, %q[vOpacity]         \n"
         "   wlstp.16                lr, %[loopCnt], 1f           \n"
         "2:                                                      \n"
 
@@ -2546,14 +2546,14 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask_opacity)(uint8_t * _
         "   vmovt.i16               q1, #256                     \n"
 #endif
 
-        "   vsub.i16                vecAlphaCompl, %[vec256], q1 \n"
+        "   vsub.i16                vecAlphaCompl, %q[vec256], q1\n"
         "   vmul.u16                q3, q0, vecAlphaCompl        \n"
         "   vldrb.u16               q0, [%[pTarget], #8]         \n"
         "   vmla.u16                q3, q1, %[Colour]            \n"
         "   vldrb.u16               q1, [%[pAlpha]], #8          \n"
-        "   vmulh.u8                q1, q1, %[vOpacity]          \n"
+        "   vmulh.u8                q1, q1, %q[vOpacity]         \n"
         "   vshr.u16                q3, q3, #8                   \n"
-        "   vstrb.u16               q3, [%[pTarget]], #8         \n"
+        "   vstrb.16                q3, [%[pTarget]], #8         \n"
         "   letp                    lr, 2b                       \n"
         "1:                                                      \n"
 
@@ -2601,7 +2601,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_mask)(uint8_t * _
 
         ".p2align 2                                              \n"
         "   vldrb.u16               q0, [%[pTarget]]             \n"
-        "   vldrb.u16               q1, [%[pAlpha], %[str4Offs]] \n"
+        "   vldrb.u16               q1, [%[pAlpha], %q[str4Offs]]\n"
         "   wlstp.16                lr, %[loopCnt], 1f           \n"
         "2:                                                      \n"
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -2611,13 +2611,13 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_mask)(uint8_t * _
 #endif
 
         "   add                     %[pAlpha], %[pAlpha], #(8*4) \n"
-        "   vsub.i16                vecAlphaCompl, %[vec256], q1 \n"
+        "   vsub.i16                vecAlphaCompl, %q[vec256], q1\n"
         "   vmul.u16                q3, q0, vecAlphaCompl        \n"
         "   vldrb.u16               q0, [%[pTarget], #8]         \n"
         "   vmla.s16                q3, q1, %[Colour]            \n"
-        "   vldrb.u16               q1, [%[pAlpha], %[str4Offs]] \n"
+        "   vldrb.u16               q1, [%[pAlpha], %q[str4Offs]]\n"
         "   vshr.u16                q3, q3, #8                   \n"
-        "   vstrb.u16               q3, [%[pTarget]], #8         \n"
+        "   vstrb.16                q3, [%[pTarget]], #8         \n"
         "   letp                    lr, 2b                       \n"
         "1:                                                      \n"
 
@@ -2670,8 +2670,8 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_mask_opacity)(uin
 
         ".p2align 2                                              \n"
         "   vldrb.u16               q0, [%[pTarget]]             \n"
-        "   vldrb.u16               q1, [%[pAlpha], %[str4Offs]] \n"
-        "   vmulh.u8                q1, q1, %[vOpacity]          \n"
+        "   vldrb.u16               q1, [%[pAlpha], %q[str4Offs]]\n"
+        "   vmulh.u8                q1, q1, %q[vOpacity]         \n"
         "   wlstp.16                lr, %[loopCnt], 1f           \n"
         "2:                                                      \n"
 
@@ -2683,14 +2683,14 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_mask_opacity)(uin
 
         "   add                     %[pAlpha], %[pAlpha], #(8*4) \n"
 
-        "   vsub.i16                vecAlphaCompl, %[vec256], q1 \n"
+        "   vsub.i16                vecAlphaCompl, %q[vec256], q1\n"
         "   vmul.u16                q3, q0, vecAlphaCompl        \n"
         "   vldrb.u16               q0, [%[pTarget], #8]         \n"
         "   vmla.s16                q3, q1, %[Colour]            \n"
-        "   vldrb.u16               q1, [%[pAlpha], %[str4Offs]] \n"
-        "   vmulh.u8                q1, q1, %[vOpacity]          \n"
+        "   vldrb.u16               q1, [%[pAlpha], %q[str4Offs]]\n"
+        "   vmulh.u8                q1, q1, %q[vOpacity]         \n"
         "   vshr.u16                q3, q3, #8                   \n"
-        "   vstrb.u16               q3, [%[pTarget]], #8         \n"
+        "   vstrb.16                q3, [%[pTarget]], #8         \n"
         "   letp                    lr, 2b                       \n"
         "1:                                                      \n"
 
@@ -3711,7 +3711,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_mask)(uint16_t *
             "   vldrh.u16               q0, [%[pTarget]]           \n"
 
             "   vmov.i16                q7, #0x0100                \n"
-            "   vldrb.u16               q1, [%[pAlpha],%[str4Offs]]\n"
+            "   vldrb.u16               q1,[%[pAlpha],%q[str4Offs]]\n"
 
             "   wlstp.16                lr, %[loopCnt], 1f         \n"
             "2:                                                    \n"
@@ -3782,7 +3782,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_mask)(uint16_t *
             "   vand                    q6, q6, q7                 \n"
 
             /* load next alpha vector */
-            "   vldrb.u16               q1, [%[pAlpha],%[str4Offs]]\n"
+            "   vldrb.u16               q1,[%[pAlpha],%q[str4Offs]]\n"
 
             "   vmov.i16                q7, #0x0100                \n"
 
@@ -3864,7 +3864,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_mask_opacity)(ui
             "   vldrh.u16               q0, [%[pTarget]]           \n"
 
             "   vmov.i16                q7, #0x0100                \n"
-            "   vldrb.u16               q1, [%[pAlpha],%[str4Offs]]\n"
+            "   vldrb.u16               q1,[%[pAlpha],%q[str4Offs]]\n"
             /* opacity vector */
             "   vldrh.u16               q6, [%[scratch], #(4*16)]  \n"
             "   vmulh.u8                q1, q1, q6                 \n"
@@ -3938,7 +3938,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_mask_opacity)(ui
             "   vand                    q6, q6, q7                 \n"
 
             /* load next alpha vector */
-            "   vldrb.u16               q1, [%[pAlpha],%[str4Offs]]\n"
+            "   vldrb.u16               q1,[%[pAlpha],%q[str4Offs]]\n"
 
             "   vmov.i16                q7, #0x0100                \n"
 
@@ -4024,7 +4024,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a2_mask)(uint32_t * __R
 
             ".p2align 2                                                   \n"
             /* expand chan0 */
-            "   vldrb.u16               q0, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh0], %q[str4Offs]] \n"
             "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
 
             "   wlstp.16                lr, %[loopCnt], 1f                \n"
@@ -4036,41 +4036,41 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a2_mask)(uint32_t * __R
             "   vmovt.i16               q1, #256                          \n"
 #endif
 
-            "   vsub.i16                vecAlphaCompl, %[vec256], q1      \n"
+            "   vsub.i16                vecAlphaCompl, %q[vec256], q1     \n"
             /*  scale ch0 vector with alpha vector */
             "   vmul.u16                q3, q0, vecAlphaCompl             \n"
 
             /* expand chan1 */
-            "   vldrb.u16               q0, [%[pTargetCh1], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh1], %q[str4Offs]]  \n"
             /*  blend ch0 vector with input ch0 color*/
             "   vmla.s16                q3, q1, %[c0]                     \n"
             "   vshr.u16                q3, q3, #8                        \n"
 
-            "   vstrb.u16               q3, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vstrb.16                q3, [%[pTargetCh0], %q[str4Offs]]  \n"
 
             /*  scale ch1 vector with alpha vector */
             "   vmul.u16                q3, q0, vecAlphaCompl             \n"
 
             /* expand chan2 */
-            "   vldrb.u16               q0, [%[pTargetCh2], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh2], %q[str4Offs]] \n"
             /*  blend ch1 vector with input ch1 color*/
             "   vmla.s16                q3, q1, %[c1]                     \n"
             "   vshr.u16                q3, q3, #8                        \n"
-            "   vstrb.u16               q3, [%[pTargetCh1], %[str4Offs]]  \n"
+            "   vstrb.16                q3, [%[pTargetCh1], %q[str4Offs]] \n"
 
             "   adds                    %[pTargetCh0], #32                \n"
             "   adds                    %[pTargetCh1], #32                \n"
 
             /*  scale ch2 vector with alpha vector */
             "   vmul.u16                q3, q0, vecAlphaCompl             \n"
-            "   vldrb.u16               q0, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh0], %q[str4Offs]] \n"
 
             /*  blend ch2 vector with input ch2 color*/
             "   vmla.s16                q3, q1, %[c2]                     \n"
             "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
 
             "   vshr.u16                q3, q3, #8                        \n"
-            "   vstrb.u16               q3, [%[pTargetCh2], %[str4Offs]]  \n"
+            "   vstrb.16                q3, [%[pTargetCh2], %q[str4Offs]] \n"
 
             "   add.w                   %[pTargetCh2], %[pTargetCh2], #32 \n"
 
@@ -4145,7 +4145,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a4_mask)(uint32_t * __R
 
             ".p2align 2                                                   \n"
             /* expand chan0 */
-            "   vldrb.u16               q0, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh0], %q[str4Offs]] \n"
             "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
 
             "   wlstp.16                lr, %[loopCnt], 1f                \n"
@@ -4157,41 +4157,41 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a4_mask)(uint32_t * __R
             "   vmovt.i16               q1, #256                          \n"
 #endif
 
-            "   vsub.i16                vecAlphaCompl, %[vec256], q1      \n"
+            "   vsub.i16                vecAlphaCompl, %q[vec256], q1     \n"
             /*  scale ch0 vector with alpha vector */
             "   vmul.u16                q3, q0, vecAlphaCompl             \n"
 
             /* expand chan1 */
-            "   vldrb.u16               q0, [%[pTargetCh1], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh1], %q[str4Offs]] \n"
             /*  blend ch0 vector with input ch0 color*/
             "   vmla.s16                q3, q1, %[c0]                     \n"
             "   vshr.u16                q3, q3, #8                        \n"
 
-            "   vstrb.u16               q3, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vstrb.16                q3, [%[pTargetCh0], %q[str4Offs]] \n"
 
             /*  scale ch1 vector with alpha vector */
             "   vmul.u16                q3, q0, vecAlphaCompl             \n"
 
             /* expand chan2 */
-            "   vldrb.u16               q0, [%[pTargetCh2], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh2], %q[str4Offs]] \n"
             /*  blend ch1 vector with input ch1 color*/
             "   vmla.s16                q3, q1, %[c1]                     \n"
             "   vshr.u16                q3, q3, #8                        \n"
-            "   vstrb.u16               q3, [%[pTargetCh1], %[str4Offs]]  \n"
+            "   vstrb.16                q3, [%[pTargetCh1], %q[str4Offs]] \n"
 
             "   adds                    %[pTargetCh0], #32                \n"
             "   adds                    %[pTargetCh1], #32                \n"
 
             /*  scale ch2 vector with alpha vector */
             "   vmul.u16                q3, q0, vecAlphaCompl             \n"
-            "   vldrb.u16               q0, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh0], %q[str4Offs]] \n"
 
             /*  blend ch2 vector with input ch2 color*/
             "   vmla.s16                q3, q1, %[c2]                     \n"
             "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
 
             "   vshr.u16                q3, q3, #8                        \n"
-            "   vstrb.u16               q3, [%[pTargetCh2], %[str4Offs]]  \n"
+            "   vstrb.16                q3, [%[pTargetCh2], %q[str4Offs]] \n"
 
             "   add.w                   %[pTargetCh2], %[pTargetCh2], #32 \n"
 
@@ -4254,7 +4254,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask)(uint32_t * __REST
 
             ".p2align 2                                                   \n"
             /* expand chan0 */
-            "   vldrb.u16               q0, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh0], %q[str4Offs]] \n"
             "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
 
             "   wlstp.16                lr, %[loopCnt], 1f                \n"
@@ -4266,41 +4266,41 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask)(uint32_t * __REST
             "   vmovt.i16               q1, #256                          \n"
 #endif
 
-            "   vsub.i16                vecAlphaCompl, %[vec256], q1      \n"
+            "   vsub.i16                vecAlphaCompl, %q[vec256], q1     \n"
             /*  scale ch0 vector with alpha vector */
             "   vmul.u16                q3, q0, vecAlphaCompl             \n"
 
             /* expand chan1 */
-            "   vldrb.u16               q0, [%[pTargetCh1], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh1], %q[str4Offs]] \n"
             /*  blend ch0 vector with input ch0 color*/
             "   vmla.s16                q3, q1, %[c0]                     \n"
             "   vshr.u16                q3, q3, #8                        \n"
 
-            "   vstrb.u16               q3, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vstrb.16                q3, [%[pTargetCh0], %q[str4Offs]] \n"
 
             /*  scale ch1 vector with alpha vector */
             "   vmul.u16                q3, q0, vecAlphaCompl             \n"
 
             /* expand chan2 */
-            "   vldrb.u16               q0, [%[pTargetCh2], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh2], %q[str4Offs]] \n"
             /*  blend ch1 vector with input ch1 color*/
             "   vmla.s16                q3, q1, %[c1]                     \n"
             "   vshr.u16                q3, q3, #8                        \n"
-            "   vstrb.u16               q3, [%[pTargetCh1], %[str4Offs]]  \n"
+            "   vstrb.16                q3, [%[pTargetCh1], %q[str4Offs]] \n"
 
             "   adds                    %[pTargetCh0], #32                \n"
             "   adds                    %[pTargetCh1], #32                \n"
 
             /*  scale ch2 vector with alpha vector */
             "   vmul.u16                q3, q0, vecAlphaCompl             \n"
-            "   vldrb.u16               q0, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh0], %q[str4Offs]] \n"
 
             /*  blend ch2 vector with input ch2 color*/
             "   vmla.s16                q3, q1, %[c2]                     \n"
             "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
 
             "   vshr.u16                q3, q3, #8                        \n"
-            "   vstrb.u16               q3, [%[pTargetCh2], %[str4Offs]]  \n"
+            "   vstrb.16                q3, [%[pTargetCh2], %q[str4Offs]] \n"
 
             "   add.w                   %[pTargetCh2], %[pTargetCh2], #32 \n"
 
@@ -4378,9 +4378,9 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a2_mask_opacity)(uint32
 
             ".p2align 2                                                   \n"
             /* expand chan0 */
-            "   vldrb.u16               q0, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh0], %q[str4Offs]] \n"
             "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
-            "   vmulh.u8                q1, q1, %[vOpacity]               \n"
+            "   vmulh.u8                q1, q1, %q[vOpacity]              \n"
 
             "   wlstp.16                lr, %[loopCnt], 1f                \n"
             "2:                                                           \n"
@@ -4391,42 +4391,42 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a2_mask_opacity)(uint32
             "   vmovt.i16               q1, #256                          \n"
 #endif
 
-            "   vsub.i16                vecAlphaCompl, %[vec256], q1      \n"
+            "   vsub.i16                vecAlphaCompl, %q[vec256], q1     \n"
             /*  scale ch0 vector with alpha vector */
             "   vmul.u16                q3, q0, vecAlphaCompl             \n"
 
             /* expand chan1 */
-            "   vldrb.u16               q0, [%[pTargetCh1], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh1], %q[str4Offs]] \n"
             /*  blend ch0 vector with input ch0 color*/
             "   vmla.s16                q3, q1, %[c0]                     \n"
             "   vshr.u16                q3, q3, #8                        \n"
 
-            "   vstrb.u16               q3, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vstrb.16                q3, [%[pTargetCh0], %q[str4Offs]] \n"
 
             /*  scale ch1 vector with alpha vector */
             "   vmul.u16                q3, q0, vecAlphaCompl             \n"
 
             /* expand chan2 */
-            "   vldrb.u16               q0, [%[pTargetCh2], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh2], %q[str4Offs]] \n"
             /*  blend ch1 vector with input ch1 color*/
             "   vmla.s16                q3, q1, %[c1]                     \n"
             "   vshr.u16                q3, q3, #8                        \n"
-            "   vstrb.u16               q3, [%[pTargetCh1], %[str4Offs]]  \n"
+            "   vstrb.16                q3, [%[pTargetCh1], %q[str4Offs]] \n"
 
             "   adds                    %[pTargetCh0], #32                \n"
             "   adds                    %[pTargetCh1], #32                \n"
 
             /*  scale ch2 vector with alpha vector */
             "   vmul.u16                q3, q0, vecAlphaCompl             \n"
-            "   vldrb.u16               q0, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh0], %q[str4Offs]] \n"
 
             /*  blend ch2 vector with input ch2 color*/
             "   vmla.s16                q3, q1, %[c2]                     \n"
             "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
-            "   vmulh.u8                q1, q1, %[vOpacity]               \n"
+            "   vmulh.u8                q1, q1, %q[vOpacity]              \n"
 
             "   vshr.u16                q3, q3, #8                        \n"
-            "   vstrb.u16               q3, [%[pTargetCh2], %[str4Offs]]  \n"
+            "   vstrb.16                q3, [%[pTargetCh2], %q[str4Offs]] \n"
 
             "   add.w                   %[pTargetCh2], %[pTargetCh2], #32 \n"
 
@@ -4502,9 +4502,9 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a4_mask_opacity)(uint32
 
             ".p2align 2                                                   \n"
             /* expand chan0 */
-            "   vldrb.u16               q0, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh0], %q[str4Offs]] \n"
             "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
-            "   vmulh.u8                q1, q1, %[vOpacity]               \n"
+            "   vmulh.u8                q1, q1, %q[vOpacity]              \n"
 
             "   wlstp.16                lr, %[loopCnt], 1f                \n"
             "2:                                                           \n"
@@ -4515,42 +4515,42 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a4_mask_opacity)(uint32
             "   vmovt.i16               q1, #256                          \n"
 #endif
 
-            "   vsub.i16                vecAlphaCompl, %[vec256], q1      \n"
+            "   vsub.i16                vecAlphaCompl, %q[vec256], q1     \n"
             /*  scale ch0 vector with alpha vector */
             "   vmul.u16                q3, q0, vecAlphaCompl             \n"
 
             /* expand chan1 */
-            "   vldrb.u16               q0, [%[pTargetCh1], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh1], %q[str4Offs]] \n"
             /*  blend ch0 vector with input ch0 color*/
             "   vmla.s16                q3, q1, %[c0]                     \n"
             "   vshr.u16                q3, q3, #8                        \n"
 
-            "   vstrb.u16               q3, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vstrb.16                q3, [%[pTargetCh0], %q[str4Offs]] \n"
 
             /*  scale ch1 vector with alpha vector */
             "   vmul.u16                q3, q0, vecAlphaCompl             \n"
 
             /* expand chan2 */
-            "   vldrb.u16               q0, [%[pTargetCh2], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh2], %q[str4Offs]] \n"
             /*  blend ch1 vector with input ch1 color*/
             "   vmla.s16                q3, q1, %[c1]                     \n"
             "   vshr.u16                q3, q3, #8                        \n"
-            "   vstrb.u16               q3, [%[pTargetCh1], %[str4Offs]]  \n"
+            "   vstrb.16                q3, [%[pTargetCh1], %q[str4Offs]] \n"
 
             "   adds                    %[pTargetCh0], #32                \n"
             "   adds                    %[pTargetCh1], #32                \n"
 
             /*  scale ch2 vector with alpha vector */
             "   vmul.u16                q3, q0, vecAlphaCompl             \n"
-            "   vldrb.u16               q0, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh0], %q[str4Offs]] \n"
 
             /*  blend ch2 vector with input ch2 color*/
             "   vmla.s16                q3, q1, %[c2]                     \n"
             "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
-            "   vmulh.u8                q1, q1, %[vOpacity]               \n"
+            "   vmulh.u8                q1, q1, %q[vOpacity]              \n"
 
             "   vshr.u16                q3, q3, #8                        \n"
-            "   vstrb.u16               q3, [%[pTargetCh2], %[str4Offs]]  \n"
+            "   vstrb.16                q3, [%[pTargetCh2], %q[str4Offs]] \n"
 
             "   add.w                   %[pTargetCh2], %[pTargetCh2], #32 \n"
 
@@ -4614,9 +4614,9 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_opacity)(uint32_t 
 
             ".p2align 2                                                   \n"
             /* expand chan0 */
-            "   vldrb.u16               q0, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh0], %q[str4Offs]] \n"
             "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
-            "   vmulh.u8                q1, q1, %[vOpacity]               \n"
+            "   vmulh.u8                q1, q1, %q[vOpacity]              \n"
 
             "   wlstp.16                lr, %[loopCnt], 1f                \n"
             "2:                                                           \n"
@@ -4627,42 +4627,42 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_opacity)(uint32_t 
             "   vmovt.i16               q1, #256                          \n"
 #endif
 
-            "   vsub.i16                vecAlphaCompl, %[vec256], q1      \n"
+            "   vsub.i16                vecAlphaCompl, %q[vec256], q1     \n"
             /*  scale ch0 vector with alpha vector */
             "   vmul.u16                q3, q0, vecAlphaCompl             \n"
 
             /* expand chan1 */
-            "   vldrb.u16               q0, [%[pTargetCh1], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh1], %q[str4Offs]] \n"
             /*  blend ch0 vector with input ch0 color*/
             "   vmla.s16                q3, q1, %[c0]                     \n"
             "   vshr.u16                q3, q3, #8                        \n"
 
-            "   vstrb.u16               q3, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vstrb.16                q3, [%[pTargetCh0], %q[str4Offs]] \n"
 
             /*  scale ch1 vector with alpha vector */
             "   vmul.u16                q3, q0, vecAlphaCompl             \n"
 
             /* expand chan2 */
-            "   vldrb.u16               q0, [%[pTargetCh2], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh2], %q[str4Offs]] \n"
             /*  blend ch1 vector with input ch1 color*/
             "   vmla.s16                q3, q1, %[c1]                     \n"
             "   vshr.u16                q3, q3, #8                        \n"
-            "   vstrb.u16               q3, [%[pTargetCh1], %[str4Offs]]  \n"
+            "   vstrb.16                q3, [%[pTargetCh1], %q[str4Offs]] \n"
 
             "   adds                    %[pTargetCh0], #32                \n"
             "   adds                    %[pTargetCh1], #32                \n"
 
             /*  scale ch2 vector with alpha vector */
             "   vmul.u16                q3, q0, vecAlphaCompl             \n"
-            "   vldrb.u16               q0, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh0], %q[str4Offs]] \n"
 
             /*  blend ch2 vector with input ch2 color*/
             "   vmla.s16                q3, q1, %[c2]                     \n"
             "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
-            "   vmulh.u8                q1, q1, %[vOpacity]               \n"
+            "   vmulh.u8                q1, q1, %q[vOpacity]              \n"
 
             "   vshr.u16                q3, q3, #8                        \n"
-            "   vstrb.u16               q3, [%[pTargetCh2], %[str4Offs]]  \n"
+            "   vstrb.16                q3, [%[pTargetCh2], %q[str4Offs]] \n"
 
             "   add.w                   %[pTargetCh2], %[pTargetCh2], #32 \n"
 
@@ -4724,8 +4724,8 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel_mask)(uint32_t 
 
             ".p2align 2                                                   \n"
             /* expand chan0 */
-            "   vldrb.u16               q0, [%[pTargetCh0], %[str4Offs]]  \n"
-            "   vldrb.u16               q1, [%[pAlpha], %[str4Offs]]      \n"
+            "   vldrb.u16               q0, [%[pTargetCh0], %q[str4Offs]] \n"
+            "   vldrb.u16               q1, [%[pAlpha], %q[str4Offs]]     \n"
 
             "   wlstp.16                lr, %[loopCnt], 1f                \n"
             "2:                                                           \n"
@@ -4735,28 +4735,28 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel_mask)(uint32_t 
             "   vpt.i16                 eq, q1, %[alph255]                \n"
             "   vmovt.i16               q1, #256                          \n"
 #endif
-            "   vsub.i16                vecAlphaCompl, %[vec256], q1      \n"
+            "   vsub.i16                vecAlphaCompl, %q[vec256], q1     \n"
 
             /*  scale ch0 vector with alpha vector */
             "   vmul.u16                q3, q0, vecAlphaCompl             \n"
 
             /* expand chan1 */
-            "   vldrb.u16               q0, [%[pTargetCh1], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh1], %q[str4Offs]] \n"
             /*  blend ch0 vector with input ch0 color*/
             "   vmla.s16                q3, q1, %[c0]                     \n"
             "   vshr.u16                q3, q3, #8                        \n"
 
-            "   vstrb.u16               q3, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vstrb.16                q3, [%[pTargetCh0], %q[str4Offs]] \n"
 
             /*  scale ch1 vector with alpha vector */
             "   vmul.u16                q3, q0, vecAlphaCompl             \n"
 
             /* expand chan2 */
-            "   vldrb.u16               q0, [%[pTargetCh2], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh2], %q[str4Offs]] \n"
             /*  blend ch1 vector with input ch1 color*/
             "   vmla.s16                q3, q1, %[c1]                     \n"
             "   vshr.u16                q3, q3, #8                        \n"
-            "   vstrb.u16               q3, [%[pTargetCh1], %[str4Offs]]  \n"
+            "   vstrb.16                q3, [%[pTargetCh1], %q[str4Offs]] \n"
 
             "   adds                    %[pAlpha], #32                    \n"
             "   adds                    %[pTargetCh0], #32                \n"
@@ -4764,14 +4764,14 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel_mask)(uint32_t 
 
             /*  scale ch2 vector with alpha vector */
             "   vmul.u16                q3, q0, vecAlphaCompl             \n"
-            "   vldrb.u16               q0, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh0], %q[str4Offs]] \n"
 
             /*  blend ch2 vector with input ch2 color*/
             "   vmla.s16                q3, q1, %[c2]                     \n"
-            "   vldrb.u16               q1, [%[pAlpha], %[str4Offs]]      \n"
+            "   vldrb.u16               q1, [%[pAlpha], %q[str4Offs]]     \n"
 
             "   vshr.u16                q3, q3, #8                        \n"
-            "   vstrb.u16               q3, [%[pTargetCh2], %[str4Offs]]  \n"
+            "   vstrb.16                q3, [%[pTargetCh2], %q[str4Offs]] \n"
 
             "   adds                    %[pTargetCh1], #32                \n"
             "   adds                    %[pTargetCh2], #32                \n"
@@ -4837,9 +4837,9 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel_mask_opacity)(u
 
             ".p2align 2                                                   \n"
             /* expand chan0 */
-            "   vldrb.u16               q0, [%[pTargetCh0], %[str4Offs]]  \n"
-            "   vldrb.u16               q1, [%[pAlpha], %[str4Offs]]      \n"
-            "   vmulh.u8                q1, q1, %[vOpacity]               \n"
+            "   vldrb.u16               q0, [%[pTargetCh0], %q[str4Offs]] \n"
+            "   vldrb.u16               q1, [%[pAlpha], %q[str4Offs]]     \n"
+            "   vmulh.u8                q1, q1, %q[vOpacity]              \n"
 
             "   wlstp.16                lr, %[loopCnt], 1f                \n"
             "2:                                                           \n"
@@ -4850,43 +4850,43 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel_mask_opacity)(u
             "   vmovt.i16               q1, #256                          \n"
 #endif
 
-            "   vsub.i16                vecAlphaCompl, %[vec256], q1      \n"
+            "   vsub.i16                vecAlphaCompl, %q[vec256], q1     \n"
             /*  scale ch0 vector with alpha vector */
             "   vmul.u16                q3, q0, vecAlphaCompl             \n"
 
             /* expand chan1 */
-            "   vldrb.u16               q0, [%[pTargetCh1], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh1], %q[str4Offs]] \n"
             /*  blend ch0 vector with input ch0 color*/
             "   vmla.s16                q3, q1, %[c0]                     \n"
             "   vshr.u16                q3, q3, #8                        \n"
 
-            "   vstrb.u16               q3, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vstrb.16                q3, [%[pTargetCh0], %q[str4Offs]] \n"
 
             /*  scale ch1 vector with alpha vector */
             "   vmul.u16                q3, q0, vecAlphaCompl             \n"
 
             /* expand chan2 */
-            "   vldrb.u16               q0, [%[pTargetCh2], %[str4Offs]]  \n"
+            "   vldrb.u16               q0, [%[pTargetCh2], %q[str4Offs]] \n"
             /*  blend ch1 vector with input ch1 color*/
             "   vmla.s16                q3, q1, %[c1]                     \n"
             "   vshr.u16                q3, q3, #8                        \n"
-            "   vstrb.u16               q3, [%[pTargetCh1], %[str4Offs]]  \n"
+            "   vstrb.16                q3, [%[pTargetCh1], %q[str4Offs]] \n"
 
             "   adds                    %[pAlpha], #32                    \n"
             "   adds                    %[pTargetCh0], #32                \n"
 
 
             /*  scale ch2 vector with alpha vector */
-            "   vmul.u16                q3, q0, vecAlphaCompl              \n"
-            "   vldrb.u16               q0, [%[pTargetCh0], %[str4Offs]]  \n"
+            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
+            "   vldrb.u16               q0, [%[pTargetCh0], %q[str4Offs]] \n"
 
             /*  blend ch2 vector with input ch2 color*/
             "   vmla.s16                q3, q1, %[c2]                     \n"
-            "   vldrb.u16               q1, [%[pAlpha], %[str4Offs]]      \n"
-            "   vmulh.u8                q1, q1, %[vOpacity]               \n"
+            "   vldrb.u16               q1, [%[pAlpha], %q[str4Offs]]     \n"
+            "   vmulh.u8                q1, q1, %q[vOpacity]              \n"
 
             "   vshr.u16                q3, q3, #8                        \n"
-            "   vstrb.u16               q3, [%[pTargetCh2], %[str4Offs]]  \n"
+            "   vstrb.16                q3, [%[pTargetCh2], %q[str4Offs]] \n"
 
             "   adds                    %[pTargetCh1], #32                \n"
             "   adds                    %[pTargetCh2], #32                \n"

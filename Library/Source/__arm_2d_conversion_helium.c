@@ -139,17 +139,17 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_to_rgb565)(uint32_t *__RESTRICT pwSour
 
         ".p2align 2                                                     \n"
         "2:                                                             \n"
-        "   vand                    q1, q1, %[maskR]                    \n"
+        "   vand                    q1, q1, %q[maskR]                   \n"
         /* mimic right shift by 5 */
         "   vqdmulh.s32             q2, q0, %[inv_2pow5]                \n"
-        "   vand                    q2, q2, %[maskG]                    \n"
+        "   vand                    q2, q2, %q[maskG]                   \n"
         /* mimic right shift by 8 */
         "   vqdmulh.s32             q3, q0, %[inv_2pow8]                \n"
         /* accumulate R & G */
         "   vorr                    q2, q1, q2                          \n"
         /* load next vector of 4 cccn888 pixels */
         "   vldrw.u32               q0, [%[pSource]], #16               \n"
-        "   vand                    q3, q3, %[maskB]                    \n"
+        "   vand                    q3, q3, %q[maskB]                   \n"
         /* mimic right shift by 3 */
         "   vqdmulh.s32             q1, q0, %[inv_2pow3]                \n"
         /* accumulate B */
@@ -159,7 +159,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_to_rgb565)(uint32_t *__RESTRICT pwSour
         "   letp                    lr, 2b                              \n"
         "1:                                                             \n"
 
-        : [pSource] "+r"(pSource), [pTarget] "+r" (pTarget)
+        : [pSource] "+r"(pSource), [pTarget] "+l" (pTarget)
         : [loopCnt] "r"(blkCnt), [inv_2pow3] "r" (inv_2pow3),
           [inv_2pow5] "r" (inv_2pow5),  [inv_2pow8] "r" (inv_2pow8),
           [maskR] "t" (maskR),[maskG] "t" (maskG),[maskB] "t" (maskB)
@@ -228,13 +228,13 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_to_cccn888)(uint16_t *__RESTRICT phwSou
         "2:                                                             \n"
         /* mimic left shift by 5 */
         "   vmul.u32                q2, q0, %[two_pow5]                 \n"
-        "   vand                    q1, q1, %[maskRB]                   \n"
+        "   vand                    q1, q1, %q[maskRB]                  \n"
         /* mimic right shift by 8 */
         "   vqdmulh.s32             q3, q0, %[inv_2pow8]                \n"
-        "   vand                    q2, q2, %[maskG]                    \n"
+        "   vand                    q2, q2, %q[maskG]                   \n"
         /* accumulate G & R, use vmla instead of vorr for best overlap */
         "   vmla.u32                q2, q1, %[one]                      \n"
-        "   vand                    q3, q3, %[maskRB]                   \n"
+        "   vand                    q3, q3, %q[maskRB]                  \n"
         /* accumulate B + left shift by 16 */
         "   vmla.u32                q2, q3, %[two_pow16]                \n"
         /* load next vector of 4 rgb565 pixels */
@@ -478,7 +478,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_to_gray8)( uint16_t *__RESTRICT phwSourc
         /* preload pixel vector + mask R allowing more efficient pipelining */
         "   vldrh.u16       q0, [%[pSource]], #16                 \n"
         /* R ch */
-        "   vand            q1, q0, %[maskR]                      \n"
+        "   vand            q1, q0, %q[maskR]                     \n"
 
 
         ".p2align 2                                               \n"
@@ -491,7 +491,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_to_gray8)( uint16_t *__RESTRICT phwSourc
         /* B ch */
         "   vshr.u16        q2, q0, #11                           \n"
         "   vmul.u16        q2, q2, %[two_pow3]                   \n"
-        "   vand            q0, q3, %[maskG]                      \n"
+        "   vand            q0, q3, %q[maskG]                     \n"
 
         /* summing */
         "   vmla.u16        q2, q0, %[four]                       \n"
@@ -500,16 +500,16 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_to_gray8)( uint16_t *__RESTRICT phwSourc
         /* load next RGB565 pixel vector */
         "   vldrh.u16       q0, [%[pSource]], #16                 \n"
         /* averaging */
-        "   vrmulh.u16      q2, q2, %[vone_third]                 \n"
+        "   vrmulh.u16      q2, q2, %q[vone_third]                \n"
         /* R */
-        "   vand            q1, q0, %[maskR]                      \n"
+        "   vand            q1, q0, %q[maskR]                     \n"
         /* store 8 Gray8 pixels */
         "   vstrb.16        q2, [%[pTarget]], #8                  \n"
 
         "   letp            lr, 2b                                \n"
         "1:                                                       \n"
 
-        : [pSource] "+r"(phwSource), [pTarget] "+r" (pTarget)
+        : [pSource] "+r"(phwSource), [pTarget] "+l" (pTarget)
         : [loopCnt] "r"(blkCnt),[two_pow3] "r" (1<<3),
           [four] "r" (4),
           [maskR] "t" (vecMaskR),[maskG] "t" (vecMaskG),
@@ -571,7 +571,7 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_to_rgb565)( uint8_t *__RESTRICT pchSource
         /* preload pixel vector + mask G allowing more efficient pipelining */
         "   vldrb.u16       q0, [%[pSource]], #8                   \n"
         /* G ch */
-        "   vand            q2, q0, %[maskG]                       \n"
+        "   vand            q2, q0, %q[maskG]                      \n"
 
         "   wlstp.16        lr, %[loopCnt], 1f                     \n"
         "2:                                                        \n"
@@ -580,13 +580,13 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_to_rgb565)( uint8_t *__RESTRICT pchSource
         /* use VMLA to mimick left shift combined with OR */
         "   vmla.u16        q1, q2, %[eight]                       \n"
         /* B ch */
-        "   vand            q2, q0, %[maskB]                       \n"
+        "   vand            q2, q0, %q[maskB]                      \n"
         "   vmla.u16        q1, q2, %[twofiftysix]                 \n"
 
         /* load next Gray pixel vector */
         "   vldrb.u16       q0, [%[pSource]], #8                   \n"
         /* G ch */
-        "   vand            q2, q0, %[maskG]                       \n"
+        "   vand            q2, q0, %q[maskG]                      \n"
         /* store 8 RGB565 pixels */
         "   vstrh.16        q1, [%[pTarget]], #16                  \n"
         "   letp            lr, 2b                                 \n"
