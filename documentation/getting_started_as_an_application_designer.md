@@ -8,7 +8,7 @@ If possible, I hope that no one would have to use Arm-2D directly to create GUI 
 
 If the graphics in your application is simple, i.e. consists of panels (for displaying parameters and user settings), and the human-machine interactions are implemented based on a keyboard (or a touch panel without complex touch gestures), then using Arm-2D APIs directly to design GUI applications might be an option.  In fact, if you can figure out a way to fulfill the missing parts aforementioned, the GUI application designed with Arm-2D is not only looking good but also has an impressively low memory footprint. 
 
-If you happen to meet the conditions above, **don't panic**, we will try our best to provide you with a easy-and-efficient development experience. **By focusing on the API usage and following the guidance** introduced in this article, **you can master the Arm-2D application design quickly**.
+If you happen to meet the conditions above, **don't panic**; we will try our best to provide you with an easy and efficient development experience. **By focusing on the API usage and following the guidance** introduced in this article, **you can master the Arm-2D application design quickly**.
 
 
 
@@ -35,7 +35,7 @@ If you happen to meet the conditions above, **don't panic**, we will try our bes
 
 ### 2.1 The basic concepts
 
-The first step of getting started is learning some basic concepts, among which ***Tile***, ***Region*** and ***Bounding Box model*** are the most fundamental ones, because almost all of the APIs take Tile(s) and Region(s) as input/output. Please kindly reading [**README**](../README.md) and [**Introduction**](./introduction.md) for details. 
+The first step of getting started is learning some basic concepts, among which ***Tile***, ***Region*** and ***Bounding Box model*** are the most fundamental ones because almost all APIs take Tile(s) and Region(s) as input/output. Please kindly read [**README**](../README.md) and [**Introduction**](./introduction.md) for details. 
 
 
 
