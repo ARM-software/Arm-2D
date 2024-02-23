@@ -82,10 +82,6 @@ extern "C" {
  __ARM_2D_SUPPRESS_GCC_HELIUM_PERFORMANCE_WARNING__ to suppress this warning."
 #       endif
 
-#       undef USE_MVE_INTRINSICS
-        /* force gcc to use MVE intrinsics */
-#       define USE_MVE_INTRINSICS
-
 #   else
     /* the gcc version is too low to support helium well */
 #       ifndef __ARM_2D_SUPPRESS_GCC_HELIUM_PATCH_WARNING__
@@ -118,7 +114,7 @@ extern "C" {
 
 /*!
  * \brief finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)
- * 
+ *
  */
 typedef enum {
     arm_fsm_rt_err          = -1,    //!< fsm error
@@ -131,7 +127,7 @@ typedef enum {
 
 /*!
  * \brief the error code for arm-2d (minimal integer: int8_t)
- * 
+ *
  */
 typedef enum {
     ARM_2D_ERR_NOT_AVAILABLE            = -12,  //!< service is not available or not initialissed
@@ -151,7 +147,7 @@ typedef enum {
 
 /*!
  * \brief comparison result
- * 
+ *
  */
 typedef enum {
     ARM_2D_CMP_SMALLER = -1,    //!< the target is smaller than the reference
@@ -165,7 +161,7 @@ typedef enum {
 
 /*!
  * \brief the colour type for gray8 (8bit gray scale)
- * 
+ *
  */
 typedef union arm_2d_color_gray8_t {
     uint8_t tValue;
@@ -173,7 +169,7 @@ typedef union arm_2d_color_gray8_t {
 
 /*!
  * \brief the colour type for rgb565
- * 
+ *
  */
 typedef union arm_2d_color_rgb565_t {
     uint16_t tValue;
@@ -184,7 +180,7 @@ typedef union arm_2d_color_rgb565_t {
     };
 } arm_2d_color_rgb565_t;
 
-/*! 
+/*!
  * \brief the colour type for brga8888
  *
  * \details In most cases four equal-sized pieces of adjacent memory are used,
@@ -207,7 +203,7 @@ typedef union arm_2d_color_bgra8888_t {
 
 /*!
  * \brief the colour type for rgb888 (compliant with ccca888 and bgra8888)
- * 
+ *
  * \details In most cases four equal-sized pieces of adjacent memory are used,
  *          one for each channel, and a 0 in a channel indicates black color or
  *          transparent alpha, while all-1 bits indicates white or fully opaque
@@ -228,7 +224,7 @@ typedef union arm_2d_color_rgb888_t {
 
 /*!
  * \brief the colour type for any 32bit colour formats which has an alpha channel on its 3rd byte.
- * 
+ *
  * \details In most cases four equal-sized pieces of adjacent memory are used,
  *          one for each channel, and a 0 in a channel indicates black color or
  *          transparent alpha, while all-1 bits indicates white or fully opaque
@@ -302,7 +298,7 @@ typedef union arm_2d_color_nccc888_t {
     };
 } arm_2d_color_nccc888_t;
 
-/*! 
+/*!
  * \brief enumerations for colour attributes
  */
 enum {
@@ -334,7 +330,7 @@ enum {
 
     ARM_2D_COLOUR_NO_ALPHA_msk        = ARM_2D_COLOUR_NO_ALPHA      << 0,
     ARM_2D_COLOUR_HAS_ALPHA_msk       = ARM_2D_COLOUR_HAS_ALPHA     << 0,
-    
+
     ARM_2D_COLOUR_VARIANT_pos = 5,
     ARM_2D_COLOUR_VARIANT_msk         = 0x07 << ARM_2D_COLOUR_VARIANT_pos,
 };
@@ -368,13 +364,13 @@ enum {
 
 #define ARM_2D_M_COLOUR_NO_ALPHA_msk        (ARM_2D_M_COLOUR_NO_ALPHA  << 0)    //!< bitmask for no-alpha-channel-in-pixel
 #define ARM_2D_M_COLOUR_HAS_ALPHA_msk       (ARM_2D_M_COLOUR_HAS_ALPHA << 0)    //!< bitmask for has-alpha-channel-in-pixel
-    
-#define ARM_2D_M_COLOUR_VARIANT_pos         5                                   //!< offset for the VARIANT bitfield                              
+
+#define ARM_2D_M_COLOUR_VARIANT_pos         5                                   //!< offset for the VARIANT bitfield
 #define ARM_2D_M_COLOUR_VARIANT_msk         (0x07<<ARM_2D_M_COLOUR_VARIANT_pos) //!< bitmask for the VARIANT bitfield
 
 /*!
  * \brief enumerations for colour types
- * 
+ *
  */
 enum {
     ARM_2D_COLOUR_MONOCHROME  =   ARM_2D_COLOUR_SZ_1BIT_msk,
@@ -386,15 +382,15 @@ enum {
 
     ARM_2D_COLOUR_2BIT        =   ARM_2D_M_COLOUR_SZ_2BIT_msk,
     ARM_2D_COLOUR_4BIT        =   ARM_2D_M_COLOUR_SZ_4BIT_msk,
-    
+
     ARM_2D_COLOUR_8BIT        =   ARM_2D_COLOUR_SZ_8BIT_msk,
     ARM_2D_COLOUR_GRAY8       =   ARM_2D_COLOUR_SZ_8BIT_msk,
     ARM_2D_COLOUR_MASK_A8     =   ARM_2D_COLOUR_SZ_8BIT_msk,
-    
+
     ARM_2D_COLOUR_16BIT       =   ARM_2D_COLOUR_SZ_16BIT_msk,
     ARM_2D_COLOUR_RGB16       =   ARM_2D_COLOUR_SZ_16BIT_msk,
     ARM_2D_COLOUR_RGB565      =   ARM_2D_COLOUR_RGB16,
-    
+
 /*  won't support
     ARM_2D_COLOUR_RGB565_BE   =   ARM_2D_COLOUR_SZ_16BIT_msk        |
                                   ARM_2D_COLOUR_BIG_ENDIAN_msk      ,
@@ -440,8 +436,8 @@ enum {
 
 #define ARM_2D_M_COLOUR_16BIT       ARM_2D_M_COLOUR_SZ_16BIT_msk                //!< macro for the generic 16bit colour formats
 #define ARM_2D_M_COLOUR_RGB16       ARM_2D_M_COLOUR_SZ_16BIT_msk                //!< macro for the generic 16bit colour formats
-#define ARM_2D_M_COLOUR_RGB565      ARM_2D_M_COLOUR_RGB16                       //!< macro for the rgb565 
-    
+#define ARM_2D_M_COLOUR_RGB565      ARM_2D_M_COLOUR_RGB16                       //!< macro for the rgb565
+
 /* won't support
 #define ARM_2D_M_COLOUR_RGB565_BE   (   ARM_2D_M_COLOUR_SZ_16BIT_msk            \
                                     |   ARM_2D_M_COLOUR_BIG_ENDIAN_msk          )
@@ -476,7 +472,7 @@ enum {
 
 /*!
  * \brief a type used as colour descriptor
- * 
+ *
  */
 typedef union {
     struct {
@@ -499,7 +495,7 @@ typedef union {
 
 /*!
  * \brief a type for coordinates (integer)
- * 
+ *
  */
 typedef struct arm_2d_location_t {
     int16_t iX;                         //!< x in Cartesian coordinate system
@@ -508,7 +504,7 @@ typedef struct arm_2d_location_t {
 
 /*!
  * \brief a type for coordinates in floating point
- * 
+ *
  */
 typedef struct arm_2d_point_float_t {
     float fX;                           //!< x in Cartesian coordinate system
@@ -517,7 +513,7 @@ typedef struct arm_2d_point_float_t {
 
 /*!
  * \brief a type for coordinates in fixed point
- * 
+ *
  */
 typedef struct arm_2d_point_fx_t {
     int32_t X;                          //!< x in Cartesian coordinate system
@@ -526,7 +522,7 @@ typedef struct arm_2d_point_fx_t {
 
 /*!
  * \brief a type for the size of an rectangular area
- * 
+ *
  */
 typedef struct arm_2d_size_t {
     int16_t iWidth;                     //!< width of an rectangular area
@@ -535,16 +531,16 @@ typedef struct arm_2d_size_t {
 
 /*!
  * \brief a type for an rectangular area
- * 
+ *
  */
 typedef struct arm_2d_region_t {
     implement_ex(arm_2d_location_t, tLocation); //!< the location (top-left corner)
-    implement_ex(arm_2d_size_t, tSize);         //!< the size 
+    implement_ex(arm_2d_size_t, tSize);         //!< the size
 } arm_2d_region_t;
 
 /*!
  * \brief a type for tile
- * 
+ *
  */
 typedef struct arm_2d_tile_t arm_2d_tile_t;
 struct arm_2d_tile_t {
@@ -570,14 +566,14 @@ struct arm_2d_tile_t {
         uint8_t             *pchBuffer;                                         //!< a pointer points to a buffer in a 8bit colour type
         uint16_t            *phwBuffer;                                         //!< a pointer points to a buffer in a 16bit colour type
         uint32_t            *pwBuffer;                                          //!< a pointer points to a buffer in a 32bit colour type
-        
+
         intptr_t            nAddress;                                           //!< a pointer in integer
     };
 };
 
 /*!
  * \brief the enumeration type for describing memory types
- * 
+ *
  */
 typedef enum {
     ARM_2D_MEM_TYPE_UNSPECIFIED,                                                //!< normal memory, we don't know its characterisics
@@ -598,7 +594,7 @@ typedef union __arm_2d_mem_info_t {
 
 /*!
  * \brief a type for scratch memory blocks
- * 
+ *
  */
 typedef struct __arm_2d_mem_t __arm_2d_mem_t;
 struct __arm_2d_mem_t {
@@ -621,29 +617,29 @@ struct arm_2d_vres_t {
 
     /*! base class: tTile */
     implement_ex( arm_2d_tile_t, tTile);
-    
+
     /*!  a reference of an user object  */
     uintptr_t pTarget;
-    
+
     /*!
      *  \brief a method to load a specific part of an image
-     *  \param[in] pTarget a reference of an user object 
+     *  \param[in] pTarget a reference of an user object
      *  \param[in] ptVRES a reference of this virtual resource
      *  \param[in] ptRegion the target region of the image
      *  \return intptr_t the address of a resource buffer which holds the content
      */
-    intptr_t  (*Load)   (   uintptr_t pTarget, 
-                            arm_2d_vres_t *ptVRES, 
+    intptr_t  (*Load)   (   uintptr_t pTarget,
+                            arm_2d_vres_t *ptVRES,
                             arm_2d_region_t *ptRegion);
-    
+
     /*!
      *  \brief a method to despose the buffer
-     *  \param[in] pTarget a reference of an user object 
+     *  \param[in] pTarget a reference of an user object
      *  \param[in] ptVRES a reference of this virtual resource
      *  \param[in] pBuffer the target buffer
      */
-    void      (*Depose) (   uintptr_t pTarget, 
-                            arm_2d_vres_t *ptVRES, 
+    void      (*Depose) (   uintptr_t pTarget,
+                            arm_2d_vres_t *ptVRES,
                             intptr_t pBuffer );
 };
 
@@ -653,7 +649,7 @@ struct arm_2d_vres_t {
 
 /*!
  * \brief arm-2d application level task control block
- * 
+ *
  */
 typedef struct arm_2d_task_t {
 ARM_PRIVATE(
@@ -673,8 +669,8 @@ typedef struct arm_2d_op_core_t arm_2d_op_core_t;
 
 /*!
  * \brief a prototype of event handlers for 2D operations
- * 
- * \param[in] ptThisOP the target 2D operation descriptor 
+ *
+ * \param[in] ptThisOP the target 2D operation descriptor
  * \param[in] tResult  the operation result
  * \param[in] pTarget  A user attached object
  * \return bool a boolean value to indicate whether the event has been handled
@@ -685,7 +681,7 @@ typedef bool arm_2d_op_evt_handler_t(  arm_2d_op_core_t *ptThisOP,
 
 /*!
  * \brief a type for 2D operation event handling
- * 
+ *
  */
 typedef struct arm_2d_op_evt_t {
     arm_2d_op_evt_handler_t    *fnHandler;                                      //!< event handler
@@ -694,15 +690,15 @@ typedef struct arm_2d_op_evt_t {
 
 /*!
  * \brief a prototype for generic event handlers
- * 
+ *
  * \param pTarget A user attached object
- * \return bool a boolean value to indicate whether the event has been handled  
+ * \return bool a boolean value to indicate whether the event has been handled
  */
 typedef bool arm_2d_evt_handler_t(void *pTarget);
 
 /*!
  * \brief a type for generic event handling
- * 
+ *
  */
 typedef struct arm_2d_evt_t {
     arm_2d_evt_handler_t    *fnHandler;                                         //!< event handler
@@ -723,7 +719,7 @@ typedef struct arm_2d_evt_t {
             ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK    |                           \
             ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK    |                           \
             ARM_2D_OP_INFO_PARAM_HAS_ORIGIN         )
-            
+
 
 //! \brief an incomplete defintion which is only used for defining pointers
 typedef struct __arm_2d_low_level_io_t __arm_2d_low_level_io_t;
@@ -756,8 +752,8 @@ typedef union __arm_2d_op_info_t {
                 uint8_t FillLike;                                               //!< A copy-like interface contains the target tile and the source tile
             };
             struct {
-                uint8_t CopyOrigLike;                                           //!< A copy-like interface contains the target tile, the dummy tile, the reference to the original source tile and the copy size 
-                uint8_t FillOrigLike;                                           //!< A copy-like interface contains the target tile, the dummy tile and the reference to the original source tile 
+                uint8_t CopyOrigLike;                                           //!< A copy-like interface contains the target tile, the dummy tile, the reference to the original source tile and the copy size
+                uint8_t FillOrigLike;                                           //!< A copy-like interface contains the target tile, the dummy tile and the reference to the original source tile
             };
             struct {
                 uint8_t TileProcessLike;                                        //!< A simple interface contains only the target tile
@@ -768,7 +764,7 @@ typedef union __arm_2d_op_info_t {
             const __arm_2d_low_level_io_t *IO[2];                               //!< array of IOs
 
             struct {
-                const __arm_2d_low_level_io_t *ptCopyLike;                      //!< the function pointer for a copy-like implementation   
+                const __arm_2d_low_level_io_t *ptCopyLike;                      //!< the function pointer for a copy-like implementation
                 const __arm_2d_low_level_io_t *ptFillLike;                      //!< the function pointer for a fill-like implementation
             };
             struct {
@@ -807,7 +803,7 @@ enum {
 
 /*!
  * \brief a type for 2D operation status
- * 
+ *
  */
 typedef union arm_2d_op_status_t {
     struct {
@@ -822,7 +818,7 @@ typedef union arm_2d_op_status_t {
 
 /*!
  * \brief the abstract class of 2D operations
- * 
+ *
  */
 struct arm_2d_op_core_t {
 ARM_PRIVATE(
@@ -848,7 +844,7 @@ ARM_PRIVATE(
     uintptr_t                   pUserParam;             //!< user attached object
 };
 
-/*! 
+/*!
  * \brief the base class for operations with only a target tile
  * \note arm_2d_op_msk_t inherits from arm_2d_op_core_t
  */
@@ -860,8 +856,8 @@ typedef struct arm_2d_op_t {
     } Target;
 } arm_2d_op_t;
 
-/*! 
- * \brief the base class for operations with a target tile and a target mask 
+/*!
+ * \brief the base class for operations with a target tile and a target mask
  * \note arm_2d_op_msk_t inherits from arm_2d_op_t
  */
 typedef struct arm_2d_op_msk_t {
@@ -870,15 +866,15 @@ typedef struct arm_2d_op_msk_t {
         const arm_2d_tile_t     *ptTile;                //!< target tile
         const arm_2d_region_t   *ptRegion;              //!< target region
     } Target;
-    
+
     /* derived part */
     struct {
         const arm_2d_tile_t     *ptTile;                //!< target tile
     } Mask;
 } arm_2d_op_msk_t;
 
-/*! 
- * \brief the base class for operations with a target tile and a source tile 
+/*!
+ * \brief the base class for operations with a target tile and a source tile
  * \note arm_2d_op_src_t inherits from arm_2d_op_t
  */
 typedef struct arm_2d_op_src_t {
@@ -895,7 +891,7 @@ typedef struct arm_2d_op_src_t {
     uint32_t wMode;
 } arm_2d_op_src_t;
 
-/*! 
+/*!
  * \brief the base class for operations with a target tile, a source tile and masks
  * \note arm_2d_op_src_msk_t inherits from arm_2d_op_src_t
  */
@@ -909,7 +905,7 @@ typedef struct arm_2d_op_src_msk_t {
         const arm_2d_tile_t     *ptTile;                //!< source tile
     }Source;
     uint32_t wMode;
-    
+
     /* derived part */
     struct {
         const arm_2d_tile_t     *ptSourceSide;          //!< source side mask
@@ -917,7 +913,7 @@ typedef struct arm_2d_op_src_msk_t {
     } Mask;
 } arm_2d_op_src_msk_t;
 
-/*! 
+/*!
  * \brief the base class for operations with a target tile, a dummy tile and a reference to the original source tile
  * \note arm_2d_op_src_orig_t inherits from arm_2d_op_src_t
  */
@@ -940,7 +936,7 @@ typedef struct arm_2d_op_src_orig_t {
 
 } arm_2d_op_src_orig_t;
 
-/*! 
+/*!
  * \brief the base class for operations with a target tile, a dummy tile, a reference to the original source tile and masks
  * \note arm_2d_op_src_orig_msk_t inherits from arm_2d_op_src_orig_t
  */
@@ -958,7 +954,7 @@ typedef struct arm_2d_op_src_orig_msk_t {
         const arm_2d_tile_t     *ptTile;                //!< the origin tile
         arm_2d_tile_t           tDummySource;           //!< the buffer for the source
     }Origin;
-    
+
     /* derived part */
     struct {
         const arm_2d_tile_t     *ptOriginSide;          //!< origin side mask
@@ -975,7 +971,7 @@ typedef struct arm_2d_op_src_orig_msk_t {
     && !__ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__
 /*!
  * \brief a type for parameters of linear interpolation (in floating point)
- * 
+ *
  */
 typedef struct arm_2d_rot_linear_regr_t {
     float   slopeY;
@@ -987,7 +983,7 @@ typedef struct arm_2d_rot_linear_regr_t {
 #else
 /*!
  * \brief a type for parameters of linear interpolation (in fixed point)
- * 
+ *
  */
 typedef struct arm_2d_rot_linear_regr_t {
     int32_t   slopeY;

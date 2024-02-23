@@ -78,7 +78,7 @@ void __ARM_2D_FUNC(colour_filling)( ARM_PIX_SCLTYP(__API_ELT_SZ) *__RESTRICT  pT
 		    ".p2align 2                                              	\n"
 		    "   wlstp." ARM_TO_STRING(__API_ELT_SZ) " lr, %[loopCnt], 1f    \n"
 		    "2:                                                      	\n"
-		    "   vstrb.u8                %[vColor], [%[pTarget]], #16 	\n"
+		    "   vstrb.8                %q[vColor], [%[pTarget]], #16 	\n"
 		    "   letp                    lr, 2b                       	\n"
 		    "1:                                                      	\n"
 
