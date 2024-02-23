@@ -78,8 +78,9 @@ extern "C" {
 #   define __ARM_2D_HAS_HELIUM_FLOAT__                  0       //!< target MCU has no Helium floating point extension
 #endif
 
-
-#ifndef __ARM_2D_HAS_ACI__
+#if defined(__ARM_FEATURE_CDE) && __ARM_FEATURE_CDE
+#   define __ARM_2D_HAS_ACI__                           1       //!< target MCU has ACI implementation
+#else
 #   define __ARM_2D_HAS_ACI__                           0       //!< target MCU has no ACI implementation
 #endif
 
@@ -129,7 +130,7 @@ extern "C" {
 #ifndef __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
 #   ifdef __ARM_2D_HAS_INTERPOLATION_ROTATION__
 #   warning __ARM_2D_HAS_INTERPOLATION_ROTATION__ is deprecated, please use __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ instead.
-/*! \brief  __ARM_2D_HAS_INTERPOLATION_ROTATION__ is deprecated 
+/*! \brief  __ARM_2D_HAS_INTERPOLATION_ROTATION__ is deprecated
  *!         add this for backward compatible
  */
 
@@ -172,7 +173,7 @@ extern "C" {
 #endif
 
 /*! \note In your application, if you do need to use RGBA8888 for some resources
- *!       and you want to use colour channels (e.g. the alpha channel) in mask 
+ *!       and you want to use colour channels (e.g. the alpha channel) in mask
  *!       related APIs, please set this macro to 1 in your project.
  */
 #ifndef __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -202,12 +203,12 @@ extern "C" {
  * 3. __ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__                     *
  *    When define this macro, alpha value 0xFF will not be treated as opaque  *
  *    in mask related operations you can barely see the background. Defining  *
- *    this macro can get a big performance uplift.                            * 
+ *    this macro can get a big performance uplift.                            *
  *----------------------------------------------------------------------------*/
 
 
-/*! \note __ARM_2D_CFG_UNSAFE_IGNORE_CALIB_IN_ROTATION_FOR_PERFORMANCE__ is 
- *        deprecated. 
+/*! \note __ARM_2D_CFG_UNSAFE_IGNORE_CALIB_IN_ROTATION_FOR_PERFORMANCE__ is
+ *        deprecated.
  *        Please use __ARM_2D_CFG_UNSAFE_IGNORE_CALIB_IN_TRANSFORM__ instead.
  */
 #ifndef __ARM_2D_CFG_UNSAFE_IGNORE_CALIB_IN_TRANSFORM__
@@ -223,8 +224,8 @@ extern "C" {
 #   endif
 #endif
 
-/*! \note __ARM_2D_CFG_UNSAFE_NO_SATURATION_IN_FIXED_POINT_FOR_PERFROMANCE__ is 
- *        deprecated. 
+/*! \note __ARM_2D_CFG_UNSAFE_NO_SATURATION_IN_FIXED_POINT_FOR_PERFROMANCE__ is
+ *        deprecated.
  *        Please use __ARM_2D_CFG_UNSAFE_NO_SATURATION_IN_FIXED_POINT__ instead.
  */
 #ifndef __ARM_2D_CFG_UNSAFE_NO_SATURATION_IN_FIXED_POINT__

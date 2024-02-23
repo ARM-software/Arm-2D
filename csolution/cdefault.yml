@@ -1,0 +1,68 @@
+default:
+
+  compiler: GCC
+
+  misc:
+    - for-compiler: AC6
+      C-CPP:
+        - -Ofast
+        - -ffast-math
+        - -ffunction-sections
+        - -Wno-macro-redefined
+        - -Wno-pragma-pack
+        - -Wno-parentheses-equality
+        - -Wno-license-management
+        - -fshort-enums -fshort-wchar
+
+      C:
+        - -std=gnu11
+      ASM:
+        - -masm=auto
+      Link:
+        - --entry=Reset_Handler
+        - --map
+        - --info summarysizes
+        - --diag_suppress=L6314W
+
+    - for-compiler: GCC
+      C-CPP:
+        - -fms-extensions
+        - -Ofast
+        - -ffast-math
+        - -std=gnu11
+        - -flax-vector-conversions
+        - -ffunction-sections
+        - -fdata-sections
+        - -D__ARM_2D_SUPPRESS_GCC_HELIUM_PERFORMANCE_WARNING__
+      Link:
+        #- --specs=nano.specs
+        #- --specs=rdimon.specs
+        - --specs=nosys.specs
+        - -Wl,-Map=$elf()$.map
+        - -lm
+        - -Wl,--wrap=SysTick_Handler
+        - -Wl,--gc-sections
+      Library:
+        - -lm
+        #- -lrdimon
+
+    - for-compiler: CLANG
+      C:
+        - -std=gnu11
+        - -Ofast
+        - -ffast-math
+        - -ffunction-sections
+        - -fdata-sections
+      Link:
+        - -lcrt0
+        #- -lcrt0-semihost
+        #- -lsemihost
+        - -Wl,-Map=$elf()$.map
+        - -Wl,--gc-sections
+
+    - for-compiler: IAR
+      C-CPP:
+        - --dlib_config DLib_Config_Full.h
+      Link:
+        - --semihosting
+        - --map=$elf()$.map

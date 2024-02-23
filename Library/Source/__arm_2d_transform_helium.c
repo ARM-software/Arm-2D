@@ -958,7 +958,7 @@ void __arm_2d_pack_rgb888_to_mem(uint8_t * pMem, uint16x8_t R, uint16x8_t G, uin
 #define AREA_UNITY                          1.0f16
 
 
-static
+
 bool __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
                                     arm_2d_location_t * pSrcPoint,
                                     float fAngle,
@@ -1174,7 +1174,7 @@ bool __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
 
 #endif
 
-static
+
 bool __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
                                             arm_2d_location_t * pSrcPoint,
                                             float fAngle,

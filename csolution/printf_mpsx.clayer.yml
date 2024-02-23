@@ -1,0 +1,47 @@
+layer:
+  description: Printf retarget for ARM MPS2 & MPS3 FPGA
+
+  groups:
+    - group: Printf retarget
+      files:
+        - file: stdout_USART.c
+
+  components:
+    - component: CMSIS-Compiler:STDOUT:Custom
+    - component: ARM::Device:Native Driver:UART
+      for-context:
+        - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
+        - +VHT-Corstone-300-NOLCD
+        - +VHT-Corstone-300-NOLCD-CDE
+        - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
+        - +VHT-Corstone-310-NOLCD
+        - +VHT-Corstone-310-NOLCD-CDE
+
+    - component: ARM::CMSIS Driver:USART
+      for-context:
+        - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
+        - +VHT-Corstone-300-NOLCD
+        - +VHT-Corstone-300-NOLCD-CDE
+        - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
+        - +VHT-Corstone-310-NOLCD
+        - +VHT-Corstone-310-NOLCD-CDE
+
+
+    - component: CMSIS Driver:USART
+      not-for-context:
+        - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
+        - +VHT-Corstone-300-NOLCD
+        - +VHT-Corstone-300-NOLCD-CDE
+        - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
+        - +VHT-Corstone-310-NOLCD
+        - +VHT-Corstone-310-NOLCD-CDE
+
+    - component: Keil::Compiler&ARM Compiler:I/O:STDOUT&ITM
+      for-context:
+        - +ARMCM85

@@ -38,10 +38,10 @@
 #   pragma clang diagnostic ignored "-Wmissing-noreturn"
 #endif
 
-__OVERRIDE_WEAK 
+__OVERRIDE_WEAK
 bool device_specific_init(void)
 {
-
+#ifndef __ARM_2D_NOLCD
     //LED_Initialize();                         /* Initializ LEDs                 */
     //Buttons_Initialize();                     /* Initializ Push Buttons         */
 
@@ -54,7 +54,9 @@ bool device_specific_init(void)
     GLCD_ClearScreen();
     //GLCD_SetBackgroundColor(GLCD_COLOR_BLUE);
     GLCD_SetForegroundColor(GLCD_COLOR_GREEN);
-    
+
+#endif
+
 #if defined(RTE_Compiler_IO_STDOUT_User)
     void uart_config(uint32_t wUARTFrequency);
     uart_config(25000000ul);

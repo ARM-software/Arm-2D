@@ -1,0 +1,193 @@
+layer:
+  # name: boot
+  description: Boot code for Virtual Hardware
+
+  groups:
+    - group: platform_mps3
+      files:
+        #- file: ../examples/common/platform/app_platform.c
+        - file: ../examples/common/platform/mps3/GLCD_V2M-MPS3_AN540.c
+        - file: ../examples/common/platform/mps3/platform_mps3.c
+
+      define:
+        - __USE_AN547__
+      add-path:
+        - ../examples/common/platform/mps3/
+        - ../examples/common/platform/mps3/v2m_mps3/
+        - ../examples/common/platform/
+        - .
+      for-context:
+        - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
+        - +VHT-Corstone-300-NOLCD
+        - +VHT-Corstone-300-NOLCD-CDE
+        - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
+        - +VHT-Corstone-310-NOLCD
+        - +VHT-Corstone-310-NOLCD-CDE
+
+    - group: platform_mps2
+      files:
+        - file: ../examples/common/platform/app_platform.c
+        - file: ../examples/common/platform/mps2/GLCD_V2M-MPS2.c
+        - file: ../examples/common/platform/mps2/platform_mps2.c
+
+      add-path:
+        - ../examples/common/platform/mps2/
+        - ../examples/common/platform/
+        - .
+      not-for-context:
+        - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
+        - +VHT-Corstone-300-NOLCD
+        - +VHT-Corstone-300-NOLCD-CDE
+        - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
+        - +VHT-Corstone-310-NOLCD
+        - +VHT-Corstone-310-NOLCD-CDE
+
+
+
+  components:
+    - component: Device:Startup&C Startup
+      not-for-context:
+        - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
+        - +VHT-Corstone-300-NOLCD
+        - +VHT-Corstone-300-NOLCD-CDE
+        - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
+        - +VHT-Corstone-310-NOLCD
+        - +VHT-Corstone-310-NOLCD-CDE
+
+    - component: ARM::Device:Definition
+      for-context:
+        - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
+        - +VHT-Corstone-300-NOLCD
+        - +VHT-Corstone-300-NOLCD-CDE
+        - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
+        - +VHT-Corstone-310-NOLCD
+        - +VHT-Corstone-310-NOLCD-CDE
+
+
+    - component: ARM::Device:Startup&C Startup
+      for-context:
+        - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
+        - +VHT-Corstone-300-NOLCD
+        - +VHT-Corstone-300-NOLCD-CDE
+        - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
+        - +VHT-Corstone-310-NOLCD
+        - +VHT-Corstone-310-NOLCD-CDE
+
+
+    - component: ARM::Device:Native Driver:Timeout
+      for-context:
+        - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
+        - +VHT-Corstone-300-NOLCD
+        - +VHT-Corstone-300-NOLCD-CDE
+        - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
+        - +VHT-Corstone-310-NOLCD
+        - +VHT-Corstone-310-NOLCD-CDE
+
+
+    - component: ARM::Device:Native Driver:SysCounter
+      for-context:
+        - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
+        - +VHT-Corstone-300-NOLCD
+        - +VHT-Corstone-300-NOLCD-CDE
+        - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
+        - +VHT-Corstone-310-NOLCD
+        - +VHT-Corstone-310-NOLCD-CDE
+
+
+    - component: ARM::Device:Native Driver:SysTimer
+      for-context:
+        - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
+        - +VHT-Corstone-300-NOLCD
+        - +VHT-Corstone-300-NOLCD-CDE
+        - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
+        - +VHT-Corstone-310-NOLCD
+        - +VHT-Corstone-310-NOLCD-CDE
+
+    - component: DMA350
+      for-context:
+        - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
+        - +VHT-Corstone-310-NOLCD
+        - +VHT-Corstone-310-NOLCD-CDE
+
+    - component: ARM::Device:Native Driver:SSE-310 Remap
+      for-context:
+        - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
+        - +VHT-Corstone-310-NOLCD
+        - +VHT-Corstone-310-NOLCD-CDE
+
+  linker:
+    - script: linker/sse300_mps3/ac6_sse300_mps3_s.sct
+      for-context:
+        - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
+        - +VHT-Corstone-300-NOLCD
+        - +VHT-Corstone-300-NOLCD-CDE
+      for-compiler: AC6
+
+    - script: linker/sse310_mps3/ac6_sse310_mps3_s.sct
+      for-context:
+        - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
+        - +VHT-Corstone-310-NOLCD
+        - +VHT-Corstone-310-NOLCD-CDE
+      for-compiler: AC6
+
+    # - script: linker/sse300_mps3/clang_sse300_mps3.sct
+    #   for-context:
+    #     - +VHT-Corstone-300
+    #     - +VHT-Corstone-300-NOLCD
+    #   for-compiler: CLANG
+
+    # - script: linker/sse310_mps3/clang_sse310_mps3.sct
+    #   for-context:
+    #     - +VHT-Corstone-310
+    #     - +VHT-Corstone-310-NOLCD
+    #     - +VHT-Corstone-310-NOLCD-CDE
+    #   for-compiler: CLANG
+
+    - script: linker/sse300_mps3/gcc_sse300_mps3.ld
+      for-context:
+        - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
+        - +VHT-Corstone-300-NOLCD
+        - +VHT-Corstone-300-NOLCD-CDE
+      for-compiler: GCC
+
+    # - script: linker/sse310_mps3/gcc_sse310_mps3_s.ld
+    #   for-context:
+    #     - +VHT-Corstone-310
+    #     - +VHT-Corstone-310-NOLCD
+    #     - +VHT-Corstone-310-NOLCD-CDE
+    #   for-compiler: GCC
+
+    - regions: linker/sse300_mps3/region_defs.h
+      for-context:
+        - +VHT-Corstone-300
+        - +VHT-Corstone-300-CDE
+        - +VHT-Corstone-300-NOLCD
+        - +VHT-Corstone-300-NOLCD-CDE
+
+    - regions: linker/sse310_mps3/region_defs.h
+      for-context:
+        - +VHT-Corstone-310
+        - +VHT-Corstone-310-CDE
+        - +VHT-Corstone-310-NOLCD
+        - +VHT-Corstone-310-NOLCD-CDE
