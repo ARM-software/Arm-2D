@@ -269,8 +269,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
                     }
                     //arm_lcd_print_banner("1234567890", __item_region, &ARM_2D_FONT_A8_DIGITS_ONLY);
                 }
-            }
-                                    
+            }                
         }
 
         /* draw text at the top-left corner */
@@ -364,6 +363,7 @@ user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter,
         },
         .bUserAllocated = bUserAllocated,
     };
+    
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
                                         &this.use_as__arm_2d_scene_t, 

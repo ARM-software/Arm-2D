@@ -9,6 +9,10 @@ CC_SRC  += $(wildcard ../../Helper/Source/*.c)
 CC_SRC  += $(wildcard ../../examples/common/asset/*.c)
 CC_SRC  += $(wildcard ../../examples/common/benchmark/*.c)
 CC_SRC  += $(wildcard ../../examples/common/controls/*.c)
+CC_SRC  += $(wildcard ../../examples/common/scenes/fitness/*.c)
+CC_SRC  += $(wildcard ../../examples/common/scenes/meter/*.c)
+CC_SRC  += $(wildcard ../../examples/common/scenes/watch/*.c)
+CC_SRC  += $(wildcard ../../examples/demos/*.c)
 
 CC_INC  := .
 CC_INC  += platform
@@ -18,6 +22,10 @@ CC_INC  += ../../Library/Include
 CC_INC  += ../../Helper/Include
 CC_INC  += ../../examples/common/benchmark
 CC_INC  += ../../examples/common/controls
+CC_INC  += ../../examples/common/scenes/fitness
+CC_INC  += ../../examples/common/scenes/meter
+CC_INC  += ../../examples/common/scenes/watch
+CC_INC  += ../../examples/demos
 
 CC_DEF  := ARM_SECTION\(x\)=
 CC_DEF  += __va_list=va_list

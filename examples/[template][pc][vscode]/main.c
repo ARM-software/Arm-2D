@@ -30,7 +30,8 @@
 #include "arm_2d_scene_meter.h"
 #include "arm_2d_scene_watch.h"
 #include "arm_2d_scene_fitness.h"
-#include "arm_2d_scene_audiomark.h"
+
+#include "arm_2d_demos.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -96,9 +97,6 @@ void scene_audiomark_loader(void)
 
     arm_2d_scene_audiomark_init(&DISP0_ADAPTER);
 }
-
-
-
 
 void scene0_loader(void) 
 {
