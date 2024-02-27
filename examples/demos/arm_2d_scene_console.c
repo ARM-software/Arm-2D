@@ -240,7 +240,14 @@ user_scene_console_t *__arm_2d_scene_console_init(
 
         /* a dirty region to be specified at runtime*/
         ADD_REGION_TO_LIST(s_tDirtyRegions,
-            0  /* initialize at runtime later */
+            .tLocation = {
+                .iX = 0,
+                .iY = 0,
+            },
+            .tSize = {
+                .iWidth = 240,
+                .iHeight = 240,
+            },
         ),
         
         /* add the last region:
@@ -261,21 +268,13 @@ user_scene_console_t *__arm_2d_scene_console_init(
 
     s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
 
+
     /* get the screen region */
     arm_2d_region_t tScreen
         = arm_2d_helper_pfb_get_display_area(
             &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
     
-    /* initialise dirty region 0 at runtime
-     * this demo shows that we create a region in the centre of a screen(320*240)
-     * for a image stored in the tile c_tileCMSISLogoMask
-     */
-    arm_2d_align_centre(tScreen, c_tileCMSISLogoMask.tRegion.tSize) {
-        s_tDirtyRegions[0].tRegion = __centre_region;
-    }
-
-    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].tRegion.tSize.iWidth 
-                                                        = tScreen.tSize.iWidth;
+    ARM_2D_UNUSED(tScreen);
 
     if (NULL == ptThis) {
         ptThis = (user_scene_console_t *)

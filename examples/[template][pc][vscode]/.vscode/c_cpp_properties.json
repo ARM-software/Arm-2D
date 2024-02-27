@@ -11,7 +11,11 @@
                 "${workspaceFolder}/../../Helper/Include",
                 "${workspaceFolder}/../../Library/Include",
                 "${workspaceFolder}/../../examples/common/benchmark",
-                "${workspaceFolder}/../../examples/common/controls"
+                "${workspaceFolder}/../../examples/common/controls",
+                "${workspaceFolder}/../../examples/demos",
+                "${workspaceFolder}/../../examples/common/scenes/fitness",
+                "${workspaceFolder}/../../examples/common/scenes/meter",
+                "${workspaceFolder}/../../examples/common/scenes/watch",
             ],
             "defines": [
                 "_DEBUG",

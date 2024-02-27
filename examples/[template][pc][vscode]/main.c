@@ -141,11 +141,17 @@ void scene5_loader(void)
     arm_2d_scene5_init(&DISP0_ADAPTER);
 }
 
+void scene_console_loader(void)
+{
+    arm_2d_scene_console_init(&DISP0_ADAPTER);
+}
+
 typedef void scene_loader_t(void);
 
 static scene_loader_t * const c_SceneLoaders[] = {
-    scene0_loader,
-    scene1_loader,
+    //scene0_loader,
+    //scene1_loader,
+    scene_console_loader,
     scene_meter_loader,
     scene3_loader,
     scene5_loader,
@@ -185,11 +191,9 @@ int app_2d_main_thread (void *argument)
     arm_2d_scene_player_register_before_switching_event_handler(
             &DISP0_ADAPTER,
             before_scene_switching_handler);
-#if 0
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
                                             ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);
     arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 3000);
-#endif
 
     arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
 #endif
