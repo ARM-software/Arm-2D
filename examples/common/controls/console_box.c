@@ -115,7 +115,6 @@ void console_box_show(  console_box_t *ptThis,
             arm_2d_op_wait_async(NULL);
         }
 
-        
     }
 
     arm_2d_op_wait_async(NULL);

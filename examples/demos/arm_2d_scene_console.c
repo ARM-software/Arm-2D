@@ -180,6 +180,21 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_console_handler)
                                                 128);
         }
 
+        arm_2d_align_centre(__top_canvas, 260, 260) {
+            /* draw console background */
+            draw_round_corner_box(  ptTile, 
+                                    &__centre_region, 
+                                    GLCD_COLOR_BLACK, 
+                                    64,
+                                    bIsNewFrame);
+            /* draw console */
+            console_box_show(   &this.tConsole,
+                                ptTile,
+                                &__centre_region,
+                                bIsNewFrame,
+                                255);
+        }
+
         /* draw text at the top-left corner */
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
         arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
@@ -278,7 +293,13 @@ user_scene_console_t *__arm_2d_scene_console_init(
     };
 
     /* ------------   initialize members of user_scene_console_t begin ---------------*/
+    do {
+        console_box_cfg_t tCFG = {
+            .tBoxSize = {240, 240},
+        };
 
+        console_box_init(&this.tConsole, &tCFG);
+    } while(0);
 
     /* ------------   initialize members of user_scene_console_t end   ---------------*/
 
