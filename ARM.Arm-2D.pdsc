@@ -334,9 +334,10 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.5.8" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.5.9" condition="Arm-2D-EXTRA">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
+            <!-- example control source files -->
             <file category="include"     name="examples/common/controls/" />
             <file category="sourceC"     name="examples/common/controls/controls.c" />
             <file category="sourceC"     name="examples/common/controls/busy_wheel.c" />
@@ -350,6 +351,9 @@
             <file category="sourceC"     name="examples/common/controls/list_view.c" />
             <file category="sourceC"     name="examples/common/controls/battery_gasgauge.c" />
             <file category="sourceC"     name="examples/common/controls/dynamic_nebula.c" />
+            <file category="sourceC"     name="examples/common/controls/console_box.c" />
+
+            <!-- assets -->
             <file category="sourceC"     name="examples/common/asset/white_dot.c" />
             <file category="sourceC"     name="examples/common/asset/SpinWheel.c" />
             <file category="sourceC"     name="examples/common/asset/blue_slashes.c" />
