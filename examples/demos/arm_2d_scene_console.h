@@ -79,12 +79,9 @@ ARM_PRIVATE(
     /* place your private member here, following two are examples */
     int64_t lTimestamp[1];
     bool bUserAllocated;
-
-    console_box_t tConsole;
-
 )
     /* place your public member here */
-    
+    console_box_t tConsole;
 };
 
 /*============================ GLOBAL VARIABLES ==============================*/
