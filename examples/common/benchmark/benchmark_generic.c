@@ -17,7 +17,7 @@
  */
 
 /*============================ INCLUDES ======================================*/
-#include "arm_extra_controls.h"
+#include "arm_2d_example_controls.h"
 #include "benchmark_generic.h"
 #include "arm_2d.h"
 #include "arm_2d_helper.h"

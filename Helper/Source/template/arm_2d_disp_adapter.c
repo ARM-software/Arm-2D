@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #include "arm_2d_helper.h"
 #include "arm_extra_lcd_printf.h"
-#include "arm_extra_controls.h"
+#include "arm_2d_example_controls.h"
 #include "arm_2d_disp_adapter_%Instance%.h"
 
 #if defined(__clang__)

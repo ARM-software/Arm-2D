@@ -24,7 +24,6 @@
 #include "arm_2d_scene_fitness.h"
 
 #include "arm_2d_helper.h"
-#include "arm_extra_controls.h"
 
 #include <stdlib.h>
 #include <string.h>

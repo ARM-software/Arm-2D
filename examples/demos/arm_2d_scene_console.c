@@ -24,7 +24,6 @@
 #include "arm_2d_scene_console.h"
 
 #include "arm_2d_helper.h"
-#include "arm_extra_controls.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -170,36 +169,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_console_handler)
         
         arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
 
-        arm_2d_align_centre(__top_canvas, 200, 100 ) {
-            draw_round_corner_box(  ptTile, 
-                                    &__centre_region, 
-                                    GLCD_COLOR_WHITE, 
-                                    255,
-                                    bIsNewFrame);
-            
-            arm_2d_op_wait_async(NULL);
-            
-            draw_round_corner_border(   ptTile, 
-                                        &__centre_region, 
-                                        GLCD_COLOR_BLACK, 
-                                        (arm_2d_border_opacity_t)
-                                            {32, 32, 255-64, 255-64},
-                                        (arm_2d_corner_opacity_t)
-                                            {0, 128, 128, 128});
-                                    
-        }
 
-
-    #if 0
-        /* draw the cmsis logo in the centre of the screen */
-        arm_2d_align_centre(__top_canvas, c_tileCMSISLogo.tRegion.tSize) {
-            arm_2d_tile_copy_with_src_mask( &c_tileCMSISLogo,
-                                            &c_tileCMSISLogoMask,
-                                            ptTile,
-                                            &__centre_region,
-                                            ARM_2D_CP_MODE_COPY);
-        }
-    #else
         /* draw the cmsis logo using mask in the centre of the screen */
         arm_2d_align_centre(__top_canvas, c_tileCMSISLogo.tRegion.tSize) {
             arm_2d_fill_colour_with_a4_mask_and_opacity(   
@@ -209,10 +179,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_console_handler)
                                                 (__arm_2d_color_t){GLCD_COLOR_BLACK},
                                                 128);
         }
-    #endif
 
         /* draw text at the top-left corner */
-
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
         arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
         arm_lcd_text_set_draw_region(NULL);

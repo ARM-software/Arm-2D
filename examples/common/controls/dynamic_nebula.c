@@ -19,7 +19,7 @@
 /*============================ INCLUDES ======================================*/
 #define __DYNAMIC_NEBULA_IMPLEMENT__
 
-#include "./arm_extra_controls.h"
+#include "./arm_2d_example_controls.h"
 #include "./__common.h"
 #include "arm_2d_helper.h"
 #include "dynamic_nebula.h"

@@ -24,7 +24,7 @@
 #include "arm_2d.h"
 
 #include "arm_2d_helper_scene.h"
-#include "arm_extra_controls.h"
+#include "arm_2d_example_controls.h"
 
 #ifdef   __cplusplus
 extern "C" {

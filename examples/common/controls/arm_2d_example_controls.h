@@ -16,12 +16,10 @@
  * limitations under the License.
  */
 
-/*
- * \note THIS HEADER FILE IS DEPRECATED
- */
 
-#ifndef __ARM_2D_EXTRA_CONTROLS_H__
-#define __ARM_2D_EXTRA_CONTROLS_H__
+
+#ifndef __ARM_2D_EXAMPLE_CONTROLS_H__
+#define __ARM_2D_EXAMPLE_CONTROLS_H__
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
@@ -40,7 +38,7 @@
 #include "./console_box.h"
 
 #if defined(__RTE_ACCELERATION_ARM_2D_EXTRA_LCD_PRINTF__)
-#   include "./arm_extra_lcd_printf.h"b
+#   include "./arm_extra_lcd_printf.h"
 #endif
 
 #ifdef   __cplusplus
