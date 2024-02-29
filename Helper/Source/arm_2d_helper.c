@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        12. Jan 2024
- * $Revision:    V.1.6.7
+ * $Date:        29. Feb 2024
+ * $Revision:    V.1.7.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -705,6 +705,157 @@ void arm_2d_helper_backend_task(void)
 {
 }
 #endif
+
+
+/*----------------------------------------------------------------------------*
+ * FIFO Helper Service                                                        *
+ *----------------------------------------------------------------------------*/
+
+ARM_NONNULL(1,2)
+bool arm_2d_byte_fifo_init( arm_2d_byte_fifo_t *ptThis, 
+                            void *pBuffer, 
+                            uint16_t hwSize)
+{
+    bool bResult = false;
+
+    do {
+        if (NULL == ptThis) {
+            break;
+        }
+
+        memset(ptThis, 0, sizeof(arm_2d_byte_fifo_t));
+
+        if ((0 == hwSize) || (NULL == pBuffer)) {
+            break;
+        }
+
+        this.pchBuffer = (uint8_t *)pBuffer;
+        this.hwSize = hwSize;
+        
+        bResult = true;
+    } while(0);
+
+    return bResult;
+}
+
+
+ARM_NONNULL(1)
+bool arm_2d_byte_fifo_enqueue(arm_2d_byte_fifo_t *ptThis, uint8_t chChar)
+{
+    assert(NULL != ptThis);
+    bool bResult = false;
+
+    arm_irq_safe {
+        do {
+            if ((this.hwTail == this.tHead.hwPointer) 
+            &&  (this.tHead.hwDataAvailable > 0)) {
+                /* FIFO is FULL */
+                break;
+            }
+
+            this.pchBuffer[this.hwTail++] = chChar;
+
+            if (this.hwTail >= this.hwSize) {
+                this.hwTail = 0;
+            }
+            this.tHead.hwDataAvailable++;
+            this.tPeek.hwDataAvailable++;
+
+            bResult = true;
+        } while(0);
+    }
+
+    return bResult;
+}
+
+ARM_NONNULL(1)
+bool arm_2d_byte_fifo_dequeue(arm_2d_byte_fifo_t *ptThis, uint8_t *pchChar)
+{
+    assert(NULL != ptThis);
+    bool bResult = false;
+    uint8_t chChar;
+
+    arm_irq_safe {
+        do {
+            
+            if ((this.tHead.hwPointer == this.hwTail) 
+            &&  (this.tHead.hwDataAvailable == 0)) {
+                /* FIFO is EMPTY */
+                break;
+            }
+
+            chChar = this.pchBuffer[this.tHead.hwPointer++];
+
+            if (this.tHead.hwPointer >= this.hwSize) {
+                this.tHead.hwPointer = 0;
+            }
+            this.tHead.hwDataAvailable--;
+
+            /* force to reset peek */
+            this.tPeek = this.tHead;
+
+            if (NULL != pchChar) {
+                *pchChar = chChar;
+            }
+
+            bResult = true;
+        } while(0);
+    }
+
+    return bResult;
+}
+
+ARM_NONNULL(1)
+bool arm_2d_byte_fifo_peek(arm_2d_byte_fifo_t *ptThis, uint8_t *pchChar)
+{
+    assert(NULL != ptThis);
+    bool bResult = false;
+    uint8_t chChar;
+
+    arm_irq_safe {
+        do {
+            
+            if ((this.tPeek.hwPointer == this.hwTail) 
+            &&  (this.tPeek.hwDataAvailable == 0)) {
+                /* Nothing left to peek */
+                break;
+            }
+
+            chChar = this.pchBuffer[this.tPeek.hwPointer++];
+
+            if (this.tPeek.hwPointer >= this.hwSize) {
+                this.tPeek.hwPointer = 0;
+            }
+            this.tPeek.hwDataAvailable--;
+
+            if (NULL != pchChar) {
+                *pchChar = chChar;
+            }
+
+            bResult = true;
+        } while(0);
+    }
+
+    return bResult;
+}
+
+ARM_NONNULL(1)
+void arm_2d_byte_fifo_get_all_peeked(arm_2d_byte_fifo_t *ptThis)
+{
+    assert(NULL != ptThis);
+    arm_irq_safe {
+        this.tHead = this.tPeek;
+    }
+}
+
+ARM_NONNULL(1)
+void arm_2d_byte_fifo_reset_peeked(arm_2d_byte_fifo_t *ptThis)
+{
+    assert(NULL != ptThis);
+    arm_irq_safe {
+        this.tPeek = this.tHead;
+    }
+}
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

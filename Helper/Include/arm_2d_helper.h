@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        12. Jan 2024
- * $Revision:    V.1.6.7
+ * $Date:        29. Feb 2024
+ * $Revision:    V.1.7.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -59,8 +59,10 @@ extern "C" {
 
 /* OOC header, please DO NOT modify  */
 #ifdef __ARM_2D_HELPER_IMPLEMENT__
-#   undef __ARM_2D_HELPER_IMPLEMENT__
 #   define __ARM_2D_IMPL__
+#elif defined(__ARM_2D_HELPER_INHERIT__)
+#   undef __ARM_2D_HELPER_INHERIT__
+#   define __ARM_2D_INHERIT__
 #endif
 #include "arm_2d_utils.h"
 
@@ -236,6 +238,22 @@ ARM_PRIVATE (
     float   fOP;
 )
 } arm_2d_helper_pi_slider_t;
+
+struct __arm_2d_fifo_reader_pointer {
+    uint16_t hwPointer;
+    uint16_t hwDataAvailable;
+};
+
+typedef struct arm_2d_byte_fifo_t {
+ARM_PROTECTED (
+    uint8_t *pchBuffer;
+    uint16_t hwSize;
+    uint16_t hwTail;
+
+    struct __arm_2d_fifo_reader_pointer tHead;
+    struct __arm_2d_fifo_reader_pointer tPeek;
+)
+} arm_2d_byte_fifo_t;
 
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -480,6 +498,75 @@ extern
 ARM_NONNULL(1)
 void arm_2d_helper_film_set_frame(arm_2d_helper_film_t *ptThis, int32_t nIndex);
 
+/*----------------------------------------------------------------------------*
+ * FIFO Helper Service                                                        *
+ *----------------------------------------------------------------------------*/
+
+/*!
+ * \brief initialize a given byte fifo
+ * \param[in] ptThis the target FIFO control block
+ * \param[in] pBuffer a buffer for storing the data
+ * \param[in] hwSize the buffer size
+ * \retval false Illegal parameters
+ * \retval true the target FIFO is initialized
+ */
+extern
+ARM_NONNULL(1,2)
+bool arm_2d_byte_fifo_init( arm_2d_byte_fifo_t *ptThis, 
+                            void *pBuffer, 
+                            uint16_t hwSize);
+
+/*!
+ * \brief write a byte to a given fifo
+ * \param[in] ptThis the target FIFO control block
+ * \param[in] chChar the target byte
+ * \retval false the FIFO is FULL
+ * \retval true operation is successful
+ */
+extern
+ARM_NONNULL(1)
+bool arm_2d_byte_fifo_enqueue(arm_2d_byte_fifo_t *ptThis, uint8_t chChar);
+
+/*!
+ * \brief read a byte from a given fifo
+ * \param[in] ptThis the target FIFO control block
+ * \param[in] pchChar a buffer to store the byte, NULL means drop a byte
+ * \retval false the FIFO is EMPTY
+ * \retval true operation is successful
+ */
+extern
+ARM_NONNULL(1)
+bool arm_2d_byte_fifo_dequeue(arm_2d_byte_fifo_t *ptThis, uint8_t *pchChar);
+
+/*!
+ * \brief peek a byte continuously from a given fifo
+ * \param[in] ptThis the target FIFO control block
+ * \param[in] pchChar a buffer to store the byte, NULL means drop a byte
+ * \retval false the FIFO is EMPTY
+ * \retval true operation is successful
+ */
+extern
+ARM_NONNULL(1)
+bool arm_2d_byte_fifo_peek(arm_2d_byte_fifo_t *ptThis, uint8_t *pchChar);
+
+/*!
+ * \brief drop all peeked byte from a given fifo
+ * \param[in] ptThis the target FIFO control block
+ * \return none
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_byte_fifo_get_all_peeked(arm_2d_byte_fifo_t *ptThis);
+
+/*!
+ * \brief reset the peek pointer, so you can restart from the beginning to peek.
+ * \param[in] ptThis the target FIFO control block
+ * \return none
+ */
+ARM_NONNULL(1)
+void arm_2d_byte_fifo_reset_peeked(arm_2d_byte_fifo_t *ptThis);
+
+
 /*! @} */
 
 #if defined(__clang__)
@@ -487,6 +574,10 @@ void arm_2d_helper_film_set_frame(arm_2d_helper_film_t *ptThis, int32_t nIndex);
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #pragma diag_warning 64
 #endif
+
+#undef __ARM_2D_HELPER_IMPLEMENT__
+#undef __ARM_2D_HELPER_INHERIT__
+
 
 #ifdef   __cplusplus
 }
