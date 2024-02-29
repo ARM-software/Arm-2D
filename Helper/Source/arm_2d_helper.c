@@ -745,6 +745,10 @@ bool arm_2d_byte_fifo_enqueue(arm_2d_byte_fifo_t *ptThis, uint8_t chChar)
     assert(NULL != ptThis);
     bool bResult = false;
 
+    if (NULL == this.pchBuffer) {
+        return false;
+    }
+
     arm_irq_safe {
         do {
             if ((this.hwTail == this.tHead.hwPointer) 
@@ -774,6 +778,10 @@ bool arm_2d_byte_fifo_dequeue(arm_2d_byte_fifo_t *ptThis, uint8_t *pchChar)
     assert(NULL != ptThis);
     bool bResult = false;
     uint8_t chChar;
+
+    if (NULL == this.pchBuffer) {
+        return false;
+    }
 
     arm_irq_safe {
         do {
@@ -811,6 +819,10 @@ bool arm_2d_byte_fifo_peek(arm_2d_byte_fifo_t *ptThis, uint8_t *pchChar)
     assert(NULL != ptThis);
     bool bResult = false;
     uint8_t chChar;
+
+    if (NULL == this.pchBuffer) {
+        return false;
+    }
 
     arm_irq_safe {
         do {
