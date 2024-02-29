@@ -202,6 +202,20 @@ extern "C" {
         .hwPeriodPerFrame = (__period),                                         \
     }
 
+#define IMPL_FONT_DRAW_CHAR(__NAME)                                             \
+            arm_fsm_rt_t __NAME(const arm_2d_tile_t *ptTile,                    \
+                                const arm_2d_region_t *ptRegion,                \
+                                arm_2d_tile_t *ptileChar,                       \
+                                COLOUR_INT tForeColour,                         \
+                                uint_fast8_t chOpacity,                         \
+                                float fScale)
+
+#define IMPL_FONT_GET_CHAR_DESCRIPTOR(__NAME)                                   \
+            arm_2d_char_descriptor_t *__NAME(                                   \
+                                        const arm_2d_font_t *ptFont,            \
+                                        arm_2d_char_descriptor_t *ptDescriptor, \
+                                        uint8_t *pchCharCode)
+
 /*============================ TYPES =========================================*/
 
 /*!
@@ -254,6 +268,53 @@ ARM_PROTECTED (
     struct __arm_2d_fifo_reader_pointer tPeek;
 )
 } arm_2d_byte_fifo_t;
+
+typedef struct {
+    arm_2d_tile_t tileChar;
+    int16_t iAdvance;
+    int16_t iBearingX;
+    int16_t iBearingY;
+    int8_t chCodeLength;
+    int8_t          : 8;
+} arm_2d_char_descriptor_t;
+
+typedef struct arm_2d_font_t arm_2d_font_t;
+
+typedef arm_2d_char_descriptor_t *arm_2d_font_get_char_descriptor_handler_t(
+                                        const arm_2d_font_t *ptFont, 
+                                        arm_2d_char_descriptor_t *ptDescriptor,
+                                        uint8_t *pchCharCode);
+
+typedef arm_fsm_rt_t arm_2d_font_draw_char_handler_t(
+                                            const arm_2d_tile_t *ptTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            arm_2d_tile_t *ptileChar,
+                                            COLOUR_INT tForeColour,
+                                            uint_fast8_t chOpacity,
+                                            float fScale);
+
+/* Font definitions */
+struct arm_2d_font_t {
+    arm_2d_tile_t tileFont;
+    arm_2d_size_t tCharSize;                                                    //!< CharSize
+    uint32_t nCount;                                                            //!< Character count
+
+    arm_2d_font_get_char_descriptor_handler_t *fnGetCharDescriptor;             //!< On-Get-Char-Descriptor event handler
+    arm_2d_font_draw_char_handler_t           *fnDrawChar;                      //!< On-Draw-Char event handler
+};
+
+typedef struct arm_2d_char_idx_t {
+    uint8_t chStartCode[4];
+    uint16_t hwCount;
+    uint16_t hwOffset;
+} arm_2d_char_idx_t;
+
+typedef struct arm_2d_user_font_t {
+    implement(arm_2d_font_t);
+    uint16_t hwCount;
+    uint16_t hwDefaultCharIndex;
+    arm_2d_char_idx_t tLookUpTable[];
+} arm_2d_user_font_t;
 
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -578,6 +639,19 @@ void arm_2d_byte_fifo_reset_peeked(arm_2d_byte_fifo_t *ptThis);
  */
 ARM_NONNULL(1)
 int8_t arm_2d_helper_utf8_byte_length(uint8_t *pchChar);
+
+/*!
+ * \brief get char descriptor
+ * \param[in] ptFont the target font
+ * \param[in] ptDescriptor a buffer to store a char descriptor
+ * \param[in] pchCharCode an UTF8 Char
+ * \return arm_2d_char_descriptor_t * the descriptor
+ */
+ARM_NONNULL(1,2,3)
+arm_2d_char_descriptor_t *
+arm_2d_helper_get_char_descriptor(  const arm_2d_font_t *ptFont, 
+                                    arm_2d_char_descriptor_t *ptDescriptor, 
+                                    uint8_t *pchCharCode);
 
 /*! @} */
 

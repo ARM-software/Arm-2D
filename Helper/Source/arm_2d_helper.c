@@ -907,6 +907,24 @@ int8_t arm_2d_helper_utf8_byte_length(uint8_t *pchChar)
     return -1;
 }
 
+ARM_NONNULL(1,2,3)
+arm_2d_char_descriptor_t *
+arm_2d_helper_get_char_descriptor(  const arm_2d_font_t *ptFont, 
+                                    arm_2d_char_descriptor_t *ptDescriptor, 
+                                    uint8_t *pchCharCode)
+{
+    assert(NULL != pchCharCode);
+
+    if (NULL == ARM_2D_INVOKE(ptFont->fnGetCharDescriptor,
+                ARM_2D_PARAM(   ptFont,
+                                ptDescriptor,
+                                pchCharCode))) {
+        return NULL;
+    }
+
+    return ptDescriptor;
+}
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #elif defined(__IS_COMPILER_GCC__)

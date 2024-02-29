@@ -73,23 +73,7 @@ extern "C" {
 #   define __GLCD_CFG_SCEEN_HEIGHT__                        320
 #endif
 
-#define IMPL_FONT_DRAW_CHAR(__NAME)                                             \
-            arm_fsm_rt_t __NAME(const arm_2d_tile_t *ptTile,                    \
-                                const arm_2d_region_t *ptRegion,                \
-                                arm_2d_tile_t *ptileChar,                       \
-                                COLOUR_INT tForeColour,                         \
-                                uint_fast8_t chOpacity,                         \
-                                float fScale)
-
-#define IMPL_FONT_GET_CHAR_DESCRIPTOR(__NAME)                                   \
-            arm_2d_char_descriptor_t *__NAME(                                   \
-                                        const arm_2d_font_t *ptFont,            \
-                                        arm_2d_char_descriptor_t *ptDescriptor, \
-                                        uint8_t *pchCharCode)
-
 /*============================ MACROFIED FUNCTIONS ===========================*/
-
-
 
 #define __arm_print_banner3(__STR, __REGION, __FONT_PTR)                        \
         do {                                                                    \
@@ -128,57 +112,10 @@ extern "C" {
 
 /*============================ TYPES =========================================*/
 
-typedef struct {
-    arm_2d_tile_t tileChar;
-    int16_t iAdvance;
-    int16_t iBearingX;
-    int16_t iBearingY;
-    int8_t chCodeLength;
-    int8_t          : 8;
-} arm_2d_char_descriptor_t;
-
-typedef struct arm_2d_font_t arm_2d_font_t;
-
-typedef arm_2d_char_descriptor_t *arm_2d_font_get_char_descriptor_handler_t(
-                                        const arm_2d_font_t *ptFont, 
-                                        arm_2d_char_descriptor_t *ptDescriptor,
-                                        uint8_t *pchCharCode);
-
-typedef arm_fsm_rt_t arm_2d_font_draw_char_handler_t(
-                                            const arm_2d_tile_t *ptTile,
-                                            const arm_2d_region_t *ptRegion,
-                                            arm_2d_tile_t *ptileChar,
-                                            COLOUR_INT tForeColour,
-                                            uint_fast8_t chOpacity,
-                                            float fScale);
-
-/* Font definitions */
-struct arm_2d_font_t {
-    arm_2d_tile_t tileFont;
-    arm_2d_size_t tCharSize;                                                    //!< CharSize
-    uint32_t nCount;                                                            //!< Character count
-
-    arm_2d_font_get_char_descriptor_handler_t *fnGetCharDescriptor;             //!< On-Get-Char-Descriptor event handler
-    arm_2d_font_draw_char_handler_t           *fnDrawChar;                      //!< On-Draw-Char event handler
-};
-
 typedef struct arm_2d_a1_font_t {
     implement(arm_2d_font_t);
     uint32_t nOffset;                                                           //!< Character offset
 } arm_2d_a1_font_t;
-
-typedef struct arm_2d_char_idx_t {
-    uint8_t chStartCode[4];
-    uint16_t hwCount;
-    uint16_t hwOffset;
-} arm_2d_char_idx_t;
-
-typedef struct arm_2d_user_font_t {
-    implement(arm_2d_font_t);
-    uint16_t hwCount;
-    uint16_t hwDefaultCharIndex;
-    arm_2d_char_idx_t tLookUpTable[];
-} arm_2d_user_font_t;
 
 /*============================ GLOBAL VARIABLES ==============================*/
 
