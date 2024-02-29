@@ -80,6 +80,8 @@ var group__gHelper =
     ] ],
     [ "arm_2d_helper_pi_slider_cfg_t", "group__gHelper.html#structarm__2d__helper__pi__slider__cfg__t", null ],
     [ "arm_2d_helper_pi_slider_t", "group__gHelper.html#structarm__2d__helper__pi__slider__t", null ],
+    [ "__arm_2d_fifo_reader_pointer", "group__gHelper.html#struct____arm__2d__fifo__reader__pointer", null ],
+    [ "arm_2d_byte_fifo_t", "group__gHelper.html#structarm__2d__byte__fifo__t", null ],
     [ "__arm_2d_helper_scene_switch_t.Feature", "group__gHelper.html#struct____arm__2d__helper__scene__switch__t_8Feature", [
       [ "chMode", "group__gHelper.html#a32e1ccd08315dddf03bcc84d8e25eb46", null ],
       [ "bIgnoreOldSceneBG", "group__gHelper.html#a293bd1e526f3a9b72e8a9c323c835373", null ],
@@ -265,5 +267,11 @@ var group__gHelper =
     [ "arm_2d_helper_draw_box", "group__gHelper.html#gacd0e2f64404ceef7412a3715c0bc47fd", null ],
     [ "arm_2d_helper_film_next_frame", "group__gHelper.html#ga8973bb94243b6b082f9e2888267bea04", null ],
     [ "arm_2d_helper_film_reset", "group__gHelper.html#gaa3dd9a9991d2cf374924d7d3e57ff69b", null ],
-    [ "arm_2d_helper_film_set_frame", "group__gHelper.html#ga335d382332ef7ac57ecb84698fec8584", null ]
+    [ "arm_2d_helper_film_set_frame", "group__gHelper.html#ga335d382332ef7ac57ecb84698fec8584", null ],
+    [ "arm_2d_byte_fifo_init", "group__gHelper.html#gac3bdc393bc8cbb86351a7647372854d8", null ],
+    [ "arm_2d_byte_fifo_enqueue", "group__gHelper.html#ga44e78d3e1990b1721c40fc6a93c78fcf", null ],
+    [ "arm_2d_byte_fifo_dequeue", "group__gHelper.html#gaa38f307b5921ee31122e1a6404444bc5", null ],
+    [ "arm_2d_byte_fifo_peek", "group__gHelper.html#gae55f1ba0073947c48f2d4a3fe4f416a7", null ],
+    [ "arm_2d_byte_fifo_get_all_peeked", "group__gHelper.html#ga5a4996625f003ec5e18d7a7b549b072a", null ],
+    [ "arm_2d_byte_fifo_reset_peeked", "group__gHelper.html#ga9a0bb323933baa059f65eb2bd62608be", null ]
 ];
