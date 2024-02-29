@@ -675,24 +675,36 @@ $(document).ready(function(){initNavTree('arm__2d__helper_8h_source.html',''); i
 <div class="line"><a id="l00566" name="l00566"></a><span class="lineno">  566</span>ARM_NONNULL(1)</div>
 <div class="line"><a id="l00567" name="l00567"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga9a0bb323933baa059f65eb2bd62608be">  567</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga9a0bb323933baa059f65eb2bd62608be" title="reset the peek pointer, so you can restart from the beginning to peek.">arm_2d_byte_fifo_reset_peeked</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis);</div>
 <div class="line"><a id="l00568" name="l00568"></a><span class="lineno">  568</span> </div>
-<div class="line"><a id="l00569" name="l00569"></a><span class="lineno">  569</span><span class="comment"></span> </div>
-<div class="line"><a id="l00570" name="l00570"></a><span class="lineno">  570</span><span class="comment">/*! @} */</span></div>
-<div class="line"><a id="l00571" name="l00571"></a><span class="lineno">  571</span> </div>
-<div class="line"><a id="l00572" name="l00572"></a><span class="lineno">  572</span><span class="preprocessor">#if defined(__clang__)</span></div>
-<div class="line"><a id="l00573" name="l00573"></a><span class="lineno">  573</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
-<div class="line"><a id="l00574" name="l00574"></a><span class="lineno">  574</span><span class="preprocessor">#elif __IS_COMPILER_ARM_COMPILER_5__</span></div>
-<div class="line"><a id="l00575" name="l00575"></a><span class="lineno">  575</span><span class="preprocessor">#pragma diag_warning 64</span></div>
-<div class="line"><a id="l00576" name="l00576"></a><span class="lineno">  576</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00577" name="l00577"></a><span class="lineno">  577</span> </div>
-<div class="line"><a id="l00578" name="l00578"></a><span class="lineno">  578</span><span class="preprocessor">#undef __ARM_2D_HELPER_IMPLEMENT__</span></div>
-<div class="line"><a id="l00579" name="l00579"></a><span class="lineno">  579</span><span class="preprocessor">#undef __ARM_2D_HELPER_INHERIT__</span></div>
-<div class="line"><a id="l00580" name="l00580"></a><span class="lineno">  580</span> </div>
-<div class="line"><a id="l00581" name="l00581"></a><span class="lineno">  581</span> </div>
-<div class="line"><a id="l00582" name="l00582"></a><span class="lineno">  582</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
-<div class="line"><a id="l00583" name="l00583"></a><span class="lineno">  583</span>}</div>
-<div class="line"><a id="l00584" name="l00584"></a><span class="lineno">  584</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00585" name="l00585"></a><span class="lineno">  585</span> </div>
-<div class="line"><a id="l00586" name="l00586"></a><span class="lineno">  586</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00569" name="l00569"></a><span class="lineno">  569</span><span class="comment">/*----------------------------------------------------------------------------*</span></div>
+<div class="line"><a id="l00570" name="l00570"></a><span class="lineno">  570</span><span class="comment"> * Misc                                                                       *</span></div>
+<div class="line"><a id="l00571" name="l00571"></a><span class="lineno">  571</span><span class="comment"> *----------------------------------------------------------------------------*/</span></div>
+<div class="line"><a id="l00572" name="l00572"></a><span class="lineno">  572</span><span class="comment"></span> </div>
+<div class="line"><a id="l00573" name="l00573"></a><span class="lineno">  573</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00574" name="l00574"></a><span class="lineno">  574</span><span class="comment"> * \brief return the code length of a given UTF8 char</span></div>
+<div class="line"><a id="l00575" name="l00575"></a><span class="lineno">  575</span><span class="comment"> * \param[in] pchChar the start address of an UTF8 char</span></div>
+<div class="line"><a id="l00576" name="l00576"></a><span class="lineno">  576</span><span class="comment"> * \retval -1 this isn&#39;t a legal UTF8 char</span></div>
+<div class="line"><a id="l00577" name="l00577"></a><span class="lineno">  577</span><span class="comment"> * \retval &gt;0 the UTF8 char length</span></div>
+<div class="line"><a id="l00578" name="l00578"></a><span class="lineno">  578</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00579" name="l00579"></a><span class="lineno">  579</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00580" name="l00580"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga00cb49b43afa6fe2815a80b0bd9bdc72">  580</a></span>int8_t <a class="code hl_function" href="group__gHelper.html#ga00cb49b43afa6fe2815a80b0bd9bdc72" title="return the code length of a given UTF8 char">arm_2d_helper_utf8_byte_length</a>(uint8_t *pchChar);</div>
+<div class="line"><a id="l00581" name="l00581"></a><span class="lineno">  581</span><span class="comment"></span> </div>
+<div class="line"><a id="l00582" name="l00582"></a><span class="lineno">  582</span><span class="comment">/*! @} */</span></div>
+<div class="line"><a id="l00583" name="l00583"></a><span class="lineno">  583</span> </div>
+<div class="line"><a id="l00584" name="l00584"></a><span class="lineno">  584</span><span class="preprocessor">#if defined(__clang__)</span></div>
+<div class="line"><a id="l00585" name="l00585"></a><span class="lineno">  585</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
+<div class="line"><a id="l00586" name="l00586"></a><span class="lineno">  586</span><span class="preprocessor">#elif __IS_COMPILER_ARM_COMPILER_5__</span></div>
+<div class="line"><a id="l00587" name="l00587"></a><span class="lineno">  587</span><span class="preprocessor">#pragma diag_warning 64</span></div>
+<div class="line"><a id="l00588" name="l00588"></a><span class="lineno">  588</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00589" name="l00589"></a><span class="lineno">  589</span> </div>
+<div class="line"><a id="l00590" name="l00590"></a><span class="lineno">  590</span><span class="preprocessor">#undef __ARM_2D_HELPER_IMPLEMENT__</span></div>
+<div class="line"><a id="l00591" name="l00591"></a><span class="lineno">  591</span><span class="preprocessor">#undef __ARM_2D_HELPER_INHERIT__</span></div>
+<div class="line"><a id="l00592" name="l00592"></a><span class="lineno">  592</span> </div>
+<div class="line"><a id="l00593" name="l00593"></a><span class="lineno">  593</span> </div>
+<div class="line"><a id="l00594" name="l00594"></a><span class="lineno">  594</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
+<div class="line"><a id="l00595" name="l00595"></a><span class="lineno">  595</span>}</div>
+<div class="line"><a id="l00596" name="l00596"></a><span class="lineno">  596</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00597" name="l00597"></a><span class="lineno">  597</span> </div>
+<div class="line"><a id="l00598" name="l00598"></a><span class="lineno">  598</span><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

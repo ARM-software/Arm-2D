@@ -248,8 +248,8 @@ var NAVTREEINDEX =
 [
 "group__Deprecated.html",
 "group__gAlpha.html#gaa30eeb5263a6dfb2105af586f6307864",
-"group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a13fa875a506b5b243aa40bc4d7059f21",
-"group__gKernel.html#ga59d6a14b6d2f3a0eb584281053dbb499",
+"group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a11b0ad1005d9022ef71697b05865065c",
+"group__gKernel.html#ga599f23738f743f523415f4f907b7976a",
 "group__gTransform.html#a39295faf4a194862db89fae27f4b4860"
 ];
 

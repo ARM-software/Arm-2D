@@ -678,6 +678,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga9a0bb323933baa059f65eb2bd62608be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga9a0bb323933baa059f65eb2bd62608be">arm_2d_byte_fifo_reset_peeked</a> (<a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis)</td></tr>
 <tr class="memdesc:ga9a0bb323933baa059f65eb2bd62608be"><td class="mdescLeft">&#160;</td><td class="mdescRight">reset the peek pointer, so you can restart from the beginning to peek.  <a href="group__gHelper.html#ga9a0bb323933baa059f65eb2bd62608be">More...</a><br /></td></tr>
 <tr class="separator:ga9a0bb323933baa059f65eb2bd62608be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga00cb49b43afa6fe2815a80b0bd9bdc72"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga00cb49b43afa6fe2815a80b0bd9bdc72">arm_2d_helper_utf8_byte_length</a> (uint8_t *pchChar)</td></tr>
+<tr class="memdesc:ga00cb49b43afa6fe2815a80b0bd9bdc72"><td class="mdescLeft">&#160;</td><td class="mdescRight">return the code length of a given UTF8 char  <a href="group__gHelper.html#ga00cb49b43afa6fe2815a80b0bd9bdc72">More...</a><br /></td></tr>
+<tr class="separator:ga00cb49b43afa6fe2815a80b0bd9bdc72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -7178,6 +7181,39 @@ For normal usage, please DO NOT use this function unless you know what you are d
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
+
+</div>
+</div>
+<a id="ga00cb49b43afa6fe2815a80b0bd9bdc72" name="ga00cb49b43afa6fe2815a80b0bd9bdc72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga00cb49b43afa6fe2815a80b0bd9bdc72">&#9670;&nbsp;</a></span>arm_2d_helper_utf8_byte_length()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int8_t arm_2d_helper_utf8_byte_length </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>pchChar</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>return the code length of a given UTF8 char </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pchChar</td><td>the start address of an UTF8 char </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">-1</td><td>this isn't a legal UTF8 char </td></tr>
+    <tr><td class="paramname">&gt;0</td><td>the UTF8 char length </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
