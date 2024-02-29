@@ -267,19 +267,25 @@ arm_2d_char_descriptor_t *__arm_lcd_get_char_descriptor(const arm_2d_font_t *ptF
     return ptDescriptor;
 }
 
-
-int8_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8_t chOpacity)
+int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8_t chOpacity)
 {
     arm_2d_char_descriptor_t tCharDescriptor;
+
+    int8_t chCodeLength = arm_2d_helper_utf8_byte_length(*ppchCharCode);
+    if (chCodeLength <= 0) {
+        chCodeLength = 1;
+    }
+
     if (NULL == __arm_lcd_get_char_descriptor(  s_tLCDTextControl.ptFont, 
                                                 &tCharDescriptor,
                                                 ppchCharCode)){
-        (*ppchCharCode) += 1;
+        (*ppchCharCode) += chCodeLength;
 
         return 0;
     }
 
-    (*ppchCharCode) += tCharDescriptor.chCodeLength;
+    //(*ppchCharCode) += tCharDescriptor.chCodeLength;
+    (*ppchCharCode) += chCodeLength;
 
     arm_2d_size_t tBBoxSize = s_tLCDTextControl.ptFont->tCharSize;
 

@@ -566,6 +566,18 @@ void arm_2d_byte_fifo_get_all_peeked(arm_2d_byte_fifo_t *ptThis);
 ARM_NONNULL(1)
 void arm_2d_byte_fifo_reset_peeked(arm_2d_byte_fifo_t *ptThis);
 
+/*----------------------------------------------------------------------------*
+ * Misc                                                                       *
+ *----------------------------------------------------------------------------*/
+
+/*!
+ * \brief return the code length of a given UTF8 char
+ * \param[in] pchChar the start address of an UTF8 char
+ * \retval -1 this isn't a legal UTF8 char
+ * \retval >0 the UTF8 char length
+ */
+ARM_NONNULL(1)
+int8_t arm_2d_helper_utf8_byte_length(uint8_t *pchChar);
 
 /*! @} */
 

@@ -869,6 +869,44 @@ void arm_2d_byte_fifo_reset_peeked(arm_2d_byte_fifo_t *ptThis)
     }
 }
 
+/*----------------------------------------------------------------------------*
+ * Misc                                                                       *
+ *----------------------------------------------------------------------------*/
+
+ARM_NONNULL(1)
+int8_t arm_2d_helper_utf8_byte_length(uint8_t *pchChar)
+{
+
+    switch(__CLZ( ~(uint32_t)pchChar[0] )) {
+        case 0:                                     /* BYTE0: 0xxx-xxxx */
+            return 1;
+        case 1:
+            break;
+        case 2:                                     /* BYTE0: 110x-xxxx */
+            if ((pchChar[1] & 0xC0) == 0x80) {      /* BYTE1: 10xx-xxxx */
+                return 2;
+            }
+            break;
+        case 3:                                     /* BYTE0: 1110-xxxx */
+            if  (((pchChar[1] & 0xC0) == 0x80)      /* BYTE1: 10xx-xxxx */
+            &&   ((pchChar[2] & 0xC0) == 0x80)) {   /* BYTE2: 10xx-xxxx */
+                return 3;
+            }
+            break;
+        case 4:
+            if  (((pchChar[1] & 0xC0) == 0x80)      /* BYTE1: 10xx-xxxx */
+            &&   ((pchChar[2] & 0xC0) == 0x80)      /* BYTE2: 10xx-xxxx */
+            &&   ((pchChar[3] & 0xC0) == 0x80)) {   /* BYTE3: 10xx-xxxx */
+                return 3;
+            }
+            break;
+        default:
+            break;
+    }
+
+    return -1;
+}
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #elif defined(__IS_COMPILER_GCC__)

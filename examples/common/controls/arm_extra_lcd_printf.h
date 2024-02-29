@@ -218,9 +218,11 @@ void arm_lcd_text_location(uint8_t chY, uint8_t chX);
  * \param[in] chOpacity the opacity of the char
  *
  * \note this chOpacity has NO effect on the default monochrome(A1) font
+ * 
+ * \return int16_t char advance in pixels
  */
 extern
-int8_t lcd_draw_char(int16_t iX, 
+int16_t lcd_draw_char(int16_t iX, 
                      int16_t iY, 
                      uint8_t **ppchCharCode, 
                      uint_fast8_t chOpacity);
