@@ -681,6 +681,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gac3bdc393bc8cbb86351a7647372854d8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gac3bdc393bc8cbb86351a7647372854d8">arm_2d_byte_fifo_init</a> (<a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis, void *pBuffer, uint16_t hwSize)</td></tr>
 <tr class="memdesc:gac3bdc393bc8cbb86351a7647372854d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize a given byte fifo  <a href="group__gHelper.html#gac3bdc393bc8cbb86351a7647372854d8">More...</a><br /></td></tr>
 <tr class="separator:gac3bdc393bc8cbb86351a7647372854d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae5ef53c867010fd51592debcba60441a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gae5ef53c867010fd51592debcba60441a">arm_2d_byte_fifo_drop_all</a> (<a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis)</td></tr>
+<tr class="memdesc:gae5ef53c867010fd51592debcba60441a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Empty a given byte fifo.  <a href="group__gHelper.html#gae5ef53c867010fd51592debcba60441a">More...</a><br /></td></tr>
+<tr class="separator:gae5ef53c867010fd51592debcba60441a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga44e78d3e1990b1721c40fc6a93c78fcf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga44e78d3e1990b1721c40fc6a93c78fcf">arm_2d_byte_fifo_enqueue</a> (<a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis, uint8_t chChar)</td></tr>
 <tr class="memdesc:ga44e78d3e1990b1721c40fc6a93c78fcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">write a byte to a given fifo  <a href="group__gHelper.html#ga44e78d3e1990b1721c40fc6a93c78fcf">More...</a><br /></td></tr>
 <tr class="separator:ga44e78d3e1990b1721c40fc6a93c78fcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -7254,6 +7257,32 @@ For normal usage, please DO NOT use this function unless you know what you are d
   <table class="retval">
     <tr><td class="paramname">false</td><td>Illegal parameters </td></tr>
     <tr><td class="paramname">true</td><td>the target FIFO is initialized </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gae5ef53c867010fd51592debcba60441a" name="gae5ef53c867010fd51592debcba60441a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae5ef53c867010fd51592debcba60441a">&#9670;&nbsp;</a></span>arm_2d_byte_fifo_drop_all()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_byte_fifo_drop_all </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Empty a given byte fifo. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target byte fifo </td></tr>
   </table>
   </dd>
 </dl>
