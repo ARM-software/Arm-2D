@@ -173,12 +173,16 @@ void __console_box_force_to_write_console_fifo( console_box_t *ptThis,
                 break;
             }
 
+        #if 0 /* we suppose all char has the same with to improve performance */
             arm_2d_char_descriptor_t tDescriptor;
             if (NULL == arm_2d_helper_get_char_descriptor(this.ptFont, &tDescriptor, (uint8_t *)&wUTF8)) {
                 iLineWidth += this.ptFont->tCharSize.iWidth;
             } else {
                 iLineWidth += tDescriptor.iAdvance;
             }
+        #else
+            iLineWidth += this.ptFont->tCharSize.iWidth;
+        #endif
 
             if (iLineWidth > this.tBoxSize.iWidth) {
                 arm_2d_byte_fifo_reset_peeked(&this.tConsoleFIFO);
@@ -279,17 +283,23 @@ void console_box_show(  console_box_t *ptThis,
             arm_lcd_text_set_font(this.ptFont);
             arm_lcd_text_set_draw_region(&__centre_region);
             arm_lcd_text_set_colour(this.tColor, GLCD_COLOR_BLACK);
-            
-            uint32_t wUTF8;
-            arm_2d_byte_fifo_reset_peeked(&this.tConsoleFIFO);
-            do {
-                if (!__console_box_peek_utf8(&this.tConsoleFIFO, &wUTF8)) {
-                    break;
-                }
-                //putc( wUTF8, stdout);
 
-                arm_lcd_putchar((const char *)&wUTF8);
-            } while(true);
+            /* force all char use the same with in display */
+            arm_using(bool bOriginal = arm_lcd_text_force_char_use_same_with(true),
+                      /* on leave resume the original configuration */
+                      arm_lcd_text_force_char_use_same_with(bOriginal)) {
+
+                uint32_t wUTF8;
+                arm_2d_byte_fifo_reset_peeked(&this.tConsoleFIFO);
+                do {
+                    if (!__console_box_peek_utf8(&this.tConsoleFIFO, &wUTF8)) {
+                        break;
+                    }
+
+                    arm_lcd_putchar((const char *)&wUTF8);
+                } while(true);
+            }
+            
 
             /* make sure the operation is complete */
             arm_2d_op_wait_async(NULL);

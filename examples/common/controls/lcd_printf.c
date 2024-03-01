@@ -78,7 +78,10 @@ static struct {
     arm_2d_tile_t *ptTargetFB;
     uint32_t       wMode;
     float          fScale;
-    
+
+    uint32_t  bForceAllCharUseSameWidth : 1;
+    uint32_t                            : 31;
+
     const arm_2d_font_t *ptFont;
 } s_tLCDTextControl = {
     .tScreen = {
@@ -147,6 +150,15 @@ void arm_lcd_text_set_scale(float fScale)
     } else {
         s_tLCDTextControl.fScale = 0.0f;
     }
+}
+
+bool arm_lcd_text_force_char_use_same_with(bool bForced)
+{
+    bool bOriginalValue = s_tLCDTextControl.bForceAllCharUseSameWidth;
+
+    s_tLCDTextControl.bForceAllCharUseSameWidth = bForced;
+
+    return bOriginalValue;
 }
 
 void arm_lcd_text_set_draw_region(arm_2d_region_t *ptRegion)
@@ -239,6 +251,7 @@ ARM_2D_A1_FONT_GET_CHAR_DESCRIPTOR_HANDLER(
     return ptDescriptor;
 }
 
+#if 0
 static 
 arm_2d_char_descriptor_t *__arm_lcd_get_char_descriptor(const arm_2d_font_t *ptFont, 
                                                         arm_2d_char_descriptor_t *ptDescriptor, 
@@ -261,22 +274,61 @@ arm_2d_char_descriptor_t *__arm_lcd_get_char_descriptor(const arm_2d_font_t *ptF
 
     return ptDescriptor;
 }
+#endif
+
+static
+int16_t __arm_lcd_get_char_advance(arm_2d_char_descriptor_t *ptDescriptor, uint8_t *pchChar)
+{
+    int16_t iAdvance = s_tLCDTextControl.ptFont->tCharSize.iWidth;
+
+    do {
+        if (s_tLCDTextControl.bForceAllCharUseSameWidth) {
+            break;
+        }
+        if (NULL != ptDescriptor) {
+            iAdvance = ptDescriptor->iAdvance;
+            break;
+        } if (NULL == pchChar) {
+            break;
+        }
+
+        arm_2d_char_descriptor_t tDescriptor;
+        if (NULL == arm_2d_helper_get_char_descriptor(  s_tLCDTextControl.ptFont, 
+                                                        &tDescriptor,
+                                                        pchChar)){
+            break;
+        }
+        iAdvance = ptDescriptor->iAdvance;
+    } while(0);
+
+
+    /* NOTE: when the FONT mask insn't ARM_2D_COLOUR_8BIT, the scaling behaviour is unpredicted */
+    if (s_tLCDTextControl.fScale > 0.0f) {
+        iAdvance = (int16_t)((float)iAdvance * s_tLCDTextControl.fScale);
+        /* NOTE: No need to adjust bearings in the following way. */
+        //ptDescriptor->iBearingX = (int16_t)((float)ptDescriptor->iBearingX * s_tLCDTextControl.fScale);
+        //ptDescriptor->iBearingY = (int16_t)((float)ptDescriptor->iBearingY * s_tLCDTextControl.fScale);
+    }
+
+    return iAdvance;
+
+}
 
 int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8_t chOpacity)
 {
     arm_2d_char_descriptor_t tCharDescriptor;
-
+    
     int8_t chCodeLength = arm_2d_helper_get_utf8_byte_valid_length(*ppchCharCode);
     if (chCodeLength <= 0) {
         chCodeLength = 1;
     }
 
-    if (NULL == __arm_lcd_get_char_descriptor(  s_tLCDTextControl.ptFont, 
-                                                &tCharDescriptor,
-                                                *ppchCharCode)){
+    if (NULL == arm_2d_helper_get_char_descriptor(  s_tLCDTextControl.ptFont, 
+                                                    &tCharDescriptor,
+                                                    *ppchCharCode)){
         (*ppchCharCode) += chCodeLength;
 
-        return s_tLCDTextControl.ptFont->tCharSize.iWidth;
+        return __arm_lcd_get_char_advance(NULL, NULL);
     }
 
     //(*ppchCharCode) += tCharDescriptor.chCodeLength;
@@ -311,7 +363,7 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
 
     arm_2d_op_wait_async(NULL);
 
-    return tCharDescriptor.iAdvance;
+    return __arm_lcd_get_char_advance(&tCharDescriptor, NULL);
 }
 
 static void __arm_lcd_draw_region_line_wrapping(arm_2d_size_t *ptCharSize, 
@@ -361,23 +413,13 @@ arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t
             }
         } else {
 
-            int16_t iAdvance = tCharSize.iWidth;
-
-            arm_2d_char_descriptor_t tDescriptor;
-
             int8_t chCodeLength = arm_2d_helper_get_utf8_byte_valid_length((uint8_t *)str);
             if (chCodeLength <= 0) {
                 chCodeLength = 1;
             }
+            str += chCodeLength;
 
-            if (NULL != __arm_lcd_get_char_descriptor( ptFont, &tDescriptor, (uint8_t *)str)) {
-                iAdvance = tDescriptor.iAdvance;
-            } else {
-                iAdvance = ptFont->tCharSize.iWidth;
-            }
-            str+=chCodeLength;
-
-            tDrawBox.tLocation.iX += iAdvance;
+            tDrawBox.tLocation.iX += __arm_lcd_get_char_advance(NULL, (uint8_t *)str);
             tDrawBox.tSize.iWidth = MAX(tDrawBox.tSize.iWidth, tDrawBox.tLocation.iX);
 
             continue;

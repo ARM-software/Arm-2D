@@ -177,6 +177,15 @@ void arm_lcd_text_set_opacity(uint8_t chOpacity);
 extern
 void arm_lcd_text_set_scale(float fScale);
 
+/*!
+ * \brief Force all char use the same with when display
+ * 
+ * \param[in] bForced force or not
+ * \return boolean the original configuration
+ */
+extern
+bool arm_lcd_text_force_char_use_same_with(bool bForced);
+
 extern 
 void arm_lcd_text_set_target_framebuffer(const arm_2d_tile_t *ptFrameBuffer);
 
