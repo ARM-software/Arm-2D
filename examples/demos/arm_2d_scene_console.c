@@ -131,7 +131,7 @@ static void __on_scene_console_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_console_t *ptThis = (user_scene_console_t *)ptScene;
 
-    if (arm_2d_helper_is_time_out(1000, &this.lTimestamp[0])) {
+    if (arm_2d_helper_is_time_out(300, &this.lTimestamp[0])) {
         console_box_printf(&this.tConsole, "Hello World! [%08x]\r\n", (uint32_t)arm_2d_helper_get_system_timestamp());
     }
 

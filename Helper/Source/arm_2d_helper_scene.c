@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        26. Dec 2023
- * $Revision:    V.1.4.6
+ * $Date:        01. March 2024
+ * $Revision:    V.1.4.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -54,10 +54,12 @@
 #   pragma clang diagnostic ignored "-Wimplicit-int-conversion"
 #   pragma clang diagnostic ignored "-Wmissing-prototypes"
 #   pragma clang diagnostic ignored "-Wpedantic"
+#   pragma clang diagnostic ignored "-Wtautological-pointer-compare"
 #elif defined(__IS_COMPILER_GCC__)
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #   pragma GCC diagnostic ignored "-Wunused-value"
+
 #endif
 
 /*============================ MACROS ========================================*/
@@ -1340,6 +1342,77 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
     return arm_fsm_rt_on_going;
 }
 
+ARM_NONNULL(1,2)
+bool arm_2d_scene_player_append_dirty_regions(arm_2d_scene_t *ptScene, 
+                                              arm_2d_region_list_item_t *ptItems,
+                                              size_t tCount)
+{
+
+    do {
+        if (NULL == ptItems || 0 == tCount || NULL == ptScene) {
+            break;
+        }
+
+        arm_2d_region_list_item_t **ppDirtyRegionList = &ptScene->ptDirtyRegion;
+        if (NULL != ppDirtyRegionList) {
+
+            if (NULL != ppDirtyRegionList) {
+                while(NULL != (*ppDirtyRegionList)) {
+                    ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
+                }
+
+                /* add dirty region items to the list */
+                (*ppDirtyRegionList) = ptItems;
+                while(--tCount) {
+                    ptItems->ptNext = ptItems + 1;
+                    ptItems++;
+                }
+                ptItems->ptNext = NULL;
+            }
+        }
+
+        return true;
+    } while(0);
+
+    return false;
+}
+
+ARM_NONNULL(1,2)
+bool arm_2d_scene_player_remove_dirty_regions(arm_2d_scene_t *ptScene, 
+                                              arm_2d_region_list_item_t *ptItems,
+                                              size_t tCount)
+{
+
+    do {
+        if (NULL == ptItems || 0 == tCount || NULL == ptScene) {
+            break;
+        }
+
+        do {
+            /* search and remove item */
+            arm_2d_region_list_item_t **ppDirtyRegionList = &ptScene->ptDirtyRegion;
+
+            while(NULL != (*ppDirtyRegionList)) {
+
+                /* remove the dirty region from the user dirty region list */
+                if ((*ppDirtyRegionList) == ptItems) {
+                    (*ppDirtyRegionList) = ptItems->ptNext;
+                    ptItems->ptNext = NULL;
+                    break;
+                }
+
+                ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
+            }
+
+            /* next item */
+            ptItems++;
+        } while(--tCount);
+
+        return true;
+    } while(0);
+
+    return false;
+}
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

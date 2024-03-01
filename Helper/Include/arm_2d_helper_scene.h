@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        26. Dec 2023
- * $Revision:    V.1.4.6
+ * $Date:        01. March 2024
+ * $Revision:    V.1.4.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -508,6 +508,34 @@ arm_2d_err_t __arm_2d_scene_player_register_before_switching_event_handler(
 extern
 ARM_NONNULL(1)
 arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis);
+
+/*!
+ * \brief append dirty regions to the a specified scene
+ * \param[in] ptScene the target scene
+ * \param[in] ptItems the dirty regions
+ * \param[in] tCount the number of dirty regions
+ * \retval true operation is successful
+ * \retval false the operation is failed.
+ */
+extern
+ARM_NONNULL(1,2)
+bool arm_2d_scene_player_append_dirty_regions(arm_2d_scene_t *ptScene, 
+                                              arm_2d_region_list_item_t *ptItems,
+                                              size_t tCount);
+
+/*!
+ * \brief remove dirty regions from the a specified scene
+ * \param[in] ptScene the target scene
+ * \param[in] ptItems the dirty regions
+ * \param[in] tCount the number of dirty regions
+ * \retval true operation is successful
+ * \retval false the operation is failed.
+ */
+extern
+ARM_NONNULL(1,2)
+bool arm_2d_scene_player_remove_dirty_regions(arm_2d_scene_t *ptScene, 
+                                              arm_2d_region_list_item_t *ptItems,
+                                              size_t tCount);
 
 /*! @} */
 
