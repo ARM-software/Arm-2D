@@ -1414,6 +1414,17 @@ bool arm_2d_scene_player_remove_dirty_regions(arm_2d_scene_t *ptScene,
     return false;
 }
 
+ARM_NONNULL(1)
+arm_2d_scene_t * arm_2d_scene_player_get_the_current_scene(arm_2d_scene_player_t *ptThis)
+{
+    assert(NULL != ptThis);
+    if (NULL == ptThis) {
+        return NULL;
+    }
+
+    return this.SceneFIFO.ptHead;;
+}
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #elif defined(__IS_COMPILER_GCC__)

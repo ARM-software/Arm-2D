@@ -537,6 +537,16 @@ bool arm_2d_scene_player_remove_dirty_regions(arm_2d_scene_t *ptScene,
                                               arm_2d_region_list_item_t *ptItems,
                                               size_t tCount);
 
+/*!
+ * \brief get the current scene of a given scene player
+ * \param[in] ptThis the target scene player
+ * \return arm_2d_scenen_t * the current scene
+ */
+extern
+ARM_NONNULL(1)
+arm_2d_scene_t * 
+arm_2d_scene_player_get_the_current_scene(arm_2d_scene_player_t *ptThis);
+
 /*! @} */
 
 #if defined(__clang__)
