@@ -101,6 +101,17 @@ bool console_box_init(  console_box_t *ptThis,
 
     this.tColor = ptCFG->tColor;
 
+    do {
+        this.Console.hwMaxColumn = this.tBoxSize.iWidth / this.ptFont->tCharSize.iWidth;
+        this.Console.hwMaxRow = this.tBoxSize.iHeight / this.ptFont->tCharSize.iHeight;
+
+        if ((0 == this.Console.hwMaxColumn)
+        ||  (0 == this.Console.hwMaxRow)) {
+            return false;
+        }
+    } while(0);
+
+
     return true;
 }
 
@@ -146,6 +157,43 @@ bool __console_box_peek_utf8(arm_2d_byte_fifo_t *ptFIFO, uint32_t *pwUTF8)
     return true;
 }
 
+static 
+void __console_box_remove_top_line(console_box_t *ptThis)
+{
+    arm_2d_byte_fifo_reset_peeked(&this.tConsoleFIFO);
+    int16_t iLineWidth = 0;
+    do {
+        uint32_t wUTF8 = 0;
+        if (!__console_box_peek_utf8(&this.tConsoleFIFO, &wUTF8)) {
+            /* failed to get a complete UTF8 char */
+            arm_2d_byte_fifo_get_all_peeked(&this.tConsoleFIFO);
+            break;
+        }
+
+        if (wUTF8 == '\n') {
+            /* successfully removed a line */
+            arm_2d_byte_fifo_get_all_peeked(&this.tConsoleFIFO);
+            break;
+        }
+
+        iLineWidth += this.ptFont->tCharSize.iWidth;
+
+        if (iLineWidth > this.tBoxSize.iWidth) {
+            arm_2d_byte_fifo_reset_peeked(&this.tConsoleFIFO);
+            /* detect line wrapping */
+            break;
+        }
+
+        /* remove this UTF8 char and move to next one */
+        arm_2d_byte_fifo_get_all_peeked(&this.tConsoleFIFO);
+
+    } while(true);
+
+    if (this.Console.hwCurrentRow) {
+        this.Console.hwCurrentRow--;
+    }
+}
+
 ARM_NONNULL(1)
 static 
 void __console_box_force_to_write_console_fifo( console_box_t *ptThis, 
@@ -153,47 +201,48 @@ void __console_box_force_to_write_console_fifo( console_box_t *ptThis,
 {
     do {
         if (arm_2d_byte_fifo_enqueue(&this.tConsoleFIFO, chInputChar)) {
+            /* check the byte written */
+            bool bMoveToNextLine = false;
+
+            switch (chInputChar) {
+                case '\n':
+                    bMoveToNextLine = true;
+                    break;
+                case '\r':
+                    this.Console.hwCurrentColumn = 0;   /* move to start of the line */
+                    break;
+                case '\b':
+                    if (this.Console.hwCurrentColumn) { /* delete one byte */
+                        this.Console.hwCurrentColumn--;
+                    }
+                    break;
+                case '\t':
+                    this.Console.hwCurrentColumn += 4;
+                    this.Console.hwCurrentColumn &= ~0x3;
+                    break;
+                default:
+                    this.Console.hwCurrentColumn++;
+                    break;
+            }
+
+            if (this.Console.hwCurrentColumn >= this.Console.hwMaxColumn) {
+                /* move to next line */
+                bMoveToNextLine = true;
+            }
+
+            if (bMoveToNextLine) {
+                this.Console.hwCurrentColumn = 0;
+                this.Console.hwCurrentRow++;
+
+                if (this.Console.hwCurrentRow >= this.Console.hwMaxRow) {
+                    __console_box_remove_top_line(ptThis);
+                }
+            }
+
             return ;
         }
         /* the CONSOLE FIFO is FULL, we have to remove the top line */
-
-        arm_2d_byte_fifo_reset_peeked(&this.tConsoleFIFO);
-        int16_t iLineWidth = 0;
-        do {
-            uint32_t wUTF8 = 0;
-            if (!__console_box_peek_utf8(&this.tConsoleFIFO, &wUTF8)) {
-                /* failed to get a complete UTF8 char */
-                arm_2d_byte_fifo_get_all_peeked(&this.tConsoleFIFO);
-                break;
-            }
-
-            if (wUTF8 == '\n') {
-                /* successfully removed a line */
-                arm_2d_byte_fifo_get_all_peeked(&this.tConsoleFIFO);
-                break;
-            }
-
-        #if 0 /* we suppose all char has the same with to improve performance */
-            arm_2d_char_descriptor_t tDescriptor;
-            if (NULL == arm_2d_helper_get_char_descriptor(this.ptFont, &tDescriptor, (uint8_t *)&wUTF8)) {
-                iLineWidth += this.ptFont->tCharSize.iWidth;
-            } else {
-                iLineWidth += tDescriptor.iAdvance;
-            }
-        #else
-            iLineWidth += this.ptFont->tCharSize.iWidth;
-        #endif
-
-            if (iLineWidth > this.tBoxSize.iWidth) {
-                arm_2d_byte_fifo_reset_peeked(&this.tConsoleFIFO);
-                /* detect line wrapping */
-                break;
-            }
-
-            /* remove this UTF8 char and move to next one */
-            arm_2d_byte_fifo_get_all_peeked(&this.tConsoleFIFO);
-
-        } while(true);
+        __console_box_remove_top_line(ptThis);
 
 
     } while(true);

@@ -81,6 +81,15 @@ ARM_PRIVATE(
 
     uint8_t bNoInputFIFO    : 1;
     uint8_t                 : 7;
+
+    struct {
+        uint16_t hwMaxColumn;
+        uint16_t hwMaxRow;
+        uint16_t hwCurrentRow;
+        uint16_t hwCurrentColumn;
+
+        int16_t iCurrentLineWidth;
+    } Console;
 )
 
 };
