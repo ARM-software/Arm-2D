@@ -266,7 +266,7 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
 {
     arm_2d_char_descriptor_t tCharDescriptor;
 
-    int8_t chCodeLength = arm_2d_helper_utf8_byte_length(*ppchCharCode);
+    int8_t chCodeLength = arm_2d_helper_get_utf8_byte_valid_length(*ppchCharCode);
     if (chCodeLength <= 0) {
         chCodeLength = 1;
     }
@@ -365,7 +365,7 @@ arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t
 
             arm_2d_char_descriptor_t tDescriptor;
 
-            int8_t chCodeLength = arm_2d_helper_utf8_byte_length((uint8_t *)str);
+            int8_t chCodeLength = arm_2d_helper_get_utf8_byte_valid_length((uint8_t *)str);
             if (chCodeLength <= 0) {
                 chCodeLength = 1;
             }
@@ -387,6 +387,45 @@ arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t
     }
 
     return tDrawBox.tSize;
+}
+
+void arm_lcd_putchar(const char *str)
+{
+    arm_2d_size_t tCharSize = s_tLCDTextControl.ptFont->tCharSize;
+    arm_2d_size_t tDrawRegionSize = s_tLCDTextControl.tRegion.tSize;
+
+    if (*str) {
+        if (*str == '\r') {
+            s_tLCDTextControl.tDrawOffset.iX = 0;
+        } else if (*str == '\n') {
+            s_tLCDTextControl.tDrawOffset.iX = 0;
+            s_tLCDTextControl.tDrawOffset.iY += tCharSize.iHeight;
+            if (s_tLCDTextControl.tDrawOffset.iY >= tDrawRegionSize.iHeight) {
+                s_tLCDTextControl.tDrawOffset.iY = 0;
+            }
+        } else if (*str == '\t') { 
+            s_tLCDTextControl.tDrawOffset.iX += tCharSize.iWidth * 4;
+            s_tLCDTextControl.tDrawOffset.iX -= s_tLCDTextControl.tDrawOffset.iX 
+                                              % tCharSize.iWidth;
+
+            __arm_lcd_draw_region_line_wrapping(&tCharSize, &tDrawRegionSize);
+
+        }else if (*str == '\b') {
+            if (s_tLCDTextControl.tDrawOffset.iX >= tCharSize.iWidth) {
+                s_tLCDTextControl.tDrawOffset.iX -= tCharSize.iWidth;
+            } else {
+                s_tLCDTextControl.tDrawOffset.iX = 0;
+            }
+        } else {
+            int16_t iX = s_tLCDTextControl.tDrawOffset.iX + s_tLCDTextControl.tRegion.tLocation.iX;
+            int16_t iY = s_tLCDTextControl.tDrawOffset.iY + s_tLCDTextControl.tRegion.tLocation.iY; 
+
+            s_tLCDTextControl.tDrawOffset.iX 
+                += lcd_draw_char(   iX, iY, (uint8_t **)&str, s_tLCDTextControl.chOpacity);
+
+            __arm_lcd_draw_region_line_wrapping(&tCharSize, &tDrawRegionSize);
+        }
+    }
 }
 
 void arm_lcd_puts(const char *str)

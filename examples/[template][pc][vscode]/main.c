@@ -149,9 +149,10 @@ void scene_console_loader(void)
 typedef void scene_loader_t(void);
 
 static scene_loader_t * const c_SceneLoaders[] = {
-    //scene0_loader,
-    //scene1_loader,
+    scene0_loader,
+    scene1_loader,
     scene_console_loader,
+
     scene_meter_loader,
     scene3_loader,
     scene5_loader,
@@ -160,6 +161,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene_audiomark_loader,
     scene_fitness_loader,
     //scene_watch_loader,
+
 };
 
 

@@ -814,7 +814,9 @@ bool arm_2d_byte_fifo_dequeue(arm_2d_byte_fifo_t *ptThis, uint8_t *pchChar)
 }
 
 ARM_NONNULL(1)
-bool arm_2d_byte_fifo_peek(arm_2d_byte_fifo_t *ptThis, uint8_t *pchChar)
+bool arm_2d_byte_fifo_peek( arm_2d_byte_fifo_t *ptThis, 
+                            uint8_t *pchChar, 
+                            bool bMovePointer)
 {
     assert(NULL != ptThis);
     bool bResult = false;
@@ -833,12 +835,14 @@ bool arm_2d_byte_fifo_peek(arm_2d_byte_fifo_t *ptThis, uint8_t *pchChar)
                 break;
             }
 
-            chChar = this.pchBuffer[this.tPeek.hwPointer++];
+            chChar = this.pchBuffer[this.tPeek.hwPointer];
 
-            if (this.tPeek.hwPointer >= this.hwSize) {
-                this.tPeek.hwPointer = 0;
+            if (bMovePointer) {
+                if (++this.tPeek.hwPointer >= this.hwSize) {
+                    this.tPeek.hwPointer = 0;
+                }
+                this.tPeek.hwDataAvailable--;
             }
-            this.tPeek.hwDataAvailable--;
 
             if (NULL != pchChar) {
                 *pchChar = chChar;
@@ -874,7 +878,7 @@ void arm_2d_byte_fifo_reset_peeked(arm_2d_byte_fifo_t *ptThis)
  *----------------------------------------------------------------------------*/
 
 ARM_NONNULL(1)
-int8_t arm_2d_helper_utf8_byte_length(uint8_t *pchChar)
+int8_t arm_2d_helper_get_utf8_byte_valid_length(uint8_t *pchChar)
 {
 
     switch(__CLZ( ~(uint32_t)pchChar[0] )) {
@@ -897,9 +901,30 @@ int8_t arm_2d_helper_utf8_byte_length(uint8_t *pchChar)
             if  (((pchChar[1] & 0xC0) == 0x80)      /* BYTE1: 10xx-xxxx */
             &&   ((pchChar[2] & 0xC0) == 0x80)      /* BYTE2: 10xx-xxxx */
             &&   ((pchChar[3] & 0xC0) == 0x80)) {   /* BYTE3: 10xx-xxxx */
-                return 3;
+                return 4;
             }
             break;
+        default:
+            break;
+    }
+
+    return -1;
+}
+
+ARM_NONNULL(1)
+int8_t arm_2d_helper_get_utf8_byte_length(uint8_t *pchChar)
+{
+    switch(__CLZ( ~(uint32_t)pchChar[0] )) {
+        case 0:
+            return 1;
+        case 1:
+            break;
+        case 2:
+            return 2;
+        case 3:
+            return 3;
+        case 4:
+            return 4;
         default:
             break;
     }

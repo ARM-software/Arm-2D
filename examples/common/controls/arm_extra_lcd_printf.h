@@ -164,6 +164,9 @@ int16_t lcd_draw_char(int16_t iX,
                      uint8_t **ppchCharCode, 
                      uint_fast8_t chOpacity);
 
+extern
+void arm_lcd_putchar(const char *str);
+
 extern 
 void arm_lcd_text_set_colour(   COLOUR_INT_TYPE wForeground, 
                                 COLOUR_INT_TYPE wBackground);

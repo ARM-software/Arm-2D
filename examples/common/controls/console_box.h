@@ -52,11 +52,14 @@ extern "C" {
 
 typedef struct console_box_cfg_t {
     arm_2d_size_t tBoxSize;
-    struct {
-        char *chFIFOBuffer;
-        size_t tSize;
-    } FIFO;
+
+    uint8_t *pchInputBuffer;
+    uint8_t *pchConsoleBuffer;
+    uint16_t hwConsoleBufferSize;
+    uint16_t hwInputBufferSize;
+
     const arm_2d_font_t *ptFont;
+    COLOUR_INT tColor;
 } console_box_cfg_t;
 
 /*!
@@ -67,10 +70,19 @@ typedef struct console_box_t console_box_t;
 struct console_box_t {
 
 ARM_PRIVATE(
-    console_box_cfg_t tCFG;
+
+    const arm_2d_font_t *ptFont;
+    arm_2d_size_t tBoxSize;
+
+    arm_2d_byte_fifo_t tInputFIFO;
+    arm_2d_byte_fifo_t tConsoleFIFO;
+
+    COLOUR_INT tColor;
+
+    uint8_t bNoInputFIFO    : 1;
+    uint8_t                 : 7;
 )
-    /* place your public member here */
-    
+
 };
 
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -78,8 +90,8 @@ ARM_PRIVATE(
 
 extern
 ARM_NONNULL(1)
-void console_box_init( console_box_t *ptThis,
-                          console_box_cfg_t *ptCFG);
+bool console_box_init(  console_box_t *ptThis,
+                        console_box_cfg_t *ptCFG);
 
 extern
 ARM_NONNULL(1)
@@ -93,6 +105,13 @@ void console_box_show( console_box_t *ptThis,
                             bool bIsNewFrame,
                             uint8_t chOpacity);
 
+extern;
+ARM_NONNULL(1)
+void console_box_on_frame_start(console_box_t *ptThis);
+
+extern
+ARM_NONNULL(1,2)
+int console_box_printf(console_box_t *ptThis, const char *format, ...);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

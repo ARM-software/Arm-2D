@@ -259,14 +259,14 @@ struct __arm_2d_fifo_reader_pointer {
 };
 
 typedef struct arm_2d_byte_fifo_t {
-ARM_PROTECTED (
+//ARM_PROTECTED (
     uint8_t *pchBuffer;
     uint16_t hwSize;
     uint16_t hwTail;
 
     struct __arm_2d_fifo_reader_pointer tHead;
     struct __arm_2d_fifo_reader_pointer tPeek;
-)
+//)
 } arm_2d_byte_fifo_t;
 
 typedef struct {
@@ -608,7 +608,9 @@ bool arm_2d_byte_fifo_dequeue(arm_2d_byte_fifo_t *ptThis, uint8_t *pchChar);
  */
 extern
 ARM_NONNULL(1)
-bool arm_2d_byte_fifo_peek(arm_2d_byte_fifo_t *ptThis, uint8_t *pchChar);
+bool arm_2d_byte_fifo_peek( arm_2d_byte_fifo_t *ptThis, 
+                            uint8_t *pchChar, 
+                            bool bMovePointer);
 
 /*!
  * \brief drop all peeked byte from a given fifo
@@ -632,13 +634,22 @@ void arm_2d_byte_fifo_reset_peeked(arm_2d_byte_fifo_t *ptThis);
  *----------------------------------------------------------------------------*/
 
 /*!
- * \brief return the code length of a given UTF8 char
+ * \brief return a valid code length of a given UTF8 char
  * \param[in] pchChar the start address of an UTF8 char
  * \retval -1 this isn't a legal UTF8 char
  * \retval >0 the UTF8 char length
  */
 ARM_NONNULL(1)
-int8_t arm_2d_helper_utf8_byte_length(uint8_t *pchChar);
+int8_t arm_2d_helper_get_utf8_byte_valid_length(uint8_t *pchChar);
+
+/*!
+ * \brief return the code length based on the first byte of a given UTF8 char
+ * \param[in] pchChar the start address of an UTF8 char
+ * \retval -1 this isn't a legal UTF8 char
+ * \retval >0 the UTF8 char length
+ */
+ARM_NONNULL(1)
+int8_t arm_2d_helper_get_utf8_byte_length(uint8_t *pchChar);
 
 /*!
  * \brief get char descriptor
