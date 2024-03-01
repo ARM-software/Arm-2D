@@ -262,9 +262,33 @@ bool console_box_putchar(console_box_t *ptThis, uint8_t chChar)
 }
 
 ARM_NONNULL(1)
+void console_box_clear_screen(console_box_t *ptThis)
+{
+    arm_irq_safe {
+        this.bClearScreenRequest = true;
+    }
+}
+
+ARM_NONNULL(1)
 void console_box_on_frame_start(console_box_t *ptThis)
 {
     assert(NULL != ptThis);
+    bool bRequestClearScreen = false;
+
+    arm_irq_safe {
+        if (this.bClearScreenRequest) {
+            bRequestClearScreen = true;
+            this.bClearScreenRequest = false;
+        }
+    }
+
+    /* clear screen */
+    if (bRequestClearScreen) {
+        arm_2d_byte_fifo_drop_all(&this.tConsoleFIFO);
+
+        this.Console.hwCurrentColumn = 0;
+        this.Console.hwCurrentRow = 0;
+    }
 
     do {
         if (this.bNoInputFIFO) {

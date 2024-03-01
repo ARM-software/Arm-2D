@@ -79,16 +79,15 @@ ARM_PRIVATE(
 
     COLOUR_INT tColor;
 
-    uint8_t bNoInputFIFO    : 1;
-    uint8_t                 : 7;
+    uint8_t bNoInputFIFO            : 1;
+    uint8_t bClearScreenRequest     : 1;
+    uint8_t                         : 7;
 
     struct {
         uint16_t hwMaxColumn;
         uint16_t hwMaxRow;
         uint16_t hwCurrentRow;
         uint16_t hwCurrentColumn;
-
-        int16_t iCurrentLineWidth;
     } Console;
 )
 
@@ -121,6 +120,10 @@ void console_box_on_frame_start(console_box_t *ptThis);
 extern
 ARM_NONNULL(1,2)
 int console_box_printf(console_box_t *ptThis, const char *format, ...);
+
+extern
+ARM_NONNULL(1)
+void console_box_clear_screen(console_box_t *ptThis);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
