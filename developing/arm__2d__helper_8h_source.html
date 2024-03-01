@@ -368,14 +368,14 @@ $(document).ready(function(){initNavTree('arm__2d__helper_8h_source.html',''); i
 <div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>};</div>
 <div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span> </div>
 <div class="line"><a id="l00261" name="l00261"></a><span class="lineno"><a class="line" href="group__gHelper.html">  261</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> {</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>ARM_PROTECTED (</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span><span class="comment">//ARM_PROTECTED (</span></div>
 <div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    uint8_t *pchBuffer;</div>
 <div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    uint16_t hwSize;</div>
 <div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    uint16_t hwTail;</div>
 <div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span> </div>
 <div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    <span class="keyword">struct </span><a class="code hl_struct" href="group__gHelper.html#struct____arm__2d__fifo__reader__pointer">__arm_2d_fifo_reader_pointer</a> tHead;</div>
 <div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    <span class="keyword">struct </span><a class="code hl_struct" href="group__gHelper.html#struct____arm__2d__fifo__reader__pointer">__arm_2d_fifo_reader_pointer</a> tPeek;</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>)</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span><span class="comment">//)</span></div>
 <div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>} <a class="code hl_struct" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a>;</div>
 <div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span> </div>
 <div class="line"><a id="l00272" name="l00272"></a><span class="lineno"><a class="line" href="group__gHelper.html">  272</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
@@ -717,68 +717,79 @@ $(document).ready(function(){initNavTree('arm__2d__helper_8h_source.html',''); i
 <div class="line"><a id="l00608" name="l00608"></a><span class="lineno">  608</span><span class="comment"> */</span></div>
 <div class="line"><a id="l00609" name="l00609"></a><span class="lineno">  609</span>extern</div>
 <div class="line"><a id="l00610" name="l00610"></a><span class="lineno">  610</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00611" name="l00611"></a><span class="lineno"><a class="line" href="group__gHelper.html#gae55f1ba0073947c48f2d4a3fe4f416a7">  611</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#gae55f1ba0073947c48f2d4a3fe4f416a7" title="peek a byte continuously from a given fifo">arm_2d_byte_fifo_peek</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis, uint8_t *pchChar);</div>
-<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span><span class="comment"></span> </div>
-<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span><span class="comment"> * \brief drop all peeked byte from a given fifo</span></div>
-<div class="line"><a id="l00615" name="l00615"></a><span class="lineno">  615</span><span class="comment"> * \param[in] ptThis the target FIFO control block</span></div>
-<div class="line"><a id="l00616" name="l00616"></a><span class="lineno">  616</span><span class="comment"> * \return none</span></div>
-<div class="line"><a id="l00617" name="l00617"></a><span class="lineno">  617</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00618" name="l00618"></a><span class="lineno">  618</span>extern</div>
-<div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00620" name="l00620"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga5a4996625f003ec5e18d7a7b549b072a">  620</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga5a4996625f003ec5e18d7a7b549b072a" title="drop all peeked byte from a given fifo">arm_2d_byte_fifo_get_all_peeked</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis);</div>
-<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span><span class="comment"></span> </div>
-<div class="line"><a id="l00622" name="l00622"></a><span class="lineno">  622</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span><span class="comment"> * \brief reset the peek pointer, so you can restart from the beginning to peek.</span></div>
-<div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span><span class="comment"> * \param[in] ptThis the target FIFO control block</span></div>
-<div class="line"><a id="l00625" name="l00625"></a><span class="lineno">  625</span><span class="comment"> * \return none</span></div>
-<div class="line"><a id="l00626" name="l00626"></a><span class="lineno">  626</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00627" name="l00627"></a><span class="lineno">  627</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00628" name="l00628"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga9a0bb323933baa059f65eb2bd62608be">  628</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga9a0bb323933baa059f65eb2bd62608be" title="reset the peek pointer, so you can restart from the beginning to peek.">arm_2d_byte_fifo_reset_peeked</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis);</div>
-<div class="line"><a id="l00629" name="l00629"></a><span class="lineno">  629</span> </div>
-<div class="line"><a id="l00630" name="l00630"></a><span class="lineno">  630</span><span class="comment">/*----------------------------------------------------------------------------*</span></div>
-<div class="line"><a id="l00631" name="l00631"></a><span class="lineno">  631</span><span class="comment"> * Misc                                                                       *</span></div>
-<div class="line"><a id="l00632" name="l00632"></a><span class="lineno">  632</span><span class="comment"> *----------------------------------------------------------------------------*/</span></div>
-<div class="line"><a id="l00633" name="l00633"></a><span class="lineno">  633</span><span class="comment"></span> </div>
-<div class="line"><a id="l00634" name="l00634"></a><span class="lineno">  634</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span><span class="comment"> * \brief return the code length of a given UTF8 char</span></div>
-<div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span><span class="comment"> * \param[in] pchChar the start address of an UTF8 char</span></div>
-<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span><span class="comment"> * \retval -1 this isn&#39;t a legal UTF8 char</span></div>
-<div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span><span class="comment"> * \retval &gt;0 the UTF8 char length</span></div>
-<div class="line"><a id="l00639" name="l00639"></a><span class="lineno">  639</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00641" name="l00641"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga00cb49b43afa6fe2815a80b0bd9bdc72">  641</a></span>int8_t <a class="code hl_function" href="group__gHelper.html#ga00cb49b43afa6fe2815a80b0bd9bdc72" title="return the code length of a given UTF8 char">arm_2d_helper_utf8_byte_length</a>(uint8_t *pchChar);</div>
-<div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span><span class="comment"></span> </div>
-<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00644" name="l00644"></a><span class="lineno">  644</span><span class="comment"> * \brief get char descriptor</span></div>
-<div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span><span class="comment"> * \param[in] ptFont the target font</span></div>
-<div class="line"><a id="l00646" name="l00646"></a><span class="lineno">  646</span><span class="comment"> * \param[in] ptDescriptor a buffer to store a char descriptor</span></div>
-<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span><span class="comment"> * \param[in] pchCharCode an UTF8 Char</span></div>
-<div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span><span class="comment"> * \return arm_2d_char_descriptor_t * the descriptor</span></div>
-<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span>ARM_NONNULL(1,2,3)</div>
-<div class="line"><a id="l00651" name="l00651"></a><span class="lineno">  651</span><a class="code hl_struct" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> *</div>
-<div class="line"><a id="l00652" name="l00652"></a><span class="lineno"><a class="line" href="group__gHelper.html#gace860649e7b7172cf6aa155abc51434d">  652</a></span><a class="code hl_function" href="group__gHelper.html#gace860649e7b7172cf6aa155abc51434d" title="get char descriptor">arm_2d_helper_get_char_descriptor</a>(  const <a class="code hl_struct" href="group__gHelper.html#structarm__2d__font__t">arm_2d_font_t</a> *ptFont, </div>
-<div class="line"><a id="l00653" name="l00653"></a><span class="lineno">  653</span>                                    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> *ptDescriptor, </div>
-<div class="line"><a id="l00654" name="l00654"></a><span class="lineno">  654</span>                                    uint8_t *pchCharCode);</div>
-<div class="line"><a id="l00655" name="l00655"></a><span class="lineno">  655</span><span class="comment"></span> </div>
-<div class="line"><a id="l00656" name="l00656"></a><span class="lineno">  656</span><span class="comment">/*! @} */</span></div>
-<div class="line"><a id="l00657" name="l00657"></a><span class="lineno">  657</span> </div>
-<div class="line"><a id="l00658" name="l00658"></a><span class="lineno">  658</span><span class="preprocessor">#if defined(__clang__)</span></div>
-<div class="line"><a id="l00659" name="l00659"></a><span class="lineno">  659</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
-<div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span><span class="preprocessor">#elif __IS_COMPILER_ARM_COMPILER_5__</span></div>
-<div class="line"><a id="l00661" name="l00661"></a><span class="lineno">  661</span><span class="preprocessor">#pragma diag_warning 64</span></div>
-<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span> </div>
-<div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span><span class="preprocessor">#undef __ARM_2D_HELPER_IMPLEMENT__</span></div>
-<div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span><span class="preprocessor">#undef __ARM_2D_HELPER_INHERIT__</span></div>
-<div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span> </div>
-<div class="line"><a id="l00667" name="l00667"></a><span class="lineno">  667</span> </div>
-<div class="line"><a id="l00668" name="l00668"></a><span class="lineno">  668</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
-<div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span>}</div>
-<div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span> </div>
-<div class="line"><a id="l00672" name="l00672"></a><span class="lineno">  672</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00611" name="l00611"></a><span class="lineno"><a class="line" href="group__gHelper.html#gab71dfe523df6a27f0758c29bd3a0e35b">  611</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#gab71dfe523df6a27f0758c29bd3a0e35b" title="peek a byte continuously from a given fifo">arm_2d_byte_fifo_peek</a>( <a class="code hl_struct" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis, </div>
+<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>                            uint8_t *pchChar, </div>
+<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span>                            <span class="keywordtype">bool</span> bMovePointer);</div>
+<div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span><span class="comment"></span> </div>
+<div class="line"><a id="l00615" name="l00615"></a><span class="lineno">  615</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00616" name="l00616"></a><span class="lineno">  616</span><span class="comment"> * \brief drop all peeked byte from a given fifo</span></div>
+<div class="line"><a id="l00617" name="l00617"></a><span class="lineno">  617</span><span class="comment"> * \param[in] ptThis the target FIFO control block</span></div>
+<div class="line"><a id="l00618" name="l00618"></a><span class="lineno">  618</span><span class="comment"> * \return none</span></div>
+<div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00620" name="l00620"></a><span class="lineno">  620</span>extern</div>
+<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00622" name="l00622"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga5a4996625f003ec5e18d7a7b549b072a">  622</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga5a4996625f003ec5e18d7a7b549b072a" title="drop all peeked byte from a given fifo">arm_2d_byte_fifo_get_all_peeked</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis);</div>
+<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span><span class="comment"></span> </div>
+<div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00625" name="l00625"></a><span class="lineno">  625</span><span class="comment"> * \brief reset the peek pointer, so you can restart from the beginning to peek.</span></div>
+<div class="line"><a id="l00626" name="l00626"></a><span class="lineno">  626</span><span class="comment"> * \param[in] ptThis the target FIFO control block</span></div>
+<div class="line"><a id="l00627" name="l00627"></a><span class="lineno">  627</span><span class="comment"> * \return none</span></div>
+<div class="line"><a id="l00628" name="l00628"></a><span class="lineno">  628</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00629" name="l00629"></a><span class="lineno">  629</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00630" name="l00630"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga9a0bb323933baa059f65eb2bd62608be">  630</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga9a0bb323933baa059f65eb2bd62608be" title="reset the peek pointer, so you can restart from the beginning to peek.">arm_2d_byte_fifo_reset_peeked</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis);</div>
+<div class="line"><a id="l00631" name="l00631"></a><span class="lineno">  631</span> </div>
+<div class="line"><a id="l00632" name="l00632"></a><span class="lineno">  632</span><span class="comment">/*----------------------------------------------------------------------------*</span></div>
+<div class="line"><a id="l00633" name="l00633"></a><span class="lineno">  633</span><span class="comment"> * Misc                                                                       *</span></div>
+<div class="line"><a id="l00634" name="l00634"></a><span class="lineno">  634</span><span class="comment"> *----------------------------------------------------------------------------*/</span></div>
+<div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span><span class="comment"></span> </div>
+<div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span><span class="comment"> * \brief return a valid code length of a given UTF8 char</span></div>
+<div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span><span class="comment"> * \param[in] pchChar the start address of an UTF8 char</span></div>
+<div class="line"><a id="l00639" name="l00639"></a><span class="lineno">  639</span><span class="comment"> * \retval -1 this isn&#39;t a legal UTF8 char</span></div>
+<div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span><span class="comment"> * \retval &gt;0 the UTF8 char length</span></div>
+<div class="line"><a id="l00641" name="l00641"></a><span class="lineno">  641</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00643" name="l00643"></a><span class="lineno"><a class="line" href="group__gHelper.html#gaade8c9a0e1c793b13a8ac34871945b5f">  643</a></span>int8_t <a class="code hl_function" href="group__gHelper.html#gaade8c9a0e1c793b13a8ac34871945b5f" title="return a valid code length of a given UTF8 char">arm_2d_helper_get_utf8_byte_valid_length</a>(uint8_t *pchChar);</div>
+<div class="line"><a id="l00644" name="l00644"></a><span class="lineno">  644</span><span class="comment"></span> </div>
+<div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00646" name="l00646"></a><span class="lineno">  646</span><span class="comment"> * \brief return the code length based on the first byte of a given UTF8 char</span></div>
+<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span><span class="comment"> * \param[in] pchChar the start address of an UTF8 char</span></div>
+<div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span><span class="comment"> * \retval -1 this isn&#39;t a legal UTF8 char</span></div>
+<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span><span class="comment"> * \retval &gt;0 the UTF8 char length</span></div>
+<div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00651" name="l00651"></a><span class="lineno">  651</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00652" name="l00652"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga2352b0099a2e5965db7a05d30b4f485b">  652</a></span>int8_t <a class="code hl_function" href="group__gHelper.html#ga2352b0099a2e5965db7a05d30b4f485b" title="return the code length based on the first byte of a given UTF8 char">arm_2d_helper_get_utf8_byte_length</a>(uint8_t *pchChar);</div>
+<div class="line"><a id="l00653" name="l00653"></a><span class="lineno">  653</span><span class="comment"></span> </div>
+<div class="line"><a id="l00654" name="l00654"></a><span class="lineno">  654</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00655" name="l00655"></a><span class="lineno">  655</span><span class="comment"> * \brief get char descriptor</span></div>
+<div class="line"><a id="l00656" name="l00656"></a><span class="lineno">  656</span><span class="comment"> * \param[in] ptFont the target font</span></div>
+<div class="line"><a id="l00657" name="l00657"></a><span class="lineno">  657</span><span class="comment"> * \param[in] ptDescriptor a buffer to store a char descriptor</span></div>
+<div class="line"><a id="l00658" name="l00658"></a><span class="lineno">  658</span><span class="comment"> * \param[in] pchCharCode an UTF8 Char</span></div>
+<div class="line"><a id="l00659" name="l00659"></a><span class="lineno">  659</span><span class="comment"> * \return arm_2d_char_descriptor_t * the descriptor</span></div>
+<div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00661" name="l00661"></a><span class="lineno">  661</span>ARM_NONNULL(1,2,3)</div>
+<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span><a class="code hl_struct" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> *</div>
+<div class="line"><a id="l00663" name="l00663"></a><span class="lineno"><a class="line" href="group__gHelper.html#gace860649e7b7172cf6aa155abc51434d">  663</a></span><a class="code hl_function" href="group__gHelper.html#gace860649e7b7172cf6aa155abc51434d" title="get char descriptor">arm_2d_helper_get_char_descriptor</a>(  const <a class="code hl_struct" href="group__gHelper.html#structarm__2d__font__t">arm_2d_font_t</a> *ptFont, </div>
+<div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span>                                    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> *ptDescriptor, </div>
+<div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span>                                    uint8_t *pchCharCode);</div>
+<div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span><span class="comment"></span> </div>
+<div class="line"><a id="l00667" name="l00667"></a><span class="lineno">  667</span><span class="comment">/*! @} */</span></div>
+<div class="line"><a id="l00668" name="l00668"></a><span class="lineno">  668</span> </div>
+<div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span><span class="preprocessor">#if defined(__clang__)</span></div>
+<div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
+<div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span><span class="preprocessor">#elif __IS_COMPILER_ARM_COMPILER_5__</span></div>
+<div class="line"><a id="l00672" name="l00672"></a><span class="lineno">  672</span><span class="preprocessor">#pragma diag_warning 64</span></div>
+<div class="line"><a id="l00673" name="l00673"></a><span class="lineno">  673</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00674" name="l00674"></a><span class="lineno">  674</span> </div>
+<div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span><span class="preprocessor">#undef __ARM_2D_HELPER_IMPLEMENT__</span></div>
+<div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span><span class="preprocessor">#undef __ARM_2D_HELPER_INHERIT__</span></div>
+<div class="line"><a id="l00677" name="l00677"></a><span class="lineno">  677</span> </div>
+<div class="line"><a id="l00678" name="l00678"></a><span class="lineno">  678</span> </div>
+<div class="line"><a id="l00679" name="l00679"></a><span class="lineno">  679</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
+<div class="line"><a id="l00680" name="l00680"></a><span class="lineno">  680</span>}</div>
+<div class="line"><a id="l00681" name="l00681"></a><span class="lineno">  681</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00682" name="l00682"></a><span class="lineno">  682</span> </div>
+<div class="line"><a id="l00683" name="l00683"></a><span class="lineno">  683</span><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

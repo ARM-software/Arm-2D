@@ -687,18 +687,21 @@ Functions</h2></td></tr>
 <tr class="memitem:gaa38f307b5921ee31122e1a6404444bc5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaa38f307b5921ee31122e1a6404444bc5">arm_2d_byte_fifo_dequeue</a> (<a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis, uint8_t *pchChar)</td></tr>
 <tr class="memdesc:gaa38f307b5921ee31122e1a6404444bc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">read a byte from a given fifo  <a href="group__gHelper.html#gaa38f307b5921ee31122e1a6404444bc5">More...</a><br /></td></tr>
 <tr class="separator:gaa38f307b5921ee31122e1a6404444bc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae55f1ba0073947c48f2d4a3fe4f416a7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gae55f1ba0073947c48f2d4a3fe4f416a7">arm_2d_byte_fifo_peek</a> (<a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis, uint8_t *pchChar)</td></tr>
-<tr class="memdesc:gae55f1ba0073947c48f2d4a3fe4f416a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">peek a byte continuously from a given fifo  <a href="group__gHelper.html#gae55f1ba0073947c48f2d4a3fe4f416a7">More...</a><br /></td></tr>
-<tr class="separator:gae55f1ba0073947c48f2d4a3fe4f416a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab71dfe523df6a27f0758c29bd3a0e35b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gab71dfe523df6a27f0758c29bd3a0e35b">arm_2d_byte_fifo_peek</a> (<a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis, uint8_t *pchChar, bool bMovePointer)</td></tr>
+<tr class="memdesc:gab71dfe523df6a27f0758c29bd3a0e35b"><td class="mdescLeft">&#160;</td><td class="mdescRight">peek a byte continuously from a given fifo  <a href="group__gHelper.html#gab71dfe523df6a27f0758c29bd3a0e35b">More...</a><br /></td></tr>
+<tr class="separator:gab71dfe523df6a27f0758c29bd3a0e35b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5a4996625f003ec5e18d7a7b549b072a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga5a4996625f003ec5e18d7a7b549b072a">arm_2d_byte_fifo_get_all_peeked</a> (<a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis)</td></tr>
 <tr class="memdesc:ga5a4996625f003ec5e18d7a7b549b072a"><td class="mdescLeft">&#160;</td><td class="mdescRight">drop all peeked byte from a given fifo  <a href="group__gHelper.html#ga5a4996625f003ec5e18d7a7b549b072a">More...</a><br /></td></tr>
 <tr class="separator:ga5a4996625f003ec5e18d7a7b549b072a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9a0bb323933baa059f65eb2bd62608be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga9a0bb323933baa059f65eb2bd62608be">arm_2d_byte_fifo_reset_peeked</a> (<a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis)</td></tr>
 <tr class="memdesc:ga9a0bb323933baa059f65eb2bd62608be"><td class="mdescLeft">&#160;</td><td class="mdescRight">reset the peek pointer, so you can restart from the beginning to peek.  <a href="group__gHelper.html#ga9a0bb323933baa059f65eb2bd62608be">More...</a><br /></td></tr>
 <tr class="separator:ga9a0bb323933baa059f65eb2bd62608be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga00cb49b43afa6fe2815a80b0bd9bdc72"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga00cb49b43afa6fe2815a80b0bd9bdc72">arm_2d_helper_utf8_byte_length</a> (uint8_t *pchChar)</td></tr>
-<tr class="memdesc:ga00cb49b43afa6fe2815a80b0bd9bdc72"><td class="mdescLeft">&#160;</td><td class="mdescRight">return the code length of a given UTF8 char  <a href="group__gHelper.html#ga00cb49b43afa6fe2815a80b0bd9bdc72">More...</a><br /></td></tr>
-<tr class="separator:ga00cb49b43afa6fe2815a80b0bd9bdc72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaade8c9a0e1c793b13a8ac34871945b5f"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaade8c9a0e1c793b13a8ac34871945b5f">arm_2d_helper_get_utf8_byte_valid_length</a> (uint8_t *pchChar)</td></tr>
+<tr class="memdesc:gaade8c9a0e1c793b13a8ac34871945b5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">return a valid code length of a given UTF8 char  <a href="group__gHelper.html#gaade8c9a0e1c793b13a8ac34871945b5f">More...</a><br /></td></tr>
+<tr class="separator:gaade8c9a0e1c793b13a8ac34871945b5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2352b0099a2e5965db7a05d30b4f485b"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga2352b0099a2e5965db7a05d30b4f485b">arm_2d_helper_get_utf8_byte_length</a> (uint8_t *pchChar)</td></tr>
+<tr class="memdesc:ga2352b0099a2e5965db7a05d30b4f485b"><td class="mdescLeft">&#160;</td><td class="mdescRight">return the code length based on the first byte of a given UTF8 char  <a href="group__gHelper.html#ga2352b0099a2e5965db7a05d30b4f485b">More...</a><br /></td></tr>
+<tr class="separator:ga2352b0099a2e5965db7a05d30b4f485b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gace860649e7b7172cf6aa155abc51434d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gace860649e7b7172cf6aa155abc51434d">arm_2d_helper_get_char_descriptor</a> (const <a class="el" href="group__gHelper.html#structarm__2d__font__t">arm_2d_font_t</a> *ptFont, <a class="el" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> *ptDescriptor, uint8_t *pchCharCode)</td></tr>
 <tr class="memdesc:gace860649e7b7172cf6aa155abc51434d"><td class="mdescLeft">&#160;</td><td class="mdescRight">get char descriptor  <a href="group__gHelper.html#gace860649e7b7172cf6aa155abc51434d">More...</a><br /></td></tr>
 <tr class="separator:gace860649e7b7172cf6aa155abc51434d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1777,7 +1780,40 @@ hwDataAvailable</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"></div>
+<div class="textblock"></div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="afdb30c42d6d1c70fb929a1bdcc40ae54" name="afdb30c42d6d1c70fb929a1bdcc40ae54"></a>uint8_t *</td>
+<td class="fieldname">
+pchBuffer</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a978d039d2e2eb2f28337740d091b1cb1" name="a978d039d2e2eb2f28337740d091b1cb1"></a>uint16_t</td>
+<td class="fieldname">
+hwSize</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="aee98f172af89e76a88b82fecd0baf2f5" name="aee98f172af89e76a88b82fecd0baf2f5"></a>uint16_t</td>
+<td class="fieldname">
+hwTail</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a94e7665f595475d4476d0ec2d3498691" name="a94e7665f595475d4476d0ec2d3498691"></a>struct <a class="el" href="group__gHelper.html#struct____arm__2d__fifo__reader__pointer">__arm_2d_fifo_reader_pointer</a></td>
+<td class="fieldname">
+tHead</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a7147d8933431bcf5ef9725ab73e21eea" name="a7147d8933431bcf5ef9725ab73e21eea"></a>struct <a class="el" href="group__gHelper.html#struct____arm__2d__fifo__reader__pointer">__arm_2d_fifo_reader_pointer</a></td>
+<td class="fieldname">
+tPeek</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
 </div>
 </div>
 <a name="structarm__2d__char__descriptor__t" id="structarm__2d__char__descriptor__t"></a>
@@ -7312,8 +7348,8 @@ For normal usage, please DO NOT use this function unless you know what you are d
 
 </div>
 </div>
-<a id="gae55f1ba0073947c48f2d4a3fe4f416a7" name="gae55f1ba0073947c48f2d4a3fe4f416a7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gae55f1ba0073947c48f2d4a3fe4f416a7">&#9670;&nbsp;</a></span>arm_2d_byte_fifo_peek()</h2>
+<a id="gab71dfe523df6a27f0758c29bd3a0e35b" name="gab71dfe523df6a27f0758c29bd3a0e35b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab71dfe523df6a27f0758c29bd3a0e35b">&#9670;&nbsp;</a></span>arm_2d_byte_fifo_peek()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -7328,7 +7364,13 @@ For normal usage, please DO NOT use this function unless you know what you are d
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>pchChar</em>&#160;</td>
+          <td class="paramname"><em>pchChar</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>bMovePointer</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -7410,14 +7452,14 @@ For normal usage, please DO NOT use this function unless you know what you are d
 
 </div>
 </div>
-<a id="ga00cb49b43afa6fe2815a80b0bd9bdc72" name="ga00cb49b43afa6fe2815a80b0bd9bdc72"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga00cb49b43afa6fe2815a80b0bd9bdc72">&#9670;&nbsp;</a></span>arm_2d_helper_utf8_byte_length()</h2>
+<a id="gaade8c9a0e1c793b13a8ac34871945b5f" name="gaade8c9a0e1c793b13a8ac34871945b5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaade8c9a0e1c793b13a8ac34871945b5f">&#9670;&nbsp;</a></span>arm_2d_helper_get_utf8_byte_valid_length()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int8_t arm_2d_helper_utf8_byte_length </td>
+          <td class="memname">int8_t arm_2d_helper_get_utf8_byte_valid_length </td>
           <td>(</td>
           <td class="paramtype">uint8_t *&#160;</td>
           <td class="paramname"><em>pchChar</em></td><td>)</td>
@@ -7426,7 +7468,40 @@ For normal usage, please DO NOT use this function unless you know what you are d
       </table>
 </div><div class="memdoc">
 
-<p>return the code length of a given UTF8 char </p>
+<p>return a valid code length of a given UTF8 char </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pchChar</td><td>the start address of an UTF8 char </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">-1</td><td>this isn't a legal UTF8 char </td></tr>
+    <tr><td class="paramname">&gt;0</td><td>the UTF8 char length </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga2352b0099a2e5965db7a05d30b4f485b" name="ga2352b0099a2e5965db7a05d30b4f485b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2352b0099a2e5965db7a05d30b4f485b">&#9670;&nbsp;</a></span>arm_2d_helper_get_utf8_byte_length()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int8_t arm_2d_helper_get_utf8_byte_length </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>pchChar</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>return the code length based on the first byte of a given UTF8 char </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">pchChar</td><td>the start address of an UTF8 char </td></tr>
