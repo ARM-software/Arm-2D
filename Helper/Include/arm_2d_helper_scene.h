@@ -540,7 +540,7 @@ bool arm_2d_scene_player_remove_dirty_regions(arm_2d_scene_t *ptScene,
 /*!
  * \brief get the current scene of a given scene player
  * \param[in] ptThis the target scene player
- * \return arm_2d_scenen_t * the current scene
+ * \return arm_2d_scene_t * the current scene
  */
 extern
 ARM_NONNULL(1)
