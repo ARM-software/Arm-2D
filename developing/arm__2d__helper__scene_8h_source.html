@@ -130,8 +130,8 @@ $(document).ready(function(){initNavTree('arm__2d__helper__scene_8h_source.html'
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * Title:        #include &quot;arm_2d_helper_scene.h&quot;</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * Description:  Public header file for the scene service</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        26. Dec 2023</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.4.6</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        01. March 2024</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.4.7</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> * Target Processor:  Cortex-M cores</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment"> * -------------------------------------------------------------------- */</span></div>
@@ -618,17 +618,45 @@ $(document).ready(function(){initNavTree('arm__2d__helper__scene_8h_source.html'
 <div class="line"><a id="l00509" name="l00509"></a><span class="lineno">  509</span>ARM_NONNULL(1)</div>
 <div class="line"><a id="l00510" name="l00510"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga9d3b273bce58d135be740ba682ec11b7">  510</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gHelper.html#ga9d3b273bce58d135be740ba682ec11b7" title="the scene player task function">arm_2d_scene_player_task</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__scene__player__t" title="a class to manage scenes">arm_2d_scene_player_t</a> *ptThis);</div>
 <div class="line"><a id="l00511" name="l00511"></a><span class="lineno">  511</span><span class="comment"></span> </div>
-<div class="line"><a id="l00512" name="l00512"></a><span class="lineno">  512</span><span class="comment">/*! @} */</span></div>
-<div class="line"><a id="l00513" name="l00513"></a><span class="lineno">  513</span> </div>
-<div class="line"><a id="l00514" name="l00514"></a><span class="lineno">  514</span><span class="preprocessor">#if defined(__clang__)</span></div>
-<div class="line"><a id="l00515" name="l00515"></a><span class="lineno">  515</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
-<div class="line"><a id="l00516" name="l00516"></a><span class="lineno">  516</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00517" name="l00517"></a><span class="lineno">  517</span> </div>
-<div class="line"><a id="l00518" name="l00518"></a><span class="lineno">  518</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
-<div class="line"><a id="l00519" name="l00519"></a><span class="lineno">  519</span>}</div>
-<div class="line"><a id="l00520" name="l00520"></a><span class="lineno">  520</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00521" name="l00521"></a><span class="lineno">  521</span> </div>
-<div class="line"><a id="l00522" name="l00522"></a><span class="lineno">  522</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00512" name="l00512"></a><span class="lineno">  512</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00513" name="l00513"></a><span class="lineno">  513</span><span class="comment"> * \brief append dirty regions to the a specified scene</span></div>
+<div class="line"><a id="l00514" name="l00514"></a><span class="lineno">  514</span><span class="comment"> * \param[in] ptScene the target scene</span></div>
+<div class="line"><a id="l00515" name="l00515"></a><span class="lineno">  515</span><span class="comment"> * \param[in] ptItems the dirty regions</span></div>
+<div class="line"><a id="l00516" name="l00516"></a><span class="lineno">  516</span><span class="comment"> * \param[in] tCount the number of dirty regions</span></div>
+<div class="line"><a id="l00517" name="l00517"></a><span class="lineno">  517</span><span class="comment"> * \retval true operation is successful</span></div>
+<div class="line"><a id="l00518" name="l00518"></a><span class="lineno">  518</span><span class="comment"> * \retval false the operation is failed.</span></div>
+<div class="line"><a id="l00519" name="l00519"></a><span class="lineno">  519</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00520" name="l00520"></a><span class="lineno">  520</span>extern</div>
+<div class="line"><a id="l00521" name="l00521"></a><span class="lineno">  521</span>ARM_NONNULL(1,2)</div>
+<div class="line"><a id="l00522" name="l00522"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga17f0592eb6eabcb8fd5ae12e4d425d71">  522</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#ga17f0592eb6eabcb8fd5ae12e4d425d71" title="append dirty regions to the a specified scene">arm_2d_scene_player_append_dirty_regions</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__scene__t" title="a class for describing scenes which are the combination of a background and a foreground with a dirty...">arm_2d_scene_t</a> *ptScene, </div>
+<div class="line"><a id="l00523" name="l00523"></a><span class="lineno">  523</span>                                              <a class="code hl_struct" href="group__gHelper.html#structarm__2d__region__list__item__t" title="the node of a region list">arm_2d_region_list_item_t</a> *ptItems,</div>
+<div class="line"><a id="l00524" name="l00524"></a><span class="lineno">  524</span>                                              <span class="keywordtype">size_t</span> tCount);</div>
+<div class="line"><a id="l00525" name="l00525"></a><span class="lineno">  525</span><span class="comment"></span> </div>
+<div class="line"><a id="l00526" name="l00526"></a><span class="lineno">  526</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00527" name="l00527"></a><span class="lineno">  527</span><span class="comment"> * \brief remove dirty regions from the a specified scene</span></div>
+<div class="line"><a id="l00528" name="l00528"></a><span class="lineno">  528</span><span class="comment"> * \param[in] ptScene the target scene</span></div>
+<div class="line"><a id="l00529" name="l00529"></a><span class="lineno">  529</span><span class="comment"> * \param[in] ptItems the dirty regions</span></div>
+<div class="line"><a id="l00530" name="l00530"></a><span class="lineno">  530</span><span class="comment"> * \param[in] tCount the number of dirty regions</span></div>
+<div class="line"><a id="l00531" name="l00531"></a><span class="lineno">  531</span><span class="comment"> * \retval true operation is successful</span></div>
+<div class="line"><a id="l00532" name="l00532"></a><span class="lineno">  532</span><span class="comment"> * \retval false the operation is failed.</span></div>
+<div class="line"><a id="l00533" name="l00533"></a><span class="lineno">  533</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00534" name="l00534"></a><span class="lineno">  534</span>extern</div>
+<div class="line"><a id="l00535" name="l00535"></a><span class="lineno">  535</span>ARM_NONNULL(1,2)</div>
+<div class="line"><a id="l00536" name="l00536"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga15bd874fcd36767c9ff8acf1955e8afe">  536</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#ga15bd874fcd36767c9ff8acf1955e8afe" title="remove dirty regions from the a specified scene">arm_2d_scene_player_remove_dirty_regions</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__scene__t" title="a class for describing scenes which are the combination of a background and a foreground with a dirty...">arm_2d_scene_t</a> *ptScene, </div>
+<div class="line"><a id="l00537" name="l00537"></a><span class="lineno">  537</span>                                              <a class="code hl_struct" href="group__gHelper.html#structarm__2d__region__list__item__t" title="the node of a region list">arm_2d_region_list_item_t</a> *ptItems,</div>
+<div class="line"><a id="l00538" name="l00538"></a><span class="lineno">  538</span>                                              <span class="keywordtype">size_t</span> tCount);</div>
+<div class="line"><a id="l00539" name="l00539"></a><span class="lineno">  539</span><span class="comment"></span> </div>
+<div class="line"><a id="l00540" name="l00540"></a><span class="lineno">  540</span><span class="comment">/*! @} */</span></div>
+<div class="line"><a id="l00541" name="l00541"></a><span class="lineno">  541</span> </div>
+<div class="line"><a id="l00542" name="l00542"></a><span class="lineno">  542</span><span class="preprocessor">#if defined(__clang__)</span></div>
+<div class="line"><a id="l00543" name="l00543"></a><span class="lineno">  543</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
+<div class="line"><a id="l00544" name="l00544"></a><span class="lineno">  544</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00545" name="l00545"></a><span class="lineno">  545</span> </div>
+<div class="line"><a id="l00546" name="l00546"></a><span class="lineno">  546</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
+<div class="line"><a id="l00547" name="l00547"></a><span class="lineno">  547</span>}</div>
+<div class="line"><a id="l00548" name="l00548"></a><span class="lineno">  548</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00549" name="l00549"></a><span class="lineno">  549</span> </div>
+<div class="line"><a id="l00550" name="l00550"></a><span class="lineno">  550</span><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -219,6 +219,8 @@ var group__gHelper =
     [ "arm_2d_scene_player_show_navigation_layer", "group__gHelper.html#ga3bac12004dcc0fb152f54118497f2d34", null ],
     [ "__arm_2d_scene_player_register_before_switching_event_handler", "group__gHelper.html#gadaa72d1d1c3baf5db91070008c238293", null ],
     [ "arm_2d_scene_player_task", "group__gHelper.html#ga9d3b273bce58d135be740ba682ec11b7", null ],
+    [ "arm_2d_scene_player_append_dirty_regions", "group__gHelper.html#ga17f0592eb6eabcb8fd5ae12e4d425d71", null ],
+    [ "arm_2d_scene_player_remove_dirty_regions", "group__gHelper.html#ga15bd874fcd36767c9ff8acf1955e8afe", null ],
     [ "arm_2d_helper_pfb_init", "group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99", null ],
     [ "arm_2d_helper_pfb_deinit", "group__gHelper.html#ga91b9bd95fab04511c9ae935757341d6f", null ],
     [ "arm_2d_helper_pfb_get_display_area", "group__gHelper.html#gaf0eef5fe61bc11d102d2180025ada377", null ],
