@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        29. Feb 2024
- * $Revision:    V.1.7.0
+ * $Date:        1. March 2024
+ * $Revision:    V.1.7.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -576,6 +576,14 @@ ARM_NONNULL(1,2)
 bool arm_2d_byte_fifo_init( arm_2d_byte_fifo_t *ptThis, 
                             void *pBuffer, 
                             uint16_t hwSize);
+
+/*!
+ * \brief Empty a given byte fifo
+ * \param[in] ptThis the target byte fifo
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_byte_fifo_drop_all( arm_2d_byte_fifo_t *ptThis);
 
 /*!
  * \brief write a byte to a given fifo

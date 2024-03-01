@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        29. Feb 2024
- * $Revision:    V.1.7.0
+ * $Date:        1. March 2024
+ * $Revision:    V.1.7.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -736,6 +736,22 @@ bool arm_2d_byte_fifo_init( arm_2d_byte_fifo_t *ptThis,
     } while(0);
 
     return bResult;
+}
+
+ARM_NONNULL(1)
+void arm_2d_byte_fifo_drop_all( arm_2d_byte_fifo_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    arm_irq_safe {
+        void *pBuffer = this.pchBuffer;
+        size_t tSize = this.hwSize;
+
+        memset(ptThis, 0, sizeof(arm_2d_byte_fifo_t));
+
+        this.pchBuffer = (uint8_t *)pBuffer;
+        this.hwSize = tSize;
+    }
 }
 
 
