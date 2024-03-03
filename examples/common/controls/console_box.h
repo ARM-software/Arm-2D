@@ -123,6 +123,10 @@ int console_box_printf(console_box_t *ptThis, const char *format, ...);
 
 extern
 ARM_NONNULL(1)
+bool console_box_putchar(console_box_t *ptThis, uint8_t chChar);
+
+extern
+ARM_NONNULL(1)
 void console_box_clear_screen(console_box_t *ptThis);
 
 #if defined(__clang__)
