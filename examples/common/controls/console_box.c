@@ -161,7 +161,8 @@ static
 void __console_box_remove_top_line(console_box_t *ptThis)
 {
     arm_2d_byte_fifo_reset_peeked(&this.tConsoleFIFO);
-    int16_t iLineWidth = 0;
+
+    uint16_t hwColumn = 0;
     do {
         uint32_t wUTF8 = 0;
         if (!__console_box_peek_utf8(&this.tConsoleFIFO, &wUTF8)) {
@@ -176,11 +177,29 @@ void __console_box_remove_top_line(console_box_t *ptThis)
             break;
         }
 
-        iLineWidth += this.ptFont->tCharSize.iWidth;
+        bool bMoveToNextLine = false;
 
-        if (iLineWidth > this.tBoxSize.iWidth) {
+        switch ((char)wUTF8) {
+            case '\r':
+                hwColumn = 0;   /* move to start of the line */
+                break;
+            case '\b':
+                if (hwColumn) { /* delete one byte */
+                    hwColumn--;
+                }
+                break;
+            case '\t':
+                hwColumn += 4;
+                hwColumn &= ~0x3;
+                break;
+            default:
+                hwColumn++;
+                break;
+        }
+
+        if (hwColumn >= this.Console.hwMaxColumn) {
             arm_2d_byte_fifo_reset_peeked(&this.tConsoleFIFO);
-            /* detect line wrapping */
+            /* detect line wrapping, this char belongs to the newline */
             break;
         }
 
