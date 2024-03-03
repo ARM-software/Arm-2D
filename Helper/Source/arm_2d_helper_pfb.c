@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        6. Feb 2024
- * $Revision:    V.1.8.5
+ * $Date:        3. March 2024
+ * $Revision:    V.1.8.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -2021,12 +2021,20 @@ label_iteration_begin_start:
                     this.Adapter.bEncounterDynamicDirtyRegion = true;
                 }
 
-                // calculate the valid region
-                if (    (this.Adapter.ptDirtyRegion->bIgnore)
-                    ||  (!arm_2d_region_intersect(
-                                &this.tCFG.tDisplayArea, 
-                                &(this.Adapter.ptDirtyRegion->tRegion), 
-                                &this.Adapter.tTargetRegion))) {
+                if (this.Adapter.bFirstIteration 
+                &&  !this.Adapter.ptDirtyRegion->bIgnore
+                &&  this.Adapter.bEncounterDynamicDirtyRegion) {
+                    /* Because the only first dirty region is a dynamic region,
+                     * there won't be any valid region information, we simply
+                     * ignore it to start the dry run
+                     */
+                    this.Adapter.tTargetRegion = this.tCFG.tDisplayArea;
+                } else if ( (this.Adapter.ptDirtyRegion->bIgnore)
+                            // calculate the valid region
+                        ||  (!arm_2d_region_intersect(
+                                    &this.tCFG.tDisplayArea, 
+                                    &(this.Adapter.ptDirtyRegion->tRegion), 
+                                    &this.Adapter.tTargetRegion))) {
 
                     ARM_2D_LOG_INFO(
                         HELPER_PFB, 
@@ -2195,9 +2203,10 @@ label_iteration_begin_start:
                                 false);
 
     if (this.Adapter.bIsDirtyRegionOptimizationEnabled) {
+        bool bFirstIteration = this.Adapter.bFirstIteration;
 
         /* check whether we need a dry run */
-        if (this.Adapter.bFirstIteration && NULL != ptDirtyRegions) {
+        if (bFirstIteration && NULL != ptDirtyRegions) {
             if (!this.Adapter.bIsDryRun) {
                 this.Adapter.bIsDryRun = true;
 
@@ -2250,10 +2259,15 @@ label_iteration_begin_start:
                     "Update dirty region working list."
                 );
 
-                __arm_2d_helper_update_dirty_region_working_list(
-                                        ptThis, 
-                                        this.Adapter.ptDirtyRegion,
-                                        this.Adapter.bEncounterDynamicDirtyRegion);
+                if (!(bFirstIteration && this.Adapter.bEncounterDynamicDirtyRegion)) {
+                    /* NOTE: we won't take the first dynamic dirty region into the 
+                     * consideration as there is no valid value 
+                     */
+                    __arm_2d_helper_update_dirty_region_working_list(
+                                            ptThis, 
+                                            this.Adapter.ptDirtyRegion,
+                                            this.Adapter.bEncounterDynamicDirtyRegion);
+                }
                 /* reset flag */
                 this.Adapter.bEncounterDynamicDirtyRegion = false;
             }
