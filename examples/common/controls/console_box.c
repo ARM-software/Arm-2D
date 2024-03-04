@@ -381,13 +381,18 @@ void console_box_on_frame_start(console_box_t *ptThis)
                                        - (int32_t)this.Console.hwLastColumn;
                     
                     /* update size */
-                    this.tDirtyRegion.tRegion.tSize = tCharSize;
-                    this.tDirtyRegion.tRegion.tSize.iWidth *= ABS(iCharDelta);
+                    this.tDirtyRegion.tRegion.tSize.iHeight = tCharSize.iHeight;
+                    this.tDirtyRegion.tRegion.tSize.iWidth = tCharSize.iWidth * ABS(iCharDelta);
 
                     /* update location */
-                    this.tDirtyRegion.tRegion.tLocation.iX 
-                        = ((int32_t)this.Console.hwLastColumn + iCharDelta) 
-                        * tCharSize.iWidth;
+                    if (iCharDelta > 0) {
+                        this.tDirtyRegion.tRegion.tLocation.iX 
+                            = this.Console.hwLastColumn * tCharSize.iWidth;
+                    } else {
+                        this.tDirtyRegion.tRegion.tLocation.iX 
+                            = ((int32_t)this.Console.hwLastColumn + iCharDelta) 
+                            * tCharSize.iWidth;
+                    }
 
                     this.tDirtyRegion.tRegion.tLocation.iY = this.Console.hwLastRow * tCharSize.iHeight;
                 }
@@ -404,6 +409,15 @@ void console_box_on_frame_start(console_box_t *ptThis)
                     = tCharSize.iHeight 
                     * (this.Console.hwCurrentRow - this.Console.hwLastRow + 1);
 
+                break;
+            
+            case REFRESH_MODE_WHOLE:
+                /* update location */
+                this.tDirtyRegion.tRegion.tLocation.iX = 0;
+                this.tDirtyRegion.tRegion.tLocation.iY = 0;
+
+                /* update size */
+                this.tDirtyRegion.tRegion.tSize = this.tBoxSize;
                 break;
 
         }
