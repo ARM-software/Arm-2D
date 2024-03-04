@@ -65,16 +65,27 @@
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
+
+enum {
+    REFRESH_MODE_NO_UPDATE,     /* nothing changed, no need to fresh */
+    REFRESH_MODE_NEW_CHARS,     /* only refresh the new chars in the same line */
+    REFRESH_MODE_NEW_LINES,     /* refresh new line(s) for line wrapping */
+    REFRESH_MODE_WHOLE,         /* refresh the whole area */
+};
+
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
-ARM_NONNULL(1,2)
+ARM_NONNULL(1,3)
 bool console_box_init(  console_box_t *ptThis,
+                        arm_2d_scene_t *ptTargetScene,
                         console_box_cfg_t *ptCFG)
 {
     assert(NULL!= ptThis);
+    assert(NULL!= ptCFG);
+
     memset(ptThis, 0, sizeof(console_box_t));
 
     if (!arm_2d_byte_fifo_init( &this.tConsoleFIFO,
@@ -86,8 +97,10 @@ bool console_box_init(  console_box_t *ptThis,
     if (!arm_2d_byte_fifo_init( &this.tInputFIFO,
                                 ptCFG->pchInputBuffer,
                                 ptCFG->hwInputBufferSize)) {
-        this.bNoInputFIFO = true;
+        this.bCFGNoInputFIFO = true;
     }
+
+    this.ptTargetScene = ptTargetScene;
 
     this.ptFont = ptCFG->ptFont;
     if (NULL == this.ptFont) {
@@ -102,8 +115,10 @@ bool console_box_init(  console_box_t *ptThis,
     this.tColor = ptCFG->tColor;
 
     do {
-        this.Console.hwMaxColumn = this.tBoxSize.iWidth / this.ptFont->tCharSize.iWidth;
-        this.Console.hwMaxRow = this.tBoxSize.iHeight / this.ptFont->tCharSize.iHeight;
+        this.Console.hwMaxColumn = this.tBoxSize.iWidth 
+                                 / this.ptFont->tCharSize.iWidth;
+        this.Console.hwMaxRow = this.tBoxSize.iHeight 
+                              / this.ptFont->tCharSize.iHeight;
 
         if ((0 == this.Console.hwMaxColumn)
         ||  (0 == this.Console.hwMaxRow)) {
@@ -111,6 +126,15 @@ bool console_box_init(  console_box_t *ptThis,
         }
     } while(0);
 
+    /* dirty region */
+    if (ptCFG->bUseDirtyRegion && NULL != ptTargetScene) {
+        this.bCFGUseDirtyRegion = ptCFG->bUseDirtyRegion;
+        this.tDirtyRegion.bIgnore = true;
+        /* add dirty region to the target scene */
+        arm_2d_scene_player_append_dirty_regions(   ptTargetScene, 
+                                                    &this.tDirtyRegion, 
+                                                    1);
+    }
 
     return true;
 }
@@ -120,6 +144,12 @@ void console_box_depose( console_box_t *ptThis)
 {
     assert(NULL != ptThis);
     
+    if (this.bCFGUseDirtyRegion && NULL != this.ptTargetScene) {
+        /* remove dirty region */
+        arm_2d_scene_player_remove_dirty_regions(   this.ptTargetScene, 
+                                                    &this.tDirtyRegion, 
+                                                    1);
+    }
 }
 
 static
@@ -211,6 +241,9 @@ void __console_box_remove_top_line(console_box_t *ptThis)
     if (this.Console.hwCurrentRow) {
         this.Console.hwCurrentRow--;
     }
+
+    /* refresh the whole console */
+    this.u2RTRefreshMode = REFRESH_MODE_WHOLE;
 }
 
 ARM_NONNULL(1)
@@ -255,7 +288,11 @@ void __console_box_force_to_write_console_fifo( console_box_t *ptThis,
 
                 if (this.Console.hwCurrentRow >= this.Console.hwMaxRow) {
                     __console_box_remove_top_line(ptThis);
+                } else if (this.u2RTRefreshMode < REFRESH_MODE_NEW_LINES) {
+                    this.u2RTRefreshMode = REFRESH_MODE_NEW_LINES;
                 }
+            } else if (this.u2RTRefreshMode == REFRESH_MODE_NO_UPDATE){
+                this.u2RTRefreshMode = REFRESH_MODE_NEW_CHARS;
             }
 
             return ;
@@ -263,8 +300,8 @@ void __console_box_force_to_write_console_fifo( console_box_t *ptThis,
         /* the CONSOLE FIFO is FULL, we have to remove the top line */
         __console_box_remove_top_line(ptThis);
 
-
     } while(true);
+
 }
 
 ARM_NONNULL(1)
@@ -272,7 +309,7 @@ bool console_box_putchar(console_box_t *ptThis, uint8_t chChar)
 {
     assert(NULL!= ptThis);
 
-    if (this.bNoInputFIFO) {
+    if (this.bCFGNoInputFIFO) {
         __console_box_force_to_write_console_fifo(ptThis, chChar);
         return true;
     }
@@ -284,7 +321,7 @@ ARM_NONNULL(1)
 void console_box_clear_screen(console_box_t *ptThis)
 {
     arm_irq_safe {
-        this.bClearScreenRequest = true;
+        this.bREQClearScreen = true;
     }
 }
 
@@ -292,25 +329,27 @@ ARM_NONNULL(1)
 void console_box_on_frame_start(console_box_t *ptThis)
 {
     assert(NULL != ptThis);
-    bool bRequestClearScreen = false;
+    bool bREQClearScreen = false;
 
     arm_irq_safe {
-        if (this.bClearScreenRequest) {
-            bRequestClearScreen = true;
-            this.bClearScreenRequest = false;
+        if (this.bREQClearScreen) {
+            bREQClearScreen = true;
+            this.bREQClearScreen = false;
         }
     }
 
     /* clear screen */
-    if (bRequestClearScreen) {
+    if (bREQClearScreen) {
         arm_2d_byte_fifo_drop_all(&this.tConsoleFIFO);
-
+        this.u2RTRefreshMode = REFRESH_MODE_WHOLE;      /* refresh the whole screen */
         this.Console.hwCurrentColumn = 0;
         this.Console.hwCurrentRow = 0;
+        this.Console.hwLastRow = 0;
+        this.Console.hwLastColumn = 0;
     }
 
     do {
-        if (this.bNoInputFIFO) {
+        if (this.bCFGNoInputFIFO) {
             break;
         }
 
@@ -324,6 +363,62 @@ void console_box_on_frame_start(console_box_t *ptThis)
         __console_box_force_to_write_console_fifo(ptThis, chByte);
 
     } while(true);
+
+    if (this.bCFGUseDirtyRegion) {
+        arm_2d_size_t tCharSize = this.ptFont->tCharSize;
+
+        this.u2RTOneTimeRefreshMode = this.u2RTRefreshMode;
+        /* reset fresh mode */
+        this.u2RTRefreshMode = REFRESH_MODE_NO_UPDATE;
+
+        switch (this.u2RTOneTimeRefreshMode) {
+            default:
+            case REFRESH_MODE_NO_UPDATE:
+                break;
+            
+            case REFRESH_MODE_NEW_CHARS: {
+                    int32_t iCharDelta = (int32_t)this.Console.hwCurrentColumn 
+                                       - (int32_t)this.Console.hwLastColumn;
+                    
+                    /* update size */
+                    this.tDirtyRegion.tRegion.tSize = tCharSize;
+                    this.tDirtyRegion.tRegion.tSize.iWidth *= ABS(iCharDelta);
+
+                    /* update location */
+                    this.tDirtyRegion.tRegion.tLocation.iX 
+                        = ((int32_t)this.Console.hwLastColumn + iCharDelta) 
+                        * tCharSize.iWidth;
+
+                    this.tDirtyRegion.tRegion.tLocation.iY = this.Console.hwLastRow * tCharSize.iHeight;
+                }
+                break;
+
+            case REFRESH_MODE_NEW_LINES:
+                /* update location */
+                this.tDirtyRegion.tRegion.tLocation.iX = 0;
+                this.tDirtyRegion.tRegion.tLocation.iY = this.Console.hwLastRow * tCharSize.iHeight;
+
+                /* this whole line */
+                this.tDirtyRegion.tRegion.tSize.iWidth = tCharSize.iWidth * this.Console.hwMaxColumn;
+                this.tDirtyRegion.tRegion.tSize.iHeight 
+                    = tCharSize.iHeight 
+                    * (this.Console.hwCurrentRow - this.Console.hwLastRow + 1);
+
+                break;
+
+        }
+
+        if (this.u2RTOneTimeRefreshMode == REFRESH_MODE_NO_UPDATE) {
+            this.tDirtyRegion.bIgnore = true;
+            this.tDirtyRegion.bUpdated = false;
+        } else {
+            this.tDirtyRegion.bIgnore = false;
+            this.tDirtyRegion.bUpdated = true;      /* use the dynamic region */
+        }
+
+        this.Console.hwLastColumn = this.Console.hwCurrentColumn;
+        this.Console.hwLastRow = this.Console.hwCurrentRow;
+    }
 }
 
 #if defined(__IS_COMPILER_IAR__) && __IS_COMPILER_IAR__
@@ -369,6 +464,21 @@ void console_box_show(  console_box_t *ptThis,
 
         /* example code: flash a 50x50 red box in the centre */
         arm_2d_align_centre(__console_box_canvas, this.tBoxSize) {
+
+            if (bIsNewFrame) {
+                if (this.bCFGUseDirtyRegion
+                &&  (this.u2RTOneTimeRefreshMode != REFRESH_MODE_NO_UPDATE)) {
+                    /* update location */
+                    this.tDirtyRegion.tRegion.tLocation.iX += __centre_region.tLocation.iX;
+                    this.tDirtyRegion.tRegion.tLocation.iY += __centre_region.tLocation.iY;
+
+                    /* get the absolution location */
+                    this.tDirtyRegion.tRegion.tLocation = 
+                        arm_2d_helper_pfb_get_absolute_location(&__console_box, this.tDirtyRegion.tRegion.tLocation);
+
+                    this.tDirtyRegion.bUpdated = true;
+                }
+            }
 
             /* draw text at the top-left corner */
             arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)&__console_box);

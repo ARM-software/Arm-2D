@@ -60,6 +60,8 @@ typedef struct console_box_cfg_t {
 
     const arm_2d_font_t *ptFont;
     COLOUR_INT tColor;
+
+    bool bUseDirtyRegion;
 } console_box_cfg_t;
 
 /*!
@@ -77,18 +79,25 @@ ARM_PRIVATE(
     arm_2d_byte_fifo_t tInputFIFO;
     arm_2d_byte_fifo_t tConsoleFIFO;
 
-    COLOUR_INT tColor;
-
-    uint8_t bNoInputFIFO            : 1;
-    uint8_t bClearScreenRequest     : 1;
-    uint8_t                         : 7;
-
     struct {
         uint16_t hwMaxColumn;
         uint16_t hwMaxRow;
+        uint16_t hwLastRow;
+        uint16_t hwLastColumn;
         uint16_t hwCurrentRow;
         uint16_t hwCurrentColumn;
     } Console;
+
+    arm_2d_scene_t                  *ptTargetScene;
+    arm_2d_region_list_item_t       tDirtyRegion;
+
+    COLOUR_INT tColor;
+    uint8_t bCFGNoInputFIFO         : 1;        /* Configuration: There is no FIFO for input */
+    uint8_t bCFGUseDirtyRegion      : 1;        /* Configuration: Use Dirty Region to improve performance */
+    uint8_t u2RTRefreshMode         : 2;        /* Runtime: Refresh Mode */
+    uint8_t u2RTOneTimeRefreshMode  : 2;        /* Runtime: the refresh mode for one frame */
+    uint8_t bREQClearScreen         : 1;        /* User Request: Clear the screen (asynchronously) */
+    uint8_t                         : 1;
 )
 
 };
@@ -97,8 +106,9 @@ ARM_PRIVATE(
 /*============================ PROTOTYPES ====================================*/
 
 extern
-ARM_NONNULL(1)
+ARM_NONNULL(1,3)
 bool console_box_init(  console_box_t *ptThis,
+                        arm_2d_scene_t *ptTargetScene,
                         console_box_cfg_t *ptCFG);
 
 extern

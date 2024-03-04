@@ -287,7 +287,7 @@ user_scene_console_t *__arm_2d_scene_console_init(
             /* Please uncommon the callbacks if you need them
              */
             .fnScene        = &__pfb_draw_scene_console_handler,
-            .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
+            //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
 
             //.fnOnBGStart    = &__on_scene_console_background_start,
@@ -313,9 +313,12 @@ user_scene_console_t *__arm_2d_scene_console_init(
             .pchInputBuffer = s_chInputBuffer,
             .hwInputBufferSize = sizeof(s_chInputBuffer),
             .tColor = GLCD_COLOR_GREEN,
+            .bUseDirtyRegion = true,
         };
 
-        console_box_init(&this.tConsole, &tCFG);
+        console_box_init(   &this.tConsole, 
+                            &this.use_as__arm_2d_scene_t, 
+                            &tCFG);
     } while(0);
 
     /* ------------   initialize members of user_scene_console_t end   ---------------*/
