@@ -17,8 +17,9 @@
  */
 
 /*============================ INCLUDES ======================================*/
-#define __CONSOLE_BOX_IMPLEMENT__
+#define __CONSOLE_BOX_IMPLEMENT__   1
 
+#define __ARM_2D_HELPER_INHERIT__   1
 #include "./arm_2d_example_controls.h"
 #include "./__common.h"
 #include "arm_2d.h"
@@ -247,6 +248,36 @@ void __console_box_remove_top_line(console_box_t *ptThis)
 }
 
 ARM_NONNULL(1)
+static uint16_t __byte_fifo_vomit(arm_2d_byte_fifo_t *ptThis, uint16_t hwCount)
+{
+    assert(NULL != ptThis);
+    if (0 == hwCount) {
+        return 0;
+    }
+    uint16_t hwRemoveCount = hwCount;
+
+    arm_irq_safe {
+        do {
+            if (this.tHead.hwDataAvailable < hwCount) {
+                hwRemoveCount = this.tHead.hwDataAvailable;
+            }
+
+            if (this.hwTail < hwRemoveCount) {
+                this.hwTail += this.hwSize - hwRemoveCount;
+            } else {
+                this.hwTail -= hwRemoveCount;
+            }
+            this.tHead.hwDataAvailable -= hwRemoveCount;
+            this.tPeek = this.tHead;
+
+        } while(0);
+    }
+
+    return hwCount - hwRemoveCount;
+
+}
+
+ARM_NONNULL(1)
 static 
 void __console_box_force_to_write_console_fifo( console_box_t *ptThis, 
                                                 uint8_t chInputChar)
@@ -261,6 +292,11 @@ void __console_box_force_to_write_console_fifo( console_box_t *ptThis,
                     bMoveToNextLine = true;
                     break;
                 case '\r':
+                #if 0   /* known issue: only use '\r' without '\n' will have letter-overlapping issue */
+                    if (__byte_fifo_vomit(&this.tConsoleFIFO, this.Console.hwCurrentColumn + 1)) {
+                        assert(false);
+                    }
+                #endif
                     this.Console.hwCurrentColumn = 0;   /* move to start of the line */
                     break;
                 case '\b':

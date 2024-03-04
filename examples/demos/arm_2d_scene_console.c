@@ -134,7 +134,7 @@ static void __on_scene_console_frame_start(arm_2d_scene_t *ptScene)
     if (arm_2d_helper_is_time_out(100, &this.lTimestamp[0])) {
         static uint16_t s_hwCount = 0;
 
-        console_box_printf(&this.tConsole, "Hello World! \t[%d]\r",s_hwCount++);
+        console_box_printf(&this.tConsole, "Hello World! \t[%d]\r\n",s_hwCount++);
     }
 
     console_box_on_frame_start(&this.tConsole);
