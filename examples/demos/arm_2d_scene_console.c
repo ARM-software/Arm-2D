@@ -315,7 +315,7 @@ user_scene_console_t *__arm_2d_scene_console_init(
             .pchInputBuffer = s_chInputBuffer,
             .hwInputBufferSize = sizeof(s_chInputBuffer),
             .tColor = GLCD_COLOR_GREEN,
-            //.bUseDirtyRegion = true,
+            .bUseDirtyRegion = true,
         };
 
         console_box_init(   &this.tConsole, 
