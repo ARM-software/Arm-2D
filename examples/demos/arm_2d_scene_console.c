@@ -131,7 +131,7 @@ static void __on_scene_console_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_console_t *ptThis = (user_scene_console_t *)ptScene;
 
-    if (arm_2d_helper_is_time_out(100, &this.lTimestamp[0])) {
+    if (arm_2d_helper_is_time_out(100, &this.lTimestamp[1])) {
         static uint16_t s_hwCount = 0;
 
         console_box_printf(&this.tConsole, "Hello World! \t[%d]\r\n",s_hwCount++);
@@ -146,8 +146,8 @@ static void __on_scene_console_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_console_t *ptThis = (user_scene_console_t *)ptScene;
     
     /* switch to next scene after 3s */
-    if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[0])) {
-        //arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
+        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 }
 
