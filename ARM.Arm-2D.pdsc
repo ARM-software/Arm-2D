@@ -334,7 +334,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.5.9" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.6.0" condition="Arm-2D-EXTRA">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <!-- example control source files -->
@@ -360,7 +360,9 @@
             <file category="sourceC"     name="examples/common/asset/wave.c" />
             <file category="sourceC"     name="examples/common/asset/cmsis_logo.c" />
             <file category="sourceC"     name="examples/common/asset/GreenCircle.c" />
-            <file category="sourceC"     name="examples/common/asset/QuaterArc.c" />
+            <file category="sourceC"     name="examples/common/asset/QuaterArcSmall.c" />
+            <file category="sourceC"     name="examples/common/asset/QuaterArcMiddle.c" />
+            <file category="sourceC"     name="examples/common/asset/QuaterArcBig.c" />
             <file category="sourceC"     name="examples/common/asset/ListCover.c" />
             <file category="sourceC"     name="examples/common/asset/battery_boarder_1.c" />
             <file category="sourceC"     name="examples/common/asset/battery_gasgauge_block.c" />
