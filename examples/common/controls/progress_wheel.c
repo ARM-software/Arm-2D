@@ -98,15 +98,11 @@ void __progress_wheel_init( progress_wheel_t *ptThis,
         this.tCFG.tDotColour = GLCD_COLOR_WHITE;
     }
 
-    if (0 == this.tCFG.iWheelDiameter) {
-        this.tCFG.iWheelDiameter = this.tCFG.ptileArcMask->tRegion.tSize.iWidth;
-    }
-
     arm_foreach(arm_2d_op_fill_cl_msk_opa_trans_t, this.tOP, ptItem) {
         ARM_2D_OP_INIT(*ptItem);
     }
 
-    progress_wheel_set_diameter(ptThis, ptCFG->iWheelDiameter);
+    progress_wheel_set_diameter(ptThis, this.tCFG.iWheelDiameter);
 
     arm_2d_region_list_item_t **ppDirtyRegionList = this.tCFG.ppList;
     if (NULL != ppDirtyRegionList) {
@@ -138,9 +134,14 @@ void progress_wheel_set_diameter(progress_wheel_t *ptThis,
 {
     assert(NULL != ptThis);
 
-    this.fScale = (float)(  (float)iDiameter 
-                         /  ((float)this.tCFG.ptileArcMask->tRegion.tSize.iWidth *2.0f));
-    this.tCFG.iWheelDiameter = iDiameter;
+    if (0 == iDiameter) {
+        this.fScale = 1.0;
+        this.tCFG.iWheelDiameter = this.tCFG.ptileArcMask->tRegion.tSize.iWidth * 2;
+    } else {
+        this.fScale = (float)(  (float)iDiameter 
+                            /  ((float)this.tCFG.ptileArcMask->tRegion.tSize.iWidth *2.0f));
+        this.tCFG.iWheelDiameter = iDiameter;
+    }
 }
 
 ARM_NONNULL(1)
@@ -443,10 +444,11 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
             }
         } while(0);
 
-        /* draw the starting point */
+
         const arm_2d_tile_t *ptileDotMask = this.tCFG.ptileDotMask;
         if (NULL != ptileDotMask) {
             arm_2d_region_t tQuater = tRotationRegion;
+
             arm_2d_location_t tDotCentre = {
                 .iX = (ptileDotMask->tRegion.tSize.iWidth + 1) >> 1,
                 .iY = ptileArcMask->tRegion.tSize.iHeight - 1,
@@ -527,6 +529,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
                 arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[6]);
             }
+
         }
     }
 
