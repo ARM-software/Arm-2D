@@ -293,9 +293,10 @@ int16_t __arm_lcd_get_char_advance(arm_2d_char_descriptor_t *ptDescriptor, uint8
         }
 
         arm_2d_char_descriptor_t tDescriptor;
-        if (NULL == arm_2d_helper_get_char_descriptor(  s_tLCDTextControl.ptFont, 
+        ptDescriptor = arm_2d_helper_get_char_descriptor(  s_tLCDTextControl.ptFont, 
                                                         &tDescriptor,
-                                                        pchChar)){
+                                                        pchChar);
+        if (NULL == ptDescriptor){
             break;
         }
         iAdvance = ptDescriptor->iAdvance;

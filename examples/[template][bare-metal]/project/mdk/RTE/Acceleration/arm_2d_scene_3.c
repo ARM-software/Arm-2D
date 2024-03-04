@@ -26,7 +26,7 @@
 #include "arm_2d_scene_3.h"
 
 #include "arm_2d_helper.h"
-#include "arm_extra_controls.h"
+#include "arm_2d_example_controls.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -55,8 +55,7 @@
 #   pragma GCC diagnostic ignored "-Wpedantic"
 #   pragma GCC diagnostic ignored "-Wunused-function"
 #   pragma GCC diagnostic ignored "-Wunused-variable"
-#   pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
-
+#   pragma GCC diagnostic ignored "-Wunused-value"
 #elif __IS_COMPILER_IAR__
 #   pragma diag_suppress=Pa089,Pe188,Pe177,Pe174
 #endif
@@ -219,9 +218,6 @@ arm_fsm_rt_t __list_view_item_0_draw_item(
     arm_2d_canvas(ptTile, __canvas) {
         draw_round_corner_box(ptTile, &__canvas, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
 
-        arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY.use_as__arm_2d_user_font_t.use_as__arm_2d_font_t.tCharSize;
-        tTextSize.iWidth *= 1;
-
         arm_lcd_text_set_target_framebuffer(ptTile);
         arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
         arm_lcd_text_set_opacity(chOpacity);
@@ -260,7 +256,7 @@ arm_fsm_rt_t __list_view_item_1_draw_item(
                             ptScene->iProgress,   /* progress 0~1000 */
                             chOpacity, 
                             bIsNewFrame);
-    
+
         arm_lcd_text_set_target_framebuffer(ptTile);
         arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
         arm_lcd_text_set_opacity(chOpacity);
@@ -383,6 +379,8 @@ static void __on_scene3_frame_start(arm_2d_scene_t *ptScene)
         this.lTimestamp[2] = 0;
     }
     this.iProgress = (int16_t)nResult;
+
+    progress_wheel_on_frame_start(&this.tWheel);
 
 }
 
@@ -526,7 +524,19 @@ user_scene_3_t *__arm_2d_scene3_init(   arm_2d_scene_player_t *ptDispAdapter,
         .bUserAllocated = bUserAllocated,
     };
 
-    progress_wheel_init(&this.tWheel, 60, GLCD_COLOR_GREEN);
+
+    do {
+        progress_wheel_cfg_t tCFG = {
+            .tDotColour     = GLCD_COLOR_WHITE,         /* dot colour */
+            .tWheelColour   = GLCD_COLOR_GREEN,         /* arc colour */
+            .iWheelDiameter = 60,                       /* diameter, 0 means use the mask's original size */
+            .bUseDirtyRegions = false,                  /* use dirty regions */
+        };
+
+        progress_wheel_init(&this.tWheel, 
+                            &this.use_as__arm_2d_scene_t,
+                            &tCFG);
+    } while(0);
 
     do {
         list_view_cfg_t tCFG = {

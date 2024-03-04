@@ -130,8 +130,8 @@ static void __on_scene_fitness_background_complete(arm_2d_scene_t *ptScene)
 static void __on_scene_fitness_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_fitness_t *ptThis = (user_scene_fitness_t *)ptScene;
-    ARM_2D_UNUSED(ptThis);
 
+    progress_wheel_on_frame_start(&this.tWheel);
 }
 
 static void __on_scene_fitness_frame_complete(arm_2d_scene_t *ptScene)
@@ -210,7 +210,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_fitness_handler)
                                 ptTile, 
                                 &__centre_region,       
                                 this.iProgress,         /* progress 0~1000 */
-                                128,                    /* opacity */
+                                255,                    /* opacity */
                                 bIsNewFrame);
             arm_2d_op_wait_async(NULL);
         }
@@ -375,14 +375,20 @@ user_scene_fitness_t *__arm_2d_scene_fitness_init(   arm_2d_scene_player_t *ptDi
         .bUserAllocated = bUserAllocated,
     };
 
-    progress_wheel_init(&this.tWheel, 
-                        0, 
-                        GLCD_COLOR_GREEN,
-                        GLCD_COLOR_WHITE,
-                        &c_tileQuaterArcMiddleMask,
-                        &c_tileWhiteDotMiddleMask,
-                        &this.use_as__arm_2d_scene_t.ptDirtyRegion);
+    do {
+        progress_wheel_cfg_t tCFG = {
+            .ptileArcMask   = &c_tileQuaterArcMiddleMask, /* mask for arc */
+            .ptileDotMask   = &c_tileWhiteDotMiddleMask,  /* mask for dot */
+            .tDotColour     = GLCD_COLOR_GREEN,           /* dot colour */
+            .tWheelColour   = GLCD_COLOR_GREEN,           /* arc colour */
+            .iWheelDiameter = 0,                          /* diameter, 0 means use the mask's original size */
+            .bUseDirtyRegions = true,                     /* use dirty regions */
+        };
 
+        progress_wheel_init(&this.tWheel, 
+                            &this.use_as__arm_2d_scene_t,
+                            &tCFG);
+    } while(0);
 
     /* initialize number list */
     do {

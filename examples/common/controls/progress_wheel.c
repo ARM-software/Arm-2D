@@ -68,6 +68,17 @@
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
+enum {
+    START,
+    WAIT_CHANGE,
+    DRAW_LAST_QUADRANT,
+    DRAW_WHOLE_WHEEL,
+    DRAW_CURVE,
+    DRAW_START_POINT,
+    DRAW_END_POINT,
+    FINISH,
+    NO_DIRTY_REGIONS,
+};
 /*============================ GLOBAL VARIABLES ==============================*/
 
 
@@ -80,9 +91,10 @@ extern const arm_2d_tile_t c_tileWhiteDotMask;
 
 /*============================ IMPLEMENTATION ================================*/
 
-ARM_NONNULL(1)
-void __progress_wheel_init( progress_wheel_t *ptThis, 
-                            const progress_wheel_cfg_t *ptCFG)
+ARM_NONNULL(1,3)
+void progress_wheel_init( progress_wheel_t *ptThis,
+                          arm_2d_scene_t *ptTargetScene,
+                          const progress_wheel_cfg_t *ptCFG)
 {
     assert(NULL != ptThis);
     assert(NULL != ptCFG);
@@ -90,6 +102,8 @@ void __progress_wheel_init( progress_wheel_t *ptThis,
     memset(ptThis, 0, sizeof(progress_wheel_t));
     this.tCFG = *ptCFG;
     
+    this.ptTargetScene = ptTargetScene;
+
     if (NULL == this.tCFG.ptileArcMask) {
         this.tCFG.ptileArcMask = &c_tileQuaterArcMask;
     }
@@ -104,6 +118,28 @@ void __progress_wheel_init( progress_wheel_t *ptThis,
 
     progress_wheel_set_diameter(ptThis, this.tCFG.iWheelDiameter);
 
+    if (NULL == this.ptTargetScene) {
+        this.tCFG.bUseDirtyRegions = false;
+    }
+
+    if (this.tCFG.bUseDirtyRegions) {
+        this.tDirtyRegion.bIgnore = true;
+        /* add dirty region to the target scene */
+        arm_2d_scene_player_append_dirty_regions(   ptTargetScene, 
+                                                    &this.tDirtyRegion, 
+                                                    1);
+        
+        /* initialize transform helper */
+        arm_2d_helper_transform_init(&this.tTransHelper,
+                                    (arm_2d_op_t *)&this.tOP[5],
+                                    0.01f,
+                                    0.1f,
+                                    &ptTargetScene->ptDirtyRegion);
+    } else {
+        this.chState = NO_DIRTY_REGIONS;
+    }
+
+#if 0
     arm_2d_region_list_item_t **ppDirtyRegionList = this.tCFG.ppList;
     if (NULL != ppDirtyRegionList) {
         /* initialize transform helper */
@@ -125,6 +161,7 @@ void __progress_wheel_init( progress_wheel_t *ptThis,
             this.tDirtyRegion.bIgnore = true;
         }
     }
+#endif
 }
 
 
@@ -151,12 +188,30 @@ void progress_wheel_depose(progress_wheel_t *ptThis)
         ARM_2D_OP_DEPOSE(*ptItem);
     }
 
+    if (this.tCFG.bUseDirtyRegions && NULL != this.ptTargetScene) {
+        /* remove dirty region */
+        arm_2d_scene_player_remove_dirty_regions(   this.ptTargetScene, 
+                                                    &this.tDirtyRegion, 
+                                                    1);
+
+        arm_2d_helper_transform_depose(&this.tTransHelper);
+    }
+
+#if 0
     arm_2d_region_list_item_t **ppDirtyRegionList = this.tCFG.ppList;
 
     if (NULL == ppDirtyRegionList) {
         return ;
     }
     arm_2d_helper_transform_depose(&this.tTransHelper);
+
+    if (this.bCFGUseDirtyRegion && NULL != this.ptTargetScene) {
+        /* remove dirty region */
+        arm_2d_scene_player_remove_dirty_regions(   this.ptTargetScene, 
+                                                    &this.tDirtyRegion, 
+                                                    1);
+    }
+
 
     while(NULL != (*ppDirtyRegionList)) {
 
@@ -169,6 +224,18 @@ void progress_wheel_depose(progress_wheel_t *ptThis)
 
         ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
     }
+#endif
+}
+
+ARM_NONNULL(1)
+void progress_wheel_on_frame_start(progress_wheel_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    if (this.tCFG.bUseDirtyRegions) {
+        this.tDirtyRegion.bUpdated = true;
+        this.tDirtyRegion.bIgnore = false;
+    }
 }
 
 ARM_NONNULL(1,2)
@@ -179,17 +246,6 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                             uint8_t chOpacity,
                             bool bIsNewFrame)
 {
-
-    enum {
-        START,
-        WAIT_CHANGE,
-        DRAW_LAST_QUADRANT,
-        DRAW_WHOLE_WHEEL,
-        DRAW_CURVE,
-        DRAW_START_POINT,
-        DRAW_END_POINT,
-        FINISH,
-    };
 
     bool bNoScale = ABS(this.fScale - 1.0f) < 0.01;
 
@@ -202,7 +258,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
     if (    (this.chState == START) 
         &&  bIsNewFrame 
-        && (NULL != this.tCFG.ppList)) {
+        &&  this.tCFG.bUseDirtyRegions) {
         /* initialize fsm */
         this.chLastQuadrant = 0;
         this.chState = DRAW_WHOLE_WHEEL;
@@ -255,7 +311,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
         if (bIsNewFrame) {
             this.fAngle = ARM_2D_ANGLE((float)iProgress * 36.0f / 100.0f);
 
-            if (NULL != this.tCFG.ppList) {
+            if (this.tCFG.bUseDirtyRegions) {
                 /* update helper with new values*/
                 arm_2d_helper_transform_update_value(&this.tTransHelper, this.fAngle, 1.0f);
 
@@ -451,7 +507,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                             &tQuater,
                                             tCentre,
                                             this.fAngle,
-                                            this.fScale + 0.003f,
+                                            this.fScale + 0.003f * bNoScale,
                                             tWheelColour,
                                             chOpacity,
                                             &tTargetCentre);
@@ -566,7 +622,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                             255,//chOpacity,
                                             &tTargetCentre);
 
-            if (NULL != this.tCFG.ppList) {
+            if (this.tCFG.bUseDirtyRegions) {
                 arm_2d_helper_transform_update_dirty_regions(   &this.tTransHelper,
                                                                 &__wheel_canvas,
                                                                 bIsNewFrame);

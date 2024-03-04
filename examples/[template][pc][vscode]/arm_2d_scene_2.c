@@ -140,8 +140,8 @@ static void __on_scene2_background_complete(arm_2d_scene_t *ptScene)
 static void __on_scene2_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_2_t *ptThis = (user_scene_2_t *)ptScene;
-    ARM_2D_UNUSED(ptThis);
 
+    progress_wheel_on_frame_start(&this.tWheel);
 }
 
 static void __on_scene2_frame_complete(arm_2d_scene_t *ptScene)
@@ -475,7 +475,7 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
 
         //.fnOnBGStart    = &__on_scene2_background_start,
         //.fnOnBGComplete = &__on_scene2_background_complete,
-        //.fnOnFrameStart = &__on_scene2_frame_start,
+        .fnOnFrameStart = &__on_scene2_frame_start,
         .fnOnFrameCPL   = &__on_scene2_frame_complete,
         .fnDepose       = &__on_scene2_depose,
         },
@@ -484,7 +484,18 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
 
     user_scene_2_t *ptThis = (user_scene_2_t *)ptScene;
 
-    progress_wheel_init(&this.tWheel, 60, GLCD_COLOR_GREEN);
+    do {
+        progress_wheel_cfg_t tCFG = {
+            .tDotColour     = GLCD_COLOR_WHITE,         /* dot colour */
+            .tWheelColour   = GLCD_COLOR_GREEN,         /* arc colour */
+            .iWheelDiameter = 60,                       /* diameter, 0 means use the mask's original size */
+            .bUseDirtyRegions = false,                  /* use dirty regions */
+        };
+
+        progress_wheel_init(&this.tWheel, 
+                            &this.use_as__arm_2d_scene_t,
+                            &tCFG);
+    } while(0);
 
     /* initialize number list */
     do {

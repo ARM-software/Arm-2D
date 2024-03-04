@@ -226,6 +226,7 @@ user_scene_console_t *__arm_2d_scene_console_init(
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
 
+#if 0
     /*! define dirty regions */
     IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
 
@@ -268,6 +269,7 @@ user_scene_console_t *__arm_2d_scene_console_init(
     arm_2d_align_centre(tScreen, s_tDirtyRegions[0].tRegion.tSize) {
         s_tDirtyRegions[0].tRegion = __centre_region;
     }
+#endif
 
     if (NULL == ptThis) {
         ptThis = (user_scene_console_t *)
@@ -291,7 +293,6 @@ user_scene_console_t *__arm_2d_scene_console_init(
             .fnScene        = &__pfb_draw_scene_console_handler,
             //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
-
             //.fnOnBGStart    = &__on_scene_console_background_start,
             //.fnOnBGComplete = &__on_scene_console_background_complete,
             .fnOnFrameStart = &__on_scene_console_frame_start,

@@ -45,6 +45,7 @@ extern "C" {
 
 /*============================ MACROS ========================================*/
 
+#if 0
 #define __progress_wheel_init0(__this_ptr, __diameter, __colour)                \
             do {                                                                \
                 progress_wheel_cfg_t tCFG = {                                   \
@@ -121,6 +122,7 @@ extern "C" {
                                                             (__diameter),       \
                                                             (__colour),         \
                                                             ##__VA_ARGS__)
+#endif
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
@@ -130,7 +132,7 @@ typedef struct progress_wheel_cfg_t {
     int16_t iWheelDiameter;
     COLOUR_INT tWheelColour;
     COLOUR_INT tDotColour;
-    arm_2d_region_list_item_t **ppList;
+    bool bUseDirtyRegions;
 } progress_wheel_cfg_t;
 
 
@@ -139,6 +141,8 @@ typedef struct progress_wheel_t {
 /* private members */
 ARM_PRIVATE(
     progress_wheel_cfg_t tCFG;
+    arm_2d_scene_t *ptTargetScene;
+
     float fScale;
     float fAngle;
     arm_2d_op_fill_cl_msk_opa_trans_t tOP[7];
@@ -159,13 +163,18 @@ ARM_PRIVATE(
 
 extern
 ARM_NONNULL(1)
-void __progress_wheel_init( progress_wheel_t *ptThis, 
-                            const progress_wheel_cfg_t *ptCFG);
+void progress_wheel_init( progress_wheel_t *ptThis,
+                          arm_2d_scene_t *ptTargetScene,
+                          const progress_wheel_cfg_t *ptCFG);
 
 extern
 ARM_NONNULL(1)
 void progress_wheel_set_diameter(progress_wheel_t *ptThis, 
                                 int16_t iDiameter);
+
+extern
+ARM_NONNULL(1)
+void progress_wheel_on_frame_start(progress_wheel_t *ptThis);
 
 extern
 ARM_NONNULL(1,2)

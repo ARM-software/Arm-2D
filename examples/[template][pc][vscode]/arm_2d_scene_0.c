@@ -295,6 +295,7 @@ user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter,
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
 
+#if 0
     /*! define dirty regions */
     IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
 
@@ -331,7 +332,8 @@ user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter,
     arm_2d_align_centre(tScreen, c_tileCMSISLogoMask.tRegion.tSize) {
         s_tDirtyRegions[0].tRegion = __centre_region;
     }
-    
+#endif
+
     if (NULL == ptThis) {
         ptThis = (user_scene_0_t *)
                     __arm_2d_allocate_scratch_memory(   sizeof(user_scene_0_t),
@@ -351,7 +353,7 @@ user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter,
             /* Please uncommon the callbacks if you need them
              */
             .fnScene        = &__pfb_draw_scene0_handler,
-            .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
+            //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
 
             //.fnOnBGStart    = &__on_scene0_background_start,
