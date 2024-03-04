@@ -81,6 +81,10 @@
 
 extern 
 const arm_2d_tile_t c_tileListCoverMask;
+extern
+const arm_2d_tile_t c_tileQuaterArcMiddleMask;
+extern
+const arm_2d_tile_t c_tileWhiteDotMiddleMask;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
@@ -375,6 +379,8 @@ user_scene_fitness_t *__arm_2d_scene_fitness_init(   arm_2d_scene_player_t *ptDi
                         240, 
                         GLCD_COLOR_GREEN,
                         GLCD_COLOR_WHITE,
+                        &c_tileQuaterArcMiddleMask,
+                        &c_tileWhiteDotMiddleMask,
                         &this.use_as__arm_2d_scene_t.ptDirtyRegion);
 
 
