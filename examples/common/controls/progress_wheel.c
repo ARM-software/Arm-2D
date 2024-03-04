@@ -492,26 +492,53 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
             };
 
             /* draw the starting point */
-            arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                            &this.tOP[4],
-                                            ptileDotMask,
-                                            &__wheel,
-                                            &tQuater,
-                                            tDotCentre,
-                                            0.0f,
-                                            this.fScale,
-                                            tWheelColour,
-                                            chOpacity,
-                                            &tTargetCentre);
-                
-            arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[4]);
+            if (bNoScale) {
+                tQuater.tLocation.iX = tQuater.tLocation.iX 
+                                     + tQuater.tSize.iWidth 
+                                     - ptileDotMask->tRegion.tSize.iWidth / 2;
+                tQuater.tLocation.iY += 1;
 
+                arm_2d_tile_t tDotMaskHalf = 
+                    impl_child_tile(*ptileDotMask, 
+                                    0, 
+                                    0, 
+                                    ptileDotMask->tRegion.tSize.iWidth / 2, 
+                                    ptileDotMask->tRegion.tSize.iHeight);
+
+                arm_2d_fill_colour_with_mask_and_opacity(
+                    &__wheel,
+                    &tQuater,
+                    &tDotMaskHalf,
+                    (__arm_2d_color_t){tWheelColour},
+                    chOpacity);
+                
+                ARM_2D_OP_WAIT_ASYNC();
+
+            } else {
+                arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                                                &this.tOP[4],
+                                                ptileDotMask,
+                                                &__wheel,
+                                                &tQuater,
+                                                tDotCentre,
+                                                0.0f,
+                                                this.fScale,
+                                                tWheelColour,
+                                                chOpacity,
+                                                &tTargetCentre);
+                
+                arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[4]);
+            }
             if (DRAW_START_POINT == this.chState) {
                 if (false == this.tDirtyRegion.bUpdated) {
-
-                    this.tDirtyRegion.tRegion = *(this.tOP[4].Target.ptRegion);
-                    this.tDirtyRegion.tRegion.tLocation.iX += tRotationRegion.tLocation.iX;
-                    this.tDirtyRegion.tRegion.tLocation.iY += tRotationRegion.tLocation.iY;
+                        
+                    if (bNoScale) {
+                        this.tDirtyRegion.tRegion = tQuater;
+                    } else {
+                        this.tDirtyRegion.tRegion = *(this.tOP[4].Target.ptRegion);
+                        this.tDirtyRegion.tRegion.tLocation.iX += tRotationRegion.tLocation.iX;
+                        this.tDirtyRegion.tRegion.tLocation.iY += tRotationRegion.tLocation.iY;
+                    }
 
                     arm_2d_region_intersect(&this.tDirtyRegion.tRegion, 
                                             &tRotationRegion,
