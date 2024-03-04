@@ -80,6 +80,17 @@ var group__gHelper =
     ] ],
     [ "arm_2d_helper_pi_slider_cfg_t", "group__gHelper.html#structarm__2d__helper__pi__slider__cfg__t", null ],
     [ "arm_2d_helper_pi_slider_t", "group__gHelper.html#structarm__2d__helper__pi__slider__t", null ],
+    [ "__arm_2d_fifo_reader_pointer", "group__gHelper.html#struct____arm__2d__fifo__reader__pointer", null ],
+    [ "arm_2d_byte_fifo_t", "group__gHelper.html#structarm__2d__byte__fifo__t", null ],
+    [ "arm_2d_char_descriptor_t", "group__gHelper.html#structarm__2d__char__descriptor__t", null ],
+    [ "arm_2d_font_t", "group__gHelper.html#structarm__2d__font__t", [
+      [ "tCharSize", "group__gHelper.html#a9a6cdac387af2ac61607310fa1eb722e", null ],
+      [ "nCount", "group__gHelper.html#afd82638ab5387c6ebcdb2fbf59d3a40e", null ],
+      [ "fnGetCharDescriptor", "group__gHelper.html#a6479b43d02147602a806b8bee6f7c962", null ],
+      [ "fnDrawChar", "group__gHelper.html#a3b841cb917873c6ef064a945ce09060d", null ]
+    ] ],
+    [ "arm_2d_char_idx_t", "group__gHelper.html#structarm__2d__char__idx__t", null ],
+    [ "arm_2d_user_font_t", "group__gHelper.html#structarm__2d__user__font__t", null ],
     [ "__arm_2d_helper_scene_switch_t.Feature", "group__gHelper.html#struct____arm__2d__helper__scene__switch__t_8Feature", [
       [ "chMode", "group__gHelper.html#a32e1ccd08315dddf03bcc84d8e25eb46", null ],
       [ "bIgnoreOldSceneBG", "group__gHelper.html#a293bd1e526f3a9b72e8a9c323c835373", null ],
@@ -208,6 +219,9 @@ var group__gHelper =
     [ "arm_2d_scene_player_show_navigation_layer", "group__gHelper.html#ga3bac12004dcc0fb152f54118497f2d34", null ],
     [ "__arm_2d_scene_player_register_before_switching_event_handler", "group__gHelper.html#gadaa72d1d1c3baf5db91070008c238293", null ],
     [ "arm_2d_scene_player_task", "group__gHelper.html#ga9d3b273bce58d135be740ba682ec11b7", null ],
+    [ "arm_2d_scene_player_append_dirty_regions", "group__gHelper.html#ga17f0592eb6eabcb8fd5ae12e4d425d71", null ],
+    [ "arm_2d_scene_player_remove_dirty_regions", "group__gHelper.html#ga15bd874fcd36767c9ff8acf1955e8afe", null ],
+    [ "arm_2d_scene_player_get_the_current_scene", "group__gHelper.html#ga416e8e1d86ebf4413ae19db8c3f605cb", null ],
     [ "arm_2d_helper_pfb_init", "group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99", null ],
     [ "arm_2d_helper_pfb_deinit", "group__gHelper.html#ga91b9bd95fab04511c9ae935757341d6f", null ],
     [ "arm_2d_helper_pfb_get_display_area", "group__gHelper.html#gaf0eef5fe61bc11d102d2180025ada377", null ],
@@ -265,5 +279,15 @@ var group__gHelper =
     [ "arm_2d_helper_draw_box", "group__gHelper.html#gacd0e2f64404ceef7412a3715c0bc47fd", null ],
     [ "arm_2d_helper_film_next_frame", "group__gHelper.html#ga8973bb94243b6b082f9e2888267bea04", null ],
     [ "arm_2d_helper_film_reset", "group__gHelper.html#gaa3dd9a9991d2cf374924d7d3e57ff69b", null ],
-    [ "arm_2d_helper_film_set_frame", "group__gHelper.html#ga335d382332ef7ac57ecb84698fec8584", null ]
+    [ "arm_2d_helper_film_set_frame", "group__gHelper.html#ga335d382332ef7ac57ecb84698fec8584", null ],
+    [ "arm_2d_byte_fifo_init", "group__gHelper.html#gac3bdc393bc8cbb86351a7647372854d8", null ],
+    [ "arm_2d_byte_fifo_drop_all", "group__gHelper.html#gae5ef53c867010fd51592debcba60441a", null ],
+    [ "arm_2d_byte_fifo_enqueue", "group__gHelper.html#ga44e78d3e1990b1721c40fc6a93c78fcf", null ],
+    [ "arm_2d_byte_fifo_dequeue", "group__gHelper.html#gaa38f307b5921ee31122e1a6404444bc5", null ],
+    [ "arm_2d_byte_fifo_peek", "group__gHelper.html#gab71dfe523df6a27f0758c29bd3a0e35b", null ],
+    [ "arm_2d_byte_fifo_get_all_peeked", "group__gHelper.html#ga5a4996625f003ec5e18d7a7b549b072a", null ],
+    [ "arm_2d_byte_fifo_reset_peeked", "group__gHelper.html#ga9a0bb323933baa059f65eb2bd62608be", null ],
+    [ "arm_2d_helper_get_utf8_byte_valid_length", "group__gHelper.html#gaade8c9a0e1c793b13a8ac34871945b5f", null ],
+    [ "arm_2d_helper_get_utf8_byte_length", "group__gHelper.html#ga2352b0099a2e5965db7a05d30b4f485b", null ],
+    [ "arm_2d_helper_get_char_descriptor", "group__gHelper.html#gace860649e7b7172cf6aa155abc51434d", null ]
 ];
