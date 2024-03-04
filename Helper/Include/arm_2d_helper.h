@@ -259,14 +259,14 @@ struct __arm_2d_fifo_reader_pointer {
 };
 
 typedef struct arm_2d_byte_fifo_t {
-//ARM_PROTECTED (
+ARM_PROTECTED (
     uint8_t *pchBuffer;
     uint16_t hwSize;
     uint16_t hwTail;
 
     struct __arm_2d_fifo_reader_pointer tHead;
     struct __arm_2d_fifo_reader_pointer tPeek;
-//)
+)
 } arm_2d_byte_fifo_t;
 
 typedef struct {
