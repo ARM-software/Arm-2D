@@ -1355,8 +1355,6 @@ bool arm_2d_scene_player_append_dirty_regions(arm_2d_scene_t *ptScene,
 
         arm_2d_region_list_item_t **ppDirtyRegionList = &ptScene->ptDirtyRegion;
         if (NULL != ppDirtyRegionList) {
-
-            if (NULL != ppDirtyRegionList) {
                 while(NULL != (*ppDirtyRegionList)) {
                     ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
                 }
@@ -1368,7 +1366,6 @@ bool arm_2d_scene_player_append_dirty_regions(arm_2d_scene_t *ptScene,
                     ptItems++;
                 }
                 ptItems->ptNext = NULL;
-            }
         }
 
         return true;
