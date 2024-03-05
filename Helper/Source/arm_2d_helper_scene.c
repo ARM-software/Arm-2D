@@ -22,7 +22,7 @@
  * Description:  Public header file for the scene service
  *
  * $Date:        05. March 2024
- * $Revision:    V.1.4.8
+ * $Revision:    V.1.4.9
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1347,30 +1347,14 @@ bool arm_2d_scene_player_append_dirty_regions(arm_2d_scene_t *ptScene,
                                               arm_2d_region_list_item_t *ptItems,
                                               size_t tCount)
 {
+    if (NULL == ptItems || 0 == tCount || NULL == ptScene) {
+        return false;
+    }
 
-    do {
-        if (NULL == ptItems || 0 == tCount || NULL == ptScene) {
-            break;
-        }
-
-        arm_2d_region_list_item_t **ppDirtyRegionList = &ptScene->ptDirtyRegion;
-
-        while(NULL != (*ppDirtyRegionList)) {
-            ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
-        }
-
-        /* add dirty region items to the list */
-        (*ppDirtyRegionList) = ptItems;
-        while(--tCount) {
-            ptItems->ptNext = ptItems + 1;
-            ptItems++;
-        }
-        ptItems->ptNext = NULL;
-
-        return true;
-    } while(0);
-
-    return false;
+    return arm_2d_helper_pfb_append_dirty_regions_to_list(
+                &ptScene->ptDirtyRegion,
+                ptItems,
+                tCount);
 }
 
 ARM_NONNULL(1,2)
@@ -1378,36 +1362,13 @@ bool arm_2d_scene_player_remove_dirty_regions(arm_2d_scene_t *ptScene,
                                               arm_2d_region_list_item_t *ptItems,
                                               size_t tCount)
 {
-
-    do {
-        if (NULL == ptItems || 0 == tCount || NULL == ptScene) {
-            break;
-        }
-
-        do {
-            /* search and remove item */
-            arm_2d_region_list_item_t **ppDirtyRegionList = &ptScene->ptDirtyRegion;
-
-            while(NULL != (*ppDirtyRegionList)) {
-
-                /* remove the dirty region from the user dirty region list */
-                if ((*ppDirtyRegionList) == ptItems) {
-                    (*ppDirtyRegionList) = ptItems->ptNext;
-                    ptItems->ptNext = NULL;
-                    break;
-                }
-
-                ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
-            }
-
-            /* next item */
-            ptItems++;
-        } while(--tCount);
-
-        return true;
-    } while(0);
-
-    return false;
+    if (NULL == ptItems || 0 == tCount || NULL == ptScene) {
+        return false;
+    }
+    return arm_2d_helper_pfb_remove_dirty_regions_from_list(
+                &ptScene->ptDirtyRegion,
+                ptItems,
+                tCount);
 }
 
 ARM_NONNULL(1)

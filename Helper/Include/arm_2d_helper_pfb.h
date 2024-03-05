@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        3. March 2024
- * $Revision:    V.1.8.6
+ * $Date:        5. March 2024
+ * $Revision:    V.1.8.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1143,6 +1143,36 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate270_rgb32(
                                             arm_2d_pfb_t *ptOrigin, 
                                             arm_2d_pfb_t *ptScratch,
                                             const arm_2d_size_t *ptScreenSize);
+
+/*!
+ * \brief append dirty regions to the a specified list
+ * \param[in] ppDirtyRegionList the target list
+ * \param[in] ptItems the dirty regions
+ * \param[in] tCount the number of dirty regions
+ * \retval true operation is successful
+ * \retval false the operation is failed.
+ */
+extern
+ARM_NONNULL(1,2)
+bool arm_2d_helper_pfb_append_dirty_regions_to_list(
+                                arm_2d_region_list_item_t **ppDirtyRegionList, 
+                                arm_2d_region_list_item_t *ptItems,
+                                size_t tCount);
+
+/*!
+ * \brief remove dirty regions from the a specified list
+ * \param[in] ppDirtyRegionList the target list
+ * \param[in] ptItems the dirty regions
+ * \param[in] tCount the number of dirty regions
+ * \retval true operation is successful
+ * \retval false the operation is failed.
+ */
+extern
+ARM_NONNULL(1,2)
+bool arm_2d_helper_pfb_remove_dirty_regions_from_list(
+                                    arm_2d_region_list_item_t **ppDirtyRegionList, 
+                                    arm_2d_region_list_item_t *ptItems,
+                                    size_t tCount);
 
 /*! @} */
 

@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        3. March 2024
- * $Revision:    V.1.8.6
+ * $Date:        5. March 2024
+ * $Revision:    V.1.8.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -3907,4 +3907,72 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_rgb32( arm_2d_pfb_t *ptOrigin,
     return ptScratch;
 }
 
+/*----------------------------------------------------------------------------*
+ * API for Dirty Region List                                                  *
+ *----------------------------------------------------------------------------*/
+ARM_NONNULL(1,2)
+bool arm_2d_helper_pfb_append_dirty_regions_to_list(
+                                arm_2d_region_list_item_t **ppDirtyRegionList, 
+                                arm_2d_region_list_item_t *ptItems,
+                                size_t tCount)
+{
 
+    do {
+        if (NULL == ptItems || 0 == tCount || NULL == ppDirtyRegionList) {
+            break;
+        }
+
+        while(NULL != (*ppDirtyRegionList)) {
+            ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
+        }
+
+        /* add dirty region items to the list */
+        (*ppDirtyRegionList) = ptItems;
+        while(--tCount) {
+            ptItems->ptNext = ptItems + 1;
+            ptItems++;
+        }
+        ptItems->ptNext = NULL;
+
+        return true;
+    } while(0);
+
+    return false;
+}
+
+ARM_NONNULL(1,2)
+bool arm_2d_helper_pfb_remove_dirty_regions_from_list(
+                                    arm_2d_region_list_item_t **ppDirtyRegionList, 
+                                    arm_2d_region_list_item_t *ptItems,
+                                    size_t tCount)
+{
+
+    do {
+        if (NULL == ptItems || 0 == tCount || NULL == ppDirtyRegionList) {
+            break;
+        }
+
+        do {
+            /* search and remove item */
+
+            while(NULL != (*ppDirtyRegionList)) {
+
+                /* remove the dirty region from the user dirty region list */
+                if ((*ppDirtyRegionList) == ptItems) {
+                    (*ppDirtyRegionList) = ptItems->ptNext;
+                    ptItems->ptNext = NULL;
+                    break;
+                }
+
+                ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
+            }
+
+            /* next item */
+            ptItems++;
+        } while(--tCount);
+
+        return true;
+    } while(0);
+
+    return false;
+}
