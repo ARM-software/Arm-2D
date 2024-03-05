@@ -179,6 +179,9 @@ static void __on_scene_audiomark_frame_start(arm_2d_scene_t *ptScene)
 
         this.Processor[n].iProgress = (int16_t)nResult;
     }
+    for (uint_fast8_t n = 0; n < dimof(this.Processor); n++) {
+        progress_wheel_on_frame_start(&this.Processor[n].tWheel);
+    }
 
 }
 

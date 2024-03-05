@@ -124,44 +124,23 @@ void progress_wheel_init( progress_wheel_t *ptThis,
 
     if (this.tCFG.bUseDirtyRegions) {
         this.tDirtyRegion.bIgnore = true;
-        /* add dirty region to the target scene */
-        arm_2d_scene_player_append_dirty_regions(   ptTargetScene, 
-                                                    &this.tDirtyRegion, 
-                                                    1);
-        
+
         /* initialize transform helper */
         arm_2d_helper_transform_init(&this.tTransHelper,
                                     (arm_2d_op_t *)&this.tOP[5],
                                     0.01f,
                                     0.1f,
                                     &ptTargetScene->ptDirtyRegion);
+
+        /* add dirty region to the target scene */
+        arm_2d_scene_player_append_dirty_regions(   ptTargetScene, 
+                                                    &this.tDirtyRegion, 
+                                                    1);
+        
+
     } else {
         this.chState = NO_DIRTY_REGIONS;
     }
-
-#if 0
-    arm_2d_region_list_item_t **ppDirtyRegionList = this.tCFG.ppList;
-    if (NULL != ppDirtyRegionList) {
-        /* initialize transform helper */
-        arm_2d_helper_transform_init(&this.tTransHelper,
-                                    (arm_2d_op_t *)&this.tOP[5],
-                                    0.01f,
-                                    0.1f,
-                                    ppDirtyRegionList);
-
-        if (NULL != ppDirtyRegionList) {
-            while(NULL != (*ppDirtyRegionList)) {
-                ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
-            }
-
-            /* add dirty region items to the list */
-            (*ppDirtyRegionList) = &this.tDirtyRegion;
-            this.tDirtyRegion.ptNext = NULL;
-
-            this.tDirtyRegion.bIgnore = true;
-        }
-    }
-#endif
 }
 
 
@@ -196,35 +175,6 @@ void progress_wheel_depose(progress_wheel_t *ptThis)
 
         arm_2d_helper_transform_depose(&this.tTransHelper);
     }
-
-#if 0
-    arm_2d_region_list_item_t **ppDirtyRegionList = this.tCFG.ppList;
-
-    if (NULL == ppDirtyRegionList) {
-        return ;
-    }
-    arm_2d_helper_transform_depose(&this.tTransHelper);
-
-    if (this.bCFGUseDirtyRegion && NULL != this.ptTargetScene) {
-        /* remove dirty region */
-        arm_2d_scene_player_remove_dirty_regions(   this.ptTargetScene, 
-                                                    &this.tDirtyRegion, 
-                                                    1);
-    }
-
-
-    while(NULL != (*ppDirtyRegionList)) {
-
-        /* remove the dirty region from the user dirty region list */
-        if ((*ppDirtyRegionList) == &this.tDirtyRegion) {
-            (*ppDirtyRegionList) = this.tDirtyRegion.ptNext;
-            this.tDirtyRegion.ptNext = NULL;
-            break;
-        }
-
-        ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
-    }
-#endif
 }
 
 ARM_NONNULL(1)
