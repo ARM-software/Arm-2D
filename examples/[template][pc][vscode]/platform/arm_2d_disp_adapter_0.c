@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #include "arm_2d_helper.h"
 #include "arm_extra_lcd_printf.h"
-#include "arm_2d_example_controls.h"
+#include "arm_extra_controls.h"
 #include "arm_2d_disp_adapter_0.h"
 
 #if defined(__clang__)
@@ -98,7 +98,6 @@ arm_2d_helper_3fb_t s_tDirectModeHelper;
 
 
 /*============================ IMPLEMENTATION ================================*/
-
 static void __on_frame_start(arm_2d_scene_t *ptScene)
 {
     ARM_2D_UNUSED(ptScene);
@@ -113,8 +112,8 @@ static void __on_frame_complete(arm_2d_scene_t *ptScene)
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_handler)
 {
-    ARM_2D_UNUSED(pTarget);
-    ARM_2D_UNUSED(ptTile);
+    ARM_2D_PARAM(pTarget);
+    ARM_2D_PARAM(ptTile);
 
     arm_2d_canvas(ptTile, __top_container) {
     
@@ -140,8 +139,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
 __WEAK
 IMPL_PFB_ON_DRAW(__disp_adapter0_draw_navigation)
 {
-    ARM_2D_UNUSED(pTarget);
-    ARM_2D_UNUSED(bIsNewFrame);
+    ARM_2D_PARAM(pTarget);
+    ARM_2D_PARAM(bIsNewFrame);
 
     arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
     arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
@@ -218,8 +217,8 @@ IMPL_PFB_ON_LOW_LV_RENDERING(__disp_adapter0_pfb_render_handler)
 {
     const arm_2d_tile_t *ptTile = &(ptPFB->tTile);
 
-    ARM_2D_UNUSED(pTarget);
-    ARM_2D_UNUSED(bIsNewFrame);
+    ARM_2D_PARAM(pTarget);
+    ARM_2D_PARAM(bIsNewFrame);
 
     if (__arm_2d_helper_3fb_draw_bitmap(&s_tDirectModeHelper,
                                         ptPFB)) {
@@ -279,8 +278,8 @@ IMPL_PFB_ON_LOW_LV_RENDERING(__disp_adapter0_pfb_render_handler)
 {
     const arm_2d_tile_t *ptTile = &(ptPFB->tTile);
 
-    ARM_2D_UNUSED(pTarget);
-    ARM_2D_UNUSED(bIsNewFrame);
+    ARM_2D_PARAM(pTarget);
+    ARM_2D_PARAM(bIsNewFrame);
 
     /* request an asynchronous flushing */
     __disp_adapter0_request_async_flushing(
@@ -300,15 +299,13 @@ IMPL_PFB_ON_LOW_LV_RENDERING(__disp_adapter0_pfb_render_handler)
  * Meanwhile, in developing stage, this method can ensure a robust flushing. 
  */
 
-
-
 __WEAK
 IMPL_PFB_ON_LOW_LV_RENDERING(__disp_adapter0_pfb_render_handler)
 {
     const arm_2d_tile_t *ptTile = &(ptPFB->tTile);
 
-    ARM_2D_UNUSED(pTarget);
-    ARM_2D_UNUSED(bIsNewFrame);
+    ARM_2D_PARAM(pTarget);
+    ARM_2D_PARAM(bIsNewFrame);
 
     Disp0_DrawBitmap(ptTile->tRegion.tLocation.iX,
                     ptTile->tRegion.tLocation.iY,
@@ -324,7 +321,7 @@ IMPL_PFB_ON_LOW_LV_RENDERING(__disp_adapter0_pfb_render_handler)
 
 static bool __on_each_frame_complete(void *ptTarget)
 {
-    ARM_2D_UNUSED(ptTarget);
+    ARM_2D_PARAM(ptTarget);
     
     int64_t lTimeStamp = arm_2d_helper_get_system_timestamp();
     
@@ -392,7 +389,7 @@ static bool __on_each_frame_complete(void *ptTarget)
                         (int32_t)arm_2d_helper_convert_ticks_to_ms(DISP0_ADAPTER.Benchmark.wLCDLatency)
                     );
                 }
-
+                 
                 DISP0_ADAPTER.Benchmark.wMin = UINT32_MAX;
                 DISP0_ADAPTER.Benchmark.wMax = 0;
                 DISP0_ADAPTER.Benchmark.dwTotal = 0;
@@ -407,6 +404,7 @@ static bool __on_each_frame_complete(void *ptTarget)
     
     return true;
 }
+
 
 #if __DISP0_CFG_ROTATE_SCREEN__
 /*!
@@ -465,10 +463,10 @@ static void __user_scene_player_init(void)
 
     //! initialise FPB helper
     if (ARM_2D_HELPER_PFB_INIT(
-        &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t,                    //!< FPB Helper object
+        &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t,                            //!< FPB Helper object
         __DISP0_CFG_SCEEN_WIDTH__,                                     //!< screen width
         __DISP0_CFG_SCEEN_HEIGHT__,                                    //!< screen height
-        COLOUR_INT,                                                    //!< colour date type
+        COLOUR_INT,                                                             //!< colour date type
         __DISP0_COLOUR_FORMAT__,                                       //!< colour format
         __DISP0_CFG_PFB_BLOCK_WIDTH__,                                 //!< PFB block width
         __DISP0_CFG_PFB_BLOCK_HEIGHT__,                                //!< PFB block height
@@ -476,7 +474,7 @@ static void __user_scene_player_init(void)
 
 #if     __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                          \
     &&  !__DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
-        + 3 
+        + __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 #else
         + (__DISP0_CFG_ROTATE_SCREEN__ > 0)
 #endif
@@ -504,8 +502,8 @@ static void __user_scene_player_init(void)
         .FrameBuffer.u3PixelHeightAlign = __DISP0_CFG_PFB_PIXEL_ALIGN_HEIGHT__,
 #if     __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                          \
     &&  !__DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
-        // reserve 3 PFB blocks for the virtual resource service
-        .FrameBuffer.u4PoolReserve = 3, 
+        // reserve PFB blocks for the virtual resource service
+        .FrameBuffer.u4PoolReserve = __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__,
 #endif
 #if __DISP0_CFG_OPTIMIZE_DIRTY_REGIONS__
         .DirtyRegion.ptRegions = s_tDirtyRegionList,

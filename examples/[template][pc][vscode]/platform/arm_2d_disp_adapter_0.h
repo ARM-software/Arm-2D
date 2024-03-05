@@ -67,6 +67,24 @@ extern "C" {
 #   define __DISP0_CFG_SCEEN_HEIGHT__                              600
 #endif
 
+/*
+  ARM_SCREEN_NO_ROTATION   0
+  ARM_SCREEN_ROTATE_90     1
+  ARM_SCREEN_ROTATE_180    2
+  ARM_SCREEN_ROTATE_270    3
+ */
+
+// <o>Rotate the Screen
+//     <0=>  NO Rotation
+//     <1=>    90 Degree
+//     <2=>   180 Degree
+//     <3=>   270 Degree
+// <i> Rotate the Screen for specified degrees.
+// <i> NOTE: This is extremely slow. Please avoid using it whenever it is possible.
+#ifndef __DISP0_CFG_ROTATE_SCREEN__
+#   define __DISP0_CFG_ROTATE_SCREEN__                             0
+#endif
+
 // <o>Width of the PFB block
 // <i> The width of your PFB block size used in disp0
 #ifndef __DISP0_CFG_PFB_BLOCK_WIDTH__
@@ -151,16 +169,6 @@ extern "C" {
 #   define __DISP0_CFG_SWAP_RGB16_HIGH_AND_LOW_BYTES__             0
 #endif
 
-// <o>Rotate the Screen
-//     <0=>    NO Rotate
-//     <1=>    90 Degree
-//     <2=>   180 Degree
-//     <3=>   270 Degree
-// <i> Rotate the Screen for specified degrees.
-#ifndef __DISP0_CFG_ROTATE_SCREEN__
-#   define __DISP0_CFG_ROTATE_SCREEN__                             0
-#endif
-
 // <q>Enable the helper service for Asynchronous Flushing
 // <i> Please select this option when using asynchronous flushing, e.g. DMA + ISR 
 #ifndef __DISP0_CFG_ENABLE_ASYNC_FLUSHING__
@@ -185,7 +193,11 @@ extern "C" {
 #   define __DISP0_CFG_DISABLE_NAVIGATION_LAYER__                  0
 #endif
 
-// <q>Enable the virtual resource helper service
+// <o>Maximum number of Virtual Resources used per API
+//     <0=>     NO Virtual Resource
+//     <1=>     1 Per API
+//     <2=>     2 Per API
+//     <3=>     3 Per API
 // <i> Introduce a helper service for loading virtual resources.
 // <i> This feature is disabled by default.
 #ifndef __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
@@ -199,7 +211,6 @@ extern "C" {
 #   define __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__      0
 #endif
 // <<< end of configuration section >>>
-
 
 #ifndef __DISP0_COLOUR_FORMAT__
 #   if      __DISP0_CFG_COLOUR_DEPTH__ == 8
