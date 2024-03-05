@@ -401,34 +401,34 @@
               <FilePath>.\MeterPanel.c</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_scene_meter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_meter.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_meter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_meter.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_watch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_watch.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_watch.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_watch.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_scene_fitness.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_fitness.c</FilePath>
+              <FilePath>..\common\scenes\fitness\arm_2d_scene_fitness.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_scene_fitness.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_fitness.h</FilePath>
+              <FilePath>..\common\scenes\fitness\arm_2d_scene_fitness.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\meter\arm_2d_scene_meter.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\meter\arm_2d_scene_meter.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_watch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\watch\arm_2d_scene_watch.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_watch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\watch\arm_2d_scene_watch.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1269,34 +1269,34 @@
               <FilePath>.\MeterPanel.c</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_scene_meter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_meter.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_meter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_meter.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_watch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_watch.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_watch.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_watch.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_scene_fitness.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_fitness.c</FilePath>
+              <FilePath>..\common\scenes\fitness\arm_2d_scene_fitness.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_scene_fitness.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_fitness.h</FilePath>
+              <FilePath>..\common\scenes\fitness\arm_2d_scene_fitness.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\meter\arm_2d_scene_meter.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\meter\arm_2d_scene_meter.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_watch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\watch\arm_2d_scene_watch.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_watch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\watch\arm_2d_scene_watch.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2138,34 +2138,34 @@
               <FilePath>.\MeterPanel.c</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_scene_meter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_meter.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_meter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_meter.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_watch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_watch.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_watch.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_watch.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_scene_fitness.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_fitness.c</FilePath>
+              <FilePath>..\common\scenes\fitness\arm_2d_scene_fitness.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_scene_fitness.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_fitness.h</FilePath>
+              <FilePath>..\common\scenes\fitness\arm_2d_scene_fitness.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\meter\arm_2d_scene_meter.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\meter\arm_2d_scene_meter.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_watch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\watch\arm_2d_scene_watch.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_watch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\watch\arm_2d_scene_watch.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2938,34 +2938,34 @@
               <FilePath>.\MeterPanel.c</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_scene_meter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_meter.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_meter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_meter.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_watch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_watch.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_watch.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_watch.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_scene_fitness.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_fitness.c</FilePath>
+              <FilePath>..\common\scenes\fitness\arm_2d_scene_fitness.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_scene_fitness.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_fitness.h</FilePath>
+              <FilePath>..\common\scenes\fitness\arm_2d_scene_fitness.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\meter\arm_2d_scene_meter.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\meter\arm_2d_scene_meter.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_watch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\watch\arm_2d_scene_watch.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_watch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\watch\arm_2d_scene_watch.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3807,34 +3807,34 @@
               <FilePath>.\MeterPanel.c</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_scene_meter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_meter.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_meter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_meter.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_watch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_watch.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_watch.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_watch.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_scene_fitness.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_fitness.c</FilePath>
+              <FilePath>..\common\scenes\fitness\arm_2d_scene_fitness.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_scene_fitness.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_fitness.h</FilePath>
+              <FilePath>..\common\scenes\fitness\arm_2d_scene_fitness.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\meter\arm_2d_scene_meter.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\meter\arm_2d_scene_meter.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_watch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\watch\arm_2d_scene_watch.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_watch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\watch\arm_2d_scene_watch.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4676,34 +4676,34 @@
               <FilePath>.\MeterPanel.c</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_scene_meter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_meter.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_meter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_meter.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_watch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_watch.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_watch.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_watch.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_scene_fitness.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_fitness.c</FilePath>
+              <FilePath>..\common\scenes\fitness\arm_2d_scene_fitness.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_scene_fitness.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_fitness.h</FilePath>
+              <FilePath>..\common\scenes\fitness\arm_2d_scene_fitness.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\meter\arm_2d_scene_meter.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\meter\arm_2d_scene_meter.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_watch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\watch\arm_2d_scene_watch.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_watch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\watch\arm_2d_scene_watch.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5484,7 +5484,7 @@
               <MiscControls>-Wno-nonportable-include-path -Omax</MiscControls>
               <Define>BENCHMARK_PFB_BLOCK_WIDTH=480,BENCHMARK_PFB_BLOCK_HEIGHT=120,__GLCD_CFG_SCEEN_WIDTH__=480,__GLCD_CFG_SCEEN_HEIGHT__=272,__DISP0_CFG_SCEEN_WIDTH__=480,__DISP0_CFG_SCEEN_HEIGHT__=272,__DISP0_CFG_PFB_BLOCK_WIDTH__=480,__DISP0_CFG_PFB_BLOCK_HEIGHT__=27</Define>
               <Undefine></Undefine>
-              <IncludePath>..\common\platform;..\common\platform\stm32f746g-discovery;.</IncludePath>
+              <IncludePath>..\common\platform;..\common\platform\stm32f746g-discovery;.;..\common\scenes\fitness;..\common\scenes\watch;..\common\scenes\meter</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5545,34 +5545,34 @@
               <FilePath>.\MeterPanel.c</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_scene_meter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_meter.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_meter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_meter.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_watch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_watch.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_watch.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_watch.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_scene_fitness.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_fitness.c</FilePath>
+              <FilePath>..\common\scenes\fitness\arm_2d_scene_fitness.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_scene_fitness.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_fitness.h</FilePath>
+              <FilePath>..\common\scenes\fitness\arm_2d_scene_fitness.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\meter\arm_2d_scene_meter.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\meter\arm_2d_scene_meter.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_watch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\watch\arm_2d_scene_watch.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_watch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\watch\arm_2d_scene_watch.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6414,34 +6414,34 @@
               <FilePath>.\MeterPanel.c</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_scene_meter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_meter.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_meter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_meter.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_watch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_watch.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_watch.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_watch.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_scene_fitness.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_fitness.c</FilePath>
+              <FilePath>..\common\scenes\fitness\arm_2d_scene_fitness.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_scene_fitness.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_fitness.h</FilePath>
+              <FilePath>..\common\scenes\fitness\arm_2d_scene_fitness.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\meter\arm_2d_scene_meter.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\meter\arm_2d_scene_meter.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_watch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\watch\arm_2d_scene_watch.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_watch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\watch\arm_2d_scene_watch.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7283,34 +7283,34 @@
               <FilePath>.\MeterPanel.c</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_scene_meter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_meter.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_meter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_meter.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_watch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_watch.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_watch.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_watch.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_scene_fitness.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_fitness.c</FilePath>
+              <FilePath>..\common\scenes\fitness\arm_2d_scene_fitness.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_scene_fitness.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_fitness.h</FilePath>
+              <FilePath>..\common\scenes\fitness\arm_2d_scene_fitness.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\meter\arm_2d_scene_meter.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\meter\arm_2d_scene_meter.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_watch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\watch\arm_2d_scene_watch.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_watch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\watch\arm_2d_scene_watch.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -8152,34 +8152,34 @@
               <FilePath>.\MeterPanel.c</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_scene_meter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_meter.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_meter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_meter.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_watch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_watch.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_scene_watch.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_watch.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_scene_fitness.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_fitness.c</FilePath>
+              <FilePath>..\common\scenes\fitness\arm_2d_scene_fitness.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_scene_fitness.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\arm_2d_scene_fitness.h</FilePath>
+              <FilePath>..\common\scenes\fitness\arm_2d_scene_fitness.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\meter\arm_2d_scene_meter.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\meter\arm_2d_scene_meter.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_watch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\watch\arm_2d_scene_watch.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_watch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\watch\arm_2d_scene_watch.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -9227,8 +9227,8 @@
     <files>
       <file attr="config" category="sourceC" name="examples\common\asset\DigitsFont.c" version="1.2.0">
         <instance index="0">RTE\Acceleration\DigitsFont.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="2.2.1" condition="Arm-2D-CORE"/>
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="2.2.3" condition="Arm-2D-CORE"/>
+        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="FastModel"/>
@@ -9244,8 +9244,8 @@
       </file>
       <file attr="config" category="sourceC" name="examples\common\controls\GLCD_Fonts.c" version="1.0.0">
         <instance index="0">RTE\Acceleration\GLCD_Fonts.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="2.2.1" condition="Arm-2D-CORE"/>
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="2.2.3" condition="Arm-2D-CORE"/>
+        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="FastModel"/>
@@ -9262,7 +9262,7 @@
       <file attr="config" category="other" name="tools\README.md" version="1.2.2">
         <instance index="0">RTE\Acceleration\README.md</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.5" condition="CMSIS-DSP"/>
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="FastModel"/>
@@ -9279,7 +9279,7 @@
       <file attr="config" category="sourceC" name="Library\Source\arm_2d.c" version="1.3.1">
         <instance index="0">RTE\Acceleration\arm_2d.c</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.5" condition="CMSIS-DSP"/>
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="FastModel"/>
@@ -9296,7 +9296,7 @@
       <file attr="config" category="preIncludeGlobal" name="Library\Include\template\arm_2d_cfg.h" version="1.3.2">
         <instance index="0">RTE\Acceleration\arm_2d_cfg.h</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.5" condition="CMSIS-DSP"/>
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="FastModel"/>
@@ -9312,8 +9312,8 @@
       </file>
       <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_disp_adapter.c" version="2.1.0">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="2.1.0" condition="Arm-2D-Helper" maxInstances="8"/>
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="2.1.1" condition="Arm-2D-Helper" maxInstances="8"/>
+        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="FastModel"/>
@@ -9329,8 +9329,8 @@
       </file>
       <file attr="config" category="header" name="Helper\Include\template\arm_2d_disp_adapter.h" version="2.1.0">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="2.1.0" condition="Arm-2D-Helper" maxInstances="8"/>
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="2.1.1" condition="Arm-2D-Helper" maxInstances="8"/>
+        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="FastModel"/>
@@ -9383,7 +9383,7 @@
       <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_helper_rtos_cmsis_rtos2.c" version="1.1.0">
         <instance index="0">RTE\Acceleration\arm_2d_helper_rtos_cmsis_rtos2.c</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="RTOS Helper" Cvariant="CMSIS-RTOS2" Cvendor="ARM" Cversion="1.1.0" condition="PFB CMSIS-RTOS2"/>
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="FastModel"/>
@@ -9405,8 +9405,8 @@
       </file>
       <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_scene.c" version="1.2.3">
         <instance index="0">RTE\Acceleration\arm_2d_scene_0.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.3" condition="Arm-2D-Helper" maxInstances="1000"/>
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.4" condition="Arm-2D-Helper" maxInstances="1000"/>
+        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="FastModel"/>
@@ -9422,8 +9422,8 @@
       </file>
       <file attr="config" category="header" name="Helper\Include\template\arm_2d_scene.h" version="1.2.3">
         <instance index="0">RTE\Acceleration\arm_2d_scene_0.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.3" condition="Arm-2D-Helper" maxInstances="1000"/>
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.4" condition="Arm-2D-Helper" maxInstances="1000"/>
+        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="FastModel"/>
@@ -9439,8 +9439,8 @@
       </file>
       <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_scene.c" version="1.1.7">
         <instance index="1">RTE\Acceleration\arm_2d_scene_1.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.3" condition="Arm-2D-Helper" maxInstances="1000"/>
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.4" condition="Arm-2D-Helper" maxInstances="1000"/>
+        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="FastModel"/>
@@ -9456,8 +9456,8 @@
       </file>
       <file attr="config" category="header" name="Helper\Include\template\arm_2d_scene.h" version="1.1.7">
         <instance index="1">RTE\Acceleration\arm_2d_scene_1.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.3" condition="Arm-2D-Helper" maxInstances="1000"/>
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.4" condition="Arm-2D-Helper" maxInstances="1000"/>
+        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="FastModel"/>
@@ -9473,8 +9473,8 @@
       </file>
       <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_scene.c" version="1.1.7">
         <instance index="2">RTE\Acceleration\arm_2d_scene_2.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.3" condition="Arm-2D-Helper" maxInstances="1000"/>
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.4" condition="Arm-2D-Helper" maxInstances="1000"/>
+        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="FastModel"/>
@@ -9490,8 +9490,8 @@
       </file>
       <file attr="config" category="header" name="Helper\Include\template\arm_2d_scene.h" version="1.1.7">
         <instance index="2">RTE\Acceleration\arm_2d_scene_2.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.3" condition="Arm-2D-Helper" maxInstances="1000"/>
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.4" condition="Arm-2D-Helper" maxInstances="1000"/>
+        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="FastModel"/>
@@ -9507,8 +9507,8 @@
       </file>
       <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_scene.c" version="1.1.7">
         <instance index="3">RTE\Acceleration\arm_2d_scene_3.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.3" condition="Arm-2D-Helper" maxInstances="1000"/>
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.4" condition="Arm-2D-Helper" maxInstances="1000"/>
+        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="FastModel"/>
@@ -9524,8 +9524,8 @@
       </file>
       <file attr="config" category="header" name="Helper\Include\template\arm_2d_scene.h" version="1.1.7">
         <instance index="3">RTE\Acceleration\arm_2d_scene_3.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.3" condition="Arm-2D-Helper" maxInstances="1000"/>
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.4" condition="Arm-2D-Helper" maxInstances="1000"/>
+        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="FastModel"/>
@@ -9541,8 +9541,8 @@
       </file>
       <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_scene.c" version="1.1.7">
         <instance index="4">RTE\Acceleration\arm_2d_scene_4.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.3" condition="Arm-2D-Helper" maxInstances="1000"/>
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.4" condition="Arm-2D-Helper" maxInstances="1000"/>
+        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="FastModel"/>
@@ -9558,8 +9558,8 @@
       </file>
       <file attr="config" category="header" name="Helper\Include\template\arm_2d_scene.h" version="1.1.7">
         <instance index="4">RTE\Acceleration\arm_2d_scene_4.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.3" condition="Arm-2D-Helper" maxInstances="1000"/>
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.4" condition="Arm-2D-Helper" maxInstances="1000"/>
+        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="FastModel"/>
@@ -9576,7 +9576,7 @@
       <file attr="config" category="utility" name="tools\img2c.py" version="1.2.2">
         <instance index="0">RTE\Acceleration\img2c.py</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.5" condition="CMSIS-DSP"/>
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="FastModel"/>
@@ -9593,7 +9593,7 @@
       <file attr="config" category="utility" name="tools\ttf2c.py" version="1.2.0">
         <instance index="0">RTE\Acceleration\ttf2c.py</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.5" condition="CMSIS-DSP"/>
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="FastModel"/>

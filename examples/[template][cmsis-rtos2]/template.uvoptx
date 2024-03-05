@@ -2529,8 +2529,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\arm_2d_scene_meter.c</PathWithFileName>
-      <FilenameWithoutPath>arm_2d_scene_meter.c</FilenameWithoutPath>
+      <PathWithFileName>..\common\scenes\fitness\arm_2d_scene_fitness.c</PathWithFileName>
+      <FilenameWithoutPath>arm_2d_scene_fitness.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -2541,8 +2541,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\arm_2d_scene_meter.h</PathWithFileName>
-      <FilenameWithoutPath>arm_2d_scene_meter.h</FilenameWithoutPath>
+      <PathWithFileName>..\common\scenes\fitness\arm_2d_scene_fitness.h</PathWithFileName>
+      <FilenameWithoutPath>arm_2d_scene_fitness.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -2553,8 +2553,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\arm_2d_scene_watch.c</PathWithFileName>
-      <FilenameWithoutPath>arm_2d_scene_watch.c</FilenameWithoutPath>
+      <PathWithFileName>..\common\scenes\meter\arm_2d_scene_meter.c</PathWithFileName>
+      <FilenameWithoutPath>arm_2d_scene_meter.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -2565,8 +2565,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\arm_2d_scene_watch.h</PathWithFileName>
-      <FilenameWithoutPath>arm_2d_scene_watch.h</FilenameWithoutPath>
+      <PathWithFileName>..\common\scenes\meter\arm_2d_scene_meter.h</PathWithFileName>
+      <FilenameWithoutPath>arm_2d_scene_meter.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -2577,8 +2577,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\arm_2d_scene_fitness.c</PathWithFileName>
-      <FilenameWithoutPath>arm_2d_scene_fitness.c</FilenameWithoutPath>
+      <PathWithFileName>..\common\scenes\watch\arm_2d_scene_watch.c</PathWithFileName>
+      <FilenameWithoutPath>arm_2d_scene_watch.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -2589,8 +2589,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\arm_2d_scene_fitness.h</PathWithFileName>
-      <FilenameWithoutPath>arm_2d_scene_fitness.h</FilenameWithoutPath>
+      <PathWithFileName>..\common\scenes\watch\arm_2d_scene_watch.h</PathWithFileName>
+      <FilenameWithoutPath>arm_2d_scene_watch.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
