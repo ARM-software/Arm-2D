@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        01. March 2024
- * $Revision:    V.1.4.7
+ * $Date:        05. March 2024
+ * $Revision:    V.1.4.8
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1354,19 +1354,18 @@ bool arm_2d_scene_player_append_dirty_regions(arm_2d_scene_t *ptScene,
         }
 
         arm_2d_region_list_item_t **ppDirtyRegionList = &ptScene->ptDirtyRegion;
-        if (NULL != ppDirtyRegionList) {
-                while(NULL != (*ppDirtyRegionList)) {
-                    ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
-                }
 
-                /* add dirty region items to the list */
-                (*ppDirtyRegionList) = ptItems;
-                while(--tCount) {
-                    ptItems->ptNext = ptItems + 1;
-                    ptItems++;
-                }
-                ptItems->ptNext = NULL;
+        while(NULL != (*ppDirtyRegionList)) {
+            ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
         }
+
+        /* add dirty region items to the list */
+        (*ppDirtyRegionList) = ptItems;
+        while(--tCount) {
+            ptItems->ptNext = ptItems + 1;
+            ptItems++;
+        }
+        ptItems->ptNext = NULL;
 
         return true;
     } while(0);
