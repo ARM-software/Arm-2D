@@ -259,6 +259,8 @@ var group__gHelper =
     [ "__arm_2d_helper_pfb_rotate90_rgb32", "group__gHelper.html#ga7bae3d1725228f6b3011945482286e3f", null ],
     [ "__arm_2d_helper_pfb_rotate180_rgb32", "group__gHelper.html#ga244fcde0c53f1d123ac5a6c2fa2b2ff2", null ],
     [ "__arm_2d_helper_pfb_rotate270_rgb32", "group__gHelper.html#ga1735b2f8f58cdc0cd453a5b92768eabb", null ],
+    [ "arm_2d_helper_pfb_append_dirty_regions_to_list", "group__gHelper.html#gad2e90a07db2ac3ca28e615e80c893f4f", null ],
+    [ "arm_2d_helper_pfb_remove_dirty_regions_from_list", "group__gHelper.html#ga6e5a6659ae9c9c0058ffb1c21cbde898", null ],
     [ "arm_2d_helper_init", "group__gHelper.html#ga9ab5e975303c28c98f1ae62babb8286d", null ],
     [ "arm_2d_helper_backend_task", "group__gHelper.html#ga5161926583cc8da4c4b369b177845e42", null ],
     [ "arm_2d_helper_convert_ticks_to_ms", "group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf", null ],
