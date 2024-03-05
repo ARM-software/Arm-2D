@@ -277,9 +277,9 @@ arm_2d_char_descriptor_t *__arm_lcd_get_char_descriptor(const arm_2d_font_t *ptF
 #endif
 
 static
-int16_t __arm_lcd_get_char_advance(arm_2d_char_descriptor_t *ptDescriptor, uint8_t *pchChar)
+int16_t __arm_lcd_get_char_advance(const arm_2d_font_t *ptFont, arm_2d_char_descriptor_t *ptDescriptor, uint8_t *pchChar)
 {
-    int16_t iAdvance = s_tLCDTextControl.ptFont->tCharSize.iWidth;
+    int16_t iAdvance = ptFont->tCharSize.iWidth;
 
     do {
         if (s_tLCDTextControl.bForceAllCharUseSameWidth) {
@@ -293,7 +293,7 @@ int16_t __arm_lcd_get_char_advance(arm_2d_char_descriptor_t *ptDescriptor, uint8
         }
 
         arm_2d_char_descriptor_t tDescriptor;
-        ptDescriptor = arm_2d_helper_get_char_descriptor(  s_tLCDTextControl.ptFont, 
+        ptDescriptor = arm_2d_helper_get_char_descriptor(  ptFont, 
                                                         &tDescriptor,
                                                         pchChar);
         if (NULL == ptDescriptor){
@@ -329,7 +329,7 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
                                                     *ppchCharCode)){
         (*ppchCharCode) += chCodeLength;
 
-        return __arm_lcd_get_char_advance(NULL, NULL);
+        return __arm_lcd_get_char_advance(s_tLCDTextControl.ptFont, NULL, NULL);
     }
 
     //(*ppchCharCode) += tCharDescriptor.chCodeLength;
@@ -364,7 +364,7 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
 
     arm_2d_op_wait_async(NULL);
 
-    return __arm_lcd_get_char_advance(&tCharDescriptor, NULL);
+    return __arm_lcd_get_char_advance(s_tLCDTextControl.ptFont, &tCharDescriptor, NULL);
 }
 
 static void __arm_lcd_draw_region_line_wrapping(arm_2d_size_t *ptCharSize, 
@@ -420,7 +420,7 @@ arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t
             }
             str += chCodeLength;
 
-            tDrawBox.tLocation.iX += __arm_lcd_get_char_advance(NULL, (uint8_t *)str);
+            tDrawBox.tLocation.iX += __arm_lcd_get_char_advance(ptFont, NULL, (uint8_t *)str);
             tDrawBox.tSize.iWidth = MAX(tDrawBox.tSize.iWidth, tDrawBox.tLocation.iX);
 
             continue;

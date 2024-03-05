@@ -956,14 +956,10 @@ arm_2d_helper_get_char_descriptor(  const arm_2d_font_t *ptFont,
 {
     assert(NULL != pchCharCode);
 
-    if (NULL == ARM_2D_INVOKE(ptFont->fnGetCharDescriptor,
+    return ARM_2D_INVOKE(ptFont->fnGetCharDescriptor,
                 ARM_2D_PARAM(   ptFont,
                                 ptDescriptor,
-                                pchCharCode))) {
-        return NULL;
-    }
-
-    return ptDescriptor;
+                                pchCharCode));
 }
 
 #if defined(__clang__)
