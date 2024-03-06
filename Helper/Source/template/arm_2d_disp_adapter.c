@@ -101,10 +101,10 @@ static
 struct {
     console_box_t tConsole;
     int64_t lTimestamp;
+    arm_2d_region_list_item_t tBackground;
+    uint32_t Signature;
     bool bShowConsole;
     uint8_t chOpacity;
-
-    arm_2d_region_list_item_t tBackground;
 } DISP%Instance%_CONSOLE;
 #endif
 
@@ -187,17 +187,17 @@ IMPL_PFB_ON_DRAW(__disp_adapter%Instance%_draw_navigation)
     arm_2d_canvas(ptTile, __navigation_canvas) {
 
         if (DISP%Instance%_CONSOLE.bShowConsole) {
-            arm_2d_align_centre(__navigation_canvas, 220, 200) {
+            arm_2d_align_top_left(__navigation_canvas, 220, 200) {
 
                 draw_round_corner_box(  ptTile, 
-                                        &__centre_region, 
+                                        &__top_left_region, 
                                         GLCD_COLOR_DARK_GREY, 
                                         (128 * DISP%Instance%_CONSOLE.chOpacity) >> 8,
                                         bIsNewFrame);
 
                 console_box_show(&DISP%Instance%_CONSOLE.tConsole,
                                 ptTile,
-                                &__centre_region,
+                                &__top_left_region,
                                 bIsNewFrame,
                                 DISP%Instance%_CONSOLE.chOpacity);
             }
@@ -698,8 +698,8 @@ void disp_adapter%Instance%_navigator_init(void)
         },
     };
 
-    arm_2d_align_centre(tScreen, 220, 200) {
-        DISP%Instance%_CONSOLE.tBackground.tRegion = __centre_region;
+    arm_2d_align_top_left(tScreen, 220, 200) {
+        DISP%Instance%_CONSOLE.tBackground.tRegion = __top_left_region;
     }
 
     arm_2d_helper_pfb_append_dirty_regions_to_list(
@@ -708,6 +708,8 @@ void disp_adapter%Instance%_navigator_init(void)
                                 1);
  
     DISP%Instance%_CONSOLE.lTimestamp = 0;
+
+    DISP0_CONSOLE.Signature = ARM_2D_VERSION;
 #endif
 
     /* register event handler for evtOnDrawNavigation */
@@ -748,7 +750,7 @@ int disp_adapter%Instance%_printf(const char *format, ...)
     real_size = MIN(sizeof(s_chBuffer)-1, real_size);
     s_chBuffer[real_size] = '\0';
     n = real_size;
-    
+
     do {
         if (!console_box_putchar(&DISP%Instance%_CONSOLE.tConsole, *pchSrc++)) {
             break;
@@ -760,6 +762,10 @@ int disp_adapter%Instance%_printf(const char *format, ...)
 
 bool disp_adapter%Instance%_putchar(uint8_t chChar)
 {
+    if (DISP0_CONSOLE.Signature != ARM_2D_VERSION) {
+        return false;
+    }
+
     return console_box_putchar(&DISP%Instance%_CONSOLE.tConsole,chChar);
 }
 #endif
