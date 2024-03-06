@@ -104,6 +104,8 @@ struct {
     int64_t lTimestamp;
     bool bShowConsole;
     uint8_t chOpacity;
+
+    arm_2d_region_list_item_t tBackground;
 } DISP0_CONSOLE;
 
 #endif
@@ -158,6 +160,11 @@ IMPL_PFB_ON_DRAW(__disp_adapter0_draw_navigation)
     if (bIsNewFrame) {
         if (console_box_on_frame_start(&DISP0_CONSOLE.tConsole)) {
             DISP0_CONSOLE.lTimestamp = 0;
+            if (!DISP0_CONSOLE.bShowConsole) {
+                DISP0_CONSOLE.tBackground.bIgnore = false;
+            } else {
+                DISP0_CONSOLE.tBackground.bIgnore = true;
+            }
             DISP0_CONSOLE.bShowConsole = true;
             DISP0_CONSOLE.chOpacity = 255;
         }
@@ -684,6 +691,25 @@ void disp_adapter0_navigator_init(void)
                             &tCFG);
     } while(0);
 
+
+    DISP0_CONSOLE.tBackground.bIgnore = true;
+    
+    arm_2d_region_t tScreen = {
+        .tSize = {
+            __DISP0_CFG_SCEEN_WIDTH__, 
+            __DISP0_CFG_SCEEN_HEIGHT__
+        },
+    };
+
+    arm_2d_align_centre(tScreen, 220, 200) {
+        DISP0_CONSOLE.tBackground.tRegion = __centre_region;
+    }
+
+    arm_2d_helper_pfb_append_dirty_regions_to_list(
+                                (arm_2d_region_list_item_t **)&s_tNavDirtyRegionList,
+                                &DISP0_CONSOLE.tBackground,
+                                1);
+ 
     DISP0_CONSOLE.lTimestamp = 0;
 #endif
 
