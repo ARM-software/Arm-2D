@@ -221,7 +221,7 @@ extern "C" {
 // <o> Console Input Buffer Size
 // <i> The size of console input buffer, 0 means no input buffer
 #ifndef __DISP0_CFG_CONSOLE_INPUT_BUFFER__
-#   define __DISP0_CFG_CONSOLE_INPUT_BUFFER__                       0
+#   define __DISP0_CFG_CONSOLE_INPUT_BUFFER__                       255
 #endif
 
 // <o> Console Display Time in ms <1000-0xFFFFFFFF>

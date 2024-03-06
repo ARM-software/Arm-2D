@@ -103,6 +103,7 @@ struct {
     console_box_t tConsole;
     int64_t lTimestamp;
     bool bShowConsole;
+    uint8_t chOpacity;
 } DISP0_CONSOLE;
 
 #endif
@@ -158,6 +159,7 @@ IMPL_PFB_ON_DRAW(__disp_adapter0_draw_navigation)
         if (console_box_on_frame_start(&DISP0_CONSOLE.tConsole)) {
             DISP0_CONSOLE.lTimestamp = 0;
             DISP0_CONSOLE.bShowConsole = true;
+            DISP0_CONSOLE.chOpacity = 255;
         }
 
     #if __DISP0_CFG_CONSOLE_DISPALY_TIME__ >= 1000                              \
@@ -165,6 +167,14 @@ IMPL_PFB_ON_DRAW(__disp_adapter0_draw_navigation)
         if (DISP0_CONSOLE.bShowConsole) {
             if (arm_2d_helper_is_time_out(__DISP0_CFG_CONSOLE_DISPALY_TIME__, &DISP0_CONSOLE.lTimestamp)) {
                 DISP0_CONSOLE.bShowConsole = false;
+            } else {
+                int64_t lTimeElapsedInMs = -arm_2d_helper_time_elapsed(&DISP0_CONSOLE.lTimestamp);
+                if (lTimeElapsedInMs > 255) {
+                    DISP0_CONSOLE.chOpacity = 255;
+                } else {
+                    DISP0_CONSOLE.chOpacity = lTimeElapsedInMs;
+                }
+                //disp_adapter0_printf("lTimeElapsedInMs: %lld\r\n", lTimeElapsedInMs);
             }
         }
     #endif
@@ -178,14 +188,14 @@ IMPL_PFB_ON_DRAW(__disp_adapter0_draw_navigation)
                 draw_round_corner_box(  ptTile, 
                                         &__centre_region, 
                                         GLCD_COLOR_DARK_GREY, 
-                                        128,
+                                        (128 * DISP0_CONSOLE.chOpacity) >> 8,
                                         bIsNewFrame);
 
                 console_box_show(&DISP0_CONSOLE.tConsole,
                                 ptTile,
                                 &__centre_region,
                                 bIsNewFrame,
-                                255);
+                                DISP0_CONSOLE.chOpacity);
             }
         }
     }
