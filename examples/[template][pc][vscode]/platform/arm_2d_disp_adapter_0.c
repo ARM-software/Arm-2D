@@ -190,17 +190,17 @@ IMPL_PFB_ON_DRAW(__disp_adapter0_draw_navigation)
     arm_2d_canvas(ptTile, __navigation_canvas) {
 
         if (DISP0_CONSOLE.bShowConsole) {
-            arm_2d_align_centre(__navigation_canvas, 220, 200) {
+            arm_2d_align_top_left(__navigation_canvas, 220, 200) {
 
                 draw_round_corner_box(  ptTile, 
-                                        &__centre_region, 
+                                        &__top_left_region, 
                                         GLCD_COLOR_DARK_GREY, 
                                         (128 * DISP0_CONSOLE.chOpacity) >> 8,
                                         bIsNewFrame);
 
                 console_box_show(&DISP0_CONSOLE.tConsole,
                                 ptTile,
-                                &__centre_region,
+                                &__top_left_region,
                                 bIsNewFrame,
                                 DISP0_CONSOLE.chOpacity);
             }
@@ -701,8 +701,8 @@ void disp_adapter0_navigator_init(void)
         },
     };
 
-    arm_2d_align_centre(tScreen, 220, 200) {
-        DISP0_CONSOLE.tBackground.tRegion = __centre_region;
+    arm_2d_align_top_left(tScreen, 220, 200) {
+        DISP0_CONSOLE.tBackground.tRegion = __top_left_region;
     }
 
     arm_2d_helper_pfb_append_dirty_regions_to_list(

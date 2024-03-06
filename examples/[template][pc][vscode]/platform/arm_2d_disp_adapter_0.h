@@ -215,7 +215,7 @@ extern "C" {
 // <i> Add a simple console to the display adapter in a floating window.
 // <i> This feature is disabled by default.
 #ifndef __DISP0_CFG_USE_CONSOLE__
-#   define __DISP0_CFG_USE_CONSOLE__                                0
+#   define __DISP0_CFG_USE_CONSOLE__                                1
 #endif
 
 // <o> Console Input Buffer Size
