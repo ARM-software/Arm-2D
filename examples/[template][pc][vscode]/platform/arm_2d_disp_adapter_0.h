@@ -213,9 +213,9 @@ extern "C" {
 
 // <q> Enable Console
 // <i> Add a simple console to the display adapter in a floating window.
-// <i> This feature is enabled by default.
+// <i> This feature is disabled by default.
 #ifndef __DISP0_CFG_USE_CONSOLE__
-#   define __DISP0_CFG_USE_CONSOLE__                                1
+#   define __DISP0_CFG_USE_CONSOLE__                                0
 #endif
 
 // <o> Console Input Buffer Size
@@ -507,6 +507,9 @@ int disp_adapter0_printf(const char *format, ...);
 
 extern
 bool disp_adapter0_putchar(uint8_t chChar);
+#else
+#   define disp_adapter0_printf(__format_string, ...)
+#   define disp_adapter0_putchar(...)           (true)
 #endif
 
 #if defined(__clang__)
