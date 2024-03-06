@@ -267,6 +267,7 @@ var group__gHelper =
     [ "arm_2d_helper_convert_ms_to_ticks", "group__gHelper.html#ga22a1338673baaec12c475e371d7593be", null ],
     [ "arm_2d_helper_get_reference_clock_frequency", "group__gHelper.html#gace60efc807106e1526fcc9f673f19b12", null ],
     [ "arm_2d_helper_get_system_timestamp", "group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185", null ],
+    [ "__arm_2d_helper_time_elapsed", "group__gHelper.html#gad8af435e0bedb4da39db10f601bcc065", null ],
     [ "__arm_2d_helper_is_time_out", "group__gHelper.html#ga23bfad9d8e31302b44dd096a57f9571d", null ],
     [ "arm_2d_port_new_semaphore", "group__gHelper.html#ga4d28a193f7ebb8b6381d22314106a113", null ],
     [ "arm_2d_port_free_semaphore", "group__gHelper.html#ga602431e4672220a78801d018d7adb993", null ],

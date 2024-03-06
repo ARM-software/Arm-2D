@@ -331,6 +331,8 @@ Macros</h2></td></tr>
 <tr class="memitem:gae4ab75c458c5e2ba0355ba76dff03735"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gae4ab75c458c5e2ba0355ba76dff03735">arm_2d_helper_is_time_out</a>(__ms, ...)</td></tr>
 <tr class="memdesc:gae4ab75c458c5e2ba0355ba76dff03735"><td class="mdescLeft">&#160;</td><td class="mdescRight">set an alarm with given period and check the status  <a href="group__gHelper.html#gae4ab75c458c5e2ba0355ba76dff03735">More...</a><br /></td></tr>
 <tr class="separator:gae4ab75c458c5e2ba0355ba76dff03735"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga04905e1027ba242ec8abd1f512c9b17b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga04905e1027ba242ec8abd1f512c9b17b">arm_2d_helper_time_elapsed</a>(__timestamp_ptr)</td></tr>
+<tr class="separator:ga04905e1027ba242ec8abd1f512c9b17b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab9da2ee4cd3a208e7ff4ece9ac8086f0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gab9da2ee4cd3a208e7ff4ece9ac8086f0">arm_2d_helper_time_liner_slider</a>(__from,  __to,  __ms,  __stroke_ptr,  ...)</td></tr>
 <tr class="memdesc:gab9da2ee4cd3a208e7ff4ece9ac8086f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the stroke of a liner slider based on time  <a href="group__gHelper.html#gab9da2ee4cd3a208e7ff4ece9ac8086f0">More...</a><br /></td></tr>
 <tr class="separator:gab9da2ee4cd3a208e7ff4ece9ac8086f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -653,6 +655,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf92c1f5d41f75d4a8514ab79c34f1185"><td class="memItemLeft" align="right" valign="top">int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185">arm_2d_helper_get_system_timestamp</a> (void)</td></tr>
 <tr class="memdesc:gaf92c1f5d41f75d4a8514ab79c34f1185"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the current system stamp from the reference clock  <a href="group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185">More...</a><br /></td></tr>
 <tr class="separator:gaf92c1f5d41f75d4a8514ab79c34f1185"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad8af435e0bedb4da39db10f601bcc065"><td class="memItemLeft" align="right" valign="top">int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gad8af435e0bedb4da39db10f601bcc065">__arm_2d_helper_time_elapsed</a> (int64_t *plTimestamp)</td></tr>
+<tr class="memdesc:gad8af435e0bedb4da39db10f601bcc065"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the elapsed time since a reference timestamp  <a href="group__gHelper.html#gad8af435e0bedb4da39db10f601bcc065">More...</a><br /></td></tr>
+<tr class="separator:gad8af435e0bedb4da39db10f601bcc065"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga23bfad9d8e31302b44dd096a57f9571d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga23bfad9d8e31302b44dd096a57f9571d">__arm_2d_helper_is_time_out</a> (int64_t lPeriod, int64_t *plTimestamp)</td></tr>
 <tr class="memdesc:ga23bfad9d8e31302b44dd096a57f9571d"><td class="mdescLeft">&#160;</td><td class="mdescRight">set an alarm with given period and check the status  <a href="group__gHelper.html#ga23bfad9d8e31302b44dd096a57f9571d">More...</a><br /></td></tr>
 <tr class="separator:ga23bfad9d8e31302b44dd096a57f9571d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -4019,6 +4024,26 @@ fOP</td>
 
 </div>
 </div>
+<a id="ga04905e1027ba242ec8abd1f512c9b17b" name="ga04905e1027ba242ec8abd1f512c9b17b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga04905e1027ba242ec8abd1f512c9b17b">&#9670;&nbsp;</a></span>arm_2d_helper_time_elapsed</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define arm_2d_helper_time_elapsed</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__timestamp_ptr</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">        <a class="code hl_function" href="group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf" title="convert ticks of a reference timer to millisecond">arm_2d_helper_convert_ticks_to_ms</a>(                                      \</div>
+<div class="line">            <a class="code hl_function" href="group__gHelper.html#gad8af435e0bedb4da39db10f601bcc065" title="get the elapsed time since a reference timestamp">__arm_2d_helper_time_elapsed</a>(__timestamp_ptr))</div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="gab9da2ee4cd3a208e7ff4ece9ac8086f0" name="gab9da2ee4cd3a208e7ff4ece9ac8086f0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gab9da2ee4cd3a208e7ff4ece9ac8086f0">&#9670;&nbsp;</a></span>arm_2d_helper_time_liner_slider</h2>
 
@@ -6789,8 +6814,35 @@ For normal usage, please DO NOT use this function unless you know what you are d
 </div><div class="memdoc">
 
 <p>get the current system stamp from the reference clock </p>
-<dl class="section return"><dt>Returns</dt><dd>int64_t the timestamp in ticks (no overflow issue) </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>int64_t the timestamp in ticks </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>you have to call <a class="el" href="group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf" title="convert ticks of a reference timer to millisecond">arm_2d_helper_convert_ticks_to_ms()</a> to convert the the timestamp into milliseconds when required. </dd></dl>
+
+</div>
+</div>
+<a id="gad8af435e0bedb4da39db10f601bcc065" name="gad8af435e0bedb4da39db10f601bcc065"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad8af435e0bedb4da39db10f601bcc065">&#9670;&nbsp;</a></span>__arm_2d_helper_time_elapsed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int64_t __arm_2d_helper_time_elapsed </td>
+          <td>(</td>
+          <td class="paramtype">int64_t *&#160;</td>
+          <td class="paramname"><em>plTimestamp</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get the elapsed time since a reference timestamp </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">plTimestamp</td><td>the reference timestamp </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int64_t the timestamp in ticks </dd></dl>
 
 </div>
 </div>
