@@ -34,7 +34,8 @@
 			"dynamic_nebula.h": "c",
 			"stdlib.h": "c",
 			"string.h": "c",
-			"arm_2d_disp_adapter_0.h": "c"
+			"arm_2d_disp_adapter_0.h": "c",
+			"console_box.h": "c"
 		}
 	}
 }

@@ -62,6 +62,8 @@ typedef struct console_box_cfg_t {
     COLOUR_INT tColor;
 
     bool bUseDirtyRegion;
+
+    arm_2d_region_list_item_t **ppDirtyRegionList;
 } console_box_cfg_t;
 
 /*!
@@ -90,6 +92,7 @@ ARM_PRIVATE(
 
     arm_2d_scene_t                  *ptTargetScene;
     arm_2d_region_list_item_t       tDirtyRegion;
+    arm_2d_region_list_item_t       **ppDirtyRegionList;
 
     COLOUR_INT tColor;
     uint8_t bCFGNoInputFIFO         : 1;        /* Configuration: There is no FIFO for input */
@@ -117,15 +120,21 @@ void console_box_depose( console_box_t *ptThis);
 
 extern
 ARM_NONNULL(1)
-void console_box_show( console_box_t *ptThis,
-                            const arm_2d_tile_t *ptTile, 
-                            const arm_2d_region_t *ptRegion, 
-                            bool bIsNewFrame,
-                            uint8_t chOpacity);
+void console_box_show(  console_box_t *ptThis,
+                        const arm_2d_tile_t *ptTile, 
+                        const arm_2d_region_t *ptRegion, 
+                        bool bIsNewFrame,
+                        uint8_t chOpacity);
 
+/*!
+ * \brief the on-frame-start event handler
+ * \param[in] ptThis the target console box 
+ * \retval false no content changed
+ * \retval true the console is updated.
+ */
 extern;
 ARM_NONNULL(1)
-void console_box_on_frame_start(console_box_t *ptThis);
+bool console_box_on_frame_start(console_box_t *ptThis);
 
 extern
 ARM_NONNULL(1,2)

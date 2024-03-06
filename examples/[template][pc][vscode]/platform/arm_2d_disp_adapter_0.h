@@ -57,14 +57,14 @@ extern "C" {
 // <i> The width of your screen
 // <i> Default: 320
 #ifndef __DISP0_CFG_SCEEN_WIDTH__
-#   define __DISP0_CFG_SCEEN_WIDTH__                               800
+#   define __DISP0_CFG_SCEEN_WIDTH__                               320
 #endif
 
 // <o>Height of the screen <8-32767>
 // <i> The height of your screen
 // <i> Default: 240
 #ifndef __DISP0_CFG_SCEEN_HEIGHT__
-#   define __DISP0_CFG_SCEEN_HEIGHT__                              600
+#   define __DISP0_CFG_SCEEN_HEIGHT__                              240
 #endif
 
 /*
@@ -148,7 +148,7 @@ extern "C" {
 // <q> Enable Dirty Region Debug Mode
 // <i> Draw dirty regions on the screen for debug.
 #ifndef __DISP0_CFG_DEBUG_DIRTY_REGIONS__
-#   define __DISP0_CFG_DEBUG_DIRTY_REGIONS__                       0
+#   define __DISP0_CFG_DEBUG_DIRTY_REGIONS__                       1
 #endif
 
 // <q> Enable Dirty Region Optimization Service
@@ -210,6 +210,26 @@ extern "C" {
 #ifndef __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
 #   define __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__      0
 #endif
+
+// <q> Enable Console
+// <i> Add a simple console to the display adapter in a floating window.
+// <i> This feature is enabled by default.
+#ifndef __DISP0_CFG_USE_CONSOLE__
+#   define __DISP0_CFG_USE_CONSOLE__                                1
+#endif
+
+// <o> Console Input Buffer Size
+// <i> The size of console input buffer, 0 means no input buffer
+#ifndef __DISP0_CFG_CONSOLE_INPUT_BUFFER__
+#   define __DISP0_CFG_CONSOLE_INPUT_BUFFER__                       0
+#endif
+
+// <o> Console Display Time in ms <1000-0xFFFFFFFF>
+// <i> The time before the console disappear for each content update.
+#ifndef __DISP0_CFG_CONSOLE_DISPALY_TIME__
+#   define __DISP0_CFG_CONSOLE_DISPALY_TIME__                       3000
+#endif
+
 // <<< end of configuration section >>>
 
 #ifndef __DISP0_COLOUR_FORMAT__
@@ -478,6 +498,15 @@ void disp_adapter0_insert_async_flushing_complete_event_handler(void);
 extern
 void *disp_adapter0_3fb_get_flush_pointer(void);
 
+#endif
+
+#if __DISP0_CFG_USE_CONSOLE__
+extern
+ARM_NONNULL(1)
+int disp_adapter0_printf(const char *format, ...);
+
+extern
+bool disp_adapter0_putchar(uint8_t chChar);
 #endif
 
 #if defined(__clang__)

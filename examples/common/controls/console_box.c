@@ -128,13 +128,25 @@ bool console_box_init(  console_box_t *ptThis,
     } while(0);
 
     /* dirty region */
-    if (ptCFG->bUseDirtyRegion && NULL != ptTargetScene) {
-        this.bCFGUseDirtyRegion = ptCFG->bUseDirtyRegion;
-        this.tDirtyRegion.bIgnore = true;
-        /* add dirty region to the target scene */
-        arm_2d_scene_player_append_dirty_regions(   ptTargetScene, 
-                                                    &this.tDirtyRegion, 
-                                                    1);
+
+    if (ptCFG->bUseDirtyRegion) {
+        if (NULL != ptCFG->ppDirtyRegionList) {
+            this.bCFGUseDirtyRegion = true;
+            this.tDirtyRegion.bIgnore = true;
+            this.ppDirtyRegionList = ptCFG->ppDirtyRegionList;
+
+            arm_2d_helper_pfb_append_dirty_regions_to_list(
+                    this.ppDirtyRegionList,
+                    &this.tDirtyRegion, 
+                    1);
+        } else if (NULL != ptTargetScene) {
+            this.bCFGUseDirtyRegion = true;
+            this.tDirtyRegion.bIgnore = true;
+            /* add dirty region to the target scene */
+            arm_2d_scene_player_append_dirty_regions(   ptTargetScene, 
+                                                        &this.tDirtyRegion, 
+                                                        1);
+        }
     }
 
     return true;
@@ -145,11 +157,19 @@ void console_box_depose( console_box_t *ptThis)
 {
     assert(NULL != ptThis);
     
-    if (this.bCFGUseDirtyRegion && NULL != this.ptTargetScene) {
-        /* remove dirty region */
-        arm_2d_scene_player_remove_dirty_regions(   this.ptTargetScene, 
-                                                    &this.tDirtyRegion, 
-                                                    1);
+    if (this.bCFGUseDirtyRegion) {
+
+        if (NULL != this.ppDirtyRegionList) {
+            arm_2d_helper_pfb_remove_dirty_regions_from_list(
+                this.ppDirtyRegionList,
+                &this.tDirtyRegion, 
+                1);
+        } else if (NULL != this.ptTargetScene) {
+            /* remove dirty region */
+            arm_2d_scene_player_remove_dirty_regions(   this.ptTargetScene, 
+                                                        &this.tDirtyRegion, 
+                                                        1);
+        }
     }
 }
 
@@ -362,7 +382,7 @@ void console_box_clear_screen(console_box_t *ptThis)
 }
 
 ARM_NONNULL(1)
-void console_box_on_frame_start(console_box_t *ptThis)
+bool console_box_on_frame_start(console_box_t *ptThis)
 {
     assert(NULL != ptThis);
     bool bREQClearScreen = false;
@@ -469,6 +489,8 @@ void console_box_on_frame_start(console_box_t *ptThis)
         this.Console.hwLastColumn = this.Console.hwCurrentColumn;
         this.Console.hwLastRow = this.Console.hwCurrentRow;
     }
+
+    return this.u2RTOneTimeRefreshMode != REFRESH_MODE_NO_UPDATE;
 }
 
 #if defined(__IS_COMPILER_IAR__) && __IS_COMPILER_IAR__
