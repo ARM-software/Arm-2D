@@ -193,6 +193,25 @@ extern "C" {
 #   define __DISP%Instance%_CFG_DISABLE_NAVIGATION_LAYER__                  0
 #endif
 
+// <q> Enable Console
+// <i> Add a simple console to the display adapter in a floating window.
+// <i> This feature is disabled by default.
+#ifndef __DISP%Instance%_CFG_USE_CONSOLE__
+#   define __DISP%Instance%_CFG_USE_CONSOLE__                                0
+#endif
+
+// <o> Console Input Buffer Size
+// <i> The size of console input buffer, 0 means no input buffer
+#ifndef __DISP%Instance%_CFG_CONSOLE_INPUT_BUFFER__
+#   define __DISP%Instance%_CFG_CONSOLE_INPUT_BUFFER__                       255
+#endif
+
+// <o> Console Display Time in ms <1000-0xFFFFFFFF>
+// <i> The time before the console disappear for each content update.
+#ifndef __DISP%Instance%_CFG_CONSOLE_DISPALY_TIME__
+#   define __DISP%Instance%_CFG_CONSOLE_DISPALY_TIME__                       3000
+#endif
+
 // <o>Maximum number of Virtual Resources used per API
 //     <0=>     NO Virtual Resource
 //     <1=>     1 Per API
@@ -478,6 +497,19 @@ void disp_adapter%Instance%_insert_async_flushing_complete_event_handler(void);
 extern
 void *disp_adapter%Instance%_3fb_get_flush_pointer(void);
 
+#endif
+
+
+#if __DISP%Instance%_CFG_USE_CONSOLE__
+extern
+ARM_NONNULL(1)
+int disp_adapter%Instance%_printf(const char *format, ...);
+
+extern
+bool disp_adapter%Instance%_putchar(uint8_t chChar);
+#else
+#   define disp_adapter%Instance%_printf(__format_string, ...)
+#   define disp_adapter%Instance%_putchar(...)           (true)
 #endif
 
 #if defined(__clang__)

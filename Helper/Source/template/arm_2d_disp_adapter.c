@@ -96,6 +96,17 @@ static
 arm_2d_helper_3fb_t s_tDirectModeHelper;
 #endif
 
+#if __DISP%Instance%_CFG_USE_CONSOLE__
+static 
+struct {
+    console_box_t tConsole;
+    int64_t lTimestamp;
+    bool bShowConsole;
+    uint8_t chOpacity;
+
+    arm_2d_region_list_item_t tBackground;
+} DISP%Instance%_CONSOLE;
+#endif
 
 /*============================ IMPLEMENTATION ================================*/
 static void __on_frame_start(arm_2d_scene_t *ptScene)
@@ -141,6 +152,59 @@ IMPL_PFB_ON_DRAW(__disp_adapter%Instance%_draw_navigation)
 {
     ARM_2D_PARAM(pTarget);
     ARM_2D_PARAM(bIsNewFrame);
+
+#if __DISP%Instance%_CFG_USE_CONSOLE__
+
+    if (bIsNewFrame) {
+        if (console_box_on_frame_start(&DISP%Instance%_CONSOLE.tConsole)) {
+            DISP%Instance%_CONSOLE.lTimestamp = 0;
+            if (!DISP%Instance%_CONSOLE.bShowConsole) {
+                DISP%Instance%_CONSOLE.tBackground.bIgnore = false;
+            } else {
+                DISP%Instance%_CONSOLE.tBackground.bIgnore = true;
+            }
+            DISP%Instance%_CONSOLE.bShowConsole = true;
+            DISP%Instance%_CONSOLE.chOpacity = 255;
+        }
+
+    #if __DISP%Instance%_CFG_CONSOLE_DISPALY_TIME__ >= 1000                              \
+    && __DISP%Instance%_CFG_CONSOLE_DISPALY_TIME__ != 0xFFFFFFFF
+        if (DISP%Instance%_CONSOLE.bShowConsole) {
+            if (arm_2d_helper_is_time_out(__DISP%Instance%_CFG_CONSOLE_DISPALY_TIME__, &DISP%Instance%_CONSOLE.lTimestamp)) {
+                DISP%Instance%_CONSOLE.bShowConsole = false;
+            } else {
+                int64_t lTimeElapsedInMs = -arm_2d_helper_time_elapsed(&DISP%Instance%_CONSOLE.lTimestamp);
+                if (lTimeElapsedInMs > 255) {
+                    DISP%Instance%_CONSOLE.chOpacity = 255;
+                } else {
+                    DISP%Instance%_CONSOLE.chOpacity = lTimeElapsedInMs;
+                }
+            }
+        }
+    #endif
+    }
+
+    arm_2d_canvas(ptTile, __navigation_canvas) {
+
+        if (DISP%Instance%_CONSOLE.bShowConsole) {
+            arm_2d_align_centre(__navigation_canvas, 220, 200) {
+
+                draw_round_corner_box(  ptTile, 
+                                        &__centre_region, 
+                                        GLCD_COLOR_DARK_GREY, 
+                                        (128 * DISP%Instance%_CONSOLE.chOpacity) >> 8,
+                                        bIsNewFrame);
+
+                console_box_show(&DISP%Instance%_CONSOLE.tConsole,
+                                ptTile,
+                                &__centre_region,
+                                bIsNewFrame,
+                                DISP%Instance%_CONSOLE.chOpacity);
+            }
+        }
+    }
+
+#endif
 
     arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
     arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
@@ -580,6 +644,72 @@ void disp_adapter%Instance%_navigator_init(void)
         ),
 
     END_IMPL_ARM_2D_REGION_LIST()
+
+#if __DISP%Instance%_CFG_USE_CONSOLE__
+    do {
+    #if __DISP%Instance%_CFG_SCEEN_WIDTH__ < 204
+    #   define __DISP%Instance%_CONSOLE_WIDTH__      __DISP%Instance%_CFG_SCEEN_WIDTH__
+    #else
+    #   define __DISP%Instance%_CONSOLE_WIDTH__      204
+    #endif
+
+    #if __DISP%Instance%_CFG_SCEEN_HEIGHT__ < 200
+    #   define __DISP%Instance%_CONSOLE_HEIGHT__      __DISP%Instance%_CFG_SCEEN_HEIGHT__
+    #else
+    #   define __DISP%Instance%_CONSOLE_HEIGHT__      192
+    #endif
+
+    #if __DISP%Instance%_CFG_CONSOLE_INPUT_BUFFER__
+        static uint8_t s_chInputBuffer[256];
+    #endif
+        static uint8_t s_chConsoleBuffer[   (__DISP%Instance%_CONSOLE_WIDTH__ / 6) 
+                                        *   (__DISP%Instance%_CONSOLE_HEIGHT__ / 8)];
+        console_box_cfg_t tCFG = {
+            .tBoxSize = {
+                .iWidth = __DISP%Instance%_CONSOLE_WIDTH__, 
+                .iHeight = __DISP%Instance%_CONSOLE_HEIGHT__,
+            },
+
+            .pchConsoleBuffer = s_chConsoleBuffer,
+            .hwConsoleBufferSize = sizeof(s_chConsoleBuffer),
+
+        #if __DISP%Instance%_CFG_CONSOLE_INPUT_BUFFER__
+            .pchInputBuffer = s_chInputBuffer,
+            .hwInputBufferSize = sizeof(s_chInputBuffer),
+        #endif
+
+            .tColor = GLCD_COLOR_GREEN,
+            .bUseDirtyRegion = true,
+            .ppDirtyRegionList = (arm_2d_region_list_item_t **)&s_tNavDirtyRegionList,
+        };
+
+        console_box_init(   &DISP%Instance%_CONSOLE.tConsole, 
+                            NULL, 
+                            &tCFG);
+    } while(0);
+
+
+    DISP%Instance%_CONSOLE.tBackground.bIgnore = true;
+    
+    arm_2d_region_t tScreen = {
+        .tSize = {
+            __DISP%Instance%_CFG_SCEEN_WIDTH__, 
+            __DISP%Instance%_CFG_SCEEN_HEIGHT__
+        },
+    };
+
+    arm_2d_align_centre(tScreen, 220, 200) {
+        DISP%Instance%_CONSOLE.tBackground.tRegion = __centre_region;
+    }
+
+    arm_2d_helper_pfb_append_dirty_regions_to_list(
+                                (arm_2d_region_list_item_t **)&s_tNavDirtyRegionList,
+                                &DISP%Instance%_CONSOLE.tBackground,
+                                1);
+ 
+    DISP%Instance%_CONSOLE.lTimestamp = 0;
+#endif
+
     /* register event handler for evtOnDrawNavigation */
     arm_2d_scene_player_register_on_draw_navigation_event_handler(
                     &DISP%Instance%_ADAPTER,
@@ -592,6 +722,45 @@ __WEAK
 void disp_adapter%Instance%_navigator_init(void)
 {
 
+}
+#endif
+
+
+#if __DISP%Instance%_CFG_USE_CONSOLE__
+
+#include <stdarg.h>
+
+#if defined(__IS_COMPILER_IAR__) && __IS_COMPILER_IAR__
+#define __va_list    va_list
+#endif
+
+ARM_NONNULL(1)
+int disp_adapter%Instance%_printf(const char *format, ...)
+{
+    int real_size, n;
+    char s_chBuffer[128];
+    char *pchSrc = s_chBuffer;
+
+    __va_list ap;
+    va_start(ap, format);
+        real_size = vsnprintf(s_chBuffer, sizeof(s_chBuffer)-1, format, ap);
+    va_end(ap);
+    real_size = MIN(sizeof(s_chBuffer)-1, real_size);
+    s_chBuffer[real_size] = '\0';
+    n = real_size;
+    
+    do {
+        if (!console_box_putchar(&DISP%Instance%_CONSOLE.tConsole, *pchSrc++)) {
+            break;
+        }
+    } while(--n);
+
+    return real_size;
+}
+
+bool disp_adapter%Instance%_putchar(uint8_t chChar)
+{
+    return console_box_putchar(&DISP%Instance%_CONSOLE.tConsole,chChar);
 }
 #endif
 
