@@ -94,6 +94,10 @@ extern "C" {
         (&arm_2d_safe_name(s_lTimestamp),##__VA_ARGS__));})
 
 
+#define arm_2d_helper_time_elapsed(__timestamp_ptr)                             \
+        arm_2d_helper_convert_ticks_to_ms(                                      \
+            __arm_2d_helper_time_elapsed(__timestamp_ptr))
+
 /*!
  * \brief calculate the stroke of a liner slider based on time
  *
@@ -360,13 +364,21 @@ uint32_t arm_2d_helper_get_reference_clock_frequency(void);
 /*!
  * \brief get the current system stamp from the reference clock
  * 
- * \return int64_t the timestamp in ticks (no overflow issue)
+ * \return int64_t the timestamp in ticks
  * \note you have to call arm_2d_helper_convert_ticks_to_ms() to convert the 
  *       the timestamp into milliseconds when required.
  */
 extern
 int64_t arm_2d_helper_get_system_timestamp(void);
 
+/*!
+ * \brief get the elapsed time since a reference timestamp
+ * \param[in] plTimestamp the reference timestamp
+ * \return int64_t the timestamp in ticks
+ */
+extern
+ARM_NONNULL(1)
+int64_t __arm_2d_helper_time_elapsed(int64_t *plTimestamp);
 
 /*!
  * \brief set an alarm with given period and check the status

@@ -184,6 +184,15 @@ bool __arm_2d_helper_is_time_out(int64_t lPeriod, int64_t *plTimestamp)
     return false;
 }
 
+ARM_NONNULL(1)
+int64_t __arm_2d_helper_time_elapsed(int64_t *plTimestamp)
+{
+    if (NULL == plTimestamp) {
+        return 0;
+    };
+    return arm_2d_helper_get_system_timestamp() - *plTimestamp;
+}
+
 ARM_NONNULL(4,5)
 bool __arm_2d_helper_time_liner_slider( int32_t nFrom, 
                                         int32_t nTo, 
