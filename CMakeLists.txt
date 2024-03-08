@@ -94,7 +94,7 @@ endif()
 if (ARM2D_CONTROLS)
 	target_include_directories(ARM2D PUBLIC examples/common/controls/)
 	target_sources(ARM2D PRIVATE 
-		    examples/common/controls/controls.c
+            examples/common/controls/controls.c
             examples/common/controls/busy_wheel.c
             examples/common/controls/shape_round_corner_box.c
             examples/common/controls/spinning_wheel.c
@@ -106,15 +106,19 @@ if (ARM2D_CONTROLS)
             examples/common/controls/list_view.c
             examples/common/controls/battery_gasgauge.c
             examples/common/controls/dynamic_nebula.c
-            examples/common/asset/white_dot.c
+            examples/common/controls/console_box.c
+            examples/common/asset/WhiteDotSmall.c
+            examples/common/asset/WhiteDotMiddle.c
+            examples/common/asset/WhiteDotBig.c
             examples/common/asset/SpinWheel.c
             examples/common/asset/blue_slashes.c
             examples/common/asset/wave.c
             examples/common/asset/cmsis_logo.c
             examples/common/asset/GreenCircle.c
-            examples/common/asset/QuaterArc.c
+            examples/common/asset/QuaterArcSmall.c
+            examples/common/asset/QuaterArcMiddle.c
+            examples/common/asset/QuaterArcBig.c
             examples/common/asset/ListCover.c
-            examples/common/asset/DigitsFont.c
             examples/common/asset/battery_boarder_1.c
             examples/common/asset/battery_gasgauge_block.c
             examples/common/asset/battery_gasgauge_grade_boarder.c

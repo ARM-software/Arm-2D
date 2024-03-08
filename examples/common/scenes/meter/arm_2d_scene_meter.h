@@ -20,6 +20,11 @@
 #define __ARM_2D_SCENE_METER_H__
 
 /*============================ INCLUDES ======================================*/
+#if defined(_RTE_)
+#   include "RTE_Components.h"
+#endif
+
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
 #include "arm_2d.h"
 
@@ -110,6 +115,8 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
 
 #ifdef   __cplusplus
 }
+#endif
+
 #endif
 
 #endif

@@ -18,7 +18,6 @@
 
 /*============================ INCLUDES ======================================*/
 
-
 #include "arm_2d.h"
 
 #ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter%Instance%

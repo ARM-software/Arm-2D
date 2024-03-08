@@ -21,6 +21,12 @@
 
 /*============================ INCLUDES ======================================*/
 
+#if defined(_RTE_)
+#   include "RTE_Components.h"
+#endif
+
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
+
 #include "arm_2d.h"
 
 #include "arm_2d_helper_scene.h"
@@ -124,6 +130,8 @@ user_scene_fitness_t *__arm_2d_scene_fitness_init(   arm_2d_scene_player_t *ptDi
 
 #ifdef   __cplusplus
 }
+#endif
+
 #endif
 
 #endif
