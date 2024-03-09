@@ -143,8 +143,8 @@
           <require Cclass="CMSIS-Compiler" Cgroup="CORE"/>
         </condition>
 
-        <condition id="STDOUT Dependency">
-          <description>CMSIS-Compiler CORE component</description>
+        <condition id="STDOUT LCD Console">
+          <description>Dependency for retarget printf to an LCD console</description>
           <require condition="CORE"/>
           <require condition="Arm-2D-Helper"/>
           <accept Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="RTOS Helper" Cvariant="CMSIS-RTOS2"/>
@@ -152,6 +152,14 @@
           <accept Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="RTOS Helper" Cvariant="User Custom"/>
           <require Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter"/>
         </condition>
+
+        <condition id="STDOUT Disp Adapter0">
+          <description>Dependency for retarget printf to the display adapter 0</description>
+          <require condition="CORE"/>
+          <require Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter"/>
+        </condition>
+
+        
         <!--
         <condition id="Cortex-M CMSIS-CORE">
             <description>Compile Cortex-M Processors CMSIS-CORE.</description>
@@ -441,7 +449,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="CMSIS-Compiler" Cgroup="STDOUT" Csub="LCD Console" Cversion="1.0.0" condition="STDOUT Dependency">
+        <component Cclass="CMSIS-Compiler" Cgroup="STDOUT" Csub="LCD Console" Cversion="1.0.0" condition="STDOUT LCD Console">
           <description>Stop program execution at a breakpoint when using STDOUT</description>
           <RTE_Components_h>
             #define RTE_CMSIS_Compiler_STDOUT                /* CMSIS-Compiler STDOUT */
@@ -464,7 +472,7 @@
           </files>
         </component>
 
-        <component Cclass="CMSIS-Compiler" Cgroup="STDOUT" Csub="Display Adapter 0" Cversion="1.0.0" condition="STDOUT Dependency">
+        <component Cclass="CMSIS-Compiler" Cgroup="STDOUT" Csub="Display Adapter 0" Cversion="1.0.0" condition="STDOUT Disp Adapter0">
           <description>Stop program execution at a breakpoint when using STDOUT</description>
           <RTE_Components_h>
             #define RTE_CMSIS_Compiler_STDOUT                   /* CMSIS-Compiler STDOUT */
