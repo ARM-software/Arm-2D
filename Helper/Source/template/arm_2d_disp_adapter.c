@@ -769,8 +769,7 @@ bool disp_adapter%Instance%_putchar(uint8_t chChar)
     return console_box_putchar(&DISP%Instance%_CONSOLE.tConsole,chChar);
 }
 
-#if defined(RTE_CMSIS_Compiler_STDOUT_Display_Adapter_%Instance%) \
- && RTE_CMSIS_Compiler_STDOUT_Display_Adapter_%Instance%
+#if defined(RTE_CMSIS_Compiler_STDOUT_Display_Adapter_%Instance%)
 
 int stdout_putchar(int ch)
 {
