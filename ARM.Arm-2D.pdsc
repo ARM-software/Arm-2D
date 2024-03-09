@@ -151,7 +151,7 @@
           <accept Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="RTOS Helper" Cvariant="RT-Thread"/>
           <accept Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="RTOS Helper" Cvariant="User Custom"/>
 
-          <require Cclass="CMSIS-Compiler" Cgroup="STDOUT" Csub="Custom" Capiversion="1.0.0" Cversion="1.0.0"/>
+          <!--require Cclass="CMSIS-Compiler" Cgroup="STDOUT" Csub="Custom" Capiversion="1.0.0" Cversion="1.0.0"/-->
           <requrie Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter"/>
         </condition>
         <!--
@@ -446,6 +446,8 @@
         <component Cclass="CMSIS-Compiler" Cgroup="STDOUT" Csub="LCD Console" Cversion="1.0.0" condition="STDOUT Dependency">
           <description>Stop program execution at a breakpoint when using STDOUT</description>
           <RTE_Components_h>
+            #define RTE_CMSIS_Compiler_STDOUT                /* CMSIS-Compiler STDOUT */
+            #define RTE_CMSIS_Compiler_STDOUT_Custom         /* CMSIS-Compiler STDOUT: Custom */
             #define RTE_CMSIS_Compiler_STDOUT_LCD_Console   /* CMSIS-Compiler STDOUT: Arm-2D LCD Console */
 
             #undef __DISP0_CFG_USE_CONSOLE__
