@@ -450,7 +450,7 @@
         </component>
 
         <component Cclass="CMSIS-Compiler" Cgroup="STDOUT" Csub="LCD Console" Cversion="1.0.0" condition="STDOUT LCD Console">
-          <description>Stop program execution at a breakpoint when using STDOUT</description>
+          <description>Retarget STDOUT to an Arm-2D LCD Console. </description>
           <RTE_Components_h>
             #define RTE_CMSIS_Compiler_STDOUT                /* CMSIS-Compiler STDOUT */
             #define RTE_CMSIS_Compiler_STDOUT_Custom         /* CMSIS-Compiler STDOUT: Custom */
@@ -473,7 +473,7 @@
         </component>
 
         <component Cclass="CMSIS-Compiler" Cgroup="STDOUT" Csub="Display Adapter 0" Cversion="1.0.0" condition="STDOUT Disp Adapter0">
-          <description>Stop program execution at a breakpoint when using STDOUT</description>
+          <description>Retarget STDOUT to the Arm-2D Display Adapter 0</description>
           <RTE_Components_h>
             #define RTE_CMSIS_Compiler_STDOUT                   /* CMSIS-Compiler STDOUT */
             #define RTE_CMSIS_Compiler_STDOUT_Custom            /* CMSIS-Compiler STDOUT: Custom */
