@@ -131,7 +131,29 @@
             <require condition="Arm-2D-Helper"/>
             <deny Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Benchmark-Generic" />
         </condition>
-        
+
+        <condition id="IO">
+          <description>Deny selection of Compiler class when using CMSIS-Compiler</description>
+          <deny Cclass="Compiler" Cgroup="I/O"/>
+        </condition>
+
+        <condition id="CORE">
+          <description>CMSIS-Compiler CORE component</description>
+          <require condition="IO"/>
+          <require Cclass="CMSIS-Compiler" Cgroup="CORE"/>
+        </condition>
+
+        <condition id="STDOUT Dependency">
+          <description>CMSIS-Compiler CORE component</description>
+          <require condition="CORE"/>
+          <require condition="Arm-2D-Helper"/>
+          <accept Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="RTOS Helper" Cvariant="CMSIS-RTOS2"/>
+          <accept Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="RTOS Helper" Cvariant="RT-Thread"/>
+          <accept Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="RTOS Helper" Cvariant="User Custom"/>
+
+          <require Cclass="CMSIS-Compiler" Cgroup="STDOUT" Csub="Custom" Capiversion="1.0.0" Cversion="1.0.0"/>
+          <requrie Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter"/>
+        </condition>
         <!--
         <condition id="Cortex-M CMSIS-CORE">
             <description>Compile Cortex-M Processors CMSIS-CORE.</description>
@@ -419,6 +441,27 @@
 #define RTE_Acceleration_Arm_2D_Extra_Benchmark
     #define RTE_Acceleration_Arm_2D_Extra_Benchmark_Watch_Panel
           </RTE_Components_h>
+        </component>
+
+        <component Cclass="CMSIS-Compiler" Cgroup="STDOUT" Csub="LCD Console" Cversion="1.0.0" condition="STDOUT Dependency">
+          <description>Stop program execution at a breakpoint when using STDOUT</description>
+          <RTE_Components_h>
+            #define RTE_CMSIS_Compiler_STDOUT_LCD_Console   /* CMSIS-Compiler STDOUT: Arm-2D LCD Console */
+
+            #undef __DISP0_CFG_USE_CONSOLE__
+            #define __DISP0_CFG_USE_CONSOLE__               0 /* disable the console in DISP0_ADAPTER */
+
+            #undef __DISP0_CFG_DISABLE_NAVIGATION_LAYER__
+            #define __DISP0_CFG_DISABLE_NAVIGATION_LAYER__  0 /* disable the navigation layer */
+
+            #undef __DISP0_CFG_DISABLE_DEFAULT_SCENE__
+            #define __DISP0_CFG_DISABLE_DEFAULT_SCENE__     0 /* disable the default scene */
+
+          </RTE_Components_h>
+          <files>
+            <file category="sourceC"  name="Helper/Source/template/arm_2d_helper_lcd_console.c"/>
+            <file category="header"   name="Helper/Include/template/arm_2d_helper_lcd_console.h"/>
+          </files>
         </component>
 
     </components>
