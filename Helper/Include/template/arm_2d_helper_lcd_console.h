@@ -24,7 +24,9 @@
 #   include "RTE_Components.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
+#if defined(RTE_CMSIS_Compiler_STDOUT_LCD_Console)
+
+#include "cmsis_compiler.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -49,7 +51,13 @@ extern "C" {
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
-/*============================ LOCAL VARIABLES ===============================*/
+
+extern
+void arm_2d_lcd_console_init(void);
+
+extern
+__NO_RETURN
+void arm_2d_lcd_console_insert_to_rtos_idle_task(void);
 
 
 
