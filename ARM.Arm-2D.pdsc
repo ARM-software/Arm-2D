@@ -479,6 +479,10 @@
             #define RTE_CMSIS_Compiler_STDOUT_Custom            /* CMSIS-Compiler STDOUT: Custom */
             #define RTE_CMSIS_Compiler_STDOUT_Display_Adapter_0 /* CMSIS-Compiler STDOUT: Arm-2D Display Adapter 0 */
           </RTE_Components_h>
+
+          <files>
+            <file category="sourceC"  name="Helper/Source/template/arm_2d_helper_disp_adapter0_console.c"/>
+          </files>
         </component>
 
     </components>
