@@ -21,7 +21,7 @@
 #   include "RTE_Components.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
+#if defined(RTE_CMSIS_Compiler_STDOUT_LCD_Console)
 
 #include <stdio.h>
 
@@ -100,12 +100,6 @@ void arm_2d_lcd_console_init(void)
         s_hWaitConsole = arm_2d_port_new_semaphore();
     }
 }
-
-#else
-void console_init(void)
-{}
-#endif
-
 
 __NO_RETURN
 void arm_2d_lcd_console_insert_to_rtos_idle_task(void)
