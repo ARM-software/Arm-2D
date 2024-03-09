@@ -726,8 +726,6 @@ void disp_adapter%Instance%_navigator_init(void)
 }
 #endif
 
-#endif
-
 #if __DISP%Instance%_CFG_USE_CONSOLE__
 
 #include <stdarg.h>
@@ -777,7 +775,7 @@ int stdout_putchar(int ch)
     return ch;
 }
 
-
+#endif
 #endif
 
 /*----------------------------------------------------------------------------*
