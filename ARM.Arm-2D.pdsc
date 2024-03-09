@@ -454,10 +454,10 @@
             #define __DISP0_CFG_USE_CONSOLE__               0 /* disable the console in DISP0_ADAPTER */
 
             #undef __DISP0_CFG_DISABLE_NAVIGATION_LAYER__
-            #define __DISP0_CFG_DISABLE_NAVIGATION_LAYER__  0 /* disable the navigation layer */
+            #define __DISP0_CFG_DISABLE_NAVIGATION_LAYER__  1 /* disable the navigation layer */
 
             #undef __DISP0_CFG_DISABLE_DEFAULT_SCENE__
-            #define __DISP0_CFG_DISABLE_DEFAULT_SCENE__     0 /* disable the default scene */
+            #define __DISP0_CFG_DISABLE_DEFAULT_SCENE__     1 /* disable the default scene */
 
           </RTE_Components_h>
           <files>
