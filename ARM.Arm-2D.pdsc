@@ -464,6 +464,19 @@
           </files>
         </component>
 
+        <component Cclass="CMSIS-Compiler" Cgroup="STDOUT" Csub="Display Adapter 0" Cversion="1.0.0" condition="STDOUT Dependency">
+          <description>Stop program execution at a breakpoint when using STDOUT</description>
+          <RTE_Components_h>
+            #define RTE_CMSIS_Compiler_STDOUT                   /* CMSIS-Compiler STDOUT */
+            #define RTE_CMSIS_Compiler_STDOUT_Custom            /* CMSIS-Compiler STDOUT: Custom */
+            #define RTE_CMSIS_Compiler_STDOUT_Display_Adapter_0 /* CMSIS-Compiler STDOUT: Arm-2D Display Adapter 0 */
+          </RTE_Components_h>
+          <files>
+            <file category="sourceC"  name="Helper/Source/template/arm_2d_helper_lcd_console.c"/>
+            <file category="header"   name="Helper/Include/template/arm_2d_helper_lcd_console.h"/>
+          </files>
+        </component>
+
     </components>
 
   <!-- optional taxonomy section for defining new component Class and Group names -->
