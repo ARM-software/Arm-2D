@@ -22,6 +22,7 @@ PACK_BUILD=./build
 PACK_DIRS="
   documentation/html
   examples/common
+  examples/demos
   Helper
   Library
   tools
