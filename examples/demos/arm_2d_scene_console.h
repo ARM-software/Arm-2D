@@ -25,7 +25,7 @@
 #   include "RTE_Components.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
+#if defined(RTE_Acceleration_Arm_2D_Helper_Disp_Adapter0)
 
 #include "arm_2d.h"
 

@@ -22,14 +22,15 @@
 #   include "RTE_Components.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
-
+#if defined(RTE_Acceleration_Arm_2D_Helper_Disp_Adapter0)
 #include "arm_2d.h"
 
 #define __USER_SCENE_CONSOLE_IMPLEMENT__
 #include "arm_2d_scene_console.h"
 
 #include "arm_2d_helper.h"
+
+#include "arm_2d_disp_adapters.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -137,24 +138,14 @@ static void __on_scene_console_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_console_t *ptThis = (user_scene_console_t *)ptScene;
 
-    if (arm_2d_helper_is_time_out(100, &this.lTimestamp[1])) {
-        static uint16_t s_hwCount = 0;
-
-        console_box_printf(&this.tConsole, "Hello World! \t[%d]\r\n",s_hwCount++);
-    }
-
     console_box_on_frame_start(&this.tConsole);
-
 }
 
 static void __on_scene_console_frame_complete(arm_2d_scene_t *ptScene)
 {
     user_scene_console_t *ptThis = (user_scene_console_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
     
-    /* switch to next scene after 3s */
-    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
-        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
-    }
 }
 
 static void __before_scene_console_switching_out(arm_2d_scene_t *ptScene)
@@ -181,41 +172,17 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_console_handler)
         
         /* following code is just a demo, you can remove them */
         
-        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
+        arm_2d_fill_colour(ptTile, &__top_canvas, GLCD_COLOR_BLACK);
 
 
-        /* draw the cmsis logo using mask in the centre of the screen */
-        arm_2d_align_centre(__top_canvas, c_tileCMSISLogo.tRegion.tSize) {
-            arm_2d_fill_colour_with_a4_mask_and_opacity(   
-                                                ptTile, 
-                                                &__centre_region, 
-                                                &c_tileCMSISLogoA4Mask, 
-                                                (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                                                128);
-        }
+        /* draw console */
+        console_box_show(   &this.tConsole,
+                            ptTile,
+                            &__top_canvas,
+                            bIsNewFrame,
+                            255);
 
-        arm_2d_align_centre(__top_canvas, 260, 260) {
-            /* draw console background */
-            draw_round_corner_box(  ptTile, 
-                                    &__centre_region, 
-                                    GLCD_COLOR_BLACK, 
-                                    128,
-                                    bIsNewFrame);
-            /* draw console */
-            console_box_show(   &this.tConsole,
-                                ptTile,
-                                &__centre_region,
-                                bIsNewFrame,
-                                255);
-        }
 
-        /* draw text at the top-left corner */
-        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-        arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
-        arm_lcd_text_set_draw_region(NULL);
-        arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
-        arm_lcd_text_location(0,0);
-        arm_lcd_puts("Scene console");
 
     /*-----------------------draw the foreground end  -----------------------*/
     }
@@ -232,51 +199,11 @@ user_scene_console_t *__arm_2d_scene_console_init(
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
 
-#if 0
-    /*! define dirty regions */
-    IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
-
-        /* a dirty region to be specified at runtime*/
-        ADD_REGION_TO_LIST(s_tDirtyRegions,
-            .tLocation = {
-                .iX = 0,
-                .iY = 0,
-            },
-            .tSize = {
-                .iWidth = 240,
-                .iHeight = 240,
-            },
-        ),
-        
-        /* add the last region:
-         * it is the top left corner for text display 
-         */
-        ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
-            .tLocation = {
-                .iX = 0,
-                .iY = 0,
-            },
-            .tSize = {
-                .iWidth = 0,
-                .iHeight = 8,
-            },
-        ),
-
-    END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
-
-    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
-
-
     /* get the screen region */
     arm_2d_region_t tScreen
         = arm_2d_helper_pfb_get_display_area(
             &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
     
-    arm_2d_align_centre(tScreen, s_tDirtyRegions[0].tRegion.tSize) {
-        s_tDirtyRegions[0].tRegion = __centre_region;
-    }
-#endif
-
     if (NULL == ptThis) {
         ptThis = (user_scene_console_t *)
                     __arm_2d_allocate_scratch_memory(   sizeof(user_scene_console_t),
@@ -311,16 +238,20 @@ user_scene_console_t *__arm_2d_scene_console_init(
 
     /* ------------   initialize members of user_scene_console_t begin ---------------*/
     do {
-        static uint8_t s_chInputBuffer[256];
-        static uint8_t s_chConsoleBuffer[(240 / 6) * (240 / 8)];
+    #if __DISP0_CFG_CONSOLE_INPUT_BUFFER__
+        static uint8_t s_chInputBuffer[__DISP0_CFG_CONSOLE_INPUT_BUFFER__];
+    #endif
+        static uint8_t s_chConsoleBuffer[(__DISP0_CFG_SCEEN_WIDTH__ / 6) * (__DISP0_CFG_SCEEN_HEIGHT__ / 8)];
         console_box_cfg_t tCFG = {
-            .tBoxSize = {240, 240},
+            .tBoxSize = tScreen.tSize,
             
             .pchConsoleBuffer = s_chConsoleBuffer,
             .hwConsoleBufferSize = sizeof(s_chConsoleBuffer),
 
+        #if __DISP0_CFG_CONSOLE_INPUT_BUFFER__
             .pchInputBuffer = s_chInputBuffer,
             .hwInputBufferSize = sizeof(s_chInputBuffer),
+        #endif
             .tColor = GLCD_COLOR_GREEN,
             .bUseDirtyRegion = true,
         };
@@ -345,4 +276,5 @@ user_scene_console_t *__arm_2d_scene_console_init(
 #endif
 
 #endif
+
 

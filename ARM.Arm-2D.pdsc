@@ -449,7 +449,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="CMSIS-Compiler" Cgroup="STDOUT" Csub="LCD Console" Cversion="1.0.0" condition="STDOUT LCD Console">
+        <component Cclass="CMSIS-Compiler" Cgroup="STDOUT" Csub="LCD Console" Cversion="1.0.1" condition="STDOUT LCD Console">
           <description>Retarget STDOUT to an Arm-2D LCD Console. </description>
           <RTE_Components_h>
             #define RTE_CMSIS_Compiler_STDOUT                /* CMSIS-Compiler STDOUT */
@@ -468,7 +468,9 @@
           </RTE_Components_h>
           <files>
             <file category="sourceC"  name="Helper/Source/template/arm_2d_helper_lcd_console.c"/>
+            <file category="sourceC"  name="examples/demos/arm_2d_scene_console.c"/>
             <file category="header"   name="Helper/Include/template/arm_2d_helper_lcd_console.h"/>
+            <file category="header"   name="examples/demos/arm_2d_scene_console.h"/>
           </files>
         </component>
 
