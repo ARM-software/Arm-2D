@@ -1,5 +1,10 @@
 var NAVTREEINDEX3 =
 {
+"group__gKernel.html#ga403c3eb9380abcea72edf8a141773b33":[10,0,148],
+"group__gKernel.html#ga414fd4c148fd220c3c9d561893c3335e":[10,0,152],
+"group__gKernel.html#ga42407a7eebceade2349b1309bdf78b48":[10,0,263],
+"group__gKernel.html#ga4306344fab53778ee1599b7b791c7f53":[10,0,131],
+"group__gKernel.html#ga441fd78aae18a38a35c0e5b1fe11dfed":[10,0,214],
 "group__gKernel.html#ga44a9aef2f2e7ef3930ea67bc5dd22018":[10,0,209],
 "group__gKernel.html#ga44b4f0ecafd8d5fb7de9f104d9321998":[10,0,241],
 "group__gKernel.html#ga45988329728665a27dd86553af72c343":[10,0,106],
@@ -244,10 +249,5 @@ var NAVTREEINDEX3 =
 "group__gKernel.html#structarm__2d__vres__t":[10,0,18],
 "group__gKernel.html#union____arm__2d__mem__info__t":[10,0,16],
 "group__gKernel.html#union____arm__2d__mem__t_8____unnamed28____":[10,0,46],
-"group__gKernel.html#union____arm__2d__op__info__t":[10,0,22],
-"group__gKernel.html#union____arm__2d__op__info__t_8Info_8LowLevelIO":[10,0,55],
-"group__gKernel.html#union____arm__2d__op__info__t_8Info_8LowLevelInterfaceIndex":[10,0,51],
-"group__gKernel.html#union____arm__2d__op__info__t_8Info_8Param":[10,0,49],
-"group__gKernel.html#unionarm__2d__color__accc8888__t":[10,0,6],
-"group__gKernel.html#unionarm__2d__color__bgra8888__t":[10,0,3]
+"group__gKernel.html#union____arm__2d__op__info__t":[10,0,22]
 };

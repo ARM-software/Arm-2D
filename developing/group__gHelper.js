@@ -47,8 +47,8 @@ var group__gHelper =
       [ "ptNext", "group__gHelper.html#aaeee77d805398d4495a984869fcbde9e", null ],
       [ "tRegion", "group__gHelper.html#aa17e31540f22ea3e9af8a23332b655e1", null ],
       [ "chUserRegionIndex", "group__gHelper.html#a42c23386f040c6e543f432af4e4e58ff", null ],
-      [ "bIgnore", "group__gHelper.html#a005807f36a3c9ba90d1706431b300f98", null ],
-      [ "bUpdated", "group__gHelper.html#a1ceaa7daf22d04ec9cc32918c6723401", null ]
+      [ "bIgnore", "group__gHelper.html#a6d72c554fc42cbd55401d9dc28795804", null ],
+      [ "bUpdated", "group__gHelper.html#abbbfe7f97c2d99378d488c96abb20165", null ]
     ] ],
     [ "arm_2d_helper_render_evt_t", "group__gHelper.html#structarm__2d__helper__render__evt__t", [
       [ "fnHandler", "group__gHelper.html#a328824317c21ed14e7913c38833f98c5", null ],
@@ -224,6 +224,11 @@ var group__gHelper =
     [ "arm_2d_scene_player_append_dirty_regions", "group__gHelper.html#ga17f0592eb6eabcb8fd5ae12e4d425d71", null ],
     [ "arm_2d_scene_player_remove_dirty_regions", "group__gHelper.html#ga15bd874fcd36767c9ff8acf1955e8afe", null ],
     [ "arm_2d_scene_player_get_the_current_scene", "group__gHelper.html#ga416e8e1d86ebf4413ae19db8c3f605cb", null ],
+    [ "arm_2d_user_dynamic_dirty_region_init", "group__gHelper.html#ga9a514fd8ee617a9af077da1543ee690b", null ],
+    [ "arm_2d_user_dynamic_dirty_region_depose", "group__gHelper.html#gaee182844d457a7931388e16d256ef317", null ],
+    [ "arm_2d_user_dynamic_dirty_region_on_frame_start", "group__gHelper.html#ga94035e00bceac073bb7ca3520e568e15", null ],
+    [ "arm_2d_user_dynamic_dirty_region_wait_next", "group__gHelper.html#ga2bba13147e28c9cc3fc59fe6c4a44367", null ],
+    [ "arm_2d_user_dynamic_dirty_region_update", "group__gHelper.html#gaab177fbb4903297d91299ab7daf403b6", null ],
     [ "arm_2d_helper_pfb_init", "group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99", null ],
     [ "arm_2d_helper_pfb_deinit", "group__gHelper.html#ga91b9bd95fab04511c9ae935757341d6f", null ],
     [ "arm_2d_helper_pfb_get_display_area", "group__gHelper.html#gaf0eef5fe61bc11d102d2180025ada377", null ],
