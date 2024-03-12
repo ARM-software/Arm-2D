@@ -75,13 +75,30 @@ extern "C" {
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
+#define __arm_print_banner4(__REGION, __FONT_PTR, __FORMAT_STR, ...)            \
+        do {                                                                    \
+            if (NULL != (__FONT_PTR)) {                                         \
+                arm_lcd_text_set_font((const arm_2d_font_t *)(__FONT_PTR));     \
+            }                                                                   \
+            arm_2d_region_t ARM_2D_SAFE_NAME(tTargetRegion) = (__REGION);       \
+            arm_2d_align_centre(                                                \
+                            ARM_2D_SAFE_NAME(tTargetRegion),                    \
+                            arm_lcd_get_string_line_box((__STR),(__FONT_PTR))) {\
+                arm_lcd_text_set_draw_region(&__centre_region);                 \
+                arm_lcd_printf(__FORMAT_STR, ##__VA_ARGS__);                    \
+            }                                                                   \
+        } while(0)
+
+
 #define __arm_print_banner3(__STR, __REGION, __FONT_PTR)                        \
         do {                                                                    \
             if (NULL != (__FONT_PTR)) {                                         \
                 arm_lcd_text_set_font((const arm_2d_font_t *)(__FONT_PTR));     \
             }                                                                   \
+            arm_2d_region_t ARM_2D_SAFE_NAME(tTargetRegion) = (__REGION);       \
             arm_2d_align_centre(                                                \
-                (__REGION), arm_lcd_get_string_line_box((__STR),(__FONT_PTR))) {\
+                            ARM_2D_SAFE_NAME(tTargetRegion),                    \
+                            arm_lcd_get_string_line_box((__STR),(__FONT_PTR))) {\
                 arm_lcd_text_set_draw_region(&__centre_region);                 \
                 arm_lcd_puts(__STR);                                            \
             }                                                                   \

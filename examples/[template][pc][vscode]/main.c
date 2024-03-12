@@ -152,7 +152,6 @@ static scene_loader_t * const c_SceneLoaders[] = {
 #if 1
     scene0_loader,
     scene1_loader,
-    scene_console_loader,
 
     scene_meter_loader,
 #endif
