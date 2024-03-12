@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        5. March 2024
- * $Revision:    V.1.8.7
+ * $Date:        12. March 2024
+ * $Revision:    V.1.8.8
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -482,18 +482,22 @@ typedef struct arm_2d_pfb_t {
  * 
  */
 typedef struct arm_2d_region_list_item_t {
-    struct arm_2d_region_list_item_t    *ptNext;                                //!< the next node
-    arm_2d_region_t                     tRegion;                                //!< the region
-    uint8_t                             bIgnore     : 1;                        //!< ignore this region
-    uint8_t                             bUpdated    : 1;                        //!< this region item has been updated, PFB helper should refresh it again.
-    uint8_t                                         : 6;
-
+    struct arm_2d_region_list_item_t   *ptNext;                                 //!< the next node
 ARM_PRIVATE(
     struct arm_2d_region_list_item_t   *ptInternalNext;                         //!< the next node in the internal list
-    uint8_t                             bFromInternalPool : 1;                  //!< a flag indicating whether this list item coming from the internal pool
-    uint8_t                             bFromHeap         : 1;                  //!< whether this item comes from the HEAP
-    uint8_t                                               : 6;
 )
+    arm_2d_region_t                     tRegion;                                //!< the region
+
+ARM_PRIVATE(
+    uint8_t     bFromInternalPool   : 1;                                        //!< a flag indicating whether this list item coming from the internal pool
+    uint8_t     bFromHeap           : 1;                                        //!< whether this item comes from the HEAP
+    uint8_t                         : 2;                                        //!< reserved for the future
+    uint8_t     u4UpdateState       : 4;                                        //!< reserved for internal FSM
+)
+    uint8_t     chUserRegionIndex;                                              //!< User Region Index, used to indicate updating which dynamic dirty regions  
+    uint16_t    bIgnore             : 1;                                        //!< ignore this region
+    uint16_t    bUpdated            : 1;                                        //!< this region item has been updated, PFB helper should refresh it again.
+    uint16_t                        : 14;                                       //!< reserved for the future    
 }arm_2d_region_list_item_t;
 
 /*!
