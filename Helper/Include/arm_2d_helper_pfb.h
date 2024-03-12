@@ -488,16 +488,18 @@ ARM_PRIVATE(
 )
     arm_2d_region_t                     tRegion;                                //!< the region
 
-ARM_PRIVATE(
-    uint8_t     bFromInternalPool   : 1;                                        //!< a flag indicating whether this list item coming from the internal pool
-    uint8_t     bFromHeap           : 1;                                        //!< whether this item comes from the HEAP
-    uint8_t                         : 2;                                        //!< reserved for the future
-    uint8_t     u4UpdateState       : 4;                                        //!< reserved for internal FSM
-)
     uint8_t     chUserRegionIndex;                                              //!< User Region Index, used to indicate updating which dynamic dirty regions  
-    uint16_t    bIgnore             : 1;                                        //!< ignore this region
-    uint16_t    bUpdated            : 1;                                        //!< this region item has been updated, PFB helper should refresh it again.
-    uint16_t                        : 14;                                       //!< reserved for the future    
+    uint8_t     bIgnore             : 1;                                        //!< ignore this region
+    uint8_t     bUpdated            : 1;                                        //!< this region item has been updated, PFB helper should refresh it again.
+    uint8_t                         : 6;                                        //!< reserved for the future
+
+ARM_PRIVATE(
+    uint16_t    bFromInternalPool   : 1;                                        //!< a flag indicating whether this list item coming from the internal pool
+    uint16_t    bFromHeap           : 1;                                        //!< whether this item comes from the HEAP
+    uint16_t    u2UpdateState       : 2;                                        //!< reserved for internal FSM
+    uint16_t    u12KEY              : 12;                                       //!< KEY
+)
+
 }arm_2d_region_list_item_t;
 
 /*!

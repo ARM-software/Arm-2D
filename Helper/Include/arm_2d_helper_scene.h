@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        05. March 2024
- * $Revision:    V.1.4.9
+ * $Date:        12. March 2024
+ * $Revision:    V.1.5.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -547,6 +547,79 @@ ARM_NONNULL(1)
 arm_2d_scene_t * 
 arm_2d_scene_player_get_the_current_scene(arm_2d_scene_player_t *ptThis);
 
+
+/*-----------------------------------------------------------------------------*
+ * Dynamic Dirty Region Helper Service                                         *
+ *-----------------------------------------------------------------------------*/
+
+/*!
+ * \brief initialize a user dynamic dirty region
+ * 
+ * \param[in] ptThis the target region list item. If it is NULL, this function will
+ *               allocate an object from the heap
+ * \param[in] ptScene the target scene.
+ * \return arm_2d_region_list_item_t* the target region list item
+ */
+extern
+arm_2d_region_list_item_t *arm_2d_user_dynamic_dirty_region_init(
+                                            arm_2d_region_list_item_t *ptThis,
+                                            arm_2d_scene_t *ptScene);
+
+/*!
+ * \brief depose a given user dynamic dirty region
+ * 
+ * \param[in] ptThis the target region list item.
+ * \param[in] ptScene the target scene.
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_user_dynamic_dirty_region_depose(
+                                            arm_2d_region_list_item_t *ptThis,
+                                            arm_2d_scene_t *ptScene);
+
+
+/*!
+ * \brief the on-frame-start event handler for a given user dynamic dirty region
+ * 
+ * \param[in] ptThis the target region list item.
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_user_dynamic_dirty_region_on_frame_start(
+                                            arm_2d_region_list_item_t *ptThis);
+/*!
+ * \brief wait for the PFB helper service requesting the next region
+ * 
+ * \param[in] ptThis the target region list item.
+ * \return uint_fast8_t the user region index
+ * 
+ * \note You can use the return value, i.e. the user region index to address
+ *       the new region you want to cover. 
+ */
+extern
+ARM_NONNULL(1)
+uint_fast8_t arm_2d_user_dynamic_dirty_region_wait_next(
+                                            arm_2d_region_list_item_t *ptThis);
+
+/*!
+ * \brief update a given user dynamic dirty region with a new region
+ * 
+ * \param[in] ptThis the target region list item.
+ * \param[in] ptTarget the target tile (the frame-buffer to draw)
+ * \param[in] ptRegion the new region
+ * \note - when the ptTarget isn't NULL, the ptRegion should points a region inside
+ *       the canvas of the ptTarget (i.e. an relative region of the ptTarget)
+ *       - when the ptTarget is NULL, this function will get the default framebuffer
+ *       by calling the function arm_2d_get_default_frame_buffer().
+ *       
+ * \param[in] chNextUserIndex the next user region index
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_user_dynamic_dirty_region_update(arm_2d_region_list_item_t *ptThis,
+                                             arm_2d_tile_t *ptTarget,
+                                             arm_2d_region_t *ptRegion,
+                                             uint8_t chNextUserIndex);
 /*! @} */
 
 #if defined(__clang__)
