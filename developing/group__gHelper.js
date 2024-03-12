@@ -46,8 +46,9 @@ var group__gHelper =
     [ "arm_2d_region_list_item_t", "group__gHelper.html#structarm__2d__region__list__item__t", [
       [ "ptNext", "group__gHelper.html#aaeee77d805398d4495a984869fcbde9e", null ],
       [ "tRegion", "group__gHelper.html#aa17e31540f22ea3e9af8a23332b655e1", null ],
-      [ "bIgnore", "group__gHelper.html#a6d72c554fc42cbd55401d9dc28795804", null ],
-      [ "bUpdated", "group__gHelper.html#abbbfe7f97c2d99378d488c96abb20165", null ]
+      [ "chUserRegionIndex", "group__gHelper.html#a42c23386f040c6e543f432af4e4e58ff", null ],
+      [ "bIgnore", "group__gHelper.html#a005807f36a3c9ba90d1706431b300f98", null ],
+      [ "bUpdated", "group__gHelper.html#a1ceaa7daf22d04ec9cc32918c6723401", null ]
     ] ],
     [ "arm_2d_helper_render_evt_t", "group__gHelper.html#structarm__2d__helper__render__evt__t", [
       [ "fnHandler", "group__gHelper.html#a328824317c21ed14e7913c38833f98c5", null ],
@@ -59,16 +60,16 @@ var group__gHelper =
       [ "evtOnDrawing", "group__gHelper.html#a75436e9711701c092b4bafcc1c868d25", null ],
       [ "evtOnLowLevelSyncUp", "group__gHelper.html#a0ed423f1f6490f8cc89abd55f886f4cd", null ],
       [ "evtOnEachFrameCPL", "group__gHelper.html#a3a09c78af2a4f90fdfed477c0844e4fc", null ],
-      [ "Navigation", "group__gHelper.html#ae13b5f69dae5f471372611003f8936d9", null ],
+      [ "Navigation", "group__gHelper.html#a9c6191792908c9cbcab58cbb79bfe326", null ],
       [ "evtBeforeFlushing", "group__gHelper.html#acf349e434e1a7056507ae25497d677fe", null ]
     ] ],
     [ "arm_2d_helper_pfb_cfg_t", "group__gHelper.html#structarm__2d__helper__pfb__cfg__t", [
       [ "tDisplayArea", "group__gHelper.html#adc4ca6df76cda6514cff8a4cec3918ca", null ],
-      [ "FrameBuffer", "group__gHelper.html#abbd242f326092ad051501d61b75fc1b5", null ],
+      [ "FrameBuffer", "group__gHelper.html#af49460bbe320c08e0df95b22056af719", null ],
       [ "Dependency", "group__gHelper.html#a65ec336911098eaed7b2ac60038dda6e", null ]
     ] ],
     [ "arm_2d_helper_pfb_t", "group__gHelper.html#structarm__2d__helper__pfb__t", [
-      [ "Statistics", "group__gHelper.html#a7fc8bdf810e98eb8415cfae078e8a68d", null ]
+      [ "Statistics", "group__gHelper.html#a0064ed6216ef28ee9c666c3a7de9bcee", null ]
     ] ],
     [ "arm_2d_helper_transform_t", "group__gHelper.html#structarm__2d__helper__transform__t", null ],
     [ "arm_2d_helper_film_t", "group__gHelper.html#structarm__2d__helper__film__t", [
@@ -116,6 +117,7 @@ var group__gHelper =
     [ "arm_2d_helper_3fb_t.__unnamed139__", "group__gHelper.html#structarm__2d__helper__3fb__t_8____unnamed139____", null ],
     [ "arm_2d_helper_3fb_t.__unnamed139__.Runtime", "group__gHelper.html#structarm__2d__helper__3fb__t_8____unnamed139_____8Runtime", null ],
     [ "arm_2d_region_list_item_t.__unnamed142__", "group__gHelper.html#structarm__2d__region__list__item__t_8____unnamed142____", null ],
+    [ "arm_2d_region_list_item_t.__unnamed144__", "group__gHelper.html#structarm__2d__region__list__item__t_8____unnamed144____", null ],
     [ "arm_2d_helper_pfb_dependency_t.Navigation", "group__gHelper.html#structarm__2d__helper__pfb__dependency__t_8Navigation", null ],
     [ "arm_2d_helper_pfb_cfg_t.FrameBuffer", "group__gHelper.html#structarm__2d__helper__pfb__cfg__t_8FrameBuffer", [
       [ "ptPFBs", "group__gHelper.html#ae32199e047789740867bc43fd74278d1", null ],
@@ -135,20 +137,20 @@ var group__gHelper =
       [ "ptRegions", "group__gHelper.html#a6a496fcf164bce1b709a9e0a91fd1a8d", null ],
       [ "chCount", "group__gHelper.html#a55bfdcb94dba247cbe1c0d3a479f17d6", null ]
     ] ],
-    [ "arm_2d_helper_pfb_t.__unnamed147__", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed147____", null ],
-    [ "arm_2d_helper_pfb_t.__unnamed147__.Adapter", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed147_____8Adapter", null ],
-    [ "arm_2d_helper_pfb_t.__unnamed147__.Adapter.OptimizedDirtyRegions", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed147_____8Adapter_8OptimizedDirtyRegions", null ],
-    [ "arm_2d_helper_pfb_t.__unnamed147__.Adapter.__unnamed152__", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed147_____8Adapter_8____unnamed152____", null ],
-    [ "arm_2d_helper_pfb_t.__unnamed147__.Adapter.FlushFIFO", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed147_____8Adapter_8FlushFIFO", null ],
+    [ "arm_2d_helper_pfb_t.__unnamed149__", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed149____", null ],
+    [ "arm_2d_helper_pfb_t.__unnamed149__.Adapter", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed149_____8Adapter", null ],
+    [ "arm_2d_helper_pfb_t.__unnamed149__.Adapter.OptimizedDirtyRegions", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed149_____8Adapter_8OptimizedDirtyRegions", null ],
+    [ "arm_2d_helper_pfb_t.__unnamed149__.Adapter.__unnamed154__", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed149_____8Adapter_8____unnamed154____", null ],
+    [ "arm_2d_helper_pfb_t.__unnamed149__.Adapter.FlushFIFO", "group__gHelper.html#structarm__2d__helper__pfb__t_8____unnamed149_____8Adapter_8FlushFIFO", null ],
     [ "arm_2d_helper_pfb_t.Statistics", "group__gHelper.html#structarm__2d__helper__pfb__t_8Statistics", [
       [ "lTimestamp", "group__gHelper.html#a5a48f3e42ab73764014d124cd2764be4", null ],
       [ "nTotalCycle", "group__gHelper.html#aad0c95f31d24233a32300ac6e851506f", null ],
       [ "nRenderingCycle", "group__gHelper.html#a5ae6646bd6957664dcc13172aa268290", null ]
     ] ],
-    [ "arm_2d_helper_transform_t.__unnamed155__", "group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed155____", null ],
-    [ "arm_2d_helper_transform_t.__unnamed155__.Angle", "group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed155_____8Angle", null ],
-    [ "arm_2d_helper_transform_t.__unnamed155__.Scale", "group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed155_____8Scale", null ],
-    [ "arm_2d_helper_pi_slider_t.__unnamed159__", "group__gHelper.html#structarm__2d__helper__pi__slider__t_8____unnamed159____", null ],
+    [ "arm_2d_helper_transform_t.__unnamed157__", "group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed157____", null ],
+    [ "arm_2d_helper_transform_t.__unnamed157__.Angle", "group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed157_____8Angle", null ],
+    [ "arm_2d_helper_transform_t.__unnamed157__.Scale", "group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed157_____8Scale", null ],
+    [ "arm_2d_helper_pi_slider_t.__unnamed161__", "group__gHelper.html#structarm__2d__helper__pi__slider__t_8____unnamed161____", null ],
     [ "arm_2d_scene_player_register_on_draw_navigation_event_handler", "group__gHelper.html#ga90130f1c831d7fb20db39f20a488a3e1", null ],
     [ "arm_2d_scene_player_set_switching_mode", "group__gHelper.html#ga6b9ef0f3e0f80430fc036f6d3c67c135", null ],
     [ "arm_2d_scene_player_register_before_switching_event_handler", "group__gHelper.html#ga0c896791f09bdcbb1115746844ddba2b", null ],
