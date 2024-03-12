@@ -75,7 +75,7 @@ extern "C" {
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
-#define __arm_print_banner4(__REGION, __FONT_PTR, __FORMAT_STR, ...)            \
+#define arm_lcd_banner_printf(__REGION, __FONT_PTR, __FORMAT_STR, ...)          \
         do {                                                                    \
             if (NULL != (__FONT_PTR)) {                                         \
                 arm_lcd_text_set_font((const arm_2d_font_t *)(__FONT_PTR));     \
