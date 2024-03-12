@@ -75,6 +75,7 @@ extern "C" {
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
+#if 0 // TODO in the future version when string alignment feature is available
 #define arm_lcd_banner_printf(__REGION, __FONT_PTR, __FORMAT_STR, ...)          \
         do {                                                                    \
             if (NULL != (__FONT_PTR)) {                                         \
@@ -88,7 +89,7 @@ extern "C" {
                 arm_lcd_printf(__FORMAT_STR, ##__VA_ARGS__);                    \
             }                                                                   \
         } while(0)
-
+#endif
 
 #define __arm_print_banner3(__STR, __REGION, __FONT_PTR)                        \
         do {                                                                    \
