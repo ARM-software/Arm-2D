@@ -229,6 +229,7 @@ var group__gHelper =
     [ "arm_2d_user_dynamic_dirty_region_on_frame_start", "group__gHelper.html#ga869feeab1c664ae0674f717ad98ed60d", null ],
     [ "arm_2d_user_dynamic_dirty_region_wait_next", "group__gHelper.html#ga2bba13147e28c9cc3fc59fe6c4a44367", null ],
     [ "arm_2d_user_dynamic_dirty_region_update", "group__gHelper.html#gaab177fbb4903297d91299ab7daf403b6", null ],
+    [ "arm_2d_user_dynamic_dirty_region_change_user_region_index_only", "group__gHelper.html#ga6b3bb642a9d22deddeca9474b78f6635", null ],
     [ "arm_2d_helper_pfb_init", "group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99", null ],
     [ "arm_2d_helper_pfb_deinit", "group__gHelper.html#ga91b9bd95fab04511c9ae935757341d6f", null ],
     [ "arm_2d_helper_pfb_get_display_area", "group__gHelper.html#gaf0eef5fe61bc11d102d2180025ada377", null ],

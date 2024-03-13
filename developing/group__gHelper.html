@@ -537,6 +537,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaab177fbb4903297d91299ab7daf403b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaab177fbb4903297d91299ab7daf403b6">arm_2d_user_dynamic_dirty_region_update</a> (<a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptThis, <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, uint8_t chNextUserIndex)</td></tr>
 <tr class="memdesc:gaab177fbb4903297d91299ab7daf403b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">update a given user dynamic dirty region with a new region  <a href="group__gHelper.html#gaab177fbb4903297d91299ab7daf403b6">More...</a><br /></td></tr>
 <tr class="separator:gaab177fbb4903297d91299ab7daf403b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6b3bb642a9d22deddeca9474b78f6635"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga6b3bb642a9d22deddeca9474b78f6635">arm_2d_user_dynamic_dirty_region_change_user_region_index_only</a> (<a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptThis, uint8_t chNextUserIndex)</td></tr>
+<tr class="memdesc:ga6b3bb642a9d22deddeca9474b78f6635"><td class="mdescLeft">&#160;</td><td class="mdescRight">only change the user region index without update the dynamic dirty region  <a href="group__gHelper.html#ga6b3bb642a9d22deddeca9474b78f6635">More...</a><br /></td></tr>
+<tr class="separator:ga6b3bb642a9d22deddeca9474b78f6635"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga14181b777abd2c6af671699f9bfd8f99"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c">arm_2d_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99">arm_2d_helper_pfb_init</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis, <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__cfg__t">arm_2d_helper_pfb_cfg_t</a> *ptCFG)</td></tr>
 <tr class="memdesc:ga14181b777abd2c6af671699f9bfd8f99"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize pfb helper service  <a href="group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99">More...</a><br /></td></tr>
 <tr class="separator:ga14181b777abd2c6af671699f9bfd8f99"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -5474,6 +5477,43 @@ false the new content is stored in ptOrigin </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">chNextUserIndex</td><td>the next user region index, 0xFF means complete. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga6b3bb642a9d22deddeca9474b78f6635" name="ga6b3bb642a9d22deddeca9474b78f6635"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6b3bb642a9d22deddeca9474b78f6635">&#9670;&nbsp;</a></span>arm_2d_user_dynamic_dirty_region_change_user_region_index_only()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_user_dynamic_dirty_region_change_user_region_index_only </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>chNextUserIndex</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>only change the user region index without update the dynamic dirty region </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target region list item. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">chNextUserIndex</td><td>the next user region index. When encounter 0xFF, the user region index will be reset to zero. </td></tr>
   </table>
   </dd>
 </dl>
