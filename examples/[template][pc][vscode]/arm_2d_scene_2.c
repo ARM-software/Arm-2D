@@ -113,6 +113,11 @@ static void __on_scene2_depose(arm_2d_scene_t *ptScene)
 
     progress_wheel_depose(&this.tWheel);
 
+    /* depose all number lists */
+    arm_foreach(number_list_t,this.tNumberList, ptItem) {
+        number_list_depose(ptItem);
+    }
+
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
@@ -142,6 +147,10 @@ static void __on_scene2_frame_start(arm_2d_scene_t *ptScene)
     user_scene_2_t *ptThis = (user_scene_2_t *)ptScene;
 
     progress_wheel_on_frame_start(&this.tWheel);
+
+    arm_foreach(number_list_t,this.tNumberList, ptItem) {
+        number_list_on_frame_start(ptItem);
+    }
 }
 
 static void __on_scene2_frame_complete(arm_2d_scene_t *ptScene)
@@ -410,17 +419,6 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
     /*! define dirty regions */
     IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
 
-        /* a dirty region to be specified at runtime*/
-        ADD_REGION_TO_LIST(s_tDirtyRegions,
-            .tSize = {
-                240, 128,
-            },
-        ),
-
-        ADD_REGION_TO_LIST(s_tDirtyRegions,
-            0
-        ),
-
         /* add the last region:
          * it is the top left corner for text display 
          */
@@ -441,28 +439,13 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
         = arm_2d_helper_pfb_get_display_area(
             &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
     
-    /* initialise dirty region 0 at runtime
-     * this demo shows that we create a region in the centre of a screen(320*240)
-     * for a image stored in the tile c_tileCMSISLogoMask
-     */
-    s_tDirtyRegions[0].tRegion.tLocation = (arm_2d_location_t){
-        .iX = ((tScreen.tSize.iWidth - 240) >> 1),
-        .iY = ((tScreen.tSize.iHeight - 128) >> 1),
-    };
-    
+
     arm_2d_align_top_right( tScreen, 
                             c_tileWhiteDotMask.tRegion.tSize.iWidth + 10,
                             c_tileWhiteDotMask.tRegion.tSize.iHeight) {
-        s_tDirtyRegions[1].tRegion = __top_right_region;
+        s_tDirtyRegions[0].tRegion = __top_right_region;
     }
-//    s_tDirtyRegions[1].tRegion = (arm_2d_region_t){
-//        .tLocation = {
-//            .iX = tScreen.tSize.iWidth - c_tileWhiteDotMask.tRegion.tSize.iWidth - 10,
-//            .iY = 0,
-//        },
-//        .tSize = c_tileWhiteDotMask.tRegion.tSize,
-//    };
-    
+
 
     *ptScene = (user_scene_2_t){
         .use_as__arm_2d_scene_t = {
@@ -489,7 +472,7 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
             .tDotColour     = GLCD_COLOR_WHITE,         /* dot colour */
             .tWheelColour   = GLCD_COLOR_GREEN,         /* arc colour */
             .iWheelDiameter = 60,                       /* diameter, 0 means use the mask's original size */
-            .bUseDirtyRegions = false,                  /* use dirty regions */
+            .bUseDirtyRegions = true,                  /* use dirty regions */
         };
 
         progress_wheel_init(&this.tWheel, 
@@ -514,6 +497,9 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
             .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY,
             /* draw list cover */
             .fnOnDrawListCover = &__arm_2d_number_list_draw_cover,
+
+            .bUseDirtyRegion = true,
+            .ptTargetScene = &this.use_as__arm_2d_scene_t,
         };
         number_list_init(&this.tNumberList[0], &tCFG);
         number_list_init(&this.tNumberList[1], &tCFG);
@@ -536,6 +522,9 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
             .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY,
             /* draw list cover */
             .fnOnDrawListCover = &__arm_2d_number_list_draw_cover,
+
+            .bUseDirtyRegion = true,
+            .ptTargetScene = &this.use_as__arm_2d_scene_t,
         };
         number_list_init(&this.tNumberList[2], &tCFG);
     } while(0);
