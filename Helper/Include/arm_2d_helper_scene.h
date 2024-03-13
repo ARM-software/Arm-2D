@@ -582,11 +582,15 @@ void arm_2d_user_dynamic_dirty_region_depose(
  * \brief the on-frame-start event handler for a given user dynamic dirty region
  * 
  * \param[in] ptThis the target region list item.
+ * \param[in] chUserRegionIndex a specified user region index. When 0xFF is given,
+ *            the existing user region index will not be changed.
+ *            
  */
 extern
 ARM_NONNULL(1)
 void arm_2d_user_dynamic_dirty_region_on_frame_start(
-                                            arm_2d_region_list_item_t *ptThis);
+                                            arm_2d_region_list_item_t *ptThis,
+                                            uint8_t chUserRegionIndex);
 /*!
  * \brief wait for the PFB helper service requesting the next region
  * 
@@ -612,7 +616,7 @@ uint_fast8_t arm_2d_user_dynamic_dirty_region_wait_next(
  *       - when the ptTarget is NULL, this function will get the default framebuffer
  *       by calling the function arm_2d_get_default_frame_buffer().
  *       
- * \param[in] chNextUserIndex the next user region index
+ * \param[in] chNextUserIndex the next user region index, 0xFF means complete.
  */
 extern
 ARM_NONNULL(1)

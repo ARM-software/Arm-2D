@@ -1845,8 +1845,8 @@ label_iteration_begin_start:
             * in the dry run
             */
             if (NULL == this.Adapter.ptDirtyRegion) {
-                this.Adapter.bIsRegionChanged = true;   
-            } else if (this.Adapter.ptDirtyRegion->bUpdated) {
+                this.Adapter.bIsRegionChanged = true;
+            } else if (this.Adapter.ptDirtyRegion->bUpdated || this.Adapter.bEncounterDynamicDirtyRegion) {
                 this.Adapter.bIsRegionChanged = true;
             }
 
@@ -2011,7 +2011,6 @@ label_iteration_begin_start:
             this.Adapter.bIsRegionChanged = false;
 
             if (NULL != this.Adapter.ptDirtyRegion) {
-                this.Adapter.bEncounterDynamicDirtyRegion = false;
 
                 if (this.Adapter.ptDirtyRegion->bUpdated) {
                     /* clear the region updated flag
@@ -2020,7 +2019,27 @@ label_iteration_begin_start:
                      */
                     this.Adapter.ptDirtyRegion->bUpdated = false;
                     this.Adapter.bEncounterDynamicDirtyRegion = true;
+
+                    ARM_2D_LOG_INFO(
+                        HELPER_PFB, 
+                        1, 
+                        "Iteration Begin", 
+                        "The target dirty region [%p] is a dynamic dirty region.",
+                        this.Adapter.ptDirtyRegion
+                    );
+                } else {
+                    this.Adapter.bEncounterDynamicDirtyRegion = false;
+
+                    ARM_2D_LOG_INFO(
+                        HELPER_PFB, 
+                        1, 
+                        "Iteration Begin", 
+                        "The target dirty region [%p] is a normal dirty region.",
+                        this.Adapter.ptDirtyRegion
+                    );
                 }
+
+                
 
                 if (this.Adapter.bFirstIteration 
                 &&  !this.Adapter.ptDirtyRegion->bIgnore
@@ -2030,6 +2049,15 @@ label_iteration_begin_start:
                      * ignore it to start the dry run
                      */
                     this.Adapter.tTargetRegion = this.tCFG.tDisplayArea;
+
+                    ARM_2D_LOG_INFO(
+                        HELPER_PFB, 
+                        1, 
+                        "Iteration Begin", 
+                        "The target dirty region [%p] is the first dynamic dirty region, we ignore its region and start a dry run...",
+                        this.Adapter.ptDirtyRegion
+                    );
+
                 } else if ( (this.Adapter.ptDirtyRegion->bIgnore)
                             // calculate the valid region
                         ||  (!arm_2d_region_intersect(
@@ -2253,21 +2281,31 @@ label_iteration_begin_start:
             assert(NULL != this.Adapter.ptDirtyRegion);
             if (!this.Adapter.bFailedToOptimizeDirtyRegion) {
 
-                ARM_2D_LOG_INFO(
-                    DIRTY_REGION_OPTIMISATION, 
-                    1, 
-                    "Iteration Begin", 
-                    "Update dirty region working list."
-                );
-
                 if (!(bFirstIteration && this.Adapter.bEncounterDynamicDirtyRegion)) {
                     /* NOTE: we won't take the first dynamic dirty region into the 
                      * consideration as there is no valid value 
                      */
+
+                    ARM_2D_LOG_INFO(
+                        DIRTY_REGION_OPTIMISATION, 
+                        1, 
+                        "Iteration Begin", 
+                        "Update dirty region working list with the new one [%p], dynamic? [%s]",
+                        this.Adapter.ptDirtyRegion,
+                        this.Adapter.bEncounterDynamicDirtyRegion ? "true" : "false"
+                    );
+
                     __arm_2d_helper_update_dirty_region_working_list(
                                             ptThis, 
                                             this.Adapter.ptDirtyRegion,
                                             this.Adapter.bEncounterDynamicDirtyRegion);
+                } else {
+                    ARM_2D_LOG_INFO(
+                        DIRTY_REGION_OPTIMISATION, 
+                        1, 
+                        "Iteration Begin", 
+                        "As the dynamic dirty region is the first available one in the list, we will not add it to the working list in the first iteration."
+                    );
                 }
                 /* reset flag */
                 this.Adapter.bEncounterDynamicDirtyRegion = false;
@@ -3161,16 +3199,13 @@ void arm_2d_helper_transform_init(arm_2d_helper_transform_t *ptThis,
     this.bNeedUpdate = true;
     
     this.tDirtyRegions[0].bIgnore = true;
-    this.tDirtyRegions[0].ptNext = &this.tDirtyRegions[1];
     this.tDirtyRegions[1].bIgnore = true;
 
-    while(NULL != (*ppDirtyRegionList)) {
-        ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
-    }
+    arm_2d_helper_pfb_append_dirty_regions_to_list( ppDirtyRegionList, 
+                                                    this.tDirtyRegions, 
+                                                    dimof(this.tDirtyRegions));
 
-    /* add dirty region item to the list */
-    (*ppDirtyRegionList) = &this.tDirtyRegions[0];
-    this.tDirtyRegions[1].ptNext = NULL;
+
 }
 
 ARM_NONNULL(1)
@@ -3183,18 +3218,9 @@ void arm_2d_helper_transform_depose(arm_2d_helper_transform_t *ptThis)
         return ;
     }
 
-    while(NULL != (*ppDirtyRegionList)) {
-
-        /* remove the dirty region from the user dirty region list */
-        if ((*ppDirtyRegionList) == &this.tDirtyRegions[0]) {
-            (*ppDirtyRegionList) = this.tDirtyRegions[1].ptNext;
-            this.tDirtyRegions[1].ptNext = NULL;
-            break;
-        }
-
-        ppDirtyRegionList = &((*ppDirtyRegionList)->ptNext);
-    }
-
+    arm_2d_helper_pfb_remove_dirty_regions_from_list(ppDirtyRegionList,
+                                                     this.tDirtyRegions,
+                                                     dimof(this.tDirtyRegions));
 }
 
 
@@ -3216,6 +3242,9 @@ void arm_2d_helper_transform_update_dirty_regions(
     
     if (this.bNeedUpdate) {
         this.bNeedUpdate = false;
+
+        this.tDirtyRegions[0].bIgnore = true;
+        this.tDirtyRegions[1].bIgnore = true;
 
         arm_2d_region_t tNewRegion = *(this.ptTransformOP->Target.ptRegion);
         tNewRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(
@@ -3289,6 +3318,10 @@ void arm_2d_helper_transform_on_frame_begin(arm_2d_helper_transform_t *ptThis)
         } else {
             this.fAngle = this.Angle.fValue;
             this.fScale = this.Scale.fValue;
+
+            /* pretend this to be a dynamic dirty region and request an update in on-draw event handler */
+            this.tDirtyRegions[0].bUpdated = true;
+            this.tDirtyRegions[0].bIgnore = false;
         }
     }
 }

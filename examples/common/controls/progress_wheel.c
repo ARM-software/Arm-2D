@@ -74,7 +74,6 @@ enum {
     DRAW_LAST_QUADRANT,
     DRAW_WHOLE_WHEEL,
     DRAW_CURVE,
-    DRAW_START_POINT,
     DRAW_END_POINT,
     FINISH,
     NO_DIRTY_REGIONS,
@@ -132,14 +131,8 @@ void progress_wheel_init( progress_wheel_t *ptThis,
                                     0.1f,
                                     &ptTargetScene->ptDirtyRegion);
 
-        /* add dirty region to the target scene */
-        arm_2d_scene_player_append_dirty_regions(   ptTargetScene, 
-                                                    &this.tDirtyRegion, 
-                                                    1);
-        
-
-    } else {
-        this.chState = NO_DIRTY_REGIONS;
+        arm_2d_user_dynamic_dirty_region_init(  &this.tDirtyRegion,
+                                                ptTargetScene);
     }
 }
 
@@ -168,10 +161,9 @@ void progress_wheel_depose(progress_wheel_t *ptThis)
     }
 
     if (this.tCFG.bUseDirtyRegions && NULL != this.ptTargetScene) {
-        /* remove dirty region */
-        arm_2d_scene_player_remove_dirty_regions(   this.ptTargetScene, 
-                                                    &this.tDirtyRegion, 
-                                                    1);
+
+        arm_2d_user_dynamic_dirty_region_depose(&this.tDirtyRegion,
+                                                this.ptTargetScene);
 
         arm_2d_helper_transform_depose(&this.tTransHelper);
     }
@@ -182,9 +174,18 @@ void progress_wheel_on_frame_start(progress_wheel_t *ptThis)
 {
     assert(NULL != ptThis);
 
+    this.iProgress = this.iNewProgress;
+    this.fAngle = ARM_2D_ANGLE((float)this.iProgress * 36.0f / 100.0f);
+
     if (this.tCFG.bUseDirtyRegions) {
-        this.tDirtyRegion.bUpdated = true;
-        this.tDirtyRegion.bIgnore = false;
+
+        arm_2d_user_dynamic_dirty_region_on_frame_start(&this.tDirtyRegion, 0xFF);
+
+        /* update helper with new values*/
+        arm_2d_helper_transform_update_value(&this.tTransHelper, this.fAngle, 1.0f);
+
+        /* call helper's on-frame-begin event handler */
+        arm_2d_helper_transform_on_frame_begin(&this.tTransHelper);
     }
 }
 
@@ -202,49 +203,55 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
     const arm_2d_tile_t *ptileArcMask = this.tCFG.ptileArcMask;
     COLOUR_INT tWheelColour = this.tCFG.tWheelColour;
 
-    iProgress = MIN(1000, iProgress);
+    if (bIsNewFrame) {
+        iProgress = MIN(1000, iProgress);
+        this.iNewProgress = iProgress;
+    }
 
-    int8_t chCurrentQuadrant = (int8_t)(iProgress / 250);
+    int8_t chCurrentQuadrant = (int8_t)(this.iProgress / 250);
 
-    if (    (this.chState == START) 
-        &&  bIsNewFrame 
-        &&  this.tCFG.bUseDirtyRegions) {
-        /* initialize fsm */
-        this.chLastQuadrant = 0;
-        this.chState = DRAW_WHOLE_WHEEL;
+    uint8_t chState = NO_DIRTY_REGIONS;
+    
+    if (this.tCFG.bUseDirtyRegions) {
+        chState = arm_2d_user_dynamic_dirty_region_wait_next(&this.tDirtyRegion);
     }
 
     arm_2d_container(ptTarget, __wheel, ptRegion) {
 
-        if ( WAIT_CHANGE == this.chState) {
-            if (this.iLastProgress != iProgress) {
-                this.iLastProgress = iProgress;
+        if (    (chState == START) 
+            &&  bIsNewFrame 
+            &&  this.tCFG.bUseDirtyRegions) {
+            /* initialize fsm */
+            this.chLastQuadrant = 0;
+            chState = DRAW_WHOLE_WHEEL;
+        }
+
+        if ( WAIT_CHANGE == chState) {
+            if (this.iLastProgress != this.iProgress) {
+                this.iLastProgress = this.iProgress;
 
                 int8_t chQuadrantChange = chCurrentQuadrant - this.chLastQuadrant;
                 chQuadrantChange = ABS(chQuadrantChange);
 
-                if (1000 == iProgress && 3 == this.chLastQuadrant) {
-                    this.chState = DRAW_CURVE;
+                if (1000 == this.iProgress && 3 == this.chLastQuadrant) {
+                    chState = DRAW_CURVE;
                 } else if (chQuadrantChange < 1) {
                     /* content changed */
-                    this.chState = DRAW_CURVE;
+                    chState = DRAW_CURVE;
                 } else if (chQuadrantChange == 1) {
-                    this.chState = DRAW_LAST_QUADRANT;
+                    chState = DRAW_LAST_QUADRANT;
                 } else {
                     this.chLastQuadrant = chCurrentQuadrant;
-                    this.chState = DRAW_WHOLE_WHEEL;
+                    chState = DRAW_WHOLE_WHEEL;
                 }
             }
         }
 
-        if (DRAW_WHOLE_WHEEL == this.chState) {
-            this.tDirtyRegion.tRegion = __wheel_canvas;
-
-            this.tDirtyRegion.tRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(&__wheel, __wheel_canvas.tLocation);
-            this.tDirtyRegion.bIgnore = false;
-
-            this.tDirtyRegion.bUpdated = true;      /* request update */
-            this.chState = FINISH;
+        if (DRAW_WHOLE_WHEEL == chState) {
+            arm_2d_user_dynamic_dirty_region_update(&this.tDirtyRegion,
+                                                    &__wheel,
+                                                    &__wheel_canvas,
+                                                    WAIT_CHANGE);
         }
     
         arm_2d_region_t tRotationRegion = __wheel_canvas;
@@ -257,18 +264,6 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
             .iX = ptileArcMask->tRegion.tSize.iWidth - 1,
             .iY = ptileArcMask->tRegion.tSize.iHeight - 1,
         };
-
-        if (bIsNewFrame) {
-            this.fAngle = ARM_2D_ANGLE((float)iProgress * 36.0f / 100.0f);
-
-            if (this.tCFG.bUseDirtyRegions) {
-                /* update helper with new values*/
-                arm_2d_helper_transform_update_value(&this.tTransHelper, this.fAngle, 1.0f);
-
-                /* call helper's on-frame-begin event handler */
-                arm_2d_helper_transform_on_frame_begin(&this.tTransHelper);
-            }
-        }
 
         tRotationRegion.tSize.iWidth = ((__wheel_canvas.tSize.iWidth + 1) >> 1);
         tRotationRegion.tSize.iHeight = ((__wheel_canvas.tSize.iHeight + 1) >> 1);
@@ -301,30 +296,26 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
             } while(0);
 
             /* update dirty region */
-            if (DRAW_LAST_QUADRANT == this.chState && this.chLastQuadrant == 0) {
-                /* wait idle */
-                if (false == this.tDirtyRegion.bUpdated) {
-                    //this.tDirtyRegion.tRegion = tQuater;
+            if (DRAW_LAST_QUADRANT == chState && this.chLastQuadrant == 0) {
 
-                    if (bNoScale) {
-                        this.tDirtyRegion.tRegion = tQuater;
-                    } else {
-                        this.tDirtyRegion.tRegion = *(this.tOP[3].Target.ptRegion);
-                        this.tDirtyRegion.tRegion.tLocation.iX += tQuater.tLocation.iX;
-                        this.tDirtyRegion.tRegion.tLocation.iY += tQuater.tLocation.iY;
-                    }
-                    
-                    arm_2d_region_intersect(&this.tDirtyRegion.tRegion, 
+                arm_2d_region_t tReDrawRegion = tQuater;
+                if (!bNoScale) {
+                    tReDrawRegion = *(this.tOP[3].Target.ptRegion);
+                    tReDrawRegion.tLocation.iX += tQuater.tLocation.iX;
+                    tReDrawRegion.tLocation.iY += tQuater.tLocation.iY;
+
+                    arm_2d_region_intersect(&tReDrawRegion, 
                                             &tQuater,
-                                            &this.tDirtyRegion.tRegion);
-                                            
-                    this.tDirtyRegion.tRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(&__wheel, this.tDirtyRegion.tRegion.tLocation);
-                    this.tDirtyRegion.bIgnore = false;
-                    this.tDirtyRegion.bUpdated = true;      /* request update */
-
-                    this.chLastQuadrant = chCurrentQuadrant;
-                    this.chState = DRAW_CURVE;
+                                            &tReDrawRegion);
                 }
+                
+                this.chLastQuadrant = chCurrentQuadrant;
+
+                arm_2d_user_dynamic_dirty_region_update(&this.tDirtyRegion,
+                                                        &__wheel,
+                                                        &tReDrawRegion,
+                                                        DRAW_CURVE);
+
             }
         }
 
@@ -356,30 +347,25 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[1]);
             }
             /* update dirty region */
-            if (DRAW_LAST_QUADRANT == this.chState && this.chLastQuadrant == 1) {
-                /* wait idle */
-                if (false == this.tDirtyRegion.bUpdated) {
+            if (DRAW_LAST_QUADRANT == chState && this.chLastQuadrant == 1) {
 
-                    if (bNoScale) {
-                        this.tDirtyRegion.tRegion = tQuater;
-                    } else {
-                        this.tDirtyRegion.tRegion = *(this.tOP[1].Target.ptRegion);
-                        this.tDirtyRegion.tRegion.tLocation.iX += tQuater.tLocation.iX;
-                        this.tDirtyRegion.tRegion.tLocation.iY += tQuater.tLocation.iY;
-                    }
+                arm_2d_region_t tReDrawRegion = tQuater;
+                if (!bNoScale) {
+                    tReDrawRegion = *(this.tOP[1].Target.ptRegion);
+                    tReDrawRegion.tLocation.iX += tQuater.tLocation.iX;
+                    tReDrawRegion.tLocation.iY += tQuater.tLocation.iY;
 
-                    arm_2d_region_intersect(&this.tDirtyRegion.tRegion, 
+                    arm_2d_region_intersect(&tReDrawRegion, 
                                             &tQuater,
-                                            &this.tDirtyRegion.tRegion);
-                                            
-                    this.tDirtyRegion.tRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(&__wheel, this.tDirtyRegion.tRegion.tLocation);
-
-                    this.tDirtyRegion.bIgnore = false;
-                    this.tDirtyRegion.bUpdated = true;      /* request update */
-
-                    this.chLastQuadrant = chCurrentQuadrant;
-                    this.chState = DRAW_CURVE;
+                                            &tReDrawRegion);
                 }
+                
+                this.chLastQuadrant = chCurrentQuadrant;
+
+                arm_2d_user_dynamic_dirty_region_update(&this.tDirtyRegion,
+                                                        &__wheel,
+                                                        &tReDrawRegion,
+                                                        DRAW_CURVE);
             }
 
         }
@@ -412,29 +398,26 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
             }
 
             /* update dirty region */
-            if (DRAW_LAST_QUADRANT == this.chState && this.chLastQuadrant == 2) {
-                /* wait idle */
-                if (false == this.tDirtyRegion.bUpdated) {
+            if (DRAW_LAST_QUADRANT == chState && this.chLastQuadrant == 2) {
+            
+                arm_2d_region_t tReDrawRegion = tQuater;
+                if (!bNoScale) {
+                    tReDrawRegion = *(this.tOP[2].Target.ptRegion);
+                    tReDrawRegion.tLocation.iX += tQuater.tLocation.iX;
+                    tReDrawRegion.tLocation.iY += tQuater.tLocation.iY;
 
-                    if (bNoScale) {
-                        this.tDirtyRegion.tRegion = tQuater;
-                    } else {
-                        this.tDirtyRegion.tRegion = *(this.tOP[2].Target.ptRegion);
-                        this.tDirtyRegion.tRegion.tLocation.iX += tQuater.tLocation.iX;
-                        this.tDirtyRegion.tRegion.tLocation.iY += tQuater.tLocation.iY;
-                    }
-
-                    arm_2d_region_intersect(&this.tDirtyRegion.tRegion, 
+                    arm_2d_region_intersect(&tReDrawRegion, 
                                             &tQuater,
-                                            &this.tDirtyRegion.tRegion);
-
-                    this.tDirtyRegion.tRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(&__wheel, this.tDirtyRegion.tRegion.tLocation);
-                    this.tDirtyRegion.bIgnore = false;
-                    this.tDirtyRegion.bUpdated = true;      /* request update */
-
-                    this.chLastQuadrant = chCurrentQuadrant;
-                    this.chState = DRAW_CURVE;
+                                            &tReDrawRegion);
                 }
+                
+                this.chLastQuadrant = chCurrentQuadrant;
+
+                arm_2d_user_dynamic_dirty_region_update(&this.tDirtyRegion,
+                                                        &__wheel,
+                                                        &tReDrawRegion,
+                                                        DRAW_CURVE);
+
             }
 
         } 
@@ -465,25 +448,24 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
             arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[0]);
 
             /* update dirty region */
-            if (DRAW_CURVE == this.chState) {
-                /* wait idle */
-                if (false == this.tDirtyRegion.bUpdated) {
-                    //this.tDirtyRegion.tRegion = tQuater;
+            if (DRAW_CURVE == chState) {
 
-                    this.tDirtyRegion.tRegion = *(this.tOP[0].Target.ptRegion);
-                    this.tDirtyRegion.tRegion.tLocation.iX += tQuater.tLocation.iX;
-                    this.tDirtyRegion.tRegion.tLocation.iY += tQuater.tLocation.iY;
+                arm_2d_region_t tReDrawRegion = *(this.tOP[0].Target.ptRegion);
+                tReDrawRegion.tLocation.iX += tQuater.tLocation.iX;
+                tReDrawRegion.tLocation.iY += tQuater.tLocation.iY;
 
-                    arm_2d_region_intersect(&this.tDirtyRegion.tRegion, 
-                                            &tQuater,
-                                            &this.tDirtyRegion.tRegion);
+                arm_2d_region_intersect(&tReDrawRegion, 
+                                        &tQuater,
+                                        &tReDrawRegion);
 
-                    this.tDirtyRegion.tRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(&__wheel, this.tDirtyRegion.tRegion.tLocation);
-                    this.tDirtyRegion.bIgnore = false;
+                
+                //this.chLastQuadrant = chCurrentQuadrant;
 
-                    this.tDirtyRegion.bUpdated = true;      /* request update */
-                    this.chState = DRAW_START_POINT;
-                }
+                arm_2d_user_dynamic_dirty_region_update(&this.tDirtyRegion,
+                                                        &__wheel,
+                                                        &tReDrawRegion,
+                                                        WAIT_CHANGE);
+
             }
         } while(0);
 
@@ -535,29 +517,6 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 
                 arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[4]);
             }
-            if (DRAW_START_POINT == this.chState) {
-                if (false == this.tDirtyRegion.bUpdated) {
-                        
-                    if (bNoScale) {
-                        this.tDirtyRegion.tRegion = tQuater;
-                    } else {
-                        this.tDirtyRegion.tRegion = *(this.tOP[4].Target.ptRegion);
-                        this.tDirtyRegion.tRegion.tLocation.iX += tRotationRegion.tLocation.iX;
-                        this.tDirtyRegion.tRegion.tLocation.iY += tRotationRegion.tLocation.iY;
-                    }
-
-                    arm_2d_region_intersect(&this.tDirtyRegion.tRegion, 
-                                            &tRotationRegion,
-                                            &this.tDirtyRegion.tRegion);
-                                            
-                    this.tDirtyRegion.tRegion.tLocation 
-                        = arm_2d_helper_pfb_get_absolute_location(&__wheel,  this.tDirtyRegion.tRegion.tLocation);
-                    this.tDirtyRegion.bIgnore = false;
-
-                    this.tDirtyRegion.bUpdated = true;      /* request update */
-                    this.chState = FINISH;
-                }
-            }
 
             /* draw the end point */
             arm_2dp_fill_colour_with_mask_opacity_and_transform(
@@ -600,13 +559,6 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[6]);
             }
 
-        }
-    }
-
-    if (FINISH == this.chState) {
-        if (false == this.tDirtyRegion.bUpdated) {
-            this.tDirtyRegion.bIgnore = true;
-            this.chState = WAIT_CHANGE;
         }
     }
 }

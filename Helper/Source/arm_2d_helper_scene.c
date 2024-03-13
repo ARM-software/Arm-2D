@@ -1455,7 +1455,8 @@ void arm_2d_user_dynamic_dirty_region_depose(
 
 ARM_NONNULL(1)
 void arm_2d_user_dynamic_dirty_region_on_frame_start(
-                                            arm_2d_region_list_item_t *ptThis)
+                                            arm_2d_region_list_item_t *ptThis,
+                                            uint8_t chUserRegionIndex)
 {
     enum {
         START = 0,
@@ -1473,8 +1474,10 @@ void arm_2d_user_dynamic_dirty_region_on_frame_start(
     /* set the flag for handshaking with the PFB helper service */
     this.bUpdated = true;
 
-    /* reset the user region index */
-    this.chUserRegionIndex = 0;
+    if (0xFF != chUserRegionIndex) {
+        /* reset the user region index */
+        this.chUserRegionIndex = chUserRegionIndex;
+    }
 
     /* reset the state machine */
     this.u2UpdateState = START;
@@ -1499,8 +1502,11 @@ uint_fast8_t arm_2d_user_dynamic_dirty_region_wait_next(
 
         switch(this.u2UpdateState) {
             case START:
-                this.u2UpdateState = WAIT_HANDSHAKE;
-                //break;    //fall-through
+                /* return the next index for user */
+                chUserRegionIndex = this.chUserRegionIndex;
+                this.u2UpdateState = DONE;
+                this.bIgnore = true;
+                break;
             case WAIT_HANDSHAKE:
                 if (!this.bUpdated) {
                     /* return the next index for user */
@@ -1538,13 +1544,13 @@ void arm_2d_user_dynamic_dirty_region_update(arm_2d_region_list_item_t *ptThis,
     this.bIgnore = false;
     this.bUpdated = true;
 
-    /* use 0xFF as a reset request */
+    /* use 0xFF as a DONE signal */
     if (0xFF == chNextUserIndex) {
         /* reset the user region index */
         this.chUserRegionIndex = 0;
 
         /* reset the state machine */
-        this.u2UpdateState = START;
+        this.u2UpdateState = DONE;
 
         return ;
     } 
