@@ -226,7 +226,7 @@ var group__gHelper =
     [ "arm_2d_scene_player_get_the_current_scene", "group__gHelper.html#ga416e8e1d86ebf4413ae19db8c3f605cb", null ],
     [ "arm_2d_user_dynamic_dirty_region_init", "group__gHelper.html#ga9a514fd8ee617a9af077da1543ee690b", null ],
     [ "arm_2d_user_dynamic_dirty_region_depose", "group__gHelper.html#gaee182844d457a7931388e16d256ef317", null ],
-    [ "arm_2d_user_dynamic_dirty_region_on_frame_start", "group__gHelper.html#ga94035e00bceac073bb7ca3520e568e15", null ],
+    [ "arm_2d_user_dynamic_dirty_region_on_frame_start", "group__gHelper.html#ga869feeab1c664ae0674f717ad98ed60d", null ],
     [ "arm_2d_user_dynamic_dirty_region_wait_next", "group__gHelper.html#ga2bba13147e28c9cc3fc59fe6c4a44367", null ],
     [ "arm_2d_user_dynamic_dirty_region_update", "group__gHelper.html#gaab177fbb4903297d91299ab7daf403b6", null ],
     [ "arm_2d_helper_pfb_init", "group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99", null ],

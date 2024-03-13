@@ -528,9 +528,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaee182844d457a7931388e16d256ef317"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaee182844d457a7931388e16d256ef317">arm_2d_user_dynamic_dirty_region_depose</a> (<a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptThis, <a class="el" href="group__gHelper.html#structarm__2d__scene__t">arm_2d_scene_t</a> *ptScene)</td></tr>
 <tr class="memdesc:gaee182844d457a7931388e16d256ef317"><td class="mdescLeft">&#160;</td><td class="mdescRight">depose a given user dynamic dirty region  <a href="group__gHelper.html#gaee182844d457a7931388e16d256ef317">More...</a><br /></td></tr>
 <tr class="separator:gaee182844d457a7931388e16d256ef317"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga94035e00bceac073bb7ca3520e568e15"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga94035e00bceac073bb7ca3520e568e15">arm_2d_user_dynamic_dirty_region_on_frame_start</a> (<a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptThis)</td></tr>
-<tr class="memdesc:ga94035e00bceac073bb7ca3520e568e15"><td class="mdescLeft">&#160;</td><td class="mdescRight">the on-frame-start event handler for a given user dynamic dirty region  <a href="group__gHelper.html#ga94035e00bceac073bb7ca3520e568e15">More...</a><br /></td></tr>
-<tr class="separator:ga94035e00bceac073bb7ca3520e568e15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga869feeab1c664ae0674f717ad98ed60d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga869feeab1c664ae0674f717ad98ed60d">arm_2d_user_dynamic_dirty_region_on_frame_start</a> (<a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptThis, uint8_t chUserRegionIndex)</td></tr>
+<tr class="memdesc:ga869feeab1c664ae0674f717ad98ed60d"><td class="mdescLeft">&#160;</td><td class="mdescRight">the on-frame-start event handler for a given user dynamic dirty region  <a href="group__gHelper.html#ga869feeab1c664ae0674f717ad98ed60d">More...</a><br /></td></tr>
+<tr class="separator:ga869feeab1c664ae0674f717ad98ed60d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2bba13147e28c9cc3fc59fe6c4a44367"><td class="memItemLeft" align="right" valign="top">uint_fast8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga2bba13147e28c9cc3fc59fe6c4a44367">arm_2d_user_dynamic_dirty_region_wait_next</a> (<a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptThis)</td></tr>
 <tr class="memdesc:ga2bba13147e28c9cc3fc59fe6c4a44367"><td class="mdescLeft">&#160;</td><td class="mdescRight">wait for the PFB helper service requesting the next region  <a href="group__gHelper.html#ga2bba13147e28c9cc3fc59fe6c4a44367">More...</a><br /></td></tr>
 <tr class="separator:ga2bba13147e28c9cc3fc59fe6c4a44367"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -5355,8 +5355,8 @@ false the new content is stored in ptOrigin </dd></dl>
 
 </div>
 </div>
-<a id="ga94035e00bceac073bb7ca3520e568e15" name="ga94035e00bceac073bb7ca3520e568e15"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga94035e00bceac073bb7ca3520e568e15">&#9670;&nbsp;</a></span>arm_2d_user_dynamic_dirty_region_on_frame_start()</h2>
+<a id="ga869feeab1c664ae0674f717ad98ed60d" name="ga869feeab1c664ae0674f717ad98ed60d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga869feeab1c664ae0674f717ad98ed60d">&#9670;&nbsp;</a></span>arm_2d_user_dynamic_dirty_region_on_frame_start()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -5365,8 +5365,18 @@ false the new content is stored in ptOrigin </dd></dl>
           <td class="memname">void arm_2d_user_dynamic_dirty_region_on_frame_start </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *&#160;</td>
-          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td class="paramname"><em>ptThis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>chUserRegionIndex</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -5375,6 +5385,7 @@ false the new content is stored in ptOrigin </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target region list item. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">chUserRegionIndex</td><td>a specified user region index. When 0xFF is given, the existing user region index will not be changed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -5462,7 +5473,7 @@ false the new content is stored in ptOrigin </dd></dl>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">chNextUserIndex</td><td>the next user region index </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">chNextUserIndex</td><td>the next user region index, 0xFF means complete. </td></tr>
   </table>
   </dd>
 </dl>
