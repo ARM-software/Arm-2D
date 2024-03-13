@@ -240,7 +240,10 @@ ARM_PROTECTED(
             union {
                 struct {
                     uint16_t hwIndex;                                           /*!< array iterator index */
-                } Array;                                                        /*!< arrat iterator */
+                } Array;                                                        /*!< array iterator */
+                /* put other iterator structure here 
+                 * ...
+                 */
             } Iterator;                                                         /*!< iterator control block */
         )
 
@@ -253,6 +256,9 @@ ARM_PROTECTED(
             int32_t                         nTargetOffset;                      /*!< the target list offset */
             uint16_t                        hwSelection;                        /*!< item selection */
             uint8_t                         chState;                            /*!< state used by list core task */
+            uint8_t                         bIsMoving   : 1;                    /*!< a flag to indicate whether the list is moving */
+            uint8_t                         bNeedRedraw : 1;                    /*!< a flag to indicate whether a redraw is requested, this is a sticky flag */
+            uint8_t                                     : 6;                    /*!< reserved */
             struct {
                 int16_t iSteps;                                                 /*!< steps to move */
                 int32_t nFinishInMs;                                            /*!< finish in ms */
@@ -383,6 +389,31 @@ extern
 ARM_NONNULL(1)
 void __arm_2d_list_core_move_offset(__arm_2d_list_core_t *ptThis, 
                                     int16_t iOffset);
+
+/*!
+ * \brief check whether the list need a redraw
+ * 
+ * \param[in] ptThis the target list core object
+ * \param[in] bAutoreset a flag to indicate whether we have to clear the redraw flag 
+ *                   automatically when calling this function.
+ * \return true the list need a redraw
+ * \return false the list has no change.
+ */
+extern
+ARM_NONNULL(1)
+bool __arm_2d_list_core_need_redraw(__arm_2d_list_core_t *ptThis, bool bAutoreset);
+
+/*!
+ * \brief check whether the list is moving its items
+ * 
+ * \param[in] ptThis the target list core object
+ * \return true the list is moving
+ * \return false the list has no change.
+ */
+extern
+ARM_NONNULL(1)
+bool __arm_2d_list_core_is_list_moving(__arm_2d_list_core_t *ptThis);
+
 /*! @} */
 
 #if defined(__clang__)

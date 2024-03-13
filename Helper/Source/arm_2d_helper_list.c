@@ -170,6 +170,8 @@ ARM_PT_BEGIN(this.Runtime.chState)
         }
         
         if (bIsNewFrame) {
+            int32_t nOldOffset = this.Runtime.nOffset;
+
             if (__arm_2d_helper_time_liner_slider(this.Runtime.nStartOffset,    /* from */
                                                   this.Runtime.nTargetOffset,   /* to */
                                                   this.Runtime.lPeriod,         /* finish in specified period */
@@ -180,7 +182,9 @@ ARM_PT_BEGIN(this.Runtime.chState)
                 }
                 this.Runtime.nTargetOffset = this.Runtime.nOffset;
                 this.Runtime.nStartOffset = this.Runtime.nTargetOffset;
-                
+
+                this.Runtime.bIsMoving = false;     /* update flag to indicate moving complete */
+
                 if (this.Runtime.MoveReq.iSteps && this.Runtime.bIsRegCalInit) {
                     __arm_2d_list_core_move_selection(
                         ptThis, 
@@ -190,6 +194,10 @@ ARM_PT_BEGIN(this.Runtime.chState)
                     this.Runtime.MoveReq.iSteps = 0;
                     this.Runtime.MoveReq.nFinishInMs = 0;
                 }
+            }
+
+            if (nOldOffset != this.Runtime.nOffset) {
+                this.Runtime.bNeedRedraw = true;    /* update the sticky bit, it is cleared by user */
             }
         }
     } while(0);
@@ -607,7 +615,7 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
         } while(0);
 
 
-        /* calculate compenstation for iStartOffset */
+        /* calculate compensation for iStartOffset */
         do {
             int16_t iStartOffset;
             if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_VERTICAL) {
@@ -642,11 +650,37 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
         this.Runtime.nTargetOffset += nOffsetChange;
         this.Runtime.lPeriod = lPeriod;
         this.Runtime.lTimestamp = 0;
+        this.Runtime.bIsMoving = true;  /* update flag to indicate the list is moving */
     }
     
     return ARM_2D_ERR_NONE;
 }
 
+ARM_NONNULL(1)
+bool __arm_2d_list_core_need_redraw(__arm_2d_list_core_t *ptThis, bool bAutoreset)
+{
+    bool bNeedRedraw = false;
+
+    assert(NULL != ptThis);
+
+    arm_irq_safe {
+        bNeedRedraw = this.Runtime.bNeedRedraw;
+        if (bAutoreset) {
+            /* auto reset */
+            this.Runtime.bNeedRedraw = false;
+        }
+    }
+
+    return bNeedRedraw;
+}
+
+ARM_NONNULL(1)
+bool __arm_2d_list_core_is_list_moving(__arm_2d_list_core_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    return this.Runtime.bIsMoving;
+}
 
 /*----------------------------------------------------------------------------*
  * Region Calculator                                                          *
