@@ -72,6 +72,9 @@ typedef struct number_list_cfg_t {
     arm_2d_helper_draw_handler_t    *fnOnDrawListBackground;                    /*!< the On-Draw-List-Core-Background event handler */
     arm_2d_helper_draw_handler_t    *fnOnDrawListCover;                         /*!< the On-Draw-List-Core-Cover event handler */
     arm_2d_font_t                   *ptFont;                                    /*!< user specified font */
+
+    bool bUseDirtyRegion;
+    arm_2d_scene_t *ptTargetScene;
 } number_list_cfg_t;
 
 
@@ -84,6 +87,8 @@ ARM_PRIVATE(
     
     int32_t nSelection;
     int32_t nIterationIndex;
+
+    arm_2d_region_list_item_t tDirtyRegion;
 )
 
 } number_list_t;
@@ -113,7 +118,9 @@ ARM_NONNULL(1,2)
 void number_list_init(  number_list_t *ptThis, 
                         number_list_cfg_t *ptCFG);
 
-
+extern
+ARM_NONNULL(1)
+void number_list_depose(number_list_t *ptThis);
 
 extern
 ARM_NONNULL(1,2)
@@ -127,6 +134,12 @@ ARM_NONNULL(1)
 void numer_list_move_selection( number_list_t *ptThis,
                                         int16_t iSteps,
                                         int32_t nFinishInMs);
+
+extern 
+ARM_NONNULL(1)
+void number_list_on_frame_start(number_list_t *ptThis);
+
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif

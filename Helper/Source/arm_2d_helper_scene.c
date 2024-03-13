@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        12. March 2024
- * $Revision:    V.1.5.0
+ * $Date:        13. March 2024
+ * $Revision:    V.1.5.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1522,6 +1522,23 @@ uint_fast8_t arm_2d_user_dynamic_dirty_region_wait_next(
     } while(0);
 
     return chUserRegionIndex;
+}
+
+ARM_NONNULL(1)
+void arm_2d_user_dynamic_dirty_region_change_user_region_index_only(
+                                            arm_2d_region_list_item_t *ptThis,
+                                            uint8_t chNextUserIndex)
+{
+    if (NULL == ptThis) {
+        assert(false);
+        return ;
+    }
+
+    if (0xFF == chNextUserIndex) {
+        this.chUserRegionIndex = 0;
+    } else {
+        this.chUserRegionIndex = chNextUserIndex;
+    }
 }
 
 ARM_NONNULL(1)

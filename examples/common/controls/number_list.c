@@ -71,6 +71,11 @@
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
+enum {
+    NUMBER_LIST_DIRTY_REGION_START = 0,
+    NUMBER_LIST_DIRTY_REGION_REDRAW_DONE,
+};
+
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -325,6 +330,38 @@ void number_list_init(  number_list_t *ptThis,
     
     /* request updating StartOffset */
     //this.use_as____arm_2d_list_core_t.CalMidAligned.bListHeightChanged = true;
+
+    if (    (this.tNumListCFG.bUseDirtyRegion) 
+        &&  (NULL != this.tNumListCFG.ptTargetScene)) {
+        arm_2d_user_dynamic_dirty_region_init(  &this.tDirtyRegion, 
+                                                this.tNumListCFG.ptTargetScene);
+    } else {
+        this.tNumListCFG.bUseDirtyRegion = false;
+    }
+}
+
+ARM_NONNULL(1)
+void number_list_depose(number_list_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    if (    (this.tNumListCFG.bUseDirtyRegion) 
+        &&  (NULL != this.tNumListCFG.ptTargetScene)) {
+        arm_2d_user_dynamic_dirty_region_depose(&this.tDirtyRegion, 
+                                                this.tNumListCFG.ptTargetScene);
+    }
+}
+
+ARM_NONNULL(1)
+void number_list_on_frame_start(number_list_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    if (this.tNumListCFG.bUseDirtyRegion) {
+        arm_2d_user_dynamic_dirty_region_on_frame_start(
+                                                &this.tDirtyRegion, 
+                                                NUMBER_LIST_DIRTY_REGION_START);
+    }
 }
 
 ARM_NONNULL(1,2)
@@ -333,11 +370,43 @@ arm_fsm_rt_t number_list_show(  number_list_t *ptThis,
                                 const arm_2d_region_t *ptRegion, 
                                 bool bIsNewFrame)
 {
+    __arm_2d_list_core_t *ptList = &this.use_as____arm_2d_list_core_t;
+    arm_fsm_rt_t tState = __arm_2d_list_core_show(  ptList,
+                                                    ptTile,
+                                                    ptRegion,
+                                                    bIsNewFrame);
 
-    return __arm_2d_list_core_show( &this.use_as____arm_2d_list_core_t,
-                                    ptTile,
-                                    ptRegion,
-                                    bIsNewFrame);
+    /* process the dynamic dirty region */
+    if (this.tNumListCFG.bUseDirtyRegion) {
+        switch (arm_2d_user_dynamic_dirty_region_wait_next(&this.tDirtyRegion)) {
+            case NUMBER_LIST_DIRTY_REGION_START:
+                if (__arm_2d_list_core_need_redraw(ptList, true)) {
+
+                    arm_2d_tile_t *ptTargetTile = &(ptList->Runtime.tileList);
+                    /* get the canvas for the list inner tile */
+                    arm_2d_canvas(ptTargetTile, __list_canvas) {
+                        
+                        arm_2d_user_dynamic_dirty_region_update(
+                                        &this.tDirtyRegion,                     /* the dirty region */
+                                        ptTargetTile,                           /* the target tile */
+                                        &__list_canvas,                         /* the redraw region */
+                                        NUMBER_LIST_DIRTY_REGION_REDRAW_DONE);  /* next state */
+                    }
+                } else {
+                    /* nothing to redraw, update state to DONE */
+                    arm_2d_user_dynamic_dirty_region_change_user_region_index_only(
+                                        &this.tDirtyRegion,
+                                        NUMBER_LIST_DIRTY_REGION_REDRAW_DONE);
+                }
+                break;
+            case NUMBER_LIST_DIRTY_REGION_REDRAW_DONE:
+                break;
+            default:    /* 0xFF */
+                break;
+        }
+    }
+
+    return tState;
 }
 
 

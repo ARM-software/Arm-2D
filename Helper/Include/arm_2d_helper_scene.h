@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        12. March 2024
- * $Revision:    V.1.5.0
+ * $Date:        13. March 2024
+ * $Revision:    V.1.5.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -577,7 +577,6 @@ void arm_2d_user_dynamic_dirty_region_depose(
                                             arm_2d_region_list_item_t *ptThis,
                                             arm_2d_scene_t *ptScene);
 
-
 /*!
  * \brief the on-frame-start event handler for a given user dynamic dirty region
  * 
@@ -624,6 +623,19 @@ void arm_2d_user_dynamic_dirty_region_update(arm_2d_region_list_item_t *ptThis,
                                              arm_2d_tile_t *ptTarget,
                                              arm_2d_region_t *ptRegion,
                                              uint8_t chNextUserIndex);
+
+/*!
+ * \brief only change the user region index without update the dynamic dirty region
+ * 
+ * \param[in] ptThis the target region list item.
+ * \param[in] chNextUserIndex the next user region index. When encounter 0xFF, the 
+ *                            user region index will be reset to zero.
+ */
+extern 
+ARM_NONNULL(1)
+void arm_2d_user_dynamic_dirty_region_change_user_region_index_only(
+                                            arm_2d_region_list_item_t *ptThis,
+                                            uint8_t chNextUserIndex);
 /*! @} */
 
 #if defined(__clang__)
