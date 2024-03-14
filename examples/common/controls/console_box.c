@@ -132,7 +132,7 @@ bool console_box_init(  console_box_t *ptThis,
     if (ptCFG->bUseDirtyRegion) {
         if (NULL != ptCFG->ppDirtyRegionList) {
             this.bCFGUseDirtyRegion = true;
-            this.tDirtyRegion.bIgnore = true;
+            arm_2d_dirty_region_item_ignore_set(&this.tDirtyRegion, true);
             this.ppDirtyRegionList = ptCFG->ppDirtyRegionList;
 
             arm_2d_helper_pfb_append_dirty_regions_to_list(
@@ -141,7 +141,7 @@ bool console_box_init(  console_box_t *ptThis,
                     1);
         } else if (NULL != ptTargetScene) {
             this.bCFGUseDirtyRegion = true;
-            this.tDirtyRegion.bIgnore = true;
+            arm_2d_dirty_region_item_ignore_set(&this.tDirtyRegion, true);
             /* add dirty region to the target scene */
             arm_2d_scene_player_append_dirty_regions(   ptTargetScene, 
                                                         &this.tDirtyRegion, 

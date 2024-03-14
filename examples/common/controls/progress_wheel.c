@@ -122,7 +122,7 @@ void progress_wheel_init( progress_wheel_t *ptThis,
     }
 
     if (this.tCFG.bUseDirtyRegions) {
-        this.tDirtyRegion.bIgnore = true;
+        arm_2d_dirty_region_item_ignore_set(&this.tDirtyRegion, true);
 
         /* initialize transform helper */
         arm_2d_helper_transform_init(&this.tTransHelper,
