@@ -141,9 +141,9 @@ void scene5_loader(void)
     arm_2d_scene5_init(&DISP0_ADAPTER);
 }
 
-void scene_console_loader(void)
+void scene_console_window_loader(void)
 {
-    arm_2d_scene_console_init(&DISP0_ADAPTER);
+    arm_2d_scene_console_window_init(&DISP0_ADAPTER);
 }
 
 typedef void scene_loader_t(void);
@@ -152,6 +152,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
 #if 1
     scene0_loader,
     scene1_loader,
+    scene_console_window_loader,
 
     scene_meter_loader,
 #endif
