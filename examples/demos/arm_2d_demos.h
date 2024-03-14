@@ -23,7 +23,7 @@
 
 #include "./arm_2d_scene_audiomark.h"
 #include "./arm_2d_scene_console.h"
-
+#include "./arm_2d_scene_console_window.h"
 
 #ifdef   __cplusplus
 extern "C" {
