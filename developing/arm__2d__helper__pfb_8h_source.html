@@ -597,17 +597,17 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l00488" name="l00488"></a><span class="lineno"><a class="line" href="group__gHelper.html">  488</a></span>)</div>
 <div class="line"><a id="l00489" name="l00489"></a><span class="lineno"><a class="line" href="group__gHelper.html#aa17e31540f22ea3e9af8a23332b655e1">  489</a></span>    <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a>                     <a class="code hl_variable" href="group__gHelper.html#aa17e31540f22ea3e9af8a23332b655e1" title="the region">tRegion</a>;                                <span class="comment">//!&lt; the region</span></div>
 <div class="line"><a id="l00490" name="l00490"></a><span class="lineno">  490</span> </div>
-<div class="line"><a id="l00491" name="l00491"></a><span class="lineno"><a class="line" href="group__gHelper.html#a42c23386f040c6e543f432af4e4e58ff">  491</a></span>    uint8_t     <a class="code hl_variable" href="group__gHelper.html#a42c23386f040c6e543f432af4e4e58ff" title="User Region Index, used to indicate updating which dynamic dirty regions">chUserRegionIndex</a>;                                              <span class="comment">//!&lt; User Region Index, used to indicate updating which dynamic dirty regions  </span></div>
-<div class="line"><a id="l00492" name="l00492"></a><span class="lineno"><a class="line" href="group__gHelper.html#a6d72c554fc42cbd55401d9dc28795804">  492</a></span>    uint8_t     <a class="code hl_variable" href="group__gHelper.html#a6d72c554fc42cbd55401d9dc28795804" title="ignore this region">bIgnore</a>             : 1;                                        <span class="comment">//!&lt; ignore this region</span></div>
-<div class="line"><a id="l00493" name="l00493"></a><span class="lineno"><a class="line" href="group__gHelper.html#abbbfe7f97c2d99378d488c96abb20165">  493</a></span>    uint8_t     <a class="code hl_variable" href="group__gHelper.html#abbbfe7f97c2d99378d488c96abb20165" title="this region item has been updated, PFB helper should refresh it again.">bUpdated</a>            : 1;                                        <span class="comment">//!&lt; this region item has been updated, PFB helper should refresh it again.</span></div>
-<div class="line"><a id="l00494" name="l00494"></a><span class="lineno">  494</span>    uint8_t                         : 6;                                        <span class="comment">//!&lt; reserved for the future</span></div>
-<div class="line"><a id="l00495" name="l00495"></a><span class="lineno">  495</span> </div>
-<div class="line"><a id="l00496" name="l00496"></a><span class="lineno">  496</span>ARM_PRIVATE(</div>
+<div class="line"><a id="l00491" name="l00491"></a><span class="lineno">  491</span>ARM_PROTECTED(</div>
+<div class="line"><a id="l00492" name="l00492"></a><span class="lineno">  492</span>    uint8_t     chUserRegionIndex;                                              <span class="comment">//!&lt; User Region Index, used to indicate updating which dynamic dirty regions  </span></div>
+<div class="line"><a id="l00493" name="l00493"></a><span class="lineno">  493</span>    uint8_t     bIgnore             : 1;                                        <span class="comment">//!&lt; ignore this region</span></div>
+<div class="line"><a id="l00494" name="l00494"></a><span class="lineno">  494</span>    uint8_t     bUpdated            : 1;                                        <span class="comment">//!&lt; this region item has been updated, PFB helper should refresh it again.</span></div>
+<div class="line"><a id="l00495" name="l00495"></a><span class="lineno">  495</span>    uint8_t                         : 6;                                        <span class="comment">//!&lt; reserved for the future</span></div>
+<div class="line"><a id="l00496" name="l00496"></a><span class="lineno">  496</span> </div>
 <div class="line"><a id="l00497" name="l00497"></a><span class="lineno">  497</span>    uint16_t    bFromInternalPool   : 1;                                        <span class="comment">//!&lt; a flag indicating whether this list item coming from the internal pool</span></div>
 <div class="line"><a id="l00498" name="l00498"></a><span class="lineno">  498</span>    uint16_t    bFromHeap           : 1;                                        <span class="comment">//!&lt; whether this item comes from the HEAP</span></div>
 <div class="line"><a id="l00499" name="l00499"></a><span class="lineno">  499</span>    uint16_t    u2UpdateState       : 2;                                        <span class="comment">//!&lt; reserved for internal FSM</span></div>
 <div class="line"><a id="l00500" name="l00500"></a><span class="lineno">  500</span>    uint16_t    u12KEY              : 12;                                       <span class="comment">//!&lt; KEY</span></div>
-<div class="line"><a id="l00501" name="l00501"></a><span class="lineno"><a class="line" href="group__gHelper.html">  501</a></span>)</div>
+<div class="line"><a id="l00501" name="l00501"></a><span class="lineno">  501</span>)</div>
 <div class="line"><a id="l00502" name="l00502"></a><span class="lineno">  502</span> </div>
 <div class="line"><a id="l00503" name="l00503"></a><span class="lineno">  503</span>}<a class="code hl_struct" href="group__gHelper.html#structarm__2d__region__list__item__t" title="the node of a region list">arm_2d_region_list_item_t</a>;</div>
 <div class="line"><a id="l00504" name="l00504"></a><span class="lineno">  504</span><span class="comment"></span> </div>
@@ -684,7 +684,7 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l00575" name="l00575"></a><span class="lineno"><a class="line" href="group__gHelper.html">  575</a></span><span class="comment"></span>    <span class="keyword">struct </span>{</div>
 <div class="line"><a id="l00576" name="l00576"></a><span class="lineno">  576</span>        arm_2d_helper_draw_evt_t    <a class="code hl_variable" href="group__gHelper.html#a75436e9711701c092b4bafcc1c868d25" title="event handler for drawing GUI">evtOnDrawing</a>;</div>
 <div class="line"><a id="l00577" name="l00577"></a><span class="lineno">  577</span>        <a class="code hl_struct" href="group__gHelper.html#structarm__2d__region__list__item__t" title="the node of a region list">arm_2d_region_list_item_t</a>  *ptDirtyRegion;</div>
-<div class="line"><a id="l00578" name="l00578"></a><span class="lineno"><a class="line" href="group__gHelper.html#a9c6191792908c9cbcab58cbb79bfe326">  578</a></span>    } <a class="code hl_variable" href="group__gHelper.html#a9c6191792908c9cbcab58cbb79bfe326" title="event handler for drawing GUI">Navigation</a>;</div>
+<div class="line"><a id="l00578" name="l00578"></a><span class="lineno"><a class="line" href="group__gHelper.html#ae13b5f69dae5f471372611003f8936d9">  578</a></span>    } <a class="code hl_variable" href="group__gHelper.html#ae13b5f69dae5f471372611003f8936d9" title="event handler for drawing GUI">Navigation</a>;</div>
 <div class="line"><a id="l00579" name="l00579"></a><span class="lineno">  579</span><span class="comment"></span> </div>
 <div class="line"><a id="l00580" name="l00580"></a><span class="lineno">  580</span><span class="comment">    //! event handler for screen rotation</span></div>
 <div class="line"><a id="l00581" name="l00581"></a><span class="lineno"><a class="line" href="group__gHelper.html#acf349e434e1a7056507ae25497d677fe">  581</a></span><span class="comment"></span>    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__before__flushing__evt__t" title="screen rotation event">arm_2d_helper_before_flushing_evt_t</a> <a class="code hl_variable" href="group__gHelper.html#acf349e434e1a7056507ae25497d677fe" title="event handler for screen rotation">evtBeforeFlushing</a>;</div>
@@ -715,7 +715,7 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l00606" name="l00606"></a><span class="lineno">  606</span>        uint32_t       u3PixelHeightAlign               : 3;    <span class="comment">//!&lt; Pixel alignment in Height for dirty region (2^n)</span></div>
 <div class="line"><a id="l00607" name="l00607"></a><span class="lineno">  607</span>        uint32_t       u4PoolReserve                    : 4;    <span class="comment">//!&lt; reserve specific number of PFB for other helper services</span></div>
 <div class="line"><a id="l00608" name="l00608"></a><span class="lineno">  608</span> </div>
-<div class="line"><a id="l00609" name="l00609"></a><span class="lineno"><a class="line" href="group__gHelper.html#af49460bbe320c08e0df95b22056af719">  609</a></span>    } <a class="code hl_variable" href="group__gHelper.html#af49460bbe320c08e0df95b22056af719" title="frame buffer context">FrameBuffer</a>;                                              <span class="comment">//!&lt; frame buffer context</span></div>
+<div class="line"><a id="l00609" name="l00609"></a><span class="lineno"><a class="line" href="group__gHelper.html#abbd242f326092ad051501d61b75fc1b5">  609</a></span>    } <a class="code hl_variable" href="group__gHelper.html#abbd242f326092ad051501d61b75fc1b5" title="frame buffer context">FrameBuffer</a>;                                              <span class="comment">//!&lt; frame buffer context</span></div>
 <div class="line"><a id="l00610" name="l00610"></a><span class="lineno">  610</span> </div>
 <div class="line"><a id="l00611" name="l00611"></a><span class="lineno"><a class="line" href="group__gHelper.html">  611</a></span>    <span class="keyword">struct </span>{</div>
 <div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>        <a class="code hl_struct" href="group__gHelper.html#structarm__2d__region__list__item__t" title="the node of a region list">arm_2d_region_list_item_t</a> *ptRegions;                   <span class="comment">//!&lt; dirty region list item for internal pool</span></div>
@@ -803,7 +803,7 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l00694" name="l00694"></a><span class="lineno">  694</span>        int64_t lTimestamp;                                     <span class="comment">//!&lt; PLEASE DO NOT USE</span></div>
 <div class="line"><a id="l00695" name="l00695"></a><span class="lineno">  695</span>        int32_t nTotalCycle;                                    <span class="comment">//!&lt; cycles used by drawing </span></div>
 <div class="line"><a id="l00696" name="l00696"></a><span class="lineno">  696</span>        int32_t nRenderingCycle;                                <span class="comment">//!&lt; cycles used in LCD flushing</span></div>
-<div class="line"><a id="l00697" name="l00697"></a><span class="lineno"><a class="line" href="group__gHelper.html#a0064ed6216ef28ee9c666c3a7de9bcee">  697</a></span>    } <a class="code hl_variable" href="group__gHelper.html#a0064ed6216ef28ee9c666c3a7de9bcee" title="performance statistics">Statistics</a>;                                               <span class="comment">//!&lt; performance statistics</span></div>
+<div class="line"><a id="l00697" name="l00697"></a><span class="lineno"><a class="line" href="group__gHelper.html#a7fc8bdf810e98eb8415cfae078e8a68d">  697</a></span>    } <a class="code hl_variable" href="group__gHelper.html#a7fc8bdf810e98eb8415cfae078e8a68d" title="performance statistics">Statistics</a>;                                               <span class="comment">//!&lt; performance statistics</span></div>
 <div class="line"><a id="l00698" name="l00698"></a><span class="lineno">  698</span> </div>
 <div class="line"><a id="l00699" name="l00699"></a><span class="lineno">  699</span>};</div>
 <div class="line"><a id="l00700" name="l00700"></a><span class="lineno">  700</span><span class="comment"></span> </div>
@@ -1289,19 +1289,42 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l01180" name="l01180"></a><span class="lineno"> 1180</span>                                    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__region__list__item__t" title="the node of a region list">arm_2d_region_list_item_t</a> *ptItems,</div>
 <div class="line"><a id="l01181" name="l01181"></a><span class="lineno"> 1181</span>                                    <span class="keywordtype">size_t</span> tCount);</div>
 <div class="line"><a id="l01182" name="l01182"></a><span class="lineno"> 1182</span><span class="comment"></span> </div>
-<div class="line"><a id="l01183" name="l01183"></a><span class="lineno"> 1183</span><span class="comment">/*! @} */</span></div>
-<div class="line"><a id="l01184" name="l01184"></a><span class="lineno"> 1184</span> </div>
-<div class="line"><a id="l01185" name="l01185"></a><span class="lineno"> 1185</span><span class="preprocessor">#if defined(__clang__)</span></div>
-<div class="line"><a id="l01186" name="l01186"></a><span class="lineno"> 1186</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
-<div class="line"><a id="l01187" name="l01187"></a><span class="lineno"> 1187</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l01188" name="l01188"></a><span class="lineno"> 1188</span> </div>
-<div class="line"><a id="l01189" name="l01189"></a><span class="lineno"> 1189</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
-<div class="line"><a id="l01190" name="l01190"></a><span class="lineno"> 1190</span>}</div>
-<div class="line"><a id="l01191" name="l01191"></a><span class="lineno"> 1191</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l01192" name="l01192"></a><span class="lineno"> 1192</span> </div>
+<div class="line"><a id="l01183" name="l01183"></a><span class="lineno"> 1183</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l01184" name="l01184"></a><span class="lineno"> 1184</span><span class="comment"> * \brief decide whether ignore the specified dirty region item</span></div>
+<div class="line"><a id="l01185" name="l01185"></a><span class="lineno"> 1185</span><span class="comment"> * </span></div>
+<div class="line"><a id="l01186" name="l01186"></a><span class="lineno"> 1186</span><span class="comment"> * \param[in] ptThis the target dirty region item object</span></div>
+<div class="line"><a id="l01187" name="l01187"></a><span class="lineno"> 1187</span><span class="comment"> * \param[in] bIgnore whether ignore </span></div>
+<div class="line"><a id="l01188" name="l01188"></a><span class="lineno"> 1188</span><span class="comment"> * \return bool the previous ignore status</span></div>
+<div class="line"><a id="l01189" name="l01189"></a><span class="lineno"> 1189</span><span class="comment"> */</span></div>
+<div class="line"><a id="l01190" name="l01190"></a><span class="lineno"> 1190</span>extern</div>
+<div class="line"><a id="l01191" name="l01191"></a><span class="lineno"> 1191</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l01192" name="l01192"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga45723c42384538326287fdf4071c4dc8"> 1192</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#ga45723c42384538326287fdf4071c4dc8" title="decide whether ignore the specified dirty region item">arm_2d_dirty_region_item_ignore_set</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__region__list__item__t" title="the node of a region list">arm_2d_region_list_item_t</a> *ptThis, <span class="keywordtype">bool</span> bIgnore);</div>
 <div class="line"><a id="l01193" name="l01193"></a><span class="lineno"> 1193</span> </div>
-<div class="line"><a id="l01194" name="l01194"></a><span class="lineno"> 1194</span> </div>
-<div class="line"><a id="l01195" name="l01195"></a><span class="lineno"> 1195</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l01194" name="l01194"></a><span class="lineno"> 1194</span><span class="comment"></span> </div>
+<div class="line"><a id="l01195" name="l01195"></a><span class="lineno"> 1195</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l01196" name="l01196"></a><span class="lineno"> 1196</span><span class="comment"> * \brief get the ignore status of a given dirty region item</span></div>
+<div class="line"><a id="l01197" name="l01197"></a><span class="lineno"> 1197</span><span class="comment"> * </span></div>
+<div class="line"><a id="l01198" name="l01198"></a><span class="lineno"> 1198</span><span class="comment"> * \param[in] ptThis the target dirty region item object</span></div>
+<div class="line"><a id="l01199" name="l01199"></a><span class="lineno"> 1199</span><span class="comment"> * \retval true the dirty region item is ignored.</span></div>
+<div class="line"><a id="l01200" name="l01200"></a><span class="lineno"> 1200</span><span class="comment"> * \retval false the dirty region item is in-use.</span></div>
+<div class="line"><a id="l01201" name="l01201"></a><span class="lineno"> 1201</span><span class="comment"> */</span></div>
+<div class="line"><a id="l01202" name="l01202"></a><span class="lineno"> 1202</span>extern</div>
+<div class="line"><a id="l01203" name="l01203"></a><span class="lineno"> 1203</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l01204" name="l01204"></a><span class="lineno"><a class="line" href="group__gHelper.html#gaab5b94c8714675f90d360b68966a45be"> 1204</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#gaab5b94c8714675f90d360b68966a45be" title="get the ignore status of a given dirty region item">arm_2d_dirty_region_item_ignore_get</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__region__list__item__t" title="the node of a region list">arm_2d_region_list_item_t</a> *ptThis);</div>
+<div class="line"><a id="l01205" name="l01205"></a><span class="lineno"> 1205</span><span class="comment"></span> </div>
+<div class="line"><a id="l01206" name="l01206"></a><span class="lineno"> 1206</span><span class="comment">/*! @} */</span></div>
+<div class="line"><a id="l01207" name="l01207"></a><span class="lineno"> 1207</span> </div>
+<div class="line"><a id="l01208" name="l01208"></a><span class="lineno"> 1208</span><span class="preprocessor">#if defined(__clang__)</span></div>
+<div class="line"><a id="l01209" name="l01209"></a><span class="lineno"> 1209</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
+<div class="line"><a id="l01210" name="l01210"></a><span class="lineno"> 1210</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l01211" name="l01211"></a><span class="lineno"> 1211</span> </div>
+<div class="line"><a id="l01212" name="l01212"></a><span class="lineno"> 1212</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
+<div class="line"><a id="l01213" name="l01213"></a><span class="lineno"> 1213</span>}</div>
+<div class="line"><a id="l01214" name="l01214"></a><span class="lineno"> 1214</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l01215" name="l01215"></a><span class="lineno"> 1215</span> </div>
+<div class="line"><a id="l01216" name="l01216"></a><span class="lineno"> 1216</span> </div>
+<div class="line"><a id="l01217" name="l01217"></a><span class="lineno"> 1217</span> </div>
+<div class="line"><a id="l01218" name="l01218"></a><span class="lineno"> 1218</span><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
