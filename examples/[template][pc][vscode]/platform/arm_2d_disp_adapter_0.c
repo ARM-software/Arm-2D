@@ -161,9 +161,9 @@ IMPL_PFB_ON_DRAW(__disp_adapter0_draw_navigation)
         if (console_box_on_frame_start(&DISP0_CONSOLE.tConsole)) {
             DISP0_CONSOLE.lTimestamp = 0;
             if (!DISP0_CONSOLE.bShowConsole) {
-                DISP0_CONSOLE.tBackground.bIgnore = false;
+                arm_2d_dirty_region_item_ignore_set(&DISP0_CONSOLE.tBackground, false);
             } else {
-                DISP0_CONSOLE.tBackground.bIgnore = true;
+                arm_2d_dirty_region_item_ignore_set(&DISP0_CONSOLE.tBackground, true);
             }
             DISP0_CONSOLE.bShowConsole = true;
             DISP0_CONSOLE.chOpacity = 255;
@@ -691,8 +691,7 @@ void disp_adapter0_navigator_init(void)
                             &tCFG);
     } while(0);
 
-
-    DISP0_CONSOLE.tBackground.bIgnore = true;
+    arm_2d_dirty_region_item_ignore_set(&DISP0_CONSOLE.tBackground, true);
     
     arm_2d_region_t tScreen = {
         .tSize = {

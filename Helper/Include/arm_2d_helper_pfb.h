@@ -488,12 +488,12 @@ ARM_PRIVATE(
 )
     arm_2d_region_t                     tRegion;                                //!< the region
 
+ARM_PROTECTED(
     uint8_t     chUserRegionIndex;                                              //!< User Region Index, used to indicate updating which dynamic dirty regions  
     uint8_t     bIgnore             : 1;                                        //!< ignore this region
     uint8_t     bUpdated            : 1;                                        //!< this region item has been updated, PFB helper should refresh it again.
     uint8_t                         : 6;                                        //!< reserved for the future
 
-ARM_PRIVATE(
     uint16_t    bFromInternalPool   : 1;                                        //!< a flag indicating whether this list item coming from the internal pool
     uint16_t    bFromHeap           : 1;                                        //!< whether this item comes from the HEAP
     uint16_t    u2UpdateState       : 2;                                        //!< reserved for internal FSM
@@ -1179,6 +1179,29 @@ bool arm_2d_helper_pfb_remove_dirty_regions_from_list(
                                     arm_2d_region_list_item_t **ppDirtyRegionList, 
                                     arm_2d_region_list_item_t *ptItems,
                                     size_t tCount);
+
+/*!
+ * \brief decide whether ignore the specified dirty region item
+ * 
+ * \param[in] ptThis the target dirty region item object
+ * \param[in] bIgnore whether ignore 
+ * \return bool the previous ignore status
+ */
+extern
+ARM_NONNULL(1)
+bool arm_2d_dirty_region_item_ignore_set(arm_2d_region_list_item_t *ptThis, bool bIgnore);
+
+
+/*!
+ * \brief get the ignore status of a given dirty region item
+ * 
+ * \param[in] ptThis the target dirty region item object
+ * \retval true the dirty region item is ignored.
+ * \retval false the dirty region item is in-use.
+ */
+extern
+ARM_NONNULL(1)
+bool arm_2d_dirty_region_item_ignore_get(arm_2d_region_list_item_t *ptThis);
 
 /*! @} */
 

@@ -3950,6 +3950,44 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate180_rgb32( arm_2d_pfb_t *ptOrigin,
 /*----------------------------------------------------------------------------*
  * API for Dirty Region List                                                  *
  *----------------------------------------------------------------------------*/
+
+ARM_NONNULL(1)
+bool arm_2d_dirty_region_item_ignore_set(arm_2d_region_list_item_t *ptThis, bool bIgnore)
+{
+    bool bOrigin = false;
+
+    do {
+        if (NULL == ptThis) {
+            assert(false);
+            break;
+        }
+
+        arm_irq_safe {
+            bOrigin = this.bIgnore;
+            this.bIgnore = !!bIgnore;
+        }
+    } while(0);
+
+    return bOrigin;
+}
+
+ARM_NONNULL(1)
+bool arm_2d_dirty_region_item_ignore_get(arm_2d_region_list_item_t *ptThis)
+{
+    bool bIgnore = false;
+
+    do {
+        if (NULL == ptThis) {
+            assert(false);
+            break;
+        }
+
+        bIgnore = this.bIgnore;
+    } while(0);
+
+    return bIgnore;
+}
+
 ARM_NONNULL(1,2)
 bool arm_2d_helper_pfb_append_dirty_regions_to_list(
                                 arm_2d_region_list_item_t **ppDirtyRegionList, 
