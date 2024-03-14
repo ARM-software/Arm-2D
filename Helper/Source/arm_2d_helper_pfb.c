@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        12. March 2024
- * $Revision:    V.1.8.8
+ * $Date:        14. March 2024
+ * $Revision:    V.1.8.9
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1963,6 +1963,10 @@ label_iteration_begin_start:
                         this.Adapter.ptCurrent = NULL;
                     }
 
+                    /* reset flag */
+                    this.Adapter.bFirstIteration = true;
+                    this.Adapter.bIsDryRun = false;
+
                     // out of lcd 
                     return (arm_2d_tile_t *)-1;
                 } else {
@@ -2039,8 +2043,6 @@ label_iteration_begin_start:
                     );
                 }
 
-                
-
                 if (this.Adapter.bFirstIteration 
                 &&  !this.Adapter.ptDirtyRegion->bIgnore
                 &&  this.Adapter.bEncounterDynamicDirtyRegion) {
@@ -2102,6 +2104,9 @@ label_iteration_begin_start:
                         __arm_2d_helper_pfb_free(ptThis, this.Adapter.ptCurrent);
                         this.Adapter.ptCurrent = NULL;
                     }
+
+                    assert(false == this.Adapter.bIsDryRun);
+                    assert(this.Adapter.bFirstIteration);
 
                     // out of lcd 
                     return (arm_2d_tile_t *)-1;
