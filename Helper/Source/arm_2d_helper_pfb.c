@@ -1865,7 +1865,8 @@ label_iteration_begin_start:
                 HELPER_PFB, 
                 1, 
                 "Iteration Begin", 
-                "In the dry run, ptCurrent is set to NULL. Try to allocate a new PFB from the pool..."
+                "In the dry run, ptCurrent is set to NULL. Try to allocate a new PFB from the pool...\r\n"
+                "Entering this branch, usually means something went wrong. "
             );
 
              arm_irq_safe {
