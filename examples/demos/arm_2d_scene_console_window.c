@@ -108,7 +108,7 @@ static void __on_scene_console_window_depose(arm_2d_scene_t *ptScene)
         *ptItem = 0;
     }
 
-    console_box_depose(&this.tConsole_window);
+    console_box_depose(&this.tConsole);
 
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
@@ -130,22 +130,30 @@ static void __on_scene_console_window_background_complete(arm_2d_scene_t *ptScen
 {
     user_scene_console_window_t *ptThis = (user_scene_console_window_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-
 }
 
 
 static void __on_scene_console_window_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_console_window_t *ptThis = (user_scene_console_window_t *)ptScene;
+    if (arm_2d_helper_is_time_out(100, &this.lTimestamp[1])) {
+        static uint16_t s_hwCount = 0;
 
-    console_box_on_frame_start(&this.tConsole_window);
+        console_box_printf(&this.tConsole, "Hello World! \t[%d]\r\n",s_hwCount++);
+    }
+
+    console_box_on_frame_start(&this.tConsole);
 }
 
 static void __on_scene_console_window_frame_complete(arm_2d_scene_t *ptScene)
 {
     user_scene_console_window_t *ptThis = (user_scene_console_window_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-    
+
+    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
+        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+    }
+
 }
 
 static void __before_scene_console_window_switching_out(arm_2d_scene_t *ptScene)
@@ -169,20 +177,44 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_console_window_handler)
 
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the foreground begin-----------------------*/
-        
+
         /* following code is just a demo, you can remove them */
-        
-        arm_2d_fill_colour(ptTile, &__top_canvas, GLCD_COLOR_BLACK);
+
+        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
 
 
-        /* draw console_window */
-        console_box_show(   &this.tConsole_window,
-                            ptTile,
-                            &__top_canvas,
-                            bIsNewFrame,
-                            255);
+        /* draw the cmsis logo using mask in the centre of the screen */
+        arm_2d_align_centre(__top_canvas, c_tileCMSISLogo.tRegion.tSize) {
+            arm_2d_fill_colour_with_a4_mask_and_opacity(   
+                                                ptTile, 
+                                                &__centre_region, 
+                                                &c_tileCMSISLogoA4Mask, 
+                                                (__arm_2d_color_t){GLCD_COLOR_BLACK},
+                                                128);
+        }
 
+        arm_2d_align_centre(__top_canvas, 260, 260) {
+            /* draw console background */
+            draw_round_corner_box(  ptTile, 
+                                    &__centre_region, 
+                                    GLCD_COLOR_BLACK, 
+                                    128,
+                                    bIsNewFrame);
+            /* draw console */
+            console_box_show(   &this.tConsole,
+                                ptTile,
+                                &__centre_region,
+                                bIsNewFrame,
+                                255);
+        }
 
+        /* draw text at the top-left corner */
+        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+        arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
+        arm_lcd_text_set_draw_region(NULL);
+        arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
+        arm_lcd_text_location(0,0);
+        arm_lcd_puts("Scene console");
 
     /*-----------------------draw the foreground end  -----------------------*/
     }
@@ -238,25 +270,21 @@ user_scene_console_window_t *__arm_2d_scene_console_window_init(
 
     /* ------------   initialize members of user_scene_console_window_t begin ---------------*/
     do {
-    #if __DISP0_CFG_CONSOLE_INPUT_BUFFER__
-        static uint8_t s_chInputBuffer[__DISP0_CFG_CONSOLE_INPUT_BUFFER__];
-    #endif
-        static uint8_t s_chConsoleBuffer[(__DISP0_CFG_SCEEN_WIDTH__ / 6) * (__DISP0_CFG_SCEEN_HEIGHT__ / 8)];
+        static uint8_t s_chInputBuffer[256];
+        static uint8_t s_chConsoleBuffer[(240 / 6) * (240 / 8)];
         console_box_cfg_t tCFG = {
-            .tBoxSize = tScreen.tSize,
-            
+            .tBoxSize = {240, 240},
+
             .pchConsoleBuffer = s_chConsoleBuffer,
             .hwConsoleBufferSize = sizeof(s_chConsoleBuffer),
 
-        #if __DISP0_CFG_CONSOLE_INPUT_BUFFER__
             .pchInputBuffer = s_chInputBuffer,
             .hwInputBufferSize = sizeof(s_chInputBuffer),
-        #endif
             .tColor = GLCD_COLOR_GREEN,
             .bUseDirtyRegion = true,
         };
 
-        console_box_init(   &this.tConsole_window, 
+        console_box_init(   &this.tConsole, 
                             &this.use_as__arm_2d_scene_t, 
                             &tCFG);
     } while(0);

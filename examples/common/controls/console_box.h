@@ -91,6 +91,7 @@ ARM_PRIVATE(
     } Console;
 
     arm_2d_scene_t                  *ptTargetScene;
+    arm_2d_region_t                 tReDrawRegion;
     arm_2d_region_list_item_t       tDirtyRegion;
     arm_2d_region_list_item_t       **ppDirtyRegionList;
 

@@ -74,6 +74,11 @@ enum {
     REFRESH_MODE_WHOLE,         /* refresh the whole area */
 };
 
+enum {
+    CONSOLE_BOX_DIRTY_REGION_START = 0,
+    CONSOLE_BOX_DIRTY_REGION_DONE,
+};
+
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -130,22 +135,21 @@ bool console_box_init(  console_box_t *ptThis,
     /* dirty region */
 
     if (ptCFG->bUseDirtyRegion) {
-        if (NULL != ptCFG->ppDirtyRegionList) {
-            this.bCFGUseDirtyRegion = true;
-            arm_2d_dirty_region_item_ignore_set(&this.tDirtyRegion, true);
-            this.ppDirtyRegionList = ptCFG->ppDirtyRegionList;
 
+        arm_2d_user_dynamic_dirty_region_init(&this.tDirtyRegion,
+                                              this.ptTargetScene);
+
+        if (NULL != this.ptTargetScene) {
+            this.bCFGUseDirtyRegion = true;
+
+        } else if (NULL != ptCFG->ppDirtyRegionList) {
+            this.bCFGUseDirtyRegion = true;
+
+            this.ppDirtyRegionList = ptCFG->ppDirtyRegionList;
             arm_2d_helper_pfb_append_dirty_regions_to_list(
                     this.ppDirtyRegionList,
                     &this.tDirtyRegion, 
                     1);
-        } else if (NULL != ptTargetScene) {
-            this.bCFGUseDirtyRegion = true;
-            arm_2d_dirty_region_item_ignore_set(&this.tDirtyRegion, true);
-            /* add dirty region to the target scene */
-            arm_2d_scene_player_append_dirty_regions(   ptTargetScene, 
-                                                        &this.tDirtyRegion, 
-                                                        1);
         }
     }
 
@@ -159,16 +163,15 @@ void console_box_depose( console_box_t *ptThis)
     
     if (this.bCFGUseDirtyRegion) {
 
+        arm_2d_user_dynamic_dirty_region_depose(&this.tDirtyRegion, 
+                                                this.ptTargetScene);
+
         if (NULL != this.ppDirtyRegionList) {
+
             arm_2d_helper_pfb_remove_dirty_regions_from_list(
                 this.ppDirtyRegionList,
                 &this.tDirtyRegion, 
                 1);
-        } else if (NULL != this.ptTargetScene) {
-            /* remove dirty region */
-            arm_2d_scene_player_remove_dirty_regions(   this.ptTargetScene, 
-                                                        &this.tDirtyRegion, 
-                                                        1);
         }
     }
 }
@@ -437,31 +440,31 @@ bool console_box_on_frame_start(console_box_t *ptThis)
                                        - (int32_t)this.Console.hwLastColumn;
                     
                     /* update size */
-                    this.tDirtyRegion.tRegion.tSize.iHeight = tCharSize.iHeight;
-                    this.tDirtyRegion.tRegion.tSize.iWidth = tCharSize.iWidth * ABS(iCharDelta);
+                    this.tReDrawRegion.tSize.iHeight = tCharSize.iHeight;
+                    this.tReDrawRegion.tSize.iWidth = tCharSize.iWidth * ABS(iCharDelta);
 
                     /* update location */
                     if (iCharDelta > 0) {
-                        this.tDirtyRegion.tRegion.tLocation.iX 
+                        this.tReDrawRegion.tLocation.iX 
                             = this.Console.hwLastColumn * tCharSize.iWidth;
                     } else {
-                        this.tDirtyRegion.tRegion.tLocation.iX 
+                        this.tReDrawRegion.tLocation.iX 
                             = ((int32_t)this.Console.hwLastColumn + iCharDelta) 
                             * tCharSize.iWidth;
                     }
 
-                    this.tDirtyRegion.tRegion.tLocation.iY = this.Console.hwLastRow * tCharSize.iHeight;
+                    this.tReDrawRegion.tLocation.iY = this.Console.hwLastRow * tCharSize.iHeight;
                 }
                 break;
 
             case REFRESH_MODE_NEW_LINES:
                 /* update location */
-                this.tDirtyRegion.tRegion.tLocation.iX = 0;
-                this.tDirtyRegion.tRegion.tLocation.iY = this.Console.hwLastRow * tCharSize.iHeight;
+                this.tReDrawRegion.tLocation.iX = 0;
+                this.tReDrawRegion.tLocation.iY = this.Console.hwLastRow * tCharSize.iHeight;
 
                 /* this whole line */
-                this.tDirtyRegion.tRegion.tSize.iWidth = tCharSize.iWidth * this.Console.hwMaxColumn;
-                this.tDirtyRegion.tRegion.tSize.iHeight 
+                this.tReDrawRegion.tSize.iWidth = tCharSize.iWidth * this.Console.hwMaxColumn;
+                this.tReDrawRegion.tSize.iHeight 
                     = tCharSize.iHeight 
                     * (this.Console.hwCurrentRow - this.Console.hwLastRow + 1);
 
@@ -469,22 +472,16 @@ bool console_box_on_frame_start(console_box_t *ptThis)
             
             case REFRESH_MODE_WHOLE:
                 /* update location */
-                this.tDirtyRegion.tRegion.tLocation.iX = 0;
-                this.tDirtyRegion.tRegion.tLocation.iY = 0;
+                this.tReDrawRegion.tLocation.iX = 0;
+                this.tReDrawRegion.tLocation.iY = 0;
 
                 /* update size */
-                this.tDirtyRegion.tRegion.tSize = this.tBoxSize;
+                this.tReDrawRegion.tSize = this.tBoxSize;
                 break;
 
         }
 
-        if (this.u2RTOneTimeRefreshMode == REFRESH_MODE_NO_UPDATE) {
-            this.tDirtyRegion.bIgnore = true;
-            this.tDirtyRegion.bUpdated = false;
-        } else {
-            this.tDirtyRegion.bIgnore = false;
-            this.tDirtyRegion.bUpdated = true;      /* use the dynamic region */
-        }
+        arm_2d_user_dynamic_dirty_region_on_frame_start(&this.tDirtyRegion, CONSOLE_BOX_DIRTY_REGION_START);
 
         this.Console.hwLastColumn = this.Console.hwCurrentColumn;
         this.Console.hwLastRow = this.Console.hwCurrentRow;
@@ -537,19 +534,36 @@ void console_box_show(  console_box_t *ptThis,
         /* example code: flash a 50x50 red box in the centre */
         arm_2d_align_centre(__console_box_canvas, this.tBoxSize) {
 
-            if (bIsNewFrame) {
-                if (this.bCFGUseDirtyRegion
-                &&  (this.u2RTOneTimeRefreshMode != REFRESH_MODE_NO_UPDATE)) {
-                    /* update location */
-                    this.tDirtyRegion.tRegion.tLocation.iX += __centre_region.tLocation.iX;
-                    this.tDirtyRegion.tRegion.tLocation.iY += __centre_region.tLocation.iY;
+            if (this.bCFGUseDirtyRegion) {
+            
+                switch (arm_2d_user_dynamic_dirty_region_wait_next(
+                                                        &this.tDirtyRegion)) {
+                    case CONSOLE_BOX_DIRTY_REGION_START:
+                        if (    this.u2RTOneTimeRefreshMode 
+                            !=  REFRESH_MODE_NO_UPDATE) {
+                            this.tReDrawRegion.tLocation.iX 
+                                += __centre_region.tLocation.iX;
+                            this.tReDrawRegion.tLocation.iY 
+                                += __centre_region.tLocation.iY;
 
-                    /* get the absolution location */
-                    this.tDirtyRegion.tRegion.tLocation = 
-                        arm_2d_helper_pfb_get_absolute_location(&__console_box, this.tDirtyRegion.tRegion.tLocation);
+                            arm_2d_user_dynamic_dirty_region_update(
+                                                &this.tDirtyRegion,
+                                                &__console_box,
+                                                &this.tReDrawRegion,
+                                                CONSOLE_BOX_DIRTY_REGION_DONE);
 
-                    this.tDirtyRegion.bUpdated = true;
+                        } else {
+                            arm_2d_user_dynamic_dirty_region_change_user_region_index_only(
+                                &this.tDirtyRegion,
+                                CONSOLE_BOX_DIRTY_REGION_DONE);
+                        }
+                        break;
+                    case CONSOLE_BOX_DIRTY_REGION_DONE:
+                        break;
+                    default:    /* 0xFF */
+                        break;
                 }
+            
             }
 
             /* draw text at the top-left corner */

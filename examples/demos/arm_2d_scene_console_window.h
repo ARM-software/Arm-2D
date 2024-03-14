@@ -87,7 +87,7 @@ ARM_PRIVATE(
     bool bUserAllocated;
 )
     /* place your public member here */
-    console_box_t tConsole_window;
+    console_box_t tConsole;
 };
 
 /*============================ GLOBAL VARIABLES ==============================*/
