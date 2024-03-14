@@ -256,7 +256,6 @@ user_scene_console_window_t *__arm_2d_scene_console_window_init(
             /* Please uncommon the callbacks if you need them
              */
             .fnScene        = &__pfb_draw_scene_console_window_handler,
-            //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
             //.fnOnBGStart    = &__on_scene_console_window_background_start,
             //.fnOnBGComplete = &__on_scene_console_window_background_complete,

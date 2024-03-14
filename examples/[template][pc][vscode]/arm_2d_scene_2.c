@@ -434,6 +434,8 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
         ),
     END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
     
+    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
+
     /* get the screen region */
     arm_2d_region_t tScreen
         = arm_2d_helper_pfb_get_display_area(

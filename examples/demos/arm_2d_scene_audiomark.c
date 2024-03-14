@@ -265,7 +265,7 @@ user_scene_audiomark_t *__arm_2d_scene_audiomark_init(   arm_2d_scene_player_t *
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
 
-#if 1
+#if 0
     /*! define dirty regions */
     IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
 
