@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        13. March 2024
- * $Revision:    V.1.5.1
+ * $Date:        15. March 2024
+ * $Revision:    V.1.6.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -430,6 +430,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
                 this.Switch.chState++;
                 //break;
             case FADE_IN:
+                this.Runtime.bCallOldSceneFrameCPL = true;
+
                 nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
                 
             #if __ARM_2D_CFG_HELPER_SWITCH_FADE_USE_SIN__
@@ -455,6 +457,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
                 }
                 break;
             case KEEP:
+                this.Runtime.bCallOldSceneFrameCPL = false;
+
                 nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
                 if (nElapsed >= arm_2d_helper_convert_ms_to_ticks(hwKeepPeriod)) {
                     this.Switch.lTimeStamp = lTimeStamp;
@@ -462,6 +466,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
                 }
                 break;
             case FADE_OUT:
+                this.Runtime.bCallNewSceneFrameCPL = true;
+
                 nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
                 
             #if __ARM_2D_CFG_HELPER_SWITCH_FADE_USE_SIN__
@@ -506,6 +512,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
             bIgnoreBG = this.Switch.tConfig.Feature.bIgnoreOldSceneBG;
             bIgnoreScene = this.Switch.tConfig.Feature.bIgnoreOldScene;
 
+            
         } else if (NULL != this.SceneFIFO.ptHead) {
             /* draw the new scene background */
             ptScene = this.SceneFIFO.ptHead->ptNext;
@@ -519,18 +526,28 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
             bIgnoreScene = ptScene->bOnSwitchingIgnoreScene || bIgnoreScene;
         }
 
+        if (bIsNewFrame) {
+            if (FADE_IN == this.Switch.chState) {
+                this.Runtime.bCallOldSceneBGCPL = !bIgnoreBG;
+            } else if (FADE_OUT == this.Switch.chState) {
+                this.Runtime.bCallNewSceneBGCPL = !bIgnoreBG;
+            }
+        }
+
         if (NULL == ptScene || (bIgnoreBG && bIgnoreScene)) {
             __pfb_draw_scene_mode_default_background(pTarget, ptTile, bIsNewFrame);
         } else {
             if (!bIgnoreBG) {
-                ARM_2D_INVOKE_RT_VOID( ptScene->fnOnBGStart, ptScene);
+                if (bIsNewFrame) {
+                    ARM_2D_INVOKE_RT_VOID( ptScene->fnOnBGStart, ptScene);
+                }
                 ARM_2D_INVOKE(ptScene->fnBackground, ptScene, ptTile, bIsNewFrame);
-                ARM_2D_INVOKE_RT_VOID( ptScene->fnOnBGComplete, ptScene);
             }
             if (!bIgnoreScene) {
-                ARM_2D_INVOKE_RT_VOID( ptScene->fnOnFrameStart, ptScene);
+                if (bIsNewFrame) {
+                    ARM_2D_INVOKE_RT_VOID( ptScene->fnOnFrameStart, ptScene);
+                }
                 ARM_2D_INVOKE( ptScene->fnScene, ptScene, ptTile, bIsNewFrame);
-                ARM_2D_INVOKE_RT_VOID( ptScene->fnOnFrameCPL, ptScene);
             }
         }
 
@@ -562,14 +579,16 @@ void __draw_erase_scene(arm_2d_scene_player_t *ptThis,
     }
 
     if (!bIgnoreBG) {
-        ARM_2D_INVOKE_RT_VOID( ptScene->fnOnBGStart, ptScene);
+        if (bIsNewFrame) {
+            ARM_2D_INVOKE_RT_VOID( ptScene->fnOnBGStart, ptScene);
+        }
         ARM_2D_INVOKE( ptScene->fnBackground, ptScene, ptTile, bIsNewFrame);
-        ARM_2D_INVOKE_RT_VOID( ptScene->fnOnBGComplete, ptScene);
     }
     if (!bIgnoreScene) {
-        ARM_2D_INVOKE_RT_VOID( ptScene->fnOnFrameStart, ptScene);
+        if (bIsNewFrame) {
+            ARM_2D_INVOKE_RT_VOID( ptScene->fnOnFrameStart, ptScene);
+        }
         ARM_2D_INVOKE( ptScene->fnScene, ptScene, ptTile, bIsNewFrame);
-        ARM_2D_INVOKE_RT_VOID( ptScene->fnOnFrameCPL, ptScene);
     }
     arm_2d_op_wait_async(NULL);
 }
@@ -610,6 +629,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
             case START:
                 this.Switch.lTimeStamp = lTimeStamp;
                 this.Switch.Erase.iOffset = 0;
+
+                this.Runtime.bCallOldSceneFrameCPL = true;
+                this.Runtime.bCallNewSceneFrameCPL = true;
+
+                this.Runtime.bCallOldSceneBGCPL = !this.Switch.tConfig.Feature.bIgnoreOldSceneBG;
+                this.Runtime.bCallNewSceneBGCPL = !this.Switch.tConfig.Feature.bIgnoreNewSceneBG;
+
                 this.Switch.chState++;
                 //break;
             case ERASE:
@@ -916,6 +942,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
             case START:
                 this.Switch.lTimeStamp = lTimeStamp;
                 this.Switch.Slide.iOffset = 0;
+
+                this.Runtime.bCallOldSceneFrameCPL = true;
+                this.Runtime.bCallNewSceneFrameCPL = true;
+
+                this.Runtime.bCallOldSceneBGCPL = !this.Switch.tConfig.Feature.bIgnoreOldSceneBG;
+                this.Runtime.bCallNewSceneBGCPL = !this.Switch.tConfig.Feature.bIgnoreNewSceneBG;
+
                 this.Switch.chState++;
                 //break;
             case SLIDE:
@@ -1312,6 +1345,11 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
                             this.Switch.hwPeriod);
                 
                 /* reset switch FSM */
+                this.Runtime.bCallOldSceneFrameCPL = false;
+                this.Runtime.bCallNewSceneFrameCPL = false;
+                this.Runtime.bCallOldSceneBGCPL = false;
+                this.Runtime.bCallNewSceneBGCPL = false;
+
                 this.Switch.chState = START;
                 this.Runtime.chState = SWITCH_SCENE;
             }
@@ -1324,6 +1362,30 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
                 return tResult;
             } else if (arm_fsm_rt_cpl != tResult) {
                 return tResult;
+            }
+
+            if (this.Runtime.bCallOldSceneBGCPL) {
+                arm_2d_scene_t *ptTempScene = this.SceneFIFO.ptHead;
+                assert(NULL != ptTempScene);
+                ARM_2D_INVOKE_RT_VOID( ptTempScene->fnOnBGComplete, ptTempScene);
+            }
+
+            if (this.Runtime.bCallOldSceneFrameCPL) {
+                arm_2d_scene_t *ptTempScene = this.SceneFIFO.ptHead;
+                assert(NULL != ptTempScene);
+                ARM_2D_INVOKE_RT_VOID( ptTempScene->fnOnFrameCPL, ptTempScene);
+            }
+
+            if (this.Runtime.bCallNewSceneBGCPL) {
+                arm_2d_scene_t *ptTempScene = this.SceneFIFO.ptHead->ptNext;
+                assert(NULL != ptTempScene);
+                ARM_2D_INVOKE_RT_VOID( ptTempScene->fnOnBGComplete, ptTempScene);
+            }
+
+            if (this.Runtime.bCallNewSceneFrameCPL) {
+                arm_2d_scene_t *ptTempScene = this.SceneFIFO.ptHead->ptNext;
+                assert(NULL != ptTempScene);
+                ARM_2D_INVOKE_RT_VOID( ptTempScene->fnOnFrameCPL, ptTempScene);
             }
 
             if (this.Runtime.bSwitchCPL) {

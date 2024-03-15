@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        13. March 2024
- * $Revision:    V.1.5.1
+ * $Date:        15. March 2024
+ * $Revision:    V.1.6.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -273,10 +273,15 @@ struct arm_2d_scene_player_t {
         } SceneFIFO;                                                            //!< Scene FIFO
         
         struct {
-            uint8_t bNextSceneReq   : 1;                                        //!< a flag to request switching-to-the next-scene
-            uint8_t bSwitchCPL      : 1;                                        //!< indication of scene switching completion
-            uint8_t bUpdateBG       : 1;                                        //!< update the background of the current scene
-            uint8_t                 : 5;
+            uint8_t bNextSceneReq           : 1;                                //!< a flag to request switching-to-the next-scene
+            uint8_t bSwitchCPL              : 1;                                //!< indication of scene switching completion
+            uint8_t bUpdateBG               : 1;                                //!< update the background of the current scene
+            uint8_t                         : 1;
+            uint8_t bCallOldSceneFrameCPL   : 1;                                //!< call the old scene frame complete event handler
+            uint8_t bCallNewSceneFrameCPL   : 1;                                //!< call the new scene frame complete event handler
+            uint8_t bCallOldSceneBGCPL      : 1;                                //!< call the old scene Background complete event handler
+            uint8_t bCallNewSceneBGCPL      : 1;                                //!< call the new scene Background complete event handler
+            
             uint8_t chState;                                                    //!< the state of the FSM used by runtime.
         } Runtime;                                                              //!< scene player runtime
         
