@@ -218,21 +218,6 @@ int main (void)
     arm_2d_scene_player_register_before_switching_event_handler(
             &DISP0_ADAPTER,
             before_scene_switching_handler);
-
-//    arm_2d_scene0_init(&DISP0_ADAPTER);
-//    arm_2d_scene1_init(&DISP0_ADAPTER);
-
-//#if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
-//    virtual_resource_demo_init();
-//#endif
-//    arm_2d_scene3_init(&DISP0_ADAPTER);
-//    arm_2d_scene4_init(&DISP0_ADAPTER);
-    
-    /*
-     * the scene2 is initalized by scene4 in the BeforeSwitching event handler
-     arm_2d_scene2_init(&DISP0_ADAPTER);
-     */
-
     
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
                                             ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);
