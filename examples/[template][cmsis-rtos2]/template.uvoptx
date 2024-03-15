@@ -1610,7 +1610,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGTARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(6017=-1,-1,-1,-1,0)(1008=1291,387,1667,623,0)(6016=2302,427,2560,1080,0)(1012=-1,-1,-1,-1,0)</Name>
+          <Name>(1010=374,314,824,871,0)(6017=105,137,294,473,0)(1008=1291,387,1667,623,0)(6016=959,233,1217,886,0)(1012=-1,-1,-1,-1,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -1660,7 +1660,7 @@
         <Mm>
           <WinNumber>1</WinNumber>
           <SubType>1</SubType>
-          <ItemText>0x20001ADC</ItemText>
+          <ItemText>0x20000768</ItemText>
           <AccSizeX>0</AccSizeX>
         </Mm>
       </MemoryWindow1>

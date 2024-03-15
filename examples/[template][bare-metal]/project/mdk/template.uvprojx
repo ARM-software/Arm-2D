@@ -8727,8 +8727,8 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="2.1.0" condition="Arm-2D-Helper" maxInstances="8">
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="2.3.0" condition="Arm-2D-Helper" maxInstances="8">
+        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
           <targetInfo name="FastModel"/>
@@ -8757,8 +8757,8 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.3" condition="Arm-2D-Helper" maxInstances="1000">
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.5" condition="Arm-2D-Helper" maxInstances="1000">
+        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo instances="5" name="AN547-Cortex-M55_r0"/>
           <targetInfo instances="5" name="FastModel"/>
@@ -9188,7 +9188,7 @@
     <files>
       <file attr="config" category="sourceC" name="examples\common\asset\DigitsFont.c" version="1.2.0">
         <instance index="0">RTE\Acceleration\DigitsFont.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="2.2.3" condition="Arm-2D-CORE"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="2.2.5" condition="Arm-2D-CORE"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9205,7 +9205,7 @@
       </file>
       <file attr="config" category="sourceC" name="examples\common\controls\GLCD_Fonts.c" version="1.0.0">
         <instance index="0">RTE\Acceleration\GLCD_Fonts.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="2.2.3" condition="Arm-2D-CORE"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="2.2.5" condition="Arm-2D-CORE"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9271,9 +9271,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_disp_adapter.c" version="2.1.0">
+      <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_disp_adapter.c" version="2.3.0">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="2.1.1" condition="Arm-2D-Helper" maxInstances="8"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="2.3.0" condition="Arm-2D-Helper" maxInstances="8"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9288,9 +9288,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="Helper\Include\template\arm_2d_disp_adapter.h" version="2.1.0">
+      <file attr="config" category="header" name="Helper\Include\template\arm_2d_disp_adapter.h" version="2.3.0">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="2.1.1" condition="Arm-2D-Helper" maxInstances="8"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="2.3.0" condition="Arm-2D-Helper" maxInstances="8"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9317,9 +9317,9 @@
         <package name="Arm-2D" schemaVersion="1.4" url="https://raw.githubusercontent.com/ARM-software/Arm-2D/developing/cmsis-pack/" vendor="Arm" version="1.0.0-preview-beta6"/>
         <targetInfos/>
       </file>
-      <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_scene.c" version="1.2.3">
+      <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_scene.c" version="1.2.5">
         <instance index="0">RTE\Acceleration\arm_2d_scene_0.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.4" condition="Arm-2D-Helper" maxInstances="1000"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.5" condition="Arm-2D-Helper" maxInstances="1000"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9334,9 +9334,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="Helper\Include\template\arm_2d_scene.h" version="1.2.3">
+      <file attr="config" category="header" name="Helper\Include\template\arm_2d_scene.h" version="1.2.5">
         <instance index="0">RTE\Acceleration\arm_2d_scene_0.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.4" condition="Arm-2D-Helper" maxInstances="1000"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.5" condition="Arm-2D-Helper" maxInstances="1000"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9353,7 +9353,7 @@
       </file>
       <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_scene.c" version="1.1.10">
         <instance index="1">RTE\Acceleration\arm_2d_scene_1.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.4" condition="Arm-2D-Helper" maxInstances="1000"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.5" condition="Arm-2D-Helper" maxInstances="1000"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9370,7 +9370,7 @@
       </file>
       <file attr="config" category="header" name="Helper\Include\template\arm_2d_scene.h" version="1.1.10">
         <instance index="1">RTE\Acceleration\arm_2d_scene_1.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.4" condition="Arm-2D-Helper" maxInstances="1000"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.5" condition="Arm-2D-Helper" maxInstances="1000"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9387,7 +9387,7 @@
       </file>
       <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_scene.c" version="1.1.2">
         <instance index="2">RTE\Acceleration\arm_2d_scene_2.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.4" condition="Arm-2D-Helper" maxInstances="1000"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.5" condition="Arm-2D-Helper" maxInstances="1000"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9404,7 +9404,7 @@
       </file>
       <file attr="config" category="header" name="Helper\Include\template\arm_2d_scene.h" version="1.1.2">
         <instance index="2">RTE\Acceleration\arm_2d_scene_2.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.4" condition="Arm-2D-Helper" maxInstances="1000"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.5" condition="Arm-2D-Helper" maxInstances="1000"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9421,7 +9421,7 @@
       </file>
       <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_scene.c" version="1.1.3">
         <instance index="3">RTE\Acceleration\arm_2d_scene_3.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.4" condition="Arm-2D-Helper" maxInstances="1000"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.5" condition="Arm-2D-Helper" maxInstances="1000"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9438,7 +9438,7 @@
       </file>
       <file attr="config" category="header" name="Helper\Include\template\arm_2d_scene.h" version="1.1.3">
         <instance index="3">RTE\Acceleration\arm_2d_scene_3.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.4" condition="Arm-2D-Helper" maxInstances="1000"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.5" condition="Arm-2D-Helper" maxInstances="1000"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9455,7 +9455,7 @@
       </file>
       <file attr="config" category="sourceC" name="Helper\Source\template\arm_2d_scene.c" version="1.1.4">
         <instance index="4">RTE\Acceleration\arm_2d_scene_4.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.4" condition="Arm-2D-Helper" maxInstances="1000"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.5" condition="Arm-2D-Helper" maxInstances="1000"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9472,7 +9472,7 @@
       </file>
       <file attr="config" category="header" name="Helper\Include\template\arm_2d_scene.h" version="1.1.4">
         <instance index="4">RTE\Acceleration\arm_2d_scene_4.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.4" condition="Arm-2D-Helper" maxInstances="1000"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cvendor="ARM" Cversion="1.2.5" condition="Arm-2D-Helper" maxInstances="1000"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
