@@ -331,6 +331,8 @@ Macros</h2></td></tr>
 <tr class="memitem:gae4ab75c458c5e2ba0355ba76dff03735"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gae4ab75c458c5e2ba0355ba76dff03735">arm_2d_helper_is_time_out</a>(__ms, ...)</td></tr>
 <tr class="memdesc:gae4ab75c458c5e2ba0355ba76dff03735"><td class="mdescLeft">&#160;</td><td class="mdescRight">set an alarm with given period and check the status  <a href="group__gHelper.html#gae4ab75c458c5e2ba0355ba76dff03735">More...</a><br /></td></tr>
 <tr class="separator:gae4ab75c458c5e2ba0355ba76dff03735"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga04905e1027ba242ec8abd1f512c9b17b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga04905e1027ba242ec8abd1f512c9b17b">arm_2d_helper_time_elapsed</a>(__timestamp_ptr)</td></tr>
+<tr class="separator:ga04905e1027ba242ec8abd1f512c9b17b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab9da2ee4cd3a208e7ff4ece9ac8086f0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gab9da2ee4cd3a208e7ff4ece9ac8086f0">arm_2d_helper_time_liner_slider</a>(__from,  __to,  __ms,  __stroke_ptr,  ...)</td></tr>
 <tr class="memdesc:gab9da2ee4cd3a208e7ff4ece9ac8086f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the stroke of a liner slider based on time  <a href="group__gHelper.html#gab9da2ee4cd3a208e7ff4ece9ac8086f0">More...</a><br /></td></tr>
 <tr class="separator:gab9da2ee4cd3a208e7ff4ece9ac8086f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -518,6 +520,24 @@ Functions</h2></td></tr>
 <tr class="memitem:ga416e8e1d86ebf4413ae19db8c3f605cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__scene__t">arm_2d_scene_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga416e8e1d86ebf4413ae19db8c3f605cb">arm_2d_scene_player_get_the_current_scene</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis)</td></tr>
 <tr class="memdesc:ga416e8e1d86ebf4413ae19db8c3f605cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the current scene of a given scene player  <a href="group__gHelper.html#ga416e8e1d86ebf4413ae19db8c3f605cb">More...</a><br /></td></tr>
 <tr class="separator:ga416e8e1d86ebf4413ae19db8c3f605cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9a514fd8ee617a9af077da1543ee690b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga9a514fd8ee617a9af077da1543ee690b">arm_2d_user_dynamic_dirty_region_init</a> (<a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptThis, <a class="el" href="group__gHelper.html#structarm__2d__scene__t">arm_2d_scene_t</a> *ptScene)</td></tr>
+<tr class="memdesc:ga9a514fd8ee617a9af077da1543ee690b"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize a user dynamic dirty region  <a href="group__gHelper.html#ga9a514fd8ee617a9af077da1543ee690b">More...</a><br /></td></tr>
+<tr class="separator:ga9a514fd8ee617a9af077da1543ee690b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaee182844d457a7931388e16d256ef317"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaee182844d457a7931388e16d256ef317">arm_2d_user_dynamic_dirty_region_depose</a> (<a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptThis, <a class="el" href="group__gHelper.html#structarm__2d__scene__t">arm_2d_scene_t</a> *ptScene)</td></tr>
+<tr class="memdesc:gaee182844d457a7931388e16d256ef317"><td class="mdescLeft">&#160;</td><td class="mdescRight">depose a given user dynamic dirty region  <a href="group__gHelper.html#gaee182844d457a7931388e16d256ef317">More...</a><br /></td></tr>
+<tr class="separator:gaee182844d457a7931388e16d256ef317"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga869feeab1c664ae0674f717ad98ed60d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga869feeab1c664ae0674f717ad98ed60d">arm_2d_user_dynamic_dirty_region_on_frame_start</a> (<a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptThis, uint8_t chUserRegionIndex)</td></tr>
+<tr class="memdesc:ga869feeab1c664ae0674f717ad98ed60d"><td class="mdescLeft">&#160;</td><td class="mdescRight">the on-frame-start event handler for a given user dynamic dirty region  <a href="group__gHelper.html#ga869feeab1c664ae0674f717ad98ed60d">More...</a><br /></td></tr>
+<tr class="separator:ga869feeab1c664ae0674f717ad98ed60d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2bba13147e28c9cc3fc59fe6c4a44367"><td class="memItemLeft" align="right" valign="top">uint_fast8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga2bba13147e28c9cc3fc59fe6c4a44367">arm_2d_user_dynamic_dirty_region_wait_next</a> (<a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptThis)</td></tr>
+<tr class="memdesc:ga2bba13147e28c9cc3fc59fe6c4a44367"><td class="mdescLeft">&#160;</td><td class="mdescRight">wait for the PFB helper service requesting the next region  <a href="group__gHelper.html#ga2bba13147e28c9cc3fc59fe6c4a44367">More...</a><br /></td></tr>
+<tr class="separator:ga2bba13147e28c9cc3fc59fe6c4a44367"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaab177fbb4903297d91299ab7daf403b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaab177fbb4903297d91299ab7daf403b6">arm_2d_user_dynamic_dirty_region_update</a> (<a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptThis, <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, uint8_t chNextUserIndex)</td></tr>
+<tr class="memdesc:gaab177fbb4903297d91299ab7daf403b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">update a given user dynamic dirty region with a new region  <a href="group__gHelper.html#gaab177fbb4903297d91299ab7daf403b6">More...</a><br /></td></tr>
+<tr class="separator:gaab177fbb4903297d91299ab7daf403b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6b3bb642a9d22deddeca9474b78f6635"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga6b3bb642a9d22deddeca9474b78f6635">arm_2d_user_dynamic_dirty_region_change_user_region_index_only</a> (<a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptThis, uint8_t chNextUserIndex)</td></tr>
+<tr class="memdesc:ga6b3bb642a9d22deddeca9474b78f6635"><td class="mdescLeft">&#160;</td><td class="mdescRight">only change the user region index without update the dynamic dirty region  <a href="group__gHelper.html#ga6b3bb642a9d22deddeca9474b78f6635">More...</a><br /></td></tr>
+<tr class="separator:ga6b3bb642a9d22deddeca9474b78f6635"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga14181b777abd2c6af671699f9bfd8f99"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c">arm_2d_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99">arm_2d_helper_pfb_init</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis, <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__cfg__t">arm_2d_helper_pfb_cfg_t</a> *ptCFG)</td></tr>
 <tr class="memdesc:ga14181b777abd2c6af671699f9bfd8f99"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize pfb helper service  <a href="group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99">More...</a><br /></td></tr>
 <tr class="separator:ga14181b777abd2c6af671699f9bfd8f99"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -629,6 +649,18 @@ Functions</h2></td></tr>
 <tr class="memitem:ga1735b2f8f58cdc0cd453a5b92768eabb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga1735b2f8f58cdc0cd453a5b92768eabb">__arm_2d_helper_pfb_rotate270_rgb32</a> (<a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptOrigin, <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptScratch, const <a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a> *ptScreenSize)</td></tr>
 <tr class="memdesc:ga1735b2f8f58cdc0cd453a5b92768eabb"><td class="mdescLeft">&#160;</td><td class="mdescRight">rotate a given rgb32 PFB for 270 degree  <a href="group__gHelper.html#ga1735b2f8f58cdc0cd453a5b92768eabb">More...</a><br /></td></tr>
 <tr class="separator:ga1735b2f8f58cdc0cd453a5b92768eabb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad2e90a07db2ac3ca28e615e80c893f4f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gad2e90a07db2ac3ca28e615e80c893f4f">arm_2d_helper_pfb_append_dirty_regions_to_list</a> (<a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> **ppDirtyRegionList, <a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptItems, size_t tCount)</td></tr>
+<tr class="memdesc:gad2e90a07db2ac3ca28e615e80c893f4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">append dirty regions to the a specified list  <a href="group__gHelper.html#gad2e90a07db2ac3ca28e615e80c893f4f">More...</a><br /></td></tr>
+<tr class="separator:gad2e90a07db2ac3ca28e615e80c893f4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6e5a6659ae9c9c0058ffb1c21cbde898"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga6e5a6659ae9c9c0058ffb1c21cbde898">arm_2d_helper_pfb_remove_dirty_regions_from_list</a> (<a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> **ppDirtyRegionList, <a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptItems, size_t tCount)</td></tr>
+<tr class="memdesc:ga6e5a6659ae9c9c0058ffb1c21cbde898"><td class="mdescLeft">&#160;</td><td class="mdescRight">remove dirty regions from the a specified list  <a href="group__gHelper.html#ga6e5a6659ae9c9c0058ffb1c21cbde898">More...</a><br /></td></tr>
+<tr class="separator:ga6e5a6659ae9c9c0058ffb1c21cbde898"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga45723c42384538326287fdf4071c4dc8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga45723c42384538326287fdf4071c4dc8">arm_2d_dirty_region_item_ignore_set</a> (<a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptThis, bool bIgnore)</td></tr>
+<tr class="memdesc:ga45723c42384538326287fdf4071c4dc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">decide whether ignore the specified dirty region item  <a href="group__gHelper.html#ga45723c42384538326287fdf4071c4dc8">More...</a><br /></td></tr>
+<tr class="separator:ga45723c42384538326287fdf4071c4dc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaab5b94c8714675f90d360b68966a45be"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaab5b94c8714675f90d360b68966a45be">arm_2d_dirty_region_item_ignore_get</a> (<a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptThis)</td></tr>
+<tr class="memdesc:gaab5b94c8714675f90d360b68966a45be"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the ignore status of a given dirty region item  <a href="group__gHelper.html#gaab5b94c8714675f90d360b68966a45be">More...</a><br /></td></tr>
+<tr class="separator:gaab5b94c8714675f90d360b68966a45be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9ab5e975303c28c98f1ae62babb8286d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga9ab5e975303c28c98f1ae62babb8286d">arm_2d_helper_init</a> (void)</td></tr>
 <tr class="memdesc:ga9ab5e975303c28c98f1ae62babb8286d"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize helper services  <a href="group__gHelper.html#ga9ab5e975303c28c98f1ae62babb8286d">More...</a><br /></td></tr>
 <tr class="separator:ga9ab5e975303c28c98f1ae62babb8286d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -647,6 +679,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf92c1f5d41f75d4a8514ab79c34f1185"><td class="memItemLeft" align="right" valign="top">int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185">arm_2d_helper_get_system_timestamp</a> (void)</td></tr>
 <tr class="memdesc:gaf92c1f5d41f75d4a8514ab79c34f1185"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the current system stamp from the reference clock  <a href="group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185">More...</a><br /></td></tr>
 <tr class="separator:gaf92c1f5d41f75d4a8514ab79c34f1185"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad8af435e0bedb4da39db10f601bcc065"><td class="memItemLeft" align="right" valign="top">int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gad8af435e0bedb4da39db10f601bcc065">__arm_2d_helper_time_elapsed</a> (int64_t *plTimestamp)</td></tr>
+<tr class="memdesc:gad8af435e0bedb4da39db10f601bcc065"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the elapsed time since a reference timestamp  <a href="group__gHelper.html#gad8af435e0bedb4da39db10f601bcc065">More...</a><br /></td></tr>
+<tr class="separator:gad8af435e0bedb4da39db10f601bcc065"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga23bfad9d8e31302b44dd096a57f9571d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga23bfad9d8e31302b44dd096a57f9571d">__arm_2d_helper_is_time_out</a> (int64_t lPeriod, int64_t *plTimestamp)</td></tr>
 <tr class="memdesc:ga23bfad9d8e31302b44dd096a57f9571d"><td class="mdescLeft">&#160;</td><td class="mdescRight">set an alarm with given period and check the status  <a href="group__gHelper.html#ga23bfad9d8e31302b44dd096a57f9571d">More...</a><br /></td></tr>
 <tr class="separator:ga23bfad9d8e31302b44dd096a57f9571d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1113,7 +1148,7 @@ inherit from <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb_
 <td class="fieldname">
 Benchmark</td>
 <td class="fielddoc">
-the switching mode <p >points to the head of the FIFO points to the tail of the FIFO Scene FIFO a flag to request switching-to-the next-scene indication of scene switching completion update the background of the current scene the state of the FSM used by runtime. scene player runtime FSM state FSM state opacity of the cover the colour of the cover FSM state scene window a temp tile erase offset FSM state scene window slide offset the switching configuration the switching should finish in specified millisecond </p>
+the switching mode <p >points to the head of the FIFO points to the tail of the FIFO Scene FIFO a flag to request switching-to-the next-scene indication of scene switching completion update the background of the current scene call the old scene frame complete event handler call the new scene frame complete event handler call the old scene Background complete event handler call the new scene Background complete event handler the state of the FSM used by runtime. scene player runtime FSM state FSM state opacity of the cover the colour of the cover FSM state scene window a temp tile erase offset FSM state scene window slide offset the switching configuration the switching should finish in specified millisecond </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a id="a7b1ac6c392f7cd20d1f06599f3770a43" name="a7b1ac6c392f7cd20d1f06599f3770a43"></a>struct <a class="el" href="group__gHelper.html#structarm__2d__scene__player__t_8____unnamed126____">arm_2d_scene_player_t.__unnamed126__</a></td>
@@ -1330,31 +1365,20 @@ a flag to indicate the starting of a frame </td></tr>
 <td class="fieldname">
 ptNext</td>
 <td class="fielddoc">
-the next node </td></tr>
-<tr><td class="fieldtype">
-<a id="aa17e31540f22ea3e9af8a23332b655e1" name="aa17e31540f22ea3e9af8a23332b655e1"></a><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a></td>
-<td class="fieldname">
-tRegion</td>
-<td class="fielddoc">
-the region </td></tr>
-<tr><td class="fieldtype">
-<a id="a6d72c554fc42cbd55401d9dc28795804" name="a6d72c554fc42cbd55401d9dc28795804"></a>uint8_t</td>
-<td class="fieldname">
-bIgnore: 1</td>
-<td class="fielddoc">
-ignore this region </td></tr>
-<tr><td class="fieldtype">
-<a id="abbbfe7f97c2d99378d488c96abb20165" name="abbbfe7f97c2d99378d488c96abb20165"></a>uint8_t</td>
-<td class="fieldname">
-bUpdated: 1</td>
-<td class="fielddoc">
-this region item has been updated, PFB helper should refresh it again. </td></tr>
+the next node <p >the next node in the internal list </p>
+</td></tr>
 <tr><td class="fieldtype">
 <a id="a75df07affecad9de1e80ad7fd841c25c" name="a75df07affecad9de1e80ad7fd841c25c"></a>struct <a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t_8____unnamed142____">arm_2d_region_list_item_t.__unnamed142__</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
 </td></tr>
+<tr><td class="fieldtype">
+<a id="aa17e31540f22ea3e9af8a23332b655e1" name="aa17e31540f22ea3e9af8a23332b655e1"></a><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a></td>
+<td class="fieldname">
+tRegion</td>
+<td class="fielddoc">
+the region </td></tr>
 </table>
 
 </div>
@@ -2217,6 +2241,30 @@ bUpdateBG: 1</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
+<a id="ad9c6f923c77d3145cb941fd63386ef4d" name="ad9c6f923c77d3145cb941fd63386ef4d"></a>uint8_t</td>
+<td class="fieldname">
+bCallOldSceneFrameCPL: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="aa20e8faedaf9c71649229f2ec56dd07d" name="aa20e8faedaf9c71649229f2ec56dd07d"></a>uint8_t</td>
+<td class="fieldname">
+bCallNewSceneFrameCPL: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ae675b7a116b8f08c00f859a1b050c824" name="ae675b7a116b8f08c00f859a1b050c824"></a>uint8_t</td>
+<td class="fieldname">
+bCallOldSceneBGCPL: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a90af52e7a9362fc35bc27843b2b1bb07" name="a90af52e7a9362fc35bc27843b2b1bb07"></a>uint8_t</td>
+<td class="fieldname">
+bCallNewSceneBGCPL: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
 <a id="aed935ac87652256c12f85e50af76e552" name="aed935ac87652256c12f85e50af76e552"></a>uint8_t</td>
 <td class="fieldname">
 chState</td>
@@ -2554,18 +2602,6 @@ bFBCopyComplete</td>
 <a id="ad98218cacab7e7e69f2af98ae8d74633" name="ad98218cacab7e7e69f2af98ae8d74633"></a>struct <a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *</td>
 <td class="fieldname">
 ptInternalNext</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a id="a1bcefde34d5dc7eb31efdb206430a6b8" name="a1bcefde34d5dc7eb31efdb206430a6b8"></a>uint8_t</td>
-<td class="fieldname">
-bFromInternalPool: 1</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a id="a39384e6fb6c89bb61c5865aa1d62644c" name="a39384e6fb6c89bb61c5865aa1d62644c"></a>uint8_t</td>
-<td class="fieldname">
-bFromHeap: 1</td>
 <td class="fielddoc">
 </td></tr>
 </table>
@@ -4013,6 +4049,26 @@ fOP</td>
 
 </div>
 </div>
+<a id="ga04905e1027ba242ec8abd1f512c9b17b" name="ga04905e1027ba242ec8abd1f512c9b17b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga04905e1027ba242ec8abd1f512c9b17b">&#9670;&nbsp;</a></span>arm_2d_helper_time_elapsed</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define arm_2d_helper_time_elapsed</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__timestamp_ptr</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">        <a class="code hl_function" href="group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf" title="convert ticks of a reference timer to millisecond">arm_2d_helper_convert_ticks_to_ms</a>(                                      \</div>
+<div class="line">            <a class="code hl_function" href="group__gHelper.html#gad8af435e0bedb4da39db10f601bcc065" title="get the elapsed time since a reference timestamp">__arm_2d_helper_time_elapsed</a>(__timestamp_ptr))</div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="gab9da2ee4cd3a208e7ff4ece9ac8086f0" name="gab9da2ee4cd3a208e7ff4ece9ac8086f0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gab9da2ee4cd3a208e7ff4ece9ac8086f0">&#9670;&nbsp;</a></span>arm_2d_helper_time_liner_slider</h2>
 
@@ -5186,6 +5242,243 @@ false the new content is stored in ptOrigin </dd></dl>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__gHelper.html#structarm__2d__scene__t" title="a class for describing scenes which are the combination of a background and a foreground with a dirty...">arm_2d_scene_t</a> * the current scene </dd></dl>
+
+</div>
+</div>
+<a id="ga9a514fd8ee617a9af077da1543ee690b" name="ga9a514fd8ee617a9af077da1543ee690b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9a514fd8ee617a9af077da1543ee690b">&#9670;&nbsp;</a></span>arm_2d_user_dynamic_dirty_region_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> * arm_2d_user_dynamic_dirty_region_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__scene__t">arm_2d_scene_t</a> *&#160;</td>
+          <td class="paramname"><em>ptScene</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>initialize a user dynamic dirty region </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target region list item. If it is NULL, this function will allocate an object from the heap </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptScene</td><td>the target scene. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>arm_2d_region_list_item_t* the target region list item </dd></dl>
+
+</div>
+</div>
+<a id="gaee182844d457a7931388e16d256ef317" name="gaee182844d457a7931388e16d256ef317"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaee182844d457a7931388e16d256ef317">&#9670;&nbsp;</a></span>arm_2d_user_dynamic_dirty_region_depose()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_user_dynamic_dirty_region_depose </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__scene__t">arm_2d_scene_t</a> *&#160;</td>
+          <td class="paramname"><em>ptScene</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>depose a given user dynamic dirty region </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target region list item. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptScene</td><td>the target scene. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga869feeab1c664ae0674f717ad98ed60d" name="ga869feeab1c664ae0674f717ad98ed60d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga869feeab1c664ae0674f717ad98ed60d">&#9670;&nbsp;</a></span>arm_2d_user_dynamic_dirty_region_on_frame_start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_user_dynamic_dirty_region_on_frame_start </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>chUserRegionIndex</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>the on-frame-start event handler for a given user dynamic dirty region </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target region list item. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">chUserRegionIndex</td><td>a specified user region index. When 0xFF is given, the existing user region index will not be changed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga2bba13147e28c9cc3fc59fe6c4a44367" name="ga2bba13147e28c9cc3fc59fe6c4a44367"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2bba13147e28c9cc3fc59fe6c4a44367">&#9670;&nbsp;</a></span>arm_2d_user_dynamic_dirty_region_wait_next()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint_fast8_t arm_2d_user_dynamic_dirty_region_wait_next </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>wait for the PFB helper service requesting the next region </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target region list item. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>uint_fast8_t the user region index</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>You can use the return value, i.e. the user region index to address the new region you want to cover. </dd></dl>
+
+</div>
+</div>
+<a id="gaab177fbb4903297d91299ab7daf403b6" name="gaab177fbb4903297d91299ab7daf403b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaab177fbb4903297d91299ab7daf403b6">&#9670;&nbsp;</a></span>arm_2d_user_dynamic_dirty_region_update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_user_dynamic_dirty_region_update </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td>
+          <td class="paramname"><em>ptTarget</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td>
+          <td class="paramname"><em>ptRegion</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>chNextUserIndex</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>update a given user dynamic dirty region with a new region </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target region list item. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptTarget</td><td>the target tile (the frame-buffer to draw) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptRegion</td><td>the new region </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>- when the ptTarget isn't NULL, the ptRegion should points a region inside the canvas of the ptTarget (i.e. an relative region of the ptTarget)<ul>
+<li>when the ptTarget is NULL, this function will get the default framebuffer by calling the function <a class="el" href="group__gKernel.html#gaa0f5857c97450feeb79b3983dd1a950b" title="get the default frame buffer">arm_2d_get_default_frame_buffer()</a>.</li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">chNextUserIndex</td><td>the next user region index, 0xFF means complete. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga6b3bb642a9d22deddeca9474b78f6635" name="ga6b3bb642a9d22deddeca9474b78f6635"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6b3bb642a9d22deddeca9474b78f6635">&#9670;&nbsp;</a></span>arm_2d_user_dynamic_dirty_region_change_user_region_index_only()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_user_dynamic_dirty_region_change_user_region_index_only </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>chNextUserIndex</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>only change the user region index without update the dynamic dirty region </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target region list item. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">chNextUserIndex</td><td>the next user region index. When encounter 0xFF, the user region index will be reset to zero. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -6549,6 +6842,179 @@ For normal usage, please DO NOT use this function unless you know what you are d
 
 </div>
 </div>
+<a id="gad2e90a07db2ac3ca28e615e80c893f4f" name="gad2e90a07db2ac3ca28e615e80c893f4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad2e90a07db2ac3ca28e615e80c893f4f">&#9670;&nbsp;</a></span>arm_2d_helper_pfb_append_dirty_regions_to_list()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool arm_2d_helper_pfb_append_dirty_regions_to_list </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> **&#160;</td>
+          <td class="paramname"><em>ppDirtyRegionList</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *&#160;</td>
+          <td class="paramname"><em>ptItems</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>tCount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>append dirty regions to the a specified list </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ppDirtyRegionList</td><td>the target list </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptItems</td><td>the dirty regions </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tCount</td><td>the number of dirty regions </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>operation is successful </td></tr>
+    <tr><td class="paramname">false</td><td>the operation is failed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga6e5a6659ae9c9c0058ffb1c21cbde898" name="ga6e5a6659ae9c9c0058ffb1c21cbde898"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6e5a6659ae9c9c0058ffb1c21cbde898">&#9670;&nbsp;</a></span>arm_2d_helper_pfb_remove_dirty_regions_from_list()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool arm_2d_helper_pfb_remove_dirty_regions_from_list </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> **&#160;</td>
+          <td class="paramname"><em>ppDirtyRegionList</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *&#160;</td>
+          <td class="paramname"><em>ptItems</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>tCount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>remove dirty regions from the a specified list </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ppDirtyRegionList</td><td>the target list </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptItems</td><td>the dirty regions </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tCount</td><td>the number of dirty regions </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>operation is successful </td></tr>
+    <tr><td class="paramname">false</td><td>the operation is failed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga45723c42384538326287fdf4071c4dc8" name="ga45723c42384538326287fdf4071c4dc8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga45723c42384538326287fdf4071c4dc8">&#9670;&nbsp;</a></span>arm_2d_dirty_region_item_ignore_set()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool arm_2d_dirty_region_item_ignore_set </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>bIgnore</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>decide whether ignore the specified dirty region item </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target dirty region item object </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bIgnore</td><td>whether ignore </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool the previous ignore status </dd></dl>
+
+</div>
+</div>
+<a id="gaab5b94c8714675f90d360b68966a45be" name="gaab5b94c8714675f90d360b68966a45be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaab5b94c8714675f90d360b68966a45be">&#9670;&nbsp;</a></span>arm_2d_dirty_region_item_ignore_get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool arm_2d_dirty_region_item_ignore_get </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get the ignore status of a given dirty region item </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target dirty region item object </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>the dirty region item is ignored. </td></tr>
+    <tr><td class="paramname">false</td><td>the dirty region item is in-use. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga9ab5e975303c28c98f1ae62babb8286d" name="ga9ab5e975303c28c98f1ae62babb8286d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga9ab5e975303c28c98f1ae62babb8286d">&#9670;&nbsp;</a></span>arm_2d_helper_init()</h2>
 
@@ -6681,8 +7147,35 @@ For normal usage, please DO NOT use this function unless you know what you are d
 </div><div class="memdoc">
 
 <p>get the current system stamp from the reference clock </p>
-<dl class="section return"><dt>Returns</dt><dd>int64_t the timestamp in ticks (no overflow issue) </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>int64_t the timestamp in ticks </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>you have to call <a class="el" href="group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf" title="convert ticks of a reference timer to millisecond">arm_2d_helper_convert_ticks_to_ms()</a> to convert the the timestamp into milliseconds when required. </dd></dl>
+
+</div>
+</div>
+<a id="gad8af435e0bedb4da39db10f601bcc065" name="gad8af435e0bedb4da39db10f601bcc065"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad8af435e0bedb4da39db10f601bcc065">&#9670;&nbsp;</a></span>__arm_2d_helper_time_elapsed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int64_t __arm_2d_helper_time_elapsed </td>
+          <td>(</td>
+          <td class="paramtype">int64_t *&#160;</td>
+          <td class="paramname"><em>plTimestamp</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get the elapsed time since a reference timestamp </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">plTimestamp</td><td>the reference timestamp </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int64_t the timestamp in ticks </dd></dl>
 
 </div>
 </div>
