@@ -1148,7 +1148,7 @@ inherit from <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb_
 <td class="fieldname">
 Benchmark</td>
 <td class="fielddoc">
-the switching mode <p >points to the head of the FIFO points to the tail of the FIFO Scene FIFO a flag to request switching-to-the next-scene indication of scene switching completion update the background of the current scene the state of the FSM used by runtime. scene player runtime FSM state FSM state opacity of the cover the colour of the cover FSM state scene window a temp tile erase offset FSM state scene window slide offset the switching configuration the switching should finish in specified millisecond </p>
+the switching mode <p >points to the head of the FIFO points to the tail of the FIFO Scene FIFO a flag to request switching-to-the next-scene indication of scene switching completion update the background of the current scene call the old scene frame complete event handler call the new scene frame complete event handler call the old scene Background complete event handler call the new scene Background complete event handler the state of the FSM used by runtime. scene player runtime FSM state FSM state opacity of the cover the colour of the cover FSM state scene window a temp tile erase offset FSM state scene window slide offset the switching configuration the switching should finish in specified millisecond </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a id="a7b1ac6c392f7cd20d1f06599f3770a43" name="a7b1ac6c392f7cd20d1f06599f3770a43"></a>struct <a class="el" href="group__gHelper.html#structarm__2d__scene__player__t_8____unnamed126____">arm_2d_scene_player_t.__unnamed126__</a></td>
@@ -2238,6 +2238,30 @@ bSwitchCPL: 1</td>
 <a id="aa451c9cbeab2e70bd80d01cee5a21b10" name="aa451c9cbeab2e70bd80d01cee5a21b10"></a>uint8_t</td>
 <td class="fieldname">
 bUpdateBG: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ad9c6f923c77d3145cb941fd63386ef4d" name="ad9c6f923c77d3145cb941fd63386ef4d"></a>uint8_t</td>
+<td class="fieldname">
+bCallOldSceneFrameCPL: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="aa20e8faedaf9c71649229f2ec56dd07d" name="aa20e8faedaf9c71649229f2ec56dd07d"></a>uint8_t</td>
+<td class="fieldname">
+bCallNewSceneFrameCPL: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ae675b7a116b8f08c00f859a1b050c824" name="ae675b7a116b8f08c00f859a1b050c824"></a>uint8_t</td>
+<td class="fieldname">
+bCallOldSceneBGCPL: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a90af52e7a9362fc35bc27843b2b1bb07" name="a90af52e7a9362fc35bc27843b2b1bb07"></a>uint8_t</td>
+<td class="fieldname">
+bCallNewSceneBGCPL: 1</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
