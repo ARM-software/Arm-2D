@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        14. March 2024
- * $Revision:    V.1.8.9
+ * $Date:        17. March 2024
+ * $Revision:    V.1.8.10
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1940,7 +1940,30 @@ label_iteration_begin_start:
                 this.Adapter.bFirstIteration = false;       
                 this.Adapter.ptDirtyRegion = NULL;          /* refresh the whole screen */
 
-                
+                if (this.tCFG.FrameBuffer.bDebugDirtyRegions) {
+                    /* in debug mode, if there is nothing to refresh, we should ignore this frame*/
+                    if (NULL == this.Adapter.OptimizedDirtyRegions.ptWorkingList) {
+                        ARM_2D_LOG_INFO(
+                            DIRTY_REGION_OPTIMISATION, 
+                            1, 
+                            "Iteration Begin", 
+                            "No valid dirty region in the list, ignore this frame"
+                        );
+                        
+                        /* free pfb */
+                        arm_irq_safe {
+                            __arm_2d_helper_pfb_free(ptThis, this.Adapter.ptCurrent);
+                            this.Adapter.ptCurrent = NULL;
+                        }
+
+                        /* reset flag */
+                        this.Adapter.bFirstIteration = true;
+                        this.Adapter.bIsDryRun = false;
+
+                        // out of lcd 
+                        return (arm_2d_tile_t *)-1;
+                    }
+                }
             } else {
 
                 /* Use the optimized dirty region working list for refresh
