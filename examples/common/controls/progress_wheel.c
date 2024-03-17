@@ -216,6 +216,25 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
         chState = arm_2d_user_dynamic_dirty_region_wait_next(&this.tDirtyRegion);
     }
 
+    arm_2d_region_t tDrawRegion;
+
+    if (bNoScale) {
+        arm_2d_canvas(ptTarget, __target_canvas) {
+            if (NULL == ptRegion) {
+                ptRegion = &__target_canvas;
+            }
+
+            arm_2d_size_t tWheelSize = ptileArcMask->tRegion.tSize;
+            tWheelSize.iWidth *= 2;
+            tWheelSize.iHeight *= 2;
+
+            arm_2d_align_centre(*ptRegion, tWheelSize) {
+                tDrawRegion = __centre_region;
+                ptRegion = &tDrawRegion;
+            }
+        }
+    }
+
     arm_2d_container(ptTarget, __wheel, ptRegion) {
 
         if (    (chState == START) 
@@ -255,6 +274,11 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
         }
     
         arm_2d_region_t tRotationRegion = __wheel_canvas;
+
+        tRotationRegion.tSize.iWidth = ((__wheel_canvas.tSize.iWidth + 1) >> 1);
+        tRotationRegion.tSize.iHeight = ((__wheel_canvas.tSize.iHeight + 1) >> 1);
+
+
         arm_2d_location_t tTargetCentre = {
             .iX = __wheel_canvas.tLocation.iX + (__wheel_canvas.tSize.iWidth >> 1),
             .iY = __wheel_canvas.tLocation.iY + (__wheel_canvas.tSize.iHeight >> 1),
@@ -264,9 +288,6 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
             .iX = ptileArcMask->tRegion.tSize.iWidth - 1,
             .iY = ptileArcMask->tRegion.tSize.iHeight - 1,
         };
-
-        tRotationRegion.tSize.iWidth = ((__wheel_canvas.tSize.iWidth + 1) >> 1);
-        tRotationRegion.tSize.iHeight = ((__wheel_canvas.tSize.iHeight + 1) >> 1);
 
         if(this.fAngle > ARM_2D_ANGLE(90.0f)){
             arm_2d_region_t tQuater = tRotationRegion;
@@ -482,8 +503,8 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
             /* draw the starting point */
             if (bNoScale) {
                 tQuater.tLocation.iX = tQuater.tLocation.iX 
-                                     + tQuater.tSize.iWidth 
-                                     - ptileDotMask->tRegion.tSize.iWidth / 2;
+                                    + tQuater.tSize.iWidth 
+                                    - ptileDotMask->tRegion.tSize.iWidth / 2;
                 tQuater.tLocation.iY += 1;
 
                 arm_2d_tile_t tDotMaskHalf = 
@@ -561,6 +582,8 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
         }
     }
+
+
 }
 
 
