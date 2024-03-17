@@ -583,6 +583,7 @@ int32_t GLCD_DrawBitmap (uint32_t x, uint32_t y, uint32_t width, uint32_t height
     const uint16_t *phwSrc = (const uint16_t *)bitmap;
     for (int_fast16_t i = 0; i < height; i++) {
         memcpy ((uint16_t *)phwDes, phwSrc, width * 2);
+        SCB_CleanDCache_by_Addr(phwDes, width * 2);
         phwSrc += width;
         phwDes += GLCD_WIDTH;
     }
