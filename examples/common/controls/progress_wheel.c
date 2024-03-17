@@ -289,7 +289,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
             .iY = ptileArcMask->tRegion.tSize.iHeight - 1,
         };
 
-        if(this.fAngle > ARM_2D_ANGLE(90.0f)){
+        if(this.fAngle >= ARM_2D_ANGLE(90.0f)){
             arm_2d_region_t tQuater = tRotationRegion;
             tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
 
@@ -340,7 +340,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
             }
         }
 
-        if(this.fAngle > ARM_2D_ANGLE(180.0f)){
+        if(this.fAngle >= ARM_2D_ANGLE(180.0f)){
             arm_2d_region_t tQuater = tRotationRegion;
             tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
             tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
@@ -391,7 +391,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
         }
 
-        if(this.fAngle > ARM_2D_ANGLE(270.0)){
+        if(this.fAngle >= ARM_2D_ANGLE(270.0)){
             arm_2d_region_t tQuater = tRotationRegion;
             tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
 
