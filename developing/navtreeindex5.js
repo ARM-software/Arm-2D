@@ -1,5 +1,7 @@
 var NAVTREEINDEX5 =
 {
+"use_tile.html#autotoc_md114":[6,0],
+"use_tile.html#autotoc_md115":[6,1],
 "use_tile.html#autotoc_md116":[6,1,0],
 "use_tile.html#autotoc_md117":[6,1,0,0],
 "use_tile.html#autotoc_md118":[6,1,0,1],
