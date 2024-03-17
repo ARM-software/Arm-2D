@@ -175,7 +175,18 @@ static void __on_scene_meter_frame_start(arm_2d_scene_t *ptScene)
 
     float fAngle = ARM_2D_ANGLE((float)iResult / 10.0f);
     /* 0 ~ 200 km / h */
-    this.iNumber = (int16_t)(200 * (iResult + 1200) / 2400); 
+
+    do {
+        int16_t iNumber = (int16_t)(200 * (iResult + 1200) / 2400);
+        bool bNumberUnchanged = this.iNumber == iNumber;
+
+        this.iNumber = iNumber;
+
+        arm_2d_dirty_region_item_ignore_set(
+                                &this.use_as__arm_2d_scene_t.ptDirtyRegion[0],
+                                bNumberUnchanged);
+
+    } while(0);
 
     /* update helper with new values*/
     arm_2d_helper_transform_update_value(&this.Pointer.tHelper, fAngle,1.0f);
@@ -316,22 +327,8 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
     IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
 
         /* the dirty region for text display*/
-        ADD_REGION_TO_LIST(s_tDirtyRegions,
-            0  /* initialize at runtime later */
-        ),
-
-        /* add the last region:
-         * it is the top left corner for text display
-         */
         ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
-            .tLocation = {
-                .iX = 0,
-                .iY = 0,
-            },
-            .tSize = {
-                .iWidth = 0,
-                .iHeight = 8,
-            },
+            0  /* initialize at runtime later */
         ),
 
     END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
@@ -362,8 +359,6 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
 
             /* we don't want to refresh "km/h" as there is no change at all */
             s_tDirtyRegions[0].tRegion.tSize.iHeight -= 16; 
-
-            s_tDirtyRegions[1].tRegion.tSize.iWidth = tScreen.tSize.iWidth;
         }
 
     } while(0);
