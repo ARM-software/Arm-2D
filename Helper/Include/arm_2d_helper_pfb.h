@@ -707,8 +707,11 @@ typedef struct {
     float fAngle;
     float fScale;
 
+    arm_2d_region_t tRegionPatch;
+
 ARM_PRIVATE(
     arm_2d_region_list_item_t tDirtyRegions[2];
+    
     arm_2d_op_t *ptTransformOP;
     arm_2d_region_list_item_t **ppDirtyRegionList;
 

@@ -673,6 +673,10 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                             &tTargetCentre);
 
             if (this.tCFG.bUseDirtyRegions) {
+                /* apply transform region patch */
+                this.tTransHelper.tRegionPatch.tLocation.iX = -1;
+                this.tTransHelper.tRegionPatch.tSize.iWidth = 1;
+
                 arm_2d_helper_transform_update_dirty_regions(   &this.tTransHelper,
                                                                 &__wheel_canvas,
                                                                 bIsNewFrame);

@@ -3298,6 +3298,17 @@ void arm_2d_helper_transform_update_dirty_regions(
         /* keep the old region */
         this.tDirtyRegions[1].tRegion = this.tDirtyRegions[0].tRegion;
 
+        /* apply region patch */
+        do {
+            /* note: tRegionPatch stores the patch values (deltas) */
+            
+            tNewRegion.tSize.iWidth += this.tRegionPatch.tSize.iWidth;
+            tNewRegion.tSize.iHeight += this.tRegionPatch.tSize.iHeight;
+
+            tNewRegion.tLocation.iX += this.tRegionPatch.tLocation.iX;
+            tNewRegion.tLocation.iY += this.tRegionPatch.tLocation.iY;
+        } while(0);
+
         /* update the new region */
         this.tDirtyRegions[0].tRegion = tNewRegion;
         

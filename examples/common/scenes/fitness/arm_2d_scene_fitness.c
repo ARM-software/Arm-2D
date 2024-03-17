@@ -224,7 +224,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_fitness_handler)
         progress_wheel_show(&this.tWheel,
                             ptTile, 
                             &__top_canvas,       
-                            1000 - this.iProgress,         /* progress 0~1000 */
+                            this.iProgress,         /* progress 0~1000 */
                             255,                    /* opacity */
                             bIsNewFrame);
         arm_2d_op_wait_async(NULL);
