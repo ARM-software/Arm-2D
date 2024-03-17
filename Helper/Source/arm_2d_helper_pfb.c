@@ -2710,9 +2710,10 @@ ARM_PT_BEGIN(this.Adapter.chPT)
             HELPER_PFB, 
             0, 
             "PFB TASK", 
-            "Call on-drawing-event-handler [%p]( user-obj: %p)",
+            "Call on-drawing-event-handler [%p]( user-obj: %p), IsNewFrame[%s]",
             this.tCFG.Dependency.evtOnDrawing.fnHandler,
-            this.tCFG.Dependency.evtOnDrawing.pTarget
+            this.tCFG.Dependency.evtOnDrawing.pTarget,
+            this.Adapter.bIsNewFrame ? "true" : "false"
         );
 
         __arm_2d_helper_perf_counter_start( &this.Statistics.lTimestamp,
@@ -2760,9 +2761,10 @@ ARM_PT_BEGIN(this.Adapter.chPT)
                 HELPER_PFB, 
                 0, 
                 "PFB TASK", 
-                "draw navigation layer [%p]( user-obj: %p)",
+                "draw navigation layer [%p]( user-obj: %p), IsNewFrame[%s]",
                 this.tCFG.Dependency.Navigation.evtOnDrawing.fnHandler,
-                this.tCFG.Dependency.Navigation.evtOnDrawing.pTarget
+                this.tCFG.Dependency.Navigation.evtOnDrawing.pTarget,
+                this.Adapter.bIsNewFrame ? "true" : "false"
             );
 
             tResult = this.tCFG.Dependency.Navigation.evtOnDrawing.fnHandler(
@@ -3323,6 +3325,7 @@ void arm_2d_helper_transform_update_dirty_regions(
 
                 this.tDirtyRegions[0].bIgnore = true;
                 this.tDirtyRegions[1].bIgnore = false;
+                this.tDirtyRegions[1].bUpdated = true;
 
                 return ;
             }
@@ -3330,8 +3333,10 @@ void arm_2d_helper_transform_update_dirty_regions(
 
         /* the new region has no overlapping with the old region */
         this.tDirtyRegions[0].bIgnore = false;
-        this.tDirtyRegions[1].bIgnore = false;
+        this.tDirtyRegions[0].bUpdated = true;
 
+        this.tDirtyRegions[1].bIgnore = false;
+        this.tDirtyRegions[1].bUpdated = true;
     }
 }
 ARM_NONNULL(1)
