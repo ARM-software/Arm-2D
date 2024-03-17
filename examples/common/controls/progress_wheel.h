@@ -150,7 +150,8 @@ ARM_PRIVATE(
     arm_2d_helper_transform_t tTransHelper;
     
     arm_2d_region_list_item_t tDirtyRegion;
-
+    arm_2d_region_t tLastCurveRegion;
+    
     int8_t  chLastQuadrant;
     int16_t iLastProgress;
     int16_t iProgress;

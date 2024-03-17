@@ -209,7 +209,7 @@
           <description>A 2D image processing library for Cortex-M processors</description>
           <files>
             <file category="include"     name="Library/Include/" />
-            <file category="sourceC"     name="Library/Source/arm_2d.c"                         attr="config" version="1.3.1" />
+            <file category="sourceC"     name="Library/Source/arm_2d.c"                         attr="config" version="1.3.2" />
             <file category="sourceC"     name="Library/Source/arm_2d_async.c" />
             <file category="sourceC"     name="Library/Source/arm_2d_draw.c" />
             <file category="sourceC"     name="Library/Source/arm_2d_conversion.c" />

@@ -221,15 +221,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_fitness_handler)
                             bIsNewFrame);
     #endif
 
-        arm_2d_align_centre(__top_canvas, 240, 240 ) {
-            progress_wheel_show(&this.tWheel,
-                                ptTile, 
-                                &__centre_region,       
-                                this.iProgress,         /* progress 0~1000 */
-                                255,                    /* opacity */
-                                bIsNewFrame);
-            arm_2d_op_wait_async(NULL);
-        }
+        progress_wheel_show(&this.tWheel,
+                            ptTile, 
+                            &__top_canvas,       
+                            1000 - this.iProgress,         /* progress 0~1000 */
+                            255,                    /* opacity */
+                            bIsNewFrame);
+        arm_2d_op_wait_async(NULL);
 
         arm_2d_align_centre(__top_canvas, 84, 80 ) {
             arm_2d_layout(__centre_region) {
