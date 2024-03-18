@@ -1,5 +1,6 @@
 var NAVTREEINDEX5 =
 {
+"pages.html":[],
 "use_tile.html":[6],
 "use_tile.html#autotoc_md114":[6,0],
 "use_tile.html#autotoc_md115":[6,1],
