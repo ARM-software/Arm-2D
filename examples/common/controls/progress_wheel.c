@@ -75,7 +75,7 @@ enum {
     //DRAW_ERASE_LAST_CURVE,
     DRAW_MIDDLE_STEP,
     DRAW_WHOLE_WHEEL,
-    DRAW_CURVE,
+    //DRAW_CURVE,
     //DRAW_END_POINT,
     //FINISH,
     NO_DIRTY_REGIONS,
@@ -271,16 +271,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 
                 bool bSmallMove = ABS(iProgressDelta) <= 25;
 
-                if (1000 == this.iProgress && 3 == this.chLastQuadrant) {
-                    chState = DRAW_CURVE;
-                    
-                    ARM_2D_LOG_INFO(
-                        CONTROLS, 
-                        0, 
-                        "Progress Wheel", 
-                        "Progress increase to 1000, Goto state[DRAW_CURVE]"
-                    );
-                } else if (chDelta < 2) {
+                if (chDelta < 2) {
                     this.chLastQuadrant = chCurrentQuadrant;
                     if (bSmallMove) {
                         ARM_2D_LOG_INFO(
@@ -559,6 +550,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 
             arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[0]);
 
+            #if 0
             do {
                 arm_2d_region_t tReDrawRegion = *(this.tOP[0].Target.ptRegion);
                 tReDrawRegion.tLocation.iX += tQuater.tLocation.iX;
@@ -581,6 +573,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
                 }
             } while(0);
+            #endif
         } while(0);
 
 
@@ -654,6 +647,11 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                     arm_2d_helper_transform_force_to_use_minimal_enclosure(
                                                     &this.tTransHelper,
                                                     (chState == DRAW_MIDDLE_STEP)
+                                                );
+                    
+                    arm_2d_helper_transform_suspend_update(
+                                                    &this.tTransHelper,
+                                                    (chState == DRAW_WHOLE_WHEEL)
                                                 );
                 }
 

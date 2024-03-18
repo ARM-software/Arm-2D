@@ -728,7 +728,8 @@ ARM_PRIVATE(
 
     uint8_t bNeedUpdate                 : 1;
     uint8_t bForceToUseMinimalEnclosure : 1;
-    uint8_t                             : 6;
+    uint8_t bSuspendUpdate              : 1;
+    uint8_t                             : 5;
 )
 
 } arm_2d_helper_transform_t;
@@ -974,9 +975,8 @@ extern
 ARM_NONNULL(1)
 void arm_2d_helper_transform_force_update(arm_2d_helper_transform_t *ptThis);
 
-ARM_NONNULL(1)
 /*!
- * \brief force the transform helper use the minimal enclosure region as
+ * \brief force the transform helper to use the minimal enclosure region as
  *        the dirty region.
  * 
  * \param[in] ptThis the target helper
@@ -984,8 +984,21 @@ ARM_NONNULL(1)
  * \return boolean the original setting
  */
 extern
+ARM_NONNULL(1)
 bool arm_2d_helper_transform_force_to_use_minimal_enclosure(
                                             arm_2d_helper_transform_t *ptThis,
+                                            bool bEnable);
+
+/*!
+ * \brief force the transform helper to suspend the dirty region update.
+ * 
+ * \param[in] ptThis the target helper
+ * \param[in] bEnable whether enable this feature.
+ * \return boolean the original setting
+ */
+extern
+ARM_NONNULL(1)
+bool arm_2d_helper_transform_suspend_update(arm_2d_helper_transform_t *ptThis,
                                             bool bEnable);
 
 /*!

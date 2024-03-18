@@ -3274,6 +3274,8 @@ void arm_2d_helper_transform_update_dirty_regions(
     if (this.bNeedUpdate) {
         this.bNeedUpdate = false;
 
+        bool bSuspendUpdate = this.bSuspendUpdate;
+
         this.tDirtyRegions[0].bIgnore = true;
         this.tDirtyRegions[1].bIgnore = true;
 
@@ -3317,12 +3319,12 @@ void arm_2d_helper_transform_update_dirty_regions(
             arm_2d_region_get_minimal_enclosure(&this.tDirtyRegions[1].tRegion, 
                                                 &this.tDirtyRegions[0].tRegion,
                                                 &tEnclosureArea);
-                                                
+
             /* we only refresh the enclosure region to save time */
             this.tDirtyRegions[1].tRegion = tEnclosureArea;
 
             this.tDirtyRegions[0].bIgnore = true;
-            this.tDirtyRegions[1].bIgnore = false;
+            this.tDirtyRegions[1].bIgnore = false || bSuspendUpdate;
             this.tDirtyRegions[1].bUpdated = true;
 
             return ;
@@ -3349,7 +3351,7 @@ void arm_2d_helper_transform_update_dirty_regions(
                 this.tDirtyRegions[1].tRegion = tEnclosureArea;
 
                 this.tDirtyRegions[0].bIgnore = true;
-                this.tDirtyRegions[1].bIgnore = false;
+                this.tDirtyRegions[1].bIgnore = false || bSuspendUpdate;
                 this.tDirtyRegions[1].bUpdated = true;
 
                 return ;
@@ -3357,10 +3359,10 @@ void arm_2d_helper_transform_update_dirty_regions(
         }
 
         /* the new region has no overlapping with the old region */
-        this.tDirtyRegions[0].bIgnore = false;
+        this.tDirtyRegions[0].bIgnore = false || bSuspendUpdate;
         this.tDirtyRegions[0].bUpdated = true;
 
-        this.tDirtyRegions[1].bIgnore = false;
+        this.tDirtyRegions[1].bIgnore = false || bSuspendUpdate;
         this.tDirtyRegions[1].bUpdated = true;
     }
 }
@@ -3403,6 +3405,22 @@ bool arm_2d_helper_transform_force_to_use_minimal_enclosure(
     arm_irq_safe {
         bOrigin = this.bForceToUseMinimalEnclosure;
         this.bForceToUseMinimalEnclosure = bEnable;
+    }
+
+    return bOrigin;
+}
+
+ARM_NONNULL(1)
+bool arm_2d_helper_transform_suspend_update(
+                                            arm_2d_helper_transform_t *ptThis,
+                                            bool bEnable)
+{
+    bool bOrigin = false;
+    assert(NULL != ptThis);
+
+    arm_irq_safe {
+        bOrigin = this.bSuspendUpdate;
+        this.bSuspendUpdate = bEnable;
     }
 
     return bOrigin;
