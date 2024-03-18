@@ -3301,7 +3301,7 @@ void arm_2d_helper_transform_update_dirty_regions(
         /* apply region patch */
         do {
             /* note: tRegionPatch stores the patch values (deltas) */
-            
+
             tNewRegion.tSize.iWidth += this.tRegionPatch.tSize.iWidth;
             tNewRegion.tSize.iHeight += this.tRegionPatch.tSize.iHeight;
 
@@ -3313,9 +3313,23 @@ void arm_2d_helper_transform_update_dirty_regions(
         this.tDirtyRegions[0].tRegion = tNewRegion;
         
         arm_2d_region_t tOverlapArea, tEnclosureArea;
-        if (arm_2d_region_intersect(&this.tDirtyRegions[1].tRegion, 
-                                    &this.tDirtyRegions[0].tRegion,
-                                    &tOverlapArea)) {
+        if (this.bForceToUseMinimalEnclosure) {
+            arm_2d_region_get_minimal_enclosure(&this.tDirtyRegions[1].tRegion, 
+                                                &this.tDirtyRegions[0].tRegion,
+                                                &tEnclosureArea);
+                                                
+            /* we only refresh the enclosure region to save time */
+            this.tDirtyRegions[1].tRegion = tEnclosureArea;
+
+            this.tDirtyRegions[0].bIgnore = true;
+            this.tDirtyRegions[1].bIgnore = false;
+            this.tDirtyRegions[1].bUpdated = true;
+
+            return ;
+
+        } else if (arm_2d_region_intersect( &this.tDirtyRegions[1].tRegion, 
+                                            &this.tDirtyRegions[0].tRegion,
+                                            &tOverlapArea)) {
             /* the new region overlaps with the old region */
             uint32_t wPixelsRegion0 = this.tDirtyRegions[0].tRegion.tSize.iHeight
                                     * this.tDirtyRegions[0].tRegion.tSize.iWidth;
@@ -3376,6 +3390,22 @@ void arm_2d_helper_transform_force_update(arm_2d_helper_transform_t *ptThis)
 {
     assert(NULL != ptThis);
     this.bNeedUpdate = true;
+}
+
+ARM_NONNULL(1)
+bool arm_2d_helper_transform_force_to_use_minimal_enclosure(
+                                            arm_2d_helper_transform_t *ptThis,
+                                            bool bEnable)
+{
+    bool bOrigin = false;
+    assert(NULL != ptThis);
+
+    arm_irq_safe {
+        bOrigin = this.bForceToUseMinimalEnclosure;
+        this.bForceToUseMinimalEnclosure = bEnable;
+    }
+
+    return bOrigin;
 }
 
 

@@ -34,6 +34,7 @@
 #include "arm_2d.h"
 
 #include "./__arm_2d_helper_common.h"
+#include <stdint.h>
 
 #ifdef   __cplusplus
 extern "C" {
@@ -725,7 +726,9 @@ ARM_PRIVATE(
         float fStep;
     } Scale;
 
-    bool bNeedUpdate;
+    uint8_t bNeedUpdate                 : 1;
+    uint8_t bForceToUseMinimalEnclosure : 1;
+    uint8_t                             : 6;
 )
 
 } arm_2d_helper_transform_t;
@@ -970,6 +973,20 @@ void arm_2d_helper_transform_on_frame_begin(arm_2d_helper_transform_t *ptThis);
 extern
 ARM_NONNULL(1)
 void arm_2d_helper_transform_force_update(arm_2d_helper_transform_t *ptThis);
+
+ARM_NONNULL(1)
+/*!
+ * \brief force the transform helper use the minimal enclosure region as
+ *        the dirty region.
+ * 
+ * \param[in] ptThis the target helper
+ * \param[in] bEnable whether enable this feature.
+ * \return boolean the original setting
+ */
+extern
+bool arm_2d_helper_transform_force_to_use_minimal_enclosure(
+                                            arm_2d_helper_transform_t *ptThis,
+                                            bool bEnable);
 
 /*!
  * \brief update a given transform helper with new values
