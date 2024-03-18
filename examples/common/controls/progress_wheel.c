@@ -71,12 +71,13 @@
 enum {
     START,
     WAIT_CHANGE,
-    DRAW_LAST_QUADRANT,
-    DRAW_ERASE_LAST_CURVE,
+    //DRAW_LAST_QUADRANT,
+    //DRAW_ERASE_LAST_CURVE,
+    DRAW_MIDDLE_STEP,
     DRAW_WHOLE_WHEEL,
     DRAW_CURVE,
-    DRAW_END_POINT,
-    FINISH,
+    //DRAW_END_POINT,
+    //FINISH,
     NO_DIRTY_REGIONS,
 };
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -202,7 +203,6 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
     bool bNoScale = ABS(this.fScale - 1.0f) < 0.01;
     bool bIgnoreCurve = false;
 
-
     const arm_2d_tile_t *ptileArcMask = this.tCFG.ptileArcMask;
     COLOUR_INT tWheelColour = this.tCFG.tWheelColour;
 
@@ -280,61 +280,26 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                         "Progress Wheel", 
                         "Progress increase to 1000, Goto state[DRAW_CURVE]"
                     );
-
-                } else if (chDelta < 1) {
-
+                } else if (chDelta < 2) {
+                    this.chLastQuadrant = chCurrentQuadrant;
                     if (bSmallMove) {
-                        /* content changed */
-                        //chState = DRAW_CURVE;
-
                         ARM_2D_LOG_INFO(
                             CONTROLS, 
                             0, 
                             "Progress Wheel", 
-                            "Progress small changes within the current Quadrant[%d], goto state[DRAW_CURVE]",
+                            "Progress in small steps, updating the regions of end point is sufficient.",
                             chCurrentQuadrant
                         );
-
-                        this.chLastQuadrant = chCurrentQuadrant;
                     } else {
-                        /* content changed */
-                        chState = DRAW_ERASE_LAST_CURVE;
-
                         ARM_2D_LOG_INFO(
                             CONTROLS, 
                             0, 
                             "Progress Wheel", 
-                            "Progress big changes within the current Quadrant[%d], goto state[DRAW_ERASE_LAST_CURVE]",
+                            "Progress in middle steps, use the minimal enclosure of the regions of the end point.",
                             chCurrentQuadrant
                         );
-                    }
-                } else if (chDelta == 1) {
-                    if (bSmallMove) {
-                        this.chLastQuadrant = chCurrentQuadrant;
-                    } else {
-                        if (chQuadrantChange == 1) {
-                            /* increase */
-                            chState = DRAW_LAST_QUADRANT;
 
-                            ARM_2D_LOG_INFO(
-                                CONTROLS, 
-                                0, 
-                                "Progress Wheel", 
-                                "Progress increase to quadrant[%d], goto state[DRAW_LAST_QUADRANT]",
-                                chCurrentQuadrant
-                            );
-                        } else /* if (chQuadrantChange == -1) */ {
-                            /* decrease */
-                            chState = DRAW_ERASE_LAST_CURVE;
-
-                            ARM_2D_LOG_INFO(
-                                CONTROLS, 
-                                0, 
-                                "Progress Wheel", 
-                                "Progress decrease to the quadrant[%d], we decided to draw the last curve region instead",
-                                chCurrentQuadrant
-                            );
-                        }
+                        chState = DRAW_MIDDLE_STEP;
                     }
                 } else {
 
@@ -358,7 +323,9 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                                     &__wheel_canvas,
                                                     WAIT_CHANGE);
             this.chLastQuadrant = chCurrentQuadrant;
-        } else if (DRAW_ERASE_LAST_CURVE == chState) {
+        }
+        #if 0
+        else if (DRAW_ERASE_LAST_CURVE == chState) {
 
             arm_2d_user_dynamic_dirty_region_update(&this.tDirtyRegion,
                                                             &__wheel,
@@ -366,6 +333,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                                             WAIT_CHANGE);
             this.chLastQuadrant = chCurrentQuadrant;
         }
+        #endif
     
         arm_2d_region_t tRotationRegion = __wheel_canvas;
 
@@ -415,6 +383,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[3]);
             } while(0);
 
+        #if 0
             /* update dirty region */
             if (DRAW_LAST_QUADRANT == chState && this.chLastQuadrant == 0) {
 
@@ -444,6 +413,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                                         DRAW_CURVE);
 
             }
+        #endif 
         }
 
         //if(this.fAngle >= ARM_2D_ANGLE(180.0f)){
@@ -479,6 +449,8 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 
                 arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[1]);
             }
+        
+        #if 0
             /* update dirty region */
             if (DRAW_LAST_QUADRANT == chState && this.chLastQuadrant == 1) {
 
@@ -500,7 +472,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                                         &tReDrawRegion,
                                                         DRAW_CURVE);
             }
-
+        #endif
         }
 
         //if(this.fAngle >= ARM_2D_ANGLE(270.0)){
@@ -534,7 +506,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                     
                 arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[2]);
             }
-
+        #if 0
             /* update dirty region */
             if (DRAW_LAST_QUADRANT == chState && this.chLastQuadrant == 2) {
             
@@ -555,6 +527,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                                         DRAW_CURVE);
 
             }
+        #endif
         }
 
         do {
@@ -676,6 +649,13 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 /* apply transform region patch */
                 this.tTransHelper.tRegionPatch.tLocation.iX = -1;
                 this.tTransHelper.tRegionPatch.tSize.iWidth = 1;
+
+                if (bIsNewFrame) {
+                    arm_2d_helper_transform_force_to_use_minimal_enclosure(
+                                                    &this.tTransHelper,
+                                                    (chState == DRAW_MIDDLE_STEP)
+                                                );
+                }
 
                 arm_2d_helper_transform_update_dirty_regions(   &this.tTransHelper,
                                                                 &__wheel_canvas,
