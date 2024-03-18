@@ -604,6 +604,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gae0a55fbb4852fbfaa59041efc6f1ce21"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gae0a55fbb4852fbfaa59041efc6f1ce21">arm_2d_helper_transform_force_update</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__transform__t">arm_2d_helper_transform_t</a> *ptThis)</td></tr>
 <tr class="memdesc:gae0a55fbb4852fbfaa59041efc6f1ce21"><td class="mdescLeft">&#160;</td><td class="mdescRight">force transform helper to update dirty region  <a href="group__gHelper.html#gae0a55fbb4852fbfaa59041efc6f1ce21">More...</a><br /></td></tr>
 <tr class="separator:gae0a55fbb4852fbfaa59041efc6f1ce21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae0692351fe401d6a3717e767ff4a9dd4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gae0692351fe401d6a3717e767ff4a9dd4">arm_2d_helper_transform_force_to_use_minimal_enclosure</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__transform__t">arm_2d_helper_transform_t</a> *ptThis, bool bEnable)</td></tr>
+<tr class="memdesc:gae0692351fe401d6a3717e767ff4a9dd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">force the transform helper use the minimal enclosure region as the dirty region.  <a href="group__gHelper.html#gae0692351fe401d6a3717e767ff4a9dd4">More...</a><br /></td></tr>
+<tr class="separator:gae0692351fe401d6a3717e767ff4a9dd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga95877df905d15cebfc4abb41b9ecdc6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga95877df905d15cebfc4abb41b9ecdc6a">arm_2d_helper_transform_update_value</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__transform__t">arm_2d_helper_transform_t</a> *ptThis, float fAngle, float fScale)</td></tr>
 <tr class="memdesc:ga95877df905d15cebfc4abb41b9ecdc6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">update a given transform helper with new values  <a href="group__gHelper.html#ga95877df905d15cebfc4abb41b9ecdc6a">More...</a><br /></td></tr>
 <tr class="separator:ga95877df905d15cebfc4abb41b9ecdc6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -3174,9 +3177,15 @@ Scale</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a78b42d98bae6f603b261003da6f22b41" name="a78b42d98bae6f603b261003da6f22b41"></a>bool</td>
+<a id="a78b42d98bae6f603b261003da6f22b41" name="a78b42d98bae6f603b261003da6f22b41"></a>uint8_t</td>
 <td class="fieldname">
-bNeedUpdate</td>
+bNeedUpdate: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ad9b80ec9814b4348d940550980c73603" name="ad9b80ec9814b4348d940550980c73603"></a>uint8_t</td>
+<td class="fieldname">
+bForceToUseMinimalEnclosure: 1</td>
 <td class="fielddoc">
 </td></tr>
 </table>
@@ -6229,6 +6238,44 @@ For normal usage, please DO NOT use this function unless you know what you are d
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="gae0692351fe401d6a3717e767ff4a9dd4" name="gae0692351fe401d6a3717e767ff4a9dd4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae0692351fe401d6a3717e767ff4a9dd4">&#9670;&nbsp;</a></span>arm_2d_helper_transform_force_to_use_minimal_enclosure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool arm_2d_helper_transform_force_to_use_minimal_enclosure </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__transform__t">arm_2d_helper_transform_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>bEnable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>force the transform helper use the minimal enclosure region as the dirty region. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target helper </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bEnable</td><td>whether enable this feature. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>boolean the original setting </dd></dl>
 
 </div>
 </div>
