@@ -906,7 +906,7 @@ ARM_NONNULL(1)
 int8_t arm_2d_helper_get_utf8_byte_valid_length(uint8_t *pchChar)
 {
 
-    switch(__CLZ( ~(uint32_t)pchChar[0] )) {
+    switch(__CLZ( ~((uint32_t)pchChar[0] << 24) )) {
         case 0:                                     /* BYTE0: 0xxx-xxxx */
             return 1;
         case 1:
@@ -939,7 +939,7 @@ int8_t arm_2d_helper_get_utf8_byte_valid_length(uint8_t *pchChar)
 ARM_NONNULL(1)
 int8_t arm_2d_helper_get_utf8_byte_length(uint8_t *pchChar)
 {
-    switch(__CLZ( ~(uint32_t)pchChar[0] )) {
+    switch(__CLZ( ~((uint32_t)pchChar[0] << 24) )) {
         case 0:
             return 1;
         case 1:
