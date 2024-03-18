@@ -619,7 +619,12 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
             assert(false);      /* this should not happen */
     }
 
-    
+    this.Runtime.bCallOldSceneFrameCPL = false;
+    this.Runtime.bCallNewSceneFrameCPL = false;
+
+    this.Runtime.bCallOldSceneBGCPL = false;
+    this.Runtime.bCallNewSceneBGCPL = false;
+
     /* internal statemachine */
     if (bIsNewFrame) {
         int32_t nElapsed;
@@ -629,12 +634,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
             case START:
                 this.Switch.lTimeStamp = lTimeStamp;
                 this.Switch.Erase.iOffset = 0;
-
-                this.Runtime.bCallOldSceneFrameCPL = true;
-                this.Runtime.bCallNewSceneFrameCPL = true;
-
-                this.Runtime.bCallOldSceneBGCPL = !this.Switch.tConfig.Feature.bIgnoreOldSceneBG;
-                this.Runtime.bCallNewSceneBGCPL = !this.Switch.tConfig.Feature.bIgnoreNewSceneBG;
 
                 this.Switch.chState++;
                 //break;
@@ -790,6 +789,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
         ptScene = this.SceneFIFO.ptHead;
 
         if (NULL != ptWindow) {
+
+            this.Runtime.bCallOldSceneFrameCPL = true;
+            this.Runtime.bCallOldSceneBGCPL = !this.Switch.tConfig.Feature.bIgnoreOldSceneBG;
+
             __draw_erase_scene( ptThis, 
                                 ptScene, 
                                 &this.Switch.Erase.tSceneWindow, 
@@ -889,6 +892,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
         ptScene = this.SceneFIFO.ptHead->ptNext;
         
         if (NULL != ptWindow) {
+
+            this.Runtime.bCallNewSceneFrameCPL = true;
+            this.Runtime.bCallNewSceneBGCPL = !this.Switch.tConfig.Feature.bIgnoreNewSceneBG;
+
             __draw_erase_scene( ptThis, 
                                 ptScene, 
                                 &this.Switch.Erase.tSceneWindow, 
@@ -932,6 +939,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
             assert(false);      /* this should not happen */
     }
 
+    this.Runtime.bCallOldSceneFrameCPL = false;
+    this.Runtime.bCallNewSceneFrameCPL = false;
+
+    this.Runtime.bCallOldSceneBGCPL = false;
+    this.Runtime.bCallNewSceneBGCPL = false;
     
     /* internal statemachine */
     if (bIsNewFrame) {
@@ -942,12 +954,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
             case START:
                 this.Switch.lTimeStamp = lTimeStamp;
                 this.Switch.Slide.iOffset = 0;
-
-                this.Runtime.bCallOldSceneFrameCPL = true;
-                this.Runtime.bCallNewSceneFrameCPL = true;
-
-                this.Runtime.bCallOldSceneBGCPL = !this.Switch.tConfig.Feature.bIgnoreOldSceneBG;
-                this.Runtime.bCallNewSceneBGCPL = !this.Switch.tConfig.Feature.bIgnoreNewSceneBG;
 
                 this.Switch.chState++;
                 //break;
@@ -1064,6 +1070,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
         ptScene = this.SceneFIFO.ptHead;
 
         if (NULL != ptWindow) {
+        
+            this.Runtime.bCallOldSceneFrameCPL = true;
+            this.Runtime.bCallOldSceneBGCPL = !this.Switch.tConfig.Feature.bIgnoreOldSceneBG;
+
             __draw_erase_scene( ptThis, 
                                 ptScene, 
                                 &this.Switch.Slide.tSceneWindow, 
@@ -1119,6 +1129,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
         ptScene = this.SceneFIFO.ptHead->ptNext;
         
         if (ptWindow) {
+
+            this.Runtime.bCallNewSceneFrameCPL = true;
+            this.Runtime.bCallNewSceneBGCPL = !this.Switch.tConfig.Feature.bIgnoreNewSceneBG;
+
             __draw_erase_scene( ptThis, 
                                 ptScene, 
                                 &this.Switch.Slide.tSceneWindow, 
