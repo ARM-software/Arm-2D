@@ -3201,265 +3201,6 @@ bool __arm_2d_helper_3fb_draw_bitmap( arm_2d_helper_3fb_t *ptThis,
 }
 
 
-
-/*----------------------------------------------------------------------------*
- * Transform Helper                                                           *
- *----------------------------------------------------------------------------*/
-
-
-ARM_NONNULL(1,2,5)
-void arm_2d_helper_transform_init(arm_2d_helper_transform_t *ptThis,
-                                  arm_2d_op_t *ptTransformOP,
-                                  float fAngleStep,
-                                  float fScaleStep,
-                                  arm_2d_region_list_item_t **ppDirtyRegionList)
-{
-    assert(NULL != ptThis);
-    assert(NULL != ptTransformOP);
-    assert(NULL != ppDirtyRegionList);
-    
-    memset(ptThis, 0, sizeof(arm_2d_helper_transform_t));
-    this.ppDirtyRegionList = ppDirtyRegionList;
-
-    this.ptTransformOP = ptTransformOP;
-    this.Angle.fStep = fAngleStep;
-    this.Scale.fStep = fScaleStep;
-    this.Scale.fValue = 1.0f;
-    this.fScale = 1.0f;
-
-    this.bNeedUpdate = true;
-    
-    this.tDirtyRegions[0].bIgnore = true;
-    this.tDirtyRegions[1].bIgnore = true;
-
-    arm_2d_helper_pfb_append_dirty_regions_to_list( ppDirtyRegionList, 
-                                                    this.tDirtyRegions, 
-                                                    dimof(this.tDirtyRegions));
-
-
-}
-
-ARM_NONNULL(1)
-void arm_2d_helper_transform_depose(arm_2d_helper_transform_t *ptThis)
-{
-    assert(NULL != ptThis);
-    arm_2d_region_list_item_t **ppDirtyRegionList = this.ppDirtyRegionList;
-    
-    if (NULL == ppDirtyRegionList) {
-        return ;
-    }
-
-    arm_2d_helper_pfb_remove_dirty_regions_from_list(ppDirtyRegionList,
-                                                     this.tDirtyRegions,
-                                                     dimof(this.tDirtyRegions));
-}
-
-
-ARM_NONNULL(1)
-void arm_2d_helper_transform_update_dirty_regions(
-                                    arm_2d_helper_transform_t *ptThis,
-                                    const arm_2d_region_t *ptCanvas,
-                                    bool bIsNewFrame)
-{
-    assert(NULL != ptThis);
-    ARM_2D_UNUSED(ptCanvas);
-
-    arm_2d_tile_t *ptTarget = (arm_2d_tile_t *)this.ptTransformOP->Target.ptTile;
-    assert(NULL != ptTarget->ptParent);
-
-    if (!bIsNewFrame) {
-        return ;
-    }
-    
-    if (this.bNeedUpdate) {
-        this.bNeedUpdate = false;
-
-        bool bSuspendUpdate = this.bSuspendUpdate;
-
-        this.tDirtyRegions[0].bIgnore = true;
-        this.tDirtyRegions[1].bIgnore = true;
-
-        arm_2d_region_t tNewRegion = *(this.ptTransformOP->Target.ptRegion);
-        tNewRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(
-                                    ptTarget, 
-                                    tNewRegion.tLocation);
-
-        if (NULL != ptCanvas) {
-            arm_2d_region_t tCanvas = *ptCanvas;
-            
-            tCanvas.tLocation = arm_2d_helper_pfb_get_absolute_location(
-                                            ptTarget->ptParent, 
-                                            tCanvas.tLocation);
-
-            if (!arm_2d_region_intersect(   &tNewRegion, 
-                                            &tCanvas,
-                                            &tNewRegion)) {
-                return ;
-            }
-        }
-
-        /* keep the old region */
-        this.tDirtyRegions[1].tRegion = this.tDirtyRegions[0].tRegion;
-
-        /* apply region patch */
-        do {
-            /* note: tRegionPatch stores the patch values (deltas) */
-
-            tNewRegion.tSize.iWidth += this.tRegionPatch.tSize.iWidth;
-            tNewRegion.tSize.iHeight += this.tRegionPatch.tSize.iHeight;
-
-            tNewRegion.tLocation.iX += this.tRegionPatch.tLocation.iX;
-            tNewRegion.tLocation.iY += this.tRegionPatch.tLocation.iY;
-        } while(0);
-
-        /* update the new region */
-        this.tDirtyRegions[0].tRegion = tNewRegion;
-        
-        arm_2d_region_t tOverlapArea, tEnclosureArea;
-        if (this.bForceToUseMinimalEnclosure) {
-            arm_2d_region_get_minimal_enclosure(&this.tDirtyRegions[1].tRegion, 
-                                                &this.tDirtyRegions[0].tRegion,
-                                                &tEnclosureArea);
-
-            /* we only refresh the enclosure region to save time */
-            this.tDirtyRegions[1].tRegion = tEnclosureArea;
-
-            this.tDirtyRegions[0].bIgnore = true;
-            this.tDirtyRegions[1].bIgnore = false || bSuspendUpdate;
-            this.tDirtyRegions[1].bUpdated = true;
-
-            return ;
-
-        } else if (arm_2d_region_intersect( &this.tDirtyRegions[1].tRegion, 
-                                            &this.tDirtyRegions[0].tRegion,
-                                            &tOverlapArea)) {
-            /* the new region overlaps with the old region */
-            uint32_t wPixelsRegion0 = this.tDirtyRegions[0].tRegion.tSize.iHeight
-                                    * this.tDirtyRegions[0].tRegion.tSize.iWidth;
-            uint32_t wPixelsRegion1 = this.tDirtyRegions[1].tRegion.tSize.iHeight
-                                    * this.tDirtyRegions[1].tRegion.tSize.iWidth;
-
-
-            arm_2d_region_get_minimal_enclosure(&this.tDirtyRegions[1].tRegion, 
-                                                &this.tDirtyRegions[0].tRegion,
-                                                &tEnclosureArea);
-            
-            uint32_t wPixelsRegionEnclosure = tEnclosureArea.tSize.iHeight
-                                            * tEnclosureArea.tSize.iWidth;
-
-            if (wPixelsRegionEnclosure < wPixelsRegion0 + wPixelsRegion1) {
-                /* we only refresh the enclosure region to save time */
-                this.tDirtyRegions[1].tRegion = tEnclosureArea;
-
-                this.tDirtyRegions[0].bIgnore = true;
-                this.tDirtyRegions[1].bIgnore = false || bSuspendUpdate;
-                this.tDirtyRegions[1].bUpdated = true;
-
-                return ;
-            }
-        }
-
-        /* the new region has no overlapping with the old region */
-        this.tDirtyRegions[0].bIgnore = false || bSuspendUpdate;
-        this.tDirtyRegions[0].bUpdated = true;
-
-        this.tDirtyRegions[1].bIgnore = false || bSuspendUpdate;
-        this.tDirtyRegions[1].bUpdated = true;
-    }
-}
-
-
-ARM_NONNULL(1)
-void arm_2d_helper_transform_on_frame_begin(arm_2d_helper_transform_t *ptThis)
-{
-    assert(NULL != ptThis);
-
-    /* make it thread safe */
-    arm_irq_safe {
-        if (!this.bNeedUpdate) {
-            this.tDirtyRegions[0].bIgnore = true;
-            this.tDirtyRegions[1].bIgnore = true;
-        } else {
-            this.fAngle = this.Angle.fValue;
-            this.fScale = this.Scale.fValue;
-
-            /* pretend this to be a dynamic dirty region and request an update in on-draw event handler */
-            this.tDirtyRegions[0].bUpdated = true;
-            this.tDirtyRegions[0].bIgnore = false;
-        }
-    }
-}
-
-ARM_NONNULL(1)
-void arm_2d_helper_transform_force_update(arm_2d_helper_transform_t *ptThis)
-{
-    assert(NULL != ptThis);
-    this.bNeedUpdate = true;
-}
-
-ARM_NONNULL(1)
-bool arm_2d_helper_transform_force_to_use_minimal_enclosure(
-                                            arm_2d_helper_transform_t *ptThis,
-                                            bool bEnable)
-{
-    bool bOrigin = false;
-    assert(NULL != ptThis);
-
-    arm_irq_safe {
-        bOrigin = this.bForceToUseMinimalEnclosure;
-        this.bForceToUseMinimalEnclosure = bEnable;
-    }
-
-    return bOrigin;
-}
-
-ARM_NONNULL(1)
-bool arm_2d_helper_transform_suspend_update(
-                                            arm_2d_helper_transform_t *ptThis,
-                                            bool bEnable)
-{
-    bool bOrigin = false;
-    assert(NULL != ptThis);
-
-    arm_irq_safe {
-        bOrigin = this.bSuspendUpdate;
-        this.bSuspendUpdate = bEnable;
-    }
-
-    return bOrigin;
-}
-
-
-ARM_NONNULL(1)
-void arm_2d_helper_transform_update_value(  arm_2d_helper_transform_t *ptThis,
-                                            float fAngle,
-                                            float fScale)
-{
-    assert(NULL != ptThis);
-    
-    float fDelta = 0.0f;
-
-    arm_irq_safe {
-        float fDelta = this.Angle.fValue - fAngle;
-        fDelta = ABS(fDelta);
-
-        if (fDelta >= this.Angle.fStep) {
-            this.Angle.fValue = fAngle;
-            this.bNeedUpdate = true;
-        }
-    }
-
-    arm_irq_safe {
-        fDelta = this.Scale.fValue - fScale;
-        fDelta = ABS(fDelta);
-
-        if (fDelta >= this.Scale.fStep) {
-            this.Scale.fValue = fAngle;
-            this.bNeedUpdate = true;
-        }
-    }
-}
-
 /*----------------------------------------------------------------------------*
  * PFB Rotate Screen 90 PFB Helper                                            *
  *----------------------------------------------------------------------------*/
@@ -4341,4 +4082,262 @@ void arm_2d_dynamic_dirty_region_update(arm_2d_region_list_item_t *ptThis,
     this.chUserRegionIndex = chNextUserIndex;
     this.u2UpdateState = WAIT_HANDSHAKE;
 
+}
+
+
+/*----------------------------------------------------------------------------*
+ * Transform Helper                                                           *
+ *----------------------------------------------------------------------------*/
+
+ARM_NONNULL(1,2,5)
+void arm_2d_helper_transform_init(arm_2d_helper_transform_t *ptThis,
+                                  arm_2d_op_t *ptTransformOP,
+                                  float fAngleStep,
+                                  float fScaleStep,
+                                  arm_2d_region_list_item_t **ppDirtyRegionList)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptTransformOP);
+    assert(NULL != ppDirtyRegionList);
+    
+    memset(ptThis, 0, sizeof(arm_2d_helper_transform_t));
+    this.ppDirtyRegionList = ppDirtyRegionList;
+
+    this.ptTransformOP = ptTransformOP;
+    this.Angle.fStep = fAngleStep;
+    this.Scale.fStep = fScaleStep;
+    this.Scale.fValue = 1.0f;
+    this.fScale = 1.0f;
+
+    this.bNeedUpdate = true;
+    
+    this.tDirtyRegions[0].bIgnore = true;
+    this.tDirtyRegions[1].bIgnore = true;
+
+    arm_2d_helper_pfb_append_dirty_regions_to_list( ppDirtyRegionList, 
+                                                    this.tDirtyRegions, 
+                                                    dimof(this.tDirtyRegions));
+
+
+}
+
+ARM_NONNULL(1)
+void arm_2d_helper_transform_depose(arm_2d_helper_transform_t *ptThis)
+{
+    assert(NULL != ptThis);
+    arm_2d_region_list_item_t **ppDirtyRegionList = this.ppDirtyRegionList;
+    
+    if (NULL == ppDirtyRegionList) {
+        return ;
+    }
+
+    arm_2d_helper_pfb_remove_dirty_regions_from_list(ppDirtyRegionList,
+                                                     this.tDirtyRegions,
+                                                     dimof(this.tDirtyRegions));
+}
+
+
+ARM_NONNULL(1)
+void arm_2d_helper_transform_update_dirty_regions(
+                                    arm_2d_helper_transform_t *ptThis,
+                                    const arm_2d_region_t *ptCanvas,
+                                    bool bIsNewFrame)
+{
+    assert(NULL != ptThis);
+    ARM_2D_UNUSED(ptCanvas);
+
+    arm_2d_tile_t *ptTarget = (arm_2d_tile_t *)this.ptTransformOP->Target.ptTile;
+    assert(NULL != ptTarget->ptParent);
+
+    if (!bIsNewFrame) {
+        return ;
+    }
+    
+    if (this.bNeedUpdate) {
+        this.bNeedUpdate = false;
+
+        bool bSuspendUpdate = this.bSuspendUpdate;
+
+        this.tDirtyRegions[0].bIgnore = true;
+        this.tDirtyRegions[1].bIgnore = true;
+
+        arm_2d_region_t tNewRegion = *(this.ptTransformOP->Target.ptRegion);
+        tNewRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(
+                                    ptTarget, 
+                                    tNewRegion.tLocation);
+
+        if (NULL != ptCanvas) {
+            arm_2d_region_t tCanvas = *ptCanvas;
+            
+            tCanvas.tLocation = arm_2d_helper_pfb_get_absolute_location(
+                                            ptTarget->ptParent, 
+                                            tCanvas.tLocation);
+
+            if (!arm_2d_region_intersect(   &tNewRegion, 
+                                            &tCanvas,
+                                            &tNewRegion)) {
+                return ;
+            }
+        }
+
+        /* keep the old region */
+        this.tDirtyRegions[1].tRegion = this.tDirtyRegions[0].tRegion;
+
+        /* apply region patch */
+        do {
+            /* note: tRegionPatch stores the patch values (deltas) */
+
+            tNewRegion.tSize.iWidth += this.tRegionPatch.tSize.iWidth;
+            tNewRegion.tSize.iHeight += this.tRegionPatch.tSize.iHeight;
+
+            tNewRegion.tLocation.iX += this.tRegionPatch.tLocation.iX;
+            tNewRegion.tLocation.iY += this.tRegionPatch.tLocation.iY;
+        } while(0);
+
+        /* update the new region */
+        this.tDirtyRegions[0].tRegion = tNewRegion;
+        
+        arm_2d_region_t tOverlapArea, tEnclosureArea;
+        if (this.bForceToUseMinimalEnclosure) {
+            arm_2d_region_get_minimal_enclosure(&this.tDirtyRegions[1].tRegion, 
+                                                &this.tDirtyRegions[0].tRegion,
+                                                &tEnclosureArea);
+
+            /* we only refresh the enclosure region to save time */
+            this.tDirtyRegions[1].tRegion = tEnclosureArea;
+
+            this.tDirtyRegions[0].bIgnore = true;
+            this.tDirtyRegions[1].bIgnore = false || bSuspendUpdate;
+            this.tDirtyRegions[1].bUpdated = true;
+
+            return ;
+
+        } else if (arm_2d_region_intersect( &this.tDirtyRegions[1].tRegion, 
+                                            &this.tDirtyRegions[0].tRegion,
+                                            &tOverlapArea)) {
+            /* the new region overlaps with the old region */
+            uint32_t wPixelsRegion0 = this.tDirtyRegions[0].tRegion.tSize.iHeight
+                                    * this.tDirtyRegions[0].tRegion.tSize.iWidth;
+            uint32_t wPixelsRegion1 = this.tDirtyRegions[1].tRegion.tSize.iHeight
+                                    * this.tDirtyRegions[1].tRegion.tSize.iWidth;
+
+
+            arm_2d_region_get_minimal_enclosure(&this.tDirtyRegions[1].tRegion, 
+                                                &this.tDirtyRegions[0].tRegion,
+                                                &tEnclosureArea);
+            
+            uint32_t wPixelsRegionEnclosure = tEnclosureArea.tSize.iHeight
+                                            * tEnclosureArea.tSize.iWidth;
+
+            if (wPixelsRegionEnclosure < wPixelsRegion0 + wPixelsRegion1) {
+                /* we only refresh the enclosure region to save time */
+                this.tDirtyRegions[1].tRegion = tEnclosureArea;
+
+                this.tDirtyRegions[0].bIgnore = true;
+                this.tDirtyRegions[1].bIgnore = false || bSuspendUpdate;
+                this.tDirtyRegions[1].bUpdated = true;
+
+                return ;
+            }
+        }
+
+        /* the new region has no overlapping with the old region */
+        this.tDirtyRegions[0].bIgnore = false || bSuspendUpdate;
+        this.tDirtyRegions[0].bUpdated = true;
+
+        this.tDirtyRegions[1].bIgnore = false || bSuspendUpdate;
+        this.tDirtyRegions[1].bUpdated = true;
+    }
+}
+
+
+ARM_NONNULL(1)
+void arm_2d_helper_transform_on_frame_begin(arm_2d_helper_transform_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    /* make it thread safe */
+    arm_irq_safe {
+        if (!this.bNeedUpdate) {
+            this.tDirtyRegions[0].bIgnore = true;
+            this.tDirtyRegions[1].bIgnore = true;
+        } else {
+            this.fAngle = this.Angle.fValue;
+            this.fScale = this.Scale.fValue;
+
+            /* pretend this to be a dynamic dirty region and request an update in on-draw event handler */
+            this.tDirtyRegions[0].bUpdated = true;
+            this.tDirtyRegions[0].bIgnore = false;
+        }
+    }
+}
+
+ARM_NONNULL(1)
+void arm_2d_helper_transform_force_update(arm_2d_helper_transform_t *ptThis)
+{
+    assert(NULL != ptThis);
+    this.bNeedUpdate = true;
+}
+
+ARM_NONNULL(1)
+bool arm_2d_helper_transform_force_to_use_minimal_enclosure(
+                                            arm_2d_helper_transform_t *ptThis,
+                                            bool bEnable)
+{
+    bool bOrigin = false;
+    assert(NULL != ptThis);
+
+    arm_irq_safe {
+        bOrigin = this.bForceToUseMinimalEnclosure;
+        this.bForceToUseMinimalEnclosure = bEnable;
+    }
+
+    return bOrigin;
+}
+
+ARM_NONNULL(1)
+bool arm_2d_helper_transform_suspend_update(
+                                            arm_2d_helper_transform_t *ptThis,
+                                            bool bEnable)
+{
+    bool bOrigin = false;
+    assert(NULL != ptThis);
+
+    arm_irq_safe {
+        bOrigin = this.bSuspendUpdate;
+        this.bSuspendUpdate = bEnable;
+    }
+
+    return bOrigin;
+}
+
+
+ARM_NONNULL(1)
+void arm_2d_helper_transform_update_value(  arm_2d_helper_transform_t *ptThis,
+                                            float fAngle,
+                                            float fScale)
+{
+    assert(NULL != ptThis);
+    
+    float fDelta = 0.0f;
+
+    arm_irq_safe {
+        float fDelta = this.Angle.fValue - fAngle;
+        fDelta = ABS(fDelta);
+
+        if (fDelta >= this.Angle.fStep) {
+            this.Angle.fValue = fAngle;
+            this.bNeedUpdate = true;
+        }
+    }
+
+    arm_irq_safe {
+        fDelta = this.Scale.fValue - fScale;
+        fDelta = ABS(fDelta);
+
+        if (fDelta >= this.Scale.fStep) {
+            this.Scale.fValue = fAngle;
+            this.bNeedUpdate = true;
+        }
+    }
 }
