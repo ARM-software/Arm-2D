@@ -4154,10 +4154,8 @@ void arm_2d_helper_dirty_region_update_dirty_regions(
     switch(arm_2d_dynamic_dirty_region_wait_next(&this.tDirtyRegion)) {
         case DIRTY_REGION_HELPER_START:
             if (NULL != ptNewRegion) {
-
                 arm_2d_region_t tNewRegion = *ptNewRegion;
                 
-
                 if (NULL != ptTargetRegion) {
 
                     tNewRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(
@@ -4363,12 +4361,25 @@ void arm_2d_helper_transform_update_dirty_regions(
     arm_2d_tile_t *ptTarget = (arm_2d_tile_t *)this.ptTransformOP->Target.ptTile;
     assert(NULL != ptTarget->ptParent);
 
-    arm_2d_helper_dirty_region_update_dirty_regions(&this.tHelper,
-                                                    ptTarget,
-                                                    ptCanvas,
-                                                    (this.ptTransformOP->Target.ptRegion),
-                                                    bIsNewFrame);
+    if (NULL != ptCanvas) {
+        arm_2d_region_t tCanvasInTarget = *ptCanvas;
 
+        /* move canvas to the target tile (calculate its relative location in the target tile) */
+        tCanvasInTarget.tLocation.iX -= ptTarget->tRegion.tLocation.iX;
+        tCanvasInTarget.tLocation.iY -= ptTarget->tRegion.tLocation.iY;
+
+        arm_2d_helper_dirty_region_update_dirty_regions(&this.tHelper,
+                                                        ptTarget,
+                                                        &tCanvasInTarget,
+                                                        (this.ptTransformOP->Target.ptRegion),
+                                                        bIsNewFrame);
+    } else {
+        arm_2d_helper_dirty_region_update_dirty_regions(&this.tHelper,
+                                                        ptTarget,
+                                                        NULL,
+                                                        (this.ptTransformOP->Target.ptRegion),
+                                                        bIsNewFrame);
+    }
 }
 
 

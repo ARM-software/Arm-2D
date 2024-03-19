@@ -734,13 +734,9 @@ typedef struct {
     float fAngle;
     float fScale;
 
-    //arm_2d_region_t tRegionPatch;
-
 ARM_PRIVATE(
-    //arm_2d_region_list_item_t tDirtyRegions[2];
     
     arm_2d_op_t *ptTransformOP;
-    //arm_2d_region_list_item_t **ppDirtyRegionList;
 
     struct {
         float fValue;
@@ -752,10 +748,7 @@ ARM_PRIVATE(
         float fStep;
     } Scale;
 
-    uint8_t bNeedUpdate                 : 1;
-    //uint8_t bForceToUseMinimalEnclosure : 1;
-    //uint8_t bSuspendUpdate              : 1;
-    uint8_t                             : 7;
+    bool bNeedUpdate;
 )
 
 } arm_2d_helper_transform_t;
