@@ -85,7 +85,6 @@ void scene_fitness_loader(void)
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
                                             ARM_2D_SCENE_SWITCH_MODE_SLIDE_RIGHT);
     arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 500);
-
     arm_2d_scene_fitness_init(&DISP0_ADAPTER);
 }
 
@@ -151,7 +150,8 @@ void scene_console_window_loader(void)
 typedef void scene_loader_t(void);
 
 static scene_loader_t * const c_SceneLoaders[] = {
-#if 1
+
+
     scene0_loader,
     scene1_loader,
     scene_console_window_loader,
@@ -160,8 +160,9 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene3_loader,
     scene5_loader,
     scene4_loader,
-#endif
+
     scene2_loader,
+
     scene_fitness_loader,
     scene_audiomark_loader,
     
@@ -198,6 +199,7 @@ int app_2d_main_thread (void *argument)
     arm_2d_scene_player_register_before_switching_event_handler(
             &DISP0_ADAPTER,
             before_scene_switching_handler);
+
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
                                             ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);
     arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 3000);
