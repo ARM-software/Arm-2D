@@ -1,6 +1,37 @@
 {
     "configurations": [
         {
+            "name": "MacOS M1",
+            "compilerPath": "/usr/bin/clang",
+            "intelliSenseMode": "macos-clang-arm64",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/sdl2/32/include",
+                "${workspaceFolder}/platform",
+                "${workspaceFolder}/platform/math",
+                "${workspaceFolder}/platform/math/dsp",
+                "${workspaceFolder}/../../Helper/Include",
+                "${workspaceFolder}/../../Library/Include",
+                "${workspaceFolder}/../../examples/common/benchmark",
+                "${workspaceFolder}/../../examples/common/controls",
+                "${workspaceFolder}/../../examples/demos",
+                "${workspaceFolder}/../../examples/common/scenes/fitness",
+                "${workspaceFolder}/../../examples/common/scenes/meter",
+                "${workspaceFolder}/../../examples/common/scenes/watch"
+            ],
+            "defines": [
+                "_RTE_",
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "ARM_SECTION(x)=  ",
+                "__va_list=va_list"
+            ],
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++11",
+            "macFrameworkPath": ["/System/Library/Frameworks", "/Library/Frameworks"]
+          },
+          {
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
@@ -15,14 +46,14 @@
                 "${workspaceFolder}/../../examples/demos",
                 "${workspaceFolder}/../../examples/common/scenes/fitness",
                 "${workspaceFolder}/../../examples/common/scenes/meter",
-                "${workspaceFolder}/../../examples/common/scenes/watch",
+                "${workspaceFolder}/../../examples/common/scenes/watch"
             ],
             "defines": [
+                "_RTE_",
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE",
                 "ARM_SECTION(x)=  ",
-                "ARM_NONNULL(...)= ",
                 "__va_list=va_list"
             ],
             "compilerPath": "gcc.exe",
