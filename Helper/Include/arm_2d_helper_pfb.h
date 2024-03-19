@@ -44,6 +44,7 @@ extern "C" {
 #if defined(__clang__)
 #   pragma clang diagnostic push
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
+#   pragma clang diagnostic ignored "-Wmissing-declarations"
 #   pragma clang diagnostic ignored "-Wpadded"
 #endif
 
@@ -699,41 +700,6 @@ ARM_PRIVATE(
 
 };
 
-/*!
- * \brief the Transform helper control block
- * 
- */
-typedef struct {
-
-    float fAngle;
-    float fScale;
-
-    arm_2d_region_t tRegionPatch;
-
-ARM_PRIVATE(
-    arm_2d_region_list_item_t tDirtyRegions[2];
-    
-    arm_2d_op_t *ptTransformOP;
-    arm_2d_region_list_item_t **ppDirtyRegionList;
-
-    struct {
-        float fValue;
-        float fStep;
-    } Angle;
-
-    struct {
-        float fValue;
-        float fStep;
-    } Scale;
-
-    uint8_t bNeedUpdate                 : 1;
-    uint8_t bForceToUseMinimalEnclosure : 1;
-    uint8_t bSuspendUpdate              : 1;
-    uint8_t                             : 5;
-)
-
-} arm_2d_helper_transform_t;
-
 typedef struct arm_2d_helper_dirty_region_t {
     
     arm_2d_region_t tRegionPatch;
@@ -757,6 +723,44 @@ ARM_PRIVATE(
 )
 
 } arm_2d_helper_dirty_region_t;
+
+/*!
+ * \brief the Transform helper control block
+ * 
+ */
+typedef struct {
+    implement_ex(arm_2d_helper_dirty_region_t, tHelper);
+
+    float fAngle;
+    float fScale;
+
+    //arm_2d_region_t tRegionPatch;
+
+ARM_PRIVATE(
+    //arm_2d_region_list_item_t tDirtyRegions[2];
+    
+    arm_2d_op_t *ptTransformOP;
+    //arm_2d_region_list_item_t **ppDirtyRegionList;
+
+    struct {
+        float fValue;
+        float fStep;
+    } Angle;
+
+    struct {
+        float fValue;
+        float fStep;
+    } Scale;
+
+    uint8_t bNeedUpdate                 : 1;
+    //uint8_t bForceToUseMinimalEnclosure : 1;
+    //uint8_t bSuspendUpdate              : 1;
+    uint8_t                             : 7;
+)
+
+} arm_2d_helper_transform_t;
+
+
 
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -1000,7 +1004,7 @@ void arm_2d_helper_dirty_region_update_dirty_regions(
                                         arm_2d_helper_dirty_region_t *ptThis,
                                         arm_2d_tile_t *ptTargetTile,
                                         const arm_2d_region_t *ptTargetRegion,
-                                        arm_2d_region_t *ptNewRegion,
+                                        const arm_2d_region_t *ptNewRegion,
                                         bool bIsNewFrame);
 
 /*!
