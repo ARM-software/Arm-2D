@@ -929,204 +929,6 @@ ARM_NONNULL(1)
 void __arm_2d_helper_pfb_free(arm_2d_helper_pfb_t *ptThis, arm_2d_pfb_t *ptPFB);
 
 /*!
- * \brief enable dirty region optimization service
- * \param[in] ptThis the PFB helper control block
- * \param[in] ptRegions an optional array of dirty region items, which will be
- *            added to the dirty region item pool. NULL is acceptable.
- * \param[in] chCount the number of items in the array.
- */
-extern
-ARM_NONNULL(1)
-void arm_2d_helper_pfb_enable_dirty_region_optimization(
-                                            arm_2d_helper_pfb_t *ptThis,
-                                            arm_2d_region_list_item_t *ptRegions,
-                                            uint_fast8_t chCount);
-/*!
- * \brief disable dirty region optimization service
- * \param[in] ptThis the PFB helper control block
- */
-extern
-ARM_NONNULL(1)
-void arm_2d_helper_pfb_disable_dirty_region_optimization(
-                                                arm_2d_helper_pfb_t *ptThis);
-
-/*!
- * \brief initialize a given dirtt region helper
- * \param[in] ptThis the target helper
- * \param[in] ppDirtyRegionList the address of the dirty region list
- */
-extern
-ARM_NONNULL(1,2)
-void arm_2d_helper_dirty_region_init(
-                                arm_2d_helper_dirty_region_t *ptThis,
-                                arm_2d_region_list_item_t **ppDirtyRegionList);
-
-/*!
- * \brief depose a given dirty region helper
- * \param[in] ptThis the target helper
- */
-extern
-ARM_NONNULL(1)
-void arm_2d_helper_dirty_region_depose(arm_2d_helper_dirty_region_t *ptThis);
-
-/*!
- * \brief the on-frame-begin event handler for a given dirty region helper
- * \param[in] ptThis the target helper
- * \note Usually this event handler should be insert the frame start event 
- *       handler of a target scene.
- */
-extern
-ARM_NONNULL(1)
-void arm_2d_helper_dirty_region_on_frame_begin( 
-                                        arm_2d_helper_dirty_region_t *ptThis);
-
-
-
-/*!
- * \brief update a specified new region while erase the previous region
- * 
- * \param[in] ptThis the target helper
- * \param[in] ptTargetTile the target tile to draw content
- * \param[in] ptTargetRegion a relative region in the target tile
- * \param[in] ptNewRegion the new region to update
- * \param[in] bIsNewFrame whether this is the first iteration of a frame
- */
-ARM_NONNULL(1,2)
-extern
-void arm_2d_helper_dirty_region_update_dirty_regions(
-                                        arm_2d_helper_dirty_region_t *ptThis,
-                                        arm_2d_tile_t *ptTargetTile,
-                                        const arm_2d_region_t *ptTargetRegion,
-                                        const arm_2d_region_t *ptNewRegion,
-                                        bool bIsNewFrame);
-
-/*!
- * \brief force the dirty region helper to use the minimal enclosure region to
- *        update.
- * 
- * \param[in] ptThis the target helper
- * \param[in] bEnable whether enable this feature.
- * \return boolean the original setting
- */
-extern
-ARM_NONNULL(1)
-bool arm_2d_helper_dirty_region_force_to_use_minimal_enclosure(
-                                        arm_2d_helper_dirty_region_t *ptThis,
-                                        bool bEnable);
-
-/*!
- * \brief force the dirty region helper to suspend the dirty region update.
- * 
- * \param[in] ptThis the target helper
- * \param[in] bEnable whether enable this feature.
- * \return boolean the original setting
- */
-extern
-ARM_NONNULL(1)
-bool arm_2d_helper_dirty_region_suspend_update(
-                                        arm_2d_helper_dirty_region_t *ptThis,
-                                        bool bEnable);
-/*!
- * \brief initialize a given transform helper
- * \param[in] ptThis the target helper
- * \param[in] ptTransformOP the target transform OP, NULL is not accepted.
- * \param[in] fAngleStep the minimal acceptable angle change. 
- * \param[in] fScaleStep the minimal acceptable scale ratio change.
- * \param[in] ppDirtyRegionList the address of the dirty region list
- */
-extern
-ARM_NONNULL(1,2,5)
-void arm_2d_helper_transform_init(arm_2d_helper_transform_t *ptThis,
-                                  arm_2d_op_t *ptTransformOP,
-                                  float fAngleStep,
-                                  float fScaleStep,
-                                  arm_2d_region_list_item_t **ppDirtyRegionList);
-
-/*!
- * \brief depose a given transform helper
- * \param[in] ptThis the target helper
- */
-extern
-ARM_NONNULL(1)
-void arm_2d_helper_transform_depose(arm_2d_helper_transform_t *ptThis);
-
-/*!
- * \brief the on-frame-begin event handler for a given transform helper
- * \param[in] ptThis the target helper
- * \note Usually this event handler should be insert the frame start event 
- *       handler of a target scene.
- */
-extern
-ARM_NONNULL(1)
-void arm_2d_helper_transform_on_frame_begin(arm_2d_helper_transform_t *ptThis);
-
-/*!
- * \brief force transform helper to update dirty region
- *
- * \note sometimes, we want to force transform helper to update dirty regions 
- *       even if both the angel and scale keep the same, for example, the pivots
- *       are updated.
- * \param[in] ptThis the target helper
- */
-extern
-ARM_NONNULL(1)
-void arm_2d_helper_transform_force_update(arm_2d_helper_transform_t *ptThis);
-
-/*!
- * \brief force the transform helper to use the minimal enclosure region as
- *        the dirty region.
- * 
- * \param[in] ptThis the target helper
- * \param[in] bEnable whether enable this feature.
- * \return boolean the original setting
- */
-extern
-ARM_NONNULL(1)
-bool arm_2d_helper_transform_force_to_use_minimal_enclosure(
-                                            arm_2d_helper_transform_t *ptThis,
-                                            bool bEnable);
-
-/*!
- * \brief force the transform helper to suspend the dirty region update.
- * 
- * \param[in] ptThis the target helper
- * \param[in] bEnable whether enable this feature.
- * \return boolean the original setting
- */
-extern
-ARM_NONNULL(1)
-bool arm_2d_helper_transform_suspend_update(arm_2d_helper_transform_t *ptThis,
-                                            bool bEnable);
-
-/*!
- * \brief update a given transform helper with new values
- * \param[in] ptThis the target helper
- * \param[in] fAngle the new angle value
- * \param[in] fScale the new scale ratio
- * \note The new value is only accepted when the change between the old value 
- *       and the new value is larger than the minimal acceptable mount.
- */
-extern
-ARM_NONNULL(1)
-void arm_2d_helper_transform_update_value(  arm_2d_helper_transform_t *ptThis,
-                                            float fAngle,
-                                            float fScale);
-
-/*!
- * \brief update the dirty region after a transform operation
- * \param[in] ptThis the target helper
- * \param[in] ptCanvas the canvas
- * \param[in] bIsNewFrame whether this is a new frame
- */
-extern
-ARM_NONNULL(1)
-void arm_2d_helper_transform_update_dirty_regions(
-                                    arm_2d_helper_transform_t *ptThis,
-                                    const arm_2d_region_t *ptCanvas,
-                                    bool bIsNewFrame);
-
-
-/*!
  * \brief initialize the 3FB (direct mode) service
  * \param[in] ptThis the helper service control block
  * \param[in] ptCFG the configuration structure
@@ -1280,6 +1082,10 @@ arm_2d_pfb_t * __arm_2d_helper_pfb_rotate270_rgb32(
                                             arm_2d_pfb_t *ptScratch,
                                             const arm_2d_size_t *ptScreenSize);
 
+/*----------------------------------------------------------------------------*
+ * Dirty Regions                                                              *
+ *----------------------------------------------------------------------------*/
+
 /*!
  * \brief append dirty regions to the a specified list
  * \param[in] ppDirtyRegionList the target list
@@ -1332,6 +1138,201 @@ bool arm_2d_dirty_region_item_ignore_set(arm_2d_region_list_item_t *ptThis, bool
 extern
 ARM_NONNULL(1)
 bool arm_2d_dirty_region_item_ignore_get(arm_2d_region_list_item_t *ptThis);
+
+/*!
+ * \brief enable dirty region optimization service
+ * \param[in] ptThis the PFB helper control block
+ * \param[in] ptRegions an optional array of dirty region items, which will be
+ *            added to the dirty region item pool. NULL is acceptable.
+ * \param[in] chCount the number of items in the array.
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_pfb_enable_dirty_region_optimization(
+                                            arm_2d_helper_pfb_t *ptThis,
+                                            arm_2d_region_list_item_t *ptRegions,
+                                            uint_fast8_t chCount);
+/*!
+ * \brief disable dirty region optimization service
+ * \param[in] ptThis the PFB helper control block
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_pfb_disable_dirty_region_optimization(
+                                                arm_2d_helper_pfb_t *ptThis);
+
+/*!
+ * \brief initialize a given dirtt region helper
+ * \param[in] ptThis the target helper
+ * \param[in] ppDirtyRegionList the address of the dirty region list
+ */
+extern
+ARM_NONNULL(1,2)
+void arm_2d_helper_dirty_region_init(
+                                arm_2d_helper_dirty_region_t *ptThis,
+                                arm_2d_region_list_item_t **ppDirtyRegionList);
+
+/*!
+ * \brief depose a given dirty region helper
+ * \param[in] ptThis the target helper
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_dirty_region_depose(arm_2d_helper_dirty_region_t *ptThis);
+
+/*!
+ * \brief the on-frame-begin event handler for a given dirty region helper
+ * \param[in] ptThis the target helper
+ * \note Usually this event handler should be insert the frame start event 
+ *       handler of a target scene.
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_dirty_region_on_frame_begin( 
+                                        arm_2d_helper_dirty_region_t *ptThis);
+
+/*!
+ * \brief update a specified new region while erase the previous region
+ * 
+ * \param[in] ptThis the target helper
+ * \param[in] ptTargetTile the target tile to draw content
+ * \param[in] ptTargetRegion a relative region in the target tile
+ * \param[in] ptNewRegion the new region to update
+ * \param[in] bIsNewFrame whether this is the first iteration of a frame
+ */
+ARM_NONNULL(1,2)
+extern
+void arm_2d_helper_dirty_region_update_dirty_regions(
+                                        arm_2d_helper_dirty_region_t *ptThis,
+                                        arm_2d_tile_t *ptTargetTile,
+                                        const arm_2d_region_t *ptTargetRegion,
+                                        const arm_2d_region_t *ptNewRegion,
+                                        bool bIsNewFrame);
+
+/*!
+ * \brief force the dirty region helper to use the minimal enclosure region to
+ *        update.
+ * 
+ * \param[in] ptThis the target helper
+ * \param[in] bEnable whether enable this feature.
+ * \return boolean the original setting
+ */
+extern
+ARM_NONNULL(1)
+bool arm_2d_helper_dirty_region_force_to_use_minimal_enclosure(
+                                        arm_2d_helper_dirty_region_t *ptThis,
+                                        bool bEnable);
+
+/*!
+ * \brief force the dirty region helper to suspend the dirty region update.
+ * 
+ * \param[in] ptThis the target helper
+ * \param[in] bEnable whether enable this feature.
+ * \return boolean the original setting
+ */
+extern
+ARM_NONNULL(1)
+bool arm_2d_helper_dirty_region_suspend_update(
+                                        arm_2d_helper_dirty_region_t *ptThis,
+                                        bool bEnable);
+/*!
+ * \brief initialize a given transform helper
+ * \param[in] ptThis the target helper
+ * \param[in] ptTransformOP the target transform OP, NULL is not accepted.
+ * \param[in] fAngleStep the minimal acceptable angle change. 
+ * \param[in] fScaleStep the minimal acceptable scale ratio change.
+ * \param[in] ppDirtyRegionList the address of the dirty region list
+ */
+extern
+ARM_NONNULL(1,2,5)
+void arm_2d_helper_transform_init(arm_2d_helper_transform_t *ptThis,
+                                  arm_2d_op_t *ptTransformOP,
+                                  float fAngleStep,
+                                  float fScaleStep,
+                                  arm_2d_region_list_item_t **ppDirtyRegionList);
+
+/*!
+ * \brief depose a given transform helper
+ * \param[in] ptThis the target helper
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_transform_depose(arm_2d_helper_transform_t *ptThis);
+
+/*!
+ * \brief the on-frame-begin event handler for a given transform helper
+ * \param[in] ptThis the target helper
+ * \note Usually this event handler should be insert the frame start event 
+ *       handler of a target scene.
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_transform_on_frame_begin(arm_2d_helper_transform_t *ptThis);
+
+/*!
+ * \brief force transform helper to update dirty region
+ *
+ * \note sometimes, we want to force transform helper to update dirty regions 
+ *       even if both the angel and scale keep the same, for example, the pivots
+ *       are updated.
+ * \param[in] ptThis the target helper
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_transform_force_update(arm_2d_helper_transform_t *ptThis);
+
+/*!
+ * \brief force the transform helper to use the minimal enclosure region as
+ *        the dirty region.
+ * 
+ * \param[in] ptThis the target helper
+ * \param[in] bEnable whether enable this feature.
+ * \return boolean the original setting
+ */
+extern
+ARM_NONNULL(1)
+bool arm_2d_helper_transform_force_to_use_minimal_enclosure(
+                                            arm_2d_helper_transform_t *ptThis,
+                                            bool bEnable);
+
+/*!
+ * \brief force the transform helper to suspend the dirty region update.
+ * 
+ * \param[in] ptThis the target helper
+ * \param[in] bEnable whether enable this feature.
+ * \return boolean the original setting
+ */
+extern
+ARM_NONNULL(1)
+bool arm_2d_helper_transform_suspend_update(arm_2d_helper_transform_t *ptThis,
+                                            bool bEnable);
+
+/*!
+ * \brief update a given transform helper with new values
+ * \param[in] ptThis the target helper
+ * \param[in] fAngle the new angle value
+ * \param[in] fScale the new scale ratio
+ * \note The new value is only accepted when the change between the old value 
+ *       and the new value is larger than the minimal acceptable mount.
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_transform_update_value(  arm_2d_helper_transform_t *ptThis,
+                                            float fAngle,
+                                            float fScale);
+
+/*!
+ * \brief update the dirty region after a transform operation
+ * \param[in] ptThis the target helper
+ * \param[in] ptCanvas the canvas
+ * \param[in] bIsNewFrame whether this is a new frame
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_transform_update_dirty_regions(
+                                    arm_2d_helper_transform_t *ptThis,
+                                    const arm_2d_region_t *ptCanvas,
+                                    bool bIsNewFrame);
 
 
 /*!
