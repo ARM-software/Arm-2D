@@ -22,6 +22,7 @@
                 "UNICODE",
                 "_UNICODE",
                 "ARM_SECTION(x)=  ",
+                "ARM_NONNULL(...)= ",
                 "__va_list=va_list"
             ],
             "compilerPath": "gcc.exe",

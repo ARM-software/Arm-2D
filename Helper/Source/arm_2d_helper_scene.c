@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        15. March 2024
- * $Revision:    V.1.6.0
+ * $Date:        19. March 2024
+ * $Revision:    V.1.6.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */

@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        17. March 2024
- * $Revision:    V.1.8.10
+ * $Date:        19. March 2024
+ * $Revision:    V.1.9.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -734,6 +734,30 @@ ARM_PRIVATE(
 
 } arm_2d_helper_transform_t;
 
+typedef struct arm_2d_helper_dirty_region_t {
+    
+    arm_2d_region_t tRegionPatch;
+
+ARM_PRIVATE(
+    union {
+        arm_2d_region_t tRegions[2];
+        struct {
+            arm_2d_region_t tNewRegion;
+            arm_2d_region_t tOldRegion;
+        };
+    };
+
+    arm_2d_region_list_item_t tDirtyRegion;
+    arm_2d_region_list_item_t **ppDirtyRegionList;
+
+    uint8_t bForceToUseMinimalEnclosure : 1;
+    uint8_t bSuspendUpdate              : 1;
+    uint8_t                             : 6;
+
+)
+
+} arm_2d_helper_dirty_region_t;
+
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ PROTOTYPES ====================================*/
@@ -929,6 +953,82 @@ ARM_NONNULL(1)
 void arm_2d_helper_pfb_disable_dirty_region_optimization(
                                                 arm_2d_helper_pfb_t *ptThis);
 
+/*!
+ * \brief initialize a given dirtt region helper
+ * \param[in] ptThis the target helper
+ * \param[in] ppDirtyRegionList the address of the dirty region list
+ */
+extern
+ARM_NONNULL(1,2)
+void arm_2d_helper_dirty_region_init(
+                                arm_2d_helper_dirty_region_t *ptThis,
+                                arm_2d_region_list_item_t **ppDirtyRegionList);
+
+/*!
+ * \brief depose a given dirty region helper
+ * \param[in] ptThis the target helper
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_dirty_region_depose(arm_2d_helper_dirty_region_t *ptThis);
+
+/*!
+ * \brief the on-frame-begin event handler for a given dirty region helper
+ * \param[in] ptThis the target helper
+ * \note Usually this event handler should be insert the frame start event 
+ *       handler of a target scene.
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_dirty_region_on_frame_begin( 
+                                        arm_2d_helper_dirty_region_t *ptThis);
+
+
+
+/*!
+ * \brief update a specified new region while erase the previous region
+ * 
+ * \param[in] ptThis the target helper
+ * \param[in] ptTargetTile the target tile to draw content
+ * \param[in] ptTargetRegion a relative region in the target tile
+ * \param[in] ptNewRegion the new region to update
+ * \param[in] bIsNewFrame whether this is the first iteration of a frame
+ */
+ARM_NONNULL(1,2)
+extern
+void arm_2d_helper_dirty_region_update_dirty_regions(
+                                        arm_2d_helper_dirty_region_t *ptThis,
+                                        arm_2d_tile_t *ptTargetTile,
+                                        const arm_2d_region_t *ptTargetRegion,
+                                        arm_2d_region_t *ptNewRegion,
+                                        bool bIsNewFrame);
+
+/*!
+ * \brief force the dirty region helper to use the minimal enclosure region to
+ *        update.
+ * 
+ * \param[in] ptThis the target helper
+ * \param[in] bEnable whether enable this feature.
+ * \return boolean the original setting
+ */
+extern
+ARM_NONNULL(1)
+bool arm_2d_helper_dirty_region_force_to_use_minimal_enclosure(
+                                        arm_2d_helper_dirty_region_t *ptThis,
+                                        bool bEnable);
+
+/*!
+ * \brief force the dirty region helper to suspend the dirty region update.
+ * 
+ * \param[in] ptThis the target helper
+ * \param[in] bEnable whether enable this feature.
+ * \return boolean the original setting
+ */
+extern
+ARM_NONNULL(1)
+bool arm_2d_helper_dirty_region_suspend_update(
+                                        arm_2d_helper_dirty_region_t *ptThis,
+                                        bool bEnable);
 /*!
  * \brief initialize a given transform helper
  * \param[in] ptThis the target helper
