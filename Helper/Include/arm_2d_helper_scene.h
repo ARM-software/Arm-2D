@@ -22,7 +22,7 @@
  * Description:  Public header file for the scene service
  *
  * $Date:        19. March 2024
- * $Revision:    V.1.6.1
+ * $Revision:    V.1.6.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */

@@ -466,7 +466,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
                 }
                 break;
             case FADE_OUT:
-                this.Runtime.bCallNewSceneFrameCPL = true;
 
                 nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
                 
@@ -530,7 +529,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
             if (FADE_IN == this.Switch.chState) {
                 this.Runtime.bCallOldSceneBGCPL = !bIgnoreBG;
             } else if (FADE_OUT == this.Switch.chState) {
-                this.Runtime.bCallNewSceneBGCPL = !bIgnoreBG;
+                this.Runtime.bCallNewSceneFrameCPL = (NULL != ptScene);
+                this.Runtime.bCallNewSceneBGCPL = !bIgnoreBG && (NULL != ptScene);
             }
         }
 
