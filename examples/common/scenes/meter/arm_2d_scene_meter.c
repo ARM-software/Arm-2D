@@ -275,6 +275,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
                 
                 arm_2d_layout(__centre_region) {
                 
+                    arm_lcd_text_set_target_framebuffer(ptTile);
                     /* print speed */
                     __item_line_vertical(tTextSize.iWidth, tTextSize.iHeight - 16) {
                         arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
@@ -294,6 +295,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
                             arm_lcd_printf("km/h");
                         }
                     }
+
+                    arm_lcd_text_set_target_framebuffer(NULL);
                 }
             }
             
