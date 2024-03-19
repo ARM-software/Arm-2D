@@ -1,5 +1,15 @@
 var NAVTREEINDEX3 =
 {
+"group__gKernel.html#ga3458644a2202c826043fd8c1b317e138":[10,0,134],
+"group__gKernel.html#ga347f0d62a99c1918cc6a139f5a6b09d2":[10,0,124],
+"group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc":[10,0,259],
+"group__gKernel.html#ga378ac21329d33f561f90265eef89f564":[10,0,135],
+"group__gKernel.html#ga3875326bba890eb0f8680584648a5629":[10,0,197],
+"group__gKernel.html#ga399c089faf3ca129f0a98cc7d952cf21":[10,0,89],
+"group__gKernel.html#ga3c45a3337bb53f0c465f975dffe0bed0":[10,0,88],
+"group__gKernel.html#ga3ca0dfcee2069013ee9d2bc124f1bdd6":[10,0,224],
+"group__gKernel.html#ga3ca0fed904ecae4e2f09d1064593417e":[10,0,255],
+"group__gKernel.html#ga3ce97dd0898a88027fd88f0943dbcdc0":[10,0,263],
 "group__gKernel.html#ga3d104377895c4f2135c673c20aba6e8b":[10,0,199],
 "group__gKernel.html#ga3dffe6cbb5bfa0172baa05602585984d":[10,0,269],
 "group__gKernel.html#ga3ec54af19d1a150ab2ab66505aeae43b":[10,0,245],
@@ -239,15 +249,5 @@ var NAVTREEINDEX3 =
 "group__gKernel.html#structarm__2d__op__src__t_8Target":[10,0,65],
 "group__gKernel.html#structarm__2d__op__status__t_8____unnamed50____":[10,0,59],
 "group__gKernel.html#structarm__2d__op__t":[10,0,25],
-"group__gKernel.html#structarm__2d__op__t_8Target":[10,0,62],
-"group__gKernel.html#structarm__2d__point__float__t":[10,0,11],
-"group__gKernel.html#structarm__2d__point__fx__t":[10,0,12],
-"group__gKernel.html#structarm__2d__region__t":[10,0,14],
-"group__gKernel.html#structarm__2d__rot__linear__regr__t":[10,0,31],
-"group__gKernel.html#structarm__2d__runtime__feature__t":[10,0,32],
-"group__gKernel.html#structarm__2d__size__t":[10,0,13],
-"group__gKernel.html#structarm__2d__task__t":[10,0,19],
-"group__gKernel.html#structarm__2d__task__t_8____unnamed30____":[10,0,47],
-"group__gKernel.html#structarm__2d__tile__t":[10,0,15],
-"group__gKernel.html#structarm__2d__tile__t_8____unnamed22____":[10,0,43]
+"group__gKernel.html#structarm__2d__op__t_8Target":[10,0,62]
 };
