@@ -258,13 +258,11 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                     CONTROLS, 
                     0, 
                     "Progress Wheel", 
-                    "iProgress Changed, from [%d] to [%d] Quadrant: Last[%d] Current[%d], fAngle[%f] 90[%f]",
+                    "iProgress Changed, from [%d] to [%d] Quadrant: Last[%d] Current[%d]",
                     this.iLastProgress,
                     this.iProgress,
                     this.chLastQuadrant,
-                    chCurrentQuadrant,
-                    this.fAngle,
-                    ARM_2D_ANGLE(90.0f)
+                    chCurrentQuadrant
                 );
                 int16_t iProgressDelta = this.iProgress - this.iLastProgress;
                 this.iLastProgress = this.iProgress;
@@ -309,11 +307,24 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
         }
 
         if (DRAW_WHOLE_WHEEL == chState) {
+            ARM_2D_LOG_INFO(
+                CONTROLS, 
+                0, 
+                "Progress Wheel", 
+                "Draw Whole Wheel, progress: last [%d] current [%d] Quadrant: Last[%d] Current[%d]",
+                this.iLastProgress,
+                this.iProgress,
+                this.chLastQuadrant,
+                chCurrentQuadrant
+            );
+
             arm_2d_user_dynamic_dirty_region_update(&this.tDirtyRegion,
                                                     &__wheel,
                                                     &__wheel_canvas,
                                                     WAIT_CHANGE);
             this.chLastQuadrant = chCurrentQuadrant;
+
+
         }
         #if 0
         else if (DRAW_ERASE_LAST_CURVE == chState) {

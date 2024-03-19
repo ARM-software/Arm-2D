@@ -15,7 +15,7 @@
                 "${workspaceFolder}/../../examples/demos",
                 "${workspaceFolder}/../../examples/common/scenes/fitness",
                 "${workspaceFolder}/../../examples/common/scenes/meter",
-                "${workspaceFolder}/../../examples/common/scenes/watch"
+                "${workspaceFolder}/../../examples/common/scenes/watch",
             ],
             "defines": [
                 "_DEBUG",
