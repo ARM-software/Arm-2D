@@ -136,7 +136,7 @@ bool console_box_init(  console_box_t *ptThis,
 
     if (ptCFG->bUseDirtyRegion) {
 
-        arm_2d_user_dynamic_dirty_region_init(&this.tDirtyRegion,
+        arm_2d_scene_player_dynamic_dirty_region_init(&this.tDirtyRegion,
                                               this.ptTargetScene);
 
         if (NULL != this.ptTargetScene) {
@@ -163,7 +163,7 @@ void console_box_depose( console_box_t *ptThis)
     
     if (this.bCFGUseDirtyRegion) {
 
-        arm_2d_user_dynamic_dirty_region_depose(&this.tDirtyRegion, 
+        arm_2d_scene_player_dynamic_dirty_region_depose(&this.tDirtyRegion, 
                                                 this.ptTargetScene);
 
         if (NULL != this.ppDirtyRegionList) {
@@ -481,7 +481,7 @@ bool console_box_on_frame_start(console_box_t *ptThis)
 
         }
 
-        arm_2d_user_dynamic_dirty_region_on_frame_start(&this.tDirtyRegion, CONSOLE_BOX_DIRTY_REGION_START);
+        arm_2d_dynamic_dirty_region_on_frame_start(&this.tDirtyRegion, CONSOLE_BOX_DIRTY_REGION_START);
 
         this.Console.hwLastColumn = this.Console.hwCurrentColumn;
         this.Console.hwLastRow = this.Console.hwCurrentRow;
@@ -536,7 +536,7 @@ void console_box_show(  console_box_t *ptThis,
 
             if (this.bCFGUseDirtyRegion) {
             
-                switch (arm_2d_user_dynamic_dirty_region_wait_next(
+                switch (arm_2d_dynamic_dirty_region_wait_next(
                                                         &this.tDirtyRegion)) {
                     case CONSOLE_BOX_DIRTY_REGION_START:
                         if (    this.u2RTOneTimeRefreshMode 
@@ -546,14 +546,14 @@ void console_box_show(  console_box_t *ptThis,
                             this.tReDrawRegion.tLocation.iY 
                                 += __centre_region.tLocation.iY;
 
-                            arm_2d_user_dynamic_dirty_region_update(
+                            arm_2d_dynamic_dirty_region_update(
                                                 &this.tDirtyRegion,
                                                 &__console_box,
                                                 &this.tReDrawRegion,
                                                 CONSOLE_BOX_DIRTY_REGION_DONE);
 
                         } else {
-                            arm_2d_user_dynamic_dirty_region_change_user_region_index_only(
+                            arm_2d_dynamic_dirty_region_change_user_region_index_only(
                                 &this.tDirtyRegion,
                                 CONSOLE_BOX_DIRTY_REGION_DONE);
                         }

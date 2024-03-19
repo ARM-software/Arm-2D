@@ -3283,6 +3283,7 @@ void arm_2d_helper_transform_update_dirty_regions(
         tNewRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(
                                     ptTarget, 
                                     tNewRegion.tLocation);
+
         if (NULL != ptCanvas) {
             arm_2d_region_t tCanvas = *ptCanvas;
             
@@ -3366,6 +3367,8 @@ void arm_2d_helper_transform_update_dirty_regions(
         this.tDirtyRegions[1].bUpdated = true;
     }
 }
+
+
 ARM_NONNULL(1)
 void arm_2d_helper_transform_on_frame_begin(arm_2d_helper_transform_t *ptThis)
 {
@@ -4140,4 +4143,202 @@ bool arm_2d_helper_pfb_remove_dirty_regions_from_list(
     } while(0);
 
     return false;
+}
+
+arm_2d_region_list_item_t *arm_2d_dynamic_dirty_region_init(
+                                arm_2d_region_list_item_t *ptThis)
+{
+    bool bFromHeap = false;
+    if (NULL == ptThis) {
+        /* allocate one dirty region from heap */
+        arm_2d_region_list_item_t *ptThis 
+            = (arm_2d_region_list_item_t *)__arm_2d_allocate_scratch_memory(
+                    sizeof(arm_2d_region_list_item_t),
+                    __alignof__(arm_2d_region_list_item_t),
+                    ARM_2D_MEM_TYPE_UNSPECIFIED
+                );
+        bFromHeap = true;
+    }
+
+    do {
+        if (NULL == ptThis) {
+            break;
+        }
+
+        memset(ptThis, 0, sizeof(arm_2d_region_list_item_t));
+        this.bFromHeap = bFromHeap;
+
+        this.u12KEY = 0xACE;    /* set key */
+
+    } while(0);
+
+    return ptThis;
+}
+
+
+ARM_NONNULL(1)
+void arm_2d_dynamic_dirty_region_depose(
+                                arm_2d_region_list_item_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    if (NULL == ptThis) {
+        return ;
+    }
+
+    if (this.u12KEY != 0xACE) {
+        /* invalid key */
+        return ;
+    }
+
+    /* destroy the key */
+    this.u12KEY = 0;
+
+    /* free the memory */
+    if (this.bFromHeap) {
+        __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptThis);
+    }
+}
+
+ARM_NONNULL(1)
+void arm_2d_dynamic_dirty_region_on_frame_start(
+                                            arm_2d_region_list_item_t *ptThis,
+                                            uint8_t chUserRegionIndex)
+{
+    enum {
+        START = 0,
+        WAIT_HANDSHAKE,
+        DONE,
+    };
+
+    if (NULL == ptThis) {
+        assert(false);
+        return ;
+    }
+
+    this.bIgnore = false;
+
+    /* set the flag for handshaking with the PFB helper service */
+    this.bUpdated = true;
+
+    if (0xFF != chUserRegionIndex) {
+        /* reset the user region index */
+        this.chUserRegionIndex = chUserRegionIndex;
+    }
+
+    /* reset the state machine */
+    this.u2UpdateState = START;
+}
+
+ARM_NONNULL(1)
+uint_fast8_t arm_2d_dynamic_dirty_region_wait_next(
+                                            arm_2d_region_list_item_t *ptThis)
+{
+    uint_fast8_t chUserRegionIndex = 0xFF;
+    enum {
+        START = 0,
+        WAIT_HANDSHAKE,
+        DONE,
+    };
+
+    do {
+        if (NULL == ptThis) {
+            assert(false);
+            break ;
+        }
+
+        switch(this.u2UpdateState) {
+            case START:
+                /* return the next index for user */
+                chUserRegionIndex = this.chUserRegionIndex;
+                this.u2UpdateState = DONE;
+                this.bIgnore = true;
+                break;
+            case WAIT_HANDSHAKE:
+                if (!this.bUpdated) {
+                    /* return the next index for user */
+                    chUserRegionIndex = this.chUserRegionIndex;
+                    this.u2UpdateState = DONE;
+                    this.bIgnore = true;
+                }
+                break;
+            default:
+            case DONE:
+                break;
+        }
+    } while(0);
+
+    return chUserRegionIndex;
+}
+
+ARM_NONNULL(1)
+void arm_2d_dynamic_dirty_region_change_user_region_index_only(
+                                            arm_2d_region_list_item_t *ptThis,
+                                            uint8_t chNextUserIndex)
+{
+    if (NULL == ptThis) {
+        assert(false);
+        return ;
+    }
+
+    if (0xFF == chNextUserIndex) {
+        this.chUserRegionIndex = 0;
+    } else {
+        this.chUserRegionIndex = chNextUserIndex;
+    }
+}
+
+ARM_NONNULL(1)
+void arm_2d_dynamic_dirty_region_update(arm_2d_region_list_item_t *ptThis,
+                                        arm_2d_tile_t *ptTarget,
+                                        arm_2d_region_t *ptRegion,
+                                        uint8_t chNextUserIndex)
+{
+    enum {
+        START = 0,
+        WAIT_HANDSHAKE,
+        DONE,
+    };
+
+    if (NULL == ptThis) {
+        assert(false);
+        return ;
+    }
+
+    this.bIgnore = false;
+    this.bUpdated = true;
+
+    /* use 0xFF as a DONE signal */
+    if (0xFF == chNextUserIndex) {
+        /* reset the user region index */
+        this.chUserRegionIndex = 0;
+
+        /* reset the state machine */
+        this.u2UpdateState = DONE;
+
+        return ;
+    } 
+
+    if (NULL == ptRegion) {
+        assert(false);
+        return ;
+    }
+
+    /* update region */
+    this.tRegion = *ptRegion;
+
+    if (NULL == ptTarget) {
+        ptTarget = arm_2d_get_default_frame_buffer();
+    }
+
+    if (NULL != ptTarget) {
+        /* get the absolute region */
+        this.tRegion.tLocation 
+            = arm_2d_helper_pfb_get_absolute_location(  ptTarget, 
+                                                        this.tRegion.tLocation);
+    }
+
+    this.chUserRegionIndex = chNextUserIndex;
+    this.u2UpdateState = WAIT_HANDSHAKE;
+
 }

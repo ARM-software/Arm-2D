@@ -333,7 +333,7 @@ void number_list_init(  number_list_t *ptThis,
 
     if (    (this.tNumListCFG.bUseDirtyRegion) 
         &&  (NULL != this.tNumListCFG.ptTargetScene)) {
-        arm_2d_user_dynamic_dirty_region_init(  &this.tDirtyRegion, 
+        arm_2d_scene_player_dynamic_dirty_region_init(  &this.tDirtyRegion, 
                                                 this.tNumListCFG.ptTargetScene);
     } else {
         this.tNumListCFG.bUseDirtyRegion = false;
@@ -347,7 +347,7 @@ void number_list_depose(number_list_t *ptThis)
 
     if (    (this.tNumListCFG.bUseDirtyRegion) 
         &&  (NULL != this.tNumListCFG.ptTargetScene)) {
-        arm_2d_user_dynamic_dirty_region_depose(&this.tDirtyRegion, 
+        arm_2d_scene_player_dynamic_dirty_region_depose(&this.tDirtyRegion, 
                                                 this.tNumListCFG.ptTargetScene);
     }
 }
@@ -358,7 +358,7 @@ void number_list_on_frame_start(number_list_t *ptThis)
     assert(NULL != ptThis);
 
     if (this.tNumListCFG.bUseDirtyRegion) {
-        arm_2d_user_dynamic_dirty_region_on_frame_start(
+        arm_2d_dynamic_dirty_region_on_frame_start(
                                                 &this.tDirtyRegion, 
                                                 NUMBER_LIST_DIRTY_REGION_START);
     }
@@ -378,7 +378,7 @@ arm_fsm_rt_t number_list_show(  number_list_t *ptThis,
 
     /* process the dynamic dirty region */
     if (this.tNumListCFG.bUseDirtyRegion) {
-        switch (arm_2d_user_dynamic_dirty_region_wait_next(&this.tDirtyRegion)) {
+        switch (arm_2d_dynamic_dirty_region_wait_next(&this.tDirtyRegion)) {
             case NUMBER_LIST_DIRTY_REGION_START:
                 if (__arm_2d_list_core_need_redraw(ptList, true)) {
 
@@ -386,7 +386,7 @@ arm_fsm_rt_t number_list_show(  number_list_t *ptThis,
                     /* get the canvas for the list inner tile */
                     arm_2d_canvas(ptTargetTile, __list_canvas) {
                         
-                        arm_2d_user_dynamic_dirty_region_update(
+                        arm_2d_dynamic_dirty_region_update(
                                         &this.tDirtyRegion,                     /* the dirty region */
                                         ptTargetTile,                           /* the target tile */
                                         &__list_canvas,                         /* the redraw region */
@@ -394,7 +394,7 @@ arm_fsm_rt_t number_list_show(  number_list_t *ptThis,
                     }
                 } else {
                     /* nothing to redraw, update state to DONE */
-                    arm_2d_user_dynamic_dirty_region_change_user_region_index_only(
+                    arm_2d_dynamic_dirty_region_change_user_region_index_only(
                                         &this.tDirtyRegion,
                                         NUMBER_LIST_DIRTY_REGION_REDRAW_DONE);
                 }

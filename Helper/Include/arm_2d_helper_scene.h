@@ -566,7 +566,7 @@ arm_2d_scene_player_get_the_current_scene(arm_2d_scene_player_t *ptThis);
  * \return arm_2d_region_list_item_t* the target region list item
  */
 extern
-arm_2d_region_list_item_t *arm_2d_user_dynamic_dirty_region_init(
+arm_2d_region_list_item_t *arm_2d_scene_player_dynamic_dirty_region_init(
                                             arm_2d_region_list_item_t *ptThis,
                                             arm_2d_scene_t *ptScene);
 
@@ -578,69 +578,10 @@ arm_2d_region_list_item_t *arm_2d_user_dynamic_dirty_region_init(
  */
 extern
 ARM_NONNULL(1)
-void arm_2d_user_dynamic_dirty_region_depose(
+void arm_2d_scene_player_dynamic_dirty_region_depose(
                                             arm_2d_region_list_item_t *ptThis,
                                             arm_2d_scene_t *ptScene);
 
-/*!
- * \brief the on-frame-start event handler for a given user dynamic dirty region
- * 
- * \param[in] ptThis the target region list item.
- * \param[in] chUserRegionIndex a specified user region index. When 0xFF is given,
- *            the existing user region index will not be changed.
- *            
- */
-extern
-ARM_NONNULL(1)
-void arm_2d_user_dynamic_dirty_region_on_frame_start(
-                                            arm_2d_region_list_item_t *ptThis,
-                                            uint8_t chUserRegionIndex);
-/*!
- * \brief wait for the PFB helper service requesting the next region
- * 
- * \param[in] ptThis the target region list item.
- * \return uint_fast8_t the user region index
- * 
- * \note You can use the return value, i.e. the user region index to address
- *       the new region you want to cover. 
- */
-extern
-ARM_NONNULL(1)
-uint_fast8_t arm_2d_user_dynamic_dirty_region_wait_next(
-                                            arm_2d_region_list_item_t *ptThis);
-
-/*!
- * \brief update a given user dynamic dirty region with a new region
- * 
- * \param[in] ptThis the target region list item.
- * \param[in] ptTarget the target tile (the frame-buffer to draw)
- * \param[in] ptRegion the new region
- * \note - when the ptTarget isn't NULL, the ptRegion should points a region inside
- *       the canvas of the ptTarget (i.e. an relative region of the ptTarget)
- *       - when the ptTarget is NULL, this function will get the default framebuffer
- *       by calling the function arm_2d_get_default_frame_buffer().
- *       
- * \param[in] chNextUserIndex the next user region index, 0xFF means complete.
- */
-extern
-ARM_NONNULL(1)
-void arm_2d_user_dynamic_dirty_region_update(arm_2d_region_list_item_t *ptThis,
-                                             arm_2d_tile_t *ptTarget,
-                                             arm_2d_region_t *ptRegion,
-                                             uint8_t chNextUserIndex);
-
-/*!
- * \brief only change the user region index without update the dynamic dirty region
- * 
- * \param[in] ptThis the target region list item.
- * \param[in] chNextUserIndex the next user region index. When encounter 0xFF, the 
- *                            user region index will be reset to zero.
- */
-extern 
-ARM_NONNULL(1)
-void arm_2d_user_dynamic_dirty_region_change_user_region_index_only(
-                                            arm_2d_region_list_item_t *ptThis,
-                                            uint8_t chNextUserIndex);
 /*! @} */
 
 #if defined(__clang__)

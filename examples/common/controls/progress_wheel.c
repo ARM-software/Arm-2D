@@ -133,7 +133,7 @@ void progress_wheel_init( progress_wheel_t *ptThis,
                                     0.1f,
                                     &ptTargetScene->ptDirtyRegion);
 
-        arm_2d_user_dynamic_dirty_region_init(  &this.tDirtyRegion,
+        arm_2d_scene_player_dynamic_dirty_region_init(  &this.tDirtyRegion,
                                                 ptTargetScene);
     }
 }
@@ -164,7 +164,7 @@ void progress_wheel_depose(progress_wheel_t *ptThis)
 
     if (this.tCFG.bUseDirtyRegions && NULL != this.ptTargetScene) {
 
-        arm_2d_user_dynamic_dirty_region_depose(&this.tDirtyRegion,
+        arm_2d_scene_player_dynamic_dirty_region_depose(&this.tDirtyRegion,
                                                 this.ptTargetScene);
 
         arm_2d_helper_transform_depose(&this.tTransHelper);
@@ -181,7 +181,7 @@ void progress_wheel_on_frame_start(progress_wheel_t *ptThis)
 
     if (this.tCFG.bUseDirtyRegions) {
 
-        arm_2d_user_dynamic_dirty_region_on_frame_start(&this.tDirtyRegion, 0xFF);
+        arm_2d_dynamic_dirty_region_on_frame_start(&this.tDirtyRegion, 0xFF);
 
         /* update helper with new values*/
         arm_2d_helper_transform_update_value(&this.tTransHelper, this.fAngle, 1.0f);
@@ -216,7 +216,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
     uint8_t chState = NO_DIRTY_REGIONS;
     
     if (this.tCFG.bUseDirtyRegions) {
-        chState = arm_2d_user_dynamic_dirty_region_wait_next(&this.tDirtyRegion);
+        chState = arm_2d_dynamic_dirty_region_wait_next(&this.tDirtyRegion);
     }
 
     arm_2d_region_t tDrawRegion;
@@ -318,10 +318,10 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 chCurrentQuadrant
             );
 
-            arm_2d_user_dynamic_dirty_region_update(&this.tDirtyRegion,
-                                                    &__wheel,
-                                                    &__wheel_canvas,
-                                                    WAIT_CHANGE);
+            arm_2d_dynamic_dirty_region_update( &this.tDirtyRegion,
+                                                &__wheel,
+                                                &__wheel_canvas,
+                                                WAIT_CHANGE);
             this.chLastQuadrant = chCurrentQuadrant;
 
 
