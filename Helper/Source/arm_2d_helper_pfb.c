@@ -4086,6 +4086,223 @@ void arm_2d_dynamic_dirty_region_update(arm_2d_region_list_item_t *ptThis,
 
 
 /*----------------------------------------------------------------------------*
+ * Dirty Region Helper                                                        *
+ *----------------------------------------------------------------------------*/
+
+enum {
+    DIRTY_REGION_HELPER_START = 0,
+    DIRTY_REGION_HELPER_UPDATE_NEW_REGION,
+    DIRTY_REGION_HELPER_DONE,
+};
+
+ARM_NONNULL(1,2)
+void arm_2d_helper_dirty_region_init(
+                                arm_2d_helper_dirty_region_t *ptThis,
+                                arm_2d_region_list_item_t **ppDirtyRegionList)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ppDirtyRegionList);
+    
+    memset(ptThis, 0, sizeof(arm_2d_helper_dirty_region_t));
+    this.ppDirtyRegionList = ppDirtyRegionList;
+
+    arm_2d_dynamic_dirty_region_init(&this.tDirtyRegion);
+
+    arm_2d_helper_pfb_append_dirty_regions_to_list( ppDirtyRegionList, 
+                                                    &this.tDirtyRegion, 
+                                                    1);
+
+}
+
+ARM_NONNULL(1)
+void arm_2d_helper_dirty_region_depose(arm_2d_helper_dirty_region_t *ptThis)
+{
+    assert(NULL != ptThis);
+    arm_2d_region_list_item_t **ppDirtyRegionList = this.ppDirtyRegionList;
+    
+    if (NULL != ppDirtyRegionList) {
+        arm_2d_helper_pfb_remove_dirty_regions_from_list(   ppDirtyRegionList,
+                                                            &this.tDirtyRegion,
+                                                            1);
+    }
+
+    arm_2d_dynamic_dirty_region_depose(&this.tDirtyRegion);
+}
+
+ARM_NONNULL(1)
+void arm_2d_helper_dirty_region_on_frame_begin( 
+                                        arm_2d_helper_dirty_region_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    arm_2d_dynamic_dirty_region_on_frame_start(&this.tDirtyRegion, 
+                                                DIRTY_REGION_HELPER_START);
+
+}
+
+ARM_NONNULL(1,2)
+void arm_2d_helper_dirty_region_update_dirty_regions(
+                                        arm_2d_helper_dirty_region_t *ptThis,
+                                        arm_2d_tile_t *ptTargetTile,
+                                        const arm_2d_region_t *ptTargetRegion,
+                                        arm_2d_region_t *ptNewRegion,
+                                        bool bIsNewFrame)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptTargetTile);
+
+    switch(arm_2d_dynamic_dirty_region_wait_next(&this.tDirtyRegion)) {
+        case DIRTY_REGION_HELPER_START:
+            if (NULL != ptNewRegion) {
+
+                arm_2d_region_t tNewRegion = *ptNewRegion;
+
+                if (NULL != ptTargetRegion) {
+                    if (!arm_2d_region_intersect(   &tNewRegion, 
+                                                    ptTargetRegion,
+                                                    &tNewRegion)) {
+                        /* we don't want to update anything */
+                        arm_2d_dynamic_dirty_region_change_user_region_index_only(
+                                                    &this.tDirtyRegion, 
+                                                    DIRTY_REGION_HELPER_DONE);
+                        break ;
+                    }
+                }
+
+                /* keep the old region */
+                this.tOldRegion = this.tNewRegion;
+
+                /* apply region patch */
+                do {
+                    /* note: tRegionPatch stores the patch values (deltas) */
+
+                    tNewRegion.tSize.iWidth += this.tRegionPatch.tSize.iWidth;
+                    tNewRegion.tSize.iHeight += this.tRegionPatch.tSize.iHeight;
+
+                    tNewRegion.tLocation.iX += this.tRegionPatch.tLocation.iX;
+                    tNewRegion.tLocation.iY += this.tRegionPatch.tLocation.iY;
+                } while(0);
+
+                /* update the new region */
+                this.tNewRegion = tNewRegion;
+                
+                arm_2d_region_t tOverlapArea, tEnclosureArea;
+                if (this.bForceToUseMinimalEnclosure) {
+                    arm_2d_region_get_minimal_enclosure(&this.tNewRegion, 
+                                                        &this.tOldRegion,
+                                                        &tEnclosureArea);
+
+                    /* we only refresh the enclosure region to save time */
+                    this.tOldRegion = tEnclosureArea;
+
+                    if (!this.bSuspendUpdate) {
+                        /* we only update the minimal enclosure region */
+                        arm_2d_dynamic_dirty_region_update(
+                                                    &this.tDirtyRegion,
+                                                    ptTargetTile, 
+                                                    &tEnclosureArea,
+                                                    DIRTY_REGION_HELPER_DONE);
+                    }
+                    break;
+
+                } else if (arm_2d_region_intersect( &this.tOldRegion, 
+                                                    &this.tNewRegion,
+                                                    &tOverlapArea)) {
+                    /* the new region overlaps with the old region */
+                    uint32_t wPixelsRegion0 = this.tOldRegion.tSize.iHeight
+                                            * this.tOldRegion.tSize.iWidth;
+                    uint32_t wPixelsRegion1 = this.tNewRegion.tSize.iHeight
+                                            * this.tNewRegion.tSize.iWidth;
+
+
+                    arm_2d_region_get_minimal_enclosure(&this.tNewRegion, 
+                                                        &this.tOldRegion,
+                                                        &tEnclosureArea);
+                    
+                    uint32_t wPixelsRegionEnclosure 
+                        = tEnclosureArea.tSize.iHeight
+                        * tEnclosureArea.tSize.iWidth;
+
+                    if (wPixelsRegionEnclosure 
+                    <   (wPixelsRegion0 + wPixelsRegion1)) {
+                        /* we only refresh the enclosure region to save time */
+                        this.tOldRegion = tEnclosureArea;
+
+                        if (!this.bSuspendUpdate) {
+                            /* we only update the minimal enclosure region */
+                            arm_2d_dynamic_dirty_region_update( 
+                                                    &this.tDirtyRegion,
+                                                    ptTargetTile, 
+                                                    &tEnclosureArea,
+                                                    DIRTY_REGION_HELPER_DONE);
+                        }
+                        break;
+                    }
+                }
+
+                if (!this.bSuspendUpdate) {
+                    /* we decide to update both old and new region: old region first */
+                    arm_2d_dynamic_dirty_region_update( 
+                                        &this.tDirtyRegion,
+                                        ptTargetTile, 
+                                        &this.tOldRegion,
+                                        DIRTY_REGION_HELPER_UPDATE_NEW_REGION);
+                }
+
+            } else {
+                arm_2d_dynamic_dirty_region_change_user_region_index_only(
+                                                    &this.tDirtyRegion, 
+                                                    DIRTY_REGION_HELPER_DONE);
+            }
+
+            break;
+        case DIRTY_REGION_HELPER_UPDATE_NEW_REGION:
+            arm_2d_dynamic_dirty_region_update( &this.tDirtyRegion,
+                                                ptTargetTile, 
+                                                &this.tNewRegion,
+                                                DIRTY_REGION_HELPER_DONE);
+            break;
+        case DIRTY_REGION_HELPER_DONE:
+            break;
+        default: /* 0xFF */
+            break;
+    }
+
+}
+
+ARM_NONNULL(1)
+bool arm_2d_helper_dirty_region_force_to_use_minimal_enclosure(
+                                        arm_2d_helper_dirty_region_t *ptThis,
+                                        bool bEnable)
+{
+    bool bOrigin = false;
+    assert(NULL != ptThis);
+
+    arm_irq_safe {
+        bOrigin = this.bForceToUseMinimalEnclosure;
+        this.bForceToUseMinimalEnclosure = bEnable;
+    }
+
+    return bOrigin;
+}
+
+ARM_NONNULL(1)
+bool arm_2d_helper_dirty_region_suspend_update(
+                                        arm_2d_helper_dirty_region_t *ptThis,
+                                        bool bEnable)
+{
+    bool bOrigin = false;
+    assert(NULL != ptThis);
+
+    arm_irq_safe {
+        bOrigin = this.bSuspendUpdate;
+        this.bSuspendUpdate = bEnable;
+    }
+
+    return bOrigin;
+}
+
+/*----------------------------------------------------------------------------*
  * Transform Helper                                                           *
  *----------------------------------------------------------------------------*/
 
@@ -4339,221 +4556,4 @@ void arm_2d_helper_transform_update_value(  arm_2d_helper_transform_t *ptThis,
             this.bNeedUpdate = true;
         }
     }
-}
-
-/*----------------------------------------------------------------------------*
- * Dirty Region Helper                                                        *
- *----------------------------------------------------------------------------*/
-
-enum {
-    DIRTY_REGION_HELPER_START = 0,
-    DIRTY_REGION_HELPER_UPDATE_NEW_REGION,
-    DIRTY_REGION_HELPER_DONE,
-};
-
-ARM_NONNULL(1,2)
-void arm_2d_helper_dirty_region_init(
-                                arm_2d_helper_dirty_region_t *ptThis,
-                                arm_2d_region_list_item_t **ppDirtyRegionList)
-{
-    assert(NULL != ptThis);
-    assert(NULL != ppDirtyRegionList);
-    
-    memset(ptThis, 0, sizeof(arm_2d_helper_dirty_region_t));
-    this.ppDirtyRegionList = ppDirtyRegionList;
-
-    arm_2d_dynamic_dirty_region_init(&this.tDirtyRegion);
-
-    arm_2d_helper_pfb_append_dirty_regions_to_list( ppDirtyRegionList, 
-                                                    &this.tDirtyRegion, 
-                                                    1);
-
-}
-
-ARM_NONNULL(1)
-void arm_2d_helper_dirty_region_depose(arm_2d_helper_dirty_region_t *ptThis)
-{
-    assert(NULL != ptThis);
-    arm_2d_region_list_item_t **ppDirtyRegionList = this.ppDirtyRegionList;
-    
-    if (NULL != ppDirtyRegionList) {
-        arm_2d_helper_pfb_remove_dirty_regions_from_list(   ppDirtyRegionList,
-                                                            &this.tDirtyRegion,
-                                                            1);
-    }
-
-    arm_2d_dynamic_dirty_region_depose(&this.tDirtyRegion);
-}
-
-ARM_NONNULL(1)
-void arm_2d_helper_dirty_region_on_frame_begin( 
-                                        arm_2d_helper_dirty_region_t *ptThis)
-{
-    assert(NULL != ptThis);
-
-    arm_2d_dynamic_dirty_region_on_frame_start(&this.tDirtyRegion, 
-                                                DIRTY_REGION_HELPER_START);
-
-}
-
-ARM_NONNULL(1,2)
-void arm_2d_helper_dirty_region_update_dirty_regions(
-                                        arm_2d_helper_dirty_region_t *ptThis,
-                                        arm_2d_tile_t *ptTargetTile,
-                                        const arm_2d_region_t *ptTargetRegion,
-                                        arm_2d_region_t *ptNewRegion,
-                                        bool bIsNewFrame)
-{
-    assert(NULL != ptThis);
-    assert(NULL != ptTargetTile);
-
-    switch(arm_2d_dynamic_dirty_region_wait_next(&this.tDirtyRegion)) {
-        case DIRTY_REGION_HELPER_START:
-            if (NULL != ptNewRegion) {
-
-                arm_2d_region_t tNewRegion = *ptNewRegion;
-
-                if (NULL != ptTargetRegion) {
-                    if (!arm_2d_region_intersect(   &tNewRegion, 
-                                                    ptTargetRegion,
-                                                    &tNewRegion)) {
-                        /* we don't want to update anything */
-                        arm_2d_dynamic_dirty_region_change_user_region_index_only(
-                                                    &this.tDirtyRegion, 
-                                                    DIRTY_REGION_HELPER_DONE);
-                        break ;
-                    }
-                }
-
-                /* keep the old region */
-                this.tOldRegion = this.tNewRegion;
-
-                /* apply region patch */
-                do {
-                    /* note: tRegionPatch stores the patch values (deltas) */
-
-                    tNewRegion.tSize.iWidth += this.tRegionPatch.tSize.iWidth;
-                    tNewRegion.tSize.iHeight += this.tRegionPatch.tSize.iHeight;
-
-                    tNewRegion.tLocation.iX += this.tRegionPatch.tLocation.iX;
-                    tNewRegion.tLocation.iY += this.tRegionPatch.tLocation.iY;
-                } while(0);
-
-                /* update the new region */
-                this.tNewRegion = tNewRegion;
-                
-                arm_2d_region_t tOverlapArea, tEnclosureArea;
-                if (this.bForceToUseMinimalEnclosure) {
-                    arm_2d_region_get_minimal_enclosure(&this.tNewRegion, 
-                                                        &this.tOldRegion,
-                                                        &tEnclosureArea);
-
-                    /* we only refresh the enclosure region to save time */
-                    this.tOldRegion = tEnclosureArea;
-
-                    if (!this.bSuspendUpdate) {
-                        /* we only update the minimal enclosure region */
-                        arm_2d_dynamic_dirty_region_update(
-                                                    &this.tDirtyRegion,
-                                                    ptTargetTile, 
-                                                    &tEnclosureArea,
-                                                    DIRTY_REGION_HELPER_DONE);
-                    }
-                    break;
-
-                } else if (arm_2d_region_intersect( &this.tOldRegion, 
-                                                    &this.tNewRegion,
-                                                    &tOverlapArea)) {
-                    /* the new region overlaps with the old region */
-                    uint32_t wPixelsRegion0 = this.tOldRegion.tSize.iHeight
-                                            * this.tOldRegion.tSize.iWidth;
-                    uint32_t wPixelsRegion1 = this.tNewRegion.tSize.iHeight
-                                            * this.tNewRegion.tSize.iWidth;
-
-
-                    arm_2d_region_get_minimal_enclosure(&this.tNewRegion, 
-                                                        &this.tOldRegion,
-                                                        &tEnclosureArea);
-                    
-                    uint32_t wPixelsRegionEnclosure 
-                        = tEnclosureArea.tSize.iHeight
-                        * tEnclosureArea.tSize.iWidth;
-
-                    if (wPixelsRegionEnclosure 
-                    <   (wPixelsRegion0 + wPixelsRegion1)) {
-                        /* we only refresh the enclosure region to save time */
-                        this.tOldRegion = tEnclosureArea;
-
-                        if (!this.bSuspendUpdate) {
-                            /* we only update the minimal enclosure region */
-                            arm_2d_dynamic_dirty_region_update( 
-                                                    &this.tDirtyRegion,
-                                                    ptTargetTile, 
-                                                    &tEnclosureArea,
-                                                    DIRTY_REGION_HELPER_DONE);
-                        }
-                        break;
-                    }
-                }
-
-                if (!this.bSuspendUpdate) {
-                    /* we decide to update both old and new region: old region first */
-                    arm_2d_dynamic_dirty_region_update( 
-                                        &this.tDirtyRegion,
-                                        ptTargetTile, 
-                                        &this.tOldRegion,
-                                        DIRTY_REGION_HELPER_UPDATE_NEW_REGION);
-                }
-
-            } else {
-                arm_2d_dynamic_dirty_region_change_user_region_index_only(
-                                                    &this.tDirtyRegion, 
-                                                    DIRTY_REGION_HELPER_DONE);
-            }
-
-            break;
-        case DIRTY_REGION_HELPER_UPDATE_NEW_REGION:
-            arm_2d_dynamic_dirty_region_update( &this.tDirtyRegion,
-                                                ptTargetTile, 
-                                                &this.tNewRegion,
-                                                DIRTY_REGION_HELPER_DONE);
-            break;
-        case DIRTY_REGION_HELPER_DONE:
-            break;
-        default: /* 0xFF */
-            break;
-    }
-
-}
-
-ARM_NONNULL(1)
-bool arm_2d_helper_dirty_region_force_to_use_minimal_enclosure(
-                                        arm_2d_helper_dirty_region_t *ptThis,
-                                        bool bEnable)
-{
-    bool bOrigin = false;
-    assert(NULL != ptThis);
-
-    arm_irq_safe {
-        bOrigin = this.bForceToUseMinimalEnclosure;
-        this.bForceToUseMinimalEnclosure = bEnable;
-    }
-
-    return bOrigin;
-}
-
-ARM_NONNULL(1)
-bool arm_2d_helper_dirty_region_suspend_update(
-                                        arm_2d_helper_dirty_region_t *ptThis,
-                                        bool bEnable)
-{
-    bool bOrigin = false;
-    assert(NULL != ptThis);
-
-    arm_irq_safe {
-        bOrigin = this.bSuspendUpdate;
-        this.bSuspendUpdate = bEnable;
-    }
-
-    return bOrigin;
 }
