@@ -4156,14 +4156,21 @@ void arm_2d_helper_dirty_region_update_dirty_regions(
             if (NULL != ptNewRegion) {
 
                 arm_2d_region_t tNewRegion = *ptNewRegion;
+                
 
-                tNewRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(
+                if (NULL != ptTargetRegion) {
+
+                    tNewRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(
                                                         ptTargetTile, 
                                                         tNewRegion.tLocation);
 
-                if (NULL != ptTargetRegion) {
+                    arm_2d_region_t tTargetRegion = *ptTargetRegion;
+                    tTargetRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(
+                                                        ptTargetTile, 
+                                                        tTargetRegion.tLocation);
+
                     if (!arm_2d_region_intersect(   &tNewRegion, 
-                                                    ptTargetRegion,
+                                                    &tTargetRegion,
                                                     &tNewRegion)) {
                         /* we don't want to update anything */
                         arm_2d_dynamic_dirty_region_change_user_region_index_only(
