@@ -193,6 +193,7 @@ typedef union arm_2d_color_rgb565_t {
  */
 typedef union arm_2d_color_bgra8888_t {
     uint32_t tValue;
+    uint8_t chChannel[4];
     struct {
         uint32_t u8B : 8;
         uint32_t u8G : 8;

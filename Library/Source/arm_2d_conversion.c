@@ -21,8 +21,8 @@
  * Title:        arm-2d_draw.c
  * Description:  APIs for colour format conversion
  *
- * $Date:        08. Aug 2022
- * $Revision:    V.1.0.2
+ * $Date:        20. March 2024
+ * $Revision:    V.1.0.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -82,6 +82,12 @@ void __arm_2d_impl_cccn888_to_rgb565(uint32_t *__RESTRICT pwSource,
                                     uint16_t *__RESTRICT phwTarget,
                                     int16_t iTargetStride,
                                     arm_2d_size_t *__RESTRICT ptCopySize);
+
+void __arm_2d_impl_ccca8888_to_rgb565(uint32_t *__RESTRICT pwSourceBase,
+                                      int16_t iSourceStride,
+                                      uint16_t *__RESTRICT phwTargetBase,
+                                      int16_t iTargetStride,
+                                      arm_2d_size_t *__RESTRICT ptCopySize);
 
 void __arm_2d_impl_rgb565_to_cccn888(uint16_t *__RESTRICT phwSourceBase,
                                     int16_t iSourceStride,
@@ -266,11 +272,19 @@ arm_fsm_rt_t __arm_2d_sw_convert_colour_to_rgb565(__arm_2d_sub_task_t *ptTask)
             /* no need to convert, return cpl directly */
             break;
         case ARM_2D_COLOUR_SZ_32BIT:
-            __arm_2d_impl_cccn888_to_rgb565( ptTask->Param.tCopy.tSource.pBuffer,
-                                            ptTask->Param.tCopy.tSource.iStride,
-                                            ptTask->Param.tCopy.tTarget.pBuffer,
-                                            ptTask->Param.tCopy.tTarget.iStride,
-                                            &(ptTask->Param.tCopy.tCopySize));
+            if (this.Source.ptTile->tInfo.tColourInfo.bHasAlpha) {
+                __arm_2d_impl_ccca8888_to_rgb565( ptTask->Param.tCopy.tSource.pBuffer,
+                                                  ptTask->Param.tCopy.tSource.iStride,
+                                                  ptTask->Param.tCopy.tTarget.pBuffer,
+                                                  ptTask->Param.tCopy.tTarget.iStride,
+                                                  &(ptTask->Param.tCopy.tCopySize));
+            } else {
+                __arm_2d_impl_cccn888_to_rgb565( ptTask->Param.tCopy.tSource.pBuffer,
+                                                ptTask->Param.tCopy.tSource.iStride,
+                                                ptTask->Param.tCopy.tTarget.pBuffer,
+                                                ptTask->Param.tCopy.tTarget.iStride,
+                                                &(ptTask->Param.tCopy.tCopySize));
+            }
             break;
         default:
             return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
@@ -368,6 +382,51 @@ void __arm_2d_impl_cccn888_to_rgb565(uint32_t *__RESTRICT pwSourceBase,
             hwTargetPixel.B = wSrcPixel.u8B;
 
             *phwTarget++ = __arm_2d_rgb565_pack(&hwTargetPixel);
+        }
+
+        pwSourceBase += iSourceStride;
+        phwTargetBase += iTargetStride;
+    }
+}
+
+__WEAK
+void __arm_2d_impl_ccca8888_to_rgb565(uint32_t *__RESTRICT pwSourceBase,
+                                      int16_t iSourceStride,
+                                      uint16_t *__RESTRICT phwTargetBase,
+                                      int16_t iTargetStride,
+                                      arm_2d_size_t *__RESTRICT ptCopySize)
+{
+    for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
+
+        const uint32_t *__RESTRICT pwSource = pwSourceBase;
+        uint16_t *__RESTRICT phwTarget = phwTargetBase;
+
+        for (int_fast16_t x = 0; x < ptCopySize->iWidth; x++) {
+
+            __arm_2d_color_fast_rgb_t tTargetPixel;
+            __arm_2d_rgb565_unpack(*phwTarget, &tTargetPixel);
+
+
+            arm_2d_color_bgra8888_t wSourcePixelOrigin = {.tValue = *pwSource++};
+
+            /* get opacity and transparency */
+            uint16_t hwOPA = wSourcePixelOrigin.u8A;
+            uint16_t hwTrans = 256 - hwOPA;
+
+            /* CCCA8888 -> RGB565 */
+
+            uint16_t hwChannel0 = (uint16_t)(wSourcePixelOrigin.chChannel[0] * hwOPA)
+                                   + (tTargetPixel.BGRA[0] * hwTrans);
+            tTargetPixel.BGRA[0] = (uint16_t) (hwChannel0 >> 8);
+            uint16_t hwChannel1 = (uint16_t)(wSourcePixelOrigin.chChannel[1] * hwOPA)
+                                   + (tTargetPixel.BGRA[1] * hwTrans);
+            tTargetPixel.BGRA[1] = (uint16_t) (hwChannel1 >> 8);
+            uint16_t hwChannel2 = (uint16_t)(wSourcePixelOrigin.chChannel[2] * hwOPA)
+                                   + (tTargetPixel.BGRA[0] * hwTrans);
+            tTargetPixel.BGRA[2] = (uint16_t) (hwChannel2 >> 8);
+
+
+            *phwTarget++ = __arm_2d_rgb565_pack(&tTargetPixel);
         }
 
         pwSourceBase += iSourceStride;
