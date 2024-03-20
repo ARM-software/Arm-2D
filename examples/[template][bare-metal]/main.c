@@ -32,6 +32,8 @@
 #include "arm_2d_scene_meter.h"
 #include "arm_2d_scene_fitness.h"
 
+#include "arm_2d_demos.h"
+
 #if defined(__clang__)
 #   pragma clang diagnostic push
 #   pragma clang diagnostic ignored "-Wunknown-warning-option"
@@ -123,6 +125,12 @@ void Disp0_DrawBitmap(  int16_t x,
 #endif
 }
 
+void scene_audiomark_loader(void) 
+{
+
+    arm_2d_scene_audiomark_init(&DISP0_ADAPTER);
+}
+
 void scene_meter_loader(void) 
 {
     arm_2d_scene_meter_init(&DISP0_ADAPTER);
@@ -181,6 +189,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene2_loader,
 
     scene_fitness_loader,
+    scene_audiomark_loader
 };
 
 
