@@ -132,13 +132,6 @@ void __arm_2d_impl_ccca8888_to_gray8(   uint32_t *__RESTRICT pwSource,
  * Convert Colour format                                                      *
  *----------------------------------------------------------------------------*/
 
-/*!
- * \brief convert the colour format of a given tile to cccn888
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[out] ptTarget the output tile (holding a buffer)
- * \return arm_fsm_rt_t the operation result
- */
 ARM_NONNULL(2,3)
 arm_fsm_rt_t arm_2dp_convert_colour_to_cccn888( arm_2d_op_cl_convt_t *ptOP,
                                                 const arm_2d_tile_t *ptSource,
@@ -164,13 +157,32 @@ arm_fsm_rt_t arm_2dp_convert_colour_to_cccn888( arm_2d_op_cl_convt_t *ptOP,
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
 
-/*!
- * \brief convert the colour format of a given tile to rgb565
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[out] ptTarget the output tile (holding a buffer)
- * \return arm_fsm_rt_t the operation result
- */
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_tile_copy_to_cccn888(  arm_2d_op_cl_convt_t *ptOP,
+                                            const arm_2d_tile_t *ptSource,
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion)
+{
+    assert(NULL != ptSource);
+    assert(NULL != ptTarget);
+
+    ARM_2D_IMPL(arm_2d_op_cl_convt_t, ptOP);
+    
+    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
+        return arm_fsm_rt_on_going;
+    }
+    
+    //memset(ptThis, 0, sizeof(*ptThis));
+
+    OP_CORE.ptOp = &ARM_2D_OP_CONVERT_TO_RGB888;
+
+    this.Target.ptTile = ptTarget;
+    this.Target.ptRegion = ptRegion;
+    this.Source.ptTile = ptSource;
+
+    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
+}
+
 ARM_NONNULL(2,3)
 arm_fsm_rt_t arm_2dp_convert_colour_to_rgb565(  arm_2d_op_cl_convt_t *ptOP,
                                                 const arm_2d_tile_t *ptSource,
@@ -196,13 +208,32 @@ arm_fsm_rt_t arm_2dp_convert_colour_to_rgb565(  arm_2d_op_cl_convt_t *ptOP,
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
 
-/*!
- * \brief convert the colour format of a given tile to gray8
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[out] ptTarget the output tile (holding a buffer)
- * \return arm_fsm_rt_t the operation result
- */
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_tile_copy_to_rgb565(   arm_2d_op_cl_convt_t *ptOP,
+                                            const arm_2d_tile_t *ptSource,
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion)
+{
+    assert(NULL != ptSource);
+    assert(NULL != ptTarget);
+
+    ARM_2D_IMPL(arm_2d_op_cl_convt_t, ptOP);
+    
+    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
+        return arm_fsm_rt_on_going;
+    }
+    
+    //memset(ptThis, 0, sizeof(*ptThis));
+
+    OP_CORE.ptOp = &ARM_2D_OP_CONVERT_TO_RGB565;
+
+    this.Target.ptTile = ptTarget;
+    this.Target.ptRegion = ptRegion;
+    this.Source.ptTile = ptSource;
+
+    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
+}
+
 ARM_NONNULL(2,3)
 arm_fsm_rt_t arm_2dp_convert_colour_to_gray8(   arm_2d_op_cl_convt_t *ptOP,
                                                 const arm_2d_tile_t *ptSource,
@@ -223,6 +254,41 @@ arm_fsm_rt_t arm_2dp_convert_colour_to_gray8(   arm_2d_op_cl_convt_t *ptOP,
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = NULL;
+    this.Source.ptTile = ptSource;
+
+    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
+}
+
+/*!
+ * \brief convert the colour format of a given tile to gray8
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the output tile (holding a buffer)
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \return arm_fsm_rt_t the operation result
+ */
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_tile_copy_to_gray8(arm_2d_op_cl_convt_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion)
+{
+    assert(NULL != ptSource);
+    assert(NULL != ptTarget);
+
+    ARM_2D_IMPL(arm_2d_op_cl_convt_t, ptOP);
+    
+    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
+        return arm_fsm_rt_on_going;
+    }
+    
+    //memset(ptThis, 0, sizeof(*ptThis));
+
+    OP_CORE.ptOp = &ARM_2D_OP_CONVERT_TO_GRAY8;
+
+    this.Target.ptTile = ptTarget;
+    this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSource;
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);

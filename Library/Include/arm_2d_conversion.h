@@ -72,11 +72,19 @@ extern "C" {
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
-#define arm_2d_convert_colour_to_cccn888(__SRC_ADDR, /* source tile address */  \
+#define arm_2d_convert_colour_to_gray8( __SRC_ADDR, /* source tile address */   \
                                         __DES_ADDR  /* target tile address */)  \
-            arm_2dp_convert_colour_to_cccn888(  NULL,                           \
-                                                (__SRC_ADDR),                   \
-                                                (__DES_ADDR))
+            arm_2dp_convert_colour_to_gray8(NULL,                               \
+                                            (__SRC_ADDR),                       \
+                                            (__DES_ADDR))
+
+#define arm_2d_tile_copy_to_gray8(  __SRC_ADDR,     /* source tile address */   \
+                                    __DES_ADDR,     /* target tile address */   \
+                                    __DES_REGION)   /* target region address */ \
+            arm_2dp_tile_copy_to_gray8( NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__DES_ADDR),                           \
+                                        (__DES_REGION))
 
 #define arm_2d_convert_colour_to_rgb565(__SRC_ADDR, /* source tile address */   \
                                         __DES_ADDR  /* target tile address */)  \
@@ -84,11 +92,27 @@ extern "C" {
                                                 (__SRC_ADDR),                   \
                                                 (__DES_ADDR))
 
-#define arm_2d_convert_colour_to_gray8( __SRC_ADDR, /* source tile address */   \
+#define arm_2d_tile_copy_to_rgb565( __SRC_ADDR,     /* source tile address */   \
+                                    __DES_ADDR,     /* target tile address */   \
+                                    __DES_REGION)   /* target region address */ \
+            arm_2dp_tile_copy_to_rgb565(NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__DES_ADDR),                           \
+                                        (__DES_REGION))
+
+#define arm_2d_convert_colour_to_cccn888(__SRC_ADDR, /* source tile address */  \
                                         __DES_ADDR  /* target tile address */)  \
-            arm_2dp_convert_colour_to_gray8(NULL,                               \
+            arm_2dp_convert_colour_to_cccn888(  NULL,                           \
+                                                (__SRC_ADDR),                   \
+                                                (__DES_ADDR))
+
+#define arm_2d_tile_copy_to_cccn888(__SRC_ADDR,     /* source tile address */   \
+                                    __DES_ADDR,     /* target tile address */   \
+                                    __DES_REGION)   /* target region address */ \
+            arm_2dp_tile_copy_to_cccn888(   NULL,                               \
                                             (__SRC_ADDR),                       \
-                                            (__DES_ADDR))
+                                            (__DES_ADDR),                       \
+                                            (__DES_REGION))
 
 #define arm_2d_pixel_brga8888_to_rgb565(__COLOUR)                               \
             ({__arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tChannels);            \
@@ -127,7 +151,7 @@ typedef union {
 /*!
  * \brief unpack a rgb565 colour into a given __arm_2d_color_fast_rgb_t object
  * \param[in] hwColour the target rgb565 colour
- * \param[out] ptRGB a __arm_2d_color_fast_rgb_t object
+ * \param[in] ptRGB a __arm_2d_color_fast_rgb_t object
  */
 ARM_NONNULL(2)
 __STATIC_INLINE void __arm_2d_rgb565_unpack(uint16_t hwColor,
@@ -148,7 +172,7 @@ __STATIC_INLINE void __arm_2d_rgb565_unpack(uint16_t hwColor,
 /*!
  * \brief unpack a 32bit colour into a given __arm_2d_color_fast_rgb_t object
  * \param[in] wColour the target brga888 colour
- * \param[out] ptRGB a __arm_2d_color_fast_rgb_t object
+ * \param[in] ptRGB a __arm_2d_color_fast_rgb_t object
  */
 ARM_NONNULL(2)
 __STATIC_INLINE void __arm_2d_brga8888_unpack(uint32_t wColor,
@@ -229,7 +253,7 @@ __STATIC_INLINE uint32_t __arm_2d_cccn888_pack(__arm_2d_color_fast_rgb_t * ptRGB
  * \brief convert the colour format of a given tile to gray8
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptSource the source tile
- * \param[out] ptTarget the output tile (holding a buffer)
+ * \param[in] ptTarget the output tile (holding a buffer)
  * \return arm_fsm_rt_t the operation result
  */
 extern
@@ -239,22 +263,26 @@ arm_fsm_rt_t arm_2dp_convert_colour_to_gray8(   arm_2d_op_cl_convt_t *ptOP,
                                                 const arm_2d_tile_t *ptTarget);
 
 /*!
- * \brief convert the colour format of a given tile to cccn888
+ * \brief copy a given tile to a gray8 target tile
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptSource the source tile
- * \param[out] ptTarget the output tile (holding a buffer)
+ * \param[in] ptTarget the output tile (holding a buffer)
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
  * \return arm_fsm_rt_t the operation result
  */
 extern
 ARM_NONNULL(2,3)
-arm_fsm_rt_t arm_2dp_convert_colour_to_cccn888( arm_2d_op_cl_convt_t *ptOP,
-                                                const arm_2d_tile_t *ptSource,
-                                                const arm_2d_tile_t *ptTarget);
+arm_fsm_rt_t arm_2dp_tile_copy_to_gray8(arm_2d_op_cl_convt_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion);
+
 /*!
  * \brief convert the colour format of a given tile to rgb565
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptSource the source tile
- * \param[out] ptTarget the output tile (holding a buffer)
+ * \param[in] ptTarget the output tile (holding a buffer)
  * \return arm_fsm_rt_t the operation result
  */
 extern
@@ -262,6 +290,51 @@ ARM_NONNULL(2,3)
 arm_fsm_rt_t arm_2dp_convert_colour_to_rgb565(  arm_2d_op_cl_convt_t *ptOP,
                                                 const arm_2d_tile_t *ptSource,
                                                 const arm_2d_tile_t *ptTarget);
+
+/*!
+ * \brief copy a given tile to a rgb565 target tile
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the output tile (holding a buffer)
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_tile_copy_to_rgb565(   arm_2d_op_cl_convt_t *ptOP,
+                                            const arm_2d_tile_t *ptSource,
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion);
+
+/*!
+ * \brief convert the colour format of a given tile to cccn888
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the output tile (holding a buffer)
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_convert_colour_to_cccn888( arm_2d_op_cl_convt_t *ptOP,
+                                                const arm_2d_tile_t *ptSource,
+                                                const arm_2d_tile_t *ptTarget);
+
+/*!
+ * \brief copy a given tile to a cccn888 target tile
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the output tile (holding a buffer)
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \return arm_fsm_rt_t the operation result
+ */
+extern
+ARM_NONNULL(2,3)
+arm_fsm_rt_t arm_2dp_tile_copy_to_cccn888(  arm_2d_op_cl_convt_t *ptOP,
+                                            const arm_2d_tile_t *ptSource,
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion);
 
 /*! @} */
 
