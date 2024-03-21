@@ -84,6 +84,12 @@ extern "C" {
                                                 (__SRC_ADDR),                   \
                                                 (__DES_ADDR))
 
+#define arm_2d_convert_colour_to_gray8( __SRC_ADDR, /* source tile address */   \
+                                        __DES_ADDR  /* target tile address */)  \
+            arm_2dp_convert_colour_to_gray8(NULL,                               \
+                                            (__SRC_ADDR),                       \
+                                            (__DES_ADDR))
+
 #define arm_2d_pixel_brga8888_to_rgb565(__COLOUR)                               \
             ({__arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tChannels);            \
             __arm_2d_brga8888_unpack((__COLOUR), &ARM_2D_SAFE_NAME(tChannels)); \
