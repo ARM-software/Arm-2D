@@ -77,23 +77,29 @@ void __arm_2d_impl_gray8_to_rgb565( uint8_t *__RESTRICT pchSourceBase,
                                     int16_t iTargetStride,
                                     arm_2d_size_t *__RESTRICT ptCopySize);
 
-void __arm_2d_impl_cccn888_to_rgb565(uint32_t *__RESTRICT pwSource,
-                                    int16_t iSourceStride,
-                                    uint16_t *__RESTRICT phwTarget,
-                                    int16_t iTargetStride,
-                                    arm_2d_size_t *__RESTRICT ptCopySize);
+void __arm_2d_impl_cccn888_to_rgb565(   uint32_t *__RESTRICT pwSource,
+                                        int16_t iSourceStride,
+                                        uint16_t *__RESTRICT phwTarget,
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t *__RESTRICT ptCopySize);
 
-void __arm_2d_impl_ccca8888_to_rgb565(uint32_t *__RESTRICT pwSourceBase,
-                                      int16_t iSourceStride,
-                                      uint16_t *__RESTRICT phwTargetBase,
-                                      int16_t iTargetStride,
-                                      arm_2d_size_t *__RESTRICT ptCopySize);
+void __arm_2d_impl_ccca8888_to_rgb565(  uint32_t *__RESTRICT pwSourceBase,
+                                        int16_t iSourceStride,
+                                        uint16_t *__RESTRICT phwTargetBase,
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t *__RESTRICT ptCopySize);
 
-void __arm_2d_impl_rgb565_to_cccn888(uint16_t *__RESTRICT phwSourceBase,
-                                    int16_t iSourceStride,
-                                    uint32_t *__RESTRICT pwTargetBase,
-                                    int16_t iTargetStride,
-                                    arm_2d_size_t *__RESTRICT ptCopySize);
+void __arm_2d_impl_rgb565_to_cccn888(   uint16_t *__RESTRICT phwSourceBase,
+                                        int16_t iSourceStride,
+                                        uint32_t *__RESTRICT pwTargetBase,
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t *__RESTRICT ptCopySize);
+
+void __arm_2d_impl_ccca8888_to_cccn888( uint32_t *__RESTRICT pwSourceBase,
+                                        int16_t iSourceStride,
+                                        uint32_t *__RESTRICT pwTargetBase,
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t *__RESTRICT ptCopySize);
 
 void __arm_2d_impl_gray8_to_cccn888(uint8_t *__RESTRICT pchSourceBase,
                                     int16_t iSourceStride,
@@ -121,14 +127,14 @@ void __arm_2d_impl_cccn888_to_gray8(uint32_t *__RESTRICT pwSource,
  *----------------------------------------------------------------------------*/
 
 /*!
- * \brief convert the colour format of a given tile to rgb888
+ * \brief convert the colour format of a given tile to cccn888
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptSource the source tile
  * \param[out] ptTarget the output tile (holding a buffer)
  * \return arm_fsm_rt_t the operation result
  */
 ARM_NONNULL(2,3)
-arm_fsm_rt_t arm_2dp_convert_colour_to_rgb888(  arm_2d_op_cl_convt_t *ptOP,
+arm_fsm_rt_t arm_2dp_convert_colour_to_cccn888( arm_2d_op_cl_convt_t *ptOP,
                                                 const arm_2d_tile_t *ptSource,
                                                 const arm_2d_tile_t *ptTarget)
 {
@@ -228,6 +234,11 @@ arm_fsm_rt_t __arm_2d_sw_convert_colour_to_gray8(__arm_2d_sub_task_t *ptTask)
     switch ( this.Source.ptTile->tInfo.tColourInfo.u3ColourSZ) {
         case ARM_2D_COLOUR_8BIT:
             /* no need to convert, return cpl directly */
+            __arm_2d_impl_c8bit_copy(ptTask->Param.tCopy.tSource.pBuffer,
+                                     ptTask->Param.tCopy.tSource.iStride,
+                                     ptTask->Param.tCopy.tTarget.pBuffer,
+                                     ptTask->Param.tCopy.tTarget.iStride,
+                                     &(ptTask->Param.tCopy.tCopySize));
             break;
         case ARM_2D_COLOUR_SZ_16BIT:
             __arm_2d_impl_rgb565_to_gray8(  ptTask->Param.tCopy.tSource.pBuffer,
@@ -270,6 +281,11 @@ arm_fsm_rt_t __arm_2d_sw_convert_colour_to_rgb565(__arm_2d_sub_task_t *ptTask)
             break;
         case ARM_2D_COLOUR_SZ_16BIT:
             /* no need to convert, return cpl directly */
+            __arm_2d_impl_rgb16_copy(ptTask->Param.tCopy.tSource.pBuffer,
+                                     ptTask->Param.tCopy.tSource.iStride,
+                                     ptTask->Param.tCopy.tTarget.pBuffer,
+                                     ptTask->Param.tCopy.tTarget.iStride,
+                                     &(ptTask->Param.tCopy.tCopySize));
             break;
         case ARM_2D_COLOUR_SZ_32BIT:
             if (this.Source.ptTile->tInfo.tColourInfo.bHasAlpha) {
@@ -304,7 +320,7 @@ arm_fsm_rt_t __arm_2d_sw_convert_colour_to_rgb888(__arm_2d_sub_task_t *ptTask)
 
     switch ( this.Source.ptTile->tInfo.tColourInfo.u3ColourSZ) {
         case ARM_2D_COLOUR_8BIT:
-            __arm_2d_impl_gray8_to_cccn888(  ptTask->Param.tCopy.tSource.pBuffer,
+            __arm_2d_impl_gray8_to_cccn888( ptTask->Param.tCopy.tSource.pBuffer,
                                             ptTask->Param.tCopy.tSource.iStride,
                                             ptTask->Param.tCopy.tTarget.pBuffer,
                                             ptTask->Param.tCopy.tTarget.iStride,
@@ -319,6 +335,20 @@ arm_fsm_rt_t __arm_2d_sw_convert_colour_to_rgb888(__arm_2d_sub_task_t *ptTask)
             break;
         case ARM_2D_COLOUR_SZ_32BIT:
             /* no need to convert, return cpl directly */
+            if (this.Source.ptTile->tInfo.tColourInfo.bHasAlpha) {
+                __arm_2d_impl_ccca8888_to_cccn888(
+                                            ptTask->Param.tCopy.tSource.pBuffer,
+                                            ptTask->Param.tCopy.tSource.iStride,
+                                            ptTask->Param.tCopy.tTarget.pBuffer,
+                                            ptTask->Param.tCopy.tTarget.iStride,
+                                            &(ptTask->Param.tCopy.tCopySize));
+            } else {
+                __arm_2d_impl_rgb32_copy(ptTask->Param.tCopy.tSource.pBuffer,
+                                         ptTask->Param.tCopy.tSource.iStride,
+                                         ptTask->Param.tCopy.tTarget.pBuffer,
+                                         ptTask->Param.tCopy.tTarget.iStride,
+                                         &(ptTask->Param.tCopy.tCopySize));
+            }
             break;
         default:
             return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
@@ -492,6 +522,60 @@ void __arm_2d_impl_rgb565_to_cccn888(uint16_t *__RESTRICT phwSourceBase,
     }
 }
 
+/*
+#   define __ARM_2D_PIXEL_BLENDING_CCCN888(__SRC_ADDR, __DES_ADDR, __TRANS)     \
+            do {                                                                \
+                uint16_t hwOPA = 256 - (__TRANS);                               \
+                uint_fast8_t ARM_2D_SAFE_NAME(n) = sizeof(uint32_t) - 1;        \
+                const uint8_t *pchSrc = (uint8_t *)(__SRC_ADDR);                \
+                uint8_t *pchDes = (uint8_t *)(__DES_ADDR);                      \
+                                                                                \
+                do {                                                            \
+                    *pchDes = ( ((uint_fast16_t)(*pchSrc++) * hwOPA)            \
+                              + ((uint_fast16_t)(*pchDes) * (__TRANS))          \
+                              ) >> 8;                                           \
+                     pchDes++;                                                  \
+                } while(--ARM_2D_SAFE_NAME(n));                                 \
+            } while(0)
+ */
+
+void __arm_2d_impl_ccca8888_to_cccn888( uint32_t *__RESTRICT pwSourceBase,
+                                        int16_t iSourceStride,
+                                        uint32_t *__RESTRICT pwTargetBase,
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t *__RESTRICT ptCopySize)
+{
+    for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
+
+        const uint32_t *__RESTRICT pwSource = pwSourceBase;
+        uint32_t       *__RESTRICT pwTarget = pwTargetBase;
+
+        for (int_fast16_t x = 0; x < ptCopySize->iWidth; x++) {
+
+            arm_2d_color_bgra8888_t *ptTargetPixel = (arm_2d_color_bgra8888_t *)pwTarget++;
+            arm_2d_color_bgra8888_t *ptSourcePixel = (arm_2d_color_bgra8888_t *)pwSource++;
+
+            uint16_t hwOPA = ptSourcePixel->u8A;
+            uint16_t hwTrans = 256 - hwOPA;
+
+            uint16_t hwChannel0 = (uint16_t)(ptSourcePixel->chChannel[0] * hwOPA)
+                                   + (ptTargetPixel->chChannel[0] * hwTrans);
+            ptTargetPixel->chChannel[0] = (uint16_t) (hwChannel0 >> 8);
+
+            uint16_t hwChannel1 = (uint16_t)(ptSourcePixel->chChannel[1] * hwOPA)
+                                   + (ptTargetPixel->chChannel[1] * hwTrans);
+            ptTargetPixel->chChannel[1] = (uint16_t) (hwChannel1 >> 8);
+
+            uint16_t hwChannel2 = (uint16_t)(ptSourcePixel->chChannel[2] * hwOPA)
+                                   + (ptTargetPixel->chChannel[2] * hwTrans);
+            ptTargetPixel->chChannel[2] = (uint16_t) (hwChannel2 >> 8);
+
+        }
+
+        pwSourceBase += iSourceStride;
+        pwTargetBase += iTargetStride;
+    }
+}
 
 
 __WEAK

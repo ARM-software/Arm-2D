@@ -52,17 +52,29 @@ extern "C" {
 #   pragma diag_suppress=Go029 
 #endif
 
+
+
+/*============================ MACROS ========================================*/
+
+/*! 
+ *  \addtogroup Deprecated
+ *  @{
+ */
+#define arm_2dp_convert_colour_to_rgb888   arm_2dp_convert_colour_to_cccn888
+#define arm_2d_convert_colour_to_rgb888    arm_2d_convert_colour_to_cccn888
+/*! @} */
+
+
 /*!
  * \addtogroup gConversion 6 Conversion Operations
  * @{
  */
 
-/*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
-#define arm_2d_convert_colour_to_rgb888(__SRC_ADDR, /* source tile address */   \
+#define arm_2d_convert_colour_to_cccn888(__SRC_ADDR, /* source tile address */  \
                                         __DES_ADDR  /* target tile address */)  \
-            arm_2dp_convert_colour_to_rgb888(   NULL,                           \
+            arm_2dp_convert_colour_to_cccn888(  NULL,                           \
                                                 (__SRC_ADDR),                   \
                                                 (__DES_ADDR))
 
@@ -221,7 +233,7 @@ arm_fsm_rt_t arm_2dp_convert_colour_to_gray8(   arm_2d_op_cl_convt_t *ptOP,
                                                 const arm_2d_tile_t *ptTarget);
 
 /*!
- * \brief convert the colour format of a given tile to rgb888
+ * \brief convert the colour format of a given tile to cccn888
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptSource the source tile
  * \param[out] ptTarget the output tile (holding a buffer)
@@ -229,7 +241,7 @@ arm_fsm_rt_t arm_2dp_convert_colour_to_gray8(   arm_2d_op_cl_convt_t *ptOP,
  */
 extern
 ARM_NONNULL(2,3)
-arm_fsm_rt_t arm_2dp_convert_colour_to_rgb888(  arm_2d_op_cl_convt_t *ptOP,
+arm_fsm_rt_t arm_2dp_convert_colour_to_cccn888( arm_2d_op_cl_convt_t *ptOP,
                                                 const arm_2d_tile_t *ptSource,
                                                 const arm_2d_tile_t *ptTarget);
 /*!
