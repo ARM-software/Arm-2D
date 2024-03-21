@@ -8,6 +8,9 @@ var group__gConversion =
     [ "__arm_2d_rgb565_pack", "group__gConversion.html#gad741f60e362467e251ef35febec37c28", null ],
     [ "__arm_2d_cccn888_pack", "group__gConversion.html#ga50cef518f8e1fe3aa7b6870ac797c66e", null ],
     [ "arm_2dp_convert_colour_to_gray8", "group__gConversion.html#ga60c2471e899128c2a21f02e1a38017de", null ],
+    [ "arm_2dp_tile_copy_to_gray8", "group__gConversion.html#gad5ccb2bf539aa24018a4eaa0868ed711", null ],
+    [ "arm_2dp_convert_colour_to_rgb565", "group__gConversion.html#gad608978ecf403dee5bcf998c23674195", null ],
+    [ "arm_2dp_tile_copy_to_rgb565", "group__gConversion.html#gaa840bd826d66df37f7fc35eae8efe3bd", null ],
     [ "arm_2dp_convert_colour_to_cccn888", "group__gConversion.html#ga489460ad41c8cde224f143d54aaf1976", null ],
-    [ "arm_2dp_convert_colour_to_rgb565", "group__gConversion.html#gad608978ecf403dee5bcf998c23674195", null ]
+    [ "arm_2dp_tile_copy_to_cccn888", "group__gConversion.html#ga0c26f67aac00afc77224c36145947946", null ]
 ];
