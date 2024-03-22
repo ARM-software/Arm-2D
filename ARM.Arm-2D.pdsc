@@ -362,7 +362,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.6.3" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.6.4" condition="Arm-2D-EXTRA">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <!-- example control source files -->
@@ -415,6 +415,7 @@
             <file category="sourceC"     name="examples/common/asset/helium.c" />
             <file category="sourceC"     name="examples/common/asset/background.c" />
             <file category="sourceC"     name="examples/common/asset/WatchCoverRound.c" />
+            <file category="sourceC"     name="examples/common/asset/GlassHalo.c" />
           </files>
           <RTE_Components_h>
 

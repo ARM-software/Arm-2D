@@ -187,6 +187,39 @@ void before_scene_switching_handler(void *pTarget,
     s_chIndex++;
 }
 
+extern const arm_2d_tile_t c_tileWatchCoverRoundGRAY8;
+extern const arm_2d_tile_t c_tileGlassHaloMask;
+
+IMPL_PFB_ON_DRAW(__disp_adapter0_user_draw_navigation)
+{
+    ARM_2D_PARAM(pTarget);
+    ARM_2D_PARAM(bIsNewFrame);
+
+    arm_2d_canvas(ptTile, __watch_cover_canvas) {
+
+        arm_2d_align_centre(__watch_cover_canvas, 
+                            c_tileWatchCoverRoundGRAY8.tRegion.tSize) {
+            
+            arm_2d_fill_colour_with_mask(
+                                        ptTile,
+                                        &__centre_region,
+                                        &c_tileWatchCoverRoundGRAY8, 
+                                        (__arm_2d_color_t){GLCD_COLOR_BLACK});
+        }
+
+        arm_2d_align_centre(__watch_cover_canvas, 
+                            c_tileGlassHaloMask.tRegion.tSize) {
+            arm_2d_fill_colour_with_mask(
+                                        ptTile,
+                                        &__centre_region,
+                                        &c_tileGlassHaloMask, 
+                                        (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY});
+        }
+    }
+
+    return arm_fsm_rt_cpl;
+}
+
 /*----------------------------------------------------------------------------
   Main function
  *----------------------------------------------------------------------------*/
