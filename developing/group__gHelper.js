@@ -310,7 +310,8 @@ var group__gHelper =
     [ "arm_2d_byte_fifo_peek", "group__gHelper.html#gab71dfe523df6a27f0758c29bd3a0e35b", null ],
     [ "arm_2d_byte_fifo_get_all_peeked", "group__gHelper.html#ga5a4996625f003ec5e18d7a7b549b072a", null ],
     [ "arm_2d_byte_fifo_reset_peeked", "group__gHelper.html#ga9a0bb323933baa059f65eb2bd62608be", null ],
-    [ "arm_2d_helper_get_utf8_byte_valid_length", "group__gHelper.html#gaade8c9a0e1c793b13a8ac34871945b5f", null ],
-    [ "arm_2d_helper_get_utf8_byte_length", "group__gHelper.html#ga2352b0099a2e5965db7a05d30b4f485b", null ],
+    [ "arm_2d_helper_get_utf8_byte_valid_length", "group__gHelper.html#gafef8afe9b381edc7b307ef22b66afae4", null ],
+    [ "arm_2d_helper_get_utf8_byte_length", "group__gHelper.html#ga7553bfdcdafa1d4ddfa3e0bff5322fc7", null ],
+    [ "arm_2d_helper_utf8_to_unicode", "group__gHelper.html#ga0400f80284319e9ae66d5316a52ee0b7", null ],
     [ "arm_2d_helper_get_char_descriptor", "group__gHelper.html#gace860649e7b7172cf6aa155abc51434d", null ]
 ];

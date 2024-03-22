@@ -130,8 +130,8 @@ $(document).ready(function(){initNavTree('arm__2d__helper_8h_source.html',''); i
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * Title:        #include &quot;arm_2d_helper.h&quot;</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * Description:  Public header file for the all helper services</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        18. March 2024</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.7.3</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        22. March 2024</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.7.5</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> * Target Processor:  Cortex-M cores</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment"> * -------------------------------------------------------------------- */</span></div>
@@ -769,7 +769,7 @@ $(document).ready(function(){initNavTree('arm__2d__helper_8h_source.html',''); i
 <div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span><span class="comment"> * \retval &gt;0 the UTF8 char length</span></div>
 <div class="line"><a id="l00661" name="l00661"></a><span class="lineno">  661</span><span class="comment"> */</span></div>
 <div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00663" name="l00663"></a><span class="lineno"><a class="line" href="group__gHelper.html#gaade8c9a0e1c793b13a8ac34871945b5f">  663</a></span>int8_t <a class="code hl_function" href="group__gHelper.html#gaade8c9a0e1c793b13a8ac34871945b5f" title="return a valid code length of a given UTF8 char">arm_2d_helper_get_utf8_byte_valid_length</a>(uint8_t *pchChar);</div>
+<div class="line"><a id="l00663" name="l00663"></a><span class="lineno"><a class="line" href="group__gHelper.html#gafef8afe9b381edc7b307ef22b66afae4">  663</a></span>int8_t <a class="code hl_function" href="group__gHelper.html#gafef8afe9b381edc7b307ef22b66afae4" title="return a valid code length of a given UTF8 char">arm_2d_helper_get_utf8_byte_valid_length</a>(const uint8_t *pchChar);</div>
 <div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span><span class="comment"></span> </div>
 <div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span><span class="comment"> * \brief return the code length based on the first byte of a given UTF8 char</span></div>
@@ -778,38 +778,49 @@ $(document).ready(function(){initNavTree('arm__2d__helper_8h_source.html',''); i
 <div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span><span class="comment"> * \retval &gt;0 the UTF8 char length</span></div>
 <div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span><span class="comment"> */</span></div>
 <div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00672" name="l00672"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga2352b0099a2e5965db7a05d30b4f485b">  672</a></span>int8_t <a class="code hl_function" href="group__gHelper.html#ga2352b0099a2e5965db7a05d30b4f485b" title="return the code length based on the first byte of a given UTF8 char">arm_2d_helper_get_utf8_byte_length</a>(uint8_t *pchChar);</div>
-<div class="line"><a id="l00673" name="l00673"></a><span class="lineno">  673</span><span class="comment"></span> </div>
-<div class="line"><a id="l00674" name="l00674"></a><span class="lineno">  674</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span><span class="comment"> * \brief get char descriptor</span></div>
-<div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span><span class="comment"> * \param[in] ptFont the target font</span></div>
-<div class="line"><a id="l00677" name="l00677"></a><span class="lineno">  677</span><span class="comment"> * \param[in] ptDescriptor a buffer to store a char descriptor</span></div>
-<div class="line"><a id="l00678" name="l00678"></a><span class="lineno">  678</span><span class="comment"> * \param[in] pchCharCode an UTF8 Char</span></div>
-<div class="line"><a id="l00679" name="l00679"></a><span class="lineno">  679</span><span class="comment"> * \return arm_2d_char_descriptor_t * the descriptor</span></div>
+<div class="line"><a id="l00672" name="l00672"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga7553bfdcdafa1d4ddfa3e0bff5322fc7">  672</a></span>int8_t <a class="code hl_function" href="group__gHelper.html#ga7553bfdcdafa1d4ddfa3e0bff5322fc7" title="return the code length based on the first byte of a given UTF8 char">arm_2d_helper_get_utf8_byte_length</a>(const uint8_t *pchChar);</div>
+<div class="line"><a id="l00673" name="l00673"></a><span class="lineno">  673</span> </div>
+<div class="line"><a id="l00674" name="l00674"></a><span class="lineno">  674</span><span class="comment"></span> </div>
+<div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span><span class="comment"> * \brief convert an UTF8 char into unicode char</span></div>
+<div class="line"><a id="l00677" name="l00677"></a><span class="lineno">  677</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00678" name="l00678"></a><span class="lineno">  678</span><span class="comment"> * \param[in] pchUTF8 </span></div>
+<div class="line"><a id="l00679" name="l00679"></a><span class="lineno">  679</span><span class="comment"> * \return uint32_t generated unicode</span></div>
 <div class="line"><a id="l00680" name="l00680"></a><span class="lineno">  680</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00681" name="l00681"></a><span class="lineno">  681</span>ARM_NONNULL(1,2,3)</div>
-<div class="line"><a id="l00682" name="l00682"></a><span class="lineno">  682</span><a class="code hl_struct" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> *</div>
-<div class="line"><a id="l00683" name="l00683"></a><span class="lineno"><a class="line" href="group__gHelper.html#gace860649e7b7172cf6aa155abc51434d">  683</a></span><a class="code hl_function" href="group__gHelper.html#gace860649e7b7172cf6aa155abc51434d" title="get char descriptor">arm_2d_helper_get_char_descriptor</a>(  const <a class="code hl_struct" href="group__gHelper.html#structarm__2d__font__t">arm_2d_font_t</a> *ptFont, </div>
-<div class="line"><a id="l00684" name="l00684"></a><span class="lineno">  684</span>                                    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> *ptDescriptor, </div>
-<div class="line"><a id="l00685" name="l00685"></a><span class="lineno">  685</span>                                    uint8_t *pchCharCode);</div>
-<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span><span class="comment"></span> </div>
-<div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span><span class="comment">/*! @} */</span></div>
-<div class="line"><a id="l00688" name="l00688"></a><span class="lineno">  688</span> </div>
-<div class="line"><a id="l00689" name="l00689"></a><span class="lineno">  689</span><span class="preprocessor">#if defined(__clang__)</span></div>
-<div class="line"><a id="l00690" name="l00690"></a><span class="lineno">  690</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
-<div class="line"><a id="l00691" name="l00691"></a><span class="lineno">  691</span><span class="preprocessor">#elif __IS_COMPILER_ARM_COMPILER_5__</span></div>
-<div class="line"><a id="l00692" name="l00692"></a><span class="lineno">  692</span><span class="preprocessor">#pragma diag_warning 64</span></div>
-<div class="line"><a id="l00693" name="l00693"></a><span class="lineno">  693</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00694" name="l00694"></a><span class="lineno">  694</span> </div>
-<div class="line"><a id="l00695" name="l00695"></a><span class="lineno">  695</span><span class="preprocessor">#undef __ARM_2D_HELPER_IMPLEMENT__</span></div>
-<div class="line"><a id="l00696" name="l00696"></a><span class="lineno">  696</span><span class="preprocessor">#undef __ARM_2D_HELPER_INHERIT__</span></div>
-<div class="line"><a id="l00697" name="l00697"></a><span class="lineno">  697</span> </div>
-<div class="line"><a id="l00698" name="l00698"></a><span class="lineno">  698</span> </div>
-<div class="line"><a id="l00699" name="l00699"></a><span class="lineno">  699</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
-<div class="line"><a id="l00700" name="l00700"></a><span class="lineno">  700</span>}</div>
-<div class="line"><a id="l00701" name="l00701"></a><span class="lineno">  701</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00702" name="l00702"></a><span class="lineno">  702</span> </div>
-<div class="line"><a id="l00703" name="l00703"></a><span class="lineno">  703</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00681" name="l00681"></a><span class="lineno">  681</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00682" name="l00682"></a><span class="lineno">  682</span>extern</div>
+<div class="line"><a id="l00683" name="l00683"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga0400f80284319e9ae66d5316a52ee0b7">  683</a></span>uint32_t <a class="code hl_function" href="group__gHelper.html#ga0400f80284319e9ae66d5316a52ee0b7" title="convert an UTF8 char into unicode char">arm_2d_helper_utf8_to_unicode</a>(const uint8_t *pchUTF8);</div>
+<div class="line"><a id="l00684" name="l00684"></a><span class="lineno">  684</span><span class="comment"></span> </div>
+<div class="line"><a id="l00685" name="l00685"></a><span class="lineno">  685</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span><span class="comment"> * \brief get char descriptor</span></div>
+<div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span><span class="comment"> * \param[in] ptFont the target font</span></div>
+<div class="line"><a id="l00688" name="l00688"></a><span class="lineno">  688</span><span class="comment"> * \param[in] ptDescriptor a buffer to store a char descriptor</span></div>
+<div class="line"><a id="l00689" name="l00689"></a><span class="lineno">  689</span><span class="comment"> * \param[in] pchCharCode an UTF8 Char</span></div>
+<div class="line"><a id="l00690" name="l00690"></a><span class="lineno">  690</span><span class="comment"> * \return arm_2d_char_descriptor_t * the descriptor</span></div>
+<div class="line"><a id="l00691" name="l00691"></a><span class="lineno">  691</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00692" name="l00692"></a><span class="lineno">  692</span>ARM_NONNULL(1,2,3)</div>
+<div class="line"><a id="l00693" name="l00693"></a><span class="lineno">  693</span><a class="code hl_struct" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> *</div>
+<div class="line"><a id="l00694" name="l00694"></a><span class="lineno"><a class="line" href="group__gHelper.html#gace860649e7b7172cf6aa155abc51434d">  694</a></span><a class="code hl_function" href="group__gHelper.html#gace860649e7b7172cf6aa155abc51434d" title="get char descriptor">arm_2d_helper_get_char_descriptor</a>(  const <a class="code hl_struct" href="group__gHelper.html#structarm__2d__font__t">arm_2d_font_t</a> *ptFont, </div>
+<div class="line"><a id="l00695" name="l00695"></a><span class="lineno">  695</span>                                    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> *ptDescriptor, </div>
+<div class="line"><a id="l00696" name="l00696"></a><span class="lineno">  696</span>                                    uint8_t *pchCharCode);</div>
+<div class="line"><a id="l00697" name="l00697"></a><span class="lineno">  697</span><span class="comment"></span> </div>
+<div class="line"><a id="l00698" name="l00698"></a><span class="lineno">  698</span><span class="comment">/*! @} */</span></div>
+<div class="line"><a id="l00699" name="l00699"></a><span class="lineno">  699</span> </div>
+<div class="line"><a id="l00700" name="l00700"></a><span class="lineno">  700</span><span class="preprocessor">#if defined(__clang__)</span></div>
+<div class="line"><a id="l00701" name="l00701"></a><span class="lineno">  701</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
+<div class="line"><a id="l00702" name="l00702"></a><span class="lineno">  702</span><span class="preprocessor">#elif __IS_COMPILER_ARM_COMPILER_5__</span></div>
+<div class="line"><a id="l00703" name="l00703"></a><span class="lineno">  703</span><span class="preprocessor">#pragma diag_warning 64</span></div>
+<div class="line"><a id="l00704" name="l00704"></a><span class="lineno">  704</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00705" name="l00705"></a><span class="lineno">  705</span> </div>
+<div class="line"><a id="l00706" name="l00706"></a><span class="lineno">  706</span><span class="preprocessor">#undef __ARM_2D_HELPER_IMPLEMENT__</span></div>
+<div class="line"><a id="l00707" name="l00707"></a><span class="lineno">  707</span><span class="preprocessor">#undef __ARM_2D_HELPER_INHERIT__</span></div>
+<div class="line"><a id="l00708" name="l00708"></a><span class="lineno">  708</span> </div>
+<div class="line"><a id="l00709" name="l00709"></a><span class="lineno">  709</span> </div>
+<div class="line"><a id="l00710" name="l00710"></a><span class="lineno">  710</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
+<div class="line"><a id="l00711" name="l00711"></a><span class="lineno">  711</span>}</div>
+<div class="line"><a id="l00712" name="l00712"></a><span class="lineno">  712</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00713" name="l00713"></a><span class="lineno">  713</span> </div>
+<div class="line"><a id="l00714" name="l00714"></a><span class="lineno">  714</span><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
