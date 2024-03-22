@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        19. March 2024
- * $Revision:    V.1.6.2
+ * $Date:        22. March 2024
+ * $Revision:    V.1.6.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -285,11 +285,22 @@ uint16_t arm_2d_scene_player_get_switching_cfg(arm_2d_scene_player_t *ptThis)
 
 ARM_NONNULL(1)
 void arm_2d_scene_player_set_switching_period(  arm_2d_scene_player_t *ptThis,
-                                                uint_fast16_t hwMS)
+                                                int32_t nMS)
 {
     assert(NULL != ptThis);
-    this.Switch.hwPeriod = MAX(hwMS, __ARM_2D_CFG_HELPER_SWITCH_MIN_PERIOD__);
+
+    if (nMS < 0) {
+        /* use the manual switching mode */
+        this.Switch.tConfig.Feature.bUseManualSwitching = true;
+        this.Switch.iProgress = 0;
+    } else {
+        this.Switch.tConfig.Feature.bUseManualSwitching = false;
+        this.Switch.hwPeriod = MIN(nMS, __UINT16_MAX__);
+        this.Switch.hwPeriod = MAX(nMS, __ARM_2D_CFG_HELPER_SWITCH_MIN_PERIOD__);
+    }
 }
+
+
 
 ARM_NONNULL(1)
 arm_2d_err_t __arm_2d_scene_player_register_on_draw_navigation_event_handler(

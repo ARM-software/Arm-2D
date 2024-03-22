@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        19. March 2024
- * $Revision:    V.1.6.2
+ * $Date:        22. March 2024
+ * $Revision:    V.1.6.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -172,7 +172,8 @@ typedef union __arm_2d_helper_scene_switch_t {
         uint8_t bIgnoreNewSceneBG       : 1;                                    //!< when set, ignore the background of the new scene
         uint8_t bIgnoreNewScene         : 1;                                    //!< when set, ignore the new scene
         uint8_t u2DefaultBG             : 2;                                    //!< the default background
-        uint8_t                         : 2;
+        uint8_t bUseManualSwitching     : 1;                                    //!< when set, use the user controlled switching progress/offset for switching
+        uint8_t                         : 1;
     } Feature;
     uint16_t hwSetting;                                                         //!< the setting value
 
@@ -307,7 +308,11 @@ struct arm_2d_scene_player_t {
                 }Slide;
             };
             __arm_2d_helper_scene_switch_t tConfig;                             //!< the switching configuration
-            uint16_t hwPeriod;                                                  //!< the switching should finish in specified millisecond
+            union {
+                uint16_t hwPeriod;                                              //!< the switching should finish in specified millisecond
+                int16_t iProgress;                                              //!< the progress for manual switching mode, used in fade in/fade out etc.
+                int16_t iOffset;                                                //!< the coordinate offset for manual switching mode, used in erasing, sliding etc.
+            };
             int64_t lTimeStamp;
         }Switch;
         
@@ -429,12 +434,12 @@ uint16_t arm_2d_scene_player_get_switching_cfg(arm_2d_scene_player_t *ptThis);
  * \brief configure the scene switching period
  *
  * \param[in] ptThis the target scene player
- * \param[in] hwMS period in millisecond
+ * \param[in] nMS period in millisecond, -1 means using manual switching mode
  */
 extern
 ARM_NONNULL(1)
 void arm_2d_scene_player_set_switching_period(  arm_2d_scene_player_t *ptThis,
-                                                uint_fast16_t hwMS);
+                                                int nMS);
 
 
 /*!
