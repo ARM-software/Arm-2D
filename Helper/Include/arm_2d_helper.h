@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        18. March 2024
- * $Revision:    V.1.7.3
+ * $Date:        22. March 2024
+ * $Revision:    V.1.7.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -660,7 +660,7 @@ void arm_2d_byte_fifo_reset_peeked(arm_2d_byte_fifo_t *ptThis);
  * \retval >0 the UTF8 char length
  */
 ARM_NONNULL(1)
-int8_t arm_2d_helper_get_utf8_byte_valid_length(uint8_t *pchChar);
+int8_t arm_2d_helper_get_utf8_byte_valid_length(const uint8_t *pchChar);
 
 /*!
  * \brief return the code length based on the first byte of a given UTF8 char
@@ -669,7 +669,18 @@ int8_t arm_2d_helper_get_utf8_byte_valid_length(uint8_t *pchChar);
  * \retval >0 the UTF8 char length
  */
 ARM_NONNULL(1)
-int8_t arm_2d_helper_get_utf8_byte_length(uint8_t *pchChar);
+int8_t arm_2d_helper_get_utf8_byte_length(const uint8_t *pchChar);
+
+
+/*!
+ * \brief convert an UTF8 char into unicode char
+ * 
+ * \param[in] pchUTF8 
+ * \return uint32_t generated unicode
+ */
+ARM_NONNULL(1)
+extern
+uint32_t arm_2d_helper_utf8_to_unicode(const uint8_t *pchUTF8);
 
 /*!
  * \brief get char descriptor
