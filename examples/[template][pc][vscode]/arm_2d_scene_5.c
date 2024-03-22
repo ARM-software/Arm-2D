@@ -202,7 +202,7 @@ my_list_item_t s_tListArray[] = {
 
 #define ITEM_BG_OPACITY     (255)
 
-#define RADIUS      800.0f
+#define RADIUS      480.0f
 
 static 
 arm_fsm_rt_t __list_view_item_0_draw_item( 

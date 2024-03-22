@@ -146,11 +146,26 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
 }
 
 #if !__DISP%Instance%_CFG_DISABLE_NAVIGATION_LAYER__
+
+__WEAK 
+IMPL_PFB_ON_DRAW(__disp_adapter%Instance%_user_draw_navigation)
+{
+    ARM_2D_PARAM(pTarget);
+    ARM_2D_PARAM(bIsNewFrame);
+
+    return arm_fsm_rt_cpl;
+}
+
 __WEAK
 IMPL_PFB_ON_DRAW(__disp_adapter%Instance%_draw_navigation)
 {
     ARM_2D_PARAM(pTarget);
     ARM_2D_PARAM(bIsNewFrame);
+
+    while(  arm_fsm_rt_cpl != 
+            __disp_adapter%Instance%_user_draw_navigation(  pTarget, 
+                                                            ptTile, 
+                                                            bIsNewFrame));
 
 #if __DISP%Instance%_CFG_USE_CONSOLE__
 
