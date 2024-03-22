@@ -21,8 +21,8 @@
  * Title:        __arm_2d_direct.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        02. May 2023
- * $Revision:    V.1.2.2
+ * $Date:        22. May 2024
+ * $Revision:    V.1.2.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -3213,6 +3213,24 @@ void __arm_2d_impl_cccn888_to_rgb565(uint32_t * __restrict pwSourceBase,
                                      uint16_t * __restrict phwTargetBase,
                                      int16_t iTargetStride,
                                      arm_2d_size_t * __restrict ptCopySize);
+
+void __arm_2d_impl_ccca8888_to_rgb565(  uint32_t *__RESTRICT pwSourceBase,
+                                        int16_t iSourceStride,
+                                        uint16_t *__RESTRICT phwTargetBase,
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t *__RESTRICT ptCopySize);
+
+void __arm_2d_impl_ccca8888_to_gray8(  uint32_t *__RESTRICT pwSourceBase,
+                                        int16_t iSourceStride,
+                                        uint8_t *__RESTRICT pchTargetBase,
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t *__RESTRICT ptCopySize);
+
+void __arm_2d_impl_ccca8888_to_cccn888( uint32_t *__RESTRICT pwSourceBase,
+                                        int16_t iSourceStride,
+                                        uint32_t *__RESTRICT pwTargetBase,
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t *__RESTRICT ptCopySize);
 
 void __arm_2d_impl_cccn888_transform(__arm_2d_param_copy_orig_t * ptParam,
                                      __arm_2d_transform_info_t * ptInfo);
