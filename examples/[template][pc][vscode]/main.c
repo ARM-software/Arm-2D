@@ -190,6 +190,7 @@ void before_scene_switching_handler(void *pTarget,
 extern const arm_2d_tile_t c_tileWatchCoverRoundGRAY8;
 extern const arm_2d_tile_t c_tileGlassHaloMask;
 
+__OVERRIDE_WEAK
 IMPL_PFB_ON_DRAW(__disp_adapter0_user_draw_navigation)
 {
     ARM_2D_PARAM(pTarget);
