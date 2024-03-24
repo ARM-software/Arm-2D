@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        19. March 2024
- * $Revision:    V.1.9.0
+ * $Date:        24. March 2024
+ * $Revision:    V.1.9.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -640,7 +640,7 @@ ARM_PRIVATE(
     arm_2d_helper_pfb_cfg_t tCFG;                               //!< user configuration 
     
     struct {                                                    
-        arm_2d_region_t             tDrawRegion;
+        arm_2d_location_t           tScanOffset;
         arm_2d_region_t             tTargetRegion;
 
         arm_2d_region_list_item_t  *ptDirtyRegion;

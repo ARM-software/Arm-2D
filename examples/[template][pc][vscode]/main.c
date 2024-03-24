@@ -187,6 +187,9 @@ void before_scene_switching_handler(void *pTarget,
     s_chIndex++;
 }
 
+#if __DISP0_CFG_SCEEN_WIDTH__ == 480                                            \
+ && __DISP0_CFG_SCEEN_HEIGHT__ == 480
+
 extern const arm_2d_tile_t c_tileWatchCoverRoundGRAY8;
 extern const arm_2d_tile_t c_tileGlassHaloMask;
 
@@ -220,6 +223,7 @@ IMPL_PFB_ON_DRAW(__disp_adapter0_user_draw_navigation)
 
     return arm_fsm_rt_cpl;
 }
+#endif
 
 /*----------------------------------------------------------------------------
   Main function

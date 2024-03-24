@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        19. March 2024
- * $Revision:    V.1.9.0
+ * $Date:        24. March 2024
+ * $Revision:    V.1.9.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -575,9 +575,9 @@ void __arm_2d_helper_low_level_rendering(arm_2d_helper_pfb_t *ptThis)
     
     // update location info
     this.Adapter.ptCurrent->tTile.tRegion.tLocation = (arm_2d_location_t) {
-        .iX = this.Adapter.tDrawRegion.tLocation.iX
+        .iX = this.Adapter.tScanOffset.iX
             + this.Adapter.tTargetRegion.tLocation.iX,
-        .iY = this.Adapter.tDrawRegion.tLocation.iY
+        .iY = this.Adapter.tScanOffset.iY
             + this.Adapter.tTargetRegion.tLocation.iY,
     };
 
@@ -2034,6 +2034,9 @@ label_iteration_begin_start:
         this.Adapter.bIsRegionChanged = true;
     }
 
+    /* Fetch a dirty region and adjust its shape according to the alignment 
+     * requirements 
+     */
     do {
         if (this.Adapter.bIsRegionChanged) {
             this.Adapter.bIsRegionChanged = false;
@@ -2181,11 +2184,13 @@ label_iteration_begin_start:
                     & ~chPixelHeightAlignMask;
             }
 
+
+            /* update PFB Size */
             if (this.tCFG.FrameBuffer.bDisableDynamicFPBSize) {
                 // reset adapter frame size
                 this.Adapter.tFrameSize = this.tCFG.FrameBuffer.tFrameSize;
 
-            } else {                                                            //!< update PFB size
+            } else {
                 uint32_t wTargetPixelCount 
                     = this.Adapter.tTargetRegion.tSize.iWidth
                     * this.Adapter.tTargetRegion.tSize.iHeight;
@@ -2234,29 +2239,41 @@ label_iteration_begin_start:
         break;
     } while(true);
     
+    /* - this.Adapter.tTargetRegion: 
+     *       the region to draw, it could be a dirty region, or the full screen
+     *
+     * - this.Adapter.tFrameSize:
+     *       The adjusted PFB size.
+     * 
+     * - this.Adapter.tScanOffset:
+     *       the relative location inside the this.Adapter.tTargetRegion. It is 
+     *       used to scan the this.Adapter.tTargetRegion with the size stored 
+     *       in this.Adapter.tFrameSize. The this.Adapter.tPFBTile ( the region
+     *       returned ) is generated based on this region.
+     */
     
-    arm_2d_region_t tTempRegion = {
+    arm_2d_region_t tVirtualScreenRegion = {
         .tSize = this.tCFG.tDisplayArea.tSize,
         .tLocation = {
             .iX = - (   this.Adapter.tTargetRegion.tLocation.iX 
-                    +   this.Adapter.tDrawRegion.tLocation.iX),
+                    +   this.Adapter.tScanOffset.iX),
             .iY = - (   this.Adapter.tTargetRegion.tLocation.iY 
-                    +   this.Adapter.tDrawRegion.tLocation.iY),
+                    +   this.Adapter.tScanOffset.iY),
         },
     };
-    
     
     ptPartialFrameBuffer->tRegion.tSize.iWidth 
         = MIN(  this.Adapter.tFrameSize.iWidth, 
                 this.Adapter.tTargetRegion.tSize.iWidth 
-            -   this.Adapter.tDrawRegion.tLocation.iX);
+            -   this.Adapter.tScanOffset.iX);
     ptPartialFrameBuffer->tRegion.tSize.iHeight 
         = MIN(  this.Adapter.tFrameSize.iHeight, 
                 this.Adapter.tTargetRegion.tSize.iHeight 
-            -   this.Adapter.tDrawRegion.tLocation.iY);
-            
+            -   this.Adapter.tScanOffset.iY);
+    
+    /* generate a child tile based on the tVirtualScreenRegion */
     arm_2d_tile_generate_child( ptPartialFrameBuffer, 
-                                &tTempRegion, 
+                                &tVirtualScreenRegion, 
                                 &this.Adapter.tPFBTile, 
                                 false);
 
@@ -2372,6 +2389,7 @@ label_iteration_begin_start:
         arm_2d_set_default_frame_buffer(&this.Adapter.tPFBTile);
     }
 
+    /* mark the virtual screen */
     this.Adapter.tPFBTile.tInfo.bVirtualScreen = true;
 
     return (arm_2d_tile_t *)&(this.Adapter.tPFBTile);
@@ -2427,18 +2445,18 @@ bool __arm_2d_helper_pfb_drawing_iteration_end(arm_2d_helper_pfb_t *ptThis)
         arm_2d_set_default_frame_buffer(NULL);
     }
 
-    this.Adapter.tDrawRegion.tLocation.iX 
+    this.Adapter.tScanOffset.iX 
         += ptPartialFrameBuffer->tRegion.tSize.iWidth;
-    if (    this.Adapter.tDrawRegion.tLocation.iX 
+    if (    this.Adapter.tScanOffset.iX 
         >=  this.Adapter.tTargetRegion.tSize.iWidth) {
-        this.Adapter.tDrawRegion.tLocation.iY 
+        this.Adapter.tScanOffset.iY 
             += ptPartialFrameBuffer->tRegion.tSize.iHeight;
-        this.Adapter.tDrawRegion.tLocation.iX = 0;
+        this.Adapter.tScanOffset.iX = 0;
         
-        if (    this.Adapter.tDrawRegion.tLocation.iY 
+        if (    this.Adapter.tScanOffset.iY 
             >=  this.Adapter.tTargetRegion.tSize.iHeight) {
             // finished
-            this.Adapter.tDrawRegion.tLocation.iY = 0;
+            this.Adapter.tScanOffset.iY = 0;
 
             return __arm_2d_helper_pfb_get_next_dirty_region(ptThis);
             
