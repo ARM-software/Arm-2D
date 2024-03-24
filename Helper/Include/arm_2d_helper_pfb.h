@@ -899,17 +899,6 @@ void __arm_2d_helper_pfb_report_rendering_complete( arm_2d_helper_pfb_t *ptThis,
                                                     arm_2d_pfb_t *ptPFB);
 
 /*!
- * \brief swap the high and low bytes for each rgb16 pixel
- *
- * \param[in] phwBuffer the pixel buffer
- * \note the phwBuffer MUST aligned to half-word addresses
- *
- * \param[in] wSize the number of pixels
- */
-extern
-void arm_2d_helper_swap_rgb16(uint16_t *phwBuffer, uint32_t wCount);
-
-/*!
  * \brief try to get a PFB block from the pool
  * \param[in] ptThis the PFB helper control block
  * \retval NULL the pool is empty

@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        22. March 2024
- * $Revision:    V.1.7.5
+ * $Date:        24. March 2024
+ * $Revision:    V.1.7.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -901,6 +901,45 @@ void arm_2d_byte_fifo_reset_peeked(arm_2d_byte_fifo_t *ptThis)
 /*----------------------------------------------------------------------------*
  * Misc                                                                       *
  *----------------------------------------------------------------------------*/
+
+__WEAK 
+void arm_2d_helper_swap_rgb16(uint16_t *phwBuffer, uint32_t wCount)
+{
+    assert(NULL != phwBuffer);
+
+    if (0 == wCount) {
+        return ;
+    }
+
+    // aligned (2)
+    assert((((uintptr_t) phwBuffer) & 0x01) == 0);
+
+    // it is not aligned to 4
+    if ((((uintptr_t) phwBuffer) & 0x03) == 0x02) {
+        // handle the leading pixel
+        uint32_t wTemp = *phwBuffer;
+        *phwBuffer++ = (uint16_t)__REV16(wTemp);
+        wCount--;
+    }
+
+
+    uint32_t wWords = wCount >> 1;
+    uint32_t *pwBuffer = (uint32_t *)phwBuffer;
+    wCount &= 0x01;
+
+    if (wWords > 0) {
+        do {
+            uint32_t wTemp = *pwBuffer;
+            *pwBuffer++ = __REV16(wTemp);
+        } while(--wWords);
+    }
+
+    if (wCount) {
+        uint32_t wTemp = *pwBuffer;
+        (*(uint16_t *)pwBuffer) = (uint16_t)__REV16(wTemp);
+    }
+}
+
 
 ARM_NONNULL(1)
 int8_t arm_2d_helper_get_utf8_byte_valid_length(const uint8_t *pchChar)

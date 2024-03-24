@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        22. March 2024
- * $Revision:    V.1.7.5
+ * $Date:        24. March 2024
+ * $Revision:    V.1.7.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -652,6 +652,17 @@ void arm_2d_byte_fifo_reset_peeked(arm_2d_byte_fifo_t *ptThis);
 /*----------------------------------------------------------------------------*
  * Misc                                                                       *
  *----------------------------------------------------------------------------*/
+
+/*!
+ * \brief swap the high and low bytes for each rgb16 pixel
+ *
+ * \param[in] phwBuffer the pixel buffer
+ * \note the phwBuffer MUST aligned to half-word addresses
+ *
+ * \param[in] wSize the number of pixels
+ */
+extern
+void arm_2d_helper_swap_rgb16(uint16_t *phwBuffer, uint32_t wCount);
 
 /*!
  * \brief return a valid code length of a given UTF8 char

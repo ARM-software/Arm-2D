@@ -389,44 +389,6 @@ arm_2d_location_t arm_2d_helper_pfb_get_absolute_location(
     return tLocation;
 }
 
-__WEAK 
-void arm_2d_helper_swap_rgb16(uint16_t *phwBuffer, uint32_t wCount)
-{
-    assert(NULL != phwBuffer);
-
-    if (0 == wCount) {
-        return ;
-    }
-
-    // aligned (2)
-    assert((((uintptr_t) phwBuffer) & 0x01) == 0);
-
-    // it is not aligned to 4
-    if ((((uintptr_t) phwBuffer) & 0x03) == 0x02) {
-        // handle the leading pixel
-        uint32_t wTemp = *phwBuffer;
-        *phwBuffer++ = (uint16_t)__REV16(wTemp);
-        wCount--;
-    }
-
-
-    uint32_t wWords = wCount >> 1;
-    uint32_t *pwBuffer = (uint32_t *)phwBuffer;
-    wCount &= 0x01;
-
-    if (wWords > 0) {
-        do {
-            uint32_t wTemp = *pwBuffer;
-            *pwBuffer++ = __REV16(wTemp);
-        } while(--wWords);
-    }
-
-    if (wCount) {
-        uint32_t wTemp = *pwBuffer;
-        (*(uint16_t *)pwBuffer) = (uint16_t)__REV16(wTemp);
-    }
-}
-
 ARM_NONNULL(1)
 void arm_2d_helper_ignore_low_level_flush(arm_2d_helper_pfb_t *ptThis)
 {
