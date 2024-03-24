@@ -130,8 +130,8 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * Title:        #include &quot;arm_2d_helper_pfb.h&quot;</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * Description:  Public header file for the PFB helper service </span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        19. March 2024</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.9.0</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        24. March 2024</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.9.1</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> * Target Processor:  Cortex-M cores</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment"> * -------------------------------------------------------------------- */</span></div>
@@ -749,7 +749,7 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span>    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__cfg__t" title="PFB Helper configuration.">arm_2d_helper_pfb_cfg_t</a> tCFG;                               <span class="comment">//!&lt; user configuration </span></div>
 <div class="line"><a id="l00641" name="l00641"></a><span class="lineno">  641</span>    </div>
 <div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span>    <span class="keyword">struct </span>{                                                    </div>
-<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span>        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a>             tDrawRegion;</div>
+<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span>        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__location__t" title="a type for coordinates (integer)">arm_2d_location_t</a>           tScanOffset;</div>
 <div class="line"><a id="l00644" name="l00644"></a><span class="lineno">  644</span>        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a>             tTargetRegion;</div>
 <div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span> </div>
 <div class="line"><a id="l00646" name="l00646"></a><span class="lineno">  646</span>        <a class="code hl_struct" href="group__gHelper.html#structarm__2d__region__list__item__t" title="the node of a region list">arm_2d_region_list_item_t</a>  *ptDirtyRegion;</div>
