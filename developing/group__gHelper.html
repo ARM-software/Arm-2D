@@ -575,9 +575,6 @@ Functions</h2></td></tr>
 <tr class="memitem:ga3f0e4fb8101686169c244a22c2e85f84"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga3f0e4fb8101686169c244a22c2e85f84">__arm_2d_helper_pfb_report_rendering_complete</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis, <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptPFB)</td></tr>
 <tr class="memdesc:ga3f0e4fb8101686169c244a22c2e85f84"><td class="mdescLeft">&#160;</td><td class="mdescRight">tell PFB helper that a low level LCD flushing work is complete  <a href="group__gHelper.html#ga3f0e4fb8101686169c244a22c2e85f84">More...</a><br /></td></tr>
 <tr class="separator:ga3f0e4fb8101686169c244a22c2e85f84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf07a91ddd548e926e5737db7800c16a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaf07a91ddd548e926e5737db7800c16a9">arm_2d_helper_swap_rgb16</a> (uint16_t *phwBuffer, uint32_t wCount)</td></tr>
-<tr class="memdesc:gaf07a91ddd548e926e5737db7800c16a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">swap the high and low bytes for each rgb16 pixel  <a href="group__gHelper.html#gaf07a91ddd548e926e5737db7800c16a9">More...</a><br /></td></tr>
-<tr class="separator:gaf07a91ddd548e926e5737db7800c16a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa7855ac916c44e531c4c8a9c5ec0e69e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaa7855ac916c44e531c4c8a9c5ec0e69e">__arm_2d_helper_pfb_new</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis)</td></tr>
 <tr class="memdesc:gaa7855ac916c44e531c4c8a9c5ec0e69e"><td class="mdescLeft">&#160;</td><td class="mdescRight">try to get a PFB block from the pool  <a href="group__gHelper.html#gaa7855ac916c44e531c4c8a9c5ec0e69e">More...</a><br /></td></tr>
 <tr class="separator:gaa7855ac916c44e531c4c8a9c5ec0e69e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -783,6 +780,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga9a0bb323933baa059f65eb2bd62608be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga9a0bb323933baa059f65eb2bd62608be">arm_2d_byte_fifo_reset_peeked</a> (<a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis)</td></tr>
 <tr class="memdesc:ga9a0bb323933baa059f65eb2bd62608be"><td class="mdescLeft">&#160;</td><td class="mdescRight">reset the peek pointer, so you can restart from the beginning to peek.  <a href="group__gHelper.html#ga9a0bb323933baa059f65eb2bd62608be">More...</a><br /></td></tr>
 <tr class="separator:ga9a0bb323933baa059f65eb2bd62608be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf07a91ddd548e926e5737db7800c16a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaf07a91ddd548e926e5737db7800c16a9">arm_2d_helper_swap_rgb16</a> (uint16_t *phwBuffer, uint32_t wCount)</td></tr>
+<tr class="memdesc:gaf07a91ddd548e926e5737db7800c16a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">swap the high and low bytes for each rgb16 pixel  <a href="group__gHelper.html#gaf07a91ddd548e926e5737db7800c16a9">More...</a><br /></td></tr>
+<tr class="separator:gaf07a91ddd548e926e5737db7800c16a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafef8afe9b381edc7b307ef22b66afae4"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gafef8afe9b381edc7b307ef22b66afae4">arm_2d_helper_get_utf8_byte_valid_length</a> (const uint8_t *pchChar)</td></tr>
 <tr class="memdesc:gafef8afe9b381edc7b307ef22b66afae4"><td class="mdescLeft">&#160;</td><td class="mdescRight">return a valid code length of a given UTF8 char  <a href="group__gHelper.html#gafef8afe9b381edc7b307ef22b66afae4">More...</a><br /></td></tr>
 <tr class="separator:gafef8afe9b381edc7b307ef22b66afae4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -5955,49 +5955,6 @@ For normal usage, please DO NOT use this function unless you know what you are d
 
 </div>
 </div>
-<a id="gaf07a91ddd548e926e5737db7800c16a9" name="gaf07a91ddd548e926e5737db7800c16a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf07a91ddd548e926e5737db7800c16a9">&#9670;&nbsp;</a></span>arm_2d_helper_swap_rgb16()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void arm_2d_helper_swap_rgb16 </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>phwBuffer</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>wCount</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>swap the high and low bytes for each rgb16 pixel </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">phwBuffer</td><td>the pixel buffer </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>the phwBuffer MUST aligned to half-word addresses</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">wSize</td><td>the number of pixels </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="gaa7855ac916c44e531c4c8a9c5ec0e69e" name="gaa7855ac916c44e531c4c8a9c5ec0e69e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaa7855ac916c44e531c4c8a9c5ec0e69e">&#9670;&nbsp;</a></span>__arm_2d_helper_pfb_new()</h2>
 
@@ -8641,6 +8598,49 @@ For normal usage, please DO NOT use this function unless you know what you are d
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
+
+</div>
+</div>
+<a id="gaf07a91ddd548e926e5737db7800c16a9" name="gaf07a91ddd548e926e5737db7800c16a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf07a91ddd548e926e5737db7800c16a9">&#9670;&nbsp;</a></span>arm_2d_helper_swap_rgb16()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_helper_swap_rgb16 </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t *&#160;</td>
+          <td class="paramname"><em>phwBuffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>wCount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>swap the high and low bytes for each rgb16 pixel </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">phwBuffer</td><td>the pixel buffer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>the phwBuffer MUST aligned to half-word addresses</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">wSize</td><td>the number of pixels </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
