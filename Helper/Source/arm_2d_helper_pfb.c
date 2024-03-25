@@ -4257,13 +4257,13 @@ void arm_2d_helper_dirty_region_update_dirty_regions(
             if (NULL != ptNewRegion) {
                 arm_2d_region_t tNewRegion = *ptNewRegion;
                 
-                if (NULL != ptTargetRegion) {
+                if (NULL != ptVisibleArea) {
 
                     tNewRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(
                                                         ptTargetTile, 
                                                         tNewRegion.tLocation);
 
-                    arm_2d_region_t tTargetRegion = *ptTargetRegion;
+                    arm_2d_region_t tTargetRegion = *ptVisibleArea;
                     tTargetRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(
                                                         ptTargetTile, 
                                                         tTargetRegion.tLocation);
