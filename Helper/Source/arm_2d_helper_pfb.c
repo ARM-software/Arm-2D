@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        24. March 2024
- * $Revision:    V.1.9.1
+ * $Date:        25. March 2024
+ * $Revision:    V.1.9.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -4245,7 +4245,7 @@ ARM_NONNULL(1,2)
 void arm_2d_helper_dirty_region_update_dirty_regions(
                                         arm_2d_helper_dirty_region_t *ptThis,
                                         arm_2d_tile_t *ptTargetTile,
-                                        const arm_2d_region_t *ptTargetRegion,
+                                        const arm_2d_region_t *ptVisibleArea,
                                         const arm_2d_region_t *ptNewRegion,
                                         bool bIsNewFrame)
 {

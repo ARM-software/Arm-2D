@@ -1208,8 +1208,10 @@ void arm_2d_helper_dirty_region_on_frame_begin(
  * 
  * \param[in] ptThis the target helper
  * \param[in] ptTargetTile the target tile to draw content
- * \param[in] ptTargetRegion a relative region in the target tile
- * \param[in] ptNewRegion the new region to update
+ * \param[in] ptVisibleArea a visible region in the target tile used to clip
+ *            the ptNewRegion, NULL means no clipping.
+ * \param[in] ptNewRegion the new region to update, NULL means nothing 
+ *            to update
  * \param[in] bIsNewFrame whether this is the first iteration of a frame
  */
 ARM_NONNULL(1,2)
@@ -1217,7 +1219,7 @@ extern
 void arm_2d_helper_dirty_region_update_dirty_regions(
                                         arm_2d_helper_dirty_region_t *ptThis,
                                         arm_2d_tile_t *ptTargetTile,
-                                        const arm_2d_region_t *ptTargetRegion,
+                                        const arm_2d_region_t *ptVisibleArea,
                                         const arm_2d_region_t *ptNewRegion,
                                         bool bIsNewFrame);
 
