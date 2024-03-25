@@ -2370,7 +2370,9 @@ label_iteration_begin_start:
     /* mark the virtual screen */
     this.Adapter.tPFBTile.tInfo.bVirtualScreen = true;
 
-    if (this.Adapter.bEnablePFBBoarder) {
+    if (this.Adapter.bEnablePFBBoarder              /* Enable PFB Border */
+    && (NULL != this.Adapter.ptDirtyRegion)) {      /* Not for full-screen-update */
+
         this.Adapter.tPFBTile.tInfo.u3ExtensionID = ARM_2D_TILE_EXTENSION_BORDER;
         this.Adapter.tPFBTile.tInfo.Extension.Border = this.Adapter.PFBBorder.Internal;
     }
