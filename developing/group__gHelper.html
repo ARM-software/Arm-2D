@@ -652,9 +652,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaa72e3eeaa3f11790c6773bfab34eccaf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaa72e3eeaa3f11790c6773bfab34eccaf">arm_2d_helper_dirty_region_on_frame_begin</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__dirty__region__t">arm_2d_helper_dirty_region_t</a> *ptThis)</td></tr>
 <tr class="memdesc:gaa72e3eeaa3f11790c6773bfab34eccaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">the on-frame-begin event handler for a given dirty region helper  <a href="group__gHelper.html#gaa72e3eeaa3f11790c6773bfab34eccaf">More...</a><br /></td></tr>
 <tr class="separator:gaa72e3eeaa3f11790c6773bfab34eccaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4b21f0a91e146ae1a5d7e6a684ec1cb7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga4b21f0a91e146ae1a5d7e6a684ec1cb7">arm_2d_helper_dirty_region_update_dirty_regions</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__dirty__region__t">arm_2d_helper_dirty_region_t</a> *ptThis, <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTargetTile, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptTargetRegion, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptNewRegion, bool bIsNewFrame)</td></tr>
-<tr class="memdesc:ga4b21f0a91e146ae1a5d7e6a684ec1cb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">update a specified new region while erase the previous region  <a href="group__gHelper.html#ga4b21f0a91e146ae1a5d7e6a684ec1cb7">More...</a><br /></td></tr>
-<tr class="separator:ga4b21f0a91e146ae1a5d7e6a684ec1cb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga939a1a3f2479a199d9a622ea68957de8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga939a1a3f2479a199d9a622ea68957de8">arm_2d_helper_dirty_region_update_dirty_regions</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__dirty__region__t">arm_2d_helper_dirty_region_t</a> *ptThis, <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTargetTile, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptVisibleArea, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptNewRegion, bool bIsNewFrame)</td></tr>
+<tr class="memdesc:ga939a1a3f2479a199d9a622ea68957de8"><td class="mdescLeft">&#160;</td><td class="mdescRight">update a specified new region while erase the previous region  <a href="group__gHelper.html#ga939a1a3f2479a199d9a622ea68957de8">More...</a><br /></td></tr>
+<tr class="separator:ga939a1a3f2479a199d9a622ea68957de8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga975434ce493469363bdbb570018071ee"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga975434ce493469363bdbb570018071ee">arm_2d_helper_dirty_region_force_to_use_minimal_enclosure</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__dirty__region__t">arm_2d_helper_dirty_region_t</a> *ptThis, bool bEnable)</td></tr>
 <tr class="memdesc:ga975434ce493469363bdbb570018071ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">force the dirty region helper to use the minimal enclosure region to update.  <a href="group__gHelper.html#ga975434ce493469363bdbb570018071ee">More...</a><br /></td></tr>
 <tr class="separator:ga975434ce493469363bdbb570018071ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -6976,8 +6976,8 @@ For normal usage, please DO NOT use this function unless you know what you are d
 
 </div>
 </div>
-<a id="ga4b21f0a91e146ae1a5d7e6a684ec1cb7" name="ga4b21f0a91e146ae1a5d7e6a684ec1cb7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga4b21f0a91e146ae1a5d7e6a684ec1cb7">&#9670;&nbsp;</a></span>arm_2d_helper_dirty_region_update_dirty_regions()</h2>
+<a id="ga939a1a3f2479a199d9a622ea68957de8" name="ga939a1a3f2479a199d9a622ea68957de8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga939a1a3f2479a199d9a622ea68957de8">&#9670;&nbsp;</a></span>arm_2d_helper_dirty_region_update_dirty_regions()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -6998,7 +6998,7 @@ For normal usage, please DO NOT use this function unless you know what you are d
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td>
-          <td class="paramname"><em>ptTargetRegion</em>, </td>
+          <td class="paramname"><em>ptVisibleArea</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -7025,8 +7025,8 @@ For normal usage, please DO NOT use this function unless you know what you are d
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target helper </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ptTargetTile</td><td>the target tile to draw content </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptTargetRegion</td><td>a relative region in the target tile </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptNewRegion</td><td>the new region to update </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptVisibleArea</td><td>a visible region in the target tile used to clip the ptNewRegion, NULL means no clipping. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptNewRegion</td><td>the new region to update, NULL means nothing to update </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">bIsNewFrame</td><td>whether this is the first iteration of a frame </td></tr>
   </table>
   </dd>

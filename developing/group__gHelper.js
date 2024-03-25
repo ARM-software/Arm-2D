@@ -267,7 +267,7 @@ var group__gHelper =
     [ "arm_2d_helper_dirty_region_init", "group__gHelper.html#ga0a1c2b16c900f888f8b129e9041dc3f3", null ],
     [ "arm_2d_helper_dirty_region_depose", "group__gHelper.html#ga58b3313b0518f0309603f87a11e95f0f", null ],
     [ "arm_2d_helper_dirty_region_on_frame_begin", "group__gHelper.html#gaa72e3eeaa3f11790c6773bfab34eccaf", null ],
-    [ "arm_2d_helper_dirty_region_update_dirty_regions", "group__gHelper.html#ga4b21f0a91e146ae1a5d7e6a684ec1cb7", null ],
+    [ "arm_2d_helper_dirty_region_update_dirty_regions", "group__gHelper.html#ga939a1a3f2479a199d9a622ea68957de8", null ],
     [ "arm_2d_helper_dirty_region_force_to_use_minimal_enclosure", "group__gHelper.html#ga975434ce493469363bdbb570018071ee", null ],
     [ "arm_2d_helper_dirty_region_suspend_update", "group__gHelper.html#ga08ef5a533a251fbb5c8b860c7e402e1e", null ],
     [ "arm_2d_helper_transform_init", "group__gHelper.html#ga076b6793e3c2fc6f1ef064ca700f667e", null ],
