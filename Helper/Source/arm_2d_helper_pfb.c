@@ -390,9 +390,10 @@ arm_2d_location_t arm_2d_helper_pfb_get_absolute_location(
 }
 
 ARM_NONNULL(1)
-void arm_2d_helper_set_pfb_border(  arm_2d_helper_pfb_t *ptThis, 
-                                    uint8_t chWidth, 
-                                    uint8_t chHeight)
+void arm_2d_helper_pfb_set_draw_region_ignore_border(
+                                                    arm_2d_helper_pfb_t *ptThis,
+                                                    uint8_t chWidth, 
+                                                    uint8_t chHeight)
 {
     assert(NULL != ptThis);
 
@@ -549,7 +550,7 @@ void __arm_2d_helper_low_level_rendering(arm_2d_helper_pfb_t *ptThis)
 
     assert(NULL != this.tCFG.Dependency.evtOnLowLevelRendering.fnHandler);
     assert(NULL != this.Adapter.ptCurrent);
-    
+
     // update location info
     this.Adapter.ptCurrent->tTile.tRegion.tLocation = (arm_2d_location_t) {
         .iX = this.Adapter.tScanOffset.iX
@@ -591,6 +592,60 @@ void __arm_2d_helper_low_level_rendering(arm_2d_helper_pfb_t *ptThis)
              /* free the scratch PFB */
             __arm_2d_helper_pfb_free(ptThis, ptScratchPFB);
         }
+    }
+
+    /* shrink the PFB (remove border) */
+    if (this.Adapter.bEnablePFBBoarder              /* Enable PFB Border */
+    && (NULL != this.Adapter.ptDirtyRegion)) {      /* Not for full-screen-update */
+
+        __arm_2d_tile_extension_border_t tBorder = this.Adapter.PFBBorder.Internal;
+
+        int16_t iWidthOrigin = this.Adapter.ptCurrent->tTile.tRegion.tSize.iWidth;
+        int16_t iHeightOrigin = this.Adapter.ptCurrent->tTile.tRegion.tSize.iHeight;
+
+        int16_t iWidth = iWidthOrigin - tBorder.chWidth * 2;
+        int16_t iHeight = iHeightOrigin - tBorder.chHeight * 2;
+
+        int_fast8_t chPixelSize = ((1 << tColourFormat.u3ColourSZ) >> 3);
+        
+        uintptr_t pSource = this.Adapter.ptCurrent->tTile.nAddress;
+        uintptr_t pTarget = pSource;
+        int16_t iSourceStride = iWidthOrigin * chPixelSize;
+        int16_t iTargetStride = iWidth * chPixelSize;
+
+        pSource += ((int16_t)tBorder.chWidth + (int16_t)tBorder.chHeight * iWidthOrigin)
+                * chPixelSize;
+        
+
+        switch (tColourFormat.u3ColourSZ) {
+            case ARM_2D_M_COLOUR_SZ_8BIT:
+                for (int_fast16_t iY = 0; iY < iHeight; iY++) {
+                    memcpy((void *)pTarget, (void *)pSource, iTargetStride);
+                    pSource += iSourceStride;
+                    pTarget += iTargetStride;
+                }
+                break;
+            case ARM_2D_M_COLOUR_SZ_16BIT:
+                for (int_fast16_t iY = 0; iY < iHeight; iY++) {
+                    memcpy((uint16_t *)pTarget, (uint16_t *)pSource, iTargetStride);
+                    pSource += iSourceStride;
+                    pTarget += iTargetStride;
+                }
+                break;
+            case ARM_2D_M_COLOUR_SZ_32BIT:
+                for (int_fast16_t iY = 0; iY < iHeight; iY++) {
+                    memcpy((uint32_t *)pTarget, (uint32_t *)pSource, iTargetStride);
+                    pSource += iSourceStride;
+                    pTarget += iTargetStride;
+                }
+                break;
+            default:
+                assert(false);                      /* this should not happen */
+                break;
+        }
+
+        this.Adapter.ptCurrent->tTile.tRegion.tSize.iWidth = iWidth;
+        this.Adapter.ptCurrent->tTile.tRegion.tSize.iHeight = iHeight;
     }
 
     __arm_2d_helper_enqueue_pfb(ptThis);
@@ -2430,13 +2485,36 @@ bool __arm_2d_helper_pfb_drawing_iteration_end(arm_2d_helper_pfb_t *ptThis)
         arm_2d_set_default_frame_buffer(NULL);
     }
 
+    __arm_2d_tile_extension_border_t tBorder = {0};
+
+    if (this.Adapter.bEnablePFBBoarder              /* Enable PFB Border */
+    && (NULL != this.Adapter.ptDirtyRegion)) {      /* Not for full-screen-update */
+        
+        tBorder = this.Adapter.PFBBorder.Internal;
+
+    #if 0
+        if (this.Adapter.tScanOffset.iX) {
+            tBorder.chWidth += this.Adapter.PFBBorder.Internal.chWidth;
+        }
+
+        if (    (this.Adapter.tScanOffset.iX + ptPartialFrameBuffer->tRegion.tSize.iWidth) 
+            <   this.Adapter.tTargetRegion.tSize.iWidth) {
+            
+        }
+    #endif
+
+    }
+
     this.Adapter.tScanOffset.iX 
-        += ptPartialFrameBuffer->tRegion.tSize.iWidth;
+        += ptPartialFrameBuffer->tRegion.tSize.iWidth - (int16_t)tBorder.chWidth * 2;
+
     if (    this.Adapter.tScanOffset.iX 
         >=  this.Adapter.tTargetRegion.tSize.iWidth) {
-        this.Adapter.tScanOffset.iY 
-            += ptPartialFrameBuffer->tRegion.tSize.iHeight;
+
         this.Adapter.tScanOffset.iX = 0;
+
+        this.Adapter.tScanOffset.iY 
+            += ptPartialFrameBuffer->tRegion.tSize.iHeight - (int16_t)tBorder.chHeight * 2;
         
         if (    this.Adapter.tScanOffset.iY 
             >=  this.Adapter.tTargetRegion.tSize.iHeight) {

@@ -877,7 +877,7 @@ void arm_2d_helper_resume_low_level_flush(arm_2d_helper_pfb_t *ptThis);
 
 
 /*!
- * \brief set the PFB inner border
+ * \brief set an ignore border for any target draw regions
  * 
  * \param[in] ptThis an initialised PFB helper control block
  * \param[in] chWidth the width of the vertical border
@@ -888,9 +888,10 @@ void arm_2d_helper_resume_low_level_flush(arm_2d_helper_pfb_t *ptThis);
  */
 extern
 ARM_NONNULL(1)
-void arm_2d_helper_set_pfb_border(  arm_2d_helper_pfb_t *ptThis, 
-                                    uint8_t chWidth, 
-                                    uint8_t chHeight);
+void arm_2d_helper_pfb_set_draw_region_ignore_border(
+                                                    arm_2d_helper_pfb_t *ptThis,
+                                                    uint8_t chWidth, 
+                                                    uint8_t chHeight);
 
 /*!
  * \brief update PFB dependency (event handlers)
