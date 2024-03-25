@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2024 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -667,7 +667,8 @@ ARM_PRIVATE(
             uint16_t                bEncounterDynamicDirtyRegion            : 1;
             uint16_t                bFailedToOptimizeDirtyRegion            : 1;
             uint16_t                bIsUsingOptimizedDirtyRegionList        : 1;
-            uint16_t                                                        : 2;
+            uint16_t                bEnablePFBBoarderReq                    : 1;    //!< A flag to request adding a border to PFB
+            uint16_t                bEnablePFBBoarder                       : 1;    //!< whether add a border to PFB
 
             uint16_t                bIsNewFrame                             : 1;
             uint16_t                                                        : 1;
@@ -678,7 +679,11 @@ ARM_PRIVATE(
             uint16_t                bFirstIteration                         : 1;
             uint16_t                bIsRegionChanged                        : 1;
         };
-        
+
+        struct {
+            __arm_2d_tile_extension_border_t Request;
+            __arm_2d_tile_extension_border_t Internal;
+        }PFBBorder;
 
         uintptr_t                   pFPBPoolAvailable;
         arm_2d_pfb_t               *ptCurrent;
@@ -853,6 +858,7 @@ ARM_NONNULL(1)
 void arm_2d_helper_show_navigation_layer(arm_2d_helper_pfb_t *ptThis);
 
 
+
 /*!
  * \brief ignore the low level PFB flushing only
  * \param[in] ptThis an initialised PFB helper control block
@@ -869,6 +875,22 @@ extern
 ARM_NONNULL(1)
 void arm_2d_helper_resume_low_level_flush(arm_2d_helper_pfb_t *ptThis);
 
+
+/*!
+ * \brief set the PFB inner border
+ * 
+ * \param[in] ptThis an initialised PFB helper control block
+ * \param[in] chWidth the width of the vertical border
+ * \param[in] chHeight the height of the horizontal border
+ * 
+ * \note when both width and the height is zero, all borders will
+ *       be removed from the PFB
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_set_pfb_border(  arm_2d_helper_pfb_t *ptThis, 
+                                    uint8_t chWidth, 
+                                    uint8_t chHeight);
 
 /*!
  * \brief update PFB dependency (event handlers)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2024 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -387,6 +387,21 @@ arm_2d_location_t arm_2d_helper_pfb_get_absolute_location(
     }
     
     return tLocation;
+}
+
+ARM_NONNULL(1)
+void arm_2d_helper_set_pfb_border(  arm_2d_helper_pfb_t *ptThis, 
+                                    uint8_t chWidth, 
+                                    uint8_t chHeight)
+{
+    assert(NULL != ptThis);
+
+    arm_irq_safe {
+        this.Adapter.PFBBorder.Request.chHeight = chHeight;
+        this.Adapter.PFBBorder.Request.chWidth = chWidth;
+
+        this.Adapter.bEnablePFBBoarderReq = !!((chWidth != 0) || (chHeight != 0));
+    }
 }
 
 ARM_NONNULL(1)
@@ -2224,6 +2239,7 @@ label_iteration_begin_start:
         },
     };
     
+    /* adjust the framebuffer actual size */
     ptPartialFrameBuffer->tRegion.tSize.iWidth 
         = MIN(  this.Adapter.tFrameSize.iWidth, 
                 this.Adapter.tTargetRegion.tSize.iWidth 
@@ -2353,6 +2369,11 @@ label_iteration_begin_start:
 
     /* mark the virtual screen */
     this.Adapter.tPFBTile.tInfo.bVirtualScreen = true;
+
+    if (this.Adapter.bEnablePFBBoarder) {
+        this.Adapter.tPFBTile.tInfo.u3ExtensionID = ARM_2D_TILE_EXTENSION_BORDER;
+        this.Adapter.tPFBTile.tInfo.Extension.Border = this.Adapter.PFBBorder.Internal;
+    }
 
     return (arm_2d_tile_t *)&(this.Adapter.tPFBTile);
 }
@@ -2573,6 +2594,26 @@ ARM_PT_BEGIN(this.Adapter.chPT)
         "PFB TASK", 
         "Start a new frame.."
     );
+
+    do {
+        bool bEnablePFBBoarderReq = false;
+        arm_irq_safe {
+            bEnablePFBBoarderReq = this.Adapter.bEnablePFBBoarderReq;
+            if (bEnablePFBBoarderReq) {
+                this.Adapter.bEnablePFBBoarderReq = false;
+                this.Adapter.PFBBorder.Internal = this.Adapter.PFBBorder.Request;
+
+                /* let the compiler do the most optimal operation */
+                //memset(&this.Adapter.PFBBorder.Request, 0, sizeof(this.Adapter.PFBBorder.Request));
+            }
+        }
+        
+        if (bEnablePFBBoarderReq) {
+            this.Adapter.bEnablePFBBoarder =!!( (this.Adapter.PFBBorder.Internal.chHeight != 0)
+                                            ||  (this.Adapter.PFBBorder.Internal.chWidth != 0));
+        }
+    } while(0);
+    
 
     this.Statistics.nTotalCycle = 0;
     this.Statistics.nRenderingCycle = 0;
