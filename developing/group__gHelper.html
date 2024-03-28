@@ -571,9 +571,6 @@ Functions</h2></td></tr>
 <tr class="memitem:gaeaaf0ab9b565da461334ed9fc641cc8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaeaaf0ab9b565da461334ed9fc641cc8d">arm_2d_helper_resume_low_level_flush</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis)</td></tr>
 <tr class="memdesc:gaeaaf0ab9b565da461334ed9fc641cc8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">resume the low level PFB flushing  <a href="group__gHelper.html#gaeaaf0ab9b565da461334ed9fc641cc8d">More...</a><br /></td></tr>
 <tr class="separator:gaeaaf0ab9b565da461334ed9fc641cc8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7a7210c0cbf4547b0be4787b7b2c9fff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga7a7210c0cbf4547b0be4787b7b2c9fff">arm_2d_helper_pfb_set_draw_region_ignore_border</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis, uint8_t chWidth, uint8_t chHeight)</td></tr>
-<tr class="memdesc:ga7a7210c0cbf4547b0be4787b7b2c9fff"><td class="mdescLeft">&#160;</td><td class="mdescRight">set an ignore border for any target draw regions  <a href="group__gHelper.html#ga7a7210c0cbf4547b0be4787b7b2c9fff">More...</a><br /></td></tr>
-<tr class="separator:ga7a7210c0cbf4547b0be4787b7b2c9fff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7f397129da5a5d78a7dd6325ab3405ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c">arm_2d_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga7f397129da5a5d78a7dd6325ab3405ef">arm_2d_helper_pfb_update_dependency</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis, uint_fast8_t chMask, const <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__dependency__t">arm_2d_helper_pfb_dependency_t</a> *ptDependency)</td></tr>
 <tr class="memdesc:ga7f397129da5a5d78a7dd6325ab3405ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">update PFB dependency (event handlers)  <a href="group__gHelper.html#ga7f397129da5a5d78a7dd6325ab3405ef">More...</a><br /></td></tr>
 <tr class="separator:ga7f397129da5a5d78a7dd6325ab3405ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -5911,51 +5908,6 @@ For normal usage, please DO NOT use this function unless you know what you are d
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="ga7a7210c0cbf4547b0be4787b7b2c9fff" name="ga7a7210c0cbf4547b0be4787b7b2c9fff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7a7210c0cbf4547b0be4787b7b2c9fff">&#9670;&nbsp;</a></span>arm_2d_helper_pfb_set_draw_region_ignore_border()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void arm_2d_helper_pfb_set_draw_region_ignore_border </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *&#160;</td>
-          <td class="paramname"><em>ptThis</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>chWidth</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>chHeight</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>set an ignore border for any target draw regions </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>an initialised PFB helper control block </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">chWidth</td><td>the width of the vertical border </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">chHeight</td><td>the height of the horizontal border</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>when both width and the height is zero, all borders will be removed from the PFB </dd></dl>
 
 </div>
 </div>

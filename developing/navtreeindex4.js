@@ -1,6 +1,5 @@
 var NAVTREEINDEX4 =
 {
-"group__gKernel.html#structarm__2d__op__src__orig__msk__t_8Origin":[10,0,77],
 "group__gKernel.html#structarm__2d__op__src__orig__msk__t_8Source":[10,0,76],
 "group__gKernel.html#structarm__2d__op__src__orig__msk__t_8Target":[10,0,75],
 "group__gKernel.html#structarm__2d__op__src__orig__t":[10,0,30],
@@ -249,5 +248,6 @@ var NAVTREEINDEX4 =
 "md_introduction.html#autotoc_md67":[4,0,3,2],
 "md_introduction.html#autotoc_md68":[4,0,3,3],
 "md_introduction.html#autotoc_md69":[4,0,4],
-"md_introduction.html#autotoc_md70":[4,0,4,0]
+"md_introduction.html#autotoc_md70":[4,0,4,0],
+"md_introduction.html#autotoc_md71":[4,0,4,1]
 };
