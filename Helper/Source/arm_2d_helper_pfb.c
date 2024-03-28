@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        25. March 2024
- * $Revision:    V.1.9.2
+ * $Date:        28. March 2024
+ * $Revision:    V.1.9.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -389,6 +389,16 @@ arm_2d_location_t arm_2d_helper_pfb_get_absolute_location(
     return tLocation;
 }
 
+/*!
+ * \brief set an ignore border for any target draw regions
+ * 
+ * \param[in] ptThis an initialised PFB helper control block
+ * \param[in] chWidth the width of the vertical border
+ * \param[in] chHeight the height of the horizontal border
+ * 
+ * \note when both width and the height is zero, all borders will
+ *       be removed from the PFB
+ */
 ARM_NONNULL(1)
 void arm_2d_helper_pfb_set_draw_region_ignore_border(
                                                     arm_2d_helper_pfb_t *ptThis,

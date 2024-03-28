@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        25. March 2024
- * $Revision:    V.1.9.2
+ * $Date:        28. March 2024
+ * $Revision:    V.1.9.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -874,24 +874,6 @@ void arm_2d_helper_ignore_low_level_flush(arm_2d_helper_pfb_t *ptThis);
 extern
 ARM_NONNULL(1)
 void arm_2d_helper_resume_low_level_flush(arm_2d_helper_pfb_t *ptThis);
-
-
-/*!
- * \brief set an ignore border for any target draw regions
- * 
- * \param[in] ptThis an initialised PFB helper control block
- * \param[in] chWidth the width of the vertical border
- * \param[in] chHeight the height of the horizontal border
- * 
- * \note when both width and the height is zero, all borders will
- *       be removed from the PFB
- */
-extern
-ARM_NONNULL(1)
-void arm_2d_helper_pfb_set_draw_region_ignore_border(
-                                                    arm_2d_helper_pfb_t *ptThis,
-                                                    uint8_t chWidth, 
-                                                    uint8_t chHeight);
 
 /*!
  * \brief update PFB dependency (event handlers)

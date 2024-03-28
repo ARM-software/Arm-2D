@@ -37,7 +37,7 @@
 #include "./arm_2d_helper_scene.h"
 #include "./arm_2d_disp_adapters.h"
 #include "./arm_2d_helper_list.h"
-#include "./arm_2d_helper_map.h"
+//#include "./arm_2d_helper_map.h"
 
 #include <stdlib.h>
 #include <assert.h>
