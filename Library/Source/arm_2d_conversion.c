@@ -21,8 +21,8 @@
  * Title:        arm-2d_draw.c
  * Description:  APIs for colour format conversion
  *
- * $Date:        20. March 2024
- * $Revision:    V.1.0.3
+ * $Date:        28. March 2024
+ * $Revision:    V.1.0.4
  *
  * Target Processor:  Cortex-M cores
  *
@@ -298,12 +298,19 @@ arm_fsm_rt_t __arm_2d_sw_convert_colour_to_gray8(__arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_cl_convt_t, ptTask->ptOP);
 
-    if (!this.Source.ptTile->bHasEnforcedColour) {
+    arm_2d_region_t tValidRegion;
+    arm_2d_tile_t *ptSource = arm_2d_tile_get_root(this.Source.ptTile, &tValidRegion, NULL);
+    if (NULL == ptSource) {
+        /* nothing to do */
+        return arm_fsm_rt_cpl;
+    }
+
+    if (!ptSource->bHasEnforcedColour) {
         return (arm_fsm_rt_t)ARM_2D_ERR_MISSING_PARAM;
     }
 
 
-    switch ( this.Source.ptTile->tInfo.tColourInfo.u3ColourSZ) {
+    switch ( ptSource->tInfo.tColourInfo.u3ColourSZ) {
         case ARM_2D_COLOUR_8BIT:
             __arm_2d_impl_c8bit_copy(ptTask->Param.tCopy.tSource.pBuffer,
                                      ptTask->Param.tCopy.tSource.iStride,
@@ -319,7 +326,7 @@ arm_fsm_rt_t __arm_2d_sw_convert_colour_to_gray8(__arm_2d_sub_task_t *ptTask)
                                             &(ptTask->Param.tCopy.tCopySize));
             break;
         case ARM_2D_COLOUR_SZ_32BIT:
-            if (this.Source.ptTile->tInfo.tColourInfo.bHasAlpha) {
+            if (ptSource->tInfo.tColourInfo.bHasAlpha) {
                 __arm_2d_impl_ccca8888_to_gray8(ptTask->Param.tCopy.tSource.pBuffer,
                                                 ptTask->Param.tCopy.tSource.iStride,
                                                 ptTask->Param.tCopy.tTarget.pBuffer,
@@ -345,12 +352,19 @@ arm_fsm_rt_t __arm_2d_sw_convert_colour_to_rgb565(__arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_cl_convt_t, ptTask->ptOP);
 
-    if (!this.Source.ptTile->bHasEnforcedColour) {
+    arm_2d_region_t tValidRegion;
+    arm_2d_tile_t *ptSource = arm_2d_tile_get_root(this.Source.ptTile, &tValidRegion, NULL);
+    if (NULL == ptSource) {
+        /* nothing to do */
+        return arm_fsm_rt_cpl;
+    }
+
+    if (!ptSource->bHasEnforcedColour) {
         return (arm_fsm_rt_t)ARM_2D_ERR_MISSING_PARAM;
     }
 
 
-    switch ( this.Source.ptTile->tInfo.tColourInfo.u3ColourSZ) {
+    switch ( ptSource->tInfo.tColourInfo.u3ColourSZ) {
         case ARM_2D_COLOUR_8BIT:
             __arm_2d_impl_gray8_to_rgb565(  ptTask->Param.tCopy.tSource.pBuffer,
                                             ptTask->Param.tCopy.tSource.iStride,
@@ -367,7 +381,7 @@ arm_fsm_rt_t __arm_2d_sw_convert_colour_to_rgb565(__arm_2d_sub_task_t *ptTask)
                                      &(ptTask->Param.tCopy.tCopySize));
             break;
         case ARM_2D_COLOUR_SZ_32BIT:
-            if (this.Source.ptTile->tInfo.tColourInfo.bHasAlpha) {
+            if (ptSource->tInfo.tColourInfo.bHasAlpha) {
                 __arm_2d_impl_ccca8888_to_rgb565( ptTask->Param.tCopy.tSource.pBuffer,
                                                   ptTask->Param.tCopy.tSource.iStride,
                                                   ptTask->Param.tCopy.tTarget.pBuffer,
@@ -392,12 +406,19 @@ arm_fsm_rt_t __arm_2d_sw_convert_colour_to_rgb888(__arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_cl_convt_t, ptTask->ptOP);
 
-    if (!this.Source.ptTile->bHasEnforcedColour) {
+    arm_2d_region_t tValidRegion;
+    arm_2d_tile_t *ptSource = arm_2d_tile_get_root(this.Source.ptTile, &tValidRegion, NULL);
+    if (NULL == ptSource) {
+        /* nothing to do */
+        return arm_fsm_rt_cpl;
+    }
+
+    if (!ptSource->bHasEnforcedColour) {
         return (arm_fsm_rt_t)ARM_2D_ERR_MISSING_PARAM;
     }
 
 
-    switch ( this.Source.ptTile->tInfo.tColourInfo.u3ColourSZ) {
+    switch ( ptSource->tInfo.tColourInfo.u3ColourSZ) {
         case ARM_2D_COLOUR_8BIT:
             __arm_2d_impl_gray8_to_cccn888( ptTask->Param.tCopy.tSource.pBuffer,
                                             ptTask->Param.tCopy.tSource.iStride,
@@ -413,7 +434,7 @@ arm_fsm_rt_t __arm_2d_sw_convert_colour_to_rgb888(__arm_2d_sub_task_t *ptTask)
                                             &(ptTask->Param.tCopy.tCopySize));
             break;
         case ARM_2D_COLOUR_SZ_32BIT:
-            if (this.Source.ptTile->tInfo.tColourInfo.bHasAlpha) {
+            if (ptSource->tInfo.tColourInfo.bHasAlpha) {
                 __arm_2d_impl_ccca8888_to_cccn888(
                                             ptTask->Param.tCopy.tSource.pBuffer,
                                             ptTask->Param.tCopy.tSource.iStride,
