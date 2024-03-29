@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        21. Feb 2024
- * $Revision:    V.1.4.0
+ * $Date:        29. March 2024
+ * $Revision:    V.1.4.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -593,6 +593,7 @@ extern "C" {
 
 /*---------------------- Graphic LCD color definitions -----------------------*/
 
+#undef __RGB
 #define __RGB32(__R, __G, __B)     ((((uint32_t)(__R) & 0xFF) << 16)        |   \
                                     (((uint32_t)(__G) & 0xFF) << 8)         |   \
                                     (((uint32_t)(__B) & 0xFF) << 0)         |   \
