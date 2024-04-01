@@ -22,7 +22,7 @@
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        24. Jan 2024
+ * $Date:        1. April 2024
  * $Revision:    V.1.1.6-dev
  *
  * Target Processor:  Cortex-M cores
@@ -68,7 +68,7 @@ extern "C" {
 #   pragma GCC diagnostic ignored "-Wmissing-braces"
 #   pragma GCC diagnostic ignored "-Wunused-value"
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)
-#   pragma diag_suppress 1296,174,64,177
+#   pragma diag_suppress 1296,174,64,177,1
 #endif
 
 /*!
