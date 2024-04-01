@@ -295,7 +295,7 @@ void arm_2d_scene_player_set_switching_period(  arm_2d_scene_player_t *ptThis,
         this.Switch.iProgress = 0;
     } else {
         this.Switch.tConfig.Feature.bUseManualSwitching = false;
-        this.Switch.hwPeriod = MIN(nMS, __UINT16_MAX__);
+        this.Switch.hwPeriod = MIN(nMS, UINT16_MAX);
         this.Switch.hwPeriod = MAX(nMS, __ARM_2D_CFG_HELPER_SWITCH_MIN_PERIOD__);
     }
 }
