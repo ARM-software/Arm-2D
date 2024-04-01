@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        29. March 2024
- * $Revision:    V.1.4.1
+ * $Date:        1. April 2024
+ * $Revision:    V.1.4.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1407,11 +1407,14 @@ extern "C" {
  */
 #define __arm_2d_align_top_left2(__region, __size)                              \
             arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
                 arm_2d_region_t __top_left_region,                              \
                 {                                                               \
                     __top_left_region.tSize.iWidth = (__size).iWidth;           \
                     __top_left_region.tSize.iHeight = (__size).iHeight;         \
-                    __top_left_region.tLocation = (__region).tLocation;         \
+                    __top_left_region.tLocation                                 \
+                        = ARM_2D_SAFE_NAME(tTempRegion).tLocation;              \
                 },                                                              \
                 {arm_2d_op_wait_async(NULL);})
 
@@ -1421,13 +1424,16 @@ extern "C" {
  */
 #define __arm_2d_align_top_left3(__region, __width, __height)                   \
             arm_using(                                                          \
-                    arm_2d_region_t __top_left_region,                          \
-                    {                                                           \
-                        __top_left_region.tSize.iWidth = (__width);             \
-                        __top_left_region.tSize.iHeight = (__height);           \
-                        __top_left_region.tLocation = (__region).tLocation;     \
-                    },                                                          \
-                    {arm_2d_op_wait_async(NULL);})
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
+                arm_2d_region_t __top_left_region,                              \
+                {                                                               \
+                    __top_left_region.tSize.iWidth = (__width);                 \
+                    __top_left_region.tSize.iHeight = (__height);               \
+                    __top_left_region.tLocation                                 \
+                        = ARM_2D_SAFE_NAME(tTempRegion).tLocation;              \
+                },                                                              \
+                {arm_2d_op_wait_async(NULL);})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with user specified info for
@@ -1456,13 +1462,17 @@ extern "C" {
  */
 #define __arm_2d_align_top_centre2(__region, __size)                            \
             arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
                 arm_2d_region_t __top_centre_region,                            \
                 {                                                               \
                     __top_centre_region.tSize.iWidth = (__size).iWidth;         \
                     __top_centre_region.tSize.iHeight = (__size).iHeight;       \
-                    __top_centre_region.tLocation = (__region).tLocation;       \
+                    __top_centre_region.tLocation                               \
+                        = ARM_2D_SAFE_NAME(tTempRegion).tLocation;              \
                     __top_centre_region.tLocation.iX                            \
-                        += ((__region).tSize.iWidth - (__size).iWidth) >> 1;    \
+                        += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iWidth      \
+                           -    (__size).iWidth) >> 1;                          \
                 },                                                              \
                 {arm_2d_op_wait_async(NULL);})
 
@@ -1472,15 +1482,19 @@ extern "C" {
  */
 #define __arm_2d_align_top_centre3(__region, __width, __height)                 \
             arm_using(                                                          \
-                    arm_2d_region_t __top_centre_region,                        \
-                    {                                                           \
-                        __top_centre_region.tSize.iWidth = (__width);           \
-                        __top_centre_region.tSize.iHeight = (__height);         \
-                        __top_centre_region.tLocation = (__region).tLocation;   \
-                        __top_centre_region.tLocation.iX                        \
-                            += ((__region).tSize.iWidth - (__width)) >> 1;      \
-                    },                                                          \
-                    {arm_2d_op_wait_async(NULL);})
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
+                arm_2d_region_t __top_centre_region,                            \
+                {                                                               \
+                    __top_centre_region.tSize.iWidth = (__width);               \
+                    __top_centre_region.tSize.iHeight = (__height);             \
+                    __top_centre_region.tLocation                               \
+                        = ARM_2D_SAFE_NAME(tTempRegion).tLocation;              \
+                    __top_centre_region.tLocation.iX                            \
+                        += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iWidth      \
+                           -    (__width)) >> 1;                                \
+                },                                                              \
+                {arm_2d_op_wait_async(NULL);})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with user specified info for
@@ -1509,13 +1523,17 @@ extern "C" {
  */
 #define __arm_2d_align_top_right2(__region, __size)                             \
             arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
                 arm_2d_region_t __top_right_region,                             \
                 {                                                               \
                     __top_right_region.tSize.iWidth = (__size).iWidth;          \
                     __top_right_region.tSize.iHeight = (__size).iHeight;        \
-                    __top_right_region.tLocation = (__region).tLocation;        \
+                    __top_right_region.tLocation                                \
+                        = ARM_2D_SAFE_NAME(tTempRegion).tLocation;              \
                     __top_right_region.tLocation.iX                             \
-                        += ((__region).tSize.iWidth - (__size).iWidth);         \
+                        += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iWidth      \
+                           -    (__size).iWidth);                               \
                 },                                                              \
                 {arm_2d_op_wait_async(NULL);})
 
@@ -1525,13 +1543,17 @@ extern "C" {
  */
 #define __arm_2d_align_top_right3(__region, __width, __height)                  \
             arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
                     arm_2d_region_t __top_right_region,                         \
                     {                                                           \
                         __top_right_region.tSize.iWidth = (__width);            \
                         __top_right_region.tSize.iHeight = (__height);          \
-                        __top_right_region.tLocation = (__region).tLocation;    \
+                        __top_right_region.tLocation                            \
+                            = ARM_2D_SAFE_NAME(tTempRegion).tLocation;          \
                         __top_right_region.tLocation.iX                         \
-                            += ((__region).tSize.iWidth - (__width));           \
+                            += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iWidth  \
+                               -    (__width));                                 \
                     },                                                          \
                     {arm_2d_op_wait_async(NULL);})
 
@@ -1564,13 +1586,17 @@ extern "C" {
  */
 #define __arm_2d_align_mid_left2(__region, __size)                              \
             arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
                 arm_2d_region_t __mid_left_region,                              \
                 {                                                               \
                     __mid_left_region.tSize.iWidth = (__size).iWidth;           \
                     __mid_left_region.tSize.iHeight = (__size).iHeight;         \
-                    __mid_left_region.tLocation = (__region).tLocation;         \
+                    __mid_left_region.tLocation                                 \
+                        = ARM_2D_SAFE_NAME(tTempRegion).tLocation;              \
                     __mid_left_region.tLocation.iY                              \
-                        += ((__region).tSize.iHeight - (__size).iHeight) >> 1;  \
+                        += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight     \
+                           -    (__size).iHeight) >> 1;                         \
                 },                                                              \
                 {arm_2d_op_wait_async(NULL);})
 
@@ -1580,13 +1606,17 @@ extern "C" {
  */
 #define __arm_2d_align_mid_left3(__region, __width, __height)                   \
             arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
                     arm_2d_region_t __mid_left_region,                          \
                     {                                                           \
                         __mid_left_region.tSize.iWidth = (__width);             \
                         __mid_left_region.tSize.iHeight = (__height);           \
-                        __mid_left_region.tLocation = (__region).tLocation;     \
+                        __mid_left_region.tLocation                             \
+                            = ARM_2D_SAFE_NAME(tTempRegion).tLocation;          \
                         __mid_left_region.tLocation.iY                          \
-                            += ((__region).tSize.iHeight - (__height)) >> 1;    \
+                            += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight \
+                               -    (__height)) >> 1;                           \
                     },                                                          \
                     {arm_2d_op_wait_async(NULL);})
 
@@ -1639,15 +1669,20 @@ extern "C" {
  */
 #define __arm_2d_align_centre2(__region, __size)                                \
             arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
                 arm_2d_region_t __centre_region,                                \
                 {                                                               \
                     __centre_region.tSize.iWidth = (__size).iWidth;             \
                     __centre_region.tSize.iHeight = (__size).iHeight;           \
-                    __centre_region.tLocation = (__region).tLocation;           \
+                    __centre_region.tLocation                                   \
+                        = ARM_2D_SAFE_NAME(tTempRegion).tLocation;              \
                     __centre_region.tLocation.iX                                \
-                        += ((__region).tSize.iWidth - (__size).iWidth)  >> 1;   \
+                        += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iWidth      \
+                           -    (__size).iWidth)  >> 1;                         \
                     __centre_region.tLocation.iY                                \
-                        += ((__region).tSize.iHeight - (__size).iHeight)>> 1;   \
+                        += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight     \
+                           -    (__size).iHeight)>> 1;                          \
                 },                                                              \
                 {arm_2d_op_wait_async(NULL);})
 
@@ -1656,17 +1691,23 @@ extern "C" {
  * 
  */
 #define __arm_2d_align_centre3(__region, __width, __height)                     \
-            arm_using(  arm_2d_region_t __centre_region,                        \
-                        {                                                       \
-                            __centre_region.tSize.iWidth = (__width);           \
-                            __centre_region.tSize.iHeight = (__height);         \
-                            __centre_region.tLocation = (__region).tLocation;   \
-                            __centre_region.tLocation.iX                        \
-                                += ((__region).tSize.iWidth - (__width))  >> 1; \
-                            __centre_region.tLocation.iY                        \
-                                += ((__region).tSize.iHeight - (__height))>> 1; \
-                        },                                                      \
-                        {arm_2d_op_wait_async(NULL);})
+            arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
+                arm_2d_region_t __centre_region,                                \
+                    {                                                           \
+                        __centre_region.tSize.iWidth = (__width);               \
+                        __centre_region.tSize.iHeight = (__height);             \
+                        __centre_region.tLocation                               \
+                            = ARM_2D_SAFE_NAME(tTempRegion).tLocation;          \
+                        __centre_region.tLocation.iX                            \
+                            += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iWidth  \
+                               -    (__width))  >> 1;                           \
+                        __centre_region.tLocation.iY                            \
+                            += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight \
+                               -    (__height))>> 1;                            \
+                    },                                                          \
+                    {arm_2d_op_wait_async(NULL);})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with user specified info for
@@ -1695,15 +1736,20 @@ extern "C" {
  */
 #define __arm_2d_align_mid_right2(__region, __size)                             \
             arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
                 arm_2d_region_t __mid_right_region,                             \
                 {                                                               \
                     __mid_right_region.tSize.iWidth = (__size).iWidth;          \
                     __mid_right_region.tSize.iHeight = (__size).iHeight;        \
-                    __mid_right_region.tLocation = (__region).tLocation;        \
+                    __mid_right_region.tLocation                                \
+                        = ARM_2D_SAFE_NAME(tTempRegion).tLocation;              \
                     __mid_right_region.tLocation.iX                             \
-                        += ((__region).tSize.iWidth - (__size).iWidth);         \
+                        += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iWidth      \
+                           -    (__size).iWidth);                               \
                     __mid_right_region.tLocation.iY                             \
-                        += ((__region).tSize.iHeight - (__size).iHeight) >> 1;  \
+                        += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight     \
+                           -    (__size).iHeight) >> 1;                         \
                 },                                                              \
                 {arm_2d_op_wait_async(NULL);})
 
@@ -1713,15 +1759,20 @@ extern "C" {
  */
 #define __arm_2d_align_mid_right3(__region, __width, __height)                  \
             arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
                 arm_2d_region_t __mid_right_region,                             \
                 {                                                               \
                     __mid_right_region.tSize.iWidth = (__width);                \
                     __mid_right_region.tSize.iHeight = (__height);              \
-                    __mid_right_region.tLocation = (__region).tLocation;        \
+                    __mid_right_region.tLocation                                \
+                        = ARM_2D_SAFE_NAME(tTempRegion).tLocation;              \
                     __mid_right_region.tLocation.iX                             \
-                        += ((__region).tSize.iWidth - (__width));               \
+                        += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iWidth      \
+                           -    (__width));                                     \
                     __mid_right_region.tLocation.iY                             \
-                        += ((__region).tSize.iHeight - (__height)) >> 1;        \
+                        += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight     \
+                           -    (__height)) >> 1;                               \
                 },                                                              \
                 {arm_2d_op_wait_async(NULL);})
 
@@ -1775,13 +1826,17 @@ extern "C" {
  */
 #define __arm_2d_align_bottom_left2(__region, __size)                           \
             arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
                 arm_2d_region_t __bottom_left_region,                           \
                 {                                                               \
                     __bottom_left_region.tSize.iWidth = (__size).iWidth;        \
                     __bottom_left_region.tSize.iHeight = (__size).iHeight;      \
-                    __bottom_left_region.tLocation = (__region).tLocation;      \
+                    __bottom_left_region.tLocation                              \
+                        = ARM_2D_SAFE_NAME(tTempRegion).tLocation;              \
                     __bottom_left_region.tLocation.iY                           \
-                        += ((__region).tSize.iHeight - (__size).iHeight);       \
+                        += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight     \
+                           -    (__size).iHeight);                              \
                 },                                                              \
                 {arm_2d_op_wait_async(NULL);})
 
@@ -1791,13 +1846,17 @@ extern "C" {
  */
 #define __arm_2d_align_bottom_left3(__region, __width, __height)                \
             arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
                 arm_2d_region_t __bottom_left_region,                           \
                 {                                                               \
                     __bottom_left_region.tSize.iWidth = (__width);              \
                     __bottom_left_region.tSize.iHeight = (__height);            \
-                    __bottom_left_region.tLocation = (__region).tLocation;      \
+                    __bottom_left_region.tLocation                              \
+                        = ARM_2D_SAFE_NAME(tTempRegion).tLocation;              \
                     __bottom_left_region.tLocation.iY                           \
-                        += ((__region).tSize.iHeight - (__height));             \
+                        += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight     \
+                           -    (__height));                                    \
                 },                                                              \
                 {arm_2d_op_wait_async(NULL);})
 
@@ -1827,15 +1886,20 @@ extern "C" {
  */
 #define __arm_2d_align_bottom_centre2(__region, __size)                         \
             arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
                 arm_2d_region_t __bottom_centre_region,                         \
                 {                                                               \
                     __bottom_centre_region.tSize.iWidth = (__size).iWidth;      \
                     __bottom_centre_region.tSize.iHeight = (__size).iHeight;    \
-                    __bottom_centre_region.tLocation = (__region).tLocation;    \
+                    __bottom_centre_region.tLocation                            \
+                        = ARM_2D_SAFE_NAME(tTempRegion).tLocation;              \
                     __bottom_centre_region.tLocation.iX                         \
-                        += ((__region).tSize.iWidth - (__size).iWidth)  >> 1;   \
+                        += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iWidth      \
+                           -    (__size).iWidth)  >> 1;                         \
                     __bottom_centre_region.tLocation.iY                         \
-                        += ((__region).tSize.iHeight - (__size).iHeight);       \
+                        += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight     \
+                           -    (__size).iHeight);                              \
                 },                                                              \
                 {arm_2d_op_wait_async(NULL);})
 
@@ -1845,15 +1909,20 @@ extern "C" {
  */
 #define __arm_2d_align_bottom_centre3(__region, __width, __height)              \
             arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
                 arm_2d_region_t __bottom_centre_region,                         \
                 {                                                               \
                     __bottom_centre_region.tSize.iWidth = (__width);            \
                     __bottom_centre_region.tSize.iHeight = (__height);          \
-                    __bottom_centre_region.tLocation = (__region).tLocation;    \
+                    __bottom_centre_region.tLocation                            \
+                        = ARM_2D_SAFE_NAME(tTempRegion).tLocation;              \
                     __bottom_centre_region.tLocation.iX                         \
-                        += ((__region).tSize.iWidth - (__width))  >> 1;         \
+                        += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iWidth      \
+                           -    (__width))  >> 1;                               \
                     __bottom_centre_region.tLocation.iY                         \
-                        += ((__region).tSize.iHeight - (__height));             \
+                        += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight     \
+                           -    (__height));                                    \
                 },                                                              \
                 {arm_2d_op_wait_async(NULL);})
 
@@ -1884,15 +1953,20 @@ extern "C" {
  */
 #define __arm_2d_align_bottom_right2(__region, __size)                          \
             arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
                 arm_2d_region_t __bottom_right_region,                          \
                 {                                                               \
                     __bottom_right_region.tSize.iWidth = (__size).iWidth;       \
                     __bottom_right_region.tSize.iHeight = (__size).iHeight;     \
-                    __bottom_right_region.tLocation = (__region).tLocation;     \
+                    __bottom_right_region.tLocation                             \
+                        = ARM_2D_SAFE_NAME(tTempRegion).tLocation;              \
                     __bottom_right_region.tLocation.iX                          \
-                        += ((__region).tSize.iWidth - (__size).iWidth);         \
+                        += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iWidth      \
+                           -    (__size).iWidth);                               \
                     __bottom_right_region.tLocation.iY                          \
-                        += ((__region).tSize.iHeight - (__size).iHeight);       \
+                        += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight     \
+                           -    (__size).iHeight);                              \
                 },                                                              \
                 {arm_2d_op_wait_async(NULL);})
 
@@ -1902,15 +1976,20 @@ extern "C" {
  */
 #define __arm_2d_align_bottom_right3(__region, __width, __height)               \
             arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
                 arm_2d_region_t __bottom_right_region,                          \
                 {                                                               \
                     __bottom_right_region.tSize.iWidth = (__width);             \
                     __bottom_right_region.tSize.iHeight = (__height);           \
-                    __bottom_right_region.tLocation = (__region).tLocation;     \
+                    __bottom_right_region.tLocation                             \
+                        = ARM_2D_SAFE_NAME(tTempRegion).tLocation;              \
                     __bottom_right_region.tLocation.iX                          \
-                        += ((__region).tSize.iWidth - (__width));               \
+                        += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iWidth      \
+                           -    (__width));                                     \
                     __bottom_right_region.tLocation.iY                          \
-                        += ((__region).tSize.iHeight - (__height));             \
+                        += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight     \
+                           -    (__height));                                    \
                 },                                                              \
                 {arm_2d_op_wait_async(NULL);})
 
@@ -1949,7 +2028,9 @@ extern "C" {
  */
 #define arm_2d_dock_top(__region, __height)                                     \
             arm_using(                                                          \
-                arm_2d_region_t __top_region = (__region),                      \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
+                arm_2d_region_t __top_region = ARM_2D_SAFE_NAME(tTempRegion),   \
                 {                                                               \
                     __top_region.tSize.iHeight = (__height);                    \
                 },                                                              \
@@ -1967,11 +2048,14 @@ extern "C" {
  */
 #define arm_2d_dock_bottom(__region, __height)                                  \
             arm_using(                                                          \
-                arm_2d_region_t __bottom_region = (__region),                   \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
+                arm_2d_region_t __bottom_region = ARM_2D_SAFE_NAME(tTempRegion),\
                 {                                                               \
                     __bottom_region.tSize.iHeight = (__height);                 \
-                    __bottom_region.tLocation.iY += (__region).tSize.iHeight    \
-                                               - (__height);                    \
+                    __bottom_region.tLocation.iY                                \
+                        += ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight          \
+                         - (__height);                                          \
                 },                                                              \
                 {arm_2d_op_wait_async(NULL);})
 
@@ -1987,7 +2071,9 @@ extern "C" {
  */
 #define arm_2d_dock_left(__region, __width)                                     \
             arm_using(                                                          \
-                arm_2d_region_t __left_region = (__region),                     \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
+                arm_2d_region_t __left_region = ARM_2D_SAFE_NAME(tTempRegion),  \
                 {                                                               \
                     __left_region.tSize.iWidth = (__width);                     \
                 },                                                              \
@@ -2006,11 +2092,14 @@ extern "C" {
  */
 #define arm_2d_dock_right(__region, __width)                                    \
             arm_using(                                                          \
-                arm_2d_region_t __right_region = (__region),                    \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
+                arm_2d_region_t __right_region = ARM_2D_SAFE_NAME(tTempRegion), \
                 {                                                               \
                     __right_region.tSize.iWidth = (__width);                    \
-                    __right_region.tLocation.iX += (__region).tSize.iWidth      \
-                                               - (__width);                     \
+                    __right_region.tLocation.iX                                 \
+                        += ARM_2D_SAFE_NAME(tTempRegion).tSize.iWidth           \
+                         - (__width);                                           \
                 },                                                              \
                 {arm_2d_op_wait_async(NULL);})
 
@@ -2026,13 +2115,18 @@ extern "C" {
  *          
  */
 #define arm_2d_dock_vertical(__region, __height)                                \
-            arm_using(  arm_2d_region_t __vertical_region = (__region),         \
-                        {                                                       \
-                            __vertical_region.tSize.iHeight = (__height);       \
-                            __vertical_region.tLocation.iY                      \
-                                += ((__region).tSize.iHeight - (__height))>> 1; \
-                        },                                                      \
-                        {arm_2d_op_wait_async(NULL);})
+            arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
+                arm_2d_region_t __vertical_region                               \
+                    = ARM_2D_SAFE_NAME(tTempRegion),                            \
+                {                                                               \
+                    __vertical_region.tSize.iHeight = (__height);               \
+                    __vertical_region.tLocation.iY                              \
+                        += (ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight         \
+                         - (__height))>> 1;                                     \
+                },                                                              \
+                {arm_2d_op_wait_async(NULL);})
 
 
 /*!
@@ -2046,13 +2140,18 @@ extern "C" {
  *          
  */
 #define arm_2d_dock_horizontal(__region, __width)                               \
-            arm_using(  arm_2d_region_t __horizontal_region = (__region),       \
-                        {                                                       \
-                            __horizontal_region.tSize.iWidth = (__width);       \
-                            __horizontal_region.tLocation.iX                    \
-                                += ((__region).tSize.iWidth - (__width))  >> 1; \
-                        },                                                      \
-                        {arm_2d_op_wait_async(NULL);})
+            arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
+                arm_2d_region_t __horizontal_region                             \
+                                    = ARM_2D_SAFE_NAME(tTempRegion),            \
+                {                                                               \
+                    __horizontal_region.tSize.iWidth = (__width);               \
+                    __horizontal_region.tLocation.iX                            \
+                        += (ARM_2D_SAFE_NAME(tTempRegion).tSize.iWidth          \
+                         - (__width))  >> 1;                                    \
+                },                                                              \
+                {arm_2d_op_wait_async(NULL);})
 
 /*!
  * \brief a template for implement a on draw event handler
