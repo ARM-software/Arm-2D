@@ -368,7 +368,7 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
 
     with open(output_file, "a") as f:
 
-        print("ARM_SECTION(\"arm2d.asset.FONT\")\nconst static uint8_t c_bmpUTF8UserA{0}Font[] = {{\n"
+        print("ARM_SECTION(\"arm2d.asset.FONT\")\nconst uint8_t c_bmpUTF8UserA{0}Font[] = {{\n"
                 .format(font_bit_size), file=f)
 
         for char, data, width, height, index, advance_width, bearing_x, bearing_y, utf8_encoding in glyphs_data:
@@ -387,7 +387,7 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
         f.write("0x00, " * (char_max_width * char_max_height))
         f.write("\n};\n\n")
 
-        print("ARM_SECTION(\"arm2d.asset.FONT\")\nconst static __ttf_char_descriptor_t c_tUTF8LookUpTableA{0}[] = {{\n"
+        print("ARM_SECTION(\"arm2d.asset.FONT\")\nconst __ttf_char_descriptor_t c_tUTF8LookUpTableA{0}[] = {{\n"
                 .format(font_bit_size), file=f)
 
         last_index = 0;
@@ -414,7 +414,7 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
 
 
 def main():
-    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v1.1.1)')
+    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v1.1.2)')
     parser.add_argument("-i", "--input",    type=str,   help="Path to the TTF file",            required=True)
     parser.add_argument("-t", "--text",     type=str,   help="Path to the text file",           required=True)
     parser.add_argument("-n", "--name",     type=str,   help="The customized UTF8 font name",   required=False,     default="UTF8")
