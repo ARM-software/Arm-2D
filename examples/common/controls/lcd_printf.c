@@ -418,11 +418,11 @@ arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t
             if (chCodeLength <= 0) {
                 chCodeLength = 1;
             }
-            str += chCodeLength;
-
+            
             tDrawBox.tLocation.iX += __arm_lcd_get_char_advance(ptFont, NULL, (uint8_t *)str);
             tDrawBox.tSize.iWidth = MAX(tDrawBox.tSize.iWidth, tDrawBox.tLocation.iX);
 
+            str += chCodeLength;
             continue;
         }
         
