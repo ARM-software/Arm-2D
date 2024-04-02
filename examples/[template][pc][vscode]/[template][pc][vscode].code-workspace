@@ -39,7 +39,8 @@
 			"stdarg.h": "c",
 			"arm_2d_scene_console.h": "c",
 			"string_view": "c",
-			"chrono": "c"
+			"chrono": "c",
+			"arm_2d.h": "c"
 		}
 	}
 }

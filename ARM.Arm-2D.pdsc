@@ -288,6 +288,9 @@
 
             <file category="sourceC"     name="examples/common/scenes/fitness/arm_2d_scene_fitness.c" attr="template"  select="Scene Template: Fitness"   version="1.2.0" />
             <file category="header"      name="examples/common/scenes/fitness/arm_2d_scene_fitness.h" attr="template"  select="Scene Template: Fitness"   version="1.2.0" />
+
+            <file category="sourceC"     name="examples/common/scenes/alarm_clock/arm_2d_scene_alarm_clock.c" attr="template"  select="Scene Template: Alarm Clock"   version="1.0.0" />
+            <file category="header"      name="examples/common/scenes/alarm_clock/arm_2d_scene_alarm_clock.h" attr="template"  select="Scene Template: Alarm Clock"   version="1.0.0" />
           </files>
           <RTE_Components_h>
     #define RTE_Acceleration_Arm_2D_Helper_PFB
@@ -362,7 +365,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.6.4" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.6.5" condition="Arm-2D-EXTRA">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <!-- example control source files -->
@@ -416,6 +419,8 @@
             <file category="sourceC"     name="examples/common/asset/background.c" />
             <file category="sourceC"     name="examples/common/asset/WatchCoverRound.c" />
             <file category="sourceC"     name="examples/common/asset/GlassHalo.c" />
+            <file category="sourceC"     name="examples/common/asset/alarm_clock_font32.c" />
+            <file category="sourceC"     name="examples/common/asset/alarm_clock_font64.c" />
           </files>
           <RTE_Components_h>
 

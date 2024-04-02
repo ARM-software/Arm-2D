@@ -17,7 +17,8 @@
                 "${workspaceFolder}/../../examples/demos",
                 "${workspaceFolder}/../../examples/common/scenes/fitness",
                 "${workspaceFolder}/../../examples/common/scenes/meter",
-                "${workspaceFolder}/../../examples/common/scenes/watch"
+                "${workspaceFolder}/../../examples/common/scenes/watch",
+                "${workspaceFolder}/../../examples/common/scenes/alarm_clock"
             ],
             "defines": [
                 "_RTE_",
@@ -25,7 +26,8 @@
                 "UNICODE",
                 "_UNICODE",
                 "ARM_SECTION(x)=  ",
-                "__va_list=va_list"
+                "__va_list=va_list",
+                "RTE_Acceleration_Arm_2D_Helper_PFB"
             ],
             "cStandard": "gnu11",
             "cppStandard": "gnu++11",
@@ -46,7 +48,8 @@
                 "${workspaceFolder}/../../examples/demos",
                 "${workspaceFolder}/../../examples/common/scenes/fitness",
                 "${workspaceFolder}/../../examples/common/scenes/meter",
-                "${workspaceFolder}/../../examples/common/scenes/watch"
+                "${workspaceFolder}/../../examples/common/scenes/watch",
+                "${workspaceFolder}/../../examples/common/scenes/alarm_clock"
             ],
             "defines": [
                 "_RTE_",
@@ -54,7 +57,8 @@
                 "UNICODE",
                 "_UNICODE",
                 "ARM_SECTION(x)=  ",
-                "__va_list=va_list"
+                "__va_list=va_list",
+                "RTE_Acceleration_Arm_2D_Helper_PFB"
             ],
             "compilerPath": "gcc.exe",
             "cStandard": "gnu11",
