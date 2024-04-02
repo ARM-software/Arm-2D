@@ -57,3 +57,4 @@ examples/\[template\]\[pc\]\[vscode\]/.vscode/settings.json
 *.ttf
 RTE_Components.h
 *.clangd
+tools/inputstring.txt
