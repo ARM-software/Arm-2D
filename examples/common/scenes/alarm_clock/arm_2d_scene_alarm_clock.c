@@ -239,7 +239,12 @@ static void __on_scene_alarm_clock_frame_start(arm_2d_scene_t *ptScene)
     /* calculate ECG scan mask offset */
     do {
         int32_t nResult;
-        if (arm_2d_helper_time_liner_slider(0, 200, 2000, &nResult, &this.lTimestamp[1])) {
+        if (arm_2d_helper_time_liner_slider(
+                        0,                                      /* from         */
+                        c_tileECGScanMask.tRegion.tSize.iWidth, /* to           */
+                        2000,                                   /* period       */
+                        &nResult,                               /* result       */
+                        &this.lTimestamp[1])) {                 /* timestamp    */
             this.lTimestamp[1] = 0;
         }
 
