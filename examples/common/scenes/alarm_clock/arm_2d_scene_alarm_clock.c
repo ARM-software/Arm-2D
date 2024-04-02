@@ -90,7 +90,8 @@ enum {
     DIRTY_REGION_IDX_HOUR,
     DIRTY_REGION_IDX_MIN,
     DIRTY_REGION_IDX_SEC,
-    DIRTY_REGION_IDX_TENMS
+    DIRTY_REGION_IDX_TENMS,
+    DIRTY_REGION_IDX_ECG,
 };
 
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -134,8 +135,12 @@ IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
         0  /* initialize at runtime later */
     ),
 
-    /* add the last region for the TenMs
-        */
+    /* a dirty region for TenMs */
+    ADD_REGION_TO_LIST(s_tDirtyRegions,
+        0  /* initialize at runtime later */
+    ),
+
+    /* add the last region for ECG */
     ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
         0
     ),
@@ -234,9 +239,12 @@ static void __on_scene_alarm_clock_frame_start(arm_2d_scene_t *ptScene)
     /* calculate ECG scan mask offset */
     do {
         int32_t nResult;
-        if (arm_2d_helper_time_liner_slider(0, 200, 1000, &nResult, &this.lTimestamp[1])) {
+        if (arm_2d_helper_time_liner_slider(0, 200, 2000, &nResult, &this.lTimestamp[1])) {
             this.lTimestamp[1] = 0;
         }
+
+        arm_2d_dirty_region_item_ignore_set(&s_tDirtyRegions[DIRTY_REGION_IDX_ECG],
+                                            (nResult == this.iECGScanOffset)); 
 
         this.iECGScanOffset = nResult;
     } while(0);
@@ -283,6 +291,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_alarm_clock_handler)
 
             arm_2d_layout(__vertical_region) {
 
+                /* Draw Clock */
                 __item_line_dock_vertical(64) {
                     arm_2d_size_t tStringSize = arm_lcd_get_string_line_box("00:00:00", &ARM_2D_FONT_ALARM_CLOCK_64_A4);
                     arm_2d_size_t tTwoDigitsSizeSmall = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
@@ -294,7 +303,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_alarm_clock_handler)
 
                     arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_ALARM_CLOCK_64_A4);
                     arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
-
 
                     arm_2d_dock_horizontal(__item_region, tStringSize.iWidth) {
 
@@ -346,33 +354,38 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_alarm_clock_handler)
                     }
                 }
 
+                /* ECG Scanning Animation */
                 __item_line_dock_vertical() {
                     arm_2d_align_centre(__item_region, c_tileECGMask.tRegion.tSize) {
-                        arm_2d_fill_colour_with_mask_and_opacity(ptTile,
-                                                                &__centre_region,
-                                                                &c_tileECGMask, 
-                                                                (__arm_2d_color_t){GLCD_COLOR_RED}, 
-                                                                255);
-                        ARM_2D_OP_WAIT_ASYNC();
 
-                        arm_2d_region_t tECGScanRegion = __centre_region;
-                        tECGScanRegion.tLocation.iX += this.iECGScanOffset - c_tileECGMask.tRegion.tSize.iWidth;
+                        arm_2d_container(ptTile, __ecg, &__centre_region ) {
+                            /* Draw ECG waveform as background */
+                            arm_2d_fill_colour_with_mask_and_opacity(&__ecg,
+                                                                     &__ecg_canvas,
+                                                                     &c_tileECGMask, 
+                                                                     (__arm_2d_color_t){GLCD_COLOR_RED}, 
+                                                                     255);
+                            ARM_2D_OP_WAIT_ASYNC();
 
-                        arm_2d_fill_colour_with_mask(ptTile,
-                                                     &tECGScanRegion,
-                                                     &c_tileECGScanMask, 
-                                                    (__arm_2d_color_t){GLCD_COLOR_BLACK});
-                        
-                        ARM_2D_OP_WAIT_ASYNC();
+                            /* draw back mask layer */
+                            arm_2d_region_t tECGScanRegion = __ecg_canvas;
+                            tECGScanRegion.tLocation.iX += this.iECGScanOffset - c_tileECGMask.tRegion.tSize.iWidth;
 
-                        tECGScanRegion.tLocation.iX += c_tileECGMask.tRegion.tSize.iWidth;
+                            arm_2d_fill_colour_with_mask(&__ecg,
+                                                         &tECGScanRegion,
+                                                         &c_tileECGScanMask, 
+                                                         (__arm_2d_color_t){GLCD_COLOR_BLACK});
+                            
+                            ARM_2D_OP_WAIT_ASYNC();
 
-                        arm_2d_fill_colour_with_mask(ptTile,
-                                                     &tECGScanRegion,
-                                                     &c_tileECGScanMask, 
-                                                    (__arm_2d_color_t){GLCD_COLOR_BLACK});
-                        
-                        ARM_2D_OP_WAIT_ASYNC();
+                            tECGScanRegion.tLocation.iX += c_tileECGMask.tRegion.tSize.iWidth;
+
+                            arm_2d_fill_colour_with_mask(&__ecg,
+                                                         &tECGScanRegion,
+                                                         &c_tileECGScanMask, 
+                                                         (__arm_2d_color_t){GLCD_COLOR_BLACK});
+                            ARM_2D_OP_WAIT_ASYNC();
+                        }
 
                     }
                 
@@ -468,6 +481,13 @@ user_scene_alarm_clock_t *__arm_2d_scene_alarm_clock_init(
                     }
                 }
             }
+
+            /* ECG Scanning Animation */
+                __item_line_dock_vertical() {
+                    arm_2d_align_centre(__item_region, c_tileECGMask.tRegion.tSize) {
+                        s_tDirtyRegions[DIRTY_REGION_IDX_ECG].tRegion = __centre_region;
+                    }
+                }
         }
     }
     /*--------------initialize static dirty region items: end  ---------------*/
@@ -493,7 +513,7 @@ user_scene_alarm_clock_t *__arm_2d_scene_alarm_clock_init(
             /* Please uncommon the callbacks if you need them
              */
             .fnScene        = &__pfb_draw_scene_alarm_clock_handler,
-            //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
+            .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
 
             //.fnOnBGStart    = &__on_scene_alarm_clock_background_start,
