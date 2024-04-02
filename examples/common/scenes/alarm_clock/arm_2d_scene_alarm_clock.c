@@ -99,6 +99,9 @@ extern const arm_2d_tile_t c_tileCMSISLogo;
 extern const arm_2d_tile_t c_tileCMSISLogoMask;
 extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
+
+extern const arm_2d_tile_t c_tileECGMask;
+extern const arm_2d_tile_t c_tileECGScanMask;
 /*============================ PROTOTYPES ====================================*/
 extern
 struct {
@@ -228,6 +231,15 @@ static void __on_scene_alarm_clock_frame_start(arm_2d_scene_t *ptScene)
         this.chTenMs = chTenMs;
     } while(0);
 
+    /* calculate ECG scan mask offset */
+    do {
+        int32_t nResult;
+        if (arm_2d_helper_time_liner_slider(0, 200, 1000, &nResult, &this.lTimestamp[1])) {
+            this.lTimestamp[1] = 0;
+        }
+
+        this.iECGScanOffset = nResult;
+    } while(0);
 }
 
 static void __on_scene_alarm_clock_frame_complete(arm_2d_scene_t *ptScene)
@@ -237,7 +249,7 @@ static void __on_scene_alarm_clock_frame_complete(arm_2d_scene_t *ptScene)
     
     /* switch to next scene after 3s */
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
-        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+        //arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 }
 
@@ -267,73 +279,105 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_alarm_clock_handler)
         
         arm_2d_fill_colour(ptTile, &__top_canvas, GLCD_COLOR_BLACK);
 
+        arm_2d_dock_vertical(__top_canvas, 64+c_tileECGMask.tRegion.tSize.iHeight) {
 
-        arm_2d_dock_vertical(__top_canvas, 64) {
+            arm_2d_layout(__vertical_region) {
 
-            arm_2d_size_t tStringSize = arm_lcd_get_string_line_box("00:00:00", &ARM_2D_FONT_ALARM_CLOCK_64_A4);
-            arm_2d_size_t tTwoDigitsSizeSmall = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
-            arm_2d_size_t tTwoDigitsSizeBig = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_ALARM_CLOCK_64_A4);
-            arm_2d_size_t tCommaSizeBig = arm_lcd_get_string_line_box(":", &ARM_2D_FONT_ALARM_CLOCK_64_A4);
-            arm_2d_size_t tCommaSizeSmall = arm_lcd_get_string_line_box(":", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
+                __item_line_dock_vertical(64) {
+                    arm_2d_size_t tStringSize = arm_lcd_get_string_line_box("00:00:00", &ARM_2D_FONT_ALARM_CLOCK_64_A4);
+                    arm_2d_size_t tTwoDigitsSizeSmall = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
+                    arm_2d_size_t tTwoDigitsSizeBig = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_ALARM_CLOCK_64_A4);
+                    arm_2d_size_t tCommaSizeBig = arm_lcd_get_string_line_box(":", &ARM_2D_FONT_ALARM_CLOCK_64_A4);
+                    arm_2d_size_t tCommaSizeSmall = arm_lcd_get_string_line_box(":", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
 
-            tStringSize.iWidth += tTwoDigitsSizeSmall.iWidth + tCommaSizeSmall.iWidth;
+                    tStringSize.iWidth += tTwoDigitsSizeSmall.iWidth + tCommaSizeSmall.iWidth;
 
-            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_ALARM_CLOCK_64_A4);
-            arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
+                    arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_ALARM_CLOCK_64_A4);
+                    arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
 
 
-            arm_2d_dock_horizontal(__vertical_region, tStringSize.iWidth) {
+                    arm_2d_dock_horizontal(__item_region, tStringSize.iWidth) {
 
-                arm_2d_layout(__horizontal_region) {
+                        arm_2d_layout(__horizontal_region) {
 
-                    __item_line_dock_horizontal(tTwoDigitsSizeBig.iWidth) {
-                        arm_lcd_text_set_draw_region(&__item_region);
-                        arm_lcd_text_location(0,0);
-                        arm_lcd_printf("%02d", this.chHour);
-                    }
+                            __item_line_dock_horizontal(tTwoDigitsSizeBig.iWidth) {
+                                arm_lcd_text_set_draw_region(&__item_region);
+                                arm_lcd_text_location(0,0);
+                                arm_lcd_printf("%02d", this.chHour);
+                            }
 
-                    __item_line_dock_horizontal(tCommaSizeBig.iWidth) {
-                        arm_lcd_text_set_draw_region(&__item_region);
-                        arm_lcd_text_location(0,0);
-                        arm_lcd_puts(":");
-                    }
+                            __item_line_dock_horizontal(tCommaSizeBig.iWidth) {
+                                arm_lcd_text_set_draw_region(&__item_region);
+                                arm_lcd_text_location(0,0);
+                                arm_lcd_puts(":");
+                            }
 
-                    __item_line_dock_horizontal(tTwoDigitsSizeBig.iWidth) {
-                        arm_lcd_text_set_draw_region(&__item_region);
-                        arm_lcd_text_location(0,0);
-                        arm_lcd_printf("%02d", this.chMin);
-                    }
+                            __item_line_dock_horizontal(tTwoDigitsSizeBig.iWidth) {
+                                arm_lcd_text_set_draw_region(&__item_region);
+                                arm_lcd_text_location(0,0);
+                                arm_lcd_printf("%02d", this.chMin);
+                            }
 
-                    __item_line_dock_horizontal(tCommaSizeBig.iWidth) {
-                        arm_lcd_text_set_draw_region(&__item_region);
-                        arm_lcd_text_location(0,0);
-                        arm_lcd_puts(":");
-                    }
+                            __item_line_dock_horizontal(tCommaSizeBig.iWidth) {
+                                arm_lcd_text_set_draw_region(&__item_region);
+                                arm_lcd_text_location(0,0);
+                                arm_lcd_puts(":");
+                            }
 
-                    __item_line_dock_horizontal(tTwoDigitsSizeBig.iWidth) {
-                        arm_lcd_text_set_draw_region(&__item_region);
-                        arm_lcd_text_location(0,0);
-                        arm_lcd_printf("%02d", this.chSec);
-                    }
+                            __item_line_dock_horizontal(tTwoDigitsSizeBig.iWidth) {
+                                arm_lcd_text_set_draw_region(&__item_region);
+                                arm_lcd_text_location(0,0);
+                                arm_lcd_printf("%02d", this.chSec);
+                            }
 
-                    __item_line_dock_horizontal(tCommaSizeSmall.iWidth) {
-                    }
+                            __item_line_dock_horizontal(tCommaSizeSmall.iWidth) {
+                            }
 
-                    __item_line_dock_horizontal(tTwoDigitsSizeSmall.iWidth) {
+                            __item_line_dock_horizontal(tTwoDigitsSizeSmall.iWidth) {
 
-                        arm_2d_align_mid_right(__item_region, tTwoDigitsSizeSmall) {
-                            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_ALARM_CLOCK_32_A4);
-                            arm_lcd_text_set_draw_region(&__mid_right_region);
-                            arm_lcd_text_location(0,0);
-                            arm_lcd_printf("%02d", this.chTenMs);
+                                arm_2d_align_mid_right(__item_region, tTwoDigitsSizeSmall) {
+                                    arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_ALARM_CLOCK_32_A4);
+                                    arm_lcd_text_set_draw_region(&__mid_right_region);
+                                    arm_lcd_text_location(0,0);
+                                    arm_lcd_printf("%02d", this.chTenMs);
+                                }
+                            }
                         }
                     }
-
                 }
+
+                __item_line_dock_vertical() {
+                    arm_2d_align_centre(__item_region, c_tileECGMask.tRegion.tSize) {
+                        arm_2d_fill_colour_with_mask_and_opacity(ptTile,
+                                                                &__centre_region,
+                                                                &c_tileECGMask, 
+                                                                (__arm_2d_color_t){GLCD_COLOR_RED}, 
+                                                                255);
+                        ARM_2D_OP_WAIT_ASYNC();
+
+                        arm_2d_region_t tECGScanRegion = __centre_region;
+                        tECGScanRegion.tLocation.iX += this.iECGScanOffset - c_tileECGMask.tRegion.tSize.iWidth;
+
+                        arm_2d_fill_colour_with_mask(ptTile,
+                                                     &tECGScanRegion,
+                                                     &c_tileECGScanMask, 
+                                                    (__arm_2d_color_t){GLCD_COLOR_BLACK});
+                        
+                        ARM_2D_OP_WAIT_ASYNC();
+
+                        tECGScanRegion.tLocation.iX += c_tileECGMask.tRegion.tSize.iWidth;
+
+                        arm_2d_fill_colour_with_mask(ptTile,
+                                                     &tECGScanRegion,
+                                                     &c_tileECGScanMask, 
+                                                    (__arm_2d_color_t){GLCD_COLOR_BLACK});
+                        
+                        ARM_2D_OP_WAIT_ASYNC();
+
+                    }
                 
+                }
             }
-
-
         }
 
         /* draw text at the top-left corner */
@@ -369,59 +413,63 @@ user_scene_alarm_clock_t *__arm_2d_scene_alarm_clock_init(
 
     /*--------------initialize static dirty region items: begin---------------*/
 
-    arm_2d_dock_vertical(tScreen, 64) {
+    arm_2d_dock_vertical(tScreen, 64+c_tileECGMask.tRegion.tSize.iHeight) {
 
-        arm_2d_size_t tStringSize = arm_lcd_get_string_line_box("00:00:00", &ARM_2D_FONT_ALARM_CLOCK_64_A4);
-        arm_2d_size_t tTwoDigitsSizeSmall = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
-        arm_2d_size_t tTwoDigitsSizeBig = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_ALARM_CLOCK_64_A4);
-        arm_2d_size_t tCommaSizeBig = arm_lcd_get_string_line_box(":", &ARM_2D_FONT_ALARM_CLOCK_64_A4);
-        arm_2d_size_t tCommaSizeSmall = arm_lcd_get_string_line_box(":", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
+        arm_2d_layout(__vertical_region) {
 
-        tStringSize.iWidth += tTwoDigitsSizeSmall.iWidth + tCommaSizeSmall.iWidth;
+            __item_line_dock_vertical(64) {
 
-        arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_ALARM_CLOCK_64_A4);
-        arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
+                arm_2d_size_t tStringSize = arm_lcd_get_string_line_box("00:00:00", &ARM_2D_FONT_ALARM_CLOCK_64_A4);
+                arm_2d_size_t tTwoDigitsSizeSmall = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
+                arm_2d_size_t tTwoDigitsSizeBig = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_ALARM_CLOCK_64_A4);
+                arm_2d_size_t tCommaSizeBig = arm_lcd_get_string_line_box(":", &ARM_2D_FONT_ALARM_CLOCK_64_A4);
+                arm_2d_size_t tCommaSizeSmall = arm_lcd_get_string_line_box(":", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
 
+                tStringSize.iWidth += tTwoDigitsSizeSmall.iWidth + tCommaSizeSmall.iWidth;
 
-        arm_2d_dock_horizontal(__vertical_region, tStringSize.iWidth) {
+                arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_ALARM_CLOCK_64_A4);
+                arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
 
-            arm_2d_layout(__horizontal_region) {
+                arm_2d_dock_horizontal(__item_region, tStringSize.iWidth) {
 
-                __item_line_dock_horizontal(tTwoDigitsSizeBig.iWidth) {
-                    
-                    s_tDirtyRegions[DIRTY_REGION_IDX_HOUR].tRegion = __item_region;
+                    arm_2d_layout(__horizontal_region) {
 
-                }
+                        __item_line_dock_horizontal(tTwoDigitsSizeBig.iWidth) {
+                            
+                            s_tDirtyRegions[DIRTY_REGION_IDX_HOUR].tRegion = __item_region;
 
-                __item_line_dock_horizontal(tCommaSizeBig.iWidth) {
+                        }
 
-                }
+                        __item_line_dock_horizontal(tCommaSizeBig.iWidth) {
 
-                __item_line_dock_horizontal(tTwoDigitsSizeBig.iWidth) {
-                    s_tDirtyRegions[DIRTY_REGION_IDX_MIN].tRegion = __item_region;
-                }
+                        }
 
-                __item_line_dock_horizontal(tCommaSizeBig.iWidth) {
-                    
-                }
+                        __item_line_dock_horizontal(tTwoDigitsSizeBig.iWidth) {
+                            s_tDirtyRegions[DIRTY_REGION_IDX_MIN].tRegion = __item_region;
+                        }
 
-                __item_line_dock_horizontal(tTwoDigitsSizeBig.iWidth) {
-                    s_tDirtyRegions[DIRTY_REGION_IDX_SEC].tRegion = __item_region;
-                }
+                        __item_line_dock_horizontal(tCommaSizeBig.iWidth) {
+                            
+                        }
 
-                __item_line_dock_horizontal(tCommaSizeSmall.iWidth) {
-                }
+                        __item_line_dock_horizontal(tTwoDigitsSizeBig.iWidth) {
+                            s_tDirtyRegions[DIRTY_REGION_IDX_SEC].tRegion = __item_region;
+                        }
 
-                __item_line_dock_horizontal(tTwoDigitsSizeSmall.iWidth) {
+                        __item_line_dock_horizontal(tCommaSizeSmall.iWidth) {
+                        }
 
-                    arm_2d_align_mid_right(__item_region, tTwoDigitsSizeSmall) {
-                        s_tDirtyRegions[DIRTY_REGION_IDX_TENMS].tRegion = __mid_right_region;
+                        __item_line_dock_horizontal(tTwoDigitsSizeSmall.iWidth) {
+
+                            arm_2d_align_mid_right(__item_region, tTwoDigitsSizeSmall) {
+                                s_tDirtyRegions[DIRTY_REGION_IDX_TENMS].tRegion = __mid_right_region;
+                            }
+                        }
                     }
                 }
             }
         }
     }
-
     /*--------------initialize static dirty region items: end  ---------------*/
 
 
@@ -445,7 +493,7 @@ user_scene_alarm_clock_t *__arm_2d_scene_alarm_clock_init(
             /* Please uncommon the callbacks if you need them
              */
             .fnScene        = &__pfb_draw_scene_alarm_clock_handler,
-            .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
+            //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
 
             //.fnOnBGStart    = &__on_scene_alarm_clock_background_start,

@@ -83,13 +83,15 @@ struct user_scene_alarm_clock_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[1];
+    int64_t lTimestamp[2];
     bool bUserAllocated;
 
     uint8_t chHour;
     uint8_t chMin;
     uint8_t chSec;
     uint8_t chTenMs;
+
+    int16_t iECGScanOffset;
 
 )
     /* place your public member here */
