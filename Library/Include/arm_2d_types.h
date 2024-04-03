@@ -613,6 +613,15 @@ typedef union __arm_2d_mem_info_t {
     uint32_t Value;                                                             //!< Memory Information
 }__arm_2d_mem_info_t;
 
+/*!
+ * \brief scratch memory descriptor
+ * 
+ */
+typedef struct arm_2d_scratch_mem_t {
+    implement(__arm_2d_mem_info_t);
+
+    uintptr_t pBuffer;
+} arm_2d_scratch_mem_t;
 
 /*!
  * \brief a type for scratch memory blocks
