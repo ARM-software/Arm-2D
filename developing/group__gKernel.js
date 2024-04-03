@@ -42,6 +42,7 @@ var group__gKernel =
     [ "__arm_2d_mem_info_t", "group__gKernel.html#union____arm__2d__mem__info__t", [
       [ "Value", "group__gKernel.html#afaabe6b178692c0b57afa1bc65a8f701", null ]
     ] ],
+    [ "arm_2d_scratch_mem_t", "group__gKernel.html#structarm__2d__scratch__mem__t", null ],
     [ "__arm_2d_mem_t", "group__gKernel.html#struct____arm__2d__mem__t", [
       [ "tInfo", "group__gKernel.html#af8aad571c70857370861ac3cf2544890", null ],
       [ "pBuffer", "group__gKernel.html#a5aad0b5f82a59d082975d4677af3864c", null ]
