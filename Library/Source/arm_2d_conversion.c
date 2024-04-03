@@ -21,8 +21,8 @@
  * Title:        arm-2d_draw.c
  * Description:  APIs for colour format conversion
  *
- * $Date:        28. March 2024
- * $Revision:    V.1.0.4
+ * $Date:        3. April 2024
+ * $Revision:    V.1.0.5
  *
  * Target Processor:  Cortex-M cores
  *
