@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        21. Feb 2024
- * $Revision:    V.1.4.4
+ * $Date:        3. April 2024
+ * $Revision:    V.1.4.5
  *
  * Target Processor:  Cortex-M cores
  *
@@ -398,7 +398,10 @@ typedef struct __arm_2d_tile_param_t {
     uint8_t                                 : 6;
     
     arm_2d_region_t     tValidRegion;
-    arm_2d_tile_t      *ptDerivedResource;
+
+    arm_2d_region_t tRegionInVirtualScreen;
+    arm_2d_tile_t   *ptDerivedResource;
+
 } __arm_2d_tile_param_t;
 
 typedef struct __arm_2d_param_copy_t {
