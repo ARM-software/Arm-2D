@@ -615,10 +615,18 @@ typedef union __arm_2d_mem_info_t {
 
 /*!
  * \brief scratch memory descriptor
- * 
+ * \note "manually" derived from __arm_2d_mem_info_t
  */
 typedef struct arm_2d_scratch_mem_t {
-    implement(__arm_2d_mem_info_t);
+    implement_ex(union {
+        struct {
+            uint32_t u24SizeInByte      : 24;                                       //!< the memory size in Byte
+            uint32_t u2ItemSize         : 3;                                        //!< the size of the data item
+            uint32_t u2Align            : 3;                                        //!< the alignment
+            uint32_t u2Type             : 2;                                        //!< The memory type define in enum arm_2d_mem_type_t
+        };
+        uint32_t Value;                                                             //!< Memory Information
+    }, tInfo);
 
     uintptr_t pBuffer;
 } arm_2d_scratch_mem_t;
