@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        24. March 2024
- * $Revision:    V.1.7.6
+ * $Date:        03. April 2024
+ * $Revision:    V.1.7.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -144,8 +144,13 @@ __WEAK int64_t arm_2d_helper_get_system_timestamp(void)
 __WEAK 
 uint32_t arm_2d_helper_get_reference_clock_frequency(void)
 {
+#if defined(__PERF_COUNTER__) && __PER_COUNTER_VER__ >= 23000
+    extern uint32_t perfc_port_get_system_timer_freq(void);
+    return perfc_port_get_system_timer_freq();
+#else
     extern uint32_t SystemCoreClock;
     return SystemCoreClock;
+#endif
 }
 #endif
 
