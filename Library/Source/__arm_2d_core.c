@@ -861,8 +861,8 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                         .tSize = ptThis->Target.ptTile->tRegion.tSize,
                     };
                     
-                    arm_2d_get_absolute_location(ptThis->Target.ptTile,
-                                                 &tTempRegion.tLocation);
+                    arm_2d_tile_get_absolute_location(  ptThis->Target.ptTile,
+                                                        &tTempRegion.tLocation);
                     
                     tTempRegion.tLocation.iX 
                         = tTargetTileParam.tValidRegion.tLocation.iX 
@@ -981,8 +981,8 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                         .tSize = ptThis->Target.ptTile->tRegion.tSize,
                     };
                     
-                    arm_2d_get_absolute_location(ptThis->Target.ptTile,
-                                                 &tTempRegion.tLocation);
+                    arm_2d_tile_get_absolute_location(  ptThis->Target.ptTile,
+                                                        &tTempRegion.tLocation);
                     
                     tTempRegion.tLocation.iX 
                         = tTargetTileParam.tValidRegion.tLocation.iX 

@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        28. March 2024
- * $Revision:    V.1.9.3
+ * $Date:        4. April 2024
+ * $Revision:    V.1.9.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -377,16 +377,7 @@ arm_2d_location_t arm_2d_helper_pfb_get_absolute_location(
 {
     assert(NULL != ptTile);
     
-    while( !ptTile->tInfo.bIsRoot && !ptTile->tInfo.bVirtualScreen ) {
-        tLocation.iX += ptTile->tRegion.tLocation.iX;
-        tLocation.iY += ptTile->tRegion.tLocation.iY;
-        
-        ptTile = ptTile->ptParent;
-
-        assert(NULL != ptTile);
-    }
-    
-    return tLocation;
+    return arm_2d_get_absolute_location(ptTile, tLocation, true);
 }
 
 /*!

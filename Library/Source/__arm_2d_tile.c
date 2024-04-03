@@ -21,7 +21,7 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        3. April 2024
+ * $Date:        4. April 2024
  * $Revision:    V.1.4.4
  *
  * Target Processor:  Cortex-M cores
@@ -673,7 +673,7 @@ arm_2d_cmp_t arm_2d_tile_shape_compare(   const arm_2d_tile_t *ptTarget,
 
 
 ARM_NONNULL(1,2)
-const arm_2d_tile_t * arm_2d_get_absolute_location(
+const arm_2d_tile_t * arm_2d_tile_get_absolute_location(
                                                const arm_2d_tile_t *ptTile, 
                                                arm_2d_location_t *ptLocation)
 {
@@ -683,13 +683,17 @@ const arm_2d_tile_t * arm_2d_get_absolute_location(
     
     ptLocation->iX = 0;
     ptLocation->iY = 0;
-    
+
+#if 0
     while( !ptTile->tInfo.bIsRoot ) {
         ptLocation->iX += ptTile->tRegion.tLocation.iX;
         ptLocation->iY += ptTile->tRegion.tLocation.iY;
         
         ptTile = ptTile->ptParent;
     }
+#else
+    *ptLocation = arm_2d_get_absolute_location(ptTile, *ptLocation, false);
+#endif
     
     return ptTile;
 }
@@ -711,8 +715,8 @@ arm_2d_region_t *arm_2d_tile_region_diff(   const arm_2d_tile_t *ptTarget,
     ptBuffer->tSize.iHeight = ptTarget->tRegion.tSize.iHeight 
                             - ptReference->tRegion.tSize.iHeight;
    
-    ptTarget = arm_2d_get_absolute_location(ptTarget, &tTargetAbsoluteLocaton);
-    ptReference = arm_2d_get_absolute_location(ptReference, &tReferenceAbsoluteLocation);
+    ptTarget = arm_2d_tile_get_absolute_location(ptTarget, &tTargetAbsoluteLocaton);
+    ptReference = arm_2d_tile_get_absolute_location(ptReference, &tReferenceAbsoluteLocation);
     
     if (ptTarget != ptReference) {
         //! they don't have the same root
@@ -796,6 +800,34 @@ arm_2d_tile_t *arm_2d_tile_generate_child(
     return ptOutput;
 }
 
+ARM_NONNULL(1)
+arm_2d_location_t arm_2d_get_absolute_location( const arm_2d_tile_t *ptTile, 
+                                                arm_2d_location_t tLocation,
+                                                bool bOnVirtualScreen)
+{
+    assert(NULL != ptTile);
+    if (bOnVirtualScreen) {
+        while( !ptTile->tInfo.bIsRoot && !ptTile->tInfo.bVirtualScreen ) {
+            tLocation.iX += ptTile->tRegion.tLocation.iX;
+            tLocation.iY += ptTile->tRegion.tLocation.iY;
+            
+            ptTile = ptTile->ptParent;
+
+            assert(NULL != ptTile);
+        }
+    } else {
+        while( !ptTile->tInfo.bIsRoot) {
+            tLocation.iX += ptTile->tRegion.tLocation.iX;
+            tLocation.iY += ptTile->tRegion.tLocation.iY;
+            
+            ptTile = ptTile->ptParent;
+
+            assert(NULL != ptTile);
+        }
+    }
+    
+    return tLocation;
+}
 
 /*----------------------------------------------------------------------------*
  * Copy/Fill tile to destination with Mirroring                               *

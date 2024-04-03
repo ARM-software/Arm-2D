@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2024 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm-2d_transform.c
  * Description:  APIs for tile transform
  *
- * $Date:        20 Jan 2024
- * $Revision:    V.1.1.0
+ * $Date:        4 April 2024
+ * $Revision:    V.1.1.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -561,7 +561,7 @@ static arm_2d_err_t __arm_2d_transform_preprocess_source(
     /* update source center (using root tile's coordinates) */
     do {
         arm_2d_location_t tResourceAsoluteLocation;
-        arm_2d_get_absolute_location(this.Origin.ptTile, &tResourceAsoluteLocation);
+        arm_2d_tile_get_absolute_location(this.Origin.ptTile, &tResourceAsoluteLocation);
         ptTransform->tCenter.iX += tResourceAsoluteLocation.iX;
         ptTransform->tCenter.iY += tResourceAsoluteLocation.iY;
     } while(0);

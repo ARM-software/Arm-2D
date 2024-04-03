@@ -21,8 +21,8 @@
  * Title:        arm_2d_tile.h
  * Description:  Public header file to contain the basic tile operations
  *
- * $Date:        15. Nov 2023
- * $Revision:    V.1.4.3
+ * $Date:        4. April 2024
+ * $Revision:    V.1.4.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -980,6 +980,22 @@ arm_2d_tile_t *arm_2d_tile_generate_child(
                                         bool bClipRegion);
 
 /*!
+ * \brief get the absolute location on a specified target tile
+ * 
+ * \param[in] ptTile the target tile
+ * \param[in] tLocation the relative location
+ * \param[in] bOnVirtualScreen whether taking the virtual screen into 
+ *            consideration.
+ *  
+ * \return arm_2d_location_t the absolute location
+ */
+extern
+ARM_NONNULL(1)
+arm_2d_location_t arm_2d_get_absolute_location( const arm_2d_tile_t *ptTile, 
+                                                arm_2d_location_t tLocation,
+                                                bool bOnVirtualScreen);
+
+/*!
  * \brief compare the widths of two tiles
  * \param[in] ptTarget the target tile
  * \param[in] ptReference the reference tile
@@ -1019,7 +1035,7 @@ arm_2d_cmp_t arm_2d_tile_shape_compare( const arm_2d_tile_t *ptTarget,
  */
 extern
 ARM_NONNULL(1,2)
-const arm_2d_tile_t * arm_2d_get_absolute_location(
+const arm_2d_tile_t * arm_2d_tile_get_absolute_location(
                                         const arm_2d_tile_t *ptTile, 
                                         arm_2d_location_t *ptLocation);
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2024 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_transform.h"
  * Description:  Public header file to contain the APIs for transform
  *
- * $Date:        18 Feb 2024
- * $Revision:    V.1.1.1
+ * $Date:        4 April 2024
+ * $Revision:    V.1.1.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
