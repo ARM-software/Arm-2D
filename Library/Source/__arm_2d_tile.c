@@ -422,18 +422,19 @@ const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root(
         return ptTile;
     }
 
-    do {
-        if (ptTile->tInfo.bVirtualScreen) {
-            if (NULL != ppVirtualScreen) {
-                if (NULL == *ppVirtualScreen) {
-                    *ppVirtualScreen = (arm_2d_tile_t *)ptTile;
-                }
-            }
-            
-            if (bQuitWhenFindVirtualScreen) {
-                return ptTile;
+    if (ptTile->tInfo.bVirtualScreen) {
+        if (NULL != ppVirtualScreen) {
+            if (NULL == *ppVirtualScreen) {
+                *ppVirtualScreen = (arm_2d_tile_t *)ptTile;
             }
         }
+        
+        if (bQuitWhenFindVirtualScreen) {
+            return ptTile;
+        }
+    }
+
+    do {
 
         //! get parent
         ptTile = (const arm_2d_tile_t *)ptTile->ptParent;
@@ -500,6 +501,18 @@ const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root(
                                         ptValidRegion)) {
             /* out of range */
             return NULL;
+        }
+
+        if (ptTile->tInfo.bVirtualScreen) {
+            if (NULL != ppVirtualScreen) {
+                if (NULL == *ppVirtualScreen) {
+                    *ppVirtualScreen = (arm_2d_tile_t *)ptTile;
+                }
+            }
+            
+            if (bQuitWhenFindVirtualScreen) {
+                return ptTile;
+            }
         }
 
         if (arm_2d_is_root_tile(ptTile)) {
