@@ -4,7 +4,7 @@ var searchData=
   ['impl_5ffilm_1',['impl_film',['../group__gHelper.html#gaaa9f4d36caf6a8a5b456a9bd8122169b',1,'arm_2d_helper.h']]],
   ['implement_2',['implement',['../group__gHelper.html#adc9eeca97d41a439c3f1800977a54a37',1,'arm_2d_helper_film_t::implement()'],['../group__gKernel.html#ga295397fe5671506e3687a730d4dfdb8a',1,'implement():&#160;arm_2d_utils.h']]],
   ['implement_5fex_3',['implement_ex',['../group__gKernel.html#gabc7a8afaf410f95e3922d2fd904a016c',1,'arm_2d_utils.h']]],
-  ['info_4',['Info',['../group__gKernel.html#aaf660a31d24872ee83b1b86f2a7d5c94',1,'__arm_2d_op_info_t']]],
+  ['info_4',['Info',['../group__gKernel.html#ab75ea65fc0d7f36ebd15612eed54901c',1,'__arm_2d_op_info_t']]],
   ['inherit_5',['inherit',['../group__gKernel.html#ga4b362915d65708c32e2b83db54425d7a',1,'arm_2d_utils.h']]],
   ['inherit_5fex_6',['inherit_ex',['../group__gKernel.html#ga22f94c7e7b097ac219c0e1d1b8129807',1,'arm_2d_utils.h']]],
   ['init_5farm_5f2d_5fhelper_5fpfb_7',['init_arm_2d_helper_pfb',['../group__gHelper.html#ga03968eeee6619747a1f8c08523c5a8ad',1,'arm_2d_helper_pfb.h']]],
