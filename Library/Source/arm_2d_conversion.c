@@ -551,7 +551,7 @@ void __arm_2d_impl_ccca8888_to_rgb565(uint32_t *__RESTRICT pwSourceBase,
                                    + (tTargetPixel.BGRA[1] * hwTrans);
             tTargetPixel.BGRA[1] = (uint16_t) (hwChannel1 >> 8);
             uint16_t hwChannel2 = (uint16_t)(wSourcePixelOrigin.chChannel[2] * hwOPA)
-                                   + (tTargetPixel.BGRA[0] * hwTrans);
+                                   + (tTargetPixel.BGRA[2] * hwTrans);
             tTargetPixel.BGRA[2] = (uint16_t) (hwChannel2 >> 8);
 
 
