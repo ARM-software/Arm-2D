@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        22. March 2024
- * $Revision:    V.1.6.3
+ * $Date:        03. April 2024
+ * $Revision:    V.1.6.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -223,6 +223,15 @@ void arm_2d_scene_player_update_scene_background(arm_2d_scene_player_t *ptThis)
     this.Runtime.bUpdateBG = true;
 }
 
+ARM_NONNULL(1)
+arm_2d_size_t arm_2d_scene_player_get_screen_size(arm_2d_scene_player_t *ptThis)
+{
+    assert (NULL != ptThis);
+
+    return arm_2d_helper_pfb_get_display_area(
+                &this.use_as__arm_2d_helper_pfb_t).tSize;
+}
+
 /*-----------------------------------------------------------------------------*
  * Scene Switching                                                             *
  *-----------------------------------------------------------------------------*/
@@ -300,8 +309,6 @@ void arm_2d_scene_player_set_switching_period(  arm_2d_scene_player_t *ptThis,
     }
 }
 
-
-
 ARM_NONNULL(1)
 arm_2d_err_t __arm_2d_scene_player_register_on_draw_navigation_event_handler(
                                     arm_2d_scene_player_t *ptThis,
@@ -323,7 +330,6 @@ arm_2d_err_t __arm_2d_scene_player_register_on_draw_navigation_event_handler(
                                     &tDependency);
 }
 
-
 ARM_NONNULL(1)
 void arm_2d_scene_player_hide_navigation_layer(arm_2d_scene_player_t *ptThis)
 {
@@ -335,8 +341,6 @@ void arm_2d_scene_player_show_navigation_layer(arm_2d_scene_player_t *ptThis)
 {
     arm_2d_helper_show_navigation_layer(&this.use_as__arm_2d_helper_pfb_t);
 }
-
-
 
 arm_2d_err_t __arm_2d_scene_player_register_before_switching_event_handler(
                     arm_2d_scene_player_t *ptThis,

@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        22. March 2024
- * $Revision:    V.1.6.3
+ * $Date:        03. April 2024
+ * $Revision:    V.1.6.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -394,6 +394,17 @@ void arm_2d_scene_player_append_scenes(arm_2d_scene_player_t *ptThis,
  */
 ARM_NONNULL(1)
 void arm_2d_scene_player_update_scene_background(arm_2d_scene_player_t *ptThis);
+
+
+/*!
+ * \brief get the screen size of a specified display adapter.
+ * 
+ * \param[in] ptThis the target scene player
+ * \return arm_2d_size_t the screen size
+ */
+extern
+ARM_NONNULL(1)
+arm_2d_size_t arm_2d_scene_player_get_screen_size(arm_2d_scene_player_t *ptThis);
 
 /*!
  * \brief request switching to the next scene safely
