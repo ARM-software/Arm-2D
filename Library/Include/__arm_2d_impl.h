@@ -400,10 +400,8 @@ typedef struct __arm_2d_tile_param_t {
     
     arm_2d_region_t     tValidRegion;
 
-    union {
-        arm_2d_region_t tValidRegionInVirtualScreen;
-        arm_2d_tile_t   *ptDerivedResource;
-    };
+    arm_2d_region_t tValidRegionInVirtualScreen;
+    arm_2d_tile_t   *ptDerivedResource;
 
 } __arm_2d_tile_param_t;
 
