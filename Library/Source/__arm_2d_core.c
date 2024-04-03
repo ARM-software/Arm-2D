@@ -21,8 +21,8 @@
  * Title:        __arm-2d_core.c
  * Description:  Basic Tile operations
  *
- * $Date:        24. Jan 2024
- * $Revision:    V.1.6.5
+ * $Date:        3. April 2024
+ * $Revision:    V.1.6.6
  *
  * Target Processor:  Cortex-M cores
  *
@@ -547,17 +547,25 @@ static const arm_2d_tile_t * __arm_2d_tile_region_caculator(
                                             __arm_2d_tile_param_t *ptOut,
                                             uint_fast8_t *pchPixelLenInBit,
                                             bool bAllowEnforcedColour,
-                                            uint32_t wMode)
+                                            uint32_t wMode,
+                                            bool bUseAsTarget)
 {
     arm_2d_region_t tValidRegion;                                                     
     int32_t nOffset = 0;
-    uint8_t *pchBuffer = NULL;                                            
-                                    
+    uint8_t *pchBuffer = NULL;                                        
+
     assert(NULL != ptTile);
     assert(NULL != ptOut);
     
+    if (bUseAsTarget) {
+        __arm_2d_tile_get_virtual_screen_or_root(
+                                                ptTile, 
+                                                &ptOut->tValidRegionInVirtualScreen,
+                                                NULL,
+                                                NULL,
+                                                true);
+    }
 
-    
     //memset(ptOut, 0, sizeof(__arm_2d_tile_param_t));
     
     ptTile = __arm_2d_tile_get_root(  ptTile,                           
@@ -573,7 +581,7 @@ static const arm_2d_tile_t * __arm_2d_tile_region_caculator(
         }
     }
     
-    if (NULL != ptTile) {    
+    if (NULL != ptTile) {
 
         //! check if enforced colour is allowed
         if (bAllowEnforcedColour) {
@@ -618,6 +626,7 @@ static const arm_2d_tile_t * __arm_2d_tile_region_caculator(
         ptOut->tColour.chScheme = ptTile->tColourInfo.chScheme;
         ptOut->bDerivedResource = bDerivedResource;
         ptOut->bInvalid = false;
+        ptOut->bUseAsTarget = !!bUseAsTarget;
     }
 
     return ptTile;
@@ -641,7 +650,8 @@ arm_fsm_rt_t __arm_2d_tile_process( arm_2d_op_t *ptThis,
                                 &tTileParam,
                                 &chPixelLenInBit,
                                 OP_CORE.ptOp->Info.Param.bAllowEnforcedColour,
-                                0);
+                                0,
+                                true);
 
     tResult = __arm_2d_issue_sub_task_tile_process( ptThis, &tTileParam); 
     
@@ -760,7 +770,8 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                                 &tOriginTileParam,
                                 &chOriginPixelLenInBit,
                                 OP_CORE.ptOp->Info.Param.bAllowEnforcedColour,
-                                wMode); 
+                                wMode,
+                                false); 
                                 
         if (NULL == ptOrigin) {
             return (arm_fsm_rt_t)ARM_2D_ERR_OUT_OF_REGION;
@@ -772,14 +783,16 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                                 &tSourceTileParam,
                                 &chSourcePixelLenInBit,
                                 OP_CORE.ptOp->Info.Param.bAllowEnforcedColour,
-                                wMode); 
+                                wMode,
+                                false); 
 
     ptTarget = __arm_2d_tile_region_caculator( 
                                 ptTarget, 
                                 &tTargetTileParam,
                                 &chTargetPixelLenInBit,
                                 false,
-                                0);
+                                0,
+                                true);
 
     if (NULL == ptSource || NULL == ptTarget) {
         return (arm_fsm_rt_t)ARM_2D_ERR_OUT_OF_REGION;
@@ -808,7 +821,8 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                                 &tSourceMaskParam,
                                 &chSourceMaskPixelLenInBit,
                                 true,
-                                wMode); 
+                                wMode,
+                                false); 
             }
         #else
             ptSourceMask = __arm_2d_tile_region_caculator( 
@@ -816,7 +830,8 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                                 &tSourceMaskParam,
                                 &chSourceMaskPixelLenInBit,
                                 true,
-                                wMode);
+                                wMode,
+                                false);
         #endif
 
             arm_2d_size_t tActualSize = {
@@ -892,7 +907,8 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                                 &tTargetMaskParam,
                                 &chTargetMaskPixelLenInBit,
                                 true,
-                                0); 
+                                0,
+                                true); 
 
             }
 
@@ -920,7 +936,8 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                                 &tSourceMaskParam,
                                 &chSourceMaskPixelLenInBit,
                                 true,
-                                wMode); 
+                                wMode,
+                                false); 
             }
         #else   
             /* 
@@ -944,7 +961,8 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                                 &tSourceMaskParam,
                                 &chSourceMaskPixelLenInBit,
                                 true,
-                                wMode); 
+                                wMode,
+                                false); 
         #endif
         }
         
@@ -1009,7 +1027,8 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                                 &tTargetMaskParam,
                                 &chTargetMaskPixelLenInBit,
                                 true,
-                                0); 
+                                0,
+                                true); 
             }
         }
     }

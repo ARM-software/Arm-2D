@@ -395,12 +395,15 @@ typedef struct __arm_2d_tile_param_t {
     
     uint8_t             bInvalid            : 1;
     uint8_t             bDerivedResource    : 1;
-    uint8_t                                 : 6;
+    uint8_t             bUseAsTarget        : 1;
+    uint8_t                                 : 5;
     
     arm_2d_region_t     tValidRegion;
 
-    arm_2d_region_t tRegionInVirtualScreen;
-    arm_2d_tile_t   *ptDerivedResource;
+    union {
+        arm_2d_region_t tValidRegionInVirtualScreen;
+        arm_2d_tile_t   *ptDerivedResource;
+    };
 
 } __arm_2d_tile_param_t;
 
@@ -591,6 +594,15 @@ const arm_2d_tile_t *__arm_2d_tile_get_1st_derived_child_or_root(
                                             arm_2d_location_t *ptOffset,
                                             arm_2d_tile_t **ppFirstDerivedChild,
                                             bool bQuitWhenFindFirstDerivedChild);
+
+extern
+ARM_NONNULL(1,2)
+const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root(
+                                            const arm_2d_tile_t *ptTile,
+                                            arm_2d_region_t *ptValidRegion,
+                                            arm_2d_location_t *ptOffset,
+                                            arm_2d_tile_t **ppVirtualScreen,
+                                            bool bQuitWhenFindVirtualScreen);
 
 extern
 ARM_NONNULL(1,2)

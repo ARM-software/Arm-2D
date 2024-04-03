@@ -21,8 +21,8 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        15. Nov 2023
- * $Revision:    V.1.4.3
+ * $Date:        3. April 2024
+ * $Revision:    V.1.4.4
  *
  * Target Processor:  Cortex-M cores
  *
@@ -321,8 +321,6 @@ const arm_2d_tile_t *__arm_2d_tile_get_1st_derived_child_or_root(
             break;
         }
         
-
-
         /*! \note Calculate the relative position between valid region and
          *!       the tile's original region. Usually, the tile's region
          *!       is inside the parent tile, but when the tile's location is
@@ -396,6 +394,125 @@ const arm_2d_tile_t *__arm_2d_tile_get_1st_derived_child_or_root(
     return ptTile;
 }
 
+
+
+ARM_NONNULL(1,2)
+const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root(
+                                            const arm_2d_tile_t *ptTile,
+                                            arm_2d_region_t *ptValidRegion,
+                                            arm_2d_location_t *ptOffset,
+                                            arm_2d_tile_t **ppVirtualScreen,
+                                            bool bQuitWhenFindVirtualScreen)
+{
+    assert(NULL != ptTile);
+    assert(NULL != ptValidRegion);
+
+    *ptValidRegion = ptTile->tRegion;
+
+    if (NULL != ppVirtualScreen) {
+        *ppVirtualScreen = NULL;        /* initialise */
+    }
+
+    if (NULL != ptOffset) {
+        ptOffset->iX = 0;
+        ptOffset->iY = 0;
+    }
+
+    if (arm_2d_is_root_tile(ptTile)) {
+        return ptTile;
+    }
+
+    do {
+        if (ptTile->tInfo.bVirtualScreen) {
+            if (NULL != ppVirtualScreen) {
+                if (NULL == *ppVirtualScreen) {
+                    *ppVirtualScreen = (arm_2d_tile_t *)ptTile;
+                }
+            }
+            
+            if (bQuitWhenFindVirtualScreen) {
+                return ptTile;
+            }
+        }
+
+        //! get parent
+        ptTile = (const arm_2d_tile_t *)ptTile->ptParent;
+        if (NULL == ptTile) {
+            break;
+        }
+        
+        /*! \note Calculate the relative position between valid region and
+         *!       the tile's original region. Usually, the tile's region
+         *!       is inside the parent tile, but when the tile's location is
+         *!       out of the parent's region with one or more negative axies,
+         *!       the offset will be non-zero.
+         *!       The offset is used to indicate the tile's view, and the
+         *!       valid region is seen as inside the tile's region.
+         *!
+         *!   Figure: What's the meaning of offset location
+         *!
+         *!   The special case, where the child tile has a negative coordinates,
+         *!   hence, the offset is (a,b) **as if** the valid region is inside
+         *!   the child tile.
+         *!
+         *!    (-a,-b) Child Tile
+         *!       +------------------------------------+
+         *!       |///(0,0) Parent Tile ///////////////|
+         *!       |/////+------------------------------+---------+
+         *!       |/////|                              |         |
+         *!       |/////|       Valid Region           |         |
+         *!       |/////|                              |         |
+         *!       +-----+------------------------------+         |
+         *!             |                                        |
+         *!             |                                        |
+         *!             +----------------------------------------+
+         *!
+         */
+        if (NULL != ptOffset) {
+            arm_2d_location_t tOffset = ptValidRegion->tLocation;
+            tOffset.iX = MAX(0, -tOffset.iX);
+            tOffset.iY = MAX(0, -tOffset.iY);
+
+            ptOffset->iX += tOffset.iX;
+            ptOffset->iY += tOffset.iY;
+        }
+
+        /*! calculate the valid range in parent tile
+         *!
+         *! \note the location of the parent tile is used to indicate its
+         *!       relative location between the it and its parent.
+         *!       when calculate the valid range in parent, we have to assume
+         *!       that the location is always (0,0)
+         *!
+         */
+        arm_2d_region_t tParentRegion = {
+            .tSize = ptTile->tRegion.tSize,
+        };
+
+        if (arm_2d_is_root_tile(ptTile)) {
+            /* root tile can has offset */
+            tParentRegion.tLocation = ptTile->tRegion.tLocation;
+        }
+
+        /*! make sure the output region is valid */
+        if (!arm_2d_region_intersect(   &tParentRegion,
+                                        ptValidRegion,
+                                        ptValidRegion)) {
+            /* out of range */
+            return NULL;
+        }
+
+        if (arm_2d_is_root_tile(ptTile)) {
+            break;
+        }
+
+        ptValidRegion->tLocation.iX += ptTile->tRegion.tLocation.iX;
+        ptValidRegion->tLocation.iY += ptTile->tRegion.tLocation.iY;
+
+    } while(true);
+
+    return ptTile;
+}
 
 ARM_NONNULL(1,2)
 const arm_2d_tile_t *__arm_2d_tile_get_root(const arm_2d_tile_t *ptTile,
