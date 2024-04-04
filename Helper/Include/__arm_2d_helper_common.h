@@ -82,6 +82,8 @@ extern "C" {
 
 #   define __arm_2d_iir_blur_acc_t  __arm_2d_iir_blur_acc_gray8_t
 
+#   define arm_2dp_filter_iir_blur  arm_2dp_gray8_filter_iir_blur
+
 #   define arm_2d_draw_pattern      arm_2d_c8bit_draw_pattern
 #   define arm_2dp_fill_colour_with_opacity                                     \
                 arm_2dp_gray8_fill_colour_with_opacity
@@ -254,6 +256,8 @@ extern "C" {
 
 #   define __arm_2d_iir_blur_acc_t  __arm_2d_iir_blur_acc_rgb565_t
 
+#   define arm_2dp_filter_iir_blur  arm_2dp_rgb565_filter_iir_blur
+
 #   define arm_2d_draw_pattern      arm_2d_rgb16_draw_pattern 
 #   define arm_2dp_fill_colour_with_opacity                                     \
                 arm_2dp_rgb565_fill_colour_with_opacity
@@ -425,6 +429,8 @@ extern "C" {
 #   define ARM_2D_COLOUR            ARM_2D_COLOUR_CCCA8888
 
 #   define __arm_2d_iir_blur_acc_t  __arm_2d_iir_blur_acc_cccn888_t
+
+#   define arm_2dp_filter_iir_blur  arm_2dp_cccn888_filter_iir_blur
 
 #   define arm_2d_draw_pattern      arm_2d_rgb32_draw_pattern 
 #   define arm_2dp_fill_colour_with_opacity                                     \
