@@ -380,32 +380,6 @@ arm_2d_location_t arm_2d_helper_pfb_get_absolute_location(
     return arm_2d_get_absolute_location(ptTile, tLocation, true);
 }
 
-/*!
- * \brief set an ignore border for any target draw regions
- * 
- * \param[in] ptThis an initialised PFB helper control block
- * \param[in] chWidth the width of the vertical border
- * \param[in] chHeight the height of the horizontal border
- * 
- * \note when both width and the height is zero, all borders will
- *       be removed from the PFB
- */
-ARM_NONNULL(1)
-void arm_2d_helper_pfb_set_draw_region_ignore_border(
-                                                    arm_2d_helper_pfb_t *ptThis,
-                                                    uint8_t chWidth, 
-                                                    uint8_t chHeight)
-{
-    assert(NULL != ptThis);
-
-    arm_irq_safe {
-        this.Adapter.PFBBorder.Request.chHeight = chHeight;
-        this.Adapter.PFBBorder.Request.chWidth = chWidth;
-
-        this.Adapter.bEnablePFBBoarderReq = !!((chWidth != 0) || (chHeight != 0));
-    }
-}
-
 ARM_NONNULL(1)
 void arm_2d_helper_ignore_low_level_flush(arm_2d_helper_pfb_t *ptThis)
 {
@@ -593,60 +567,6 @@ void __arm_2d_helper_low_level_rendering(arm_2d_helper_pfb_t *ptThis)
              /* free the scratch PFB */
             __arm_2d_helper_pfb_free(ptThis, ptScratchPFB);
         }
-    }
-
-    /* shrink the PFB (remove border) */
-    if (this.Adapter.bEnablePFBBoarder              /* Enable PFB Border */
-    && (NULL != this.Adapter.ptDirtyRegion)) {      /* Not for full-screen-update */
-
-        __arm_2d_tile_extension_border_t tBorder = this.Adapter.PFBBorder.Internal;
-
-        int16_t iWidthOrigin = this.Adapter.ptCurrent->tTile.tRegion.tSize.iWidth;
-        int16_t iHeightOrigin = this.Adapter.ptCurrent->tTile.tRegion.tSize.iHeight;
-
-        int16_t iWidth = iWidthOrigin - tBorder.chWidth * 2;
-        int16_t iHeight = iHeightOrigin - tBorder.chHeight * 2;
-
-        int_fast8_t chPixelSize = ((1 << tColourFormat.u3ColourSZ) >> 3);
-        
-        uintptr_t pSource = this.Adapter.ptCurrent->tTile.nAddress;
-        uintptr_t pTarget = pSource;
-        int16_t iSourceStride = iWidthOrigin * chPixelSize;
-        int16_t iTargetStride = iWidth * chPixelSize;
-
-        pSource += ((int16_t)tBorder.chWidth + (int16_t)tBorder.chHeight * iWidthOrigin)
-                * chPixelSize;
-        
-
-        switch (tColourFormat.u3ColourSZ) {
-            case ARM_2D_M_COLOUR_SZ_8BIT:
-                for (int_fast16_t iY = 0; iY < iHeight; iY++) {
-                    memcpy((void *)pTarget, (void *)pSource, iTargetStride);
-                    pSource += iSourceStride;
-                    pTarget += iTargetStride;
-                }
-                break;
-            case ARM_2D_M_COLOUR_SZ_16BIT:
-                for (int_fast16_t iY = 0; iY < iHeight; iY++) {
-                    memcpy((uint16_t *)pTarget, (uint16_t *)pSource, iTargetStride);
-                    pSource += iSourceStride;
-                    pTarget += iTargetStride;
-                }
-                break;
-            case ARM_2D_M_COLOUR_SZ_32BIT:
-                for (int_fast16_t iY = 0; iY < iHeight; iY++) {
-                    memcpy((uint32_t *)pTarget, (uint32_t *)pSource, iTargetStride);
-                    pSource += iSourceStride;
-                    pTarget += iTargetStride;
-                }
-                break;
-            default:
-                assert(false);                      /* this should not happen */
-                break;
-        }
-
-        this.Adapter.ptCurrent->tTile.tRegion.tSize.iWidth = iWidth;
-        this.Adapter.ptCurrent->tTile.tRegion.tSize.iHeight = iHeight;
     }
 
     __arm_2d_helper_enqueue_pfb(ptThis);
@@ -2426,13 +2346,6 @@ label_iteration_begin_start:
     /* mark the virtual screen */
     this.Adapter.tPFBTile.tInfo.bVirtualScreen = true;
 
-    if (this.Adapter.bEnablePFBBoarder              /* Enable PFB Border */
-    && (NULL != this.Adapter.ptDirtyRegion)) {      /* Not for full-screen-update */
-
-        this.Adapter.tPFBTile.tInfo.u3ExtensionID = ARM_2D_TILE_EXTENSION_BORDER;
-        this.Adapter.tPFBTile.tInfo.Extension.Border = this.Adapter.PFBBorder.Internal;
-    }
-
     return (arm_2d_tile_t *)&(this.Adapter.tPFBTile);
 }
 
@@ -2486,28 +2399,8 @@ bool __arm_2d_helper_pfb_drawing_iteration_end(arm_2d_helper_pfb_t *ptThis)
         arm_2d_set_default_frame_buffer(NULL);
     }
 
-    __arm_2d_tile_extension_border_t tBorder = {0};
-
-    if (this.Adapter.bEnablePFBBoarder              /* Enable PFB Border */
-    && (NULL != this.Adapter.ptDirtyRegion)) {      /* Not for full-screen-update */
-        
-        tBorder = this.Adapter.PFBBorder.Internal;
-
-    #if 0
-        if (this.Adapter.tScanOffset.iX) {
-            tBorder.chWidth += this.Adapter.PFBBorder.Internal.chWidth;
-        }
-
-        if (    (this.Adapter.tScanOffset.iX + ptPartialFrameBuffer->tRegion.tSize.iWidth) 
-            <   this.Adapter.tTargetRegion.tSize.iWidth) {
-            
-        }
-    #endif
-
-    }
-
     this.Adapter.tScanOffset.iX 
-        += ptPartialFrameBuffer->tRegion.tSize.iWidth - (int16_t)tBorder.chWidth * 2;
+        += ptPartialFrameBuffer->tRegion.tSize.iWidth;
 
     if (    this.Adapter.tScanOffset.iX 
         >=  this.Adapter.tTargetRegion.tSize.iWidth) {
@@ -2515,7 +2408,7 @@ bool __arm_2d_helper_pfb_drawing_iteration_end(arm_2d_helper_pfb_t *ptThis)
         this.Adapter.tScanOffset.iX = 0;
 
         this.Adapter.tScanOffset.iY 
-            += ptPartialFrameBuffer->tRegion.tSize.iHeight - (int16_t)tBorder.chHeight * 2;
+            += ptPartialFrameBuffer->tRegion.tSize.iHeight;
         
         if (    this.Adapter.tScanOffset.iY 
             >=  this.Adapter.tTargetRegion.tSize.iHeight) {
@@ -2675,26 +2568,6 @@ ARM_PT_BEGIN(this.Adapter.chPT)
         "PFB TASK", 
         "Start a new frame.."
     );
-
-    do {
-        bool bEnablePFBBoarderReq = false;
-        arm_irq_safe {
-            bEnablePFBBoarderReq = this.Adapter.bEnablePFBBoarderReq;
-            if (bEnablePFBBoarderReq) {
-                this.Adapter.bEnablePFBBoarderReq = false;
-                this.Adapter.PFBBorder.Internal = this.Adapter.PFBBorder.Request;
-
-                /* let the compiler do the most optimal operation */
-                //memset(&this.Adapter.PFBBorder.Request, 0, sizeof(this.Adapter.PFBBorder.Request));
-            }
-        }
-        
-        if (bEnablePFBBoarderReq) {
-            this.Adapter.bEnablePFBBoarder =!!( (this.Adapter.PFBBorder.Internal.chHeight != 0)
-                                            ||  (this.Adapter.PFBBorder.Internal.chWidth != 0));
-        }
-    } while(0);
-    
 
     this.Statistics.nTotalCycle = 0;
     this.Statistics.nRenderingCycle = 0;

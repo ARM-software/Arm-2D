@@ -667,8 +667,7 @@ ARM_PRIVATE(
             uint16_t                bEncounterDynamicDirtyRegion            : 1;
             uint16_t                bFailedToOptimizeDirtyRegion            : 1;
             uint16_t                bIsUsingOptimizedDirtyRegionList        : 1;
-            uint16_t                bEnablePFBBoarderReq                    : 1;    //!< A flag to request adding a border to PFB
-            uint16_t                bEnablePFBBoarder                       : 1;    //!< whether add a border to PFB
+            uint16_t                                                        : 2;
 
             uint16_t                bIsNewFrame                             : 1;
             uint16_t                                                        : 1;
@@ -679,11 +678,6 @@ ARM_PRIVATE(
             uint16_t                bFirstIteration                         : 1;
             uint16_t                bIsRegionChanged                        : 1;
         };
-
-        struct {
-            __arm_2d_tile_extension_border_t Request;
-            __arm_2d_tile_extension_border_t Internal;
-        }PFBBorder;
 
         uintptr_t                   pFPBPoolAvailable;
         arm_2d_pfb_t               *ptCurrent;
