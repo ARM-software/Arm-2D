@@ -42,6 +42,9 @@
 			"chrono": "c",
 			"arm_2d.h": "c",
 			"algorithm": "c"
-		}
+		},
+		"cSpell.words": [
+			"cccn"
+		]
 	}
 }
