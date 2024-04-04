@@ -34,6 +34,7 @@ target_compile_options(ARM2D PUBLIC
                        -DRTE_Acceleration_Arm_2D
                        -DRTE_Acceleration_Arm_2D_Alpha_Blending
                        -DRTE_Acceleration_Arm_2D_Transform
+                       -DRTE_Acceleration_Arm_2D_Filter
                        )
 target_compile_options(ARM2D PRIVATE -Wno-format
         -Wno-unused-function)

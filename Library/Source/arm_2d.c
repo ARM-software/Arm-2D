@@ -19,10 +19,10 @@
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
  * Title:        arm-2d.c
- * Description:  Tables for pixel pipeline OPs
+ * Description:  Essential components of Arm-2D
  *
- * $Date:        19. Nov 2023
- * $Revision:    V.1.3.1
+ * $Date:        4. April 2024
+ * $Revision:    V.1.3.2
  *
  * Target Processor:  Cortex-M cores
  *

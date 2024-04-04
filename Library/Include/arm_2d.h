@@ -39,6 +39,7 @@
 #include "arm_2d_conversion.h"
 #include "arm_2d_alpha_blending.h"
 #include "arm_2d_transform.h"
+#include "arm_2d_filter.h"
 
 #ifdef   __cplusplus
 extern "C" {

@@ -30,12 +30,18 @@
 
 
 /*============================ INCLUDES ======================================*/
+
+#if defined(__clang__)
+#   pragma clang diagnostic ignored "-Wempty-translation-unit"
+#endif
+
+#ifdef __ARM_2D_COMPILATION_UNIT
+#undef __ARM_2D_COMPILATION_UNIT
+
 #define __ARM_2D_IMPL__
 
 #include "arm_2d.h"
 #include "__arm_2d_impl.h"
-
-#include "arm_2d_filter_iir_blur.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -82,17 +88,12 @@ extern "C" {
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
-{%- for colour_name, colour_int, colour_int_prefix, colour_int_no_bits in [
-    ('cccn888', 'uint32_t', 'w', '32BIT' ),
-    ] 
-%}
-
 /*
  * the Frontend API
  */
 
 ARM_NONNULL(2,4)
-arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_filter_iir_blur(  
+arm_fsm_rt_t arm_2dp_cccn888_filter_iir_blur(  
                             arm_2d_filter_iir_blur_descriptor_t *ptOP,
                             const arm_2d_tile_t *ptTarget,
                             const arm_2d_region_t *ptRegion,
@@ -106,7 +107,7 @@ arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_filter_iir_blur(
         return arm_fsm_rt_on_going;
     }
     
-    OP_CORE.ptOp = &ARM_2D_OP_FILTER_IIR_BLUR_{{colour_name | upper}};
+    OP_CORE.ptOp = &ARM_2D_OP_FILTER_IIR_BLUR_CCCN888;
     
     OPCODE.Target.ptTile = ptTarget;
     OPCODE.Target.ptRegion = ptRegion;
@@ -132,8 +133,8 @@ arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_filter_iir_blur(
 
 /* default low level implementation */
 __WEAK
-void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
-                            {{colour_int}} *__RESTRICT p{{colour_int_prefix}}Target,
+void __arm_2d_impl_cccn888_filter_iir_blur(
+                            uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
                             arm_2d_region_t *ptTargetRegionOnVirtualScreen,
@@ -190,7 +191,7 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
                   contains a valid buffer.
      */
     
-    {{colour_int}} *p{{colour_int_prefix}}Pixel = p{{colour_int_prefix}}Target;
+    uint32_t *pwPixel = pwTarget;
 
     /* rows direct path */
 
@@ -203,7 +204,7 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
             tAcc = *ptStatusV;
 
         } else {
-            pchChannel = (unsigned char *)p{{colour_int_prefix}}Pixel;
+            pchChannel = (unsigned char *)pwPixel;
 
             tAcc.hwR = *pchChannel++;
             tAcc.hwG = *pchChannel++;
@@ -226,7 +227,7 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
             *ptStatusV++ = tAcc;
         }
 
-        p{{colour_int_prefix}}Pixel +=iTargetStride;
+        pwPixel +=iTargetStride;
           
     }
 
@@ -234,16 +235,16 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
  && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
     /* rows reverse path */
     
-    p{{colour_int_prefix}}Pixel = &(p{{colour_int_prefix}}Target[(iWidth-1) + (iHeight-1)*iTargetStride]);
+    pwPixel = &(pwTarget[(iWidth-1) + (iHeight-1)*iTargetStride]);
     
     for (iY = iHeight-1; iY > 0; iY--) {   
         
-        pchChannel = (uint8_t *)p{{colour_int_prefix}}Pixel;     /* read RGBA 8888  */
+        pchChannel = (uint8_t *)pwPixel;     /* read RGBA 8888  */
         tAcc.hwR = *pchChannel++;
         tAcc.hwG = *pchChannel++;
         tAcc.hwB = *pchChannel++;
 
-        pchChannel = (uint8_t *)p{{colour_int_prefix}}Pixel;
+        pchChannel = (uint8_t *)pwPixel;
 
         for (iX = 0; iX < iWidth; iX++)
         {   
@@ -254,12 +255,12 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
             pchChannel -= 7;
         }
         
-        p{{colour_int_prefix}}Pixel -=iTargetStride;
+        pwPixel -=iTargetStride;
     }
 #endif 
 
 
-    p{{colour_int_prefix}}Pixel = p{{colour_int_prefix}}Target;
+    pwPixel = pwTarget;
 
     ptStatusH += tOffset.iX;
 
@@ -270,12 +271,12 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
             /* recover the previous statues */
             tAcc = *ptStatusH;
         } else {
-            pchChannel = (uint8_t *)p{{colour_int_prefix}}Pixel;     /* read RGBA 8888  */
+            pchChannel = (uint8_t *)pwPixel;     /* read RGBA 8888  */
             tAcc.hwR = *pchChannel++;
             tAcc.hwG = *pchChannel++;
             tAcc.hwB = *pchChannel++;
         }
-        pchChannel = (uint8_t *)p{{colour_int_prefix}}Pixel++;
+        pchChannel = (uint8_t *)pwPixel++;
         
         for (iY = 0; iY < iHeight; iY++) {
 
@@ -295,17 +296,17 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
 #if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
  && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
 
-    p{{colour_int_prefix}}Pixel = &(p{{colour_int_prefix}}Target[iWidth-1 + (iHeight-1)*iTargetStride]);
+    pwPixel = &(pwTarget[iWidth-1 + (iHeight-1)*iTargetStride]);
 
     /* columns reverse path */
     for (iX = iWidth-1; iX > 0; iX--)
     {   
-        pchChannel = (uint8_t *)p{{colour_int_prefix}}Pixel;     /* read RGBA 8888  */
+        pchChannel = (uint8_t *)pwPixel;     /* read RGBA 8888  */
         tAcc.hwR = *pchChannel++;
         tAcc.hwG = *pchChannel++;
         tAcc.hwB = *pchChannel++;
 
-        pchChannel = (uint8_t *)p{{colour_int_prefix}}Pixel--;
+        pchChannel = (uint8_t *)pwPixel--;
 
         for (iY = 0; iY < iHeight; iY++)
         {   
@@ -322,11 +323,11 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
 /*
  * The backend entry
  */
-arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_filter_iir_blur( __arm_2d_sub_task_t *ptTask)
+arm_fsm_rt_t __arm_2d_cccn888_sw_filter_iir_blur( __arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_filter_iir_blur_descriptor_t, ptTask->ptOP);
 
-    assert(ARM_2D_COLOUR_SZ_{{colour_int_no_bits | upper}} == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
+    assert(ARM_2D_COLOUR_SZ_32BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
 
     arm_2d_region_t tTargetRegion = *this.use_as__arm_2d_op_t.Target.ptRegion;
 
@@ -335,7 +336,7 @@ arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_filter_iir_blur( __arm_2d_sub_t
                                         tTargetRegion.tLocation,
                                         true);
 
-    __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur( 
+    __arm_2d_impl_cccn888_filter_iir_blur( 
                         ptTask->Param.tTileProcess.pBuffer,
                         ptTask->Param.tTileProcess.iStride,
                         &(ptTask->Param.tTileProcess.tValidRegionInVirtualScreen),
@@ -350,18 +351,18 @@ arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_filter_iir_blur( __arm_2d_sub_t
  * OPCODE Low Level Implementation Entries
  */
 __WEAK
-def_low_lv_io(  __ARM_2D_IO_FILTER_IIR_BLUR_{{colour_name | upper}},
-                __arm_2d_{{colour_name | lower}}_sw_filter_iir_blur);      /* Default SW Implementation */
+def_low_lv_io(  __ARM_2D_IO_FILTER_IIR_BLUR_CCCN888,
+                __arm_2d_cccn888_sw_filter_iir_blur);      /* Default SW Implementation */
 
 
 /*
  * OPCODE
  */
 
-const __arm_2d_op_info_t ARM_2D_OP_FILTER_IIR_BLUR_{{colour_name | upper}} = {
+const __arm_2d_op_info_t ARM_2D_OP_FILTER_IIR_BLUR_CCCN888 = {
     .Info = {
         .Colour = {
-            .chScheme   = ARM_2D_COLOUR_{{colour_name | upper}},
+            .chScheme   = ARM_2D_COLOUR_CCCN888,
         },
         .Param = {
             .bHasSource     = false,
@@ -370,13 +371,13 @@ const __arm_2d_op_info_t ARM_2D_OP_FILTER_IIR_BLUR_{{colour_name | upper}} = {
         .chOpIndex      = __ARM_2D_OP_IDX_FILETER_IIR_BLUR,
         
         .LowLevelIO = {
-            .ptTileProcessLike = ref_low_lv_io(__ARM_2D_IO_FILTER_IIR_BLUR_{{colour_name | upper}}),
+            .ptTileProcessLike = ref_low_lv_io(__ARM_2D_IO_FILTER_IIR_BLUR_CCCN888),
         },
     },
 };
 
-{%- endfor %}
-
 #ifdef   __cplusplus
 }
 #endif
+
+#endif /* __ARM_2D_COMPILATION_UNIT */
