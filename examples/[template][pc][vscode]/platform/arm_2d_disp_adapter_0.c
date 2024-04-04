@@ -129,8 +129,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
     ARM_2D_PARAM(ptTile);
 
     arm_2d_canvas(ptTile, __top_container) {
-    
-        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
         
         arm_2d_align_centre(__top_container, 100, 100) {
             draw_round_corner_box(  ptTile,
@@ -815,6 +813,10 @@ void disp_adapter0_init(void)
     
         static arm_2d_scene_t s_tScenes[] = {
             [0] = {
+
+                /* the canvas colour */
+                .tCanvas = {GLCD_COLOR_WHITE}, 
+        
                 .fnScene        = &__pfb_draw_handler,
                 //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
                 .fnOnFrameStart = &__on_frame_start,

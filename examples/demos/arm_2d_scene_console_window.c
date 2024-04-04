@@ -252,7 +252,7 @@ user_scene_console_window_t *__arm_2d_scene_console_window_init(
         .use_as__arm_2d_scene_t = {
 
             /* the canvas colour */
-            .tCanvas = {GLCD_COLOR_BLACK}, 
+            .tCanvas = {GLCD_COLOR_WHITE}, 
         
             /* Please uncommon the callbacks if you need them
              */
