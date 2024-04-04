@@ -205,36 +205,14 @@ void __arm_2d_impl_gray8_filter_iir_blur(
 
         } else {
             pchChannel = (unsigned char *)pchPixel;
-
-        #if 0
-            tAcc.hwR = *pchChannel++;
-            tAcc.hwG = *pchChannel++;
-            tAcc.hwB = *pchChannel++;
-        #else
-            
-        tAcc.hwC = *pchChannel;
-     
-        #endif
+            tAcc.hwC = *pchChannel;
         }
 
         pchChannel = (unsigned char *)pchPixel;
 
         for (iX = 0; iX < iWidth; iX++) {
-
-        #if 0
-            tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR;
-            tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
-            tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
-
-            pchChannel++;
-        #else
+            tAcc.hwC += ((*pchChannel) - tAcc.hwC) * ratio >> 8;  *pchChannel++ = tAcc.hwC;
             
-        tAcc.hwC += ((*pchChannel) - tAcc.hwC) * ratio >> 8;  *pchChannel++ = tAcc.hwC;
-     
-
-            
-        #endif
-                              /* skip A */
         }
 
         if (NULL != ptStatusV) {
@@ -255,37 +233,13 @@ void __arm_2d_impl_gray8_filter_iir_blur(
     for (iY = iHeight-1; iY > 0; iY--) {   
         
         pchChannel = (uint8_t *)pchPixel;     /* read RGBA 8888  */
-        #if 0
-            tAcc.hwR = *pchChannel++;
-            tAcc.hwG = *pchChannel++;
-            tAcc.hwB = *pchChannel++;
-        #else
-            
         tAcc.hwC = *pchChannel;
-     
-        #endif
 
         pchChannel = (uint8_t *)pchPixel;
 
-        for (iX = 0; iX < iWidth; iX++)
-        {   
-        #if 0
-            tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR;
-            tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
-            tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
-
-            pchChannel -= 7;
-        #else
-            
-        tAcc.hwC += ((*pchChannel) - tAcc.hwC) * ratio >> 8;  *pchChannel++ = tAcc.hwC;
-     
-
-            
-        pchChannel -= 2;
-     
-        #endif
-
-            
+        for (iX = 0; iX < iWidth; iX++) {   
+            tAcc.hwC += ((*pchChannel) - tAcc.hwC) * ratio >> 8;  *pchChannel++ = tAcc.hwC;
+            pchChannel -= 2;
         }
         
         pchPixel -=iTargetStride;
@@ -305,35 +259,13 @@ void __arm_2d_impl_gray8_filter_iir_blur(
             tAcc = *ptStatusH;
         } else {
             pchChannel = (uint8_t *)pchPixel;     /* read RGBA 8888  */
-        #if 0
-            tAcc.hwR = *pchChannel++;
-            tAcc.hwG = *pchChannel++;
-            tAcc.hwB = *pchChannel++;
-        #else
-            
-        tAcc.hwC = *pchChannel;
-     
-        #endif
+            tAcc.hwC = *pchChannel;
         }
         pchChannel = (uint8_t *)pchPixel++;
         
         for (iY = 0; iY < iHeight; iY++) {
-        #if 0
-            tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR;
-            tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
-            tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
-
-            pchChannel += (iTargetStride*4) - 3;
-        #else
-            
-        tAcc.hwC += ((*pchChannel) - tAcc.hwC) * ratio >> 8;  *pchChannel++ = tAcc.hwC;
-     
-
-            
-        pchChannel += iTargetStride - 1;
-     
-        #endif
-
+            tAcc.hwC += ((*pchChannel) - tAcc.hwC) * ratio >> 8;  *pchChannel++ = tAcc.hwC;
+            pchChannel += iTargetStride - 1;
         }
 
         if (NULL != ptStatusH) {
@@ -351,37 +283,13 @@ void __arm_2d_impl_gray8_filter_iir_blur(
     for (iX = iWidth-1; iX > 0; iX--)
     {   
         pchChannel = (uint8_t *)pchPixel;     /* read RGBA 8888  */
-        #if 0
-            tAcc.hwR = *pchChannel++;
-            tAcc.hwG = *pchChannel++;
-            tAcc.hwB = *pchChannel++;
-        #else
-            
         tAcc.hwC = *pchChannel;
-     
-        #endif
 
         pchChannel = (uint8_t *)pchPixel--;
 
-        for (iY = 0; iY < iHeight; iY++)
-        {   
-        #if 0
-            tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR;
-            tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
-            tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
-
-            pchChannel -= 3 + (iTargetStride*4);
-        #else
-            
-        tAcc.hwC += ((*pchChannel) - tAcc.hwC) * ratio >> 8;  *pchChannel++ = tAcc.hwC;
-     
-
-            
-        pchChannel -= 1 + iTargetStride;
-     
-        #endif
-
-            
+        for (iY = 0; iY < iHeight; iY++) {   
+            tAcc.hwC += ((*pchChannel) - tAcc.hwC) * ratio >> 8;  *pchChannel++ = tAcc.hwC;
+            pchChannel -= 1 + iTargetStride;
         }
     }
 #endif  
@@ -560,42 +468,22 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
 
         } else {
             pchChannel = (unsigned char *)pwPixel;
-
-        #if 0
-            tAcc.hwR = *pchChannel++;
-            tAcc.hwG = *pchChannel++;
-            tAcc.hwB = *pchChannel++;
-        #else
             
         tAcc.hwR = *pchChannel++;
         tAcc.hwG = *pchChannel++;
         tAcc.hwB = *pchChannel++;
      
-        #endif
         }
 
         pchChannel = (unsigned char *)pwPixel;
 
         for (iX = 0; iX < iWidth; iX++) {
-
-        #if 0
-            tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR;
+            
+            tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR; 
             tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
             tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
-
+     
             pchChannel++;
-        #else
-            
-      tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR; 
-      tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
-      tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
-     
-
-            
-        pchChannel++;
-     
-        #endif
-                              /* skip A */
         }
 
         if (NULL != ptStatusV) {
@@ -616,41 +504,21 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
     for (iY = iHeight-1; iY > 0; iY--) {   
         
         pchChannel = (uint8_t *)pwPixel;     /* read RGBA 8888  */
-        #if 0
-            tAcc.hwR = *pchChannel++;
-            tAcc.hwG = *pchChannel++;
-            tAcc.hwB = *pchChannel++;
-        #else
-            
+        
         tAcc.hwR = *pchChannel++;
         tAcc.hwG = *pchChannel++;
         tAcc.hwB = *pchChannel++;
      
-        #endif
 
         pchChannel = (uint8_t *)pwPixel;
 
-        for (iX = 0; iX < iWidth; iX++)
-        {   
-        #if 0
-            tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR;
+        for (iX = 0; iX < iWidth; iX++) {   
+            
+            tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR; 
             tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
             tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
-
+     
             pchChannel -= 7;
-        #else
-            
-      tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR; 
-      tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
-      tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
-     
-
-            
-        pchChannel -= 7;
-     
-        #endif
-
-            
         }
         
         pwPixel -=iTargetStride;
@@ -670,39 +538,21 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
             tAcc = *ptStatusH;
         } else {
             pchChannel = (uint8_t *)pwPixel;     /* read RGBA 8888  */
-        #if 0
-            tAcc.hwR = *pchChannel++;
-            tAcc.hwG = *pchChannel++;
-            tAcc.hwB = *pchChannel++;
-        #else
             
         tAcc.hwR = *pchChannel++;
         tAcc.hwG = *pchChannel++;
         tAcc.hwB = *pchChannel++;
      
-        #endif
         }
         pchChannel = (uint8_t *)pwPixel++;
         
         for (iY = 0; iY < iHeight; iY++) {
-        #if 0
-            tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR;
+            
+            tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR; 
             tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
             tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
-
+     
             pchChannel += (iTargetStride*4) - 3;
-        #else
-            
-      tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR; 
-      tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
-      tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
-     
-
-            
-        pchChannel += (iTargetStride*4) - 3;
-     
-        #endif
-
         }
 
         if (NULL != ptStatusH) {
@@ -720,41 +570,21 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
     for (iX = iWidth-1; iX > 0; iX--)
     {   
         pchChannel = (uint8_t *)pwPixel;     /* read RGBA 8888  */
-        #if 0
-            tAcc.hwR = *pchChannel++;
-            tAcc.hwG = *pchChannel++;
-            tAcc.hwB = *pchChannel++;
-        #else
-            
+        
         tAcc.hwR = *pchChannel++;
         tAcc.hwG = *pchChannel++;
         tAcc.hwB = *pchChannel++;
      
-        #endif
 
         pchChannel = (uint8_t *)pwPixel--;
 
-        for (iY = 0; iY < iHeight; iY++)
-        {   
-        #if 0
-            tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR;
+        for (iY = 0; iY < iHeight; iY++) {   
+            
+            tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR; 
             tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
             tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
-
+     
             pchChannel -= 3 + (iTargetStride*4);
-        #else
-            
-      tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR; 
-      tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
-      tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
-     
-
-            
-        pchChannel -= 3 + (iTargetStride*4);
-     
-        #endif
-
-            
         }
     }
 #endif  
