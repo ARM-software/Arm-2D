@@ -93,11 +93,25 @@ extern "C" {
         colour_int_prefix, 
         colour_int_no_bits,
         acc_init,
+        next_pixel_in_row,
+        next_pixel_in_column,
+        next_pixel_in_row_reverse,
+        next_pixel_in_column_reverse,
         blur_operation
 in [
     ('gray8', 'uint8_t', 'ch', '8BIT',
      '
         tAcc.hwC = *pchChannel;
+     ',
+     '',
+     '
+        pchChannel += iTargetStride - 1;
+     ',
+     '
+        pchChannel -= 2;
+     ',
+     '
+        pchChannel -= 1 + iTargetStride;
      ',
      '
         tAcc.hwC += ((*pchChannel) - tAcc.hwC) * ratio >> 8;  *pchChannel++ = tAcc.hwC;
@@ -108,6 +122,18 @@ in [
         tAcc.hwR = *pchChannel++;
         tAcc.hwG = *pchChannel++;
         tAcc.hwB = *pchChannel++;
+     ',
+     '
+        pchChannel++;
+     ',
+     '
+        pchChannel += (iTargetStride*4) - 3;
+     ',
+     '
+        pchChannel -= 7;
+     ',
+     '
+        pchChannel -= 3 + (iTargetStride*4);
      ',
      '
       tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR; 
@@ -253,10 +279,14 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
             tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR;
             tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
             tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
+
+            pchChannel++;
         #else
             {{blur_operation}}
+
+            {{next_pixel_in_row}}
         #endif
-            pchChannel++;                  /* skip A */
+                              /* skip A */
         }
 
         if (NULL != ptStatusV) {
@@ -293,11 +323,15 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
             tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR;
             tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
             tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
-        #else
-            {{blur_operation}}
-        #endif
 
             pchChannel -= 7;
+        #else
+            {{blur_operation}}
+
+            {{next_pixel_in_row_reverse}}
+        #endif
+
+            
         }
         
         p{{colour_int_prefix}}Pixel -=iTargetStride;
@@ -332,11 +366,14 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
             tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR;
             tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
             tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
-        #else
-            {{blur_operation}}
-        #endif
 
             pchChannel += (iTargetStride*4) - 3;
+        #else
+            {{blur_operation}}
+
+            {{next_pixel_in_column}}
+        #endif
+
         }
 
         if (NULL != ptStatusH) {
@@ -370,11 +407,15 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
             tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR;
             tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
             tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
-        #else
-            {{blur_operation}}
-        #endif
 
             pchChannel -= 3 + (iTargetStride*4);
+        #else
+            {{blur_operation}}
+
+            {{next_pixel_in_column_reverse}}
+        #endif
+
+            
         }
     }
 #endif  

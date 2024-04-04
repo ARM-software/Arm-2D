@@ -225,12 +225,16 @@ void __arm_2d_impl_gray8_filter_iir_blur(
             tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR;
             tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
             tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
+
+            pchChannel++;
         #else
             
         tAcc.hwC += ((*pchChannel) - tAcc.hwC) * ratio >> 8;  *pchChannel++ = tAcc.hwC;
      
+
+            
         #endif
-            pchChannel++;                  /* skip A */
+                              /* skip A */
         }
 
         if (NULL != ptStatusV) {
@@ -269,13 +273,19 @@ void __arm_2d_impl_gray8_filter_iir_blur(
             tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR;
             tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
             tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
+
+            pchChannel -= 7;
         #else
             
         tAcc.hwC += ((*pchChannel) - tAcc.hwC) * ratio >> 8;  *pchChannel++ = tAcc.hwC;
      
+
+            
+        pchChannel -= 2;
+     
         #endif
 
-            pchChannel -= 7;
+            
         }
         
         pchPixel -=iTargetStride;
@@ -312,13 +322,18 @@ void __arm_2d_impl_gray8_filter_iir_blur(
             tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR;
             tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
             tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
+
+            pchChannel += (iTargetStride*4) - 3;
         #else
             
         tAcc.hwC += ((*pchChannel) - tAcc.hwC) * ratio >> 8;  *pchChannel++ = tAcc.hwC;
      
+
+            
+        pchChannel += iTargetStride - 1;
+     
         #endif
 
-            pchChannel += (iTargetStride*4) - 3;
         }
 
         if (NULL != ptStatusH) {
@@ -354,13 +369,19 @@ void __arm_2d_impl_gray8_filter_iir_blur(
             tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR;
             tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
             tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
+
+            pchChannel -= 3 + (iTargetStride*4);
         #else
             
         tAcc.hwC += ((*pchChannel) - tAcc.hwC) * ratio >> 8;  *pchChannel++ = tAcc.hwC;
      
+
+            
+        pchChannel -= 1 + iTargetStride;
+     
         #endif
 
-            pchChannel -= 3 + (iTargetStride*4);
+            
         }
     }
 #endif  
@@ -561,14 +582,20 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
             tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR;
             tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
             tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
+
+            pchChannel++;
         #else
             
       tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR; 
       tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
       tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
      
+
+            
+        pchChannel++;
+     
         #endif
-            pchChannel++;                  /* skip A */
+                              /* skip A */
         }
 
         if (NULL != ptStatusV) {
@@ -609,15 +636,21 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
             tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR;
             tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
             tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
+
+            pchChannel -= 7;
         #else
             
       tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR; 
       tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
       tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
      
+
+            
+        pchChannel -= 7;
+     
         #endif
 
-            pchChannel -= 7;
+            
         }
         
         pwPixel -=iTargetStride;
@@ -656,15 +689,20 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
             tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR;
             tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
             tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
+
+            pchChannel += (iTargetStride*4) - 3;
         #else
             
       tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR; 
       tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
       tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
      
+
+            
+        pchChannel += (iTargetStride*4) - 3;
+     
         #endif
 
-            pchChannel += (iTargetStride*4) - 3;
         }
 
         if (NULL != ptStatusH) {
@@ -702,15 +740,21 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
             tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR;
             tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
             tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
+
+            pchChannel -= 3 + (iTargetStride*4);
         #else
             
       tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR; 
       tAcc.hwG += ((*pchChannel) - tAcc.hwG) * ratio >> 8;  *pchChannel++ = tAcc.hwG;
       tAcc.hwB += ((*pchChannel) - tAcc.hwB) * ratio >> 8;  *pchChannel++ = tAcc.hwB;
      
+
+            
+        pchChannel -= 3 + (iTargetStride*4);
+     
         #endif
 
-            pchChannel -= 3 + (iTargetStride*4);
+            
         }
     }
 #endif  
