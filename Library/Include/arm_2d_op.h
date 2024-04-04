@@ -709,6 +709,14 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_RG
 extern
 const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_CCCN888;
 
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILTER_IIR_BLUR_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILTER_IIR_BLUR_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILTER_IIR_BLUR_CCCN888;
 /*============================ PROTOTYPES ====================================*/
 
 

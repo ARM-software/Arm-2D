@@ -58,6 +58,13 @@ extern "C" {
 #ifndef __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 #   define __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__             1
 #endif
+
+// <q>Improve the Quality of IIR Blur
+// <i> Note that enabling this feature will half the performance of IIR Blur and only works correctly in Full framebuffer mode
+// <i> This feature is disabled by default to improve performance
+#ifndef __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
+#   define __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__                 0
+#endif
 // </h>
 
 // <h>Log and Debug

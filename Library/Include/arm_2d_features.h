@@ -22,8 +22,8 @@
  * Description:  Public header file to indicate features avaialble for this
  *               arm-2d library variant.
  *
- * $Date:        14. Aug 2023
- * $Revision:    V.1.1.0
+ * $Date:        4. April 2024
+ * $Revision:    V.1.1.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -178,6 +178,10 @@ extern "C" {
  */
 #ifndef __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 #   define __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__  1      //!< enable the support for CCCA8888
+#endif
+
+#ifndef __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
+#   define __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__     0
 #endif
 
 /*----------------------------------------------------------------------------*

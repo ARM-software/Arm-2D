@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        3. April 2024
- * $Revision:    V.1.4.5
+ * $Date:        4. April 2024
+ * $Revision:    V.1.4.6
  *
  * Target Processor:  Cortex-M cores
  *
@@ -369,6 +369,9 @@ enum {
     //__ARM_2D_OP_IDX_TRANSFORM_WITH_MASKS_AND_OPACITY,                         //!< todo in v1.xx
     __ARM_2D_OP_IDX_TRANSFORM_WITH_SOURCE_MASK_AND_OPACITY,
     //__ARM_2D_OP_IDX_TRANSFORM_WITH_TARGET_MASK_AND_OPACITY,                   //!< todo in v1.xx
+
+    __ARM_2D_OP_IDX_FILETER_IIR_BLUR,
+
     /*------------ arm-2d operation idx end --------------*/
 
     __ARM_2D_OP_IDX_USER_OP_START,
@@ -1480,6 +1483,15 @@ extern
 arm_fsm_rt_t 
 __arm_2d_cccn888_sw_transform_with_src_mask_and_opacity(
                                                 __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_filter_iir_blur( __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_filter_iir_blur( __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_filter_iir_blur( __arm_2d_sub_task_t *ptTask);
 /*========================== POST INCLUDES ===================================*/
 #include "__arm_2d_direct.h"
 

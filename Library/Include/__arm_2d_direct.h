@@ -21,8 +21,8 @@
  * Title:        __arm_2d_direct.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        22. May 2024
- * $Revision:    V.1.2.3
+ * $Date:        4. April 2024
+ * $Revision:    V.1.2.4
  *
  * Target Processor:  Cortex-M cores
  *
@@ -9500,6 +9500,30 @@ void __arm_2d_impl_cccn888_colour_filling_mask_opacity_transform(
                                         __arm_2d_param_copy_orig_t *ptParam,
                                         __arm_2d_transform_info_t *ptInfo,
                                         uint_fast16_t hwRatio);
+
+void __arm_2d_impl_gray8_filter_iir_blur(
+                            uint8_t *__RESTRICT pchTarget,
+                            int16_t iTargetStride,
+                            arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                            arm_2d_region_t *ptTargetRegionOnVirtualScreen,
+                            uint8_t chBlurDegree,
+                            arm_2d_scratch_mem_t *ptScratchMemory);
+
+void __arm_2d_impl_rgb565_filter_iir_blur(
+                            uint16_t *__RESTRICT phwTarget,
+                            int16_t iTargetStride,
+                            arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                            arm_2d_region_t *ptTargetRegionOnVirtualScreen,
+                            uint8_t chBlurDegree,
+                            arm_2d_scratch_mem_t *ptScratchMemory);
+
+void __arm_2d_impl_cccn888_filter_iir_blur(
+                            uint32_t *__RESTRICT pwTarget,
+                            int16_t iTargetStride,
+                            arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                            arm_2d_region_t *ptTargetRegionOnVirtualScreen,
+                            uint8_t chBlurDegree,
+                            arm_2d_scratch_mem_t *ptScratchMemory);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
