@@ -54,17 +54,22 @@ extern "C" {
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 
-typedef struct __arm_2d_iir_blur_acc_t {
+typedef struct __arm_2d_iir_blur_acc_cccn888_t {
     uint16_t hwR;
     uint16_t hwG;
     uint16_t hwB;
-} __arm_2d_iir_blur_acc_t;
+} __arm_2d_iir_blur_acc_cccn888_t;
+
+typedef __arm_2d_iir_blur_acc_cccn888_t __arm_2d_iir_blur_acc_rgb565_t;
+
+typedef struct __arm_2d_iir_blur_acc_gray8_t {
+    uint16_t hwC;
+} __arm_2d_iir_blur_acc_gray8_t;
 
 typedef struct arm_2d_filter_iir_blur_api_params_t {
     /* add your parameters here */
     uint_fast8_t chBlurDegree;
 } arm_2d_filter_iir_blur_api_params_t;
-
 
 typedef struct arm_2d_filter_iir_blur_descriptor_t {
 ARM_PRIVATE(
