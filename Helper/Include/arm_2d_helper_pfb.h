@@ -22,7 +22,7 @@
  * Description:  Public header file for the PFB helper service 
  *
  * $Date:        4. April 2024
- * $Revision:    V.1.9.4
+ * $Revision:    V.1.9.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -670,7 +670,7 @@ ARM_PRIVATE(
             uint16_t                                                        : 2;
 
             uint16_t                bIsNewFrame                             : 1;
-            uint16_t                                                        : 1;
+            uint16_t                bIgnoreCanvasColour                     : 1;
             uint16_t                bIgnoreLowLevelFlush                    : 1;
             uint16_t                bHideNavigationLayer                    : 1;
             uint16_t                bIsDryRun                               : 1;    //!< A flag to indicate whether the first iteration was a dry run
@@ -678,6 +678,8 @@ ARM_PRIVATE(
             uint16_t                bFirstIteration                         : 1;
             uint16_t                bIsRegionChanged                        : 1;
         };
+
+        arm_2d_colour_t tCanvas;
 
         uintptr_t                   pFPBPoolAvailable;
         arm_2d_pfb_t               *ptCurrent;
@@ -852,6 +854,25 @@ ARM_NONNULL(1)
 void arm_2d_helper_show_navigation_layer(arm_2d_helper_pfb_t *ptThis);
 
 
+/*!
+ * \brief enable filling canvas with specified colour
+ * 
+ * \param[in] ptThis an initialised PFB helper control block
+ * \param[in] tColour the target canvas colour
+ */
+extern
+ARM_NONNULL(1)
+void __arm_2d_helper_pfb_enable_drawing_canvas_colour(arm_2d_helper_pfb_t *ptThis,
+                                                      arm_2d_colour_t tColour);
+
+extern
+ARM_NONNULL(1)
+/*!
+ * \brief disable filling canvas with specified colour
+ * 
+ * \param[in] ptThis an initialised PFB helper control block
+ */
+void __arm_2d_helper_pfb_disable_drawing_canvas_colour(arm_2d_helper_pfb_t *ptThis);
 
 /*!
  * \brief ignore the low level PFB flushing only

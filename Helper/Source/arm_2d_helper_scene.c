@@ -552,16 +552,33 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
         if (NULL == ptScene || (bIgnoreBG && bIgnoreScene)) {
             __pfb_draw_scene_mode_default_background(pTarget, ptTile, bIsNewFrame);
         } else {
+            bool bCanvasFilled = false;
+
             if (!bIgnoreBG) {
                 if (bIsNewFrame) {
                     ARM_2D_INVOKE_RT_VOID( ptScene->fnOnBGStart, ptScene);
                 }
+
+                /* fill canvas */
+                arm_2d_helper_fill_tile_colour( ptTile, 
+                                                ptTile->tInfo.tColourInfo,
+                                                ptScene->tCanvas);
+                bCanvasFilled = true;
                 ARM_2D_INVOKE(ptScene->fnBackground, ptScene, ptTile, bIsNewFrame);
             }
+
             if (!bIgnoreScene) {
                 if (bIsNewFrame) {
                     ARM_2D_INVOKE_RT_VOID( ptScene->fnOnFrameStart, ptScene);
                 }
+
+                if (!bCanvasFilled) {
+                    /* fill canvas */
+                    arm_2d_helper_fill_tile_colour( ptTile, 
+                                                    ptTile->tInfo.tColourInfo,
+                                                    ptScene->tCanvas);
+                }
+
                 ARM_2D_INVOKE( ptScene->fnScene, ptScene, ptTile, bIsNewFrame);
             }
         }
@@ -587,6 +604,7 @@ void __draw_erase_scene(arm_2d_scene_player_t *ptThis,
                         bool bIgnoreScene)
 {
     ARM_2D_UNUSED(ptThis);
+    bool bCanvasFilled = false;
 
     if (NULL != ptScene) {
         bIgnoreBG = ptScene->bOnSwitchingIgnoreBG && bIgnoreBG;
@@ -597,12 +615,26 @@ void __draw_erase_scene(arm_2d_scene_player_t *ptThis,
         if (bIsNewFrame) {
             ARM_2D_INVOKE_RT_VOID( ptScene->fnOnBGStart, ptScene);
         }
+
+        /* fill canvas */
+        arm_2d_helper_fill_tile_colour( ptTile, 
+                                        ptTile->tInfo.tColourInfo,
+                                        ptScene->tCanvas);
+
         ARM_2D_INVOKE( ptScene->fnBackground, ptScene, ptTile, bIsNewFrame);
     }
     if (!bIgnoreScene) {
         if (bIsNewFrame) {
             ARM_2D_INVOKE_RT_VOID( ptScene->fnOnFrameStart, ptScene);
         }
+
+        if (!bCanvasFilled) {
+            /* fill canvas */
+            arm_2d_helper_fill_tile_colour( ptTile, 
+                                            ptTile->tInfo.tColourInfo,
+                                            ptScene->tCanvas);
+        }
+
         ARM_2D_INVOKE( ptScene->fnScene, ptScene, ptTile, bIsNewFrame);
     }
     arm_2d_op_wait_async(NULL);
@@ -1231,6 +1263,10 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
                 this.Runtime.bUpdateBG = false;
                 this.Runtime.chState = DRAW_BACKGROUND_PREPARE;
             }
+            __arm_2d_helper_pfb_enable_drawing_canvas_colour(
+                                            &this.use_as__arm_2d_helper_pfb_t,
+                                            ptScene->tCanvas);
+
             // fall-through
         
         case DRAW_BACKGROUND_PREPARE:
@@ -1358,6 +1394,9 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
 
                 assert(     this.Switch.ptMode->chEffects 
                         !=  ARM_2D_SCENE_SWITCH_CFG_NONE);
+
+                __arm_2d_helper_pfb_disable_drawing_canvas_colour(
+                                            &this.use_as__arm_2d_helper_pfb_t);
 
                 /* update drawer */
                 ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(

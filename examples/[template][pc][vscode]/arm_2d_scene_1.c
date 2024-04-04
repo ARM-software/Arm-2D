@@ -201,7 +201,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene1_handler)
 
     /* following code is just a demo, you can remove them */
     arm_2d_canvas(ptTile, __canvas) {
-        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
 
         if (bIsNewFrame) {
             int32_t iResult;
@@ -372,6 +371,10 @@ user_scene_1_t *__arm_2d_scene1_init(   arm_2d_scene_player_t *ptDispAdapter,
 
     *ptScene = (user_scene_1_t){
         .use_as__arm_2d_scene_t = {
+        
+        /* the canvas colour */
+        .tCanvas = {GLCD_COLOR_WHITE}, 
+        
         /* Please uncommon the callbacks if you need them
          */
         //.fnBackground   = &__pfb_draw_scene1_background_handler,

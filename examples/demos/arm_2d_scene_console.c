@@ -171,9 +171,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_console_handler)
     /*-----------------------draw the foreground begin-----------------------*/
         
         /* following code is just a demo, you can remove them */
-        
-        arm_2d_fill_colour(ptTile, &__top_canvas, GLCD_COLOR_BLACK);
-
 
         /* draw console */
         console_box_show(   &this.tConsole,
@@ -221,6 +218,10 @@ user_scene_console_t *__arm_2d_scene_console_init(
 
     *ptThis = (user_scene_console_t){
         .use_as__arm_2d_scene_t = {
+
+            /* the canvas colour */
+            .tCanvas = {GLCD_COLOR_BLACK}, 
+        
             /* Please uncommon the callbacks if you need them
              */
             .fnScene        = &__pfb_draw_scene_console_handler,

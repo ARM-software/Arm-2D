@@ -208,8 +208,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_fitness_handler)
     /*-----------------------draw the foreground begin-----------------------*/
         
         /* following code is just a demo, you can remove them */
-        
-        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
 
     #if __FITNESS_CFG_NEBULA_ENABLE__
         /* show nebula */
@@ -347,6 +345,10 @@ user_scene_fitness_t *__arm_2d_scene_fitness_init(   arm_2d_scene_player_t *ptDi
 
     *ptThis = (user_scene_fitness_t){
         .use_as__arm_2d_scene_t = {
+
+            /* the canvas colour */
+            .tCanvas = {GLCD_COLOR_BLACK}, 
+        
             /* Please uncommon the callbacks if you need them
              */
             .fnScene        = &__pfb_draw_scene_fitness_handler,

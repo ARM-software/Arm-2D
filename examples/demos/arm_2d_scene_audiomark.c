@@ -225,8 +225,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_audiomark_handler)
     /*-----------------------draw the foreground begin-----------------------*/
         
         /* following code is just a demo, you can remove them */
-        
-        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
 
         arm_2d_align_centre(__top_canvas, 415, 415) {
             
@@ -310,6 +308,10 @@ user_scene_audiomark_t *__arm_2d_scene_audiomark_init(   arm_2d_scene_player_t *
 
     *ptThis = (user_scene_audiomark_t){
         .use_as__arm_2d_scene_t = {
+
+            /* the canvas colour */
+            .tCanvas = {GLCD_COLOR_BLACK}, 
+        
             /* Please uncommon the callbacks if you need them
              */
             .fnScene        = &__pfb_draw_scene_audiomark_handler,

@@ -201,6 +201,8 @@ struct arm_2d_scene_t {
     arm_2d_scene_t *ptNext;                                                     //!< next scene
     arm_2d_scene_player_t *ptPlayer;                                            //!< points to the host scene player
 
+    arm_2d_colour_t tCanvas;                                                    //!< the canvas colour
+
     /*! \note Please do NOT use it unless it is necessary */
     arm_2d_helper_draw_handler_t    *fnBackground;
 

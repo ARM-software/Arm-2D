@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        03. April 2024
- * $Revision:    V.1.7.7
+ * $Date:        04. April 2024
+ * $Revision:    V.1.7.8
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -705,6 +705,19 @@ arm_2d_char_descriptor_t *
 arm_2d_helper_get_char_descriptor(  const arm_2d_font_t *ptFont, 
                                     arm_2d_char_descriptor_t *ptDescriptor, 
                                     uint8_t *pchCharCode);
+
+extern
+ARM_NONNULL(1)
+/*!
+ * \brief fill the target tile with a specified colour
+ * 
+ * \param[in] ptTile the target tile
+ * \param[in] tColourFormat the colour format of the target tile
+ * \param[in] tColour the target colour
+ */
+void arm_2d_helper_fill_tile_colour(const arm_2d_tile_t *ptTile, 
+                                    arm_2d_color_info_t tColourFormat,
+                                    arm_2d_colour_t tColour);
 
 /*! @} */
 

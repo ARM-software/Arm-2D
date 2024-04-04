@@ -173,8 +173,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_<name>_handler)
     /*-----------------------draw the foreground begin-----------------------*/
         
         /* following code is just a demo, you can remove them */
-        
-        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
 
         arm_2d_align_centre(__top_canvas, 200, 100 ) {
             draw_round_corner_box(  ptTile, 
@@ -299,6 +297,10 @@ user_scene_<name>_t *__arm_2d_scene_<name>_init(   arm_2d_scene_player_t *ptDisp
 
     *ptThis = (user_scene_<name>_t){
         .use_as__arm_2d_scene_t = {
+
+            /* the canvas colour */
+            .tCanvas = {GLCD_COLOR_WHITE}, 
+
             /* Please uncommon the callbacks if you need them
              */
             .fnScene        = &__pfb_draw_scene_<name>_handler,

@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        03. April 2024
- * $Revision:    V.1.7.7
+ * $Date:        04. April 2024
+ * $Revision:    V.1.7.8
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1060,6 +1060,32 @@ arm_2d_helper_get_char_descriptor(  const arm_2d_font_t *ptFont,
                 ARM_2D_PARAM(   ptFont,
                                 ptDescriptor,
                                 pchCharCode));
+}
+
+
+ARM_NONNULL(1)
+void arm_2d_helper_fill_tile_colour(const arm_2d_tile_t *ptTile, 
+                                    arm_2d_color_info_t tColourFormat,
+                                    arm_2d_colour_t tColour)
+{
+    assert(NULL != ptTile);
+
+    switch (tColourFormat.u3ColourSZ) {
+        case ARM_2D_M_COLOUR_SZ_8BIT:
+            arm_2d_c8bit_fill_colour(ptTile, NULL, tColour.chColour);
+            break;
+        case ARM_2D_M_COLOUR_SZ_16BIT:
+            arm_2d_rgb16_fill_colour(ptTile, NULL, tColour.hwColour);
+            break;
+        case ARM_2D_M_COLOUR_SZ_32BIT:
+            arm_2d_rgb32_fill_colour(ptTile, NULL, tColour.wColour);
+            break;
+        default:
+            /* unsupported colour size */
+            assert(false);
+            break;
+    }
+    ARM_2D_OP_WAIT_ASYNC();
 }
 
 #if defined(__clang__)

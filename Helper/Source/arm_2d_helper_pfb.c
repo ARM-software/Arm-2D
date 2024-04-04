@@ -22,7 +22,7 @@
  * Description:  the pfb helper service source code
  *
  * $Date:        4. April 2024
- * $Revision:    V.1.9.4
+ * $Revision:    V.1.9.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -407,6 +407,25 @@ void arm_2d_helper_show_navigation_layer(arm_2d_helper_pfb_t *ptThis)
 {
     assert(NULL != ptThis);
     this.Adapter.bHideNavigationLayer = false;
+}
+
+ARM_NONNULL(1)
+void __arm_2d_helper_pfb_enable_drawing_canvas_colour(arm_2d_helper_pfb_t *ptThis,
+                                                      arm_2d_colour_t tColour)
+{
+    assert(NULL != ptThis);
+
+    arm_irq_safe {
+        this.Adapter.bIgnoreCanvasColour = false;
+        this.Adapter.tCanvas = tColour;
+    }
+}
+
+ARM_NONNULL(1)
+void __arm_2d_helper_pfb_disable_drawing_canvas_colour(arm_2d_helper_pfb_t *ptThis)
+{
+    assert(NULL != ptThis);
+    this.Adapter.bIgnoreCanvasColour = true;
 }
 
 ARM_NONNULL(1)
@@ -2345,6 +2364,9 @@ label_iteration_begin_start:
 
     /* mark the virtual screen */
     this.Adapter.tPFBTile.tInfo.bVirtualScreen = true;
+    /* update the colour info */
+    this.Adapter.tPFBTile.tInfo.tColourInfo.u7ColourFormat 
+        = this.tCFG.FrameBuffer.u7ColourFormat;
 
     return (arm_2d_tile_t *)&(this.Adapter.tPFBTile);
 }
@@ -2692,7 +2714,20 @@ ARM_PT_BEGIN(this.Adapter.chPT)
         );
 
         __arm_2d_helper_perf_counter_start( &this.Statistics.lTimestamp,
-                                            ARM_2D_PERFC_RENDER); 
+                                            ARM_2D_PERFC_RENDER);
+        
+        if (!this.Adapter.bIgnoreCanvasColour) {
+
+            arm_2d_color_info_t tColourFormat = {
+                .u7ColourFormat = this.tCFG.FrameBuffer.u7ColourFormat,
+            };
+
+            arm_2d_helper_fill_tile_colour( this.Adapter.ptFrameBuffer,
+                                            tColourFormat,
+                                            this.Adapter.tCanvas);
+
+        }
+
         /* draw all the gui elements on target frame buffer */
         tResult = this.tCFG.Dependency.evtOnDrawing.fnHandler(
                                         this.tCFG.Dependency.evtOnDrawing.pTarget,

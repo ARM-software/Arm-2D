@@ -289,8 +289,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_alarm_clock_handler)
     /*-----------------------draw the foreground begin-----------------------*/
         
         /* following code is just a demo, you can remove them */
-        
-        arm_2d_fill_colour(ptTile, &__top_canvas, GLCD_COLOR_BLACK);
 
         arm_2d_dock_vertical(__top_canvas, 64+c_tileECGMask.tRegion.tSize.iHeight) {
 
@@ -515,6 +513,10 @@ user_scene_alarm_clock_t *__arm_2d_scene_alarm_clock_init(
 
     *ptThis = (user_scene_alarm_clock_t){
         .use_as__arm_2d_scene_t = {
+
+            /* the canvas colour */
+            .tCanvas = {GLCD_COLOR_BLACK}, 
+        
             /* Please uncommon the callbacks if you need them
              */
             .fnScene        = &__pfb_draw_scene_alarm_clock_handler,

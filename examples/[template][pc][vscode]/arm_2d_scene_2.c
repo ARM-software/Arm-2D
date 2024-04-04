@@ -231,8 +231,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
     /*-----------------------draw the foreground begin-----------------------*/
 
     /* following code is just a demo, you can remove them */
-    
-    arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
 
     arm_2d_canvas(ptTile, __canvas) {
         arm_2d_align_centre(__canvas, 240, 128) {
@@ -451,6 +449,10 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
 
     *ptScene = (user_scene_2_t){
         .use_as__arm_2d_scene_t = {
+
+        /* the canvas colour */
+        .tCanvas = {GLCD_COLOR_BLACK}, 
+        
         /* Please uncommon the callbacks if you need them
          */
         //.fnBackground   = &__pfb_draw_scene2_background_handler,

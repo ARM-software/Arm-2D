@@ -299,6 +299,10 @@ user_scene_%Instance%_t *__arm_2d_scene%Instance%_init(   arm_2d_scene_player_t 
 
     *ptThis = (user_scene_%Instance%_t){
         .use_as__arm_2d_scene_t = {
+
+            /* the canvas colour */
+            .tCanvas = {GLCD_COLOR_WHITE}, 
+
             /* Please uncommon the callbacks if you need them
              */
             .fnScene        = &__pfb_draw_scene%Instance%_handler,
@@ -311,6 +315,7 @@ user_scene_%Instance%_t *__arm_2d_scene%Instance%_init(   arm_2d_scene_player_t 
             //.fnBeforeSwitchOut = &__before_scene%Instance%_switching_out,
             .fnOnFrameCPL   = &__on_scene%Instance%_frame_complete,
             .fnDepose       = &__on_scene%Instance%_depose,
+
         },
         .bUserAllocated = bUserAllocated,
     };

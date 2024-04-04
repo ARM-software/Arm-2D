@@ -21,8 +21,8 @@
  * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        25. March 2024
- * $Revision:    V.1.2.3
+ * $Date:        4. April 2024
+ * $Revision:    V.1.2.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -163,7 +163,7 @@ typedef enum {
  * \brief the colour type for gray8 (8bit gray scale)
  *
  */
-typedef union arm_2d_color_gray8_t {
+typedef struct arm_2d_color_gray8_t {
     uint8_t tValue;
 } arm_2d_color_gray8_t;
 
@@ -298,6 +298,28 @@ typedef union arm_2d_color_nccc888_t {
         uint8_t u8C[3];
     };
 } arm_2d_color_nccc888_t;
+
+
+/*!
+ * \brief the generic type to hold a colour
+ * 
+ */
+typedef union arm_2d_colour_t {
+
+    uint32_t wColour;
+    uint16_t hwColour;
+    uint8_t chColour;
+
+    inherit(arm_2d_color_gray8_t);
+    inherit(arm_2d_color_rgb565_t);
+    inherit(arm_2d_color_bgra8888_t);
+    inherit(arm_2d_color_rgb888_t);
+    inherit(arm_2d_color_ccca8888_t);
+    inherit(arm_2d_color_accc8888_t);
+    inherit(arm_2d_color_cccn888_t);
+    inherit(arm_2d_color_nccc888_t);
+
+} arm_2d_colour_t;
 
 /*!
  * \brief enumerations for colour attributes
@@ -545,17 +567,7 @@ typedef struct arm_2d_region_t {
  */
 enum {
     ARM_2D_TILE_EXTENSION_NONE = 0,             //!< no extension in the tile.tInfo.Extension field
-    ARM_2D_TILE_EXTENSION_BORDER,               //!< there is a tile border extension
 };
-
-/*!
- * \brief the type for tile border extension
- * 
- */
-typedef struct {
-    uint8_t chWidth;                                                //!< the width of the vertical border
-    uint8_t chHeight;                                               //!< the height of the horizontal border
-} __arm_2d_tile_extension_border_t;
 
 /*!
  * \brief a type for tile
@@ -572,7 +584,6 @@ struct arm_2d_tile_t {
         uint8_t    u3ExtensionID        : 3;                                    //!< Tile Extension ID
 
         union {
-            __arm_2d_tile_extension_border_t Border;
             uint8_t chReserve[2];
         } Extension;
         arm_2d_color_info_t    tColourInfo;                                     //!< enforced colour

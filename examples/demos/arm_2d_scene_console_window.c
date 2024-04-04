@@ -180,9 +180,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_console_window_handler)
 
         /* following code is just a demo, you can remove them */
 
-        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
-
-
         /* draw the cmsis logo using mask in the centre of the screen */
         arm_2d_align_centre(__top_canvas, c_tileCMSISLogo.tRegion.tSize) {
             arm_2d_fill_colour_with_a4_mask_and_opacity(   
@@ -253,6 +250,10 @@ user_scene_console_window_t *__arm_2d_scene_console_window_init(
 
     *ptThis = (user_scene_console_window_t){
         .use_as__arm_2d_scene_t = {
+
+            /* the canvas colour */
+            .tCanvas = {GLCD_COLOR_BLACK}, 
+        
             /* Please uncommon the callbacks if you need them
              */
             .fnScene        = &__pfb_draw_scene_console_window_handler,

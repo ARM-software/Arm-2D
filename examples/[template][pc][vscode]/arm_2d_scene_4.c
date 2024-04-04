@@ -181,8 +181,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene4_handler)
     /*-----------------------draw the foreground begin-----------------------*/
     
     /* following code is just a demo, you can remove them */
-    
-    arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
 
     if (bIsNewFrame) {
         int32_t iResult;
@@ -324,6 +322,10 @@ user_scene_4_t *__arm_2d_scene4_init(   arm_2d_scene_player_t *ptDispAdapter,
 
     *ptThis = (user_scene_4_t){
         .use_as__arm_2d_scene_t = {
+
+        /* the canvas colour */
+        .tCanvas = {GLCD_COLOR_BLACK}, 
+
         /* Please uncommon the callbacks if you need them
          */
         //.fnBackground   = &__pfb_draw_scene4_background_handler,
