@@ -1,5 +1,7 @@
 var NAVTREEINDEX3 =
 {
+"group__gKernel.html#ga27a24a896295488772e6d847c790fd1c":[10,0,265],
+"group__gKernel.html#ga295397fe5671506e3687a730d4dfdb8a":[10,0,86],
 "group__gKernel.html#ga2979dec2f537a0d6a78b665eced2b3c0":[10,0,196],
 "group__gKernel.html#ga29b6ca6f40e2a188bf66d1288aadf4dc":[10,0,212],
 "group__gKernel.html#ga2a3039cfca20c75338850c41fcf4fbc5":[10,0,211],
@@ -210,7 +212,6 @@ var NAVTREEINDEX3 =
 "group__gKernel.html#gga75983a418ea2c46866c20e2f1379c5cca126cebc9b0ab41803132a6bc757531a8":[10,0,267,1],
 "group__gKernel.html#gga75983a418ea2c46866c20e2f1379c5ccac7f5e1b2ee0887e398840015ecd496c2":[10,0,267,0],
 "group__gKernel.html#gga99fb83031ce9923c84392b4e92f956b5a3bae1996a35a1229476bcbc6bacccb3a":[10,0,266,0],
-"group__gKernel.html#gga99fb83031ce9923c84392b4e92f956b5aaa33a0c7f76cd17ae709c4f7d2b5c966":[10,0,266,1],
 "group__gKernel.html#ggabc6126af1d45847bc59afa0aa3216b04a47f8a479896c1e420ba51b499509e315":[10,0,267,1],
 "group__gKernel.html#ggabc6126af1d45847bc59afa0aa3216b04a56f9a8495508d17fd6dabadf8172ce68":[10,0,267,0],
 "group__gKernel.html#ggabc6126af1d45847bc59afa0aa3216b04a7073e7b41d758c515548cb3d9a97076b":[10,0,267,2],
@@ -224,19 +225,19 @@ var NAVTREEINDEX3 =
 "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelInterfaceIndex_8____unnamed46____":[10,0,58],
 "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelInterfaceIndex_8____unnamed48____":[10,0,59],
 "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8Param_8____unnamed42____":[10,0,55],
-"group__gKernel.html#struct____arm__2d__tile__extension__border__t":[10,0,15],
 "group__gKernel.html#struct____arm__slist__node__t":[10,0,0],
 "group__gKernel.html#structarm__2d__color__accc8888__t_8____unnamed13____":[10,0,40],
 "group__gKernel.html#structarm__2d__color__bgra8888__t_8____unnamed7____":[10,0,37],
 "group__gKernel.html#structarm__2d__color__ccca8888__t_8____unnamed11____":[10,0,39],
 "group__gKernel.html#structarm__2d__color__cccn888__t_8____unnamed15____":[10,0,41],
+"group__gKernel.html#structarm__2d__color__gray8__t":[10,0,1],
 "group__gKernel.html#structarm__2d__color__info__t_8____unnamed19____":[10,0,43],
 "group__gKernel.html#structarm__2d__color__info__t_8____unnamed21____":[10,0,44],
 "group__gKernel.html#structarm__2d__color__nccc888__t_8____unnamed17____":[10,0,42],
 "group__gKernel.html#structarm__2d__color__rgb565__t_8____unnamed5____":[10,0,36],
 "group__gKernel.html#structarm__2d__color__rgb888__t_8____unnamed9____":[10,0,38],
 "group__gKernel.html#structarm__2d__evt__t":[10,0,23],
-"group__gKernel.html#structarm__2d__location__t":[10,0,10],
+"group__gKernel.html#structarm__2d__location__t":[10,0,11],
 "group__gKernel.html#structarm__2d__op__core__t":[10,0,26],
 "group__gKernel.html#structarm__2d__op__core__t_8____unnamed58____":[10,0,65],
 "group__gKernel.html#structarm__2d__op__core__t_8____unnamed58_____8Preference":[10,0,66],
@@ -248,6 +249,5 @@ var NAVTREEINDEX3 =
 "group__gKernel.html#structarm__2d__op__src__msk__t_8Mask":[10,0,74],
 "group__gKernel.html#structarm__2d__op__src__msk__t_8Source":[10,0,73],
 "group__gKernel.html#structarm__2d__op__src__msk__t_8Target":[10,0,72],
-"group__gKernel.html#structarm__2d__op__src__orig__msk__t":[10,0,32],
-"group__gKernel.html#structarm__2d__op__src__orig__msk__t_8Mask":[10,0,81]
+"group__gKernel.html#structarm__2d__op__src__orig__msk__t":[10,0,32]
 };

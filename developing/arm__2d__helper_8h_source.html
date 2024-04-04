@@ -130,8 +130,8 @@ $(document).ready(function(){initNavTree('arm__2d__helper_8h_source.html',''); i
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * Title:        #include &quot;arm_2d_helper.h&quot;</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * Description:  Public header file for the all helper services</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        03. April 2024</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.7.7</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        04. April 2024</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.7.8</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> * Target Processor:  Cortex-M cores</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment"> * -------------------------------------------------------------------- */</span></div>
@@ -814,24 +814,37 @@ $(document).ready(function(){initNavTree('arm__2d__helper_8h_source.html',''); i
 <div class="line"><a id="l00705" name="l00705"></a><span class="lineno"><a class="line" href="group__gHelper.html#gace860649e7b7172cf6aa155abc51434d">  705</a></span><a class="code hl_function" href="group__gHelper.html#gace860649e7b7172cf6aa155abc51434d" title="get char descriptor">arm_2d_helper_get_char_descriptor</a>(  const <a class="code hl_struct" href="group__gHelper.html#structarm__2d__font__t">arm_2d_font_t</a> *ptFont, </div>
 <div class="line"><a id="l00706" name="l00706"></a><span class="lineno">  706</span>                                    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> *ptDescriptor, </div>
 <div class="line"><a id="l00707" name="l00707"></a><span class="lineno">  707</span>                                    uint8_t *pchCharCode);</div>
-<div class="line"><a id="l00708" name="l00708"></a><span class="lineno">  708</span><span class="comment"></span> </div>
-<div class="line"><a id="l00709" name="l00709"></a><span class="lineno">  709</span><span class="comment">/*! @} */</span></div>
-<div class="line"><a id="l00710" name="l00710"></a><span class="lineno">  710</span> </div>
-<div class="line"><a id="l00711" name="l00711"></a><span class="lineno">  711</span><span class="preprocessor">#if defined(__clang__)</span></div>
-<div class="line"><a id="l00712" name="l00712"></a><span class="lineno">  712</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
-<div class="line"><a id="l00713" name="l00713"></a><span class="lineno">  713</span><span class="preprocessor">#elif __IS_COMPILER_ARM_COMPILER_5__</span></div>
-<div class="line"><a id="l00714" name="l00714"></a><span class="lineno">  714</span><span class="preprocessor">#pragma diag_warning 64</span></div>
-<div class="line"><a id="l00715" name="l00715"></a><span class="lineno">  715</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00716" name="l00716"></a><span class="lineno">  716</span> </div>
-<div class="line"><a id="l00717" name="l00717"></a><span class="lineno">  717</span><span class="preprocessor">#undef __ARM_2D_HELPER_IMPLEMENT__</span></div>
-<div class="line"><a id="l00718" name="l00718"></a><span class="lineno">  718</span><span class="preprocessor">#undef __ARM_2D_HELPER_INHERIT__</span></div>
-<div class="line"><a id="l00719" name="l00719"></a><span class="lineno">  719</span> </div>
-<div class="line"><a id="l00720" name="l00720"></a><span class="lineno">  720</span> </div>
-<div class="line"><a id="l00721" name="l00721"></a><span class="lineno">  721</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
-<div class="line"><a id="l00722" name="l00722"></a><span class="lineno">  722</span>}</div>
-<div class="line"><a id="l00723" name="l00723"></a><span class="lineno">  723</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00724" name="l00724"></a><span class="lineno">  724</span> </div>
-<div class="line"><a id="l00725" name="l00725"></a><span class="lineno">  725</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00708" name="l00708"></a><span class="lineno">  708</span> </div>
+<div class="line"><a id="l00709" name="l00709"></a><span class="lineno">  709</span>extern</div>
+<div class="line"><a id="l00710" name="l00710"></a><span class="lineno">  710</span>ARM_NONNULL(1)<span class="comment"></span></div>
+<div class="line"><a id="l00711" name="l00711"></a><span class="lineno">  711</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00712" name="l00712"></a><span class="lineno">  712</span><span class="comment"> * \brief fill the target tile with a specified colour</span></div>
+<div class="line"><a id="l00713" name="l00713"></a><span class="lineno">  713</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00714" name="l00714"></a><span class="lineno">  714</span><span class="comment"> * \param[in] ptTile the target tile</span></div>
+<div class="line"><a id="l00715" name="l00715"></a><span class="lineno">  715</span><span class="comment"> * \param[in] tColourFormat the colour format of the target tile</span></div>
+<div class="line"><a id="l00716" name="l00716"></a><span class="lineno">  716</span><span class="comment"> * \param[in] tColour the target colour</span></div>
+<div class="line"><a id="l00717" name="l00717"></a><span class="lineno">  717</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00718" name="l00718"></a><span class="lineno"><a class="line" href="group__gHelper.html#gad463890671cef394edd5dbc33e34a3bc">  718</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#gad463890671cef394edd5dbc33e34a3bc" title="fill the target tile with a specified colour">arm_2d_helper_fill_tile_colour</a>(const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTile, </div>
+<div class="line"><a id="l00719" name="l00719"></a><span class="lineno">  719</span>                                    <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__info__t" title="a type used as colour descriptor">arm_2d_color_info_t</a> tColourFormat,</div>
+<div class="line"><a id="l00720" name="l00720"></a><span class="lineno">  720</span>                                    <a class="code hl_union" href="group__gKernel.html#unionarm__2d__colour__t" title="the generic type to hold a colour">arm_2d_colour_t</a> tColour);</div>
+<div class="line"><a id="l00721" name="l00721"></a><span class="lineno">  721</span><span class="comment"></span> </div>
+<div class="line"><a id="l00722" name="l00722"></a><span class="lineno">  722</span><span class="comment">/*! @} */</span></div>
+<div class="line"><a id="l00723" name="l00723"></a><span class="lineno">  723</span> </div>
+<div class="line"><a id="l00724" name="l00724"></a><span class="lineno">  724</span><span class="preprocessor">#if defined(__clang__)</span></div>
+<div class="line"><a id="l00725" name="l00725"></a><span class="lineno">  725</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
+<div class="line"><a id="l00726" name="l00726"></a><span class="lineno">  726</span><span class="preprocessor">#elif __IS_COMPILER_ARM_COMPILER_5__</span></div>
+<div class="line"><a id="l00727" name="l00727"></a><span class="lineno">  727</span><span class="preprocessor">#pragma diag_warning 64</span></div>
+<div class="line"><a id="l00728" name="l00728"></a><span class="lineno">  728</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00729" name="l00729"></a><span class="lineno">  729</span> </div>
+<div class="line"><a id="l00730" name="l00730"></a><span class="lineno">  730</span><span class="preprocessor">#undef __ARM_2D_HELPER_IMPLEMENT__</span></div>
+<div class="line"><a id="l00731" name="l00731"></a><span class="lineno">  731</span><span class="preprocessor">#undef __ARM_2D_HELPER_INHERIT__</span></div>
+<div class="line"><a id="l00732" name="l00732"></a><span class="lineno">  732</span> </div>
+<div class="line"><a id="l00733" name="l00733"></a><span class="lineno">  733</span> </div>
+<div class="line"><a id="l00734" name="l00734"></a><span class="lineno">  734</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
+<div class="line"><a id="l00735" name="l00735"></a><span class="lineno">  735</span>}</div>
+<div class="line"><a id="l00736" name="l00736"></a><span class="lineno">  736</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00737" name="l00737"></a><span class="lineno">  737</span> </div>
+<div class="line"><a id="l00738" name="l00738"></a><span class="lineno">  738</span><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

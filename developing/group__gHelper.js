@@ -10,6 +10,7 @@ var group__gHelper =
     [ "arm_2d_scene_t", "group__gHelper.html#structarm__2d__scene__t", [
       [ "ptNext", "group__gHelper.html#a58b6fe1c4ab89fd6a89c8344fcbe85e7", null ],
       [ "ptPlayer", "group__gHelper.html#a02317320d49833d7d6f3fc959d95e5f5", null ],
+      [ "tCanvas", "group__gHelper.html#a64812662df8ef2562d0b4ab62e2a6cff", null ],
       [ "fnBackground", "group__gHelper.html#adfd244e234641aff86db898b9a0120cf", null ],
       [ "ptDirtyRegion", "group__gHelper.html#a14ff6b13dd709cab6c029631f073ccd4", null ],
       [ "fnScene", "group__gHelper.html#a11df8d98a8cddbc856d69808ded8c733", null ],
@@ -238,6 +239,8 @@ var group__gHelper =
     [ "arm_2d_helper_pfb_flush", "group__gHelper.html#ga8568abf593c04cf6df798e82cda60676", null ],
     [ "arm_2d_helper_hide_navigation_layer", "group__gHelper.html#gaec3341ff7e558eb0665d1d2819e0e92c", null ],
     [ "arm_2d_helper_show_navigation_layer", "group__gHelper.html#gae7a2c6d89191cfa51b06b24e06a89e2e", null ],
+    [ "__arm_2d_helper_pfb_enable_drawing_canvas_colour", "group__gHelper.html#ga7aacbb555e295f1e12fdd85213d4db3c", null ],
+    [ "__arm_2d_helper_pfb_disable_drawing_canvas_colour", "group__gHelper.html#gacd06c01a12019f65c4c6d16ea7f19959", null ],
     [ "arm_2d_helper_ignore_low_level_flush", "group__gHelper.html#gae4017b79661fe52c6115894ebcb094a5", null ],
     [ "arm_2d_helper_resume_low_level_flush", "group__gHelper.html#gaeaaf0ab9b565da461334ed9fc641cc8d", null ],
     [ "arm_2d_helper_pfb_update_dependency", "group__gHelper.html#ga7f397129da5a5d78a7dd6325ab3405ef", null ],
@@ -316,5 +319,6 @@ var group__gHelper =
     [ "arm_2d_helper_get_utf8_byte_valid_length", "group__gHelper.html#gafef8afe9b381edc7b307ef22b66afae4", null ],
     [ "arm_2d_helper_get_utf8_byte_length", "group__gHelper.html#ga7553bfdcdafa1d4ddfa3e0bff5322fc7", null ],
     [ "arm_2d_helper_utf8_to_unicode", "group__gHelper.html#ga0400f80284319e9ae66d5316a52ee0b7", null ],
-    [ "arm_2d_helper_get_char_descriptor", "group__gHelper.html#gace860649e7b7172cf6aa155abc51434d", null ]
+    [ "arm_2d_helper_get_char_descriptor", "group__gHelper.html#gace860649e7b7172cf6aa155abc51434d", null ],
+    [ "arm_2d_helper_fill_tile_colour", "group__gHelper.html#gad463890671cef394edd5dbc33e34a3bc", null ]
 ];
