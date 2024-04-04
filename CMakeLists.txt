@@ -50,6 +50,7 @@ target_sources(ARM2D PRIVATE
     Library/Source/arm_2d_helium.c
     Library/Source/arm_2d_alpha_blending.c
     Library/Source/arm_2d_transform.c
+    Library/Source/arm_2d_filter.c
     )
 
 
@@ -139,6 +140,12 @@ if (ARM2D_CONTROLS)
             examples/common/asset/wifi_signal.c
             examples/common/asset/helium.c
             examples/common/asset/background.c
+            examples/common/asset/WatchCoverRound.c
+            examples/common/asset/GlassHalo.c
+            examples/common/asset/alarm_clock_font32.c
+            examples/common/asset/alarm_clock_font64.c
+            examples/common/asset/ECG.c
+            examples/common/asset/ECGScan.c
           )
     target_compile_options(ARM2D PUBLIC
           -DRTE_Acceleration_Arm_2D_Extra_Controls
