@@ -265,7 +265,7 @@
           </RTE_Components_h>
         </component>
         
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Filter" Cversion="1.0.0" condition="Arm-2D-CORE">
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Filter" Cversion="1.1.6" condition="Arm-2D-CORE">
           <description>Filters (Blur etc)</description>
           <files>
             <file category="sourceC"     name="Library/Source/arm_2d_filter.c"/>
