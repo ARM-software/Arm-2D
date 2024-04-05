@@ -138,6 +138,8 @@ arm_fsm_rt_t arm_2dp_cccn888_filter_iir_blur(
                     const arm_2d_region_t *ptRegion,
                     const arm_2d_filter_iir_blur_api_params_t *ptParams);
 
+/*! @} */
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif

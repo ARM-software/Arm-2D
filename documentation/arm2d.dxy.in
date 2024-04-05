@@ -890,6 +890,8 @@ INPUT                  = ../README.md \
                          ../Library/Include/arm_2d_draw.h \
                          ../Library/Include/arm_2d_conversion.h \
                          ../Library/Include/arm_2d_alpha_blending.h \
+                         ../Library/Include/arm_2d_filter.h \
+                         ../Library/Include/__arm_2d_filter_iir_blur.h \
                          ../Library/Include/arm_2d.h \
                          ../Helper/Include/arm_2d_helper_scene.h \
                          ../Helper/Include/arm_2d_helper_pfb.h \
