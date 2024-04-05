@@ -71,7 +71,7 @@ extern "C" {
 /*! @} */
 
 /*!
- * \addtogroup gHelper 7 Helper Services
+ * \addtogroup gHelper 8 Helper Services
  * @{
  */
 /*============================ MACROFIED FUNCTIONS ===========================*/

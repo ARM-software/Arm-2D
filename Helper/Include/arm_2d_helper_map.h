@@ -49,7 +49,7 @@ extern "C" {
 #endif
 
 /*!
- * \addtogroup gHelper 7 Helper Services
+ * \addtogroup gHelper 8 Helper Services
  * @{
  */
 
