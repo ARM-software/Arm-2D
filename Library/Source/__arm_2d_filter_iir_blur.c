@@ -22,7 +22,7 @@
  * Description:  APIs for IIR Blur
  *
  * $Date:        5. April 2024
- * $Revision:    V.0.9.9
+ * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
  *
