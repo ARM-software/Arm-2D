@@ -21,8 +21,8 @@
  * Title:        __arm_2d_filter_iir_blur.h
  * Description:  APIs for IIR Blur
  *
- * $Date:        4. April 2024
- * $Revision:    V.0.9.0
+ * $Date:        5. April 2024
+ * $Revision:    V.0.9.9
  *
  * Target Processor:  Cortex-M cores
  *
@@ -49,7 +49,6 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
 #endif
 
-
 /*!
  * \addtogroup gFilter 7 Filter Operations
  * @{
@@ -60,9 +59,9 @@ extern "C" {
 /*============================ TYPES =========================================*/
 
 typedef struct __arm_2d_iir_blur_acc_cccn888_t {
-    uint16_t hwR;
-    uint16_t hwG;
     uint16_t hwB;
+    uint16_t hwG;
+    uint16_t hwR;
 } __arm_2d_iir_blur_acc_cccn888_t;
 
 typedef __arm_2d_iir_blur_acc_cccn888_t __arm_2d_iir_blur_acc_rgb565_t;
