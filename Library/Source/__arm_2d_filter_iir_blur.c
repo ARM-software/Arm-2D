@@ -21,8 +21,8 @@
  * Title:        __arm_2d_filter_iir_blur.c
  * Description:  APIs for IIR Blur
  *
- * $Date:        4. April 2024
- * $Revision:    V.0.9.0
+ * $Date:        5. April 2024
+ * $Revision:    V.0.9.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -144,11 +144,9 @@ void __arm_2d_impl_gray8_filter_iir_blur(
     int_fast16_t iWidth = ptValidRegionOnVirtualScreen->tSize.iWidth;
     int_fast16_t iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
   
-    //blur_filter (pwTarget, iWidth, iHeight, iTargetStride, sigma);
     int16_t iY, iX, ibyte, ibit, ratio = 256 - chBlurDegree;
 
     __arm_2d_iir_blur_acc_gray8_t tAcc;
-    //uint16_t accuR, accuG, accuB;
     uint8_t *pchChannel = NULL;
 
     __arm_2d_iir_blur_acc_gray8_t *ptStatusH = NULL;
@@ -194,7 +192,6 @@ void __arm_2d_impl_gray8_filter_iir_blur(
     uint8_t *pchPixel = pchTarget;
 
     /* rows direct path */
-
     ptStatusV += tOffset.iY;
 
     for (iY = 0; iY < iHeight; iY++) {   
@@ -209,7 +206,8 @@ void __arm_2d_impl_gray8_filter_iir_blur(
     
         }
 
-        pchChannel = (uint8_t *)pchPixel;
+        //pchChannel = (uint8_t *)pchPixel;
+        pchChannel = pchPixel;
 
         for (iX = 0; iX < iWidth; iX++) {
             tAcc.hwC += ((*pchChannel) - tAcc.hwC) * ratio >> 8;  *pchChannel++ = tAcc.hwC;
@@ -241,7 +239,9 @@ void __arm_2d_impl_gray8_filter_iir_blur(
     
         } while(0);
 
-        pchChannel = (uint8_t *)pchPixel;
+        //pchChannel = (uint8_t *)pchPixel;
+
+        pchChannel = pchPixel;
 
         for (iX = 0; iX < iWidth; iX++) {   
             tAcc.hwC += ((*pchChannel) - tAcc.hwC) * ratio >> 8;  *pchChannel++ = tAcc.hwC;
@@ -269,12 +269,15 @@ void __arm_2d_impl_gray8_filter_iir_blur(
             tAcc.hwC = *pchChannel;
     
         }
-        pchChannel = (uint8_t *)pchPixel++;
-        
+        //pchChannel = (uint8_t *)pchPixel++;
+        pchChannel = pchPixel;
+
         for (iY = 0; iY < iHeight; iY++) {
             tAcc.hwC += ((*pchChannel) - tAcc.hwC) * ratio >> 8;  *pchChannel++ = tAcc.hwC;
             pchChannel += iTargetStride - 1;
         }
+
+        pchPixel++;
 
         if (NULL != ptStatusH) {
             /* save the last pixel */
@@ -298,12 +301,15 @@ void __arm_2d_impl_gray8_filter_iir_blur(
     
         } while(0);
 
-        pchChannel = (uint8_t *)pchPixel--;
+        //pchChannel = (uint8_t *)pchPixel--;
+        pchChannel = pchPixel;
 
         for (iY = 0; iY < iHeight; iY++) {   
             tAcc.hwC += ((*pchChannel) - tAcc.hwC) * ratio >> 8;  *pchChannel++ = tAcc.hwC;
             pchChannel -= 1 + iTargetStride;
         }
+
+        pchPixel--;
     }
 #endif  
 }
@@ -420,11 +426,9 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
     int_fast16_t iWidth = ptValidRegionOnVirtualScreen->tSize.iWidth;
     int_fast16_t iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
   
-    //blur_filter (pwTarget, iWidth, iHeight, iTargetStride, sigma);
     int16_t iY, iX, ibyte, ibit, ratio = 256 - chBlurDegree;
 
     __arm_2d_iir_blur_acc_cccn888_t tAcc;
-    //uint16_t accuR, accuG, accuB;
     uint8_t *pchChannel = NULL;
 
     __arm_2d_iir_blur_acc_cccn888_t *ptStatusH = NULL;
@@ -470,7 +474,6 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
     uint32_t *pwPixel = pwTarget;
 
     /* rows direct path */
-
     ptStatusV += tOffset.iY;
 
     for (iY = 0; iY < iHeight; iY++) {   
@@ -487,6 +490,7 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
      
         }
 
+        //pchChannel = (uint8_t *)pwPixel;
         pchChannel = (uint8_t *)pwPixel;
 
         for (iX = 0; iX < iWidth; iX++) {
@@ -525,6 +529,8 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
      
         } while(0);
 
+        //pchChannel = (uint8_t *)pwPixel;
+
         pchChannel = (uint8_t *)pwPixel;
 
         for (iX = 0; iX < iWidth; iX++) {   
@@ -559,8 +565,9 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
             tAcc.hwB = *pchChannel++;
      
         }
-        pchChannel = (uint8_t *)pwPixel++;
-        
+        //pchChannel = (uint8_t *)pwPixel++;
+        pchChannel = (uint8_t *)pwPixel;
+
         for (iY = 0; iY < iHeight; iY++) {
             
             tAcc.hwR += ((*pchChannel) - tAcc.hwR) * ratio >> 8;  *pchChannel++ = tAcc.hwR; 
@@ -569,6 +576,8 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
      
             pchChannel += (iTargetStride*4) - 3;
         }
+
+        pwPixel++;
 
         if (NULL != ptStatusH) {
             /* save the last pixel */
@@ -594,7 +603,8 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
      
         } while(0);
 
-        pchChannel = (uint8_t *)pwPixel--;
+        //pchChannel = (uint8_t *)pwPixel--;
+        pchChannel = (uint8_t *)pwPixel;
 
         for (iY = 0; iY < iHeight; iY++) {   
             
@@ -604,6 +614,8 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
      
             pchChannel -= 3 + (iTargetStride*4);
         }
+
+        pwPixel--;
     }
 #endif  
 }
