@@ -31,6 +31,7 @@
 
 #include "arm_2d_scene_meter.h"
 #include "arm_2d_scene_fitness.h"
+#include "arm_2d_scene_alarm_clock.h"
 
 #include "arm_2d_demos.h"
 
@@ -141,6 +142,11 @@ void scene_fitness_loader(void)
     arm_2d_scene_fitness_init(&DISP0_ADAPTER);
 }
 
+void scene_alarm_clock_loader(void) 
+{
+    arm_2d_scene_alarm_clock_init(&DISP0_ADAPTER);
+}
+
 void scene0_loader(void) 
 {
     arm_2d_scene0_init(&DISP0_ADAPTER);
@@ -181,6 +187,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene0_loader,
     scene1_loader,
     scene_meter_loader,
+    scene_alarm_clock_loader,
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
     virtual_resource_demo_loader,
 #endif
@@ -189,7 +196,8 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene2_loader,
 
     scene_fitness_loader,
-    scene_audiomark_loader
+    scene_alarm_clock_loader
+    //scene_audiomark_loader
 };
 
 

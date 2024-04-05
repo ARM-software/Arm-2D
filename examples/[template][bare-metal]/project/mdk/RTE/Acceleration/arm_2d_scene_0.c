@@ -90,6 +90,8 @@
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 
+extern const arm_2d_tile_t c_tileCMSISLogoCCCA8888;
+
 extern const arm_2d_tile_t c_tileCMSISLogo;
 extern const arm_2d_tile_t c_tileCMSISLogoMask;
 extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
@@ -197,14 +199,19 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
         }
 
 
-    #if 0
+    #if 1
         /* draw the cmsis logo in the centre of the screen */
         arm_2d_align_centre(__top_canvas, c_tileCMSISLogo.tRegion.tSize) {
-            arm_2d_tile_copy_with_src_mask( &c_tileCMSISLogo,
-                                            &c_tileCMSISLogoMask,
-                                            ptTile,
-                                            &__centre_region,
-                                            ARM_2D_CP_MODE_COPY);
+            arm_2d_tile_copy_to_rgb565(
+                        &c_tileCMSISLogoCCCA8888,
+                        ptTile,
+                        &__centre_region
+                    );
+//            arm_2d_tile_copy_with_src_mask( &c_tileCMSISLogo,
+//                                            &c_tileCMSISLogoMask,
+//                                            ptTile,
+//                                            &__centre_region,
+//                                            ARM_2D_CP_MODE_COPY);
         }
     #else
         /* draw the cmsis logo using mask in the centre of the screen */
@@ -299,6 +306,10 @@ user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter,
 
     *ptThis = (user_scene_0_t){
         .use_as__arm_2d_scene_t = {
+
+            /* the canvas colour */
+            .tCanvas = {GLCD_COLOR_WHITE}, 
+
             /* Please uncommon the callbacks if you need them
              */
             .fnScene        = &__pfb_draw_scene0_handler,
@@ -311,6 +322,7 @@ user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter,
             //.fnBeforeSwitchOut = &__before_scene0_switching_out,
             .fnOnFrameCPL   = &__on_scene0_frame_complete,
             .fnDepose       = &__on_scene0_depose,
+
         },
         .bUserAllocated = bUserAllocated,
     };
