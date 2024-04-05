@@ -248,7 +248,7 @@ var NAVTREEINDEX =
 [
 "group__Deprecated.html",
 "group__gAlpha.html#gaa15837e39908675ba85ef23f00861682",
-"group__gHelper.html#gaa72e3eeaa3f11790c6773bfab34eccaf",
+"group__gHelper.html#gaa5946f15d97b62f2c86c018fbb720583",
 "group__gKernel.html#ga206ba077ba0d890fd0be935fc5d15dda",
 "group__gKernel.html#structarm__2d__op__core__t_8____unnamed58_____8Preference",
 "md_introduction.html#autotoc_md57"

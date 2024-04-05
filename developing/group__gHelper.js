@@ -219,7 +219,7 @@ var group__gHelper =
     [ "arm_2d_scene_player_switch_to_next_scene", "group__gHelper.html#gae6df5a7c480a7e3f44a926772ba78cb8", null ],
     [ "__arm_2d_scene_player_set_switching_mode", "group__gHelper.html#ga141d41ffe2e75ff8cd17f9e9f553d0bc", null ],
     [ "arm_2d_scene_player_get_switching_cfg", "group__gHelper.html#ga36e4f860adbf479e6928621878e5b744", null ],
-    [ "arm_2d_scene_player_set_switching_period", "group__gHelper.html#gab6ab3855d486721c82dc97c77eb4ead0", null ],
+    [ "arm_2d_scene_player_set_switching_period", "group__gHelper.html#ga292b6303a3289d49c3e0407121774022", null ],
     [ "__arm_2d_scene_player_register_on_draw_navigation_event_handler", "group__gHelper.html#ga516674d7d321e4ecb058fd3b8ddbab70", null ],
     [ "arm_2d_scene_player_hide_navigation_layer", "group__gHelper.html#ga401b363d3f7120e56a1494d26e3c2af7", null ],
     [ "arm_2d_scene_player_show_navigation_layer", "group__gHelper.html#ga3bac12004dcc0fb152f54118497f2d34", null ],

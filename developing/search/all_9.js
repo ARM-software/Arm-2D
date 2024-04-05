@@ -379,7 +379,7 @@ var searchData=
   ['arm_5f2d_5fscene_5fplayer_5fregister_5fon_5fdraw_5fnavigation_5fevent_5fhandler_376',['arm_2d_scene_player_register_on_draw_navigation_event_handler',['../group__gHelper.html#ga90130f1c831d7fb20db39f20a488a3e1',1,'arm_2d_helper_scene.h']]],
   ['arm_5f2d_5fscene_5fplayer_5fremove_5fdirty_5fregions_377',['arm_2d_scene_player_remove_dirty_regions',['../group__gHelper.html#ga15bd874fcd36767c9ff8acf1955e8afe',1,'arm_2d_helper_scene.h']]],
   ['arm_5f2d_5fscene_5fplayer_5fset_5fswitching_5fmode_378',['arm_2d_scene_player_set_switching_mode',['../group__gHelper.html#ga6b9ef0f3e0f80430fc036f6d3c67c135',1,'arm_2d_helper_scene.h']]],
-  ['arm_5f2d_5fscene_5fplayer_5fset_5fswitching_5fperiod_379',['arm_2d_scene_player_set_switching_period',['../group__gHelper.html#gab6ab3855d486721c82dc97c77eb4ead0',1,'arm_2d_helper_scene.h']]],
+  ['arm_5f2d_5fscene_5fplayer_5fset_5fswitching_5fperiod_379',['arm_2d_scene_player_set_switching_period',['../group__gHelper.html#ga292b6303a3289d49c3e0407121774022',1,'arm_2d_helper_scene.h']]],
   ['arm_5f2d_5fscene_5fplayer_5fshow_5fnavigation_5flayer_380',['arm_2d_scene_player_show_navigation_layer',['../group__gHelper.html#ga3bac12004dcc0fb152f54118497f2d34',1,'arm_2d_helper_scene.h']]],
   ['arm_5f2d_5fscene_5fplayer_5fswitch_5fmode_5ft_381',['arm_2d_scene_player_switch_mode_t',['../group__gHelper.html#gab79c6ab3540af636c218dc40fa065ac3',1,'arm_2d_helper_scene.h']]],
   ['arm_5f2d_5fscene_5fplayer_5fswitch_5fto_5fnext_5fscene_382',['arm_2d_scene_player_switch_to_next_scene',['../group__gHelper.html#gae6df5a7c480a7e3f44a926772ba78cb8',1,'arm_2d_helper_scene.h']]],
