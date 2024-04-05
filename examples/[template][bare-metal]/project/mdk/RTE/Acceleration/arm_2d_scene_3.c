@@ -374,7 +374,7 @@ static void __on_scene3_frame_start(arm_2d_scene_t *ptScene)
     user_scene_3_t *ptThis = (user_scene_3_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    int nResult;
+    int32_t nResult;
     if (arm_2d_helper_time_liner_slider(0, 1000, 10000, &nResult, &this.lTimestamp[2])) {
         this.lTimestamp[2] = 0;
     }

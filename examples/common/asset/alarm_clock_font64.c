@@ -18,6 +18,7 @@
 #   pragma clang diagnostic ignored "-Wincompatible-pointer-types-discards-qualifiers"
 #elif defined(__IS_COMPILER_GCC__)
 #   pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
+#   pragma GCC diagnostic ignored "-Wunused-variable"
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)
 #   pragma diag_suppress=1296
 #endif

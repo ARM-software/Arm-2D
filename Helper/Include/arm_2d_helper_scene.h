@@ -452,7 +452,7 @@ uint16_t arm_2d_scene_player_get_switching_cfg(arm_2d_scene_player_t *ptThis);
 extern
 ARM_NONNULL(1)
 void arm_2d_scene_player_set_switching_period(  arm_2d_scene_player_t *ptThis,
-                                                int nMS);
+                                                int32_t nMS);
 
 
 /*!

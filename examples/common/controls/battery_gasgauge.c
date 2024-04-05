@@ -41,6 +41,8 @@
 #   pragma clang diagnostic ignored "-Wunused-const-variable"
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
 #   pragma clang diagnostic ignored "-Wmissing-variable-declarations"
+#elif __IS_COMPILER_GCC__
+#   pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 #endif
 
 /*============================ MACROS ========================================*/

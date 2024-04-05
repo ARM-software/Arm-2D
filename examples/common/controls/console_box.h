@@ -133,7 +133,7 @@ void console_box_show(  console_box_t *ptThis,
  * \retval false no content changed
  * \retval true the console is updated.
  */
-extern;
+extern
 ARM_NONNULL(1)
 bool console_box_on_frame_start(console_box_t *ptThis);
 

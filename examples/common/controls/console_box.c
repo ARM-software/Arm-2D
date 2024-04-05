@@ -231,7 +231,7 @@ void __console_box_remove_top_line(console_box_t *ptThis)
             break;
         }
 
-        bool bMoveToNextLine = false;
+        //bool bMoveToNextLine = false;
 
         switch ((char)wUTF8) {
             case '\r':
@@ -268,36 +268,6 @@ void __console_box_remove_top_line(console_box_t *ptThis)
 
     /* refresh the whole console */
     this.u2RTRefreshMode = REFRESH_MODE_WHOLE;
-}
-
-ARM_NONNULL(1)
-static uint16_t __byte_fifo_vomit(arm_2d_byte_fifo_t *ptThis, uint16_t hwCount)
-{
-    assert(NULL != ptThis);
-    if (0 == hwCount) {
-        return 0;
-    }
-    uint16_t hwRemoveCount = hwCount;
-
-    arm_irq_safe {
-        do {
-            if (this.tHead.hwDataAvailable < hwCount) {
-                hwRemoveCount = this.tHead.hwDataAvailable;
-            }
-
-            if (this.hwTail < hwRemoveCount) {
-                this.hwTail += this.hwSize - hwRemoveCount;
-            } else {
-                this.hwTail -= hwRemoveCount;
-            }
-            this.tHead.hwDataAvailable -= hwRemoveCount;
-            this.tPeek = this.tHead;
-
-        } while(0);
-    }
-
-    return hwCount - hwRemoveCount;
-
 }
 
 ARM_NONNULL(1)
