@@ -202,13 +202,14 @@ void __arm_2d_impl_gray8_filter_iir_blur(
         if (NULL != ptStatusV && tOffset.iX > 0) {
             /* recover the previous statues */
             tAcc = *ptStatusV;
-
         } else {
-            pchChannel = (unsigned char *)pchPixel;
+            
+            pchChannel = pchPixel;
             tAcc.hwC = *pchChannel;
+    
         }
 
-        pchChannel = (unsigned char *)pchPixel;
+        pchChannel = (uint8_t *)pchPixel;
 
         for (iX = 0; iX < iWidth; iX++) {
             tAcc.hwC += ((*pchChannel) - tAcc.hwC) * ratio >> 8;  *pchChannel++ = tAcc.hwC;
@@ -232,8 +233,13 @@ void __arm_2d_impl_gray8_filter_iir_blur(
     
     for (iY = iHeight-1; iY > 0; iY--) {   
         
-        pchChannel = (uint8_t *)pchPixel;     /* read RGBA 8888  */
-        tAcc.hwC = *pchChannel;
+        /* initialize the accumulator */
+        do {
+            
+            pchChannel = pchPixel;
+            tAcc.hwC = *pchChannel;
+    
+        } while(0);
 
         pchChannel = (uint8_t *)pchPixel;
 
@@ -258,8 +264,10 @@ void __arm_2d_impl_gray8_filter_iir_blur(
             /* recover the previous statues */
             tAcc = *ptStatusH;
         } else {
-            pchChannel = (uint8_t *)pchPixel;     /* read RGBA 8888  */
+            
+            pchChannel = pchPixel;
             tAcc.hwC = *pchChannel;
+    
         }
         pchChannel = (uint8_t *)pchPixel++;
         
@@ -282,8 +290,13 @@ void __arm_2d_impl_gray8_filter_iir_blur(
     /* columns reverse path */
     for (iX = iWidth-1; iX > 0; iX--)
     {   
-        pchChannel = (uint8_t *)pchPixel;     /* read RGBA 8888  */
-        tAcc.hwC = *pchChannel;
+        /* initialize the accumulator */
+        do {
+            
+            pchChannel = pchPixel;
+            tAcc.hwC = *pchChannel;
+    
+        } while(0);
 
         pchChannel = (uint8_t *)pchPixel--;
 
@@ -465,17 +478,16 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
         if (NULL != ptStatusV && tOffset.iX > 0) {
             /* recover the previous statues */
             tAcc = *ptStatusV;
-
         } else {
-            pchChannel = (unsigned char *)pwPixel;
             
-        tAcc.hwR = *pchChannel++;
-        tAcc.hwG = *pchChannel++;
-        tAcc.hwB = *pchChannel++;
+            pchChannel = (uint8_t *)pwPixel;
+            tAcc.hwR = *pchChannel++;
+            tAcc.hwG = *pchChannel++;
+            tAcc.hwB = *pchChannel++;
      
         }
 
-        pchChannel = (unsigned char *)pwPixel;
+        pchChannel = (uint8_t *)pwPixel;
 
         for (iX = 0; iX < iWidth; iX++) {
             
@@ -503,12 +515,15 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
     
     for (iY = iHeight-1; iY > 0; iY--) {   
         
-        pchChannel = (uint8_t *)pwPixel;     /* read RGBA 8888  */
-        
-        tAcc.hwR = *pchChannel++;
-        tAcc.hwG = *pchChannel++;
-        tAcc.hwB = *pchChannel++;
+        /* initialize the accumulator */
+        do {
+            
+            pchChannel = (uint8_t *)pwPixel;
+            tAcc.hwR = *pchChannel++;
+            tAcc.hwG = *pchChannel++;
+            tAcc.hwB = *pchChannel++;
      
+        } while(0);
 
         pchChannel = (uint8_t *)pwPixel;
 
@@ -537,11 +552,11 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
             /* recover the previous statues */
             tAcc = *ptStatusH;
         } else {
-            pchChannel = (uint8_t *)pwPixel;     /* read RGBA 8888  */
             
-        tAcc.hwR = *pchChannel++;
-        tAcc.hwG = *pchChannel++;
-        tAcc.hwB = *pchChannel++;
+            pchChannel = (uint8_t *)pwPixel;
+            tAcc.hwR = *pchChannel++;
+            tAcc.hwG = *pchChannel++;
+            tAcc.hwB = *pchChannel++;
      
         }
         pchChannel = (uint8_t *)pwPixel++;
@@ -569,12 +584,15 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
     /* columns reverse path */
     for (iX = iWidth-1; iX > 0; iX--)
     {   
-        pchChannel = (uint8_t *)pwPixel;     /* read RGBA 8888  */
-        
-        tAcc.hwR = *pchChannel++;
-        tAcc.hwG = *pchChannel++;
-        tAcc.hwB = *pchChannel++;
+        /* initialize the accumulator */
+        do {
+            
+            pchChannel = (uint8_t *)pwPixel;
+            tAcc.hwR = *pchChannel++;
+            tAcc.hwG = *pchChannel++;
+            tAcc.hwB = *pchChannel++;
      
+        } while(0);
 
         pchChannel = (uint8_t *)pwPixel--;
 

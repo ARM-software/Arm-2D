@@ -100,7 +100,10 @@ extern "C" {
         blur_operation
 in [
     ('gray8', 'uint8_t', 'ch', '8BIT',
-     'tAcc.hwC = *pchChannel;',
+     '
+            pchChannel = pchPixel;
+            tAcc.hwC = *pchChannel;
+    ',
      '',
      'pchChannel += iTargetStride - 1;',
      'pchChannel -= 2;',
@@ -109,9 +112,10 @@ in [
     ),
     ('cccn888', 'uint32_t', 'w', '32BIT',
      '
-        tAcc.hwR = *pchChannel++;
-        tAcc.hwG = *pchChannel++;
-        tAcc.hwB = *pchChannel++;
+            pchChannel = (uint8_t *)pwPixel;
+            tAcc.hwR = *pchChannel++;
+            tAcc.hwG = *pchChannel++;
+            tAcc.hwB = *pchChannel++;
      ',
      'pchChannel++;',
      'pchChannel += (iTargetStride*4) - 3;',
@@ -240,13 +244,11 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
         if (NULL != ptStatusV && tOffset.iX > 0) {
             /* recover the previous statues */
             tAcc = *ptStatusV;
-
         } else {
-            pchChannel = (unsigned char *)p{{colour_int_prefix}}Pixel;
             {{acc_init}}
         }
 
-        pchChannel = (unsigned char *)p{{colour_int_prefix}}Pixel;
+        pchChannel = (uint8_t *)p{{colour_int_prefix}}Pixel;
 
         for (iX = 0; iX < iWidth; iX++) {
             {{blur_operation}}
@@ -270,8 +272,10 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
     
     for (iY = iHeight-1; iY > 0; iY--) {   
         
-        pchChannel = (uint8_t *)p{{colour_int_prefix}}Pixel;     /* read RGBA 8888  */
-        {{acc_init}}
+        /* initialize the accumulator */
+        do {
+            {{acc_init}}
+        } while(0);
 
         pchChannel = (uint8_t *)p{{colour_int_prefix}}Pixel;
 
@@ -296,7 +300,6 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
             /* recover the previous statues */
             tAcc = *ptStatusH;
         } else {
-            pchChannel = (uint8_t *)p{{colour_int_prefix}}Pixel;     /* read RGBA 8888  */
             {{acc_init}}
         }
         pchChannel = (uint8_t *)p{{colour_int_prefix}}Pixel++;
@@ -320,8 +323,10 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
     /* columns reverse path */
     for (iX = iWidth-1; iX > 0; iX--)
     {   
-        pchChannel = (uint8_t *)p{{colour_int_prefix}}Pixel;     /* read RGBA 8888  */
-        {{acc_init}}
+        /* initialize the accumulator */
+        do {
+            {{acc_init}}
+        } while(0);
 
         pchChannel = (uint8_t *)p{{colour_int_prefix}}Pixel--;
 
