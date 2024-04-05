@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['source_0',['Source',['../group__gAlpha.html#afaab93ba2aeb55574f3df81718dfcc39',1,'arm_2d_op_alpha_t::Source()'],['../group__gAlpha.html#aada17dc99bd60e95d3a49a7f46562c01',1,'arm_2d_op_alpha_cl_key_t::Source()']]],
-  ['statistics_1',['Statistics',['../group__gHelper.html#aa2aad4c12c296a8fd32bb8fee03feae3',1,'arm_2d_helper_pfb_t']]]
+  ['readme_20_7b_23mainpage_7d_20_3c_21_2d_2d_20omit_20from_20toc_20_2d_2d_3e_0',['README {#mainpage} &lt;!-- omit from toc --&gt;',['../md__home_runner_work_Arm_2D_Arm_2D_README.html',1,'']]],
+  ['ref_5flow_5flv_5fio_1',['ref_low_lv_io',['../group__gKernel.html#gae3cfa68806c0c6c9fa7bb2a36453eef5',1,'arm_2d_utils.h']]]
 ];

@@ -1,21 +1,8 @@
 var searchData=
 [
-  ['fangle_0',['fAngle',['../group__gTransform.html#a598a27b28a4c799378c9b10c4a792f75',1,'__arm_2d_transform_info_t']]],
-  ['fnbackground_1',['fnBackground',['../group__gHelper.html#adfd244e234641aff86db898b9a0120cf',1,'arm_2d_scene_t']]],
-  ['fnbeforeswitchout_2',['fnBeforeSwitchOut',['../group__gHelper.html#a971eef026e3cd95397424c681451880d',1,'arm_2d_scene_t']]],
-  ['fndepose_3',['fnDepose',['../group__gHelper.html#a6e8ca4e93825c26bd94310188d54f462',1,'arm_2d_scene_t']]],
-  ['fndrawchar_4',['fnDrawChar',['../group__gHelper.html#a3b841cb917873c6ef064a945ce09060d',1,'arm_2d_font_t']]],
-  ['fngetchardescriptor_5',['fnGetCharDescriptor',['../group__gHelper.html#a6479b43d02147602a806b8bee6f7c962',1,'arm_2d_font_t']]],
-  ['fnhandler_6',['fnHandler',['../group__gKernel.html#a8f828fa395c4ae69fe956ae232c0893b',1,'arm_2d_op_evt_t::fnHandler()'],['../group__gKernel.html#a276d348c59950c0663e28adfc4829c99',1,'arm_2d_evt_t::fnHandler()'],['../group__gHelper.html#a551aa1393ca48917f03bce3d661909b9',1,'arm_2d_scene_before_scene_switching_evt_t::fnHandler()'],['../group__gHelper.html#a328824317c21ed14e7913c38833f98c5',1,'arm_2d_helper_render_evt_t::fnHandler()']]],
-  ['fnonbgcomplete_7',['fnOnBGComplete',['../group__gHelper.html#a9f48896229bd93381db449d8a09c8303',1,'arm_2d_scene_t']]],
-  ['fnonbgstart_8',['fnOnBGStart',['../group__gHelper.html#ae8a3464ab829906cf0711c89624b2a13',1,'arm_2d_scene_t']]],
-  ['fnonframecpl_9',['fnOnFrameCPL',['../group__gHelper.html#afa4eefd559eb1d11d3e871aa7b35cff1',1,'arm_2d_scene_t']]],
-  ['fnonframestart_10',['fnOnFrameStart',['../group__gHelper.html#a9bb39993e5091bd87bd047df8bc35512',1,'arm_2d_scene_t']]],
-  ['fnscene_11',['fnScene',['../group__gHelper.html#a11df8d98a8cddbc856d69808ded8c733',1,'arm_2d_scene_t']]],
-  ['fnswitchdrawer_12',['fnSwitchDrawer',['../group__gHelper.html#abb828a64c4ccfbd867ffd5461824968a',1,'arm_2d_scene_switch_mode_t']]],
-  ['foreground_13',['Foreground',['../group__Drawing.html#ac51861f10c7e7d3384e80b4ce18ca586',1,'arm_2d_op_drw_patn_t']]],
-  ['framebuffer_14',['FrameBuffer',['../group__gHelper.html#adcca9109a42f07a725776088ecc6be82',1,'arm_2d_helper_pfb_cfg_t']]],
-  ['fscale_15',['fScale',['../group__gTransform.html#afe43ae7c569abd89f499db003873b915',1,'__arm_2d_transform_info_t']]],
-  ['fx_16',['fX',['../group__gKernel.html#ad1c4e04b3b22f47fdc69c1fc92ecb905',1,'arm_2d_point_float_t']]],
-  ['fy_17',['fY',['../group__gKernel.html#a912063b5c4243a0ed4e1a655e3cb3082',1,'arm_2d_point_float_t']]]
+  ['evtbeforeflushing_0',['evtBeforeFlushing',['../group__gHelper.html#acf349e434e1a7056507ae25497d677fe',1,'arm_2d_helper_pfb_dependency_t']]],
+  ['evtondrawing_1',['evtOnDrawing',['../group__gHelper.html#a75436e9711701c092b4bafcc1c868d25',1,'arm_2d_helper_pfb_dependency_t']]],
+  ['evtoneachframecpl_2',['evtOnEachFrameCPL',['../group__gHelper.html#a3a09c78af2a4f90fdfed477c0844e4fc',1,'arm_2d_helper_pfb_dependency_t']]],
+  ['evtonlowlevelrendering_3',['evtOnLowLevelRendering',['../group__gHelper.html#a85bd7ad0d6a3c150a6ef8ac6ee9aaeed',1,'arm_2d_helper_pfb_dependency_t']]],
+  ['evtonlowlevelsyncup_4',['evtOnLowLevelSyncUp',['../group__gHelper.html#a0ed423f1f6490f8cc89abd55f886f4cd',1,'arm_2d_helper_pfb_dependency_t']]]
 ];

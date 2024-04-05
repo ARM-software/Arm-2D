@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['deprecated_0',['Deprecated',['../group__Deprecated.html',1,'']]]
+  ['8_20helper_20services_0',['8 Helper Services',['../group__gHelper.html',1,'']]]
 ];
