@@ -196,7 +196,6 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene2_loader,
 
     scene_fitness_loader,
-    scene_alarm_clock_loader
     //scene_audiomark_loader
 };
 
