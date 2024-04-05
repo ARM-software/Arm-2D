@@ -284,7 +284,7 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_to_rgb565)(uint32_t *__RESTRICT pwSou
         "   vand q2,        q2, q7                          \n"
         "   vld21.8         {q3,q4}, [%[pSource]]!          \n"
         "   vorr            q1, q1, q2                      \n"
-        "   vstrw.u32       q1, [%[phwTarget]] , #16        \n"
+        "   vstrh.u16       q1, [%[phwTarget]] , #16        \n"
         "   letp            lr, 2b                          \n"
         "1:                                                 \n"
         : [phwTarget] "+r" (phwTarget),
