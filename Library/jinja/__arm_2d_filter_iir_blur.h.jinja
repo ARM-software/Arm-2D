@@ -49,6 +49,10 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
 #endif
 
+/*!
+ * \addtogroup gFilter 7 Filter Operations
+ * @{
+ */
 
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
@@ -110,6 +114,8 @@ arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_filter_iir_blur(
 
 
 {%- endfor %}
+
+/*! @} */
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
