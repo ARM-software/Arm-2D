@@ -377,7 +377,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.6.6" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.6.7" condition="Arm-2D-EXTRA">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <!-- example control source files -->
@@ -435,6 +435,8 @@
             <file category="sourceC"     name="examples/common/asset/alarm_clock_font64.c" />
             <file category="sourceC"     name="examples/common/asset/ECG.c" />
             <file category="sourceC"     name="examples/common/asset/ECGScan.c" />
+            <file category="sourceC"     name="examples/common/asset/Cuisine.c" />
+
           </files>
           <RTE_Components_h>
 
