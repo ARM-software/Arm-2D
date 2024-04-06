@@ -6,6 +6,7 @@ var modules =
     [ "4 Alpha Blending Operations", "group__gAlpha.html", "group__gAlpha" ],
     [ "5 Transform Operations", "group__gTransform.html", "group__gTransform" ],
     [ "6 Conversion Operations", "group__gConversion.html", "group__gConversion" ],
-    [ "7 Helper Services", "group__gHelper.html", "group__gHelper" ],
+    [ "7 Filter Operations", "group__gFilter.html", "group__gFilter" ],
+    [ "8 Helper Services", "group__gHelper.html", "group__gHelper" ],
     [ "Deprecated", "group__Deprecated.html", null ]
 ];
