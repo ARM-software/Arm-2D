@@ -318,7 +318,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_atom_handler)
 
                     arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
                     arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
-                    arm_print_banner("+2", __item_region, &ARM_2D_FONT_A4_DIGITS_ONLY);
+                    arm_print_banner("2+", __item_region, &ARM_2D_FONT_A4_DIGITS_ONLY);
                 }
             }
         }
