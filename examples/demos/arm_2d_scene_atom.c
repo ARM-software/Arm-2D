@@ -197,10 +197,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_atom_handler)
 
                 /* calculate core vibration */
                 int32_t nOffsetX, nOffsetY;
-                arm_2d_helper_time_cos_slider(-5, 5, 100, ARM_2D_ANGLE(0.0f), &nOffsetX,&this.lTimestamp[1]);
+                arm_2d_helper_time_cos_slider(-5, 5, 100, ARM_2D_ANGLE(0.0f), &nOffsetX, &this.lTimestamp[1]);
                 this.Core.tVibration.iX = nOffsetX;
                 
-                arm_2d_helper_time_cos_slider(-5, 5, 150, ARM_2D_ANGLE(30.0f), &nOffsetY,&this.lTimestamp[2]);
+                arm_2d_helper_time_cos_slider(-5, 5, 150, ARM_2D_ANGLE(30.0f), &nOffsetY, &this.lTimestamp[2]);
                 this.Core.tVibration.iY = nOffsetY;
             }
 
@@ -285,10 +285,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_atom_handler)
                         int32_t nOffsetX, nOffsetY, nOpacity;
                         int16_t iRadiusX = __centre_region.tSize.iWidth >> 1;
                         int16_t iRadiusY = __centre_region.tSize.iHeight >> 1;
-                        arm_2d_helper_time_cos_slider(-iRadiusX, iRadiusX, 1300, ARM_2D_ANGLE(0.0f), &nOffsetX,&this.lTimestamp[3]);
+                        arm_2d_helper_time_cos_slider(-iRadiusX, iRadiusX, 1300, ARM_2D_ANGLE(0.0f), &nOffsetX, &this.lTimestamp[3]);
                         this.Electronic[0].tOffset.iX = nOffsetX;
                         
-                        arm_2d_helper_time_cos_slider(-iRadiusY, iRadiusY, 1300, ARM_2D_ANGLE(45.0f), &nOffsetY,&this.lTimestamp[4]);
+                        arm_2d_helper_time_cos_slider(-iRadiusY, iRadiusY, 1300, ARM_2D_ANGLE(45.0f), &nOffsetY, &this.lTimestamp[4]);
                         this.Electronic[0].tOffset.iY = nOffsetY;
 
                         arm_2d_helper_time_cos_slider(128, 255, 1300, ARM_2D_ANGLE(45.0f), &nOpacity, &this.lTimestamp[7]);
@@ -328,10 +328,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_atom_handler)
                         int32_t nOffsetX, nOffsetY, nOpacity;
                         int16_t iRadiusX = __centre_region.tSize.iWidth >> 1;
                         int16_t iRadiusY = __centre_region.tSize.iHeight >> 1;
-                        arm_2d_helper_time_cos_slider(-iRadiusX, iRadiusX, 1300, ARM_2D_ANGLE(180.0f), &nOffsetX,&this.lTimestamp[5]);
+                        arm_2d_helper_time_cos_slider(-iRadiusX, iRadiusX, 1300, ARM_2D_ANGLE(180.0f), &nOffsetX, &this.lTimestamp[5]);
                         this.Electronic[1].tOffset.iX = nOffsetX;
                         
-                        arm_2d_helper_time_cos_slider(-iRadiusY, iRadiusY, 1300, ARM_2D_ANGLE(45.0f), &nOffsetY,&this.lTimestamp[6]);
+                        arm_2d_helper_time_cos_slider(-iRadiusY, iRadiusY, 1300, ARM_2D_ANGLE(45.0f), &nOffsetY, &this.lTimestamp[6]);
                         this.Electronic[1].tOffset.iY = nOffsetY;
 
                         arm_2d_helper_time_cos_slider(128, 255, 1300, ARM_2D_ANGLE(45.0f), &nOpacity,&this.lTimestamp[8]);
