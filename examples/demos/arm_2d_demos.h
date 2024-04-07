@@ -24,6 +24,7 @@
 #include "./arm_2d_scene_audiomark.h"
 #include "./arm_2d_scene_console.h"
 #include "./arm_2d_scene_console_window.h"
+#include "./arm_2d_scene_atom.h"
 
 #ifdef   __cplusplus
 extern "C" {

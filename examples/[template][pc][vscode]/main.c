@@ -106,6 +106,11 @@ void scene_audiomark_loader(void)
     arm_2d_scene_audiomark_init(&DISP0_ADAPTER);
 }
 
+void scene_atom_loader(void) 
+{
+    arm_2d_scene_atom_init(&DISP0_ADAPTER);
+}
+
 void scene0_loader(void) 
 {
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
@@ -122,7 +127,6 @@ void scene1_loader(void)
 
 void scene2_loader(void) 
 {
-
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
                                             ARM_2D_SCENE_SWITCH_MODE_SLIDE_RIGHT);
     arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 500);
@@ -160,11 +164,13 @@ typedef void scene_loader_t(void);
 
 static scene_loader_t * const c_SceneLoaders[] = {
 
+    
     scene0_loader,
     scene1_loader,
     scene_console_window_loader,
     scene_meter_loader,
     scene_alarm_clock_loader,
+    scene_atom_loader,
     scene3_loader,
     scene5_loader,
     scene4_loader,
