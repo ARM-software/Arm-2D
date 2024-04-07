@@ -145,6 +145,46 @@ static void __on_scene_atom_frame_start(arm_2d_scene_t *ptScene)
     user_scene_atom_t *ptThis = (user_scene_atom_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    /* update core and electronics coordinates */
+    do {
+
+        int32_t nOffsetX, nOffsetY, nOpacity;
+        int16_t iRadiusX = 110;
+        int16_t iRadiusY = 110;
+
+        /* calculate core vibration */
+        arm_2d_helper_time_cos_slider(-5, 5, 100, ARM_2D_ANGLE(0.0f), &nOffsetX, &this.lTimestamp[1]);
+        this.Core.tVibration.iX = nOffsetX;
+        
+        arm_2d_helper_time_cos_slider(-5, 5, 150, ARM_2D_ANGLE(30.0f), &nOffsetY, &this.lTimestamp[2]);
+        this.Core.tVibration.iY = nOffsetY;
+
+        /* calculate electronic0 vibration */
+
+        arm_2d_helper_time_cos_slider(-iRadiusX, iRadiusX, 1300, ARM_2D_ANGLE(0.0f), &nOffsetX, &this.lTimestamp[3]);
+        this.Electronic[0].tOffset.iX = nOffsetX;
+        
+        arm_2d_helper_time_cos_slider(-iRadiusY, iRadiusY, 1300, ARM_2D_ANGLE(45.0f), &nOffsetY, &this.lTimestamp[4]);
+        this.Electronic[0].tOffset.iY = nOffsetY;
+
+        arm_2d_helper_time_cos_slider(128, 255, 1300, ARM_2D_ANGLE(45.0f), &nOpacity, &this.lTimestamp[7]);
+
+        this.Electronic[0].chOpacity = nOpacity;
+
+        /* calculate electronic 1 vibration */
+        arm_2d_helper_time_cos_slider(-iRadiusX, iRadiusX, 1300, ARM_2D_ANGLE(180.0f), &nOffsetX, &this.lTimestamp[5]);
+        this.Electronic[1].tOffset.iX = nOffsetX;
+        
+        arm_2d_helper_time_cos_slider(-iRadiusY, iRadiusY, 1300, ARM_2D_ANGLE(45.0f), &nOffsetY, &this.lTimestamp[6]);
+        this.Electronic[1].tOffset.iY = nOffsetY;
+
+        arm_2d_helper_time_cos_slider(128, 255, 1300, ARM_2D_ANGLE(45.0f), &nOpacity,&this.lTimestamp[8]);
+
+        this.Electronic[1].chOpacity = nOpacity;
+
+    } while(0);
+
+
     arm_2d_helper_dirty_region_on_frame_begin(&this.Core.tDirtyRegionHelper);
 
     arm_2d_helper_dirty_region_on_frame_begin(&this.Electronic[0].tDirtyRegionHelper);
@@ -184,93 +224,106 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_atom_handler)
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the foreground begin-----------------------*/
 
-
+        arm_2d_size_t tCharSize = ARM_2D_FONT_A4_DIGITS_ONLY
+                                .use_as__arm_2d_user_font_t
+                                    .use_as__arm_2d_font_t.tCharSize;
         arm_2d_size_t tAtomCoreSize = {
             .iWidth = c_tileWhiteDotMiddleA4Mask.tRegion.tSize.iWidth * 2,
-            .iHeight = c_tileWhiteDotMiddleA4Mask.tRegion.tSize.iWidth * 2,
+            .iHeight = c_tileWhiteDotMiddleA4Mask.tRegion.tSize.iHeight * 2 
+                     + tCharSize.iHeight,
         };
         
         /* draw atom core */
         arm_2d_align_centre(__top_canvas, tAtomCoreSize) {
 
-            if (bIsNewFrame) {
+            arm_2d_layout(__centre_region) {
+            
+                __item_line_dock_vertical(c_tileWhiteDotMiddleA4Mask.tRegion.tSize.iHeight * 2) {
+                    
+                    /* apply vibration */
+                    __item_region.tLocation.iX += this.Core.tVibration.iX;
+                    __item_region.tLocation.iY += this.Core.tVibration.iY;
 
-                /* calculate core vibration */
-                int32_t nOffsetX, nOffsetY;
-                arm_2d_helper_time_cos_slider(-5, 5, 100, ARM_2D_ANGLE(0.0f), &nOffsetX, &this.lTimestamp[1]);
-                this.Core.tVibration.iX = nOffsetX;
-                
-                arm_2d_helper_time_cos_slider(-5, 5, 150, ARM_2D_ANGLE(30.0f), &nOffsetY, &this.lTimestamp[2]);
-                this.Core.tVibration.iY = nOffsetY;
+                    arm_2d_region_t tDirtyRegion = __item_region;
+                    tDirtyRegion.tSize.iHeight += tCharSize.iHeight;
+
+                    /* update dirty region */
+                    arm_2d_helper_dirty_region_update_dirty_regions(&this.Core.tDirtyRegionHelper,
+                                                                    (arm_2d_tile_t *)ptTile,
+                                                                    &__top_canvas,
+                                                                    &tDirtyRegion,
+                                                                    bIsNewFrame);
+
+                    do {
+                        arm_2d_region_t tHadron = __item_region;
+
+                        tHadron.tLocation.iX += (c_tileWhiteDotMiddleA4Mask.tRegion.tSize.iWidth >> 1) + 5;
+                        arm_2d_fill_colour_with_a4_mask_and_opacity(
+                            ptTile,
+                            &tHadron,
+                            &c_tileWhiteDotMiddleA4Mask,
+                            (__arm_2d_color_t){GLCD_COLOR_RED},
+                            128);
+                        
+                        ARM_2D_OP_WAIT_ASYNC();
+                    } while(0);
+
+                    do {
+                        arm_2d_region_t tHadron = __item_region;
+
+                        tHadron.tLocation.iX += c_tileWhiteDotMiddleA4Mask.tRegion.tSize.iWidth >> 1;
+                        tHadron.tLocation.iY += (c_tileWhiteDotMiddleA4Mask.tRegion.tSize.iHeight >> 1) + 5;
+                        arm_2d_fill_colour_with_a4_mask_and_opacity(
+                            ptTile,
+                            &tHadron,
+                            &c_tileWhiteDotMiddleA4Mask,
+                            (__arm_2d_color_t){GLCD_COLOR_BLUE},
+                            256 - 64);
+                        
+                        ARM_2D_OP_WAIT_ASYNC();
+                    } while(0);
+
+                    do {
+                        arm_2d_region_t tHadron = __item_region;
+                        tHadron.tLocation.iX += 5;
+                        tHadron.tLocation.iY += (c_tileWhiteDotMiddleA4Mask.tRegion.tSize.iHeight >> 1) - 5;
+                        arm_2d_fill_colour_with_a4_mask_and_opacity(
+                            ptTile,
+                            &tHadron,
+                            &c_tileWhiteDotMiddleA4Mask,
+                            (__arm_2d_color_t){GLCD_COLOR_BLUE},
+                            256 - 32);
+                        
+                        ARM_2D_OP_WAIT_ASYNC();
+                    } while(0);
+
+                    do {
+                        arm_2d_region_t tHadron = __item_region;
+
+                        tHadron.tLocation.iX += c_tileWhiteDotMiddleA4Mask.tRegion.tSize.iWidth;
+                        tHadron.tLocation.iY += c_tileWhiteDotMiddleA4Mask.tRegion.tSize.iHeight >> 1;
+                        arm_2d_fill_colour_with_a4_mask_and_opacity(
+                            ptTile,
+                            &tHadron,
+                            &c_tileWhiteDotMiddleA4Mask,
+                            (__arm_2d_color_t){GLCD_COLOR_RED},
+                            255);
+                        
+                        ARM_2D_OP_WAIT_ASYNC();
+                    } while(0);
+                }
+
+                __item_line_dock_vertical() {
+
+                    /* apply vibration */
+                    __item_region.tLocation.iX += this.Core.tVibration.iX;
+                    __item_region.tLocation.iY += this.Core.tVibration.iY;
+
+                    arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+                    arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
+                    arm_print_banner("+2", __item_region, &ARM_2D_FONT_A4_DIGITS_ONLY);
+                }
             }
-
-            __centre_region.tLocation.iX += this.Core.tVibration.iX;
-            __centre_region.tLocation.iY += this.Core.tVibration.iY;
-
-            /* update dirty region */
-            arm_2d_helper_dirty_region_update_dirty_regions(&this.Core.tDirtyRegionHelper,
-                                                            (arm_2d_tile_t *)ptTile,
-                                                            &__top_canvas,
-                                                            &__centre_region,
-                                                            bIsNewFrame);
-
-            do {
-                arm_2d_region_t tHadron = __centre_region;
-
-                tHadron.tLocation.iX += (c_tileWhiteDotMiddleA4Mask.tRegion.tSize.iWidth >> 1) + 5;
-                arm_2d_fill_colour_with_a4_mask_and_opacity(
-                    ptTile,
-                    &tHadron,
-                    &c_tileWhiteDotMiddleA4Mask,
-                    (__arm_2d_color_t){GLCD_COLOR_RED},
-                    128);
-                
-                ARM_2D_OP_WAIT_ASYNC();
-            } while(0);
-
-            do {
-                arm_2d_region_t tHadron = __centre_region;
-
-                tHadron.tLocation.iX += c_tileWhiteDotMiddleA4Mask.tRegion.tSize.iWidth >> 1;
-                tHadron.tLocation.iY += (c_tileWhiteDotMiddleA4Mask.tRegion.tSize.iHeight >> 1) + 5;
-                arm_2d_fill_colour_with_a4_mask_and_opacity(
-                    ptTile,
-                    &tHadron,
-                    &c_tileWhiteDotMiddleA4Mask,
-                    (__arm_2d_color_t){GLCD_COLOR_BLUE},
-                    256 - 64);
-                
-                ARM_2D_OP_WAIT_ASYNC();
-            } while(0);
-
-            do {
-                arm_2d_region_t tHadron = __centre_region;
-                tHadron.tLocation.iX += 5;
-                tHadron.tLocation.iY += (c_tileWhiteDotMiddleA4Mask.tRegion.tSize.iHeight >> 1) - 5;
-                arm_2d_fill_colour_with_a4_mask_and_opacity(
-                    ptTile,
-                    &tHadron,
-                    &c_tileWhiteDotMiddleA4Mask,
-                    (__arm_2d_color_t){GLCD_COLOR_BLUE},
-                    256 - 32);
-                
-                ARM_2D_OP_WAIT_ASYNC();
-            } while(0);
-
-            do {
-                arm_2d_region_t tHadron = __centre_region;
-
-                tHadron.tLocation.iX += c_tileWhiteDotMiddleA4Mask.tRegion.tSize.iWidth;
-                tHadron.tLocation.iY += c_tileWhiteDotMiddleA4Mask.tRegion.tSize.iHeight >> 1;
-                arm_2d_fill_colour_with_a4_mask_and_opacity(
-                    ptTile,
-                    &tHadron,
-                    &c_tileWhiteDotMiddleA4Mask,
-                    (__arm_2d_color_t){GLCD_COLOR_RED},
-                    255);
-                
-                ARM_2D_OP_WAIT_ASYNC();
-            } while(0);
         }
 
         /* draw electronics */
@@ -278,92 +331,83 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_atom_handler)
             arm_2d_align_centre(__top_canvas, 
                                 220, 
                                 220) {
+
+                arm_2d_size_t tElectronicSize = {
+                    .iWidth = c_tileWhiteDotMask.tRegion.tSize.iWidth
+                            + tCharSize.iWidth,
+                    .iHeight = c_tileWhiteDotMask.tRegion.tSize.iWidth
+                            + tCharSize.iHeight,
+                };
+
                 /* electronic 0 */
-                do {
-                    if (bIsNewFrame) {
-                        /* calculate core vibration */
-                        int32_t nOffsetX, nOffsetY, nOpacity;
-                        int16_t iRadiusX = __centre_region.tSize.iWidth >> 1;
-                        int16_t iRadiusY = __centre_region.tSize.iHeight >> 1;
-                        arm_2d_helper_time_cos_slider(-iRadiusX, iRadiusX, 1300, ARM_2D_ANGLE(0.0f), &nOffsetX, &this.lTimestamp[3]);
-                        this.Electronic[0].tOffset.iX = nOffsetX;
-                        
-                        arm_2d_helper_time_cos_slider(-iRadiusY, iRadiusY, 1300, ARM_2D_ANGLE(45.0f), &nOffsetY, &this.lTimestamp[4]);
-                        this.Electronic[0].tOffset.iY = nOffsetY;
+                arm_2d_align_centre(__centre_region, tElectronicSize) {
 
-                        arm_2d_helper_time_cos_slider(128, 255, 1300, ARM_2D_ANGLE(45.0f), &nOpacity, &this.lTimestamp[7]);
+                    __centre_region.tLocation.iX += this.Electronic[0].tOffset.iX;
+                    __centre_region.tLocation.iY += this.Electronic[0].tOffset.iY;
 
-                        this.Electronic[0].chOpacity = nOpacity;
-                    }
+                    /* update dirty region */
+                    arm_2d_helper_dirty_region_update_dirty_regions(&this.Electronic[0].tDirtyRegionHelper,
+                                                                    (arm_2d_tile_t *)ptTile,
+                                                                    &__top_canvas,
+                                                                    &__centre_region,
+                                                                    bIsNewFrame);
 
-                    arm_2d_align_centre(__centre_region, c_tileWhiteDotMask.tRegion.tSize) {
-
-                        __centre_region.tLocation.iX += this.Electronic[0].tOffset.iX;
-                        __centre_region.tLocation.iY += this.Electronic[0].tOffset.iY;
+                    arm_2d_align_bottom_left(__centre_region, c_tileWhiteDotMask.tRegion.tSize) {
 
                         arm_2d_fill_colour_with_mask_and_opacity(
                             ptTile,
-                            &__centre_region,
+                            &__bottom_left_region,
                             &c_tileWhiteDotMask,
                             (__arm_2d_color_t){GLCD_COLOR_GREEN},
                             this.Electronic[0].chOpacity);
 
-
-                        /* update dirty region */
-                        arm_2d_helper_dirty_region_update_dirty_regions(&this.Electronic[0].tDirtyRegionHelper,
-                                                                        (arm_2d_tile_t *)ptTile,
-                                                                        &__top_canvas,
-                                                                        &__centre_region,
-                                                                        bIsNewFrame);
-
                         ARM_2D_OP_WAIT_ASYNC();
+                        
                     }
 
-                } while(0);
+                    arm_2d_align_mid_right(__centre_region, tCharSize) {
+
+                        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+                        arm_lcd_text_set_colour(GLCD_COLOR_GREEN, GLCD_COLOR_WHITE);
+                        arm_print_banner("-", __mid_right_region, &ARM_2D_FONT_A4_DIGITS_ONLY);
+                        
+                    }
+                    
+                }
                 
                 /* electronic 1 */
-                do {
-                    if (bIsNewFrame) {
-                        /* calculate core vibration */
-                        int32_t nOffsetX, nOffsetY, nOpacity;
-                        int16_t iRadiusX = __centre_region.tSize.iWidth >> 1;
-                        int16_t iRadiusY = __centre_region.tSize.iHeight >> 1;
-                        arm_2d_helper_time_cos_slider(-iRadiusX, iRadiusX, 1300, ARM_2D_ANGLE(180.0f), &nOffsetX, &this.lTimestamp[5]);
-                        this.Electronic[1].tOffset.iX = nOffsetX;
-                        
-                        arm_2d_helper_time_cos_slider(-iRadiusY, iRadiusY, 1300, ARM_2D_ANGLE(45.0f), &nOffsetY, &this.lTimestamp[6]);
-                        this.Electronic[1].tOffset.iY = nOffsetY;
+                arm_2d_align_centre(__centre_region, tElectronicSize) {
 
-                        arm_2d_helper_time_cos_slider(128, 255, 1300, ARM_2D_ANGLE(45.0f), &nOpacity,&this.lTimestamp[8]);
+                    __centre_region.tLocation.iX += this.Electronic[1].tOffset.iX;
+                    __centre_region.tLocation.iY += this.Electronic[1].tOffset.iY;
 
-                        this.Electronic[1].chOpacity = nOpacity;
+                    /* update dirty region */
+                    arm_2d_helper_dirty_region_update_dirty_regions(&this.Electronic[1].tDirtyRegionHelper,
+                                                                    (arm_2d_tile_t *)ptTile,
+                                                                    &__top_canvas,
+                                                                    &__centre_region,
+                                                                    bIsNewFrame);
 
-                    }
-
-                    arm_2d_align_centre(__centre_region, c_tileWhiteDotMask.tRegion.tSize) {
-
-                        __centre_region.tLocation.iX += this.Electronic[1].tOffset.iX;
-                        __centre_region.tLocation.iY += this.Electronic[1].tOffset.iY;
+                    arm_2d_align_bottom_left(__centre_region, c_tileWhiteDotMask.tRegion.tSize) {
 
                         arm_2d_fill_colour_with_mask_and_opacity(
                             ptTile,
-                            &__centre_region,
+                            &__bottom_left_region,
                             &c_tileWhiteDotMask,
                             (__arm_2d_color_t){GLCD_COLOR_GREEN},
                             this.Electronic[1].chOpacity);
 
-
-                        /* update dirty region */
-                        arm_2d_helper_dirty_region_update_dirty_regions(&this.Electronic[1].tDirtyRegionHelper,
-                                                                        (arm_2d_tile_t *)ptTile,
-                                                                        &__top_canvas,
-                                                                        &__centre_region,
-                                                                        bIsNewFrame);
-
                         ARM_2D_OP_WAIT_ASYNC();
                     }
 
-                } while(0);
+                    arm_2d_align_mid_right(__centre_region, tCharSize) {
+
+                        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+                        arm_lcd_text_set_colour(GLCD_COLOR_GREEN, GLCD_COLOR_WHITE);
+                        arm_print_banner("-", __mid_right_region, &ARM_2D_FONT_A4_DIGITS_ONLY);
+                        
+                    }
+                }
 
             }
         } while(0);
