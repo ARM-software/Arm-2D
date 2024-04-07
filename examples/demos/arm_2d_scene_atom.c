@@ -148,39 +148,36 @@ static void __on_scene_atom_frame_start(arm_2d_scene_t *ptScene)
     /* update core and electronics coordinates */
     do {
 
-        int32_t nOffsetX, nOffsetY, nOpacity;
-        int16_t iRadiusX = 110;
-        int16_t iRadiusY = 110;
+        int32_t nResult;
+        const int16_t iRadiusX = 110;
+        const int16_t iRadiusY = 110;
 
         /* calculate core vibration */
-        arm_2d_helper_time_cos_slider(-5, 5, 100, ARM_2D_ANGLE(0.0f), &nOffsetX, &this.lTimestamp[1]);
-        this.Core.tVibration.iX = nOffsetX;
+        arm_2d_helper_time_cos_slider(-5, 5, 100, ARM_2D_ANGLE(0.0f), &nResult, &this.lTimestamp[1]);
+        this.Core.tVibration.iX = nResult;
         
-        arm_2d_helper_time_cos_slider(-5, 5, 150, ARM_2D_ANGLE(30.0f), &nOffsetY, &this.lTimestamp[2]);
-        this.Core.tVibration.iY = nOffsetY;
+        arm_2d_helper_time_cos_slider(-5, 5, 150, ARM_2D_ANGLE(30.0f), &nResult, &this.lTimestamp[2]);
+        this.Core.tVibration.iY = nResult;
 
         /* calculate electronic0 vibration */
-
-        arm_2d_helper_time_cos_slider(-iRadiusX, iRadiusX, 1300, ARM_2D_ANGLE(0.0f), &nOffsetX, &this.lTimestamp[3]);
-        this.Electronic[0].tOffset.iX = nOffsetX;
+        arm_2d_helper_time_cos_slider(-iRadiusX, iRadiusX, 1300, ARM_2D_ANGLE(0.0f), &nResult, &this.lTimestamp[3]);
+        this.Electronic[0].tOffset.iX = nResult;
         
-        arm_2d_helper_time_cos_slider(-iRadiusY, iRadiusY, 1300, ARM_2D_ANGLE(45.0f), &nOffsetY, &this.lTimestamp[4]);
-        this.Electronic[0].tOffset.iY = nOffsetY;
+        arm_2d_helper_time_cos_slider(-iRadiusY, iRadiusY, 1300, ARM_2D_ANGLE(45.0f), &nResult, &this.lTimestamp[4]);
+        this.Electronic[0].tOffset.iY = nResult;
 
-        arm_2d_helper_time_cos_slider(128, 255, 1300, ARM_2D_ANGLE(45.0f), &nOpacity, &this.lTimestamp[7]);
-
-        this.Electronic[0].chOpacity = nOpacity;
+        arm_2d_helper_time_cos_slider(128, 255, 1300, ARM_2D_ANGLE(45.0f), &nResult, &this.lTimestamp[7]);
+        this.Electronic[0].chOpacity = nResult;
 
         /* calculate electronic 1 vibration */
-        arm_2d_helper_time_cos_slider(-iRadiusX, iRadiusX, 1300, ARM_2D_ANGLE(180.0f), &nOffsetX, &this.lTimestamp[5]);
-        this.Electronic[1].tOffset.iX = nOffsetX;
+        arm_2d_helper_time_cos_slider(-iRadiusX, iRadiusX, 1300, ARM_2D_ANGLE(180.0f), &nResult, &this.lTimestamp[5]);
+        this.Electronic[1].tOffset.iX = nResult;
         
-        arm_2d_helper_time_cos_slider(-iRadiusY, iRadiusY, 1300, ARM_2D_ANGLE(45.0f), &nOffsetY, &this.lTimestamp[6]);
-        this.Electronic[1].tOffset.iY = nOffsetY;
+        arm_2d_helper_time_cos_slider(-iRadiusY, iRadiusY, 1300, ARM_2D_ANGLE(45.0f), &nResult, &this.lTimestamp[6]);
+        this.Electronic[1].tOffset.iY = nResult;
 
-        arm_2d_helper_time_cos_slider(128, 255, 1300, ARM_2D_ANGLE(45.0f), &nOpacity,&this.lTimestamp[8]);
-
-        this.Electronic[1].chOpacity = nOpacity;
+        arm_2d_helper_time_cos_slider(128, 255, 1300, ARM_2D_ANGLE(45.0f), &nResult, &this.lTimestamp[8]);
+        this.Electronic[1].chOpacity = nResult;
 
     } while(0);
 
