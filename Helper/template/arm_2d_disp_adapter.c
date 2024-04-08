@@ -71,6 +71,26 @@
 #   endif
 #endif
 
+#if __DISP%Instance%_CFG_USE_CONSOLE__
+
+#ifndef __DISP%Instance%_CONSOLE_WIDTH__
+#   if __DISP%Instance%_CFG_SCEEN_WIDTH__ < 204
+#       define __DISP%Instance%_CONSOLE_WIDTH__      __DISP%Instance%_CFG_SCEEN_WIDTH__
+#   else
+#       define __DISP%Instance%_CONSOLE_WIDTH__      204
+#   endif
+#endif
+
+#ifndef __DISP%Instance%_CONSOLE_HEIGHT__
+#   if __DISP%Instance%_CFG_SCEEN_HEIGHT__ < 200
+#       define __DISP%Instance%_CONSOLE_HEIGHT__      __DISP%Instance%_CFG_SCEEN_HEIGHT__
+#   else
+#       define __DISP%Instance%_CONSOLE_HEIGHT__      192
+#   endif
+#endif
+
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -199,7 +219,9 @@ IMPL_PFB_ON_DRAW(__disp_adapter%Instance%_draw_navigation)
     arm_2d_canvas(ptTile, __navigation_canvas) {
 
         if (DISP%Instance%_CONSOLE.bShowConsole) {
-            arm_2d_align_top_left(__navigation_canvas, 220, 200) {
+            arm_2d_align_top_left(  __navigation_canvas, 
+                                    __DISP%Instance%_CONSOLE_WIDTH__ + 8, 
+                                    __DISP%Instance%_CONSOLE_HEIGHT__ + 8) {
 
                 draw_round_corner_box(  ptTile, 
                                         &__top_left_region, 
@@ -659,17 +681,6 @@ void disp_adapter%Instance%_navigator_init(void)
 
 #if __DISP%Instance%_CFG_USE_CONSOLE__
     do {
-    #if __DISP%Instance%_CFG_SCEEN_WIDTH__ < 204
-    #   define __DISP%Instance%_CONSOLE_WIDTH__      __DISP%Instance%_CFG_SCEEN_WIDTH__
-    #else
-    #   define __DISP%Instance%_CONSOLE_WIDTH__      204
-    #endif
-
-    #if __DISP%Instance%_CFG_SCEEN_HEIGHT__ < 200
-    #   define __DISP%Instance%_CONSOLE_HEIGHT__      __DISP%Instance%_CFG_SCEEN_HEIGHT__
-    #else
-    #   define __DISP%Instance%_CONSOLE_HEIGHT__      192
-    #endif
 
     #if __DISP%Instance%_CFG_CONSOLE_INPUT_BUFFER__
         static uint8_t s_chInputBuffer[256];
