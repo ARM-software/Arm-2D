@@ -220,12 +220,17 @@
             <file category="utility"     name="tools/ttf2c.py"                                  attr="config" version="1.2.0"/>
             <file category="other"       name="tools/README.md"                                 attr="config" version="1.2.2"/>
             
-            <!-- code template -->
+            <!-- the template for user controls -->
             <file category="header"      name="examples/common/controls/template/user_control_template.h"   attr="template"  select="User Control Template" version="1.1.0"/>
             <file category="sourceC"     name="examples/common/controls/template/user_control_template.c"   attr="template"  select="User Control Template" version="1.1.0"/>
             
-            <file category="sourceC"     name="Helper/template/arm_2d_scene_template.c"  attr="template"  select="User Scene Template"   version="1.2.6" />
+            <!-- the template for scenes -->
+            <file category="sourceC"     name="Helper/template/arm_2d_scene_template.c" attr="template"  select="User Scene Template"   version="1.2.6" />
             <file category="header"      name="Helper/template/arm_2d_scene_template.h" attr="template"  select="User Scene Template"   version="1.2.6" />
+
+            <!-- the template for user defined OPCODEs -->
+            <file category="sourceC"     name="Library/template/arm_2d_user_opcode_template_i_cp_src.c" attr="template"  select="OPCODE Template for Copy-Like Operations"   version="1.0.0" />
+            <file category="header"      name="Library/template/arm_2d_user_opcode_template_i_cp_src.h" attr="template"  select="OPCODE Template for Copy-Like Operations"   version="1.0.0" />
 
           </files>
 
