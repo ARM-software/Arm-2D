@@ -208,7 +208,6 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_to_rgb565)(uint32_t *__RESTRICT pwSou
             vSrcG = (vmulq(vSrcG, vSrcOpa) + vmulq(G, vTrans)) >> 8;
             vSrcB = (vmulq(vSrcB, vSrcOpa) + vmulq(B, vTrans)) >> 8;
 
-
             vst1q_p(phwTarget,
                 __arm_2d_rgb565_pack_single_vec(vSrcR, vSrcG, vSrcB), tailPred);
 
@@ -221,7 +220,7 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_to_rgb565)(uint32_t *__RESTRICT pwSou
         phwTargetBase += iTargetStride;
     }
 #else
-    uint16x8_t      scratch[3];
+    uint16x8_t      scratch[2];
     vst1q((uint16_t*)&scratch[1], vdupq_n_u16(0xf800));
     vst1q((uint16_t*)&scratch[0], vdupq_n_u16(0x7e0));
 
@@ -235,70 +234,274 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_to_rgb565)(uint32_t *__RESTRICT pwSou
         loopCnt = ptCopySize->iWidth;
 
     __asm volatile(
-
         ".p2align 2                                         \n"
-        // pipelining
-        "   vld20.8         {q3,q4}, [%[pSource]]           \n"
-        "   vmov.i16        q0, #0xf8                       \n"
-        "   vld21.8         {q3,q4}, [%[pSource]]!          \n"
 
+        // pipelining
+        "   vldrh.u16       q4, [%[phwTarget]]              \n"
+        "   vmov.i16        q0, #0xf8                       \n"
+        "   vld20.8         {q5,q6}, [%[pSource]]           \n"
         "   wlstp.16        lr, %[loopCnt], 1f              \n"
+        "   vld21.8         {q5,q6}, [%[pSource]]!          \n"
+
 
         "2:                                                 \n"
+        "   vrev16.8        q7, q6                          \n"
+        "   vmullb.u8       q3, q5, q7                      \n"
         // Opacity
-        "   vmovlt.u8       q2, q4                          \n"
-        "   vmov.i16        q6, #0x100                      \n"
+        "   vmovlt.u8       q2, q6                          \n"
+        "   vmov.i16        q1, #0x100                      \n"
         // Transparency
-        "   vsub.i16        q7, q6, q2                      \n"
-        "   vldrh.u16       q5, [%[phwTarget]]              \n"
-        "   vshr.u16        q6, q5, #0x8                    \n"
+        "   vsub.i16        q2, q1, q2                      \n"
         // vmullt combines vmovlt + vmul
-        "   vmullt.u8       q1, q3, q4                      \n"
-        "   vand            q6, q6, q0                      \n"
-        "   vmul.i16        q2, q7, q6                      \n"
-        "   vshr.u16        q6, q5, #0x3                    \n"
-
-        "   vadd.i16        q1, q2, q1                      \n"
-        "   vstrw.u32       q1, [%[scratch], #32]           \n"
-        "   vshl.i16        q2, q5, #0x3                    \n"
+        "   vmullt.u8       q1, q5, q6                      \n"
+        "   vshr.u16        q5, q4, #0x3                    \n"
+        "   vmullb.u8       q7, q6, q7                      \n"
+        "   vshr.u16        q6, q4, #0x8                    \n"
+        "   vmul.i16        q4, q4,  %[eight]               \n"
+        "   vand q6,        q6, q0                          \n"
+        "   vmul.i16        q6, q2, q6                      \n"
+        "   vand            q4, q4, q0                      \n"
+        "   vmul.i16        q4, q2, q4                      \n"
+        "   vadd.i16        q6, q6, q1                      \n"
         "   vmov.i16        q1, #0xfc                       \n"
-        "   vand            q1, q6, q1                      \n"
-        "   vmul.i16        q6, q7, q1                      \n"
-        "   vrev16.8        q1, q4                          \n"
-        "   vmullb.u8       q4, q4, q1                      \n"
-        "   vand            q2, q2, q0                      \n"
-        "   vmul.i16        q7, q7, q2                      \n"
-        "   vadd.i16        q4, q6, q4                      \n"
-        "   vmullb.u8       q6, q3, q1                      \n"
-        "   vshr.u16        q2, q4, #0x5                    \n"
-        "   vadd.i16        q4, q7, q6                      \n"
+        "   vand            q5, q5, q1                      \n"
+        "   vmul.i16        q2, q2, q5                      \n"
+        "   vadd.i16        q1, q4, q3                      \n"
         // vector of 0xf800
-        "   vldrw.u32       q1, [%[scratch], #16]           \n"
-        "   vshr.u16        q6, q4, #0xb                    \n"
-        "   vldrw.u32       q4, [%[scratch], #32]           \n"
-        "   vand            q1, q4, q1                      \n"
-        "   vld20.8         {q3,q4}, [%[pSource]]           \n"
-        "   vorr            q1, q1, q6                      \n"
+        "   vldrw.u32       q4, [%[scratch], #16]           \n"
+        "   vand            q3, q6, q4                      \n"
+        "   vld20.8         {q5,q6}, [%[pSource]]           \n"
+        "   vshr.u16        q1, q1, #0xb                    \n"
+        "   vldrh.u16       q4, [%[phwTarget], #16]         \n"
+        "   vadd.i16        q2, q2, q7                      \n"
+        "   vqdmulh.s16     q2, q2, %[inv2pow5]             \n"
+        "   vorr            q1, q3, q1                      \n"
         // vector of 0x7e0
         "   vldrw.u32       q7, [%[scratch]]                \n"
-        "   vand q2,        q2, q7                          \n"
-        "   vld21.8         {q3,q4}, [%[pSource]]!          \n"
+        "   vand            q2, q2, q7                      \n"
+        "   vld21.8         {q5,q6}, [%[pSource]]!          \n"
         "   vorr            q1, q1, q2                      \n"
         "   vstrh.u16       q1, [%[phwTarget]] , #16        \n"
         "   letp            lr, 2b                          \n"
         "1:                                                 \n"
+
         : [phwTarget] "+r" (phwTarget),
-        [pSource] "+r" (pSource), [loopCnt] "+r"(loopCnt)
-        : [scratch] "r" (scratch)
+          [pSource] "+r" (pSource), [loopCnt] "+r"(loopCnt)
+        : [scratch] "r" (scratch), [eight] "r" (8),
+          [inv2pow5] "r" ( 1 << (15 - 5)) //  /* 1/(2^5) in Q.15 */
         : "q0", "q1", "q2", "q3",
           "q4", "q5", "q6", "q7",
           "memory" );
-
 
         pwSourceBase += iSourceStride;
         phwTargetBase += iTargetStride;
     }
     #endif
+}
+
+__OVERRIDE_WEAK
+void __MVE_WRAPPER( __arm_2d_impl_ccca8888_to_gray8) (   uint32_t *__RESTRICT pwSourceBase,
+                                        int16_t iSourceStride,
+                                        uint8_t *__RESTRICT pchTargetBase,
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t *__RESTRICT ptCopySize)
+{
+#ifdef USE_MVE_INTRINSICS
+    for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
+
+        const uint8_t  *__RESTRICT pSource = (const uint8_t *) pwSourceBase;
+        uint8_t *__RESTRICT pchTarget = pchTargetBase;
+        int32_t         blkCnt = ptCopySize->iWidth;
+
+        do {
+
+            mve_pred16_t    tailPred = vctp16q(blkCnt);
+
+            uint8x16x2_t    vdeintr2 = vld2q_u8(pSource);
+
+            uint16x8_t      vSrcOpa = vmovltq(vdeintr2.val[1]);
+            uint16x8_t      vSrcG = vmovlbq(vdeintr2.val[1]);
+            uint16x8_t      vSrcR = vmovltq(vdeintr2.val[0]);
+            uint16x8_t      vSrcB = vmovlbq(vdeintr2.val[0]);
+
+            uint16x8_t      vtrgt = vldrbq_u16(pchTarget);
+            uint16x8_t      vTrans = 256 - vSrcOpa;
+
+            uint16x8_t vAvg = vSrcG + vSrcR + vSrcB;
+
+            vAvg = vAvg / 3;
+
+            vAvg = (vmulq(vAvg, vSrcOpa) + vmulq(vtrgt, vTrans)) >> 8;
+
+            vstrbq_p_u16(pchTarget, vAvg, tailPred);
+
+            pSource += 32;
+            pchTarget += 8;
+            blkCnt -= 8;
+        }
+        while (blkCnt > 0);
+        pwSourceBase += iSourceStride;
+        pchTargetBase += iTargetStride;
+    }
+
+#else
+
+    for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
+
+        const uint8_t  *__RESTRICT pSource = (const uint8_t *) pwSourceBase;
+        uint8_t *__RESTRICT pchTarget = pchTargetBase;
+
+        register unsigned loopCnt  __asm("lr");
+        loopCnt = ptCopySize->iWidth;
+
+    __asm volatile(
+        ".p2align 2                                         \n"
+
+        // pipelining
+        "   vld20.8         {q2,q3}, [%[pSource]]           \n"
+        "   vdup.16         q1, %[one_third]                \n"
+        "   vld21.8         {q2,q3}, [%[pSource]]!          \n"
+        "   vmov.i16        q0, #0x100                      \n"
+        "   wlstp.16        lr, %[loopCnt], 1f              \n"
+
+        "2:                                                 \n"
+        // Opacity
+        "   vmovlt.u8       q4, q3                          \n"
+        "   vmovlb.u8       q3, q3                          \n"
+        "   vmovlt.u8       q5, q2                          \n"
+        "   vmovlb.u8       q2, q2                          \n"
+        // averaging
+        "   vadd.i16        q6, q3, q5                      \n"
+        "   vadd.i16        q6, q6, q2                      \n"
+        "   vmulh.u16       q6, q6, q1                      \n"
+        // Transparency
+        "   vsub.i16        q7, q0, q4                      \n"
+        "   vld20.8         {q2,q3}, [%[pSource]]           \n"
+        "   vshr.u16        q6, q6, #0x1                    \n"
+        "   vmul.i16        q6, q6, q4                      \n"
+        "   vldrb.u16       q4, [%[pchTarget]]              \n"
+        "   vmul.i16        q7, q7, q4                      \n"
+        "   vld21.8         {q2,q3}, [%[pSource]]!          \n"
+        "   vadd.i16        q6, q6, q7                      \n"
+        // 8-bit right shift
+        "   vqdmulh.s16     q6, q6, %[inv2pow8]             \n"
+        "   vstrb.u16       q6, [%[pchTarget]] , #8         \n"
+        "   letp            lr, 2b                          \n"
+        "1:                                                 \n"
+
+        : [pchTarget] "+r" (pchTarget),
+          [pSource] "+r" (pSource), [loopCnt] "+r"(loopCnt)
+        : [one_third] "r" (0xaaab),
+          [inv2pow8] "r" ( 1 << (15 - 8)) //  /* 1/(2^8) in Q.15 */
+        : "q0", "q1", "q2", "q3",
+          "q4", "q5", "q6", "q7",
+          "memory" );
+
+        pwSourceBase += iSourceStride;
+        pchTargetBase += iTargetStride;
+    }
+    #endif
+}
+
+
+
+__OVERRIDE_WEAK
+void __MVE_WRAPPER( __arm_2d_impl_ccca8888_to_cccn888)( uint32_t *__RESTRICT pwSourceBase,
+                                        int16_t iSourceStride,
+                                        uint32_t *__RESTRICT pwTargetBase,
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t *__RESTRICT ptCopySize)
+{
+    /* offset to replicate the opacity accross the 4 channels */
+    uint16x8_t offset = {3, 3, 3, 3, 7, 7, 7, 7};
+#ifdef USE_MVE_INTRINSICS
+
+    for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
+
+
+        const uint8_t *__RESTRICT pwSource = (const uint8_t *)pwSourceBase;
+        uint8_t       *__RESTRICT pwTarget = (uint8_t *)pwTargetBase;
+        int32_t         blkCnt = ptCopySize->iWidth;
+
+        do {
+
+            mve_pred16_t    tailPred = vctp64q(blkCnt);
+
+            uint16x8_t vSrc = vldrbq_u16(pwSource);
+            uint16x8_t vTrg = vldrbq_u16(pwTarget);
+
+            /*
+              replicate alpha, but alpha location = 0 (zeroing) so that transparency = 0x100
+              and leaves target 0 unchanged
+              vSrcOpa = | opa0 | opa0 | opa0 |  0  | opa1 | opa1 | opa1 |  0  |
+              */
+            uint16x8_t vSrcOpa = vldrbq_gather_offset_z_u16(pwSource,  offset, 0x3f3f);
+
+            uint16x8_t      vTrans = 256 - vSrcOpa;
+
+            vTrg = (vTrg *vTrans + vSrc*vSrcOpa) >> 8;
+
+            vstrbq_p_u16(pwTarget, vTrg, tailPred);
+
+            pwSource += 8;
+            pwTarget += 8;
+            blkCnt -= 2;
+        }
+        while (blkCnt > 0);
+        pwSourceBase += iSourceStride;
+        pwTargetBase += iTargetStride;
+    }
+#else
+
+    for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
+
+        const uint8_t *__RESTRICT pwSource = (const uint8_t *)pwSourceBase;
+        uint8_t       *__RESTRICT pwTarget = (uint8_t *)pwTargetBase;
+
+
+        register unsigned loopCnt  __asm("lr");
+        loopCnt = ptCopySize->iWidth;
+
+      __asm volatile(
+            ".p2align 2                                         \n"
+
+            "   vmsr            p0, %[repl_pred_msk]            \n"
+
+            "   vpst                                            \n"
+            "   vldrbt.u16      q5, [%[pwSource], %q[offset]]   \n"
+            "   vmov.i16        q0, #0x100                      \n"
+            "   vldrb.u16       q4, [%[pwSource]], #8           \n"
+
+            // 2 x 32-bit pixel / loop
+            "   wlstp.64        lr, %[loopCnt], 1f              \n"
+
+            "2:                                                 \n"
+            "   vmul.i16        q4, q5, q4                      \n"
+            "   vldrb.u16       q2, [%[pwTarget]]               \n"
+            // transparency
+            "   vsub.i16        q3, q0, q5                      \n"
+            "   vmul.i16        q3, q3, q2                      \n"
+            // Opacity
+            "   vpst                                            \n"
+            "   vldrbt.u16      q5, [%[pwSource], %q[offset]]   \n"
+            "   vadd.i16        q3, q3, q4                      \n"
+            "   vldrb.u16       q4, [%[pwSource]], #8           \n"
+            "   vshr.u16        q3, q3, #0x8                    \n"
+
+            "   vstrb.16        q3, [%[pwTarget]], #8           \n"
+            "   letp            lr, 2b                          \n"
+            "1:                                                 \n"
+            : [pwTarget] "+r" (pwTarget),
+              [pwSource] "+r" (pwSource), [loopCnt] "+r"(loopCnt)
+            : [repl_pred_msk] "r" (0x3f3f), [offset] "t" (offset)
+            : "q0", "q1", "q2", "q3",
+              "q4", "q5",
+              "memory" );
+
+        pwSourceBase += iSourceStride;
+        pwTargetBase += iTargetStride;
+    }
+#endif
 }
 
 __OVERRIDE_WEAK
