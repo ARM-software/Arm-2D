@@ -144,7 +144,7 @@ __WEAK int64_t arm_2d_helper_get_system_timestamp(void)
 __WEAK 
 uint32_t arm_2d_helper_get_reference_clock_frequency(void)
 {
-#if defined(__PERF_COUNTER__) && __PER_COUNTER_VER__ >= 23000
+#if defined(__PERF_COUNTER__) && __PER_COUNTER_VER__ >= 20300
     extern uint32_t perfc_port_get_system_timer_freq(void);
     return perfc_port_get_system_timer_freq();
 #else
