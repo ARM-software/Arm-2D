@@ -35,7 +35,7 @@ from jinja2 import Environment, FileSystemLoader
 def main(argv):
 
     # Parse the input
-    parser = argparse.ArgumentParser(description='Jinja Launcher for arm-2d code templates (v1.0.0)')
+    parser = argparse.ArgumentParser(description='Jinja Launcher for arm-2d code templates (v1.1.0)')
 
     parser.add_argument("-i",   "--input",          type = str, help="Path of the input jinja2 template file", required=False)
     parser.add_argument("-var", "--variable",       type = str, help="an optional path of the JSON file containing jinja2 template variables", required=False)
@@ -57,22 +57,25 @@ def main(argv):
         print(f"Error: The folder {args.folder} does not exist.")
         sys.exit(1)
 
-
-    if args.output_folder == None or args.output_folder == "" :
-        args.output_folder = "../Source"
-
-    if not os.path.isdir(os.path.join(args.folder, args.output_folder)):
-        print(f"Error: The folder {os.path.join(args.folder, args.output_folder)} does not exist.")
-        sys.exit(1)
-
     output_file = args.output
     if output_file is None:
         if args.input.endswith('.jinja'):
             output_file = args.input[:-6]  # remove ".jinja" extension
+
+            if args.output_folder == None or args.output_folder == "" :
+                if output_file.endswith('.c') :
+                    args.output_folder = "../Source"
+                if output_file.endswith('.h') :
+                    args.output_folder = "../Include"
+
             output_file = os.path.join(args.folder, args.output_folder, output_file)
         else:
             output_file = None
 
+    if not os.path.isdir(os.path.join(args.folder, args.output_folder)):
+        print(f"Error: The folder {os.path.join(args.folder, args.output_folder)} does not exist.")
+        sys.exit(1)
+    
 
     #Template environment
     env = Environment(loader=FileSystemLoader(args.folder))
@@ -85,8 +88,6 @@ def main(argv):
     template = env.get_template(args.input)
 
     # Load variables
-
-
 
     variables = {}
     if args.variable is not None:
