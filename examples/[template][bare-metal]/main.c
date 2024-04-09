@@ -91,7 +91,7 @@ void Disp0_DrawBitmap(  int16_t x,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptCopySize);
 
-    static uint16_t s_hwFrameBuffer[BENCHMARK_PFB_BLOCK_WIDTH * BENCHMARK_PFB_BLOCK_HEIGHT];
+    static uint16_t s_hwFrameBuffer[__DISP0_CFG_SCEEN_WIDTH__ * __DISP0_CFG_SCEEN_HEIGHT__];
     
     arm_2d_size_t size = {
         .iWidth = width,
@@ -185,17 +185,17 @@ typedef void scene_loader_t(void);
 static scene_loader_t * const c_SceneLoaders[] = {
 
     scene0_loader,
-    scene1_loader,
-    scene_meter_loader,
-    scene_alarm_clock_loader,
-#if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
-    virtual_resource_demo_loader,
-#endif
-    scene3_loader,
-    scene4_loader,
-    scene2_loader,
+//    scene1_loader,
+//    scene_meter_loader,
+//    scene_alarm_clock_loader,
+//#if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
+//    virtual_resource_demo_loader,
+//#endif
+//    scene3_loader,
+//    scene4_loader,
+//    scene2_loader,
 
-    scene_fitness_loader,
+//    scene_fitness_loader,
     //scene_audiomark_loader
 };
 
