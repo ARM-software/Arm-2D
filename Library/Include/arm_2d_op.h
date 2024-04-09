@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        18. Feb 2024
- * $Revision:    V.1.6.2
+ * $Date:        9. April 2024
+ * $Revision:    V.1.6.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -216,12 +216,18 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_COLOUR_KEYING_AND_XY_MIRROR_RG
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_COLOUR_KEYING_AND_XY_MIRROR_RGB32;
 
-
-
 /*----------------------------------------------------------------------------*
- * Alpha-Blending and Masks                                                   *
+ * Colour Filling                                                         *
  *----------------------------------------------------------------------------*/
 
+extern 
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_C8BIT;
+
+extern 
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_RGB16;
+    
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_RGB32; 
 
 extern 
 const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_A2_MASK_GRAY8;
@@ -330,6 +336,46 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_Y_MIRROR_AND_OPACITY_CC
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_XY_MIRROR_AND_OPACITY_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_AND_OPACITY_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_AND_OPACITY_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_AND_OPACITY_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_VERTICAL_LINE_MASK_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_VERTICAL_LINE_MASK_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_VERTICAL_LINE_MASK_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_VERTICAL_LINE_MASK_AND_OPACITY_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_VERTICAL_LINE_MASK_AND_OPACITY_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_VERTICAL_LINE_MASK_AND_OPACITY_CCCN888;
+
+/*----------------------------------------------------------------------------*
+ * Alpha Blending and Masks                                                   *
+ *----------------------------------------------------------------------------*/
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_OPACITY_GRAY8;
@@ -604,14 +650,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_AND_XY_MIRROR_CCCN888
 /*----------------------------------------------------------------------------*
  * Basic Drawing                                                              *
  *----------------------------------------------------------------------------*/
-extern 
-const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_C8BIT;
-
-extern 
-const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_RGB16;
-    
-extern
-const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_RGB32; 
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_DRAW_POINT_C8BIT;
