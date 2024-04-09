@@ -133,7 +133,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_horizontal_line_mask(
 /*
  * The backend entry
  */
-arm_fsm_rt_t __arm_2d_cccn888_sw_fill_colour_with_horizontal_line_mask( __arm_2d_sub_task_t *ptTask)
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_horizontal_line_mask( __arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptTask->ptOP);
 
@@ -233,7 +233,7 @@ void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_mask(
  */
 __WEAK
 def_low_lv_io(  __ARM_2D_IO_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_CCCN888,
-                __arm_2d_cccn888_sw_fill_colour_with_horizontal_line_mask);      /* Default SW Implementation */
+                __arm_2d_cccn888_sw_colour_filling_with_horizontal_line_mask);      /* Default SW Implementation */
 
 
 /*
