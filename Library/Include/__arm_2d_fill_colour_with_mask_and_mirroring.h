@@ -305,7 +305,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_mask_and_x_mirror(
 extern
 ARM_NONNULL(2,4)
 arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_mask_x_mirror_and_opacity(
-                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
@@ -323,7 +323,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_mask_and_y_mirror(
 extern
 ARM_NONNULL(2,4)
 arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_mask_y_mirror_and_opacity(
-                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
@@ -341,7 +341,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_mask_and_xy_mirror(
 extern
 ARM_NONNULL(2,4)
 arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_mask_xy_mirror_and_opacity(
-                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
@@ -359,7 +359,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask_and_x_mirror(
 extern
 ARM_NONNULL(2,4)
 arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask_x_mirror_and_opacity(
-                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
@@ -377,7 +377,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask_and_y_mirror(
 extern
 ARM_NONNULL(2,4)
 arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask_y_mirror_and_opacity(
-                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
@@ -395,7 +395,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask_and_xy_mirror(
 extern
 ARM_NONNULL(2,4)
 arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask_xy_mirror_and_opacity(
-                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
@@ -413,7 +413,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_mask_and_x_mirror(
 extern
 ARM_NONNULL(2,4)
 arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_mask_x_mirror_and_opacity(
-                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
@@ -431,7 +431,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_mask_and_y_mirror(
 extern
 ARM_NONNULL(2,4)
 arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_mask_y_mirror_and_opacity(
-                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
@@ -449,7 +449,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_mask_and_xy_mirror(
 extern
 ARM_NONNULL(2,4)
 arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_mask_xy_mirror_and_opacity(
-                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,

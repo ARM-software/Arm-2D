@@ -22,7 +22,7 @@
  * Description:  APIs for colour-filling-with-mask-and-mirroring
  *
  * $Date:        20. Feb 2024
- * $Revision:    V.0.6.1
+ * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -305,7 +305,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_{{mirror_name | upper()
 
 ARM_NONNULL(2,4)
 arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_mask_{{mirror_name | lower }}_and_opacity(
-                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
@@ -315,7 +315,7 @@ arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_mask_{{mirror_name
     assert(NULL != ptTarget);
     assert(NULL != ptAlpha);
 
-    ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptOP);
 
     //! valid alpha mask tile
     if (!__arm_2d_valid_mask(ptAlpha, 
@@ -417,7 +417,7 @@ void __arm_2d_impl_{{colour_name | lower}}_colour_filling_channel_mask_{{mirror_
 arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_mask_{{mirror_name | lower }}_and_opacity(
                                                 __arm_2d_sub_task_t *ptTask)
 {
-    ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptTask->ptOP)
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptTask->ptOP)
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__

@@ -341,6 +341,12 @@ enum {
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_TRANFORM,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_OPACITY_AND_TRANFORM,
 
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_AND_OPACITY,
+
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_VERTICAL_LINE_MASK,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_VERTICAL_LINE_MASK_AND_OPACITY,
+
     __ARM_2D_OP_IDX_DRAW_POINT,
     __ARM_2D_OP_IDX_DRAW_PATTERN,
 
@@ -510,7 +516,7 @@ ARM_PRIVATE(
         
         arm_2d_op_alpha_t                   tAlpha;
         arm_2d_op_alpha_cl_key_t            tAlphaColourKeying;
-        arm_2d_op_alpha_fill_cl_msk_opc_t   tAlphaFillColourMaskOpacity;
+        arm_2d_op_fill_cl_msk_opc_t   tAlphaFillColourMaskOpacity;
         arm_2d_op_cp_msk_t                  tCopyMasks;
         
         arm_2d_op_drw_patn_t                tDrawPattern;

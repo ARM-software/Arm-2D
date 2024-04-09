@@ -23,7 +23,7 @@
  *               colour-filling-with-mask-and-mirroring
  *
  * $Date:        20. Feb 2024
- * $Revision:    V.0.6.1
+ * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -128,7 +128,7 @@ arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_mask_and_{{mirror_
 extern
 ARM_NONNULL(2,4)
 arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_mask_{{mirror_name | lower}}_and_opacity(
-                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,

@@ -274,7 +274,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_X_MIRROR_AND_OPACITY_GR
 
 ARM_NONNULL(2,4)
 arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_mask_x_mirror_and_opacity(
-                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
@@ -284,7 +284,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_mask_x_mirror_and_opacity(
     assert(NULL != ptTarget);
     assert(NULL != ptAlpha);
 
-    ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptOP);
 
     //! valid alpha mask tile
     if (!__arm_2d_valid_mask(ptAlpha, 
@@ -386,7 +386,7 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_x_mirror_opacity(
 arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_x_mirror_and_opacity(
                                                 __arm_2d_sub_task_t *ptTask)
 {
-    ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptTask->ptOP)
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptTask->ptOP)
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -630,7 +630,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_Y_MIRROR_AND_OPACITY_GR
 
 ARM_NONNULL(2,4)
 arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_mask_y_mirror_and_opacity(
-                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
@@ -640,7 +640,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_mask_y_mirror_and_opacity(
     assert(NULL != ptTarget);
     assert(NULL != ptAlpha);
 
-    ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptOP);
 
     //! valid alpha mask tile
     if (!__arm_2d_valid_mask(ptAlpha, 
@@ -742,7 +742,7 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_y_mirror_opacity(
 arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_y_mirror_and_opacity(
                                                 __arm_2d_sub_task_t *ptTask)
 {
-    ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptTask->ptOP)
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptTask->ptOP)
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -986,7 +986,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_XY_MIRROR_AND_OPACITY_G
 
 ARM_NONNULL(2,4)
 arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_mask_xy_mirror_and_opacity(
-                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
@@ -996,7 +996,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_mask_xy_mirror_and_opacity(
     assert(NULL != ptTarget);
     assert(NULL != ptAlpha);
 
-    ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptOP);
 
     //! valid alpha mask tile
     if (!__arm_2d_valid_mask(ptAlpha, 
@@ -1098,7 +1098,7 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_xy_mirror_opacity(
 arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_xy_mirror_and_opacity(
                                                 __arm_2d_sub_task_t *ptTask)
 {
-    ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptTask->ptOP)
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptTask->ptOP)
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -1342,7 +1342,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_X_MIRROR_AND_OPACITY_RG
 
 ARM_NONNULL(2,4)
 arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask_x_mirror_and_opacity(
-                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
@@ -1352,7 +1352,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask_x_mirror_and_opacity(
     assert(NULL != ptTarget);
     assert(NULL != ptAlpha);
 
-    ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptOP);
 
     //! valid alpha mask tile
     if (!__arm_2d_valid_mask(ptAlpha, 
@@ -1454,7 +1454,7 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror_opacity(
 arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_x_mirror_and_opacity(
                                                 __arm_2d_sub_task_t *ptTask)
 {
-    ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptTask->ptOP)
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptTask->ptOP)
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -1698,7 +1698,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_Y_MIRROR_AND_OPACITY_RG
 
 ARM_NONNULL(2,4)
 arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask_y_mirror_and_opacity(
-                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
@@ -1708,7 +1708,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask_y_mirror_and_opacity(
     assert(NULL != ptTarget);
     assert(NULL != ptAlpha);
 
-    ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptOP);
 
     //! valid alpha mask tile
     if (!__arm_2d_valid_mask(ptAlpha, 
@@ -1810,7 +1810,7 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_y_mirror_opacity(
 arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_y_mirror_and_opacity(
                                                 __arm_2d_sub_task_t *ptTask)
 {
-    ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptTask->ptOP)
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptTask->ptOP)
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -2054,7 +2054,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_XY_MIRROR_AND_OPACITY_R
 
 ARM_NONNULL(2,4)
 arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask_xy_mirror_and_opacity(
-                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
@@ -2064,7 +2064,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask_xy_mirror_and_opacity(
     assert(NULL != ptTarget);
     assert(NULL != ptAlpha);
 
-    ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptOP);
 
     //! valid alpha mask tile
     if (!__arm_2d_valid_mask(ptAlpha, 
@@ -2166,7 +2166,7 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_xy_mirror_opacity(
 arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_xy_mirror_and_opacity(
                                                 __arm_2d_sub_task_t *ptTask)
 {
-    ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptTask->ptOP)
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptTask->ptOP)
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -2410,7 +2410,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_X_MIRROR_AND_OPACITY_CC
 
 ARM_NONNULL(2,4)
 arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_mask_x_mirror_and_opacity(
-                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
@@ -2420,7 +2420,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_mask_x_mirror_and_opacity(
     assert(NULL != ptTarget);
     assert(NULL != ptAlpha);
 
-    ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptOP);
 
     //! valid alpha mask tile
     if (!__arm_2d_valid_mask(ptAlpha, 
@@ -2522,7 +2522,7 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask_x_mirror_opacity(
 arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_x_mirror_and_opacity(
                                                 __arm_2d_sub_task_t *ptTask)
 {
-    ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptTask->ptOP)
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptTask->ptOP)
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -2766,7 +2766,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_Y_MIRROR_AND_OPACITY_CC
 
 ARM_NONNULL(2,4)
 arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_mask_y_mirror_and_opacity(
-                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
@@ -2776,7 +2776,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_mask_y_mirror_and_opacity(
     assert(NULL != ptTarget);
     assert(NULL != ptAlpha);
 
-    ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptOP);
 
     //! valid alpha mask tile
     if (!__arm_2d_valid_mask(ptAlpha, 
@@ -2878,7 +2878,7 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask_y_mirror_opacity(
 arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_y_mirror_and_opacity(
                                                 __arm_2d_sub_task_t *ptTask)
 {
-    ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptTask->ptOP)
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptTask->ptOP)
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -3122,7 +3122,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_XY_MIRROR_AND_OPACITY_C
 
 ARM_NONNULL(2,4)
 arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_mask_xy_mirror_and_opacity(
-                                        arm_2d_op_alpha_fill_cl_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptAlpha,
@@ -3132,7 +3132,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_mask_xy_mirror_and_opacity(
     assert(NULL != ptTarget);
     assert(NULL != ptAlpha);
 
-    ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptOP);
 
     //! valid alpha mask tile
     if (!__arm_2d_valid_mask(ptAlpha, 
@@ -3234,7 +3234,7 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask_xy_mirror_opacity(
 arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_xy_mirror_and_opacity(
                                                 __arm_2d_sub_task_t *ptTask)
 {
-    ARM_2D_IMPL(arm_2d_op_alpha_fill_cl_msk_opc_t, ptTask->ptOP)
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptTask->ptOP)
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
