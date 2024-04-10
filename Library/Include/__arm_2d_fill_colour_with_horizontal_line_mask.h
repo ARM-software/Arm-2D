@@ -21,8 +21,8 @@
  * Title:        __arm_2d_fill_colour_with_horizontal_line_mask.h
  * Description:  APIs for colour-filling-with-horizontal-line-mask
  *
- * $Date:        20. April 2024
- * $Revision:    V.0.3.0
+ * $Date:        10. April 2024
+ * $Revision:    V.0.9.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -89,6 +89,48 @@ extern "C" {
                                  (__MASK_ADDR),                                 \
                                  (arm_2d_color_cccn888_t){(__COLOUR).tValue})
 
+#define arm_2d_gray8_fill_colour_with_horizontal_line_mask_and_opacity(                   \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   mask tile address */   \
+                                    __COLOUR,       /*   colour */              \
+                                    __OPACITY)      /*    Opacity */            \
+            arm_2dp_gray8_fill_colour_with_horizontal_line_mask_and_opacity(              \
+                                  NULL,                                         \
+                                 (__TARGET_ADDR),                               \
+                                 (__REGION_ADDR),                               \
+                                 (__MASK_ADDR),                                 \
+                                 (arm_2d_color_gray8_t){(__COLOUR).tValue},    \
+                                 (__OPACITY)}
+
+#define arm_2d_rgb565_fill_colour_with_horizontal_line_mask_and_opacity(                   \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   mask tile address */   \
+                                    __COLOUR,       /*   colour */              \
+                                    __OPACITY)      /*    Opacity */            \
+            arm_2dp_rgb565_fill_colour_with_horizontal_line_mask_and_opacity(              \
+                                  NULL,                                         \
+                                 (__TARGET_ADDR),                               \
+                                 (__REGION_ADDR),                               \
+                                 (__MASK_ADDR),                                 \
+                                 (arm_2d_color_rgb565_t){(__COLOUR).tValue},    \
+                                 (__OPACITY)}
+
+#define arm_2d_cccn888_fill_colour_with_horizontal_line_mask_and_opacity(                   \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   mask tile address */   \
+                                    __COLOUR,       /*   colour */              \
+                                    __OPACITY)      /*    Opacity */            \
+            arm_2dp_cccn888_fill_colour_with_horizontal_line_mask_and_opacity(              \
+                                  NULL,                                         \
+                                 (__TARGET_ADDR),                               \
+                                 (__REGION_ADDR),                               \
+                                 (__MASK_ADDR),                                 \
+                                 (arm_2d_color_cccn888_t){(__COLOUR).tValue},    \
+                                 (__OPACITY)}
+
 /*============================ TYPES =========================================*/
 
 /*!
@@ -123,6 +165,40 @@ typedef struct arm_2d_op_fill_cl_l_msk_t {
 
 } arm_2d_op_fill_cl_l_msk_t;
 
+/*!
+ * \brief control block for colour-filling-with-mask operations
+ * \note arm_2d_op_fill_cl_l_msk_t inherits from arm_2d_op_msk_t explicitly 
+ */
+typedef struct arm_2d_op_fill_cl_l_msk_opc_t {
+
+    inherit(arm_2d_op_core_t);
+    struct {
+        const arm_2d_tile_t     *ptTile;                //!< target tile
+        const arm_2d_region_t   *ptRegion;              //!< target region
+    } Target;
+    struct {
+        const arm_2d_tile_t     *ptTile;                //!< source tile
+    }Source;
+    uint32_t wMode;
+
+    /* derived part */
+    struct {
+        const arm_2d_tile_t     *ptSourceSide;          //!< source side mask
+        const arm_2d_tile_t     *ptTargetSide;          //!< target side mask
+    } Mask;
+
+    union {
+        uint8_t  chColour;                      //!< 8bit key colour
+        uint16_t hwColour;                      //!< 16bit key colour
+        uint32_t wColour;                       //!< 32bit key colour
+    };
+
+    arm_2d_tile_t tDummySource;
+
+    uint8_t chOpacity;
+
+} arm_2d_op_fill_cl_l_msk_opc_t;
+
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -154,6 +230,36 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_horizontal_line_mask(
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptLineMask,
                                         arm_2d_color_cccn888_t tColour);
+
+extern
+ARM_NONNULL(2,4)
+arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_horizontal_line_mask_and_opacity(
+                                        arm_2d_op_fill_cl_l_msk_opc_t *ptOP,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_tile_t *ptLineMask,
+                                        arm_2d_color_gray8_t tColour,
+                                        uint8_t chOpacity);
+
+extern
+ARM_NONNULL(2,4)
+arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_horizontal_line_mask_and_opacity(
+                                        arm_2d_op_fill_cl_l_msk_opc_t *ptOP,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_tile_t *ptLineMask,
+                                        arm_2d_color_rgb565_t tColour,
+                                        uint8_t chOpacity);
+
+extern
+ARM_NONNULL(2,4)
+arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_horizontal_line_mask_and_opacity(
+                                        arm_2d_op_fill_cl_l_msk_opc_t *ptOP,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_tile_t *ptLineMask,
+                                        arm_2d_color_cccn888_t tColour,
+                                        uint8_t chOpacity);
 
 
 #if defined(__clang__)

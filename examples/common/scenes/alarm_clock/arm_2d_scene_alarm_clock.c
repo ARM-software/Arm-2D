@@ -377,7 +377,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_alarm_clock_handler)
                             tECGScanRegion.tLocation.iX += this.iECGScanOffset - c_tileECGMask.tRegion.tSize.iWidth;
                             tECGScanRegion.tSize.iWidth += c_tileECGMask.tRegion.tSize.iWidth - this.iECGScanOffset;
                             arm_2d_fill_colour_with_horizontal_line_mask(
-                                                        &__ecg,
+                                                         &__ecg,
                                                          &tECGScanRegion,
                                                          &c_tileECGScanLineMask, 
                                                          (__arm_2d_color_t){GLCD_COLOR_BLACK});

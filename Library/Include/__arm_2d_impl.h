@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        10. April 2024
- * $Revision:    V.1.4.7
+ * $Date:        11. April 2024
+ * $Revision:    V.1.4.8
  *
  * Target Processor:  Cortex-M cores
  *
@@ -1409,6 +1409,31 @@ extern
 arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_horizontal_line_mask_and_opacity(
                                                 __arm_2d_sub_task_t *ptTask);
 
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_repeat_colour_filling_with_horizontal_line_mask(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_repeat_colour_filling_with_horizontal_line_mask(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_repeat_colour_filling_with_horizontal_line_mask(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_repeat_colour_filling_with_horizontal_line_mask_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_repeat_colour_filling_with_horizontal_line_mask_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_repeat_colour_filling_with_horizontal_line_mask_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+
 extern
 arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_vertical_line_mask(
                                                 __arm_2d_sub_task_t *ptTask);
@@ -1431,6 +1456,30 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_vertical_line_mask_and_opaci
 
 extern
 arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_vertical_line_mask_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_repeat_colour_filling_with_vertical_line_mask(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_repeat_colour_filling_with_vertical_line_mask(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_repeat_colour_filling_with_vertical_line_mask(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_repeat_colour_filling_with_vertical_line_mask_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_repeat_colour_filling_with_vertical_line_mask_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_repeat_colour_filling_with_vertical_line_mask_and_opacity(
                                                 __arm_2d_sub_task_t *ptTask);
 
 extern

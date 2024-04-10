@@ -21,8 +21,8 @@
  * Title:        __arm_2d_fill_colour_with_horizontal_line_mask.c
  * Description:  APIs for colour-filling-with-horizontal-line-mask
  *
- * $Date:        20. April 2024
- * $Revision:    V.0.3.0
+ * $Date:        10. April 2024
+ * $Revision:    V.0.9.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -76,6 +76,34 @@ extern "C" {
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
+{%- for opacity_postfix, 
+        opa_abbr, 
+        opacity_func_arg, 
+        opacity_func_param,
+        pass_opacity_in_api,
+        opacity_impl in [
+    (
+    '',
+    '',
+    ')',
+    ')',
+    '',
+    ''
+    ),
+
+
+    (
+    '_and_opacity', '_opc', 
+    ',
+                                        uint8_t chOpacity)',
+    ',
+                                                this.chOpacity)',
+    'this.chOpacity = chOpacity;',
+    ' * (uint16_t)chOpacity >> 8'
+    )
+    ] 
+%}
+
 {%- for colour_name, colour_int, colour_int_prefix, colour_int_no_bits in [
     ('gray8', 'uint8_t', 'ch', '8BIT' ),
     ('rgb565', 'uint16_t', 'hw', '16BIT' ),
@@ -88,17 +116,17 @@ extern "C" {
  */
 
 ARM_NONNULL(2,4)
-arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_horizontal_line_mask(
-                                        arm_2d_op_fill_cl_l_msk_t *ptOP,
+arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_horizontal_line_mask{{opacity_postfix}}(
+                                        arm_2d_op_fill_cl_l_msk{{opa_abbr}}_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptLineMask,
-                                        arm_2d_color_{{colour_name | lower}}_t tColour)
+                                        arm_2d_color_{{colour_name | lower}}_t tColour{{opacity_func_arg}}
 {
     assert(NULL != ptTarget);
     assert(NULL != ptLineMask);
 
-    ARM_2D_IMPL(arm_2d_op_fill_cl_l_msk_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_l_msk{{opa_abbr}}_t, ptOP);
 
     //! valid alpha mask tile
     if (!__arm_2d_valid_mask(ptLineMask, 
@@ -114,7 +142,7 @@ arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_horizontal_line_ma
         return arm_fsm_rt_on_going;
     }
 
-    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_{{colour_name | upper}};
+    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK{{opacity_postfix | upper}}_{{colour_name | upper}};
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
@@ -128,8 +156,8 @@ arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_horizontal_line_ma
     this.Source.ptTile = &this.tDummySource;
     this.Mask.ptSourceSide = ptLineMask;
     this.wMode = ARM_2D_CP_MODE_FILL;
-
     this.{{colour_int_prefix}}Colour = tColour.tValue;
+    {{pass_opacity_in_api}}
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 
@@ -138,13 +166,13 @@ arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_horizontal_line_ma
 
 /* default low level implementation */
 __WEAK
-void __arm_2d_impl_{{colour_name | lower}}_fill_colour_with_horizontal_line_mask(
+void __arm_2d_impl_{{colour_name | lower}}_fill_colour_with_horizontal_line_mask{{opacity_postfix}}(
                                         {{colour_int}} *__RESTRICT p{{colour_int_prefix}}Target,
                                         int16_t iTargetStride,
                                         uint8_t *__RESTRICT pchLineMask,
                                         //int16_t iMaskStride,
                                         arm_2d_size_t *__RESTRICT ptCopySize,
-                                        {{colour_int}} {{colour_int_prefix}}Colour)
+                                        {{colour_int}} {{colour_int_prefix}}Colour{{opacity_func_arg}}
 {
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
@@ -155,7 +183,7 @@ void __arm_2d_impl_{{colour_name | lower}}_fill_colour_with_horizontal_line_mask
         {{colour_int}} *p{{colour_int_prefix}}TargetLine = p{{colour_int_prefix}}Target;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwAlpha = 256 - (*pchMask++);
+            uint16_t hwAlpha = 256 - ((*pchMask++){{opacity_impl}});
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
@@ -167,13 +195,13 @@ void __arm_2d_impl_{{colour_name | lower}}_fill_colour_with_horizontal_line_mask
 }
 
 __WEAK
-void __arm_2d_impl_{{colour_name | lower}}_fill_colour_with_horizontal_line_chn_mask(
+void __arm_2d_impl_{{colour_name | lower}}_fill_colour_with_horizontal_line_chn_mask{{opacity_postfix}}(
                                         {{colour_int}} *__RESTRICT p{{colour_int_prefix}}Target,
                                         int16_t iTargetStride,
                                         uint32_t *__RESTRICT pwLineMask,
                                         //int16_t iMaskStride,
                                         arm_2d_size_t *__RESTRICT ptCopySize,
-                                        {{colour_int}} {{colour_int_prefix}}Colour)
+                                        {{colour_int}} {{colour_int_prefix}}Colour{{opacity_func_arg}}
 {
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
@@ -184,7 +212,7 @@ void __arm_2d_impl_{{colour_name | lower}}_fill_colour_with_horizontal_line_chn_
         {{colour_int}} *p{{colour_int_prefix}}TargetLine = p{{colour_int_prefix}}Target;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwAlpha = 256 - (*(uint8_t *)(pwMask++));
+            uint16_t hwAlpha = 256 - ((*(uint8_t *)(pwMask++)){{opacity_impl}});
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
@@ -197,14 +225,14 @@ void __arm_2d_impl_{{colour_name | lower}}_fill_colour_with_horizontal_line_chn_
 
 /* default low level implementation */
 __WEAK
-void __arm_2d_impl_{{colour_name | lower}}_repeat_fill_colour_with_horizontal_line_mask(
+void __arm_2d_impl_{{colour_name | lower}}_repeat_fill_colour_with_horizontal_line_mask{{opacity_postfix}}(
                                         {{colour_int}} *__RESTRICT p{{colour_int_prefix}}Target,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
                                         uint8_t *__RESTRICT pchLineMask,
                                         //int16_t iMaskStride,
                                         arm_2d_size_t *__RESTRICT ptMaskSize,
-                                        {{colour_int}} {{colour_int_prefix}}Colour)
+                                        {{colour_int}} {{colour_int_prefix}}Colour{{opacity_func_arg}}
 {
     int_fast16_t iHeight = ptTargetSize->iHeight;
     int_fast16_t iWidth  = ptTargetSize->iWidth;
@@ -218,7 +246,7 @@ void __arm_2d_impl_{{colour_name | lower}}_repeat_fill_colour_with_horizontal_li
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
-            uint16_t hwAlpha = 256 - (*pchMask++);
+            uint16_t hwAlpha = 256 - ((*pchMask++){{opacity_impl}});
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
@@ -237,14 +265,14 @@ void __arm_2d_impl_{{colour_name | lower}}_repeat_fill_colour_with_horizontal_li
 }
 
 __WEAK
-void __arm_2d_impl_{{colour_name | lower}}_repeat_fill_colour_with_horizontal_line_chn_mask(
+void __arm_2d_impl_{{colour_name | lower}}_repeat_fill_colour_with_horizontal_line_chn_mask{{opacity_postfix}}(
                                         {{colour_int}} *__RESTRICT p{{colour_int_prefix}}Target,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
                                         uint32_t *__RESTRICT pwLineMask,
                                         //int16_t iMaskStride,
                                         arm_2d_size_t *__RESTRICT ptMaskSize,
-                                        {{colour_int}} {{colour_int_prefix}}Colour)
+                                        {{colour_int}} {{colour_int_prefix}}Colour{{opacity_func_arg}}
 {
     int_fast16_t iHeight = ptTargetSize->iHeight;
     int_fast16_t iWidth  = ptTargetSize->iWidth;
@@ -257,7 +285,7 @@ void __arm_2d_impl_{{colour_name | lower}}_repeat_fill_colour_with_horizontal_li
         int_fast16_t iMaskWidth = ptMaskSize->iWidth;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwAlpha = 256 - (*(uint8_t *)(pwMask++));
+            uint16_t hwAlpha = 256 - ((*(uint8_t *)(pwMask++)){{opacity_impl}});
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
@@ -275,48 +303,50 @@ void __arm_2d_impl_{{colour_name | lower}}_repeat_fill_colour_with_horizontal_li
 }
 
 /*
- * The backend entry
+ * OPCODE Low Level Implementation Entries
  */
-arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_horizontal_line_mask(
-                                                    __arm_2d_sub_task_t *ptTask)
-{
-    ARM_2D_IMPL(arm_2d_op_fill_cl_l_msk_t, ptTask->ptOP);
+__WEAK
+def_low_lv_io(  __ARM_2D_IO_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK{{opacity_postfix | upper}}_{{colour_name | upper}},
+                __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_horizontal_line_mask{{opacity_postfix}});      /* Default SW Implementation */
 
-    assert(ARM_2D_COLOUR_SZ_{{colour_int_no_bits}} == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
-
-    if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
-    
-    #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-        return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
-    #else
-        __arm_2d_impl_{{colour_name | lower}}_fill_colour_with_horizontal_line_chn_mask(
-
-                                                ptTask->Param.tCopyMask.use_as____arm_2d_param_copy_t.tTarget.pBuffer,
-                                                ptTask->Param.tCopyMask.use_as____arm_2d_param_copy_t.tTarget.iStride,
-                                                ptTask->Param.tCopyMask.tSrcMask.pBuffer,    /* mask */
-                                                //ptTask->Param.tCopyMask.tSrcMask.iStride,  /* mask stride */
-                                                &(ptTask->Param.tCopyMask.use_as____arm_2d_param_copy_t.tCopySize),
-
-                                                this.{{colour_int_prefix}}Colour);
-    #endif
-    } else {
-        __arm_2d_impl_{{colour_name | lower}}_fill_colour_with_horizontal_line_mask(
-
-                                                ptTask->Param.tCopyMask.use_as____arm_2d_param_copy_t.tTarget.pBuffer,
-                                                ptTask->Param.tCopyMask.use_as____arm_2d_param_copy_t.tTarget.iStride,
-                                                ptTask->Param.tCopyMask.tSrcMask.pBuffer,    /* mask */
-                                                //ptTask->Param.tCopyMask.tSrcMask.iStride,  /* mask stride */
-                                                &(ptTask->Param.tCopyMask.use_as____arm_2d_param_copy_t.tCopySize),
-
-                                                this.{{colour_int_prefix}}Colour);
-    }
-    return arm_fsm_rt_cpl;
-}
-
+__WEAK
+def_low_lv_io(  __ARM_2D_IO_REPEAT_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK{{opacity_postfix | upper}}_{{colour_name | upper}},
+                __arm_2d_{{colour_name | lower}}_sw_repeat_colour_filling_with_horizontal_line_mask{{opacity_postfix}});      /* Default SW Implementation */
 
 /*
- * The backend entry
+ * OPCODE
  */
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK{{opacity_postfix | upper}}_{{colour_name | upper}} = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_{{colour_name | upper}},
+        },
+        .Param = {
+            .bHasTarget     = true,
+            .bHasSource     = true,
+            .bHasSrcMask    = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK{{opacity_postfix | upper}},
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK{{opacity_postfix | upper}}_{{colour_name | upper}}),
+            .ptFillLike = ref_low_lv_io(__ARM_2D_IO_REPEAT_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK{{opacity_postfix | upper}}_{{colour_name | upper}}),
+        },
+    },
+};
+
+{%- endfor %}
+
+{%- endfor %}
+
+
+{%- for colour_name, colour_int, colour_int_prefix, colour_int_no_bits in [
+    ('gray8', 'uint8_t', 'ch', '8BIT' ),
+    ('rgb565', 'uint16_t', 'hw', '16BIT' ),
+    ('cccn888', 'uint32_t', 'w', '32BIT' ),
+    ] 
+%}
+
 arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_repeat_colour_filling_with_horizontal_line_mask(
                                                     __arm_2d_sub_task_t *ptTask)
 {
@@ -332,57 +362,138 @@ arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_repeat_colour_filling_with_hori
         __arm_2d_impl_{{colour_name | lower}}_repeat_fill_colour_with_horizontal_line_chn_mask(
                                                 ptTask->Param.tFillMask.use_as____arm_2d_param_fill_t.tTarget.pBuffer,
                                                 ptTask->Param.tFillMask.use_as____arm_2d_param_fill_t.tTarget.iStride,
-                                              &(ptTask->Param.tFillMask.use_as____arm_2d_param_fill_t.tTarget.tValidRegion.tSize),
+                                            &(ptTask->Param.tFillMask.use_as____arm_2d_param_fill_t.tTarget.tValidRegion.tSize),
                                                 ptTask->Param.tFillMask.tSrcMask.pBuffer,    /* mask */
                                                 //ptTask->Param.tFillMask.tSrcMask.iStride,  /* mask stride */
-                                              &(ptTask->Param.tFillMask.tSrcMask.tValidRegion.tSize),
+                                            &(ptTask->Param.tFillMask.tSrcMask.tValidRegion.tSize),
                                                 this.{{colour_int_prefix}}Colour);
     #endif
     } else {
         __arm_2d_impl_{{colour_name | lower}}_repeat_fill_colour_with_horizontal_line_mask(
                                                 ptTask->Param.tFillMask.use_as____arm_2d_param_fill_t.tTarget.pBuffer,
                                                 ptTask->Param.tFillMask.use_as____arm_2d_param_fill_t.tTarget.iStride,
-                                              &(ptTask->Param.tFillMask.use_as____arm_2d_param_fill_t.tTarget.tValidRegion.tSize),
+                                            &(ptTask->Param.tFillMask.use_as____arm_2d_param_fill_t.tTarget.tValidRegion.tSize),
                                                 ptTask->Param.tFillMask.tSrcMask.pBuffer,    /* mask */
                                                 //ptTask->Param.tFillMask.tSrcMask.iStride,  /* mask stride */
-                                              &(ptTask->Param.tFillMask.tSrcMask.tValidRegion.tSize),
+                                            &(ptTask->Param.tFillMask.tSrcMask.tValidRegion.tSize),
+                                                this.{{colour_int_prefix}}Colour);
+    }
+
+    return arm_fsm_rt_cpl;
+}
+
+arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_horizontal_line_mask(
+                                                    __arm_2d_sub_task_t *ptTask)
+{
+    ARM_2D_IMPL(arm_2d_op_fill_cl_l_msk_t, ptTask->ptOP);
+
+    assert(ARM_2D_COLOUR_SZ_{{colour_int_no_bits}} == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
+
+    if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
+    
+    #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+        return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
+    #else
+        __arm_2d_impl_{{colour_name | lower}}_fill_colour_with_horizontal_line_chn_mask(
+                                                ptTask->Param.tCopyMask.use_as____arm_2d_param_copy_t.tTarget.pBuffer,
+                                                ptTask->Param.tCopyMask.use_as____arm_2d_param_copy_t.tTarget.iStride,
+                                                ptTask->Param.tCopyMask.tSrcMask.pBuffer,    /* mask */
+                                                //ptTask->Param.tCopyMask.tSrcMask.iStride,  /* mask stride */
+                                                &(ptTask->Param.tCopyMask.use_as____arm_2d_param_copy_t.tCopySize),
+                                                this.{{colour_int_prefix}}Colour);
+    #endif
+    } else {
+        __arm_2d_impl_{{colour_name | lower}}_fill_colour_with_horizontal_line_mask(
+                                                ptTask->Param.tCopyMask.use_as____arm_2d_param_copy_t.tTarget.pBuffer,
+                                                ptTask->Param.tCopyMask.use_as____arm_2d_param_copy_t.tTarget.iStride,
+                                                ptTask->Param.tCopyMask.tSrcMask.pBuffer,    /* mask */
+                                                //ptTask->Param.tCopyMask.tSrcMask.iStride,  /* mask stride */
+                                                &(ptTask->Param.tCopyMask.use_as____arm_2d_param_copy_t.tCopySize),
                                                 this.{{colour_int_prefix}}Colour);
     }
     return arm_fsm_rt_cpl;
 }
 
-/*
- * OPCODE Low Level Implementation Entries
- */
-__WEAK
-def_low_lv_io(  __ARM_2D_IO_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_{{colour_name | upper}},
-                __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_horizontal_line_mask);      /* Default SW Implementation */
 
-__WEAK
-def_low_lv_io(  __ARM_2D_IO_REPEAT_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_{{colour_name | upper}},
-                __arm_2d_{{colour_name | lower}}_sw_repeat_colour_filling_with_horizontal_line_mask);      /* Default SW Implementation */
+arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_repeat_colour_filling_with_horizontal_line_mask_and_opacity(
+                                                    __arm_2d_sub_task_t *ptTask)
+{
+    ARM_2D_IMPL(arm_2d_op_fill_cl_l_msk_opc_t, ptTask->ptOP);
 
-/*
- * OPCODE
- */
-const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_{{colour_name | upper}} = {
-    .Info = {
-        .Colour = {
-            .chScheme   = ARM_2D_COLOUR_{{colour_name | upper}},
-        },
-        .Param = {
-            .bHasTarget     = true,
-            .bHasSource     = true,
-            .bHasSrcMask    = true,
-        },
-        .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK,
-        
-        .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_{{colour_name | upper}}),
-            .ptFillLike = ref_low_lv_io(__ARM_2D_IO_REPEAT_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_{{colour_name | upper}}),
-        },
-    },
-};
+    assert(ARM_2D_COLOUR_SZ_{{colour_int_no_bits}} == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
+
+    if (255 == this.chOpacity) {
+        return __arm_2d_{{colour_name | lower}}_sw_repeat_colour_filling_with_horizontal_line_mask(ptTask);
+    }
+
+    if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
+    
+    #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+        return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
+    #else
+        __arm_2d_impl_{{colour_name | lower}}_repeat_fill_colour_with_horizontal_line_chn_mask_and_opacity(
+                                                ptTask->Param.tFillMask.use_as____arm_2d_param_fill_t.tTarget.pBuffer,
+                                                ptTask->Param.tFillMask.use_as____arm_2d_param_fill_t.tTarget.iStride,
+                                            &(ptTask->Param.tFillMask.use_as____arm_2d_param_fill_t.tTarget.tValidRegion.tSize),
+                                                ptTask->Param.tFillMask.tSrcMask.pBuffer,    /* mask */
+                                                //ptTask->Param.tFillMask.tSrcMask.iStride,  /* mask stride */
+                                            &(ptTask->Param.tFillMask.tSrcMask.tValidRegion.tSize),
+                                                this.{{colour_int_prefix}}Colour,
+                                                this.chOpacity);
+    #endif
+    } else {
+        __arm_2d_impl_{{colour_name | lower}}_repeat_fill_colour_with_horizontal_line_mask_and_opacity(
+                                                ptTask->Param.tFillMask.use_as____arm_2d_param_fill_t.tTarget.pBuffer,
+                                                ptTask->Param.tFillMask.use_as____arm_2d_param_fill_t.tTarget.iStride,
+                                            &(ptTask->Param.tFillMask.use_as____arm_2d_param_fill_t.tTarget.tValidRegion.tSize),
+                                                ptTask->Param.tFillMask.tSrcMask.pBuffer,    /* mask */
+                                                //ptTask->Param.tFillMask.tSrcMask.iStride,  /* mask stride */
+                                            &(ptTask->Param.tFillMask.tSrcMask.tValidRegion.tSize),
+                                                this.{{colour_int_prefix}}Colour,
+                                                this.chOpacity);
+    }
+
+    return arm_fsm_rt_cpl;
+}
+
+arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_horizontal_line_mask_and_opacity(
+                                                    __arm_2d_sub_task_t *ptTask)
+{
+    ARM_2D_IMPL(arm_2d_op_fill_cl_l_msk_opc_t, ptTask->ptOP);
+
+    assert(ARM_2D_COLOUR_SZ_{{colour_int_no_bits}} == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
+
+    if (255 == this.chOpacity) {
+        return __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_horizontal_line_mask(ptTask);
+    }
+
+    if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
+    
+    #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+        return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
+    #else
+        __arm_2d_impl_{{colour_name | lower}}_fill_colour_with_horizontal_line_chn_mask_and_opacity(
+                                                ptTask->Param.tCopyMask.use_as____arm_2d_param_copy_t.tTarget.pBuffer,
+                                                ptTask->Param.tCopyMask.use_as____arm_2d_param_copy_t.tTarget.iStride,
+                                                ptTask->Param.tCopyMask.tSrcMask.pBuffer,    /* mask */
+                                                //ptTask->Param.tCopyMask.tSrcMask.iStride,  /* mask stride */
+                                                &(ptTask->Param.tCopyMask.use_as____arm_2d_param_copy_t.tCopySize),
+                                                this.{{colour_int_prefix}}Colour,
+                                                this.chOpacity);
+    #endif
+    } else {
+        __arm_2d_impl_{{colour_name | lower}}_fill_colour_with_horizontal_line_mask_and_opacity(
+                                                ptTask->Param.tCopyMask.use_as____arm_2d_param_copy_t.tTarget.pBuffer,
+                                                ptTask->Param.tCopyMask.use_as____arm_2d_param_copy_t.tTarget.iStride,
+                                                ptTask->Param.tCopyMask.tSrcMask.pBuffer,    /* mask */
+                                                //ptTask->Param.tCopyMask.tSrcMask.iStride,  /* mask stride */
+                                                &(ptTask->Param.tCopyMask.use_as____arm_2d_param_copy_t.tCopySize),
+                                                this.{{colour_int_prefix}}Colour,
+                                                this.chOpacity);
+    }
+    return arm_fsm_rt_cpl;
+}
+
 
 {%- endfor %}
 
