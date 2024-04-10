@@ -92,8 +92,8 @@ void scene_fitness_loader(void)
 void scene_alarm_clock_loader(void) 
 {
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
-                                            ARM_2D_SCENE_SWITCH_MODE_ERASE_UP);
-    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 500);
+                                            ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);
+    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 3000);
     arm_2d_scene_alarm_clock_init(&DISP0_ADAPTER);
 }
 
@@ -164,7 +164,7 @@ typedef void scene_loader_t(void);
 
 static scene_loader_t * const c_SceneLoaders[] = {
 
-    
+#if 0
     scene0_loader,
     scene1_loader,
     scene_console_window_loader,
@@ -179,7 +179,9 @@ static scene_loader_t * const c_SceneLoaders[] = {
 
     scene_fitness_loader,
     scene_audiomark_loader,
-    
+#else
+    scene_alarm_clock_loader
+#endif
     //scene_watch_loader,
 
 };

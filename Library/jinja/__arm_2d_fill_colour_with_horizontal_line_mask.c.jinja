@@ -22,7 +22,7 @@
  * Description:  APIs for colour-filling-with-horizontal-line-mask
  *
  * $Date:        10. April 2024
- * $Revision:    V.0.9.0
+ * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
  *

@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        1. April 2024
- * $Revision:    V.1.4.2
+ * $Date:        10. April 2024
+ * $Revision:    V.1.4.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -249,6 +249,9 @@ extern "C" {
                 arm_2d_gray8_fill_colour_with_mask_opacity_and_transform
 #   define arm_2d_fill_colour_with_horizontal_line_mask                         \
                 arm_2d_gray8_fill_colour_with_horizontal_line_mask
+#   define arm_2d_fill_colour_with_horizontal_line_mask_and_opacity             \
+                arm_2d_gray8_fill_colour_with_horizontal_line_mask_and_opacity
+
 #   define arm_2d_draw_point        arm_2d_gray8_draw_point
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
@@ -425,6 +428,9 @@ extern "C" {
                 arm_2d_rgb565_fill_colour_with_mask_opacity_and_transform
 #   define arm_2d_fill_colour_with_horizontal_line_mask                         \
                 arm_2d_rgb565_fill_colour_with_horizontal_line_mask
+#   define arm_2d_fill_colour_with_horizontal_line_mask_and_opacity             \
+                arm_2d_rgb565_fill_colour_with_horizontal_line_mask_and_opacity
+
 #   define arm_2d_draw_point        arm_2d_rgb565_draw_point
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
@@ -601,6 +607,8 @@ extern "C" {
                 arm_2d_cccn888_fill_colour_with_mask_opacity_and_transform
 #   define arm_2d_fill_colour_with_horizontal_line_mask                         \
                 arm_2d_cccn888_fill_colour_with_horizontal_line_mask
+#   define arm_2d_fill_colour_with_horizontal_line_mask_and_opacity             \
+                arm_2d_cccn888_fill_colour_with_horizontal_line_mask_and_opacity
 #   define arm_2d_draw_point        arm_2d_cccn888_draw_point
 #else
 #   error Unsupported colour depth!

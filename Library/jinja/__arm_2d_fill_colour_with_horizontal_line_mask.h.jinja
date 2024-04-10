@@ -22,7 +22,7 @@
  * Description:  APIs for colour-filling-with-horizontal-line-mask
  *
  * $Date:        10. April 2024
- * $Revision:    V.0.9.0
+ * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -49,6 +49,10 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
 #endif
 
+/*!
+ * \addtogroup gAlpha 4 Alpha Blending Operations
+ * @{
+ */
 
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
@@ -66,7 +70,7 @@ extern "C" {
     ',       /*   colour */              \\
                                     __OPACITY)      /*    Opacity */            \\',
     ',    \\
-                                 (__OPACITY)}'
+                                 (__OPACITY))'
     )
     ] 
 %}
@@ -167,15 +171,6 @@ typedef struct arm_2d_op_fill_cl_l_msk_opc_t {
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
-{%- for opacity_postfix, opa_abbr, opacity_func_arg in [
-    ('','',')'),
-    (
-    '_and_opacity', '_opc', 
-    ',
-                                        uint8_t chOpacity)'
-    ),
-    ] 
-%}
 
 {%- for colour_name, colour_int, colour_int_prefix, colour_int_no_bits in [
     ('gray8', 'uint8_t', 'ch', '8BIT' ),
@@ -186,17 +181,47 @@ typedef struct arm_2d_op_fill_cl_l_msk_opc_t {
 
 extern
 ARM_NONNULL(2,4)
-arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_horizontal_line_mask{{opacity_postfix}}(
-                                        arm_2d_op_fill_cl_l_msk{{opa_abbr}}_t *ptOP,
+/*!
+ *  \brief fill the target region with a specified colour and a horizontal line mask
+ *  \param[in] ptOP the control block, NULL means using the default control block
+ *  \param[in] ptTarget the target tile
+ *  \param[in] ptRegion the target region
+ *  \param[in] ptLineMsk the target line mask
+ *  \param[in] tColour the target colour
+ *  \return arm_fsm_rt_t the operations result
+ */
+arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_horizontal_line_mask(
+                                        arm_2d_op_fill_cl_l_msk_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptLineMask,
-                                        arm_2d_color_{{colour_name | lower}}_t tColour{{opacity_func_arg}};
+                                        arm_2d_color_{{colour_name | lower}}_t tColour);
+
+
+extern
+ARM_NONNULL(2,4)
+/*!
+ *  \brief fill the target region with a specified colour, a horizontal line mask 
+ *         and opacity
+ *  \param[in] ptOP the control block, NULL means using the default control block
+ *  \param[in] ptTarget the target tile
+ *  \param[in] ptRegion the target region
+ *  \param[in] ptLineMsk the target line mask
+ *  \param[in] tColour the target colour
+ *  \param[in] chOpacity the opacity ratio
+ *  \return arm_fsm_rt_t the operations result
+ */
+arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_horizontal_line_mask_and_opacity(
+                                        arm_2d_op_fill_cl_l_msk_opc_t *ptOP,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_tile_t *ptLineMask,
+                                        arm_2d_color_{{colour_name | lower}}_t tColour,
+                                        uint8_t chOpacity);
 
 {%- endfor %}
 
-{%- endfor %}
-
+/*! @} */
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
