@@ -120,7 +120,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_horizontal_line_mask(
     };
     this.Source.ptTile = &this.tDummySource;
     this.Mask.ptSourceSide = ptLineMask;
-    this.wMode = 0;
+    this.wMode = ARM_2D_CP_MODE_FILL;
 
     this.wColour = tColour.tValue;
 
@@ -188,6 +188,68 @@ void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_chn_mask(
     }
 }
 
+
+/* default low level implementation */
+__WEAK
+void __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_mask(
+                                        uint32_t *__RESTRICT pwTarget,
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t *__RESTRICT ptTargetSize,
+                                        uint8_t *__RESTRICT pchLineMask,
+                                        //int16_t iMaskStride,
+                                        arm_2d_size_t *__RESTRICT ptMaskSize,
+                                        uint32_t wColour)
+{
+    int_fast16_t iHeight = ptTargetSize->iHeight;
+    int_fast16_t iWidth  = ptTargetSize->iWidth;
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+        uint8_t *pchMask = pchLineMask;
+        uint32_t *pwTargetLine = pwTarget;
+
+        for (int_fast16_t x = 0; x < iWidth; x++) {
+            uint16_t hwAlpha = 256 - (*pchMask++);
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            hwAlpha -= (hwAlpha == 1);
+#endif
+            __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwAlpha);
+        }
+
+        pwTarget += iTargetStride;
+    }
+}
+
+__WEAK
+void __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_chn_mask(
+                                        uint32_t *__RESTRICT pwTarget,
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t *__RESTRICT ptTargetSize,
+                                        uint32_t *__RESTRICT pwLineMask,
+                                        //int16_t iMaskStride,
+                                        arm_2d_size_t *__RESTRICT ptMaskSize,
+                                        uint32_t wColour)
+{
+    int_fast16_t iHeight = ptTargetSize->iHeight;
+    int_fast16_t iWidth  = ptTargetSize->iWidth;
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+        uint32_t *pwMask = pwLineMask;
+        uint32_t *pwTargetLine = pwTarget;
+
+        for (int_fast16_t x = 0; x < iWidth; x++) {
+            uint16_t hwAlpha = 256 - (*(uint8_t *)(pwMask++));
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            hwAlpha -= (hwAlpha == 1);
+#endif
+            __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwAlpha);
+        }
+
+        pwTarget += iTargetStride;
+    }
+}
+
 /*
  * The backend entry
  */
@@ -227,6 +289,44 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_horizontal_line_mask(
     return arm_fsm_rt_cpl;
 }
 
+
+/*
+ * The backend entry
+ */
+arm_fsm_rt_t __arm_2d_cccn888_sw_repeat_colour_filling_with_horizontal_line_mask(
+                                                    __arm_2d_sub_task_t *ptTask)
+{
+    ARM_2D_IMPL(arm_2d_op_fill_cl_l_msk_t, ptTask->ptOP);
+
+    assert(ARM_2D_COLOUR_SZ_32BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
+
+    if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
+    
+    #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+        return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
+    #else
+        __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_chn_mask(
+                                                ptTask->Param.tFillMask.use_as____arm_2d_param_fill_t.tTarget.pBuffer,
+                                                ptTask->Param.tFillMask.use_as____arm_2d_param_fill_t.tTarget.iStride,
+                                              &(ptTask->Param.tFillMask.use_as____arm_2d_param_fill_t.tTarget.tValidRegion.tSize),
+                                                ptTask->Param.tFillMask.tSrcMask.pBuffer,    /* mask */
+                                                //ptTask->Param.tFillMask.tSrcMask.iStride,  /* mask stride */
+                                              &(ptTask->Param.tFillMask.tSrcMask.tValidRegion.tSize),
+                                                this.wColour);
+    #endif
+    } else {
+        __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_mask(
+                                                ptTask->Param.tFillMask.use_as____arm_2d_param_fill_t.tTarget.pBuffer,
+                                                ptTask->Param.tFillMask.use_as____arm_2d_param_fill_t.tTarget.iStride,
+                                              &(ptTask->Param.tFillMask.use_as____arm_2d_param_fill_t.tTarget.tValidRegion.tSize),
+                                                ptTask->Param.tFillMask.tSrcMask.pBuffer,    /* mask */
+                                                //ptTask->Param.tFillMask.tSrcMask.iStride,  /* mask stride */
+                                              &(ptTask->Param.tFillMask.tSrcMask.tValidRegion.tSize),
+                                                this.wColour);
+    }
+    return arm_fsm_rt_cpl;
+}
+
 /*
  * OPCODE Low Level Implementation Entries
  */
@@ -234,6 +334,9 @@ __WEAK
 def_low_lv_io(  __ARM_2D_IO_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_CCCN888,
                 __arm_2d_cccn888_sw_colour_filling_with_horizontal_line_mask);      /* Default SW Implementation */
 
+__WEAK
+def_low_lv_io(  __ARM_2D_IO_REPEAT_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_CCCN888,
+                __arm_2d_cccn888_sw_repeat_colour_filling_with_horizontal_line_mask);      /* Default SW Implementation */
 
 /*
  * OPCODE
@@ -252,7 +355,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_CCCN888
         
         .LowLevelIO = {
             .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_CCCN888),
-            .ptFillLike = NULL,
+            .ptFillLike = ref_low_lv_io(__ARM_2D_IO_REPEAT_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_CCCN888),
         },
     },
 };
