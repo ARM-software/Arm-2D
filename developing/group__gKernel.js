@@ -182,7 +182,7 @@ var group__gKernel =
       [ "ptRegion", "group__gKernel.html#a0cb326a2a86a2a0e46a3b1226fb97c65", null ]
     ] ],
     [ "arm_2d_op_msk_t.Mask", "group__gKernel.html#structarm__2d__op__msk__t_8Mask", [
-      [ "ptTile", "group__gKernel.html#a64a5acb6f6d68bcc4b933310d44c480b", null ]
+      [ "ptTargetSide", "group__gKernel.html#a8bad2a9f967b1ca4f848ef67c7f41add", null ]
     ] ],
     [ "arm_2d_op_src_t.Target", "group__gKernel.html#structarm__2d__op__src__t_8Target", [
       [ "ptTile", "group__gKernel.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
