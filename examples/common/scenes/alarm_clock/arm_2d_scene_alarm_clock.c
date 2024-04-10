@@ -103,6 +103,7 @@ extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
 extern const arm_2d_tile_t c_tileECGMask;
 extern const arm_2d_tile_t c_tileECGScanMask;
+extern const arm_2d_tile_t c_tileECGScanLineMask;
 /*============================ PROTOTYPES ====================================*/
 extern
 struct {
@@ -116,16 +117,6 @@ struct {
     arm_2d_char_idx_t tUTF8Table;
 } ARM_2D_FONT_ALARM_CLOCK_64_A4;
 /*============================ LOCAL VARIABLES ===============================*/
-
-const arm_2d_tile_t c_tileECGScanLineMaskHorizontal = 
-    impl_child_tile(
-        c_tileECGScanMask,
-        0, 
-        3,
-        200,
-        1
-    );
-
 
 /*! define dirty regions */
 IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
@@ -388,7 +379,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_alarm_clock_handler)
                             arm_2d_fill_colour_with_horizontal_line_mask(
                                                         &__ecg,
                                                          &tECGScanRegion,
-                                                         &c_tileECGScanLineMaskHorizontal, 
+                                                         &c_tileECGScanLineMask, 
                                                          (__arm_2d_color_t){GLCD_COLOR_BLACK});
                             
                             ARM_2D_OP_WAIT_ASYNC();
