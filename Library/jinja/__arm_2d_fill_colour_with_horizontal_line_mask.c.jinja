@@ -188,7 +188,6 @@ void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_chn_mask(
     }
 }
 
-
 /* default low level implementation */
 __WEAK
 void __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_mask(
@@ -208,12 +207,22 @@ void __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_mask(
         uint8_t *pchMask = pchLineMask;
         uint32_t *pwTargetLine = pwTarget;
 
+        int_fast16_t iMaskWidth = ptMaskSize->iWidth;
+
         for (int_fast16_t x = 0; x < iWidth; x++) {
+
             uint16_t hwAlpha = 256 - (*pchMask++);
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
             __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwAlpha);
+
+            /* maintain mask line */
+            if (0 == --iMaskWidth) {
+                iMaskWidth = ptMaskSize->iWidth;
+                pchMask = pchLineMask;
+            }
+
         }
 
         pwTarget += iTargetStride;
@@ -238,12 +247,20 @@ void __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_chn_mask(
         uint32_t *pwMask = pwLineMask;
         uint32_t *pwTargetLine = pwTarget;
 
+        int_fast16_t iMaskWidth = ptMaskSize->iWidth;
+
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwAlpha = 256 - (*(uint8_t *)(pwMask++));
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
             __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwAlpha);
+
+            /* maintain mask line */
+            if (0 == --iMaskWidth) {
+                iMaskWidth = ptMaskSize->iWidth;
+                pwMask = pwLineMask;
+            }
         }
 
         pwTarget += iTargetStride;
