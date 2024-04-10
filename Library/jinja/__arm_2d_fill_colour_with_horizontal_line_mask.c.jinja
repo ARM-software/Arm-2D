@@ -232,7 +232,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_CCCN888
         },
         .Param = {
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasSrcMask    = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK,
         

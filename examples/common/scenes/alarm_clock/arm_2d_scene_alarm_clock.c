@@ -117,6 +117,16 @@ struct {
 } ARM_2D_FONT_ALARM_CLOCK_64_A4;
 /*============================ LOCAL VARIABLES ===============================*/
 
+const arm_2d_tile_t c_tileECGScanLineMaskHorizontal = 
+    impl_child_tile(
+        c_tileECGScanMask,
+        0, 
+        3,
+        200,
+        1
+    );
+
+
 /*! define dirty regions */
 IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
 
@@ -374,18 +384,20 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_alarm_clock_handler)
                             arm_2d_region_t tECGScanRegion = __ecg_canvas;
                             tECGScanRegion.tLocation.iX += this.iECGScanOffset - c_tileECGMask.tRegion.tSize.iWidth;
 
-                            arm_2d_fill_colour_with_mask(&__ecg,
+                            arm_2d_fill_colour_with_horizontal_line_mask(
+                                                        &__ecg,
                                                          &tECGScanRegion,
-                                                         &c_tileECGScanMask, 
+                                                         &c_tileECGScanLineMaskHorizontal, 
                                                          (__arm_2d_color_t){GLCD_COLOR_BLACK});
                             
                             ARM_2D_OP_WAIT_ASYNC();
 
                             tECGScanRegion.tLocation.iX += c_tileECGMask.tRegion.tSize.iWidth;
 
-                            arm_2d_fill_colour_with_mask(&__ecg,
+                            arm_2d_fill_colour_with_horizontal_line_mask(
+                                                         &__ecg,
                                                          &tECGScanRegion,
-                                                         &c_tileECGScanMask, 
+                                                         &c_tileECGScanLineMaskHorizontal, 
                                                          (__arm_2d_color_t){GLCD_COLOR_BLACK});
                             ARM_2D_OP_WAIT_ASYNC();
                         }

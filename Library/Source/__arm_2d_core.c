@@ -99,6 +99,11 @@ const arm_2d_version_t ARM_2D_VERSION_INFO = {
 };
 
 /*============================ PROTOTYPES ====================================*/
+static arm_2d_tile_t *__clip_asset_tile(const arm_2d_tile_t *ptOriginAssetTile, 
+                                        const arm_2d_region_t *ptReferenceRegion,
+                                        arm_2d_tile_t *ptOutputAssetTile,
+                                        bool bIgnoreHorizontal,
+                                        bool bIgnoreVertical);
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
@@ -683,11 +688,37 @@ arm_fsm_rt_t __arm_2d_tile_process( arm_2d_op_t *ptThis,
 
     const arm_2d_tile_t *ptTargetMask = NULL;
 
-    if (OP_CORE.ptOp->Info.Param.bHasDesMask) {
+    if (OP_CORE.ptOp->Info.Param.bHasDesMask || OP_CORE.ptOp->Info.Param.bHasSrcMask) {
 
         arm_2d_op_msk_t *ptOP = (arm_2d_op_msk_t *)ptThis;
         
-        ptTargetMask = arm_2d_tile_get_root(ptOP->Mask.ptTargetSide, 
+        arm_2d_tile_t tTempMaskTile;
+
+        ptTargetMask = ptOP->Mask.ptTargetSide;
+        
+        /* clip the target mask */
+        if (NULL != ptTargetMask)  {
+            arm_2d_region_t tTargetRegion;
+            if (NULL != ptThis->Target.ptRegion) {
+                tTargetRegion = *ptThis->Target.ptRegion;
+            } else {
+                tTargetRegion = (arm_2d_region_t) {
+                    .tSize = ptTarget->tRegion.tSize
+                };
+            }
+
+            bool bIgnoreHorizontal = (ptTargetMask->tRegion.tSize.iWidth == 1);
+            bool bIgnoreVertical = (ptTargetMask->tRegion.tSize.iWidth == 1);
+
+            ptTargetMask = __clip_asset_tile(   ptTargetMask,
+                                                &tTargetRegion,
+                                                &tTempMaskTile,
+                                                bIgnoreHorizontal,
+                                                bIgnoreVertical );
+
+        }
+
+        ptTargetMask = arm_2d_tile_get_root(ptTargetMask, 
                                             &tTargetMaskParam.tValidRegion, 
                                             NULL);
         
@@ -703,41 +734,49 @@ arm_fsm_rt_t __arm_2d_tile_process( arm_2d_op_t *ptThis,
             
             arm_2d_region_t tNewTargetMaskRegion = tTargetMaskParam.tValidRegion; //ptTargetMask->tRegion;
 
-            // when the target mask is not 1-vertical line mask
-            if (tTargetMaskParam.tValidRegion.tSize.iWidth != 1 ) {
-                tTempRegion.tLocation.iX 
-                    = tTargetTileParam.tValidRegion.tLocation.iX 
-                    - tTempRegion.tLocation.iX;
+            /*
+             * NOTE: When bHasSrcMask is true, the target mask can be applied to the
+             *       target region we specified, otherwise (when bHasDesMask is true),  
+             *       the target mask will be applied to the target tile starting from 
+             *       the (0,0) and clipped with the target region
+             */
+            if (OP_CORE.ptOp->Info.Param.bHasDesMask) {
+                // when the target mask is not 1-vertical line mask
+                if (tTargetMaskParam.tValidRegion.tSize.iWidth != 1 ) {
+                    tTempRegion.tLocation.iX 
+                        = tTargetTileParam.tValidRegion.tLocation.iX 
+                        - tTempRegion.tLocation.iX;
 
-                tTempRegion.tSize.iWidth
-                    = tTargetTileParam.tValidRegion.tSize.iWidth 
-                    - tTempRegion.tSize.iWidth;
-            
-                tNewTargetMaskRegion.tLocation.iX += tTempRegion.tLocation.iX;
-                tNewTargetMaskRegion.tSize.iWidth += tTempRegion.tSize.iWidth;
-            }
-            
-            // when the target mask is not 1-horizontal line mask
-            if (tTargetMaskParam.tValidRegion.tSize.iHeight != 1 ) {
-                tTempRegion.tLocation.iY 
-                    = tTargetTileParam.tValidRegion.tLocation.iY 
-                    - tTempRegion.tLocation.iY;
-            
-                tTempRegion.tSize.iHeight
-                    = tTargetTileParam.tValidRegion.tSize.iHeight 
-                    - tTempRegion.tSize.iHeight;
-            
+                    tTempRegion.tSize.iWidth
+                        = tTargetTileParam.tValidRegion.tSize.iWidth 
+                        - tTempRegion.tSize.iWidth;
                 
-                tNewTargetMaskRegion.tLocation.iY += tTempRegion.tLocation.iY;
-                tNewTargetMaskRegion.tSize.iHeight += tTempRegion.tSize.iHeight;
+                    tNewTargetMaskRegion.tLocation.iX += tTempRegion.tLocation.iX;
+                    tNewTargetMaskRegion.tSize.iWidth += tTempRegion.tSize.iWidth;
+                }
+                
+                // when the target mask is not 1-horizontal line mask
+                if (tTargetMaskParam.tValidRegion.tSize.iHeight != 1 ) {
+                    tTempRegion.tLocation.iY 
+                        = tTargetTileParam.tValidRegion.tLocation.iY 
+                        - tTempRegion.tLocation.iY;
+                
+                    tTempRegion.tSize.iHeight
+                        = tTargetTileParam.tValidRegion.tSize.iHeight 
+                        - tTempRegion.tSize.iHeight;
+                
+                    
+                    tNewTargetMaskRegion.tLocation.iY += tTempRegion.tLocation.iY;
+                    tNewTargetMaskRegion.tSize.iHeight += tTempRegion.tSize.iHeight;
+                }
             }
-        
+
             ptTargetMask = arm_2d_tile_generate_child( 
                                     ptTargetMask,
                                     &tNewTargetMaskRegion,
                                     &tTargetMask,
                                     false);
-            
+
             ptTargetMask = __arm_2d_tile_region_caculator( 
                         ptTargetMask, 
                         &tTargetMaskParam,
@@ -1435,17 +1474,24 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
 
 static arm_2d_tile_t *__clip_asset_tile(const arm_2d_tile_t *ptOriginAssetTile, 
                                         const arm_2d_region_t *ptReferenceRegion,
-                                        arm_2d_tile_t *ptOutputAssetTile)
+                                        arm_2d_tile_t *ptOutputAssetTile,
+                                        bool bIgnoreHorizontal,
+                                        bool bIgnoreVertical)
 {
     arm_2d_region_t tempRegion = {
         .tLocation = ptOriginAssetTile->tRegion.tLocation,
         .tSize = ptReferenceRegion->tSize,
     };
 
-    tempRegion.tLocation.iX = -ptReferenceRegion->tLocation.iX;
-    tempRegion.tLocation.iY = -ptReferenceRegion->tLocation.iY;
-    tempRegion.tSize.iWidth += ptReferenceRegion->tLocation.iX;
-    tempRegion.tSize.iHeight += ptReferenceRegion->tLocation.iY;
+    if (!bIgnoreHorizontal) {
+        tempRegion.tLocation.iX = -ptReferenceRegion->tLocation.iX;
+        tempRegion.tSize.iWidth += ptReferenceRegion->tLocation.iX;
+    }
+
+    if (!bIgnoreVertical) {
+        tempRegion.tLocation.iY = -ptReferenceRegion->tLocation.iY;
+        tempRegion.tSize.iHeight += ptReferenceRegion->tLocation.iY;
+    }
 
     return arm_2d_tile_generate_child(  ptOriginAssetTile, 
                                         &tempRegion, 
@@ -1472,7 +1518,9 @@ arm_fsm_rt_t __tile_clipped_pave(
         /* clip the source tile with the region reference of the target tile*/
         ptSourceTile = __clip_asset_tile(this.Source.ptTile,
                                          ptRegion,
-                                         &tTempSourceTile);
+                                         &tTempSourceTile,
+                                         false,
+                                         false);
         if (NULL == ptSourceTile) {
             break;
         }
@@ -1482,9 +1530,14 @@ arm_fsm_rt_t __tile_clipped_pave(
             &&  !OP_CORE.ptOp->Info.Param.bHasOrigin) {
             arm_2d_op_src_msk_t *ptOP = (arm_2d_op_src_msk_t *)ptThis; 
 
+            bool bIgnoreHorizontal = (ptOP->Mask.ptSourceSide->tRegion.tSize.iWidth == 1);
+            bool bIgnoreVertical = (ptOP->Mask.ptSourceSide->tRegion.tSize.iWidth == 1);
+
             ptSourceMaskTile = __clip_asset_tile(ptOP->Mask.ptSourceSide,
                                                  ptRegion,
-                                                 &tTempSourceMaskTile);
+                                                 &tTempSourceMaskTile,
+                                                 bIgnoreHorizontal,
+                                                 bIgnoreVertical);
             if (NULL == ptSourceMaskTile) {
                 break;
             }
