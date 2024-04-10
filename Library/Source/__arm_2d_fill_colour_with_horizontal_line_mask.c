@@ -111,7 +111,17 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_horizontal_line_mask(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTargetSide = ptLineMask;
+
+    this.tDummySource = (arm_2d_tile_t) {
+        .tInfo.bIsRoot = true,
+        .tRegion = {
+            .tSize = ptTarget->tRegion.tSize
+        },
+    };
+    this.Source.ptTile = &this.tDummySource;
+    this.Mask.ptSourceSide = ptLineMask;
+    this.wMode = 0;
+
     this.wColour = tColour.tValue;
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
@@ -194,23 +204,26 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_horizontal_line_mask(
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #else
         __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_chn_mask(
-                                                ptTask->Param.tTileMaskProcess.tTarget.pBuffer,
-                                                ptTask->Param.tTileMaskProcess.tTarget.iStride,
-                                                ptTask->Param.tTileMaskProcess.tDesMask.pBuffer,    /* mask */
-                                                //ptTask->Param.tTileMaskProcess.tDesMask.iStride,  /* mask stride */
-                                                &(ptTask->Param.tTileMaskProcess.tTarget.tValidRegion.tSize),
+
+                                                ptTask->Param.tCopyMask.use_as____arm_2d_param_copy_t.tTarget.pBuffer,
+                                                ptTask->Param.tCopyMask.use_as____arm_2d_param_copy_t.tTarget.iStride,
+                                                ptTask->Param.tCopyMask.tSrcMask.pBuffer,    /* mask */
+                                                //ptTask->Param.tCopyMask.tSrcMask.iStride,  /* mask stride */
+                                                &(ptTask->Param.tCopyMask.use_as____arm_2d_param_copy_t.tCopySize),
+
                                                 this.wColour);
     #endif
     } else {
         __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_mask(
-                                                ptTask->Param.tTileMaskProcess.tTarget.pBuffer,
-                                                ptTask->Param.tTileMaskProcess.tTarget.iStride,
-                                                ptTask->Param.tTileMaskProcess.tDesMask.pBuffer,    /* mask */
-                                                //ptTask->Param.tTileMaskProcess.tDesMask.iStride,  /* mask stride */
-                                                &(ptTask->Param.tTileMaskProcess.tTarget.tValidRegion.tSize),
+
+                                                ptTask->Param.tCopyMask.use_as____arm_2d_param_copy_t.tTarget.pBuffer,
+                                                ptTask->Param.tCopyMask.use_as____arm_2d_param_copy_t.tTarget.iStride,
+                                                ptTask->Param.tCopyMask.tSrcMask.pBuffer,    /* mask */
+                                                //ptTask->Param.tCopyMask.tSrcMask.iStride,  /* mask stride */
+                                                &(ptTask->Param.tCopyMask.use_as____arm_2d_param_copy_t.tCopySize),
+
                                                 this.wColour);
     }
-
     return arm_fsm_rt_cpl;
 }
 
@@ -232,6 +245,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_CCCN888
         },
         .Param = {
             .bHasTarget     = true,
+            .bHasSource     = true,
             .bHasSrcMask    = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK,

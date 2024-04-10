@@ -96,15 +96,21 @@ extern "C" {
  * \note arm_2d_op_fill_cl_l_msk_t inherits from arm_2d_op_msk_t explicitly 
  */
 typedef struct arm_2d_op_fill_cl_l_msk_t {
+
     inherit(arm_2d_op_core_t);
     struct {
         const arm_2d_tile_t     *ptTile;                //!< target tile
         const arm_2d_region_t   *ptRegion;              //!< target region
     } Target;
+    struct {
+        const arm_2d_tile_t     *ptTile;                //!< source tile
+    }Source;
+    uint32_t wMode;
 
     /* derived part */
     struct {
-        const arm_2d_tile_t     *ptTargetSide;          //!< target mask tile
+        const arm_2d_tile_t     *ptSourceSide;          //!< source side mask
+        const arm_2d_tile_t     *ptTargetSide;          //!< target side mask
     } Mask;
 
     union {
@@ -112,6 +118,9 @@ typedef struct arm_2d_op_fill_cl_l_msk_t {
         uint16_t hwColour;                      //!< 16bit key colour
         uint32_t wColour;                       //!< 32bit key colour
     };
+
+    arm_2d_tile_t tDummySource;
+
 } arm_2d_op_fill_cl_l_msk_t;
 
 /*============================ GLOBAL VARIABLES ==============================*/
