@@ -21,8 +21,8 @@
  * Title:        __arm-2d_core.c
  * Description:  Basic Tile operations
  *
- * $Date:        3. April 2024
- * $Revision:    V.1.6.6
+ * $Date:        10. April 2024
+ * $Revision:    V.1.7.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -228,7 +228,7 @@ void __arm_2d_sub_task_depose(arm_2d_op_core_t *ptOP)
         case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
             |   ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK: {
                 arm_2d_op_msk_t *ptThis = (arm_2d_op_msk_t *)ptOP;
-                __depose_virtual_resource(this.Mask.ptTile);
+                __depose_virtual_resource(this.Mask.ptTargetSide);
             }
             break;
         
@@ -295,6 +295,31 @@ arm_fsm_rt_t __arm_2d_issue_sub_task_tile_process(
     __arm_2d_sub_task_t *ptTask = &(__arm_2d_sub_task_t){
         .ptOP = (arm_2d_op_core_t *)ptThis,
         .Param.tTileProcess = *ptParam,
+    };
+
+    /* todo: update the tile process interface */
+
+    /* call default software implementation */
+    ARM_2D_RUN_DEFAULT( 0, __arm_2d_io_func_t);
+    
+    __arm_2d_sub_task_depose((arm_2d_op_core_t *)ptThis);
+    return tResult;
+}
+
+
+__WEAK
+arm_fsm_rt_t __arm_2d_issue_sub_task_tile_mask_process(  
+                                        arm_2d_op_t *ptThis,
+                                        __arm_2d_tile_param_t *ptTarget,
+                                        __arm_2d_tile_param_t *ptTargetMask)
+{
+    arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
+    __arm_2d_sub_task_t *ptTask = &(__arm_2d_sub_task_t){
+        .ptOP = (arm_2d_op_core_t *)ptThis,
+        .Param.tTileMaskProcess = {
+            .tTarget = *ptTarget,
+            .tDesMask = *ptTargetMask,
+        },
     };
 
     /* todo: update the tile process interface */
@@ -642,19 +667,97 @@ arm_fsm_rt_t __arm_2d_tile_process( arm_2d_op_t *ptThis,
     
     arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
 
-    uint_fast8_t chPixelLenInBit = _BV(OP_CORE.ptOp->Info.Colour.u3ColourSZ);
+    uint_fast8_t chTargetPixelLenInBit = _BV(OP_CORE.ptOp->Info.Colour.u3ColourSZ);
 
-    __arm_2d_tile_param_t tTileParam;
+    __arm_2d_tile_param_t tTargetTileParam;
+    __arm_2d_tile_param_t tTargetMaskParam;
+    arm_2d_tile_t tTargetMask;
+
     __arm_2d_tile_region_caculator( 
                                 ptTarget, 
-                                &tTileParam,
-                                &chPixelLenInBit,
+                                &tTargetTileParam,
+                                &chTargetPixelLenInBit,
                                 OP_CORE.ptOp->Info.Param.bAllowEnforcedColour,
                                 0,
                                 true);
 
-    tResult = __arm_2d_issue_sub_task_tile_process( ptThis, &tTileParam); 
-    
+    const arm_2d_tile_t *ptTargetMask = NULL;
+
+    if (OP_CORE.ptOp->Info.Param.bHasDesMask) {
+
+        arm_2d_op_msk_t *ptOP = (arm_2d_op_msk_t *)ptThis;
+        
+        ptTargetMask = arm_2d_tile_get_root(ptOP->Mask.ptTargetSide, 
+                                            &tTargetMaskParam.tValidRegion, 
+                                            NULL);
+        
+        if (NULL != ptTargetMask) {
+            uint_fast8_t chTargetMaskPixelLenInBit = 8;
+            
+            arm_2d_region_t tTempRegion= {
+                .tSize = ptThis->Target.ptTile->tRegion.tSize,
+            };
+            
+            arm_2d_tile_get_absolute_location(  ptThis->Target.ptTile,
+                                                &tTempRegion.tLocation);
+            
+            arm_2d_region_t tNewTargetMaskRegion = tTargetMaskParam.tValidRegion; //ptTargetMask->tRegion;
+
+            // when the target mask is not 1-vertical line mask
+            if (tTargetMaskParam.tValidRegion.tSize.iWidth != 1 ) {
+                tTempRegion.tLocation.iX 
+                    = tTargetTileParam.tValidRegion.tLocation.iX 
+                    - tTempRegion.tLocation.iX;
+
+                tTempRegion.tSize.iWidth
+                    = tTargetTileParam.tValidRegion.tSize.iWidth 
+                    - tTempRegion.tSize.iWidth;
+            
+                tNewTargetMaskRegion.tLocation.iX += tTempRegion.tLocation.iX;
+                tNewTargetMaskRegion.tSize.iWidth += tTempRegion.tSize.iWidth;
+            }
+            
+            // when the target mask is not 1-horizontal line mask
+            if (tTargetMaskParam.tValidRegion.tSize.iHeight != 1 ) {
+                tTempRegion.tLocation.iY 
+                    = tTargetTileParam.tValidRegion.tLocation.iY 
+                    - tTempRegion.tLocation.iY;
+            
+                tTempRegion.tSize.iHeight
+                    = tTargetTileParam.tValidRegion.tSize.iHeight 
+                    - tTempRegion.tSize.iHeight;
+            
+                
+                tNewTargetMaskRegion.tLocation.iY += tTempRegion.tLocation.iY;
+                tNewTargetMaskRegion.tSize.iHeight += tTempRegion.tSize.iHeight;
+            }
+        
+            ptTargetMask = arm_2d_tile_generate_child( 
+                                    ptTargetMask,
+                                    &tNewTargetMaskRegion,
+                                    &tTargetMask,
+                                    false);
+            
+            ptTargetMask = __arm_2d_tile_region_caculator( 
+                        ptTargetMask, 
+                        &tTargetMaskParam,
+                        &chTargetMaskPixelLenInBit,
+                        true,
+                        0,
+                        false); 
+        }
+        
+    }
+
+    if (NULL != ptTargetMask) {
+        tResult = __arm_2d_issue_sub_task_tile_mask_process( ptThis, 
+                                                            &tTargetTileParam,
+                                                            &tTargetMaskParam);
+    } else {
+        tResult = __arm_2d_issue_sub_task_tile_process( ptThis, 
+                                                        &tTargetTileParam); 
+    }
+
     return tResult;
 }
 
@@ -1366,24 +1469,6 @@ arm_fsm_rt_t __tile_clipped_pave(
         arm_2d_tile_t *ptSourceTile = NULL;
         arm_2d_tile_t *ptSourceMaskTile = NULL;
 
-    #if 0
-        arm_2d_region_t tempRegion = {
-            .tLocation = this.Source.ptTile->tRegion.tLocation,
-            .tSize = ptRegion->tSize,
-        };
-    
-        tempRegion.tLocation.iX = -ptRegion->tLocation.iX;
-        tempRegion.tLocation.iY = -ptRegion->tLocation.iY;
-        tempRegion.tSize.iWidth += ptRegion->tLocation.iX;
-        tempRegion.tSize.iHeight += ptRegion->tLocation.iY;
-    
-        if (NULL == arm_2d_tile_generate_child( this.Source.ptTile, 
-                                    &tempRegion, 
-                                    &tTempSourceTile, 
-                                    true)) {
-            break;
-        };
-    #else
         /* clip the source tile with the region reference of the target tile*/
         ptSourceTile = __clip_asset_tile(this.Source.ptTile,
                                          ptRegion,
@@ -1405,8 +1490,6 @@ arm_fsm_rt_t __tile_clipped_pave(
             }
         }
 
-    #endif
-    
         if (NULL != ptClippedRegion) {
             *ptClippedRegion = tTempSourceTile.tRegion;
         }

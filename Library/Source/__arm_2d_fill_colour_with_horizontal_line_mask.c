@@ -73,16 +73,6 @@ extern "C" {
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
-extern
-void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_mask(
-                            uint32_t *__RESTRICT pSource,
-                            int16_t iSourceStride,
-                            uint32_t *__RESTRICT pTarget,
-                            int16_t iTargetStride,
-                            arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
-                            arm_2d_region_t *ptTargetRegionOnVirtualScreen,
-                            arm_2d_size_t *__RESTRICT ptCopySize);
-
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
@@ -92,7 +82,7 @@ void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_mask(
 
 ARM_NONNULL(2,4)
 arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_horizontal_line_mask(
-                                        arm_2d_op_fill_cl_msk_t *ptOP,
+                                        arm_2d_op_fill_cl_l_msk_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptLineMask,
@@ -101,7 +91,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_horizontal_line_mask(
     assert(NULL != ptTarget);
     assert(NULL != ptLineMask);
 
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_l_msk_t, ptOP);
 
     //! valid alpha mask tile
     if (!__arm_2d_valid_mask(ptLineMask, 
@@ -121,8 +111,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_horizontal_line_mask(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptLineMask;
-    this.wMode = 0;
+    this.Mask.ptTargetSide = ptLineMask;
     this.wColour = tColour.tValue;
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
@@ -130,102 +119,99 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_horizontal_line_mask(
 }
 
 
-/*
- * The backend entry
- */
-arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_horizontal_line_mask( __arm_2d_sub_task_t *ptTask)
-{
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptTask->ptOP);
-
-    assert(ARM_2D_COLOUR_SZ_32BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
-
-    arm_2d_region_t tTargetRegion = *(((arm_2d_op_t *)ptThis)->Target.ptRegion);
-
-    tTargetRegion.tLocation 
-        = arm_2d_get_absolute_location( ((arm_2d_op_t *)ptThis)->Target.ptTile,
-                                        tTargetRegion.tLocation,
-                                        true);
-
-    __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_mask(   ptTask->Param.tCopy.tSource.pBuffer,
-                                                    ptTask->Param.tCopy.tSource.iStride,
-                                                    ptTask->Param.tCopy.tTarget.pBuffer,
-                                                    ptTask->Param.tCopy.tTarget.iStride,
-                                                    &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
-                                                    &tTargetRegion,
-                                                    &ptTask->Param.tCopy.tCopySize);
-
-    return arm_fsm_rt_cpl;
-}
-
-
 /* default low level implementation */
 __WEAK
 void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_mask(
-                                    uint32_t *__RESTRICT pwSource,
-                                    int16_t iSourceStride,
-                                    uint32_t *__RESTRICT pwTarget,
-                                    int16_t iTargetStride,
-                                    arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
-                                    arm_2d_region_t *ptTargetRegionOnVirtualScreen,
-                                    arm_2d_size_t *__RESTRICT ptCopySize)
+                                        uint32_t *__RESTRICT pwTarget,
+                                        int16_t iTargetStride,
+                                        uint8_t *__RESTRICT pchLineMask,
+                                        //int16_t iMaskStride,
+                                        arm_2d_size_t *__RESTRICT ptCopySize,
+                                        uint32_t wColour)
 {
-
-    /* calculate the offset between the target region and the valid region */
-    arm_2d_location_t tOffset = {
-        .iX = ptValidRegionOnVirtualScreen->tLocation.iX - ptTargetRegionOnVirtualScreen->tLocation.iX,
-        .iY = ptValidRegionOnVirtualScreen->tLocation.iY - ptTargetRegionOnVirtualScreen->tLocation.iY,
-    };
-    ARM_2D_UNUSED(tOffset);
-    /*
-         Virtual Screen
-         +--------------------------------------------------------------+
-         |                                                              |
-         |        Target Region                                         |
-         |       +-------------------------------------------+          |
-         |       |                                           |          |
-         |       |                  +-------------------+    |          |
-         |       |                  | Valid Region      |    |          |
-         |       |                  |                   |    |          |
-         |       |                  +-------------------+    |          |     
-         |       |                                           |          |
-         |       |                                           |          |     
-         |       +-------------------------------------------+          |
-         +--------------------------------------------------------------+     
-     
-         NOTE: 1. Both the Target Region and the Valid Region are relative
-                  regions of the virtual Screen in this function.
-               2. The Valid region is always inside the Target Region.
-               3. tOffset is the relative location between the Valid Region
-                  and the Target Region.
-               4. The Valid Region marks the location and size of the current
-                  working buffer on the virtual screen. Only the valid region
-                  contains a valid buffer.
-     */
-
-    int_fast16_t iWidth = ptCopySize->iWidth;
     int_fast16_t iHeight = ptCopySize->iHeight;
+    int_fast16_t iWidth  = ptCopySize->iWidth;
 
-    uint_fast8_t chTargetChannel = 0;
+    for (int_fast16_t y = 0; y < iHeight; y++) {
 
-    for (int_fast16_t iY = 0; iY < ptCopySize->iHeight; iY++) {
-
-        uint32_t *pwSourceLine = pwSource;
+        uint8_t *pchMask = pchLineMask;
         uint32_t *pwTargetLine = pwTarget;
 
-        for (int_fast16_t iX = 0; iX < iWidth; iX++) {
-
-            arm_2d_color_ccca8888_t tSourcePixel = {.tValue = *pwSourceLine++};
-            arm_2d_color_ccca8888_t tTargetPixel = {0};
-
-            tTargetPixel.u8C[chTargetChannel] = tSourcePixel.u8C[chTargetChannel];
-
-            *pwTargetLine++ = tTargetPixel.tValue;
-
+        for (int_fast16_t x = 0; x < iWidth; x++) {
+            uint16_t hwAlpha = 256 - (*pchMask++);
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            hwAlpha -= (hwAlpha == 1);
+#endif
+            __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwAlpha);
         }
 
-        pwSource += iSourceStride;
         pwTarget += iTargetStride;
     }
+}
+
+__WEAK
+void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_chn_mask(
+                                        uint32_t *__RESTRICT pwTarget,
+                                        int16_t iTargetStride,
+                                        uint32_t *__RESTRICT pwLineMask,
+                                        //int16_t iMaskStride,
+                                        arm_2d_size_t *__RESTRICT ptCopySize,
+                                        uint32_t wColour)
+{
+    int_fast16_t iHeight = ptCopySize->iHeight;
+    int_fast16_t iWidth  = ptCopySize->iWidth;
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+        uint32_t *pwMask = pwLineMask;
+        uint32_t *pwTargetLine = pwTarget;
+
+        for (int_fast16_t x = 0; x < iWidth; x++) {
+            uint16_t hwAlpha = 256 - (*(uint8_t *)(pwMask++));
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            hwAlpha -= (hwAlpha == 1);
+#endif
+            __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwAlpha);
+        }
+
+        pwTarget += iTargetStride;
+    }
+}
+
+/*
+ * The backend entry
+ */
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_horizontal_line_mask(
+                                                    __arm_2d_sub_task_t *ptTask)
+{
+    ARM_2D_IMPL(arm_2d_op_fill_cl_l_msk_t, ptTask->ptOP);
+
+    assert(ARM_2D_COLOUR_SZ_32BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
+
+    if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
+    
+    #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+        return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
+    #else
+        __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_chn_mask(
+                                                ptTask->Param.tTileMaskProcess.tTarget.pBuffer,
+                                                ptTask->Param.tTileMaskProcess.tTarget.iStride,
+                                                ptTask->Param.tTileMaskProcess.tDesMask.pBuffer,    /* mask */
+                                                //ptTask->Param.tTileMaskProcess.tDesMask.iStride,  /* mask stride */
+                                                &(ptTask->Param.tTileMaskProcess.tTarget.tValidRegion.tSize),
+                                                this.wColour);
+    #endif
+    } else {
+        __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_mask(
+                                                ptTask->Param.tTileMaskProcess.tTarget.pBuffer,
+                                                ptTask->Param.tTileMaskProcess.tTarget.iStride,
+                                                ptTask->Param.tTileMaskProcess.tDesMask.pBuffer,    /* mask */
+                                                //ptTask->Param.tTileMaskProcess.tDesMask.iStride,  /* mask stride */
+                                                &(ptTask->Param.tTileMaskProcess.tTarget.tValidRegion.tSize),
+                                                this.wColour);
+    }
+
+    return arm_fsm_rt_cpl;
 }
 
 /*
@@ -245,8 +231,8 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_CCCN888
             .chScheme   = ARM_2D_COLOUR_CCCN888,
         },
         .Param = {
-            .bHasSource     = true,
             .bHasTarget     = true,
+            .bHasDesMask    = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK,
         

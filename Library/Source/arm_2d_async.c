@@ -679,6 +679,32 @@ arm_fsm_rt_t __arm_2d_issue_sub_task_tile_process(
 }
 
 __OVERRIDE_WEAK
+arm_fsm_rt_t __arm_2d_issue_sub_task_tile_mask_process(  
+                                        arm_2d_op_t *ptThis,
+                                        __arm_2d_tile_param_t *ptTarget,
+                                        __arm_2d_tile_param_t *ptTargetMask)
+{
+
+    __arm_2d_sub_task_t *ptTask = __arm_2d_sub_task_new();
+    assert(NULL != ptTask);         
+
+    (*ptTask) = (__arm_2d_sub_task_t) {
+                    .ptOP = &(ptThis->use_as__arm_2d_op_core_t),
+                    .chLowLeveIOIndex = 0,
+                    .Param.tTileMaskProcess = {
+                        .tTarget = *ptTarget,
+                        .tDesMask = *ptTargetMask,
+                    },
+                };
+    
+    OP_CORE.Status.u4SubTaskCount++;
+    
+    __arm_2d_sub_task_add(ptTask);
+    
+    return arm_fsm_rt_async;
+}
+
+__OVERRIDE_WEAK
 arm_fsm_rt_t __arm_2d_issue_sub_task_fill(
                                     arm_2d_op_cp_t *ptThis,
                                     __arm_2d_tile_param_t *ptSource,

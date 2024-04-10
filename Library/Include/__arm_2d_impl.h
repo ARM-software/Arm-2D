@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        4. April 2024
- * $Revision:    V.1.4.6
+ * $Date:        10. April 2024
+ * $Revision:    V.1.4.7
  *
  * Target Processor:  Cortex-M cores
  *
@@ -414,6 +414,11 @@ typedef struct __arm_2d_tile_param_t {
 
 } __arm_2d_tile_param_t;
 
+typedef struct __arm_2d_param_target_msk_t {
+    __arm_2d_tile_param_t tTarget;
+    __arm_2d_tile_param_t tDesMask;
+} __arm_2d_param_target_msk_t;
+
 typedef struct __arm_2d_param_copy_t {
     __arm_2d_tile_param_t tSource;
     __arm_2d_tile_param_t tTarget;
@@ -474,7 +479,8 @@ ARM_PRIVATE(
     
     union {
         __arm_2d_tile_param_t           tTileProcess;
-        
+        __arm_2d_param_target_msk_t     tTileMaskProcess;
+
         __arm_2d_param_copy_t           tCopy;
         __arm_2d_param_copy_msk_t       tCopyMask;
         __arm_2d_param_copy_orig_t      tCopyOrig;                              //!< for transform

@@ -919,7 +919,7 @@ typedef struct arm_2d_op_msk_t {
 
     /* derived part */
     struct {
-        const arm_2d_tile_t     *ptTile;                //!< target tile
+        const arm_2d_tile_t     *ptTargetSide;          //!< target mask tile
     } Mask;
 } arm_2d_op_msk_t;
 

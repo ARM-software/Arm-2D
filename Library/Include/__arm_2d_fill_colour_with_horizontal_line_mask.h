@@ -52,7 +52,68 @@ extern "C" {
 
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
+
+#define arm_2d_gray8_fill_colour_with_horizontal_line_mask(                   \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   mask tile address */   \
+                                    __COLOUR)       /*   colour */              \
+            arm_2dp_gray8_fill_colour_with_horizontal_line_mask(              \
+                                  NULL,                                         \
+                                 (__TARGET_ADDR),                               \
+                                 (__REGION_ADDR),                               \
+                                 (__MASK_ADDR),                                 \
+                                 (arm_2d_color_gray8_t){(__COLOUR).tValue})
+
+#define arm_2d_rgb565_fill_colour_with_horizontal_line_mask(                   \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   mask tile address */   \
+                                    __COLOUR)       /*   colour */              \
+            arm_2dp_rgb565_fill_colour_with_horizontal_line_mask(              \
+                                  NULL,                                         \
+                                 (__TARGET_ADDR),                               \
+                                 (__REGION_ADDR),                               \
+                                 (__MASK_ADDR),                                 \
+                                 (arm_2d_color_rgb565_t){(__COLOUR).tValue})
+
+#define arm_2d_cccn888_fill_colour_with_horizontal_line_mask(                   \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   mask tile address */   \
+                                    __COLOUR)       /*   colour */              \
+            arm_2dp_cccn888_fill_colour_with_horizontal_line_mask(              \
+                                  NULL,                                         \
+                                 (__TARGET_ADDR),                               \
+                                 (__REGION_ADDR),                               \
+                                 (__MASK_ADDR),                                 \
+                                 (arm_2d_color_cccn888_t){(__COLOUR).tValue})
+
 /*============================ TYPES =========================================*/
+
+/*!
+ * \brief control block for colour-filling-with-mask operations
+ * \note arm_2d_op_fill_cl_l_msk_t inherits from arm_2d_op_msk_t explicitly 
+ */
+typedef struct arm_2d_op_fill_cl_l_msk_t {
+    inherit(arm_2d_op_core_t);
+    struct {
+        const arm_2d_tile_t     *ptTile;                //!< target tile
+        const arm_2d_region_t   *ptRegion;              //!< target region
+    } Target;
+
+    /* derived part */
+    struct {
+        const arm_2d_tile_t     *ptTargetSide;          //!< target mask tile
+    } Mask;
+
+    union {
+        uint8_t  chColour;                      //!< 8bit key colour
+        uint16_t hwColour;                      //!< 16bit key colour
+        uint32_t wColour;                       //!< 32bit key colour
+    };
+} arm_2d_op_fill_cl_l_msk_t;
+
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -60,8 +121,26 @@ extern "C" {
 
 extern
 ARM_NONNULL(2,4)
+arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_horizontal_line_mask(
+                                        arm_2d_op_fill_cl_l_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_tile_t *ptLineMask,
+                                        arm_2d_color_gray8_t tColour);
+
+extern
+ARM_NONNULL(2,4)
+arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_horizontal_line_mask(
+                                        arm_2d_op_fill_cl_l_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_tile_t *ptLineMask,
+                                        arm_2d_color_rgb565_t tColour);
+
+extern
+ARM_NONNULL(2,4)
 arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_horizontal_line_mask(
-                                        arm_2d_op_fill_cl_msk_t *ptOP,
+                                        arm_2d_op_fill_cl_l_msk_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptLineMask,
