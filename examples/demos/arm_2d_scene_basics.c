@@ -20,10 +20,10 @@
 
 #include "arm_2d.h"
 
-#ifdef RTE_Acceleration_Arm_2D_Scene0
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
-#define __USER_SCENE0_IMPLEMENT__
-#include "arm_2d_scene_0.h"
+#define __USER_SCENE_BASICS_IMPLEMENT__
+#include "arm_2d_scene_basics.h"
 
 #include "arm_2d_helper.h"
 #include "arm_2d_example_controls.h"
@@ -99,9 +99,9 @@ extern const arm_2d_tile_t c_tileBackground;
 /*============================ IMPLEMENTATION ================================*/
 
 
-static void __on_scene0_depose(arm_2d_scene_t *ptScene)
+static void __on_scene_basics_depose(arm_2d_scene_t *ptScene)
 {
-    user_scene_0_t *ptThis = (user_scene_0_t *)ptScene;
+    user_scene_basics_t *ptThis = (user_scene_basics_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
     ptScene->ptPlayer = NULL;
@@ -120,31 +120,31 @@ static void __on_scene0_depose(arm_2d_scene_t *ptScene)
  * Scene 0                                                                    *
  *----------------------------------------------------------------------------*/
 
-static void __on_scene0_background_start(arm_2d_scene_t *ptScene)
+static void __on_scene_basics_background_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_0_t *ptThis = (user_scene_0_t *)ptScene;
+    user_scene_basics_t *ptThis = (user_scene_basics_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
-static void __on_scene0_background_complete(arm_2d_scene_t *ptScene)
+static void __on_scene_basics_background_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_0_t *ptThis = (user_scene_0_t *)ptScene;
+    user_scene_basics_t *ptThis = (user_scene_basics_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
 
-static void __on_scene0_frame_start(arm_2d_scene_t *ptScene)
+static void __on_scene_basics_frame_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_0_t *ptThis = (user_scene_0_t *)ptScene;
+    user_scene_basics_t *ptThis = (user_scene_basics_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
-static void __on_scene0_frame_complete(arm_2d_scene_t *ptScene)
+static void __on_scene_basics_frame_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_0_t *ptThis = (user_scene_0_t *)ptScene;
+    user_scene_basics_t *ptThis = (user_scene_basics_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
     /* switch to next scene after 3s */
@@ -153,17 +153,17 @@ static void __on_scene0_frame_complete(arm_2d_scene_t *ptScene)
     }
 }
 
-static void __before_scene0_switching_out(arm_2d_scene_t *ptScene)
+static void __before_scene_basics_switching_out(arm_2d_scene_t *ptScene)
 {
-    user_scene_0_t *ptThis = (user_scene_0_t *)ptScene;
+    user_scene_basics_t *ptThis = (user_scene_basics_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
 static
-IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
 {
-    user_scene_0_t *ptThis = (user_scene_0_t *)pTarget;
+    user_scene_basics_t *ptThis = (user_scene_basics_t *)pTarget;
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
     
@@ -286,8 +286,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
 }
 
 ARM_NONNULL(1)
-user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_0_t *ptThis)
+user_scene_basics_t *__arm_2d_scene_basics_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_basics_t *ptThis)
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
@@ -334,9 +334,9 @@ user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter,
 #endif
 
     if (NULL == ptThis) {
-        ptThis = (user_scene_0_t *)
-                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_0_t),
-                                                        __alignof__(user_scene_0_t),
+        ptThis = (user_scene_basics_t *)
+                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_basics_t),
+                                                        __alignof__(user_scene_basics_t),
                                                         ARM_2D_MEM_TYPE_UNSPECIFIED);
         assert(NULL != ptThis);
         if (NULL == ptThis) {
@@ -345,9 +345,9 @@ user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter,
     } else {
         bUserAllocated = true;
     }
-    memset(ptThis, 0, sizeof(user_scene_0_t));
+    memset(ptThis, 0, sizeof(user_scene_basics_t));
 
-    *ptThis = (user_scene_0_t){
+    *ptThis = (user_scene_basics_t){
         .use_as__arm_2d_scene_t = {
 
             /* the canvas colour */
@@ -355,16 +355,16 @@ user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter,
 
             /* Please uncommon the callbacks if you need them
              */
-            .fnScene        = &__pfb_draw_scene0_handler,
+            .fnScene        = &__pfb_draw_scene_basics_handler,
             //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
 
-            //.fnOnBGStart    = &__on_scene0_background_start,
-            //.fnOnBGComplete = &__on_scene0_background_complete,
-            .fnOnFrameStart = &__on_scene0_frame_start,
-            //.fnBeforeSwitchOut = &__before_scene0_switching_out,
-            .fnOnFrameCPL   = &__on_scene0_frame_complete,
-            .fnDepose       = &__on_scene0_depose,
+            //.fnOnBGStart    = &__on_scene_basics_background_start,
+            //.fnOnBGComplete = &__on_scene_basics_background_complete,
+            .fnOnFrameStart = &__on_scene_basics_frame_start,
+            //.fnBeforeSwitchOut = &__before_scene_basics_switching_out,
+            .fnOnFrameCPL   = &__on_scene_basics_frame_complete,
+            .fnDepose       = &__on_scene_basics_depose,
         },
         .bUserAllocated = bUserAllocated,
     };

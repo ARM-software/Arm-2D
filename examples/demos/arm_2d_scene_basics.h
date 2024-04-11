@@ -16,14 +16,14 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D_SCENE0_H__
-#define __ARM_2D_SCENE0_H__
+#ifndef __ARM_2D_SCENE_BASICS_H__
+#define __ARM_2D_SCENE_BASICS_H__
 
 /*============================ INCLUDES ======================================*/
 
 #include "arm_2d.h"
 
-#ifdef RTE_Acceleration_Arm_2D_Scene0
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
 #include "arm_2d_helper_scene.h"
 
@@ -48,8 +48,8 @@ extern "C" {
 /*============================ MACROS ========================================*/
 
 /* OOC header, please DO NOT modify  */
-#ifdef __USER_SCENE0_IMPLEMENT__
-#   undef __USER_SCENE0_IMPLEMENT__
+#ifdef __USER_SCENE_BASICS_IMPLEMENT__
+#   undef __USER_SCENE_BASICS_IMPLEMENT__
 #   define __ARM_2D_IMPL__
 #endif
 #include "arm_2d_utils.h"
@@ -60,21 +60,21 @@ extern "C" {
  * \brief initalize scene0 and add it to a user specified scene player
  * \param[in] __DISP_ADAPTER_PTR the target display adatper (i.e. scene player)
  * \param[in] ... this is an optional parameter. When it is NULL, a new 
- *            user_scene_0_t will be allocated from HEAP and freed on
+ *            user_scene_basics_t will be allocated from HEAP and freed on
  *            the deposing event. When it is non-NULL, the life-cycle is managed
  *            by user.
- * \return user_scene_0_t* the user_scene_0_t instance
+ * \return user_scene_basics_t* the user_scene_basics_t instance
  */
-#define arm_2d_scene0_init(__DISP_ADAPTER_PTR, ...)                    \
-            __arm_2d_scene0_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
+#define arm_2d_scene_basics_init(__DISP_ADAPTER_PTR, ...)                    \
+            __arm_2d_scene_basics_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
 /*!
  * \brief a user class for scene 0
  */
-typedef struct user_scene_0_t user_scene_0_t;
+typedef struct user_scene_basics_t user_scene_basics_t;
 
-struct user_scene_0_t {
+struct user_scene_basics_t {
     implement(arm_2d_scene_t);                                                  //! derived from class: arm_2d_scene_t
 
 ARM_PRIVATE(
@@ -92,8 +92,8 @@ ARM_PRIVATE(
 
 ARM_NONNULL(1)
 extern
-user_scene_0_t *__arm_2d_scene0_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_0_t *ptScene);
+user_scene_basics_t *__arm_2d_scene_basics_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_basics_t *ptScene);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

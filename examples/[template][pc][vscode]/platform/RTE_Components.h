@@ -29,7 +29,6 @@
 /* ARM::Acceleration:Arm-2D Helper:PFB:1.7.2 */
 #define RTE_Acceleration_Arm_2D_Helper_PFB
 /* ARM::Acceleration:Arm-2D Helper:Scene:1.1.9 */
-#define RTE_Acceleration_Arm_2D_Scene0
 
 /* ARM::Acceleration:Arm-2D:Alpha-Blending:1.1.4 */
 #define RTE_Acceleration_Arm_2D_Alpha_Blending

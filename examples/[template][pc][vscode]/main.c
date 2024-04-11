@@ -92,8 +92,8 @@ void scene_fitness_loader(void)
 void scene_alarm_clock_loader(void) 
 {
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
-                                            ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);
-    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 3000);
+                                            ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT);
+    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 500);
     arm_2d_scene_alarm_clock_init(&DISP0_ADAPTER);
 }
 
@@ -111,13 +111,13 @@ void scene_atom_loader(void)
     arm_2d_scene_atom_init(&DISP0_ADAPTER);
 }
 
-void scene0_loader(void) 
+void scene_basics_loader(void) 
 {
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
                                             ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);
     arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 3000);
 
-    arm_2d_scene0_init(&DISP0_ADAPTER);
+    arm_2d_scene_basics_init(&DISP0_ADAPTER);
 }
 
 void scene_progress_status_loader(void) 
@@ -162,7 +162,7 @@ typedef void scene_loader_t(void);
 static scene_loader_t * const c_SceneLoaders[] = {
 
 #if 1
-    scene0_loader,
+    scene_basics_loader,
     scene_progress_status_loader,
     scene_console_window_loader,
     scene_meter_loader,

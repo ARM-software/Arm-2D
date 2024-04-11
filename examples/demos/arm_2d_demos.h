@@ -21,6 +21,7 @@
 
 /*============================ INCLUDES ======================================*/
 
+#include "./arm_2d_scene_basics.h"
 #include "./arm_2d_scene_audiomark.h"
 #include "./arm_2d_scene_console.h"
 #include "./arm_2d_scene_console_window.h"
