@@ -25,6 +25,7 @@
 #include "./arm_2d_scene_console.h"
 #include "./arm_2d_scene_console_window.h"
 #include "./arm_2d_scene_atom.h"
+#include "./arm_2d_scene_gas_gauge.h"
 
 #ifdef   __cplusplus
 extern "C" {

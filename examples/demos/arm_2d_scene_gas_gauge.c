@@ -20,13 +20,15 @@
 
 #include "arm_2d.h"
 
-#ifdef RTE_Acceleration_Arm_2D_Scene4
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
-#define __USER_SCENE4_IMPLEMENT__
+#define __USER_SCENE_GAS_GAUGE_IMPLEMENT__
 #include "arm_2d_scenes.h"
 
 #include "arm_2d_helper.h"
 #include "arm_2d_example_controls.h"
+
+#include "arm_2d_scene_gas_gauge.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -94,7 +96,7 @@ extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 /*============================ IMPLEMENTATION ================================*/
 
 
-static void __on_scene4_depose(arm_2d_scene_t *ptScene)
+static void __on_scene_gas_gauge_depose(arm_2d_scene_t *ptScene)
 {
     user_scene_4_t *ptThis = (user_scene_4_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
@@ -115,14 +117,14 @@ static void __on_scene4_depose(arm_2d_scene_t *ptScene)
  * Scene 4                                                                    *
  *----------------------------------------------------------------------------*/
 
-static void __on_scene4_background_start(arm_2d_scene_t *ptScene)
+static void __on_scene_gas_gauge_background_start(arm_2d_scene_t *ptScene)
 {
     user_scene_4_t *ptThis = (user_scene_4_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
-static void __on_scene4_background_complete(arm_2d_scene_t *ptScene)
+static void __on_scene_gas_gauge_background_complete(arm_2d_scene_t *ptScene)
 {
     user_scene_4_t *ptThis = (user_scene_4_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
@@ -130,20 +132,20 @@ static void __on_scene4_background_complete(arm_2d_scene_t *ptScene)
 }
 
 
-static void __on_scene4_frame_start(arm_2d_scene_t *ptScene)
+static void __on_scene_gas_gauge_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_4_t *ptThis = (user_scene_4_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
-static void __before_scene4_switching_out(arm_2d_scene_t *ptScene)
+static void __before_scene_gas_gauge_switching_out(arm_2d_scene_t *ptScene)
 {
     user_scene_4_t *ptThis = (user_scene_4_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 }
 
-static void __on_scene4_frame_complete(arm_2d_scene_t *ptScene)
+static void __on_scene_gas_gauge_frame_complete(arm_2d_scene_t *ptScene)
 {
     user_scene_4_t *ptThis = (user_scene_4_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
@@ -155,7 +157,7 @@ static void __on_scene4_frame_complete(arm_2d_scene_t *ptScene)
 }
 
 static
-IMPL_PFB_ON_DRAW(__pfb_draw_scene4_background_handler)
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_gas_gauge_background_handler)
 {
     user_scene_4_t *ptThis = (user_scene_4_t *)pTarget;
     ARM_2D_UNUSED(ptTile);
@@ -171,7 +173,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene4_background_handler)
 }
 
 static
-IMPL_PFB_ON_DRAW(__pfb_draw_scene4_handler)
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_gas_gauge_handler)
 {
     user_scene_4_t *ptThis = (user_scene_4_t *)pTarget;
     ARM_2D_UNUSED(ptTile);
@@ -254,7 +256,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene4_handler)
                         arm_2d_op_wait_async(NULL);
                     }
                 }
-                
             }
         }
     }
@@ -275,7 +276,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene4_handler)
 }
 
 ARM_NONNULL(1)
-user_scene_4_t *__arm_2d_scene4_init(   arm_2d_scene_player_t *ptDispAdapter, 
+user_scene_4_t *__arm_2d_scene_gas_gauge_init(   arm_2d_scene_player_t *ptDispAdapter, 
                                         user_scene_4_t *ptThis)
 {
     bool bUserAllocated = false;
@@ -328,17 +329,17 @@ user_scene_4_t *__arm_2d_scene4_init(   arm_2d_scene_player_t *ptDispAdapter,
 
         /* Please uncommon the callbacks if you need them
          */
-        //.fnBackground   = &__pfb_draw_scene4_background_handler,
-        .fnScene        = &__pfb_draw_scene4_handler,
+        //.fnBackground   = &__pfb_draw_scene_gas_gauge_background_handler,
+        .fnScene        = &__pfb_draw_scene_gas_gauge_handler,
         .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
         
 
-        //.fnOnBGStart    = &__on_scene4_background_start,
-        //.fnOnBGComplete = &__on_scene4_background_complete,
-        //.fnOnFrameStart = &__on_scene4_frame_start,
-        .fnBeforeSwitchOut = &__before_scene4_switching_out,
-        .fnOnFrameCPL   = &__on_scene4_frame_complete,
-        .fnDepose       = &__on_scene4_depose,
+        //.fnOnBGStart    = &__on_scene_gas_gauge_background_start,
+        //.fnOnBGComplete = &__on_scene_gas_gauge_background_complete,
+        //.fnOnFrameStart = &__on_scene_gas_gauge_frame_start,
+        .fnBeforeSwitchOut = &__before_scene_gas_gauge_switching_out,
+        .fnOnFrameCPL   = &__on_scene_gas_gauge_frame_complete,
+        .fnDepose       = &__on_scene_gas_gauge_depose,
         },
         .bUserAllocated = bUserAllocated,
     };

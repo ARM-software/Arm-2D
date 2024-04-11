@@ -23,7 +23,7 @@
 
 #include "arm_2d.h"
 
-#ifdef RTE_Acceleration_Arm_2D_Scene4
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
 #include "arm_2d_helper_scene.h"
 

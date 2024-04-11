@@ -510,6 +510,17 @@
           </RTE_Components_h>
         </component>
 
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Gas Gauge" Cversion="1.0.0" condition="Arm-2D-EXTRA">
+          <description>A demo for the battery gas gauge.</description>
+          <files>
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_gas_gauge.c" attr="config" version="1.0.0" />
+            <file category="header"      name="examples/demos/arm_2d_scene_gas_gauge.h" attr="config" version="1.0.0" />
+          </files>
+          <RTE_Components_h>
+#define RTE_Acceleration_Arm_2D_Demos_Gas_Gauge
+          </RTE_Components_h>
+        </component>
+
         <component Cclass="CMSIS-Compiler" Cgroup="STDOUT" Csub="LCD Console" Cversion="1.0.2" condition="STDOUT LCD Console">
           <description>Retarget STDOUT to an Arm-2D LCD Console. </description>
           <RTE_Components_h>
