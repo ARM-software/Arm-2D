@@ -27,6 +27,8 @@
 #include "./arm_2d_scene_atom.h"
 #include "./arm_2d_scene_gas_gauge.h"
 #include "./arm_2d_scene_listview.h"
+#include "./arm_2d_scene_panel.h"
+#include "./arm_2d_scene_progress_status.h"
 
 #ifdef   __cplusplus
 extern "C" {

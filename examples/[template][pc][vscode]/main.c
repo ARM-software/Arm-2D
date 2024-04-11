@@ -120,18 +120,18 @@ void scene0_loader(void)
     arm_2d_scene0_init(&DISP0_ADAPTER);
 }
 
-void scene1_loader(void) 
+void scene_progress_status_loader(void) 
 {
-    arm_2d_scene1_init(&DISP0_ADAPTER);
+    arm_2d_scene_progress_status_init(&DISP0_ADAPTER);
 }
 
-void scene2_loader(void) 
+void scene_panel_loader(void) 
 {
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
                                             ARM_2D_SCENE_SWITCH_MODE_SLIDE_RIGHT);
     arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 500);
 
-    arm_2d_scene2_init(&DISP0_ADAPTER);
+    arm_2d_scene_panel_init(&DISP0_ADAPTER);
 }
 
 void scene_gas_gauge_loader(void) 
@@ -163,7 +163,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
 
 #if 1
     scene0_loader,
-    scene1_loader,
+    scene_progress_status_loader,
     scene_console_window_loader,
     scene_meter_loader,
     scene_alarm_clock_loader,
@@ -172,8 +172,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene_listview_loader,
     scene5_loader,
 
-    scene2_loader,
-
+    scene_panel_loader,
     scene_fitness_loader,
     scene_audiomark_loader,
 #else

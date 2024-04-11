@@ -532,6 +532,28 @@
           </RTE_Components_h>
         </component>
 
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cversion="1.0.0" condition="Arm-2D-EXTRA">
+          <description>A demo for typical controls on a panel </description>
+          <files>
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_panel.c" attr="config" version="1.0.0" />
+            <file category="header"      name="examples/demos/arm_2d_scene_panel.h" attr="config" version="1.0.0" />
+          </files>
+          <RTE_Components_h>
+#define RTE_Acceleration_Arm_2D_Demos_Panel
+          </RTE_Components_h>
+        </component>
+
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cversion="1.0.0" condition="Arm-2D-EXTRA">
+          <description>A demo for progress indication and gif </description>
+          <files>
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_progress_status.c" attr="config" version="1.0.0" />
+            <file category="header"      name="examples/demos/arm_2d_scene_progress_status.h" attr="config" version="1.0.0" />
+          </files>
+          <RTE_Components_h>
+#define RTE_Acceleration_Arm_2D_Demos_Progress_Status
+          </RTE_Components_h>
+        </component>
+
         <component Cclass="CMSIS-Compiler" Cgroup="STDOUT" Csub="LCD Console" Cversion="1.0.2" condition="STDOUT LCD Console">
           <description>Retarget STDOUT to an Arm-2D LCD Console. </description>
           <RTE_Components_h>

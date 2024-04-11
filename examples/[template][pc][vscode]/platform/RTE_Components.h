@@ -30,8 +30,6 @@
 #define RTE_Acceleration_Arm_2D_Helper_PFB
 /* ARM::Acceleration:Arm-2D Helper:Scene:1.1.9 */
 #define RTE_Acceleration_Arm_2D_Scene0
-#define RTE_Acceleration_Arm_2D_Scene1
-#define RTE_Acceleration_Arm_2D_Scene2
 #define RTE_Acceleration_Arm_2D_Scene5
 
 /* ARM::Acceleration:Arm-2D:Alpha-Blending:1.1.4 */
