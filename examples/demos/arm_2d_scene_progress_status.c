@@ -265,8 +265,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
         arm_lcd_text_location(0,0);
-        //arm_lcd_puts("Scene 1");
-        arm_lcd_printf("scene 1");
+        arm_lcd_printf("Scene Progress and Status");
     }
 
     /*-----------------------draw the foreground end  -----------------------*/

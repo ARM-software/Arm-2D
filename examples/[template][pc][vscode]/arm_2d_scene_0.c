@@ -265,7 +265,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
                             arm_lcd_printf("%d", n);
                         }
                     }
-                    //arm_lcd_print_banner("1234567890", __item_region, &ARM_2D_FONT_A8_DIGITS_ONLY);
                 }
             }                
         }

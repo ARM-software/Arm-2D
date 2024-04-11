@@ -340,7 +340,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_panel_handler)
         arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
         arm_lcd_text_location(0,0);
-        arm_lcd_printf("scene 2");
+        arm_lcd_printf("Scene Panel");
     }
     /*-----------------------draw the foreground end  -----------------------*/
     arm_2d_op_wait_async(NULL);
