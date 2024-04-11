@@ -521,6 +521,17 @@
           </RTE_Components_h>
         </component>
 
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Listview" Cversion="1.0.0" condition="Arm-2D-EXTRA">
+          <description>A demo for the listview </description>
+          <files>
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_listview.c" attr="config" version="1.0.0" />
+            <file category="header"      name="examples/demos/arm_2d_scene_listview.h" attr="config" version="1.0.0" />
+          </files>
+          <RTE_Components_h>
+#define RTE_Acceleration_Arm_2D_Demos_Listview
+          </RTE_Components_h>
+        </component>
+
         <component Cclass="CMSIS-Compiler" Cgroup="STDOUT" Csub="LCD Console" Cversion="1.0.2" condition="STDOUT LCD Console">
           <description>Retarget STDOUT to an Arm-2D LCD Console. </description>
           <RTE_Components_h>

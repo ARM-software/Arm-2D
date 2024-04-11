@@ -16,14 +16,14 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D_SCENE3_H__
-#define __ARM_2D_SCENE3_H__
+#ifndef __ARM_2D__SCENE_LISTVIEW_H__
+#define __ARM_2D__SCENE_LISTVIEW_H__
 
 /*============================ INCLUDES ======================================*/
 
 #include "arm_2d.h"
 
-#ifdef RTE_Acceleration_Arm_2D_Scene3
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
 #include "arm_2d_helper_scene.h"
 #include "list_view.h"
@@ -50,8 +50,8 @@ extern "C" {
 /*============================ MACROS ========================================*/
 
 /* OOC header, please DO NOT modify  */
-#ifdef __USER_SCENE3_IMPLEMENT__
-#   undef __USER_SCENE3_IMPLEMENT__
+#ifdef __USER_SCENE_LISTVIEW_IMPLEMENT__
+#   undef __USER_SCENE_LISTVIEW_IMPLEMENT__
 #   define __ARM_2D_IMPL__
 #endif
 #include "arm_2d_utils.h"
@@ -59,7 +59,7 @@ extern "C" {
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
- * \brief initalize scene3 and add it to a user specified scene player
+ * \brief initalize _listview and add it to a user specified scene player
  * \param[in] __DISP_ADAPTER_PTR the target display adatper (i.e. scene player)
  * \param[in] ... this is an optional parameter. When it is NULL, a new 
  *            user_scene_3_t will be allocated from HEAP and freed on
@@ -67,8 +67,8 @@ extern "C" {
  *            by user.
  * \return user_scene_3_t* the user_scene_3_t instance
  */
-#define arm_2d_scene3_init(__DISP_ADAPTER_PTR, ...)                    \
-            __arm_2d_scene3_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
+#define arm_2d_scene_listview_init(__DISP_ADAPTER_PTR, ...)                    \
+            __arm_2d_scene_listview_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
 /*!
@@ -96,7 +96,7 @@ ARM_PRIVATE(
 
 ARM_NONNULL(1)
 extern
-user_scene_3_t *__arm_2d_scene3_init(   arm_2d_scene_player_t *ptDispAdapter, 
+user_scene_3_t *__arm_2d_scene_listview_init(   arm_2d_scene_player_t *ptDispAdapter, 
                                         user_scene_3_t *ptScene);
 
 #if defined(__clang__)

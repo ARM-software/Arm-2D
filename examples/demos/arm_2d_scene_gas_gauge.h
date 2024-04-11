@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D_SCENE4_H__
-#define __ARM_2D_SCENE4_H__
+#ifndef __ARM_2D_SCENE_GAS_GAUGE_H__
+#define __ARM_2D_SCENE_GAS_GAUGE_H__
 
 /*============================ INCLUDES ======================================*/
 
@@ -50,8 +50,8 @@ extern "C" {
 /*============================ MACROS ========================================*/
 
 /* OOC header, please DO NOT modify  */
-#ifdef __USER_SCENE4_IMPLEMENT__
-#   undef __USER_SCENE4_IMPLEMENT__
+#ifdef __USER_SCENE_GAS_GAUGE_IMPLEMENT__
+#   undef __USER_SCENE_GAS_GAUGE_IMPLEMENT__
 #   define __ARM_2D_IMPL__
 #endif
 #include "arm_2d_utils.h"
@@ -67,8 +67,8 @@ extern "C" {
  *            by user.
  * \return user_scene_4_t* the user_scene_4_t instance
  */
-#define arm_2d_scene4_init(__DISP_ADAPTER_PTR, ...)                    \
-            __arm_2d_scene4_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
+#define arm_2d_scene_gas_gauge_init(__DISP_ADAPTER_PTR, ...)                    \
+            __arm_2d_scene_gas_gauge_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
 /*!
@@ -97,7 +97,7 @@ ARM_PRIVATE(
 
 ARM_NONNULL(1)
 extern
-user_scene_4_t *__arm_2d_scene4_init(   arm_2d_scene_player_t *ptDispAdapter, 
+user_scene_4_t *__arm_2d_scene_gas_gauge_init(   arm_2d_scene_player_t *ptDispAdapter, 
                                         user_scene_4_t *ptScene);
 
 #if defined(__clang__)

@@ -20,13 +20,14 @@
 
 #include "arm_2d.h"
 
-#ifdef RTE_Acceleration_Arm_2D_Scene3
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
-#define __USER_SCENE3_IMPLEMENT__
-#include "arm_2d_scene_3.h"
+#define __USER_SCENE_LISTVIEW_IMPLEMENT__
 
 #include "arm_2d_helper.h"
 #include "arm_2d_example_controls.h"
+
+#include "arm_2d_scene_listview.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -331,7 +332,7 @@ arm_fsm_rt_t __list_view_item_3_draw_item(
 }
 
 
-static void __on_scene3_depose(arm_2d_scene_t *ptScene)
+static void __on_scene_listview_depose(arm_2d_scene_t *ptScene)
 {
     user_scene_3_t *ptThis = (user_scene_3_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
@@ -354,14 +355,14 @@ static void __on_scene3_depose(arm_2d_scene_t *ptScene)
  * Scene 3                                                                    *
  *----------------------------------------------------------------------------*/
 
-static void __on_scene3_background_start(arm_2d_scene_t *ptScene)
+static void __on_scene_listview_background_start(arm_2d_scene_t *ptScene)
 {
     user_scene_3_t *ptThis = (user_scene_3_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
-static void __on_scene3_background_complete(arm_2d_scene_t *ptScene)
+static void __on_scene_listview_background_complete(arm_2d_scene_t *ptScene)
 {
     user_scene_3_t *ptThis = (user_scene_3_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
@@ -369,7 +370,7 @@ static void __on_scene3_background_complete(arm_2d_scene_t *ptScene)
 }
 
 
-static void __on_scene3_frame_start(arm_2d_scene_t *ptScene)
+static void __on_scene_listview_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_3_t *ptThis = (user_scene_3_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
@@ -384,7 +385,7 @@ static void __on_scene3_frame_start(arm_2d_scene_t *ptScene)
 
 }
 
-static void __on_scene3_frame_complete(arm_2d_scene_t *ptScene)
+static void __on_scene_listview_frame_complete(arm_2d_scene_t *ptScene)
 {
     user_scene_3_t *ptThis = (user_scene_3_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
@@ -400,7 +401,7 @@ static void __on_scene3_frame_complete(arm_2d_scene_t *ptScene)
 }
 
 static
-IMPL_PFB_ON_DRAW(__pfb_draw_scene3_background_handler)
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_listview_background_handler)
 {
     user_scene_3_t *ptThis = (user_scene_3_t *)pTarget;
     ARM_2D_UNUSED(ptTile);
@@ -416,7 +417,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene3_background_handler)
 }
 
 static
-IMPL_PFB_ON_DRAW(__pfb_draw_scene3_handler)
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_listview_handler)
 {
     user_scene_3_t *ptThis = (user_scene_3_t *)pTarget;
     ARM_2D_UNUSED(ptTile);
@@ -444,7 +445,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene3_handler)
 }
 
 ARM_NONNULL(1)
-user_scene_3_t *__arm_2d_scene3_init(   arm_2d_scene_player_t *ptDispAdapter, 
+user_scene_3_t *__arm_2d_scene_listview_init(   arm_2d_scene_player_t *ptDispAdapter, 
                                         user_scene_3_t *ptThis)
 {
     bool bUserAllocated = false;
@@ -499,16 +500,16 @@ user_scene_3_t *__arm_2d_scene3_init(   arm_2d_scene_player_t *ptDispAdapter,
         
         /* Please uncommon the callbacks if you need them
          */
-        //.fnBackground   = &__pfb_draw_scene3_background_handler,
-        .fnScene        = &__pfb_draw_scene3_handler,
+        //.fnBackground   = &__pfb_draw_scene_listview_background_handler,
+        .fnScene        = &__pfb_draw_scene_listview_handler,
         .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
         
 
-        //.fnOnBGStart    = &__on_scene3_background_start,
-        //.fnOnBGComplete = &__on_scene3_background_complete,
-        .fnOnFrameStart = &__on_scene3_frame_start,
-        .fnOnFrameCPL   = &__on_scene3_frame_complete,
-        .fnDepose       = &__on_scene3_depose,
+        //.fnOnBGStart    = &__on_scene_listview_background_start,
+        //.fnOnBGComplete = &__on_scene_listview_background_complete,
+        .fnOnFrameStart = &__on_scene_listview_frame_start,
+        .fnOnFrameCPL   = &__on_scene_listview_frame_complete,
+        .fnDepose       = &__on_scene_listview_depose,
         },
         .bUserAllocated = bUserAllocated,
     };
