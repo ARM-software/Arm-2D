@@ -98,7 +98,7 @@ extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
 static void __on_scene_gas_gauge_depose(arm_2d_scene_t *ptScene)
 {
-    user_scene_4_t *ptThis = (user_scene_4_t *)ptScene;
+    user_scene_gas_gauge_t *ptThis = (user_scene_gas_gauge_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
     ptScene->ptPlayer = NULL;
@@ -119,14 +119,14 @@ static void __on_scene_gas_gauge_depose(arm_2d_scene_t *ptScene)
 
 static void __on_scene_gas_gauge_background_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_4_t *ptThis = (user_scene_4_t *)ptScene;
+    user_scene_gas_gauge_t *ptThis = (user_scene_gas_gauge_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
 static void __on_scene_gas_gauge_background_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_4_t *ptThis = (user_scene_4_t *)ptScene;
+    user_scene_gas_gauge_t *ptThis = (user_scene_gas_gauge_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
@@ -134,20 +134,20 @@ static void __on_scene_gas_gauge_background_complete(arm_2d_scene_t *ptScene)
 
 static void __on_scene_gas_gauge_frame_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_4_t *ptThis = (user_scene_4_t *)ptScene;
+    user_scene_gas_gauge_t *ptThis = (user_scene_gas_gauge_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
 static void __before_scene_gas_gauge_switching_out(arm_2d_scene_t *ptScene)
 {
-    user_scene_4_t *ptThis = (user_scene_4_t *)ptScene;
+    user_scene_gas_gauge_t *ptThis = (user_scene_gas_gauge_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 }
 
 static void __on_scene_gas_gauge_frame_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_4_t *ptThis = (user_scene_4_t *)ptScene;
+    user_scene_gas_gauge_t *ptThis = (user_scene_gas_gauge_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
     /* switch to next scene after 3s */
@@ -159,7 +159,7 @@ static void __on_scene_gas_gauge_frame_complete(arm_2d_scene_t *ptScene)
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_gas_gauge_background_handler)
 {
-    user_scene_4_t *ptThis = (user_scene_4_t *)pTarget;
+    user_scene_gas_gauge_t *ptThis = (user_scene_gas_gauge_t *)pTarget;
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
     /*-----------------------draw back ground begin-----------------------*/
@@ -175,7 +175,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_gas_gauge_background_handler)
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_gas_gauge_handler)
 {
-    user_scene_4_t *ptThis = (user_scene_4_t *)pTarget;
+    user_scene_gas_gauge_t *ptThis = (user_scene_gas_gauge_t *)pTarget;
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
 
@@ -276,8 +276,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_gas_gauge_handler)
 }
 
 ARM_NONNULL(1)
-user_scene_4_t *__arm_2d_scene_gas_gauge_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_4_t *ptThis)
+user_scene_gas_gauge_t *__arm_2d_scene_gas_gauge_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_gas_gauge_t *ptThis)
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
@@ -308,9 +308,9 @@ user_scene_4_t *__arm_2d_scene_gas_gauge_init(   arm_2d_scene_player_t *ptDispAd
     }
     
     if (NULL == ptThis) {
-        ptThis = (user_scene_4_t *)
-                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_4_t),
-                                                        __alignof__(user_scene_4_t),
+        ptThis = (user_scene_gas_gauge_t *)
+                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_gas_gauge_t),
+                                                        __alignof__(user_scene_gas_gauge_t),
                                                         ARM_2D_MEM_TYPE_UNSPECIFIED);
         assert(NULL != ptThis);
         if (NULL == ptThis) {
@@ -318,10 +318,10 @@ user_scene_4_t *__arm_2d_scene_gas_gauge_init(   arm_2d_scene_player_t *ptDispAd
         }
     } else {
         bUserAllocated = true;
-        memset(ptThis, 0, sizeof(user_scene_4_t));
+        memset(ptThis, 0, sizeof(user_scene_gas_gauge_t));
     }
 
-    *ptThis = (user_scene_4_t){
+    *ptThis = (user_scene_gas_gauge_t){
         .use_as__arm_2d_scene_t = {
 
         /* the canvas colour */

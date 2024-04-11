@@ -43,7 +43,8 @@
 			"arm_2d.h": "c",
 			"algorithm": "c",
 			"arm_2d_scene_1.h": "c",
-			"arm_2d_helper_scene.h": "c"
+			"arm_2d_helper_scene.h": "c",
+			"progress_wheel.h": "c"
 		},
 		"cSpell.words": [
 			"cccn"

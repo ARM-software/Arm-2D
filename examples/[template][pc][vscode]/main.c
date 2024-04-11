@@ -147,9 +147,9 @@ void scene_listview_loader(void)
     arm_2d_scene_listview_init(&DISP0_ADAPTER);
 }
 
-void scene5_loader(void) 
+void scene_menu_loader(void) 
 {
-    arm_2d_scene5_init(&DISP0_ADAPTER);
+    arm_2d_scene_menu_init(&DISP0_ADAPTER);
 }
 
 void scene_console_window_loader(void)
@@ -170,7 +170,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene_atom_loader,
     scene_gas_gauge_loader,
     scene_listview_loader,
-    scene5_loader,
+    scene_menu_loader,
 
     scene_panel_loader,
     scene_fitness_loader,
@@ -178,7 +178,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
 #else
     scene_alarm_clock_loader
 #endif
-    //scene_watch_loader,
+
 
 };
 

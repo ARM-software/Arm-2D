@@ -101,7 +101,7 @@ const arm_2d_tile_t c_tileWhiteDotMask;
 
 static void __on_scene_panel_depose(arm_2d_scene_t *ptScene)
 {
-    user_scene_2_t *ptThis = (user_scene_2_t *)ptScene;
+    user_scene_panel_t *ptThis = (user_scene_panel_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
     ptScene->ptPlayer = NULL;
@@ -129,14 +129,14 @@ static void __on_scene_panel_depose(arm_2d_scene_t *ptScene)
 
 static void __on_scene_panel_background_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_2_t *ptThis = (user_scene_2_t *)ptScene;
+    user_scene_panel_t *ptThis = (user_scene_panel_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
 static void __on_scene_panel_background_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_2_t *ptThis = (user_scene_2_t *)ptScene;
+    user_scene_panel_t *ptThis = (user_scene_panel_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
@@ -144,7 +144,7 @@ static void __on_scene_panel_background_complete(arm_2d_scene_t *ptScene)
 
 static void __on_scene_panel_frame_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_2_t *ptThis = (user_scene_2_t *)ptScene;
+    user_scene_panel_t *ptThis = (user_scene_panel_t *)ptScene;
 
     progress_wheel_on_frame_start(&this.tWheel);
 
@@ -155,7 +155,7 @@ static void __on_scene_panel_frame_start(arm_2d_scene_t *ptScene)
 
 static void __on_scene_panel_frame_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_2_t *ptThis = (user_scene_2_t *)ptScene;
+    user_scene_panel_t *ptThis = (user_scene_panel_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
@@ -186,7 +186,7 @@ static void __on_scene_panel_frame_complete(arm_2d_scene_t *ptScene)
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_panel_background_handler)
 {
-    user_scene_2_t *ptThis = (user_scene_2_t *)pTarget;
+    user_scene_panel_t *ptThis = (user_scene_panel_t *)pTarget;
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
     /*-----------------------draw back ground begin-----------------------*/
@@ -224,7 +224,7 @@ static void draw_buttom(const arm_2d_tile_t *ptTile,
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_panel_handler)
 {
-    user_scene_2_t *ptThis = (user_scene_2_t *)pTarget;
+    user_scene_panel_t *ptThis = (user_scene_panel_t *)pTarget;
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
     
@@ -333,27 +333,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_panel_handler)
                                                      (__arm_2d_color_t){GLCD_COLOR_RED},
                                                      this.chOpacity);
         }
-        
-    //    arm_2d_align_centre(__canvas, 100, 100) {
-    //        static arm_2d_location_t s_tOffset = {0,0};
-    //        if (bIsNewFrame) {
-    //            static int64_t s_lTimestamp[2] = {0};
-    //            int32_t iXOffset, iYOffset;
-    //            arm_2d_helper_time_cos_slider(0, 100, 2000, 0, &iXOffset, &s_lTimestamp[0]);
-    //            arm_2d_helper_time_cos_slider(0, 100, 2000, ARM_2D_ANGLE(90), &iYOffset, &s_lTimestamp[1]);
-    //            s_tOffset.iX = iXOffset;
-    //            s_tOffset.iY = iYOffset;
-    //        }
-    //        
-    //        __centre_region.tLocation.iX += 100 - s_tOffset.iX;
-    //        __centre_region.tLocation.iY += s_tOffset.iY;
-    //        arm_2d_fill_colour_with_mask(ptTile,
-    //                                     &__centre_region,
-    //                                     &c_tileWhiteDotMask,
-    //                                     (__arm_2d_color_t){GLCD_COLOR_RED});
-    //    
-    //    }
-
 
         /* draw text at the top-left corner */
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
@@ -392,17 +371,17 @@ IMPL_PFB_ON_DRAW(__arm_2d_number_list_draw_cover)
 }
 
 ARM_NONNULL(1)
-user_scene_2_t *__arm_2d_scene_panel_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_2_t *ptScene)
+user_scene_panel_t *__arm_2d_scene_panel_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_panel_t *ptScene)
 {
 
     bool bUserAllocated = true;
     assert(NULL != ptDispAdapter);
 
     if (NULL == ptScene) {
-        ptScene = (user_scene_2_t *)
-                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_2_t),
-                                                        __alignof__(user_scene_2_t),
+        ptScene = (user_scene_panel_t *)
+                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_panel_t),
+                                                        __alignof__(user_scene_panel_t),
                                                         ARM_2D_MEM_TYPE_UNSPECIFIED);
         assert(NULL != ptScene);
         if (NULL == ptScene) {
@@ -411,7 +390,7 @@ user_scene_2_t *__arm_2d_scene_panel_init(   arm_2d_scene_player_t *ptDispAdapte
         bUserAllocated = false;
     }
 
-    memset(ptScene, 0, sizeof(user_scene_2_t));
+    memset(ptScene, 0, sizeof(user_scene_panel_t));
 
 
     /*! define dirty regions */
@@ -447,7 +426,7 @@ user_scene_2_t *__arm_2d_scene_panel_init(   arm_2d_scene_player_t *ptDispAdapte
     }
 
 
-    *ptScene = (user_scene_2_t){
+    *ptScene = (user_scene_panel_t){
         .use_as__arm_2d_scene_t = {
 
         /* the canvas colour */
@@ -469,7 +448,7 @@ user_scene_2_t *__arm_2d_scene_panel_init(   arm_2d_scene_player_t *ptDispAdapte
         .bUserAllocated = bUserAllocated,
     };
 
-    user_scene_2_t *ptThis = (user_scene_2_t *)ptScene;
+    user_scene_panel_t *ptThis = (user_scene_panel_t *)ptScene;
 
     do {
         progress_wheel_cfg_t tCFG = {

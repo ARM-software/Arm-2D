@@ -20,10 +20,10 @@
 
 #include "arm_2d.h"
 
-#ifdef RTE_Acceleration_Arm_2D_Scene5
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
-#define __USER_SCENE5_IMPLEMENT__
-#include "arm_2d_scene_5.h"
+#define __USER_SCENE_MENU_IMPLEMENT__
+#include "arm_2d_scene_menu.h"
 
 #include "arm_2d_helper.h"
 #include "arm_2d_example_controls.h"
@@ -202,7 +202,6 @@ my_list_item_t s_tListArray[] = {
 
 #define ITEM_BG_OPACITY     (255)
 
-#define RADIUS      480.0f
 
 static 
 arm_fsm_rt_t __list_view_item_0_draw_item( 
@@ -217,6 +216,14 @@ arm_fsm_rt_t __list_view_item_0_draw_item(
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(ptParam);
 
+    user_scene_menu_t *ptScene = (user_scene_menu_t *)this.use_as__arm_2d_list_item_t.pTarget;
+
+    arm_2d_region_t tScreen
+        = arm_2d_helper_pfb_get_display_area(
+            &(ptScene->use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t));
+    
+    int16_t iRadius = tScreen.tSize.iWidth;
+
     uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
     int32_t q7ScaleRatio = ((ptParam->chOpacity >> 1) + 128);
     /* re-use opacity (0~255) as scaling ratio */
@@ -228,7 +235,7 @@ arm_fsm_rt_t __list_view_item_0_draw_item(
             /* adjust item position around a curve*/
             do {
                 float fYOffset =  (float)ptParam->hwRatio;
-                fYOffset = RADIUS - sqrt(RADIUS * RADIUS - fYOffset * fYOffset);
+                fYOffset = iRadius - sqrt(iRadius * iRadius - fYOffset * fYOffset);
 
                 __top_centre_region.tLocation.iY += (int16_t) fYOffset;
             } while(0);
@@ -257,14 +264,20 @@ arm_fsm_rt_t __list_view_item_1_draw_item(
                                       arm_2d_list_item_param_t *ptParam)
 {
     my_list_item_t *ptThis = (my_list_item_t *)ptItem;
-    user_scene_5_t *ptScene = (user_scene_5_t *)ptItem->pTarget;
     ARM_2D_UNUSED(ptItem);
     ARM_2D_UNUSED(bIsNewFrame);
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(ptParam);
 
-    uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
+    user_scene_menu_t *ptScene = (user_scene_menu_t *)this.use_as__arm_2d_list_item_t.pTarget;
 
+    arm_2d_region_t tScreen
+        = arm_2d_helper_pfb_get_display_area(
+            &(ptScene->use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t));
+    
+    int16_t iRadius = tScreen.tSize.iWidth;
+
+    uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
     int32_t q7ScaleRatio = ((ptParam->chOpacity >> 1) + 128);
     /* re-use opacity (0~255) as scaling ratio */
     int32_t nSize = 100 * q7ScaleRatio >> 8;
@@ -279,7 +292,7 @@ arm_fsm_rt_t __list_view_item_1_draw_item(
             /* adjust item position around a curve*/
             do {
                 float fYOffset =  (float)ptParam->hwRatio;
-                fYOffset = RADIUS - sqrt(RADIUS * RADIUS - fYOffset * fYOffset);
+                fYOffset = iRadius - sqrt(iRadius * iRadius - fYOffset * fYOffset);
 
                 __top_centre_region.tLocation.iY += (int16_t) fYOffset;
             } while(0);
@@ -318,7 +331,15 @@ arm_fsm_rt_t __list_view_item_2_draw_item(
     ARM_2D_UNUSED(bIsNewFrame);
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(ptParam);
+
+    user_scene_menu_t *ptScene = (user_scene_menu_t *)this.use_as__arm_2d_list_item_t.pTarget;
+
+    arm_2d_region_t tScreen
+        = arm_2d_helper_pfb_get_display_area(
+            &(ptScene->use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t));
     
+    int16_t iRadius = tScreen.tSize.iWidth;
+
     uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
 
     int32_t q7ScaleRatio = ((ptParam->chOpacity >> 1) + 128);
@@ -331,7 +352,7 @@ arm_fsm_rt_t __list_view_item_2_draw_item(
             /* adjust item position around a curve*/
             do {
                 float fYOffset =  (float)ptParam->hwRatio;
-                fYOffset = RADIUS - sqrt(RADIUS * RADIUS - fYOffset * fYOffset);
+                fYOffset = iRadius - sqrt(iRadius * iRadius - fYOffset * fYOffset);
 
                 __top_centre_region.tLocation.iY += (int16_t) fYOffset;
             } while(0);
@@ -365,6 +386,14 @@ arm_fsm_rt_t __list_view_item_3_draw_item(
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(ptParam);
 
+    user_scene_menu_t *ptScene = (user_scene_menu_t *)this.use_as__arm_2d_list_item_t.pTarget;
+
+    arm_2d_region_t tScreen
+        = arm_2d_helper_pfb_get_display_area(
+            &(ptScene->use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t));
+    
+    int16_t iRadius = tScreen.tSize.iWidth;
+
     uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
 
     int32_t q7ScaleRatio = ((ptParam->chOpacity >> 1) + 128);
@@ -377,7 +406,7 @@ arm_fsm_rt_t __list_view_item_3_draw_item(
             /* adjust item position around a curve*/
             do {
                 float fYOffset =  (float)ptParam->hwRatio;
-                fYOffset = RADIUS - sqrt(RADIUS * RADIUS - fYOffset * fYOffset);
+                fYOffset = iRadius - sqrt(iRadius * iRadius - fYOffset * fYOffset);
 
                 __top_centre_region.tLocation.iY += (int16_t) fYOffset;
             } while(0);
@@ -399,9 +428,9 @@ arm_fsm_rt_t __list_view_item_3_draw_item(
 }
 
 
-static void __on_scene5_depose(arm_2d_scene_t *ptScene)
+static void __on_scene_menu_depose(arm_2d_scene_t *ptScene)
 {
-    user_scene_5_t *ptThis = (user_scene_5_t *)ptScene;
+    user_scene_menu_t *ptThis = (user_scene_menu_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
     ptScene->ptPlayer = NULL;
@@ -422,24 +451,24 @@ static void __on_scene5_depose(arm_2d_scene_t *ptScene)
  * Scene 3                                                                    *
  *----------------------------------------------------------------------------*/
 
-static void __on_scene5_background_start(arm_2d_scene_t *ptScene)
+static void __on_scene_menu_background_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_5_t *ptThis = (user_scene_5_t *)ptScene;
+    user_scene_menu_t *ptThis = (user_scene_menu_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
-static void __on_scene5_background_complete(arm_2d_scene_t *ptScene)
+static void __on_scene_menu_background_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_5_t *ptThis = (user_scene_5_t *)ptScene;
+    user_scene_menu_t *ptThis = (user_scene_menu_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
 
-static void __on_scene5_frame_start(arm_2d_scene_t *ptScene)
+static void __on_scene_menu_frame_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_5_t *ptThis = (user_scene_5_t *)ptScene;
+    user_scene_menu_t *ptThis = (user_scene_menu_t *)ptScene;
 
     int nResult;
     if (arm_2d_helper_time_liner_slider(0, 1000, 10000, &nResult, &this.lTimestamp[2])) {
@@ -450,9 +479,9 @@ static void __on_scene5_frame_start(arm_2d_scene_t *ptScene)
     progress_wheel_on_frame_start(&this.tWheel);
 }
 
-static void __on_scene5_frame_complete(arm_2d_scene_t *ptScene)
+static void __on_scene_menu_frame_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_5_t *ptThis = (user_scene_5_t *)ptScene;
+    user_scene_menu_t *ptThis = (user_scene_menu_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
     /* switch to next scene after 10s */
@@ -466,9 +495,9 @@ static void __on_scene5_frame_complete(arm_2d_scene_t *ptScene)
 }
 
 static
-IMPL_PFB_ON_DRAW(__pfb_draw_scene5_background_handler)
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_menu_background_handler)
 {
-    user_scene_5_t *ptThis = (user_scene_5_t *)pTarget;
+    user_scene_menu_t *ptThis = (user_scene_menu_t *)pTarget;
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
     /*-----------------------draw back ground begin-----------------------*/
@@ -482,9 +511,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene5_background_handler)
 }
 
 static
-IMPL_PFB_ON_DRAW(__pfb_draw_scene5_handler)
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_menu_handler)
 {
-    user_scene_5_t *ptThis = (user_scene_5_t *)pTarget;
+    user_scene_menu_t *ptThis = (user_scene_menu_t *)pTarget;
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
     
@@ -510,23 +539,23 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene5_handler)
 }
 
 ARM_NONNULL(1)
-user_scene_5_t *__arm_2d_scene5_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_5_t *ptThis)
+user_scene_menu_t *__arm_2d_scene_menu_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_menu_t *ptThis)
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
 
     if (NULL == ptThis) {
-        ptThis = (user_scene_5_t *)
-                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_5_t),
-                                                        __alignof__(user_scene_5_t),
+        ptThis = (user_scene_menu_t *)
+                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_menu_t),
+                                                        __alignof__(user_scene_menu_t),
                                                         ARM_2D_MEM_TYPE_UNSPECIFIED);
         assert(NULL != ptThis);
         if (NULL == ptThis) {
             return NULL;
         }
     } else {
-        memset(ptThis, 0, sizeof(user_scene_5_t));
+        memset(ptThis, 0, sizeof(user_scene_menu_t));
         bUserAllocated = true;
     }
 
@@ -557,7 +586,7 @@ user_scene_5_t *__arm_2d_scene5_init(   arm_2d_scene_player_t *ptDispAdapter,
     };
     s_tDirtyRegions[0].tRegion.tSize.iWidth = tScreen.tSize.iWidth;
 
-    *ptThis = (user_scene_5_t){
+    *ptThis = (user_scene_menu_t){
         .use_as__arm_2d_scene_t = {
 
         /* the canvas colour */
@@ -565,16 +594,16 @@ user_scene_5_t *__arm_2d_scene5_init(   arm_2d_scene_player_t *ptDispAdapter,
         
         /* Please uncommon the callbacks if you need them
          */
-        //.fnBackground   = &__pfb_draw_scene5_background_handler,
-        .fnScene        = &__pfb_draw_scene5_handler,
+        //.fnBackground   = &__pfb_draw_scene_menu_background_handler,
+        .fnScene        = &__pfb_draw_scene_menu_handler,
         .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
         
 
-        //.fnOnBGStart    = &__on_scene5_background_start,
-        //.fnOnBGComplete = &__on_scene5_background_complete,
-        .fnOnFrameStart = &__on_scene5_frame_start,
-        .fnOnFrameCPL   = &__on_scene5_frame_complete,
-        .fnDepose       = &__on_scene5_depose,
+        //.fnOnBGStart    = &__on_scene_menu_background_start,
+        //.fnOnBGComplete = &__on_scene_menu_background_complete,
+        .fnOnFrameStart = &__on_scene_menu_frame_start,
+        .fnOnFrameCPL   = &__on_scene_menu_frame_complete,
+        .fnDepose       = &__on_scene_menu_depose,
         },
         .bUserAllocated = bUserAllocated,
     };

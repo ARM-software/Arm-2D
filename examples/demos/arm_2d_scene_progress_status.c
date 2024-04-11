@@ -109,7 +109,7 @@ static arm_2d_helper_film_t s_tileWIFISignalFilmMask =
 
 static void __on_scene_progress_status_depose(arm_2d_scene_t *ptScene)
 {
-    user_scene_1_t *ptThis = (user_scene_1_t *)ptScene;
+    user_scene_progress_status_t *ptThis = (user_scene_progress_status_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
     ptScene->ptPlayer = NULL;
@@ -130,21 +130,21 @@ static void __on_scene_progress_status_depose(arm_2d_scene_t *ptScene)
 
 static void __on_scene_progress_status_background_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_1_t *ptThis = (user_scene_1_t *)ptScene;
+    user_scene_progress_status_t *ptThis = (user_scene_progress_status_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
 static void __on_scene_progress_status_background_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_1_t *ptThis = (user_scene_1_t *)ptScene;
+    user_scene_progress_status_t *ptThis = (user_scene_progress_status_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
 static void __on_scene_progress_status_frame_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_1_t *ptThis = (user_scene_1_t *)ptScene;
+    user_scene_progress_status_t *ptThis = (user_scene_progress_status_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
     if (arm_2d_helper_is_time_out(  s_tileWIFISignalFilm.hwPeriodPerFrame, 
@@ -157,7 +157,7 @@ static void __on_scene_progress_status_frame_start(arm_2d_scene_t *ptScene)
 
 static void __on_scene_progress_status_frame_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_1_t *ptThis = (user_scene_1_t *)ptScene;
+    user_scene_progress_status_t *ptThis = (user_scene_progress_status_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
     /* switch to next scene after 3s */
@@ -172,7 +172,7 @@ static void __on_scene_progress_status_frame_complete(arm_2d_scene_t *ptScene)
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_background_handler)
 {
-    user_scene_1_t *ptThis = (user_scene_1_t *)pTarget;
+    user_scene_progress_status_t *ptThis = (user_scene_progress_status_t *)pTarget;
     ARM_2D_UNUSED(bIsNewFrame);
     ARM_2D_UNUSED(ptTile);
     /*-----------------------draw back ground begin-----------------------*/
@@ -190,7 +190,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_background_handler)
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
 {
-    user_scene_1_t *ptThis = (user_scene_1_t *)pTarget;
+    user_scene_progress_status_t *ptThis = (user_scene_progress_status_t *)pTarget;
     arm_2d_size_t tScreenSize = ptTile->tRegion.tSize;
 
     ARM_2D_UNUSED(ptTile);
@@ -278,8 +278,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
 #define PROGRESSBAR_WIDTH       (__DISP0_CFG_SCEEN_WIDTH__ * 3 >> 3)
 
 ARM_NONNULL(1)
-user_scene_1_t *__arm_2d_scene_progress_status_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_1_t *ptScene)
+user_scene_progress_status_t *__arm_2d_scene_progress_status_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_progress_status_t *ptScene)
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
@@ -311,9 +311,9 @@ user_scene_1_t *__arm_2d_scene_progress_status_init(   arm_2d_scene_player_t *pt
     s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
 
     if (NULL == ptScene) {
-        ptScene = (user_scene_1_t *)
-                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_1_t),
-                                                        __alignof__(user_scene_1_t),
+        ptScene = (user_scene_progress_status_t *)
+                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_progress_status_t),
+                                                        __alignof__(user_scene_progress_status_t),
                                                         ARM_2D_MEM_TYPE_UNSPECIFIED);
         assert(NULL != ptScene);
         if (NULL == ptScene) {
@@ -321,7 +321,7 @@ user_scene_1_t *__arm_2d_scene_progress_status_init(   arm_2d_scene_player_t *pt
         }
         bUserAllocated = true;
     } else {
-        memset(ptScene, 0, sizeof(user_scene_1_t));
+        memset(ptScene, 0, sizeof(user_scene_progress_status_t));
     }
 
     /* get the screen region */
@@ -369,7 +369,7 @@ user_scene_1_t *__arm_2d_scene_progress_status_init(   arm_2d_scene_player_t *pt
     arm_2d_helper_film_set_frame(&s_tileWIFISignalFilmMask, -1);
 
 
-    *ptScene = (user_scene_1_t){
+    *ptScene = (user_scene_progress_status_t){
         .use_as__arm_2d_scene_t = {
         
         /* the canvas colour */

@@ -62,10 +62,10 @@ extern "C" {
  * \brief initalize _listview and add it to a user specified scene player
  * \param[in] __DISP_ADAPTER_PTR the target display adatper (i.e. scene player)
  * \param[in] ... this is an optional parameter. When it is NULL, a new 
- *            user_scene_3_t will be allocated from HEAP and freed on
+ *            user_scene_listview_t will be allocated from HEAP and freed on
  *            the deposing event. When it is non-NULL, the life-cycle is managed
  *            by user.
- * \return user_scene_3_t* the user_scene_3_t instance
+ * \return user_scene_listview_t* the user_scene_listview_t instance
  */
 #define arm_2d_scene_listview_init(__DISP_ADAPTER_PTR, ...)                    \
             __arm_2d_scene_listview_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
@@ -74,9 +74,9 @@ extern "C" {
 /*!
  * \brief a user class for scene 3
  */
-typedef struct user_scene_3_t user_scene_3_t;
+typedef struct user_scene_listview_t user_scene_listview_t;
 
-struct user_scene_3_t {
+struct user_scene_listview_t {
     implement(arm_2d_scene_t);                                                  //! derived from class: arm_2d_scene_t
 
 ARM_PRIVATE(
@@ -96,8 +96,8 @@ ARM_PRIVATE(
 
 ARM_NONNULL(1)
 extern
-user_scene_3_t *__arm_2d_scene_listview_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_3_t *ptScene);
+user_scene_listview_t *__arm_2d_scene_listview_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_listview_t *ptScene);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

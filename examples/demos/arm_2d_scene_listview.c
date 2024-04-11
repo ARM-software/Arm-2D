@@ -240,7 +240,7 @@ arm_fsm_rt_t __list_view_item_1_draw_item(
                                       arm_2d_list_item_param_t *ptParam)
 {
     my_list_item_t *ptThis = (my_list_item_t *)ptItem;
-    user_scene_3_t *ptScene = (user_scene_3_t *)ptItem->pTarget;
+    user_scene_listview_t *ptScene = (user_scene_listview_t *)ptItem->pTarget;
     ARM_2D_UNUSED(ptItem);
     ARM_2D_UNUSED(bIsNewFrame);
     ARM_2D_UNUSED(ptTile);
@@ -334,7 +334,7 @@ arm_fsm_rt_t __list_view_item_3_draw_item(
 
 static void __on_scene_listview_depose(arm_2d_scene_t *ptScene)
 {
-    user_scene_3_t *ptThis = (user_scene_3_t *)ptScene;
+    user_scene_listview_t *ptThis = (user_scene_listview_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
     ptScene->ptPlayer = NULL;
@@ -357,14 +357,14 @@ static void __on_scene_listview_depose(arm_2d_scene_t *ptScene)
 
 static void __on_scene_listview_background_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_3_t *ptThis = (user_scene_3_t *)ptScene;
+    user_scene_listview_t *ptThis = (user_scene_listview_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
 static void __on_scene_listview_background_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_3_t *ptThis = (user_scene_3_t *)ptScene;
+    user_scene_listview_t *ptThis = (user_scene_listview_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
@@ -372,7 +372,7 @@ static void __on_scene_listview_background_complete(arm_2d_scene_t *ptScene)
 
 static void __on_scene_listview_frame_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_3_t *ptThis = (user_scene_3_t *)ptScene;
+    user_scene_listview_t *ptThis = (user_scene_listview_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
     int nResult;
@@ -387,7 +387,7 @@ static void __on_scene_listview_frame_start(arm_2d_scene_t *ptScene)
 
 static void __on_scene_listview_frame_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_3_t *ptThis = (user_scene_3_t *)ptScene;
+    user_scene_listview_t *ptThis = (user_scene_listview_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
     /* switch to next scene after 10s */
@@ -403,7 +403,7 @@ static void __on_scene_listview_frame_complete(arm_2d_scene_t *ptScene)
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_listview_background_handler)
 {
-    user_scene_3_t *ptThis = (user_scene_3_t *)pTarget;
+    user_scene_listview_t *ptThis = (user_scene_listview_t *)pTarget;
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
     /*-----------------------draw back ground begin-----------------------*/
@@ -419,7 +419,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_listview_background_handler)
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_listview_handler)
 {
-    user_scene_3_t *ptThis = (user_scene_3_t *)pTarget;
+    user_scene_listview_t *ptThis = (user_scene_listview_t *)pTarget;
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
     
@@ -444,23 +444,23 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_listview_handler)
 }
 
 ARM_NONNULL(1)
-user_scene_3_t *__arm_2d_scene_listview_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_3_t *ptThis)
+user_scene_listview_t *__arm_2d_scene_listview_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_listview_t *ptThis)
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
 
     if (NULL == ptThis) {
-        ptThis = (user_scene_3_t *)
-                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_3_t),
-                                                        __alignof__(user_scene_3_t),
+        ptThis = (user_scene_listview_t *)
+                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_listview_t),
+                                                        __alignof__(user_scene_listview_t),
                                                         ARM_2D_MEM_TYPE_UNSPECIFIED);
         assert(NULL != ptThis);
         if (NULL == ptThis) {
             return NULL;
         }
     } else {
-        memset(ptThis, 0, sizeof(user_scene_3_t));
+        memset(ptThis, 0, sizeof(user_scene_listview_t));
         bUserAllocated = true;
     }
 
@@ -491,7 +491,7 @@ user_scene_3_t *__arm_2d_scene_listview_init(   arm_2d_scene_player_t *ptDispAda
     };
     s_tDirtyRegions[0].tRegion.tSize.iWidth = tScreen.tSize.iWidth;
 
-    *ptThis = (user_scene_3_t){
+    *ptThis = (user_scene_listview_t){
         .use_as__arm_2d_scene_t = {
 
         /* the canvas colour */
