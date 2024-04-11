@@ -267,7 +267,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_gas_gauge_handler)
     arm_lcd_text_set_draw_region(NULL);
     arm_lcd_text_set_colour(GLCD_COLOR_NIXIE_TUBE, GLCD_COLOR_WHITE);
     arm_lcd_text_location(0,0);
-    arm_lcd_puts("Scene 4");
+    arm_lcd_puts("Scene Battery Gas Gauge");
 
     /*-----------------------draw the foreground end  -----------------------*/
     arm_2d_op_wait_async(NULL);
