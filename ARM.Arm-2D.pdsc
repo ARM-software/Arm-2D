@@ -477,8 +477,8 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Basics Operations" Cversion="1.0.0" condition="Arm-2D-EXTRA">
-          <description>A demo for some basics operations.</description>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Basics" Cversion="1.0.0" condition="Arm-2D-EXTRA">
+          <description>A demo for some basic operations.</description>
           <files>
             <file category="sourceC"     name="examples/demos/arm_2d_scene_basics.c" attr="config" version="1.0.0" />
             <file category="header"      name="examples/demos/arm_2d_scene_basics.h" attr="config" version="1.0.0" />
