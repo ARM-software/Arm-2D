@@ -1542,25 +1542,28 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l01433" name="l01433"></a><span class="lineno"> 1433</span><span class="comment"> * </span></div>
 <div class="line"><a id="l01434" name="l01434"></a><span class="lineno"> 1434</span><span class="comment"> * \param[in] ptTarget the target tile</span></div>
 <div class="line"><a id="l01435" name="l01435"></a><span class="lineno"> 1435</span><span class="comment"> * \param[in] ptRegion the target region to test</span></div>
-<div class="line"><a id="l01436" name="l01436"></a><span class="lineno"> 1436</span><span class="comment"> * \return true the specified region is currently being drawing</span></div>
-<div class="line"><a id="l01437" name="l01437"></a><span class="lineno"> 1437</span><span class="comment"> * \return false the PFB is out of the range. </span></div>
-<div class="line"><a id="l01438" name="l01438"></a><span class="lineno"> 1438</span><span class="comment"> */</span></div>
-<div class="line"><a id="l01439" name="l01439"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga982784598b54ca41b255ef58e900217f"> 1439</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#ga982784598b54ca41b255ef58e900217f" title="check whether specified region is being drawing">arm_2d_helper_pfb_is_region_being_drawing</a>(const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
-<div class="line"><a id="l01440" name="l01440"></a><span class="lineno"> 1440</span>                                               const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion);</div>
-<div class="line"><a id="l01441" name="l01441"></a><span class="lineno"> 1441</span><span class="comment"></span> </div>
-<div class="line"><a id="l01442" name="l01442"></a><span class="lineno"> 1442</span><span class="comment">/*! @} */</span></div>
-<div class="line"><a id="l01443" name="l01443"></a><span class="lineno"> 1443</span> </div>
-<div class="line"><a id="l01444" name="l01444"></a><span class="lineno"> 1444</span><span class="preprocessor">#if defined(__clang__)</span></div>
-<div class="line"><a id="l01445" name="l01445"></a><span class="lineno"> 1445</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
-<div class="line"><a id="l01446" name="l01446"></a><span class="lineno"> 1446</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l01447" name="l01447"></a><span class="lineno"> 1447</span> </div>
-<div class="line"><a id="l01448" name="l01448"></a><span class="lineno"> 1448</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
-<div class="line"><a id="l01449" name="l01449"></a><span class="lineno"> 1449</span>}</div>
-<div class="line"><a id="l01450" name="l01450"></a><span class="lineno"> 1450</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l01451" name="l01451"></a><span class="lineno"> 1451</span> </div>
-<div class="line"><a id="l01452" name="l01452"></a><span class="lineno"> 1452</span> </div>
-<div class="line"><a id="l01453" name="l01453"></a><span class="lineno"> 1453</span> </div>
-<div class="line"><a id="l01454" name="l01454"></a><span class="lineno"> 1454</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l01436" name="l01436"></a><span class="lineno"> 1436</span><span class="comment"> * \param[out] ppVirtualScreen the address of the pointer that used to point </span></div>
+<div class="line"><a id="l01437" name="l01437"></a><span class="lineno"> 1437</span><span class="comment"> *                  the virtual screen tile</span></div>
+<div class="line"><a id="l01438" name="l01438"></a><span class="lineno"> 1438</span><span class="comment"> * \return true the specified region is currently being drawing</span></div>
+<div class="line"><a id="l01439" name="l01439"></a><span class="lineno"> 1439</span><span class="comment"> * \return false the PFB is out of the range. </span></div>
+<div class="line"><a id="l01440" name="l01440"></a><span class="lineno"> 1440</span><span class="comment"> */</span></div>
+<div class="line"><a id="l01441" name="l01441"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga133523ec2682ddb18cccb6324f4cad8d"> 1441</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#ga133523ec2682ddb18cccb6324f4cad8d" title="check whether specified region is being drawing">arm_2d_helper_pfb_is_region_being_drawing</a>(const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
+<div class="line"><a id="l01442" name="l01442"></a><span class="lineno"> 1442</span>                                               const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
+<div class="line"><a id="l01443" name="l01443"></a><span class="lineno"> 1443</span>                                               const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> **ppVirtualScreen);</div>
+<div class="line"><a id="l01444" name="l01444"></a><span class="lineno"> 1444</span><span class="comment"></span> </div>
+<div class="line"><a id="l01445" name="l01445"></a><span class="lineno"> 1445</span><span class="comment">/*! @} */</span></div>
+<div class="line"><a id="l01446" name="l01446"></a><span class="lineno"> 1446</span> </div>
+<div class="line"><a id="l01447" name="l01447"></a><span class="lineno"> 1447</span><span class="preprocessor">#if defined(__clang__)</span></div>
+<div class="line"><a id="l01448" name="l01448"></a><span class="lineno"> 1448</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
+<div class="line"><a id="l01449" name="l01449"></a><span class="lineno"> 1449</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l01450" name="l01450"></a><span class="lineno"> 1450</span> </div>
+<div class="line"><a id="l01451" name="l01451"></a><span class="lineno"> 1451</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
+<div class="line"><a id="l01452" name="l01452"></a><span class="lineno"> 1452</span>}</div>
+<div class="line"><a id="l01453" name="l01453"></a><span class="lineno"> 1453</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l01454" name="l01454"></a><span class="lineno"> 1454</span> </div>
+<div class="line"><a id="l01455" name="l01455"></a><span class="lineno"> 1455</span> </div>
+<div class="line"><a id="l01456" name="l01456"></a><span class="lineno"> 1456</span> </div>
+<div class="line"><a id="l01457" name="l01457"></a><span class="lineno"> 1457</span><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -707,9 +707,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga5ee61182d0eff6004c01c87a4a20b7f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga5ee61182d0eff6004c01c87a4a20b7f8">arm_2d_dynamic_dirty_region_change_user_region_index_only</a> (<a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptThis, uint8_t chNextUserIndex)</td></tr>
 <tr class="memdesc:ga5ee61182d0eff6004c01c87a4a20b7f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">only change the user region index without update the dynamic dirty region  <a href="group__gHelper.html#ga5ee61182d0eff6004c01c87a4a20b7f8">More...</a><br /></td></tr>
 <tr class="separator:ga5ee61182d0eff6004c01c87a4a20b7f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga982784598b54ca41b255ef58e900217f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga982784598b54ca41b255ef58e900217f">arm_2d_helper_pfb_is_region_being_drawing</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion)</td></tr>
-<tr class="memdesc:ga982784598b54ca41b255ef58e900217f"><td class="mdescLeft">&#160;</td><td class="mdescRight">check whether specified region is being drawing  <a href="group__gHelper.html#ga982784598b54ca41b255ef58e900217f">More...</a><br /></td></tr>
-<tr class="separator:ga982784598b54ca41b255ef58e900217f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga133523ec2682ddb18cccb6324f4cad8d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga133523ec2682ddb18cccb6324f4cad8d">arm_2d_helper_pfb_is_region_being_drawing</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> **ppVirtualScreen)</td></tr>
+<tr class="memdesc:ga133523ec2682ddb18cccb6324f4cad8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">check whether specified region is being drawing  <a href="group__gHelper.html#ga133523ec2682ddb18cccb6324f4cad8d">More...</a><br /></td></tr>
+<tr class="separator:ga133523ec2682ddb18cccb6324f4cad8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9ab5e975303c28c98f1ae62babb8286d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga9ab5e975303c28c98f1ae62babb8286d">arm_2d_helper_init</a> (void)</td></tr>
 <tr class="memdesc:ga9ab5e975303c28c98f1ae62babb8286d"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize helper services  <a href="group__gHelper.html#ga9ab5e975303c28c98f1ae62babb8286d">More...</a><br /></td></tr>
 <tr class="separator:ga9ab5e975303c28c98f1ae62babb8286d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -7667,8 +7667,8 @@ For normal usage, please DO NOT use this function unless you know what you are d
 
 </div>
 </div>
-<a id="ga982784598b54ca41b255ef58e900217f" name="ga982784598b54ca41b255ef58e900217f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga982784598b54ca41b255ef58e900217f">&#9670;&nbsp;</a></span>arm_2d_helper_pfb_is_region_being_drawing()</h2>
+<a id="ga133523ec2682ddb18cccb6324f4cad8d" name="ga133523ec2682ddb18cccb6324f4cad8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga133523ec2682ddb18cccb6324f4cad8d">&#9670;&nbsp;</a></span>arm_2d_helper_pfb_is_region_being_drawing()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -7683,7 +7683,13 @@ For normal usage, please DO NOT use this function unless you know what you are d
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td>
-          <td class="paramname"><em>ptRegion</em>&#160;</td>
+          <td class="paramname"><em>ptRegion</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> **&#160;</td>
+          <td class="paramname"><em>ppVirtualScreen</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -7698,6 +7704,7 @@ For normal usage, please DO NOT use this function unless you know what you are d
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ptTarget</td><td>the target tile </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ptRegion</td><td>the target region to test </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ppVirtualScreen</td><td>the address of the pointer that used to point the virtual screen tile </td></tr>
   </table>
   </dd>
 </dl>

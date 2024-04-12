@@ -248,7 +248,7 @@ var NAVTREEINDEX =
 [
 "group__Deprecated.html",
 "group__gAlpha.html#ga7c145b78ac75b6ac0cf51347fd50bdf6",
-"group__gHelper.html#ga5ee61182d0eff6004c01c87a4a20b7f8",
+"group__gHelper.html#ga5a4996625f003ec5e18d7a7b549b072a",
 "group__gKernel.html#aa643d17e74108930c55010a2b86e8e1b",
 "group__gKernel.html#gga3249990f0553a40aa0e48e3568172e59a5d3ce11b32268835bc89401fba037832",
 "md_how_to_accelerate_arm_2d.html#autotoc_md150"
