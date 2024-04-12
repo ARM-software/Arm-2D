@@ -249,7 +249,7 @@ void __arm_2d_impl_gray8_repeat_fill_colour_with_vertical_line_chn_mask(
 
     int_fast16_t iMaskHeight = ptMaskSize->iHeight;
 
-    uint8_t *pchMask = pchLineMask;
+    uint32_t *pwMask = pwLineMask;
     int_fast16_t iMaskY = iMaskHeight;
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
@@ -271,9 +271,9 @@ void __arm_2d_impl_gray8_repeat_fill_colour_with_vertical_line_chn_mask(
         /* maintain mask line */
         if (0 == --iMaskY) {
             iMaskY = iMaskHeight;
-            pchMask = pchLineMask;
+            pwMask = pwLineMask;
         } else {
-            pchMask += iMaskStride;
+            pwMask += iMaskStride;
         }
 
         pchTarget += iTargetStride;
@@ -486,7 +486,7 @@ void __arm_2d_impl_rgb565_repeat_fill_colour_with_vertical_line_chn_mask(
 
     int_fast16_t iMaskHeight = ptMaskSize->iHeight;
 
-    uint8_t *pchMask = pchLineMask;
+    uint32_t *pwMask = pwLineMask;
     int_fast16_t iMaskY = iMaskHeight;
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
@@ -508,9 +508,9 @@ void __arm_2d_impl_rgb565_repeat_fill_colour_with_vertical_line_chn_mask(
         /* maintain mask line */
         if (0 == --iMaskY) {
             iMaskY = iMaskHeight;
-            pchMask = pchLineMask;
+            pwMask = pwLineMask;
         } else {
-            pchMask += iMaskStride;
+            pwMask += iMaskStride;
         }
 
         phwTarget += iTargetStride;
@@ -723,7 +723,7 @@ void __arm_2d_impl_cccn888_repeat_fill_colour_with_vertical_line_chn_mask(
 
     int_fast16_t iMaskHeight = ptMaskSize->iHeight;
 
-    uint8_t *pchMask = pchLineMask;
+    uint32_t *pwMask = pwLineMask;
     int_fast16_t iMaskY = iMaskHeight;
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
@@ -745,9 +745,9 @@ void __arm_2d_impl_cccn888_repeat_fill_colour_with_vertical_line_chn_mask(
         /* maintain mask line */
         if (0 == --iMaskY) {
             iMaskY = iMaskHeight;
-            pchMask = pchLineMask;
+            pwMask = pwLineMask;
         } else {
-            pchMask += iMaskStride;
+            pwMask += iMaskStride;
         }
 
         pwTarget += iTargetStride;
@@ -965,7 +965,7 @@ void __arm_2d_impl_gray8_repeat_fill_colour_with_vertical_line_chn_mask_and_opac
 
     int_fast16_t iMaskHeight = ptMaskSize->iHeight;
 
-    uint8_t *pchMask = pchLineMask;
+    uint32_t *pwMask = pwLineMask;
     int_fast16_t iMaskY = iMaskHeight;
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
@@ -987,9 +987,9 @@ void __arm_2d_impl_gray8_repeat_fill_colour_with_vertical_line_chn_mask_and_opac
         /* maintain mask line */
         if (0 == --iMaskY) {
             iMaskY = iMaskHeight;
-            pchMask = pchLineMask;
+            pwMask = pwLineMask;
         } else {
-            pchMask += iMaskStride;
+            pwMask += iMaskStride;
         }
 
         pchTarget += iTargetStride;
@@ -1207,7 +1207,7 @@ void __arm_2d_impl_rgb565_repeat_fill_colour_with_vertical_line_chn_mask_and_opa
 
     int_fast16_t iMaskHeight = ptMaskSize->iHeight;
 
-    uint8_t *pchMask = pchLineMask;
+    uint32_t *pwMask = pwLineMask;
     int_fast16_t iMaskY = iMaskHeight;
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
@@ -1229,9 +1229,9 @@ void __arm_2d_impl_rgb565_repeat_fill_colour_with_vertical_line_chn_mask_and_opa
         /* maintain mask line */
         if (0 == --iMaskY) {
             iMaskY = iMaskHeight;
-            pchMask = pchLineMask;
+            pwMask = pwLineMask;
         } else {
-            pchMask += iMaskStride;
+            pwMask += iMaskStride;
         }
 
         phwTarget += iTargetStride;
@@ -1449,7 +1449,7 @@ void __arm_2d_impl_cccn888_repeat_fill_colour_with_vertical_line_chn_mask_and_op
 
     int_fast16_t iMaskHeight = ptMaskSize->iHeight;
 
-    uint8_t *pchMask = pchLineMask;
+    uint32_t *pwMask = pwLineMask;
     int_fast16_t iMaskY = iMaskHeight;
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
@@ -1471,9 +1471,9 @@ void __arm_2d_impl_cccn888_repeat_fill_colour_with_vertical_line_chn_mask_and_op
         /* maintain mask line */
         if (0 == --iMaskY) {
             iMaskY = iMaskHeight;
-            pchMask = pchLineMask;
+            pwMask = pwLineMask;
         } else {
-            pchMask += iMaskStride;
+            pwMask += iMaskStride;
         }
 
         pwTarget += iTargetStride;

@@ -284,7 +284,7 @@ void __arm_2d_impl_{{colour_name | lower}}_repeat_fill_colour_with_vertical_line
 
     int_fast16_t iMaskHeight = ptMaskSize->iHeight;
 
-    uint8_t *pchMask = pchLineMask;
+    uint32_t *pwMask = pwLineMask;
     int_fast16_t iMaskY = iMaskHeight;
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
@@ -306,9 +306,9 @@ void __arm_2d_impl_{{colour_name | lower}}_repeat_fill_colour_with_vertical_line
         /* maintain mask line */
         if (0 == --iMaskY) {
             iMaskY = iMaskHeight;
-            pchMask = pchLineMask;
+            pwMask = pwLineMask;
         } else {
-            pchMask += iMaskStride;
+            pwMask += iMaskStride;
         }
 
         p{{colour_int_prefix}}Target += iTargetStride;
