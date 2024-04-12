@@ -21,8 +21,8 @@
  * Title:        arm_2d_tile.h
  * Description:  Public header file to contain the basic tile operations
  *
- * $Date:        4. April 2024
- * $Revision:    V.1.4.4
+ * $Date:        12. April 2024
+ * $Revision:    V.1.4.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -932,7 +932,7 @@ int_fast8_t arm_2d_is_region_inside_target(const arm_2d_region_t *ptRegion,
   \endcode
  */
 extern
-ARM_NONNULL(1,2)
+ARM_NONNULL(1)
 const arm_2d_tile_t *arm_2d_tile_get_root(  const arm_2d_tile_t *ptTile,
                                             arm_2d_region_t *ptValidRegion,
                                             arm_2d_location_t *ptOffset);

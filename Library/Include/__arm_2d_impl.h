@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        11. April 2024
- * $Revision:    V.1.4.8
+ * $Date:        12. April 2024
+ * $Revision:    V.1.4.9
  *
  * Target Processor:  Cortex-M cores
  *
@@ -601,7 +601,7 @@ bool __arm_2d_valid_mask(   const arm_2d_tile_t *ptAlpha,
                             uint_fast8_t chAllowMask);
 
 extern
-ARM_NONNULL(1,2)
+ARM_NONNULL(1)
 const arm_2d_tile_t *__arm_2d_tile_get_1st_derived_child_or_root(
                                             const arm_2d_tile_t *ptTile,
                                             arm_2d_region_t *ptValidRegion,
@@ -619,7 +619,7 @@ const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root(
                                             bool bQuitWhenFindVirtualScreen);
 
 extern
-ARM_NONNULL(1,2)
+ARM_NONNULL(1)
 const arm_2d_tile_t *__arm_2d_tile_get_root(const arm_2d_tile_t *ptTile,
                                             arm_2d_region_t *ptValidRegion,
                                             arm_2d_location_t *ptOffset,
