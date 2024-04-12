@@ -721,6 +721,15 @@ static bool __arm_2d_helper_pfb_get_next_dirty_region(arm_2d_helper_pfb_t *ptThi
     if (this.Adapter.ptDirtyRegion->bUpdated) {
         /* refresh this dirty region item again */
         this.Adapter.bIsRegionChanged = true;
+
+        ARM_2D_LOG_INFO(
+            HELPER_PFB, 
+            2, 
+            "Get Next Dirty Region", 
+            "Get a dynamic dirty region item [%p] in the normal way",
+            this.Adapter.ptDirtyRegion
+        );
+
     } else {
         this.Adapter.ptDirtyRegion = this.Adapter.ptDirtyRegion->ptNext;
         
@@ -730,15 +739,18 @@ static bool __arm_2d_helper_pfb_get_next_dirty_region(arm_2d_helper_pfb_t *ptThi
         } else {
             this.Adapter.bIsRegionChanged = true;
         }
+
+        ARM_2D_LOG_INFO(
+            HELPER_PFB, 
+            2, 
+            "Get Next Dirty Region", 
+            "Get a dirty region item [%p] in the normal way",
+            this.Adapter.ptDirtyRegion
+        );
+
     }
 
-    ARM_2D_LOG_INFO(
-        HELPER_PFB, 
-        2, 
-        "Get Next Dirty Region", 
-        "Get a dirty region item [%p] in the normal way",
-        this.Adapter.ptDirtyRegion
-    );
+
     
     return true;
 }
