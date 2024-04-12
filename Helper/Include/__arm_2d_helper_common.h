@@ -896,6 +896,7 @@ extern "C" {
                                         NULL,                                   \
                                         &ARM_2D_SAFE_NAME(ptTile),              \
                                         false);                                 \
+                        bool bDrawCanvas =                                      \
                         (   NULL != ARM_2D_SAFE_NAME(ptRootTile)                \
                         ||  (   (NULL != ARM_2D_SAFE_NAME(ptTile))              \
                             &&  (ARM_2D_SAFE_NAME(ptTile)->tInfo.u3ExtensionID  \
@@ -905,6 +906,25 @@ extern "C" {
                                 ||  ARM_2D_SAFE_NAME(ptTile)                    \
                                         ->tInfo.Extension.PFB.bIsNewFrame))     \
                         );                                                      \
+                        if (bDrawCanvas) {                                      \
+                            ARM_2D_LOG_INFO(                                    \
+                                APP,                                            \
+                                0,                                              \
+                                "Canvas " #__region_name,                       \
+                                "Draw Canvas for the target tile [%p] ",        \
+                                (__tile_ptr)                                    \
+                            );                                                  \
+                        } else {                                                \
+                            ARM_2D_LOG_INFO(                                    \
+                                APP,                                            \
+                                0,                                              \
+                                "Canvas " #__region_name,                       \
+                                "Skip Canvas for the target tile [%p]"          \
+                                "as the PFB is out of range.",                  \
+                                (__tile_ptr)                                    \
+                            );                                                  \
+                        }                                                       \
+                        bDrawCanvas;                                            \
                     }) : 0;                                                     \
                  ({ARM_2D_OP_WAIT_ASYNC();})                                    \
                 )
