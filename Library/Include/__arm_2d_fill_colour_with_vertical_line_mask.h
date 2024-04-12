@@ -18,18 +18,18 @@
 
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
- * Title:        __arm_2d_fill_colour_with_horizontal_line_mask.h
- * Description:  APIs for colour-filling-with-horizontal-line-mask
+ * Title:        __arm_2d_fill_colour_with_vertical_line_mask.h
+ * Description:  APIs for colour-filling-with-vertical-line-mask
  *
- * $Date:        10. April 2024
+ * $Date:        12. April 2024
  * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
  *
  * -------------------------------------------------------------------- */
 
-#ifndef __ARM_2D_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_H__
-#define __ARM_2D_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_H__
+#ifndef __ARM_2D_FILL_COLOUR_WITH_VERTICAL_LINE_MASK_H__
+#define __ARM_2D_FILL_COLOUR_WITH_VERTICAL_LINE_MASK_H__
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d_types.h"
@@ -57,63 +57,63 @@ extern "C" {
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
-#define arm_2d_gray8_fill_colour_with_horizontal_line_mask(                     \
+#define arm_2d_gray8_fill_colour_with_vertical_line_mask(                   \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __MASK_ADDR,    /*   mask tile address */   \
                                     __COLOUR)       /*   colour */              \
-            arm_2dp_gray8_fill_colour_with_horizontal_line_mask(                \
+            arm_2dp_gray8_fill_colour_with_vertical_line_mask(              \
                                   NULL,                                         \
                                  (__TARGET_ADDR),                               \
                                  (__REGION_ADDR),                               \
                                  (__MASK_ADDR),                                 \
                                  (arm_2d_color_gray8_t){(__COLOUR).tValue})
 
-#define arm_2d_rgb565_fill_colour_with_horizontal_line_mask(                    \
+#define arm_2d_rgb565_fill_colour_with_vertical_line_mask(                   \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __MASK_ADDR,    /*   mask tile address */   \
                                     __COLOUR)       /*   colour */              \
-            arm_2dp_rgb565_fill_colour_with_horizontal_line_mask(               \
+            arm_2dp_rgb565_fill_colour_with_vertical_line_mask(              \
                                   NULL,                                         \
                                  (__TARGET_ADDR),                               \
                                  (__REGION_ADDR),                               \
                                  (__MASK_ADDR),                                 \
                                  (arm_2d_color_rgb565_t){(__COLOUR).tValue})
 
-#define arm_2d_cccn888_fill_colour_with_horizontal_line_mask(                   \
+#define arm_2d_cccn888_fill_colour_with_vertical_line_mask(                   \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __MASK_ADDR,    /*   mask tile address */   \
                                     __COLOUR)       /*   colour */              \
-            arm_2dp_cccn888_fill_colour_with_horizontal_line_mask(              \
+            arm_2dp_cccn888_fill_colour_with_vertical_line_mask(              \
                                   NULL,                                         \
                                  (__TARGET_ADDR),                               \
                                  (__REGION_ADDR),                               \
                                  (__MASK_ADDR),                                 \
                                  (arm_2d_color_cccn888_t){(__COLOUR).tValue})
 
-#define arm_2d_gray8_fill_colour_with_horizontal_line_mask_and_opacity(         \
+#define arm_2d_gray8_fill_colour_with_vertical_line_mask_and_opacity(                   \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __MASK_ADDR,    /*   mask tile address */   \
                                     __COLOUR,       /*   colour */              \
                                     __OPACITY)      /*    Opacity */            \
-            arm_2dp_gray8_fill_colour_with_horizontal_line_mask_and_opacity(    \
+            arm_2dp_gray8_fill_colour_with_vertical_line_mask_and_opacity(              \
                                   NULL,                                         \
                                  (__TARGET_ADDR),                               \
                                  (__REGION_ADDR),                               \
                                  (__MASK_ADDR),                                 \
-                                 (arm_2d_color_gray8_t){(__COLOUR).tValue},     \
+                                 (arm_2d_color_gray8_t){(__COLOUR).tValue},    \
                                  (__OPACITY))
 
-#define arm_2d_rgb565_fill_colour_with_horizontal_line_mask_and_opacity(        \
+#define arm_2d_rgb565_fill_colour_with_vertical_line_mask_and_opacity(                   \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __MASK_ADDR,    /*   mask tile address */   \
                                     __COLOUR,       /*   colour */              \
                                     __OPACITY)      /*    Opacity */            \
-            arm_2dp_rgb565_fill_colour_with_horizontal_line_mask_and_opacity(   \
+            arm_2dp_rgb565_fill_colour_with_vertical_line_mask_and_opacity(              \
                                   NULL,                                         \
                                  (__TARGET_ADDR),                               \
                                  (__REGION_ADDR),                               \
@@ -121,18 +121,18 @@ extern "C" {
                                  (arm_2d_color_rgb565_t){(__COLOUR).tValue},    \
                                  (__OPACITY))
 
-#define arm_2d_cccn888_fill_colour_with_horizontal_line_mask_and_opacity(       \
+#define arm_2d_cccn888_fill_colour_with_vertical_line_mask_and_opacity(                   \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __MASK_ADDR,    /*   mask tile address */   \
                                     __COLOUR,       /*   colour */              \
                                     __OPACITY)      /*    Opacity */            \
-            arm_2dp_cccn888_fill_colour_with_horizontal_line_mask_and_opacity(  \
+            arm_2dp_cccn888_fill_colour_with_vertical_line_mask_and_opacity(              \
                                   NULL,                                         \
                                  (__TARGET_ADDR),                               \
                                  (__REGION_ADDR),                               \
                                  (__MASK_ADDR),                                 \
-                                 (arm_2d_color_cccn888_t){(__COLOUR).tValue},   \
+                                 (arm_2d_color_cccn888_t){(__COLOUR).tValue},    \
                                  (__OPACITY))
 
 /*============================ TYPES =========================================*/
@@ -144,7 +144,7 @@ extern "C" {
 extern
 ARM_NONNULL(2,4)
 /*!
- *  \brief fill the target region with a specified colour and a horizontal line mask
+ *  \brief fill the target region with a specified colour and a vertical line mask
  *  \param[in] ptOP the control block, NULL means using the default control block
  *  \param[in] ptTarget the target tile
  *  \param[in] ptRegion the target region
@@ -152,7 +152,7 @@ ARM_NONNULL(2,4)
  *  \param[in] tColour the target colour
  *  \return arm_fsm_rt_t the operations result
  */
-arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_horizontal_line_mask(
+arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_vertical_line_mask(
                                         arm_2d_op_fill_cl_l_msk_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
@@ -163,7 +163,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_horizontal_line_mask(
 extern
 ARM_NONNULL(2,4)
 /*!
- *  \brief fill the target region with a specified colour, a horizontal line mask 
+ *  \brief fill the target region with a specified colour, a vertical line mask 
  *         and opacity
  *  \param[in] ptOP the control block, NULL means using the default control block
  *  \param[in] ptTarget the target tile
@@ -173,7 +173,7 @@ ARM_NONNULL(2,4)
  *  \param[in] chOpacity the opacity ratio
  *  \return arm_fsm_rt_t the operations result
  */
-arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_horizontal_line_mask_and_opacity(
+arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_vertical_line_mask_and_opacity(
                                         arm_2d_op_fill_cl_l_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
@@ -184,7 +184,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_horizontal_line_mask_and_opacity(
 extern
 ARM_NONNULL(2,4)
 /*!
- *  \brief fill the target region with a specified colour and a horizontal line mask
+ *  \brief fill the target region with a specified colour and a vertical line mask
  *  \param[in] ptOP the control block, NULL means using the default control block
  *  \param[in] ptTarget the target tile
  *  \param[in] ptRegion the target region
@@ -192,7 +192,7 @@ ARM_NONNULL(2,4)
  *  \param[in] tColour the target colour
  *  \return arm_fsm_rt_t the operations result
  */
-arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_horizontal_line_mask(
+arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_vertical_line_mask(
                                         arm_2d_op_fill_cl_l_msk_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
@@ -203,7 +203,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_horizontal_line_mask(
 extern
 ARM_NONNULL(2,4)
 /*!
- *  \brief fill the target region with a specified colour, a horizontal line mask 
+ *  \brief fill the target region with a specified colour, a vertical line mask 
  *         and opacity
  *  \param[in] ptOP the control block, NULL means using the default control block
  *  \param[in] ptTarget the target tile
@@ -213,7 +213,7 @@ ARM_NONNULL(2,4)
  *  \param[in] chOpacity the opacity ratio
  *  \return arm_fsm_rt_t the operations result
  */
-arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_horizontal_line_mask_and_opacity(
+arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_vertical_line_mask_and_opacity(
                                         arm_2d_op_fill_cl_l_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
@@ -224,7 +224,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_horizontal_line_mask_and_opacity(
 extern
 ARM_NONNULL(2,4)
 /*!
- *  \brief fill the target region with a specified colour and a horizontal line mask
+ *  \brief fill the target region with a specified colour and a vertical line mask
  *  \param[in] ptOP the control block, NULL means using the default control block
  *  \param[in] ptTarget the target tile
  *  \param[in] ptRegion the target region
@@ -232,7 +232,7 @@ ARM_NONNULL(2,4)
  *  \param[in] tColour the target colour
  *  \return arm_fsm_rt_t the operations result
  */
-arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_horizontal_line_mask(
+arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_vertical_line_mask(
                                         arm_2d_op_fill_cl_l_msk_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
@@ -243,7 +243,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_horizontal_line_mask(
 extern
 ARM_NONNULL(2,4)
 /*!
- *  \brief fill the target region with a specified colour, a horizontal line mask 
+ *  \brief fill the target region with a specified colour, a vertical line mask 
  *         and opacity
  *  \param[in] ptOP the control block, NULL means using the default control block
  *  \param[in] ptTarget the target tile
@@ -253,7 +253,7 @@ ARM_NONNULL(2,4)
  *  \param[in] chOpacity the opacity ratio
  *  \return arm_fsm_rt_t the operations result
  */
-arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_horizontal_line_mask_and_opacity(
+arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_vertical_line_mask_and_opacity(
                                         arm_2d_op_fill_cl_l_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
@@ -272,4 +272,4 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_horizontal_line_mask_and_opacity(
 #endif
 
 
-#endif /* __ARM_2D_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_H__ */
+#endif /* __ARM_2D_FILL_COLOUR_WITH_VERTICAL_LINE_MASK_H__ */

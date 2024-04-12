@@ -21,8 +21,8 @@
  * Title:        arm_2d_alpha_blending.c
  * Description:  APIs for various alpha related operations
  *
- * $Date:        21. Feb 2024
- * $Revision:    V.1.6.3
+ * $Date:        12. April 2024
+ * $Revision:    V.1.6.5
  *
  * Target Processor:  Cortex-M cores
  *
@@ -79,6 +79,9 @@ extern "C" {
 
 #define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_fill_colour_with_horizontal_line_mask.c"
+
+#define __ARM_2D_COMPILATION_UNIT
+#include "__arm_2d_fill_colour_with_vertical_line_mask.c"
 
 /*============================ IMPLEMENTATION ================================*/
 
