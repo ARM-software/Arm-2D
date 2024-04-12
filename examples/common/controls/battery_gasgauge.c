@@ -77,7 +77,13 @@
 
 
 extern
-const arm_2d_tile_t c_tileBatteryBoarder1Mask;
+const arm_2d_tile_t c_tileBatteryBoarderTopMask;
+
+extern 
+const arm_2d_tile_t c_tileBatteryBoarderLineMask;
+
+extern 
+const arm_2d_tile_t c_tileBatteryBoarderBottomMask;
 
 extern
 const arm_2d_tile_t c_tileBatteryGasGaugeGradeBoarderMask;
@@ -152,17 +158,58 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
 
     arm_2d_container(ptTile, __battery, ptRegion) {
 
+        arm_2d_size_t tBatterySize = c_tileBatteryBoarderTopMask.tRegion.tSize;
+        tBatterySize.iHeight += c_tileBatteryBoarderBottomMask.tRegion.tSize.iHeight;
+        tBatterySize.iHeight += 72;
+
         /* draw battery boarder */
         arm_2d_align_centre(__battery_canvas,
-                            c_tileBatteryBoarder1Mask.tRegion.tSize) {
+                            tBatterySize) {
 
-            arm_2d_fill_colour_with_mask_and_opacity(   
-                                            &__battery,
-                                            &__centre_region,
-                                            &c_tileBatteryBoarder1Mask,
-                                            (__arm_2d_color_t){GLCD_COLOR_NIXIE_TUBE},
-                                            this.chBoarderOpacity);
-            arm_2d_op_wait_async(NULL);
+            arm_2d_layout(__centre_region) {
+                __item_line_dock_vertical(
+                    c_tileBatteryBoarderTopMask.tRegion.tSize.iHeight) {
+
+                    arm_2d_fill_colour_with_mask_and_opacity(   
+                                    &__battery,
+                                    &__item_region,
+                                    &c_tileBatteryBoarderTopMask,
+                                    (__arm_2d_color_t){GLCD_COLOR_NIXIE_TUBE},
+                                    this.chBoarderOpacity);
+                    
+                    ARM_2D_OP_WAIT_ASYNC();
+
+                }
+
+                __item_line_dock_vertical(
+                        tBatterySize.iHeight 
+                    -   c_tileBatteryBoarderBottomMask.tRegion.tSize.iHeight
+                    -   c_tileBatteryBoarderTopMask.tRegion.tSize.iHeight) {
+
+                    arm_2d_fill_colour_with_horizontal_line_mask_and_opacity(   
+                                    &__battery,
+                                    &__item_region,
+                                    &c_tileBatteryBoarderLineMask,
+                                    (__arm_2d_color_t){GLCD_COLOR_NIXIE_TUBE},
+                                    this.chBoarderOpacity);
+                    
+                    ARM_2D_OP_WAIT_ASYNC();
+
+                }
+            
+                __item_line_dock_vertical() {
+
+                    arm_2d_fill_colour_with_mask_and_opacity(   
+                                    &__battery,
+                                    &__item_region,
+                                    &c_tileBatteryBoarderBottomMask,
+                                    (__arm_2d_color_t){GLCD_COLOR_NIXIE_TUBE},
+                                    this.chBoarderOpacity);
+                    
+                    ARM_2D_OP_WAIT_ASYNC();
+
+                }
+            }
         }
 
         /* draw gas gauge grade*/
@@ -351,16 +398,59 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
     }
     
     arm_2d_container(ptTile, __battery, ptRegion) {
-        /* draw battery boarder */
-        arm_2d_align_centre(__battery_canvas,
-                            c_tileBatteryBoarder1Mask.tRegion.tSize) {
 
-            arm_2d_fill_colour_with_mask_and_opacity(   
-                                            &__battery,
-                                            &__centre_region,
-                                            &c_tileBatteryBoarder1Mask,
-                                            (__arm_2d_color_t){GLCD_COLOR_WHITE},
-                                            this.chBoarderOpacity);
+        arm_2d_size_t tBatterySize = c_tileBatteryBoarderTopMask.tRegion.tSize;
+        tBatterySize.iHeight += c_tileBatteryBoarderBottomMask.tRegion.tSize.iHeight;
+        tBatterySize.iHeight += 72;
+
+
+        /* draw battery boarder */
+        arm_2d_align_centre(__battery_canvas, tBatterySize) {
+
+            arm_2d_layout(__centre_region) {
+                __item_line_dock_vertical(
+                    c_tileBatteryBoarderTopMask.tRegion.tSize.iHeight) {
+
+                    arm_2d_fill_colour_with_mask_and_opacity(   
+                                    &__battery,
+                                    &__item_region,
+                                    &c_tileBatteryBoarderTopMask,
+                                    (__arm_2d_color_t){GLCD_COLOR_WHITE},
+                                    this.chBoarderOpacity);
+                    
+                    ARM_2D_OP_WAIT_ASYNC();
+
+                }
+            
+                __item_line_dock_vertical(
+                        tBatterySize.iHeight 
+                    -   c_tileBatteryBoarderBottomMask.tRegion.tSize.iHeight
+                    -   c_tileBatteryBoarderTopMask.tRegion.tSize.iHeight) {
+
+                    arm_2d_fill_colour_with_horizontal_line_mask_and_opacity(   
+                                    &__battery,
+                                    &__item_region,
+                                    &c_tileBatteryBoarderLineMask,
+                                    (__arm_2d_color_t){GLCD_COLOR_WHITE},
+                                    this.chBoarderOpacity);
+                    
+                    ARM_2D_OP_WAIT_ASYNC();
+
+                }
+            
+                __item_line_dock_vertical() {
+
+                    arm_2d_fill_colour_with_mask_and_opacity(   
+                                    &__battery,
+                                    &__item_region,
+                                    &c_tileBatteryBoarderBottomMask,
+                                    (__arm_2d_color_t){GLCD_COLOR_WHITE},
+                                    this.chBoarderOpacity);
+                    
+                    ARM_2D_OP_WAIT_ASYNC();
+
+                }
+            }
 
             arm_2d_container(&__battery, __inner_container, &__centre_region,
                              //8,9,16,10
