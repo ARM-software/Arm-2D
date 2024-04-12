@@ -473,11 +473,13 @@ void __draw_round_corner_image( const arm_2d_tile_t *ptSource,
     }
 }
 
-void draw_round_corner_border(  const arm_2d_tile_t *ptTarget,
+ARM_NONNULL(1)
+void __draw_round_corner_border(const arm_2d_tile_t *ptTarget,
                                 const arm_2d_region_t *ptRegion,
                                 COLOUR_INT tColour,
                                 arm_2d_border_opacity_t Opacity,
-                                arm_2d_corner_opacity_t CornerOpacity)
+                                arm_2d_corner_opacity_t CornerOpacity,
+                                bool bIsNewFrame)
 {
 
     arm_2d_container(ptTarget, __round_corner_box, ptRegion) {

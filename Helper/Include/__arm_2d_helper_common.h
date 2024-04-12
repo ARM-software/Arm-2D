@@ -852,8 +852,7 @@ extern "C" {
                 },                                                              \
                 {                                                               \
                     (void)0;                                                    \
-                })  arm_2d_canvas(  &(__container_name),                        \
-                                    __container_name##_canvas)
+                }) arm_2d_canvas( &__container_name, __container_name##_canvas)
 
 /*!
  * \brief generate a child tile with a given name, a reference region and an 
@@ -881,10 +880,22 @@ extern "C" {
                                 __container_name,                               \
                                 (__region_ptr),##__VA_ARGS__)
 
+
 #define arm_2d_canvas(__tile_ptr, __region_name)                                \
-            arm_using(arm_2d_region_t __region_name = {0},                      \
-                        {__region_name.tSize = (__tile_ptr)->tRegion.tSize;},   \
-                        {arm_2d_op_wait_async(NULL);})
+                for (arm_2d_region_t __region_name = {0},                       \
+                    *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;          \
+                 ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL ?          \
+                    ({ /* on enter operations */                                \
+                        __region_name.tSize                                     \
+                            = (__tile_ptr)->tRegion.tSize;                      \
+                        const arm_2d_tile_t *ARM_2D_SAFE_NAME(ptRootTile)       \
+                            = arm_2d_tile_get_root( (__tile_ptr),               \
+                                                    NULL,                       \
+                                                    NULL);                      \
+                        (NULL != ARM_2D_SAFE_NAME(ptRootTile) || bIsNewFrame);  \
+                    }) : 0;                                                     \
+                 ({ARM_2D_OP_WAIT_ASYNC();})                                    \
+                )
 
 #define arm_2d_layout(__region)                                                 \
         arm_using(  arm_2d_region_t __arm_2d_layout = {                         \
@@ -892,10 +903,10 @@ extern "C" {
                     },                                                          \
                     __arm_2d_layout_area = (__region),                          \
                     {                                                           \
-                          ARM_2D_UNUSED(__arm_2d_layout_area);                  \
+                        ARM_2D_UNUSED(__arm_2d_layout_area);                    \
                     },                                                          \
                     {                                                           \
-                        arm_2d_op_wait_async(NULL);                             \
+                        ARM_2D_OP_WAIT_ASYNC();                                 \
                     }                                                           \
                 )
 
