@@ -21,8 +21,8 @@
  * Title:        __arm-2d_core.c
  * Description:  Basic Tile operations
  *
- * $Date:        10. April 2024
- * $Revision:    V.1.7.0
+ * $Date:        13. April 2024
+ * $Revision:    V.1.7.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -708,7 +708,7 @@ arm_fsm_rt_t __arm_2d_tile_process( arm_2d_op_t *ptThis,
             }
 
             bool bIgnoreHorizontal = (ptTargetMask->tRegion.tSize.iWidth == 1);
-            bool bIgnoreVertical = (ptTargetMask->tRegion.tSize.iWidth == 1);
+            bool bIgnoreVertical = (ptTargetMask->tRegion.tSize.iHeight == 1);
 
             ptTargetMask = __clip_asset_tile(   ptTargetMask,
                                                 &tTargetRegion,
@@ -1479,7 +1479,6 @@ static arm_2d_tile_t *__clip_asset_tile(const arm_2d_tile_t *ptOriginAssetTile,
                                         bool bIgnoreVertical)
 {
     arm_2d_region_t tempRegion = {
-        .tLocation = ptOriginAssetTile->tRegion.tLocation,
         .tSize = ptReferenceRegion->tSize,
     };
 
@@ -1530,8 +1529,9 @@ arm_fsm_rt_t __tile_clipped_pave(
             &&  !OP_CORE.ptOp->Info.Param.bHasOrigin) {
             arm_2d_op_src_msk_t *ptOP = (arm_2d_op_src_msk_t *)ptThis; 
 
+            /* we currently only support line masks */
             bool bIgnoreHorizontal = (ptOP->Mask.ptSourceSide->tRegion.tSize.iWidth == 1);
-            bool bIgnoreVertical = (ptOP->Mask.ptSourceSide->tRegion.tSize.iWidth == 1);
+            bool bIgnoreVertical = (ptOP->Mask.ptSourceSide->tRegion.tSize.iHeight == 1);
 
             ptSourceMaskTile = __clip_asset_tile(ptOP->Mask.ptSourceSide,
                                                  ptRegion,
