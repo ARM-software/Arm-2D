@@ -937,6 +937,28 @@ const arm_2d_tile_t *arm_2d_tile_get_root(  const arm_2d_tile_t *ptTile,
                                             arm_2d_region_t *ptValidRegion,
                                             arm_2d_location_t *ptOffset);
 
+extern
+ARM_NONNULL(1)
+/*!
+ * \brief get the root tile (and/or the virtual screen tile)
+ * 
+ * \param[in] ptTile the target tile
+ * \param[out] ptValidRegion the valid region inside the root tile
+ * \param[out] ptOffset the offsite of the root tile as if the root tile 
+ *              is inside the target tile
+ * \param[out] ppVirtualScreen the virtual screen tile
+ * \param[in] bQuitWhenFindVirtualScreen whether stop searching when 
+ *              encounter the virtual screen tile.
+ * \return const arm_2d_tile_t* the root tile or the virtual screen tile 
+ *              when bQuitWhenFindVirtualScreen is true
+ */
+const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root(
+                                            const arm_2d_tile_t *ptTile,
+                                            arm_2d_region_t *ptValidRegion,
+                                            arm_2d_location_t *ptOffset,
+                                            arm_2d_tile_t **ppVirtualScreen,
+                                            bool bQuitWhenFindVirtualScreen);
+
 /*!
  * \brief generate a child tile from the target tile with a given region
  * \param[in] ptTargetTile the target tile

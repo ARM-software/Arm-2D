@@ -313,7 +313,7 @@ const arm_2d_tile_t *__arm_2d_tile_get_1st_derived_child_or_root(
             }
             
             if (bQuitWhenFindFirstDerivedChild) {
-                return ptTile;
+                break;
             }
         }
 
@@ -402,7 +402,7 @@ const arm_2d_tile_t *__arm_2d_tile_get_1st_derived_child_or_root(
 
 
 
-ARM_NONNULL(1,2)
+ARM_NONNULL(1)
 const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root(
                                             const arm_2d_tile_t *ptTile,
                                             arm_2d_region_t *ptValidRegion,
@@ -411,9 +411,8 @@ const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root(
                                             bool bQuitWhenFindVirtualScreen)
 {
     assert(NULL != ptTile);
-    assert(NULL != ptValidRegion);
 
-    *ptValidRegion = ptTile->tRegion;
+    arm_2d_region_t tValidRegion = ptTile->tRegion;
 
     if (NULL != ppVirtualScreen) {
         *ppVirtualScreen = NULL;        /* initialise */
@@ -425,6 +424,9 @@ const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root(
     }
 
     if (arm_2d_is_root_tile(ptTile)) {
+        if (NULL != ptValidRegion) {
+            *ptValidRegion = tValidRegion;
+        }
         return ptTile;
     }
 
@@ -436,6 +438,9 @@ const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root(
         }
         
         if (bQuitWhenFindVirtualScreen) {
+            if (NULL != ptValidRegion) {
+                *ptValidRegion = tValidRegion;
+            }
             return ptTile;
         }
     }
@@ -476,7 +481,7 @@ const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root(
          *!
          */
         if (NULL != ptOffset) {
-            arm_2d_location_t tOffset = ptValidRegion->tLocation;
+            arm_2d_location_t tOffset = tValidRegion.tLocation;
             tOffset.iX = MAX(0, -tOffset.iX);
             tOffset.iY = MAX(0, -tOffset.iY);
 
@@ -503,8 +508,8 @@ const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root(
 
         /*! make sure the output region is valid */
         if (!arm_2d_region_intersect(   &tParentRegion,
-                                        ptValidRegion,
-                                        ptValidRegion)) {
+                                        &tValidRegion,
+                                        &tValidRegion)) {
             /* out of range */
             return NULL;
         }
@@ -517,7 +522,7 @@ const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root(
             }
             
             if (bQuitWhenFindVirtualScreen) {
-                return ptTile;
+                break;
             }
         }
 
@@ -525,10 +530,14 @@ const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root(
             break;
         }
 
-        ptValidRegion->tLocation.iX += ptTile->tRegion.tLocation.iX;
-        ptValidRegion->tLocation.iY += ptTile->tRegion.tLocation.iY;
+        tValidRegion.tLocation.iX += ptTile->tRegion.tLocation.iX;
+        tValidRegion.tLocation.iY += ptTile->tRegion.tLocation.iY;
 
     } while(true);
+
+    if (NULL != ptValidRegion) {
+        *ptValidRegion = tValidRegion;
+    }
 
     return ptTile;
 }

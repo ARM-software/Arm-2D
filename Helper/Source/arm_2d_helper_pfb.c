@@ -2362,11 +2362,19 @@ label_iteration_begin_start:
         arm_2d_set_default_frame_buffer(&this.Adapter.tPFBTile);
     }
 
-    /* mark the virtual screen */
-    this.Adapter.tPFBTile.tInfo.bVirtualScreen = true;
-    /* update the colour info */
-    this.Adapter.tPFBTile.tInfo.tColourInfo.u7ColourFormat 
-        = this.tCFG.FrameBuffer.u7ColourFormat;
+    arm_with(arm_2d_tile_t, &this.Adapter.tPFBTile, ptTile) {
+
+        /* mark the virtual screen */
+        ptTile->tInfo.bVirtualScreen = true;
+        /* update the colour info */
+        ptTile->tInfo.tColourInfo.u7ColourFormat 
+            = this.tCFG.FrameBuffer.u7ColourFormat;
+
+        //! attach PFB info to tile extension field
+        ptTile->tInfo.u3ExtensionID = ARM_2D_TILE_EXTENSION_PFB;
+        ptTile->tInfo.Extension.PFB.bIsDryRun = this.Adapter.bIsDryRun;
+        ptTile->tInfo.Extension.PFB.bIsNewFrame = this.Adapter.bIsNewFrame;
+    } 
 
     return (arm_2d_tile_t *)&(this.Adapter.tPFBTile);
 }

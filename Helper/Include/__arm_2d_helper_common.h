@@ -888,11 +888,23 @@ extern "C" {
                     ({ /* on enter operations */                                \
                         __region_name.tSize                                     \
                             = (__tile_ptr)->tRegion.tSize;                      \
+                        arm_2d_tile_t *ARM_2D_SAFE_NAME(ptTile) = NULL;         \
                         const arm_2d_tile_t *ARM_2D_SAFE_NAME(ptRootTile)       \
-                            = arm_2d_tile_get_root( (__tile_ptr),               \
-                                                    NULL,                       \
-                                                    NULL);                      \
-                        (NULL != ARM_2D_SAFE_NAME(ptRootTile) || bIsNewFrame);  \
+                            = __arm_2d_tile_get_virtual_screen_or_root(         \
+                                        (const arm_2d_tile_t *)(__tile_ptr),    \
+                                        NULL,                                   \
+                                        NULL,                                   \
+                                        &ARM_2D_SAFE_NAME(ptTile),              \
+                                        false);                                 \
+                        (   NULL != ARM_2D_SAFE_NAME(ptRootTile)                \
+                        ||  (   (NULL != ARM_2D_SAFE_NAME(ptTile))              \
+                            &&  (ARM_2D_SAFE_NAME(ptTile)->tInfo.u3ExtensionID  \
+                                    == ARM_2D_TILE_EXTENSION_PFB)               \
+                            &&  (   ARM_2D_SAFE_NAME(ptTile)                    \
+                                        ->tInfo.Extension.PFB.bIsDryRun         \
+                                ||  ARM_2D_SAFE_NAME(ptTile)                    \
+                                        ->tInfo.Extension.PFB.bIsNewFrame))     \
+                        );                                                      \
                     }) : 0;                                                     \
                  ({ARM_2D_OP_WAIT_ASYNC();})                                    \
                 )

@@ -21,8 +21,8 @@
  * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        4. April 2024
- * $Revision:    V.1.2.4
+ * $Date:        12. April 2024
+ * $Revision:    V.1.2.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -567,6 +567,7 @@ typedef struct arm_2d_region_t {
  */
 enum {
     ARM_2D_TILE_EXTENSION_NONE = 0,             //!< no extension in the tile.tInfo.Extension field
+    ARM_2D_TILE_EXTENSION_PFB,                  //!< contains PFB extension information
 };
 
 /*!
@@ -582,11 +583,16 @@ struct arm_2d_tile_t {
         uint8_t    bVirtualResource     : 1;                                    //!< indicate whether the resource should be loaded on-demand
         uint8_t    bVirtualScreen       : 1;                                    //!< DO NOT USE! indicate whether the tile is considered as the virtual screen, it is used in dirty region calculation
         uint8_t    u3ExtensionID        : 3;                                    //!< Tile Extension ID
+        arm_2d_color_info_t    tColourInfo;                                     //!< enforced colour
 
         union {
-            uint8_t chReserve[2];
+            uint16_t                    : 16;
+            struct {
+                uint8_t bIsNewFrame     : 1;
+                uint8_t bIsDryRun       : 1;
+            }PFB;
         } Extension;
-        arm_2d_color_info_t    tColourInfo;                                     //!< enforced colour
+        
     }, tInfo);
 
     implement_ex(arm_2d_region_t, tRegion);                                     //!< the region of the tile

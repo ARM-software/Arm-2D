@@ -21,8 +21,8 @@
  * Title:        arm_2d_utils.h
  * Description:  Public header file for Arm-2D Library
  *
- * $Date:        17. March 2024
- * $Revision:    V.1.4.2
+ * $Date:        12. April 2024
+ * $Revision:    V.1.4.3
  *
  * -------------------------------------------------------------------- */
 
@@ -525,13 +525,13 @@ extern "C" {
  * \note do NOT use this macro directly
  */
 #define __ARM_WITH2(__type, __addr)                                             \
-            ARM_USING(__type *_p=(__addr))
+            arm_using(__type *_=(__addr))
 
 /*!
  * \note do NOT use this macro directly
  */
 #define __ARM_WITH3(__type, __addr, __item)                                     \
-            ARM_USING(__type *_p=(__addr), *__item = _p, (void)_p, (void)0)
+            arm_using(__type *_=(__addr), *__item = _, (void)_, (void)0)
 
 /*!
  * \brief a with block to access members of a given object
