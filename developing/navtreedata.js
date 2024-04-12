@@ -247,11 +247,11 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "group__Deprecated.html",
-"group__gAlpha.html#ga863b1737131d159b6535aa2ee89e0207",
-"group__gHelper.html#ga6cd67bb1aebd25b730cd1b52d762a18f",
-"group__gKernel.html#ac3cc19238dcaabfd6a5ac6001a610392",
-"group__gKernel.html#gga75983a418ea2c46866c20e2f1379c5cca09e575c62a7f1ad22dda8658558f7794",
-"md_how_to_deploy_the_arm_2d_library.html#autotoc_md43"
+"group__gAlpha.html#ga7ffaa038179f89a43d879f80f4b8d334",
+"group__gHelper.html#ga5f32055d9bfe64fde69f377207e0c078",
+"group__gKernel.html#aafb142b4ace10f2f28b36f6e21c0bc37",
+"group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fca4e8025cf61b9b22f9abc6fe918f80e6b",
+"md_how_to_accelerate_arm_2d.html#autotoc_md154"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
