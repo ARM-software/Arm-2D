@@ -1,5 +1,8 @@
 var NAVTREEINDEX5 =
 {
+"md_how_to_accelerate_arm_2d.html#autotoc_md151":[7,1,3,1],
+"md_how_to_accelerate_arm_2d.html#autotoc_md152":[7,1,3,2],
+"md_how_to_accelerate_arm_2d.html#autotoc_md153":[7,2],
 "md_how_to_accelerate_arm_2d.html#autotoc_md154":[7,2,0],
 "md_how_to_accelerate_arm_2d.html#autotoc_md155":[7,2,1],
 "md_how_to_accelerate_arm_2d.html#autotoc_md156":[7,2,2],

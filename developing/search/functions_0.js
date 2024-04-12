@@ -31,5 +31,6 @@ var searchData=
   ['_5f_5farm_5f2d_5frgb565_5funpack_28',['__arm_2d_rgb565_unpack',['../group__gConversion.html#ga0dac4bd927c28a54130bfe279542065c',1,'arm_2d_conversion.h']]],
   ['_5f_5farm_5f2d_5fscene_5fplayer_5fregister_5fbefore_5fswitching_5fevent_5fhandler_29',['__arm_2d_scene_player_register_before_switching_event_handler',['../group__gHelper.html#gadaa72d1d1c3baf5db91070008c238293',1,'arm_2d_helper_scene.h']]],
   ['_5f_5farm_5f2d_5fscene_5fplayer_5fregister_5fon_5fdraw_5fnavigation_5fevent_5fhandler_30',['__arm_2d_scene_player_register_on_draw_navigation_event_handler',['../group__gHelper.html#ga516674d7d321e4ecb058fd3b8ddbab70',1,'arm_2d_helper_scene.h']]],
-  ['_5f_5farm_5f2d_5fscene_5fplayer_5fset_5fswitching_5fmode_31',['__arm_2d_scene_player_set_switching_mode',['../group__gHelper.html#ga141d41ffe2e75ff8cd17f9e9f553d0bc',1,'arm_2d_helper_scene.h']]]
+  ['_5f_5farm_5f2d_5fscene_5fplayer_5fset_5fswitching_5fmode_31',['__arm_2d_scene_player_set_switching_mode',['../group__gHelper.html#ga141d41ffe2e75ff8cd17f9e9f553d0bc',1,'arm_2d_helper_scene.h']]],
+  ['_5f_5farm_5f2d_5ftile_5fget_5fvirtual_5fscreen_5for_5froot_32',['__arm_2d_tile_get_virtual_screen_or_root',['../group__Tile.html#ga79c243ad718ebe19f5ba16a9d1719a4e',1,'arm_2d_tile.h']]]
 ];
