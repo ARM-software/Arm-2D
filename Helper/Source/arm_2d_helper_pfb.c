@@ -4490,3 +4490,28 @@ void arm_2d_helper_transform_update_value(  arm_2d_helper_transform_t *ptThis,
         }
     }
 }
+
+/*----------------------------------------------------------------------------*
+ * Misc                                                                       *
+ *----------------------------------------------------------------------------*/
+
+ARM_NONNULL(1)
+bool arm_2d_helper_pfb_is_region_being_drawing(const arm_2d_tile_t *ptTarget,
+                                               const arm_2d_region_t *ptRegion)
+{
+    bool bResult = false;
+    arm_2d_tile_t tTempTile;
+    if (NULL != ptRegion) {
+        ptTarget = arm_2d_tile_generate_child(ptTarget, ptRegion, &tTempTile, false);
+    }
+
+    if (NULL != __arm_2d_tile_get_virtual_screen_or_root(ptTarget, 
+                                                        NULL, 
+                                                        NULL, 
+                                                        NULL, 
+                                                        false)) {
+        bResult = true;
+    }
+
+    return bResult;
+}

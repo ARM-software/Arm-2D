@@ -1426,6 +1426,18 @@ ARM_NONNULL(1)
 void arm_2d_dynamic_dirty_region_change_user_region_index_only(
                                             arm_2d_region_list_item_t *ptThis,
                                             uint8_t chNextUserIndex);
+extern
+ARM_NONNULL(1)
+/*!
+ * \brief check whether specified region is being drawing
+ * 
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region to test
+ * \return true the specified region is currently being drawing
+ * \return false the PFB is out of the range. 
+ */
+bool arm_2d_helper_pfb_is_region_being_drawing(const arm_2d_tile_t *ptTarget,
+                                               const arm_2d_region_t *ptRegion);
 
 /*! @} */
 
