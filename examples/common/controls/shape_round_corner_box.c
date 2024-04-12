@@ -57,17 +57,41 @@ extern const arm_2d_tile_t c_tileCircleMask;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
-const arm_2d_tile_t c_tileCircleAlphaQ4 = 
-    impl_child_tile(c_tileCircleMask, 7, 7, 7, 7);
 
-const arm_2d_tile_t c_tileCircleAlphaQ1 = 
-    impl_child_tile(c_tileCircleMask, 7, 0, 7, 7);
-
-const arm_2d_tile_t c_tileCircleAlphaQ2 = 
+const arm_2d_tile_t c_tileCircleQuaterMask = 
     impl_child_tile(c_tileCircleMask, 0, 0, 7, 7);
 
-const arm_2d_tile_t c_tileCircleAlphaQ3 = 
-    impl_child_tile(c_tileCircleMask, 0, 7, 7, 7);
+const arm_2d_tile_t c_tileCircleHorizontalLineLeftMask = 
+    impl_child_tile(
+        c_tileCircleMask, 
+        0, 
+        6, 
+        7, 
+        1);
+
+const arm_2d_tile_t c_tileCircleHorizontalLineRightMask = 
+    impl_child_tile(
+        c_tileCircleMask, 
+        7, 
+        6, 
+        7, 
+        1);
+
+const arm_2d_tile_t c_tileCircleVerticalLineTopMask = 
+    impl_child_tile(
+        c_tileCircleMask, 
+        6, 
+        0, 
+        1, 
+        7);
+
+const arm_2d_tile_t c_tileCircleVerticalLineBottomMask = 
+    impl_child_tile(
+        c_tileCircleMask, 
+        6, 
+        7, 
+        1, 
+        7);
 
 
 /*============================ IMPLEMENTATION ================================*/
@@ -455,109 +479,122 @@ void draw_round_corner_border(  const arm_2d_tile_t *ptTarget,
                                 arm_2d_border_opacity_t Opacity,
                                 arm_2d_corner_opacity_t CornerOpacity)
 {
-    assert( NULL != ptTarget );
 
-    arm_2d_region_t tTempRegion = {0};
-    if (NULL == ptRegion) {
-        tTempRegion.tSize = ptTarget->tRegion.tSize;
-        ptRegion = (const arm_2d_region_t *)&tTempRegion;
+    arm_2d_container(ptTarget, __round_corner_box, ptRegion) {
+
+        /* top left corner */
+        arm_2d_align_top_left(  __round_corner_box_canvas,
+                                c_tileCircleQuaterMask.tRegion.tSize) {
+            arm_2d_fill_colour_with_mask_and_opacity(   
+                                                    &__round_corner_box, 
+                                                    &__top_left_region, 
+                                                    &c_tileCircleQuaterMask, 
+                                                    (__arm_2d_color_t){tColour},
+                                                    CornerOpacity.chTopLeft);
+            ARM_2D_OP_WAIT_ASYNC();
+        }
+
+        /* top right corner */
+        arm_2d_align_top_right( __round_corner_box_canvas,
+                                c_tileCircleQuaterMask.tRegion.tSize) {
+            arm_2d_fill_colour_with_mask_x_mirror_and_opacity(   
+                                                    &__round_corner_box, 
+                                                    &__top_right_region, 
+                                                    &c_tileCircleQuaterMask, 
+                                                    (__arm_2d_color_t){tColour},
+                                                    CornerOpacity.chTopRight);
+            ARM_2D_OP_WAIT_ASYNC();
+        }
+
+        /* bottom left corner */
+        arm_2d_align_bottom_left(   __round_corner_box_canvas,
+                                    c_tileCircleQuaterMask.tRegion.tSize) {
+            arm_2d_fill_colour_with_mask_y_mirror_and_opacity(   
+                                                    &__round_corner_box, 
+                                                    &__bottom_left_region, 
+                                                    &c_tileCircleQuaterMask, 
+                                                    (__arm_2d_color_t){tColour},
+                                                    CornerOpacity.chBottomLeft);
+            ARM_2D_OP_WAIT_ASYNC();
+        }
+
+        /* bottom right corner */
+        arm_2d_align_bottom_right(  __round_corner_box_canvas,
+                                    c_tileCircleQuaterMask.tRegion.tSize) {
+            arm_2d_fill_colour_with_mask_xy_mirror_and_opacity(   
+                                                    &__round_corner_box, 
+                                                    &__bottom_right_region, 
+                                                    &c_tileCircleQuaterMask, 
+                                                    (__arm_2d_color_t){tColour},
+                                                    CornerOpacity.chBottomRight);
+            ARM_2D_OP_WAIT_ASYNC();
+        }
+
+        arm_2d_dock_vertical(__round_corner_box_canvas,
+                                __round_corner_box_canvas.tSize.iHeight
+                             -  c_tileCircleQuaterMask.tRegion.tSize.iHeight * 2) {
+
+            /* left border */
+            arm_2d_dock_left(   __vertical_region, 
+                                c_tileCircleHorizontalLineLeftMask.tRegion.tSize.iWidth) {
+                
+                arm_2d_fill_colour_with_horizontal_line_mask_and_opacity(
+                                                    &__round_corner_box, 
+                                                    &__left_region, 
+                                                    &c_tileCircleHorizontalLineLeftMask, 
+                                                    (__arm_2d_color_t){tColour},
+                                                    Opacity.chLeft);
+                ARM_2D_OP_WAIT_ASYNC();
+            }
+
+            /* right border */
+            arm_2d_dock_right(   __vertical_region, 
+                                c_tileCircleHorizontalLineRightMask.tRegion.tSize.iWidth) {
+                
+                arm_2d_fill_colour_with_horizontal_line_mask_and_opacity(
+                                                    &__round_corner_box, 
+                                                    &__right_region, 
+                                                    &c_tileCircleHorizontalLineRightMask, 
+                                                    (__arm_2d_color_t){tColour},
+                                                    Opacity.chRight);
+                ARM_2D_OP_WAIT_ASYNC();
+            }
+
+        }
+
+
+        arm_2d_dock_horizontal(__round_corner_box_canvas,
+                                __round_corner_box_canvas.tSize.iWidth
+                             -  c_tileCircleQuaterMask.tRegion.tSize.iWidth * 2) {
+
+            /* top border */
+            arm_2d_dock_top(    __horizontal_region, 
+                                c_tileCircleVerticalLineTopMask.tRegion.tSize.iHeight) {
+                
+                arm_2d_fill_colour_with_vertical_line_mask_and_opacity(
+                                                    &__round_corner_box, 
+                                                    &__top_region, 
+                                                    &c_tileCircleVerticalLineTopMask, 
+                                                    (__arm_2d_color_t){tColour},
+                                                    Opacity.chTop);
+                ARM_2D_OP_WAIT_ASYNC();
+            }
+
+            /* bottom border */
+            arm_2d_dock_bottom( __horizontal_region, 
+                                c_tileCircleVerticalLineBottomMask.tRegion.tSize.iHeight) {
+                
+                arm_2d_fill_colour_with_vertical_line_mask_and_opacity(
+                                                    &__round_corner_box, 
+                                                    &__bottom_region, 
+                                                    &c_tileCircleVerticalLineBottomMask, 
+                                                    (__arm_2d_color_t){tColour},
+                                                    Opacity.chBottom);
+                ARM_2D_OP_WAIT_ASYNC();
+            }
+
+        }
     }
-    
-    arm_2d_region_t tDrawRegion = *ptRegion;
-    
-    tDrawRegion.tSize.iHeight = 2;
-    tDrawRegion.tSize.iWidth -= 14;
-    tDrawRegion.tLocation.iX += 7;
-    /* draw the top horizontal line */
-    arm_2d_fill_colour_with_opacity(ptTarget,
-                                    &tDrawRegion,
-                                    (__arm_2d_color_t){tColour},
-                                    Opacity.chTop);
-    
-    arm_2d_op_wait_async(NULL);
-    
-    tDrawRegion.tLocation.iY += ptRegion->tSize.iHeight - 2;
-    
-    /* draw the bottom horizontal line */
-    arm_2d_fill_colour_with_opacity(ptTarget,
-                                    &tDrawRegion,
-                                    (__arm_2d_color_t){tColour},
-                                    Opacity.chBottom);
-    
-    arm_2d_op_wait_async(NULL);
-    
-    tDrawRegion = *ptRegion;
-    
-    /* draw left vertical line */
-    tDrawRegion.tSize.iWidth = 2;
-    tDrawRegion.tLocation.iY += 7;
-    tDrawRegion.tSize.iHeight -= 14;
-
-    arm_2d_fill_colour_with_opacity(ptTarget,
-                                    &tDrawRegion,
-                                    (__arm_2d_color_t){tColour},
-                                    Opacity.chLeft);
-    
-    arm_2d_op_wait_async(NULL);
-    
-    /* draw right vertical line */
-    tDrawRegion.tLocation.iX += ptRegion->tSize.iWidth - 2;
-    arm_2d_fill_colour_with_opacity(ptTarget,
-                                    &tDrawRegion,
-                                    (__arm_2d_color_t){tColour},
-                                    Opacity.chRight);
-    
-    arm_2d_op_wait_async(NULL);
-
-
-    
-    tDrawRegion = *ptRegion;
-
-    //! copy the top left corner
-    arm_2d_fill_colour_with_mask_and_opacity(   
-                                            ptTarget, 
-                                            &tDrawRegion, 
-                                            &c_tileCircleAlphaQ2, 
-                                            (__arm_2d_color_t){tColour},
-                                            CornerOpacity.chTopLeft);
-                                                
-    arm_2d_op_wait_async(NULL);
-
-    //! copy the top right corner
-    tDrawRegion.tLocation.iX += ptRegion->tSize.iWidth - c_tileCircleAlphaQ1.tRegion.tSize.iWidth;
-                            
-    arm_2d_fill_colour_with_mask_and_opacity(   
-                                            ptTarget, 
-                                            &tDrawRegion, 
-                                            &c_tileCircleAlphaQ1, 
-                                            (__arm_2d_color_t){tColour},
-                                            CornerOpacity.chTopRight);
-
-    arm_2d_op_wait_async(NULL);
-
-    //! copy the bottom right corner 
-    tDrawRegion.tLocation.iY += ptRegion->tSize.iHeight - c_tileCircleAlphaQ4.tRegion.tSize.iHeight;
-
-    arm_2d_fill_colour_with_mask_and_opacity(   
-                                            ptTarget, 
-                                            &tDrawRegion, 
-                                            &c_tileCircleAlphaQ4, 
-                                            (__arm_2d_color_t){tColour},
-                                            CornerOpacity.chBottomRight);
-
-    arm_2d_op_wait_async(NULL);
-
-    //! copy the bottom left corner 
-    tDrawRegion.tLocation.iX = ptRegion->tLocation.iX;
-                            
-    arm_2d_fill_colour_with_mask_and_opacity(  
-                                            ptTarget, 
-                                            &tDrawRegion, 
-                                            &c_tileCircleAlphaQ3, 
-                                            (__arm_2d_color_t){tColour},
-                                            CornerOpacity.chBottomLeft);
-
-    arm_2d_op_wait_async(NULL);
 
 }
 
