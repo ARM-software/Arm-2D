@@ -172,12 +172,14 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
         
         /* following code is just a demo, you can remove them */
 
+    #if 0
         arm_2d_align_centre(__top_canvas, c_tileBackground.tRegion.tSize) {
             draw_round_corner_image(&c_tileBackground,
                                     ptTile,
                                     &__centre_region,
                                     bIsNewFrame);
         }
+    #endif
 
         arm_2d_align_centre(__top_canvas, 240, 120 ) {
             arm_2d_layout(__centre_region) {
@@ -292,47 +294,6 @@ user_scene_basics_t *__arm_2d_scene_basics_init(   arm_2d_scene_player_t *ptDisp
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
 
-#if 0
-    /*! define dirty regions */
-    IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
-
-        /* a dirty region to be specified at runtime*/
-        ADD_REGION_TO_LIST(s_tDirtyRegions,
-            0  /* initialize at runtime later */
-        ),
-        
-        /* add the last region:
-         * it is the top left corner for text display 
-         */
-        ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
-            .tLocation = {
-                .iX = 0,
-                .iY = 0,
-            },
-            .tSize = {
-                .iWidth = __GLCD_CFG_SCEEN_WIDTH__,
-                .iHeight = 8,
-            },
-        ),
-
-    END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
-    
-    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
-
-    /* get the screen region */
-    arm_2d_region_t tScreen
-        = arm_2d_helper_pfb_get_display_area(
-            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
-    
-    /* initialise dirty region 0 at runtime
-     * this demo shows that we create a region in the centre of a screen(320*240)
-     * for a image stored in the tile c_tileCMSISLogoMask
-     */
-    arm_2d_align_centre(tScreen, c_tileCMSISLogoMask.tRegion.tSize) {
-        s_tDirtyRegions[0].tRegion = __centre_region;
-    }
-#endif
-
     if (NULL == ptThis) {
         ptThis = (user_scene_basics_t *)
                     __arm_2d_allocate_scratch_memory(   sizeof(user_scene_basics_t),
@@ -356,8 +317,6 @@ user_scene_basics_t *__arm_2d_scene_basics_init(   arm_2d_scene_player_t *ptDisp
             /* Please uncommon the callbacks if you need them
              */
             .fnScene        = &__pfb_draw_scene_basics_handler,
-            //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
-            
 
             //.fnOnBGStart    = &__on_scene_basics_background_start,
             //.fnOnBGComplete = &__on_scene_basics_background_complete,
