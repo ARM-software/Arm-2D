@@ -286,6 +286,7 @@ var group__gHelper =
     [ "arm_2d_dynamic_dirty_region_wait_next", "group__gHelper.html#gaeb380bba7940cea40429bfa6d448e4d1", null ],
     [ "arm_2d_dynamic_dirty_region_update", "group__gHelper.html#ga0ffd7a30b3700782ba033c043844a876", null ],
     [ "arm_2d_dynamic_dirty_region_change_user_region_index_only", "group__gHelper.html#ga5ee61182d0eff6004c01c87a4a20b7f8", null ],
+    [ "arm_2d_helper_pfb_is_region_being_drawing", "group__gHelper.html#ga982784598b54ca41b255ef58e900217f", null ],
     [ "arm_2d_helper_init", "group__gHelper.html#ga9ab5e975303c28c98f1ae62babb8286d", null ],
     [ "arm_2d_helper_backend_task", "group__gHelper.html#ga5161926583cc8da4c4b369b177845e42", null ],
     [ "arm_2d_helper_convert_ticks_to_ms", "group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf", null ],
