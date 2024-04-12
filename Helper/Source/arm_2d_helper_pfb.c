@@ -4496,8 +4496,10 @@ void arm_2d_helper_transform_update_value(  arm_2d_helper_transform_t *ptThis,
  *----------------------------------------------------------------------------*/
 
 ARM_NONNULL(1)
-bool arm_2d_helper_pfb_is_region_being_drawing(const arm_2d_tile_t *ptTarget,
-                                               const arm_2d_region_t *ptRegion)
+bool arm_2d_helper_pfb_is_region_being_drawing(
+                                    const arm_2d_tile_t *ptTarget,
+                                    const arm_2d_region_t *ptRegion,
+                                    const arm_2d_tile_t **ppVirtualScreen)
 {
     bool bResult = false;
     arm_2d_tile_t tTempTile;
@@ -4505,11 +4507,11 @@ bool arm_2d_helper_pfb_is_region_being_drawing(const arm_2d_tile_t *ptTarget,
         ptTarget = arm_2d_tile_generate_child(ptTarget, ptRegion, &tTempTile, false);
     }
 
-    if (NULL != __arm_2d_tile_get_virtual_screen_or_root(ptTarget, 
-                                                        NULL, 
-                                                        NULL, 
-                                                        NULL, 
-                                                        false)) {
+    if (NULL != __arm_2d_tile_get_virtual_screen_or_root(   ptTarget, 
+                                                            NULL, 
+                                                            NULL, 
+                                                            ppVirtualScreen, 
+                                                            false)) {
         bResult = true;
     }
 
