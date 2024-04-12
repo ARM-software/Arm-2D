@@ -95,10 +95,10 @@ extern
 const arm_2d_tile_t c_tileSinWaveMask;
 
 extern 
-const arm_2d_tile_t c_tileGlassReflectionWMask;
+const arm_2d_tile_t c_tileGlassReflectionWLineMask;
 
-extern
-const arm_2d_tile_t c_tileGlassReflectionNMask;
+extern 
+const arm_2d_tile_t c_tileGlassReflectionNLineMask;
 
 extern
 const arm_2d_tile_t c_tileLightingA4Mask;
@@ -555,12 +555,12 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
                             ) {
 
                 /* draw the glass reflection (narrow) on the left side */
-                arm_2d_align_left(  __glass_face_canvas, 
-                                    c_tileGlassReflectionNMask.tRegion.tSize) {
-                    arm_2d_fill_colour_with_mask_and_opacity(
+                arm_2d_dock_left(  __glass_face_canvas, 
+                                    c_tileGlassReflectionNLineMask.tRegion.tSize.iWidth) {
+                    arm_2d_fill_colour_with_horizontal_line_mask_and_opacity(
                         &__glass_face,
                         &__left_region,
-                        &c_tileGlassReflectionNMask,
+                        &c_tileGlassReflectionNLineMask,
                         (__arm_2d_color_t){GLCD_COLOR_WHITE},
                         128 );
 
@@ -568,12 +568,12 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
                 }
                 
                 /* draw the glass reflection (wide) on the right side */
-                arm_2d_align_right( __glass_face_canvas, 
-                                    c_tileGlassReflectionWMask.tRegion.tSize) {
-                    arm_2d_fill_colour_with_mask_and_opacity(
+                arm_2d_dock_right( __glass_face_canvas,
+                                    c_tileGlassReflectionWLineMask.tRegion.tSize.iWidth) {
+                    arm_2d_fill_colour_with_horizontal_line_mask_and_opacity(
                         &__glass_face,
                         &__right_region,
-                        &c_tileGlassReflectionWMask,
+                        &c_tileGlassReflectionWLineMask,
                         (__arm_2d_color_t){GLCD_COLOR_WHITE},
                         128 + 32);
 

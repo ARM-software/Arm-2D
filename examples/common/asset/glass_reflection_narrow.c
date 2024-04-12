@@ -1096,6 +1096,32 @@ const uint32_t c_bmpGlassReflectionNCCCA8888[9*88] = {
 0x0dffffff, 0x3cffffff, 0x6cffffff, 0x81f9fbfd, 0x80edf1f9, 0x81e1e9f5, 0x72d8e4f3, 0x41d7e3f3, 0x0edadaec, 
 };
 
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpGlassReflectionNLineAlpha")
+static const uint8_t c_bmpGlassReflectionNLineAlpha[9*88] = {
+    /* -0- */
+    0x11, 0x3d, 0x6c, 0x81, 0x80, 0x81, 0x72, 0x43, 0x15,
+};
+
+extern const arm_2d_tile_t c_tileGlassReflectionNLineMask;
+
+ARM_SECTION("arm2d.tile.c_tileGlassReflectionNLineMask")
+const arm_2d_tile_t c_tileGlassReflectionNLineMask = {
+    .tRegion = {
+        .tSize = {
+            .iWidth = 9,
+            .iHeight = 1,
+        },
+    },
+    .tInfo = {
+        .bIsRoot = true,
+        .bHasEnforcedColour = true,
+        .tColourInfo = {
+            .chScheme = ARM_2D_COLOUR_8BIT,
+        },
+    },
+    .pchBuffer = (uint8_t *)c_bmpGlassReflectionNLineAlpha,
+};
+
 
 extern const arm_2d_tile_t c_tileGlassReflectionNGRAY8;
 ARM_SECTION("arm2d.tile.c_tileGlassReflectionNGRAY8")
