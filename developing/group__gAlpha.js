@@ -97,7 +97,7 @@ var group__gAlpha =
       [ "ptSourceSide", "group__gAlpha.html#a13d713fa0ec43e86713c9b6cf51e5bf4", null ],
       [ "ptTargetSide", "group__gAlpha.html#a8bad2a9f967b1ca4f848ef67c7f41add", null ]
     ] ],
-    [ "arm_2d_op_fill_cl_l_msk_t.__unnamed135__", "group__gAlpha.html#unionarm__2d__op__fill__cl__l__msk__t_8____unnamed135____", [
+    [ "arm_2d_op_fill_cl_l_msk_t.__unnamed131__", "group__gAlpha.html#unionarm__2d__op__fill__cl__l__msk__t_8____unnamed131____", [
       [ "chColour", "group__gAlpha.html#a4853c21ae19c1b2bc936685425c225b5", null ],
       [ "hwColour", "group__gAlpha.html#a3a90debdbc76b907ebc5d82ee18e56aa", null ],
       [ "wColour", "group__gAlpha.html#a9f162c8dd605b531b0443f4f8d74453d", null ]
@@ -113,7 +113,7 @@ var group__gAlpha =
       [ "ptSourceSide", "group__gAlpha.html#a13d713fa0ec43e86713c9b6cf51e5bf4", null ],
       [ "ptTargetSide", "group__gAlpha.html#a8bad2a9f967b1ca4f848ef67c7f41add", null ]
     ] ],
-    [ "arm_2d_op_fill_cl_l_msk_opc_t.__unnamed140__", "group__gAlpha.html#unionarm__2d__op__fill__cl__l__msk__opc__t_8____unnamed140____", [
+    [ "arm_2d_op_fill_cl_l_msk_opc_t.__unnamed136__", "group__gAlpha.html#unionarm__2d__op__fill__cl__l__msk__opc__t_8____unnamed136____", [
       [ "chColour", "group__gAlpha.html#a4853c21ae19c1b2bc936685425c225b5", null ],
       [ "hwColour", "group__gAlpha.html#a3a90debdbc76b907ebc5d82ee18e56aa", null ],
       [ "wColour", "group__gAlpha.html#a9f162c8dd605b531b0443f4f8d74453d", null ]
