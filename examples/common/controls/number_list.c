@@ -372,7 +372,6 @@ arm_fsm_rt_t number_list_show(  number_list_t *ptThis,
 {
     __arm_2d_list_core_t *ptList = &this.use_as____arm_2d_list_core_t;
 
-
     /* process the dynamic dirty region */
     if (this.tNumListCFG.bUseDirtyRegion) {
         switch (arm_2d_dynamic_dirty_region_wait_next(&this.tDirtyRegion)) {
@@ -407,10 +406,10 @@ arm_fsm_rt_t number_list_show(  number_list_t *ptThis,
         return arm_fsm_rt_cpl;
     }
 
-    return __arm_2d_list_core_show( ptList,
-                                    ptTile,
-                                    ptRegion,
-                                    bIsNewFrame);
+    return __arm_2d_list_core_show(ptList,
+                            ptTile,
+                            ptRegion,
+                            bIsNewFrame);
 }
 
 
