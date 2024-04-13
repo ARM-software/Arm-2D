@@ -880,8 +880,8 @@ extern "C" {
                                 __container_name,                               \
                                 (__region_ptr),##__VA_ARGS__)
 
-
-#define arm_2d_canvas(__tile_ptr, __region_name)                                \
+#if 1
+#define arm_2d_canvas(__tile_ptr, __region_name, ...)                           \
                 for (arm_2d_region_t __region_name = {0},                       \
                     *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;          \
                  ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL ?          \
@@ -924,10 +924,16 @@ extern "C" {
                                 (__tile_ptr)                                    \
                             );                                                  \
                         }                                                       \
-                        bDrawCanvas;                                            \
+                        (bDrawCanvas, ##__VA_ARGS__);                           \
                     }) : 0;                                                     \
                  ({ARM_2D_OP_WAIT_ASYNC();})                                    \
                 )
+#else
+#define arm_2d_canvas(__tile_ptr, __region_name)                                \
+            arm_using(arm_2d_region_t __region_name = {0},                      \
+                        {__region_name.tSize = (__tile_ptr)->tRegion.tSize;},   \
+                        {arm_2d_op_wait_async(NULL);})
+#endif
 
 #define arm_2d_layout(__region)                                                 \
         arm_using(  arm_2d_region_t __arm_2d_layout = {                         \
