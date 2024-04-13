@@ -533,7 +533,10 @@ void console_box_show(  console_box_t *ptThis,
                     default:    /* 0xFF */
                         break;
                 }
-            
+            }
+
+            if (!arm_2d_helper_pfb_is_region_being_drawing(&__console_box, &__centre_region, NULL)) {
+                break;
             }
 
             /* draw text at the top-left corner */

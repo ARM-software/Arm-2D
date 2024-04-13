@@ -158,6 +158,10 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
 
     arm_2d_container(ptTile, __battery, ptRegion) {
 
+        if (!arm_2d_helper_pfb_is_region_being_drawing(&__battery, NULL, NULL)) {
+            return ;
+        }
+
         arm_2d_size_t tBatterySize = c_tileBatteryBoarderTopMask.tRegion.tSize;
         tBatterySize.iHeight += c_tileBatteryBoarderBottomMask.tRegion.tSize.iHeight;
         tBatterySize.iHeight += 72;

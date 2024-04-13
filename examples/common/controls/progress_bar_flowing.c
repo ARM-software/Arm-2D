@@ -79,7 +79,7 @@ void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget,
                                     COLOUR_INT tPitchColour,
                                     COLOUR_INT tBoarderColour)
 {
-    
+    static int16_t s_iOffset = 0;
  
     assert(NULL != ptTarget);
     if (iProgress > 1000) {
@@ -95,7 +95,6 @@ void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget,
         iWidth = ptRegion->tSize.iWidth;
     }
 
-
     arm_2d_region_t tBarRegion = {
         .tLocation = {
            .iX = ptRegion->tLocation.iX + (ptRegion->tSize.iWidth - (int16_t)iWidth) / 2,
@@ -106,6 +105,33 @@ void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget,
             .iHeight = c_tileWaveMask.tRegion.tSize.iHeight,
         },
     };
+
+    //! update offset
+    if (bIsNewFrame) {
+        int64_t lClocks = arm_2d_helper_get_system_timestamp();
+        int32_t nElapsed = (int32_t)((lClocks - s_lLastTime));
+
+        if (lClocks >= s_lWavingTime) {
+            s_lWavingTime = lClocks + arm_2d_helper_convert_ms_to_ticks(3000);
+            s_bWaving = true;
+        }
+
+        if (nElapsed >= (int32_t)s_wUnit) {
+            s_lLastTime = lClocks;
+            
+            if (s_bWaving) {
+                s_iOffset+=2;
+                if (s_iOffset >= tBarRegion.tSize.iWidth + c_tileWaveMask.tRegion.tSize.iWidth) {
+                    s_iOffset = 0;
+                    s_bWaving = false;
+                }
+            }
+        }
+    }
+
+    if (!arm_2d_helper_pfb_is_region_being_drawing(ptTarget, &tBarRegion, NULL)) {
+        return ;
+    }
     
     //! draw a white box
     arm_2d_fill_colour( ptTarget, 
@@ -139,7 +165,7 @@ void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget,
     arm_2d_op_wait_async(NULL);
     //! draw wave
     do {
-        static int16_t s_iOffset = 0;
+        
         arm_2d_region_t tInnerRegion = {
             .tSize = c_tileWaveMask.tRegion.tSize,
             .tLocation = {
@@ -157,28 +183,6 @@ void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget,
                                         (__arm_2d_color_t) {tPitchColour});
         
         arm_2d_op_wait_async(NULL);
-        //! update offset
-        if (bIsNewFrame) {
-            int64_t lClocks = arm_2d_helper_get_system_timestamp();
-            int32_t nElapsed = (int32_t)((lClocks - s_lLastTime));
-
-            if (lClocks >= s_lWavingTime) {
-                s_lWavingTime = lClocks + arm_2d_helper_convert_ms_to_ticks(3000);
-                s_bWaving = true;
-            }
-
-            if (nElapsed >= (int32_t)s_wUnit) {
-                s_lLastTime = lClocks;
-                
-                if (s_bWaving) {
-                    s_iOffset+=2;
-                    if (s_iOffset >= tBarRegion.tSize.iWidth + c_tileWaveMask.tRegion.tSize.iWidth) {
-                        s_iOffset = 0;
-                        s_bWaving = false;
-                    }
-                }
-            }
-        }
 
     } while(0);
     

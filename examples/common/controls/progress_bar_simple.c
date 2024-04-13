@@ -126,7 +126,6 @@ void __progress_bar_simple_show(const arm_2d_tile_t *ptTarget,
             .iHeight = c_tileSmallDotMask.tRegion.tSize.iHeight,
         },
     };
-
     
     // draw a white box
     arm_2d_helper_draw_box(ptTarget, &tBarRegion, 1, GLCD_COLOR_WHITE, 255 - 64);

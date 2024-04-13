@@ -371,10 +371,7 @@ arm_fsm_rt_t number_list_show(  number_list_t *ptThis,
                                 bool bIsNewFrame)
 {
     __arm_2d_list_core_t *ptList = &this.use_as____arm_2d_list_core_t;
-    arm_fsm_rt_t tState = __arm_2d_list_core_show(  ptList,
-                                                    ptTile,
-                                                    ptRegion,
-                                                    bIsNewFrame);
+
 
     /* process the dynamic dirty region */
     if (this.tNumListCFG.bUseDirtyRegion) {
@@ -406,7 +403,14 @@ arm_fsm_rt_t number_list_show(  number_list_t *ptThis,
         }
     }
 
-    return tState;
+    if (!arm_2d_helper_pfb_is_region_being_drawing(ptTile, ptRegion, NULL) && !bIsNewFrame) {
+        return arm_fsm_rt_cpl;
+    }
+
+    return __arm_2d_list_core_show( ptList,
+                                    ptTile,
+                                    ptRegion,
+                                    bIsNewFrame);
 }
 
 

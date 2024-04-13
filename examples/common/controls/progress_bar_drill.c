@@ -97,6 +97,8 @@ void __progress_bar_drill_show( const arm_2d_tile_t *ptTarget,
                                 COLOUR_INT tBarColour,
                                 bool bIsNewFrame)
 {
+    static uint8_t s_chOffset = 0;
+
     assert(NULL != ptTarget);
     if (iProgress > 1000) {
         iProgress = 0;
@@ -120,7 +122,27 @@ void __progress_bar_drill_show( const arm_2d_tile_t *ptTarget,
             .iHeight = c_tileBlueSlash.tRegion.tSize.iHeight,
         },
     };
-    
+
+    //! update offset
+    if (bIsNewFrame) {
+        if (arm_2d_helper_is_time_out(s_wUnit, &s_lLastTime)) {
+//            int64_t lClocks = arm_2d_helper_get_system_timestamp();
+//            int32_t nElapsed = (int32_t)((lClocks - s_lLastTime));
+//            
+//            if (nElapsed >= (int32_t)s_wUnit) {
+//                s_lLastTime = lClocks;
+            s_chOffset++;
+            if (s_chOffset >= c_tileBlueSlash.tRegion.tSize.iWidth) {
+                s_chOffset = 0;
+            }
+//            }
+        }
+    }
+
+    if (!arm_2d_helper_pfb_is_region_being_drawing(ptTarget, &tBarRegion, NULL)) {
+        return ;
+    }
+
     //! draw a white box
     arm_2d_fill_colour(ptTarget, &tBarRegion, __RGB(0xa5, 0xc6, 0xef));
     
@@ -133,7 +155,7 @@ void __progress_bar_drill_show( const arm_2d_tile_t *ptTarget,
     tBarRegion.tLocation.iY += 1;
 
     do {
-        static uint8_t s_chOffset = 0;
+        
         arm_2d_region_t tInnerRegion = {
             .tSize = {
                 .iWidth = tBarRegion.tSize.iWidth + c_tileBlueSlash.tRegion.tSize.iWidth,
@@ -154,21 +176,6 @@ void __progress_bar_drill_show( const arm_2d_tile_t *ptTarget,
                             &tInnerRegion);
 
         arm_2d_op_wait_async(NULL);
-        //! update offset
-        if (bIsNewFrame) {
-            if (arm_2d_helper_is_time_out(s_wUnit, &s_lLastTime)) {
-//            int64_t lClocks = arm_2d_helper_get_system_timestamp();
-//            int32_t nElapsed = (int32_t)((lClocks - s_lLastTime));
-//            
-//            if (nElapsed >= (int32_t)s_wUnit) {
-//                s_lLastTime = lClocks;
-                s_chOffset++;
-                if (s_chOffset >= c_tileBlueSlash.tRegion.tSize.iWidth) {
-                    s_chOffset = 0;
-                }
-//            }
-            }
-        }
 
     } while(0);
 

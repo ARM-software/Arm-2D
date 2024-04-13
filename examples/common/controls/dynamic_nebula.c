@@ -127,6 +127,10 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
 
         arm_2d_align_centre(__control_canvas, this.tCFG.iRadius * 2, this.tCFG.iRadius * 2) {
 
+            if (!arm_2d_helper_pfb_is_region_being_drawing(&__control, &__centre_region, NULL)) {
+                break;
+            }
+
             arm_2d_location_t tCentre = {
                     .iX = (__centre_region.tSize.iWidth >> 1) + __centre_region.tLocation.iX,
                     .iY = (__centre_region.tSize.iHeight >> 1) + __centre_region.tLocation.iY,
@@ -171,7 +175,6 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
                         ptParticle->fCos = arm_cos_f32(fAngle);
                     }
                 }
-
 
                 ptParticle++;
             } while(--n);

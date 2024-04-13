@@ -4507,13 +4507,20 @@ bool arm_2d_helper_pfb_is_region_being_drawing(
         ptTarget = arm_2d_tile_generate_child(ptTarget, ptRegion, &tTempTile, false);
     }
 
-    if (NULL != __arm_2d_tile_get_virtual_screen_or_root(   ptTarget, 
-                                                            NULL, 
-                                                            NULL, 
-                                                            ppVirtualScreen, 
-                                                            false)) {
-        bResult = true;
-    }
+    do {
+        if (NULL == ptTarget) {
+            break;
+        }
+
+        if (NULL != __arm_2d_tile_get_virtual_screen_or_root(   
+                                                    ptTarget, 
+                                                    NULL, 
+                                                    NULL, 
+                                                    (const arm_2d_tile_t **)ppVirtualScreen, 
+                                                    false)) {
+            bResult = true;
+        }
+    } while(0);
 
     return bResult;
 }

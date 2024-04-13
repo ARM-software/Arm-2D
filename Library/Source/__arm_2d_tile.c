@@ -404,11 +404,11 @@ const arm_2d_tile_t *__arm_2d_tile_get_1st_derived_child_or_root(
 
 ARM_NONNULL(1)
 const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root(
-                                            const arm_2d_tile_t *ptTile,
-                                            arm_2d_region_t *ptValidRegion,
-                                            arm_2d_location_t *ptOffset,
-                                            arm_2d_tile_t **ppVirtualScreen,
-                                            bool bQuitWhenFindVirtualScreen)
+                                        const arm_2d_tile_t *ptTile,
+                                        arm_2d_region_t *ptValidRegion,
+                                        arm_2d_location_t *ptOffset,
+                                        const arm_2d_tile_t **ppVirtualScreen,
+                                        bool bQuitWhenFindVirtualScreen)
 {
     assert(NULL != ptTile);
 

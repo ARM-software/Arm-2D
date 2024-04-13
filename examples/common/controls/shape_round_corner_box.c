@@ -484,6 +484,10 @@ void __draw_round_corner_border(const arm_2d_tile_t *ptTarget,
 
     arm_2d_container(ptTarget, __round_corner_box, ptRegion) {
 
+        if (!arm_2d_helper_pfb_is_region_being_drawing(&__round_corner_box, NULL, NULL)) {
+            break;
+        }
+
         /* top left corner */
         arm_2d_align_top_left(  __round_corner_box_canvas,
                                 c_tileCircleQuaterMask.tRegion.tSize) {
@@ -539,7 +543,7 @@ void __draw_round_corner_border(const arm_2d_tile_t *ptTarget,
             /* left border */
             arm_2d_dock_left(   __vertical_region, 
                                 c_tileCircleHorizontalLineLeftMask.tRegion.tSize.iWidth) {
-                
+
                 arm_2d_fill_colour_with_horizontal_line_mask_and_opacity(
                                                     &__round_corner_box, 
                                                     &__left_region, 

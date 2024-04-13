@@ -888,7 +888,7 @@ extern "C" {
                     ({ /* on enter operations */                                \
                         __region_name.tSize                                     \
                             = (__tile_ptr)->tRegion.tSize;                      \
-                        arm_2d_tile_t *ARM_2D_SAFE_NAME(ptTile) = NULL;         \
+                        const arm_2d_tile_t *ARM_2D_SAFE_NAME(ptTile) = NULL;   \
                         const arm_2d_tile_t *ARM_2D_SAFE_NAME(ptRootTile)       \
                             = __arm_2d_tile_get_virtual_screen_or_root(         \
                                         (const arm_2d_tile_t *)(__tile_ptr),    \
