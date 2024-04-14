@@ -277,6 +277,7 @@ int_fast8_t arm_2d_is_region_inside_target(const arm_2d_region_t *ptRegion,
 
 
 ARM_NONNULL(1)
+__attribute__((noinline))
 const arm_2d_tile_t *__arm_2d_tile_get_1st_derived_child_or_root(
                                             const arm_2d_tile_t *ptTile,
                                             arm_2d_region_t *ptValidRegion,
@@ -307,9 +308,9 @@ const arm_2d_tile_t *__arm_2d_tile_get_1st_derived_child_or_root(
     do {
         if (ptTile->tInfo.bDerivedResource) {
             if (NULL != ppFirstDerivedChild) {
-                if (NULL == *ppFirstDerivedChild) {
+                //if (NULL == *ppFirstDerivedChild) {
                     *ppFirstDerivedChild = (arm_2d_tile_t *)ptTile;
-                }
+                //}
             }
             
             if (bQuitWhenFindFirstDerivedChild) {
@@ -432,9 +433,9 @@ const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root(
 
     if (ptTile->tInfo.bVirtualScreen) {
         if (NULL != ppVirtualScreen) {
-            if (NULL == *ppVirtualScreen) {
+            //if (NULL == *ppVirtualScreen) {
                 *ppVirtualScreen = (arm_2d_tile_t *)ptTile;
-            }
+            //}
         }
         
         if (bQuitWhenFindVirtualScreen) {
@@ -516,9 +517,9 @@ const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root(
 
         if (ptTile->tInfo.bVirtualScreen) {
             if (NULL != ppVirtualScreen) {
-                if (NULL == *ppVirtualScreen) {
+                //if (NULL == *ppVirtualScreen) {
                     *ppVirtualScreen = (arm_2d_tile_t *)ptTile;
-                }
+                //}
             }
             
             if (bQuitWhenFindVirtualScreen) {
