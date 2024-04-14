@@ -1968,7 +1968,7 @@ typedef arm_2d_op_src_msk_t arm_2d_op_cp_msk_t;
 
 /*!
  * \brief control block for colour-filling-with-mask operations
- * \note arm_2d_op_fill_cl_l_msk_t inherits from arm_2d_op_msk_t explicitly 
+ * \note arm_2d_op_fill_cl_l_msk_t inherits from arm_2d_op_src_msk_t explicitly 
  */
 typedef struct arm_2d_op_fill_cl_l_msk_t {
 
