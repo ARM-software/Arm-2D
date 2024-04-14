@@ -21,8 +21,8 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        12. April 2024
- * $Revision:    V.1.4.5
+ * $Date:        14. April 2024
+ * $Revision:    V.1.4.6
  *
  * Target Processor:  Cortex-M cores
  *
@@ -277,7 +277,6 @@ int_fast8_t arm_2d_is_region_inside_target(const arm_2d_region_t *ptRegion,
 
 
 ARM_NONNULL(1)
-__attribute__((noinline))
 const arm_2d_tile_t *__arm_2d_tile_get_1st_derived_child_or_root(
                                             const arm_2d_tile_t *ptTile,
                                             arm_2d_region_t *ptValidRegion,
@@ -308,9 +307,10 @@ const arm_2d_tile_t *__arm_2d_tile_get_1st_derived_child_or_root(
     do {
         if (ptTile->tInfo.bDerivedResource) {
             if (NULL != ppFirstDerivedChild) {
-                //if (NULL == *ppFirstDerivedChild) {
+                /* ensure this is the first derived child */
+                if (NULL == *ppFirstDerivedChild) {
                     *ppFirstDerivedChild = (arm_2d_tile_t *)ptTile;
-                //}
+                }
             }
             
             if (bQuitWhenFindFirstDerivedChild) {
@@ -433,9 +433,10 @@ const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root(
 
     if (ptTile->tInfo.bVirtualScreen) {
         if (NULL != ppVirtualScreen) {
-            //if (NULL == *ppVirtualScreen) {
+            /* ensure this is the first virtual screen */
+            if (NULL == *ppVirtualScreen) {
                 *ppVirtualScreen = (arm_2d_tile_t *)ptTile;
-            //}
+            }
         }
         
         if (bQuitWhenFindVirtualScreen) {
@@ -517,9 +518,10 @@ const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root(
 
         if (ptTile->tInfo.bVirtualScreen) {
             if (NULL != ppVirtualScreen) {
-                //if (NULL == *ppVirtualScreen) {
+                /* ensure this is the first virtual screen */
+                if (NULL == *ppVirtualScreen) {
                     *ppVirtualScreen = (arm_2d_tile_t *)ptTile;
-                //}
+                }
             }
             
             if (bQuitWhenFindVirtualScreen) {
