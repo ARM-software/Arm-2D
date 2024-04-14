@@ -112,9 +112,7 @@ static void __on_scene_atom_depose(arm_2d_scene_t *ptScene)
         *ptItem = 0;
     }
 
-    arm_2d_helper_dirty_region_depose(&this.Core.tDirtyRegionHelper);
-    arm_2d_helper_dirty_region_depose(&this.Electronic[0].tDirtyRegionHelper);
-    arm_2d_helper_dirty_region_depose(&this.Electronic[1].tDirtyRegionHelper);
+    arm_2d_helper_dirty_region_depose(&this.tDirtyRegionHelper);
 
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
@@ -181,11 +179,8 @@ static void __on_scene_atom_frame_start(arm_2d_scene_t *ptScene)
 
     } while(0);
 
+    arm_2d_helper_dirty_region_on_frame_begin(&this.tDirtyRegionHelper);
 
-    arm_2d_helper_dirty_region_on_frame_begin(&this.Core.tDirtyRegionHelper);
-
-    arm_2d_helper_dirty_region_on_frame_begin(&this.Electronic[0].tDirtyRegionHelper);
-    arm_2d_helper_dirty_region_on_frame_begin(&this.Electronic[1].tDirtyRegionHelper);
 }
 
 static void __on_scene_atom_frame_complete(arm_2d_scene_t *ptScene)
@@ -195,7 +190,7 @@ static void __on_scene_atom_frame_complete(arm_2d_scene_t *ptScene)
     
     /* switch to next scene after 5s */
     if (arm_2d_helper_is_time_out(5000, &this.lTimestamp[0])) {
-        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+        //arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 }
 
@@ -217,6 +212,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_atom_handler)
     arm_2d_size_t tScreenSize = ptTile->tRegion.tSize;
 
     ARM_2D_UNUSED(tScreenSize);
+
+    __arm_2d_helper_dirty_region_update_dirty_regions(  &this.tDirtyRegionHelper, 
+                                                        ptTile);
 
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the foreground begin-----------------------*/
@@ -245,11 +243,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_atom_handler)
                     tDirtyRegion.tSize.iHeight += tCharSize.iHeight;
 
                     /* update dirty region */
-                    arm_2d_helper_dirty_region_update_dirty_regions(&this.Core.tDirtyRegionHelper,
-                                                                    (arm_2d_tile_t *)ptTile,
-                                                                    &__top_canvas,
-                                                                    &tDirtyRegion,
-                                                                    bIsNewFrame);
+                    arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionHelper,
+                                                            &this.Core.tDirtyRegionItem,
+                                                            (arm_2d_tile_t *)ptTile,
+                                                            &__top_canvas,
+                                                            &tDirtyRegion);
 
                     do {
                         arm_2d_region_t tHadron = __item_region;
@@ -343,11 +341,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_atom_handler)
                     __centre_region.tLocation.iY += this.Electronic[0].tOffset.iY;
 
                     /* update dirty region */
-                    arm_2d_helper_dirty_region_update_dirty_regions(&this.Electronic[0].tDirtyRegionHelper,
-                                                                    (arm_2d_tile_t *)ptTile,
-                                                                    &__top_canvas,
-                                                                    &__centre_region,
-                                                                    bIsNewFrame);
+                    arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionHelper,
+                                                            &this.Electronic[0].tDirtyRegionItem,
+                                                            (arm_2d_tile_t *)ptTile,
+                                                            &__top_canvas,
+                                                            &__centre_region);
 
                     arm_2d_align_bottom_left(__centre_region, c_tileWhiteDotMask.tRegion.tSize) {
 
@@ -379,11 +377,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_atom_handler)
                     __centre_region.tLocation.iY += this.Electronic[1].tOffset.iY;
 
                     /* update dirty region */
-                    arm_2d_helper_dirty_region_update_dirty_regions(&this.Electronic[1].tDirtyRegionHelper,
-                                                                    (arm_2d_tile_t *)ptTile,
-                                                                    &__top_canvas,
-                                                                    &__centre_region,
-                                                                    bIsNewFrame);
+                    arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionHelper,
+                                                            &this.Electronic[1].tDirtyRegionItem,
+                                                            (arm_2d_tile_t *)ptTile,
+                                                            &__top_canvas,
+                                                            &__centre_region);
 
                     arm_2d_align_bottom_left(__centre_region, c_tileWhiteDotMask.tRegion.tSize) {
 
@@ -467,13 +465,20 @@ user_scene_atom_t *__arm_2d_scene_atom_init(   arm_2d_scene_player_t *ptDispAdap
     };
 
     /* ------------   initialize members of user_scene_atom_t begin ---------------*/
-    arm_2d_helper_dirty_region_init(&this.Core.tDirtyRegionHelper,
+    arm_2d_helper_dirty_region_init(&this.tDirtyRegionHelper,
                                     &this.use_as__arm_2d_scene_t.ptDirtyRegion);
     
-    arm_2d_helper_dirty_region_init(&this.Electronic[0].tDirtyRegionHelper,
-                                    &this.use_as__arm_2d_scene_t.ptDirtyRegion);
-    arm_2d_helper_dirty_region_init(&this.Electronic[1].tDirtyRegionHelper,
-                                    &this.use_as__arm_2d_scene_t.ptDirtyRegion);
+    arm_2d_helper_dirty_region_add_items(&this.tDirtyRegionHelper,
+                                         &this.Core.tDirtyRegionItem,
+                                         1);
+
+    arm_2d_helper_dirty_region_add_items(&this.tDirtyRegionHelper,
+                                         &this.Electronic[0].tDirtyRegionItem,
+                                         1);
+
+    arm_2d_helper_dirty_region_add_items(&this.tDirtyRegionHelper,
+                                         &this.Electronic[1].tDirtyRegionItem,
+                                         1);
 
     /* ------------   initialize members of user_scene_atom_t end   ---------------*/
 

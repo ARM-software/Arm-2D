@@ -651,8 +651,8 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
             if (this.tCFG.bUseDirtyRegions) {
                 /* apply transform region patch */
-                this.tTransHelper.tHelper.tRegionPatch.tLocation.iX = -1;
-                this.tTransHelper.tHelper.tRegionPatch.tSize.iWidth = 1;
+                this.tTransHelper.tDirtyRegionItem.tRegionPatch.tLocation.iX = -1;
+                this.tTransHelper.tDirtyRegionItem.tRegionPatch.tSize.iWidth = 1;
 
                 if (bIsNewFrame) {
                     arm_2d_helper_transform_force_to_use_minimal_enclosure(
