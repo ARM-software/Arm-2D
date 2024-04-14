@@ -120,7 +120,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_vertical_line_mask(
     };
     this.Source.ptTile = &this.tDummySource;
     this.Mask.ptSourceSide = ptLineMask;
-    this.Mask.ptTargetSize = NULL;
+    this.Mask.ptTargetSide = NULL;
     this.wMode = ARM_2D_CP_MODE_FILL;
     this.chColour = tColour.tValue;
     
@@ -358,7 +358,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_vertical_line_mask(
     };
     this.Source.ptTile = &this.tDummySource;
     this.Mask.ptSourceSide = ptLineMask;
-    this.Mask.ptTargetSize = NULL;
+    this.Mask.ptTargetSide = NULL;
     this.wMode = ARM_2D_CP_MODE_FILL;
     this.hwColour = tColour.tValue;
     
@@ -596,7 +596,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_vertical_line_mask(
     };
     this.Source.ptTile = &this.tDummySource;
     this.Mask.ptSourceSide = ptLineMask;
-    this.Mask.ptTargetSize = NULL;
+    this.Mask.ptTargetSide = NULL;
     this.wMode = ARM_2D_CP_MODE_FILL;
     this.wColour = tColour.tValue;
     
@@ -835,7 +835,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_vertical_line_mask_and_opacity(
     };
     this.Source.ptTile = &this.tDummySource;
     this.Mask.ptSourceSide = ptLineMask;
-    this.Mask.ptTargetSize = NULL;
+    this.Mask.ptTargetSide = NULL;
     this.wMode = ARM_2D_CP_MODE_FILL;
     this.chColour = tColour.tValue;
     this.chOpacity = chOpacity;
@@ -1078,7 +1078,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_vertical_line_mask_and_opacity(
     };
     this.Source.ptTile = &this.tDummySource;
     this.Mask.ptSourceSide = ptLineMask;
-    this.Mask.ptTargetSize = NULL;
+    this.Mask.ptTargetSide = NULL;
     this.wMode = ARM_2D_CP_MODE_FILL;
     this.hwColour = tColour.tValue;
     this.chOpacity = chOpacity;
@@ -1321,7 +1321,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_vertical_line_mask_and_opacity(
     };
     this.Source.ptTile = &this.tDummySource;
     this.Mask.ptSourceSide = ptLineMask;
-    this.Mask.ptTargetSize = NULL;
+    this.Mask.ptTargetSide = NULL;
     this.wMode = ARM_2D_CP_MODE_FILL;
     this.wColour = tColour.tValue;
     this.chOpacity = chOpacity;
