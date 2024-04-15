@@ -803,13 +803,14 @@ ARM_PRIVATE(
     arm_2d_region_list_item_t **ppDirtyRegionList;
 
     /* region items */
-    arm_2d_helper_dirty_region_item_t *ptItems;
     arm_2d_helper_dirty_region_item_t *ptCurrent;
 
     uint8_t chUpdateLifeCycle;
     uint8_t                     : 8;
     uint16_t                    : 16;
 )
+
+    arm_2d_helper_dirty_region_item_t tDefaultItem;
 
 } ;
 
@@ -839,8 +840,6 @@ ARM_PRIVATE(
 
     bool bNeedUpdate;
 )
-
-    arm_2d_helper_dirty_region_item_t tDirtyRegionItem;
 
 } arm_2d_helper_transform_t;
 

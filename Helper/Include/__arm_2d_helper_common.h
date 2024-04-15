@@ -929,7 +929,7 @@ extern "C" {
                  ({ARM_2D_OP_WAIT_ASYNC();})                                    \
                 )
 #else
-#define arm_2d_canvas(__tile_ptr, __region_name)                                \
+#define arm_2d_canvas(__tile_ptr, __region_name, ...)                           \
             arm_using(arm_2d_region_t __region_name = {0},                      \
                         {__region_name.tSize = (__tile_ptr)->tRegion.tSize;},   \
                         {arm_2d_op_wait_async(NULL);})
