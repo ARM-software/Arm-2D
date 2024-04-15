@@ -80,6 +80,8 @@ extern "C" {
 #   define COLOUR_INT               uint8_t
 #   define ARM_2D_COLOUR            ARM_2D_COLOUR_GRAY8
 
+#   define arm_2d_pixel_from_brga8888  arm_2d_pixel_brga8888_to_gray8
+
 #   define __arm_2d_iir_blur_acc_t  __arm_2d_iir_blur_acc_gray8_t
 
 #   define arm_2dp_filter_iir_blur  arm_2dp_gray8_filter_iir_blur
@@ -265,6 +267,8 @@ extern "C" {
 #   define COLOUR_INT               uint16_t
 #   define ARM_2D_COLOUR            ARM_2D_COLOUR_RGB565
 
+#   define arm_2d_pixel_from_brga8888  arm_2d_pixel_brga8888_to_rgb565
+
 #   define __arm_2d_iir_blur_acc_t  __arm_2d_iir_blur_acc_rgb565_t
 
 #   define arm_2dp_filter_iir_blur  arm_2dp_rgb565_filter_iir_blur
@@ -449,6 +453,8 @@ extern "C" {
 #   define __arm_2d_color_t         arm_2d_color_cccn888_t
 #   define COLOUR_INT               uint32_t
 #   define ARM_2D_COLOUR            ARM_2D_COLOUR_CCCA8888
+
+#   define arm_2d_pixel_from_brga8888  
 
 #   define __arm_2d_iir_blur_acc_t  __arm_2d_iir_blur_acc_cccn888_t
 

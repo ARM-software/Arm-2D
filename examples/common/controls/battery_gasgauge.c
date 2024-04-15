@@ -47,23 +47,6 @@
 
 /*============================ MACROS ========================================*/
 
-#if __GLCD_CFG_COLOUR_DEPTH__ == 8
-
-#define arm_2d_pixel_from_brga8888  arm_2d_pixel_brga8888_to_gray8
-
-#elif __GLCD_CFG_COLOUR_DEPTH__ == 16
-
-#define arm_2d_pixel_from_brga8888  arm_2d_pixel_brga8888_to_rgb565
-
-#elif __GLCD_CFG_COLOUR_DEPTH__ == 32
-
-#define arm_2d_pixel_from_brga8888
-
-#else
-#   error Unsupported colour depth!
-#endif
-
-
 #define __NIXIE_BOARDER_OPA_MAX         (255 - 64)
 
 #define __LIQUID_BOARDER_OPA_MAX        (128)
