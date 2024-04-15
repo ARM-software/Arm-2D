@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        4. April 2024
- * $Revision:    V.1.9.6
+ * $Date:        14. April 2024
+ * $Revision:    V.1.10.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -330,6 +330,68 @@ extern "C" {
             __arm_2d_helper_pfb_report_rendering_complete((__PFB_HELPER_PTR),   \
                                                           (NULL,##__VA_ARGS__))
 
+
+#define __arm_2d_helper_dirty_region_update_dirty_regions0                      \
+            __arm_2d_helper_dirty_region_update_dirty_regions
+
+/*!
+ * \brief update a specified new region while erase the previous region
+ * 
+ * \param[in] ptThis the target helper
+ * \param[in] ptTargetTile the target tile to draw content
+ * \param[in] ptVisibleArea a visible region in the target tile used to clip
+ *            the ptNewRegion, NULL means no clipping.
+ * \param[in] ptNewRegion the new region to update, NULL means nothing 
+ *            to update
+ * \param[in] bIsNewFrame unused, keep for backward compatibility
+ */
+#define __arm_2d_helper_dirty_region_update_dirty_regions3( __helper_ptr,       \
+                                                            __tile_ptr,         \
+                                                            __visible_area_ptr, \
+                                                            __new_region_ptr,   \
+                                                            __is_new_frame)     \
+            __arm_2d_helper_dirty_region_update_dirty_regions2(                 \
+                                                        (__helper_ptr),         \
+                                                        (__tile_ptr),           \
+                                                        (__visible_area_ptr),   \
+                                                        (__new_region_ptr))
+
+/*!
+ * \brief update a specified new region while erase the previous region
+ * 
+ * \param[in] ptThis the target helper
+ * \param[in] ptTargetTile the target tile to draw content
+ * \param[in] ptNewRegion the new region to update, NULL means nothing 
+ *            to update
+ */
+#define __arm_2d_helper_dirty_region_update_dirty_regions1( __helper_ptr,       \
+                                                            __tile_ptr,         \
+                                                            __new_region_ptr)   \
+            __arm_2d_helper_dirty_region_update_dirty_regions2(                 \
+                                                        (__helper_ptr),         \
+                                                        (__tile_ptr),           \
+                                                        NULL,                   \
+                                                        (__new_region_ptr))
+
+
+/*!
+ * \brief update a specified new region while erase the previous region
+ * 
+ * \param[in] __helper_ptr the target helper
+ * \param[in] __tile_ptr the target tile to draw content
+ * \param[in] ... optional parameters, and the following combinations are valid:
+ *           a. new region ptr
+ *           b. the canvas ptr and the new region ptr
+ *           c. the canvas ptr, the new region ptr and a reserved option 
+ *              (bIsNewFrame)
+ */
+#define arm_2d_helper_dirty_region_update_dirty_regions(    __helper_ptr,       \
+                                                            __tile_ptr,         \
+                                                            ...)                \
+            ARM_CONNECT2(__arm_2d_helper_dirty_region_update_dirty_regions,     \
+                        __ARM_VA_NUM_ARGS(__VA_ARGS__))((__helper_ptr),         \
+                                                        (__tile_ptr)            \
+                                                        ,##__VA_ARGS__)
 
 #define impl_arm_2d_region_list(__NAME, ...)                                    \
             IMPL_ARM_2D_REGION_LIST(__NAME,##__VA_ARGS__)
@@ -701,29 +763,56 @@ ARM_PRIVATE(
 
 };
 
-typedef struct arm_2d_helper_dirty_region_t {
-    
-    arm_2d_region_t tRegionPatch;
+typedef struct arm_2d_helper_dirty_region_item_t arm_2d_helper_dirty_region_item_t;
+typedef struct arm_2d_helper_dirty_region_t  arm_2d_helper_dirty_region_t;
+
+struct arm_2d_helper_dirty_region_item_t{
 
 ARM_PRIVATE(
+    arm_2d_helper_dirty_region_item_t *ptNext;
+    arm_2d_helper_dirty_region_t *ptHelper;
+
     union {
         arm_2d_region_t tRegions[2];
         struct {
             arm_2d_region_t tNewRegion;
-            arm_2d_region_t tOldRegion;
+            union {
+                arm_2d_region_t tOldRegion;
+                arm_2d_region_t tEnclosureArea;
+            };
         };
     };
+    
+    uint8_t bForceToUseMinimalEnclosure : 1;
+    uint8_t bSuspendUpdate              : 1;
+    uint8_t bIgnore                     : 1;
+    uint8_t bOnlyUpdateMinimalEnclosure : 1;
+    uint8_t                             : 4;
+    uint8_t chUpdateLifeCycle;                  /* a life cycle counter used to avoid repeated update operations in the same frame.*/
 
+    uint16_t u16Key;
+)
+    arm_2d_region_t tRegionPatch;
+
+};
+
+struct arm_2d_helper_dirty_region_t  {
+
+ARM_PRIVATE(
     arm_2d_region_list_item_t tDirtyRegion;
     arm_2d_region_list_item_t **ppDirtyRegionList;
 
-    uint8_t bForceToUseMinimalEnclosure : 1;
-    uint8_t bSuspendUpdate              : 1;
-    uint8_t                             : 6;
+    /* region items */
+    arm_2d_helper_dirty_region_item_t *ptCurrent;
 
+    uint8_t chUpdateLifeCycle;
+    uint8_t                     : 8;
+    uint16_t                    : 16;
 )
 
-} arm_2d_helper_dirty_region_t;
+    arm_2d_helper_dirty_region_item_t tDefaultItem;
+
+} ;
 
 /*!
  * \brief the Transform helper control block
@@ -809,6 +898,22 @@ arm_2d_location_t arm_2d_helper_pfb_get_absolute_location(
 extern
 ARM_NONNULL(1)
 arm_2d_size_t arm_2d_helper_pfb_get_pfb_size(arm_2d_helper_pfb_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+/*!
+ * \brief check whether specified region is being drawing
+ * 
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region to test
+ * \param[out] ppVirtualScreen the address of the pointer that used to point 
+ *                  the virtual screen tile
+ * \return true the specified region is currently being drawing
+ * \return false the PFB is out of the range. 
+ */
+bool arm_2d_helper_pfb_is_region_being_drawing(const arm_2d_tile_t *ptTarget,
+                                               const arm_2d_region_t *ptRegion,
+                                               const arm_2d_tile_t **ppVirtualScreen);
 
 /*!
  * \brief the task function for pfb helper
@@ -1170,6 +1275,94 @@ ARM_NONNULL(1)
 void arm_2d_helper_pfb_disable_dirty_region_optimization(
                                                 arm_2d_helper_pfb_t *ptThis);
 
+/*----------------------------------------------------------------------------*
+ * The Dynamic Dirty Region Service                                           *
+ *----------------------------------------------------------------------------*/
+/*!
+ * \brief the on-frame-start event handler for a given user dynamic dirty region
+ * 
+ * \param[in] ptThis the target region list item.
+ * \param[in] chUserRegionIndex a specified user region index. When 0xFF is given,
+ *            the existing user region index will not be changed.
+ *            
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_dynamic_dirty_region_on_frame_start(
+                                            arm_2d_region_list_item_t *ptThis,
+                                            uint8_t chUserRegionIndex);
+
+/*!
+ * \brief initialize a dynamic dirty region
+ * 
+ * \param[in] ptThis the target region list item. If it is NULL, this function will
+ *               allocate an object from the heap
+ * \return arm_2d_region_list_item_t* the target region list item
+ */
+extern
+arm_2d_region_list_item_t *arm_2d_dynamic_dirty_region_init(
+                                            arm_2d_region_list_item_t *ptThis);
+
+/*!
+ * \brief depose a given dynamic dirty region
+ * 
+ * \param[in] ptThis the target region list item.
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_dynamic_dirty_region_depose(arm_2d_region_list_item_t *ptThis);
+
+/*!
+ * \brief wait for the PFB helper service requesting the next region
+ * 
+ * \param[in] ptThis the target region list item.
+ * \return uint_fast8_t the user region index
+ * 
+ * \note You can use the return value, i.e. the user region index to address
+ *       the new region you want to cover. 
+ */
+extern
+ARM_NONNULL(1)
+uint_fast8_t arm_2d_dynamic_dirty_region_wait_next(
+                                            arm_2d_region_list_item_t *ptThis);
+
+/*!
+ * \brief update a given user dynamic dirty region with a new region
+ * 
+ * \param[in] ptThis the target region list item.
+ * \param[in] ptTarget the target tile (the frame-buffer to draw)
+ * \param[in] ptRegion the new region
+ * \note - when the ptTarget isn't NULL, the ptRegion should points a region inside
+ *       the canvas of the ptTarget (i.e. an relative region of the ptTarget)
+ *       - when the ptTarget is NULL, this function will get the default framebuffer
+ *       by calling the function arm_2d_get_default_frame_buffer().
+ *       
+ * \param[in] chNextUserIndex the next user region index, 0xFF means complete.
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_dynamic_dirty_region_update(arm_2d_region_list_item_t *ptThis,
+                                             arm_2d_tile_t *ptTarget,
+                                             arm_2d_region_t *ptRegion,
+                                             uint8_t chNextUserIndex);
+
+/*!
+ * \brief only change the user region index without update the dynamic dirty region
+ * 
+ * \param[in] ptThis the target region list item.
+ * \param[in] chNextUserIndex the next user region index. When encounter 0xFF, the 
+ *                            user region index will be reset to zero.
+ */
+extern 
+ARM_NONNULL(1)
+void arm_2d_dynamic_dirty_region_change_user_region_index_only(
+                                            arm_2d_region_list_item_t *ptThis,
+                                            uint8_t chNextUserIndex);
+
+/*----------------------------------------------------------------------------*
+ * The Dirty Region Helper Service                                            *
+ *----------------------------------------------------------------------------*/
+
 /*!
  * \brief initialize a given dirtt region helper
  * \param[in] ptThis the target helper
@@ -1180,14 +1373,41 @@ ARM_NONNULL(1,2)
 void arm_2d_helper_dirty_region_init(
                                 arm_2d_helper_dirty_region_t *ptThis,
                                 arm_2d_region_list_item_t **ppDirtyRegionList);
+extern
+ARM_NONNULL(1,2)
+/*!
+ * \brief add an array of region items to a dirty region helper 
+ * 
+ * \param[in] ptThis the target helper
+ * \param[in] ptItems the array of the region items
+ * \param[in] hwCount the number of items in the array
+ */
+void arm_2d_helper_dirty_region_add_items(
+                                arm_2d_helper_dirty_region_t *ptThis,
+                                arm_2d_helper_dirty_region_item_t *ptItems,
+                                uint_fast16_t hwCount);
+extern
+ARM_NONNULL(1,2)
+/*!
+ * \brief remove an array of region items to a dirty region helper 
+ * 
+ * \param[in] ptThis the target helper
+ * \param[in] ptItems the array of the region items
+ * \param[in] hwCount the number of items in the array
+ */
+void arm_2d_helper_dirty_region_remove_items(
+                                arm_2d_helper_dirty_region_t *ptThis,
+                                arm_2d_helper_dirty_region_item_t *ptItems,
+                                uint_fast16_t hwCount);
 
 /*!
  * \brief depose a given dirty region helper
  * \param[in] ptThis the target helper
+ * \return arm_2d_helper_dirty_region_item_t * the region list items
  */
 extern
 ARM_NONNULL(1)
-void arm_2d_helper_dirty_region_depose(arm_2d_helper_dirty_region_t *ptThis);
+arm_2d_helper_dirty_region_item_t * arm_2d_helper_dirty_region_depose(arm_2d_helper_dirty_region_t *ptThis);
 
 /*!
  * \brief the on-frame-begin event handler for a given dirty region helper
@@ -1203,22 +1423,52 @@ void arm_2d_helper_dirty_region_on_frame_begin(
 /*!
  * \brief update a specified new region while erase the previous region
  * 
+ * \param[in] ptHelper the target dirty region helper
+ * \param[in] ptThis the target region item
+ * \param[in] ptTargetTile the target tile to draw content
+ * \param[in] ptVisibleArea a visible region in the target tile used to clip
+ *            the ptNewRegion, NULL means no clipping.
+ * \param[in] ptNewRegion the new region to update, NULL means nothing 
+ *            to update
+ */
+extern
+ARM_NONNULL(1,2,3)
+void arm_2d_helper_dirty_region_update_item(
+                                        arm_2d_helper_dirty_region_t *ptHelper,
+                                        arm_2d_helper_dirty_region_item_t *ptThis,
+                                        const arm_2d_tile_t *ptTargetTile,
+                                        const arm_2d_region_t *ptVisibleArea,
+                                        const arm_2d_region_t *ptNewRegion);
+
+/*!
+ * \brief update a specified new region while erase the previous region
+ * 
+ * \param[in] ptThis the target helper
+ * \param[in] ptTargetTile the target tile to draw content
+ */
+ARM_NONNULL(1,2)
+extern
+void __arm_2d_helper_dirty_region_update_dirty_regions(
+                                        arm_2d_helper_dirty_region_t *ptThis,
+                                        const arm_2d_tile_t *ptTargetTile);
+
+/*!
+ * \brief update a specified new region while erase the previous region
+ * 
  * \param[in] ptThis the target helper
  * \param[in] ptTargetTile the target tile to draw content
  * \param[in] ptVisibleArea a visible region in the target tile used to clip
  *            the ptNewRegion, NULL means no clipping.
  * \param[in] ptNewRegion the new region to update, NULL means nothing 
  *            to update
- * \param[in] bIsNewFrame whether this is the first iteration of a frame
  */
-ARM_NONNULL(1,2)
 extern
-void arm_2d_helper_dirty_region_update_dirty_regions(
+ARM_NONNULL(1,2)
+void __arm_2d_helper_dirty_region_update_dirty_regions2(
                                         arm_2d_helper_dirty_region_t *ptThis,
-                                        arm_2d_tile_t *ptTargetTile,
+                                        const arm_2d_tile_t *ptTargetTile,
                                         const arm_2d_region_t *ptVisibleArea,
-                                        const arm_2d_region_t *ptNewRegion,
-                                        bool bIsNewFrame);
+                                        const arm_2d_region_t *ptNewRegion);
 
 /*!
  * \brief force the dirty region helper to use the minimal enclosure region to
@@ -1246,6 +1496,10 @@ ARM_NONNULL(1)
 bool arm_2d_helper_dirty_region_suspend_update(
                                         arm_2d_helper_dirty_region_t *ptThis,
                                         bool bEnable);
+
+/*----------------------------------------------------------------------------*
+ * The Transform Helper Service                                               *
+ *----------------------------------------------------------------------------*/
 /*!
  * \brief initialize a given transform helper
  * \param[in] ptThis the target helper
@@ -1345,102 +1599,6 @@ void arm_2d_helper_transform_update_dirty_regions(
                                     const arm_2d_region_t *ptCanvas,
                                     bool bIsNewFrame);
 
-
-/*!
- * \brief the on-frame-start event handler for a given user dynamic dirty region
- * 
- * \param[in] ptThis the target region list item.
- * \param[in] chUserRegionIndex a specified user region index. When 0xFF is given,
- *            the existing user region index will not be changed.
- *            
- */
-extern
-ARM_NONNULL(1)
-void arm_2d_dynamic_dirty_region_on_frame_start(
-                                            arm_2d_region_list_item_t *ptThis,
-                                            uint8_t chUserRegionIndex);
-
-/*!
- * \brief initialize a dynamic dirty region
- * 
- * \param[in] ptThis the target region list item. If it is NULL, this function will
- *               allocate an object from the heap
- * \return arm_2d_region_list_item_t* the target region list item
- */
-extern
-arm_2d_region_list_item_t *arm_2d_dynamic_dirty_region_init(
-                                            arm_2d_region_list_item_t *ptThis);
-
-/*!
- * \brief depose a given dynamic dirty region
- * 
- * \param[in] ptThis the target region list item.
- */
-extern
-ARM_NONNULL(1)
-void arm_2d_dynamic_dirty_region_depose(arm_2d_region_list_item_t *ptThis);
-
-/*!
- * \brief wait for the PFB helper service requesting the next region
- * 
- * \param[in] ptThis the target region list item.
- * \return uint_fast8_t the user region index
- * 
- * \note You can use the return value, i.e. the user region index to address
- *       the new region you want to cover. 
- */
-extern
-ARM_NONNULL(1)
-uint_fast8_t arm_2d_dynamic_dirty_region_wait_next(
-                                            arm_2d_region_list_item_t *ptThis);
-
-/*!
- * \brief update a given user dynamic dirty region with a new region
- * 
- * \param[in] ptThis the target region list item.
- * \param[in] ptTarget the target tile (the frame-buffer to draw)
- * \param[in] ptRegion the new region
- * \note - when the ptTarget isn't NULL, the ptRegion should points a region inside
- *       the canvas of the ptTarget (i.e. an relative region of the ptTarget)
- *       - when the ptTarget is NULL, this function will get the default framebuffer
- *       by calling the function arm_2d_get_default_frame_buffer().
- *       
- * \param[in] chNextUserIndex the next user region index, 0xFF means complete.
- */
-extern
-ARM_NONNULL(1)
-void arm_2d_dynamic_dirty_region_update(arm_2d_region_list_item_t *ptThis,
-                                             arm_2d_tile_t *ptTarget,
-                                             arm_2d_region_t *ptRegion,
-                                             uint8_t chNextUserIndex);
-
-/*!
- * \brief only change the user region index without update the dynamic dirty region
- * 
- * \param[in] ptThis the target region list item.
- * \param[in] chNextUserIndex the next user region index. When encounter 0xFF, the 
- *                            user region index will be reset to zero.
- */
-extern 
-ARM_NONNULL(1)
-void arm_2d_dynamic_dirty_region_change_user_region_index_only(
-                                            arm_2d_region_list_item_t *ptThis,
-                                            uint8_t chNextUserIndex);
-extern
-ARM_NONNULL(1)
-/*!
- * \brief check whether specified region is being drawing
- * 
- * \param[in] ptTarget the target tile
- * \param[in] ptRegion the target region to test
- * \param[out] ppVirtualScreen the address of the pointer that used to point 
- *                  the virtual screen tile
- * \return true the specified region is currently being drawing
- * \return false the PFB is out of the range. 
- */
-bool arm_2d_helper_pfb_is_region_being_drawing(const arm_2d_tile_t *ptTarget,
-                                               const arm_2d_region_t *ptRegion,
-                                               const arm_2d_tile_t **ppVirtualScreen);
 
 /*! @} */
 

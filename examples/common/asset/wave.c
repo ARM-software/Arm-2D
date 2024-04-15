@@ -102,6 +102,34 @@ static const uint8_t c_bmpWaveAlpha[40*20] = {
 0x5d, 0x50, 0x43, 0x37, 0x2a, 0x1d, 0x11, 0x05, 
 };
 
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpWaveLineAlpha")
+static const uint8_t c_bmpWaveLineAlpha[40*20] = {
+    /* -0- */
+    0x05, 0x11, 0x1e, 0x2b, 0x38, 0x45, 0x51, 0x5e, 0x6b, 0x78, 0x87, 0x98, 0xa9, 0xba, 0xcb, 0xdd,
+    0xe9, 0xef, 0xf5, 0xfc, 0xfc, 0xf5, 0xef, 0xe8, 0xdd, 0xcb, 0xbb, 0xaa, 0x99, 0x88, 0x79, 0x6c,
+    0x5f, 0x52, 0x45, 0x38, 0x2b, 0x1e, 0x11, 0x05
+};
+
+extern const arm_2d_tile_t c_tileWaveLineMask;
+
+ARM_SECTION("arm2d.tile.c_tileWaveLineMask")
+const arm_2d_tile_t c_tileWaveLineMask = {
+    .tRegion = {
+        .tSize = {
+            .iWidth = 40,
+            .iHeight = 1,
+        },
+    },
+    .tInfo = {
+        .bIsRoot = true,
+        .bHasEnforcedColour = true,
+        .tColourInfo = {
+            .chScheme = ARM_2D_COLOUR_8BIT,
+        },
+    },
+    .pchBuffer = (uint8_t *)c_bmpWaveLineAlpha,
+};
+
 
 extern const arm_2d_tile_t c_tileWaveMask;
 
