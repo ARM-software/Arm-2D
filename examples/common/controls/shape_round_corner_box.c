@@ -51,49 +51,8 @@ extern
 const arm_2d_tile_t c_tileWhiteDotAlphaQuarter;
 
 
-
-extern const arm_2d_tile_t c_tileCircleMask;
-
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
-
-
-const arm_2d_tile_t c_tileCircleQuaterMask = 
-    impl_child_tile(c_tileCircleMask, 0, 0, 7, 7);
-
-const arm_2d_tile_t c_tileCircleHorizontalLineLeftMask = 
-    impl_child_tile(
-        c_tileCircleMask, 
-        0, 
-        6, 
-        7, 
-        1);
-
-const arm_2d_tile_t c_tileCircleHorizontalLineRightMask = 
-    impl_child_tile(
-        c_tileCircleMask, 
-        7, 
-        6, 
-        7, 
-        1);
-
-const arm_2d_tile_t c_tileCircleVerticalLineTopMask = 
-    impl_child_tile(
-        c_tileCircleMask, 
-        6, 
-        0, 
-        1, 
-        7);
-
-const arm_2d_tile_t c_tileCircleVerticalLineBottomMask = 
-    impl_child_tile(
-        c_tileCircleMask, 
-        6, 
-        7, 
-        1, 
-        7);
-
-
 /*============================ IMPLEMENTATION ================================*/
 
 ARM_NONNULL(1)
@@ -488,7 +447,7 @@ void __draw_round_corner_border(const arm_2d_tile_t *ptTarget,
                                 COLOUR_INT tColour,
                                 arm_2d_border_opacity_t Opacity,
                                 arm_2d_corner_opacity_t CornerOpacity,
-                                bool bIsNewFrame)
+                                const arm_2d_tile_t *ptCircleMask)
 {
 
     arm_2d_container(ptTarget, __round_corner_box, ptRegion) {
@@ -497,13 +456,57 @@ void __draw_round_corner_border(const arm_2d_tile_t *ptTarget,
             break;
         }
 
+        int16_t iCicleWidthHalf = ptCircleMask->tRegion.tSize.iWidth / 2;
+        int16_t iCicleHeightHalf = ptCircleMask->tRegion.tSize.iWidth / 2;
+
+        const arm_2d_tile_t tileCircleQuaterMask = 
+            impl_child_tile(
+                *ptCircleMask, 
+                0, 
+                0, 
+                iCicleWidthHalf, 
+                iCicleHeightHalf);
+
+        const arm_2d_tile_t tileCircleHorizontalLineLeftMask = 
+            impl_child_tile(
+                *ptCircleMask, 
+                0, 
+                iCicleHeightHalf, 
+                iCicleWidthHalf, 
+                1);
+
+        const arm_2d_tile_t tileCircleHorizontalLineRightMask = 
+            impl_child_tile(
+                *ptCircleMask, 
+                iCicleWidthHalf, 
+                iCicleHeightHalf, 
+                iCicleWidthHalf, 
+                1);
+
+        const arm_2d_tile_t tileCircleVerticalLineTopMask = 
+            impl_child_tile(
+                *ptCircleMask, 
+                iCicleWidthHalf, 
+                0, 
+                1, 
+                iCicleHeightHalf);
+
+        const arm_2d_tile_t tileCircleVerticalLineBottomMask = 
+            impl_child_tile(
+                *ptCircleMask, 
+                iCicleWidthHalf, 
+                iCicleHeightHalf, 
+                1, 
+                iCicleHeightHalf);
+
+
         /* top left corner */
         arm_2d_align_top_left(  __round_corner_box_canvas,
-                                c_tileCircleQuaterMask.tRegion.tSize) {
+                                tileCircleQuaterMask.tRegion.tSize) {
             arm_2d_fill_colour_with_mask_and_opacity(   
                                                     &__round_corner_box, 
                                                     &__top_left_region, 
-                                                    &c_tileCircleQuaterMask, 
+                                                    &tileCircleQuaterMask, 
                                                     (__arm_2d_color_t){tColour},
                                                     CornerOpacity.chTopLeft);
             ARM_2D_OP_WAIT_ASYNC();
@@ -511,11 +514,11 @@ void __draw_round_corner_border(const arm_2d_tile_t *ptTarget,
 
         /* top right corner */
         arm_2d_align_top_right( __round_corner_box_canvas,
-                                c_tileCircleQuaterMask.tRegion.tSize) {
+                                tileCircleQuaterMask.tRegion.tSize) {
             arm_2d_fill_colour_with_mask_x_mirror_and_opacity(   
                                                     &__round_corner_box, 
                                                     &__top_right_region, 
-                                                    &c_tileCircleQuaterMask, 
+                                                    &tileCircleQuaterMask, 
                                                     (__arm_2d_color_t){tColour},
                                                     CornerOpacity.chTopRight);
             ARM_2D_OP_WAIT_ASYNC();
@@ -523,11 +526,11 @@ void __draw_round_corner_border(const arm_2d_tile_t *ptTarget,
 
         /* bottom left corner */
         arm_2d_align_bottom_left(   __round_corner_box_canvas,
-                                    c_tileCircleQuaterMask.tRegion.tSize) {
+                                    tileCircleQuaterMask.tRegion.tSize) {
             arm_2d_fill_colour_with_mask_y_mirror_and_opacity(   
                                                     &__round_corner_box, 
                                                     &__bottom_left_region, 
-                                                    &c_tileCircleQuaterMask, 
+                                                    &tileCircleQuaterMask, 
                                                     (__arm_2d_color_t){tColour},
                                                     CornerOpacity.chBottomLeft);
             ARM_2D_OP_WAIT_ASYNC();
@@ -535,11 +538,11 @@ void __draw_round_corner_border(const arm_2d_tile_t *ptTarget,
 
         /* bottom right corner */
         arm_2d_align_bottom_right(  __round_corner_box_canvas,
-                                    c_tileCircleQuaterMask.tRegion.tSize) {
+                                    tileCircleQuaterMask.tRegion.tSize) {
             arm_2d_fill_colour_with_mask_xy_mirror_and_opacity(   
                                                     &__round_corner_box, 
                                                     &__bottom_right_region, 
-                                                    &c_tileCircleQuaterMask, 
+                                                    &tileCircleQuaterMask, 
                                                     (__arm_2d_color_t){tColour},
                                                     CornerOpacity.chBottomRight);
             ARM_2D_OP_WAIT_ASYNC();
@@ -547,48 +550,47 @@ void __draw_round_corner_border(const arm_2d_tile_t *ptTarget,
 
         arm_2d_dock_vertical(__round_corner_box_canvas,
                                 __round_corner_box_canvas.tSize.iHeight
-                             -  c_tileCircleQuaterMask.tRegion.tSize.iHeight * 2) {
+                             -  tileCircleQuaterMask.tRegion.tSize.iHeight * 2) {
 
             /* left border */
             arm_2d_dock_left(   __vertical_region, 
-                                c_tileCircleHorizontalLineLeftMask.tRegion.tSize.iWidth) {
+                                tileCircleHorizontalLineLeftMask.tRegion.tSize.iWidth) {
 
                 arm_2d_fill_colour_with_horizontal_line_mask_and_opacity(
                                                     &__round_corner_box, 
                                                     &__left_region, 
-                                                    &c_tileCircleHorizontalLineLeftMask, 
+                                                    &tileCircleHorizontalLineLeftMask, 
                                                     (__arm_2d_color_t){tColour},
                                                     Opacity.chLeft);
                 ARM_2D_OP_WAIT_ASYNC();
             }
 
             /* right border */
-            arm_2d_dock_right(   __vertical_region, 
-                                c_tileCircleHorizontalLineRightMask.tRegion.tSize.iWidth) {
+            arm_2d_dock_right(  __vertical_region, 
+                                tileCircleHorizontalLineRightMask.tRegion.tSize.iWidth) {
                 
                 arm_2d_fill_colour_with_horizontal_line_mask_and_opacity(
                                                     &__round_corner_box, 
                                                     &__right_region, 
-                                                    &c_tileCircleHorizontalLineRightMask, 
+                                                    &tileCircleHorizontalLineRightMask, 
                                                     (__arm_2d_color_t){tColour},
                                                     Opacity.chRight);
                 ARM_2D_OP_WAIT_ASYNC();
             }
-
         }
 
         arm_2d_dock_horizontal(__round_corner_box_canvas,
                                 __round_corner_box_canvas.tSize.iWidth
-                             -  c_tileCircleQuaterMask.tRegion.tSize.iWidth * 2) {
+                             -  tileCircleQuaterMask.tRegion.tSize.iWidth * 2) {
 
             /* top border */
             arm_2d_dock_top(    __horizontal_region, 
-                                c_tileCircleVerticalLineTopMask.tRegion.tSize.iHeight) {
+                                tileCircleVerticalLineTopMask.tRegion.tSize.iHeight) {
                 
                 arm_2d_fill_colour_with_vertical_line_mask_and_opacity(
                                                     &__round_corner_box, 
                                                     &__top_region, 
-                                                    &c_tileCircleVerticalLineTopMask, 
+                                                    &tileCircleVerticalLineTopMask, 
                                                     (__arm_2d_color_t){tColour},
                                                     Opacity.chTop);
                 ARM_2D_OP_WAIT_ASYNC();
@@ -596,12 +598,12 @@ void __draw_round_corner_border(const arm_2d_tile_t *ptTarget,
 
             /* bottom border */
             arm_2d_dock_bottom( __horizontal_region, 
-                                c_tileCircleVerticalLineBottomMask.tRegion.tSize.iHeight) {
+                                tileCircleVerticalLineBottomMask.tRegion.tSize.iHeight) {
                 
                 arm_2d_fill_colour_with_vertical_line_mask_and_opacity(
                                                     &__round_corner_box, 
                                                     &__bottom_region, 
-                                                    &c_tileCircleVerticalLineBottomMask, 
+                                                    &tileCircleVerticalLineBottomMask, 
                                                     (__arm_2d_color_t){tColour},
                                                     Opacity.chBottom);
                 ARM_2D_OP_WAIT_ASYNC();

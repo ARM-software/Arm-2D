@@ -113,7 +113,19 @@ extern "C" {
                                         (__target_region_ptr),                  \
                                         (__colour),                             \
                                         __VA_ARGS__,                            \
-                                        bIsNewFrame)
+                                        &c_tileCircleMask)
+
+#define draw_round_corner_border_with_circle_mask(__target_tile_ptr,            \
+                                 __target_region_ptr,                           \
+                                 __colour,                                      \
+                                 __circle_mask_ptr,                             \
+                                 ...)                                           \
+            __draw_round_corner_border(                                         \
+                                    (__target_tile_ptr),                        \
+                                    (__target_region_ptr),                      \
+                                    (__colour),                                 \
+                                    __VA_ARGS__,                                \
+                                    (const arm_2d_tile_t *)(__circle_mask_ptr))
 
 /*============================ TYPES =========================================*/
 
@@ -135,6 +147,9 @@ typedef struct {
 
 extern
 const arm_2d_tile_t c_tileWhiteDotMask;
+
+extern 
+const arm_2d_tile_t c_tileCircleMask;
 /*============================ PROTOTYPES ====================================*/
 
 extern
@@ -162,7 +177,7 @@ void __draw_round_corner_border(const arm_2d_tile_t *ptTarget,
                                 COLOUR_INT tColour,
                                 arm_2d_border_opacity_t Opacity,
                                 arm_2d_corner_opacity_t CornerOpacity,
-                                bool bIsNewFrame);
+                                const arm_2d_tile_t *ptCircleMask);
 #ifdef   __cplusplus
 }
 #endif
