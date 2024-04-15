@@ -154,12 +154,12 @@ const arm_2d_tile_t c_tileCircleMask;
 
 extern
 ARM_NONNULL(1)
-void __draw_round_corner_box( const arm_2d_tile_t *ptTarget, 
-                            const arm_2d_region_t *ptRegion,
-                            COLOUR_INT tColour,
-                            uint8_t chOpacity,
-                            bool bIsNewFrame,
-                            const arm_2d_tile_t *ptCircleMask);
+void __draw_round_corner_box(   const arm_2d_tile_t *ptTarget, 
+                                const arm_2d_region_t *ptRegion,
+                                COLOUR_INT tColour,
+                                uint8_t chOpacity,
+                                bool bIsNewFrame,
+                                const arm_2d_tile_t *ptCircleMask);
 
 extern
 ARM_NONNULL(1)
