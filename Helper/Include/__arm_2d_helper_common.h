@@ -696,7 +696,7 @@ extern "C" {
  * 
  */
 #define __impl_fb(__name, __width, __height, __type, ...)                       \
-            ARM_NOINIT static __type                                            \
+            ARM_NOINIT __type                                                   \
                 __name##Buffer[(__width) * (__height)];                         \
             const arm_2d_tile_t __name = {                                      \
                 .tRegion = {                                                    \
