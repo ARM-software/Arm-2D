@@ -608,12 +608,9 @@ void __draw_round_corner_border(const arm_2d_tile_t *ptTarget,
                                                     Opacity.chBottom);
                 ARM_2D_OP_WAIT_ASYNC();
             }
-
         }
     }
-
 }
-
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
