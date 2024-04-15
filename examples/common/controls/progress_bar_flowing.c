@@ -47,6 +47,7 @@
 #   define PROGRESS_BAR_WAVE_SPEED     15
 #endif
 
+#define MASK_HEIGHT   20
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
@@ -99,11 +100,11 @@ void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget,
     arm_2d_region_t tBarRegion = {
         .tLocation = {
            .iX = ptRegion->tLocation.iX + (ptRegion->tSize.iWidth - (int16_t)iWidth) / 2,
-           .iY = ptRegion->tLocation.iY + (ptRegion->tSize.iHeight - 20) / (int16_t)2,
+           .iY = ptRegion->tLocation.iY + (ptRegion->tSize.iHeight - MASK_HEIGHT) / (int16_t)2,
         },
         .tSize = {
             .iWidth = (int16_t)iWidth,
-            .iHeight = 20,
+            .iHeight = MASK_HEIGHT,
         },
     };
 
@@ -170,7 +171,7 @@ void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget,
         arm_2d_region_t tInnerRegion = {
             .tSize = { 
                 .iWidth = c_tileWaveLineMask.tRegion.tSize.iWidth,
-                .iHeight = 20,
+                .iHeight = MASK_HEIGHT,
             },
             .tLocation = {
                 .iX = - c_tileWaveLineMask.tRegion.tSize.iWidth + s_iOffset,
