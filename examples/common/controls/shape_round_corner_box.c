@@ -116,6 +116,10 @@ void __draw_round_corner_box( const arm_2d_tile_t *ptTarget,
     
     arm_2d_container(ptTarget, __box, ptRegion) {
 
+        if (!arm_2d_helper_pfb_is_region_being_drawing(&__box, NULL, NULL)) {
+            break;
+        }
+
         do {
             arm_2d_tile_t c_tileWhiteDotAlphaQ2 = 
                 impl_child_tile(*ptCircleMask, 0, 0, iCircleWidth, iCircleHeight);
@@ -247,12 +251,17 @@ void __draw_round_corner_image( const arm_2d_tile_t *ptSource,
     int16_t iCircleHeight = ((ptCircleMask->tRegion.tSize.iHeight + 1) >> 1);
 
     ARM_2D_UNUSED(bIsNewFrame);
-    impl_heap_fb(tileWhiteDotMask, iCircleWidth, iCircleHeight, uint8_t) {
 
-        tileWhiteDotMask.bHasEnforcedColour = true;
-        tileWhiteDotMask.tInfo.tColourInfo.chScheme = ARM_2D_COLOUR_MASK_A8;
+    arm_2d_container(ptTarget, __box, ptRegion) {
 
-        arm_2d_container(ptTarget, __box, ptRegion) {
+        if (!arm_2d_helper_pfb_is_region_being_drawing(&__box, NULL, NULL)) {
+            break;
+        }
+
+        impl_heap_fb(tileWhiteDotMask, iCircleWidth, iCircleHeight, uint8_t) {
+
+            tileWhiteDotMask.bHasEnforcedColour = true;
+            tileWhiteDotMask.tInfo.tColourInfo.chScheme = ARM_2D_COLOUR_MASK_A8;
 
             int16_t iBoxWidth = MIN(__box_canvas.tSize.iWidth, ptSource->tRegion.tSize.iWidth);
             int16_t iBoxHeight = MIN(__box_canvas.tSize.iHeight, ptSource->tRegion.tSize.iHeight);
@@ -567,7 +576,6 @@ void __draw_round_corner_border(const arm_2d_tile_t *ptTarget,
             }
 
         }
-
 
         arm_2d_dock_horizontal(__round_corner_box_canvas,
                                 __round_corner_box_canvas.tSize.iWidth
