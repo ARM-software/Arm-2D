@@ -54,7 +54,8 @@
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
-extern const arm_2d_tile_t c_tileWaveMask;
+
+extern const arm_2d_tile_t c_tileWaveLineMask;
 
 ARM_NOINIT static int64_t s_lLastTime;
 ARM_NOINIT static int64_t s_lWavingTime;
@@ -98,11 +99,11 @@ void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget,
     arm_2d_region_t tBarRegion = {
         .tLocation = {
            .iX = ptRegion->tLocation.iX + (ptRegion->tSize.iWidth - (int16_t)iWidth) / 2,
-           .iY = ptRegion->tLocation.iY + (ptRegion->tSize.iHeight - c_tileWaveMask.tRegion.tSize.iHeight) / (int16_t)2,
+           .iY = ptRegion->tLocation.iY + (ptRegion->tSize.iHeight - 20) / (int16_t)2,
         },
         .tSize = {
             .iWidth = (int16_t)iWidth,
-            .iHeight = c_tileWaveMask.tRegion.tSize.iHeight,
+            .iHeight = 20,
         },
     };
 
@@ -121,7 +122,7 @@ void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget,
             
             if (s_bWaving) {
                 s_iOffset+=2;
-                if (s_iOffset >= tBarRegion.tSize.iWidth + c_tileWaveMask.tRegion.tSize.iWidth) {
+                if (s_iOffset >= tBarRegion.tSize.iWidth + c_tileWaveLineMask.tRegion.tSize.iWidth) {
                     s_iOffset = 0;
                     s_bWaving = false;
                 }
@@ -167,9 +168,12 @@ void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget,
     do {
         
         arm_2d_region_t tInnerRegion = {
-            .tSize = c_tileWaveMask.tRegion.tSize,
+            .tSize = { 
+                .iWidth = c_tileWaveLineMask.tRegion.tSize.iWidth,
+                .iHeight = 20,
+            },
             .tLocation = {
-                .iX = - c_tileWaveMask.tRegion.tSize.iWidth + s_iOffset,
+                .iX = - c_tileWaveLineMask.tRegion.tSize.iWidth + s_iOffset,
             },
         };
         arm_2d_tile_t tileInnerSlot;
@@ -177,10 +181,10 @@ void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget,
         //! generate a child tile for texture paving
         arm_2d_tile_generate_child(ptTarget, &tBarRegion, &tileInnerSlot, false);
 
-        arm_2d_fill_colour_with_mask(   &tileInnerSlot,
-                                        &tInnerRegion,
-                                        &c_tileWaveMask,
-                                        (__arm_2d_color_t) {tPitchColour});
+        arm_2d_fill_colour_with_horizontal_line_mask(   &tileInnerSlot,
+                                                        &tInnerRegion,
+                                                        &c_tileWaveLineMask,
+                                                        (__arm_2d_color_t) {tPitchColour});
         
         arm_2d_op_wait_async(NULL);
 
