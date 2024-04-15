@@ -109,6 +109,8 @@ if (ARM2D_CONTROLS)
             examples/common/controls/battery_gasgauge.c
             examples/common/controls/dynamic_nebula.c
             examples/common/controls/console_box.c
+            examples/common/controls/histogram.c
+            
             examples/common/asset/WhiteDotSmall.c
             examples/common/asset/WhiteDotMiddle.c
             examples/common/asset/WhiteDotBig.c

@@ -19,7 +19,8 @@
                 "${workspaceFolder}/../../examples/common/scenes/fitness",
                 "${workspaceFolder}/../../examples/common/scenes/meter",
                 "${workspaceFolder}/../../examples/common/scenes/watch",
-                "${workspaceFolder}/../../examples/common/scenes/alarm_clock"
+                "${workspaceFolder}/../../examples/common/scenes/alarm_clock",
+                "${workspaceFolder}/../../examples/common/scenes/histogram"
             ],
             "defines": [
                 "_RTE_",
@@ -51,7 +52,8 @@
                 "${workspaceFolder}/../../examples/common/scenes/fitness",
                 "${workspaceFolder}/../../examples/common/scenes/meter",
                 "${workspaceFolder}/../../examples/common/scenes/watch",
-                "${workspaceFolder}/../../examples/common/scenes/alarm_clock"
+                "${workspaceFolder}/../../examples/common/scenes/alarm_clock",
+                "${workspaceFolder}/../../examples/common/scenes/histogram"
             ],
             "defines": [
                 "_RTE_",

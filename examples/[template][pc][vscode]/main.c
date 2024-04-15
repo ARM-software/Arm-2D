@@ -31,6 +31,7 @@
 #include "arm_2d_scene_watch.h"
 #include "arm_2d_scene_fitness.h"
 #include "arm_2d_scene_alarm_clock.h"
+#include "arm_2d_scene_histogram.h"
 
 #include "arm_2d_demos.h"
 
@@ -97,6 +98,14 @@ void scene_alarm_clock_loader(void)
     arm_2d_scene_alarm_clock_init(&DISP0_ADAPTER);
 }
 
+void scene_histogram_loader(void) 
+{
+    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
+                                            ARM_2D_SCENE_SWITCH_MODE_ERASE_UP);
+    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 500);
+    arm_2d_scene_histogram_init(&DISP0_ADAPTER);
+}
+
 void scene_audiomark_loader(void) 
 {
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
@@ -161,13 +170,14 @@ typedef void scene_loader_t(void);
 
 static scene_loader_t * const c_SceneLoaders[] = {
 
-#if 1
+#if 0
     scene_basics_loader,
     scene_progress_status_loader,
     scene_console_window_loader,
     scene_meter_loader,
     scene_alarm_clock_loader,
     scene_atom_loader,
+    scene_histogram_loader,
     scene_gas_gauge_loader,
     scene_listview_loader,
     scene_menu_loader,
@@ -176,7 +186,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene_fitness_loader,
     scene_audiomark_loader,
 #else
-    scene_gas_gauge_loader,
+    scene_histogram_loader,
 #endif
 
 
