@@ -22,6 +22,7 @@
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
 #include "./__common.h"
+#include "arm_2d_helper.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -49,8 +50,38 @@ extern "C" {
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 
+typedef struct histogram_bin_item_t {
+    int16_t iNewValue;
+
+//ARM_PRIVATE(
+    int16_t iLastValue;
+    COLOUR_INT tColour;
+//)
+
+} histogram_bin_item_t;
 
 typedef struct histogram_cfg_t {
+    struct {
+        arm_2d_size_t tSize;
+
+        histogram_bin_item_t *ptItems;
+        uint16_t hwCount;
+
+        int8_t  chPadding;
+        uint8_t bUseScanLine            : 1;
+        uint8_t bSupportNegative        : 1;
+        uint8_t u6BinsPerDirtyRegion    : 6;
+
+        int16_t iMaxValue;
+
+    } Bin;
+
+    struct {
+        uint32_t wFrom;
+        uint32_t wTo;
+    } Colour;
+
+    arm_2d_scene_t *ptParent;
 
 } histogram_cfg_t;
 
@@ -62,12 +93,15 @@ typedef struct histogram_t histogram_t;
 struct histogram_t {
 
 ARM_PRIVATE(
-
     histogram_cfg_t tCFG;
+    arm_2d_size_t tHistogramSize;
 
-    /* place your private member here, following two are examples */
-    int64_t lTimestamp[1];
+    arm_2d_region_list_item_t tDirtyRegion;
+    uint8_t bUseDirtyRegion : 1;
+    uint8_t                 : 7;
     uint8_t chOpacity;
+
+    int32_t q16Ratio;
 )
     /* place your public member here */
     
@@ -85,12 +119,15 @@ extern
 ARM_NONNULL(1)
 void histogram_depose( histogram_t *ptThis);
 
+ARM_NONNULL(1)
+void histogram_on_frame_start( histogram_t *ptThis);
+
 extern
 ARM_NONNULL(1)
 void histogram_show( histogram_t *ptThis,
                             const arm_2d_tile_t *ptTile, 
-                            const arm_2d_region_t *ptRegion, 
-                            bool bIsNewFrame);
+                            const arm_2d_region_t *ptRegion,
+                            uint8_t chOpacity);
 
 
 #if defined(__clang__)

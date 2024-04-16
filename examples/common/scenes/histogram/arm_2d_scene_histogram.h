@@ -30,7 +30,7 @@
 #include "arm_2d.h"
 
 #include "arm_2d_helper_scene.h"
-
+#include "arm_2d_example_controls.h"
 #ifdef   __cplusplus
 extern "C" {
 #endif
@@ -83,8 +83,11 @@ struct user_scene_histogram_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[1];
+    int64_t lTimestamp[17];
     bool bUserAllocated;
+
+    histogram_t tHistogram;
+    histogram_bin_item_t tBins[16];
 
 )
     /* place your public member here */
