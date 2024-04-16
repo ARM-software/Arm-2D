@@ -222,7 +222,7 @@ arm_fsm_rt_t __list_view_item_0_draw_item(
         = arm_2d_helper_pfb_get_display_area(
             &(ptScene->use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t));
     
-    int16_t iRadius = tScreen.tSize.iWidth;
+    int16_t iRadius = tScreen.tSize.iWidth >> 1;
 
     uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
     int32_t q7ScaleRatio = ((ptParam->chOpacity >> 1) + 128);
@@ -275,7 +275,7 @@ arm_fsm_rt_t __list_view_item_1_draw_item(
         = arm_2d_helper_pfb_get_display_area(
             &(ptScene->use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t));
     
-    int16_t iRadius = tScreen.tSize.iWidth;
+    int16_t iRadius = tScreen.tSize.iWidth >> 1;
 
     uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
     int32_t q7ScaleRatio = ((ptParam->chOpacity >> 1) + 128);
@@ -338,7 +338,7 @@ arm_fsm_rt_t __list_view_item_2_draw_item(
         = arm_2d_helper_pfb_get_display_area(
             &(ptScene->use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t));
     
-    int16_t iRadius = tScreen.tSize.iWidth;
+    int16_t iRadius = tScreen.tSize.iWidth >> 1;
 
     uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
 
@@ -392,7 +392,7 @@ arm_fsm_rt_t __list_view_item_3_draw_item(
         = arm_2d_helper_pfb_get_display_area(
             &(ptScene->use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t));
     
-    int16_t iRadius = tScreen.tSize.iWidth;
+    int16_t iRadius = tScreen.tSize.iWidth >> 1;
 
     uint8_t chOpacity = arm_2d_helper_alpha_mix(ITEM_BG_OPACITY, ptParam->chOpacity);
 

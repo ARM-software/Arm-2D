@@ -186,6 +186,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene_fitness_loader,
     scene_audiomark_loader,
 #else
+    scene_menu_loader,
     scene_histogram_loader,
 #endif
 
