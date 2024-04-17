@@ -21,8 +21,8 @@
  * Title:        __arm-2d_core.c
  * Description:  Basic Tile operations
  *
- * $Date:        13. April 2024
- * $Revision:    V.1.7.1
+ * $Date:        17. April 2024
+ * $Revision:    V.1.7.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -1909,7 +1909,7 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
             +-----+------------------------------+-- ... --+
             */
 
-            if  (tClippedRegion.tSize.iHeight < tDrawRegion.tSize.iHeight) {
+            if  (tClippedRegion.tSize.iHeight < tDrawRegion.tSize.iHeight && tClippedRegion.tLocation.iX < 0) {
                 //! something left to draw
 
                 arm_2d_region_t tFirstColumnRegion = tDrawRegion;
