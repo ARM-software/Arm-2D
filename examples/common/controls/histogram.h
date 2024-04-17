@@ -97,7 +97,11 @@ ARM_PRIVATE(
     histogram_cfg_t tCFG;
     arm_2d_size_t tHistogramSize;
 
-    arm_2d_region_list_item_t tDirtyRegion;
+    struct {
+        arm_2d_region_list_item_t tDirtyRegionItem;
+        uint16_t hwCurrentBin; 
+    } DirtyRegion;
+
     uint8_t bUseDirtyRegion : 1;
     uint8_t                 : 7;
     uint8_t chOpacity;

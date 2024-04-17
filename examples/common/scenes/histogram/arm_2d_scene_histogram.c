@@ -139,6 +139,12 @@ static void __on_scene_histogram_frame_start(arm_2d_scene_t *ptScene)
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    /* no need to use dirty region optimization in this demo */
+    arm_2d_helper_pfb_disable_dirty_region_optimization(
+                                    &(this.use_as__arm_2d_scene_t
+                                        .ptPlayer
+                                            ->use_as__arm_2d_helper_pfb_t));
+
 
     for (int32_t n = 0; n < dimof(this.tBins); n++) {
         int32_t nResult;
@@ -167,6 +173,11 @@ static void __before_scene_histogram_switching_out(arm_2d_scene_t *ptScene)
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    arm_2d_helper_pfb_enable_dirty_region_optimization(
+                                    &(this.use_as__arm_2d_scene_t
+                                        .ptPlayer
+                                            ->use_as__arm_2d_helper_pfb_t),
+                                    NULL, 0);
 }
 
 static
@@ -212,7 +223,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_histogram_handler)
 }
 
 ARM_NONNULL(1)
-user_scene_histogram_t *__arm_2d_scene_histogram_init(   arm_2d_scene_player_t *ptDispAdapter, 
+user_scene_histogram_t *__arm_2d_scene_histogram_init(
+                                        arm_2d_scene_player_t *ptDispAdapter, 
                                         user_scene_histogram_t *ptThis)
 {
     bool bUserAllocated = false;
@@ -246,7 +258,7 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(   arm_2d_scene_player_t *
             //.fnOnBGStart    = &__on_scene_histogram_background_start,
             //.fnOnBGComplete = &__on_scene_histogram_background_complete,
             .fnOnFrameStart = &__on_scene_histogram_frame_start,
-            //.fnBeforeSwitchOut = &__before_scene_histogram_switching_out,
+            .fnBeforeSwitchOut = &__before_scene_histogram_switching_out,
             .fnOnFrameCPL   = &__on_scene_histogram_frame_complete,
             .fnDepose       = &__on_scene_histogram_depose,
         },
@@ -275,7 +287,7 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(   arm_2d_scene_player_t *
                 .wTo =      __RGB32(0xFF, 0, 0), 
             },
 
-            //.ptParent = &this.use_as__arm_2d_scene_t,
+            .ptParent = &this.use_as__arm_2d_scene_t,
         };
 
         histogram_init(&this.tHistogram, &tCFG);

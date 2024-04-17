@@ -68,7 +68,8 @@
 /*============================ TYPES =========================================*/
 enum {
     HISTOGRAM_DR_START = 0,
-
+    HISTOGRAM_DR_UPDATE_BINS,
+    HISTOGRAM_DR_DONE,
 };
 
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -176,8 +177,9 @@ void histogram_init( histogram_t *ptThis,
     if (NULL != this.tCFG.ptParent) {
         this.bUseDirtyRegion = true;
 
-        arm_2d_scene_player_dynamic_dirty_region_init(  &this.tDirtyRegion,
-                                                        this.tCFG.ptParent);
+        arm_2d_scene_player_dynamic_dirty_region_init(  
+                                            &this.DirtyRegion.tDirtyRegionItem,
+                                            this.tCFG.ptParent);
     }
 
 
@@ -188,8 +190,11 @@ void histogram_depose( histogram_t *ptThis)
 {
     assert(NULL != ptThis);
     
-    arm_2d_scene_player_dynamic_dirty_region_depose(&this.tDirtyRegion,
-                                                    this.tCFG.ptParent);
+    if (this.bUseDirtyRegion) {
+        arm_2d_scene_player_dynamic_dirty_region_depose(
+                                            &this.DirtyRegion.tDirtyRegionItem,
+                                            this.tCFG.ptParent);
+    }
 }
 
 ARM_NONNULL(1)
@@ -204,7 +209,11 @@ void histogram_on_frame_start( histogram_t *ptThis)
         ptItem->iLastValue = ptItem->iCurrentValue;
         ptItem->iCurrentValue = ptItem->iNewValue;
     }
-    arm_2d_dynamic_dirty_region_on_frame_start(&this.tDirtyRegion, HISTOGRAM_DR_START);
+    if (this.bUseDirtyRegion) {
+        arm_2d_dynamic_dirty_region_on_frame_start(
+                                            &this.DirtyRegion.tDirtyRegionItem,
+                                            HISTOGRAM_DR_START);
+    }
 }
 
 ARM_NONNULL(1)
@@ -214,6 +223,21 @@ void histogram_show(histogram_t *ptThis,
                     uint8_t chOpacity)
 {
     assert(NULL!= ptThis);
+
+    uint8_t chDirtyRegionState = arm_2d_dynamic_dirty_region_wait_next(
+                                        &this.DirtyRegion.tDirtyRegionItem);
+
+    if (HISTOGRAM_DR_START ==  chDirtyRegionState) {
+        if (this.tCFG.Bin.hwCount > 0 && NULL != this.tCFG.Bin.ptItems) {
+            this.DirtyRegion.hwCurrentBin = 0;
+            chDirtyRegionState = HISTOGRAM_DR_UPDATE_BINS;
+        } else {
+            arm_2d_dynamic_dirty_region_change_user_region_index_only(
+                &this.DirtyRegion.tDirtyRegionItem,
+                HISTOGRAM_DR_DONE
+            );
+        }
+    }
 
     arm_2d_container(ptTile, __histogram, ptRegion) {
 
@@ -231,10 +255,9 @@ void histogram_show(histogram_t *ptThis,
             } else {
                 tBaseLine.iY = this.tHistogramSize.iHeight;
 
-                arm_foreach(histogram_bin_item_t, 
-                    this.tCFG.Bin.ptItems, 
-                    this.tCFG.Bin.hwCount,
-                    ptItem) {
+                histogram_bin_item_t *ptItem = this.tCFG.Bin.ptItems;
+
+                for (uint_fast16_t hwBinIndex = 0; hwBinIndex < this.tCFG.Bin.hwCount; hwBinIndex++) {
                 
                     int16_t iHeight = ((int64_t)this.q16Ratio * (int64_t)INT16_2_Q16(ptItem->iCurrentValue)) >> 32;
 
@@ -274,9 +297,82 @@ void histogram_show(histogram_t *ptThis,
                             chOpacity
                         );
                     }
+
+                    /* update dirty regions */
+                    do {
+                        if (HISTOGRAM_DR_UPDATE_BINS != chDirtyRegionState) {
+                            break;
+                        }
+                        if (this.DirtyRegion.hwCurrentBin != hwBinIndex) {
+                            break;
+                        }
+                        this.DirtyRegion.hwCurrentBin++;
+
+                        if (ptItem->iCurrentValue == ptItem->iLastValue) {
+
+                            /* we would like to ignore current bin */
+                            if (this.DirtyRegion.hwCurrentBin >= this.tCFG.Bin.hwCount) {
+
+                                /* encounter the final bin */
+                                arm_2d_dynamic_dirty_region_change_user_region_index_only(
+                                    &this.DirtyRegion.tDirtyRegionItem,
+                                    HISTOGRAM_DR_DONE
+                                );
+
+                                chDirtyRegionState = 0xFF;
+                            }
+
+                        } else {
+
+                            int16_t iLastHeight = ((int64_t)this.q16Ratio * (int64_t)INT16_2_Q16(ptItem->iLastValue)) >> 32;
+
+                            arm_2d_region_t tLastBinRegion = {
+                                .tLocation = {
+                                    .iX = tBaseLine.iX,
+                                    .iY = tBaseLine.iY - iLastHeight,
+                                },
+                                .tSize = {
+                                    .iWidth = iBinWidth,
+                                    .iHeight = 1,
+                                },
+                            };
+
+                            tBinRegion.tSize.iHeight = 1;
+                            
+                            arm_2d_region_t tRedrawRegion;
+                            arm_2d_region_get_minimal_enclosure(&tLastBinRegion,
+                                                                &tBinRegion,
+                                                                &tRedrawRegion);
+                            
+                            if (this.DirtyRegion.hwCurrentBin >= this.tCFG.Bin.hwCount) {
+                                /* the final one */
+                                arm_2d_dynamic_dirty_region_update(
+                                        &this.DirtyRegion.tDirtyRegionItem,
+                                        &__panel,
+                                        &tRedrawRegion,
+                                        HISTOGRAM_DR_DONE
+                                    );
+                                
+                                
+                            } else {
+                                arm_2d_dynamic_dirty_region_update(
+                                        &this.DirtyRegion.tDirtyRegionItem,
+                                        &__panel,
+                                        &tRedrawRegion,
+                                        HISTOGRAM_DR_UPDATE_BINS
+                                    );
+                            }
+
+                            chDirtyRegionState = 0xFF;
+                        }
+
+                    } while(0);
+
                     ARM_2D_OP_WAIT_ASYNC();
 
                     tBaseLine.iX += iBinWidth + this.tCFG.Bin.chPadding;
+
+                    ptItem++;
                 }
 
             }
