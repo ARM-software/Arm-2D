@@ -1909,14 +1909,14 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
             +-----+------------------------------+-- ... --+
             */
 
-            if  (tClippedRegion.tSize.iHeight < tDrawRegion.tSize.iHeight && tClippedRegion.tLocation.iX < 0) {
+            if  (tClippedRegion.tSize.iHeight < tDrawRegion.tSize.iHeight) {
                 //! something left to draw
 
                 arm_2d_region_t tFirstColumnRegion = tDrawRegion;
                 tFirstColumnRegion.tSize.iHeight = tDrawRegion.tSize.iHeight - tClippedRegion.tSize.iHeight;
                 tFirstColumnRegion.tLocation.iY += tClippedRegion.tSize.iHeight;
                 
-                if (tTargetCanvas.tLocation.iX < 0) {
+                if (tTargetCanvas.tLocation.iX <= 0) {
                     tFirstColumnRegion.tSize.iWidth = tClippedRegion.tSize.iWidth 
                                                     - tTargetCanvas.tLocation.iX;
                     tFirstColumnRegion.tLocation.iX = tTargetCanvas.tLocation.iX;
