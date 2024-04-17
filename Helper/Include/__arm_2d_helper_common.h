@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        12. April 2024
- * $Revision:    V.1.4.4
+ * $Date:        17. April 2024
+ * $Revision:    V.1.4.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -900,22 +900,22 @@ extern "C" {
                     ({ /* on enter operations */                                \
                         __region_name.tSize                                     \
                             = (__tile_ptr)->tRegion.tSize;                      \
-                        const arm_2d_tile_t *ARM_2D_SAFE_NAME(ptTile) = NULL;   \
+                        const arm_2d_tile_t *ARM_2D_SAFE_NAME(ptScreen) = NULL; \
                         const arm_2d_tile_t *ARM_2D_SAFE_NAME(ptRootTile)       \
                             = __arm_2d_tile_get_virtual_screen_or_root(         \
                                         (const arm_2d_tile_t *)(__tile_ptr),    \
                                         NULL,                                   \
                                         NULL,                                   \
-                                        &ARM_2D_SAFE_NAME(ptTile),              \
+                                        &ARM_2D_SAFE_NAME(ptScreen),            \
                                         false);                                 \
                         bool bDrawCanvas =                                      \
                         (   NULL != ARM_2D_SAFE_NAME(ptRootTile)                \
-                        ||  (   (NULL != ARM_2D_SAFE_NAME(ptTile))              \
-                            &&  (ARM_2D_SAFE_NAME(ptTile)->tInfo.u3ExtensionID  \
+                        ||  (   (NULL != ARM_2D_SAFE_NAME(ptScreen))            \
+                            &&  (ARM_2D_SAFE_NAME(ptScreen)->tInfo.u3ExtensionID\
                                     == ARM_2D_TILE_EXTENSION_PFB)               \
-                            &&  (   ARM_2D_SAFE_NAME(ptTile)                    \
+                            &&  (   ARM_2D_SAFE_NAME(ptScreen)                  \
                                         ->tInfo.Extension.PFB.bIsDryRun         \
-                                ||  ARM_2D_SAFE_NAME(ptTile)                    \
+                                ||  ARM_2D_SAFE_NAME(ptScreen)                  \
                                         ->tInfo.Extension.PFB.bIsNewFrame))     \
                         );                                                      \
                         if (bDrawCanvas) {                                      \
