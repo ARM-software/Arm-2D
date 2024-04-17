@@ -551,7 +551,6 @@ void histogram_show(histogram_t *ptThis,
 
                     if (this.tCFG.Bin.bUseScanLine) {
                     
-                    #if 1
                         arm_2d_container(&__panel, __bin, &tBinRegion) {
 
                             int16_t iOffset = this.tHistogramSize.iHeight - iHeight;
@@ -559,7 +558,7 @@ void histogram_show(histogram_t *ptThis,
                             tOriginalRegion.tLocation.iY -= this.tHistogramSize.iHeight - iHeight;
                             tOriginalRegion.tSize.iHeight += iOffset;
 
-                        #if 0
+                        #if 1
                             arm_2d_fill_colour_with_vertical_line_mask_and_opacity(
                                 &__bin,
                                 &tOriginalRegion,
@@ -575,15 +574,7 @@ void histogram_show(histogram_t *ptThis,
                                 chOpacity);
                         #endif
                         }
-                    #else
-                        arm_2d_fill_colour_with_vertical_line_mask_and_opacity(
-                            &__panel,
-                            &tBinRegion,
-                            &c_tileLineMask,
-                            (__arm_2d_color_t) {ptItem->tColour},
-                            chOpacity
-                        );
-                    #endif
+
                     } else {
                         arm_2d_fill_colour_with_opacity(
                             &__panel,

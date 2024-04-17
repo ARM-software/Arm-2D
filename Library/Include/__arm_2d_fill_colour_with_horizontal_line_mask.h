@@ -21,8 +21,8 @@
  * Title:        __arm_2d_fill_colour_with_horizontal_line_mask.h
  * Description:  APIs for colour-filling-with-horizontal-line-mask
  *
- * $Date:        10. April 2024
- * $Revision:    V.1.0.0
+ * $Date:        17. April 2024
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -153,7 +153,7 @@ ARM_NONNULL(2,4)
  *  \return arm_fsm_rt_t the operations result
  */
 arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_horizontal_line_mask(
-                                        arm_2d_op_fill_cl_l_msk_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptLineMask,
@@ -174,7 +174,7 @@ ARM_NONNULL(2,4)
  *  \return arm_fsm_rt_t the operations result
  */
 arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_horizontal_line_mask_and_opacity(
-                                        arm_2d_op_fill_cl_l_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptLineMask,
@@ -193,7 +193,7 @@ ARM_NONNULL(2,4)
  *  \return arm_fsm_rt_t the operations result
  */
 arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_horizontal_line_mask(
-                                        arm_2d_op_fill_cl_l_msk_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptLineMask,
@@ -214,7 +214,7 @@ ARM_NONNULL(2,4)
  *  \return arm_fsm_rt_t the operations result
  */
 arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_horizontal_line_mask_and_opacity(
-                                        arm_2d_op_fill_cl_l_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptLineMask,
@@ -233,7 +233,7 @@ ARM_NONNULL(2,4)
  *  \return arm_fsm_rt_t the operations result
  */
 arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_horizontal_line_mask(
-                                        arm_2d_op_fill_cl_l_msk_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptLineMask,
@@ -254,7 +254,7 @@ ARM_NONNULL(2,4)
  *  \return arm_fsm_rt_t the operations result
  */
 arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_horizontal_line_mask_and_opacity(
-                                        arm_2d_op_fill_cl_l_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptLineMask,

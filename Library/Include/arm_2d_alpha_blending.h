@@ -21,8 +21,8 @@
  * Title:        arm_2d_alpha_blending.h
  * Description:  Public header file to contain the alpha related APIs
  *
- * $Date:        12. April 2024
- * $Revision:    V.1.6.5
+ * $Date:        17. April 2024
+ * $Revision:    V.1.6.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1939,7 +1939,10 @@ typedef struct arm_2d_op_fill_cl_msk_opc_t {
         uint16_t hwColour;                      //!< 16bit key colour
         uint32_t wColour;                       //!< 32bit key colour
     };
-    uint8_t chRatio;                            //!< opacity
+    union {
+        uint8_t chRatio;                        //!< opacity
+        uint8_t chOpacity;
+    };
 } arm_2d_op_fill_cl_msk_opc_t;
 
 /*!
@@ -1965,72 +1968,6 @@ typedef struct arm_2d_op_fill_cl_opc_t {
  * 
  */
 typedef arm_2d_op_src_msk_t arm_2d_op_cp_msk_t;
-
-/*!
- * \brief control block for colour-filling-with-mask operations
- * \note arm_2d_op_fill_cl_l_msk_t inherits from arm_2d_op_src_msk_t explicitly 
- */
-typedef struct arm_2d_op_fill_cl_l_msk_t {
-
-    inherit(arm_2d_op_core_t);
-    struct {
-        const arm_2d_tile_t     *ptTile;                //!< target tile
-        const arm_2d_region_t   *ptRegion;              //!< target region
-    } Target;
-    struct {
-        const arm_2d_tile_t     *ptTile;                //!< source tile
-    }Source;
-    uint32_t wMode;
-
-    /* derived part */
-    struct {
-        const arm_2d_tile_t     *ptSourceSide;          //!< source side mask
-        const arm_2d_tile_t     *ptTargetSide;          //!< target side mask
-    } Mask;
-
-    union {
-        uint8_t  chColour;                      //!< 8bit key colour
-        uint16_t hwColour;                      //!< 16bit key colour
-        uint32_t wColour;                       //!< 32bit key colour
-    };
-
-    arm_2d_tile_t tDummySource;
-
-} arm_2d_op_fill_cl_l_msk_t;
-
-/*!
- * \brief control block for colour-filling-with-mask operations
- * \note arm_2d_op_fill_cl_l_msk_t inherits from arm_2d_op_msk_t explicitly 
- */
-typedef struct arm_2d_op_fill_cl_l_msk_opc_t {
-
-    inherit(arm_2d_op_core_t);
-    struct {
-        const arm_2d_tile_t     *ptTile;                //!< target tile
-        const arm_2d_region_t   *ptRegion;              //!< target region
-    } Target;
-    struct {
-        const arm_2d_tile_t     *ptTile;                //!< source tile
-    }Source;
-    uint32_t wMode;
-
-    /* derived part */
-    struct {
-        const arm_2d_tile_t     *ptSourceSide;          //!< source side mask
-        const arm_2d_tile_t     *ptTargetSide;          //!< target side mask
-    } Mask;
-
-    union {
-        uint8_t  chColour;                      //!< 8bit key colour
-        uint16_t hwColour;                      //!< 16bit key colour
-        uint32_t wColour;                       //!< 32bit key colour
-    };
-
-    arm_2d_tile_t tDummySource;
-
-    uint8_t chOpacity;
-
-} arm_2d_op_fill_cl_l_msk_opc_t;
 
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
