@@ -1865,7 +1865,7 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
                                             - tClippedRegion.tSize.iWidth;
                 tHeaderRegion.tLocation.iX += tClippedRegion.tSize.iWidth;
                 
-                if (tTargetCanvas.tLocation.iY < 0) {
+                if (tTargetCanvas.tLocation.iY <= 0) {
                     tHeaderRegion.tSize.iHeight = tClippedRegion.tSize.iHeight 
                                                 - tTargetCanvas.tLocation.iY;
                     tHeaderRegion.tLocation.iY = tTargetCanvas.tLocation.iY;
