@@ -383,14 +383,14 @@ const arm_2d_tile_t c_tileLineMask = {
 };
 
 const uint8_t c_chScanLineVerticalLineMask[]= {
-    255, 255, 128, 0, 128
+    255, 255, 0, 0,
 };
 
 const arm_2d_tile_t c_tileLineVerticalLineMask = {
     .tRegion = {
         .tSize = {
             .iWidth = 1,
-            .iHeight = 5,
+            .iHeight = 4,
         },
     },
     .tInfo = {
