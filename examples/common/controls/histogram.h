@@ -53,10 +53,11 @@ extern "C" {
 typedef struct histogram_bin_item_t {
     int16_t iNewValue;
 
-//ARM_PRIVATE(
+ARM_PRIVATE(
+    int16_t iCurrentValue;
     int16_t iLastValue;
     COLOUR_INT tColour;
-//)
+)
 
 } histogram_bin_item_t;
 

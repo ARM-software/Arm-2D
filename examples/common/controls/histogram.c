@@ -76,14 +76,14 @@ enum {
 /*============================ LOCAL VARIABLES ===============================*/
 
 const uint8_t c_chScanLineVerticalLineMask[]= {
-    255, 255, 0, 0,
+    255, 255, 128, 0, 128,
 };
 
 const arm_2d_tile_t c_tileLineVerticalLineMask = {
     .tRegion = {
         .tSize = {
             .iWidth = 1,
-            .iHeight = 4,
+            .iHeight = 5,
         },
     },
     .tInfo = {
@@ -197,6 +197,13 @@ void histogram_on_frame_start( histogram_t *ptThis)
 {
     assert(NULL != ptThis);
 
+    arm_foreach(histogram_bin_item_t, 
+                    this.tCFG.Bin.ptItems, 
+                    this.tCFG.Bin.hwCount,
+                    ptItem) {
+        ptItem->iLastValue = ptItem->iCurrentValue;
+        ptItem->iCurrentValue = ptItem->iNewValue;
+    }
     arm_2d_dynamic_dirty_region_on_frame_start(&this.tDirtyRegion, HISTOGRAM_DR_START);
 }
 
@@ -229,7 +236,7 @@ void histogram_show(histogram_t *ptThis,
                     this.tCFG.Bin.hwCount,
                     ptItem) {
                 
-                    int16_t iHeight = ((int64_t)this.q16Ratio * (int64_t)INT16_2_Q16(ptItem->iNewValue)) >> 32;
+                    int16_t iHeight = ((int64_t)this.q16Ratio * (int64_t)INT16_2_Q16(ptItem->iCurrentValue)) >> 32;
 
                     arm_2d_region_t tBinRegion = {
                         .tLocation = {
