@@ -69,14 +69,17 @@
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoGRAY8
+#   define c_tileHelium             c_tileHeliumGRAY8
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoRGB565
+#   define c_tileHelium             c_tileHeliumRGB565
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoCCCA8888
+#   define c_tileHelium             c_tileHeliumCCCN888
 #else
 #   error Unsupported colour depth!
 #endif
@@ -92,6 +95,7 @@ extern const arm_2d_tile_t c_tileCMSISLogo;
 extern const arm_2d_tile_t c_tileCMSISLogoMask;
 extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
+extern const arm_2d_tile_t c_tileHelium;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
@@ -185,23 +189,34 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_histogram_handler)
         
         /* following code is just a demo, you can remove them */
 
-        arm_2d_align_centre(__top_canvas, 224, 180 ) {
+        arm_2d_align_centre(__top_canvas, c_tileHelium.tRegion.tSize) {
+            arm_2d_tile_copy_only(
+                &c_tileHelium,
+                ptTile, 
+                &__centre_region
+            );
 
-            histogram_show( &this.tHistogram,
-                            ptTile,
-                            &__centre_region,
-                            255);
+            ARM_2D_OP_WAIT_ASYNC();
         }
 
+        
+        arm_2d_align_centre(__top_canvas, 240, 200) {
+        
+            draw_round_corner_box(  ptTile, 
+                                    &__centre_region, 
+                                    GLCD_COLOR_BLACK, 
+                                    200,
+                                    bIsNewFrame);
+                                    
+            arm_2d_align_bottom_centre(__centre_region, 224, 140 ) {
 
-        /* draw text at the top-left corner */
+                histogram_show( &this.tHistogram,
+                                ptTile,
+                                &__bottom_centre_region,
+                                255);
+            }
 
-        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-        arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
-        arm_lcd_text_set_draw_region(NULL);
-        arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
-        arm_lcd_text_location(0,0);
-        arm_lcd_puts("Scene histogram");
+        }
 
     /*-----------------------draw the foreground end  -----------------------*/
     }
@@ -260,7 +275,7 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
 
         histogram_cfg_t tCFG = {
             .Bin = {
-                .tSize = {10, 180},
+                .tSize = {10, 128},
                 .chPadding = 4,
                 .u6BinsPerDirtyRegion = 1,
                 .bUseScanLine = true,
