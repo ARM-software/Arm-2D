@@ -139,13 +139,6 @@ static void __on_scene_histogram_frame_start(arm_2d_scene_t *ptScene)
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    /* no need to use dirty region optimization in this demo */
-    arm_2d_helper_pfb_disable_dirty_region_optimization(
-                                    &(this.use_as__arm_2d_scene_t
-                                        .ptPlayer
-                                            ->use_as__arm_2d_helper_pfb_t));
-
-
     for (int32_t n = 0; n < dimof(this.tBins); n++) {
         int32_t nResult;
         arm_2d_helper_time_cos_slider(0, 1000, 1000, ARM_2D_ANGLE(15.0f * (float)n), &nResult, &this.lTimestamp[1+n]);
@@ -173,11 +166,6 @@ static void __before_scene_histogram_switching_out(arm_2d_scene_t *ptScene)
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    arm_2d_helper_pfb_enable_dirty_region_optimization(
-                                    &(this.use_as__arm_2d_scene_t
-                                        .ptPlayer
-                                            ->use_as__arm_2d_helper_pfb_t),
-                                    NULL, 0);
 }
 
 static
