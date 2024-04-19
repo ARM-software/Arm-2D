@@ -145,7 +145,7 @@ static void __on_scene_histogram_frame_start(arm_2d_scene_t *ptScene)
 
     do {
         int32_t nResult;
-        arm_2d_helper_time_cos_slider(-1000, 1000, 1000, ARM_2D_ANGLE(0.0f), &nResult, &this.lTimestamp[2]);
+        arm_2d_helper_time_cos_slider(0, 1000, 500, ARM_2D_ANGLE(0.0f), &nResult, &this.lTimestamp[2]);
 
         this.WindowFIFO.iBuffer[this.WindowFIFO.hwPointer++] = nResult;
         if (this.WindowFIFO.hwPointer >= dimof(this.WindowFIFO.iBuffer)) {
@@ -163,7 +163,7 @@ static void __on_scene_histogram_frame_complete(arm_2d_scene_t *ptScene)
     
     /* switch to next scene after 10s */
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
-        //arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 }
 
@@ -291,12 +291,11 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
 
         histogram_cfg_t tCFG = {
             .Bin = {
-                .tSize = {1, 128},
-                .chPadding = 0,
-                .u5BinsPerDirtyRegion = 1,
-                //.bUseScanLine = true,
-                .bDrawEndPointOnly = true,
-                .bSupportNegative = true,
+                .tSize = {10, 128},
+                .chPadding = 4,
+                .bUseScanLine = true,
+                //.bDrawEndPointOnly = true,
+                //.bSupportNegative = true,
                 .nMaxValue = 1000,
 
                 .ptItems = this.tBins,
@@ -304,8 +303,8 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
             },
 
             .Colour = {
-                .wFrom =    __RGB32(0, 0xFF, 0), //__RGB32(0, 0xFF, 0),
-                .wTo =      __RGB32(0, 0xFF, 0), //__RGB32(0xFF, 0, 0), 
+                .wFrom =    __RGB32(0, 0xFF, 0),
+                .wTo =      __RGB32(0xFF, 0, 0), 
             },
 
             .ptParent = &this.use_as__arm_2d_scene_t,

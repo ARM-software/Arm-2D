@@ -87,10 +87,10 @@ ARM_PRIVATE(
     bool bUserAllocated;
 
     histogram_t tHistogram;
-    histogram_bin_item_t tBins[200];
+    histogram_bin_item_t tBins[16];
 
     struct {
-        int16_t iBuffer[200];
+        int16_t iBuffer[16];
         uint16_t hwPointer; 
     } WindowFIFO; 
 

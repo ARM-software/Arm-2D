@@ -122,13 +122,6 @@ void histogram_init( histogram_t *ptThis,
     if (this.tCFG.Bin.tSize.iHeight <=0) {
         this.tCFG.Bin.tSize.iHeight = 64;   /* default value */
     }
-    if (this.tCFG.Bin.u5BinsPerDirtyRegion == 0) {
-        if (this.tCFG.Bin.tSize.iWidth >= 16) {
-            this.tCFG.Bin.u5BinsPerDirtyRegion = 1;
-        } else {
-            this.tCFG.Bin.u5BinsPerDirtyRegion = 32 / this.tCFG.Bin.tSize.iWidth;
-        }
-    }
 
     if (this.tCFG.Bin.nMaxValue <= 0) {
         this.tCFG.Bin.nMaxValue = INT32_MAX;
