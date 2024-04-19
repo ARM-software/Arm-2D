@@ -321,8 +321,6 @@ void histogram_show(histogram_t *ptThis,
                 ptItem++;
             }
 
-
-
             /* update dirty region */
             switch (arm_2d_dynamic_dirty_region_wait_next(
                                         &this.DirtyRegion.tDirtyRegionItem)) {

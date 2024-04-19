@@ -309,8 +309,8 @@
             <file category="sourceC"     name="examples/common/scenes/alarm_clock/arm_2d_scene_alarm_clock.c" attr="template"  select="Scene Template: Alarm Clock"   version="1.0.1" />
             <file category="header"      name="examples/common/scenes/alarm_clock/arm_2d_scene_alarm_clock.h" attr="template"  select="Scene Template: Alarm Clock"   version="1.0.1" />
 
-            <file category="sourceC"     name="examples/common/scenes/histogram/arm_2d_scene_histogram.c" attr="template"  select="Scene Template: Histogram"   version="1.0.0" />
-            <file category="header"      name="examples/common/scenes/histogram/arm_2d_scene_histogram.h" attr="template"  select="Scene Template: Histogram"   version="1.0.0" />
+            <file category="sourceC"     name="examples/common/scenes/histogram/arm_2d_scene_histogram.c" attr="template"  select="Scene Template: Histogram"   version="1.1.0" />
+            <file category="header"      name="examples/common/scenes/histogram/arm_2d_scene_histogram.h" attr="template"  select="Scene Template: Histogram"   version="1.1.0" />
           </files>
           <RTE_Components_h>
     #define RTE_Acceleration_Arm_2D_Helper_PFB
@@ -385,7 +385,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.7.0" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.7.1" condition="Arm-2D-EXTRA">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <!-- example control source files -->
