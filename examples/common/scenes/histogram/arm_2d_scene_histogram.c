@@ -143,13 +143,23 @@ static void __on_scene_histogram_frame_start(arm_2d_scene_t *ptScene)
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+#if 0
     for (int32_t n = 0; n < dimof(this.tBins); n++) {
         int32_t nResult;
         arm_2d_helper_time_cos_slider(0, 1000, 1000, ARM_2D_ANGLE(15.0f * (float)n), &nResult, &this.lTimestamp[1+n]);
 
         this.tBins[n].iNewValue = (int16_t)nResult;
     }
+#endif
+    do {
+        int32_t nResult;
+        arm_2d_helper_time_cos_slider(0, 1000, 500, ARM_2D_ANGLE(0.0f), &nResult, &this.lTimestamp[2]);
 
+        this.WindowFIFO.iBuffer[this.WindowFIFO.hwPointer++] = nResult;
+        if (this.WindowFIFO.hwPointer >= dimof(this.WindowFIFO.iBuffer)) {
+            this.WindowFIFO.hwPointer = 0;
+        }
+    } while(0);
 
     histogram_on_frame_start(&this.tHistogram);
 }
@@ -224,6 +234,21 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_histogram_handler)
     return arm_fsm_rt_cpl;
 }
 
+static
+int32_t histogram_get_bin_value(void *pTarget, 
+                                histogram_t *ptHistogram, 
+                                uint_fast16_t hwBinIndex)
+{
+    user_scene_histogram_t *ptThis = (user_scene_histogram_t *)pTarget;
+
+    uint16_t hwAccessIndex = (hwBinIndex + this.WindowFIFO.hwPointer);
+    hwAccessIndex -= (hwAccessIndex >= dimof(this.WindowFIFO.iBuffer)) 
+                   * dimof(this.WindowFIFO.iBuffer);
+
+    return (int32_t)this.WindowFIFO.iBuffer[hwAccessIndex];
+}
+
+
 ARM_NONNULL(1)
 user_scene_histogram_t *__arm_2d_scene_histogram_init(
                                         arm_2d_scene_player_t *ptDispAdapter, 
@@ -278,7 +303,7 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
                 .chPadding = 4,
                 .u6BinsPerDirtyRegion = 1,
                 .bUseScanLine = true,
-                .iMaxValue = 1000,
+                .nMaxValue = 1000,
 
                 .ptItems = this.tBins,
                 .hwCount = dimof(this.tBins),
@@ -290,6 +315,11 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
             },
 
             .ptParent = &this.use_as__arm_2d_scene_t,
+
+            .evtOnGetBinValue = {
+                .fnHandler = &histogram_get_bin_value,
+                .pTarget = ptThis,
+            },
         };
 
         histogram_init(&this.tHistogram, &tCFG);

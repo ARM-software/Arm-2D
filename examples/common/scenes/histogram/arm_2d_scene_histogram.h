@@ -89,6 +89,11 @@ ARM_PRIVATE(
     histogram_t tHistogram;
     histogram_bin_item_t tBins[16];
 
+    struct {
+        int16_t iBuffer[16];
+        uint16_t hwPointer; 
+    } WindowFIFO; 
+
 )
     /* place your public member here */
     

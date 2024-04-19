@@ -64,6 +64,7 @@
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 #define INT16_2_Q16(__VALUE)    ((int32_t)(__VALUE) << 16)
+#define INT32_2_Q16(__VALUE)    ((int64_t)(__VALUE) << 16)
 
 /*============================ TYPES =========================================*/
 enum {
@@ -108,6 +109,7 @@ void histogram_init( histogram_t *ptThis,
     assert(NULL != ptCFG);
     assert(NULL != ptCFG->Bin.ptItems);
     assert(ptCFG->Bin.hwCount > 0);
+    assert(NULL != ptCFG->evtOnGetBinValue.fnHandler);
 
     memset(ptThis, 0, sizeof(histogram_t));
 
@@ -128,16 +130,16 @@ void histogram_init( histogram_t *ptThis,
         }
     }
 
-    if (this.tCFG.Bin.iMaxValue <= 0) {
-        this.tCFG.Bin.iMaxValue = INT16_MAX;
+    if (this.tCFG.Bin.nMaxValue <= 0) {
+        this.tCFG.Bin.nMaxValue = INT32_MAX;
     }
 
     if (this.tCFG.Bin.bSupportNegative) {
         this.q16Ratio = (   INT16_2_Q16((this.tCFG.Bin.tSize.iHeight >> 1))  
-                        /   this.tCFG.Bin.iMaxValue);
+                        /   this.tCFG.Bin.nMaxValue);
     } else {
         this.q16Ratio = (   INT16_2_Q16(this.tCFG.Bin.tSize.iHeight)  
-                        /   this.tCFG.Bin.iMaxValue);
+                        /   this.tCFG.Bin.nMaxValue);
     }
 
     if (this.tCFG.Colour.wFrom == this.tCFG.Colour.wTo) {
@@ -202,13 +204,29 @@ void histogram_on_frame_start( histogram_t *ptThis)
 {
     assert(NULL != ptThis);
 
-    arm_foreach(histogram_bin_item_t, 
-                    this.tCFG.Bin.ptItems, 
-                    this.tCFG.Bin.hwCount,
-                    ptItem) {
-        ptItem->iLastValue = ptItem->iCurrentValue;
-        ptItem->iCurrentValue = ptItem->iNewValue;
+    if (NULL != this.tCFG.evtOnGetBinValue.fnHandler) {
+        histogram_bin_item_t *ptItem = this.tCFG.Bin.ptItems;
+
+        for (   uint_fast16_t hwBinIndex = 0; 
+                hwBinIndex < this.tCFG.Bin.hwCount; 
+                hwBinIndex++) {
+
+            ptItem->iLastValue = ptItem->iCurrentValue;
+            int32_t nValue = ARM_2D_INVOKE(this.tCFG.evtOnGetBinValue.fnHandler,
+                                            ARM_2D_PARAM(
+                                            this.tCFG.evtOnGetBinValue.pTarget,
+                                            ptThis,
+                                            hwBinIndex
+                                            ));
+            ptItem->iCurrentValue 
+                =(int16_t)( (   (int64_t)this.q16Ratio 
+                            *   (int64_t)INT32_2_Q16(nValue)) 
+                          >> 32);
+        
+            ptItem++;
+        }
     }
+
     if (this.bUseDirtyRegion) {
         arm_2d_dynamic_dirty_region_on_frame_start(
                                             &this.DirtyRegion.tDirtyRegionItem,
@@ -259,7 +277,7 @@ void histogram_show(histogram_t *ptThis,
 
                 for (uint_fast16_t hwBinIndex = 0; hwBinIndex < this.tCFG.Bin.hwCount; hwBinIndex++) {
                 
-                    int16_t iHeight = ((int64_t)this.q16Ratio * (int64_t)INT16_2_Q16(ptItem->iCurrentValue)) >> 32;
+                    int16_t iHeight = ptItem->iCurrentValue;
 
                     arm_2d_region_t tBinRegion = {
                         .tLocation = {
@@ -324,7 +342,7 @@ void histogram_show(histogram_t *ptThis,
 
                         } else {
 
-                            int16_t iLastHeight = ((int64_t)this.q16Ratio * (int64_t)INT16_2_Q16(ptItem->iLastValue)) >> 32;
+                            int16_t iLastHeight = ptItem->iLastValue;
 
                             arm_2d_region_t tLastBinRegion = {
                                 .tLocation = {

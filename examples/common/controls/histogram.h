@@ -51,7 +51,6 @@ extern "C" {
 /*============================ TYPES =========================================*/
 
 typedef struct histogram_bin_item_t {
-    int16_t iNewValue;
 
 ARM_PRIVATE(
     int16_t iCurrentValue;
@@ -60,6 +59,18 @@ ARM_PRIVATE(
 )
 
 } histogram_bin_item_t;
+
+
+typedef struct histogram_t histogram_t;
+
+typedef int32_t histogram_get_bin_value_t(  void *pTarget, 
+                                            histogram_t *ptHistogram, 
+                                            uint_fast16_t hwBinIndex);
+
+typedef struct histogram_on_get_bin_value_evt_t {
+    histogram_get_bin_value_t *fnHandler;
+    void *pTarget;
+} histogram_on_get_bin_value_evt_t;
 
 typedef struct histogram_cfg_t {
     struct {
@@ -73,7 +84,7 @@ typedef struct histogram_cfg_t {
         uint8_t bSupportNegative        : 1;
         uint8_t u6BinsPerDirtyRegion    : 6;
 
-        int16_t iMaxValue;
+        int32_t nMaxValue;
 
     } Bin;
 
@@ -84,13 +95,14 @@ typedef struct histogram_cfg_t {
 
     arm_2d_scene_t *ptParent;
 
+    histogram_on_get_bin_value_evt_t evtOnGetBinValue;
+
 } histogram_cfg_t;
+
 
 /*!
  * \brief a user class for user defined control
  */
-typedef struct histogram_t histogram_t;
-
 struct histogram_t {
 
 ARM_PRIVATE(
