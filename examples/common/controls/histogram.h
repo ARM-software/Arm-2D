@@ -82,7 +82,8 @@ typedef struct histogram_cfg_t {
         int8_t  chPadding;
         uint8_t bUseScanLine            : 1;
         uint8_t bSupportNegative        : 1;
-        uint8_t u6BinsPerDirtyRegion    : 6;
+        uint8_t bDrawEndPointOnly       : 1;
+        uint8_t u5BinsPerDirtyRegion    : 5;
 
         int32_t nMaxValue;
 

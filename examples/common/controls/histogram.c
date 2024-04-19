@@ -122,11 +122,11 @@ void histogram_init( histogram_t *ptThis,
     if (this.tCFG.Bin.tSize.iHeight <=0) {
         this.tCFG.Bin.tSize.iHeight = 64;   /* default value */
     }
-    if (this.tCFG.Bin.u6BinsPerDirtyRegion == 0) {
+    if (this.tCFG.Bin.u5BinsPerDirtyRegion == 0) {
         if (this.tCFG.Bin.tSize.iWidth >= 16) {
-            this.tCFG.Bin.u6BinsPerDirtyRegion = 1;
+            this.tCFG.Bin.u5BinsPerDirtyRegion = 1;
         } else {
-            this.tCFG.Bin.u6BinsPerDirtyRegion = 64 / this.tCFG.Bin.tSize.iWidth;
+            this.tCFG.Bin.u5BinsPerDirtyRegion = 32 / this.tCFG.Bin.tSize.iWidth;
         }
     }
 
@@ -300,6 +300,18 @@ void histogram_show(histogram_t *ptThis,
                                 chOpacity);
                     }
 
+                } else if (this.tCFG.Bin.bDrawEndPointOnly) {
+                    arm_2d_location_t tPointLocation = tBinRegion.tLocation;
+                    if (iHeight < 0) {
+                        tPointLocation.iY -= iHeight;
+                    }
+
+                    arm_2d_draw_point(
+                        &__panel,
+                        tPointLocation,
+                        ptItem->tColour,
+                        chOpacity
+                    );
                 } else {
                     arm_2d_fill_colour_with_opacity(
                         &__panel,
