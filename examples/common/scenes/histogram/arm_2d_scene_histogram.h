@@ -83,7 +83,7 @@ struct user_scene_histogram_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[17];
+    int64_t lTimestamp[2];
     bool bUserAllocated;
 
     histogram_t tHistogram;

@@ -242,21 +242,6 @@ void histogram_show(histogram_t *ptThis,
 {
     assert(NULL!= ptThis);
 
-    uint8_t chDirtyRegionState = arm_2d_dynamic_dirty_region_wait_next(
-                                        &this.DirtyRegion.tDirtyRegionItem);
-
-    if (HISTOGRAM_DR_START ==  chDirtyRegionState) {
-        if (this.tCFG.Bin.hwCount > 0 && NULL != this.tCFG.Bin.ptItems) {
-            this.DirtyRegion.hwCurrentBin = 0;
-            chDirtyRegionState = HISTOGRAM_DR_UPDATE_BINS;
-        } else {
-            arm_2d_dynamic_dirty_region_change_user_region_index_only(
-                &this.DirtyRegion.tDirtyRegionItem,
-                HISTOGRAM_DR_DONE
-            );
-        }
-    }
-
     arm_2d_container(ptTile, __histogram, ptRegion) {
 
         arm_2d_region_t tPanelRegion = {
@@ -267,31 +252,31 @@ void histogram_show(histogram_t *ptThis,
 
             arm_2d_location_t tBaseLine = {0,0};
             int16_t iBinWidth = this.tCFG.Bin.tSize.iWidth;
-            if (this.tCFG.Bin.bSupportNegative) {
-                tBaseLine.iY = this.tHistogramSize.iHeight >> 1;
 
-            } else {
-                tBaseLine.iY = this.tHistogramSize.iHeight;
+            tBaseLine.iY = this.tHistogramSize.iHeight >> (!!this.tCFG.Bin.bSupportNegative);
+        
 
-                histogram_bin_item_t *ptItem = this.tCFG.Bin.ptItems;
+            arm_foreach(histogram_bin_item_t, 
+                        this.tCFG.Bin.ptItems, 
+                        this.tCFG.Bin.hwCount,
+                        ptItem) {
+            
+                int16_t iHeight = ptItem->iCurrentValue;
 
-                for (uint_fast16_t hwBinIndex = 0; hwBinIndex < this.tCFG.Bin.hwCount; hwBinIndex++) {
+                arm_2d_region_t tBinRegion = {
+                    .tLocation = {
+                        .iX = tBaseLine.iX,
+                        .iY = tBaseLine.iY - iHeight * (iHeight > 0),
+                    },
+                    .tSize = {
+                        .iWidth = iBinWidth,
+                        .iHeight = ABS(iHeight),
+                    },
+                };
+
+                if (this.tCFG.Bin.bUseScanLine) {
                 
-                    int16_t iHeight = ptItem->iCurrentValue;
-
-                    arm_2d_region_t tBinRegion = {
-                        .tLocation = {
-                            .iX = tBaseLine.iX,
-                            .iY = tBaseLine.iY - iHeight,
-                        },
-                        .tSize = {
-                            .iWidth = iBinWidth,
-                            .iHeight = ABS(iHeight),
-                        },
-                    };
-
-                    if (this.tCFG.Bin.bUseScanLine) {
-                    
+                    if (iHeight > 0) {
                         arm_2d_container(&__panel, __bin, &tBinRegion) {
 
                             int16_t iOffset = this.tHistogramSize.iHeight - iHeight;
@@ -306,48 +291,76 @@ void histogram_show(histogram_t *ptThis,
                                 (__arm_2d_color_t) {ptItem->tColour},
                                 chOpacity);
                         }
-
                     } else {
-                        arm_2d_fill_colour_with_opacity(
-                            &__panel,
-                            &tBinRegion,
-                            (__arm_2d_color_t) {ptItem->tColour},
-                            chOpacity
-                        );
+                        arm_2d_fill_colour_with_vertical_line_mask_and_opacity(
+                                &__panel,
+                                &tBinRegion,
+                                &c_tileLineVerticalLineMask,
+                                (__arm_2d_color_t) {ptItem->tColour},
+                                chOpacity);
                     }
 
-                    /* update dirty regions */
+                } else {
+                    arm_2d_fill_colour_with_opacity(
+                        &__panel,
+                        &tBinRegion,
+                        (__arm_2d_color_t) {ptItem->tColour},
+                        chOpacity
+                    );
+                }
+
+                ARM_2D_OP_WAIT_ASYNC();
+
+                tBaseLine.iX += iBinWidth + this.tCFG.Bin.chPadding;
+
+                ptItem++;
+            }
+
+
+
+            /* update dirty region */
+            switch (arm_2d_dynamic_dirty_region_wait_next(
+                                        &this.DirtyRegion.tDirtyRegionItem)) {
+                case HISTOGRAM_DR_START:
+                    if (this.tCFG.Bin.hwCount > 0 && NULL != this.tCFG.Bin.ptItems) {
+                        this.DirtyRegion.hwCurrentBin = 0;
+                    } else {
+                        arm_2d_dynamic_dirty_region_change_user_region_index_only(
+                            &this.DirtyRegion.tDirtyRegionItem,
+                            HISTOGRAM_DR_DONE
+                        );
+                        break;
+                    }
+                case HISTOGRAM_DR_UPDATE_BINS:
                     do {
-                        if (HISTOGRAM_DR_UPDATE_BINS != chDirtyRegionState) {
-                            break;
-                        }
-                        if (this.DirtyRegion.hwCurrentBin != hwBinIndex) {
-                            break;
-                        }
-                        this.DirtyRegion.hwCurrentBin++;
+                        histogram_bin_item_t *ptItem 
+                            = &this.tCFG.Bin.ptItems[this.DirtyRegion.hwCurrentBin++];
 
                         if (ptItem->iCurrentValue == ptItem->iLastValue) {
 
                             /* we would like to ignore current bin */
                             if (this.DirtyRegion.hwCurrentBin >= this.tCFG.Bin.hwCount) {
-
                                 /* encounter the final bin */
                                 arm_2d_dynamic_dirty_region_change_user_region_index_only(
                                     &this.DirtyRegion.tDirtyRegionItem,
                                     HISTOGRAM_DR_DONE
                                 );
-
-                                chDirtyRegionState = 0xFF;
+                                break;
                             }
-
+                            continue;
                         } else {
+                            int16_t iBinWidth = this.tCFG.Bin.tSize.iWidth;
 
-                            int16_t iLastHeight = ptItem->iLastValue;
 
-                            arm_2d_region_t tLastBinRegion = {
+                            arm_2d_location_t tBaseLine = {
+                                .iX = (iBinWidth + this.tCFG.Bin.chPadding) * (this.DirtyRegion.hwCurrentBin - 1),
+                                .iY = this.tHistogramSize.iHeight >> (!!this.tCFG.Bin.bSupportNegative),
+                            };
+
+                            arm_2d_region_t tBinRegion = {
                                 .tLocation = {
                                     .iX = tBaseLine.iX,
-                                    .iY = tBaseLine.iY - iLastHeight,
+                                    .iY = tBaseLine.iY - ptItem->iCurrentValue,
                                 },
                                 .tSize = {
                                     .iWidth = iBinWidth,
@@ -355,7 +368,16 @@ void histogram_show(histogram_t *ptThis,
                                 },
                             };
 
-                            tBinRegion.tSize.iHeight = 1;
+                            arm_2d_region_t tLastBinRegion = {
+                                .tLocation = {
+                                    .iX = tBaseLine.iX,
+                                    .iY = tBaseLine.iY - ptItem->iLastValue,
+                                },
+                                .tSize = {
+                                    .iWidth = iBinWidth,
+                                    .iHeight = 1,
+                                },
+                            };
                             
                             arm_2d_region_t tRedrawRegion;
                             arm_2d_region_get_minimal_enclosure(&tLastBinRegion,
@@ -370,8 +392,6 @@ void histogram_show(histogram_t *ptThis,
                                         &tRedrawRegion,
                                         HISTOGRAM_DR_DONE
                                     );
-                                
-                                
                             } else {
                                 arm_2d_dynamic_dirty_region_update(
                                         &this.DirtyRegion.tDirtyRegionItem,
@@ -381,20 +401,16 @@ void histogram_show(histogram_t *ptThis,
                                     );
                             }
 
-                            chDirtyRegionState = 0xFF;
+                            break;
                         }
+                    } while(true);
 
-                    } while(0);
-
-                    ARM_2D_OP_WAIT_ASYNC();
-
-                    tBaseLine.iX += iBinWidth + this.tCFG.Bin.chPadding;
-
-                    ptItem++;
-                }
-
+                    break;
+                case HISTOGRAM_DR_DONE:
+                    break;
+                default:
+                    break;
             }
-
 
             
         }

@@ -143,17 +143,9 @@ static void __on_scene_histogram_frame_start(arm_2d_scene_t *ptScene)
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-#if 0
-    for (int32_t n = 0; n < dimof(this.tBins); n++) {
-        int32_t nResult;
-        arm_2d_helper_time_cos_slider(0, 1000, 1000, ARM_2D_ANGLE(15.0f * (float)n), &nResult, &this.lTimestamp[1+n]);
-
-        this.tBins[n].iNewValue = (int16_t)nResult;
-    }
-#endif
     do {
         int32_t nResult;
-        arm_2d_helper_time_cos_slider(0, 1000, 500, ARM_2D_ANGLE(0.0f), &nResult, &this.lTimestamp[2]);
+        arm_2d_helper_time_cos_slider(-1000, 1000, 500, ARM_2D_ANGLE(0.0f), &nResult, &this.lTimestamp[2]);
 
         this.WindowFIFO.iBuffer[this.WindowFIFO.hwPointer++] = nResult;
         if (this.WindowFIFO.hwPointer >= dimof(this.WindowFIFO.iBuffer)) {
@@ -303,6 +295,7 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
                 .chPadding = 4,
                 .u6BinsPerDirtyRegion = 1,
                 .bUseScanLine = true,
+                .bSupportNegative = true,
                 .nMaxValue = 1000,
 
                 .ptItems = this.tBins,
