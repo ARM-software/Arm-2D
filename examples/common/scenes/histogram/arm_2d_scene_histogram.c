@@ -145,7 +145,7 @@ static void __on_scene_histogram_frame_start(arm_2d_scene_t *ptScene)
 
     do {
         int32_t nResult;
-        arm_2d_helper_time_cos_slider(0, 1000, 500, ARM_2D_ANGLE(0.0f), &nResult, &this.lTimestamp[2]);
+        arm_2d_helper_time_cos_slider(0, 1000, 1000, ARM_2D_ANGLE(0.0f), &nResult, &this.lTimestamp[1]);
 
         this.WindowFIFO.iBuffer[this.WindowFIFO.hwPointer++] = nResult;
         if (this.WindowFIFO.hwPointer >= dimof(this.WindowFIFO.iBuffer)) {
