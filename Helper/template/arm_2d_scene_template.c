@@ -94,6 +94,31 @@ extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
+
+/*! define dirty regions */
+IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
+
+    /* a dirty region to be specified at runtime*/
+    ADD_REGION_TO_LIST(s_tDirtyRegions,
+        0  /* initialize at runtime later */
+    ),
+    
+    /* add the last region:
+        * it is the top left corner for text display 
+        */
+    ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
+        .tLocation = {
+            .iX = 0,
+            .iY = 0,
+        },
+        .tSize = {
+            .iWidth = 0,
+            .iHeight = 8,
+        },
+    ),
+
+END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
+
 /*============================ IMPLEMENTATION ================================*/
 
 
@@ -237,30 +262,6 @@ user_scene_<name>_t *__arm_2d_scene_<name>_init(   arm_2d_scene_player_t *ptDisp
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
-
-    /*! define dirty regions */
-    IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
-
-        /* a dirty region to be specified at runtime*/
-        ADD_REGION_TO_LIST(s_tDirtyRegions,
-            0  /* initialize at runtime later */
-        ),
-        
-        /* add the last region:
-         * it is the top left corner for text display 
-         */
-        ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
-            .tLocation = {
-                .iX = 0,
-                .iY = 0,
-            },
-            .tSize = {
-                .iWidth = 0,
-                .iHeight = 8,
-            },
-        ),
-
-    END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
 
     s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
 
