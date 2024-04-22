@@ -564,7 +564,7 @@ ARM_PROTECTED(
     uint16_t    u12KEY              : 12;                                       //!< KEY
 )
 
-}arm_2d_region_list_item_t;
+} arm_2d_region_list_item_t;
 
 /*!
  * \brief the On Low Level Rendering event handler for the low level (LCD Driver)
