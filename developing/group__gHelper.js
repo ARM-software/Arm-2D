@@ -292,6 +292,7 @@ var group__gHelper =
     [ "__arm_2d_helper_dirty_region_update_dirty_regions2", "group__gHelper.html#ga59f0bea3f58066624ba385e0e6bc6bc8", null ],
     [ "arm_2d_helper_dirty_region_force_to_use_minimal_enclosure", "group__gHelper.html#ga975434ce493469363bdbb570018071ee", null ],
     [ "arm_2d_helper_dirty_region_suspend_update", "group__gHelper.html#ga08ef5a533a251fbb5c8b860c7e402e1e", null ],
+    [ "arm_2d_helper_dirty_region_item_suspend_update", "group__gHelper.html#ga017de82f4efa0309cf39a8364c933a43", null ],
     [ "arm_2d_helper_transform_init", "group__gHelper.html#ga076b6793e3c2fc6f1ef064ca700f667e", null ],
     [ "arm_2d_helper_transform_depose", "group__gHelper.html#gac827ff7995d260f06cd3f80c1df0e9b7", null ],
     [ "arm_2d_helper_transform_on_frame_begin", "group__gHelper.html#ga646d1178b70b862d77d33f8a84173f0e", null ],
