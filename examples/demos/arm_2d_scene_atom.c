@@ -112,6 +112,7 @@ static void __on_scene_atom_load(arm_2d_scene_t *ptScene)
     arm_2d_helper_dirty_region_add_items(&this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
                                          &this.Electronic[1].tDirtyRegionItem,
                                          1);
+
 }
 
 static void __on_scene_atom_depose(arm_2d_scene_t *ptScene)
