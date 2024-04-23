@@ -105,7 +105,8 @@ var group__gHelper =
     [ "arm_2d_scene_t.__unnamed136__.__unnamed140__", "group__gHelper.html#structarm__2d__scene__t_8____unnamed136_____8____unnamed140____", null ],
     [ "arm_2d_scene_t.__unnamed138__", "group__gHelper.html#structarm__2d__scene__t_8____unnamed138____", [
       [ "bOnSwitchingIgnoreBG", "group__gHelper.html#a2912f0746294e6c0c0f91d3f82914112", null ],
-      [ "bOnSwitchingIgnoreScene", "group__gHelper.html#a1a6c67905a7be94f1ce72b9b25f9a1a7", null ]
+      [ "bOnSwitchingIgnoreScene", "group__gHelper.html#a1a6c67905a7be94f1ce72b9b25f9a1a7", null ],
+      [ "bUseDirtyRegionHelper", "group__gHelper.html#a63a25e4a9911a68a0c61b86923d7cf33", null ]
     ] ],
     [ "arm_2d_scene_player_t.Benchmark", "group__gHelper.html#structarm__2d__scene__player__t_8Benchmark", null ],
     [ "arm_2d_scene_player_t.__unnamed143__", "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed143____", null ],
